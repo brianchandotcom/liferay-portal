@@ -19,7 +19,8 @@ import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPrev
 import SingleFileUploader from '../../item_selector_uploader/js/SingleFileUploader';
 
 export default function ItemSelectorRepositoryEntryBrowser({
-	eventName,
+	closeCaption,
+	eventName: itemSelectedEventName,
 	portletNamespace,
 	rootNode,
 	uploadEnabled = true,
@@ -34,12 +35,12 @@ export default function ItemSelectorRepositoryEntryBrowser({
 
 	const handleSelectedItem = useCallback(
 		({returnType, value}) => {
-			Liferay.Util.getOpener().Liferay.fire(eventName, {
+			Liferay.Util.getOpener().Liferay.fire(itemSelectedEventName, {
 				returnType,
 				value,
 			});
 		},
-		[eventName]
+		[itemSelectedEventName]
 	);
 
 	useEffect(() => {
@@ -103,13 +104,21 @@ export default function ItemSelectorRepositoryEntryBrowser({
 
 	return (
 		<>
-			{uploadEnabled && <SingleFileUploader {...uploaderProps} />}
+			{uploadEnabled && (
+				<SingleFileUploader
+					closeCaption={closeCaption}
+					itemSelectedEventName={itemSelectedEventName}
+					{...uploaderProps}
+				/>
+			)}
+
 			{itemSelectorPreviewOpen && (
 				<ItemSelectorPreview
 					currentIndex={itemSelectorPreviewIndex}
 					handleClose={() => setItemSelectorPreviewOpen(false)}
 					handleSelectedItem={handleSelectedItem}
-					itemSelectedEventName={eventName}
+					headerTitle={closeCaption}
+					itemSelectedEventName={itemSelectedEventName}
 					items={itemSelectorPreviewItemsRef.current}
 				/>
 			)}

@@ -21,6 +21,8 @@ public class ObjectLayoutBoxConstants {
 
 	public static final String TYPE_CATEGORIZATION = "categorization";
 
+	public static final String TYPE_COMMENTS = "comments";
+
 	public static final String TYPE_REGULAR = "regular";
 
 }

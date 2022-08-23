@@ -20,12 +20,16 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -77,6 +81,21 @@ public class FileEntryLayoutDisplayPageProvider
 	public LayoutDisplayPageObjectProvider<FileEntry>
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
+		if (urlTitle.contains(StringPool.SLASH)) {
+			String[] urlNames = urlTitle.split(StringPool.SLASH);
+
+			if (urlNames.length > 1) {
+				Group group = _groupLocalService.fetchFriendlyURLGroup(
+					CompanyThreadLocal.getCompanyId(),
+					StringPool.SLASH + urlNames[0]);
+
+				if (group != null) {
+					return getLayoutDisplayPageObjectProvider(
+						group.getGroupId(), urlNames[1]);
+				}
+			}
+		}
+
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				groupId, FileEntry.class, urlTitle);
@@ -103,6 +122,9 @@ public class FileEntryLayoutDisplayPageProvider
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference(
 		target = "(item.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"

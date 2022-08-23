@@ -1,0 +1,8 @@
+{
+	"cssPath": "index.css",
+	"configurationPath": "index.json",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "applications new submissions",
+	"type": "react"
+}

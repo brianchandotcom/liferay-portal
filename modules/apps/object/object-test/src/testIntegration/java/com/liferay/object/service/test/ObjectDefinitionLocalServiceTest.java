@@ -1322,8 +1322,12 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT
 			).dbColumnName(
 				objectEntryTable.userName.getName()
+			).dbTableName(
+				dbTableName
 			).dbType(
 				ObjectFieldConstants.DB_TYPE_STRING
+			).defaultValue(
+				StringPool.BLANK
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "author"))
@@ -1336,8 +1340,16 @@ public class ObjectDefinitionLocalServiceTest {
 			Assert.assertTrue(iterator.hasNext());
 
 			_assertSystemObjectFields(
-				new ObjectFieldBuilder().dbColumnName(
+				new ObjectFieldBuilder().businessType(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT
+				).dbColumnName(
 					objectEntryTable.externalReferenceCode.getName()
+				).dbTableName(
+					dbTableName
+				).dbType(
+					ObjectFieldConstants.DB_TYPE_STRING
+				).defaultValue(
+					StringPool.BLANK
 				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(
 						LanguageUtil.get(
@@ -1355,8 +1367,12 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER
 			).dbColumnName(
 				dbColumnName
+			).dbTableName(
+				dbTableName
 			).dbType(
 				ObjectFieldConstants.DB_TYPE_LONG
+			).defaultValue(
+				StringPool.BLANK
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "id"))
@@ -1372,8 +1388,12 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectFieldConstants.BUSINESS_TYPE_DATE
 			).dbColumnName(
 				objectEntryTable.modifiedDate.getName()
+			).dbTableName(
+				dbTableName
 			).dbType(
 				ObjectFieldConstants.DB_TYPE_DATE
+			).defaultValue(
+				StringPool.BLANK
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "modified-date"))
@@ -1389,8 +1409,12 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT
 			).dbColumnName(
 				objectEntryTable.status.getName()
+			).dbTableName(
+				dbTableName
 			).dbType(
 				ObjectFieldConstants.DB_TYPE_STRING
+			).defaultValue(
+				StringPool.BLANK
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "status"))

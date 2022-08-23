@@ -41,6 +41,61 @@ public class ColumnValuesExtractorTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	public void testExtractValuesWithChildObjects() throws Exception {
+		ArrayContainer arrayContainer = new ArrayContainer(
+			new Double[] {43.2, 12.8, 33.17, 0.234, 5D},
+			new String[] {"A,BC", "D\"EF", "GHI", "J'KL", "``NO,P"});
+
+		ObjectContainer objectContainer = new ObjectContainer(
+			arrayContainer, arrayContainer);
+
+		ColumnValuesExtractor columnValuesExtractor = new ColumnValuesExtractor(
+			ItemClassIndexUtil.index(objectContainer.getClass()),
+			Arrays.asList("arrayContainer1", "arrayContainer2", "length"));
+
+		_assertHeaders(
+			new String[] {
+				"arrayContainer1.doubles", "arrayContainer1.length",
+				"arrayContainer1.strings", "arrayContainer2.doubles",
+				"arrayContainer2.length", "arrayContainer2.strings", "length"
+			},
+			columnValuesExtractor.getHeaders());
+
+		List<Object[]> rows = columnValuesExtractor.extractValues(
+			objectContainer);
+
+		List<Object[]> testResults = columnValuesExtractor.extractValues(
+			objectContainer);
+
+		Assert.assertFalse(rows.isEmpty());
+
+		Object[] row = testResults.get(0);
+
+		Assert.assertEquals(Arrays.toString(row), 7, row.length);
+
+		Assert.assertEquals(Integer.valueOf(2), row[6]);
+
+		row = testResults.get(1);
+
+		CSVRecord csvRecord = _parseCSV((String)row[0]);
+
+		Assert.assertEquals(5, csvRecord.size());
+
+		for (int i = 0; i < arrayContainer.length; i++) {
+			Assert.assertEquals(
+				arrayContainer.doubles[i], Double.valueOf(csvRecord.get(i)));
+		}
+
+		csvRecord = _parseCSV((String)row[2]);
+
+		Assert.assertEquals(5, csvRecord.size());
+
+		for (int i = 0; i < arrayContainer.length; i++) {
+			Assert.assertEquals(arrayContainer.strings[i], csvRecord.get(i));
+		}
+	}
+
+	@Test
 	public void testExtractValuesWithDoubleArray() throws Exception {
 		ArrayContainer arrayContainer = new ArrayContainer(
 			new Double[] {43.2, 12.8, 33.17, 0.234, 5D},
@@ -50,13 +105,20 @@ public class ColumnValuesExtractorTest {
 			ItemClassIndexUtil.index(arrayContainer.getClass()),
 			Arrays.asList("doubles", "length", "strings"));
 
-		List<Object> objects = columnValuesExtractor.extractValues(
+		_assertHeaders(
+			new String[] {"doubles", "length", "strings"},
+			columnValuesExtractor.getHeaders());
+
+		List<Object[]> rows = columnValuesExtractor.extractValues(
 			arrayContainer);
 
-		Assert.assertEquals(objects.toString(), 3, objects.size());
-		Assert.assertEquals(Integer.valueOf(5), objects.get(1));
+		Assert.assertFalse(rows.isEmpty());
 
-		CSVRecord csvRecord = _parseCSV((String)objects.get(0));
+		Object[] objects = rows.get(0);
+
+		Assert.assertEquals(objects.toString(), 3, objects.length);
+
+		CSVRecord csvRecord = _parseCSV((String)objects[0]);
 
 		Assert.assertEquals(5, csvRecord.size());
 
@@ -65,12 +127,23 @@ public class ColumnValuesExtractorTest {
 				arrayContainer.doubles[i], Double.valueOf(csvRecord.get(i)));
 		}
 
-		csvRecord = _parseCSV((String)objects.get(2));
+		Assert.assertEquals(Integer.valueOf(5), objects[1]);
+
+		csvRecord = _parseCSV((String)objects[2]);
 
 		Assert.assertEquals(5, csvRecord.size());
 
 		for (int i = 0; i < arrayContainer.length; i++) {
 			Assert.assertEquals(arrayContainer.strings[i], csvRecord.get(i));
+		}
+	}
+
+	private void _assertHeaders(String[] expected, String[] actual) {
+		Assert.assertEquals(
+			Arrays.toString(actual), expected.length, actual.length);
+
+		for (int i = 0; i < expected.length; i++) {
+			Assert.assertEquals(expected[i], actual[i]);
 		}
 	}
 
@@ -98,6 +171,23 @@ public class ColumnValuesExtractorTest {
 			this.doubles = doubles;
 			length = strings.length;
 			this.strings = strings;
+		}
+
+	}
+
+	private class ObjectContainer {
+
+		public ArrayContainer arrayContainer1;
+		public ArrayContainer arrayContainer2;
+		public int length;
+
+		private ObjectContainer(
+			ArrayContainer arrayContainer1, ArrayContainer arrayContainer2) {
+
+			this.arrayContainer1 = arrayContainer1;
+			this.arrayContainer2 = arrayContainer2;
+
+			length = 2;
 		}
 
 	}

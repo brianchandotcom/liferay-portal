@@ -37,12 +37,8 @@ import org.osgi.service.component.annotations.Reference;
 public class MetadataAction extends BaseSamlStrutsAction {
 
 	@Override
-	@Reference(unbind = "-")
-	public void setSamlProviderConfigurationHelper(
-		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
-
-		super.setSamlProviderConfigurationHelper(
-			samlProviderConfigurationHelper);
+	public boolean isEnabled() {
+		return _samlProviderConfigurationHelper.isEnabled();
 	}
 
 	@Override
@@ -65,5 +61,8 @@ public class MetadataAction extends BaseSamlStrutsAction {
 
 	@Reference
 	private SamlHttpRequestUtil _samlHttpRequestUtil;
+
+	@Reference
+	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 }

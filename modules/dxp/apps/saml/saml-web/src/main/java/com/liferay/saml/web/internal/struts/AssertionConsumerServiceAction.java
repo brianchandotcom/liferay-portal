@@ -52,20 +52,11 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 
 	@Override
 	public boolean isEnabled() {
-		if (samlProviderConfigurationHelper.isRoleSp()) {
-			return super.isEnabled();
+		if (_samlProviderConfigurationHelper.isRoleSp()) {
+			return _samlProviderConfigurationHelper.isEnabled();
 		}
 
 		return false;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	public void setSamlProviderConfigurationHelper(
-		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
-
-		super.setSamlProviderConfigurationHelper(
-			samlProviderConfigurationHelper);
 	}
 
 	@Override
@@ -148,6 +139,9 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;

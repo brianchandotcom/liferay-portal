@@ -35,20 +35,11 @@ public class WebSsoAction extends BaseSamlStrutsAction {
 
 	@Override
 	public boolean isEnabled() {
-		if (samlProviderConfigurationHelper.isRoleIdp()) {
-			return super.isEnabled();
+		if (_samlProviderConfigurationHelper.isRoleIdp()) {
+			return _samlProviderConfigurationHelper.isEnabled();
 		}
 
 		return false;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	public void setSamlProviderConfigurationHelper(
-		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
-
-		super.setSamlProviderConfigurationHelper(
-			samlProviderConfigurationHelper);
 	}
 
 	@Override
@@ -62,6 +53,9 @@ public class WebSsoAction extends BaseSamlStrutsAction {
 
 		return null;
 	}
+
+	@Reference
+	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 	@Reference(unbind = "-")
 	private WebSsoProfile _webSsoProfile;

@@ -1225,7 +1225,9 @@ public class ContentPageEditorDisplayContext {
 		).buildString();
 	}
 
-	private Map<String, Map<String, Object>> _getDynamicFragments() {
+	private Map<String, Map<String, Object>>
+		_getDynamicFragmentCollectionsMap() {
+
 		Map<String, Map<String, Object>> dynamicFragmentCollectionsMap =
 			new LinkedHashMap<>();
 
@@ -1274,7 +1276,7 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private Map<String, Map<String, Object>>
-		_getFragmentCollectionContributors() {
+		_getFragmentCollectionContributorsMap() {
 
 		Map<String, Map<String, Object>> fragmentCollectionContributorsMap =
 			new LinkedHashMap<>();
@@ -1348,9 +1350,10 @@ public class ContentPageEditorDisplayContext {
 
 		if (includeSystem) {
 			Map<String, Map<String, Object>> systemFragmentCollections =
-				_getFragmentCollectionContributors();
+				_getFragmentCollectionContributorsMap();
 
-			systemFragmentCollections.putAll(_getDynamicFragments());
+			systemFragmentCollections.putAll(
+				_getDynamicFragmentCollectionsMap());
 
 			allFragmentCollections.addAll(
 				_addLayoutElements(systemFragmentCollections));

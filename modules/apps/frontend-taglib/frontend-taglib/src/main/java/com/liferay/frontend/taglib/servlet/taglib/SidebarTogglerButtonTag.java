@@ -14,9 +14,11 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
@@ -53,6 +55,13 @@ public class SidebarTogglerButtonTag extends IncludeTag {
 
 	public void setLabel(String label) {
 		_label = label;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setSidenavId(String sidenavId) {

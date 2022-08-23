@@ -38,29 +38,30 @@ html#{$cadmin-selector} #{$selector} {
 				&#{$selector}--with-sidebar-open {
 					#{$selector}__label-width {
 						left: unset;
-						right: $sidebarButtonWidth + $sidebarContentWidth;
+						right: $sidebarButtonWidth + $defaultSidebarContentWidth;
 					}
 
 					@include media-breakpoint-up(sm) {
 						margin-left: 0;
-						margin-right: $sidebarButtonWidth + $sidebarContentWidth;
+						margin-right: $sidebarButtonWidth +
+							$defaultSidebarContentWidth;
 					}
 				}
 			}
 
 			&#{$selector}--with-sidebar-open {
 				#{$selector}__label-width {
-					right: $sidebarContentWidth;
+					right: $defaultSidebarContentWidth;
 				}
 			}
 
 			&#{$selector}--with-item-configuration-open {
 				#{$selector}__label-width {
-					right: $sidebarContentWidth;
+					right: $defaultSidebarContentWidth;
 				}
 
 				@include media-breakpoint-up(sm) {
-					margin-right: $sidebarContentWidth;
+					margin-right: $defaultSidebarContentWidth;
 				}
 			}
 		}

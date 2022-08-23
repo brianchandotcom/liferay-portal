@@ -34,7 +34,7 @@ html#{$cadmin-selector} .cadmin .page-editor__item-configuration-sidebar {
 	border-left: 1px solid $cadmin-secondary-l3;
 	right: 0;
 	transition: transform ease $defaultTransitionDuration;
-	width: $sidebarContentWidth;
+	width: $defaultSidebarContentWidth;
 
 	transform: translateX(100%);
 
@@ -148,7 +148,7 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		transition: transform ease $defaultTransitionDuration,
 			left ease $defaultTransitionDuration;
 
-		width: $sidebarContentWidth;
+		width: $defaultSidebarContentWidth;
 		z-index: $zIndexContent;
 
 		&--open {
@@ -203,7 +203,7 @@ html#{$cadmin-selector} .page-editor__wrapper {
 
 		&.page-editor__wrapper--padded {
 			@include media-breakpoint-up(sm) {
-				margin-right: $sidebarButtonWidth + $sidebarContentWidth;
+				margin-right: $sidebarButtonWidth + $defaultSidebarContentWidth;
 				padding-left: 0;
 			}
 		}
@@ -211,13 +211,13 @@ html#{$cadmin-selector} .page-editor__wrapper {
 
 	&--padded-start {
 		@include media-breakpoint-up(sm) {
-			padding-left: $sidebarButtonWidth + $sidebarContentWidth;
+			padding-left: $sidebarButtonWidth + $defaultSidebarContentWidth;
 		}
 	}
 
 	&--padded-end {
 		@include media-breakpoint-up(sm) {
-			margin-right: $sidebarContentWidth;
+			margin-right: $defaultSidebarContentWidth;
 		}
 	}
 }

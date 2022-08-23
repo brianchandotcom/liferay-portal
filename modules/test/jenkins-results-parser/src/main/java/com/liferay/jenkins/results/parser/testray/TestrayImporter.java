@@ -910,6 +910,12 @@ public class TestrayImporter {
 	public void recordTestrayCaseResults() {
 		final Job job = getJob();
 
+		TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =
+			TestrayFactory.newTopLevelBuildTestrayCaseResult(
+				getTestrayBuild(null), getTopLevelBuild());
+
+		topLevelBuildTestrayCaseResult.recordTestrayCaseResult(job);
+
 		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>(
 			job.getAxisTestClassGroups());
 

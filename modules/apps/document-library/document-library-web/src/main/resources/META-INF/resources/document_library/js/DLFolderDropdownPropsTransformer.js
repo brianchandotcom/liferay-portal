@@ -23,9 +23,9 @@ const _webDAVHTML = (
 		${Liferay.Language.get('webdav-help')}
 
 		<a href="${learnURL}" target="_blank">${learnMessage}</a>
-		
+
 		<br/><br/>
-		
+
 		<div class="form-group input-resource-wrapper">
 			<label class="control-label" for="${portletNamespace}webDavURL">
 				${Liferay.Language.get('web-dav-url')}
@@ -54,6 +54,16 @@ const ACTIONS = {
 				}
 			},
 			title: Liferay.Language.get('access-from-desktop'),
+		});
+	},
+
+	delete({deleteURL}) {
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			onConfirm: (isConfirmed) =>
+				isConfirmed && submitForm(document.hrefFm, deleteURL),
 		});
 	},
 

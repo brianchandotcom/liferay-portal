@@ -227,7 +227,15 @@ public class FolderActionDisplayContext {
 				).add(
 					this::_isDeleteFolderActionVisible,
 					dropdownItem -> {
-						dropdownItem.setHref(_getDeleteFolderURL());
+						if (_isTrashEnabled()) {
+							dropdownItem.setHref(_getDeleteFolderURL());
+						}
+						else {
+							dropdownItem.putData("action", "delete");
+							dropdownItem.putData(
+								"deleteURL", _getDeleteFolderURL());
+						}
+
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_httpServletRequest, "delete"));

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -38,6 +39,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import javax.portlet.PortletRequest;
@@ -53,7 +56,6 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
@@ -96,32 +98,48 @@ public class WorkflowInstanceViewDisplayContextTest {
 
 		DefaultWorkflowNode defaultWorkflowNode1 = new DefaultWorkflowNode();
 
-		defaultWorkflowNode1.setName("task1");
+		defaultWorkflowNode1.setLabelMap(
+			HashMapBuilder.put(
+				LocaleUtil.BRAZIL, "Revisar Regra de Negócio"
+			).put(
+				LocaleUtil.US, "Business Rule Review"
+			).build());
+		defaultWorkflowNode1.setName("businessRuleReview");
 
 		DefaultWorkflowNode defaultWorkflowNode2 = new DefaultWorkflowNode();
 
-		defaultWorkflowNode2.setName("task2");
+		defaultWorkflowNode2.setLabelMap(
+			HashMapBuilder.put(
+				LocaleUtil.BRAZIL, "Revisar Sintaxe"
+			).put(
+				LocaleUtil.US, "Syntax Review"
+			).build());
+		defaultWorkflowNode2.setName("syntaxReview");
 
 		defaultWorkflowInstance.setCurrentNodes(
 			Arrays.asList(defaultWorkflowNode1, defaultWorkflowNode2));
 
-		Mockito.when(
-			_language.get(
-				Mockito.any(HttpServletRequest.class), Mockito.eq("task1"))
-		).thenReturn(
-			"task1"
-		);
+		Assert.assertEquals(
+			StringUtil.merge(
+				Arrays.asList("Revisar Regra de Negócio", "Revisar Sintaxe"),
+				StringPool.COMMA_AND_SPACE),
+			_workflowInstanceViewDisplayContext.getStatus(
+				defaultWorkflowInstance));
 
-		Mockito.when(
-			_language.get(
-				Mockito.any(HttpServletRequest.class), Mockito.eq("task2"))
-		).thenReturn(
-			"task2"
-		);
+		defaultWorkflowNode1.setLabelMap(
+			HashMapBuilder.put(
+				LocaleUtil.US, "Business Rule Review"
+			).build());
+
+		defaultWorkflowNode2.setLabelMap(
+			HashMapBuilder.put(
+				LocaleUtil.US, "Syntax Review"
+			).build());
 
 		Assert.assertEquals(
 			StringUtil.merge(
-				Arrays.asList("task1", "task2"), StringPool.COMMA_AND_SPACE),
+				Arrays.asList("Business Rule Review", "Syntax Review"),
+				StringPool.COMMA_AND_SPACE),
 			_workflowInstanceViewDisplayContext.getStatus(
 				defaultWorkflowInstance));
 
@@ -129,7 +147,21 @@ public class WorkflowInstanceViewDisplayContextTest {
 			Arrays.asList(defaultWorkflowNode1));
 
 		Assert.assertEquals(
-			"task1",
+			"Business Rule Review",
+			_workflowInstanceViewDisplayContext.getStatus(
+				defaultWorkflowInstance));
+
+		Mockito.when(
+			_language.get(
+				Mockito.any(Locale.class), Mockito.eq("businessRuleReview"))
+		).thenReturn(
+			"businessRuleReview"
+		);
+
+		defaultWorkflowNode1.setLabelMap(Collections.emptyMap());
+
+		Assert.assertEquals(
+			"businessRuleReview",
 			_workflowInstanceViewDisplayContext.getStatus(
 				defaultWorkflowInstance));
 	}
@@ -142,11 +174,12 @@ public class WorkflowInstanceViewDisplayContextTest {
 
 	private static void _setUpLiferayPortletRequest() {
 		_liferayPortletRequest = Mockito.mock(LiferayPortletRequest.class);
+		_httpServletRequest = Mockito.mock(HttpServletRequest.class);
 
 		Mockito.when(
 			_portal.getHttpServletRequest(_liferayPortletRequest)
 		).thenReturn(
-			new MockHttpServletRequest()
+			_httpServletRequest
 		);
 	}
 
@@ -196,6 +229,12 @@ public class WorkflowInstanceViewDisplayContextTest {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
+			_httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
+		);
+
+		Mockito.when(
 			_liferayPortletRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			themeDisplay
@@ -214,6 +253,7 @@ public class WorkflowInstanceViewDisplayContextTest {
 		);
 	}
 
+	private static HttpServletRequest _httpServletRequest;
 	private static LiferayPortletRequest _liferayPortletRequest;
 	private static LiferayPortletResponse _liferayPortletResponse;
 	private static Portal _portal;

@@ -75,12 +75,23 @@ export default function ItemSelectorRepositoryEntryBrowser({
 			}
 
 			clicablePreviewButtons.forEach((clicableItem, index) => {
-				clicableItem.addEventListener('click', (event) => {
+				const handleOpenPreview = (event) => {
 					event.preventDefault();
 					event.stopPropagation();
 
 					setItemSelectorPreviewIndex(index);
 					setItemSelectorPreviewOpen(true);
+				};
+
+				clicableItem.addEventListener('click', handleOpenPreview);
+
+				eventListeners.push({
+					dispose: () => {
+						clicableItem.removeEventListener(
+							'click',
+							handleOpenPreview
+						);
+					},
 				});
 			});
 		}

@@ -178,6 +178,10 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			JobProperty teamComponentNamesJobProperty = _getJobProperty(
 				"testray.team." + teamName + ".component.names");
 
+			if (teamComponentNamesJobProperty == null) {
+				continue;
+			}
+
 			String teamComponentNames =
 				teamComponentNamesJobProperty.getValue();
 
@@ -285,6 +289,72 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		return _axisTestClassGroup;
 	}
 
+	@Override
+	protected TestrayAttachment getTopLevelBuildReportTestrayAttachment() {
+		TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =
+			getTopLevelBuildTestrayCaseResult();
+
+		if (topLevelBuildTestrayCaseResult == null) {
+			return null;
+		}
+
+		return topLevelBuildTestrayCaseResult.
+			getTopLevelBuildReportTestrayAttachment();
+	}
+
+	protected TopLevelBuildTestrayCaseResult
+		getTopLevelBuildTestrayCaseResult() {
+
+		if (_topLevelBuildTestrayCaseResult != null) {
+			return _topLevelBuildTestrayCaseResult;
+		}
+
+		_topLevelBuildTestrayCaseResult =
+			TestrayFactory.newTopLevelBuildTestrayCaseResult(
+				getTestrayBuild(), getTopLevelBuild());
+
+		return _topLevelBuildTestrayCaseResult;
+	}
+
+	@Override
+	protected TestrayAttachment getTopLevelJenkinsConsoleTestrayAttachment() {
+		TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =
+			getTopLevelBuildTestrayCaseResult();
+
+		if (topLevelBuildTestrayCaseResult == null) {
+			return null;
+		}
+
+		return topLevelBuildTestrayCaseResult.
+			getTopLevelJenkinsConsoleTestrayAttachment();
+	}
+
+	@Override
+	protected TestrayAttachment getTopLevelJenkinsReportTestrayAttachment() {
+		TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =
+			getTopLevelBuildTestrayCaseResult();
+
+		if (topLevelBuildTestrayCaseResult == null) {
+			return null;
+		}
+
+		return topLevelBuildTestrayCaseResult.
+			getTopLevelJenkinsReportTestrayAttachment();
+	}
+
+	@Override
+	protected TestrayAttachment getTopLevelJobSummaryTestrayAttachment() {
+		TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =
+			getTopLevelBuildTestrayCaseResult();
+
+		if (topLevelBuildTestrayCaseResult == null) {
+			return null;
+		}
+
+		return topLevelBuildTestrayCaseResult.
+			getTopLevelJobSummaryTestrayAttachment();
+	}
+
 	private TestrayAttachment _getJenkinsConsoleTestrayAttachment() {
 		String name = "Jenkins Console";
 		String key = getAxisBuildURLPath() + "/jenkins-console.txt.gz";
@@ -360,5 +430,6 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 	}
 
 	private final AxisTestClassGroup _axisTestClassGroup;
+	private TopLevelBuildTestrayCaseResult _topLevelBuildTestrayCaseResult;
 
 }

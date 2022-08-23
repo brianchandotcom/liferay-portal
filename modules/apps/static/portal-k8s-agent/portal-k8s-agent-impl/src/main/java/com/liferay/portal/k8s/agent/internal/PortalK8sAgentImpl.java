@@ -122,7 +122,8 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 
 		Objects.requireNonNull(
 			configMapModelConsumer, "Config map model consumer is null");
-		Objects.requireNonNull(configMapName, "Config map name is null");
+
+		_validateConfigMapName(configMapName);
 
 		ConfigMap configMap = _kubernetesClient.configMaps(
 		).inNamespace(
@@ -182,7 +183,7 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 						binaryData, originalConfigMap.getBinaryData()) ||
 					 !Objects.equals(data, originalConfigMap.getData())) {
 
-				_validateLabels(configMapName, _getLabels(configMap));
+				_validateLabels(configMapName, labels);
 
 				configMap = _kubernetesClient.configMaps(
 				).withName(
@@ -699,8 +700,8 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 		}
 	}
 
-	private void _validateLabels(
-		String configMapName, Map<String, String> labels) {
+	private void _validateConfigMapName(String configMapName) {
+		Objects.requireNonNull(configMapName, "Config map name is null");
 
 		if (!configMapName.endsWith("-lxc-dxp-metadata") &&
 			!configMapName.endsWith("-lxc-ext-init-metadata")) {
@@ -710,6 +711,12 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 					"Config map name ", configMapName,
 					" does not follow a recognized pattern"));
 		}
+	}
+
+	private void _validateLabels(
+		String configMapName, Map<String, String> labels) {
+
+		_validateConfigMapName(configMapName);
 
 		String metadataType = labels.get("lxc.liferay.com/metadataType");
 

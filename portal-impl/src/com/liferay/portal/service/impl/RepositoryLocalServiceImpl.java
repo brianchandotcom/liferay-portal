@@ -277,8 +277,8 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		}
 
 		DLFolder dlFolder = _dlFolderLocalService.addFolder(
-			user.getUserId(), groupId, repositoryId, true, parentFolderId, name,
-			description, hidden, serviceContext);
+			null, user.getUserId(), groupId, repositoryId, true, parentFolderId,
+			name, description, hidden, serviceContext);
 
 		return dlFolder.getFolderId();
 	}

@@ -80,8 +80,9 @@ public class DLFolderServiceTest {
 		_group = GroupTestUtil.addGroup();
 
 		_parentFolder = _dlAppService.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Test Folder", RandomTestUtil.randomString(),
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test Folder",
+			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -201,7 +202,7 @@ public class DLFolderServiceTest {
 		expectedFileEntries.add(fileEntry);
 
 		Folder folder = _dlAppService.addFolder(
-			_group.getGroupId(), _parentFolder.getFolderId(),
+			null, _group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
@@ -315,8 +316,9 @@ public class DLFolderServiceTest {
 			fileEntry3.getFileEntryId(), 4);
 
 		Folder hiddenFolder = _dlAppService.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Hidden Folder", RandomTestUtil.randomString(),
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Hidden Folder",
+			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 

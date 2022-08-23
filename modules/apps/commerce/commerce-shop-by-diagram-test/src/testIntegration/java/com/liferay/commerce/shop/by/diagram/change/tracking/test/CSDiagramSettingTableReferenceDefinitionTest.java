@@ -76,8 +76,9 @@ public class CSDiagramSettingTableReferenceDefinitionTest
 			group.getGroupId());
 
 		DLFolder dlFolder = _dlFolderLocalService.addFolder(
-			TestPropsValues.getUserId(), group.getGroupId(), group.getGroupId(),
-			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			group.getGroupId(), false,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			_serviceContext);
 

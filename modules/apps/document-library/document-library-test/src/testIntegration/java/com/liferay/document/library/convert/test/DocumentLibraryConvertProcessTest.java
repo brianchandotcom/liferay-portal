@@ -163,7 +163,8 @@ public class DocumentLibraryConvertProcessTest {
 	@Test
 	public void testMigrateDLWhenFileEntryInFolder() throws Exception {
 		Folder folder = _dlAppService.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
@@ -297,7 +298,8 @@ public class DocumentLibraryConvertProcessTest {
 			TestDataConstants.TEST_BYTE_ARRAY);
 
 		Folder folder = _dlAppService.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));

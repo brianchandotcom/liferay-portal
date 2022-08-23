@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.taglib.internal.util;
+package com.liferay.layout.taglib.internal.info.search;
 
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 

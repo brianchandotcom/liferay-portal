@@ -26,6 +26,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.info.display.url.provider.InfoEditURLProviderUtil;
+import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperTrackerUtil;
 import com.liferay.layout.content.page.editor.web.internal.layout.display.page.LayoutDisplayPageProviderTrackerUtil;
 import com.liferay.layout.content.page.editor.web.internal.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;

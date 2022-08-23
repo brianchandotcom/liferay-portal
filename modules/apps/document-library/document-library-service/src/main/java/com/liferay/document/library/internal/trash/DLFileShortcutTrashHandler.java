@@ -306,21 +306,6 @@ public class DLFileShortcutTrashHandler extends BaseDLTrashHandler {
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileShortcut)",
-		unbind = "-"
-	)
-	protected void setTrashRendererFactory(
-		TrashRendererFactory trashRendererFactory) {
-
-		_trashRendererFactory = trashRendererFactory;
-	}
-
 	private DLFileShortcut _getDLFileShortcut(long classPK)
 		throws PortalException {
 
@@ -341,6 +326,7 @@ public class DLFileShortcutTrashHandler extends BaseDLTrashHandler {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileShortcutTrashHandler.class);
 
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
@@ -357,6 +343,9 @@ public class DLFileShortcutTrashHandler extends BaseDLTrashHandler {
 	)
 	private ModelResourcePermission<Folder> _folderModelResourcePermission;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileShortcut)"
+	)
 	private TrashRendererFactory _trashRendererFactory;
 
 }

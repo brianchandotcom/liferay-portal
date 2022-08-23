@@ -387,30 +387,16 @@ public class DLFolderTrashHandler extends BaseDLTrashHandler {
 			permissionChecker, dlFolder, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFileEntryLocalService(
-		DLFileEntryLocalService dlFileEntryLocalService) {
-
-		_dlFileEntryLocalService = dlFileEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFolderLocalService(
-		DLFolderLocalService dlFolderLocalService) {
-
-		_dlFolderLocalService = dlFolderLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFolderTrashHandler.class);
 
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
 
 	@Reference(

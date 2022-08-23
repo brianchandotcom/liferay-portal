@@ -218,7 +218,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 
 								<clay:dropdown-actions
 									dropdownItems="<%= kbDropdownItemsProvider.getKBFolderDropdownItems(kbFolder) %>"
-									propsTransformer="admin/js/KBFolderDropdownPropsTransformer"
+									propsTransformer="admin/js/KBDropdownPropsTransformer"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>
@@ -304,7 +304,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 
 								<clay:dropdown-actions
 									dropdownItems="<%= kbDropdownItemsProvider.getKBArticleDropdownItems(kbArticle) %>"
-									propsTransformer="admin/js/KBArticleDropdownPropsTransformer"
+									propsTransformer="admin/js/KBDropdownPropsTransformer"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:otherwise>

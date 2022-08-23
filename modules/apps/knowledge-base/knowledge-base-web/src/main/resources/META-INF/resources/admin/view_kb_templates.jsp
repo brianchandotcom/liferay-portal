@@ -123,7 +123,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 
 						<clay:dropdown-actions
 							dropdownItems="<%= kbDropdownItemsProvider.getKBTemplateDropdownItems(kbTemplate) %>"
-							propsTransformer="admin/js/KBTemplateDropdownPropsTransformer"
+							propsTransformer="admin/js/KBDropdownPropsTransformer"
 						/>
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>

@@ -74,7 +74,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 
 							<clay:dropdown-actions
 								dropdownItems="<%= kbDropdownItemsProvider.getKBFolderDropdownItems(kbFolder) %>"
-								propsTransformer="admin/js/KBFolderDropdownPropsTransformer"
+								propsTransformer="admin/js/KBDropdownPropsTransformer"
 							/>
 						</li>
 					</ul>
@@ -160,7 +160,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 
 								<clay:dropdown-actions
 									dropdownItems="<%= kbDropdownItemsProvider.getKBArticleDropdownItems(kbArticle) %>"
-									propsTransformer="admin/js/KBArticleDropdownPropsTransformer"
+									propsTransformer="admin/js/KBDropdownPropsTransformer"
 								/>
 							</li>
 						</ul>

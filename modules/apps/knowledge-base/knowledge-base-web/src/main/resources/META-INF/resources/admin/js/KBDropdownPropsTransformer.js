@@ -22,7 +22,7 @@ const ACTIONS = {
 			),
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
-					submitForm(document.hrefFm, itemData.deleteKBFolderURL);
+					submitForm(document.hrefFm, itemData.deleteURL);
 				}
 			},
 		});

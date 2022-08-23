@@ -185,7 +185,7 @@ public class KBDropdownItemsProvider {
 			dropdownItem -> {
 				dropdownItem.putData("action", "delete");
 				dropdownItem.putData(
-					"deleteKBArticleURL",
+					"deleteURL",
 					PortletURLBuilder.createActionURL(
 						_liferayPortletResponse
 					).setActionName(
@@ -251,7 +251,7 @@ public class KBDropdownItemsProvider {
 			dropdownItem -> {
 				dropdownItem.putData("action", "delete");
 				dropdownItem.putData(
-					"deleteKBFolderURL",
+					"deleteURL",
 					PortletURLBuilder.createActionURL(
 						_liferayPortletResponse
 					).setActionName(
@@ -339,7 +339,7 @@ public class KBDropdownItemsProvider {
 			dropdownItem -> {
 				dropdownItem.putData("action", "delete");
 				dropdownItem.putData(
-					"deleteKBTemplateURL",
+					"deleteURL",
 					PortletURLBuilder.createActionURL(
 						_liferayPortletResponse
 					).setActionName(

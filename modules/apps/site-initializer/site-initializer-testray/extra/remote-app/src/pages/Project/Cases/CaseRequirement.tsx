@@ -39,8 +39,6 @@ const CaseRequirement = () => {
 
 	return (
 		<Container>
-			<CaseRequirementLinkModal modal={formModal} />
-
 			<ListView
 				forceRefetch={formModal.forceRefetch}
 				managementToolbarProps={{
@@ -139,7 +137,16 @@ const CaseRequirement = () => {
 				variables={{
 					filter: searchUtil.eq('caseId', testrayCase.id),
 				}}
-			/>
+			>
+				{(response) => {
+					return (
+						<CaseRequirementLinkModal
+							items={response?.items}
+							modal={formModal}
+						/>
+					);
+				}}
+			</ListView>
 		</Container>
 	);
 };

@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,6 +33,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,6 +49,13 @@ public class DLFileEntryTypeContentDashboardItemSubtypeTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(new LanguageImpl());
+	}
 
 	@Test
 	public void testCreation() throws PortalException {
@@ -85,6 +94,77 @@ public class DLFileEntryTypeContentDashboardItemSubtypeTest {
 		Assert.assertEquals(
 			dLFileEntryType.getFileEntryTypeId(),
 			classNameClassPKInfoItemIdentifier.getClassPK());
+	}
+
+	@Test
+	public void testCreationWithBasicDocumentAndImageExtension()
+		throws PortalException {
+
+		DLFileEntryType dLFileEntryType = _getDLFileEntryType(
+			"fileEntryTypeName");
+
+		DLFileEntry dlFileEntry = Mockito.mock(DLFileEntry.class);
+
+		Mockito.when(
+			dlFileEntry.getExtension()
+		).thenReturn(
+			"pdf"
+		);
+
+		FileExtensionGroupsProvider fileExtensionGroupsProvider = Mockito.mock(
+			FileExtensionGroupsProvider.class);
+
+		Mockito.when(
+			fileExtensionGroupsProvider.getFileGroupKey("pdf")
+		).thenReturn(
+			"image"
+		);
+
+		DLFileEntryTypeContentDashboardItemSubtype
+			dLFileEntryTypeContentDashboardItemSubtype =
+				new DLFileEntryTypeContentDashboardItemSubtype(
+					dLFileEntryType, dlFileEntry, dLFileEntryType,
+					fileExtensionGroupsProvider, _getGroup("groupName"),
+					new LanguageImpl());
+
+		Assert.assertEquals(
+			"fileEntryTypeName (image) (groupName)",
+			dLFileEntryTypeContentDashboardItemSubtype.getFullLabel(
+				LocaleUtil.US));
+		Assert.assertEquals(
+			"fileEntryTypeName (image)",
+			dLFileEntryTypeContentDashboardItemSubtype.getLabel(LocaleUtil.US));
+	}
+
+	@Test
+	public void testCreationWithBasicDocumentAndOtherExtension()
+		throws PortalException {
+
+		DLFileEntryType dLFileEntryType = _getDLFileEntryType(
+			"fileEntryTypeName");
+
+		DLFileEntry dlFileEntry = Mockito.mock(DLFileEntry.class);
+
+		Mockito.when(
+			dlFileEntry.getExtension()
+		).thenReturn(
+			"unknow-extension"
+		);
+
+		DLFileEntryTypeContentDashboardItemSubtype
+			dLFileEntryTypeContentDashboardItemSubtype =
+				new DLFileEntryTypeContentDashboardItemSubtype(
+					dLFileEntryType, dlFileEntry, dLFileEntryType,
+					new FileExtensionGroupsProvider(), _getGroup("groupName"),
+					new LanguageImpl());
+
+		Assert.assertEquals(
+			"fileEntryTypeName (other) (groupName)",
+			dLFileEntryTypeContentDashboardItemSubtype.getFullLabel(
+				LocaleUtil.US));
+		Assert.assertEquals(
+			"fileEntryTypeName (other)",
+			dLFileEntryTypeContentDashboardItemSubtype.getLabel(LocaleUtil.US));
 	}
 
 	@Test

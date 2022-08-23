@@ -12,6 +12,8 @@
  * details.
  */
 
+import {CONSTANTS} from './constants';
+
 export function convertDateToString(date) {
 	const newDate = date.toISOString().substring(0, 10);
 
@@ -55,3 +57,15 @@ export const getDayOfYear = Math.floor(
 		60 /
 		24
 );
+
+export default function formatDate(date, withSlash) {
+	const newDate = date.toISOString().substring(0, 10).split('-');
+
+	if (withSlash) {
+		return `${newDate[1]}/${newDate[2]}/${newDate[0]}`;
+	}
+
+	return `${CONSTANTS.MONTHS_ABREVIATIONS[date.getMonth()]} ${newDate[2]}, ${
+		newDate[0]
+	}`;
+}

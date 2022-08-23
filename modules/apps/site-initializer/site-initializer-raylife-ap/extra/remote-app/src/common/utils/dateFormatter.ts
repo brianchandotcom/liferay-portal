@@ -14,7 +14,28 @@
 
 import {CONSTANTS} from './constants';
 
-export default function formatDate(date, withSlash = false) {
+export function convertDateToString(date: Date) {
+	return date.toISOString().substring(0, 10);
+}
+
+export const currentDate = convertDateToString(new Date());
+export const currentDateString = currentDate.split('-');
+
+export const currentDay = new Date().getDate();
+export const currentMonth = new Date().getMonth();
+export const currentYear = new Date().getFullYear();
+
+export const sixMonthsAgo = currentMonth - 5;
+export const threeMonthsAgo = currentMonth - 2;
+export const lastYear = currentYear - 1;
+
+export const january = '01';
+export const december = '12';
+
+export const arrayOfMonthsWith30Days = [3, 5, 8, 10];
+export const arrayOfMonthsWith31Days = [0, 2, 4, 6, 7, 9, 11];
+
+export default function formatDate(date: Date, withSlash = false) {
 	const newDate = date.toISOString().substring(0, 10).split('-');
 
 	if (withSlash) {

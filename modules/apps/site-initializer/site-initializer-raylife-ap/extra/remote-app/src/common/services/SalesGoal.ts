@@ -12,25 +12,19 @@
  * details.
  */
 
-export type Parameters = {
-	[key: string]: string | string[];
-};
+import {axios} from './liferay/api';
+import {Liferay} from './liferay/liferay';
 
-export function parametersFormater(
-	parametersList: string[],
-	parameters: Parameters
+const DeliveryAPI = 'o/c/raylifesalesgoals';
+const userId = Liferay.ThemeDisplay.getUserId();
+
+export function getSalesGoal(
+	limitYear: string,
+	limitMonth: string,
+	baseYear: string,
+	baseMonth: string
 ) {
-	const parametersContainer: String[] = [];
-
-	parametersList.forEach((item) => {
-		parametersContainer.push(`${item}=${parameters[item]}`);
-	});
-
-	const parametersString = '?' + parametersContainer.join('&');
-
-	return parametersString;
+	return axios.get(
+		`${DeliveryAPI}/?fields=finalReferenceDate,goalValue,initialReferenceDate,productExternalReferenceCode&pageSize=200&filter=finalReferenceDate le ${limitYear}-${limitMonth}-31 and finalReferenceDate ge ${baseYear}-${baseMonth}-01 and userId eq '${userId}'`
+	);
 }
-
-export * from './Application';
-export * from './Policy';
-export * from './SalesGoal';

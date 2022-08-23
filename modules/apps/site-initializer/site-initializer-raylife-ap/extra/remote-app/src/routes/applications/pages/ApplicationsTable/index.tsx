@@ -24,7 +24,7 @@ import {
 	deleteApplicationByExternalReferenceCode,
 	getApplications,
 } from '../../../../common/services';
-import formatDate from '../../../../common/utils/dateFormater';
+import formatDate from '../../../../common/utils/dateFormatter';
 
 const HEADERS = [
 	{

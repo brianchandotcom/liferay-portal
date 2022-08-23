@@ -12,27 +12,18 @@
  * details.
  */
 
+import {Parameters, parametersFormater} from '.';
 import {axios} from './liferay/api';
 
 const DeliveryAPI = 'o/c/raylifeapplications';
-
-type Parameters = {
-	[key: string]: string;
-};
 
 export function getApplications(parameters: Parameters = {}) {
 	const parametersList = Object.keys(parameters);
 
 	if (parametersList.length) {
-		const parametersContainer: String[] = [];
-
-		parametersList.forEach((item) => {
-			parametersContainer.push(`${item}=${parameters[item]}`);
-		});
-
-		const parametersString = '?' + parametersContainer.join('&');
-
-		return axios.get(`${DeliveryAPI}/${parametersString}`);
+		return axios.get(
+			`${DeliveryAPI}/${parametersFormater(parametersList, parameters)}`
+		);
 	}
 
 	return axios.get(`${DeliveryAPI}/`);

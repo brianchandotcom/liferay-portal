@@ -22,57 +22,125 @@ import Header from '../../../common/components/header';
 import ProductList, {
 	ProductCell,
 } from '../../../common/components/product-list';
-
-const PRODUCT_SALES_GOAL = [
-	{
-		active: false,
-		productName: 'Auto',
-		salesGoal: 102000,
-		totalSales: 120000,
-	},
-	{
-		active: false,
-		productName: 'Business Owner Policy',
-		salesGoal: 102000,
-		totalSales: 90000,
-	},
-	{
-		active: false,
-		productName: 'General Liability',
-		salesGoal: 102000,
-		totalSales: 10000,
-	},
-	{
-		active: false,
-		productName: 'Professional Liability',
-		salesGoal: 102000,
-		totalSales: 150000,
-	},
-	{
-		active: false,
-		productName: 'Workers Compensation',
-		salesGoal: 102000,
-		totalSales: 60000,
-	},
-];
+import {getPoliciesForSalesGoal, getSalesGoal} from '../../../common/services';
+import {
+	currentDateString,
+	december,
+	january,
+} from '../../../common/utils/dateFormatter';
 
 const TIME_PERIODS = ['YTD', '3 MO', '6 MO'];
+
+type Policy = {
+	boundDate: string;
+	productExternalReferenceCode: string;
+	productName: string;
+	termPremium: number;
+};
+
+type ProductListType = {
+	[keys: string]: ProductType;
+};
+
+type ProductType = {
+	goalValue: number;
+	productName: string;
+	totalSales: number;
+};
+
+type SalesGoal = {
+	finalReferenceDate?: string;
+	goalValue: number;
+	initialReferenceDate?: string;
+	productExternalReferenceCode: string;
+};
 
 const ProductPerformance = () => {
 	const [products, setProducts] = useState<ProductCell[]>([]);
 	const [timePeriod, setTimePeriod] = useState(TIME_PERIODS[0]);
 
+	const productsBaseSetup = async () => {
+		const yearlyPolicies = await getPoliciesForSalesGoal(
+			currentDateString[0],
+			currentDateString[1],
+			currentDateString[0],
+			january
+		);
+
+		const yearlySalesGoal = await getSalesGoal(
+			currentDateString[0],
+			december,
+			currentDateString[0],
+			january
+		);
+
+		const newProductList: ProductCell[] = [];
+		const yearlyProductsTotal: ProductListType = {};
+
+		yearlyPolicies?.data?.items?.forEach(
+			({
+				productExternalReferenceCode,
+				productName,
+				termPremium,
+			}: Policy) => {
+				if (!yearlyProductsTotal[productExternalReferenceCode]) {
+					yearlyProductsTotal[productExternalReferenceCode] = {
+						goalValue: 0,
+						productName,
+						totalSales: termPremium,
+					};
+
+					return;
+				}
+
+				yearlyProductsTotal[productExternalReferenceCode][
+					'totalSales'
+				] += termPremium;
+			}
+		);
+
+		yearlySalesGoal?.data?.items?.forEach(
+			({goalValue, productExternalReferenceCode}: SalesGoal) => {
+				yearlyProductsTotal[productExternalReferenceCode][
+					'goalValue'
+				] += goalValue;
+			}
+		);
+
+		Object.keys(yearlyProductsTotal).forEach(
+			(productExternalReferenceCode: string) => {
+				newProductList.push({
+					active: false,
+					goalValue:
+						yearlyProductsTotal[productExternalReferenceCode][
+							'goalValue'
+						],
+					productExternalReferenceCode,
+					productName:
+						yearlyProductsTotal[productExternalReferenceCode][
+							'productName'
+						],
+					totalSales:
+						yearlyProductsTotal[productExternalReferenceCode][
+							'totalSales'
+						],
+				});
+			}
+		);
+
+		setProducts(newProductList);
+	};
+
 	useEffect(() => {
-		setProducts(PRODUCT_SALES_GOAL);
+		productsBaseSetup();
 	}, []);
 
-	const isFilterAllActive = (product: ProductCell) => !product.active;
-	const findActiveProduct = products.find((product) => product.active)
-		?.productName;
-
-	const handleProductFilterToggle = (productName: string) => {
+	const handleProductFilterToggle = (
+		productExternalReferenceCode: string
+	) => {
 		const newProducts = products.map((product) => {
-			product.productName === productName
+			product.productExternalReferenceCode ===
+			productExternalReferenceCode
 				? (product.active = true)
 				: (product.active = false);
 
@@ -81,6 +149,11 @@ const ProductPerformance = () => {
 
 		setProducts(newProducts);
 	};
+
+	const isFilterAllActive = (product: ProductCell) => !product.active;
+
+	const findActiveProduct = products.find((product) => product.active)
+		?.productName;
 
 	return (
 		<div className="d-flex flex-wrap ray-dashboard-product-performance">

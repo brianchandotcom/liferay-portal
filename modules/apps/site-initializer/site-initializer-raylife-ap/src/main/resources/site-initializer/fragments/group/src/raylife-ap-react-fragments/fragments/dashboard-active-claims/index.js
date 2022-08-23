@@ -16,10 +16,10 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
-import formatDate from '../../../../../../../../../../extra/remote-app/src/common/utils/dateFormater';
 import BarChart from '../../../common/components/bar-chart';
 import Table from '../../../common/components/table';
 import ClayIconProvider from '../../../common/context/ClayIconProvider';
+import formatDate from '../../../common/utils/dateFormatter';
 import {redirectTo} from '../../../common/utils/liferay';
 
 export default function () {

@@ -33,6 +33,11 @@ definition {
 		AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
 	}
 
+	macro assertDropdownItemIsDisabled{
+		var key_dropdownItem = "${dropdownItem}";
+		AssertElementPresent(locator1 = "CP2ActivationKeys#DISABLED_DROPDOWN_ITEM_BUTTON");
+	}
+
 	macro clickAtDropdownItem {
 		var key_dropdownItem = "${dropdownItem}";
 		Click(locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");

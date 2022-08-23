@@ -115,10 +115,11 @@ export default function EditObjectField({
 		onSubmit,
 	});
 
-	const disabled = !!(
-		readOnly ||
+	const disableLabel = !!(readOnly || values.relationshipType);
+
+	const disableFieldFormBase = !!(
+		disableLabel ||
 		isApproved ||
-		values.relationshipType ||
 		values.system
 	);
 
@@ -456,21 +457,13 @@ export default function EditObjectField({
 		<SidePanelForm
 			className="lfr-objects__edit-object-field"
 			onSubmit={handleSubmit}
-			readOnly={
-				values.system && objectName !== 'AccountEntry'
-					? disabled
-					: readOnly
-			}
+			readOnly={disableLabel}
 			title={Liferay.Language.get('field')}
 		>
 			<Card title={Liferay.Language.get('basic-info')}>
 				<InputLocalized
-					disableFlag={values.system && objectName !== 'AccountEntry'}
-					disabled={
-						values.system && objectName !== 'AccountEntry'
-							? disabled
-							: readOnly
-					}
+					disableFlag={disableLabel}
+					disabled={disableLabel}
 					error={errors.label}
 					label={Liferay.Language.get('label')}
 					onChange={(label) => setValues({label})}
@@ -479,7 +472,7 @@ export default function EditObjectField({
 				/>
 
 				<ObjectFieldFormBase
-					disabled={disabled}
+					disabled={disableFieldFormBase}
 					editingField
 					errors={errors}
 					handleChange={handleChange}
@@ -504,13 +497,8 @@ export default function EditObjectField({
 					{(values.businessType === 'Text' ||
 						values.businessType === 'LongText') && (
 						<MaxLengthProperties
-							disabled={
-								values.system && objectName !== 'AccountEntry'
-									? disabled
-									: readOnly
-							}
+							disabled={disableFieldFormBase}
 							errors={errors}
-							isSystemObjectField={!!values.system}
 							objectField={values}
 							objectFieldSettings={
 								values.objectFieldSettings as ObjectFieldSetting[]
@@ -576,7 +564,7 @@ export default function EditObjectField({
 
 			{values.DBType !== 'Blob' && (
 				<SearchableContainer
-					disabled={disabled}
+					disabled={disableFieldFormBase}
 					errors={errors}
 					isApproved={isApproved}
 					objectField={values}
@@ -696,7 +684,6 @@ function SearchableContainer({
 function MaxLengthProperties({
 	disabled,
 	errors,
-	isSystemObjectField,
 	objectField,
 	objectFieldSettings,
 	onSettingsChange,
@@ -730,7 +717,7 @@ function MaxLengthProperties({
 		<>
 			<ClayForm.Group>
 				<Toggle
-					disabled={isSystemObjectField ?? disabled}
+					disabled={disabled}
 					label={Liferay.Language.get('limit-characters')}
 					name="showCounter"
 					onToggle={(value) => {
@@ -756,6 +743,7 @@ function MaxLengthProperties({
 			<ClayForm.Group>
 				{settings.showCounter && (
 					<Input
+						disabled={disabled}
 						error={errors.maxLength}
 						feedbackMessage={sub(
 							Liferay.Language.get(
@@ -878,7 +866,6 @@ interface IAttachmentPropertiesProps {
 interface IMaxLengthPropertiesProps {
 	disabled: boolean;
 	errors: ObjectFieldErrors;
-	isSystemObjectField: boolean;
 	objectField: Partial<ObjectField>;
 	objectFieldSettings: ObjectFieldSetting[];
 	onSettingsChange: (setting: ObjectFieldSetting) => void;
@@ -901,7 +888,7 @@ interface IProps {
 }
 
 interface ISearchableProps {
-	disabled: boolean;
+	disabled?: boolean;
 	errors: ObjectFieldErrors;
 	isApproved: boolean;
 	objectField: Partial<ObjectField>;

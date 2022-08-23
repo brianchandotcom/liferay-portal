@@ -203,6 +203,14 @@ definition {
 			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_SITE",
 			value1 = "${changeSite}");
 
+		if (isSet(changeStatus)) {
+			var key_changeStatus = "${changeStatus}";
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_STATUS",
+				value1 = "${changeStatus}");
+		}
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
 			value1 = "${changeTitle}");

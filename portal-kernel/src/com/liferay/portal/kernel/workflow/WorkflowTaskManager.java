@@ -49,7 +49,7 @@ public interface WorkflowTaskManager {
 			long companyId, long userId, long workflowTaskId,
 			long assigneeUserId, String comment, Date dueDate,
 			Map<String, Serializable> workflowContext)
-		throws WorkflowException;
+		throws PortalException;
 
 	public WorkflowTask completeWorkflowTask(
 			long companyId, long userId, long workflowTaskId,

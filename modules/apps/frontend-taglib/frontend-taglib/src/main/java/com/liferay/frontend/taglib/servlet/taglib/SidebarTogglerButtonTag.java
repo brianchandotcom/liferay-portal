@@ -83,8 +83,8 @@ public class SidebarTogglerButtonTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
-		setNamespacedAttribute(httpServletRequest, "position", _cssClass);
-		setNamespacedAttribute(httpServletRequest, "sidenavId", _icon);
+		setNamespacedAttribute(httpServletRequest, "cssClass", _cssClass);
+		setNamespacedAttribute(httpServletRequest, "icon", _icon);
 		setNamespacedAttribute(httpServletRequest, "label", _label);
 		setNamespacedAttribute(httpServletRequest, "sidenavId", _sidenavId);
 		setNamespacedAttribute(httpServletRequest, "typeMobile", _typeMobile);

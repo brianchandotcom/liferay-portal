@@ -50,8 +50,9 @@ public class DLFileShortcutUADTestUtil {
 			ServiceContextTestUtil.getServiceContext();
 
 		DLFolder dlFolder = dlFolderLocalService.addFolder(
-			userId, groupId, groupId, false, 0L, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), false, serviceContext);
+			null, userId, groupId, groupId, false, 0L,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			serviceContext);
 
 		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
 

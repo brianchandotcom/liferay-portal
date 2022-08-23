@@ -73,8 +73,9 @@ public abstract class BaseDLAppTestCase {
 		}
 
 		parentFolder = _dlAppService.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Test Folder", RandomTestUtil.randomString(),
+			null, group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test Folder",
+			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 

@@ -60,15 +60,17 @@ public class DLFolderTableReferenceDefinitionTest
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		DLFolder parentFolder = _dlFolderLocalService.addFolder(
-			group.getCreatorUserId(), group.getGroupId(), group.getGroupId(),
-			false, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, group.getCreatorUserId(), group.getGroupId(),
+			group.getGroupId(), false,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			serviceContext);
 
 		DLFolder childFolder = _dlFolderLocalService.addFolder(
-			group.getCreatorUserId(), group.getGroupId(), group.getGroupId(),
-			false, parentFolder.getFolderId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), false, serviceContext);
+			null, group.getCreatorUserId(), group.getGroupId(),
+			group.getGroupId(), false, parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			serviceContext);
 
 		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
 

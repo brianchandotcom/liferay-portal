@@ -231,7 +231,7 @@ public class FileEntryAnalyticsReportsInfoItemTest {
 				TestPropsValues.getGroupId());
 
 		Folder folder = _dlAppLocalService.addFolder(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);

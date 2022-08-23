@@ -23,7 +23,10 @@ import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceEntryTable;
 import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
 import com.liferay.commerce.price.list.service.base.CommercePriceEntryLocalServiceBaseImpl;
+import com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -35,6 +38,7 @@ import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -55,6 +59,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -241,7 +246,7 @@ public class CommercePriceEntryLocalServiceImpl
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
@@ -578,7 +583,7 @@ public class CommercePriceEntryLocalServiceImpl
 
 		// Commerce tier price entries
 
-		commerceTierPriceEntryLocalService.deleteCommerceTierPriceEntries(
+		_commerceTierPriceEntryLocalService.deleteCommerceTierPriceEntries(
 			commercePriceEntry.getCommercePriceEntryId());
 
 		// Commerce price entry
@@ -706,7 +711,7 @@ public class CommercePriceEntryLocalServiceImpl
 		}
 
 		CommercePriceList commercePriceList =
-			commercePriceListLocalService.fetchCommercePriceList(
+			_commercePriceListLocalService.fetchCommercePriceList(
 				commercePriceListId);
 
 		if ((commercePriceList == null) ||
@@ -783,7 +788,7 @@ public class CommercePriceEntryLocalServiceImpl
 	public CommercePriceEntry getInstanceBaseCommercePriceEntry(
 		String cpInstanceUuid, String priceListType) {
 
-		return commercePriceListFinder.findBasePriceEntry(
+		return _commercePriceListFinder.findBasePriceEntry(
 			cpInstanceUuid, priceListType);
 	}
 
@@ -830,7 +835,7 @@ public class CommercePriceEntryLocalServiceImpl
 	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
 		String cpInstanceUuid, int start, int end) {
 
-		return commercePriceListFinder.findByCPInstanceUuid(
+		return _commercePriceListFinder.findByCPInstanceUuid(
 			cpInstanceUuid, start, end);
 	}
 
@@ -863,7 +868,7 @@ public class CommercePriceEntryLocalServiceImpl
 
 	@Override
 	public int getInstanceCommercePriceEntriesCount(String cpInstanceUuid) {
-		return commercePriceListFinder.countByCPInstanceUuid(cpInstanceUuid);
+		return _commercePriceListFinder.countByCPInstanceUuid(cpInstanceUuid);
 	}
 
 	@Override
@@ -950,7 +955,7 @@ public class CommercePriceEntryLocalServiceImpl
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		CommercePriceEntry commercePriceEntry =
 			commercePriceEntryPersistence.findByPrimaryKey(
@@ -1104,7 +1109,7 @@ public class CommercePriceEntryLocalServiceImpl
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 		Date date = new Date();
 
 		CommercePriceEntry commercePriceEntry =
@@ -1514,6 +1519,16 @@ public class CommercePriceEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePriceEntryLocalServiceImpl.class);
 
+	@BeanReference(type = CommercePriceListFinder.class)
+	private CommercePriceListFinder _commercePriceListFinder;
+
+	@BeanReference(type = CommercePriceListLocalService.class)
+	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@BeanReference(type = CommerceTierPriceEntryLocalService.class)
+	private CommerceTierPriceEntryLocalService
+		_commerceTierPriceEntryLocalService;
+
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
@@ -1522,5 +1537,8 @@ public class CommercePriceEntryLocalServiceImpl
 
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

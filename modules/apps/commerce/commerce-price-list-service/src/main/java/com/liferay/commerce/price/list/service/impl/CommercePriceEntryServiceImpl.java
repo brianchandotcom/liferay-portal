@@ -17,8 +17,10 @@ package com.liferay.commerce.price.list.service.impl;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.base.CommercePriceEntryServiceBaseImpl;
+import com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
@@ -314,7 +316,7 @@ public class CommercePriceEntryServiceImpl
 	public CommercePriceEntry getInstanceBaseCommercePriceEntry(
 		String cpInstanceUuid, String priceListType) {
 
-		return commercePriceListFinder.findBasePriceEntry(
+		return _commercePriceListFinder.findBasePriceEntry(
 			cpInstanceUuid, priceListType, true);
 	}
 
@@ -330,7 +332,7 @@ public class CommercePriceEntryServiceImpl
 			return Collections.emptyList();
 		}
 
-		return commercePriceListFinder.findByCPInstanceUuid(
+		return _commercePriceListFinder.findByCPInstanceUuid(
 			cpInstance.getCPInstanceUuid(), start, end, true);
 	}
 
@@ -358,7 +360,7 @@ public class CommercePriceEntryServiceImpl
 			return 0;
 		}
 
-		return commercePriceListFinder.countByCPInstanceUuid(
+		return _commercePriceListFinder.countByCPInstanceUuid(
 			cpInstance.getCPInstanceUuid(), true);
 	}
 
@@ -572,6 +574,9 @@ public class CommercePriceEntryServiceImpl
 				CommercePriceEntryServiceImpl.class,
 				"_commercePriceListModelResourcePermission",
 				CommercePriceList.class);
+
+	@BeanReference(type = CommercePriceListFinder.class)
+	private CommercePriceListFinder _commercePriceListFinder;
 
 	@ServiceReference(type = CPInstanceService.class)
 	private CPInstanceService _cpInstanceService;

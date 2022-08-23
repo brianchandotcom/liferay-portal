@@ -17,7 +17,9 @@ package com.liferay.commerce.price.list.service.impl;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.base.CommerceTierPriceEntryServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
@@ -58,7 +60,7 @@ public class CommerceTierPriceEntryServiceImpl
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryLocalService.getCommercePriceEntry(
+			_commercePriceEntryLocalService.getCommercePriceEntry(
 				commercePriceEntryId);
 
 		if (commercePriceEntry != null) {
@@ -87,7 +89,7 @@ public class CommerceTierPriceEntryServiceImpl
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryLocalService.getCommercePriceEntry(
+			_commercePriceEntryLocalService.getCommercePriceEntry(
 				commercePriceEntryId);
 
 		_commercePriceListModelResourcePermission.check(
@@ -113,14 +115,14 @@ public class CommerceTierPriceEntryServiceImpl
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryLocalService.fetchCommercePriceEntry(
+			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceEntryId);
 
 		if ((commercePriceEntry == null) &&
 			Validator.isNotNull(priceEntryExternalReferenceCode)) {
 
 			commercePriceEntry =
-				commercePriceEntryLocalService.
+				_commercePriceEntryLocalService.
 					fetchCommercePriceEntryByReferenceCode(
 						serviceContext.getCompanyId(),
 						priceEntryExternalReferenceCode);
@@ -155,14 +157,14 @@ public class CommerceTierPriceEntryServiceImpl
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryLocalService.fetchCommercePriceEntry(
+			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceEntryId);
 
 		if ((commercePriceEntry == null) &&
 			Validator.isNotNull(priceEntryExternalReferenceCode)) {
 
 			commercePriceEntry =
-				commercePriceEntryLocalService.
+				_commercePriceEntryLocalService.
 					fetchCommercePriceEntryByReferenceCode(
 						serviceContext.getCompanyId(),
 						priceEntryExternalReferenceCode);
@@ -265,7 +267,7 @@ public class CommerceTierPriceEntryServiceImpl
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryLocalService.getCommercePriceEntry(
+			_commercePriceEntryLocalService.getCommercePriceEntry(
 				commercePriceEntryId);
 
 		_commercePriceListModelResourcePermission.check(
@@ -283,7 +285,7 @@ public class CommerceTierPriceEntryServiceImpl
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryLocalService.getCommercePriceEntry(
+			_commercePriceEntryLocalService.getCommercePriceEntry(
 				commercePriceEntryId);
 
 		_commercePriceListModelResourcePermission.check(
@@ -299,7 +301,7 @@ public class CommerceTierPriceEntryServiceImpl
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryLocalService.getCommercePriceEntry(
+			_commercePriceEntryLocalService.getCommercePriceEntry(
 				commercePriceEntryId);
 
 		_commercePriceListModelResourcePermission.check(
@@ -348,7 +350,7 @@ public class CommerceTierPriceEntryServiceImpl
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryLocalService.fetchCommercePriceEntry(
+			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceEntryId);
 
 		if (commercePriceEntry != null) {
@@ -368,7 +370,7 @@ public class CommerceTierPriceEntryServiceImpl
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryLocalService.getCommercePriceEntry(
+			_commercePriceEntryLocalService.getCommercePriceEntry(
 				commercePriceEntryId);
 
 		if (commercePriceEntry != null) {
@@ -377,7 +379,7 @@ public class CommerceTierPriceEntryServiceImpl
 				commercePriceEntry.getCommercePriceListId(), ActionKeys.UPDATE);
 		}
 
-		return commercePriceEntryLocalService.searchCommercePriceEntriesCount(
+		return _commercePriceEntryLocalService.searchCommercePriceEntriesCount(
 			companyId, commercePriceEntryId, keywords);
 	}
 
@@ -460,5 +462,8 @@ public class CommerceTierPriceEntryServiceImpl
 				CommerceTierPriceEntryServiceImpl.class,
 				"_commercePriceListModelResourcePermission",
 				CommercePriceList.class);
+
+	@BeanReference(type = CommercePriceEntryLocalService.class)
+	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
 
 }

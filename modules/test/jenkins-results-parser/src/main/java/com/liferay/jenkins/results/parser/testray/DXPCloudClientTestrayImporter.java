@@ -154,6 +154,72 @@ public class DXPCloudClientTestrayImporter {
 		return varValue;
 	}
 
+	private static Element _getOutputLogAttachmentElement() {
+		File xmlFile = new File(
+			_projectDir,
+			"test-results/TEST-com.liferay.poshi.runner.PoshiRunner.xml");
+
+		if (!xmlFile.exists()) {
+			return null;
+		}
+
+		File gzipFile = new File(_projectDir, "test-results/system-out.txt.gz");
+
+		String key = JenkinsResultsParserUtil.combine(
+			_getRelativeURLPath(), "/", gzipFile.getName());
+
+		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+
+		if (!gzipFile.exists()) {
+			try {
+				String content = JenkinsResultsParserUtil.read(xmlFile);
+
+				if (JenkinsResultsParserUtil.isNullOrEmpty(content)) {
+					return null;
+				}
+
+				String openTag = "<system-out><![CDATA[";
+
+				int x = content.indexOf(openTag);
+
+				int y = content.indexOf("]]></system-out>", x);
+
+				if ((x == -1) || (y == -1)) {
+					return null;
+				}
+
+				String systemOut = content.substring(x + openTag.length(), y);
+
+				systemOut = systemOut.trim();
+
+				if (JenkinsResultsParserUtil.isNullOrEmpty(systemOut)) {
+					return null;
+				}
+
+				File file = new File(
+					_projectDir, "test-results/system-out.txt");
+
+				JenkinsResultsParserUtil.write(file, systemOut);
+
+				JenkinsResultsParserUtil.gzip(file, gzipFile);
+
+				testrayS3Bucket.createTestrayS3Object(key, gzipFile);
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
+		Element attachmentElement = Dom4JUtil.getNewElement("attachment");
+
+		attachmentElement.addAttribute("name", "Output Log");
+		attachmentElement.addAttribute(
+			"url", testrayS3Bucket.getTestrayS3BaseURL() + key + "?authuser=0");
+		attachmentElement.addAttribute("value", key + "?authuser=0");
+
+		return attachmentElement;
+	}
+
 	private static Element _getPropertiesElement(Properties properties) {
 		Element element = Dom4JUtil.getNewElement("properties");
 
@@ -270,6 +336,12 @@ public class DXPCloudClientTestrayImporter {
 					_testrayServerURL, "/reports/", _testrayReleaseName,
 					"/logs/", key, "?authuser=0"));
 			attachmentElement.addAttribute("value", key + "?authuser=0");
+		}
+
+		Element outputLogAttachmentElement = _getOutputLogAttachmentElement();
+
+		if (outputLogAttachmentElement != null) {
+			attachmentsElement.add(outputLogAttachmentElement);
 		}
 
 		return attachmentsElement;

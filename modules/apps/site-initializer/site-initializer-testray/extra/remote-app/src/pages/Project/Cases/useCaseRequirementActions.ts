@@ -21,6 +21,7 @@ import {
 	TestrayCase,
 	TestrayRequirementCase,
 	createRequirementCaseBatch,
+	deleteRequirementCaseBatch,
 	deleteResource,
 } from '../../../services/rest';
 import {Action} from '../../../types';
@@ -31,21 +32,33 @@ const useCaseRequirementActions = (testrayCase: TestrayCase) => {
 	const {removeItemFromList} = useMutate();
 
 	const {forceRefetch: modalForceRefetch, modal} = useFormModal({
-		onSave: (requirements: State) => {
-			if (requirements.length) {
-				createRequirementCaseBatch(
-					requirements.map((requirementId) => ({
+		onSave: ({items, state}: {items: number; state: State}) => {
+			if (state?.length) {
+				return createRequirementCaseBatch(
+					state.map((requirementId) => ({
 						caseId: testrayCase.id,
 						requirementId,
 					}))
 				)
 					.then(() => {
-						setTimeout(() => {
-							setForceRefetch(new Date().getTime());
-						}, 1000);
+						deleteRequirementCaseBatch(items)
+							.then(() => {
+								setTimeout(() => {
+									setForceRefetch(new Date().getTime());
+								}, 100);
+							})
+							.catch(console.error);
 					})
 					.catch(console.error);
 			}
+
+			return deleteRequirementCaseBatch(items)
+				.then(() => {
+					setTimeout(() => {
+						setForceRefetch(new Date().getTime());
+					}, 100);
+				})
+				.catch(console.error);
 		},
 	});
 

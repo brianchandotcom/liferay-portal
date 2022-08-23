@@ -24,6 +24,8 @@ definition {
 		Click(locator1 = "ACTests#AB_TEST_NAME");
 
 		Button.click(button = "Terminate Test");
+
+		Button.click(button = "Stop Test");
 	}
 
 }

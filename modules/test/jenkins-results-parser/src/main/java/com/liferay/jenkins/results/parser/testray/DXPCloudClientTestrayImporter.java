@@ -57,7 +57,9 @@ public class DXPCloudClientTestrayImporter {
 				_getTestCasePropertiesElement(testCaseResultElement));
 		}
 
-		if (!TestrayS3Bucket.googleCredentialsAvailable()) {
+		TestrayBuild testrayBuild = _getTestrayBuild();
+
+		if (_testrayServerURL.contains("testray.liferay.com")) {
 			JenkinsResultsParserUtil.HTTPAuthorization httpAuthorization = null;
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(_testrayUserName) &&
@@ -77,45 +79,47 @@ public class DXPCloudClientTestrayImporter {
 					URLEncoder.encode(Dom4JUtil.format(rootElement), "UTF-8"),
 					"&type=poshi"),
 				httpAuthorization);
-
-			TestrayBuild testrayBuild = _getTestrayBuild();
-
-			System.out.println("Imported results to " + testrayBuild.getURL());
-
-			return;
 		}
+		else {
+			File testrayResultsDir = new File("testray-results");
 
-		TestrayBuild testrayBuild = _getTestrayBuild();
+			File resultsTarGzFile = new File(
+				JenkinsResultsParserUtil.combine(
+					String.valueOf(
+						JenkinsResultsParserUtil.getCurrentTimeMillis()),
+					"-", String.valueOf(testrayBuild.getID()),
+					"-results.tar.gz"));
 
-		File testrayResultsDir = new File("testray-results");
+			try {
+				JenkinsResultsParserUtil.delete(testrayResultsDir);
 
-		JenkinsResultsParserUtil.delete(testrayResultsDir);
+				testrayResultsDir.mkdirs();
 
-		testrayResultsDir.mkdirs();
+				File resultsFile = new File(
+					testrayResultsDir,
+					JenkinsResultsParserUtil.combine(
+						"TESTS-dxp-cloud-client-",
+						String.valueOf(testrayBuild.getID()), ".xml"));
 
-		File resultsFile = new File(
-			testrayResultsDir,
-			JenkinsResultsParserUtil.combine(
-				"TESTS-dxp-cloud-client-", String.valueOf(testrayBuild.getID()),
-				".xml"));
+				JenkinsResultsParserUtil.write(
+					resultsFile, Dom4JUtil.format(rootElement));
 
-		JenkinsResultsParserUtil.write(
-			resultsFile, Dom4JUtil.format(rootElement));
+				JenkinsResultsParserUtil.tarGzip(
+					testrayResultsDir, resultsTarGzFile);
 
-		File resultsTarGzFile = new File(
-			JenkinsResultsParserUtil.combine(
-				String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis()),
-				"-", String.valueOf(testrayBuild.getID()), "-results.tar.gz"));
+				TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 
-		JenkinsResultsParserUtil.tarGzip(testrayResultsDir, resultsTarGzFile);
-
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
-
-		testrayS3Bucket.createTestrayS3Object(
-			"inbox/" + resultsTarGzFile.getName(), resultsTarGzFile);
-
-		JenkinsResultsParserUtil.delete(testrayResultsDir);
-		JenkinsResultsParserUtil.delete(resultsTarGzFile);
+				testrayS3Bucket.createTestrayS3Object(
+					"inbox/" + resultsTarGzFile.getName(), resultsTarGzFile);
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+			finally {
+				JenkinsResultsParserUtil.delete(testrayResultsDir);
+				JenkinsResultsParserUtil.delete(resultsTarGzFile);
+			}
+		}
 
 		System.out.println("Imported results to " + testrayBuild.getURL());
 	}
@@ -180,7 +184,7 @@ public class DXPCloudClientTestrayImporter {
 		TestrayBuild testrayBuild = _getTestrayBuild();
 
 		_relativeURLPath = JenkinsResultsParserUtil.combine(
-			_localDate.format(DateTimeFormatter.ofPattern("yyyy-MM")),
+			"gcp/", _localDate.format(DateTimeFormatter.ofPattern("yyyy-MM")),
 			"/dxp-cloud/", String.valueOf(testrayBuild.getID()));
 
 		return _relativeURLPath;

@@ -20,10 +20,10 @@ import SingleFileUploader from '../../item_selector_uploader/js/SingleFileUpload
 
 export default function ItemSelectorRepositoryEntryBrowser({
 	closeCaption,
-	eventName: itemSelectedEventName,
+	itemSelectedEventName,
 	portletNamespace,
 	rootNode,
-	uploadEnabled = true,
+	uploaderEnabled = true,
 	...uploaderProps
 }) {
 	const [itemSelectorPreviewOpen, setItemSelectorPreviewOpen] = useState(
@@ -104,7 +104,7 @@ export default function ItemSelectorRepositoryEntryBrowser({
 
 	return (
 		<>
-			{uploadEnabled && (
+			{uploaderEnabled && (
 				<SingleFileUploader
 					closeCaption={closeCaption}
 					itemSelectedEventName={itemSelectedEventName}

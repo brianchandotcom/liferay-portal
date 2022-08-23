@@ -142,8 +142,6 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 								return null;
 							}
 						).put(
-							"eventName", itemSelectedEventName
-						).put(
 							"itemSelectedEventName", itemSelectedEventName
 						).put(
 							"maxFileSize", maxFileSize
@@ -152,7 +150,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 						).put(
 							"rootNode", "#" + randomNamespace + "ItemSelectorContainer"
 						).put(
-							"uploadEnabled", showDragAndDropZone && !showSearchInfo
+							"uploaderEnabled", showDragAndDropZone && !showSearchInfo
 						).put(
 							"uploadItemReturnType", HtmlUtil.escapeAttribute(returnType)
 						).put(

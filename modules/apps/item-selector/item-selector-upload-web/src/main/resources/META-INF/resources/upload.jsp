@@ -55,7 +55,7 @@ if (Validator.isNotNull(namespace)) {
 						).put(
 							"editImageURL", uploadURL
 						).put(
-							"eventName", itemSelectorUploadViewDisplayContext.getItemSelectedEventName()
+							"itemSelectedEventName", itemSelectorUploadViewDisplayContext.getItemSelectedEventName()
 						).put(
 							"maxFileSize", itemSelectorUploadViewDisplayContext.getMaxFileSize()
 						).put(

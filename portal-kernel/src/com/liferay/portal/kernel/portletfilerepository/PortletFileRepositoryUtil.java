@@ -60,17 +60,6 @@ public class PortletFileRepositoryUtil {
 	}
 
 	public static FileEntry addPortletFileEntry(
-			long groupId, long userId, String className, long classPK,
-			String portletId, long folderId, InputStream inputStream,
-			String fileName, String mimeType, boolean indexingEnabled)
-		throws PortalException {
-
-		return _portletFileRepository.addPortletFileEntry(
-			groupId, userId, className, classPK, portletId, folderId,
-			inputStream, fileName, mimeType, indexingEnabled);
-	}
-
-	public static FileEntry addPortletFileEntry(
 			String externalReferenceCode, long groupId, long userId,
 			String className, long classPK, String portletId, long folderId,
 			File file, String fileName, String mimeType,

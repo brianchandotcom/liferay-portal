@@ -102,6 +102,38 @@ definition {
 		}
 	}
 
+	@description = "LPS-148086 - Verify that a Virtual activation key's details pop up will have a section for Cluster Nodes"
+	@priority = "4"
+	test IfClusterNodesIsOnServerColumn {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("When a user selects a project and an individual key with a Virtual Cluster key type") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Liferay");
+		}
+
+		task ("Then the modal will show 'Cluster Nodes' on the Server group") {
+			CP2ActivationKeys.assertKeyDetailsServerElements(
+				keyType = "Virtual Cluster",
+				clusterNodes = "1");
+		}
+	}
+
 	@description = "LPS-148083 - Verify that an activation key's details pop up has all necessary information of the Environment group."
 	@priority = "5"
 	test IfEnvironmentElementsArePresent {
@@ -137,7 +169,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-148084 - Verify that an activation key's details pop up has all necessary information of the Server group."
+	@description = "LPS-148084 - Verify that an On-Premise activation key's details pop up has all necessary information of the Server group."
 	@priority = "4"
 	test IfServerElementsArePresent {
 		property portal.upstream = "quarantine";
@@ -152,7 +184,7 @@ definition {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
-		task ("When a user selects a project and an individual key") {
+		task ("When a user selects a project and an individual key with an On-Premise key type") {
 			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
 
 			CP2NavigationMenu.goToProductActivation();
@@ -162,7 +194,7 @@ definition {
 			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
 		}
 
-		task ("Then the modal will show all elements of the Server group") {
+		task ("Then the modal will show the 'Host Name', 'IP Addressess', and 'MAC Addressess' on the Server group") {
 			CP2ActivationKeys.assertKeyDetailsServerElements(
 				keyType = "On-Premise",
 				hostName = "Redacted",

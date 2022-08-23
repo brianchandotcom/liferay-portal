@@ -168,13 +168,6 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinitionPersistence.fetchByC_N(
 				companyId, systemObjectDefinitionMetadata.getName());
 
-		if ((objectDefinition != null) &&
-			(objectDefinition.getVersion() ==
-				systemObjectDefinitionMetadata.getVersion())) {
-
-			return objectDefinition;
-		}
-
 		long userId = _userLocalService.getDefaultUserId(companyId);
 
 		if (objectDefinition == null) {

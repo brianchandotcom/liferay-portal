@@ -191,8 +191,18 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 
 		try {
 			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.addOrUpdateSystemObjectDefinition(
-					companyId, systemObjectDefinitionMetadata);
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					companyId, systemObjectDefinitionMetadata.getName());
+
+			if ((objectDefinition == null) ||
+				(objectDefinition.getVersion() !=
+					systemObjectDefinitionMetadata.getVersion())) {
+
+				objectDefinition =
+					_objectDefinitionLocalService.
+						addOrUpdateSystemObjectDefinition(
+							companyId, systemObjectDefinitionMetadata);
+			}
 
 			_bundleContext.registerService(
 				ItemSelectorView.class,

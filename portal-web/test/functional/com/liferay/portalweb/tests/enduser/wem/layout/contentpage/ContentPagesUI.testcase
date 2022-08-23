@@ -70,6 +70,57 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-146373. The page creator should be redirected to the previous page when clicking the back button in the page editor."
+	@priority = "4"
+	test RedirectToPreviousPageWhenClickBackInPageEditor {
+		property custom.properties = "feature.flag.LPS-153452=true";
+
+		task ("Given a page creator adds a content page via the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Content Page Name");
+		}
+
+		task ("When the page creator clicks the back button in page editor") {
+			PageEditor.clickBack();
+		}
+
+		task ("Then the page creator should be redirected to the Pages admin") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Pages");
+		}
+
+		task ("Given the page creator accesses to page editor via view mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			ContentPages.gotoPageEditor();
+		}
+
+		task ("When the page creator clicks the back button in page editor") {
+			PageEditor.clickBack();
+		}
+
+		task ("Then the page creator should be redirected to the content page at view mode") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+
+			AssertVisible(locator1 = "Icon#EDIT_PENCIL");
+		}
+	}
+
 	@description = "This is a test for LPS-136412. View collapse style changes in fragment configuration."
 	@priority = "5"
 	test ViewCollapseStyleInFragmentConfiguration {

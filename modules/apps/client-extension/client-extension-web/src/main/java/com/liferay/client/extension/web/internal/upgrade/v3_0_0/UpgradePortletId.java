@@ -92,8 +92,8 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 					new String[] {
 						portletIdPrefix + externalReferenceCode,
 						StringBundler.concat(
-							portletIdPrefix, externalReferenceCode,
-							StringPool.UNDERLINE, companyId)
+							portletIdPrefix, companyId, StringPool.UNDERLINE,
+							externalReferenceCode)
 					});
 			}
 		}

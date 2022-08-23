@@ -13,6 +13,7 @@
  */
 
 import {delegate} from 'frontend-js-web';
+import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
@@ -127,3 +128,10 @@ export default function ItemSelectorRepositoryEntryBrowser({
 		</>
 	);
 }
+
+ItemSelectorRepositoryEntryBrowser.propTypes = {
+	itemSelectedEventName: PropTypes.string.isRequired,
+	portletNamespace: PropTypes.string.isRequired,
+	rootNode: PropTypes.string.isRequired,
+	uploaderEnabled: PropTypes.bool,
+};

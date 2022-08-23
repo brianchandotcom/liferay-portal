@@ -18,6 +18,4 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.2"
-	testCompile group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
-	testCompile group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 }

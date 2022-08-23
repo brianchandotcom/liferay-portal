@@ -46,8 +46,8 @@ public class DLFolderUADTestUtil {
 		throws Exception {
 
 		Folder folder = dlAppLocalService.addFolder(
-			userId, groupId, parentFolderId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
+			null, userId, groupId, parentFolderId,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
 
 		return (DLFolder)folder.getModel();

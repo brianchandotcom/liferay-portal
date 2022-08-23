@@ -232,8 +232,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 					}
 
 					return localRepository.addFolder(
-						userId, parentFolderId, folderName, StringPool.BLANK,
-						serviceContext);
+						null, userId, parentFolderId, folderName,
+						StringPool.BLANK, serviceContext);
 				}
 			});
 	}

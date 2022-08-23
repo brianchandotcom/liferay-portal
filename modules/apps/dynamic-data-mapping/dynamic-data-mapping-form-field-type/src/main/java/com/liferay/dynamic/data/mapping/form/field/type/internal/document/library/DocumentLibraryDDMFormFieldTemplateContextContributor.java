@@ -256,7 +256,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 		try {
 			return _dlAppService.addFolder(
-				repositoryId, parentFolderId, user.getScreenName(),
+				null, repositoryId, parentFolderId, user.getScreenName(),
 				_language.get(
 					getResourceBundle(user.getLocale()),
 					"this-folder-was-automatically-created-by-forms-to-store-" +

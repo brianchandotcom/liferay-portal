@@ -14,134 +14,123 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
-import com.liferay.portal.kernel.exception.NoSuchCompanyException;
-import com.liferay.portal.kernel.exception.RequiredCompanyException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyService;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Víctor Galán Grande
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + PortalInstancesPortletKeys.PORTAL_INSTANCES,
-		"mvc.command.name=/portal_instances/edit_instance"
+		"mvc.command.name=/portal_instances/add_instance"
 	},
 	service = MVCActionCommand.class
 )
-public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
+public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		try {
-			_updateInstance(actionRequest);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			sendRedirect(actionRequest, actionResponse);
+		try {
+			_addInstance(actionRequest);
 		}
 		catch (Exception exception) {
-			String mvcPath = "/error.jsp";
-
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
 
-			if (exception instanceof NoSuchCompanyException ||
-				exception instanceof PrincipalException) {
+			String errorMessage = "an-unexpected-error-occurred";
 
-				SessionErrors.add(actionRequest, exception.getClass());
+			if (exception instanceof CompanyMxException) {
+				errorMessage = "please-enter-a-valid-mail-domain";
 			}
-			else if (exception instanceof CompanyMxException ||
-					 exception instanceof CompanyVirtualHostException ||
-					 exception instanceof CompanyWebIdException) {
-
-				long companyId = ParamUtil.getLong(actionRequest, "companyId");
-
-				Company company = _companyLocalService.fetchCompanyById(
-					companyId);
-
-				if (company != null) {
-					actionRequest.setAttribute(WebKeys.SEL_COMPANY, company);
-				}
-
-				SessionErrors.add(actionRequest, exception.getClass());
-
-				SessionMessages.add(
-					actionRequest,
-					_portal.getPortletId(actionRequest) +
-						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
-
-				mvcPath = "/edit_instance.jsp";
+			else if (exception instanceof CompanyVirtualHostException) {
+				errorMessage = "please-enter-a-valid-virtual-host";
 			}
-			else if (exception instanceof RequiredCompanyException) {
-				SessionErrors.add(actionRequest, exception.getClass());
-			}
-			else {
-				_log.error(exception);
-
-				throw exception;
+			else if (exception instanceof CompanyWebIdException) {
+				errorMessage = "please-enter-a-valid-web-id";
 			}
 
-			actionResponse.setRenderParameter("mvcPath", mvcPath);
+			jsonObject.put(
+				"error",
+				_language.get(actionRequest.getLocale(), errorMessage));
 		}
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 	}
 
-	private void _updateInstance(ActionRequest actionRequest) throws Exception {
-		long companyId = ParamUtil.getLong(actionRequest, "companyId");
-
+	private void _addInstance(ActionRequest actionRequest) throws Exception {
 		String virtualHostname = ParamUtil.getString(
 			actionRequest, "virtualHostname");
 		String mx = ParamUtil.getString(actionRequest, "mx");
 		int maxUsers = ParamUtil.getInteger(actionRequest, "maxUsers");
-
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
-		if (companyId == _portalInstancesLocalService.getDefaultCompanyId()) {
-			active = true;
+		String webId = ParamUtil.getString(actionRequest, "webId");
+
+		Company company = _companyService.addCompany(
+			webId, virtualHostname, mx, false, maxUsers, active);
+
+		String siteInitializerKey = ParamUtil.getString(
+			actionRequest, "siteInitializerKey");
+		ServletContext servletContext =
+			(ServletContext)actionRequest.getAttribute(WebKeys.CTX);
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					company.getCompanyId())) {
+
+			_portalInstancesLocalService.initializePortalInstance(
+				company.getCompanyId(), siteInitializerKey, servletContext);
 		}
 
-		_companyService.updateCompany(
-			companyId, virtualHostname, mx, maxUsers, active);
+		_synchronizePortalInstances();
+	}
 
+	private void _synchronizePortalInstances() {
 		_portalInstancesLocalService.synchronizePortalInstances();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditInstanceMVCActionCommand.class);
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
+		AddInstanceMVCActionCommand.class);
 
 	@Reference
 	private CompanyService _companyService;
 
 	@Reference
-	private Portal _portal;
+	private Language _language;
 
 	@Reference
 	private PortalInstancesLocalService _portalInstancesLocalService;

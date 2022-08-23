@@ -23,6 +23,10 @@ String label = (String)request.getAttribute("liferay-frontend:sidebar-toggler-bu
 String sidenavId = (String)request.getAttribute("liferay-frontend:sidebar-toggler-button:sidenavId");
 String typeMobile = (String)request.getAttribute("liferay-frontend:sidebar-toggler-button:typeMobile");
 
+if (Validator.isNull(cssClass)) {
+	cssClass = "btn btn-secondary";
+}
+
 if (Validator.isNull(sidenavId)) {
 	sidenavId = liferayPortletResponse.getNamespace() + "infoPanelId";
 }

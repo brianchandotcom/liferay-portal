@@ -267,6 +267,83 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-10998 | Automation ID: LRAC-11380 | Test Summary: Check that the Identify event is not sent every time the user interacts with the site"
+	@priority = "3"
+	test CheckIdentityEventNotTriggeredAlwaysUserInteractsWithSite {
+		property proxy.server.enabled = "true";
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("identity");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+		}
+
+		task ("Navigate to the connected site") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Get the time of the last update of the identity event") {
+			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		}
+
+		task ("Visit the document") {
+			ACUtils.navigateToSitePage(
+				actionType = "View DM",
+				documentTitleList = "DM AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Get the time of the last update of the identity event") {
+			var localStorageItem2 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		}
+
+		task ("Check that the time of the last update of the identity event has not changed") {
+			TestUtils.assertEquals(
+				actual = "${localStorageItem2}",
+				expected = "${localStorageItem1}");
+		}
+
+		task ("Navigate to the connected site") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Get the time of the last update of the identity event") {
+			var localStorageItem3 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		}
+
+		task ("Check that the time of the last update of the identity event has not changed") {
+			TestUtils.assertEquals(
+				actual = "${localStorageItem3}",
+				expected = "${localStorageItem1}");
+		}
+	}
+
 	@description = "Feature ID: LRAC-10998 | Automation ID: LRAC-11381 | Test Summary: Check that the Identify event is resent if the user stays logged in for more than 7 days and check if the same individual has not been counted twice when the event is resent"
 	@priority = "5"
 	test CheckIdentityEventResentIfUserStaysLoggedForMoreThan7days {

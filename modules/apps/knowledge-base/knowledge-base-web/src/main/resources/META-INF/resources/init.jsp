@@ -112,7 +112,6 @@ page import="com.liferay.knowledge.base.web.internal.security.permission.resourc
 page import="com.liferay.knowledge.base.web.internal.security.permission.resource.DisplayPermission" %><%@
 page import="com.liferay.knowledge.base.web.internal.security.permission.resource.KBArticlePermission" %><%@
 page import="com.liferay.knowledge.base.web.internal.security.permission.resource.KBCommentPermission" %><%@
-page import="com.liferay.knowledge.base.web.internal.security.permission.resource.KBTemplatePermission" %><%@
 page import="com.liferay.knowledge.base.web.internal.servlet.taglib.clay.KBArticleAttachmentHorizontalCard" %><%@
 page import="com.liferay.knowledge.base.web.internal.social.SocialBookmarksUtil" %><%@
 page import="com.liferay.knowledge.base.web.internal.util.AdminUtil" %><%@

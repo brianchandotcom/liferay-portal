@@ -15087,10 +15087,11 @@ url=${short.hostname}:8080</echo>
 			</not>
 			<then>
 				<antcall target="rebuild-database">
-					<param name="database.bare.enabled" value="true" />
 					<param name="database.mariadb.docker.image" value="mariadb:${database.version}" />
 					<param name="database.mariadb.host" value="${database.host}_mariadb" />
 					<param name="database.type" value="mariadb" />
+					<param name="sql.dir" value="sql/create-bare/" />
+					<param name="sql.file" value="create-bare-mariadb.sql" />
 				</antcall>
 			</then>
 		</if>
@@ -15272,12 +15273,13 @@ url=${short.hostname}:8080</echo>
 			</not>
 			<then>
 				<antcall target="rebuild-database">
-					<param name="database.bare.enabled" value="true" />
 					<param name="database.sqlserver.docker.image" value="${database.sqlserver.docker.image}" />
 					<param name="database.sqlserver.host" value="${database.host}_sqlserver" />
 					<param name="database.sqlserver.password" value="Liferay123" />
 					<param name="database.sqlserver.username" value="sa" />
 					<param name="database.type" value="sqlserver" />
+					<param name="sql.dir" value="sql/create-bare/" />
+					<param name="sql.file" value="create-bare-sql-server.sql" />
 				</antcall>
 			</then>
 		</if>

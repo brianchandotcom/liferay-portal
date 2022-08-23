@@ -233,7 +233,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "parentFolderId");
 
 			_dlAppService.addFolder(
-				repositoryId, parentFolderId, name, description,
+				null, repositoryId, parentFolderId, name, description,
 				serviceContext);
 		}
 		else {

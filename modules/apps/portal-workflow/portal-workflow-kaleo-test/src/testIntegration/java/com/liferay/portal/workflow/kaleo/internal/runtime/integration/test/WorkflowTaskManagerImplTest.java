@@ -1342,7 +1342,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 
 	private Folder _addFolder() throws Exception {
 		return _dlAppService.addFolder(
-			_group.getGroupId(), 0, RandomTestUtil.randomString(),
+			null, _group.getGroupId(), 0, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), _serviceContext);
 	}
 

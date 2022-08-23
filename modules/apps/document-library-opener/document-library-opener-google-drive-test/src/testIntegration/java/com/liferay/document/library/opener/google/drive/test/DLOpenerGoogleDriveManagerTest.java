@@ -244,7 +244,7 @@ public class DLOpenerGoogleDriveManagerTest {
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId());
 
 		Folder folder = _dlAppLocalService.addFolder(
-			TestPropsValues.getUserId(), _company.getGroupId(),
+			null, TestPropsValues.getUserId(), _company.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);

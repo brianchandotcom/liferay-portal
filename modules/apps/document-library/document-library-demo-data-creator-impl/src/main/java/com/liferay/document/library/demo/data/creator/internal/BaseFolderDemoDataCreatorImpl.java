@@ -66,7 +66,7 @@ public abstract class BaseFolderDemoDataCreatorImpl
 			}
 
 			folder = dlAppLocalService.addFolder(
-				userId, groupId, folderId, name, StringPool.BLANK,
+				null, userId, groupId, folderId, name, StringPool.BLANK,
 				new ServiceContext());
 		}
 

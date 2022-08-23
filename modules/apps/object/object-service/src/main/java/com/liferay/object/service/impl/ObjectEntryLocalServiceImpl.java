@@ -1596,7 +1596,7 @@ public class ObjectEntryLocalServiceImpl
 
 		try {
 			dlFolder = _dlFolderLocalService.addFolder(
-				_userLocalService.getDefaultUserId(companyId),
+				null, _userLocalService.getDefaultUserId(companyId),
 				repository.getGroupId(), repository.getRepositoryId(), false,
 				repository.getDlFolderId(), String.valueOf(userId), null, false,
 				serviceContext);
@@ -1963,8 +1963,8 @@ public class ObjectEntryLocalServiceImpl
 
 			try {
 				Folder folder = _dlAppLocalService.addFolder(
-					_userLocalService.getDefaultUserId(companyId), groupId,
-					storageDLFolderId, name, null, serviceContext);
+					null, _userLocalService.getDefaultUserId(companyId),
+					groupId, storageDLFolderId, name, null, serviceContext);
 
 				storageDLFolderId = folder.getFolderId();
 			}

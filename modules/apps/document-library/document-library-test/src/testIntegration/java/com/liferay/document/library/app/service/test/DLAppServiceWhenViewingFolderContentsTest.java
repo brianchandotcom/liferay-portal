@@ -133,7 +133,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		Folder targetGroupFolder = _dlAppService.addFolder(
-			targetGroup.getGroupId(),
+			null, targetGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(targetGroup.getGroupId()));
@@ -214,7 +214,7 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			(byte[])null, null, null, serviceContext);
 
 		_dlAppService.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
+			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 

@@ -106,7 +106,7 @@ public class DLFileEntrySharingTest extends BaseSharingTestCase<DLFileEntry> {
 		serviceContext.setAddGuestPermissions(false);
 
 		Folder folder = _dlAppLocalService.addFolder(
-			user.getUserId(), group.getGroupId(),
+			null, user.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);

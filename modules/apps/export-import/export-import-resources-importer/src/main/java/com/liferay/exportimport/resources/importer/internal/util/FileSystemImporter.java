@@ -835,8 +835,8 @@ public class FileSystemImporter extends BaseImporter {
 
 		if (dlFolder == null) {
 			dlFolder = dlFolderLocalService.addFolder(
-				userId, groupId, groupId, false, parentFolderId, folderName,
-				null, false, serviceContext);
+				null, userId, groupId, groupId, false, parentFolderId,
+				folderName, null, false, serviceContext);
 		}
 
 		_addPrimaryKey(DLFolder.class.getName(), dlFolder.getPrimaryKey());

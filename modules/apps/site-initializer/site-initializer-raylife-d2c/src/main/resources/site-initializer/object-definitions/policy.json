@@ -143,6 +143,18 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
+				"en_US": "Product External Reference Code"
+			},
+			"name": "productExternalReferenceCode",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
 				"en_US": "Product Name"
 			},
 			"name": "productName",

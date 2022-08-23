@@ -48,9 +48,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Product Id"
+				"en_US": "Product External Reference Code"
 			},
-			"name": "productId",
+			"name": "productExternalReferenceCode",
 			"required": false,
 			"type": "String"
 		}

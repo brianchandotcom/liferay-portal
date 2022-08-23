@@ -212,8 +212,7 @@ public class SalesforceObjectEntryManagerImplTest {
 			objectEntry, ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		Assert.assertEquals(
-			title,
-			MapUtil.getString(objectEntry.getProperties(), "title"));
+			title, MapUtil.getString(objectEntry.getProperties(), "title"));
 
 		_objectEntryManager.deleteObjectEntry(
 			objectEntry.getExternalReferenceCode(),
@@ -244,8 +243,7 @@ public class SalesforceObjectEntryManagerImplTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		Assert.assertEquals(
-			title,
-			MapUtil.getString(objectEntry.getProperties(), "title"));
+			title, MapUtil.getString(objectEntry.getProperties(), "title"));
 
 		_objectEntryManager.deleteObjectEntry(
 			objectEntry.getExternalReferenceCode(),

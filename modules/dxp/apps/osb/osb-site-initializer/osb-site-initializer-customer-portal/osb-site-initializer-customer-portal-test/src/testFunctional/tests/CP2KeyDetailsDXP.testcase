@@ -40,7 +40,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-148079 - Verify that an activation keys details pop up appears when clicking on a key."
+	@description = "LPS-148079 - Verify that an activation key's details pop up appears when clicking on a key."
 	@priority = "5"
 	test PopUpShowsFromActivationKey {
 		property portal.upstream = "quarantine";
@@ -65,6 +65,41 @@ definition {
 
 		task ("Then the user can click an individual key and a modal for the activation key's details will pop up") {
 			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
+		}
+	}
+
+	@description = "LPS-148083 - Verify that an activation key's details pop up has all necessary information of the Environment group."
+	@priority = "5"
+	test IfEnvironmentElementsArePresent {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("When a user selects a project and an individual key") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
+		}
+
+		task ("Then the modal will show all elements of the Environment group") {
+			CP2ActivationKeys.assertKeyDetailsEnvironmentElements(
+				product = "DXP",
+				version = "7.0",
+				environmentType = "Backup",
+				subscriptionType = "Subscription",
+				instanceSize = "1");
 		}
 	}
 

@@ -134,6 +134,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-148085 - Verify that the copy button works on an acitvation key's details pop up window."
+	@priority = "4"
+	test IfCopyButtonWorks {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("When a user selects a project and an individual key") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
+		}
+
+		task ("Then clicking the copy icon for each value will save the value to the clipboard") {
+			for (var serverValue : list "HOST_NAME,IP_ADDRESS,MAC_ADDRESS") {
+				Click(locator1 = "CP2ActivationKeys#COPY_ICON_${serverValue}");
+
+				Alert.viewSuccessMessage();
+			}
+		}
+	}
+
 	@description = "LPS-148083 - Verify that an activation key's details pop up has all necessary information of the Environment group."
 	@priority = "5"
 	test IfEnvironmentElementsArePresent {
@@ -194,7 +228,7 @@ definition {
 			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
 		}
 
-		task ("Then the modal will show the 'Host Name', 'IP Addressess', and 'MAC Addressess' on the Server group") {
+		task ("Then the modal will show the 'Host Name', 'IP Addresses', and 'MAC Addresses' on the Server group") {
 			CP2ActivationKeys.assertKeyDetailsServerElements(
 				keyType = "On-Premise",
 				hostName = "Redacted",

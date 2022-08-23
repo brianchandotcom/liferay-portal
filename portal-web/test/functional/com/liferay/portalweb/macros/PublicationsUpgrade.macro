@@ -22,6 +22,18 @@ definition {
 			locator1 = "Publications#PUBLICATION_ROLE_BUTTON");
 	}
 
+	macro viewNoUnrelatedPreviews {
+		PublicationsNavigator.openPublicationsAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		AssertElementPresent(locator1 = "PublicationsChanges#MESSAGE_NO_CHANGES");
+	}
+
 	macro viewOutOfDatePublications {
 		PublicationsNavigator.openPublicationsAdmin();
 

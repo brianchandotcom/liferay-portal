@@ -87,7 +87,6 @@ const Activities = ({
 			<PRMForm.Footer>
 				<div className="d-flex mr-auto">
 					<Button
-						className=""
 						displayType={null}
 						onClick={() =>
 							isForm

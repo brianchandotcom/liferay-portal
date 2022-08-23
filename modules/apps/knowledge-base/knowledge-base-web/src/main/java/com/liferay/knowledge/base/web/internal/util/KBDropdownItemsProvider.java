@@ -56,6 +56,7 @@ public class KBDropdownItemsProvider {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
+		_currentURL = PortalUtil.getCurrentURL(_liferayPortletRequest);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -70,7 +71,7 @@ public class KBDropdownItemsProvider {
 					).setMVCPath(
 						"/admin/common/edit_kb_article.jsp"
 					).setRedirect(
-						PortalUtil.getCurrentURL(_liferayPortletRequest)
+						_currentURL
 					).setParameter(
 						"resourcePrimKey", kbArticle.getResourcePrimKey()
 					).buildRenderURL());
@@ -89,7 +90,7 @@ public class KBDropdownItemsProvider {
 					).setMVCPath(
 						"/admin/common/edit_kb_article.jsp"
 					).setRedirect(
-						PortalUtil.getCurrentURL(_liferayPortletRequest)
+						_currentURL
 					).setParameter(
 						"parentResourceClassNameId", kbArticle.getClassNameId()
 					).setParameter(
@@ -126,7 +127,7 @@ public class KBDropdownItemsProvider {
 					).setActionName(
 						"/knowledge_base/unsubscribe_kb_article"
 					).setRedirect(
-						PortalUtil.getCurrentURL(_liferayPortletRequest)
+						_currentURL
 					).setParameter(
 						"resourcePrimKey", kbArticle.getResourcePrimKey()
 					).buildActionURL());
@@ -144,7 +145,7 @@ public class KBDropdownItemsProvider {
 					).setActionName(
 						"/knowledge_base/subscribe_kb_article"
 					).setRedirect(
-						PortalUtil.getCurrentURL(_liferayPortletRequest)
+						_currentURL
 					).setParameter(
 						"resourcePrimKey", kbArticle.getResourcePrimKey()
 					).buildActionURL());
@@ -162,7 +163,7 @@ public class KBDropdownItemsProvider {
 					).setMVCPath(
 						"/admin/common/move_object.jsp"
 					).setRedirect(
-						PortalUtil.getCurrentURL(_liferayPortletRequest)
+						_currentURL
 					).setParameter(
 						"parentResourceClassNameId",
 						kbArticle.getParentResourceClassNameId()
@@ -190,7 +191,7 @@ public class KBDropdownItemsProvider {
 					).setActionName(
 						"/knowledge_base/delete_kb_article"
 					).setRedirect(
-						PortalUtil.getCurrentURL(_liferayPortletRequest)
+						_currentURL
 					).setParameter(
 						"resourcePrimKey", kbArticle.getResourcePrimKey()
 					).buildString());
@@ -212,7 +213,7 @@ public class KBDropdownItemsProvider {
 					).setMVCPath(
 						"/admin/common/edit_kb_folder.jsp"
 					).setRedirect(
-						PortalUtil.getCurrentURL(_liferayPortletRequest)
+						_currentURL
 					).setParameter(
 						"kbFolderId", kbFolder.getKbFolderId()
 					).buildRenderURL());
@@ -230,7 +231,7 @@ public class KBDropdownItemsProvider {
 					).setMVCPath(
 						"/admin/common/move_object.jsp"
 					).setRedirect(
-						PortalUtil.getCurrentURL(_liferayPortletRequest)
+						_currentURL
 					).setParameter(
 						"parentResourceClassNameId", kbFolder.getClassNameId()
 					).setParameter(
@@ -256,7 +257,7 @@ public class KBDropdownItemsProvider {
 					).setActionName(
 						"/knowledge_base/delete_kb_folder"
 					).setRedirect(
-						PortalUtil.getCurrentURL(_liferayPortletRequest)
+						_currentURL
 					).setParameter(
 						"kbFolderId", kbFolder.getKbFolderId()
 					).buildString());
@@ -307,7 +308,7 @@ public class KBDropdownItemsProvider {
 					).setMVCPath(
 						"/admin/common/edit_kb_template.jsp"
 					).setRedirect(
-						PortalUtil.getCurrentURL(_liferayPortletRequest)
+						_currentURL
 					).setParameter(
 						"kbTemplateId", kbTemplate.getKbTemplateId()
 					).buildRenderURL());
@@ -344,7 +345,7 @@ public class KBDropdownItemsProvider {
 					).setActionName(
 						"/knowledge_base/delete_kb_template"
 					).setRedirect(
-						PortalUtil.getCurrentURL(_liferayPortletRequest)
+						_currentURL
 					).setParameter(
 						"kbTemplateId", kbTemplate.getKbTemplateId()
 					).buildString());
@@ -582,6 +583,7 @@ public class KBDropdownItemsProvider {
 		return false;
 	}
 
+	private final String _currentURL;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;

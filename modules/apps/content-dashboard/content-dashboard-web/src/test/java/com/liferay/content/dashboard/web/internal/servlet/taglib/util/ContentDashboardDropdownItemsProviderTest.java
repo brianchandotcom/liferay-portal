@@ -287,6 +287,11 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
+			public List<Version> getLatestVersions(Locale locale) {
+				return null;
+			}
+
+			@Override
 			public Date getModifiedDate() {
 				return null;
 			}
@@ -324,11 +329,6 @@ public class ContentDashboardDropdownItemsProviderTest {
 			@Override
 			public String getUserName() {
 				return RandomTestUtil.randomString();
-			}
-
-			@Override
-			public List<Version> getVersions(Locale locale) {
-				return null;
 			}
 
 			@Override

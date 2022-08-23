@@ -273,6 +273,22 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public List<Version> getLatestVersions(Locale locale) {
+		return Stream.of(
+			_toVersionOptional(_journalArticle, locale),
+			_toVersionOptional(_latestApprovedJournalArticle, locale)
+		).filter(
+			Optional::isPresent
+		).map(
+			Optional::get
+		).sorted(
+			Comparator.comparing(Version::getVersion)
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	@Override
 	public Date getModifiedDate() {
 		return _journalArticle.getModifiedDate();
 	}
@@ -336,22 +352,6 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public List<Version> getVersions(Locale locale) {
-		return Stream.of(
-			_toVersionOptional(_journalArticle, locale),
-			_toVersionOptional(_latestApprovedJournalArticle, locale)
-		).filter(
-			Optional::isPresent
-		).map(
-			Optional::get
-		).sorted(
-			Comparator.comparing(Version::getVersion)
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	@Override
 	public boolean isViewable(HttpServletRequest httpServletRequest) {
 		if (!_journalArticle.hasApprovedVersion()) {
 			return false;
@@ -374,7 +374,7 @@ public class JournalArticleContentDashboardItem
 	}
 
 	private Version _getLastVersion(Locale locale) {
-		List<Version> versions = getVersions(locale);
+		List<Version> versions = getLatestVersions(locale);
 
 		return versions.get(versions.size() - 1);
 	}

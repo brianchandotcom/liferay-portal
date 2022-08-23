@@ -260,6 +260,17 @@ public class BlogsEntryContentDashboardItem
 	}
 
 	@Override
+	public List<Version> getLatestVersions(Locale locale) {
+		return Collections.singletonList(
+			new Version(
+				_language.get(
+					locale,
+					WorkflowConstants.getStatusLabel(_blogsEntry.getStatus())),
+				WorkflowConstants.getStatusStyle(_blogsEntry.getStatus()),
+				"1.0"));
+	}
+
+	@Override
 	public Date getModifiedDate() {
 		return _blogsEntry.getModifiedDate();
 	}
@@ -311,17 +322,6 @@ public class BlogsEntryContentDashboardItem
 	}
 
 	@Override
-	public List<Version> getVersions(Locale locale) {
-		return Collections.singletonList(
-			new Version(
-				_language.get(
-					locale,
-					WorkflowConstants.getStatusLabel(_blogsEntry.getStatus())),
-				WorkflowConstants.getStatusStyle(_blogsEntry.getStatus()),
-				"1.0"));
-	}
-
-	@Override
 	public boolean isViewable(HttpServletRequest httpServletRequest) {
 		Optional<ContentDashboardItemActionProvider>
 			contentDashboardItemActionProviderOptional =
@@ -340,7 +340,7 @@ public class BlogsEntryContentDashboardItem
 	}
 
 	private Version _getLastVersion(Locale locale) {
-		List<Version> versions = getVersions(locale);
+		List<Version> versions = getLatestVersions(locale);
 
 		return versions.get(versions.size() - 1);
 	}

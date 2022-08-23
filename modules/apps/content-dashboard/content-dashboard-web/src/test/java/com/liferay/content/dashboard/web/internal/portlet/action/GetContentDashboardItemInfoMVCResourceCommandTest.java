@@ -309,7 +309,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		Assert.assertEquals("portraitURL", userJSONObject.getString("url"));
 
 		List<ContentDashboardItem.Version> versions =
-			contentDashboardItem.getVersions(LocaleUtil.US);
+			contentDashboardItem.getLatestVersions(LocaleUtil.US);
 
 		ContentDashboardItem.Version version = versions.get(0);
 
@@ -728,6 +728,12 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 				@Override
+				public List<Version> getLatestVersions(Locale locale) {
+					return Collections.singletonList(
+						new Version("version", "style", "0.1"));
+				}
+
+				@Override
 				public Date getModifiedDate() {
 					return new Date();
 				}
@@ -773,12 +779,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				@Override
 				public String getUserName() {
 					return userName;
-				}
-
-				@Override
-				public List<Version> getVersions(Locale locale) {
-					return Collections.singletonList(
-						new Version("version", "style", "0.1"));
 				}
 
 				@Override

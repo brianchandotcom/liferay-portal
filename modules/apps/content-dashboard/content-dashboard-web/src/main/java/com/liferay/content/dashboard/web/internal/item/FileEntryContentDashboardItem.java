@@ -278,6 +278,42 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
+	public List<Version> getLatestVersions(Locale locale) {
+		try {
+			FileVersion latestFileVersion = _fileEntry.getLatestFileVersion();
+			FileVersion latestTrustedFileVersion =
+				_fileEntry.getLatestFileVersion(true);
+
+			List<FileVersion> fileVersions = new ArrayList<>();
+
+			fileVersions.add(latestTrustedFileVersion);
+
+			if (!latestFileVersion.equals(latestTrustedFileVersion)) {
+				fileVersions.add(latestFileVersion);
+			}
+
+			Stream<FileVersion> stream = fileVersions.stream();
+
+			return stream.map(
+				fileVersion -> _toVersionOptional(fileVersion, locale)
+			).filter(
+				Optional::isPresent
+			).map(
+				Optional::get
+			).sorted(
+				Comparator.comparing(Version::getVersion)
+			).collect(
+				Collectors.toList()
+			);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return Collections.emptyList();
+		}
+	}
+
+	@Override
 	public Date getModifiedDate() {
 		return _fileEntry.getModifiedDate();
 	}
@@ -335,42 +371,6 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public List<Version> getVersions(Locale locale) {
-		try {
-			FileVersion latestFileVersion = _fileEntry.getLatestFileVersion();
-			FileVersion latestTrustedFileVersion =
-				_fileEntry.getLatestFileVersion(true);
-
-			List<FileVersion> fileVersions = new ArrayList<>();
-
-			fileVersions.add(latestTrustedFileVersion);
-
-			if (!latestFileVersion.equals(latestTrustedFileVersion)) {
-				fileVersions.add(latestFileVersion);
-			}
-
-			Stream<FileVersion> stream = fileVersions.stream();
-
-			return stream.map(
-				fileVersion -> _toVersionOptional(fileVersion, locale)
-			).filter(
-				Optional::isPresent
-			).map(
-				Optional::get
-			).sorted(
-				Comparator.comparing(Version::getVersion)
-			).collect(
-				Collectors.toList()
-			);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-
-			return Collections.emptyList();
-		}
-	}
-
-	@Override
 	public boolean isViewable(HttpServletRequest httpServletRequest) {
 		if (ListUtil.isEmpty(
 				_fileEntry.getFileVersions(
@@ -402,7 +402,7 @@ public class FileEntryContentDashboardItem
 	}
 
 	private Version _getLastVersion(Locale locale) {
-		List<Version> versions = getVersions(locale);
+		List<Version> versions = getLatestVersions(locale);
 
 		return versions.get(versions.size() - 1);
 	}

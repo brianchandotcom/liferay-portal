@@ -550,7 +550,7 @@ public class JournalArticleContentDashboardItemTest {
 				_getLanguage(), null, null);
 
 		List<ContentDashboardItem.Version> versions =
-			journalArticleContentDashboardItem.getVersions(LocaleUtil.US);
+			journalArticleContentDashboardItem.getLatestVersions(LocaleUtil.US);
 
 		Assert.assertEquals(versions.toString(), 1, versions.size());
 
@@ -597,7 +597,7 @@ public class JournalArticleContentDashboardItemTest {
 				_getLanguage(), journalArticle2, null);
 
 		List<ContentDashboardItem.Version> versions =
-			journalArticleContentDashboardItem.getVersions(LocaleUtil.US);
+			journalArticleContentDashboardItem.getLatestVersions(LocaleUtil.US);
 
 		Assert.assertEquals(versions.toString(), 2, versions.size());
 

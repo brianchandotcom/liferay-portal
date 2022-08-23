@@ -43,6 +43,7 @@ const SidebarPanelInfoView = ({
 	description,
 	downloadURL,
 	languageTag = 'en',
+	latestVersions = [],
 	modifiedDate,
 	specificFields = {},
 	subscribe,
@@ -54,7 +55,6 @@ const SidebarPanelInfoView = ({
 	fetchSharingButtonURL,
 	fetchSharingCollaboratorsURL,
 	user,
-	versions = [],
 	viewURLs = [],
 	vocabularies = {},
 }) => {
@@ -118,16 +118,18 @@ const SidebarPanelInfoView = ({
 							{subType ? `${type} - ${subType}` : `${type}`}
 						</p>
 
-						{versions.map((version) => (
-							<div className="c-mt-2" key={version.version}>
+						{latestVersions.map((latestVersion) => (
+							<div className="c-mt-2" key={latestVersion.version}>
 								<ClayLabel displayType="info">
 									{Liferay.Language.get('version') + ' '}
 
-									{version.version}
+									{latestVersion.version}
 								</ClayLabel>
 
-								<ClayLabel displayType={version.statusStyle}>
-									{version.statusLabel}
+								<ClayLabel
+									displayType={latestVersion.statusStyle}
+								>
+									{latestVersion.statusLabel}
 								</ClayLabel>
 							</div>
 						))}
@@ -330,6 +332,7 @@ SidebarPanelInfoView.propTypes = {
 	description: PropTypes.string,
 	fetchSharingButtonURL: PropTypes.string,
 	fetchSharingCollaboratorsURL: PropTypes.string,
+	latestVersions: PropTypes.array.isRequired,
 	modifiedDate: PropTypes.string.isRequired,
 	preview: PropTypes.object,
 	specificFields: PropTypes.object.isRequired,
@@ -337,7 +340,6 @@ SidebarPanelInfoView.propTypes = {
 	tags: PropTypes.array,
 	title: PropTypes.string.isRequired,
 	user: PropTypes.object.isRequired,
-	versions: PropTypes.array.isRequired,
 	viewURLs: PropTypes.array.isRequired,
 	vocabularies: PropTypes.object,
 };

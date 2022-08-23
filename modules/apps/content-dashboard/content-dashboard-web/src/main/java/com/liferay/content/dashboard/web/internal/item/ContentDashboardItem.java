@@ -61,6 +61,8 @@ public interface ContentDashboardItem<T> {
 
 	public InfoItemReference getInfoItemReference();
 
+	public List<Version> getLatestVersions(Locale locale);
+
 	public Date getModifiedDate();
 
 	public Preview getPreview();
@@ -76,8 +78,6 @@ public interface ContentDashboardItem<T> {
 	public long getUserId();
 
 	public String getUserName();
-
-	public List<Version> getVersions(Locale locale);
 
 	public boolean isViewable(HttpServletRequest httpServletRequest);
 

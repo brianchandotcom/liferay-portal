@@ -18,6 +18,7 @@ import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity';
 import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
 import getTotalBudget from '../../../../common/utils/getTotalBudget';
+import getTotalMDFRequest from '../../../../common/utils/getTotalMDFRequest';
 import ActivityPanel from '../../components/ActivityPanel';
 import BudgetResumeCard from '../../components/BudgetResumeCard';
 import {StepType} from '../../enums/stepType';
@@ -39,6 +40,11 @@ const Review = ({
 	const totalBudget = useMemo(() => getTotalBudget(values.activities), [
 		values.activities,
 	]);
+
+	const totalMDFRequest = useMemo(
+		() => getTotalMDFRequest(values.activities),
+		[values.activities]
+	);
 
 	return (
 		<div className="d-flex flex-column">
@@ -87,7 +93,7 @@ const Review = ({
 							className="mt-3"
 							leftContent="Total MDF Requested Amount"
 							rightContent={getIntlNumberFormat().format(
-								totalBudget * 0.5
+								totalMDFRequest
 							)}
 						/>
 					</div>

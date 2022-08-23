@@ -33,11 +33,11 @@ const ActivityPanel = ({
 }: IProps) => {
 	return (
 		<ClayPanel
-			className="bg-brand-primary-lighten-6 border-brand-primary-lighten-4"
+			className="border-brand-primary-lighten-4"
 			collapsable={detail}
 			displayTitle={
 				<ClayPanel.Title
-					className={classNames(' text-dark', {
+					className={classNames('text-dark', {
 						'p-4': !detail,
 						'py-2': detail,
 					})}

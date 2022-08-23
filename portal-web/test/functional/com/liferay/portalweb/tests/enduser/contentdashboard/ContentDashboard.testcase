@@ -4268,6 +4268,28 @@ definition {
 				type = "Display Page Template");
 		}
 
+		task ("Add mapped heading to Display Page") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Title");
+
+			PageEditor.waitForAutoSave();
+
+			Button.clickPublish();
+		}
+
 		task ("Add Web Content and change the language") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",

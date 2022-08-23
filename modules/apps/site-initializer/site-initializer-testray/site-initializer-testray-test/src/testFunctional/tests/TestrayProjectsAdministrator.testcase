@@ -35,9 +35,9 @@ definition {
 		task ("Go to Testray and Create Project") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
-			TestrayManage.addProjectManageBar(
+			Testray.createProjectTestray(
 				description = "Projects_1 Project Description",
-				name = "Projects_1 Project");
+				key_name = "Projects_1 Project");
 		}
 
 		task ("Check if the project was created") {
@@ -48,6 +48,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160538. Verify if as an Administrator I am able to delete a Project"
+	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanDeleteProject {
 		task ("Go to Testray and Create Project") {
@@ -59,12 +60,13 @@ definition {
 		}
 
 		task ("Delete the project and make sure it is deleted") {
-			TestrayContextMenu.clickContextMenuProjects(projectName = "Projects_2 Project");
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_2 Project");
 
-			TestrayContextMenu.selectItemFromProjectsContextMenu(key_menuItem = "Delete");
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
 
 			Testray.assertProjectNotPresent(key_name = "Projects_2 Project");
 		}
+		
 	}
 
 	@description = "This is a test for LPS-160537. Verify if as an Administrator I am able to edit a Project name and description"
@@ -127,6 +129,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160898. Verify if as an Administrator I should be able to delete a project that contains routines without associated builds"
+	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeleteProjectsThatContainRoutinesWithoutAssociatedBuilds {
 		task ("Create project and create Routine") {
@@ -139,6 +142,15 @@ definition {
 			Testray.goToProjectPage(projectName = "Projects_4 Project");
 
 			TestrayRoutines.createRoutine(key_value = "Projects_4 Routine");
+		}
+		task ("Go to home screen, Delete the project and make sure it is deleted") {
+			TestrayLayout.clickResultsOnSidebar();
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_4 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+
+			Testray.assertProjectNotPresent(key_name = "Projects_4 Project");
 		}
 	}
 

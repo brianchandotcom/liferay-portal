@@ -11,7 +11,7 @@
 
 import Button from '@clayui/button';
 import {useFormikContext} from 'formik';
-import {useCallback} from 'react';
+import {useCallback, useMemo} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
@@ -21,6 +21,7 @@ import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import getPicklistOptions from '../../utils/getPicklistOptions';
+import isObjectEmpty from '../../utils/isObjectEmpty';
 import useCompanyOptions from './hooks/useCompanyOptions';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 
@@ -30,6 +31,7 @@ const Goals = ({
 	onSaveAsDraft,
 }: PRMFormikPageProps & MDFRequestStepProps<MDFRequest>) => {
 	const {
+		errors,
 		isSubmitting,
 		isValid,
 		setFieldValue,
@@ -65,6 +67,12 @@ const Goals = ({
 		fieldEntries[LiferayPicklistName.ADDITIONAL_OPTIONS],
 		(selected) => setFieldValue('additionalOption', selected)
 	);
+
+	const goalsErrors = useMemo(() => {
+		delete errors.activities;
+
+		return errors;
+	}, [errors]);
 
 	return (
 		<PRMForm className="mb-4" name="Goals" title="Campaign Information">
@@ -160,7 +168,10 @@ const Goals = ({
 					</Button>
 
 					<Button
-						disabled={!isValid || isSubmitting}
+						disabled={
+							(!isValid && !isObjectEmpty(goalsErrors)) ||
+							isSubmitting
+						}
 						onClick={() =>
 							onContinue?.(formikHelpers, StepType.ACTIVITIES)
 						}

@@ -1399,4 +1399,25 @@ definition {
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
 	}
 
+	@description = "This test covers LPS-152732. It ensures that the default redirect can not override localized redirect."
+	@priority = "4"
+	test DefaultRedirectCanNotOverrideLocalizedRedirect {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONRedirect.addRedirect(
+			destinationURL = "https://google.hu",
+			groupName = "Test Site Name",
+			permanent = "true",
+			sourceURL = "hu/google");
+
+		JSONRedirect.addRedirect(
+			destinationURL = "https://google.com",
+			groupName = "Test Site Name",
+			sourceURL = "google");
+
+		Navigator.openSpecificURL(url = "${portalURL}/hu/google");
+
+		AssertLocation(value1 = "https://www.google.hu/");
+	}
+
 }

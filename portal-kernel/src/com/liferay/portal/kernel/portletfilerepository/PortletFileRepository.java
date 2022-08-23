@@ -52,12 +52,6 @@ public interface PortletFileRepository {
 		throws PortalException;
 
 	public FileEntry addPortletFileEntry(
-			long groupId, long userId, String className, long classPK,
-			String portletId, long folderId, InputStream inputStream,
-			String fileName, String mimeType, boolean indexingEnabled)
-		throws PortalException;
-
-	public FileEntry addPortletFileEntry(
 			String externalReferenceCode, long groupId, long userId,
 			String className, long classPK, String portletId, long folderId,
 			File file, String fileName, String mimeType,

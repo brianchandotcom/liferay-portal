@@ -202,7 +202,7 @@ public class DLImporter {
 		Repository repository = repositories.get(0);
 
 		DLFolder dlFolder = _dlFolderLocalService.addFolder(
-			userId, scopeGroupId, repository.getRepositoryId(), false,
+			null, userId, scopeGroupId, repository.getRepositoryId(), false,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, description,
 			false, serviceContext);
 

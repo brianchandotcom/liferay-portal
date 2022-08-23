@@ -228,7 +228,7 @@ public class RepositoryBrowserServlet extends HttpServlet {
 				httpServletRequest, "parentFolderId");
 
 			_dlAppService.addFolder(
-				repositoryId, parentFolderId, name, StringPool.BLANK,
+				null, repositoryId, parentFolderId, name, StringPool.BLANK,
 				ServiceContextFactory.getInstance(
 					Folder.class.getName(), httpServletRequest));
 

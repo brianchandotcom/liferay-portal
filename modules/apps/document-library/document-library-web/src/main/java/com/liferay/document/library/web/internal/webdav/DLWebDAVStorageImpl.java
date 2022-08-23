@@ -146,7 +146,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			if (depth == 0) {
 				_dlAppService.addFolder(
-					groupId, parentFolderId, name, description, serviceContext);
+					null, groupId, parentFolderId, name, description,
+					serviceContext);
 			}
 			else {
 				_dlAppService.copyFolder(
@@ -537,7 +538,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				DLFolder.class.getName(), webDAVRequest);
 
 			_dlAppService.addFolder(
-				webDAVRequest.getGroupId(), parentFolderId, name,
+				null, webDAVRequest.getGroupId(), parentFolderId, name,
 				StringPool.BLANK, serviceContext);
 
 			String location = StringUtil.merge(pathArray, StringPool.SLASH);

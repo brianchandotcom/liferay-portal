@@ -231,7 +231,7 @@ public class TemporaryFileEntriesCapabilityImpl
 			}
 
 			return _documentRepository.addFolder(
-				userId, parentFolderId, folderName, StringPool.BLANK,
+				null, userId, parentFolderId, folderName, StringPool.BLANK,
 				serviceContext);
 		}
 	}

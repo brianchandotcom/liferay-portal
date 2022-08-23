@@ -141,7 +141,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 		Assert.assertEquals("urltitle", friendlyURLEntry1.getUrlTitle());
 
 		Folder folder = _dlAppService.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
+			null, group.getGroupId(), parentFolder.getFolderId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
 

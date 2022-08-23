@@ -21,6 +21,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,14 +45,18 @@ public class PortalInstancesManagementToolbarDisplayContext
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
-				dropdownItem.setHref(
+				dropdownItem.putData(
+					"addInstanceURL",
 					PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
-					).setMVCRenderCommandName(
-						"/portal_instances/edit_instance"
+					).setMVCPath(
+						"/add_instance.jsp"
 					).setRedirect(
 						PortalUtil.getCurrentURL(httpServletRequest)
+					).setWindowState(
+						LiferayWindowState.POP_UP
 					).buildString());
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "add"));
 			}

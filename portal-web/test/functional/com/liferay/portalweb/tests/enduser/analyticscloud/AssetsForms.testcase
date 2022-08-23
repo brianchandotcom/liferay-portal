@@ -351,7 +351,7 @@ definition {
 
 		ACNavigation.viewActiveSwitchTab(tabName = "Overview");
 
-		for (var cardTitle : list "Visitors Behavior,Audience,Submissions by Location,Submissions by Technology,Form Abandonment,Asset Appears On") {
+		for (var cardTitle : list "Visitors Behavior,Audience,Submissions by Location,Submissions by Technology,Asset Appears On") {
 			ACCards.viewCards(cardTitle = "${cardTitle}");
 		}
 

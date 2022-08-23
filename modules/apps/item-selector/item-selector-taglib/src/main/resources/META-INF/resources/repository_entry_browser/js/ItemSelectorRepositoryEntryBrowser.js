@@ -12,7 +12,8 @@
  * details.
  */
 
-import React, {useEffect, useRef, useState} from 'react';
+import {delegate} from 'frontend-js-web';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
 import SingleFileUploader from '../../item_selector_uploader/js/SingleFileUploader';
@@ -20,6 +21,7 @@ import SingleFileUploader from '../../item_selector_uploader/js/SingleFileUpload
 export default function ItemSelectorRepositoryEntryBrowser({
 	eventName,
 	portletNamespace,
+	rootNode,
 	uploadEnabled = true,
 	...uploaderProps
 }) {
@@ -30,7 +32,30 @@ export default function ItemSelectorRepositoryEntryBrowser({
 
 	const itemSelectorPreviewItemsRef = useRef();
 
+	const handleSelectedItem = useCallback(
+		({returnType, value}) => {
+			Liferay.Util.getOpener().Liferay.fire(eventName, {
+				returnType,
+				value,
+			});
+		},
+		[eventName]
+	);
+
 	useEffect(() => {
+		const eventListeners = [];
+
+		eventListeners.push(
+			delegate(
+				document.querySelector(rootNode),
+				'click',
+				'.item-preview',
+				(event) => {
+					handleSelectedItem(event.delegateTarget.dataset);
+				}
+			)
+		);
+
 		const itemSelectorPreviewItems = Array.from(
 			document.querySelectorAll(
 				`#p_p_id${portletNamespace} .item-preview-editable`
@@ -42,26 +67,28 @@ export default function ItemSelectorRepositoryEntryBrowser({
 		);
 
 		if (
-			!itemSelectorPreviewItems.length ||
-			itemSelectorPreviewItems.length !== clicablePreviewButtons.length
+			itemSelectorPreviewItems.length &&
+			itemSelectorPreviewItems.length === clicablePreviewButtons.length
 		) {
-			return;
-		}
+			if (!itemSelectorPreviewItemsRef.current) {
+				itemSelectorPreviewItemsRef.current = itemSelectorPreviewItems;
+			}
 
-		if (!itemSelectorPreviewItemsRef.current) {
-			itemSelectorPreviewItemsRef.current = itemSelectorPreviewItems;
-		}
+			clicablePreviewButtons.forEach((clicableItem, index) => {
+				clicableItem.addEventListener('click', (event) => {
+					event.preventDefault();
+					event.stopPropagation();
 
-		clicablePreviewButtons.forEach((clicableItem, index) => {
-			clicableItem.addEventListener('click', (event) => {
-				event.preventDefault();
-				event.stopPropagation();
-
-				setItemSelectorPreviewIndex(index);
-				setItemSelectorPreviewOpen(true);
+					setItemSelectorPreviewIndex(index);
+					setItemSelectorPreviewOpen(true);
+				});
 			});
-		});
-	}, [portletNamespace]);
+		}
+
+		return () => {
+			eventListeners.forEach(({dispose}) => dispose());
+		};
+	}, [handleSelectedItem, portletNamespace, rootNode]);
 
 	return (
 		<>
@@ -70,9 +97,7 @@ export default function ItemSelectorRepositoryEntryBrowser({
 				<ItemSelectorPreview
 					currentIndex={itemSelectorPreviewIndex}
 					handleClose={() => setItemSelectorPreviewOpen(false)}
-					handleSelectedItem={(item) => {
-						Liferay.Util.getOpener().Liferay.fire(eventName, item);
-					}}
+					handleSelectedItem={handleSelectedItem}
 					itemSelectedEventName={eventName}
 					items={itemSelectorPreviewItemsRef.current}
 				/>

@@ -280,7 +280,7 @@ describe('SidebarPanelInfoView', () => {
 
 		expect(
 			container.getElementsByClassName('lexicon-icon-copy').length
-		).toBe(1);
+		).toBe(2);
 
 		expect(getByText('Document - Basic Document')).toBeInTheDocument();
 		expect(getByText('download')).toBeInTheDocument();

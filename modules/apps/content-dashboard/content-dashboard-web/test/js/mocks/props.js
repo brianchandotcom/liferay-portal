@@ -325,10 +325,20 @@ export const mockedFileDocumentProps = {
 			type: 'string',
 			value: 'sh',
 		},
+		latestVersionUrl: {
+			title: 'Latest Version URL',
+			type: 'URL',
+			value: 'mockedURLValue',
+		},
 		size: {
 			title: 'Size',
 			type: 'string',
 			value: '9 KB',
+		},
+		webDavUrl: {
+			title: 'WebDAV URL',
+			type: 'URL',
+			value: 'mockedURLValue2',
 		},
 	},
 	subType: 'Basic Document',

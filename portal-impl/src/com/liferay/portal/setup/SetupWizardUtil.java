@@ -40,15 +40,18 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
 import java.sql.Connection;
 
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -291,6 +294,13 @@ public class SetupWizardUtil {
 			String password, String jndiName)
 		throws Exception {
 
+		Collection<Object> driverClassNameWhiteList = _properties.values();
+
+		if (!driverClassNameWhiteList.contains(driverClassName)) {
+			throw new Exception(
+				driverClassName + " is not a valid driver class name!");
+		}
+
 		DataSource dataSource = null;
 
 		try {
@@ -506,5 +516,8 @@ public class SetupWizardUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SetupWizardUtil.class);
+
+	private static final Properties _properties = PropsUtil.getProperties(
+		PropsKeys.SETUP_DATABASE_DRIVER_CLASS_NAME, true);
 
 }

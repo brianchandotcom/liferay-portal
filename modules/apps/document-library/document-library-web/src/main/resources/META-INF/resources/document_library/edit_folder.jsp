@@ -267,8 +267,6 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 		var message =
 			'<%= UnicodeLanguageUtil.get(request, dlEditFolderDisplayContext.isWorkflowEnabled() ? "change-document-types-and-workflow-message" : "change-document-types-message") %>';
 
-		var submit = true;
-
 		if (<portlet:namespace />documentTypesChanged) {
 			Liferay.Util.openConfirmModal({
 				message: message,
@@ -278,6 +276,9 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 					}
 				},
 			});
+		}
+		else {
+			submitForm(document.<portlet:namespace />fm);
 		}
 	};
 

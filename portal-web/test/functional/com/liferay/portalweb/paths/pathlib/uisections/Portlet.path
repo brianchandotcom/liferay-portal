@@ -190,7 +190,7 @@
 </tr>
 <tr>
 	<td>SPECIFIC_PORTLET_SECTION</td>
-	<td>//section[contains(@id,'portlet')][*//div[contains(@class,'portlet-title')][normalize-space()='${key_portletName}']]</td>
+	<td>//section[contains(@id,'portlet')][*//div[contains(@class,'portlet-title')][contains(.,'${key_portletName}')]]</td>
 	<td></td>
 </tr>
 

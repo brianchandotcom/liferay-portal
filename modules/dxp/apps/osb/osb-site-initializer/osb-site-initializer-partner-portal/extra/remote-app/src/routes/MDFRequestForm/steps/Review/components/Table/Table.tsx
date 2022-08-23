@@ -19,18 +19,18 @@ interface IProps {
 }
 
 const Table = ({items, title}: IProps) => (
-	<ClayTable className="border-0">
+	<ClayTable className="bg-brand-primary-lighten-6 border-0 table-striped">
 		<ClayTable.Head>
 			<ClayTable.Row>
 				<ClayTable.Cell
-					className="border-neutral-2 border-top"
+					className="border-neutral-2 border-top rounded-0 w-50"
 					expanded
 					headingCell
 				>
-					{title}
+					<p className="mt-4 text-neutral-10">{title}</p>
 				</ClayTable.Cell>
 
-				<ClayTable.Cell className="border-neutral-2 border-top"></ClayTable.Cell>
+				<ClayTable.Cell className="border-neutral-2 border-top rounded-0 w-50"></ClayTable.Cell>
 			</ClayTable.Row>
 		</ClayTable.Head>
 
@@ -38,11 +38,11 @@ const Table = ({items, title}: IProps) => (
 			{items?.map((item: TableItem, index: number) => (
 				<ClayTable.Row key={index}>
 					<ClayTable.Cell className="border-0 w-50">
-						{item.title}
+						<p className="text-neutral-10">{item.title}</p>
 					</ClayTable.Cell>
 
 					<ClayTable.Cell className="border-0 w-50">
-						{item.value}
+						<p className="text-neutral-10">{item.value}</p>
 					</ClayTable.Cell>
 				</ClayTable.Row>
 			))}

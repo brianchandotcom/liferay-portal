@@ -98,7 +98,7 @@ const Review = ({
 						<div className="mr-auto pl-0 py-3">
 							<Button
 								className="mr-4"
-								displayType="secondary"
+								displayType={null}
 								onClick={() =>
 									onPrevious?.(StepType.ACTIVITIES)
 								}

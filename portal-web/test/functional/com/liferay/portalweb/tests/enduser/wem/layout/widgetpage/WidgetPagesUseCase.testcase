@@ -259,6 +259,74 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145264. The changes on widget page template should be propagate to widget page when Inherit Changes is enabled."
+	@priority = "4"
+	test PropagateChangesFromWidgetPageTemplate {
+		property testray.component.names = "Site Pages Administration,Widget Page Templates";
+
+		task ("Given a page creator has a widget page template") {
+			task ("Add a widget page template") {
+				JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+					groupName = "Test Site Name",
+					layoutPageTemplateCollectionName = "Widget Template Collection");
+
+				JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+					groupName = "Test Site Name",
+					layoutPageTemplateCollectionName = "Widget Template Collection",
+					layoutPageTemplateEntryName = "Widget Template Name",
+					layoutPageTemplateStatus = "Approved",
+					layoutPageTemplateType = "Widget Page Template");
+			}
+
+			task ("Add a Blogs widget to page template") {
+				PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+				Navigator.gotoNavNested(navNested = "Widget Template Collection");
+
+				PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Widget Template Name");
+
+				Portlet.addPG(portletName = "Blogs");
+			}
+		}
+
+		task ("When the page creator adds a widget page based on template") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.addPage(
+				collectionName = "Widget Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Widget Template Name");
+		}
+
+		task ("Then page creator can see Inherit Changes is enabled by default") {
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Inherit Changes",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Alert.viewWarningSpecific(warningMessage = "Some page settings are unavailable because Inherit Changes is enabled. To change these settings, disable Inherit Changes under the General section.");
+		}
+
+		task ("When the page creator adds an Asset Publisher on widget page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Widget Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Widget Template Name");
+
+			Portlet.addPG(portletName = "Asset Publisher");
+		}
+
+		task ("Then the page creator should see the Asset Publisher is propagated to widget page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site name");
+
+			for (var widgetName : list "Blogs,Asset Publisher") {
+				Portlet.viewSpecificPG(portletName = "${widgetName}");
+			}
+		}
+	}
+
 	@description = "An error is thrown when the default language has an empty friendly url in widget page."
 	@priority = "3"
 	test ViewNoExceptionWhenPageWithoutFriendlyURLInDefaultLanguage {

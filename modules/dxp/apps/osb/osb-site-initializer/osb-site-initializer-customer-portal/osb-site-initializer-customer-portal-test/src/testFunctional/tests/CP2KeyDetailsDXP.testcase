@@ -68,6 +68,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-148088 - Verify that the close button on the Activation Key Details popup works."
+	@priority = "3"
+	test IfCloseButtonWorks {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("When a user selects a project and clicks on a key") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
+		}
+
+		task ("Then the user will have the option to close the pop up modal") {
+			Button.click(button = "Close");
+
+			AssertElementNotPresent(
+				key_environmentName = "Redacted",
+				locator1 = "CP2ActivationKeys#KEY_DETAILS_MODAL");
+		}
+	}
+
 	@description = "LPS-148083 - Verify that an activation key's details pop up has all necessary information of the Environment group."
 	@priority = "5"
 	test IfEnvironmentElementsArePresent {
@@ -104,7 +138,7 @@ definition {
 	}
 
 	@description = "LPS-148084 - Verify that an activation key's details pop up has all necessary information of the Server group."
-	@priority = "5"
+	@priority = "4"
 	test IfServerElementsArePresent {
 		property portal.upstream = "quarantine";
 
@@ -138,7 +172,7 @@ definition {
 	}
 
 	@description = "LPS-148087 - Verify that an activation key's details pop up has all necessary information of the Activation Status group."
-	@priority = "5"
+	@priority = "4"
 	test IfStatusElementsArePresent {
 		property portal.upstream = "quarantine";
 

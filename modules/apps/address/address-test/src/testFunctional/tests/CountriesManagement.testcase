@@ -314,6 +314,32 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that a user cannot add a new region with a region code that already exists"
+	@priority = "5"
+	test CannotAddExistingRegionCode {
+		task ("Given a country with existing regions") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "United States");
+		}
+
+		task ("When a user attempts to add a new region with a code that is already being used by an existing region") {
+			LexiconEntry.gotoAdd();
+
+			CountriesManagement._inputRegionDetails(
+				regionCode = "AL",
+				regionName = "New Region Name");
+
+			Button.clickSave();
+		}
+
+		task ("Then the region does not save") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "The region code is already used");
+		}
+	}
+
 	@description = "Can order countries by name in descending and ascending order"
 	@priority = "3"
 	test CanOrderCountryByName {

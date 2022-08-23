@@ -1,0 +1,142 @@
+@component-name = "portal-publications"
+definition {
+
+	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
+	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+	property osgi.module.configurations = "enabled=B&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Publications.disablePublications();
+		}
+	}
+
+	@description = "This is a use case for LPS-159649."
+	@priority = "4"
+	test CannotPublishPublicationWithPendingAssetEntries {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title 1");
+
+		PortletEntry.submitForPublication();
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "PENDING",
+			webContentTitle = "WC WebContent Title 1");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title 2");
+
+		PortletEntry.submitForPublication();
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "PENDING",
+			webContentTitle = "WC WebContent Title 2");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		WorkflowAsset.gotoViaNotification(
+			assetType = "Web Content Article",
+			user = "userfn userln");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+
+		Workflow.confirmWorkflowAction();
+
+		PublicationsNavigator.openPublicationsAdmin();
+
+		PublicationsNavigator.gotoReviewChanges();
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Web Content Article",
+			changeSite = "Guest",
+			changeStatus = "Pending",
+			changeTitle = "WC WebContent Title 1",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Web Content Article",
+			changeOrder = "2",
+			changeSite = "Guest",
+			changeStatus = "Approved",
+			changeTitle = "WC WebContent Title 2",
+			changeType = "Added",
+			changeUser = "userfn userln");
+
+		PublicationsNavigator.gotoPublish(publicationName = "Publication Name");
+
+		Publications.viewConflictingChangesWarning(warningMessage = "This publication contains unapproved changes that must be approved before publishing");
+	}
+
+}

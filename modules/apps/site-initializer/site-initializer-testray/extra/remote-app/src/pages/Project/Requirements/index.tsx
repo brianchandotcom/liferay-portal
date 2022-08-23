@@ -20,6 +20,7 @@ import Button from '../../../components/Button';
 import Container from '../../../components/Layout/Container';
 import ListView, {ListViewProps} from '../../../components/ListView';
 import {TableProps} from '../../../components/Table';
+import {ListViewContextProviderProps} from '../../../context/ListViewContext';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';
 import {
@@ -34,10 +35,15 @@ type RequirementListViewProps = {
 	actions?: Action[];
 	projectId?: number | string;
 	variables?: any;
-} & {listViewProps?: Partial<ListViewProps>; tableProps?: Partial<TableProps>};
+} & {
+	initialContext?: Partial<ListViewContextProviderProps>;
+	listViewProps?: Partial<ListViewProps>;
+	tableProps?: Partial<TableProps>;
+};
 
 const RequirementListView: React.FC<RequirementListViewProps> = ({
 	actions,
+	initialContext,
 	listViewProps,
 	tableProps,
 	variables,
@@ -46,6 +52,7 @@ const RequirementListView: React.FC<RequirementListViewProps> = ({
 
 	return (
 		<ListView
+			initialContext={initialContext}
 			managementToolbarProps={{
 				addButton: () => navigate('create'),
 				buttons: (

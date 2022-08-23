@@ -430,39 +430,6 @@ public class DLFileEntryTrashHandler extends BaseDLTrashHandler {
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFileEntryLocalService(
-		DLFileEntryLocalService dlFileEntryLocalService) {
-
-		_dlFileEntryLocalService = dlFileEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFileVersionLocalService(
-		DLFileVersionLocalService dlFileVersionLocalService) {
-
-		_dlFileVersionLocalService = dlFileVersionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFolderLocalService(
-		DLFolderLocalService dlFolderLocalService) {
-
-		_dlFolderLocalService = dlFolderLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLTrashLocalService(
-		DLTrashLocalService dlTrashLocalService) {
-
-		_dlTrashLocalService = dlTrashLocalService;
-	}
-
 	private DLFileEntry _fetchDLFileEntry(long classPK) throws PortalException {
 		Repository repository = RepositoryProviderUtil.getFileEntryRepository(
 			classPK);
@@ -494,10 +461,19 @@ public class DLFileEntryTrashHandler extends BaseDLTrashHandler {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryTrashHandler.class);
 
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
 	private DLFileVersionLocalService _dlFileVersionLocalService;
+
+	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
 	private DLTrashLocalService _dlTrashLocalService;
 
 	@Reference

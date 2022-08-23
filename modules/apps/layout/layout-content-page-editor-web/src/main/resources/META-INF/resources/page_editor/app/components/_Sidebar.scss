@@ -2,6 +2,8 @@ $toolbarHeight: 112px;
 $sidebarButtonHeight: $sidebarButtonWidth;
 $desktopToolbarHeight: 64px;
 $changeTrackingBarHeight: 23px;
+$resizerBorderWidth: 2px;
+$resizerWidth: 16px;
 $toolbarBorders: 2px;
 
 // z-indexes for children of page-editor-sidebar (which is a stacking context).
@@ -142,17 +144,45 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		);
 		/* stylelint-enable */
 		left: $sidebarButtonWidth;
-		overflow: hidden;
 		position: fixed;
 		transform: translateX(-100%);
 		transition: transform ease $defaultTransitionDuration,
 			left ease $defaultTransitionDuration;
 
-		width: $defaultSidebarContentWidth;
+		width: var(--sidebar-content-width, $defaultSidebarContentWidth);
 		z-index: $zIndexContent;
 
 		&--open {
 			transform: translateX(0);
+		}
+	}
+
+	&__resizer {
+		cursor: ew-resize;
+		height: 100%;
+		left: calc(100% - #{$resizerWidth / 2});
+		position: absolute;
+		top: 0;
+		width: $resizerWidth;
+
+		&:hover,
+		&:focus-visible,
+		&--resizing {
+			box-shadow: inset ($resizerWidth / 2 - $resizerBorderWidth) 0 0
+					$white,
+				inset ($resizerWidth / 2) 0 0 $primary-l1;
+			outline: none;
+		}
+
+		&--resizing::after {
+			content: '';
+			display: block;
+			height: 100vh;
+			left: 0;
+			position: fixed;
+			top: 0;
+			width: 100vw;
+			z-index: $modalZIndex;
 		}
 	}
 }

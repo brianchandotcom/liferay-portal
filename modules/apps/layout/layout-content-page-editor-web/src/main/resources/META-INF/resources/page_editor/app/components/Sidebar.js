@@ -21,11 +21,12 @@ import {
 	useStateSafe,
 } from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useRef} from 'react';
 
 import useLazy from '../../core/hooks/useLazy';
 import useLoad from '../../core/hooks/useLoad';
 import usePlugins from '../../core/hooks/usePlugins';
+import {useSessionState} from '../../core/hooks/useSessionState';
 import * as Actions from '../actions/index';
 import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
@@ -68,6 +69,10 @@ const getActivePanelData = ({panelId, panels, sidebarPanels}) => {
 	return {panel, sidebarPanelId};
 };
 
+const MAX_SIDEBAR_WIDTH = 500;
+const MIN_SIZEBAR_WIDTH = 280;
+const SIDEBAR_WIDTH_RESIZE_STEP = 20;
+
 export default function Sidebar() {
 	const dropClearRef = useDropClear();
 	const [hasError, setHasError] = useStateSafe(false);
@@ -75,9 +80,20 @@ export default function Sidebar() {
 	const dispatch = useDispatch();
 	const isMounted = useIsMounted();
 	const load = useLoad();
+	const [resizing, setResizing] = useStateSafe(false);
 	const selectItem = useSelectItem();
+	const separatorRef = useRef();
+	const sidebarContentId = useId();
 	const sidebarId = useId();
 	const store = useSelector((state) => state);
+
+	const [sidebarWidth, setSidebarWidth] = useSessionState(
+		`${config.portletNamespace}_sidebar-width`,
+		MIN_SIZEBAR_WIDTH
+	);
+
+	const sidebarWidthRef = useRef(sidebarWidth);
+	sidebarWidthRef.current = sidebarWidth;
 
 	const panels = useSelector(selectAvailablePanels(config.panels));
 	const sidebarHidden = store.sidebar.hidden;
@@ -184,6 +200,74 @@ export default function Sidebar() {
 		};
 	}, [sidebarOpen, itemConfigurationOpen]);
 
+	useEffect(() => {
+		const separatorElement = separatorRef.current;
+
+		if (!separatorElement) {
+			return;
+		}
+
+		let initialSidebarWidth;
+		let initialCursorPosition;
+
+		const handleMouseMove = (event) => {
+			const cursorDelta = event.clientX - initialCursorPosition;
+
+			if (
+				Liferay.Language.direction[themeDisplay?.getLanguageId()] ===
+				'rtl'
+			) {
+				setSidebarWidth(
+					Math.min(
+						MAX_SIDEBAR_WIDTH,
+						Math.max(
+							MIN_SIZEBAR_WIDTH,
+							initialSidebarWidth - cursorDelta
+						)
+					)
+				);
+			}
+			else {
+				setSidebarWidth(
+					Math.min(
+						MAX_SIDEBAR_WIDTH,
+						Math.max(
+							MIN_SIZEBAR_WIDTH,
+							initialSidebarWidth + cursorDelta
+						)
+					)
+				);
+			}
+		};
+
+		const stopResizing = () => {
+			setResizing(false);
+			document.body.removeEventListener('mousemove', handleMouseMove);
+			document.body.removeEventListener('mouseleave', stopResizing);
+			document.body.removeEventListener('mouseup', stopResizing);
+		};
+
+		const handleMouseDown = (event) => {
+			setResizing(true);
+
+			event.preventDefault();
+
+			initialSidebarWidth = sidebarWidthRef.current;
+			initialCursorPosition = event.clientX;
+
+			document.body.addEventListener('mousemove', handleMouseMove);
+			document.body.addEventListener('mouseleave', stopResizing);
+			document.body.addEventListener('mouseup', stopResizing);
+		};
+
+		separatorElement.addEventListener('mousedown', handleMouseDown);
+
+		return () => {
+			stopResizing();
+			separatorElement.removeEventListener('mousedown', handleMouseDown);
+		};
+	}, [separatorRef, setResizing, setSidebarWidth, sidebarWidthRef]);
+
 	const SidebarPanel = useLazy(
 		useCallback(({instance}) => {
 			if (typeof instance.renderSidebar === 'function') {
@@ -213,6 +297,59 @@ export default function Sidebar() {
 		);
 	};
 
+	const handleSeparatorKeyDown = (event) => {
+		if (
+			Liferay.Language.direction[themeDisplay?.getLanguageId()] === 'rtl'
+		) {
+			if (event.key === 'ArrowLeft') {
+				setSidebarWidth(
+					Math.min(
+						MAX_SIDEBAR_WIDTH,
+						sidebarWidth + SIDEBAR_WIDTH_RESIZE_STEP
+					)
+				);
+			}
+			else if (event.key === 'ArrowRight') {
+				setSidebarWidth(
+					Math.max(
+						MIN_SIZEBAR_WIDTH,
+						sidebarWidth - SIDEBAR_WIDTH_RESIZE_STEP
+					)
+				);
+			}
+			else if (event.key === 'Home') {
+				setSidebarWidth(MIN_SIZEBAR_WIDTH);
+			}
+			else if (event.key === 'End') {
+				setSidebarWidth(MAX_SIDEBAR_WIDTH);
+			}
+		}
+		else {
+			if (event.key === 'ArrowLeft') {
+				setSidebarWidth(
+					Math.max(
+						MIN_SIZEBAR_WIDTH,
+						sidebarWidth - SIDEBAR_WIDTH_RESIZE_STEP
+					)
+				);
+			}
+			else if (event.key === 'ArrowRight') {
+				setSidebarWidth(
+					Math.min(
+						MAX_SIDEBAR_WIDTH,
+						sidebarWidth + SIDEBAR_WIDTH_RESIZE_STEP
+					)
+				);
+			}
+			else if (event.key === 'Home') {
+				setSidebarWidth(MIN_SIZEBAR_WIDTH);
+			}
+			else if (event.key === 'End') {
+				setSidebarWidth(MAX_SIDEBAR_WIDTH);
+			}
+		}
+	};
+
 	return (
 		<ReactPortal className="cadmin">
 			<div
@@ -225,6 +362,7 @@ export default function Sidebar() {
 					}
 				)}
 				ref={dropClearRef}
+				style={{'--sidebar-content-width': `${sidebarWidth}px`}}
 			>
 				<div
 					className={classNames('page-editor__sidebar__buttons', {
@@ -311,6 +449,7 @@ export default function Sidebar() {
 							sidebarPanelId &&
 							!Liferay.FeatureFlags['LPS-153452'],
 					})}
+					id={sidebarContentId}
 					onClick={deselectItem}
 				>
 					{hasError ? (
@@ -354,6 +493,27 @@ export default function Sidebar() {
 							</Suspense>
 						</ErrorBoundary>
 					)}
+
+					{Liferay.FeatureFlags['LPS-153452'] ? (
+						<div
+							aria-controls={sidebarContentId}
+							aria-label={Liferay.Language.get('resize-sidebar')}
+							aria-orientation="vertical"
+							aria-valuemax={MAX_SIDEBAR_WIDTH}
+							aria-valuemin={MIN_SIZEBAR_WIDTH}
+							aria-valuenow={sidebarWidth}
+							className={classNames(
+								'page-editor__sidebar__resizer',
+								{
+									'page-editor__sidebar__resizer--resizing': resizing,
+								}
+							)}
+							onKeyDown={handleSeparatorKeyDown}
+							ref={separatorRef}
+							role="separator"
+							tabIndex={0}
+						/>
+					) : null}
 				</div>
 			</div>
 		</ReactPortal>

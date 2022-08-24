@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {
 	useGetContent,
 	useGetFieldValue,
@@ -44,6 +45,12 @@ import UnsafeHTML from '../UnsafeHTML';
 import FragmentContentInteractionsFilter from './FragmentContentInteractionsFilter';
 import FragmentContentProcessor from './FragmentContentProcessor';
 import getAllEditables from './getAllEditables';
+
+const TEXT_EDITABLE_TYPES = new Set([
+	EDITABLE_TYPES.link,
+	EDITABLE_TYPES['rich-text'],
+	EDITABLE_TYPES.text,
+]);
 
 const FragmentContent = ({
 	className,
@@ -185,6 +192,13 @@ const FragmentContent = ({
 						);
 
 						editable.element.classList.add('page-editor__editable');
+
+						if (TEXT_EDITABLE_TYPES.has(editable.type)) {
+							editable.element.setAttribute(
+								'data-tooltip-floating',
+								true
+							);
+						}
 					});
 				})
 			).then(() => {

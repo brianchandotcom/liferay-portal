@@ -15,7 +15,7 @@
 --%>
 
 <liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/form_navigator.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/form_navigator.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <div class="taglib-form-navigator" id="<portlet:namespace />tabsBoundingBox">

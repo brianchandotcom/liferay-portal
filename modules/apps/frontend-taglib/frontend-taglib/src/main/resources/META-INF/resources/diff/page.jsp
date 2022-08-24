@@ -27,7 +27,7 @@ List<DiffResult> targetResults = diffResults[1];
 %>
 
 <liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/diff.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/diff.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <clay:container-fluid>

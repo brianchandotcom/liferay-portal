@@ -267,7 +267,8 @@ public class BlogsEntryContentDashboardItem
 					locale,
 					WorkflowConstants.getStatusLabel(_blogsEntry.getStatus())),
 				WorkflowConstants.getStatusStyle(_blogsEntry.getStatus()),
-				"1.0"));
+				"1.0", null, _blogsEntry.getUserName(),
+				_blogsEntry.getCreateDate()));
 	}
 
 	@Override

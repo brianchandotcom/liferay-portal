@@ -555,7 +555,8 @@ public class FileEntryContentDashboardItem
 					WorkflowConstants.getStatusLabel(
 						curFileVersion.getStatus())),
 				WorkflowConstants.getStatusStyle(curFileVersion.getStatus()),
-				curFileVersion.getVersion())
+				curFileVersion.getVersion(), curFileVersion.getChangeLog(),
+				curFileVersion.getUserName(), curFileVersion.getCreateDate())
 		);
 	}
 

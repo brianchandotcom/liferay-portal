@@ -436,7 +436,9 @@ public class JournalArticleContentDashboardItem
 					WorkflowConstants.getStatusLabel(
 						curJournalArticle.getStatus())),
 				WorkflowConstants.getStatusStyle(curJournalArticle.getStatus()),
-				String.valueOf(curJournalArticle.getVersion()))
+				String.valueOf(curJournalArticle.getVersion()), null,
+				curJournalArticle.getUserName(),
+				curJournalArticle.getCreateDate())
 		);
 	}
 

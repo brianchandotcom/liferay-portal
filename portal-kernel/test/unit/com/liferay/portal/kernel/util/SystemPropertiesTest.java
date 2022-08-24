@@ -76,13 +76,13 @@ public class SystemPropertiesTest {
 		SystemProperties.set(_PREFIX + _KEY, _TEST_VALUE);
 
 		Assert.assertEquals(
-			new HashMapBuilder<String, String>().put(
+			HashMapBuilder.put(
 				_KEY, _TEST_VALUE
 			).build(),
 			SystemProperties.getProperties(_PREFIX, true));
 
 		Assert.assertEquals(
-			new HashMapBuilder<String, String>().put(
+			HashMapBuilder.put(
 				_PREFIX + _KEY, _TEST_VALUE
 			).build(),
 			SystemProperties.getProperties(_PREFIX, false));

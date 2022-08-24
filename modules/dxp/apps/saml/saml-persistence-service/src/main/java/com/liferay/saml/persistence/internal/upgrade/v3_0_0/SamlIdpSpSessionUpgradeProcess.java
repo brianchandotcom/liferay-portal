@@ -48,7 +48,7 @@ public class SamlIdpSpSessionUpgradeProcess extends UpgradeProcess {
 				"samlNameIdSpProvidedId, samlNameIdValue, samlPeerEntityId) ",
 				"values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-			try (PreparedStatement preparedStatement =
+			try (PreparedStatement preparedStatement1 =
 					connection.prepareStatement(
 						StringBundler.concat(
 							"select min(samlIdpSpSessionId) as ",
@@ -58,40 +58,39 @@ public class SamlIdpSpSessionUpgradeProcess extends UpgradeProcess {
 							"SamlIdpSpSession group by companyId, userId, ",
 							"userName, nameIdFormat, nameIdValue, ",
 							"samlSpEntityId"));
-				ResultSet resultSet = preparedStatement.executeQuery();
-				PreparedStatement insertPreparedStatement =
+				ResultSet resultSet = preparedStatement1.executeQuery();
+				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection, sql)) {
 
 				while (resultSet.next()) {
-					insertPreparedStatement.setInt(
+					preparedStatement2.setInt(
 						1,
 						resultSet.getInt("samlIdpSpSessionId") +
 							-samlIdpSpSessionIdOffset +
 								latestSamlPeerBindingId);
-					insertPreparedStatement.setLong(
+					preparedStatement2.setLong(
 						2, resultSet.getLong("companyId"));
-					insertPreparedStatement.setTimestamp(
+					preparedStatement2.setTimestamp(
 						3, resultSet.getTimestamp("createDate"));
-					insertPreparedStatement.setLong(
-						4, resultSet.getLong("userId"));
-					insertPreparedStatement.setString(
+					preparedStatement2.setLong(4, resultSet.getLong("userId"));
+					preparedStatement2.setString(
 						5, resultSet.getString("userName"));
-					insertPreparedStatement.setBoolean(6, false);
-					insertPreparedStatement.setString(
+					preparedStatement2.setBoolean(6, false);
+					preparedStatement2.setString(
 						7, resultSet.getString("nameIdFormat"));
-					insertPreparedStatement.setString(8, null);
-					insertPreparedStatement.setString(9, null);
-					insertPreparedStatement.setString(10, null);
-					insertPreparedStatement.setString(
+					preparedStatement2.setString(8, null);
+					preparedStatement2.setString(9, null);
+					preparedStatement2.setString(10, null);
+					preparedStatement2.setString(
 						11, resultSet.getString("nameIdValue"));
-					insertPreparedStatement.setString(
+					preparedStatement2.setString(
 						12, resultSet.getString("samlSpEntityId"));
 
-					insertPreparedStatement.addBatch();
+					preparedStatement2.addBatch();
 				}
 
-				insertPreparedStatement.executeBatch();
+				preparedStatement2.executeBatch();
 			}
 
 			runSQL(

@@ -20,29 +20,14 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {
-								"key": "BASIC_COMPONENT-heading"
-							},
-							"fragmentConfig": {
-								"headingLevel": "h1"
-							},
-							"fragmentFields": [
-								{
-									"id": "element-text",
-									"value": {
-										"fragmentLink": {
-										},
-										"text": {
-											"value_i18n": {
-												"en_US": "MDF Requests"
-											}
-										}
-									}
-								}
-							],
-							"indexed": true
+							"widgetInstance": {
+								"widgetConfig": {
+									"properties": "route=mdf-request-list"
+								},
+								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-REACT-APP$]"
+							}
 						},
-						"type": "Fragment"
+						"type": "Widget"
 					}
 				],
 				"type": "Section"
@@ -52,7 +37,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "content-template"
+			"key": "main-template"
 		}
 	},
 	"version": 1.1

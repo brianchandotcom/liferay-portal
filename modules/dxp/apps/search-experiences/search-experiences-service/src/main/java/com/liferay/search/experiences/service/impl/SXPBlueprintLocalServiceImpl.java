@@ -58,24 +58,25 @@ public class SXPBlueprintLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SXPBlueprint addSXPBlueprint(
-			long userId, String configurationJSON,
+			String externalReferenceCode, long userId, String configurationJSON,
 			Map<Locale, String> descriptionMap, String elementInstancesJSON,
 			String schemaVersion, Map<Locale, String> titleMap,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		_validateExternalReferenceCode(
+			serviceContext.getCompanyId(), externalReferenceCode);
 
 		_validate(configurationJSON, titleMap, serviceContext);
 
 		SXPBlueprint sxpBlueprint = sxpBlueprintPersistence.create(
 			counterLocalService.increment());
 
+		sxpBlueprint.setExternalReferenceCode(externalReferenceCode);
+		sxpBlueprint.setCompanyId(serviceContext.getCompanyId());
+
 		User user = _userLocalService.getUser(userId);
 
-		_validateExternalReferenceCode(
-			sxpBlueprint.getSXPBlueprintId(), user.getCompanyId(),
-			sxpBlueprint.getExternalReferenceCode());
-
-		sxpBlueprint.setCompanyId(user.getCompanyId());
 		sxpBlueprint.setUserId(user.getUserId());
 		sxpBlueprint.setUserName(user.getFullName());
 
@@ -230,15 +231,13 @@ public class SXPBlueprintLocalServiceImpl
 	}
 
 	private void _validateExternalReferenceCode(
-			long sxpBlueprintId, long companyId, String externalReferenceCode)
+			long companyId, String externalReferenceCode)
 		throws PortalException {
 
 		SXPBlueprint sxpBlueprint = fetchSXPBlueprintByExternalReferenceCode(
 			companyId, externalReferenceCode);
 
-		if ((sxpBlueprint != null) &&
-			(sxpBlueprint.getSXPBlueprintId() != sxpBlueprintId)) {
-
+		if (sxpBlueprint != null) {
 			throw new DuplicateSXPBlueprintExternalReferenceCodeException();
 		}
 	}

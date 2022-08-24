@@ -28,7 +28,7 @@ DispatchTriggerMetadata dispatchTriggerMetadata = dispatchTriggerDisplayContext.
 String runNowButton = "runNowButton" + row.getRowId();
 %>
 
-<span aria-hidden="true" class="<%= "hide icon-spinner icon-spin dispatch-check-row-icon-spinner" + row.getRowId() %>"></span>
+<span aria-hidden="true" class="hide icon-spinner icon-spin dispatch-check-row-icon-spinner<%= row.getRowId() %>"></span>
 
 <c:if test="<%= DispatchTriggerPermission.contains(permissionChecker, dispatchTrigger, ActionKeys.UPDATE) && dispatchTriggerMetadata.isDispatchTaskExecutorReady() %>">
 	<aui:button name="<%= runNowButton %>" value="run-now" />

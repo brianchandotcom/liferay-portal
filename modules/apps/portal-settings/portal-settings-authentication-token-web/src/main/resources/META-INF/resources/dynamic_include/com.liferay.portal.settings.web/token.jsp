@@ -41,7 +41,7 @@ String userTokenName = tokenConfiguration.userTokenName();
 		<aui:input cssClass="lfr-input-text-container" helpMessage="user-token-name-help" label="user-token-name" name="<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + TokenConfigurationKeys.USER_TOKEN_NAME %>" type="text" value="<%= userTokenName %>" />
 
 		<aui:select helpMessage="token-location-help" label="token-location" name="<%= PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE + TokenConfigurationKeys.TOKEN_LOCATION %>">
-			<aui:option label="<%= "token-location-" + TokenLocation.COOKIE %>" selected="<%= tokenLocation.equals(TokenLocation.COOKIE) %>" value="TokenLocation.COOKIE %>" />
+			<aui:option label="token-location-<%= TokenLocation.COOKIE %>" selected="<%= tokenLocation.equals(TokenLocation.COOKIE) %>" value="TokenLocation.COOKIE %>" />
 			<aui:option label='<%= "token-location-" + TokenLocation.REQUEST %>' selected="<%= tokenLocation.equals(TokenLocation.REQUEST) %>" value="<%= TokenLocation.REQUEST %>" />
 			<aui:option label='<%= "token-location-" + TokenLocation.REQUEST_HEADER %>' selected="<%= tokenLocation.equals(TokenLocation.REQUEST_HEADER) %>" value="<%= TokenLocation.REQUEST_HEADER %>" />
 			<aui:option label='<%= "token-location-" + TokenLocation.SESSION %>' selected="<%= tokenLocation.equals(TokenLocation.SESSION) %>" value="<%= TokenLocation.SESSION %>" />

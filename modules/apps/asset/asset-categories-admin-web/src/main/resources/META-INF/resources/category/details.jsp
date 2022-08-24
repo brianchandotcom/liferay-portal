@@ -88,7 +88,7 @@ renderResponse.setTitle(title);
 							<div>
 								<div id="<portlet:namespace />parentCategoryContainer">
 									<div class="field-content">
-										<div class="form-group" id="<%= "namespace_assetCategoriesSelector_" + vocabularyId %>">
+										<div class="form-group" id="namespace_assetCategoriesSelector_<%= vocabularyId %>">
 											<div class="input-group">
 												<div class="input-group-item">
 													<div class="form-control form-control-tag-group input-group">

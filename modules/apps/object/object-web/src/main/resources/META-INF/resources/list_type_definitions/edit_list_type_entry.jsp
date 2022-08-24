@@ -21,7 +21,7 @@ ListTypeEntry listTypeEntry = (ListTypeEntry)request.getAttribute(ObjectWebKeys.
 ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListTypeEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<form action="javascript:void(0);" onSubmit="<%= liferayPortletResponse.getNamespace() + "editListTypeEntry();" %>">
+<form action="javascript:void(0);" onSubmit="<%= liferayPortletResponse.getNamespace() %>editListTypeEntry();">
 	<div class="modal-header">
 		<div class="modal-title">
 			<%= LanguageUtil.get(request, "edit-item") %>

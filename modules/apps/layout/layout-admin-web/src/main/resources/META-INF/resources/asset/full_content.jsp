@@ -40,7 +40,7 @@ if (LayoutBranchConstants.MASTER_BRANCH_NAME.equals(layoutBranchName)) {
 }
 %>
 
-<strong><liferay-ui:message key="page" />:</strong> <a href="<%= HtmlUtil.escapeHREF(layoutFriendlyURL) + "?layoutSetBranchId=" + layoutRevision.getLayoutSetBranchId() + "&layoutRevisionId=" + layoutRevision.getLayoutRevisionId() %>"><%= HtmlUtil.escape(targetLayout.getHTMLTitle(locale)) %></a><br />
+<strong><liferay-ui:message key="page" />:</strong> <a href="<%= HtmlUtil.escapeHREF(layoutFriendlyURL) %>?layoutSetBranchId=<%= layoutRevision.getLayoutSetBranchId() %>&layoutRevisionId=<%= layoutRevision.getLayoutRevisionId() %>"><%= HtmlUtil.escape(targetLayout.getHTMLTitle(locale)) %></a><br />
 
 <strong><liferay-ui:message key="site-pages-variation" />:</strong> <%= HtmlUtil.escape(layoutSetBranchName) %><br />
 

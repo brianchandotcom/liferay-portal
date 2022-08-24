@@ -170,14 +170,14 @@ else {
 
 			<ul class="dropdown-menu dropdown-menu-right" role="menu">
 				<li>
-					<a class="dropdown-item" href="javascript:void(0);" id="manageLayoutSetRevisions" onclick="<%= liferayPortletResponse.getNamespace() + "openSitePagesVariationsDialog();" %>">
+					<a class="dropdown-item" href="javascript:void(0);" id="manageLayoutSetRevisions" onclick="<%= liferayPortletResponse.getNamespace() %>openSitePagesVariationsDialog();">
 						<liferay-ui:message key="site-pages-variation" />
 					</a>
 				</li>
 
 				<c:if test="<%= !layoutRevision.isIncomplete() && !layout.isTypeContent() %>">
 					<li>
-						<a class="dropdown-item" href="javascript:void(0);" id="manageLayoutRevisions" onclick="<%= liferayPortletResponse.getNamespace() + "openPageVariationsDialog();" %>">
+						<a class="dropdown-item" href="javascript:void(0);" id="manageLayoutRevisions" onclick="<%= liferayPortletResponse.getNamespace() %>openPageVariationsDialog();">
 							<liferay-ui:message key="page-variations" />
 						</a>
 					</li>

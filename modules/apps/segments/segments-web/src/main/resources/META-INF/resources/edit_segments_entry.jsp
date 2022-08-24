@@ -43,7 +43,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 	<aui:input name="type" type="hidden" value="<%= editSegmentsEntryDisplayContext.getType() %>" />
 	<aui:input name="dynamic" type="hidden" value="<%= true %>" />
 
-	<div id="<%= liferayPortletResponse.getNamespace() + "-segment-edit-root" %>">
+	<div id="<%= liferayPortletResponse.getNamespace() %>-segment-edit-root">
 		<div class="inline-item my-5 p-5 w-100">
 			<span aria-hidden="true" class="loading-animation"></span>
 		</div>

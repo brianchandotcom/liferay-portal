@@ -24,7 +24,7 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 <liferay-frontend:side-panel-content
 	title='<%= LanguageUtil.get(request, "picklist") %>'
 >
-	<form action="javascript:void(0);" onSubmit="<%= liferayPortletResponse.getNamespace() + "saveListTypeDefinition();" %>">
+	<form action="javascript:void(0);" onSubmit="<%= liferayPortletResponse.getNamespace() %>saveListTypeDefinition();">
 		<div class="side-panel-content">
 			<div class="side-panel-content__body">
 				<div class="sheet">

@@ -18,7 +18,7 @@
 
 <portlet:renderURL var="basePortletURL" />
 
-<div id="<%= liferayPortletResponse.getNamespace() + "-questions-root" %>">
+<div id="<%= liferayPortletResponse.getNamespace() %>-questions-root">
 
 	<%
 	QuestionsConfiguration questionsConfiguration = portletDisplay.getPortletInstanceConfiguration(QuestionsConfiguration.class);

@@ -35,7 +35,7 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 
 	<div class="input-group">
 		<div class="input-group-item">
-			<input placeholder="<%= LanguageUtil.format(locale, "select-x", "structure") %>" id="<%= liferayPortletResponse.getNamespace() + "ddmStructure" %>" name="structure" readonly value="<%= (ddmStructure != null) ? ddmStructure.getName(locale) : StringPool.BLANK %>" class="form-control lfr-input-resource" />
+			<input placeholder="<%= LanguageUtil.format(locale, "select-x", "structure") %>" id="<%= liferayPortletResponse.getNamespace() %>ddmStructure" name="structure" readonly value="<%= (ddmStructure != null) ? ddmStructure.getName(locale) : StringPool.BLANK %>" class="form-control lfr-input-resource" />
 		</div>
 
 		<c:if test="<%= (ddmTemplate == null) || (ddmTemplate.getClassPK() == 0) %>">

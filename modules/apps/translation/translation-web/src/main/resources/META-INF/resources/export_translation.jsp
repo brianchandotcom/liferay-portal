@@ -120,7 +120,7 @@ renderResponse.setTitle(exportTranslationDisplayContext.getTitle());
 											<clay:content-col>
 												<div class="custom-checkbox custom-control">
 													<label>
-														<input checked class="custom-control-input" id="<%= "experience_" + experience.get("value") %>" type="checkbox" />
+														<input checked class="custom-control-input" id="experience_<%= experience.get("value") %>" type="checkbox" />
 
 														<span class="custom-control-label"></span>
 													</label>

@@ -20,7 +20,7 @@
 LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext)request.getAttribute(ProductNavigationProductMenuWebKeys.LAYOUTS_TREE_DISPLAY_CONTEXT);
 %>
 
-<div id="<%= liferayPortletResponse.getNamespace() + "-layout-finder" %>">
+<div id="<%= liferayPortletResponse.getNamespace() %>-layout-finder">
 	<react:component
 		module="js/LayoutFinder.es"
 		props="<%= layoutsTreeDisplayContext.getLayoutFinderData() %>"
@@ -29,7 +29,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext
 </div>
 
 <div id="<portlet:namespace />layoutsTree">
-	<div id="<%= liferayPortletResponse.getNamespace() + "-page-type" %>">
+	<div id="<%= liferayPortletResponse.getNamespace() %>-page-type">
 		<react:component
 			module="js/PageTypeSelector.es"
 			props="<%= layoutsTreeDisplayContext.getPageTypeSelectorData() %>"

@@ -61,7 +61,7 @@ ViewPortalPropertiesDisplayContext viewPortalPropertiesDisplayContext = new View
 						cssClass="table-cell-expand"
 						name="value"
 					>
-						<select name="<%= liferayPortletResponse.getNamespace() + "portalProperty" + HtmlUtil.escapeAttribute(property) %>">
+						<select name="<%= liferayPortletResponse.getNamespace() %>portalProperty<%= HtmlUtil.escapeAttribute(property) %>">
 							<option <%= Objects.equals("true", value) ? "selected" : StringPool.BLANK %> value="true"><%= LanguageUtil.get(request, "true") %></option>
 							<option <%= Objects.equals("false", value) ? "selected" : StringPool.BLANK %> value="false"><%= LanguageUtil.get(request, "false") %></option>
 						</select>

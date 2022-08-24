@@ -76,7 +76,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 				</div>
 
 				<div class="align-items-end col-auto d-flex">
-					<button class="btn btn-monospaced btn-secondary form-submitter" id="remove-sku-button" onclick="<%= liferayPortletResponse.getNamespace() + "removeSku();" %>" type="button">
+					<button class="btn btn-monospaced btn-secondary form-submitter" id="remove-sku-button" onclick="<%= liferayPortletResponse.getNamespace() %>removeSku();" type="button">
 						<clay:icon
 							symbol="trash"
 						/>

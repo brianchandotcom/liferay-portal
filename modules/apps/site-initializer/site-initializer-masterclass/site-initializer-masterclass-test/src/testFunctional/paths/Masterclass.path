@@ -81,7 +81,7 @@
 </tr>
 <tr>
 	<td>MASTERCLASS_LOGO</td>
-	<td>//img[contains(@src,'masterclass_logo.svg')]</td>
+	<td>//img[contains(@src,'masterclass_logo-svg')]</td>
 	<td></td>
 </tr>
 <tr>

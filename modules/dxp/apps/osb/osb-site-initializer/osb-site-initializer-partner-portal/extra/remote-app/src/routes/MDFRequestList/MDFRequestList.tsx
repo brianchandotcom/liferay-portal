@@ -11,8 +11,10 @@
 
 import ClayButton from '@clayui/button';
 
+import {PRMPageRoute} from '../../common/enums/prmPageRoute';
+import liferayNavigate from '../../common/utils/liferayNavigate';
 import Table from './components/Table';
-import getMDFListColumns from './components/utils/getMDFListColumns';
+import useGetMDFListColumns from './hooks/useGetMDFListColumns';
 import useGetMDFRequestListItems from './hooks/useGetMDFRequestListItems';
 
 interface MDFRequestListItem {
@@ -24,6 +26,17 @@ interface MDFRequestListItem {
 
 const MDFRequestList = () => {
 	const {data: listItems} = useGetMDFRequestListItems();
+	// eslint-disable-next-line no-console
+	console.log(
+		'🚀 ~ file: MDFRequestList.tsx ~ line 29 ~ MDFRequestList ~ listItems',
+		listItems
+	);
+
+	const {data: listColumns} = useGetMDFListColumns();
+
+	const newMdfRequest = () => {
+		liferayNavigate(PRMPageRoute.CREATE_MDF_REQUEST);
+	};
 
 	return (
 		<div className="border-0 pb-3 pt-5 px-6 sheet">
@@ -34,14 +47,14 @@ const MDFRequestList = () => {
 					Export MDF Report
 				</ClayButton>
 
-				<ClayButton>New Request</ClayButton>
+				<ClayButton onClick={newMdfRequest}>New Request</ClayButton>
 			</div>
 
 			{listItems && (
 				<div className="mt-3">
 					<Table<MDFRequestListItem>
 						borderless
-						columns={getMDFListColumns()}
+						columns={listColumns}
 						responsive
 						rows={listItems}
 					/>

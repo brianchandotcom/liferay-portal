@@ -9,7 +9,16 @@
  * distribution rights of the Software.
  */
 
-export enum PRMPageRoute {
-	CREATE_MDF_REQUEST = 'marketing/mdf-requests/new',
-	MDF_REQUESTS_LISTING = 'marketing/mdf-requests',
+import useGetMDFListingColumns from '../../../common/services/liferay/object/mdf-listing/useGetMDFListingColumns';
+
+export default function useGetMDFListColumns() {
+	const swr = useGetMDFListingColumns();
+
+	return {
+		...swr,
+		data: swr.data?.items.map((item) => ({
+			columnKey: item.externalReferenceCode,
+			label: item.label,
+		})),
+	};
 }

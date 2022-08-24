@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import useGetMDFRequest from '../../../common/services/liferay/object/mdf-requests/useGetMDFRequest';
 import {customFormatDateOptions} from '../../../common/utils/constants/customFormatDateOptions';
 import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
@@ -60,7 +61,7 @@ export default function useGetMDFRequestListItems() {
 					item.maxDateActivity
 				),
 				...getBudgetInfos(item.totalCostOfExpense, item.totalRequested),
-				id: `Request-${item.id}`,
+				[MDFColumnKey.id]: `Request-${item.id}`,
 			};
 		}),
 	};

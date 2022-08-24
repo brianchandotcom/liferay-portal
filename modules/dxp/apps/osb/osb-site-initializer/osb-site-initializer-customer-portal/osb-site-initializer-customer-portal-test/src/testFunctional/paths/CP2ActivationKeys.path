@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ACTIONS_DROPDOWN</td>
+	<td>//button[contains(@class, 'dropdown-item')]//div[contains(text(), '${key_action}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN</td>
 	<td>//select/option[text()='${key_option}']</td>
 	<td></td>

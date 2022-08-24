@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.persistence.PortalPreferencesUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.simple.Element;
@@ -177,11 +176,11 @@ public class PortalPreferencesImpl
 		String[] values = preferences.get(
 			new PortalPreferenceKey(namespace, key));
 
-		if (_isNull(values)) {
+		if (PreferencesValueUtil.isNull(values)) {
 			return defaultValue;
 		}
 
-		return _getActualValue(values[0]);
+		return PreferencesValueUtil.getActualValue(values[0]);
 	}
 
 	@Override
@@ -307,7 +306,7 @@ public class PortalPreferencesImpl
 
 				modifiedPreferences.put(
 					portalPreferenceKey,
-					new String[] {_getXMLSafeValue(value)});
+					new String[] {PreferencesValueUtil.getXMLSafeValue(value)});
 			};
 
 			if (_signedIn) {
@@ -364,7 +363,8 @@ public class PortalPreferencesImpl
 				Map<PortalPreferenceKey, String[]> modifiedPreferences =
 					_getModifiedPreferences();
 
-				modifiedPreferences.put(keyEntry, _getXMLSafeValues(values));
+				modifiedPreferences.put(
+					keyEntry, PreferencesValueUtil.getXMLSafeValues(values));
 			};
 
 			if (_signedIn) {
@@ -430,42 +430,6 @@ public class PortalPreferencesImpl
 		return portletPreferencesElement.toXMLString();
 	}
 
-	private String _getActualValue(String value) {
-		if ((value == null) || value.equals(_NULL_VALUE)) {
-			return null;
-		}
-
-		return PreferencesValueUtil.fromCompactSafe(value);
-	}
-
-	private String[] _getActualValues(String[] values) {
-		if (values == null) {
-			return null;
-		}
-
-		if (values.length == 1) {
-			String actualValue = _getActualValue(values[0]);
-
-			if (actualValue == null) {
-				return null;
-			}
-			else if (actualValue.equals(_NULL_ELEMENT)) {
-				return new String[] {null};
-			}
-			else {
-				return new String[] {actualValue};
-			}
-		}
-
-		String[] actualValues = new String[values.length];
-
-		for (int i = 0; i < actualValues.length; i++) {
-			actualValues[i] = _getActualValue(values[i]);
-		}
-
-		return actualValues;
-	}
-
 	private Map<PortalPreferenceKey, String[]> _getModifiedPreferences() {
 		if (_modifiedPreferences == null) {
 			_modifiedPreferences = new ConcurrentHashMap<>(
@@ -482,37 +446,11 @@ public class PortalPreferencesImpl
 
 		String[] values = preferences.get(portalPreferenceKey);
 
-		if (_isNull(values)) {
+		if (PreferencesValueUtil.isNull(values)) {
 			return def;
 		}
 
-		return _getActualValues(values);
-	}
-
-	private String _getXMLSafeValue(String value) {
-		if (value == null) {
-			return _NULL_VALUE;
-		}
-
-		return PreferencesValueUtil.toCompactSafe(value);
-	}
-
-	private String[] _getXMLSafeValues(String[] values) {
-		if (values == null) {
-			return new String[] {_NULL_VALUE};
-		}
-
-		if ((values.length == 1) && (values[0] == null)) {
-			return new String[] {_NULL_ELEMENT};
-		}
-
-		String[] xmlSafeValues = new String[values.length];
-
-		for (int i = 0; i < xmlSafeValues.length; i++) {
-			xmlSafeValues[i] = _getXMLSafeValue(values[i]);
-		}
-
-		return xmlSafeValues;
+		return PreferencesValueUtil.getActualValues(values);
 	}
 
 	private boolean _isCausedByConcurrentModification(Throwable throwable) {
@@ -532,16 +470,6 @@ public class PortalPreferencesImpl
 			throwable = causeThrowable;
 
 			causeThrowable = throwable.getCause();
-		}
-
-		return false;
-	}
-
-	private boolean _isNull(String[] values) {
-		if (ArrayUtil.isEmpty(values) ||
-			((values.length == 1) && (_getActualValue(values[0]) == null))) {
-
-			return true;
 		}
 
 		return false;
@@ -588,11 +516,11 @@ public class PortalPreferencesImpl
 
 					String[] values = preferenceMap.get(portalPreferenceKey);
 
-					if (_isNull(values)) {
+					if (PreferencesValueUtil.isNull(values)) {
 						values = null;
 					}
 					else {
-						values = _getActualValues(values);
+						values = PreferencesValueUtil.getActualValues(values);
 					}
 
 					if (!Arrays.equals(originalValues, values)) {
@@ -609,10 +537,6 @@ public class PortalPreferencesImpl
 			}
 		}
 	}
-
-	private static final String _NULL_ELEMENT = "NULL_ELEMENT";
-
-	private static final String _NULL_VALUE = "NULL_VALUE";
 
 	private static final String _RANDOM_KEY = "r";
 

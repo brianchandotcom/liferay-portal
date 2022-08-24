@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -71,6 +72,8 @@ public class ExecutePoshiElement extends PoshiElement {
 		String poshiScriptParentheticalContent = getParentheticalContent(
 			poshiScript);
 		String fileExtension = getFileExtension();
+
+		validateParentheticalContent(poshiScriptParentheticalContent);
 
 		if (fileExtension.equals("function") &&
 			poshiScript.startsWith("selenium.")) {
@@ -261,6 +264,58 @@ public class ExecutePoshiElement extends PoshiElement {
 		}
 
 		return returnPoshiElement.createPoshiScriptSnippet(poshiScriptSnippet);
+	}
+
+	public void validateParentheticalContent(String parentheticalContent)
+		throws PoshiScriptParserException {
+
+		Stack<Character> stack = new Stack<>();
+
+		boolean expectedComma = false;
+
+		for (int i = 0; i < parentheticalContent.length(); i++) {
+			char c = parentheticalContent.charAt(i);
+
+			if (!stack.isEmpty() && (c == '\"') &&
+				(parentheticalContent.charAt(i - 1) != '\\')) {
+
+				stack.pop();
+				expectedComma = true;
+
+				continue;
+			}
+
+			if (c == '\"') {
+				stack.push(c);
+
+				continue;
+			}
+
+			if (expectedComma) {
+				if (c == ',') {
+					expectedComma = false;
+
+					continue;
+				}
+
+				if (c == ' ') {
+					continue;
+				}
+
+				PoshiScriptParserException poshiScriptParserException =
+					new PoshiScriptParserException(
+						"Missing comma in execute method", this);
+
+				int errorLineNumber =
+					poshiScriptParserException.getErrorLineNumber();
+
+				poshiScriptParserException.setErrorLineNumber(
+					errorLineNumber +
+						StringUtil.count(parentheticalContent, "\n", i));
+
+				throw poshiScriptParserException;
+			}
+		}
 	}
 
 	protected ExecutePoshiElement() {

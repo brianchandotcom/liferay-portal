@@ -78,7 +78,7 @@
 </tr>
 <tr>
 	<td>SITE_SELECTOR</td>
-	<td>//div[contains(@class,'card-horizontal')]//a[contains(@title,'${key_siteName}')]</td>
+	<td>//span[contains(@class,'card-body')]//span[normalize-space(text())='${key_siteName}']</td>
 	<td></td>
 </tr>
 <tr>

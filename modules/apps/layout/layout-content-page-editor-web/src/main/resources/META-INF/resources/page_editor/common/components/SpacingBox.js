@@ -233,7 +233,7 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 			<div ref={itemListRef}>
 				<ClayDropDown.ItemList aria-labelledby={triggerId}>
 					<ClayDropDown.Group header={field?.label}>
-						{field?.validValues?.map((option) => (
+						{field?.typeOptions?.validValues?.map((option) => (
 							<ClayDropDown.Item
 								aria-label={Liferay.Util.sub(
 									Liferay.Language.get('set-x-to-x'),

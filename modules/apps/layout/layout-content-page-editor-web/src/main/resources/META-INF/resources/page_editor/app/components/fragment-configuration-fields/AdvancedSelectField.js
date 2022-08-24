@@ -392,12 +392,6 @@ AdvancedSelectField.propTypes = {
 				})
 			).isRequired,
 		}),
-		validValues: PropTypes.arrayOf(
-			PropTypes.shape({
-				label: PropTypes.string.isRequired,
-				value: PropTypes.string.isRequired,
-			})
-		),
 	}),
 	onValueSelect: PropTypes.func.isRequired,
 	options: PropTypes.arrayOf(

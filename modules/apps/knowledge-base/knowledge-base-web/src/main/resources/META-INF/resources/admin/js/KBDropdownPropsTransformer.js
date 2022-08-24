@@ -12,41 +12,27 @@
  * details.
  */
 
-import {openConfirmModal} from 'frontend-js-web';
+import {openConfirmModal, openModal} from 'frontend-js-web';
 
 const ACTIONS = {
-	delete(itemData) {
+	delete({deleteURL}) {
 		openConfirmModal({
 			message: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this'
 			),
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
-					submitForm(document.hrefFm, itemData.deleteURL);
+					submitForm(document.hrefFm, deleteURL);
 				}
 			},
 		});
 	},
 
-	openWindow(label, url) {
-		Liferay.Util.openWindow({
-			dialog: {
-				destroyOnHide: true,
-				modal: true,
-			},
-			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer',
-			},
-			title: Liferay.Language.get(label),
-			uri: url,
+	permissions({permissionsURL}) {
+		openModal({
+			title: Liferay.Language.get('permissions'),
+			url: permissionsURL,
 		});
-	},
-
-	permissions(itemData) {
-		this.openWindow(
-			Liferay.Language.get('permissions'),
-			itemData.permissionsURL
-		);
 	},
 };
 

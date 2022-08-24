@@ -30,7 +30,6 @@ import {
 } from '../utils/getFormErrorDescription';
 import getFragmentEntryLinkIdsFromItemId from '../utils/getFragmentEntryLinkIdsFromItemId';
 import {hasFormParent} from '../utils/hasFormParent';
-import hasRequiredInputChild from '../utils/hasRequiredInputChild';
 import {isRequiredFormInput} from '../utils/isRequiredFormInput';
 
 export default function deleteItem({itemId, selectItem = () => {}}) {
@@ -139,7 +138,7 @@ function maybeShowAlert(layoutData, itemId, fragmentEntryLinks) {
 
 	if (
 		!item ||
-		item.type === LAYOUT_DATA_ITEM_TYPES.form ||
+		item.type !== LAYOUT_DATA_ITEM_TYPES.fragment ||
 		!hasFormParent(item, layoutData)
 	) {
 		return null;
@@ -180,23 +179,6 @@ function maybeShowAlert(layoutData, itemId, fragmentEntryLinks) {
 			const {message} = getFormErrorDescription({
 				name: getFieldLabel(fieldId, formFields),
 				type: FORM_ERROR_TYPES.deletedField,
-			});
-
-			openToast({
-				message,
-				type: 'warning',
-			});
-		}
-		else if (
-			hasRequiredInputChild({
-				formFields,
-				fragmentEntryLinks,
-				itemId,
-				layoutData,
-			})
-		) {
-			const {message} = getFormErrorDescription({
-				type: FORM_ERROR_TYPES.deletedFragment,
 			});
 
 			openToast({

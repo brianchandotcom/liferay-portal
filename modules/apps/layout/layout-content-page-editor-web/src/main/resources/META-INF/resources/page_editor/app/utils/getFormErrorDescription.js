@@ -14,7 +14,6 @@
 
 export const FORM_ERROR_TYPES = {
 	deletedField: 'deletedField',
-	deletedFragment: 'deletedFragment',
 	hiddenFields: 'hiddenFields',
 	hiddenFragment: 'hiddenFragment',
 	missingFields: 'missingFields',
@@ -29,13 +28,6 @@ export function getFormErrorDescription({name = null, type}) {
 				message: Liferay.Util.sub(
 					Liferay.Language.get('the-required-field-x-was-deleted'),
 					name
-				),
-			};
-
-		case FORM_ERROR_TYPES.deletedFragment:
-			return {
-				message: Liferay.Language.get(
-					'the-deleted-fragment-contained-required-fields'
 				),
 			};
 

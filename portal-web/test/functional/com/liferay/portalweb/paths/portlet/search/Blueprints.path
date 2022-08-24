@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_FIELDS_MENU</td>
-	<td>//button[contains(@class,'dropdown-toggle') and contains(.,'Open Fields Menu')]</td>
+	<td>//button[contains(@class,'dropdown-toggle') and contains(@aria-label,'Open Fields Menu')]</td>
 	<td></td>
 </tr>
 <tr>

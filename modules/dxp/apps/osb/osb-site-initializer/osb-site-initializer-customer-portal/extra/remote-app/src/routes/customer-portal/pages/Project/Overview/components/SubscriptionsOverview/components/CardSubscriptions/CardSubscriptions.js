@@ -29,7 +29,7 @@ const SUBSCRIPTION_IMAGE_FILE = {
 	'Commerce': 'commerce_icon.svg',
 	'DXP': 'dxp_icon.svg',
 	'Enterprise Search': 'enterprise_icon.svg',
-	'LXC - SM': 'dxp_icon.svg',
+	'LXC-SM': 'dxp_icon.svg',
 	'Liferay Experience Cloud': 'dxp_icon.svg',
 	'Portal': 'portal_icon.svg',
 };

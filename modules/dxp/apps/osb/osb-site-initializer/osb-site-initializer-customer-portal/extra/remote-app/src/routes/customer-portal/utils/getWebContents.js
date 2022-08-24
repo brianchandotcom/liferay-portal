@@ -49,22 +49,22 @@ export function getWebContents(dxpVersion, slaCurrent, subscriptionGroups) {
 
 	const hasAnalyticsCloudNotActive = subscriptionGroups.find(
 		(subscriptionGroup) =>
-			subscriptionGroup.name === 'Analytics Cloud' &&
+			subscriptionGroup.name === PRODUCT_TYPES.analyticsCloud &&
 			(subscriptionGroup.activationStatus === 'In-Progress' ||
 				!subscriptionGroup.activationStatus)
 	);
 
 	const hasPortalOrPartnershipNotActive = subscriptionGroups.find(
 		(subscriptionGroup) =>
-			subscriptionGroup.name === 'Portal' ||
-			(subscriptionGroup.name === 'Partnership' &&
+			subscriptionGroup.name === PRODUCT_TYPES.portal ||
+			(subscriptionGroup.name === PRODUCT_TYPES.partnership &&
 				(subscriptionGroup.activationStatus === 'In-Progress' ||
 					!subscriptionGroup.activationStatus))
 	);
 	const hasDXPOrDXPCloudActive = subscriptionGroups.find(
 		(subscriptionGroup) =>
-			subscriptionGroup.name === 'DXP' ||
-			(subscriptionGroup.name === 'LXC - SM' &&
+			subscriptionGroup.name === PRODUCT_TYPES.dxp ||
+			(subscriptionGroup.name === PRODUCT_TYPES.dxpCloud &&
 				subscriptionGroup.activationStatus === 'Active')
 	);
 

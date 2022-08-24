@@ -14,4 +14,18 @@ definition {
 		}
 	}
 
+	macro exportAllKeyDetails {
+		Click(
+			key_text = "Actions",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_action = "Export All Key Details (csv)",
+			locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
+
+		Alert.viewSuccessMessage();
+
+		CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${fileName}");
+	}
+
 }

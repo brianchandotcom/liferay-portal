@@ -35,6 +35,7 @@ import java.nio.file.Paths;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 
 import org.dom4j.Element;
 
@@ -772,6 +773,16 @@ public final class CommandLogger {
 
 		String testClassCommandName =
 			PoshiContext.getTestCaseNamespacedClassCommandName();
+
+		Properties properties =
+			PoshiContext.getNamespacedClassCommandNameProperties(
+				testClassCommandName);
+
+		if (GetterUtil.getBoolean(
+				properties.getProperty("disable-webdriver"))) {
+
+			return;
+		}
 
 		testClassCommandName = StringUtil.replace(
 			testClassCommandName, "#", "_");

@@ -121,7 +121,8 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.supported-public-render-parameter=categoryId",
 		"javax.portlet.supported-public-render-parameter=resetCur",
 		"javax.portlet.supported-public-render-parameter=tag",
-		"javax.portlet.supported-public-render-parameter=tags"
+		"javax.portlet.supported-public-render-parameter=tags",
+		"javax.portlet.version=3.0"
 	},
 	service = {AssetPublisherPortlet.class, Portlet.class}
 )

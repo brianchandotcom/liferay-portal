@@ -1,10 +1,10 @@
-@component-name = "portal-headless-frontend-infrastructure"
+@component-name = "portal-frontend-infrastructure"
 definition {
 
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Headless Frontend Infrastructure";
+	property testray.main.component.name = "Remote Apps";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -55,8 +55,6 @@ definition {
 		}
 
 		task ("Then Vanilla Counter is displayed correctly") {
-			Navigator.gotoPage(pageName = "My Widget Page");
-
 			AssertElementPresent(locator1 = "//vanilla-counter[@test-data-user='QAuser']");
 
 			Refresh();
@@ -86,8 +84,6 @@ definition {
 		}
 
 		task ("Then My Pretty IFrame is displayed correctly") {
-			Navigator.gotoPage(pageName = "My Widget Page");
-
 			AssertElementPresent(locator1 = "//iframe[contains(@src,'https://liferay.github.io/liferay-frontend-projects/index.html?b=2&a=1')]");
 		}
 	}

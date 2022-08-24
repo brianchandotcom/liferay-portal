@@ -6568,8 +6568,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent1 Title");
 
-		WebContent.viewCP(
-			webContentContent = "WC WebContent1 Content",
+		WebContent.viewWithStructureCP(
+			webContentRichText = "WC WebContent1 Content",
+			webContentRichTextFieldLabel = "content",
 			webContentTitle = "WC WebContent1 Title");
 
 		SignOut.signOut();
@@ -6624,8 +6625,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent2 Title");
 
-		WebContent.viewCP(
-			webContentContent = "WC WebContent2 Content",
+		WebContent.viewWithStructureCP(
+			webContentRichText = "WC WebContent2 Content",
+			webContentRichTextFieldLabel = "content",
 			webContentTitle = "WC WebContent2 Title");
 
 		Upgrade.viewMatchingCalendarIndexesInPartitionedDatabase();

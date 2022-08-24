@@ -22,6 +22,7 @@ import {
 	Select,
 	Toggle,
 	invalidateRequired,
+	stringIncludesQuery,
 	useForm,
 } from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
@@ -539,7 +540,10 @@ function AggregationSourceProperty({
 	objectFieldSettings = [],
 	setValues,
 }: IAggregationSourcePropertyProps) {
-	const [query, setQuery] = useState<string>('');
+	const [relationshipsQuery, setRelationshipsQuery] = useState<string>('');
+	const [relationshipFieldsQuery, setRelationshipFieldsQuery] = useState<
+		string
+	>('');
 	const [
 		selectedRelatedObjectRelationship,
 		setSelectRelatedObjectRelationship,
@@ -557,6 +561,24 @@ function AggregationSourceProperty({
 	const [objectRelationshipFields, setObjectRelationshipFields] = useState<
 		ObjectField[]
 	>();
+
+	const filteredObjectRelationships = useMemo(() => {
+		return objectRelationships?.filter(({label}) =>
+			stringIncludesQuery(
+				label[defaultLanguageId] as string,
+				relationshipsQuery
+			)
+		);
+	}, [objectRelationships, relationshipsQuery]);
+
+	const filteredObjectRelationshipFields = useMemo(() => {
+		return objectRelationshipFields?.filter(({label}) =>
+			stringIncludesQuery(
+				label[defaultLanguageId] as string,
+				relationshipFieldsQuery
+			)
+		);
+	}, [objectRelationshipFields, relationshipFieldsQuery]);
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -769,13 +791,13 @@ function AggregationSourceProperty({
 					'no-relationships-were-found'
 				)}
 				error={errors.objectRelationshipName}
-				items={objectRelationships ?? []}
+				items={filteredObjectRelationships ?? []}
 				label={Liferay.Language.get('relationship')}
-				onChangeQuery={setQuery}
+				onChangeQuery={setRelationshipsQuery}
 				onSelectItem={(item: TObjectRelationship) => {
 					handleChangeRelatedObjectRelationship(item);
 				}}
-				query={query}
+				query={relationshipsQuery}
 				required
 				value={
 					selectedRelatedObjectRelationship?.label[defaultLanguageId]
@@ -804,13 +826,13 @@ function AggregationSourceProperty({
 						'no-fields-were-found'
 					)}
 					error={errors.objectFieldName}
-					items={objectRelationshipFields ?? []}
+					items={filteredObjectRelationshipFields ?? []}
 					label={Liferay.Language.get('field')}
-					onChangeQuery={setQuery}
+					onChangeQuery={setRelationshipFieldsQuery}
 					onSelectItem={(item: ObjectField) => {
 						handleSummarizeFieldChange(item);
 					}}
-					query={query}
+					query={relationshipFieldsQuery}
 					required
 					value={selectedSummarizeField}
 				>

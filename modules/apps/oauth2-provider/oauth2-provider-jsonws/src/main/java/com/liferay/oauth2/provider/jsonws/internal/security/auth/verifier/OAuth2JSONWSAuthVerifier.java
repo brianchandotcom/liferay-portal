@@ -90,9 +90,6 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 			accessControlContext);
 
 		if (accessTokenContent == null) {
-			authVerifierResult.setState(
-				AuthVerifierResult.State.NOT_APPLICABLE);
-
 			return authVerifierResult;
 		}
 

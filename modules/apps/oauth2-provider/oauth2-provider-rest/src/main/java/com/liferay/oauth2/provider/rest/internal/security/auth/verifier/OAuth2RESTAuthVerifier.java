@@ -79,9 +79,6 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 				accessControlContext);
 
 			if (accessTokenContent == null) {
-				authVerifierResult.setState(
-					AuthVerifierResult.State.NOT_APPLICABLE);
-
 				return authVerifierResult;
 			}
 

@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Locale;
+import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,7 +45,7 @@ public class DDMFormLayoutValidatorTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Test(expected = MustNotDuplicateFieldName.class)
+	@Test
 	public void testDuplicateFieldNames() throws Exception {
 		DDMFormLayoutColumn ddmFormLayoutColumn1 = _createDDMFormLayoutColumn(
 			6, "field1", "field2", "field3");
@@ -64,7 +66,19 @@ public class DDMFormLayoutValidatorTest {
 		DDMFormLayout ddmFormLayout = _createDDMFormLayout(
 			ddmFormLayoutPage, LocaleUtil.US);
 
-		_ddmFormLayoutValidator.validate(ddmFormLayout);
+		try {
+			_ddmFormLayoutValidator.validate(ddmFormLayout);
+
+			Assert.fail();
+		}
+		catch (MustNotDuplicateFieldName mustNotDuplicateFieldName) {
+			Set<String> duplicatedFieldNames =
+				mustNotDuplicateFieldName.getDuplicatedFieldNames();
+
+			Assert.assertTrue(duplicatedFieldNames.contains("field1"));
+			Assert.assertFalse(duplicatedFieldNames.contains("field2"));
+			Assert.assertTrue(duplicatedFieldNames.contains("field3"));
+		}
 	}
 
 	@Test(expected = InvalidRowSize.class)

@@ -3194,11 +3194,28 @@ public abstract class BaseBuild implements Build {
 			return new HashMap<>();
 		}
 
-		JSONObject jsonObject = actionsJSONArray.getJSONObject(0);
+		JSONObject parametersActionsJSONObject = null;
 
-		if (jsonObject.has("parameters")) {
-			JSONArray parametersJSONArray = jsonObject.getJSONArray(
-				"parameters");
+		for (int i = 0; i < actionsJSONArray.length(); i++) {
+			JSONObject actionsJSONObject = actionsJSONArray.getJSONObject(i);
+
+			if (!Objects.equals(
+					actionsJSONObject.getString("_class"),
+					"hudson.model.ParametersAction")) {
+
+				continue;
+			}
+
+			parametersActionsJSONObject = actionsJSONObject;
+
+			break;
+		}
+
+		if ((parametersActionsJSONObject != null) &&
+			parametersActionsJSONObject.has("parameters")) {
+
+			JSONArray parametersJSONArray =
+				parametersActionsJSONObject.getJSONArray("parameters");
 
 			return getParameters(parametersJSONArray);
 		}

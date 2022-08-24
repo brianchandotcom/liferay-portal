@@ -116,6 +116,8 @@ describe.each([
 				expect(storage.getItem(anyName)).not.toBeNull();
 
 				expect(LiferayStorage.getItem(anyName, consentType)).toBeNull();
+
+				expect(storage.getItem(anyName)).not.toBeNull();
 			}
 		);
 	});

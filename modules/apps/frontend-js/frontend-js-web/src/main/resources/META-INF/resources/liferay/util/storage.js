@@ -25,8 +25,6 @@ export default class Storage {
 
 	getItem(key, type) {
 		if (!checkConsent(type)) {
-			this.removeItem(key);
-
 			return null;
 		}
 

@@ -78,7 +78,6 @@ public class KBDropdownItemsProvider {
 					).setParameter(
 						"resourcePrimKey", kbArticle.getResourcePrimKey()
 					).buildRenderURL());
-				dropdownItem.setIcon("edit");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),

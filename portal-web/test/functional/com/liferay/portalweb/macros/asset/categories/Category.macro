@@ -71,7 +71,9 @@ definition {
 		PortletEntry.inputTitle(title = "${categoryName}");
 
 		if (isSet(categoryDescription)) {
-			PortletEntry.inputDescription(description = "${categoryDescription}");
+			CKEditor.addContentInWebContent(
+				content = "${categoryDescription}",
+				fieldLabel = "Description");
 		}
 
 		if (isSet(displayPageTemplateType)) {

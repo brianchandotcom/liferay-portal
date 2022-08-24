@@ -15,7 +15,9 @@ definition {
 			PortletEntry.inputTitle(title = "${grandSubcategoryName}");
 
 			if (isSet(grandSubcategoryDescription)) {
-				PortletEntry.inputDescription(description = "${grandSubcategoryDescription}");
+				CKEditor.addContentInWebContent(
+					content = "${grandSubcategoryDescription}",
+					fieldLabel = "Description");
 			}
 		}
 		else {
@@ -26,7 +28,9 @@ definition {
 			PortletEntry.inputTitle(title = "${subcategoryName}");
 
 			if (isSet(subcategoryDescription)) {
-				PortletEntry.inputDescription(description = "${subcategoryDescription}");
+				CKEditor.addContentInWebContent(
+					content = "${subcategoryDescription}",
+					fieldLabel = "Description");
 			}
 		}
 	}

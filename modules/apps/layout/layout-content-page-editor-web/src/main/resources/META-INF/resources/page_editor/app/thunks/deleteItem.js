@@ -178,7 +178,7 @@ function maybeShowAlert(layoutData, itemId, fragmentEntryLinks) {
 
 			const {message} = getFormErrorDescription({
 				name: getFieldLabel(fieldId, formFields),
-				type: FORM_ERROR_TYPES.deletedField,
+				type: FORM_ERROR_TYPES.deletedFragment,
 			});
 
 			openToast({

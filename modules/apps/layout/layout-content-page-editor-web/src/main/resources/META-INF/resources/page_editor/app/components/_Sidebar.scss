@@ -73,8 +73,17 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		flex-direction: column;
 		font-size: 0.875rem;
 		padding: 16px 5px;
+		transition: transform ease $defaultTransitionDuration;
 		width: $sidebarButtonWidth;
 		z-index: $zIndexButtons;
+
+		&--hidden {
+			transform: translateX(-100%);
+
+			& + .page-editor__sidebar__content {
+				left: 0;
+			}
+		}
 
 		a {
 			align-items: center;
@@ -136,7 +145,9 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		overflow: hidden;
 		position: fixed;
 		transform: translateX(-100%);
-		transition: transform ease $defaultTransitionDuration;
+		transition: transform ease $defaultTransitionDuration,
+			left ease $defaultTransitionDuration;
+
 		width: $sidebarContentWidth;
 		z-index: $zIndexContent;
 
@@ -166,6 +177,10 @@ html#{$cadmin-selector} body {
 }
 
 html#{$cadmin-selector} .page-editor__wrapper {
+	&--sidebar--hidden {
+		padding-left: 0;
+	}
+
 	padding-left: $sidebarButtonWidth;
 	position: relative;
 	transition: padding-left ease $defaultTransitionDuration,

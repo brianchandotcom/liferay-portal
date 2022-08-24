@@ -20,15 +20,14 @@ import React from 'react';
 import {config} from '../config/index';
 import {useActiveItemId, useActiveItemType} from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
+import selectItemConfigurationOpen from '../selectors/selectItemConfigurationOpen';
 import ItemConfiguration from './ItemConfiguration';
 
 export default function ItemConfigurationSidebar() {
 	const activeItemId = useActiveItemId();
 	const activeItemType = useActiveItemType();
 
-	const itemConfigurationOpen = useSelector(
-		(state) => state.sidebar.itemConfigurationOpen
-	);
+	const itemConfigurationOpen = useSelector(selectItemConfigurationOpen);
 
 	return (
 		<ReactPortal className="cadmin">

@@ -31,6 +31,8 @@ import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectAvailablePanels from '../selectors/selectAvailablePanels';
+import selectItemConfigurationOpen from '../selectors/selectItemConfigurationOpen';
+import selectSidebarIsOpened from '../selectors/selectSidebarIsOpened';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import {useDropClear} from '../utils/drag-and-drop/useDragAndDrop';
 import {useId} from '../utils/useId';
@@ -78,8 +80,9 @@ export default function Sidebar() {
 	const store = useSelector((state) => state);
 
 	const panels = useSelector(selectAvailablePanels(config.panels));
-	const sidebarOpen = store.sidebar.open;
-	const itemConfigurationOpen = store.sidebar.itemConfigurationOpen;
+	const sidebarHidden = store.sidebar.hidden;
+	const sidebarOpen = selectSidebarIsOpened(store);
+	const itemConfigurationOpen = selectItemConfigurationOpen(store);
 	const {panel, sidebarPanelId} = getActivePanelData({
 		panelId: store.sidebar.panelId,
 		panels,
@@ -163,6 +166,11 @@ export default function Sidebar() {
 			'page-editor__wrapper--padded-start',
 			sidebarOpen
 		);
+
+		wrapper.classList.toggle(
+			'page-editor__wrapper--sidebar--hidden',
+			sidebarHidden
+		);
 		wrapper.classList.toggle(
 			'page-editor__wrapper--padded-end',
 			itemConfigurationOpen
@@ -220,7 +228,8 @@ export default function Sidebar() {
 			>
 				<div
 					className={classNames('page-editor__sidebar__buttons', {
-						light: true,
+						'light': true,
+						'page-editor__sidebar__buttons--hidden': sidebarHidden,
 					})}
 					onClick={deselectItem}
 				>

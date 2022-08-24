@@ -70,6 +70,7 @@ public class OrderItemDTOConverter
 				decimalQuantity = commerceOrderItem.getDecimalQuantity();
 				deliveryGroup = commerceOrderItem.getDeliveryGroup();
 				discountAmount = commerceOrderItem.getDiscountAmount();
+				discountManuallyAdjusted = commerceOrderItem.getDiscountManuallyAdjusted();
 				discountPercentageLevel1 =
 					commerceOrderItem.getDiscountPercentageLevel1();
 				discountPercentageLevel1WithTaxAmount =

@@ -54,9 +54,10 @@ public interface SXPBlueprintService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.search.experiences.service.impl.SXPBlueprintServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the sxp blueprint remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SXPBlueprintServiceUtil} if injection and service tracking are not available.
 	 */
 	public SXPBlueprint addSXPBlueprint(
-			String configurationJSON, Map<Locale, String> descriptionMap,
-			String elementInstancesJSON, String schemaVersion,
-			Map<Locale, String> titleMap, ServiceContext serviceContext)
+			String externalReferenceCode, String configurationJSON,
+			Map<Locale, String> descriptionMap, String elementInstancesJSON,
+			String schemaVersion, Map<Locale, String> titleMap,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public SXPBlueprint deleteSXPBlueprint(long sxpBlueprintId)

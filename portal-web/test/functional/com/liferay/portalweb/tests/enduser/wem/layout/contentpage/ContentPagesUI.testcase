@@ -451,4 +451,26 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-146373. Both page editor sidebars should be closed when the product menu is open."
+	@priority = "4"
+	test ViewPageEditorSidebarsClosedWhenProductMenuOpen {
+		property custom.properties = "feature.flag.LPS-153452=true";
+
+		task ("Given a page creator accesses to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("When the page creator opens the Product Menu") {
+			ProductMenuHelper.openProductMenu();
+		}
+
+		task ("Then both page editor sidebars are closed") {
+			AssertElementNotPresent(locator1 = "Sidebar#PANEL_OPEN");
+
+			AssertElementNotPresent(locator1 = "PageEditor#ITEM_CONFIGURATION_SIDEBAR_OPEN");
+		}
+	}
+
 }

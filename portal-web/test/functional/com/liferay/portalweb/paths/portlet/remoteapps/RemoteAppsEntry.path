@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>URL_ROW_INDEX</td>
-	<td>//*[contains(@class,'form-row')][${key_index}]//input[(contains(@id,'${key_id}'))]</td>
+	<td>//*[@class='lfr-form-row'][${key_index}]//input[(contains(@id,'${key_id}'))]</td>
 	<td></td>
 </tr>
 <tr>

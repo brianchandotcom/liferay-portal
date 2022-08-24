@@ -23,16 +23,12 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class PreferencesValueUtil {
 
-	public static String fromCompactSafe(String xml) {
-		return StringUtil.replace(xml, "[$NEW_LINE$]", StringPool.NEW_LINE);
-	}
-
 	public static String getActualValue(String value) {
 		if ((value == null) || value.equals(_NULL_VALUE)) {
 			return null;
 		}
 
-		return fromCompactSafe(value);
+		return _fromCompactSafe(value);
 	}
 
 	public static String[] getActualValues(String[] values) {
@@ -107,6 +103,10 @@ public class PreferencesValueUtil {
 				StringPool.RETURN
 			},
 			new String[] {"[$NEW_LINE$]", "[$NEW_LINE$]", "[$NEW_LINE$]"});
+	}
+
+	private static String _fromCompactSafe(String xml) {
+		return StringUtil.replace(xml, "[$NEW_LINE$]", StringPool.NEW_LINE);
 	}
 
 	private static final String _NULL_ELEMENT = "NULL_ELEMENT";

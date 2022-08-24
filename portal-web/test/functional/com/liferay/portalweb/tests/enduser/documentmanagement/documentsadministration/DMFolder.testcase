@@ -390,12 +390,15 @@ definition {
 	@description = "This ensures that a folder can be moved to another folder via drag and drop."
 	@priority = "4"
 	test CanMoveFolderToFolderViaDragAndDrop {
-		for (var num : list "1,2") {
-			JSONFolder.addFolder(
-				dmFolderDescription = "DM Folder Description${num}",
-				dmFolderName = "DM Folder Name${num}",
-				groupName = "Guest");
-		}
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description1",
+			dmFolderName = "DM Folder Name1",
+			groupName = "Guest");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description2",
+			dmFolderName = "DM Folder Name2",
+			groupName = "Guest");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

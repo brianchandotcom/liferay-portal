@@ -25,6 +25,17 @@ create table CTCollection (
 	statusDate DATE null
 );
 
+create table CTCollectionTemplate (
+	mvccVersion LONG default 0 not null,
+	ctCollectionTemplateId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
+	name VARCHAR(75) null,
+	description VARCHAR(75) null
+);
+
 create table CTComment (
 	mvccVersion LONG default 0 not null,
 	ctCommentId LONG not null primary key,

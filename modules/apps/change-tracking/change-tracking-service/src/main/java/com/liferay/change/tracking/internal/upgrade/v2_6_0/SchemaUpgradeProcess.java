@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.change.tracking.constants;
+package com.liferay.change.tracking.internal.upgrade.v2_6_0;
+
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Preston Crary
+ * @author David Truong
  */
-public class CTActionKeys {
+public class SchemaUpgradeProcess extends UpgradeProcess {
 
-	public static final String ADD_PUBLICATION = "ADD_PUBLICATION";
+	@Override
+	protected void doUpgrade() throws Exception {
+		String template = StringUtil.read(
+			SchemaUpgradeProcess.class.getResourceAsStream(
+				"dependencies/update.sql"));
 
-	public static final String ADD_TEMPLATE = "ADD_TEMPLATE";
-
-	public static final String PUBLISH = "PUBLISH";
-
-	public static final String WORK_ON_PRODUCTION = "WORK_ON_PRODUCTION";
+		runSQLTemplateString(template, true);
+	}
 
 }

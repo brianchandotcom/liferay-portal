@@ -113,6 +113,18 @@
 			"name": "totalCostOfExpense",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Total MDF Requested Amount"
+			},
+			"name": "totalMdfRequestAmount",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

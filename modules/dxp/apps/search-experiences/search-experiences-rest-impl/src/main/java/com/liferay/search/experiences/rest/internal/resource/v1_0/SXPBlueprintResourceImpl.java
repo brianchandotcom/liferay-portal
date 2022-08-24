@@ -245,7 +245,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			_sxpBlueprintService.addSXPBlueprint(
-				_getConfigurationJSON(sxpBlueprint),
+				null, _getConfigurationJSON(sxpBlueprint),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpBlueprint.getDescription(),
@@ -272,7 +272,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			_sxpBlueprintService.addSXPBlueprint(
-				sxpBlueprint.getConfigurationJSON(),
+				null, sxpBlueprint.getConfigurationJSON(),
 				sxpBlueprint.getDescriptionMap(),
 				sxpBlueprint.getElementInstancesJSON(),
 				sxpBlueprint.getSchemaVersion(),

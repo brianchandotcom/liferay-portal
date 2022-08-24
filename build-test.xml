@@ -2862,6 +2862,13 @@ include-and-override=portal-liferay-online-limit.properties</echo>
 				token="${database.mysql.driver}"
 				value="${database.mariadb.driver}"
 			/>
+
+			<replace
+				file="${app.server.tomcat.classes.portal.dir}/portal-liferay-online-config.properties"
+			>
+				<replacetoken>configuration.override.com.liferay.portal.security.configuration.BasicAuthHeaderSupportConfiguration_enabled=B"false"</replacetoken>
+				<replacevalue>configuration.override.com.liferay.portal.security.configuration.BasicAuthHeaderSupportConfiguration_enabled=B"true"</replacevalue>
+			</replace>
 		</sequential>
 	</macrodef>
 

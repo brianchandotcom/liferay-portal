@@ -42,3 +42,4 @@ export {
 export {BuilderScreen} from './components/BuilderScreen/BuilderScreen';
 export {ManagementToolbarSearch} from './components/ManagementToolbarSearch';
 export * as API from './utils/api';
+export * from './utils/string';

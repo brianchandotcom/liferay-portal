@@ -129,6 +129,9 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
+					"allVersions",
+					_getAllVersionsJSONArray(contentDashboardItem, themeDisplay)
+				).put(
 					"className", _getClassName(contentDashboardItem)
 				).put(
 					"classPK", _getClassPK(contentDashboardItem)
@@ -216,6 +219,20 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 						ResourceBundleUtil.getBundle(locale, getClass()),
 						"an-unexpected-error-occurred")));
 		}
+	}
+
+	private JSONArray _getAllVersionsJSONArray(
+		ContentDashboardItem contentDashboardItem, ThemeDisplay themeDisplay) {
+
+		List<ContentDashboardItem.Version> allVersions =
+			contentDashboardItem.getAllVersions(themeDisplay);
+
+		Stream<ContentDashboardItem.Version> stream = allVersions.stream();
+
+		return JSONUtil.putAll(
+			stream.map(
+				ContentDashboardItem.Version::toJSONObject
+			).toArray());
 	}
 
 	private JSONArray _getAssetTagsJSONArray(

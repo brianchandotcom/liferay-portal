@@ -22,7 +22,7 @@
 	<aui:input name="mvcPath" type="hidden" value="/install_local_app.jsp" />
 
 	<clay:sheet>
-		<c:if test="<%= CompanyLocalServiceUtil.getCompaniesCount(false) > 1 %>">
+		<c:if test="<%= CompanyLocalServiceUtil.getCompaniesCount() > 1 %>">
 			<div class="alert alert-info">
 				<liferay-ui:message key="installed-apps-are-available-to-all-portal-instances.-go-to-plugins-configuration-within-each-portal-instance-to-enable-disable-each-app" />
 			</div>

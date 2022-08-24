@@ -1342,7 +1342,7 @@ public class PortletTracker
 
 		List<Future<Void>> futures = new ArrayList<>();
 
-		List<Company> companies = _companyLocalService.getCompanies(false);
+		List<Company> companies = _companyLocalService.getCompanies();
 
 		for (Company company : companies) {
 			futures.add(

@@ -76,7 +76,7 @@ public class CompanyBuilder extends DirectoryBuilder {
 			String companyWebId = filterConstraint.getValue("ou");
 
 			if (companyWebId == null) {
-				companies.addAll(CompanyLocalServiceUtil.getCompanies(false));
+				companies.addAll(CompanyLocalServiceUtil.getCompanies());
 			}
 			else {
 				Company company = CompanyLocalServiceUtil.getCompanyByWebId(

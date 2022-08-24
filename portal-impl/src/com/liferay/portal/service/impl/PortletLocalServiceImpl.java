@@ -374,7 +374,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		throws PortalException {
 
 		long[] companyIds = ListUtil.toLongArray(
-			_companyLocalService.getCompanies(false), Company::getCompanyId);
+			_companyLocalService.getCompanies(), Company::getCompanyId);
 
 		deployRemotePortlet(
 			companyIds, portlet, categoryNames, eagerDestroy, true);

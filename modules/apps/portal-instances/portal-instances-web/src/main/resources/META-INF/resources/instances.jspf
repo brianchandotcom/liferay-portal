@@ -20,10 +20,10 @@
 
 <liferay-ui:search-container
 	iteratorURL="<%= portletURL %>"
-	total="<%= CompanyLocalServiceUtil.getCompaniesCount(false) %>"
+	total="<%= CompanyLocalServiceUtil.getCompaniesCount() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= CompanyLocalServiceUtil.getCompanies(false, searchContainer.getStart(), searchContainer.getEnd()) %>"
+		results="<%= CompanyLocalServiceUtil.getCompanies(searchContainer.getStart(), searchContainer.getEnd()) %>"
 	/>
 
 	<liferay-ui:search-container-row

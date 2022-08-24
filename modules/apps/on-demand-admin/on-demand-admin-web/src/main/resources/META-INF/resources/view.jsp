@@ -19,10 +19,10 @@
 <aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">
 	<liferay-ui:search-container
 		iteratorURL="<%= currentURLObj %>"
-		total="<%= CompanyLocalServiceUtil.getCompaniesCount(false) %>"
+		total="<%= CompanyLocalServiceUtil.getCompaniesCount() %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= CompanyLocalServiceUtil.getCompanies(false, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			results="<%= CompanyLocalServiceUtil.getCompanies(searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row

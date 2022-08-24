@@ -143,7 +143,7 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected void doVerify() throws VerifyException {
-		List<Company> companies = CompanyLocalServiceUtil.getCompanies(false);
+		List<Company> companies = CompanyLocalServiceUtil.getCompanies();
 
 		if (_configureProperties) {
 			_setUpProperties();

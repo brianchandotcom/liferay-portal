@@ -228,12 +228,6 @@ public abstract class BaseVLDAPTestCase {
 		);
 
 		Mockito.when(
-			companyLocalService.getCompanies(Mockito.anyBoolean())
-		).thenReturn(
-			companies
-		);
-
-		Mockito.when(
 			companyLocalService.getCompanyByWebId(Mockito.eq("liferay.com"))
 		).thenReturn(
 			company

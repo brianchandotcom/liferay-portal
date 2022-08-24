@@ -35,6 +35,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-146373. The page creator could access to Look and Feel settings via the configuration icon."
+	@priority = "4"
+	test AccessToLookAndFeelSettings {
+		property custom.properties = "feature.flag.LPS-153452=true";
+
+		task ("Given a page creator accesses to the Page Design Options panel") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+		}
+
+		task ("When the page creator click the configuration icon") {
+			Click(locator1 = "PageEditor#MORE_LINK");
+		}
+
+		task ("Then the page creator accesses to the Look and Feel settings") {
+			AssertElementPresent(
+				key_title = "General",
+				locator1 = "Header#H2_TITLE");
+
+			for (var sectionName : list "Favicon,Master,Style Book,Theme") {
+				AssertElementPresent(
+					key_sectionTitle = "${sectionName}",
+					locator1 = "PagesAdmin#SECTION_TITLE");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-146373. The page creator could close the left sidebar panel via the times icon."
 	@priority = "4"
 	test CloseLeftPageEditorSidebar {

@@ -398,6 +398,7 @@ AUI.add(
 					const root = host.get('root');
 
 					data = {
+						doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 						groupId: root.groupId,
 						privateLayout: root.privateLayout,
 						recursive: true,

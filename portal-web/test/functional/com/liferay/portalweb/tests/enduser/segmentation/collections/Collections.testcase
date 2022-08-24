@@ -3550,6 +3550,52 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-125486. Collection should be available after delete Item Subtype."
+	@priority = "4"
+	test ViewCollectionAfterDeleteItemSubtype {
+		task ("Given a collection creator has a dynamic collection with custom structure as Item Subtype") {
+			task ("Add a web content structure with text field") {
+				WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
+
+				WebContentStructures.addCP(structureName = "WC Structure Name");
+
+				DataEngine.addField(
+					fieldFieldLabel = "Text",
+					fieldName = "Text");
+
+				WebContentStructures.saveCP();
+			}
+
+			task ("Add a Dynamic Collection based on Web Content Article and WC Structure Name") {
+				JSONAssetlist.addDynamicAssetListEntryWithItemType(
+					groupName = "Test Site Name",
+					itemSubtype = "WC Structure Name",
+					itemType = "Web Content Article",
+					title = "Dynamic Collection");
+			}
+		}
+
+		task ("When the collection creator deletes the wc structure name") {
+			WebContentStructures.deleteCP(structureName = "WC Structure Name");
+		}
+
+		task ("Then the collection creator should see the dynamic collection in Asset Lists admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssertSelectedLabel(
+				key_selectFieldLabel = "Item Type",
+				locator1 = "Select#ANY",
+				value1 = "Web Content Article");
+
+			AssertSelectedLabel(
+				key_selectFieldLabel = "Item Subtype",
+				locator1 = "Select#ANY",
+				value1 = "-Not Selected-");
+		}
+	}
+
 	@description = "LPS-86283: Validate if, is possible to preview the content of a dynamic content set variation in a modal window	"
 	@priority = "4"
 	test ViewContentOfAVariant {

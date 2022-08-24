@@ -12,19 +12,28 @@
  * details.
  */
 
-package com.liferay.change.tracking.constants;
+package com.liferay.change.tracking.exception;
+
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
- * @author Preston Crary
+ * @author Brian Wing Shun Chan
  */
-public class CTActionKeys {
+public class NoSuchCollectionTemplateException extends NoSuchModelException {
 
-	public static final String ADD_PUBLICATION = "ADD_PUBLICATION";
+	public NoSuchCollectionTemplateException() {
+	}
 
-	public static final String ADD_TEMPLATE = "ADD_TEMPLATE";
+	public NoSuchCollectionTemplateException(String msg) {
+		super(msg);
+	}
 
-	public static final String PUBLISH = "PUBLISH";
+	public NoSuchCollectionTemplateException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
 
-	public static final String WORK_ON_PRODUCTION = "WORK_ON_PRODUCTION";
+	public NoSuchCollectionTemplateException(Throwable throwable) {
+		super(throwable);
+	}
 
 }

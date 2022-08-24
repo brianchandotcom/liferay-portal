@@ -766,9 +766,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public List<Map<String, Serializable>> getValuesList(
-			long objectDefinitionId, long groupId, long[] accountEntryIds,
-			Predicate predicate, String search, int start, int end,
-			OrderByExpression[] orderByExpressions)
+			long objectDefinitionId, long companyId, long groupId,
+			long[] accountEntryIds, Predicate predicate, String search,
+			int start, int end, OrderByExpression[] orderByExpressions)
 		throws PortalException {
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
@@ -813,21 +813,9 @@ public class ObjectEntryLocalServiceImpl
 				).and(
 					_fillPredicate(objectDefinitionId, predicate, search)
 				).and(
-					() -> {
-						if (PermissionThreadLocal.getPermissionChecker() ==
-								null) {
-
-							return null;
-						}
-
-						ObjectDefinition objectDefinition =
-							_objectDefinitionPersistence.fetchByPrimaryKey(
-								objectDefinitionId);
-
-						return _inlineSQLHelper.getPermissionWherePredicate(
-							objectDefinition.getClassName(),
-							dynamicObjectDefinitionTable.getPrimaryKeyColumn());
-					}
+					_getPermissionWherePredicate(
+						objectDefinitionId, companyId, groupId,
+						dynamicObjectDefinitionTable)
 				)
 			).orderBy(
 				orderByExpressions
@@ -848,8 +836,8 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public int getValuesListCount(
-			long objectDefinitionId, long groupId, long[] accountEntryIds,
-			Predicate predicate, String search)
+			long objectDefinitionId, long companyId, long groupId,
+			long[] accountEntryIds, Predicate predicate, String search)
 		throws PortalException {
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
@@ -888,19 +876,9 @@ public class ObjectEntryLocalServiceImpl
 			).and(
 				_fillPredicate(objectDefinitionId, predicate, search)
 			).and(
-				() -> {
-					if (PermissionThreadLocal.getPermissionChecker() == null) {
-						return null;
-					}
-
-					ObjectDefinition objectDefinition =
-						_objectDefinitionPersistence.fetchByPrimaryKey(
-							objectDefinitionId);
-
-					return _inlineSQLHelper.getPermissionWherePredicate(
-						objectDefinition.getClassName(),
-						dynamicObjectDefinitionTable.getPrimaryKeyColumn());
-				}
+				_getPermissionWherePredicate(
+					objectDefinitionId, companyId, groupId,
+					dynamicObjectDefinitionTable)
 			)
 		);
 
@@ -1712,6 +1690,24 @@ public class ObjectEntryLocalServiceImpl
 				}
 			)
 		);
+	}
+
+	private Expression<Boolean> _getPermissionWherePredicate(
+		long objectDefinitionId, long companyId, long groupId,
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable) {
+
+		if ((PermissionThreadLocal.getPermissionChecker() == null) ||
+			!_inlineSQLHelper.isEnabled(companyId, groupId)) {
+
+			return null;
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
+
+		return _inlineSQLHelper.getPermissionWherePredicate(
+			objectDefinition.getClassName(),
+			dynamicObjectDefinitionTable.getPrimaryKeyColumn());
 	}
 
 	private Expression<?>[] _getSelectExpressions(

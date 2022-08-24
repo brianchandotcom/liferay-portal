@@ -15,11 +15,13 @@
 import {SWITCH_SIDEBAR_PANEL} from './types';
 
 export default function switchSidebarPanel({
+	hidden = false,
 	itemConfigurationOpen = true,
 	sidebarOpen,
 	sidebarPanelId,
 }) {
 	return {
+		hidden,
 		itemConfigurationOpen,
 		sidebarOpen,
 		sidebarPanelId,

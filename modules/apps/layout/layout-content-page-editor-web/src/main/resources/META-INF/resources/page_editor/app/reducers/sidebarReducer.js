@@ -13,10 +13,12 @@
  */
 
 import {SWITCH_SIDEBAR_PANEL} from '../actions/types';
+import isNullOrUndefined from '../utils/isNullOrUndefined';
 
 const DEFAULT_PANEL_ID = 'fragments-widgets';
 
 export const INITIAL_STATE = {
+	hidden: false,
 	itemConfigurationOpen: false,
 	open: false,
 	panelId: DEFAULT_PANEL_ID,
@@ -25,8 +27,11 @@ export const INITIAL_STATE = {
 export default function sidebarReducer(sidebarStatus = INITIAL_STATE, action) {
 	if (action.type === SWITCH_SIDEBAR_PANEL) {
 		return {
+			hidden: action.hidden,
 			itemConfigurationOpen: action.itemConfigurationOpen,
-			open: action.sidebarOpen,
+			open: isNullOrUndefined(action.sidebarOpen)
+				? sidebarStatus.open
+				: action.sidebarOpen,
 			panelId:
 				action.sidebarPanelId === undefined
 					? sidebarStatus.panelId

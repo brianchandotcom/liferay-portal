@@ -81,6 +81,12 @@ public class RequestDispatcherUtil {
 					return HttpMethods.GET;
 				}
 
+				@Override
+				public String getPathInfo() {
+					return (String)getAttribute(
+						RequestDispatcher.INCLUDE_PATH_INFO);
+				}
+
 			},
 			bufferCacheServletResponse);
 

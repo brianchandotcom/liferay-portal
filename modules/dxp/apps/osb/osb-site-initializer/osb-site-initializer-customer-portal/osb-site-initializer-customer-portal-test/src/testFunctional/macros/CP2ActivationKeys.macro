@@ -53,6 +53,12 @@ definition {
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX");
 	}
 
+	macro selectKeyCheckboxByExpirationDate {
+		var key_position = "${position}";
+		var key_date = "${date}";
+		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX_BY_EXPIRATION_DATE");
+	}
+
 	macro formatLicenseFileName {
 		if(!(isSet(licenseType))) {
 			var licenseType = "";

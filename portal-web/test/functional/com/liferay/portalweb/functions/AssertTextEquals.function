@@ -31,6 +31,14 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function assertPartialTextCaseSensitive {
+		selenium.waitForVisible();
+
+		selenium.waitForPartialText();
+
+		selenium.assertPartialText();
+	}
+
 	function assertText {
 		WaitForSPARefresh();
 

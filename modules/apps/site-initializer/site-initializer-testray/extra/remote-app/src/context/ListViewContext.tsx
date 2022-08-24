@@ -109,12 +109,11 @@ const reducer = (state: InitialState, action: AppActions) => {
 					rowIds as number
 				);
 
-				if (rowAlreadyInserted) {
-					selectedRows = selectedRows.filter((row) => row !== rowIds);
-				}
-				else {
-					selectedRows = [...selectedRows, rowIds as number];
-				}
+				rowAlreadyInserted
+					? (selectedRows = selectedRows.filter(
+							(row) => row !== rowIds
+					  ))
+					: (selectedRows = [...selectedRows, rowIds as number]);
 			}
 
 			return {

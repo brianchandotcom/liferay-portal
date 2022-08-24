@@ -172,8 +172,7 @@ const ListViewRest: React.FC<ListViewProps> = ({
 	);
 
 	const onSelectAllRows = useCallback(() => {
-		const rowIds = items.map(({id}) => id);
-		onSelectRow(rowIds);
+		onSelectRow(items.map(({id}) => id));
 	}, [items, onSelectRow]);
 
 	useEffect(() => {
@@ -184,11 +183,8 @@ const ListViewRest: React.FC<ListViewProps> = ({
 
 	useEffect(() => {
 		if (tableProps.rowSelectable) {
-			const initialChecked = items.every(({id}) =>
-				selectedRows.includes(id)
-			);
 			dispatch({
-				payload: initialChecked,
+				payload: items.every(({id}) => selectedRows.includes(id)),
 				type: ListViewTypes.SET_CHECKED_ALL_ROWS,
 			});
 		}

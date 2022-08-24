@@ -82,8 +82,6 @@ public class SXPBlueprintSuggestionsContributorTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		_setUpSuggestionsContributorConfiguration();
-		_setUpSXPBlueprintSuggestionsContributor();
 		_setUpAssetEntryLocalService();
 		_setUpLayoutLocalService();
 		_setUpLiferayPortletRequest();
@@ -91,6 +89,8 @@ public class SXPBlueprintSuggestionsContributorTest {
 		_setUpPortalUtil();
 		_setUpSearchContext();
 		_setUpSearchRequestBuilderFactory();
+		_setUpSuggestionsContributorConfiguration();
+		_setUpSXPBlueprintSuggestionsContributor();
 	}
 
 	@Test
@@ -457,12 +457,6 @@ public class SXPBlueprintSuggestionsContributorTest {
 			SearchRequestBuilder.class);
 
 		Mockito.doReturn(
-			searchRequestBuilder
-		).when(
-			_searchRequestBuilderFactory
-		).builder();
-
-		Mockito.doReturn(
 			Mockito.mock(SearchRequest.class)
 		).when(
 			searchRequestBuilder
@@ -499,6 +493,12 @@ public class SXPBlueprintSuggestionsContributorTest {
 		).withSearchContext(
 			Mockito.any(Consumer.class)
 		);
+
+		Mockito.doReturn(
+			searchRequestBuilder
+		).when(
+			_searchRequestBuilderFactory
+		).builder();
 	}
 
 	private void _setUpSuggestionsContributorConfiguration() {
@@ -534,17 +534,17 @@ public class SXPBlueprintSuggestionsContributorTest {
 			_sxpBlueprintSuggestionsContributor, "_layoutLocalService",
 			_layoutLocalService);
 		ReflectionTestUtil.setFieldValue(
-			_sxpBlueprintSuggestionsContributor, "_searchRequestBuilderFactory",
-			_searchRequestBuilderFactory);
-		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSuggestionsContributor, "_searcher", _searcher);
 		ReflectionTestUtil.setFieldValue(
-			_sxpBlueprintSuggestionsContributor, "_suggestionBuilderFactory",
-			new SuggestionBuilderFactoryImpl());
+			_sxpBlueprintSuggestionsContributor, "_searchRequestBuilderFactory",
+			_searchRequestBuilderFactory);
 		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSuggestionsContributor,
 			"_suggestionsContributorResultsBuilderFactory",
 			new SuggestionsContributorResultsBuilderFactoryImpl());
+		ReflectionTestUtil.setFieldValue(
+			_sxpBlueprintSuggestionsContributor, "_suggestionBuilderFactory",
+			new SuggestionBuilderFactoryImpl());
 	}
 
 	@Mock

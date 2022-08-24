@@ -77,7 +77,7 @@ public class BasicSuggestionsContributorTest {
 		_setUpLayoutLocalService();
 		_setUpLiferayPortletRequest();
 		_setUpSearchRequestBuilderFactory();
-		_setUpSuggestionsContributorConfiguration(testName.getMethodName());
+		_setUpSuggestionsContributorConfiguration();
 	}
 
 	@Test
@@ -422,14 +422,12 @@ public class BasicSuggestionsContributorTest {
 		).builder();
 	}
 
-	private void _setUpSuggestionsContributorConfiguration(
-		String displayGroupName) {
-
+	private void _setUpSuggestionsContributorConfiguration() {
 		_suggestionsContributorConfiguration =
 			new SuggestionsContributorConfiguration();
 
 		_suggestionsContributorConfiguration.setDisplayGroupName(
-			displayGroupName);
+			testName.getMethodName());
 	}
 
 	@Mock

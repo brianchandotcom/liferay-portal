@@ -19,7 +19,7 @@ type Columns<T> = {
 
 type TableProps<T> = {
 	borderless?: boolean;
-	columns: Columns<T>[];
+	columns: Columns<T>[] | undefined;
 	responsive?: boolean;
 	rows: T[];
 };
@@ -28,7 +28,7 @@ const Table = <T extends unknown>({columns, rows, ...props}: TableProps<T>) => (
 	<ClayTable {...props} tableVerticalAlignment="middle">
 		<ClayTable.Head>
 			<ClayTable.Row>
-				{columns.map((column: Columns<T>, index: number) => (
+				{columns?.map((column: Columns<T>, index: number) => (
 					<ClayTable.Cell align="left" headingCell key={index}>
 						<span className="text-neutral-10">{column.label}</span>
 					</ClayTable.Cell>
@@ -39,7 +39,7 @@ const Table = <T extends unknown>({columns, rows, ...props}: TableProps<T>) => (
 		<ClayTable.Body>
 			{rows?.map((row, index) => (
 				<ClayTable.Row key={index}>
-					{columns.map((column, index) => {
+					{columns?.map((column, index) => {
 						const data = row[column.columnKey as keyof T];
 
 						return (

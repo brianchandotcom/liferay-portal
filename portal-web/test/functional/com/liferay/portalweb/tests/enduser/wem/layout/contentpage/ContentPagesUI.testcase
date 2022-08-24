@@ -173,6 +173,79 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-146373. The page creator could use a scroll bar for each section in the page editor."
+	@priority = "4"
+	test UseScrollBarInEachSection {
+		property custom.properties = "feature.flag.LPS-153452=true";
+
+		task ("Given a page creator accesses to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("When the page creator accesses to the Fragments and Widgets panel") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		}
+
+		task ("Then the page creator use the scroll bar to find the Menu Display fragment set") {
+			ScrollWebElementIntoView(
+				key_collectionName = "Menu Display",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL");
+		}
+
+		task ("When the page creator accesses to the Styles panel of Heading fragment") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.gotoStyle(fragmentName = "Heading");
+		}
+
+		task ("Then the page creator use the scroll bar to find the effects section") {
+			ScrollWebElementIntoView(
+				key_fieldSetLabel = "Effects",
+				locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
+		}
+
+		task ("When the page creator adds more fragments into page") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid",
+				targetFragmentName = "Heading");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Card",
+				targetFragmentName = "Grid");
+		}
+
+		task ("Then the page creator use the scroll bar to find the content at the bottom of page") {
+			ScrollWebElementIntoView(
+				fragmentName = "card",
+				id = "link",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
+
+			var leftSidebarButtonsWidth = selenium.getElementWidth("PageEditor#FRAGMENT_SIDEBAR_BODY");
+			var leftSidebarPanelWidth = selenium.getElementWidth("Sidebar#PANEL_OPEN");
+			var bodyWidth = selenium.getElementWidth("//body");
+			var rightSidebarWidth = selenium.getElementWidth("PageEditor#ITEM_CONFIGURATION_SIDEBAR");
+			var gridFragmentWidth = selenium.getElementWidth("//div[@aria-label='Grid']");
+			var leftSidebarWidth = ${leftSidebarButtonsWidth} + ${leftSidebarPanelWidth};
+			var offsetWidth = selenium.getAttribute("//div[contains(@class,'overflow-auto')]@offsetWidth");
+			var clientWidth = selenium.getAttribute("//div[contains(@class,'overflow-auto')]@clientWidth");
+
+			var scrollBarWidth = ${offsetWidth} - ${clientWidth};
+			var bothSidebarWidth = ${leftSidebarWidth} + ${rightSidebarWidth};
+			var pageContentWidth = ${gridFragmentWidth} + ${scrollBarWidth};
+
+			TestUtils.assertEquals(
+				actual = MathUtil.difference("${bodyWidth}", "${bothSidebarWidth}"),
+				expected = "${pageContentWidth}");
+		}
+	}
+
 	@description = "This is a test for LPS-136412. View collapse style changes in fragment configuration."
 	@priority = "5"
 	test ViewCollapseStyleInFragmentConfiguration {

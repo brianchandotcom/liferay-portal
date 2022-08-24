@@ -126,4 +126,80 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanCreateCommentWithoutCustomExternalReferenceCodePreviouslyCreated {
+		property portal.acceptance = "true";
+
+		task ("And Given with POST request I create a comment without a custom external reference code") {
+			var blogPostingId = BlogPostingAPI.getBlogPostingsIdList();
+
+			var response = CommentAPI.createCommentInBlogPosting(
+				blogPostingId = "${blogPostingId}",
+				commentText = "CommentOne");
+		}
+
+		task ("When with POST request I create a comment with a custom external reference code with a value of the internal id of the previously created comment") {
+			var commentId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+			var response2 = CommentAPI.createCommentInBlogPosting(
+				blogPostingId = "${blogPostingId}",
+				commentText = "CommentTwo",
+				externalReferenceCode = "${commentId}");
+		}
+
+		task ("Then another comment with the same external reference code is being created") {
+			var commentsTotalCount = CommentAPI.getFieldValueOfBlogPostingComments(
+				blogPostingId = "${blogPostingId}",
+				fieldName = "totalCount");
+
+			TestUtils.assertEquals(
+				actual = "${commentsTotalCount}",
+				expected = "2");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanCreateChildCommentWithCustomExternalReferenceCode {
+		property portal.acceptance = "true";
+
+		task ("And Given with POST request I create a comment with a custom external reference code") {
+			var blogPostingId = BlogPostingAPI.getBlogPostingsIdList();
+
+			var response = CommentAPI.createCommentInBlogPosting(
+				blogPostingId = "${blogPostingId}",
+				commentText = "CommentOne",
+				externalReferenceCode = "ercComment");
+		}
+
+		task ("When create a child comment with a custom external reference code") {
+			var commentId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+			var response2 = CommentAPI.createCommentInBlogPosting(
+				commentId = "${commentId}",
+				commentText = "ChildComment",
+				externalReferenceCode = "ERC_ChildComment");
+		}
+
+		task ("Then a child comment is being created") {
+			var childCommentsTotalCount = CommentAPI.getFieldValueOfBlogPostingComments(
+				commentId = "${commentId}",
+				fieldName = "totalCount");
+
+			TestUtils.assertEquals(
+				actual = "${childCommentsTotalCount}",
+				expected = "1");
+		}
+
+		task ("And Then can see the custom external reference code in the body response") {
+			var externalReferenceCodes = CommentAPI.getFieldValueOfBlogPostingComments(
+				commentId = "${commentId}",
+				fieldName = "externalReferenceCode");
+
+			TestUtils.assertEquals(
+				actual = "${externalReferenceCodes}",
+				expected = "ERC_ChildComment");
+		}
+	}
 }

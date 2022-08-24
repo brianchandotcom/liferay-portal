@@ -70,7 +70,7 @@ public interface SXPBlueprintLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public SXPBlueprint addSXPBlueprint(
-			long userId, String configurationJSON,
+			String externalReferenceCode, long userId, String configurationJSON,
 			Map<Locale, String> descriptionMap, String elementInstancesJSON,
 			String schemaVersion, Map<Locale, String> titleMap,
 			ServiceContext serviceContext)

@@ -32,18 +32,18 @@ if (Validator.isNotNull(namespace)) {
 }
 %>
 
-<c:choose>
-	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-160919")) %>'>
-		<liferay-util:html-top
-			outputKey="item_selector_repository_entry_browser"
-		>
-			<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/item-selector-taglib/repository_entry_browser/css/main.css") %>" rel="stylesheet" />
-		</liferay-util:html-top>
+<clay:container-fluid
+	cssClass="lfr-item-viewer"
+	id="itemSelectorUploadContainer"
+>
+	<c:choose>
+		<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-160919")) %>'>
+			<liferay-util:html-top
+				outputKey="item_selector_repository_entry_browser"
+			>
+				<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/item-selector-taglib/repository_entry_browser/css/main.css") %>" rel="stylesheet" />
+			</liferay-util:html-top>
 
-		<clay:container-fluid
-			cssClass="lfr-item-viewer"
-			id="itemSelectorUploadContainer"
-		>
 			<div class="dropzone-wrapper dropzone-wrapper-search-container-empty">
 				<div class="dropzone dropzone-disabled"><span aria-hidden="true" class="loading-animation loading-animation-sm"></span></div>
 
@@ -70,13 +70,8 @@ if (Validator.isNotNull(namespace)) {
 					%>'
 				/>
 			</div>
-		</clay:container-fluid>
-	</c:when>
-	<c:otherwise>
-		<clay:container-fluid
-			cssClass="lfr-item-viewer"
-			id="itemSelectorUploadContainer"
-		>
+		</c:when>
+		<c:otherwise>
 			<div class="drop-enabled drop-zone item-selector upload-view">
 				<div id="uploadDescription">
 					<c:if test="<%= !BrowserSnifferUtil.isMobile(request) %>">
@@ -98,29 +93,29 @@ if (Validator.isNotNull(namespace)) {
 			/>
 
 			<div class="item-selector-preview-container"></div>
-		</clay:container-fluid>
 
-		<liferay-frontend:component
-			context='<%=
-				HashMapBuilder.<String, Object>put(
-					"closeCaption", itemSelectorUploadViewDisplayContext.getTitle(locale)
-				).put(
-					"editImageURL", uploadURL
-				).put(
-					"eventName", itemSelectorUploadViewDisplayContext.getItemSelectedEventName()
-				).put(
-					"maxFileSize", itemSelectorUploadViewDisplayContext.getMaxFileSize()
-				).put(
-					"rootNode", "#itemSelectorUploadContainer"
-				).put(
-					"uploadItemReturnType", HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName())
-				).put(
-					"uploadItemURL", uploadURL
-				).put(
-					"validExtensions", ArrayUtil.isEmpty(itemSelectorUploadViewDisplayContext.getExtensions()) ? "*" : StringUtil.merge(itemSelectorUploadViewDisplayContext.getExtensions())
-				).build()
-			%>'
-			module="js/ItemSelectorRepositoryEntryBrowser"
-		/>
-	</c:otherwise>
-</c:choose>
+			<liferay-frontend:component
+				context='<%=
+					HashMapBuilder.<String, Object>put(
+						"closeCaption", itemSelectorUploadViewDisplayContext.getTitle(locale)
+					).put(
+						"editImageURL", uploadURL
+					).put(
+						"eventName", itemSelectorUploadViewDisplayContext.getItemSelectedEventName()
+					).put(
+						"maxFileSize", itemSelectorUploadViewDisplayContext.getMaxFileSize()
+					).put(
+						"rootNode", "#itemSelectorUploadContainer"
+					).put(
+						"uploadItemReturnType", HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName())
+					).put(
+						"uploadItemURL", uploadURL
+					).put(
+						"validExtensions", ArrayUtil.isEmpty(itemSelectorUploadViewDisplayContext.getExtensions()) ? "*" : StringUtil.merge(itemSelectorUploadViewDisplayContext.getExtensions())
+					).build()
+				%>'
+				module="js/ItemSelectorRepositoryEntryBrowser"
+			/>
+		</c:otherwise>
+	</c:choose>
+</clay:container-fluid>

@@ -386,8 +386,9 @@ public class DefaultObjectEntryManagerImpl
 			facets,
 			TransformUtil.transform(
 				_objectEntryLocalService.getValuesList(
-					objectDefinition.getObjectDefinitionId(), groupId,
-					accountEntryIds, predicate, search, start, end,
+					objectDefinition.getObjectDefinitionId(),
+					objectDefinition.getCompanyId(), groupId, accountEntryIds,
+					predicate, search, start, end,
 					OrderByExpressionUtil.getOrderByExpressions(
 						objectDefinition.getObjectDefinitionId(),
 						_objectFieldLocalService, sorts)),
@@ -395,8 +396,9 @@ public class DefaultObjectEntryManagerImpl
 					dtoConverterContext, objectDefinition, values)),
 			pagination,
 			_objectEntryLocalService.getValuesListCount(
-				objectDefinition.getObjectDefinitionId(), groupId,
-				accountEntryIds, predicate, search));
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getCompanyId(), groupId, accountEntryIds,
+				predicate, search));
 	}
 
 	@Override

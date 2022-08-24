@@ -149,7 +149,7 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 				httpServletRequest,
 				themeDisplay.getCDNDynamicResourcesHost() +
 					themeDisplay.getPathContext() + "/combo/",
-				"minifierType=",
+				"minifierType=js",
 				PortalWebResourcesUtil.getLastModified(
 					PortalWebResourceConstants.RESOURCE_TYPE_JS));
 

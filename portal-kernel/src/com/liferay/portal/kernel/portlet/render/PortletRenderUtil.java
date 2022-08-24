@@ -285,6 +285,14 @@ public class PortletRenderUtil {
 		return urls;
 	}
 
+	private static String _getMinifierType(URLType urlType) {
+		if (urlType == URLType.CSS) {
+			return "css";
+		}
+
+		return "js";
+	}
+
 	private static PortletRenderParts _getPortletRenderParts(
 		HttpServletRequest httpServletRequest, String portletHTML,
 		Portlet portlet, boolean portletOnLayout) {
@@ -442,7 +450,10 @@ public class PortletRenderUtil {
 					httpServletRequest,
 					themeDisplay.getCDNDynamicResourcesHost() +
 						themeDisplay.getPathContext() + "/combo",
-					"minifierType=&themeId=" + themeDisplay.getThemeId(), -1),
+					StringBundler.concat(
+						"minifierType=", _getMinifierType(urlType), "&themeId=",
+						themeDisplay.getThemeId()),
+					-1),
 				visitedURLs);
 		}
 

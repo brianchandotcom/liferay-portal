@@ -287,7 +287,7 @@ public class ComboServlet extends HttpServlet {
 
 		String contentType = ContentTypes.TEXT_JAVASCRIPT;
 
-		if (StringUtil.equalsIgnoreCase(extension, _CSS_EXTENSION)) {
+		if (StringUtil.equalsIgnoreCase(minifierType, "css")) {
 			contentType = ContentTypes.TEXT_CSS_UTF8;
 		}
 

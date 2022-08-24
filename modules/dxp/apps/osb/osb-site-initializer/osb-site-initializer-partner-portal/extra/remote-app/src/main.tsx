@@ -27,12 +27,12 @@ type AppRouteComponent = {
 	[key in AppRouteType]?: JSX.Element;
 };
 
-const appRoutes: AppRouteComponent = {
-	[AppRouteType.MDF_REQUEST_FORM]: <MDFRequestForm />,
-	[AppRouteType.MDF_REQUEST_LIST]: <MDFRequestList />,
-};
-
 const PartnerPortalApp = ({route}: IProps) => {
+	const appRoutes: AppRouteComponent = {
+		[AppRouteType.MDF_REQUEST_FORM]: <MDFRequestForm />,
+		[AppRouteType.MDF_REQUEST_LIST]: <MDFRequestList />,
+	};
+
 	return (
 		<SWRConfig
 			value={{
@@ -59,7 +59,7 @@ class PartnerPortalRemoteAppComponent extends HTMLElement {
 
 			this.root.render(
 				<PartnerPortalApp
-					route={super.getAttribute('route') as AppRouteType}
+					route={this.getAttribute('route') as AppRouteType}
 				/>
 			);
 		}

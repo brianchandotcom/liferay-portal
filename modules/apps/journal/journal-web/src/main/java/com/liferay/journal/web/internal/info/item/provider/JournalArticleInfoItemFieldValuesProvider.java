@@ -241,6 +241,11 @@ public class JournalArticleInfoItemFieldValuesProvider
 				if (Validator.isNotNull(articleImageURL)) {
 					journalArticleFieldValues.add(
 						new InfoFieldValue<>(
+							JournalArticleInfoItemFields.previewImageInfoField,
+							new WebImage(articleImageURL)));
+
+					journalArticleFieldValues.add(
+						new InfoFieldValue<>(
 							JournalArticleInfoItemFields.smallImageInfoField,
 							new WebImage(articleImageURL)));
 				}

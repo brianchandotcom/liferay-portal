@@ -3,6 +3,8 @@ create index IX_F925260 on CTAutoResolutionInfo (ctCollectionId, modelClassNameI
 create index IX_8D52E6F9 on CTCollection (companyId, status);
 create index IX_CCDD86CD on CTCollection (schemaVersionId);
 
+create index IX_489283B9 on CTCollectionTemplate (companyId);
+
 create index IX_FE644B52 on CTComment (ctCollectionId);
 create index IX_C5E592B8 on CTComment (ctEntryId);
 

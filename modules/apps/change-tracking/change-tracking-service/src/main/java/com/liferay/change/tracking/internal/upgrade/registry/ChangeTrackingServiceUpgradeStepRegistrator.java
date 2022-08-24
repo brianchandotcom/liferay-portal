@@ -62,6 +62,11 @@ public class ChangeTrackingServiceUpgradeStepRegistrator
 				SchemaUpgradeProcess());
 
 		registry.register("2.5.0", "2.5.1", new DummyUpgradeStep());
+
+		registry.register(
+			"2.5.1", "2.6.0",
+			new com.liferay.change.tracking.internal.upgrade.v2_6_0.
+				SchemaUpgradeProcess());
 	}
 
 }

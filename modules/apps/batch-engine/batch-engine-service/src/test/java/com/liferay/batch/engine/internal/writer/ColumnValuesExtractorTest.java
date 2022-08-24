@@ -41,31 +41,75 @@ public class ColumnValuesExtractorTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testExtractValuesWithChildObjects() throws Exception {
-		ArrayContainer arrayContainer = new ArrayContainer(
+	public void testExtractValuesWithDoubleArray() throws Exception {
+		ArraysAggregator arraysAggregator = new ArraysAggregator(
 			new Double[] {43.2, 12.8, 33.17, 0.234, 5D},
 			new String[] {"A,BC", "D\"EF", "GHI", "J'KL", "``NO,P"});
 
-		ObjectContainer objectContainer = new ObjectContainer(
-			arrayContainer, arrayContainer);
+		ColumnValuesExtractor columnValuesExtractor = new ColumnValuesExtractor(
+			ItemClassIndexUtil.index(arraysAggregator.getClass()),
+			Arrays.asList("doubles", "length", "strings"));
+
+		_assertHeaders(
+			new String[] {"doubles", "length", "strings"},
+			columnValuesExtractor.getHeaders());
+
+		List<Object[]> rows = columnValuesExtractor.extractValues(
+			arraysAggregator);
+
+		Assert.assertFalse(rows.isEmpty());
+
+		Object[] objects = rows.get(0);
+
+		Assert.assertEquals(objects.toString(), 3, objects.length);
+
+		CSVRecord csvRecord = _parseCSV((String)objects[0]);
+
+		Assert.assertEquals(5, csvRecord.size());
+
+		for (int i = 0; i < arraysAggregator.length; i++) {
+			Assert.assertEquals(
+				arraysAggregator.doubles[i], Double.valueOf(csvRecord.get(i)));
+		}
+
+		Assert.assertEquals(Integer.valueOf(5), objects[1]);
+
+		csvRecord = _parseCSV((String)objects[2]);
+
+		Assert.assertEquals(5, csvRecord.size());
+
+		for (int i = 0; i < arraysAggregator.length; i++) {
+			Assert.assertEquals(arraysAggregator.strings[i], csvRecord.get(i));
+		}
+	}
+
+	@Test
+	public void testExtractValuesWithNestedObjects() throws Exception {
+		ArraysAggregator arraysAggregator = new ArraysAggregator(
+			new Double[] {43.2, 12.8, 33.17, 0.234, 5D},
+			new String[] {"A,BC", "D\"EF", "GHI", "J'KL", "``NO,P"});
+
+		NestedObjectsAggregator nestedObjectsAggregator =
+			new NestedObjectsAggregator(arraysAggregator, arraysAggregator);
 
 		ColumnValuesExtractor columnValuesExtractor = new ColumnValuesExtractor(
-			ItemClassIndexUtil.index(objectContainer.getClass()),
-			Arrays.asList("arrayContainer1", "arrayContainer2", "length"));
+			ItemClassIndexUtil.index(nestedObjectsAggregator.getClass()),
+			Arrays.asList("arraysAggregator1", "arraysAggregator2", "length"));
 
 		_assertHeaders(
 			new String[] {
-				"arrayContainer1.doubles", "arrayContainer1.length",
-				"arrayContainer1.strings", "arrayContainer2.doubles",
-				"arrayContainer2.length", "arrayContainer2.strings", "length"
+				"arraysAggregator1.doubles", "arraysAggregator1.length",
+				"arraysAggregator1.strings", "arraysAggregator2.doubles",
+				"arraysAggregator2.length", "arraysAggregator2.strings",
+				"length"
 			},
 			columnValuesExtractor.getHeaders());
 
 		List<Object[]> rows = columnValuesExtractor.extractValues(
-			objectContainer);
+			nestedObjectsAggregator);
 
 		List<Object[]> testResults = columnValuesExtractor.extractValues(
-			objectContainer);
+			nestedObjectsAggregator);
 
 		Assert.assertFalse(rows.isEmpty());
 
@@ -81,60 +125,17 @@ public class ColumnValuesExtractorTest {
 
 		Assert.assertEquals(5, csvRecord.size());
 
-		for (int i = 0; i < arrayContainer.length; i++) {
+		for (int i = 0; i < arraysAggregator.length; i++) {
 			Assert.assertEquals(
-				arrayContainer.doubles[i], Double.valueOf(csvRecord.get(i)));
+				arraysAggregator.doubles[i], Double.valueOf(csvRecord.get(i)));
 		}
 
 		csvRecord = _parseCSV((String)row[2]);
 
 		Assert.assertEquals(5, csvRecord.size());
 
-		for (int i = 0; i < arrayContainer.length; i++) {
-			Assert.assertEquals(arrayContainer.strings[i], csvRecord.get(i));
-		}
-	}
-
-	@Test
-	public void testExtractValuesWithDoubleArray() throws Exception {
-		ArrayContainer arrayContainer = new ArrayContainer(
-			new Double[] {43.2, 12.8, 33.17, 0.234, 5D},
-			new String[] {"A,BC", "D\"EF", "GHI", "J'KL", "``NO,P"});
-
-		ColumnValuesExtractor columnValuesExtractor = new ColumnValuesExtractor(
-			ItemClassIndexUtil.index(arrayContainer.getClass()),
-			Arrays.asList("doubles", "length", "strings"));
-
-		_assertHeaders(
-			new String[] {"doubles", "length", "strings"},
-			columnValuesExtractor.getHeaders());
-
-		List<Object[]> rows = columnValuesExtractor.extractValues(
-			arrayContainer);
-
-		Assert.assertFalse(rows.isEmpty());
-
-		Object[] objects = rows.get(0);
-
-		Assert.assertEquals(objects.toString(), 3, objects.length);
-
-		CSVRecord csvRecord = _parseCSV((String)objects[0]);
-
-		Assert.assertEquals(5, csvRecord.size());
-
-		for (int i = 0; i < arrayContainer.length; i++) {
-			Assert.assertEquals(
-				arrayContainer.doubles[i], Double.valueOf(csvRecord.get(i)));
-		}
-
-		Assert.assertEquals(Integer.valueOf(5), objects[1]);
-
-		csvRecord = _parseCSV((String)objects[2]);
-
-		Assert.assertEquals(5, csvRecord.size());
-
-		for (int i = 0; i < arrayContainer.length; i++) {
-			Assert.assertEquals(arrayContainer.strings[i], csvRecord.get(i));
+		for (int i = 0; i < arraysAggregator.length; i++) {
+			Assert.assertEquals(arraysAggregator.strings[i], csvRecord.get(i));
 		}
 	}
 
@@ -161,13 +162,13 @@ public class ColumnValuesExtractorTest {
 		return records.get(0);
 	}
 
-	private class ArrayContainer {
+	private class ArraysAggregator {
 
 		public Double[] doubles;
 		public int length;
 		public String[] strings;
 
-		private ArrayContainer(Double[] doubles, String[] strings) {
+		private ArraysAggregator(Double[] doubles, String[] strings) {
 			this.doubles = doubles;
 			length = strings.length;
 			this.strings = strings;
@@ -175,17 +176,18 @@ public class ColumnValuesExtractorTest {
 
 	}
 
-	private class ObjectContainer {
+	private class NestedObjectsAggregator {
 
-		public ArrayContainer arrayContainer1;
-		public ArrayContainer arrayContainer2;
+		public ArraysAggregator arraysAggregator1;
+		public ArraysAggregator arraysAggregator2;
 		public int length;
 
-		private ObjectContainer(
-			ArrayContainer arrayContainer1, ArrayContainer arrayContainer2) {
+		private NestedObjectsAggregator(
+			ArraysAggregator arraysAggregator1,
+			ArraysAggregator arraysAggregator2) {
 
-			this.arrayContainer1 = arrayContainer1;
-			this.arrayContainer2 = arrayContainer2;
+			this.arraysAggregator1 = arraysAggregator1;
+			this.arraysAggregator2 = arraysAggregator2;
 
 			length = 2;
 		}

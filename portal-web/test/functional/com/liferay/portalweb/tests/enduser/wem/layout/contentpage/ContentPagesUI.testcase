@@ -35,6 +35,28 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-146373. The page creator could close the left sidebar panel via the times icon."
+	@priority = "4"
+	test CloseLeftPageEditorSidebar {
+		property custom.properties = "feature.flag.LPS-153452=true";
+
+		task ("Given a page creator accesses to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("When the page creator click the times icon on the Fragments and Widgets panel") {
+			Click(
+				key_text = "times",
+				locator1 = "Icon#ANY");
+		}
+
+		task ("Then the left page editor sidebar is closed") {
+			AssertElementNotPresent(locator1 = "Sidebar#PANEL_OPEN");
+		}
+	}
+
 	@description = "This is a test for LPS-140266. The user could look for color samples via scroll bar."
 	@priority = "4"
 	@uitest

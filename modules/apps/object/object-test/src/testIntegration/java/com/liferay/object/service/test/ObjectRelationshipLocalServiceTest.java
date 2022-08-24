@@ -99,7 +99,8 @@ public class ObjectRelationshipLocalServiceTest {
 		bundleContext.registerService(
 			SystemObjectDefinitionMetadata.class,
 			new TestSystemObjectDefinitionMetadata(
-				_systemObjectDefinition1.getName()),
+				_systemObjectDefinition1.getName(),
+				_systemObjectDefinition1.getModelClass()),
 			new HashMapDictionary<>());
 	}
 
@@ -647,8 +648,11 @@ public class ObjectRelationshipLocalServiceTest {
 	private static class TestSystemObjectDefinitionMetadata
 		extends BaseSystemObjectDefinitionMetadata {
 
-		public TestSystemObjectDefinitionMetadata(String name) {
+		public TestSystemObjectDefinitionMetadata(
+			String name, Class<?> modelClass) {
+
 			_name = name;
+			_modelClass = modelClass;
 		}
 
 		@Override
@@ -658,7 +662,7 @@ public class ObjectRelationshipLocalServiceTest {
 
 		@Override
 		public Class<?> getModelClass() {
-			return null;
+			return _modelClass;
 		}
 
 		@Override
@@ -706,6 +710,7 @@ public class ObjectRelationshipLocalServiceTest {
 			return 1;
 		}
 
+		private final Class<?> _modelClass;
 		private final String _name;
 
 	}

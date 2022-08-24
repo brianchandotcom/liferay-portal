@@ -882,6 +882,13 @@ public abstract class TopLevelBuild extends BaseBuild {
 			if (downstreamBuildURL != null) {
 				downstreamBuildURLs.add(downstreamBuildURL);
 			}
+
+			List<String> downstreamBadBuildURLs =
+				downstreamBuild.getBadBuildURLs();
+
+			if (downstreamBadBuildURLs != null) {
+				downstreamBuildURLs.addAll(downstreamBadBuildURLs);
+			}
 		}
 
 		if (getBuildURL() != null) {

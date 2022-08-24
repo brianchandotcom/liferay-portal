@@ -185,8 +185,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @param  webId the the company's web domain
 	 * @param  virtualHostname the company's virtual host name
 	 * @param  mx the company's mail domain
-	 * @param  system whether the company is the very first company (i.e., the
-	 *         super company)
 	 * @param  maxUsers the max number of company users (optionally
 	 *         <code>0</code>)
 	 * @param  active whether the company is active
@@ -195,7 +193,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	@Override
 	public Company addCompany(
 			Long companyId, String webId, String virtualHostname, String mx,
-			boolean system, int maxUsers, boolean active)
+			int maxUsers, boolean active)
 		throws PortalException {
 
 		// Company
@@ -232,7 +230,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		try {
 			company.setWebId(webId);
 			company.setMx(mx);
-			company.setSystem(system);
 			company.setMaxUsers(maxUsers);
 			company.setActive(active);
 
@@ -312,12 +309,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public Company addCompany(
-			String webId, String virtualHostname, String mx, boolean system,
-			int maxUsers, boolean active)
+			String webId, String virtualHostname, String mx, int maxUsers,
+			boolean active)
 		throws PortalException {
 
-		return addCompany(
-			null, webId, virtualHostname, mx, system, maxUsers, active);
+		return addCompany(null, webId, virtualHostname, mx, maxUsers, active);
 	}
 
 	/**

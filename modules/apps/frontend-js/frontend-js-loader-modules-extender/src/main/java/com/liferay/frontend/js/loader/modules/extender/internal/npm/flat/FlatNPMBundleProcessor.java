@@ -20,6 +20,8 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.petra.io.Deserializer;
+import com.liferay.petra.io.Serializer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -28,19 +30,18 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.net.URL;
+
+import java.nio.ByteBuffer;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -226,20 +227,20 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		File cacheFile = bundleContext.getDataFile("cache_json_objects");
 
 		if (cacheFile.exists()) {
-			try (InputStream inputStream = new FileInputStream(cacheFile);
-				DataInputStream dataInputStream = new DataInputStream(
-					inputStream)) {
+			try {
+				Deserializer deserializer = new Deserializer(
+					ByteBuffer.wrap(FileUtil.getBytes(cacheFile)));
 
-				if (dataInputStream.readLong() == bundle.getLastModified()) {
+				if (deserializer.readLong() == bundle.getLastModified()) {
 					Map<URL, JSONObject> jsonObjects = new HashMap<>();
 
-					int size = dataInputStream.readInt();
+					int size = deserializer.readInt();
 
 					for (int i = 0; i < size; i++) {
 						jsonObjects.put(
-							new URL(dataInputStream.readUTF()),
+							new URL(deserializer.readString()),
 							JSONFactoryUtil.createJSONObject(
-								dataInputStream.readUTF()));
+								deserializer.readString()));
 					}
 
 					return jsonObjects;
@@ -292,30 +293,35 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			try {
 				Map.Entry<URL, JSONObject> entry = future.get();
 
-				jsonObjects.put(entry.getKey(), entry.getValue());
+				JSONObject jsonObject = entry.getValue();
+
+				if (jsonObject != null) {
+					jsonObjects.put(entry.getKey(), jsonObject);
+				}
 			}
 			catch (Exception exception) {
 				_log.error(exception);
 			}
 		}
 
-		try (OutputStream outputStream = new FileOutputStream(cacheFile);
-			DataOutputStream dataOutputStream = new DataOutputStream(
-				outputStream)) {
+		Serializer serializer = new Serializer();
 
-			dataOutputStream.writeLong(bundle.getLastModified());
+		serializer.writeLong(bundle.getLastModified());
 
-			dataOutputStream.writeInt(jsonObjects.size());
+		serializer.writeInt(jsonObjects.size());
 
-			for (Map.Entry<URL, JSONObject> entry : jsonObjects.entrySet()) {
-				URL url = entry.getKey();
+		for (Map.Entry<URL, JSONObject> entry : jsonObjects.entrySet()) {
+			URL url = entry.getKey();
 
-				dataOutputStream.writeUTF(url.toExternalForm());
+			serializer.writeString(url.toExternalForm());
 
-				JSONObject jsonObject = entry.getValue();
+			JSONObject jsonObject = entry.getValue();
 
-				dataOutputStream.writeUTF(jsonObject.toString());
-			}
+			serializer.writeString(jsonObject.toString());
+		}
+
+		try (OutputStream outputStream = new FileOutputStream(cacheFile)) {
+			serializer.writeTo(outputStream);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -334,21 +340,21 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		File cacheFile = bundleContext.getDataFile("cache_model_dependencies");
 
 		if (cacheFile.exists()) {
-			try (InputStream inputStream = new FileInputStream(cacheFile);
-				DataInputStream dataInputStream = new DataInputStream(
-					inputStream)) {
+			try {
+				Deserializer deserializer = new Deserializer(
+					ByteBuffer.wrap(FileUtil.getBytes(cacheFile)));
 
-				if (dataInputStream.readLong() == bundle.getLastModified()) {
+				if (deserializer.readLong() == bundle.getLastModified()) {
 					Map<URL, Collection<String>> moduleDependenciesMap =
 						new HashMap<>();
 
-					int size = dataInputStream.readInt();
+					int size = deserializer.readInt();
 
 					for (int i = 0; i < size; i++) {
 						moduleDependenciesMap.put(
-							new URL(dataInputStream.readUTF()),
+							new URL(deserializer.readString()),
 							Arrays.asList(
-								StringUtil.split(dataInputStream.readUTF())));
+								StringUtil.split(deserializer.readString())));
 					}
 
 					return moduleDependenciesMap;
@@ -396,23 +402,24 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			}
 		}
 
-		try (OutputStream outputStream = new FileOutputStream(cacheFile);
-			DataOutputStream dataOutputStream = new DataOutputStream(
-				outputStream)) {
+		Serializer serializer = new Serializer();
 
-			dataOutputStream.writeLong(bundle.getLastModified());
+		serializer.writeLong(bundle.getLastModified());
 
-			dataOutputStream.writeInt(moduleDependenciesMap.size());
+		serializer.writeInt(moduleDependenciesMap.size());
 
-			for (Map.Entry<URL, Collection<String>> entry :
-					moduleDependenciesMap.entrySet()) {
+		for (Map.Entry<URL, Collection<String>> entry :
+				moduleDependenciesMap.entrySet()) {
 
-				URL url = entry.getKey();
+			URL url = entry.getKey();
 
-				dataOutputStream.writeUTF(url.toExternalForm());
+			serializer.writeString(url.toExternalForm());
 
-				dataOutputStream.writeUTF(StringUtil.merge(entry.getValue()));
-			}
+			serializer.writeString(StringUtil.merge(entry.getValue()));
+		}
+
+		try (OutputStream outputStream = new FileOutputStream(cacheFile)) {
+			serializer.writeTo(outputStream);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

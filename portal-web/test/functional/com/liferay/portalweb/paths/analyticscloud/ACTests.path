@@ -17,11 +17,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>AB_TEST_NAME</td>
-	<td>//*[contains(@class,'table-title')]/span[contains(@class,'text-truncate') and text()='${key_testName}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DELETE_TEST</td>
 	<td>//*[contains(@class,'dropdown-item')and text()='Delete Test']</td>
 	<td></td>

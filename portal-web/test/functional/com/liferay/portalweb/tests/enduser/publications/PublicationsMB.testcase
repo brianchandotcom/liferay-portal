@@ -25,6 +25,8 @@ definition {
 		}
 	}
 
+	@description = "Assert comments created outside of a publication will not result in changes within the publication."
+	@priority = "4"
 	test AddPublicationWithUnrelatedComments {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",

@@ -97,7 +97,7 @@ public class SXPBlueprintSearchRequestContributorTest {
 		Class<?> clazz = getClass();
 
 		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			StringUtil.read(
 				clazz,
 				StringBundler.concat(

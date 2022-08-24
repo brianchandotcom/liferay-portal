@@ -51,17 +51,19 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 
 	@Override
 	public SXPBlueprint addSXPBlueprint(
-			String configurationJSON, Map<Locale, String> descriptionMap,
-			String elementInstancesJSON, String schemaVersion,
-			Map<Locale, String> titleMap, ServiceContext serviceContext)
+			String externalReferenceCode, String configurationJSON,
+			Map<Locale, String> descriptionMap, String elementInstancesJSON,
+			String schemaVersion, Map<Locale, String> titleMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null, SXPActionKeys.ADD_SXP_BLUEPRINT);
 
 		return sxpBlueprintLocalService.addSXPBlueprint(
-			getUserId(), configurationJSON, descriptionMap,
-			elementInstancesJSON, schemaVersion, titleMap, serviceContext);
+			externalReferenceCode, getUserId(), configurationJSON,
+			descriptionMap, elementInstancesJSON, schemaVersion, titleMap,
+			serviceContext);
 	}
 
 	@Override

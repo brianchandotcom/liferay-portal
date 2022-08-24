@@ -152,8 +152,9 @@ public class JSONCurlUtil {
 			sb.append(_requestMethod);
 			sb.append(" ");
 			sb.append(_getRequestOptionsString());
-			sb.append(" ");
+			sb.append(" '");
 			sb.append(_requestURL);
+			sb.append("'");
 
 			Process process = ExecUtil.executeCommands(
 				true, new File("."), 1000 * 60 * 15, sb.toString());

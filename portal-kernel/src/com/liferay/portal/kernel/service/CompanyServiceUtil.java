@@ -57,11 +57,11 @@ public class CompanyServiceUtil {
 	 */
 	public static Company addCompany(
 			long companyId, String webId, String virtualHost, String mx,
-			boolean system, int maxUsers, boolean active)
+			int maxUsers, boolean active)
 		throws PortalException {
 
 		return getService().addCompany(
-			companyId, webId, virtualHost, mx, system, maxUsers, active);
+			companyId, webId, virtualHost, mx, maxUsers, active);
 	}
 
 	/**
@@ -77,12 +77,12 @@ public class CompanyServiceUtil {
 	 * @return the company
 	 */
 	public static Company addCompany(
-			String webId, String virtualHost, String mx, boolean system,
-			int maxUsers, boolean active)
+			String webId, String virtualHost, String mx, int maxUsers,
+			boolean active)
 		throws PortalException {
 
 		return getService().addCompany(
-			webId, virtualHost, mx, system, maxUsers, active);
+			webId, virtualHost, mx, maxUsers, active);
 	}
 
 	public static Company deleteCompany(long companyId) throws PortalException {

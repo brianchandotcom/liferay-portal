@@ -57,8 +57,6 @@ public class CompanyLocalServiceWrapper
 	 * @param webId the the company's web domain
 	 * @param virtualHostname the company's virtual host name
 	 * @param mx the company's mail domain
-	 * @param system whether the company is the very first company (i.e., the
-	 super company)
 	 * @param maxUsers the max number of company users (optionally
 	 <code>0</code>)
 	 * @param active whether the company is active
@@ -67,12 +65,12 @@ public class CompanyLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.Company addCompany(
 			java.lang.Long companyId, java.lang.String webId,
-			java.lang.String virtualHostname, java.lang.String mx,
-			boolean system, int maxUsers, boolean active)
+			java.lang.String virtualHostname, java.lang.String mx, int maxUsers,
+			boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _companyLocalService.addCompany(
-			companyId, webId, virtualHostname, mx, system, maxUsers, active);
+			companyId, webId, virtualHostname, mx, maxUsers, active);
 	}
 
 	/**
@@ -95,11 +93,11 @@ public class CompanyLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.Company addCompany(
 			java.lang.String webId, java.lang.String virtualHostname,
-			java.lang.String mx, boolean system, int maxUsers, boolean active)
+			java.lang.String mx, int maxUsers, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _companyLocalService.addCompany(
-			webId, virtualHostname, mx, system, maxUsers, active);
+			webId, virtualHostname, mx, maxUsers, active);
 	}
 
 	/**

@@ -52,8 +52,7 @@ public class CompanyServiceHttp {
 
 	public static com.liferay.portal.kernel.model.Company addCompany(
 			HttpPrincipal httpPrincipal, long companyId, String webId,
-			String virtualHost, String mx, boolean system, int maxUsers,
-			boolean active)
+			String virtualHost, String mx, int maxUsers, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -62,8 +61,7 @@ public class CompanyServiceHttp {
 				_addCompanyParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, webId, virtualHost, mx, system, maxUsers,
-				active);
+				methodKey, companyId, webId, virtualHost, mx, maxUsers, active);
 
 			Object returnObj = null;
 
@@ -95,7 +93,7 @@ public class CompanyServiceHttp {
 
 	public static com.liferay.portal.kernel.model.Company addCompany(
 			HttpPrincipal httpPrincipal, String webId, String virtualHost,
-			String mx, boolean system, int maxUsers, boolean active)
+			String mx, int maxUsers, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -104,7 +102,7 @@ public class CompanyServiceHttp {
 				_addCompanyParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, webId, virtualHost, mx, system, maxUsers, active);
+				methodKey, webId, virtualHost, mx, maxUsers, active);
 
 			Object returnObj = null;
 
@@ -848,12 +846,11 @@ public class CompanyServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CompanyServiceHttp.class);
 
 	private static final Class<?>[] _addCompanyParameterTypes0 = new Class[] {
-		long.class, String.class, String.class, String.class, boolean.class,
-		int.class, boolean.class
+		long.class, String.class, String.class, String.class, int.class,
+		boolean.class
 	};
 	private static final Class<?>[] _addCompanyParameterTypes1 = new Class[] {
-		String.class, String.class, String.class, boolean.class, int.class,
-		boolean.class
+		String.class, String.class, String.class, int.class, boolean.class
 	};
 	private static final Class<?>[] _deleteCompanyParameterTypes2 =
 		new Class[] {long.class};

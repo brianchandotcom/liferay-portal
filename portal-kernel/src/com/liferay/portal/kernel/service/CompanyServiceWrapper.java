@@ -49,12 +49,12 @@ public class CompanyServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.Company addCompany(
 			long companyId, java.lang.String webId,
-			java.lang.String virtualHost, java.lang.String mx, boolean system,
-			int maxUsers, boolean active)
+			java.lang.String virtualHost, java.lang.String mx, int maxUsers,
+			boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _companyService.addCompany(
-			companyId, webId, virtualHost, mx, system, maxUsers, active);
+			companyId, webId, virtualHost, mx, maxUsers, active);
 	}
 
 	/**
@@ -72,11 +72,11 @@ public class CompanyServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.Company addCompany(
 			java.lang.String webId, java.lang.String virtualHost,
-			java.lang.String mx, boolean system, int maxUsers, boolean active)
+			java.lang.String mx, int maxUsers, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _companyService.addCompany(
-			webId, virtualHost, mx, system, maxUsers, active);
+			webId, virtualHost, mx, maxUsers, active);
 	}
 
 	@Override

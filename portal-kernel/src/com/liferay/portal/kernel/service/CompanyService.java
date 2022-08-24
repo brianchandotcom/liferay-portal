@@ -77,7 +77,7 @@ public interface CompanyService extends BaseService {
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public Company addCompany(
 			long companyId, String webId, String virtualHost, String mx,
-			boolean system, int maxUsers, boolean active)
+			int maxUsers, boolean active)
 		throws PortalException;
 
 	/**
@@ -94,8 +94,8 @@ public interface CompanyService extends BaseService {
 	 */
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public Company addCompany(
-			String webId, String virtualHost, String mx, boolean system,
-			int maxUsers, boolean active)
+			String webId, String virtualHost, String mx, int maxUsers,
+			boolean active)
 		throws PortalException;
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

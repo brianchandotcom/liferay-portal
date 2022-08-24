@@ -87,8 +87,6 @@ public interface CompanyLocalService
 	 * @param webId the the company's web domain
 	 * @param virtualHostname the company's virtual host name
 	 * @param mx the company's mail domain
-	 * @param system whether the company is the very first company (i.e., the
-	 super company)
 	 * @param maxUsers the max number of company users (optionally
 	 <code>0</code>)
 	 * @param active whether the company is active
@@ -96,7 +94,7 @@ public interface CompanyLocalService
 	 */
 	public Company addCompany(
 			Long companyId, String webId, String virtualHostname, String mx,
-			boolean system, int maxUsers, boolean active)
+			int maxUsers, boolean active)
 		throws PortalException;
 
 	/**
@@ -117,8 +115,8 @@ public interface CompanyLocalService
 	 */
 	@Deprecated
 	public Company addCompany(
-			String webId, String virtualHostname, String mx, boolean system,
-			int maxUsers, boolean active)
+			String webId, String virtualHostname, String mx, int maxUsers,
+			boolean active)
 		throws PortalException;
 
 	/**

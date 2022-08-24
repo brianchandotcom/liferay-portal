@@ -45,7 +45,6 @@ import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountResource
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -74,7 +73,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.io.IOException;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -523,17 +521,6 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		AccountAddress[] accountAddresses = account.getAccountAddresses();
 
 		if (accountAddresses != null) {
-			List<CommerceAddress> commerceAddresses =
-				_commerceAddressService.getCommerceAddresses(
-					AccountEntry.class.getName(),
-					commerceAccount.getCommerceAccountId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
-
-			for (CommerceAddress commerceAddress : commerceAddresses) {
-				_commerceAddressService.deleteCommerceAddress(
-					commerceAddress.getCommerceAddressId());
-			}
-
 			for (AccountAddress accountAddress : accountAddresses) {
 				Country country = _countryService.fetchCountryByA2(
 					commerceAccount.getCompanyId(),
@@ -547,6 +534,49 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 								"country ISO code ", account.getName(),
 								" and account name ",
 								accountAddress.getCountryISOCode()));
+					}
+
+					continue;
+				}
+
+				long accountAddressId = GetterUtil.getLong(
+					accountAddress.getId());
+
+				if (accountAddressId > 0) {
+					CommerceAddress exisitingCommerceAddress =
+						_commerceAddressService.getCommerceAddress(
+							accountAddressId);
+
+					_commerceAddressService.updateCommerceAddress(
+						exisitingCommerceAddress.getCommerceAddressId(),
+						accountAddress.getName(),
+						accountAddress.getDescription(),
+						accountAddress.getStreet1(),
+						accountAddress.getStreet2(),
+						accountAddress.getStreet3(), accountAddress.getCity(),
+						accountAddress.getZip(),
+						_getRegionId(country, accountAddress),
+						country.getCountryId(), accountAddress.getPhoneNumber(),
+						GetterUtil.getInteger(
+							accountAddress.getType(),
+							CommerceAddressConstants.
+								ADDRESS_TYPE_BILLING_AND_SHIPPING),
+						serviceContext);
+
+					if (GetterUtil.get(
+							accountAddress.getDefaultBilling(), false)) {
+
+						_commerceAccountService.updateDefaultBillingAddress(
+							commerceAccount.getCommerceAccountId(),
+							exisitingCommerceAddress.getCommerceAddressId());
+					}
+
+					if (GetterUtil.get(
+							accountAddress.getDefaultShipping(), false)) {
+
+						_commerceAccountService.updateDefaultShippingAddress(
+							commerceAccount.getCommerceAccountId(),
+							exisitingCommerceAddress.getCommerceAddressId());
 					}
 
 					continue;

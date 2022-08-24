@@ -21,6 +21,7 @@ import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.Date;
 import java.util.List;
@@ -33,6 +34,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Cristina González
  */
 public interface ContentDashboardItem<T> {
+
+	public List<Version> getAllVersions(ThemeDisplay themeDisplay);
 
 	public List<AssetCategory> getAssetCategories();
 

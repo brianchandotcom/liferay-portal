@@ -108,6 +108,11 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
+	public List<Version> getAllVersions(ThemeDisplay themeDisplay) {
+		return Collections.emptyList();
+	}
+
+	@Override
 	public List<AssetCategory> getAssetCategories() {
 		return _assetCategories;
 	}

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -98,6 +99,11 @@ public class JournalArticleContentDashboardItem
 		}
 
 		_portal = portal;
+	}
+
+	@Override
+	public List<Version> getAllVersions(ThemeDisplay themeDisplay) {
+		return Collections.emptyList();
 	}
 
 	@Override

@@ -638,6 +638,11 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			return new ContentDashboardItem() {
 
 				@Override
+				public List<Version> getAllVersions(ThemeDisplay themeDisplay) {
+					return Collections.emptyList();
+				}
+
+				@Override
 				public List<AssetCategory> getAssetCategories() {
 					return Arrays.asList(assetCategory1, assetCategory2);
 				}

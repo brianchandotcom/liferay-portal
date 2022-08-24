@@ -30,7 +30,12 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
+import io.swagger.v3.oas.models.media.Content;
+import io.swagger.v3.oas.models.media.MediaType;
+import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
+import io.swagger.v3.oas.models.responses.ApiResponse;
+import io.swagger.v3.oas.models.responses.ApiResponses;
 
 import java.net.URI;
 
@@ -132,6 +137,26 @@ public class OpenAPIRelationshipsExtendedEndpoints
 			}
 		};
 
+		ApiResponses apiResponses = new ApiResponses();
+
+		ApiResponse defaultResponse = new ApiResponse();
+
+		Content content = new Content();
+
+		MediaType mediaType = new MediaType();
+
+		Schema<Object> schema = new Schema<>();
+
+		schema.set$ref("");
+
+		mediaType.setSchema(schema);
+
+		content.addMediaType("application/json", mediaType);
+
+		defaultResponse.setContent(content);
+
+		apiResponses.setDefault(defaultResponse);
+
 		return new Operation() {
 			{
 				operationId(
@@ -140,6 +165,7 @@ public class OpenAPIRelationshipsExtendedEndpoints
 						StringUtil.upperCaseFirstLetter(
 							objectRelationship.getName())));
 				parameters(new ArrayList<>(parameters.values()));
+				responses(apiResponses);
 				tags(
 					Collections.singletonList(
 						_getExternalType(systemObjectDefinitionMetadata)));

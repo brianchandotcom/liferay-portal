@@ -154,4 +154,38 @@ definition {
 		}
 	}
 
+	@description = "LPS-159476. Assert walkthrough can save current step when user signs in and out."
+	@priority = "3"
+	test CurrentStepIsSavedWhenUserSignsInAndOut {
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("When on step 2") {
+			Walkthrough.enablePopoverMode();
+
+			Walkthrough.goToSpecificStep(key_step = "2");
+
+			VerifyElementPresent(
+				key_title = "Step 2 of 2: Enter Your Name",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+
+		task ("And When user signs out") {
+			User.logoutPG();
+		}
+
+		task ("And When user signs in") {
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Then popover mode element is present on step 2") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/walkthrough-page-2");
+
+			AssertElementPresent(
+				key_title = "Step 2 of 2: Enter Your Name",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+	}
+
 }

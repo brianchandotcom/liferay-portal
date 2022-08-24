@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
@@ -191,14 +193,18 @@ public class UserTestUtil {
 	}
 
 	public static User addUser(Company company) throws Exception {
+		User user = getAdminUser(company.getCompanyId());
+
+		Group group = GroupLocalServiceUtil.getGroup(
+			company.getCompanyId(), GroupConstants.GUEST);
+
 		return addUser(
-			company.getCompanyId(), TestPropsValues.getUserId(),
+			company.getCompanyId(), user.getUserId(),
 			RandomTestUtil.randomString(
 				NumericStringRandomizerBumper.INSTANCE,
 				UniqueStringRandomizerBumper.INSTANCE),
 			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(),
-			new long[] {TestPropsValues.getGroupId()},
+			RandomTestUtil.randomString(), new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext());
 	}
 

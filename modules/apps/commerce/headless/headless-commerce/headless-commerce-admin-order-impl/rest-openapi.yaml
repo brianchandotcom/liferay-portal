@@ -637,6 +637,10 @@ components:
                     format: bigdecimal
                     minimum: 0
                     type: number
+                discountManuallyAdjusted:
+                    example: true
+                    type: boolean
+                    readOnly: true
                 discountPercentageLevel1:
                     example: 20
                     format: bigdecimal

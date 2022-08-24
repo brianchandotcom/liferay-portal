@@ -2453,7 +2453,7 @@ public class ObjectEntryLocalServiceImpl
 		for (ObjectField objectField : objectFields) {
 			Object value = values.get(objectField.getName());
 
-			if (value == null) {
+			if (!values.containsKey(objectField.getName())) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"No value was provided for object field \"" +
@@ -2518,7 +2518,7 @@ public class ObjectEntryLocalServiceImpl
 			for (ObjectField objectField : objectFields) {
 				Object value = values.get(objectField.getName());
 
-				if (value == null) {
+				if (!values.containsKey(objectField.getName())) {
 					continue;
 				}
 

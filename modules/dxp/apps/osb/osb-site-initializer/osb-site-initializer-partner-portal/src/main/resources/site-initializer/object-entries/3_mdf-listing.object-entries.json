@@ -1,0 +1,53 @@
+{
+	"object-entries": [
+		{
+			"externalReferenceCode": "PRMMDFC-001",
+			"label": "Request ID"
+		},
+		{
+			"externalReferenceCode": "PRMMDFC-002",
+			"label": "Status"
+		},
+		{
+			"externalReferenceCode": "PRMMDFC-003",
+			"label": "Activity Period"
+		},
+		{
+			"externalReferenceCode": "PRMMDFC-004",
+			"label": "Partner"
+		},
+		{
+			"externalReferenceCode": "PRMMDFC-005",
+			"label": "Total Cost"
+		},
+		{
+			"externalReferenceCode": "PRMMDFC-006",
+			"label": "Type"
+		},
+		{
+			"externalReferenceCode": "PRMMDFC-007",
+			"label": "Requested"
+		},
+		{
+			"externalReferenceCode": "PRMMDFC-008",
+			"label": "Amount Claimed"
+		},
+		{
+			"externalReferenceCode": "PRMMDFC-009",
+			"label": "Approved"
+		},
+		{
+			"externalReferenceCode": "PRMMDFC-010",
+			"label": "Paid"
+		},
+		{
+			"externalReferenceCode": "PRMMDFC-011",
+			"label": "Reimpursement Claim(s)"
+		},
+		{
+			"externalReferenceCode": "PRMMDFC-012",
+			"label": "Date Submitted"
+		}
+	],
+	"objectDefinitionName": "MDFListingColumn"
+}

@@ -121,6 +121,15 @@ public class JournalArticleInfoItemFields {
 			InfoLocalizedValue.localize(
 				JournalArticleInfoItemFields.class, "modified-date")
 		).build();
+	public static final InfoField<ImageInfoFieldType> previewImageInfoField =
+		BuilderHolder._builder.infoFieldType(
+			ImageInfoFieldType.INSTANCE
+		).name(
+			"previewImage"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				JournalArticleInfoItemFields.class, "preview-image")
+		).build();
 	public static final InfoField<DateInfoFieldType> publishDateInfoField =
 		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE

@@ -428,6 +428,8 @@ public class KBAdminNavigationDisplayContext {
 						_liferayPortletResponse
 					).setMVCPath(
 						"/admin/common/edit_kb_template.jsp"
+					).setRedirect(
+						PortalUtil.getCurrentURL(_httpServletRequest)
 					).setParameter(
 						"kbTemplateId", kbTemplate.getKbTemplateId()
 					).buildString()

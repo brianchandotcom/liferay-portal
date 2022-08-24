@@ -43,20 +43,6 @@ definition {
 		return "${curl}";
 	}
 
-	macro _curlBlogPostingComments {
-		Variables.assertDefined(parameterList = "${blogPostingId}");
-
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}/comments \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json
-		''';
-
-		return "${curl}";
-	}
-
 	macro _curlBlogPostingChildComments {
 		Variables.assertDefined(parameterList = "${commentId}");
 
@@ -64,6 +50,20 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/comments/${commentId}/comments \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
+
+		return "${curl}";
+	}
+
+	macro _curlBlogPostingComments {
+		Variables.assertDefined(parameterList = "${blogPostingId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}/comments \
 			-u test@liferay.com:test \
 			-H Content-Type: application/json
 		''';
@@ -82,11 +82,11 @@ definition {
 			var parentCommentId = "0";
 		}
 
-		if ((isSet(blogPostingId)) && !(isSet(commentId))) {
+		if (isSet(blogPostingId) && !(isSet(commentId))) {
 			var curl = CommentAPI._curlBlogPostingComments(blogPostingId = "${blogPostingId}");
 		}
 
-		if ((isSet(commentId)) && !(isSet(blogPostingId))) {
+		if (isSet(commentId) && !(isSet(blogPostingId))) {
 			var curl = CommentAPI._curlBlogPostingChildComments(commentId = "${commentId}");
 		}
 
@@ -108,13 +108,13 @@ definition {
 	macro getFieldValueOfBlogPostingComments {
 		Variables.assertDefined(parameterList = "${fieldName}");
 
-		if ((isSet(blogPostingId)) && !(isSet(commentId))) {
+		if (isSet(blogPostingId) && !(isSet(commentId))) {
 			var curl = CommentAPI._curlBlogPostingComments(blogPostingId = "${blogPostingId}");
 
 			var response = JSONCurlUtil.get("${curl}");
 		}
 
-		if ((isSet(commentId)) && !(isSet(blogPostingId))) {
+		if (isSet(commentId) && !(isSet(blogPostingId))) {
 			var curl = CommentAPI._curlBlogPostingChildComments(commentId = "${commentId}");
 
 			var response = JSONCurlUtil.get("${curl}");

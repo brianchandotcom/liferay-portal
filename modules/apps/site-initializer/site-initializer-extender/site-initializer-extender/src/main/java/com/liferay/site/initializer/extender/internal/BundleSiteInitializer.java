@@ -2586,14 +2586,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 		KnowledgeBaseArticle knowledgeBaseArticle = KnowledgeBaseArticle.toDTO(
 			jsonObject.toString());
 
-		KnowledgeBaseArticle existingKnowledgeBaseArticle = null;
-
 		try {
-			existingKnowledgeBaseArticle =
+			KnowledgeBaseArticle existingKnowledgeBaseArticle =
 				knowledgeBaseArticleResource.
 					getSiteKnowledgeBaseArticleByExternalReferenceCode(
 						serviceContext.getScopeGroupId(),
 						knowledgeBaseArticle.getExternalReferenceCode());
+
+			return knowledgeBaseArticleResource.
+				putSiteKnowledgeBaseArticleByExternalReferenceCode(
+					existingKnowledgeBaseArticle.getSiteId(),
+					existingKnowledgeBaseArticle.getExternalReferenceCode(),
+					existingKnowledgeBaseArticle);
 		}
 		catch (NoSuchModelException noSuchModelException) {
 			if (!folder) {
@@ -2612,12 +2616,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				postKnowledgeBaseFolderKnowledgeBaseArticle(
 					parentKnowledgeBaseObjectId, knowledgeBaseArticle);
 		}
-
-		return knowledgeBaseArticleResource.
-			putSiteKnowledgeBaseArticleByExternalReferenceCode(
-				existingKnowledgeBaseArticle.getSiteId(),
-				existingKnowledgeBaseArticle.getExternalReferenceCode(),
-				existingKnowledgeBaseArticle);
 	}
 
 	private KnowledgeBaseFolder _addOrUpdateKnowledgeBaseFolder(
@@ -2638,14 +2636,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 		KnowledgeBaseFolder knowledgeBaseFolder = KnowledgeBaseFolder.toDTO(
 			jsonObject.toString());
 
-		KnowledgeBaseFolder existingKnowledgeBaseFolder = null;
-
 		try {
-			existingKnowledgeBaseFolder =
+			KnowledgeBaseFolder existingKnowledgeBaseFolder =
 				knowledgeBaseFolderResource.
 					getSiteKnowledgeBaseFolderByExternalReferenceCode(
 						serviceContext.getScopeGroupId(),
 						knowledgeBaseFolder.getExternalReferenceCode());
+
+			return knowledgeBaseFolderResource.
+				putSiteKnowledgeBaseFolderByExternalReferenceCode(
+					existingKnowledgeBaseFolder.getSiteId(),
+					existingKnowledgeBaseFolder.getExternalReferenceCode(),
+					existingKnowledgeBaseFolder);
 		}
 		catch (NoSuchModelException noSuchModelException) {
 			if (parentKnowledgeBaseObjectId == 0) {
@@ -2657,12 +2659,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				postKnowledgeBaseFolderKnowledgeBaseFolder(
 					parentKnowledgeBaseObjectId, knowledgeBaseFolder);
 		}
-
-		return knowledgeBaseFolderResource.
-			putSiteKnowledgeBaseFolderByExternalReferenceCode(
-				existingKnowledgeBaseFolder.getSiteId(),
-				existingKnowledgeBaseFolder.getExternalReferenceCode(),
-				existingKnowledgeBaseFolder);
 	}
 
 	private void _addPermissions(

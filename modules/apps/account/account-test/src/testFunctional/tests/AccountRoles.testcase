@@ -329,6 +329,112 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-142654. This asserts user with Define Permission can define owned account role permissions."
+	@priority = "4"
+	test CanDefinePermissionsforAccountRoleWithPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given a user is granted permissions to access Account Admin portlet") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			Accounts.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
+		}
+
+		task ("And user is assigned a business account and prepare an Owned account role for testing") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.assignUsers(
+				accountName = "Account Name",
+				assigneeName = "userfn1");
+
+			Accounts.addOwnedAccountRole(accountRoleTitle = "New Account Role");
+		}
+
+		task ("When this user is granted permissions to Define Account Role Permission") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+			Accounts.addOwnedAccountRole(accountRoleTitle = "Define Permissions Role");
+
+			for (var resourceActionIndex : list "UPDATE,VIEW_ACCOUNT_ROLES") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.account.model.AccountEntry",
+					roleTitle = "Define Permissions Role",
+					roleType = "account");
+			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "DEFINE_PERMISSIONS",
+				resourceName = "com.liferay.account.model.AccountRole",
+				roleTitle = "Define Permissions Role",
+				roleType = "account");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Define Permissions Role",
+				accountUserName = "userfn1 userln1");
+		}
+
+		task ("Then user can define permissions and group scope permissions in owned Account Roles") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Define Permissions",
+				rowEntry = "New Account Role");
+
+			Accounts.definePermissions(
+				key_navItem = "Accounts",
+				key_subItem = "Accounts",
+				permissionKey = "ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_ENTRY_VIEW",
+				permissionNavigationKey = "PERMISSIONS_NAVITEM_SUBITEM");
+
+			AssertElementPresent(
+				key_permissionDefinitionValue = "View",
+				key_permissionNavigationValue = "Accounts",
+				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+
+			Accounts.defineGroupScopePermissions(
+				key_navItem = "Account Management",
+				permissionKey = "ACCOUNTS_APPLICATION_PERMISSIONS_VIEW",
+				permissionNavigationKey = "PERMISSIONS_NAVITEM");
+
+			AssertElementPresent(
+				key_permissionDefinitionValue = "View",
+				key_permissionNavigationValue = "Account Management",
+				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+		}
+	}
+
 	@description = "This is a use case for LPS-142654. This asserts user with Delete Account Role permissions for an account can Delete account roles."
 	@priority = "4"
 	test CanDeleteAccountRoleWithPermissions {

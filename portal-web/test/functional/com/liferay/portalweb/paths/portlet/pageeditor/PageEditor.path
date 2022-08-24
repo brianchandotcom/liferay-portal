@@ -484,6 +484,11 @@
 	<td>//div[contains(@class,'page-editor__item-configuration-sidebar')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ITEM_CONFIGURATION_SIDEBAR_OPEN</td>
+	<td>//div[contains(@class,'page-editor__item-configuration-sidebar--open')]</td>
+	<td></td>
+</tr>
 
 <!--COMMENTS_PANEL-->
 

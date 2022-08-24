@@ -16,7 +16,6 @@ package com.liferay.portal.layoutconfiguration.util.velocity;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.layoutconfiguration.util.PortletRenderer;
+import com.liferay.portlet.PreferencesValueUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -202,7 +202,8 @@ public class TemplateProcessor implements ColumnProcessor {
 
 						for (String value : values) {
 							sb.append("<value>");
-							sb.append(XMLUtil.toCompactSafe(value));
+							sb.append(
+								PreferencesValueUtil.toCompactSafe(value));
 							sb.append("</value>");
 						}
 

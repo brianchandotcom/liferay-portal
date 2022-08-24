@@ -15,7 +15,6 @@
 package com.liferay.portlet;
 
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -436,7 +435,7 @@ public class PortalPreferencesImpl
 			return null;
 		}
 
-		return XMLUtil.fromCompactSafe(value);
+		return PreferencesValueUtil.fromCompactSafe(value);
 	}
 
 	private String[] _getActualValues(String[] values) {
@@ -495,7 +494,7 @@ public class PortalPreferencesImpl
 			return _NULL_VALUE;
 		}
 
-		return XMLUtil.toCompactSafe(value);
+		return PreferencesValueUtil.toCompactSafe(value);
 	}
 
 	private String[] _getXMLSafeValues(String[] values) {

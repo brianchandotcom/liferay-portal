@@ -14,7 +14,6 @@
 
 package com.liferay.petra.xml;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -69,10 +68,6 @@ public class XMLUtil {
 		}
 	}
 
-	public static String fromCompactSafe(String xml) {
-		return StringUtil.replace(xml, "[$NEW_LINE$]", StringPool.NEW_LINE);
-	}
-
 	public static String stripInvalidChars(String xml) {
 		if (Validator.isNull(xml)) {
 			return xml;
@@ -107,16 +102,6 @@ public class XMLUtil {
 		}
 
 		return sb.toString();
-	}
-
-	public static String toCompactSafe(String xml) {
-		return StringUtil.replace(
-			xml,
-			new String[] {
-				StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE,
-				StringPool.RETURN
-			},
-			new String[] {"[$NEW_LINE$]", "[$NEW_LINE$]", "[$NEW_LINE$]"});
 	}
 
 	private static final String _XML_INDENT = "  ";

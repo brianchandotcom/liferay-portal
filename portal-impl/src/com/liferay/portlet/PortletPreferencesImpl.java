@@ -443,7 +443,7 @@ public class PortletPreferencesImpl
 			return _NULL_VALUE;
 		}
 
-		return XMLUtil.toCompactSafe(value);
+		return PreferencesValueUtil.toCompactSafe(value);
 	}
 
 	private String[] _getXMLSafeValues(String[] values) {

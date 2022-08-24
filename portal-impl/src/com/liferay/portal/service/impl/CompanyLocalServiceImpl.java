@@ -482,7 +482,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		List<Company> companies = null;
 
 		if (!CompanyThreadLocal.isLocked()) {
-			companies = companyLocalService.getCompanies(false);
+			companies = companyLocalService.getCompanies();
 		}
 
 		forEachCompany(unsafeConsumer, companies);
@@ -522,7 +522,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		if (!CompanyThreadLocal.isLocked()) {
 			companyIds = ListUtil.toLongArray(
-				companyLocalService.getCompanies(false), Company::getCompanyId);
+				companyLocalService.getCompanies(), Company::getCompanyId);
 		}
 
 		forEachCompanyId(unsafeConsumer, companyIds);
@@ -557,35 +557,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	@Override
 	public List<Company> getCompanies() {
 		return companyPersistence.findAll();
-	}
-
-	/**
-	 * Returns all the companies used by WSRP.
-	 *
-	 * @param  system whether the company is the very first company (i.e., the
-	 *         super company)
-	 * @return the companies used by WSRP
-	 */
-	@Override
-	public List<Company> getCompanies(boolean system) {
-		return companyPersistence.findBySystem(system);
-	}
-
-	@Override
-	public List<Company> getCompanies(boolean system, int start, int end) {
-		return companyPersistence.findBySystem(system, start, end);
-	}
-
-	/**
-	 * Returns the number of companies used by WSRP.
-	 *
-	 * @param  system whether the company is the very first company (i.e., the
-	 *         super company)
-	 * @return the number of companies used by WSRP
-	 */
-	@Override
-	public int getCompaniesCount(boolean system) {
-		return companyPersistence.countBySystem(system);
 	}
 
 	/**

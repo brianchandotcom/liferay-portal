@@ -380,23 +380,6 @@ public class CompanyLocalServiceUtil {
 	}
 
 	/**
-	 * Returns all the companies used by WSRP.
-	 *
-	 * @param system whether the company is the very first company (i.e., the
-	 super company)
-	 * @return the companies used by WSRP
-	 */
-	public static List<Company> getCompanies(boolean system) {
-		return getService().getCompanies(system);
-	}
-
-	public static List<Company> getCompanies(
-		boolean system, int start, int end) {
-
-		return getService().getCompanies(system, start, end);
-	}
-
-	/**
 	 * Returns a range of all the companies.
 	 *
 	 * <p>
@@ -418,17 +401,6 @@ public class CompanyLocalServiceUtil {
 	 */
 	public static int getCompaniesCount() {
 		return getService().getCompaniesCount();
-	}
-
-	/**
-	 * Returns the number of companies used by WSRP.
-	 *
-	 * @param system whether the company is the very first company (i.e., the
-	 super company)
-	 * @return the number of companies used by WSRP
-	 */
-	public static int getCompaniesCount(boolean system) {
-		return getService().getCompaniesCount(system);
 	}
 
 	/**

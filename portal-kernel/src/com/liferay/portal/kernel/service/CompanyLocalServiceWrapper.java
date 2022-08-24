@@ -429,27 +429,6 @@ public class CompanyLocalServiceWrapper
 	}
 
 	/**
-	 * Returns all the companies used by WSRP.
-	 *
-	 * @param system whether the company is the very first company (i.e., the
-	 super company)
-	 * @return the companies used by WSRP
-	 */
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Company> getCompanies(
-		boolean system) {
-
-		return _companyLocalService.getCompanies(system);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Company> getCompanies(
-		boolean system, int start, int end) {
-
-		return _companyLocalService.getCompanies(system, start, end);
-	}
-
-	/**
 	 * Returns a range of all the companies.
 	 *
 	 * <p>
@@ -475,18 +454,6 @@ public class CompanyLocalServiceWrapper
 	@Override
 	public int getCompaniesCount() {
 		return _companyLocalService.getCompaniesCount();
-	}
-
-	/**
-	 * Returns the number of companies used by WSRP.
-	 *
-	 * @param system whether the company is the very first company (i.e., the
-	 super company)
-	 * @return the number of companies used by WSRP
-	 */
-	@Override
-	public int getCompaniesCount(boolean system) {
-		return _companyLocalService.getCompaniesCount(system);
 	}
 
 	/**

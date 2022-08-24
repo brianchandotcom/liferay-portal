@@ -341,19 +341,6 @@ public interface CompanyLocalService
 	public List<Company> getCompanies();
 
 	/**
-	 * Returns all the companies used by WSRP.
-	 *
-	 * @param system whether the company is the very first company (i.e., the
-	 super company)
-	 * @return the companies used by WSRP
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Company> getCompanies(boolean system);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Company> getCompanies(boolean system, int start, int end);
-
-	/**
 	 * Returns a range of all the companies.
 	 *
 	 * <p>
@@ -374,16 +361,6 @@ public interface CompanyLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompaniesCount();
-
-	/**
-	 * Returns the number of companies used by WSRP.
-	 *
-	 * @param system whether the company is the very first company (i.e., the
-	 super company)
-	 * @return the number of companies used by WSRP
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompaniesCount(boolean system);
 
 	/**
 	 * Returns the company with the primary key.

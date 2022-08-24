@@ -57,6 +57,25 @@ public class AddressModelListener extends BaseModelListener<Address> {
 		}
 	}
 
+	@Override
+	public void onAfterUpdate(Address originalAddress, Address address)
+		throws ModelListenerException {
+
+		try {
+			List<CommerceOrder> commerceOrders =
+				_commerceOrderLocalService.getCommerceOrdersByShippingAddress(
+					address.getAddressId());
+
+			for (CommerceOrder commerceOrder : commerceOrders) {
+				_commerceOrderLocalService.resetCommerceOrderShipping(
+					commerceOrder.getCommerceOrderId());
+			}
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
 	private void _removeCommerceOrderAddresses(
 			List<CommerceOrder> commerceOrders, long commerceAddressId)
 		throws PortalException {

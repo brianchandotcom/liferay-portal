@@ -16,16 +16,12 @@ package com.liferay.search.experiences.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -44,7 +40,6 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,26 +58,41 @@ public class SXPElementLocalServiceTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+	@Test
+	public void testAddSXPElement() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
 
-		_sxpElement = _addSXPElement(
-			false, RandomTestUtil.randomString(), TestPropsValues.getUserId());
+		SXPElement sxpElement = _addSXPElement(externalReferenceCode);
+
+		Assert.assertEquals(
+			externalReferenceCode, sxpElement.getExternalReferenceCode());
+		Assert.assertEquals("1.0", sxpElement.getVersion());
 	}
 
 	@Test
-	public void testAddSXPElement() throws Exception {
-		Assert.assertNotNull(_sxpElement.getExternalReferenceCode());
-		Assert.assertEquals("1.0", _sxpElement.getVersion());
+	public void testAddSXPElementWithDuplicateERCDifferentCompany()
+		throws Exception {
 
-		SXPElement sxpElement = _addSXPElement(
-			true, RandomTestUtil.randomString(), TestPropsValues.getUserId());
+		SXPElement sxpElement1 = _addSXPElement(RandomTestUtil.randomString());
+
+		Company company = CompanyTestUtil.addCompany();
+
+		SXPElement sxpElement2 = _addSXPElement(
+			sxpElement1.getExternalReferenceCode(), company.getCompanyId());
+
+		Assert.assertEquals(
+			sxpElement1.getExternalReferenceCode(),
+			sxpElement2.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testAddSXPElementWithDuplicateERCSameCompany()
+		throws Exception {
+
+		SXPElement sxpElement = _addSXPElement(RandomTestUtil.randomString());
 
 		try {
-			_addSXPElement(
-				true, sxpElement.getTitle(LocaleUtil.US),
-				TestPropsValues.getUserId());
+			_addSXPElement(sxpElement.getExternalReferenceCode());
 
 			Assert.fail();
 		}
@@ -95,15 +105,26 @@ public class SXPElementLocalServiceTest {
 	}
 
 	@Test
+	public void testAddSXPElementWithNullERC() throws Exception {
+		SXPElement sxpElement = _addSXPElement(null);
+
+		Assert.assertNotNull(sxpElement.getExternalReferenceCode());
+		Assert.assertEquals("1.0", sxpElement.getVersion());
+	}
+
+	@Test
 	public void testGetSXPElementByExternalReferenceCode() throws Exception {
+		SXPElement sxpElement = _addSXPElement(RandomTestUtil.randomString());
+
 		Assert.assertEquals(
-			_sxpElement,
+			sxpElement,
 			_sxpElementLocalService.getSXPElementByExternalReferenceCode(
-				_group.getCompanyId(), _sxpElement.getExternalReferenceCode()));
+				TestPropsValues.getCompanyId(),
+				sxpElement.getExternalReferenceCode()));
 
 		try {
 			_sxpElementLocalService.getSXPElementByExternalReferenceCode(
-				_group.getCompanyId(), RandomTestUtil.randomString());
+				TestPropsValues.getCompanyId(), RandomTestUtil.randomString());
 
 			Assert.fail();
 		}
@@ -114,11 +135,11 @@ public class SXPElementLocalServiceTest {
 
 	@Test
 	public void testUpdateSXPElement() throws Exception {
-		SXPElement sxpElement = _addSXPElement(
-			false, RandomTestUtil.randomString(), TestPropsValues.getUserId());
+		SXPElement sxpElement1 = _addSXPElement(RandomTestUtil.randomString());
+		SXPElement sxpElement2 = _addSXPElement(RandomTestUtil.randomString());
 
-		sxpElement.setExternalReferenceCode(
-			_sxpElement.getExternalReferenceCode());
+		sxpElement2.setExternalReferenceCode(
+			sxpElement1.getExternalReferenceCode());
 
 		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
 				"org.hibernate.engine.jdbc.batch.internal.BatchingBatch",
@@ -128,7 +149,7 @@ public class SXPElementLocalServiceTest {
 				LoggerTestUtil.ERROR)) {
 
 			try {
-				_sxpElementLocalService.updateSXPElement(sxpElement);
+				_sxpElementLocalService.updateSXPElement(sxpElement2);
 
 				Assert.fail();
 			}
@@ -137,75 +158,61 @@ public class SXPElementLocalServiceTest {
 			}
 		}
 
-		Company company = CompanyTestUtil.addCompany();
-
-		User user = UserTestUtil.addCompanyAdminUser(company);
-
-		sxpElement = _addSXPElement(
-			false, RandomTestUtil.randomString(), user.getUserId());
-
-		sxpElement.setExternalReferenceCode(
-			_sxpElement.getExternalReferenceCode());
-
-		sxpElement = _sxpElementLocalService.updateSXPElement(sxpElement);
-
-		Assert.assertEquals(
-			_sxpElement.getExternalReferenceCode(),
-			sxpElement.getExternalReferenceCode());
-
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		_sxpElement.setExternalReferenceCode(externalReferenceCode);
+		sxpElement1.setExternalReferenceCode(externalReferenceCode);
 
-		_sxpElement = _sxpElementLocalService.updateSXPElement(_sxpElement);
-
-		Assert.assertEquals(
-			externalReferenceCode, _sxpElement.getExternalReferenceCode());
-
-		_sxpElement = _sxpElementLocalService.updateSXPElement(
-			_sxpElement.getUserId(), _sxpElement.getSXPElementId(),
-			_sxpElement.getDescriptionMap(),
-			_sxpElement.getElementDefinitionJSON(), _sxpElement.isHidden(),
-			_sxpElement.getSchemaVersion(), _sxpElement.getTitleMap(),
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId()));
+		sxpElement1 = _sxpElementLocalService.updateSXPElement(sxpElement1);
 
 		Assert.assertEquals(
-			externalReferenceCode, _sxpElement.getExternalReferenceCode());
-		Assert.assertEquals("1.1", _sxpElement.getVersion());
+			externalReferenceCode, sxpElement1.getExternalReferenceCode());
 
-		_sxpElement = _sxpElementLocalService.updateSXPElement(
-			_sxpElement.getUserId(), _sxpElement.getSXPElementId(),
-			_sxpElement.getDescriptionMap(),
-			_sxpElement.getElementDefinitionJSON(), _sxpElement.isHidden(),
-			_sxpElement.getSchemaVersion(), _sxpElement.getTitleMap(),
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId()));
+		sxpElement1 = _sxpElementLocalService.updateSXPElement(
+			sxpElement1.getUserId(), sxpElement1.getSXPElementId(),
+			sxpElement1.getDescriptionMap(),
+			sxpElement1.getElementDefinitionJSON(), sxpElement1.isHidden(),
+			sxpElement1.getSchemaVersion(), sxpElement1.getTitleMap(),
+			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(
-			externalReferenceCode, _sxpElement.getExternalReferenceCode());
-		Assert.assertEquals("1.2", _sxpElement.getVersion());
+			externalReferenceCode, sxpElement1.getExternalReferenceCode());
+		Assert.assertEquals("1.1", sxpElement1.getVersion());
+
+		sxpElement1 = _sxpElementLocalService.updateSXPElement(
+			sxpElement1.getUserId(), sxpElement1.getSXPElementId(),
+			sxpElement1.getDescriptionMap(),
+			sxpElement1.getElementDefinitionJSON(), sxpElement1.isHidden(),
+			sxpElement1.getSchemaVersion(), sxpElement1.getTitleMap(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			externalReferenceCode, sxpElement1.getExternalReferenceCode());
+		Assert.assertEquals("1.2", sxpElement1.getVersion());
+	}
+
+	private SXPElement _addSXPElement(String externalReferenceCode)
+		throws Exception {
+
+		return _addSXPElement(
+			externalReferenceCode, TestPropsValues.getCompanyId());
 	}
 
 	private SXPElement _addSXPElement(
-			boolean readOnly, String title, long userId)
+			String externalReferenceCode, long companyId)
 		throws Exception {
 
 		SXPElement sxpElement = _sxpElementLocalService.addSXPElement(
-			userId, Collections.singletonMap(LocaleUtil.US, ""), "{}", readOnly,
+			externalReferenceCode, TestPropsValues.getUserId(),
+			Collections.singletonMap(LocaleUtil.US, ""), "{}", false,
 			RandomTestUtil.randomString(),
-			Collections.singletonMap(LocaleUtil.US, title), 0,
-			ServiceContextTestUtil.getServiceContext(_group, userId));
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			0, ServiceContextTestUtil.getServiceContext(companyId, 0, 0));
 
 		_sxpElements.add(sxpElement);
 
 		return sxpElement;
 	}
-
-	@DeleteAfterTestRun
-	private Group _group;
-
-	private SXPElement _sxpElement;
 
 	@Inject
 	private SXPElementLocalService _sxpElementLocalService;

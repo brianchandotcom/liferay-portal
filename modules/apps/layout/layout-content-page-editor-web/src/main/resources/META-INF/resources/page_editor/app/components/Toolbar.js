@@ -35,6 +35,7 @@ import selectCanPublish from '../selectors/selectCanPublish';
 import redo from '../thunks/redo';
 import undo from '../thunks/undo';
 import {useDropClear} from '../utils/drag-and-drop/useDragAndDrop';
+import hideProductMenuIfPresent from '../utils/hideProductMenuIfPresent';
 import EditModeSelector from './EditModeSelector';
 import ExperimentsLabel from './ExperimentsLabel';
 import NetworkStatusBar from './NetworkStatusBar';
@@ -61,6 +62,8 @@ function ToolbarBody({className}) {
 	const canPublish = selectCanPublish(store);
 
 	const [publishPending, setPublishPending] = useState(false);
+
+	const sidebarHidden = useSelector((state) => state.sidebar.hidden);
 
 	const {
 		network,
@@ -286,7 +289,30 @@ function ToolbarBody({className}) {
 
 				<li className="nav-item">
 					<ul className="navbar-nav">
-						{Liferay.FeatureFlags['LPS-153452'] ? null : (
+						{Liferay.FeatureFlags['LPS-153452'] ? (
+							<li className="nav-item">
+								<ClayButtonWithIcon
+									className="btn btn-secondary"
+									displayType="secondary"
+									onClick={() => {
+										hideProductMenuIfPresent({
+											onHide: () =>
+												dispatch(
+													Actions.switchSidebarPanel({
+														hidden: !sidebarHidden,
+													})
+												),
+										});
+									}}
+									small
+									symbol={sidebarHidden ? 'hidden' : 'view'}
+									title={Liferay.Language.get('preview')}
+									type="button"
+								>
+									{Liferay.Language.get('preview')}
+								</ClayButtonWithIcon>
+							</li>
+						) : (
 							<li className="nav-item">
 								<ClayButtonWithIcon
 									className="btn btn-secondary"

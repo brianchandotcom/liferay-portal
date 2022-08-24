@@ -477,6 +477,14 @@
 	<td></td>
 </tr>
 
+<!--ITEM_CONFIGURATION_SIDEBAR-->
+
+<tr>
+	<td>ITEM_CONFIGURATION_SIDEBAR</td>
+	<td>//div[contains(@class,'page-editor__item-configuration-sidebar')]</td>
+	<td></td>
+</tr>
+
 <!--COMMENTS_PANEL-->
 
 <tr>

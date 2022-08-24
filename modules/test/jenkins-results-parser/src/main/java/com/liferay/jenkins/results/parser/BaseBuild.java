@@ -34,7 +34,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -3125,53 +3124,6 @@ public abstract class BaseBuild implements Build {
 
 	protected String getJenkinsReportTimeZoneName() {
 		return _NAME_JENKINS_REPORT_TIME_ZONE;
-	}
-
-	protected Set<String> getJobParameterNames() {
-		JSONObject jsonObject = null;
-
-		String urlSuffix = "api/json";
-
-		if (archiveFileExists(urlSuffix)) {
-			jsonObject = new JSONObject(getArchiveFileContent(urlSuffix));
-		}
-		else {
-			try {
-				jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					JenkinsResultsParserUtil.getLocalURL(
-						JenkinsResultsParserUtil.combine(
-							getJobURL(), "/api/json?tree=actions[",
-							"parameterDefinitions[name,type,value]]")));
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(
-					"Unable to get build JSON", ioException);
-			}
-		}
-
-		JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
-
-		JSONObject firstActionJSONObject = actionsJSONArray.getJSONObject(0);
-
-		JSONArray parameterDefinitionsJSONArray =
-			firstActionJSONObject.getJSONArray("parameterDefinitions");
-
-		Set<String> parameterNames = new HashSet<>(
-			parameterDefinitionsJSONArray.length());
-
-		for (int i = 0; i < parameterDefinitionsJSONArray.length(); i++) {
-			JSONObject parameterDefinitionJSONObject =
-				parameterDefinitionsJSONArray.getJSONObject(i);
-
-			String type = parameterDefinitionJSONObject.getString("type");
-
-			if (type.equals("StringParameterDefinition")) {
-				parameterNames.add(
-					parameterDefinitionJSONObject.getString("name"));
-			}
-		}
-
-		return parameterNames;
 	}
 
 	protected Map<String, String> getParameters(JSONArray jsonArray) {

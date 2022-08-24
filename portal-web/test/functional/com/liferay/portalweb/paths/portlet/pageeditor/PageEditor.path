@@ -879,7 +879,7 @@
 
 <tr>
 	<td>MORE_LINK</td>
-	<td>//*[contains(@class,'page-editor__sidebar__panel-header') and contains(.,'Page Design Options')]//a[normalize-space(text())='More']</td>
+	<td>//*[contains(@class,'page-editor__sidebar__panel-header') and contains(.,'Page Design Options')]//a[normalize-space(text())='More'] | //*[contains(@class,'page-editor__sidebar__panel-header') and contains(.,'Page Design Options')]//*[name()='svg'][contains(@class,'lexicon-icon-cog')]</td>
 	<td></td>
 </tr>
 

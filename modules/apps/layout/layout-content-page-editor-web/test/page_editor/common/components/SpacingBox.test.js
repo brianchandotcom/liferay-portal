@@ -46,66 +46,82 @@ const SpacingBoxTest = ({onChange = () => {}, value = {}}) => (
 				marginBottom: {
 					defaultValue: '0',
 					label: 'margin-bottom',
-					validValues: [
-						{label: '0', value: '0'},
-						{label: '10', value: '10'},
-					],
+					typeOptions: {
+						validValues: [
+							{label: '0', value: '0'},
+							{label: '10', value: '10'},
+						],
+					},
 				},
 				marginLeft: {
 					defaultValue: '0',
 					label: 'margin-left',
-					validValues: [
-						{label: '0', value: '0'},
-						{label: '10', value: '10'},
-					],
+					typeOptions: {
+						validValues: [
+							{label: '0', value: '0'},
+							{label: '10', value: '10'},
+						],
+					},
 				},
 				marginRight: {
 					defaultValue: '0',
 					label: 'margin-right',
-					validValues: [
-						{label: '0', value: '0'},
-						{label: '10', value: '10'},
-					],
+					typeOptions: {
+						validValues: [
+							{label: '0', value: '0'},
+							{label: '10', value: '10'},
+						],
+					},
 				},
 				marginTop: {
 					defaultValue: '0',
 					label: 'margin-top',
-					validValues: [
-						{label: '0', value: '0'},
-						{label: '10', value: '10'},
-					],
+					typeOptions: {
+						validValues: [
+							{label: '0', value: '0'},
+							{label: '10', value: '10'},
+						],
+					},
 				},
 				paddingBottom: {
 					defaultValue: '0',
 					label: 'padding-bottom',
-					validValues: [
-						{label: '0', value: '0'},
-						{label: '10', value: '10'},
-					],
+					typeOptions: {
+						validValues: [
+							{label: '0', value: '0'},
+							{label: '10', value: '10'},
+						],
+					},
 				},
 				paddingLeft: {
 					defaultValue: '0',
 					label: 'padding-left',
-					validValues: [
-						{label: '0', value: '0'},
-						{label: '10', value: '10'},
-					],
+					typeOptions: {
+						validValues: [
+							{label: '0', value: '0'},
+							{label: '10', value: '10'},
+						],
+					},
 				},
 				paddingRight: {
 					defaultValue: '0',
 					label: 'padding-right',
-					validValues: [
-						{label: '0', value: '0'},
-						{label: '5', value: '5'},
-					],
+					typeOptions: {
+						validValues: [
+							{label: '0', value: '0'},
+							{label: '5', value: '5'},
+						],
+					},
 				},
 				paddingTop: {
 					defaultValue: '0',
 					label: 'padding-top',
-					validValues: [
-						{label: '0', value: '0'},
-						{label: '10', value: '10'},
-					],
+					typeOptions: {
+						validValues: [
+							{label: '0', value: '0'},
+							{label: '10', value: '10'},
+						],
+					},
 				},
 			}}
 			onChange={onChange}

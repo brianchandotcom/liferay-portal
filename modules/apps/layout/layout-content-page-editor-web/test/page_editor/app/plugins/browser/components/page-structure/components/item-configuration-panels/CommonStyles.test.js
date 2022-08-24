@@ -109,16 +109,18 @@ jest.mock(
 							name: 'marginLeft',
 							responsive: true,
 							type: 'select',
-							validValues: [
-								{
-									label: '0',
-									value: '0',
-								},
-								{
-									label: '1',
-									value: '1',
-								},
-							],
+							typeOptions: {
+								validValues: [
+									{
+										label: '0',
+										value: '0',
+									},
+									{
+										label: '1',
+										value: '1',
+									},
+								],
+							},
 						},
 						{
 							dataType: 'string',
@@ -129,16 +131,18 @@ jest.mock(
 							name: 'marginRight',
 							responsive: true,
 							type: 'select',
-							validValues: [
-								{
-									label: '0',
-									value: '0',
-								},
-								{
-									label: '1',
-									value: '1',
-								},
-							],
+							typeOptions: {
+								validValues: [
+									{
+										label: '0',
+										value: '0',
+									},
+									{
+										label: '1',
+										value: '1',
+									},
+								],
+							},
 						},
 					],
 				},

@@ -159,16 +159,18 @@ jest.mock(
 							responsive: true,
 							responsiveTemplate: 'mt{viewport}{value}',
 							type: 'select',
-							validValues: [
-								{
-									label: '0',
-									value: '0',
-								},
-								{
-									label: '1',
-									value: '1',
-								},
-							],
+							typeOptions: {
+								validValues: [
+									{
+										label: '0',
+										value: '0',
+									},
+									{
+										label: '1',
+										value: '1',
+									},
+								],
+							},
 						},
 					],
 				},

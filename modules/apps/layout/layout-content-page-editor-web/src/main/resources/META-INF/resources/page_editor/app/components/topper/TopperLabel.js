@@ -67,7 +67,9 @@ export function TopperLabel({children, itemElement, style}) {
 					itemElementMarginRight +
 					TOPPER_BAR_BORDER_WIDTH;
 
-				const isInset = Math.floor(itemElementTop - scrollY) <= 0;
+				const isInset =
+					Math.floor(itemElementTop - TOPPER_BAR_HEIGHT - scrollY) <=
+					0;
 
 				const top = isInset
 					? itemElementTop + TOPPER_BAR_BORDER_WIDTH

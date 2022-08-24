@@ -295,4 +295,57 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-146373. The page creator could find Fragments and Widgets, Browser, Page Design Options, Page Content, and Comments on the left sidebar while fragment configuration on the right sidebar. Both page editor sidebars shouldn't overlay the page content."
+	@priority = "4"
+	test ViewPageEditorSidebars {
+		property custom.properties = "feature.flag.LPS-153452=true";
+
+		task ("When the page creator accesses to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page creator sees Fragments and Widgets, Browser, Page Design Options, Page Content, and Comments on the left sidebar while fragment configuration on the right sidebar and both page editor sidebars don't overlay the page content") {
+			for (var tabName : list "Fragments and Widgets,Browser,Page Design Options,Page Content,Comments") {
+				AssertVisible(
+					key_tabName = "${tabName}",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+			}
+
+			AssertTextEquals.assertPartialTextCaseSensitive(
+				locator1 = "PageEditor#ITEM_CONFIGURATION_SIDEBAR",
+				value1 = "Select a Page Element");
+
+			AssertTextEquals.assertPartialTextCaseSensitive(
+				locator1 = "PageEditor#ITEM_CONFIGURATION_SIDEBAR",
+				value1 = "Select a page element to activate this panel.");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.clickConfigurableField(fragmentName = "Heading");
+
+			for (var tabName : list "General,Styles,Advanced") {
+				AssertVisible(
+					key_tab = "${tabName}",
+					locator1 = "NavTab#TAB_LINK");
+			}
+
+			var leftSidebarButtonsWidth = selenium.getElementWidth("PageEditor#FRAGMENT_SIDEBAR_BODY");
+			var leftSidebarPanelWidth = selenium.getElementWidth("Sidebar#PANEL_OPEN");
+			var bodyWidth = selenium.getElementWidth("//body");
+			var rightSidebarWidth = selenium.getElementWidth("PageEditor#ITEM_CONFIGURATION_SIDEBAR");
+			var headingFragmentWidth = selenium.getElementWidth("//div[@aria-label='Heading']");
+			var leftSidebarWidth = ${leftSidebarButtonsWidth} + ${leftSidebarPanelWidth};
+
+			var bothSidebarWidth = ${leftSidebarWidth} + ${rightSidebarWidth};
+
+			TestUtils.assertEquals(
+				actual = MathUtil.difference("${bodyWidth}", "${bothSidebarWidth}"),
+				expected = "${headingFragmentWidth}");
+		}
+	}
+
 }

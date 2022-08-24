@@ -23,7 +23,6 @@ import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceEntryTable;
 import com.liferay.commerce.price.list.model.CommercePriceList;
-import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
 import com.liferay.commerce.price.list.service.base.CommercePriceEntryLocalServiceBaseImpl;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListPersistence;
@@ -587,11 +586,6 @@ public class CommercePriceEntryLocalServiceImpl
 	public CommercePriceEntry deleteCommercePriceEntry(
 			CommercePriceEntry commercePriceEntry)
 		throws PortalException {
-
-		// Commerce tier price entries
-
-		_commerceTierPriceEntryLocalService.deleteCommerceTierPriceEntries(
-			commercePriceEntry.getCommercePriceEntryId());
 
 		// Commerce price entry
 
@@ -1531,10 +1525,6 @@ public class CommercePriceEntryLocalServiceImpl
 
 	@Reference
 	private CommercePriceListPersistence _commercePriceListPersistence;
-
-	@Reference
-	private CommerceTierPriceEntryLocalService
-		_commerceTierPriceEntryLocalService;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

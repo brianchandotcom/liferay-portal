@@ -37,6 +37,7 @@ import java.util.regex.Pattern;
 
 import org.dom4j.Element;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -47,6 +48,36 @@ public class BatchBuild extends BaseBuild {
 	@Override
 	public void addTimelineData(BaseBuild.TimelineData timelineData) {
 		addDownstreamBuildsTimelineData(timelineData);
+	}
+
+	@Override
+	protected void findDownstreamBuilds() {
+		List<String> foundDownstreamBuildURLs = new ArrayList<>(
+			findDownstreamBuildsInConsoleText());
+
+		JSONObject buildJSONObject = getBuildJSONObject("runs[number,url]");
+
+		if ((buildJSONObject != null) && buildJSONObject.has("runs")) {
+			JSONArray runsJSONArray = buildJSONObject.getJSONArray("runs");
+
+			if (runsJSONArray != null) {
+				for (int i = 0; i < runsJSONArray.length(); i++) {
+					JSONObject runJSONObject = runsJSONArray.getJSONObject(i);
+
+					if (runJSONObject.getInt("number") == getBuildNumber()) {
+						String url = runJSONObject.getString("url");
+
+						if (!hasBuildURL(url) &&
+								!foundDownstreamBuildURLs.contains(url)) {
+
+							foundDownstreamBuildURLs.add(url);
+						}
+					}
+				}
+			}
+		}
+
+		addDownstreamBuilds(foundDownstreamBuildURLs.toArray(new String[0]));
 	}
 
 	@Override

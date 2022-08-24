@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.internal.upgrade.v2_3_0;
 
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -35,20 +36,16 @@ public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
 					"select siteNavigationMenuItemId, typeSettings from " +
 						"SiteNavigationMenuItem where type_ = 'display_page'");
 			PreparedStatement updatePreparedStatement =
-				connection.prepareStatement(
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
 					"update SiteNavigationMenuItem set type_ = ? where " +
 						"siteNavigationMenuItemId = ?");
 			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long siteNavigationMenuItemId = resultSet.getLong(
-					"siteNavigationMenuItemId");
-
-				String typeSettings = resultSet.getString("typeSettings");
-
 				UnicodeProperties typeSettingsUnicodeProperties =
 					UnicodePropertiesBuilder.fastLoad(
-						typeSettings
+						resultSet.getString("typeSettings")
 					).build();
 
 				long classNameId = GetterUtil.getLong(
@@ -57,10 +54,13 @@ public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
 				updatePreparedStatement.setString(
 					1, PortalUtil.getClassName(classNameId));
 
-				updatePreparedStatement.setLong(2, siteNavigationMenuItemId);
+				updatePreparedStatement.setLong(
+					2, resultSet.getLong("siteNavigationMenuItemId"));
 
-				updatePreparedStatement.executeUpdate();
+				updatePreparedStatement.addBatch();
 			}
+
+			updatePreparedStatement.executeBatch();
 		}
 	}
 

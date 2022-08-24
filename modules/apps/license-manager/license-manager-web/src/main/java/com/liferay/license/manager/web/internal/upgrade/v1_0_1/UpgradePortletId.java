@@ -15,7 +15,7 @@
 package com.liferay.license.manager.web.internal.upgrade.v1_0_1;
 
 import com.liferay.license.manager.web.internal.constants.LicenseManagerPortletKeys;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 
 import java.sql.PreparedStatement;
@@ -58,29 +58,24 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select ownerId, ownerType, plid from PortletPreferences " +
 					"where portletId = '176'");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			ResultSet resultSet = preparedStatement.executeQuery();
+			PreparedStatement deletePreparedStatement =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"delete from PortletPreferences where ownerId = ? and " +
+						"ownerType = ? and plid = ? and portletId = ?")) {
 
 			while (resultSet.next()) {
-				long ownerId = resultSet.getLong(1);
-				int ownerType = resultSet.getInt(2);
-				long plid = resultSet.getLong(3);
+				deletePreparedStatement.setLong(1, resultSet.getLong(1));
+				deletePreparedStatement.setInt(2, resultSet.getInt(2));
+				deletePreparedStatement.setLong(3, resultSet.getLong(3));
+				deletePreparedStatement.setString(
+					4, LicenseManagerPortletKeys.LICENSE_MANAGER);
 
-				try (PreparedStatement deletePreparedStatement =
-						connection.prepareStatement(
-							StringBundler.concat(
-								"delete from PortletPreferences where ownerId ",
-								"= ? and ownerType = ? and plid = ? and ",
-								"portletId = ?"))) {
-
-					deletePreparedStatement.setLong(1, ownerId);
-					deletePreparedStatement.setInt(2, ownerType);
-					deletePreparedStatement.setLong(3, plid);
-					deletePreparedStatement.setString(
-						4, LicenseManagerPortletKeys.LICENSE_MANAGER);
-
-					deletePreparedStatement.executeUpdate();
-				}
+				deletePreparedStatement.addBatch();
 			}
+
+			deletePreparedStatement.executeBatch();
 		}
 	}
 
@@ -88,31 +83,26 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId, scope, primKey, roleId from " +
 					"ResourcePermission where name = '176'");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			ResultSet resultSet = preparedStatement.executeQuery();
+			PreparedStatement deletePreparedStatement =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"delete from ResourcePermission where companyId = ? and " +
+						"name = ? and scope = ? and primkey = ? and roleId = " +
+							"?")) {
 
 			while (resultSet.next()) {
-				long companyId = resultSet.getLong(1);
-				int scope = resultSet.getInt(2);
-				String primKey = resultSet.getString(3);
-				long roleId = resultSet.getLong(4);
+				deletePreparedStatement.setLong(1, resultSet.getLong(1));
+				deletePreparedStatement.setString(
+					2, LicenseManagerPortletKeys.LICENSE_MANAGER);
+				deletePreparedStatement.setInt(3, resultSet.getInt(2));
+				deletePreparedStatement.setString(4, resultSet.getString(3));
+				deletePreparedStatement.setLong(5, resultSet.getLong(4));
 
-				try (PreparedStatement deletePreparedStatement =
-						connection.prepareStatement(
-							StringBundler.concat(
-								"delete from ResourcePermission where ",
-								"companyId = ? and name = ? and scope = ? and ",
-								"primkey = ? and roleId = ?"))) {
-
-					deletePreparedStatement.setLong(1, companyId);
-					deletePreparedStatement.setString(
-						2, LicenseManagerPortletKeys.LICENSE_MANAGER);
-					deletePreparedStatement.setInt(3, scope);
-					deletePreparedStatement.setString(4, primKey);
-					deletePreparedStatement.setLong(5, roleId);
-
-					deletePreparedStatement.executeUpdate();
-				}
+				deletePreparedStatement.addBatch();
 			}
+
+			deletePreparedStatement.executeBatch();
 		}
 	}
 

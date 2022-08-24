@@ -54,7 +54,7 @@ public class XLSBatchEngineExportTaskItemWriterImpl
 
 		_sheet = _workbook.createSheet();
 
-		_write(fieldNames);
+		_write(_columnValuesExtractor.getHeaders());
 	}
 
 	@Override
@@ -69,11 +69,13 @@ public class XLSBatchEngineExportTaskItemWriterImpl
 	@Override
 	public void write(Collection<?> items) throws Exception {
 		for (Object item : items) {
-			_write(_columnValuesExtractor.extractValues(item));
+			for (Object[] row : _columnValuesExtractor.extractValues(item)) {
+				_write(row);
+			}
 		}
 	}
 
-	private void _write(Collection<?> values) {
+	private void _write(Object[] values) {
 		Row row = _sheet.createRow(_rowNum++);
 
 		int column = 0;

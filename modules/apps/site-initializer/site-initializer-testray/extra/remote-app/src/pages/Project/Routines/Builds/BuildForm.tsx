@@ -27,6 +27,7 @@ import useFormActions from '../../../../hooks/useFormActions';
 import useFormModal from '../../../../hooks/useFormModal';
 import i18n from '../../../../i18n';
 import yupSchema, {yupResolver} from '../../../../schema/yup';
+import fetcher from '../../../../services/fetcher';
 import {
 	APIResponse,
 	TestrayBuild,
@@ -34,6 +35,7 @@ import {
 	TestrayFactor,
 	TestrayProductVersion,
 	TestrayRoutine,
+	TestraySuiteCase,
 	testrayBuildRest,
 	testrayFactorRest,
 } from '../../../../services/rest';
@@ -105,9 +107,32 @@ const BuildForm = () => {
 		},
 	});
 
-	const {modal: buildSelectSuitesModal} = useFormModal();
-	const navigate = useNavigate();
 	const [cases, setCases] = useState<number[]>([]);
+
+	const {modal: buildSelectSuitesModal} = useFormModal({
+		onSave: (newSuites) => {
+			fetcher<APIResponse<TestraySuiteCase>>(
+				`/suitescaseses?fields=r_caseToSuitesCases_c_caseId&filter=${searchUtil.in(
+					'suiteId',
+					newSuites
+				)}`
+			).then((response) => {
+				if (response?.totalCount) {
+					setCases((prevCases) => [
+						...new Set([
+							...prevCases,
+							...response.items.map(
+								({r_caseToSuitesCases_c_caseId}) =>
+									r_caseToSuitesCases_c_caseId
+							),
+						]),
+					]);
+				}
+			});
+		},
+	});
+
+	const navigate = useNavigate();
 	const {
 		mutateBuild,
 		testrayBuild,

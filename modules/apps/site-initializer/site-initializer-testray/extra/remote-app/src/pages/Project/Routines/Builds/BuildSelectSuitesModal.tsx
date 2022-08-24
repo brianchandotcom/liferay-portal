@@ -59,7 +59,7 @@ const BuildSelectSuitesModal: React.FC<BuildSelectSuitesModalProps> = ({
 						filterFields: filters.suites as any,
 						title: i18n.translate('suites'),
 					}}
-					onContextChange={(selectedRows) => setState(selectedRows)}
+					onContextChange={({selectedRows}) => setState(selectedRows)}
 					resource="/suites"
 					tableProps={{
 						actions,

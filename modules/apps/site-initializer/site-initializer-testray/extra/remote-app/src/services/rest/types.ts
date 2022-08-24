@@ -209,6 +209,9 @@ export type TestraySuite = {
 export type TestraySuiteCase = {
 	case: TestrayCase;
 	id: number;
+	r_caseToSuitesCases_c_case: TestrayCase;
+	r_caseToSuitesCases_c_caseId: number;
+	r_caseToSuitesCases_c_suite: TestraySuite;
 	suite: TestraySuite;
 };
 

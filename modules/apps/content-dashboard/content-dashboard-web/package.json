@@ -1,7 +1,6 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*",
-		"@testing-library/react": "^12.1.5"
+		"frontend-js-web": "*"
 	},
 	"jest": {
 		"modulePathIgnorePatterns": [

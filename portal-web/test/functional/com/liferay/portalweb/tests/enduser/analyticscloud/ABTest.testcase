@@ -146,9 +146,7 @@ definition {
 		}
 
 		task ("Assert AB test Deleted") {
-			AssertElementNotPresent(
-				key_testName = "${nameABTest}",
-				locator1 = "ACTests#AB_TEST_NAME");
+			ACUtils.viewGenericText(textValueList = "There are no tests found.");
 		}
 	}
 

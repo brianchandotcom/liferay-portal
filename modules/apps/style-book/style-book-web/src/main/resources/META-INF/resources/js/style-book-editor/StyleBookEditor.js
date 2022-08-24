@@ -122,6 +122,10 @@ function getMostRecentLayout(previewOptions) {
 const getFrontendTokens = ({frontendTokenCategories}) => {
 	let tokens = {};
 
+	if (!frontendTokenCategories) {
+		return tokens;
+	}
+
 	for (const category of frontendTokenCategories) {
 		for (const tokenSet of category.frontendTokenSets) {
 			for (const token of tokenSet.frontendTokens) {

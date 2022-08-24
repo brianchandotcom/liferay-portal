@@ -1020,6 +1020,44 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-148426. The page creator can successfully publish a content page with commerce widgets."
+	@priority = "4"
+	test PublishPageWithCommerceWidgets {
+		task ("Given a page creator has a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("When the page creator adds commerce widgets to page") {
+			PageEditor.addWidget(portletName = "Checkout");
+
+			for (var widgetName : list "Open Carts,Placed Orders,Wish List Content,Wish Lists") {
+				PageEditor.addWidget(
+					portletName = "${widgetName}",
+					targetFragmentName = "Checkout");
+			}
+		}
+
+		task ("The the page creator could publish the content page") {
+			task ("Publish the page") {
+				PageEditor.publish();
+			}
+
+			task ("View commerce widgets are shown at view mode") {
+				ContentPagesNavigator.openViewContentPage(
+					pageName = "Test Content Page Name",
+					siteName = "Test Site Name");
+
+				for (var widgetName : list "Checkout,WishLists,WishListContent,OrderContent,OpenOrderContent") {
+					AssertElementPresent(
+						key_portletName = "${widgetName}",
+						locator1 = "Portlet#SPECIFIC_FRAGMENTS_AND_WIDGETS");
+				}
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-106776. Reorganize fragments in page editor."
 	@priority = "5"
 	@uitest

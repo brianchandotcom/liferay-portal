@@ -1,5 +1,11 @@
 # Poshi Runner Change Log
 
+## 1.0.369
+
+### Gradle
+
+* [POSHI-389](https://issues.liferay.com/browse/POSHI-389) - As a test writer, I would like to read in and use environment variables in the tests
+
 ## 1.0.368
 
 ### IDE

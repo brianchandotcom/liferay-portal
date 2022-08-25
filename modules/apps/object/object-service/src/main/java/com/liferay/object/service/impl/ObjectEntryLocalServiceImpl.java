@@ -2074,14 +2074,6 @@ public class ObjectEntryLocalServiceImpl
 			count++;
 		}
 
-		/*if (count == 1) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"No values were provided for object entry " +
-						objectEntryId);
-			}
-		}*/
-
 		sb.append(") values (?");
 
 		for (int i = 1; i < count; i++) {

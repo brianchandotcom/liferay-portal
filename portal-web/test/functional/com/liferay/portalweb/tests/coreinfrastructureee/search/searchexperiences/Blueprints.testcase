@@ -1876,6 +1876,10 @@ definition {
 			fieldName = "Description",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELDS_MENU_ITEM");
 
+		AssertElementPresent(
+			fieldName = "Description",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELD");
+
 		Click(
 			fieldName = "Title",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELDS_MENU_ITEM");

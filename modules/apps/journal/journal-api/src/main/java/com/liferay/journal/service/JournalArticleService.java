@@ -549,6 +549,11 @@ public interface JournalArticleService extends BaseService {
 		long groupId, long folderId, Locale locale, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesByArticleId(
+		long groupId, String articleId, int status, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator);
+
 	/**
 	 * Returns an ordered range of all the web content articles matching the
 	 * group and article ID.
@@ -845,6 +850,10 @@ public interface JournalArticleService extends BaseService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getArticlesCountByArticleId(long groupId, String articleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getArticlesCountByArticleId(
+		long groupId, String articleId, int status);
 
 	/**
 	 * Returns the number of web content articles matching the group, class name

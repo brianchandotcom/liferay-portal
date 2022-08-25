@@ -684,6 +684,16 @@ public class JournalArticleServiceWrapper
 			groupId, folderId, locale, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<JournalArticle> getArticlesByArticleId(
+		long groupId, String articleId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator) {
+
+		return _journalArticleService.getArticlesByArticleId(
+			groupId, articleId, status, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns an ordered range of all the web content articles matching the
 	 * group and article ID.
@@ -1031,6 +1041,14 @@ public class JournalArticleServiceWrapper
 	public int getArticlesCountByArticleId(long groupId, String articleId) {
 		return _journalArticleService.getArticlesCountByArticleId(
 			groupId, articleId);
+	}
+
+	@Override
+	public int getArticlesCountByArticleId(
+		long groupId, String articleId, int status) {
+
+		return _journalArticleService.getArticlesCountByArticleId(
+			groupId, articleId, status);
 	}
 
 	/**

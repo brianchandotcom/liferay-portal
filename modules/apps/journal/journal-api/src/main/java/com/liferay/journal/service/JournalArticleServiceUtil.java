@@ -657,6 +657,14 @@ public class JournalArticleServiceUtil {
 			groupId, folderId, locale, start, end, orderByComparator);
 	}
 
+	public static List<JournalArticle> getArticlesByArticleId(
+		long groupId, String articleId, int status, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		return getService().getArticlesByArticleId(
+			groupId, articleId, status, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns an ordered range of all the web content articles matching the
 	 * group and article ID.
@@ -988,6 +996,13 @@ public class JournalArticleServiceUtil {
 		long groupId, String articleId) {
 
 		return getService().getArticlesCountByArticleId(groupId, articleId);
+	}
+
+	public static int getArticlesCountByArticleId(
+		long groupId, String articleId, int status) {
+
+		return getService().getArticlesCountByArticleId(
+			groupId, articleId, status);
 	}
 
 	/**

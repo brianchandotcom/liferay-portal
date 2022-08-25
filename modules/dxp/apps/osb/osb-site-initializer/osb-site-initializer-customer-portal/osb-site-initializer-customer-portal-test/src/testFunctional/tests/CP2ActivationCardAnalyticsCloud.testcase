@@ -182,9 +182,85 @@ definition {
     @description = "Automation ID: LPS-150373 | Test Summary: Verify if the card has the following details - Active: Analytics Cloud product logo - Project Name - Start and End Date of Analytics Cloud Subscriptions - Activation form status"
     @priority = "5"
     test DetailsFromActiveCard {
-        
-        // TODO LPS-150373 DetailsFromActiveCard pending implementation
+        task ("Create objects for CP2.0") {
+            CustomerPortal.addCPObject(title = "Analytics Cloud Workspace");
+        }
 
+        task ("Change the user role in the project") {
+            Accounts.openAccountsAdmin();
+
+            CustomerPortal.accountTableProject(title = "Test Account Analytics Cloud");
+
+            Accounts.addAssigneeToRoleViaUsersTab(
+                accountRoleTitle = "Account Administrator",
+                accountUserName = "Test Test");
+        }
+
+        task ("Go to CP2.0 and join a project") {
+            ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+            CustomerPortal.enterOnProject(
+                status = "Expired",
+                title = "Test Account Analytics Cloud");
+        }
+
+        task ("Going through onboarding") {
+            CustomerPortal.fullOnboardingFlow();
+        }
+
+        task ("Go to the product activation page") {
+            CP2NavigationMenu.goToProductActivation();
+
+            CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
+        }
+
+        task ("Submit the card activation form") {
+            CustomerPortal.clickOnFinishActivationButton();
+
+            CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
+
+            Button.click(button = "Submit");
+
+            Button.click(button = "Done");
+        }
+
+        task ("Change the activation card status to Active") {
+            CustomerPortal.activeStatus();
+        }
+
+        task ("Go to CP2.0 and join a project") {
+            ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+            CustomerPortal.enterOnProject(
+                status = "Expired",
+                title = "Test Account Analytics Cloud");
+        }
+
+        task ("Assert that the activation card link has changed") {
+            CP2NavigationMenu.goToProductActivation();
+
+            CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
+
+            AssertElementPresent(
+                locator1 = "CustomerPortalSite#PRODUCT_CONSOLE",
+                value1 = "Go to Product Console");
+        }
+
+        task ("Access the link and affirm that a new page has opened") {
+            CP2DXPCloudSetup.clickOnProductConsoleLink();
+
+            SelectWindow(locator1 = "title=Log in | Analytics Cloud");
+
+            AssertElementPresent(locator1 = "CustomerPortalSite#YOUR_ACCOUNT");
+
+            Navigator.closeWindow();
+        }
+
+        task ("Delete the entries and objects created") {
+            CustomerPortal.deleteEntryAccountFlag(entry = "ERC-003");
+
+            CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(status = "Active");
+        }
     }
 
     @description = "Automation ID: LPS-150374 | Test Summary: Verify activation form link name: Go to Workspace"

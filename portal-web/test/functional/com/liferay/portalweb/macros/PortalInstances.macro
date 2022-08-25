@@ -3,6 +3,8 @@ definition {
 	macro addCP {
 		LexiconEntry.gotoAdd();
 
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 		Type(
 			locator1 = "TextInput#WEB_ID",
 			value1 = "${webId}");
@@ -25,7 +27,7 @@ definition {
 			Uncheck(locator1 = "Checkbox#ACTIVE");
 		}
 
-		PortletEntry.save();
+		Button.clickAdd();
 	}
 
 	macro deactivatePortalInstance {

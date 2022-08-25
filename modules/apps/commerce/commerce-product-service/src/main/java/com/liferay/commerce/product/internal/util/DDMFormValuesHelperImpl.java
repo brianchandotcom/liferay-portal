@@ -43,16 +43,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), without direct replacement, as this
-	 *             processing is no longer necessary
-	 */
-	@Deprecated
-	@Override
-	public String cleanDDMFormValuesJSON(String json) throws PortalException {
-		return json;
-	}
-
 	@Override
 	public DDMFormValues deserialize(
 			DDMForm ddmForm, String json, Locale locale)
@@ -85,21 +75,6 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 		ddmFormValues.setDDMFormFieldValues(ddmFormFieldValues);
 
 		return ddmFormValues;
-	}
-
-	/**
-	 * @param      json1
-	 * @param      json2
-	 * @return
-	 *
-	 * @throws     PortalException
-	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 *             JsonHelper#equals(String, String)}
-	 */
-	@Deprecated
-	@Override
-	public boolean equals(String json1, String json2) throws PortalException {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

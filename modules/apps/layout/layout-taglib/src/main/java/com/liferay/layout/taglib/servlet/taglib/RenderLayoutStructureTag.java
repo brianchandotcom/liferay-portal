@@ -50,6 +50,7 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -72,6 +73,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -232,7 +234,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			renderCollectionLayoutStructureItemDisplayContext.getCollection();
 
 		if (ListUtil.isEmpty(collection)) {
-			_renderEmptyState(jspWriter);
+			_renderEmptyState(
+				collectionStyledLayoutStructureItem.getEmptyCollectionOptions(),
+				jspWriter);
 
 			jspWriter.write("</div>");
 
@@ -696,12 +700,46 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		}
 	}
 
-	private void _renderEmptyState(JspWriter jspWriter) throws Exception {
+	private void _renderEmptyState(
+			EmptyCollectionOptions emptyCollectionOptions, JspWriter jspWriter)
+		throws Exception {
+
+		String message = LanguageUtil.get(getRequest(), "no-results-found");
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-160789"))) {
+			if ((emptyCollectionOptions != null) &&
+				(emptyCollectionOptions.getMessage() != null)) {
+
+				HttpServletRequest httpServletRequest = getRequest();
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				Map<String, String> messageMap =
+					emptyCollectionOptions.getMessage();
+
+				String customMessage = messageMap.get(
+					String.valueOf(themeDisplay.getLocale()));
+
+				if (Validator.isNotNull(customMessage)) {
+					message = customMessage;
+				}
+			}
+
+			jspWriter.write("<div class=\"c-empty-state\">");
+			jspWriter.write("<div class=\"c-empty-state-text\">");
+			jspWriter.write(message);
+			jspWriter.write("</div></div>");
+
+			return;
+		}
+
 		jspWriter.write("<div class=\"c-empty-state\">");
 		jspWriter.write("<div class=\"c-empty-state-title mt-0\">");
 		jspWriter.write("<span class=\"text-truncate-inline\">");
 		jspWriter.write("<span class=\"text-truncate\">");
-		jspWriter.write(LanguageUtil.get(getRequest(), "no-results-found"));
+		jspWriter.write(message);
 		jspWriter.write("</span></span></div>");
 		jspWriter.write("<div class=\"c-empty-state-text\">");
 		jspWriter.write(

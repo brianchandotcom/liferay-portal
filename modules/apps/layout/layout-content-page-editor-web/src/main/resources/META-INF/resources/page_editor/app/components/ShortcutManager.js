@@ -183,6 +183,7 @@ export default function ShortcutManager() {
 		hideSidebar: {
 			action: hideSidebar,
 			canBeExecuted: (event) =>
+				Liferay.FeatureFlags['LPS-153452'] &&
 				!isInteractiveElement(event.target) &&
 				!isWithinIframe() &&
 				!isEditingEditableField(),
@@ -225,6 +226,7 @@ export default function ShortcutManager() {
 		openShortcutModal: {
 			action: openShortcutModalAction,
 			canBeExecuted: (event) =>
+				Liferay.FeatureFlags['LPS-153452'] &&
 				!isInteractiveElement(event.target) &&
 				!isWithinIframe() &&
 				!isEditingEditableField(),

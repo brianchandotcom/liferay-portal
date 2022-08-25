@@ -94,10 +94,11 @@ public class DLFileEntryTypeContentDashboardItemSubtypeFactoryTest {
 			classNameClassPKInfoItemIdentifier.getClassName());
 
 		Assert.assertEquals(
-			"image/jpeg",
+			"Basic Document (Image)",
 			contentDashboardItemSubtype.getFullLabel(LocaleUtil.US));
 		Assert.assertEquals(
-			"image/jpeg", contentDashboardItemSubtype.getLabel(LocaleUtil.US));
+			"Basic Document (Image)",
+			contentDashboardItemSubtype.getLabel(LocaleUtil.US));
 	}
 
 	@Inject(

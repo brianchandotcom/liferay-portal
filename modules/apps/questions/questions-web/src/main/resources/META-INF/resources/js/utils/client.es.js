@@ -471,6 +471,7 @@ export const getSectionThreadsQuery = `
 					image
 					name
 				}
+				dateCreated
 				dateModified
 				friendlyUrlPath
 				hasValidAnswer

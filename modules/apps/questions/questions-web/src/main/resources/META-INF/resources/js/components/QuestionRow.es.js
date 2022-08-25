@@ -19,12 +19,9 @@ import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import React from 'react';
 
-import {
-	dateToInternationalHuman,
-	normalizeRating,
-	stripHTML,
-} from '../utils/utils.es';
+import {normalizeRating, stripHTML} from '../utils/utils.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
+import EditedTimestamp from './EditedTimestamp.es';
 import Link from './Link.es';
 import QuestionBadge from './QuestionsBadge.es';
 import SectionLabel from './SectionLabel.es';
@@ -191,13 +188,11 @@ export default function QuestionRow({
 						</strong>
 					</Link>
 
-					<span className="c-ml-2 small">
-						{'- ' +
-							dateToInternationalHuman(
-								question.dateModified,
-								Liferay.ThemeDisplay.getBCP47LanguageId()
-							)}
-					</span>
+					<EditedTimestamp
+						dateCreated={question.dateCreated}
+						dateModified={question.dateModified}
+						operationText={Liferay.Language.get('asked')}
+					/>
 				</div>
 
 				<TagList sectionTitle={sectionTitle} tags={question.keywords} />

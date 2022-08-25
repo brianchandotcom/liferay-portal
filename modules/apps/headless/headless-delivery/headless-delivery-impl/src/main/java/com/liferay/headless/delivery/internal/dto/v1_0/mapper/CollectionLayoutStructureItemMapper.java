@@ -230,6 +230,7 @@ public class CollectionLayoutStructureItemMapper
 		return new EmptyCollectionConfig() {
 			{
 				setDisplayMessage(emptyCollectionOptions::isDisplayMessage);
+				setMessage_i18n(emptyCollectionOptions::getMessage);
 			}
 		};
 	}

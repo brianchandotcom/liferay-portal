@@ -302,6 +302,9 @@ public class CollectionLayoutStructureItemImporter
 
 						return null;
 					});
+				setMessage(
+					() -> (Map<String, String>)emptyCollectionConfig.get(
+						"message_i18n"));
 			}
 		};
 	}

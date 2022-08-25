@@ -927,6 +927,13 @@
 						"displayMessage": {
 							"title": "The displayMessage Schema",
 							"type": "boolean"
+						},
+						"message_i18n": {
+							"additionalProperties": {
+								"type": "string"
+							},
+							"title": "The message_i18n Schema",
+							"type": "object"
 						}
 					},
 					"title": "The emptyCollectionConfig Schema",

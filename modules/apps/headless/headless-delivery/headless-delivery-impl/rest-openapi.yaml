@@ -3282,6 +3282,14 @@ components:
                                 Whether to display a message when the collection is empty or no results match the
                                 applied filters (true by default).
                             type: boolean
+                        message_i18n:
+                            additionalProperties:
+                                type: string
+                            # @review
+                            description:
+                                The localized message to display when the collection is empty or no results match the
+                                applied filters ('No Results Found' by default).
+                            type: object
                     type: object
                 fragmentStyle:
                     allOf:

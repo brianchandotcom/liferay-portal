@@ -77,7 +77,7 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 
 				labels.clear();
 			},
-			_configMapName(webId));
+			_getConfigMapName(webId));
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 		_companyLocalService.forEachCompany(this::_synchronizeConfigMap);
 	}
 
-	private String _configMapName(String webId) {
+	private String _getConfigMapName(String webId) {
 		return webId.concat("-lxc-dxp-metadata");
 	}
 
@@ -128,7 +128,7 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 				labels.put("lxc.liferay.com/metadataType", "dxp");
 				labels.put("dxp.lxc.liferay.com/virtualInstanceId", webId);
 			},
-			_configMapName(webId));
+			_getConfigMapName(webId));
 	}
 
 	@Reference

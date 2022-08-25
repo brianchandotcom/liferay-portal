@@ -73,7 +73,7 @@
 										"key": "marketing-welcome-banner"
 									},
 									"fragmentConfig": {
-										"secondaryButtonLink": "/documents/d/prm/partner-marketing-program-guide-pdf"
+										"secondaryButtonLink": "[$DOCUMENT_URL:/site-initializer/documents/group/marketing-resources-pdf/partner-marketing-program-guide.pdf$]"
 									},
 									"fragmentFields": [
 										{
@@ -718,7 +718,7 @@
 																											"fields": [
 																												{
 																													"fieldName": "friendlyURL",
-																													"fieldValue": "/marketing/mdf-requests/mew"
+																													"fieldValue": "/marketing/mdf-requests/new"
 																												},
 																												{
 																													"fieldName": "privatePage",

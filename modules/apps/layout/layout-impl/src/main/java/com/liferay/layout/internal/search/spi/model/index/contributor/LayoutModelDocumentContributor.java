@@ -161,9 +161,6 @@ public class LayoutModelDocumentContributor
 			themeDisplay.setLayout(layout);
 			themeDisplay.setPlid(layout.getPlid());
 
-			httpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, themeDisplay);
-
 			long segmentsExperienceId =
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid());

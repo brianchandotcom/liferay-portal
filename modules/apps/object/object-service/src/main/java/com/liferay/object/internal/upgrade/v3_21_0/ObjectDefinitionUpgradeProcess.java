@@ -14,6 +14,7 @@
 
 package com.liferay.object.internal.upgrade.v3_21_0;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -28,12 +29,16 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 		alterTableAddColumn("ObjectDefinition", "enableComments", "BOOLEAN");
 
 		runSQL(
-			"update ObjectDefinition set enableCategorization = [$TRUE$], " +
-				"enableComments = [$FALSE$] where system_ = [$FALSE$]");
+			StringBundler.concat(
+				"update ObjectDefinition set enableCategorization = [$TRUE$], ",
+				"enableComments = [$FALSE$] where system_ = [$FALSE$] and ",
+				"storageType = 'default'"));
 
 		runSQL(
-			"update ObjectDefinition set enableCategorization = [$FALSE$], " +
-				"enableComments = [$FALSE$] where system_ = [$TRUE$]");
+			StringBundler.concat(
+				"update ObjectDefinition set enableCategorization = ",
+				"[$FALSE$], enableComments = [$FALSE$] where storageType <> ",
+				"'default' or system_ = [$TRUE$]"));
 	}
 
 }

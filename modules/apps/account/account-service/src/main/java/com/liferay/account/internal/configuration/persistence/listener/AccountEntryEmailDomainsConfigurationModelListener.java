@@ -14,21 +14,32 @@
 
 package com.liferay.account.internal.configuration.persistence.listener;
 
+import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
+import com.liferay.account.internal.validator.DomainValidatorFactory;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
+import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.LinkedHashMap;
+import java.util.List;
+
+import org.apache.commons.validator.routines.DomainValidator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,8 +92,8 @@ public class AccountEntryEmailDomainsConfigurationModelListener
 	}
 
 	@Override
-	public void onBeforeSave(
-		String pid, Dictionary<String, Object> properties) {
+	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
+		throws ConfigurationModelListenerException {
 
 		if (_getCompanyId(properties) == CompanyConstants.SYSTEM) {
 			return;
@@ -97,6 +108,32 @@ public class AccountEntryEmailDomainsConfigurationModelListener
 		Arrays.setAll(
 			blockedEmailDomains,
 			i -> StringUtil.lowerCase(StringUtil.trim(blockedEmailDomains[i])));
+
+		DomainValidator domainValidator = _domainValidatorFactory.create(
+			GetterUtil.getStringValues(
+				properties.get("customTLDs"), _EMPTY_STRING_ARRAY));
+
+		List<String> invalidDomains = new ArrayList<>();
+
+		for (String blockedEmailDomain : blockedEmailDomains) {
+			if (!domainValidator.isValid(blockedEmailDomain)) {
+				invalidDomains.add(blockedEmailDomain);
+			}
+		}
+
+		if (ListUtil.isNotEmpty(invalidDomains)) {
+			throw new ConfigurationModelListenerException(
+				_language.format(
+					LocaleThreadLocal.getSiteDefaultLocale(),
+					"these-domains-are-not-formatted-correctly-x",
+					StringUtil.merge(
+						invalidDomains, StringPool.COMMA_AND_SPACE)),
+				AccountEntryEmailDomainsConfiguration.class,
+				AccountEntryEmailDomainsConfigurationModelListener.class,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"invalidDomains", ArrayUtil.toStringArray(invalidDomains)
+				).build());
+		}
 
 		properties.put(
 			"blockedEmailDomains",
@@ -116,7 +153,15 @@ public class AccountEntryEmailDomainsConfigurationModelListener
 			properties.get("companyId"), CompanyConstants.SYSTEM);
 	}
 
+	private static final String[] _EMPTY_STRING_ARRAY = new String[0];
+
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private DomainValidatorFactory _domainValidatorFactory;
+
+	@Reference
+	private Language _language;
 
 }

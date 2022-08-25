@@ -740,7 +740,10 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setUserName(user.getFullName());
 		objectDefinition.setActive(system);
 
-		objectDefinition.setEnableCategorization(!system);
+		objectDefinition.setEnableCategorization(
+			!system &&
+			StringUtil.equals(
+				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setClassName(
@@ -1053,9 +1056,11 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672"))) {
 			_validateEnableCategorization(
-				enableCategorization, objectDefinition.isSystem());
+				enableCategorization, objectDefinition.getStorageType(),
+				objectDefinition.isSystem());
 			_validateEnableComments(
-				enableComments, objectDefinition.isSystem());
+				enableComments, objectDefinition.getStorageType(),
+				objectDefinition.isSystem());
 		}
 
 		_validateLabel(labelMap);
@@ -1080,7 +1085,10 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 		else {
 			objectDefinition.setEnableCategorization(
-				!objectDefinition.isSystem());
+				!objectDefinition.isSystem() &&
+				StringUtil.equals(
+					objectDefinition.getStorageType(),
+					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 			objectDefinition.setEnableComments(false);
 		}
 
@@ -1222,7 +1230,7 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _validateEnableCategorization(
-			boolean enableCategorization, boolean system)
+			boolean enableCategorization, String storageType, boolean system)
 		throws PortalException {
 
 		if (enableCategorization && system) {
@@ -1230,14 +1238,33 @@ public class ObjectDefinitionLocalServiceImpl
 				"Enable categorization is not allowed for system object " +
 					"definition");
 		}
+
+		if (enableCategorization &&
+			!StringUtil.equals(
+				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
+
+			throw new ObjectDefinitionEnableCategorizationException(
+				"Enable categorization is allowed only in object definition " +
+					"with default storage type");
+		}
 	}
 
-	private void _validateEnableComments(boolean enableComments, boolean system)
+	private void _validateEnableComments(
+			boolean enableComments, String storageType, boolean system)
 		throws PortalException {
 
 		if (enableComments && system) {
 			throw new ObjectDefinitionEnableCommentsException(
 				"Enable comments is not allowed for system object definition");
+		}
+
+		if (enableComments &&
+			!StringUtil.equals(
+				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
+
+			throw new ObjectDefinitionEnableCategorizationException(
+				"Enable comments is allowed only in object definition with " +
+					"default storage type");
 		}
 	}
 

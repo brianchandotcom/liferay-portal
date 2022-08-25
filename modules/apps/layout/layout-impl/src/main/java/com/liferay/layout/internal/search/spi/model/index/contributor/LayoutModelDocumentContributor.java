@@ -170,19 +170,25 @@ public class LayoutModelDocumentContributor
 				}
 			}
 
-			if (Validator.isNull(content)) {
-				continue;
-			}
-
-			content = _html.stripHtml(_getWrapper(content));
-
-			if (Validator.isNull(content)) {
-				continue;
-			}
-
-			document.addText(
-				Field.getLocalizedName(locale, Field.CONTENT), content);
+			_addLocalizedContentField(content, document, locale);
 		}
+	}
+
+	private void _addLocalizedContentField(
+		String content, Document document, Locale locale) {
+
+		if (Validator.isNull(content)) {
+			return;
+		}
+
+		content = _html.stripHtml(_getWrapper(content));
+
+		if (Validator.isNull(content)) {
+			return;
+		}
+
+		document.addText(
+			Field.getLocalizedName(locale, Field.CONTENT), content);
 	}
 
 	private int _getStatus(Layout layout) {

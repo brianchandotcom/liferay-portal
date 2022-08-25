@@ -18,42 +18,32 @@ import com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAg
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
-import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-import org.osgi.framework.Constants;
 import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Raymond Augé
@@ -72,8 +62,8 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 			_log.debug("Activate " + properties);
 		}
 
-		Company company = _getCompany(properties);
-		String externalReferenceCode = _getExternalReferenceCode(properties);
+		Company company = getCompany(properties);
+		String externalReferenceCode = getExternalReferenceCode(properties);
 
 		OAuth2ProviderApplicationUserAgentConfiguration
 			oAuth2ProviderApplicationUserAgentConfiguration =
@@ -95,16 +85,14 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 			oAuth2ProviderApplicationUserAgentConfiguration, redirectURIsList,
 			scopeAliasesList);
 
-		_serviceId = GetterUtil.getString(
-			properties.get("ext.lxc.liferay.com.serviceId"));
+		setServiceId(
+			GetterUtil.getString(
+				properties.get("ext.lxc.liferay.com.serviceId")));
 
-		if ((_portalK8sConfigMapModifier != null) &&
-			Validator.isNotNull(_serviceId)) {
+		if ((portalK8sConfigMapModifier != null) &&
+			Validator.isNotNull(getServiceId())) {
 
-			_getConfigMapName = _getConfigMapName(
-				_serviceId, company.getWebId());
-
-			_extensionProperties = HashMapBuilder.put(
+			Map<String, String> extensionProperties = HashMapBuilder.put(
 				externalReferenceCode + ".oauth2.authorization.uri",
 				serviceAddress.concat("/o/oauth2/authorize")
 			).put(
@@ -124,11 +112,13 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 				StringUtil.merge(scopeAliasesList, StringPool.NEW_LINE)
 			).build();
 
-			_portalK8sConfigMapModifier.modifyConfigMap(
+			setExtensionProperties(extensionProperties);
+
+			portalK8sConfigMapModifier.modifyConfigMap(
 				configMapModel -> {
 					Map<String, String> data = configMapModel.data();
 
-					_extensionProperties.forEach(data::put);
+					extensionProperties.forEach(data::put);
 
 					Map<String, String> labels = configMapModel.labels();
 
@@ -153,13 +143,13 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 							properties.get("ext.lxc.liferay.com.serviceUid")));
 					labels.put("lxc.liferay.com/metadataType", "ext-init");
 				},
-				_getConfigMapName);
+				createAndRetainConfigMapName(company.getWebId()));
 		}
 
-		_oAuth2Application = oAuth2Application;
+		setOAuth2Application(oAuth2Application);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("OAuth 2 application " + _oAuth2Application);
+			_log.debug("OAuth 2 application " + oAuth2Application);
 		}
 	}
 
@@ -171,21 +161,25 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 			return;
 		}
 
+		OAuth2Application oAuth2Application = getOAuth2Application();
+
 		if (_log.isDebugEnabled()) {
-			_log.debug("Deactivating " + _oAuth2Application.toString());
+			_log.debug("Deactivating " + oAuth2Application.toString());
 		}
 
-		if ((_portalK8sConfigMapModifier != null) &&
-			Validator.isNotNull(_serviceId)) {
+		if ((portalK8sConfigMapModifier != null) &&
+			Validator.isNotNull(getServiceId())) {
 
-			_portalK8sConfigMapModifier.modifyConfigMap(
-				configMapModel -> _extensionProperties.forEach(
+			Map<String, String> extensionProperties = getExtensionProperties();
+
+			portalK8sConfigMapModifier.modifyConfigMap(
+				configMapModel -> extensionProperties.forEach(
 					configMapModel.data()::remove),
-				_getConfigMapName);
+				getConfigMapName());
 		}
 
-		_oAuth2ApplicationLocalService.deleteOAuth2Application(
-			_oAuth2Application);
+		oAuth2ApplicationLocalService.deleteOAuth2Application(
+			oAuth2Application);
 	}
 
 	private OAuth2Application _addOrUpdateOAuth2Application(
@@ -195,10 +189,10 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 			List<String> redirectURIsList, List<String> scopeAliasesList)
 		throws Exception {
 
-		User user = _userLocalService.getDefaultUser(companyId);
+		User user = userLocalService.getDefaultUser(companyId);
 
 		OAuth2Application oAuth2Application =
-			_oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(
+			oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(
 				externalReferenceCode, user.getUserId(), user.getScreenName(),
 				ListUtil.fromArray(
 					GrantType.AUTHORIZATION_CODE_PKCE, GrantType.JWT_BEARER),
@@ -213,79 +207,18 @@ public class OAuth2ProviderApplicationUserAgentConfigurationFactory
 					privacyPolicyURL(),
 				redirectURIsList, false, true, null, new ServiceContext());
 
-		oAuth2Application = _oAuth2ApplicationLocalService.updateScopeAliases(
+		oAuth2Application = oAuth2ApplicationLocalService.updateScopeAliases(
 			oAuth2Application.getUserId(), oAuth2Application.getUserName(),
 			oAuth2Application.getOAuth2ApplicationId(), scopeAliasesList);
 
 		Class<?> clazz = getClass();
 
-		return _oAuth2ApplicationLocalService.updateIcon(
+		return oAuth2ApplicationLocalService.updateIcon(
 			oAuth2Application.getOAuth2ApplicationId(),
 			clazz.getResourceAsStream("dependencies/logo.png"));
 	}
 
-	private Company _getCompany(Map<String, Object> properties)
-		throws Exception {
-
-		long companyId = GetterUtil.getLong(properties.get("companyId"));
-
-		if (companyId > 0) {
-			return _companyLocalService.getCompanyById(companyId);
-		}
-
-		String webId = (String)properties.get(
-			"dxp.lxc.liferay.com.virtualInstanceId");
-
-		if (Validator.isNotNull(webId)) {
-			if (Objects.equals(webId, "default")) {
-				webId = PropsValues.COMPANY_DEFAULT_WEB_ID;
-			}
-
-			return _companyLocalService.getCompanyByWebId(webId);
-		}
-
-		throw new IllegalStateException(
-			"The property \"companyId\" or " +
-				"\"dxp.lxc.liferay.com.virtualInstanceId\" must be set");
-	}
-
-	private String _getConfigMapName(String serviceId, String webId) {
-		return StringBundler.concat(
-			serviceId, StringPool.DASH, webId, "-lxc-ext-init-metadata");
-	}
-
-	private String _getExternalReferenceCode(Map<String, Object> properties) {
-		String externalReferenceCode = GetterUtil.getString(
-			properties.get(Constants.SERVICE_PID));
-
-		int index = externalReferenceCode.indexOf('~');
-
-		if (index > 0) {
-			externalReferenceCode = externalReferenceCode.substring(index + 1);
-		}
-
-		return externalReferenceCode;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		OAuth2ProviderApplicationUserAgentConfigurationFactory.class);
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	private Map<String, String> _extensionProperties;
-	private String _getConfigMapName;
-	private OAuth2Application _oAuth2Application;
-
-	@Reference
-	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
-
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private PortalK8sConfigMapModifier _portalK8sConfigMapModifier;
-
-	private String _serviceId;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

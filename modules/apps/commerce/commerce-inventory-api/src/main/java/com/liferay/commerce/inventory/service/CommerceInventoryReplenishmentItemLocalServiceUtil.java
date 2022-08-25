@@ -146,6 +146,12 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 			commerceInventoryWarehouseId);
 	}
 
+	public static void deleteCommerceInventoryReplenishmentItems(
+		long companyId, String sku) {
+
+		getService().deleteCommerceInventoryReplenishmentItems(companyId, sku);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

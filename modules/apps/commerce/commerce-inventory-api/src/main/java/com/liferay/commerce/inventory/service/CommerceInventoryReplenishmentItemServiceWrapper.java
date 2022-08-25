@@ -65,6 +65,15 @@ public class CommerceInventoryReplenishmentItemServiceWrapper
 	}
 
 	@Override
+	public void deleteCommerceInventoryReplenishmentItems(
+			long companyId, String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commerceInventoryReplenishmentItemService.
+			deleteCommerceInventoryReplenishmentItems(companyId, sku);
+	}
+
+	@Override
 	public
 		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
 				fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(

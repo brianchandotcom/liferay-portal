@@ -141,6 +141,9 @@ public interface CommerceInventoryReplenishmentItemLocalService
 	public void deleteCommerceInventoryReplenishmentItems(
 		long commerceInventoryWarehouseId);
 
+	public void deleteCommerceInventoryReplenishmentItems(
+		long companyId, String sku);
+
 	/**
 	 * @throws PortalException
 	 */

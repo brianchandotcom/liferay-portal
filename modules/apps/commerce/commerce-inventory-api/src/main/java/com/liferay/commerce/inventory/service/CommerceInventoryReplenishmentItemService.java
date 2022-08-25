@@ -62,6 +62,10 @@ public interface CommerceInventoryReplenishmentItemService extends BaseService {
 			long commerceInventoryReplenishmentItemId)
 		throws PortalException;
 
+	public void deleteCommerceInventoryReplenishmentItems(
+			long companyId, String sku)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceInventoryReplenishmentItem
 			fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(

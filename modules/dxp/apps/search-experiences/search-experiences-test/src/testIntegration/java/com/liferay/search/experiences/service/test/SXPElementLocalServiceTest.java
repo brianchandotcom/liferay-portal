@@ -15,13 +15,14 @@
 package com.liferay.search.experiences.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -75,10 +76,11 @@ public class SXPElementLocalServiceTest {
 
 		SXPElement sxpElement1 = _addSXPElement(RandomTestUtil.randomString());
 
-		Company company = CompanyTestUtil.addCompany();
+		User user = UserTestUtil.addCompanyAdminUser(
+			CompanyTestUtil.addCompany());
 
 		SXPElement sxpElement2 = _addSXPElement(
-			sxpElement1.getExternalReferenceCode(), company.getCompanyId());
+			sxpElement1.getExternalReferenceCode(), user.getUserId());
 
 		Assert.assertEquals(
 			sxpElement1.getExternalReferenceCode(),
@@ -194,20 +196,19 @@ public class SXPElementLocalServiceTest {
 		throws Exception {
 
 		return _addSXPElement(
-			externalReferenceCode, TestPropsValues.getCompanyId());
+			externalReferenceCode, TestPropsValues.getUserId());
 	}
 
-	private SXPElement _addSXPElement(
-			String externalReferenceCode, long companyId)
+	private SXPElement _addSXPElement(String externalReferenceCode, long userId)
 		throws Exception {
 
 		SXPElement sxpElement = _sxpElementLocalService.addSXPElement(
-			externalReferenceCode, TestPropsValues.getUserId(),
+			externalReferenceCode, userId,
 			Collections.singletonMap(LocaleUtil.US, ""), "{}", false,
 			RandomTestUtil.randomString(),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			0, ServiceContextTestUtil.getServiceContext(companyId, 0, 0));
+			0, ServiceContextTestUtil.getServiceContext());
 
 		_sxpElements.add(sxpElement);
 

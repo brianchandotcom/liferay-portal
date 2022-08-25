@@ -15,13 +15,14 @@
 package com.liferay.search.experiences.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -76,10 +77,11 @@ public class SXPBlueprintLocalServiceTest {
 		SXPBlueprint sxpBlueprint1 = _addSXPBlueprint(
 			RandomTestUtil.randomString());
 
-		Company company = CompanyTestUtil.addCompany();
+		User user = UserTestUtil.addCompanyAdminUser(
+			CompanyTestUtil.addCompany());
 
 		SXPBlueprint sxpBlueprint2 = _addSXPBlueprint(
-			sxpBlueprint1.getExternalReferenceCode(), company.getCompanyId());
+			sxpBlueprint1.getExternalReferenceCode(), user.getUserId());
 
 		Assert.assertEquals(
 			sxpBlueprint1.getExternalReferenceCode(),
@@ -202,19 +204,19 @@ public class SXPBlueprintLocalServiceTest {
 		throws Exception {
 
 		return _addSXPBlueprint(
-			externalReferenceCode, TestPropsValues.getCompanyId());
+			externalReferenceCode, TestPropsValues.getUserId());
 	}
 
 	private SXPBlueprint _addSXPBlueprint(
-			String externalReferenceCode, long companyId)
+			String externalReferenceCode, long userId)
 		throws Exception {
 
 		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			externalReferenceCode, TestPropsValues.getUserId(), "{}",
+			externalReferenceCode, userId, "{}",
 			Collections.singletonMap(LocaleUtil.US, ""), null, "",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			ServiceContextTestUtil.getServiceContext(companyId, 0, 0));
+			ServiceContextTestUtil.getServiceContext());
 
 		_sxpBlueprints.add(sxpBlueprint);
 

@@ -50,6 +50,11 @@
 	<td>xpath=(//*[contains(@class, 'table-cell-ws-nowrap') and contains(., '${key_date}')]/parent::*//*[@type='checkbox'])[${key_position}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FILTER_CHECKBOX</td>
+	<td>//*[@class='custom-control-label' and contains(., '${key_filterOption}')]/preceding-sibling::*[@type='checkbox']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

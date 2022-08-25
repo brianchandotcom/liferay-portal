@@ -166,25 +166,27 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 
 	@Deactivate
 	protected void deactivate(Integer reason) throws PortalException {
-		if (reason ==
+		if (reason !=
 				ComponentConstants.DEACTIVATION_REASON_CONFIGURATION_DELETED) {
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Deactivating " + _oAuth2Application.toString());
-			}
-
-			if ((_portalK8sConfigMapModifier != null) &&
-				Validator.isNotNull(_serviceId)) {
-
-				_portalK8sConfigMapModifier.modifyConfigMap(
-					configMapModel -> _extensionProperties.forEach(
-						configMapModel.data()::remove),
-					_configMapName);
-			}
-
-			_oAuth2ApplicationLocalService.deleteOAuth2Application(
-				_oAuth2Application);
+			return;
 		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Deactivating " + _oAuth2Application.toString());
+		}
+
+		if ((_portalK8sConfigMapModifier != null) &&
+			Validator.isNotNull(_serviceId)) {
+
+			_portalK8sConfigMapModifier.modifyConfigMap(
+				configMapModel -> _extensionProperties.forEach(
+					configMapModel.data()::remove),
+				_configMapName);
+		}
+
+		_oAuth2ApplicationLocalService.deleteOAuth2Application(
+			_oAuth2Application);
 	}
 
 	private OAuth2Application _addOrUpdateOAuth2Application(

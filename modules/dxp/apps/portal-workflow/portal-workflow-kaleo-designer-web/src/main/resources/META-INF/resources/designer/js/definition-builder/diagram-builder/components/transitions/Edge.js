@@ -22,7 +22,7 @@ import {getEdgeParams} from './utils';
 
 function Edge(props) {
 	const {
-		data: {defaultEdge = true, label = {}},
+		data: {defaultEdge = true, label},
 		id,
 		source,
 		style = {},
@@ -32,10 +32,18 @@ function Edge(props) {
 	const {elements, selectedLanguageId} = useContext(DefinitionBuilderContext);
 	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
 
-	let edgeLabel = label[defaultLanguageId];
+	let labelProps = label;
 
-	if (selectedLanguageId && label[selectedLanguageId]) {
-		edgeLabel = label[selectedLanguageId];
+	if (!labelProps || !labelProps[defaultLanguageId]) {
+		labelProps = {
+			[defaultLanguageId]: Liferay.Language.get('task'),
+		};
+	}
+
+	let edgeLabel = labelProps[defaultLanguageId];
+
+	if (selectedLanguageId && labelProps[selectedLanguageId]) {
+		edgeLabel = labelProps[selectedLanguageId];
 	}
 
 	const nodes = useStoreState((state) => state.nodes);
@@ -55,17 +63,15 @@ function Edge(props) {
 	);
 
 	const hasCollidingNode = elements.filter(
-		(element) =>
-			element.source === props.target && element.target === props.source
+		(element) => element.source === target && element.target === source
 	).length;
 
 	const collidedTransitionIndex = elements.findIndex(
-		(element) =>
-			element.source === props.target && element.target === props.source
+		(element) => element.source === target && element.target === source
 	);
 
 	const currentTransitionIndex = elements.findIndex(
-		(element) => element.id === props.id
+		(element) => element.id === id
 	);
 
 	let newSourceX = sx;
@@ -138,7 +144,7 @@ function Edge(props) {
 			/>
 
 			<EdgeText
-				className="reaft-flow-__edge-text"
+				className="react-flow-__edge-text"
 				label={edgeLabel?.toUpperCase()}
 				labelBgBorderRadius="13px"
 				labelBgPadding={[8, 4]}

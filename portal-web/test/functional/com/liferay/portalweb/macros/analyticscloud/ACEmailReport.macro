@@ -4,5 +4,8 @@ definition {
 		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 	}
 
+    macro accessEmailReportSettings {
+		Click(locator1 = "ACEmailReport#EMAIL_REPORT_WIDGET_ICON");
+	}
 
 }

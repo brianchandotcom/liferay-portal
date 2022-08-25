@@ -103,7 +103,8 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 		if ((_portalK8sConfigMapModifier != null) &&
 			Validator.isNotNull(_serviceId)) {
 
-			_configMapName = _configMapName(_serviceId, company.getWebId());
+			_getConfigMapName = _getConfigMapName(
+				_serviceId, company.getWebId());
 
 			_extensionProperties = HashMapBuilder.put(
 				externalReferenceCode + ".oauth2.authorization.uri",
@@ -154,7 +155,7 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 							properties.get("ext.lxc.liferay.com.serviceUid")));
 					labels.put("lxc.liferay.com/metadataType", "ext-init");
 				},
-				_configMapName);
+				_getConfigMapName);
 		}
 
 		_oAuth2Application = oAuth2Application;
@@ -182,7 +183,7 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 			_portalK8sConfigMapModifier.modifyConfigMap(
 				configMapModel -> _extensionProperties.forEach(
 					configMapModel.data()::remove),
-				_configMapName);
+				_getConfigMapName);
 		}
 
 		_oAuth2ApplicationLocalService.deleteOAuth2Application(
@@ -227,12 +228,6 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 			oAuth2Application.getOAuth2ApplicationId(), inputStream);
 	}
 
-	private String _configMapName(String serviceId, String virtualInstanceId) {
-		return StringBundler.concat(
-			serviceId, StringPool.DASH, virtualInstanceId,
-			"-lxc-ext-init-metadata");
-	}
-
 	private Company _getCompany(Map<String, Object> properties)
 		throws Exception {
 
@@ -258,14 +253,19 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 				"property must be present");
 	}
 
+	private String _getConfigMapName(String serviceId, String webId) {
+		return StringBundler.concat(
+			serviceId, StringPool.DASH, webId, "-lxc-ext-init-metadata");
+	}
+
 	private String _getExternalReferenceCode(Map<String, Object> properties) {
 		String externalReferenceCode = GetterUtil.getString(
 			properties.get(Constants.SERVICE_PID));
 
-		int pos = externalReferenceCode.indexOf('~');
+		int index = externalReferenceCode.indexOf('~');
 
-		if (pos > 0) {
-			externalReferenceCode = externalReferenceCode.substring(pos + 1);
+		if (index > 0) {
+			externalReferenceCode = externalReferenceCode.substring(index + 1);
 		}
 
 		return externalReferenceCode;
@@ -277,8 +277,8 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private String _configMapName;
 	private HashMap<String, String> _extensionProperties;
+	private String _getConfigMapName;
 	private OAuth2Application _oAuth2Application;
 
 	@Reference

@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = "_portalK8sConfigMapModifier.cardinality.minimum=1", service = {}
 )
-public class Oauth2ProviderApplicationUserAgentFactory {
+public class OAuth2ProviderApplicationUserAgentConfigurationFactory {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
@@ -267,7 +267,7 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		Oauth2ProviderApplicationUserAgentFactory.class);
+		OAuth2ProviderApplicationUserAgentConfigurationFactory.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

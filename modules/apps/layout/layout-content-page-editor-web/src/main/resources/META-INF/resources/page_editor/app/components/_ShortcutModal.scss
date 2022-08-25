@@ -1,0 +1,13 @@
+html#{$cadmin-selector} .cadmin {
+	.page-editor__shorcut-modal__shorcut {
+		min-width: 60px;
+
+		> kbd {
+			border-color: $cadmin-secondary-l2;
+		}
+	}
+
+	.page-editor__shorcut-modal__shorcut-description {
+		line-height: 2;
+	}
+}

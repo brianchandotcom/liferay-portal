@@ -39,8 +39,8 @@ import undoThunk from '../thunks/undo';
 import canBeDuplicated from '../utils/canBeDuplicated';
 import canBeRemoved from '../utils/canBeRemoved';
 import canBeSaved from '../utils/canBeSaved';
-import hideProductMenuIfPresent from '../utils/hideProductMenuIfPresent';
 import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
+import ShortcutModal from './ShortcutModal';
 
 const ctrlOrMeta = (event) =>
 	(event.ctrlKey && !event.metaKey) || (!event.ctrlKey && event.metaKey);
@@ -71,6 +71,7 @@ export default function ShortcutManager() {
 	const dispatch = useDispatch();
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const [openSaveModal, setOpenSaveModal] = useState(false);
+	const [openShortcutModal, setOpenShorcutModal] = useState(false);
 	const selectItem = useSelectItem();
 	const state = useSelector((state) => state);
 	const sidebarHidden = state.sidebar.hidden;
@@ -134,6 +135,10 @@ export default function ShortcutManager() {
 				segmentsExperienceId,
 			})
 		);
+	};
+
+	const openShortcutModalAction = () => {
+		setOpenShorcutModal(true);
 	};
 
 	const remove = () => {
@@ -217,6 +222,14 @@ export default function ShortcutManager() {
 				);
 			},
 		},
+		openShortcutModal: {
+			action: openShortcutModalAction,
+			canBeExecuted: (event) =>
+				!isInteractiveElement(event.target) &&
+				!isWithinIframe() &&
+				!isEditingEditableField(),
+			isKeyCombination: (event) => event.shiftKey && event.key === '?',
+		},
 		remove: {
 			action: remove,
 			canBeExecuted: (event) =>
@@ -277,6 +290,12 @@ export default function ShortcutManager() {
 			{openSaveModal && (
 				<SaveFragmentCompositionModal
 					onCloseModal={() => setOpenSaveModal(false)}
+				/>
+			)}
+
+			{openShortcutModal && (
+				<ShortcutModal
+					onCloseModal={() => setOpenShorcutModal(false)}
 				/>
 			)}
 		</>

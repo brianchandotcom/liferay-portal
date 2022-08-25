@@ -384,7 +384,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 			if (content != null) {
 				try {
-					_document = SAXReaderUtil.read(getContent());
+					_document = SAXReaderUtil.read(content);
 				}
 				catch (DocumentException documentException) {
 					if (_log.isWarnEnabled()) {

@@ -68,12 +68,12 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 		}
 
 		_portalK8sConfigMapModifier.modifyConfigMap(
-			model -> {
-				Map<String, String> data = model.data();
+			configMapModel -> {
+				Map<String, String> data = configMapModel.data();
 
 				data.clear();
 
-				Map<String, String> labels = model.labels();
+				Map<String, String> labels = configMapModel.labels();
 
 				labels.clear();
 			},

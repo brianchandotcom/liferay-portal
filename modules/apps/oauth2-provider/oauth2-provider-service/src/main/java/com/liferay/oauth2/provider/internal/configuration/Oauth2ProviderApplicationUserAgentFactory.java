@@ -177,7 +177,8 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 				Validator.isNotNull(_serviceId)) {
 
 				_portalK8sConfigMapModifier.modifyConfigMap(
-					model -> _extensionProperties.forEach(model.data()::remove),
+					configMapModel -> _extensionProperties.forEach(
+						configMapModel.data()::remove),
 					_configMapName);
 			}
 

@@ -841,6 +841,20 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, folderIds, locale, queryDefinition);
 	}
 
+	@Override
+	public List<JournalArticle> getArticlesByArticleId(
+		long groupId, String articleId, int status, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return journalArticlePersistence.filterFindByG_A(
+				groupId, articleId, start, end, orderByComparator);
+		}
+
+		return journalArticlePersistence.filterFindByG_A_ST(
+			groupId, articleId, status, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns an ordered range of all the web content articles matching the
 	 * group and article ID.
@@ -1201,6 +1215,19 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	@Override
 	public int getArticlesCountByArticleId(long groupId, String articleId) {
 		return journalArticlePersistence.filterCountByG_A(groupId, articleId);
+	}
+
+	@Override
+	public int getArticlesCountByArticleId(
+		long groupId, String articleId, int status) {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return journalArticlePersistence.filterCountByG_A(
+				groupId, articleId);
+		}
+
+		return journalArticlePersistence.filterCountByG_A_ST(
+			groupId, articleId, status);
 	}
 
 	/**

@@ -17,6 +17,7 @@ definition {
 
 	tearDown {
 		BlogPostingAPI.deleteAllBlogPostings();
+		echo("ok");
 	}
 
 	@disable-webdriver = "true"
@@ -203,4 +204,107 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanGetCommentByExternalReferenceCode {
+		property portal.acceptance = "true";
+
+		task ("When with POST request I create a comment with a custom external reference code") {
+			var blogPostingId = BlogPostingAPI.getBlogPostingsIdList();
+
+			CommentAPI.createCommentInBlogPosting(
+				blogPostingId = "${blogPostingId}",
+				commentText = "CommentOne",
+				externalReferenceCode = "ercComment");
+		}
+
+		task ("When I make a GET request by external reference code") {
+			task("Get Blog Posting ID"){
+				var getBlogPostings = BlogPostingAPI.getBlogPostings();
+
+				var blogPostingERC = JSONUtil.getWithJSONPath("${getBlogPostings}", "$..externalReferenceCode");
+			}
+			var commentText = CommentAPI.getFieldValueOfBlogPostingComments(
+				blogPostingERC = "${blogPostingERC}",
+				blogPostingCommentERC = "ercComment",
+				fieldName = "text");
+		}
+
+		task ("Then I receive a correct body response") {
+			TestUtils.assertEquals(
+				actual = "${commentText}",
+				expected = "<p>CommentOne</p>");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanGetCommentByExternalReferenceCodeWithCommentID {
+		property portal.acceptance = "true";
+
+		task ("When with POST request I create a comment without a custom external reference code") {
+			var blogPostingId = BlogPostingAPI.getBlogPostingsIdList();
+
+			var response = CommentAPI.createCommentInBlogPosting(
+				blogPostingId = "${blogPostingId}",
+				commentText = "CommentOne");
+		}
+
+		task ("When I make a GET request by external reference code using comment ID as external reference code") {
+			task("Get Blog Posting ID"){
+				var getBlogPostings = BlogPostingAPI.getBlogPostings();
+
+				var blogPostingERC = JSONUtil.getWithJSONPath("${getBlogPostings}", "$..externalReferenceCode");
+			}
+			var commentId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+			var commentText = CommentAPI.getFieldValueOfBlogPostingComments(
+				blogPostingERC = "${blogPostingERC}",
+				blogPostingCommentERC = "${commentId}",
+				fieldName = "status");
+		}
+
+		task ("Then I receive an error about GET request by external reference code using comment ID as external reference code") {
+			TestUtils.assertPartialEquals(
+				actual = "${commentText}",
+				expected = "NOT_FOUND");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanGetChildCommentByExternalReferenceCode {
+		property portal.acceptance = "true";
+
+		task ("And Given with POST request I create a comment with a custom external reference code") {
+			var blogPostingId = BlogPostingAPI.getBlogPostingsIdList();
+
+			var response = CommentAPI.createCommentInBlogPosting(
+				blogPostingId = "${blogPostingId}",
+				commentText = "CommentOne",
+				externalReferenceCode = "ercComment");
+		}
+
+		task ("When create a child comment with a custom external reference code") {
+			var commentId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+			var response2 = CommentAPI.createCommentInBlogPosting(
+				commentId = "${commentId}",
+				commentText = "ChildComment",
+				externalReferenceCode = "ERC_ChildComment");
+		}
+		
+		task ("When I make a GET request by external reference code of the child comment") {
+			var commentText = CommentAPI.getFieldValueOfBlogPostingComments(
+				blogPostingChildCommentERC = "ERC_ChildComment",
+				blogPostingCommentERC = "ercComment",
+				fieldName = "text");
+		}
+
+		task ("Then I receive a correct body response") {
+			TestUtils.assertEquals(
+				actual = "${commentText}",
+				expected = "<p>ChildComment</p>");
+		}
+	}
 }

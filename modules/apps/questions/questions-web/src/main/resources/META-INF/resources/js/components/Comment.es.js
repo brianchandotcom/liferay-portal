@@ -22,9 +22,8 @@ import {Link, withRouter} from 'react-router-dom';
 import {AppContext} from '../AppContext.es';
 import FlagsContainer from '../pages/questions/components/FlagsContainer';
 import {deleteMessageQuery} from '../utils/client.es';
-import lang from '../utils/lang.es';
-import {getDateFormatted} from '../utils/time.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
+import EditedTimestamp from './EditedTimestamp.es';
 import Modal from './Modal.es';
 
 export default withRouter(
@@ -46,9 +45,11 @@ export default withRouter(
 
 				<div className="col-10 col-lg-11">
 					<span className="text-secondary">
-						{lang.sub(Liferay.Language.get('replied-x'), [
-							getDateFormatted(comment.dateCreated),
-						])}
+						<EditedTimestamp
+							dateCreated={comment.dateCreated}
+							dateModified={comment.dateModified}
+							operationText={Liferay.Language.get('replied')}
+						/>
 					</span>
 
 					{comment.status && comment.status !== 'approved' && (

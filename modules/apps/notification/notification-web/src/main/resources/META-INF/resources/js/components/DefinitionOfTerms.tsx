@@ -21,6 +21,7 @@ import {
 	API,
 	AutoComplete,
 	onActionDropdownItemClick,
+	stringIncludesQuery,
 } from '@liferay/object-js-components-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -106,6 +107,12 @@ export function DefinitionOfTerms({baseResourceURL}: IProps) {
 		return getDataSetProps(entityFields);
 	}, [entityFields]);
 
+	const filteredObjectDefinitions = useMemo(() => {
+		return objectDefinitions?.filter(({label}) =>
+			stringIncludesQuery(label[defaultLanguageId] as string, query)
+		);
+	}, [objectDefinitions, query]);
+
 	useEffect(() => {
 		API.getObjectDefinitions().then((items) => {
 			const objectDefinitions = items.filter(
@@ -155,7 +162,7 @@ export function DefinitionOfTerms({baseResourceURL}: IProps) {
 					emptyStateMessage={Liferay.Language.get(
 						'no-entities-were-found'
 					)}
-					items={objectDefinitions ?? []}
+					items={filteredObjectDefinitions ?? []}
 					label={Liferay.Language.get('entity')}
 					onChangeQuery={setQuery}
 					onSelectItem={(item: ObjectDefinition) => {

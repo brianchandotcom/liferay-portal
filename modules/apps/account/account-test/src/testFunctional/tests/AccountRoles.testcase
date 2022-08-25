@@ -156,6 +156,95 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-142654. This asserts user with Update Account Role permissions for an account can update account roles."
+	@priority = "4"
+	test CanUpdateAccountRoleWithPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given a user is granted permissions to access Account Admin portlet") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			Accounts.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
+		}
+
+		task ("And he is a member of a business account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.assignUsers(
+				accountName = "Account Name",
+				assigneeName = "userfn1");
+		}
+
+		task ("And add owned account role with Update account entry, View account role tab permissions ") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
+
+			for (var resourceActionIndex : list "UPDATE,VIEW_ACCOUNT_ROLES") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.account.model.AccountEntry",
+					roleTitle = "Account Specific Role",
+					roleType = "account");
+			}
+		}
+
+		task ("When this user is granted permissions to Update account role for Account Name") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.account.model.AccountRole",
+				roleTitle = "Account Specific Role",
+				roleType = "account");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Specific Role",
+				accountUserName = "userfn1 userln1");
+		}
+
+		task ("Then he can update account roles in Account Name") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.updateOwnedAccountRole(
+				accountRoleTitle = "Account Specific Role",
+				accountRoleTitleEdit = "Account Specific Role Edit");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Specific Role Edit");
+		}
+	}
+
 	@description = "This is a use case for LPS-142654. This asserts user with View Account Roles permissions for an account can only view and cannot do other actions to those roles. It also asserts that a user only has this permissions to the account he has the role in."
 	@priority = "4"
 	test CanViewAccountRolesWithPermissions {

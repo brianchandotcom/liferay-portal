@@ -74,15 +74,14 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 			_log.debug("Activate " + properties);
 		}
 
+		Company company = _getCompany(properties);
+		String externalReferenceCode = _getExternalReferenceCode(properties);
+
 		OAuth2ProviderApplicationUserAgentConfiguration
 			oAuth2ProviderApplicationUserAgentConfiguration =
 				ConfigurableUtil.createConfigurable(
 					OAuth2ProviderApplicationUserAgentConfiguration.class,
 					properties);
-
-		String externalReferenceCode = _getExternalReferenceCode(properties);
-
-		Company company = _getCompany(properties);
 
 		String serviceAddress = Http.HTTPS_WITH_SLASH.concat(
 			company.getVirtualHostname());
@@ -127,12 +126,12 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 			).build();
 
 			_portalK8sConfigMapModifier.modifyConfigMap(
-				model -> {
-					Map<String, String> data = model.data();
+				configMapModel -> {
+					Map<String, String> data = configMapModel.data();
 
 					_extensionProperties.forEach(data::put);
 
-					Map<String, String> labels = model.labels();
+					Map<String, String> labels = configMapModel.labels();
 
 					labels.put(
 						"ext.lxc.liferay.com/projectId",

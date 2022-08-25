@@ -64,8 +64,10 @@ public class SXPBlueprintLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		User user = _userLocalService.getUser(userId);
+
 		_validateExternalReferenceCode(
-			serviceContext.getCompanyId(), externalReferenceCode);
+			user.getCompanyId(), externalReferenceCode);
 
 		_validate(configurationJSON, titleMap, serviceContext);
 
@@ -73,10 +75,7 @@ public class SXPBlueprintLocalServiceImpl
 			counterLocalService.increment());
 
 		sxpBlueprint.setExternalReferenceCode(externalReferenceCode);
-		sxpBlueprint.setCompanyId(serviceContext.getCompanyId());
-
-		User user = _userLocalService.getUser(userId);
-
+		sxpBlueprint.setCompanyId(user.getCompanyId());
 		sxpBlueprint.setUserId(user.getUserId());
 		sxpBlueprint.setUserName(user.getFullName());
 

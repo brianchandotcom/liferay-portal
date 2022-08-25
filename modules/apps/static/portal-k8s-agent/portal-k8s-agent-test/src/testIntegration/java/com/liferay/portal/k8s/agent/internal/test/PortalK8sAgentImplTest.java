@@ -312,7 +312,7 @@ public class PortalK8sAgentImplTest {
 		throws Exception {
 
 		_portalK8sConfigMapModifier.modifyConfigMap(
-			model -> {
+			configMapModel -> {
 			},
 			null);
 	}

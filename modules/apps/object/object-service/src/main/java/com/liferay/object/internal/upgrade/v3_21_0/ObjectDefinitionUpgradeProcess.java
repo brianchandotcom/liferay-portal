@@ -14,11 +14,7 @@
 
 package com.liferay.object.internal.upgrade.v3_21_0;
 
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * @author Selton Guedes
@@ -31,27 +27,13 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 			"ObjectDefinition", "enableCategorization", "BOOLEAN");
 		alterTableAddColumn("ObjectDefinition", "enableComments", "BOOLEAN");
 
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select objectDefinitionId, system_ from ObjectDefinition");
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update ObjectDefinition set enableCategorization = ?, " +
-						"enableComments = ? where objectDefinitionId = ?");
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+		runSQL(
+			"update ObjectDefinition set enableCategorization = [$TRUE$], " +
+				"enableComments = [$FALSE$] where system_ = [$FALSE$]");
 
-			while (resultSet.next()) {
-				preparedStatement2.setBoolean(
-					1, !resultSet.getBoolean("system_"));
-				preparedStatement2.setBoolean(2, false);
-				preparedStatement2.setLong(
-					3, resultSet.getLong("objectDefinitionId"));
-
-				preparedStatement2.addBatch();
-			}
-
-			preparedStatement2.executeBatch();
-		}
+		runSQL(
+			"update ObjectDefinition set enableCategorization = [$FALSE$], " +
+				"enableComments = [$FALSE$] where system_ = [$TRUE$]");
 	}
 
 }

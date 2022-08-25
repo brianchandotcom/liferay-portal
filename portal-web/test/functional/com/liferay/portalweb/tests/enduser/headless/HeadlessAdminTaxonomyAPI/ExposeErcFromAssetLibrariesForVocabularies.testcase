@@ -159,6 +159,42 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test CanRecieveCorrectErcValueInCategory {
+		property portal.acceptance = "true";
+
+		task ("Given a vocabulary with assetLibrary") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var responseOfCreated = TaxonomyVocabularyAPI.createTaxonomyVocabulary(
+				assetLibraryId = "${assetLibraryId}",
+				name = "Vocabulary Name");
+		}
+
+		task ("And Given a TaxonomyCategory with custom external reference code") {
+			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
+				element = "$.id",
+				responseToParse = "${responseOfCreated}");
+
+			var taxonomyCategoryId = TaxonomyVocabularyAPI.createTaxonomyCategory(
+				externalReferenceCode = "erc",
+				name = "Category Name",
+				taxonomyVocabularyId = "${taxonomyVocabularyId}");
+		}
+
+		task ("When with GET request getTaxonomyCategory") {
+			var response = TaxonomyVocabularyAPI.getTaxonomyCategory(taxonomyCategoryId = "${taxonomyCategoryId}");
+		}
+
+		task ("Then I can receive the correct custom external reference code value in the response") {
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.externalReferenceCode");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "erc");
+		}
+	}
+
 	@priority = "3"
 	test CanReturnErrorWithGetVocabularyWithNonExistingErc {
 		property portal.acceptance = "true";

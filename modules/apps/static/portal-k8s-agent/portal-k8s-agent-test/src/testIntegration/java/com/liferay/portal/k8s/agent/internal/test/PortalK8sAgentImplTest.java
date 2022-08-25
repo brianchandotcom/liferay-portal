@@ -203,8 +203,8 @@ public class PortalK8sAgentImplTest {
 			"-lxc-ext-init-metadata");
 
 		_portalK8sConfigMapModifier.modifyConfigMap(
-			model -> {
-				Map<String, String> data = model.data();
+			configMapModel -> {
+				Map<String, String> data = configMapModel.data();
 
 				data.put(
 					"com.liferay.lxc.dxp.domains",
@@ -213,7 +213,7 @@ public class PortalK8sAgentImplTest {
 					"com.liferay.lxc.dxp.mainDomain",
 					TestPropsValues.COMPANY_WEB_ID);
 
-				Map<String, String> labels = model.labels();
+				Map<String, String> labels = configMapModel.labels();
 
 				labels.put("lxc.liferay.com/metadataType", "ext-init");
 				labels.put("ext.lxc.liferay.com/serviceId", serviceId);
@@ -307,21 +307,28 @@ public class PortalK8sAgentImplTest {
 		}
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void testPortalK8sConfigMapModifierValidateConfigMapNameNotNull()
-		throws Exception {
+	@Test
+	public void testModifyConfigMap() throws Exception {
+		try {
+			_portalK8sConfigMapModifier.modifyConfigMap(
+				configMapModel -> {
+				},
+				null);
 
-		_portalK8sConfigMapModifier.modifyConfigMap(
-			configMapModel -> {
-			},
-			null);
-	}
+			Assert.fail();
+		}
+		catch (NullPointerException nullPointerException) {
+			Assert.assertNotNull(nullPointerException);
+		}
 
-	@Test(expected = NullPointerException.class)
-	public void testPortalK8sConfigMapModifierValidateModelNotNull()
-		throws Exception {
+		try {
+			_portalK8sConfigMapModifier.modifyConfigMap(null, null);
 
-		_portalK8sConfigMapModifier.modifyConfigMap(null, null);
+			Assert.fail();
+		}
+		catch (NullPointerException nullPointerException) {
+			Assert.assertNotNull(nullPointerException);
+		}
 	}
 
 	public static class AwaitingConfigurationHolder

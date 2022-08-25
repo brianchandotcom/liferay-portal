@@ -197,11 +197,14 @@ public class EditCommerceOrderItemMVCActionCommand
 		BigDecimal decimalQuantity = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "decimalQuantity");
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceOrderItem.class.getName(), actionRequest);
+
+		serviceContext.setAttribute("validateOrder", Boolean.FALSE);
+
 		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
 			commerceOrderItemId, cpMeasurementUnitId,
-			decimalQuantity.intValue(),
-			ServiceContextFactory.getInstance(
-				CommerceOrderItem.class.getName(), actionRequest));
+			decimalQuantity.intValue(), serviceContext);
 
 		if (!commerceOrder.isOpen()) {
 			BigDecimal price = (BigDecimal)ParamUtil.getNumber(

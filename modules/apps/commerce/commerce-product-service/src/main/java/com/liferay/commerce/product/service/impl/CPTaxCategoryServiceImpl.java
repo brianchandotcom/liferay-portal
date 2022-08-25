@@ -33,25 +33,6 @@ import java.util.Map;
  */
 public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #addCPTaxCategory(String, Map, Map, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public CPTaxCategory addCPTaxCategory(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
-
-		return cpTaxCategoryLocalService.addCPTaxCategory(
-			nameMap, descriptionMap, serviceContext);
-	}
-
 	@Override
 	public CPTaxCategory addCPTaxCategory(
 			String externalReferenceCode, Map<Locale, String> nameMap,
@@ -145,25 +126,6 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
 		return cpTaxCategoryLocalService.getCPTaxCategory(cpTaxCategoryId);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #updateCPTaxCategory(String, long, Map, Map)}
-	 */
-	@Deprecated
-	@Override
-	public CPTaxCategory updateCPTaxCategory(
-			long cpTaxCategoryId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
-
-		return cpTaxCategoryLocalService.updateCPTaxCategory(
-			cpTaxCategoryId, nameMap, descriptionMap);
 	}
 
 	@Override

@@ -37,35 +37,6 @@ import java.util.Map;
 public class CPTaxCategoryLocalServiceImpl
 	extends CPTaxCategoryLocalServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #addCPTaxCategory(String, Map, Map, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public CPTaxCategory addCPTaxCategory(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		User user = userLocalService.getUser(serviceContext.getUserId());
-
-		validate(nameMap);
-
-		long cpTaxCategoryId = counterLocalService.increment();
-
-		CPTaxCategory cpTaxCategory = cpTaxCategoryPersistence.create(
-			cpTaxCategoryId);
-
-		cpTaxCategory.setCompanyId(user.getCompanyId());
-		cpTaxCategory.setUserId(user.getUserId());
-		cpTaxCategory.setUserName(user.getFullName());
-		cpTaxCategory.setNameMap(nameMap);
-		cpTaxCategory.setDescriptionMap(descriptionMap);
-
-		return cpTaxCategoryPersistence.update(cpTaxCategory);
-	}
-
 	@Override
 	public CPTaxCategory addCPTaxCategory(
 			String externalReferenceCode, Map<Locale, String> nameMap,
@@ -154,28 +125,6 @@ public class CPTaxCategoryLocalServiceImpl
 	@Override
 	public int getCPTaxCategoriesCount(long companyId) {
 		return cpTaxCategoryPersistence.countByCompanyId(companyId);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #updateCPTaxCategory(String, long, Map, Map)}
-	 */
-	@Deprecated
-	@Override
-	public CPTaxCategory updateCPTaxCategory(
-			long cpTaxCategoryId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap)
-		throws PortalException {
-
-		CPTaxCategory cpTaxCategory = cpTaxCategoryPersistence.findByPrimaryKey(
-			cpTaxCategoryId);
-
-		validate(nameMap);
-
-		cpTaxCategory.setNameMap(nameMap);
-		cpTaxCategory.setDescriptionMap(descriptionMap);
-
-		return cpTaxCategoryPersistence.update(cpTaxCategory);
 	}
 
 	@Override

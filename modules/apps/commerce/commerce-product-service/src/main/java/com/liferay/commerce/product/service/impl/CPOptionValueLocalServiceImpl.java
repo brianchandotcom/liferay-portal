@@ -234,31 +234,6 @@ public class CPOptionValueLocalServiceImpl
 		}
 	}
 
-	/**
-	 * @param      companyId
-	 * @param      groupId
-	 * @param      cpOptionId
-	 * @param      keywords
-	 * @param      start
-	 * @param      end
-	 * @param      sort
-	 * @return
-	 *
-	 * @throws     PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #searchCPOptionValues(long, long, String, int, int, Sort[])}
-	 */
-	@Deprecated
-	@Override
-	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
-			long companyId, long groupId, long cpOptionId, String keywords,
-			int start, int end, Sort sort)
-		throws PortalException {
-
-		return cpOptionValueLocalService.searchCPOptionValues(
-			companyId, cpOptionId, keywords, start, end, new Sort[] {sort});
-	}
-
 	@Override
 	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
 			long companyId, long cpOptionId, String keywords, int start,

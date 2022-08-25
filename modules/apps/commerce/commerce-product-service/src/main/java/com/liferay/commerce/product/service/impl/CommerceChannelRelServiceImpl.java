@@ -120,20 +120,6 @@ public class CommerceChannelRelServiceImpl
 			commerceChannelId, start, end, orderByComparator);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public List<CommerceChannelRel> getCommerceChannelRels(
-			String className, long classPK, int start, int end,
-			OrderByComparator<CommerceChannelRel> orderByComparator)
-		throws PortalException {
-
-		return commerceChannelRelService.getCommerceChannelRels(
-			className, classPK, null, start, end);
-	}
-
 	@Override
 	public List<CommerceChannelRel> getCommerceChannelRels(
 			String className, long classPK, String name, int start, int end)
@@ -149,18 +135,6 @@ public class CommerceChannelRelServiceImpl
 
 		return commerceChannelRelFinder.findByC_C(
 			className, classPK, name, start, end, true);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public List<CommerceChannelRel> getCommerceChannelRels(
-		String className, long classPK, String classPKField, String name,
-		int start, int end) {
-
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -197,17 +171,6 @@ public class CommerceChannelRelServiceImpl
 
 		return commerceChannelRelFinder.countByC_C(
 			className, classPK, name, true);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public int getCommerceChannelRelsCount(
-		String className, long classPK, String classPKField, String name) {
-
-		throw new UnsupportedOperationException();
 	}
 
 	private static volatile ModelResourcePermission<CommerceChannel>

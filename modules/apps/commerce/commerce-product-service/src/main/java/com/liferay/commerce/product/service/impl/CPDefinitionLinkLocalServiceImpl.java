@@ -40,24 +40,6 @@ import java.util.List;
 public class CPDefinitionLinkLocalServiceImpl
 	extends CPDefinitionLinkLocalServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public CPDefinitionLink addCPDefinitionLink(
-			long cpDefinitionId1, long cpDefinitionId2, double priority,
-			String type, ServiceContext serviceContext)
-		throws PortalException {
-
-		CPDefinition cpDefinition2 = cpDefinitionPersistence.findByPrimaryKey(
-			cpDefinitionId2);
-
-		return addCPDefinitionLinkByCProductId(
-			cpDefinitionId1, cpDefinition2.getCProductId(), priority, type,
-			serviceContext);
-	}
-
 	@Override
 	public CPDefinitionLink addCPDefinitionLinkByCProductId(
 			long cpDefinitionId, long cProductId, double priority, String type,
@@ -157,24 +139,6 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		return cpDefinitionLinkLocalService.deleteCPDefinitionLink(
 			cpDefinitionLink);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public void deleteCPDefinitionLinks(long cpDefinitionId)
-		throws PortalException {
-
-		deleteCPDefinitionLinksByCPDefinitionId(cpDefinitionId);
-
-		CPDefinition cpDefinition = cpDefinitionPersistence.fetchByPrimaryKey(
-			cpDefinitionId);
-
-		if (cpDefinition != null) {
-			deleteCPDefinitionLinksByCProductId(cpDefinition.getCProductId());
-		}
 	}
 
 	@Override

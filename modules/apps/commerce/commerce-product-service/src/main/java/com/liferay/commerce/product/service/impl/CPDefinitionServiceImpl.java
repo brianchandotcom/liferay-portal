@@ -22,7 +22,6 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.base.CPDefinitionServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -364,18 +363,6 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			cpDefinitionId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getLayoutUuid(long cpDefinitionId) throws PortalException {
-		_checkCommerceCatalogByCPDefinitionId(cpDefinitionId, ActionKeys.VIEW);
-
-		return cpDefinitionLocalService.getLayoutUuid(
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, cpDefinitionId);
-	}
-
 	@Override
 	public Map<Locale, String> getUrlTitleMap(long cpDefinitionId)
 		throws PortalException {
@@ -522,24 +509,6 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			cpDefinitionId, enable);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void updateCPDisplayLayout(
-			long cpDefinitionId, String layoutUuid,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_checkCommerceCatalogByCPDefinitionId(
-			cpDefinitionId, ActionKeys.UPDATE);
-
-		cpDisplayLayoutLocalService.addCPDisplayLayout(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			CPDefinition.class, cpDefinitionId, layoutUuid);
-	}
-
 	@Override
 	public CPDefinition updateExternalReferenceCode(
 			String externalReferenceCode, long cpDefinitionId)
@@ -603,27 +572,6 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			deliverySubscriptionLength, deliverySubscriptionType,
 			deliverySubscriptionTypeSettingsUnicodeProperties,
 			deliveryMaxSubscriptionCycles);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public CPDefinition updateSubscriptionInfo(
-			long cpDefinitionId, boolean subscriptionEnabled,
-			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, ServiceContext serviceContext)
-		throws PortalException {
-
-		_checkCommerceCatalogByCPDefinitionId(
-			cpDefinitionId, ActionKeys.UPDATE);
-
-		return cpDefinitionLocalService.updateSubscriptionInfo(
-			cpDefinitionId, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
-			maxSubscriptionCycles, serviceContext);
 	}
 
 	@Override

@@ -265,155 +265,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstance;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CPInstance addCPInstance(
-			String externalReferenceCode, long cpDefinitionId, long groupId,
-			String sku, String gtin, String manufacturerPartNumber,
-			boolean purchasable,
-			Map<Long, List<Long>>
-				cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds,
-			double width, double height, double depth, double weight,
-			BigDecimal price, BigDecimal promoPrice, BigDecimal cost,
-			boolean published, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			boolean overrideSubscriptionInfo, boolean subscriptionEnabled,
-			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
-			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles, String unspsc,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpInstanceLocalService.addCPInstance(
-			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
-			manufacturerPartNumber, purchasable,
-			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds, width, height,
-			depth, weight, price, promoPrice, cost, published, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
-			maxSubscriptionCycles, deliverySubscriptionEnabled,
-			deliverySubscriptionLength, deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsUnicodeProperties,
-			deliveryMaxSubscriptionCycles, unspsc, false, null, 0, 0, 0, 0,
-			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CPInstance addCPInstance(
-			String externalReferenceCode, long cpDefinitionId, long groupId,
-			String sku, String gtin, String manufacturerPartNumber,
-			boolean purchasable,
-			Map<Long, List<Long>>
-				cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds,
-			double width, double height, double depth, double weight,
-			BigDecimal price, BigDecimal promoPrice, BigDecimal cost,
-			boolean published, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			boolean overrideSubscriptionInfo, boolean subscriptionEnabled,
-			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpInstanceLocalService.addCPInstance(
-			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
-			manufacturerPartNumber, purchasable,
-			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds, width, height,
-			depth, weight, price, promoPrice, cost, published, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
-			maxSubscriptionCycles, null, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CPInstance addCPInstance(
-			String externalReferenceCode, long cpDefinitionId, long groupId,
-			String sku, String gtin, String manufacturerPartNumber,
-			boolean purchasable,
-			Map<Long, List<Long>>
-				cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds,
-			double width, double height, double depth, double weight,
-			BigDecimal price, BigDecimal promoPrice, BigDecimal cost,
-			boolean published, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			boolean overrideSubscriptionInfo, boolean subscriptionEnabled,
-			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, String unspsc,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpInstanceLocalService.addCPInstance(
-			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
-			manufacturerPartNumber, purchasable,
-			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds, width, height,
-			depth, weight, price, promoPrice, cost, published, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			overrideSubscriptionInfo, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
-			maxSubscriptionCycles, false, 1, null, null, 0, unspsc,
-			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CPInstance addOrUpdateCPInstance(
-			String externalReferenceCode, long cpDefinitionId, long groupId,
-			String sku, String gtin, String manufacturerPartNumber,
-			boolean purchasable, String json, double width, double height,
-			double depth, double weight, BigDecimal price,
-			BigDecimal promoPrice, BigDecimal cost, boolean published,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpInstanceLocalService.addOrUpdateCPInstance(
-			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
-			manufacturerPartNumber, purchasable, json, width, height, depth,
-			weight, price, promoPrice, cost, published, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, null,
-			serviceContext);
-	}
-
 	@Override
 	public CPInstance addOrUpdateCPInstance(
 			String externalReferenceCode, long cpDefinitionId, long groupId,
@@ -470,34 +321,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CPInstance addOrUpdateCPInstance(
-			String externalReferenceCode, long cpDefinitionId, long groupId,
-			String sku, String gtin, String manufacturerPartNumber,
-			boolean purchasable, String json, double width, double height,
-			double depth, double weight, BigDecimal price,
-			BigDecimal promoPrice, BigDecimal cost, boolean published,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String unspsc, ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpInstanceLocalService.addOrUpdateCPInstance(
-			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
-			manufacturerPartNumber, purchasable, json, width, height, depth,
-			weight, price, promoPrice, cost, published, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, unspsc,
-			false, null, 0, 0, 0, 0, serviceContext);
-	}
-
 	@Override
 	public void buildCPInstances(
 			long cpDefinitionId, ServiceContext serviceContext)
@@ -540,16 +363,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				cpDefinition.getDisplayDate(), cpDefinition.getExpirationDate(),
 				neverExpire, serviceContext);
 		}
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #checkCPInstances(long)}
-	 */
-	@Deprecated
-	@Override
-	public void checkCPInstances() throws PortalException {
-		checkCPInstancesByDisplayDate(0);
-		checkCPInstancesByExpirationDate();
 	}
 
 	@Override
@@ -702,21 +515,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstancePersistence.findByC_ST(
 			cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * @param      cpDefinitionId
-	 * @return
-	 *
-	 * @deprecated As of Athanasius (7.3.x), use workflow aware method {@link
-	 *             #getCPDefinitionInstances(long, int, int, int,
-	 *             OrderByComparator)} or {@link
-	 *             #getCPDefinitionApprovedCPInstances(long)}
-	 */
-	@Deprecated
-	@Override
-	public List<CPInstance> getCPDefinitionInstances(long cpDefinitionId) {
-		return cpInstancePersistence.findByCPDefinitionId(cpDefinitionId);
 	}
 
 	@Override
@@ -951,107 +749,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CPInstance updateCPInstance(
-			long cpInstanceId, String sku, String gtin,
-			String manufacturerPartNumber, boolean purchasable,
-			boolean published, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpInstanceLocalService.updateCPInstance(
-			cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable,
-			published, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, null, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CPInstance updateCPInstance(
-			long cpInstanceId, String sku, String gtin,
-			String manufacturerPartNumber, boolean purchasable,
-			boolean published, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire, String unspsc,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
-			cpInstanceId);
-
-		int discontinuedDateMonth = 0;
-		int discontinuedDateDay = 0;
-		int discontinuedDateYear = 0;
-
-		Date discontinuedDate = cpInstance.getDiscontinuedDate();
-
-		if (discontinuedDate != null) {
-			Calendar discontinuedDateCalendar = CalendarFactoryUtil.getCalendar(
-				discontinuedDate.getTime(), serviceContext.getTimeZone());
-
-			discontinuedDateMonth = discontinuedDateCalendar.get(
-				Calendar.MONTH);
-			discontinuedDateDay = discontinuedDateCalendar.get(
-				Calendar.DAY_OF_MONTH);
-			discontinuedDateYear = discontinuedDateCalendar.get(Calendar.YEAR);
-		}
-
-		return cpInstanceLocalService.updateCPInstance(
-			cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable,
-			cpInstance.getWidth(), cpInstance.getHeight(),
-			cpInstance.getDepth(), cpInstance.getWeight(),
-			cpInstance.getPrice(), cpInstance.getPromoPrice(),
-			cpInstance.getCost(), published, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, unspsc,
-			cpInstance.isDiscontinued(), cpInstance.getCPInstanceUuid(),
-			cpInstance.getReplacementCProductId(), discontinuedDateMonth,
-			discontinuedDateDay, discontinuedDateYear, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CPInstance updateCPInstance(
-			long cpInstanceId, String sku, String gtin,
-			String manufacturerPartNumber, boolean purchasable, double width,
-			double height, double depth, double weight, BigDecimal price,
-			BigDecimal promoPrice, BigDecimal cost, boolean published,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpInstanceLocalService.updateCPInstance(
-			cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable, width,
-			height, depth, weight, price, promoPrice, cost, published,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, null, serviceContext);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPInstance updateCPInstance(
@@ -1177,55 +874,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 
 		return cpInstance;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public CPInstance updateCPInstance(
-			long cpInstanceId, String sku, String gtin,
-			String manufacturerPartNumber, boolean purchasable, double width,
-			double height, double depth, double weight, BigDecimal price,
-			BigDecimal promoPrice, BigDecimal cost, boolean published,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String unspsc, ServiceContext serviceContext)
-		throws PortalException {
-
-		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
-			cpInstanceId);
-
-		int discontinuedDateMonth = 0;
-		int discontinuedDateDay = 0;
-		int discontinuedDateYear = 0;
-
-		Date discontinuedDate = cpInstance.getDiscontinuedDate();
-
-		if (discontinuedDate != null) {
-			Calendar discontinuedDateCalendar = CalendarFactoryUtil.getCalendar(
-				discontinuedDate.getTime(), serviceContext.getTimeZone());
-
-			discontinuedDateMonth = discontinuedDateCalendar.get(
-				Calendar.MONTH);
-			discontinuedDateDay = discontinuedDateCalendar.get(
-				Calendar.DAY_OF_MONTH);
-			discontinuedDateYear = discontinuedDateCalendar.get(Calendar.YEAR);
-		}
-
-		return cpInstanceLocalService.updateCPInstance(
-			cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable, width,
-			height, depth, weight, price, promoPrice, cost, published,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, unspsc, cpInstance.isDiscontinued(),
-			cpInstance.getCPInstanceUuid(),
-			cpInstance.getReplacementCProductId(), discontinuedDateMonth,
-			discontinuedDateDay, discontinuedDateYear, serviceContext);
 	}
 
 	@Override

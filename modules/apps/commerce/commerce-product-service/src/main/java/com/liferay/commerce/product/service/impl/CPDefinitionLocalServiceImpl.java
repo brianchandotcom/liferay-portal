@@ -2162,24 +2162,6 @@ public class CPDefinitionLocalServiceImpl
 		return cpDefinitionPersistence.update(cpDefinition);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public CPDefinition updateSubscriptionInfo(
-			long cpDefinitionId, boolean subscriptionEnabled,
-			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpDefinitionLocalService.updateSubscriptionInfo(
-			cpDefinitionId, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
-			maxSubscriptionCycles, false, 1, null, null, 0);
-	}
-
 	@Override
 	public CPDefinition updateTaxCategoryInfo(
 			long cpDefinitionId, long cpTaxCategoryId, boolean taxExempt,

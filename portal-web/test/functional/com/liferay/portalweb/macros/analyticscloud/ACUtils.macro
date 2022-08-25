@@ -752,12 +752,6 @@ definition {
 		Pause(locator1 = "5000");
 	}
 
-	macro selectGenericOption {
-		Select(
-			locator1 = "Select#SELECT",
-			value1 = "${optionValue}");
-	}
-
 	@summary = "This macro access a page/document"
 	macro navigateToSitePage {
 		for (var documentTitle : list "${documentTitleList}") {
@@ -899,6 +893,12 @@ definition {
 				locator1 = "ACSettings#SEARCH_BAR",
 				value1 = "\ENTER");
 		}
+	}
+
+	macro selectGenericOption {
+		Select(
+			locator1 = "Select#SELECT",
+			value1 = "${optionValue}");
 	}
 
 	macro setItemName {

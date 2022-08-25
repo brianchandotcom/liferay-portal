@@ -1,21 +1,21 @@
 definition {
 
-	macro enableEmailReportToggle {
-		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
-	}
-
-    macro accessEmailReportSettings {
+	macro accessEmailReportSettings {
 		Click(locator1 = "ACEmailReport#EMAIL_REPORT_WIDGET_ICON");
 	}
 
-    macro enableEmailReport {
+	macro enableEmailReport {
 		ACEmailReport.accessEmailReportSettings();
 
-        ACEmailReport.enableEmailReportToggle();
+		ACEmailReport.enableEmailReportToggle();
 
-        ACUtils.selectGenericOption(optionValue = "${frequency}");
+		ACUtils.selectGenericOption(optionValue = "${frequency}");
 
-        Button.clickSave();
+		Button.clickSave();
+	}
+
+	macro enableEmailReportToggle {
+		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 	}
 
 }

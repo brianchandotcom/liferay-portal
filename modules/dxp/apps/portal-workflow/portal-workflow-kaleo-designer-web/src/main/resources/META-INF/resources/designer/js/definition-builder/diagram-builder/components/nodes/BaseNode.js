@@ -112,18 +112,10 @@ export default function BaseNode({
 		nodeTypeClassName = `${nodeTypeClassName} selected`;
 	}
 
-	let nodeLabel;
+	let nodeLabel = label[defaultLanguageId];
 
-	if (selectedLanguageId) {
-		if (!label[selectedLanguageId]) {
-			nodeLabel = label[defaultLanguageId];
-		}
-		else {
-			nodeLabel = label[selectedLanguageId];
-		}
-	}
-	else {
-		nodeLabel = label[defaultLanguageId];
+	if (selectedLanguageId && label[selectedLanguageId]) {
+		nodeLabel = label[selectedLanguageId];
 	}
 
 	const displaySourceHandles = (display) => () => {

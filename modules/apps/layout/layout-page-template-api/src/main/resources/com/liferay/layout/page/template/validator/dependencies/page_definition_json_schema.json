@@ -922,6 +922,16 @@
 					"title": "The displayAllPages Schema",
 					"type": "boolean"
 				},
+				"emptyCollectionConfig": {
+					"properties": {
+						"displayMessage": {
+							"title": "The displayMessage Schema",
+							"type": "boolean"
+						}
+					},
+					"title": "The emptyCollectionConfig Schema",
+					"type": "object"
+				},
 				"fragmentStyle": {
 					"$ref": "#/definitions/FragmentStyle"
 				},

@@ -3274,6 +3274,15 @@ components:
                     description:
                         Whether to show all pages when pagination is enabled.
                     type: boolean
+                emptyCollectionConfig:
+                    properties:
+                        displayMessage:
+                            # @review
+                            description:
+                                Whether to display a message when the collection is empty or no results match the
+                                applied filters (true by default).
+                            type: boolean
+                    type: object
                 fragmentStyle:
                     allOf:
                         - $ref: "#/components/schemas/FragmentStyle"

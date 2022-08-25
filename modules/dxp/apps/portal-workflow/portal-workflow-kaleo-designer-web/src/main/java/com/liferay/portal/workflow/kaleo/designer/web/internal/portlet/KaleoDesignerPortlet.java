@@ -238,14 +238,6 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		return true;
 	}
 
-	@Reference(unbind = "-")
-	protected void setKaleoDefinitionVersionLocalService(
-		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService) {
-
-		_kaleoDefinitionVersionLocalService =
-			kaleoDefinitionVersionLocalService;
-	}
-
 	private Integer[] _getRoleTypesObj(int type) {
 		if ((type == RoleConstants.TYPE_ACCOUNT) ||
 			(type == RoleConstants.TYPE_DEPOT) ||

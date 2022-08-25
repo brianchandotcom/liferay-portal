@@ -19,6 +19,7 @@ import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.validator.AccountEntryEmailValidator;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -64,12 +65,21 @@ public class AccountUserActionDropdownItemsProvider {
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		return DropdownItemListBuilder.add(
 			() -> {
+				AccountEntryEmailValidator accountEntryEmailValidator =
+					_accountEntryDisplay.getAccountEntryEmailValidator();
+
 				if (Objects.equals(
 						PortalUtil.getPortletId(_httpServletRequest),
 						AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT) &&
-					UserPermissionUtil.contains(
-						_permissionChecker, _accountUserId,
-						ActionKeys.UPDATE)) {
+					(UserPermissionUtil.contains(
+						_permissionChecker, _accountUserDisplay.getUserId(),
+						ActionKeys.UPDATE) ||
+					 (accountEntryEmailValidator.isValidDomainStrict(
+						 _accountUserDisplay.getEmailAddress()) &&
+					  AccountEntryPermission.contains(
+						  _permissionChecker,
+						  _accountEntryDisplay.getAccountEntryId(),
+						  ActionKeys.MANAGE_USERS)))) {
 
 					return true;
 				}

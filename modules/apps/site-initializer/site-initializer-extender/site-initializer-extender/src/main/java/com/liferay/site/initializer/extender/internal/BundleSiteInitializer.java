@@ -2651,14 +2651,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 		StructuredContentFolder structuredContentFolder =
 			StructuredContentFolder.toDTO(json);
 
-		StructuredContentFolder existingStructuredContentFolder = null;
-
 		try {
-			existingStructuredContentFolder =
+			StructuredContentFolder existingStructuredContentFolder =
 				structuredContentFolderResource.
 					getSiteStructuredContentFolderByExternalReferenceCode(
 						serviceContext.getScopeGroupId(),
 						structuredContentFolder.getExternalReferenceCode());
+
+			structuredContentFolder =
+				structuredContentFolderResource.
+					putSiteStructuredContentFolderByExternalReferenceCode(
+						existingStructuredContentFolder.getSiteId(),
+						existingStructuredContentFolder.
+							getExternalReferenceCode(),
+						existingStructuredContentFolder);
+
+			return structuredContentFolder.getId();
 		}
 		catch (NoSuchModelException noSuchModelException) {
 			if (documentFolderId != null) {
@@ -2676,15 +2684,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			return structuredContentFolder.getId();
 		}
-
-		structuredContentFolder =
-			structuredContentFolderResource.
-				putSiteStructuredContentFolderByExternalReferenceCode(
-					existingStructuredContentFolder.getSiteId(),
-					existingStructuredContentFolder.getExternalReferenceCode(),
-					existingStructuredContentFolder);
-
-		return structuredContentFolder.getId();
 	}
 
 	private void _addPermissions(

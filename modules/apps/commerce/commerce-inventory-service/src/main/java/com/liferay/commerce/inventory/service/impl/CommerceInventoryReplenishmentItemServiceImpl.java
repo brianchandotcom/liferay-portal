@@ -86,6 +86,23 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 	}
 
 	@Override
+	public void deleteCommerceInventoryReplenishmentItems(
+			long companyId, String sku)
+		throws PortalException {
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceInventoryWarehouseModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+
+		commerceInventoryReplenishmentItemLocalService.
+			deleteCommerceInventoryReplenishmentItems(companyId, sku);
+	}
+
+	@Override
 	public CommerceInventoryReplenishmentItem
 			fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
 				String externalReferenceCode, long companyId)

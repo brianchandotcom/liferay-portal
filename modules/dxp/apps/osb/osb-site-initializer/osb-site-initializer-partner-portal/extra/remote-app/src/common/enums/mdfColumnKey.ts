@@ -10,17 +10,17 @@
  */
 
 export enum MDFColumnKey {
-	id = 'PRMMDFC-001',
-	status = 'PRMMDFC-002',
 	activityPeriod = 'PRMMDFC-003',
-	partner = 'PRMMDFC-004',
-	totalCost = 'PRMMDFC-005',
-	type = 'PRMMDFC-006',
-	requested = 'PRMMDFC-007',
 	amountClaimed = 'PRMMDFC-008',
 	approved = 'PRMMDFC-009',
-	paid = 'PRMMDFC-010',
-	reimbursementClaims = 'PRMMDFC-011',
 	dateSubmitted = 'PRMMDFC-012',
+	id = 'PRMMDFC-001',
 	lastModified = 'PRMMDFC-013',
+	name = 'PRMMDFC-006',
+	paid = 'PRMMDFC-010',
+	partner = 'PRMMDFC-004',
+	reimbursementClaims = 'PRMMDFC-011',
+	requested = 'PRMMDFC-007',
+	status = 'PRMMDFC-002',
+	totalCost = 'PRMMDFC-005',
 }

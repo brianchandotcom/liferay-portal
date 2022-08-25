@@ -170,9 +170,7 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 				ComponentConstants.DEACTIVATION_REASON_CONFIGURATION_DELETED) {
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Deleting User Agent application: ".concat(
-						_oAuth2Application.toString()));
+				_log.debug("Deactivating " + _oAuth2Application.toString());
 			}
 
 			if ((_portalK8sConfigMapModifier != null) &&

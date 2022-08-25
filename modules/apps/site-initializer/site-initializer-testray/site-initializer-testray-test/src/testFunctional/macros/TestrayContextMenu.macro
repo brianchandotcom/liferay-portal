@@ -9,7 +9,7 @@ definition {
 	macro selectItemFromProjectsContextMenu {
 		var menuItem = "${item}";
 
-		Click(locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		ClickNoError(locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
 	}
 
 }

@@ -48,7 +48,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160538. Verify if as an Administrator I am able to delete a Project"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanDeleteProject {
 		task ("Go to Testray and Create Project") {
@@ -60,9 +59,7 @@ definition {
 		}
 
 		task ("Delete the project and make sure it is deleted") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_2 Project");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+			Testray.deleteProject();
 
 			Testray.assertProjectNotPresent(key_name = "Projects_2 Project");
 		}
@@ -128,7 +125,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-160898. Verify if as an Administrator I should be able to delete a project that contains routines without associated builds"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeleteProjectsThatContainRoutinesWithoutAssociatedBuilds {
 		task ("Create project and create Routine") {
@@ -146,9 +142,7 @@ definition {
 		task ("Go to home screen, Delete the project and make sure it is deleted") {
 			TestrayLayout.clickResultsOnSidebar();
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_4 Project");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+			Testray.deleteProject();
 
 			Testray.assertProjectNotPresent(key_name = "Projects_4 Project");
 		}

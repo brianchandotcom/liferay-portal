@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>PROJECT_NAME</td>
-	<td>//section[contains(@class, 'testray-content')]//td[text()='${key_projectName}']</td>
+	<td>//td[contains(@class,'text') and contains(.,'${key_projectName}')]</td>
 	<td></td>
 </tr>
 <tr>

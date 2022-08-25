@@ -96,6 +96,14 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 			removeByCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
 	}
 
+	@Override
+	public void deleteCommerceInventoryReplenishmentItems(
+		long companyId, String sku) {
+
+		commerceInventoryReplenishmentItemPersistence.removeByC_S(
+			companyId, sku);
+	}
+
 	public CommerceInventoryReplenishmentItem
 		fetchCommerceInventoryReplenishmentItem(
 			long companyId, String sku,

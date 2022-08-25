@@ -27,6 +27,7 @@ import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -100,6 +101,12 @@ public class CollectionLayoutStructureItemImporter
 			(Boolean)definitionMap.get("displayAllItems"));
 
 		Boolean displayAllPages = (Boolean)definitionMap.get("displayAllPages");
+
+		Map<String, Object> emptyCollectionConfig =
+			(Map<String, Object>)definitionMap.get("emptyCollectionConfig");
+
+		collectionStyledLayoutStructureItem.setEmptyCollectionOptions(
+			_getEmptyCollectionOptions(emptyCollectionConfig));
 
 		Boolean showAllItems = (Boolean)definitionMap.get("showAllItems");
 
@@ -270,6 +277,33 @@ public class CollectionLayoutStructureItemImporter
 		).put(
 			"type", InfoListProviderItemSelectorReturnType.class.getName()
 		);
+	}
+
+	private EmptyCollectionOptions _getEmptyCollectionOptions(
+		Map<String, Object> emptyCollectionConfig) {
+
+		if ((emptyCollectionConfig == null) ||
+			emptyCollectionConfig.isEmpty()) {
+
+			return null;
+		}
+
+		return new EmptyCollectionOptions() {
+			{
+				setDisplayMessage(
+					() -> {
+						if (emptyCollectionConfig.containsKey(
+								"displayMessage")) {
+
+							return GetterUtil.getBoolean(
+								emptyCollectionConfig.get("displayMessage"),
+								true);
+						}
+
+						return null;
+					});
+			}
+		};
 	}
 
 	private String _getItemSubtype(

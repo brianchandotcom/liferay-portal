@@ -19,6 +19,7 @@ import com.liferay.headless.delivery.dto.v1_0.ClassPKReference;
 import com.liferay.headless.delivery.dto.v1_0.CollectionConfig;
 import com.liferay.headless.delivery.dto.v1_0.CollectionViewport;
 import com.liferay.headless.delivery.dto.v1_0.CollectionViewportDefinition;
+import com.liferay.headless.delivery.dto.v1_0.EmptyCollectionConfig;
 import com.liferay.headless.delivery.dto.v1_0.PageCollectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
@@ -26,6 +27,7 @@ import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -70,6 +72,8 @@ public class CollectionLayoutStructureItemMapper
 						displayAllPages =
 							collectionStyledLayoutStructureItem.
 								isDisplayAllPages();
+						emptyCollectionConfig = _getEmptyCollectionConfig(
+							collectionStyledLayoutStructureItem);
 						listItemStyle =
 							collectionStyledLayoutStructureItem.
 								getListItemStyle();
@@ -210,6 +214,24 @@ public class CollectionLayoutStructureItemMapper
 			});
 
 		return collectionViewports.toArray(new CollectionViewport[0]);
+	}
+
+	private EmptyCollectionConfig _getEmptyCollectionConfig(
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem) {
+
+		EmptyCollectionOptions emptyCollectionOptions =
+			collectionStyledLayoutStructureItem.getEmptyCollectionOptions();
+
+		if (emptyCollectionOptions == null) {
+			return null;
+		}
+
+		return new EmptyCollectionConfig() {
+			{
+				setDisplayMessage(emptyCollectionOptions::isDisplayMessage);
+			}
+		};
 	}
 
 	private PageCollectionDefinition.PaginationType _getPaginationType(

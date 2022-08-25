@@ -732,7 +732,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	private Map<Locale, String> _descriptionMap;
 
-	@CacheField(propagateToInterface = true)
 	private Document _document;
 
 	private long _imagesFolderId;

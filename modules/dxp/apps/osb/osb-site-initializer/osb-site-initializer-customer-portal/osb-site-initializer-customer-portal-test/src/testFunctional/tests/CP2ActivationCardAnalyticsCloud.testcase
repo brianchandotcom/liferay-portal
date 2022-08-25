@@ -39,9 +39,28 @@ definition {
     @description = "Automation ID: LPS-150154 | Test Summary: Verify if the card has the following details - Not Activated (Link only visible to admin roles): Analytics Cloud product logo - Project Name - Start and End Date of Analytics Cloud Subscriptions - Activation form status"
     @priority = "5"
     test DetailsFromNotActivatedCard {
-        
-        // TODO LPS-150154 DetailsFromNotActivatedCard pending implementation
+        task ("Go to CP2.0 and join a project") {
+            ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
+            CustomerPortal.enterOnProject(
+                status = "Expired",
+                title = "Test Account Analytics Cloud");
+        }
+
+        task ("Go to the product activation page") {
+            CP2NavigationMenu.goToProductActivation();
+
+            CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
+        }
+
+        task ("View card details") {
+            CustomerPortal.viewActivationStatusCardValue(
+                subtitle = "Almost there! Setup Analytics Cloud by finishing the activation form",
+                productIcon = "analytics_icon",
+                project = "Test Account Analytics Cloud",
+                dates = "Invalid Date - Invalid Date",
+                status = "Not Activated");
+        }
     }
 
     @description = "Automation ID: LPS-150163 | Test Summary: Verify if the Activation form link works"

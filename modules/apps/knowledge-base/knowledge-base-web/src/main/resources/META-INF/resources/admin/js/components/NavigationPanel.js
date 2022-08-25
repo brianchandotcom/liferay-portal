@@ -12,7 +12,9 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import {TreeView as ClayTreeView} from '@clayui/core';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
 import {navigate} from 'frontend-js-web';
@@ -60,6 +62,20 @@ export default function NavigationPanel({items, selectedItemId}) {
 							{(item) => {
 								return (
 									<ClayTreeView.Item
+										actions={
+											item?.actions?.length && (
+												<ClayDropDownWithItems
+													items={item.actions}
+													trigger={
+														<ClayButtonWithIcon
+															displayType="unstyled"
+															small
+															symbol="ellipsis-v"
+														/>
+													}
+												/>
+											)
+										}
 										onClick={(event) => {
 											handleClickItem(event, item);
 										}}

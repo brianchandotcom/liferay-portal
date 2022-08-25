@@ -27,7 +27,9 @@
 </tr>
 <tr>
 	<td>GENERIC_TEXT_ORDER</td>
-	<td>xpath=(//*[text()='${key_textValue}'])[${index}]</td>
+<tr>
+	<td>TOGGLE_ICON</td>
+	<td>//*[contains(@class, 'toggle-switch-check')]</td>
 	<td></td>
 </tr>
 <tr>

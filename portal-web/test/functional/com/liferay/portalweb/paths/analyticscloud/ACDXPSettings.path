@@ -138,11 +138,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SYNC_ALL_CONTACTS_TOGGLE</td>
-	<td>//*[contains(@class, 'toggle-switch-check')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SYNC_ALL_CONTACTS_NUMBER</td>
 	<td>//*[contains(@class, 'toggle-switch-text')]</td>
 	<td></td>

@@ -198,7 +198,7 @@ definition {
 	macro syncContactData {
 		Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
 
-		Check.checkToggleSwitch(locator1 = "ACDXPSettings#SYNC_ALL_CONTACTS_TOGGLE");
+		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 
@@ -242,7 +242,7 @@ definition {
 
 		Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
 
-		Check.checkToggleSwitch(locator1 = "ACDXPSettings#SYNC_ALL_CONTACTS_TOGGLE");
+		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 

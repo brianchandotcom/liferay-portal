@@ -112,8 +112,57 @@ public class LayoutModelDocumentContributor
 			String content = StringPool.BLANK;
 
 			try {
-				content = _getLayoutContent(
-					layout, layoutPageTemplateStructure, locale);
+				if (!layout.isPrivateLayout()) {
+					content = _layoutCrawler.getLayoutContent(layout, locale);
+				}
+				else {
+					HttpServletRequest httpServletRequest = null;
+					HttpServletResponse httpServletResponse = null;
+
+					ServiceContext serviceContext =
+						ServiceContextThreadLocal.getServiceContext();
+
+					if ((serviceContext != null) &&
+						(serviceContext.getRequest() != null)) {
+
+						httpServletRequest =
+							DynamicServletRequest.addQueryString(
+								serviceContext.getRequest(),
+								"p_l_id=" + layout.getPlid(), false);
+
+						httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+						ThemeDisplay themeDisplay =
+							(ThemeDisplay)httpServletRequest.getAttribute(
+								WebKeys.THEME_DISPLAY);
+
+						themeDisplay.setLayout(layout);
+						themeDisplay.setPlid(layout.getPlid());
+
+						httpServletRequest.setAttribute(
+							WebKeys.THEME_DISPLAY, themeDisplay);
+
+						httpServletResponse = serviceContext.getResponse();
+					}
+
+					if ((httpServletRequest == null) ||
+						(httpServletResponse == null)) {
+
+						content = StringPool.BLANK;
+					}
+					else {
+						content =
+							LayoutPageTemplateStructureRenderUtil.
+								renderLayoutContent(
+									_fragmentRendererController,
+									httpServletRequest, httpServletResponse,
+									layoutPageTemplateStructure,
+									FragmentEntryLinkConstants.VIEW, locale,
+									_segmentsExperienceLocalService.
+										fetchDefaultSegmentsExperienceId(
+											layout.getPlid()));
+					}
+				}
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -134,54 +183,6 @@ public class LayoutModelDocumentContributor
 			document.addText(
 				Field.getLocalizedName(locale, Field.CONTENT), content);
 		}
-	}
-
-	private String _getLayoutContent(
-			Layout layout,
-			LayoutPageTemplateStructure layoutPageTemplateStructure,
-			Locale locale)
-		throws Exception {
-
-		if (!layout.isPrivateLayout()) {
-			return _layoutCrawler.getLayoutContent(layout, locale);
-		}
-
-		HttpServletRequest httpServletRequest = null;
-		HttpServletResponse httpServletResponse = null;
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if ((serviceContext != null) && (serviceContext.getRequest() != null)) {
-			httpServletRequest = DynamicServletRequest.addQueryString(
-				serviceContext.getRequest(), "p_l_id=" + layout.getPlid(),
-				false);
-
-			httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			themeDisplay.setLayout(layout);
-			themeDisplay.setPlid(layout.getPlid());
-
-			httpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, themeDisplay);
-
-			httpServletResponse = serviceContext.getResponse();
-		}
-
-		if ((httpServletRequest == null) || (httpServletResponse == null)) {
-			return StringPool.BLANK;
-		}
-
-		return LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
-			_fragmentRendererController, httpServletRequest,
-			httpServletResponse, layoutPageTemplateStructure,
-			FragmentEntryLinkConstants.VIEW, locale,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
 	}
 
 	private int _getStatus(Layout layout) {

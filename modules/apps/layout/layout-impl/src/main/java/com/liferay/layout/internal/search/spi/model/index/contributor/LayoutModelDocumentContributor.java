@@ -127,55 +127,50 @@ public class LayoutModelDocumentContributor
 			return;
 		}
 
+		HttpServletRequest httpServletRequest = null;
+		HttpServletResponse httpServletResponse = null;
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if ((serviceContext != null) && (serviceContext.getRequest() != null)) {
+			httpServletRequest = DynamicServletRequest.addQueryString(
+				serviceContext.getRequest(), "p_l_id=" + layout.getPlid(),
+				false);
+
+			httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			themeDisplay.setLayout(layout);
+			themeDisplay.setPlid(layout.getPlid());
+
+			httpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
+
+			httpServletResponse = serviceContext.getResponse();
+		}
+
+		if ((httpServletRequest == null) || (httpServletResponse == null)) {
+			return;
+		}
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
 		for (Locale locale : locales) {
 			String content = StringPool.BLANK;
 
 			try {
-				HttpServletRequest httpServletRequest = null;
-				HttpServletResponse httpServletResponse = null;
-
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
-
-				if ((serviceContext != null) &&
-					(serviceContext.getRequest() != null)) {
-
-					httpServletRequest = DynamicServletRequest.addQueryString(
-						serviceContext.getRequest(),
-						"p_l_id=" + layout.getPlid(), false);
-
-					httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
-
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					themeDisplay.setLayout(layout);
-					themeDisplay.setPlid(layout.getPlid());
-
-					httpServletRequest.setAttribute(
-						WebKeys.THEME_DISPLAY, themeDisplay);
-
-					httpServletResponse = serviceContext.getResponse();
-				}
-
-				if ((httpServletRequest == null) ||
-					(httpServletResponse == null)) {
-
-					content = StringPool.BLANK;
-				}
-				else {
-					content =
-						LayoutPageTemplateStructureRenderUtil.
-							renderLayoutContent(
-								_fragmentRendererController, httpServletRequest,
-								httpServletResponse,
-								layoutPageTemplateStructure,
-								FragmentEntryLinkConstants.VIEW, locale,
-								_segmentsExperienceLocalService.
-									fetchDefaultSegmentsExperienceId(
-										layout.getPlid()));
-				}
+				content =
+					LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
+						_fragmentRendererController, httpServletRequest,
+						httpServletResponse, layoutPageTemplateStructure,
+						FragmentEntryLinkConstants.VIEW, locale,
+						segmentsExperienceId);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

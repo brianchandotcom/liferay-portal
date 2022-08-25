@@ -49,9 +49,9 @@ public class OAuth2ProviderApplicationRedirect {
 
 		return Response.ok(
 			StringBundler.concat(
-				"<html><head><title>Liferay Authorization Redirect</title>",
-				"</head><body><script type=\"text/javascript\">",
-				"  window.postMessage({code: \"", code, "\", error: \"", error,
+				"<html><head><title>Liferay OAuth2 Redirect</title></head>",
+				"<body><script type=\"text/javascript\">window.postMessage(",
+				"{code: \"", code, "\", error: \"", error,
 				"\"}, document.location.href);</script></body></html>")
 		).build();
 	}

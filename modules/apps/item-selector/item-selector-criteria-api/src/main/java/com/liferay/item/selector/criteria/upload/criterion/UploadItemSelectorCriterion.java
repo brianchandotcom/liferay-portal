@@ -16,6 +16,7 @@ package com.liferay.item.selector.criteria.upload.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Ambrín Chaudhary
@@ -26,16 +27,19 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	public UploadItemSelectorCriterion(
-		String portletId, String url, String repositoryName) {
+		String mimeTypeRestriction, String portletId, String url,
+		String repositoryName) {
 
 		this(
-			portletId, url, repositoryName,
+			mimeTypeRestriction, portletId, url, repositoryName,
 			UploadServletRequestConfigurationHelperUtil.getMaxSize());
 	}
 
 	public UploadItemSelectorCriterion(
-		String portletId, String url, String repositoryName, long maxFileSize) {
+		String mimeTypeRestriction, String portletId, String url,
+		String repositoryName, long maxFileSize) {
 
+		_mimeTypeRestriction = mimeTypeRestriction;
 		_portletId = portletId;
 		_url = url;
 		_repositoryName = repositoryName;
@@ -59,6 +63,15 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	public long getMaxFileSize() {
 		return _maxFileSize;
+	}
+
+	@Override
+	public String getMimeTypeRestriction() {
+		if (Validator.isNull(_mimeTypeRestriction)) {
+			super.getMimeTypeRestriction();
+		}
+
+		return _mimeTypeRestriction;
 	}
 
 	public String getPortletId() {
@@ -95,6 +108,7 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	private String[] _extensions;
 	private long _maxFileSize;
+	private String _mimeTypeRestriction;
 	private String _portletId;
 	private String _repositoryName;
 	private String _url;

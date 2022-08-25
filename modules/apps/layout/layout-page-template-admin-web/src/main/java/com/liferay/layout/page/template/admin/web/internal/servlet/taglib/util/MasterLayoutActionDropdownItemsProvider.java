@@ -355,7 +355,7 @@ public class MasterLayoutActionDropdownItemsProvider {
 	private String _getItemSelectorURL() {
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+				null, LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
 				PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(

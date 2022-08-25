@@ -134,7 +134,7 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
-				WikiPortletKeys.WIKI,
+				null, WikiPortletKeys.WIKI,
 				PortletURLBuilder.create(
 					requestBackedPortletURLFactory.createActionURL(
 						WikiPortletKeys.WIKI)

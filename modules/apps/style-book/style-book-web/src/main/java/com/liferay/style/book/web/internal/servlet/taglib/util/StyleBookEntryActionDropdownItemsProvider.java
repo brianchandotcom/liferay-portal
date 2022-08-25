@@ -252,7 +252,7 @@ public class StyleBookEntryActionDropdownItemsProvider {
 	private String _getItemSelectorURL() {
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
-				StyleBookPortletKeys.STYLE_BOOK,
+				null, StyleBookPortletKeys.STYLE_BOOK,
 				PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(

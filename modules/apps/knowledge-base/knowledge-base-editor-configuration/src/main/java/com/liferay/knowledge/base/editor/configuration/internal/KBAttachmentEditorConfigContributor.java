@@ -153,7 +153,7 @@ public class KBAttachmentEditorConfigContributor
 
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
-				null,
+				null, null,
 				PortletURLBuilder.create(
 					requestBackedPortletURLFactory.createActionURL(
 						KBPortletKeys.KNOWLEDGE_BASE_ADMIN)

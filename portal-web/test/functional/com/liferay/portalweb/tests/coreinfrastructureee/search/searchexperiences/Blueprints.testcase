@@ -1856,7 +1856,9 @@ definition {
 			Click(
 				fieldName = "${field}",
 				locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELDS_MENU_ITEM");
+		}
 
+		for (var field : list "Description,ID,Author,Created,Modified") {
 			AssertElementNotPresent(
 				fieldName = "${field}",
 				locator1 = "Blueprints#BLUEPRINTS_ADMIN_FIELD");

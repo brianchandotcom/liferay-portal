@@ -66,15 +66,47 @@ definition {
     @description = "Automation ID: LPS-150163 | Test Summary: Verify if the Activation form link works"
     @priority = "5"
     test IfActivationFormLinkWorks {
-        
-        // TODO LPS-150163 IfActivationFormLinkWorks pending implementation
+        task ("Change the user role in the project") {
+            Accounts.openAccountsAdmin();
 
-    }
+            CustomerPortal.accountTableProject(title = "Test Account Analytics Cloud");
 
-    @description = "Automation ID: LPS-150370 | Test Summary: Verify the page subtitle: Almost there! Setup Analytics Cloud by finishing the activation form"
-    @priority = "3"
-    test PageSubtitleAlmostThereIsPresent {
-        // TODO LPS-150370 PageSubtitleAlmostThereIsPresent pending implementation
+            Accounts.addAssigneeToRoleViaUsersTab(
+                accountRoleTitle = "Account Administrator",
+                accountUserName = "Test Test");
+        }
+
+        task ("Go to CP2.0 and join a project") {
+            ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+            CustomerPortal.enterOnProject(
+                status = "Expired",
+                title = "Test Account Analytics Cloud");
+        }
+
+        task ("Going through onboarding") {
+            CustomerPortal.fullOnboardingFlow();
+        }
+
+        task ("Go to the product activation page") {
+            CP2NavigationMenu.goToProductActivation();
+
+            CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
+        }
+
+        task ("Assert that the Setup Analytics Cloud modal opens") {
+            CustomerPortal.clickOnFinishActivationButton();
+
+            AssertElementPresent(
+                modal = "Set up Analytics Cloud",
+                locator1 = "CustomerPortalSite#MODAL_PAGE");
+
+            Button.clickCancel();
+        }
+
+        task ("Delete the entries and objects created") {
+			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-003");
+		}
     }
 
     @description = "Automation ID: LPS-150371 | Test Summary: Verify if the card has the following details - In Progress: Analytics Cloud product logo - Project Name - Start and End Date of Analytics Cloud Subscriptions - Activation form status"

@@ -21,6 +21,8 @@ public class OpenSocialUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		removeExpandoData("OPEN_SOCIAL_DATA_");
+
 		removePortletData(
 			new String[] {"opensocial-portlet"}, null,
 			new String[] {

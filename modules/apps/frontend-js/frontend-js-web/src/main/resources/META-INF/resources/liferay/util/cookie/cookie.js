@@ -12,7 +12,7 @@
  * details.
  */
 
-import {CONSENT_TYPES, checkConsent} from './consent';
+import {CONSENT_TYPES, checkConsent} from '../consent';
 
 const generateCookie = (name, value, options = {}) => {
 	let cookie = `${name}=${value}`;

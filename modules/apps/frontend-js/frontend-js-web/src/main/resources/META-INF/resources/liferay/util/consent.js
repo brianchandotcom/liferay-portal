@@ -12,7 +12,7 @@
  * details.
  */
 
-import {getCookie} from './cookie';
+import {getCookie} from './cookie/cookie';
 
 export const CONSENT_TYPES = {
 	FUNCTIONAL: 'CONSENT_TYPE_FUNCTIONAL',

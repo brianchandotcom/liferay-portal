@@ -68,30 +68,20 @@ public class SXPElementLocalServiceTest {
 		Assert.assertEquals(
 			externalReferenceCode, sxpElement.getExternalReferenceCode());
 		Assert.assertEquals("1.0", sxpElement.getVersion());
-	}
 
-	@Test
-	public void testAddSXPElementWithDuplicateERCDifferentCompany()
-		throws Exception {
-
-		SXPElement sxpElement1 = _addSXPElement(RandomTestUtil.randomString());
+		// Duplicate external reference code in different company
 
 		User user = UserTestUtil.addCompanyAdminUser(
 			CompanyTestUtil.addCompany());
 
-		SXPElement sxpElement2 = _addSXPElement(
-			sxpElement1.getExternalReferenceCode(), user.getUserId());
+		SXPElement differentCompanySXPElement = _addSXPElement(
+			sxpElement.getExternalReferenceCode(), user.getUserId());
 
 		Assert.assertEquals(
-			sxpElement1.getExternalReferenceCode(),
-			sxpElement2.getExternalReferenceCode());
-	}
+			sxpElement.getExternalReferenceCode(),
+			differentCompanySXPElement.getExternalReferenceCode());
 
-	@Test
-	public void testAddSXPElementWithDuplicateERCSameCompany()
-		throws Exception {
-
-		SXPElement sxpElement = _addSXPElement(RandomTestUtil.randomString());
+		// Duplicate external reference code in same company
 
 		try {
 			_addSXPElement(sxpElement.getExternalReferenceCode());
@@ -104,11 +94,10 @@ public class SXPElementLocalServiceTest {
 			Assert.assertNotNull(
 				duplicateSXPElementExternalReferenceCodeException);
 		}
-	}
 
-	@Test
-	public void testAddSXPElementWithNullERC() throws Exception {
-		SXPElement sxpElement = _addSXPElement(null);
+		// Null external reference code
+
+		sxpElement = _addSXPElement(null);
 
 		Assert.assertNotNull(sxpElement.getExternalReferenceCode());
 		Assert.assertEquals("1.0", sxpElement.getVersion());

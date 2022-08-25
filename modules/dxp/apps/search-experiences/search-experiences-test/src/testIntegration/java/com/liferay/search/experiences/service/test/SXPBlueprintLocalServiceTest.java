@@ -68,32 +68,20 @@ public class SXPBlueprintLocalServiceTest {
 		Assert.assertEquals(
 			externalReferenceCode, sxpBlueprint.getExternalReferenceCode());
 		Assert.assertEquals("1.0", sxpBlueprint.getVersion());
-	}
 
-	@Test
-	public void testAddSXPBlueprintWithDuplicateERCDifferentCompany()
-		throws Exception {
-
-		SXPBlueprint sxpBlueprint1 = _addSXPBlueprint(
-			RandomTestUtil.randomString());
+		// Duplicate external reference code in different company
 
 		User user = UserTestUtil.addCompanyAdminUser(
 			CompanyTestUtil.addCompany());
 
-		SXPBlueprint sxpBlueprint2 = _addSXPBlueprint(
-			sxpBlueprint1.getExternalReferenceCode(), user.getUserId());
+		SXPBlueprint differentCompanySXPBlueprint = _addSXPBlueprint(
+			sxpBlueprint.getExternalReferenceCode(), user.getUserId());
 
 		Assert.assertEquals(
-			sxpBlueprint1.getExternalReferenceCode(),
-			sxpBlueprint2.getExternalReferenceCode());
-	}
+			sxpBlueprint.getExternalReferenceCode(),
+			differentCompanySXPBlueprint.getExternalReferenceCode());
 
-	@Test
-	public void testAddSXPBlueprintWithDuplicateERCSameCompany()
-		throws Exception {
-
-		SXPBlueprint sxpBlueprint = _addSXPBlueprint(
-			RandomTestUtil.randomString());
+		// Duplicate external reference code in same company
 
 		try {
 			_addSXPBlueprint(sxpBlueprint.getExternalReferenceCode());
@@ -106,11 +94,10 @@ public class SXPBlueprintLocalServiceTest {
 			Assert.assertNotNull(
 				duplicateSXPBlueprintExternalReferenceCodeException);
 		}
-	}
 
-	@Test
-	public void testAddSXPBlueprintWithNullERC() throws Exception {
-		SXPBlueprint sxpBlueprint = _addSXPBlueprint(null);
+		// Null external reference code
+
+		sxpBlueprint = _addSXPBlueprint(null);
 
 		Assert.assertNotNull(sxpBlueprint.getExternalReferenceCode());
 		Assert.assertEquals("1.0", sxpBlueprint.getVersion());

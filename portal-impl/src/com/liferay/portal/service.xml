@@ -142,7 +142,6 @@
 		<column name="mx" type="String" />
 		<column name="homeURL" type="String" />
 		<column name="logoId" type="long" />
-		<column name="system" type="boolean" />
 		<column name="maxUsers" type="int" />
 		<column name="active" type="boolean" />
 		<column name="name" type="String" />
@@ -165,9 +164,6 @@
 		</finder>
 		<finder name="LogoId" return-type="Company">
 			<finder-column name="logoId" />
-		</finder>
-		<finder name="System" return-type="Collection">
-			<finder-column name="system" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CompanyInfo" remote-service="false">

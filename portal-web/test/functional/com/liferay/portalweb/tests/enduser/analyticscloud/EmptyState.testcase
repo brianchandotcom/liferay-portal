@@ -980,7 +980,9 @@ definition {
 		}
 
 		task ("Navigate to AC Page > Overview > Displayed Assets") {
-			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", "Combined");
+
+			var dataSourceName = StringUtil.trim("${dataSourceName}");
 
 			ACNavigation.openItem(itemName = "Blogs AC Title - Site Name - ${dataSourceName}");
 		}

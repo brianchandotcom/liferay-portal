@@ -1,0 +1,77 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+    @description = "Automation ID: LPS-149746 | Test Summary: Verify if the team member table contains the following data (Name - Email - Support Seat - Role - Status)"
+    @priority = "4"
+    test AssertAllItemsInTheTable {
+
+        // TODO LPS-149746 archive pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-149748 | Test Summary: Verify if in the third column next to the 'Support Seat' heading the information icon has a tooltip"
+    @priority = "4"
+    test CanViewTooltipInSupportSeat {
+
+        // TODO LPS-149748 archive pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-149752 | Test Summary: Verify that in the table the guest user is below the current user and its status is displayed as invited"
+    @priority = "5"
+    test AssertTheStatusAndOrderOfTheGuestUser {
+
+        // TODO LPS-149752 archive pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-149754 | Test Summary: Verify that the text in the upper right corner is similar to 'Support Seats: 1 of 3 available', if the project has a support seats limit"
+    @priority = "4"
+    test CanViewTextIfProjectHasLimitOfSupportSeats {
+
+        // TODO LPS-149754 archive pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-149756 | Test Summary: Verify if the '+ Invite' button is visible for administrator roles only"
+    @priority = "5"
+    test CanViewTheInviteButton {
+
+        // TODO LPS-149756 archive pending implementation
+
+    }
+}

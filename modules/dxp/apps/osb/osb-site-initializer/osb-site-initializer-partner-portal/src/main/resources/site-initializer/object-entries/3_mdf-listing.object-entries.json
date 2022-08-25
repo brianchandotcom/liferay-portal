@@ -42,11 +42,15 @@
 		},
 		{
 			"externalReferenceCode": "PRMMDFC-011",
-			"label": "Reimpursement Claim(s)"
+			"label": "Reimbursement Claim(s)"
 		},
 		{
 			"externalReferenceCode": "PRMMDFC-012",
 			"label": "Date Submitted"
+		},
+		{
+			"externalReferenceCode": "PRMMDFC-013",
+			"label": "Last Modified"
 		}
 	],
 	"objectDefinitionName": "MDFListingColumn"

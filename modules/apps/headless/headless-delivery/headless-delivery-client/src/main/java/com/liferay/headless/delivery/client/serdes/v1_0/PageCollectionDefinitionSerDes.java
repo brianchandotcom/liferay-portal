@@ -119,6 +119,18 @@ public class PageCollectionDefinitionSerDes {
 			sb.append(pageCollectionDefinition.getDisplayAllPages());
 		}
 
+		if (pageCollectionDefinition.getEmptyCollectionConfig() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"emptyCollectionConfig\": ");
+
+			sb.append(
+				String.valueOf(
+					pageCollectionDefinition.getEmptyCollectionConfig()));
+		}
+
 		if (pageCollectionDefinition.getFragmentStyle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -336,6 +348,16 @@ public class PageCollectionDefinitionSerDes {
 				String.valueOf(pageCollectionDefinition.getDisplayAllPages()));
 		}
 
+		if (pageCollectionDefinition.getEmptyCollectionConfig() == null) {
+			map.put("emptyCollectionConfig", null);
+		}
+		else {
+			map.put(
+				"emptyCollectionConfig",
+				String.valueOf(
+					pageCollectionDefinition.getEmptyCollectionConfig()));
+		}
+
 		if (pageCollectionDefinition.getFragmentStyle() == null) {
 			map.put("fragmentStyle", null);
 		}
@@ -497,6 +519,15 @@ public class PageCollectionDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageCollectionDefinition.setDisplayAllPages(
 						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "emptyCollectionConfig")) {
+
+				if (jsonParserFieldValue != null) {
+					pageCollectionDefinition.setEmptyCollectionConfig(
+						EmptyCollectionConfigSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {

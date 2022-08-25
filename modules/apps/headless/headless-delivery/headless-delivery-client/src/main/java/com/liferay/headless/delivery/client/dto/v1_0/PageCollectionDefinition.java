@@ -122,6 +122,30 @@ public class PageCollectionDefinition implements Cloneable, Serializable {
 
 	protected Boolean displayAllPages;
 
+	public EmptyCollectionConfig getEmptyCollectionConfig() {
+		return emptyCollectionConfig;
+	}
+
+	public void setEmptyCollectionConfig(
+		EmptyCollectionConfig emptyCollectionConfig) {
+
+		this.emptyCollectionConfig = emptyCollectionConfig;
+	}
+
+	public void setEmptyCollectionConfig(
+		UnsafeSupplier<EmptyCollectionConfig, Exception>
+			emptyCollectionConfigUnsafeSupplier) {
+
+		try {
+			emptyCollectionConfig = emptyCollectionConfigUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected EmptyCollectionConfig emptyCollectionConfig;
+
 	public FragmentStyle getFragmentStyle() {
 		return fragmentStyle;
 	}

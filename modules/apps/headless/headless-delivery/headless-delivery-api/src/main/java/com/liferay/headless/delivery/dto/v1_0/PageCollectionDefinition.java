@@ -190,6 +190,38 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean displayAllPages;
 
+	@Schema
+	@Valid
+	public EmptyCollectionConfig getEmptyCollectionConfig() {
+		return emptyCollectionConfig;
+	}
+
+	public void setEmptyCollectionConfig(
+		EmptyCollectionConfig emptyCollectionConfig) {
+
+		this.emptyCollectionConfig = emptyCollectionConfig;
+	}
+
+	@JsonIgnore
+	public void setEmptyCollectionConfig(
+		UnsafeSupplier<EmptyCollectionConfig, Exception>
+			emptyCollectionConfigUnsafeSupplier) {
+
+		try {
+			emptyCollectionConfig = emptyCollectionConfigUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected EmptyCollectionConfig emptyCollectionConfig;
+
 	@Schema(description = "The fragment style of the page collection.")
 	@Valid
 	public FragmentStyle getFragmentStyle() {
@@ -638,6 +670,16 @@ public class PageCollectionDefinition implements Serializable {
 			sb.append("\"displayAllPages\": ");
 
 			sb.append(displayAllPages);
+		}
+
+		if (emptyCollectionConfig != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"emptyCollectionConfig\": ");
+
+			sb.append(String.valueOf(emptyCollectionConfig));
 		}
 
 		if (fragmentStyle != null) {

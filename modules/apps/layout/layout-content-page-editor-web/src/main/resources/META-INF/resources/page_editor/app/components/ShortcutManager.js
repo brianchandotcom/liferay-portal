@@ -34,10 +34,12 @@ import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
 import moveItem from '../thunks/moveItem';
 import redoThunk from '../thunks/redo';
+import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import undoThunk from '../thunks/undo';
 import canBeDuplicated from '../utils/canBeDuplicated';
 import canBeRemoved from '../utils/canBeRemoved';
 import canBeSaved from '../utils/canBeSaved';
+import hideProductMenuIfPresent from '../utils/hideProductMenuIfPresent';
 import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
 
 const ctrlOrMeta = (event) =>
@@ -71,6 +73,7 @@ export default function ShortcutManager() {
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 	const selectItem = useSelectItem();
 	const state = useSelector((state) => state);
+	const sidebarHidden = state.sidebar.hidden;
 	const widgets = useWidgets();
 
 	const {fragmentEntryLinks, layoutData, segmentsExperienceId} = state;
@@ -85,6 +88,10 @@ export default function ShortcutManager() {
 				selectItem,
 			})
 		);
+	};
+
+	const hideSidebar = () => {
+		dispatch(switchSidebarPanel({hidden: !sidebarHidden}));
 	};
 
 	const move = (event) => {
@@ -167,6 +174,16 @@ export default function ShortcutManager() {
 				),
 			isKeyCombination: (event) =>
 				ctrlOrMeta(event) && event.keyCode === D_KEYCODE,
+		},
+		hideSidebar: {
+			action: hideSidebar,
+			canBeExecuted: (event) =>
+				!isInteractiveElement(event.target) &&
+				!isWithinIframe() &&
+				!isEditingEditableField(),
+
+			isKeyCombination: (event) =>
+				ctrlOrMeta(event) && event.shiftKey && event.key === '.',
 		},
 		move: {
 			action: move,

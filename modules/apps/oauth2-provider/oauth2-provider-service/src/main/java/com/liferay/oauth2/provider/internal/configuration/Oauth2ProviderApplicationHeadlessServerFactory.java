@@ -44,7 +44,6 @@ import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -306,7 +305,7 @@ public class Oauth2ProviderApplicationHeadlessServerFactory {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private HashMap<String, String> _extensionProperties;
+	private Map<String, String> _extensionProperties;
 	private String _getConfigMapName;
 	private OAuth2Application _oAuth2Application;
 

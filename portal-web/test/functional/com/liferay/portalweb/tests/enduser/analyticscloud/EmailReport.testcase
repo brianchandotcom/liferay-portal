@@ -69,4 +69,43 @@ definition {
 		}
 	}
 
+    @description = "Story: LRAC-11663 | Automation ID: LRAC-11835 | Test Summary: Check that the Email Reports widget appears on the property settings page for all users"
+	@priority = "2"
+	test CheckEmailReportsAppearsForAllUsers {
+		var emailAddressList = "bryan.cheung@faro.io,michelle.hoshi@faro.io,corbin.murakami@faro.io";
+
+        task ("Sign in AC as Test Test user") {
+			ACUtils.launchAC();
+		}
+
+        for (var emailAddress : list "${emailAddressList}") {
+            task ("Sign in AC") {
+                ACWorkspace.signOut();
+
+                ACLogin.loginAs(emailAddress = "${emailAddress}");
+
+                ACWorkspace.openWorkspace();
+            }
+
+            task ("Go to property and Select the property you are using") {
+                ACNavigation.goToSettings();
+
+                ACSettings.goToProperties();
+
+                ACNavigation.openItem(itemName = "${assignedPropertyName}");
+            }
+
+            task ("Check that email report is disabled") {
+                ACUtils.viewGenericText(textValueList = "Email Reports: Disabled");
+            }
+
+            task ("Enable and configure email report frequency") {
+                ACEmailReport.enableEmailReport(frequency = "Daily");
+            }
+
+            task ("Check that email report has been enabled") {
+                ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
+            }
+        }
+	}
 }

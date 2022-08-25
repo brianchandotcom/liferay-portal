@@ -139,7 +139,7 @@ definition {
 
 		task ("Then popover mode is not present") {
 			AssertElementNotPresent(
-				key_title = "Step 1 of 2: Click the Button",
+				key_title = "",
 				locator1 = "Walkthrough#POPOVER_TITLE");
 		}
 
@@ -169,14 +169,10 @@ definition {
 				locator1 = "Walkthrough#POPOVER_TITLE");
 		}
 
-		task ("And When user signs out") {
-			User.logoutPG();
-		}
-
-		task ("And When user signs in") {
-			User.loginPG(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+		task ("And When user signs out and in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
 		}
 
 		task ("Then popover mode element is present on step 2") {

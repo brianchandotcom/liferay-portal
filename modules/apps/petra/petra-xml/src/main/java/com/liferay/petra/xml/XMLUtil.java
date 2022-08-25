@@ -14,6 +14,7 @@
 
 package com.liferay.petra.xml;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,7 +31,7 @@ public class XMLUtil {
 
 	public static String formatXML(Document document) {
 		try {
-			return document.formattedString(_XML_INDENT);
+			return document.formattedString(StringPool.DOUBLE_SPACE);
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);
@@ -55,7 +56,7 @@ public class XMLUtil {
 
 		try {
 			xml = StringUtil.replace(xml, "&#", "[$SPECIAL_CHARACTER$]");
-			xml = Dom4jUtil.toString(xml, _XML_INDENT);
+			xml = Dom4jUtil.toString(xml, StringPool.DOUBLE_SPACE);
 			xml = StringUtil.replace(xml, "[$SPECIAL_CHARACTER$]", "&#");
 
 			return xml;
@@ -103,7 +104,5 @@ public class XMLUtil {
 
 		return sb.toString();
 	}
-
-	private static final String _XML_INDENT = "  ";
 
 }

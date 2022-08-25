@@ -246,10 +246,10 @@ public class PortalK8sAgentImplTest {
 		Map<String, String> labels = objectMeta.getLabels();
 
 		Assert.assertEquals(
-			serviceId, labels.get("ext.lxc.liferay.com/serviceId"));
-		Assert.assertEquals(
 			TestPropsValues.COMPANY_WEB_ID,
 			labels.get("dxp.lxc.liferay.com/virtualInstanceId"));
+		Assert.assertEquals(
+			serviceId, labels.get("ext.lxc.liferay.com/serviceId"));
 		Assert.assertEquals(
 			"ext-init", labels.get("lxc.liferay.com/metadataType"));
 	}
@@ -269,14 +269,14 @@ public class PortalK8sAgentImplTest {
 				StringBundler.concat(
 					serviceId, "-", TestPropsValues.COMPANY_WEB_ID,
 					"-lxc-ext-provision-metadata")
+			).addToLabels(
+				"dxp.lxc.liferay.com/virtualInstanceId",
+				TestPropsValues.COMPANY_WEB_ID
 			).addToAnnotations(
 				"ext.lxc.liferay.com/domains",
 				serviceId.concat("-extproject.lfr.sh")
 			).addToAnnotations(
 				"ext.lxc.liferay.com/mainDomain", mainDomain
-			).addToLabels(
-				"dxp.lxc.liferay.com/virtualInstanceId",
-				TestPropsValues.COMPANY_WEB_ID
 			).addToLabels(
 				"ext.lxc.liferay.com/projectId", RandomTestUtil.randomString()
 			).addToLabels(

@@ -77,7 +77,7 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 
 				labels.clear();
 			},
-			_getConfigMapName(company.getWebId()));
+			_getConfigMapName(company));
 	}
 
 	@Override
@@ -96,8 +96,8 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 		_companyLocalService.forEachCompany(this::_synchronizeConfigMap);
 	}
 
-	private String _getConfigMapName(String webId) {
-		return webId.concat("-lxc-dxp-metadata");
+	private String _getConfigMapName(Company company) {
+		return company.getWebId() + "-lxc-dxp-metadata";
 	}
 
 	private void _synchronizeConfigMap(Company company) {
@@ -111,24 +111,24 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 		}
 
 		_portalK8sConfigMapModifier.modifyConfigMap(
-			model -> {
-				Map<String, String> data = model.data();
+			configMapModel -> {
+				Map<String, String> data = configMapModel.data();
 
-				data.put(
-					"com.liferay.lxc.dxp.mainDomain",
-					company.getVirtualHostname());
 				data.put(
 					"com.liferay.lxc.dxp.domains",
 					StringUtil.merge(virtualHostNames, StringPool.NEW_LINE));
+				data.put(
+					"com.liferay.lxc.dxp.mainDomain",
+					company.getVirtualHostname());
 
-				Map<String, String> labels = model.labels();
+				Map<String, String> labels = configMapModel.labels();
 
-				labels.put("lxc.liferay.com/metadataType", "dxp");
 				labels.put(
 					"dxp.lxc.liferay.com/virtualInstanceId",
 					company.getWebId());
+				labels.put("lxc.liferay.com/metadataType", "dxp");
 			},
-			_getConfigMapName(company.getWebId()));
+			_getConfigMapName(company));
 	}
 
 	@Reference

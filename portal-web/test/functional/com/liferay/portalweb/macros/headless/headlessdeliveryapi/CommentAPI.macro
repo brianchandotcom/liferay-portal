@@ -71,6 +71,40 @@ definition {
 		return "${curl}";
 	}
 
+	macro _curlBlogPostingCommentsByExternalReferenceCode {
+		Variables.assertDefined(parameterList = "${blogPostingERC},${blogPostingCommentERC}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings/by-external-reference-code/${blogPostingERC}/comments/by-external-reference-code/${blogPostingCommentERC} \
+			-u test@liferay.com:test \
+			-H accept: application/json
+		''';
+
+		return "${curl}";
+	}
+
+	macro _curlBlogPostingChildCommentsByExternalReferenceCode {
+		Variables.assertDefined(parameterList = "${blogPostingChildCommentERC},${blogPostingCommentERC}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/comments/by-external-reference-code/${blogPostingCommentERC}/comments/by-external-reference-code/${blogPostingChildCommentERC} \
+			-u test@liferay.com:test \
+			-H accept: application/json
+		''';
+
+		return "${curl}";
+	}
+
 	macro createCommentInBlogPosting {
 		Variables.assertDefined(parameterList = "${commentText}");
 
@@ -116,6 +150,22 @@ definition {
 
 		if (isSet(commentId) && !(isSet(blogPostingId))) {
 			var curl = CommentAPI._curlBlogPostingChildComments(commentId = "${commentId}");
+
+			var response = JSONCurlUtil.get("${curl}");
+		}
+
+		if (isSet(blogPostingERC) && (isSet(blogPostingCommentERC))) {
+			var curl = CommentAPI._curlBlogPostingCommentsByExternalReferenceCode(
+				blogPostingERC = "${blogPostingERC}",
+				blogPostingCommentERC = "${blogPostingCommentERC}");
+
+			var response = JSONCurlUtil.get("${curl}");
+		}
+
+		if (isSet(blogPostingChildCommentERC) && (isSet(blogPostingCommentERC))) {
+			var curl = CommentAPI._curlBlogPostingChildCommentsByExternalReferenceCode(
+				blogPostingChildCommentERC = "${blogPostingChildCommentERC}",
+				blogPostingCommentERC = "${blogPostingCommentERC}");
 
 			var response = JSONCurlUtil.get("${curl}");
 		}

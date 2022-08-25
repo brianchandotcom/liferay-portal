@@ -99,7 +99,7 @@ definition {
 			task ("Login at the second instance") {
 				User.firstLoginUI(
 					password = "test",
-					specificURL = "http://able.com:8080",
+					specificURL = "http://www.able.com:8080",
 					userEmailAddress = "test@able.com");
 			}
 		}
@@ -145,7 +145,7 @@ definition {
 			task ("Login at the second instance") {
 				User.firstLoginUI(
 					password = "test",
-					specificURL = "http://able.com:8080",
+					specificURL = "http://www.able.com:8080",
 					userEmailAddress = "test@able.com");
 			}
 		}

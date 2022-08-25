@@ -23,7 +23,7 @@ export default function TemplatesPanel({items}) {
 		<ClayTreeView defaultItems={items} nestedKey="children">
 			{(item) => {
 				return (
-					<ClayTreeView.Item className="pl-0">
+					<ClayTreeView.Item className="pl-1">
 						<ClayTreeView.ItemStack>
 							<ClayLink displayType="secondary" href={item.href}>
 								{item.name}

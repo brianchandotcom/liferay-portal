@@ -30,31 +30,6 @@ public class CPDefinitionLinkImpl extends CPDefinitionLinkBaseImpl {
 			getCPDefinitionId());
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public CPDefinition getCPDefinition1() {
-		return getCPDefinition();
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public CPDefinition getCPDefinition2() {
-		CProduct cProduct = getCProduct();
-
-		if (cProduct == null) {
-			return null;
-		}
-
-		return CPDefinitionLocalServiceUtil.fetchCPDefinition(
-			cProduct.getPublishedCPDefinitionId());
-	}
-
 	@Override
 	public CProduct getCProduct() {
 		return CProductLocalServiceUtil.fetchCProduct(getCProductId());

@@ -1319,6 +1319,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro updateOwnedAccountRole {
+		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+		LexiconEntry.openEntryMenu(rowEntry = "${accountRoleTitle}");
+
+		MenuItem.click(menuItem = "Edit");
+
+		PortletEntry.inputTitle(title = "${accountRoleTitleEdit}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro viewAccountDetails {
 		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
 

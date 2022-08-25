@@ -17,7 +17,7 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${key_value}");
+			value1 = "${key_name}");
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
@@ -26,6 +26,14 @@ definition {
 		Click(
 			key_projectName = "${routineName}",
 			locator1 = "Testray#PROJECT_NAME");
+	}
+
+	macro selectOptionDropdownRoutine {
+		Click(locator1 = "TestrayRoutines#DROPDOWN_ROUTINE");
+
+		MenuItem.clickNoError(menuItem = "${menuItem}");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro typeRoutineField {

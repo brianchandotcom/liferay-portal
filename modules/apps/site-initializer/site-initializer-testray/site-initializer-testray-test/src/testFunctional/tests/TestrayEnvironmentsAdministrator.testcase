@@ -18,6 +18,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		TestrayManage.deleteCategory();
+
 		Testray.tearDownCP();
 
 		if ("${testPortalInstance}" == "true") {
@@ -25,39 +27,86 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-157239 - Verify if As an Administrator I should be able to add and delete a Factor Category"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test AdminCanAddAndDeleteFactorCategory {
-
-		// TODO LPS-157239 AdminCanAddAndDeleteFactorCategory pending implementation
-
-	}
-
 	@description = "This is a test for LPS-157327 - Verify if As an Administrator I should be able to add and delete a Factor Option"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanAddAndDeleteFactorOption {
+		task ("Go to Categories on Manage Sidebar and Add Category") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		// TODO LPS-157327 AdminCanAddAndDeleteFactorOption pending implementation
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+
+			TestrayManage.addNewCategory(category = "Environments_2 Factor Category");
+		}
+
+		task ("Go to Options on Manage Sidebar and Add New Option") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Options");
+
+			TestrayManage.createNewOption(
+				categorie = "Environments_2 Factor Category",
+				key_value = "Environments_2 Factor Option");
+		}
+
+		task ("Delete Option, Go to Options and state if deleted") {
+			TestrayManage.deleteOption(nameOptions = "Environments_2 Factor Option");
+
+			TestrayManage.deleteCategory();
+
+			TestrayManage.assertOptionNotPresent(key_title = "Environments_2 Factor Option");
+
+			TestrayManage.assertNameNotPresent(name = "Environments_2 Factor Category");
+		}
 
 	}
 
 	@description = "This is a test for LPS-157231 - Verify if as an Administrator I am able to add Factor Categories"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanAddCategory {
+		task ("Go to Categories on Manage Sidebar") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		// TODO LPS-157231 AdminCanAddCategory pending implementation
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+		}
+
+		task ("Add a category and check if the category was created") {
+			TestrayManage.addNewCategory(category = "Environments_1 Category");
+
+			TestrayManage.assertName(name = "Environments_1 Category");
+		}
 
 	}
 
 	@description = "This is a test for LPS-157309 - Verify if as an Administrator I am able to add Options"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanAddOptions {
+		task ("Go to Categories on Manage Sidebar and Add Category") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		// TODO LPS-157309 AdminCanAddOptions pending implementation
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+
+			TestrayManage.addNewCategory(category = "Environments_2 Category");
+		}
+
+		task ("Go to Options on Manage Sidebar, Add Options and assert the new option has been created") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Options");
+
+			TestrayManage.createNewOption(
+				categorie = "Environments_2 Category",
+				key_value = "Environments_2 Option");
+
+			TestrayManage.assertName(name = "Environments_2 Option");
+
+			TestrayManage.assertName(name = "Environments_2 Category");
+		}
 
 	}
 
@@ -71,38 +120,116 @@ definition {
 	}
 
 	@description = "This is a test for LPS-157237 - Verify if as an Administrator I am able to delete Factor Categories"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanDeleteCategory {
+		task ("Go to Categories on Manage Sidebar") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		// TODO LPS-157237 AdminCanDeleteCategory pending implementation
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+		}
+
+		task ("Add a category, Delete it, and check if the category has been deleted") {
+			TestrayManage.addNewCategory(category = "Environments_4 Category");
+
+			TestrayManage.deleteCategory();
+
+			TestrayManage.assertNameNotPresent(name = "Environments_4 Category");
+		}
 
 	}
 
 	@description = "This is a test for LPS-157307 - Verify if as an Administrator I am able to edit Factor Categories"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanEditFactorCategories {
+		task ("Go to Categories on Manage Sidebar") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		// TODO LPS-157307 AdminCanEditFactorCategories pending implementation
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+		}
+
+		task ("Create the new category and then edit and state if the name has changed") {
+			TestrayManage.addNewCategory(category = "Environments_6 Category");
+
+			TestrayManage.editNameCategory(category = "Environments_6 Category Edited");
+
+			TestrayManage.assertName(name = "Environments_6 Category Edited");
+		}
 
 	}
 
 	@description = "This is a test for LPS-157326 - Verify if as an Administrator I am able to edit the Option by changing the Category"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanEditOptionChangingCategory {
+		task ("Go to Categories on Manage Sidebar and Add Category") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		// TODO LPS-157326 AdminCanEditOptionChangingCategory pending implementation
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+
+			TestrayManage.addNewCategory(category = "Environments_8 Category A");
+
+			TestrayManage.addNewCategory(category = "Environments_8 Category B");
+		}
+
+		task ("Go to Options on Manage Sidebar and Add New Option") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Options");
+
+			TestrayManage.createNewOption(
+				categorie = "Environments_8 Category A",
+				key_value = "Environments_8 Option");
+		}
+
+		task ("Check if you can edit the Option by changing the Category") {
+			TestrayManage.editNewOptionName(
+				key_value = "Environments_8 Option",
+				categorie = "Environments_8 Category B");
+
+			TestrayManage.assertNameCategoryInOptions(category = "Environments_8 Category B");
+
+			TestrayManage.assertCategorieNotPresent(key_title = "Environments_8 Category A");
+
+			TestrayManage.assertName(name = "Environments_8 Option");
+		}
 
 	}
 
 	@description = "This is a test for LPS-157323 - Verify if as an Administrator I am able to edit the Option Name"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanEditOptionName {
+		task ("Go to Categories on Manage Sidebar and Add Category") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		// TODO LPS-157323 AdminCanEditOptionName pending implementation
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+
+			TestrayManage.addNewCategory(category = "Environments_7 Category");
+		}
+
+		task ("Create the new Options and then edit and state if the name has changed") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Options");
+
+			TestrayManage.createNewOption(
+				categorie = "Environments_7 Category",
+				key_value = "Environments_7 Option");
+
+			TestrayManage.editNewOptionName(
+				key_value = "Environments_7 Option Edited",
+				categorie = "Environments_7 Category");
+
+			TestrayManage.assertName(name = "Environments_7 Option Edited");
+
+			TestrayManage.assertName(name = "Environments_7 Category");
+		}
 
 	}
 

@@ -25,6 +25,11 @@
 	<td>//*[contains(@class, 'bb-legend-item') and contains(., '${key_item}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DROPDOWN_ROUTINE</td>
+	<td>//td[contains(text(),'${key_title}')]/..//div[contains(@class, 'dropdown')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

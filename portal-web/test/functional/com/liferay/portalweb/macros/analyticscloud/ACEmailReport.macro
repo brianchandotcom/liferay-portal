@@ -8,4 +8,14 @@ definition {
 		Click(locator1 = "ACEmailReport#EMAIL_REPORT_WIDGET_ICON");
 	}
 
+    macro enableEmailReport {
+		ACEmailReport.accessEmailReportSettings();
+
+        ACEmailReport.enableEmailReportToggle();
+
+        ACUtils.selectGenericOption(optionValue = "${frequency}");
+
+        Button.clickSave();
+	}
+
 }

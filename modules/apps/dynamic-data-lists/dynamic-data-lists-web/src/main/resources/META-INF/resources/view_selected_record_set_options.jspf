@@ -19,7 +19,7 @@
 		<c:if test="<%= ddlDisplayContext.isShowConfigurationIcon() %>">
 			<div class="btn-group-item">
 				<liferay-ui:icon
-					cssClass="btn btn-link"
+					cssClass="lfr-action lfr-icon-action-configuration"
 					icon="cog"
 					label="<%= true %>"
 					markupView="lexicon"
@@ -45,7 +45,7 @@
 
 			<div class="btn-group-item">
 				<liferay-ui:icon
-					cssClass="btn btn-link"
+					cssClass="lfr-action lfr-icon-action-configuration"
 					icon="plus"
 					label="<%= true %>"
 					message="add-list"
@@ -70,7 +70,7 @@
 
 			<div class="btn-group-item">
 				<liferay-ui:icon
-					cssClass="btn btn-link"
+					cssClass="lfr-action lfr-icon-action-configuration"
 					icon="pencil"
 					label="<%= true %>"
 					message="edit-list"
@@ -102,7 +102,7 @@
 
 			<div class="btn-group-item">
 				<liferay-ui:icon
-					cssClass="btn btn-link"
+					cssClass="lfr-action lfr-icon-action-configuration"
 					icon="plus"
 					label="<%= true %>"
 					message="add-form-template"
@@ -163,7 +163,7 @@
 
 			<div class="btn-group-item">
 				<liferay-ui:icon
-					cssClass="btn btn-link"
+					cssClass="lfr-action lfr-icon-action-configuration"
 					icon="pencil"
 					label="<%= true %>"
 					message="edit-display-template"
@@ -197,7 +197,7 @@
 
 			<div class="btn-group-item">
 				<liferay-ui:icon
-					cssClass="btn btn-link"
+					cssClass="lfr-action lfr-icon-action-configuration"
 					icon="pencil"
 					label="<%= true %>"
 					message="edit-form-template"

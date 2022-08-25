@@ -14,6 +14,10 @@
 
 package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoValue;
@@ -92,6 +96,8 @@ public class UserSXPParameterContributorTest {
 		long[] segmentsEntryIds = _randomLongArray(2);
 
 		_userSXPParameterContributor = new UserSXPParameterContributor(
+			_mockAssetCategoryLocalService(Collections.emptyList()),
+			_mockAssetTagLocalService(Collections.emptyList()),
 			_mockExpandoColumnLocalService(Collections.emptyList()),
 			_mockExpandoValueLocalService(Collections.emptyList()), _language,
 			_portal, _mockRoleLocalService(Collections.emptyList()),
@@ -114,6 +120,94 @@ public class UserSXPParameterContributorTest {
 	@Test
 	public void testAge() throws Exception {
 		_testSXPParameter(value -> (int)value == 0, "user.age");
+	}
+
+	@Test
+	public void testAssetCategoryIds() throws Exception {
+		long[] assetCategoryIds = {
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong()
+		};
+
+		AssetCategory assetCategory1 = Mockito.mock(AssetCategory.class);
+
+		Mockito.doReturn(
+			assetCategoryIds[0]
+		).when(
+			assetCategory1
+		).getCategoryId();
+
+		AssetCategory assetCategory2 = Mockito.mock(AssetCategory.class);
+
+		Mockito.doReturn(
+			assetCategoryIds[1]
+		).when(
+			assetCategory2
+		).getCategoryId();
+
+		_userSXPParameterContributor = new UserSXPParameterContributor(
+			_mockAssetCategoryLocalService(
+				Arrays.asList(assetCategory1, assetCategory2)),
+			_mockAssetTagLocalService(Collections.emptyList()),
+			_mockExpandoColumnLocalService(Collections.emptyList()),
+			_mockExpandoValueLocalService(Collections.emptyList()), _language,
+			_portal, _mockRoleLocalService(Collections.emptyList()),
+			_mockSegmentsEntryRetriever(new long[0]),
+			_mockUserGroupGroupRoleLocalService(Collections.emptyList()),
+			_mockUserGroupLocalService(Collections.emptyList()),
+			_mockUserGroupRoleLocalService(Collections.emptyList()),
+			_mockUserLocalService());
+
+		_userSXPParameterContributor.contribute(
+			_exceptionListener, _searchContext, null, _sxpParameters);
+
+		Assert.assertTrue(
+			_exists(
+				"user.asset_category_ids",
+				value -> Arrays.equals(
+					ArrayUtils.toPrimitive((Long[])value), assetCategoryIds)));
+	}
+
+	@Test
+	public void testAssetTagNames() throws Exception {
+		String[] assetTagNames = {
+			RandomTestUtil.randomString(5), RandomTestUtil.randomString(5)
+		};
+
+		AssetTag assetTag1 = Mockito.mock(AssetTag.class);
+
+		Mockito.doReturn(
+			assetTagNames[0]
+		).when(
+			assetTag1
+		).getName();
+
+		AssetTag assetTag2 = Mockito.mock(AssetTag.class);
+
+		Mockito.doReturn(
+			assetTagNames[1]
+		).when(
+			assetTag2
+		).getName();
+
+		_userSXPParameterContributor = new UserSXPParameterContributor(
+			_mockAssetCategoryLocalService(Collections.emptyList()),
+			_mockAssetTagLocalService(Arrays.asList(assetTag1, assetTag2)),
+			_mockExpandoColumnLocalService(Collections.emptyList()),
+			_mockExpandoValueLocalService(Collections.emptyList()), _language,
+			_portal, _mockRoleLocalService(Collections.emptyList()),
+			_mockSegmentsEntryRetriever(new long[0]),
+			_mockUserGroupGroupRoleLocalService(Collections.emptyList()),
+			_mockUserGroupLocalService(Collections.emptyList()),
+			_mockUserGroupRoleLocalService(Collections.emptyList()),
+			_mockUserLocalService());
+
+		_userSXPParameterContributor.contribute(
+			_exceptionListener, _searchContext, null, _sxpParameters);
+
+		Assert.assertTrue(
+			_exists(
+				"user.asset_tag_names",
+				value -> Arrays.equals((String[])value, assetTagNames)));
 	}
 
 	@Test
@@ -182,6 +276,8 @@ public class UserSXPParameterContributorTest {
 		).getRoleId();
 
 		_userSXPParameterContributor = new UserSXPParameterContributor(
+			_mockAssetCategoryLocalService(Collections.emptyList()),
+			_mockAssetTagLocalService(Collections.emptyList()),
 			_mockExpandoColumnLocalService(Collections.emptyList()),
 			_mockExpandoValueLocalService(Collections.emptyList()), _language,
 			_portal, _mockRoleLocalService(Collections.emptyList()),
@@ -499,6 +595,92 @@ public class UserSXPParameterContributorTest {
 	}
 
 	@Test
+	public void testParentAssetCategoryIds() throws Exception {
+		long[] parentAssetCategoryIds = {
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong()
+		};
+
+		AssetCategory assetCategory1 = Mockito.mock(AssetCategory.class);
+
+		Mockito.doReturn(
+			parentAssetCategoryIds[0]
+		).when(
+			assetCategory1
+		).getParentCategoryId();
+
+		AssetCategory parentAssetCategory1 = Mockito.mock(AssetCategory.class);
+
+		Mockito.doReturn(
+			parentAssetCategory1
+		).when(
+			assetCategory1
+		).getParentCategory();
+
+		Mockito.doReturn(
+			parentAssetCategoryIds[0]
+		).when(
+			parentAssetCategory1
+		).getCategoryId();
+
+		Mockito.doReturn(
+			0L
+		).when(
+			parentAssetCategory1
+		).getParentCategoryId();
+
+		AssetCategory assetCategory2 = Mockito.mock(AssetCategory.class);
+
+		Mockito.doReturn(
+			parentAssetCategoryIds[1]
+		).when(
+			assetCategory2
+		).getParentCategoryId();
+
+		AssetCategory parentAssetCategory2 = Mockito.mock(AssetCategory.class);
+
+		Mockito.doReturn(
+			parentAssetCategory2
+		).when(
+			assetCategory2
+		).getParentCategory();
+
+		Mockito.doReturn(
+			parentAssetCategoryIds[1]
+		).when(
+			parentAssetCategory2
+		).getCategoryId();
+
+		Mockito.doReturn(
+			0L
+		).when(
+			parentAssetCategory1
+		).getParentCategoryId();
+
+		_userSXPParameterContributor = new UserSXPParameterContributor(
+			_mockAssetCategoryLocalService(
+				Arrays.asList(assetCategory1, assetCategory2)),
+			_mockAssetTagLocalService(Collections.emptyList()),
+			_mockExpandoColumnLocalService(Collections.emptyList()),
+			_mockExpandoValueLocalService(Collections.emptyList()), _language,
+			_portal, _mockRoleLocalService(Collections.emptyList()),
+			_mockSegmentsEntryRetriever(new long[0]),
+			_mockUserGroupGroupRoleLocalService(Collections.emptyList()),
+			_mockUserGroupLocalService(Collections.emptyList()),
+			_mockUserGroupRoleLocalService(Collections.emptyList()),
+			_mockUserLocalService());
+
+		_userSXPParameterContributor.contribute(
+			_exceptionListener, _searchContext, null, _sxpParameters);
+
+		Assert.assertTrue(
+			_exists(
+				"user.parent_asset_category_ids",
+				value -> Arrays.equals(
+					ArrayUtils.toPrimitive((Long[])value),
+					parentAssetCategoryIds)));
+	}
+
+	@Test
 	public void testRegularRoleIds() throws Exception {
 		_testSXPParameter(
 			value -> Arrays.equals(
@@ -641,6 +823,8 @@ public class UserSXPParameterContributorTest {
 		).getUserGroupId();
 
 		_userSXPParameterContributor = new UserSXPParameterContributor(
+			_mockAssetCategoryLocalService(Collections.emptyList()),
+			_mockAssetTagLocalService(Collections.emptyList()),
 			_mockExpandoColumnLocalService(Collections.emptyList()),
 			_mockExpandoValueLocalService(Collections.emptyList()), _language,
 			_portal, _mockRoleLocalService(Collections.emptyList()),
@@ -673,6 +857,40 @@ public class UserSXPParameterContributorTest {
 		}
 
 		return false;
+	}
+
+	private AssetCategoryLocalService _mockAssetCategoryLocalService(
+		List<AssetCategory> assetCategories) {
+
+		AssetCategoryLocalService assetCategoryLocalService = Mockito.mock(
+			AssetCategoryLocalService.class);
+
+		Mockito.doReturn(
+			assetCategories
+		).when(
+			assetCategoryLocalService
+		).getCategories(
+			Mockito.anyString(), Mockito.anyLong()
+		);
+
+		return assetCategoryLocalService;
+	}
+
+	private AssetTagLocalService _mockAssetTagLocalService(
+		List<AssetTag> assetTags) {
+
+		AssetTagLocalService assetTagLocalService = Mockito.mock(
+			AssetTagLocalService.class);
+
+		Mockito.doReturn(
+			assetTags
+		).when(
+			assetTagLocalService
+		).getTags(
+			Mockito.anyString(), Mockito.anyLong()
+		);
+
+		return assetTagLocalService;
 	}
 
 	private ExpandoColumn _mockExpandoColumn(
@@ -841,6 +1059,12 @@ public class UserSXPParameterContributorTest {
 		).getLastName();
 
 		Mockito.doReturn(
+			User.class.getName()
+		).when(
+			_user
+		).getModelClassName();
+
+		Mockito.doReturn(
 			false
 		).when(
 			_user
@@ -974,6 +1198,8 @@ public class UserSXPParameterContributorTest {
 		).getColumnId();
 
 		_userSXPParameterContributor = new UserSXPParameterContributor(
+			_mockAssetCategoryLocalService(Collections.emptyList()),
+			_mockAssetTagLocalService(Collections.emptyList()),
 			_mockExpandoColumnLocalService(
 				new ArrayList<ExpandoColumn>() {
 					{
@@ -1017,6 +1243,8 @@ public class UserSXPParameterContributorTest {
 		throws Exception {
 
 		_userSXPParameterContributor = new UserSXPParameterContributor(
+			_mockAssetCategoryLocalService(Collections.emptyList()),
+			_mockAssetTagLocalService(Collections.emptyList()),
 			_mockExpandoColumnLocalService(Collections.emptyList()),
 			_mockExpandoValueLocalService(Collections.emptyList()), _language,
 			_portal, _mockRoleLocalService(Collections.emptyList()),

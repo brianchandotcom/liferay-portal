@@ -87,4 +87,16 @@ definition {
 		return "${downloadedFileName}";
 	}
 
+	macro filterKeyTable {
+		var key_filterOption = "${filterOption}";
+
+		CustomerPortal.clickAtButton(text = "Filter");
+
+		CP2ActivationKeys.clickAtDropdownItem(key_dropdownItem = "${filterType}");
+		
+		Check.checkNotVisible(locator1 = "CP2ActivationKeys#FILTER_CHECKBOX");
+
+		CustomerPortal.clickAtButton(text = "Apply");
+	}
+
 }

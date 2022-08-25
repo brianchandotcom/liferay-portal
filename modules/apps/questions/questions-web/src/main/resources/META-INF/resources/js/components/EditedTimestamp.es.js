@@ -26,6 +26,10 @@ const getTextDelimeted = (text, date) => {
 };
 
 const EditedTimestamp = ({dateCreated, dateModified, operationText}) => {
+	if (!dateCreated || !dateModified) {
+		return null;
+	}
+
 	const selectedText = getTextDelimeted(
 		operationText,
 		dateToInternationalHuman(dateCreated, BCP47LanguageId)

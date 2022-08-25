@@ -26,10 +26,9 @@ import {
 	deleteMessageQuery,
 	markAsAnswerMessageBoardMessageQuery,
 } from '../utils/client.es';
-import lang from '../utils/lang.es';
-import {dateToInternationalHuman} from '../utils/utils.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 import Comments from './Comments.es';
+import EditedTimestamp from './EditedTimestamp.es';
 import Link from './Link.es';
 import Modal from './Modal.es';
 import Rating from './Rating.es';
@@ -107,12 +106,13 @@ export default withRouter(
 							)}
 
 							<span className="text-secondary">
-								{lang.sub(Liferay.Language.get('answered-x'), [
-									`- ${dateToInternationalHuman(
-										answer.dateCreated,
-										Liferay.ThemeDisplay.getBCP47LanguageId()
-									)}`,
-								])}
+								<EditedTimestamp
+									dateCreated={answer.dateCreated}
+									dateModified={answer.dateModified}
+									operationText={Liferay.Language.get(
+										'answered'
+									)}
+								/>
 							</span>
 
 							{answer.status && answer.status !== 'approved' && (

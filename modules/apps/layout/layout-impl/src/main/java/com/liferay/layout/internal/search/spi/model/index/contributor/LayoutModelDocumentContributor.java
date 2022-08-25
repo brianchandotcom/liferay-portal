@@ -138,18 +138,6 @@ public class LayoutModelDocumentContributor
 				serviceContext.getRequest(), "p_l_id=" + layout.getPlid(),
 				false);
 
-			httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			themeDisplay.setLayout(layout);
-			themeDisplay.setPlid(layout.getPlid());
-
-			httpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, themeDisplay);
-
 			httpServletResponse = serviceContext.getResponse();
 		}
 
@@ -157,28 +145,57 @@ public class LayoutModelDocumentContributor
 			return;
 		}
 
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
+		Layout originalRequestLayout = (Layout)httpServletRequest.getAttribute(
+			WebKeys.LAYOUT);
 
-		for (Locale locale : locales) {
-			String content = StringPool.BLANK;
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			try {
-				content =
-					LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
-						_fragmentRendererController, httpServletRequest,
-						httpServletResponse, layoutPageTemplateStructure,
-						FragmentEntryLinkConstants.VIEW, locale,
-						segmentsExperienceId);
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to get layout content", exception);
+		Layout originalThemeDisplayLayout = themeDisplay.getLayout();
+		long originalThemeDisplayPlid = themeDisplay.getPlid();
+
+		try {
+			httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+			themeDisplay.setLayout(layout);
+			themeDisplay.setPlid(layout.getPlid());
+
+			httpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
+
+			long segmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(layout.getPlid());
+
+			for (Locale locale : locales) {
+				String content = StringPool.BLANK;
+
+				try {
+					content =
+						LayoutPageTemplateStructureRenderUtil.
+							renderLayoutContent(
+								_fragmentRendererController, httpServletRequest,
+								httpServletResponse,
+								layoutPageTemplateStructure,
+								FragmentEntryLinkConstants.VIEW, locale,
+								segmentsExperienceId);
 				}
-			}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to get layout content", exception);
+					}
+				}
 
-			_addLocalizedContentField(content, document, locale);
+				_addLocalizedContentField(content, document, locale);
+			}
+		}
+		finally {
+			httpServletRequest.setAttribute(
+				WebKeys.LAYOUT, originalRequestLayout);
+
+			themeDisplay.setLayout(originalThemeDisplayLayout);
+			themeDisplay.setPlid(originalThemeDisplayPlid);
 		}
 	}
 

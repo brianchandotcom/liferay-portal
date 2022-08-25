@@ -134,6 +134,9 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 					Map<String, String> labels = configMapModel.labels();
 
 					labels.put(
+						"dxp.lxc.liferay.com/virtualInstanceId",
+						company.getWebId());
+					labels.put(
 						"ext.lxc.liferay.com/projectId",
 						GetterUtil.getString(
 							properties.get("ext.lxc.liferay.com.projectId")));
@@ -149,9 +152,6 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 						"ext.lxc.liferay.com/serviceUid",
 						GetterUtil.getString(
 							properties.get("ext.lxc.liferay.com.serviceUid")));
-					labels.put(
-						"dxp.lxc.liferay.com/virtualInstanceId",
-						company.getWebId());
 					labels.put("lxc.liferay.com/metadataType", "ext-init");
 				},
 				_configMapName);

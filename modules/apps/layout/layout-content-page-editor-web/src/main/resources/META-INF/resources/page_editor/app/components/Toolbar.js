@@ -33,12 +33,11 @@ import {useEditableProcessorUniqueId} from '../contexts/EditableProcessorContext
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectCanPublish from '../selectors/selectCanPublish';
 import redo from '../thunks/redo';
-import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import undo from '../thunks/undo';
 import {useDropClear} from '../utils/drag-and-drop/useDragAndDrop';
-import hideProductMenuIfPresent from '../utils/hideProductMenuIfPresent';
 import EditModeSelector from './EditModeSelector';
 import ExperimentsLabel from './ExperimentsLabel';
+import HideSidebarButton from './HideSidebarButton';
 import NetworkStatusBar from './NetworkStatusBar';
 import PreviewModal from './PreviewModal';
 import PublishButton from './PublishButton';
@@ -63,8 +62,6 @@ function ToolbarBody({className}) {
 	const canPublish = selectCanPublish(store);
 
 	const [publishPending, setPublishPending] = useState(false);
-
-	const sidebarHidden = useSelector((state) => state.sidebar.hidden);
 
 	const {
 		network,
@@ -292,21 +289,7 @@ function ToolbarBody({className}) {
 					<ul className="navbar-nav">
 						{Liferay.FeatureFlags['LPS-153452'] ? (
 							<li className="nav-item">
-								<ClayButtonWithIcon
-									className="btn btn-secondary"
-									displayType="secondary"
-									onClick={() =>
-										switchSidebarPanel({
-											hidden: !sidebarHidden,
-										})
-									}
-									small
-									symbol={sidebarHidden ? 'hidden' : 'view'}
-									title={Liferay.Language.get('preview')}
-									type="button"
-								>
-									{Liferay.Language.get('preview')}
-								</ClayButtonWithIcon>
+								<HideSidebarButton />
 							</li>
 						) : (
 							<li className="nav-item">

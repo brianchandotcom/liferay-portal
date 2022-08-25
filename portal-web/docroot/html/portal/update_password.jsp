@@ -30,10 +30,12 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 }
 
 String titlePage = (String)request.getAttribute(WebKeys.TITLE_SET_PASSWORD);
+boolean showCancelButton = false;
+
 if (Validator.isNull(titlePage)) {
 	titlePage = "change-password";
+	showCancelButton = true;
 }
-
 %>
 
 <div class="sheet sheet-lg">
@@ -199,7 +201,9 @@ if (Validator.isNull(titlePage)) {
 					<aui:button-row>
 						<aui:button type="submit" />
 
-						<aui:button href='<%= themeDisplay.getPathMain() + "/portal/logout" %>' type="cancel" />
+						<c:if test="<%= showCancelButton %>">
+							<aui:button href='<%= themeDisplay.getPathMain() + "/portal/logout" %>' type="cancel" />
+						</c:if>
 					</aui:button-row>
 				</aui:form>
 			</c:otherwise>

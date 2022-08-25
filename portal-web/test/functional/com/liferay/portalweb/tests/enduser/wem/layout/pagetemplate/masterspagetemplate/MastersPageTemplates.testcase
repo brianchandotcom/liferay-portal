@@ -284,7 +284,7 @@ definition {
 				key_masterLayoutName = "Custom Masters Page Template",
 				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
 
-			AssertElementNotPresent(
+			AssertNotVisible(
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 
@@ -431,7 +431,7 @@ definition {
 				key_masterLayoutName = "Custom Masters Page Template",
 				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
 
-			AssertElementNotPresent(
+			AssertNotVisible(
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 
@@ -625,7 +625,7 @@ definition {
 				key_masterLayoutName = "Custom Masters Page Template",
 				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
 
-			AssertElementNotPresent(
+			AssertNotVisible(
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 
@@ -764,7 +764,7 @@ definition {
 				key_masterLayoutName = "Custom Masters Page Template",
 				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
 
-			AssertElementNotPresent(
+			AssertNotVisible(
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 
@@ -911,7 +911,7 @@ definition {
 				key_masterLayoutName = "Custom Masters Page Template",
 				locator1 = "PagesAdmin#MASTER_LAYOUT_NAME");
 
-			AssertElementNotPresent(
+			AssertNotVisible(
 				key_sectionTitle = "Theme",
 				locator1 = "PagesAdmin#SECTION_TITLE");
 

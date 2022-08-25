@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>AB_TEST_SIDE_BAR</td>
-	<td>//*[contains(@class, 'sidebar sidebar-light sidenav-menu sidebar-sm')]//*[text() ='A/B Test']</td>
+	<td>//div[contains(@class,'sidebar') and descendant::*[contains(.,'A/B Test')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>HIDE_AB_TEST_BUTTON</td>
-	<td>//div[contains(@class,'sidebar') and descendant::span[contains(.,'A/B Test')]] //a[contains(.,'Do not show me this again')]</td>
+	<td>//div[contains(@class,'sidebar') and descendant::*[contains(.,'A/B Test')]] //a[contains(.,'Do not show me this again')]</td>
 	<td></td>
 </tr>
 <tr>

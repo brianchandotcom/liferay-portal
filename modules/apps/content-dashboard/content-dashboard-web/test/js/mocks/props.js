@@ -13,9 +13,22 @@
  */
 
 export const mockedProps = {
+	allVersions: [],
 	classPK: '38070',
 	createDate: '2020-07-27T10:50:55.19',
 	languageTag: 'en',
+	latestVersions: [
+		{
+			statusLabel: 'Approved',
+			statusStyle: 'success',
+			version: 1.6,
+		},
+		{
+			statusLabel: 'Draft',
+			statusStyle: 'secondary',
+			version: 1.7,
+		},
+	],
 	modifiedDate: '2020-07-27T10:56:56.027',
 	specificFields: {
 		'display-date': {
@@ -48,18 +61,6 @@ export const mockedProps = {
 		url: '',
 		userId: 20126,
 	},
-	versions: [
-		{
-			statusLabel: 'Approved',
-			statusStyle: 'success',
-			version: 1.6,
-		},
-		{
-			statusLabel: 'Draft',
-			statusStyle: 'secondary',
-			version: 1.7,
-		},
-	],
 	viewURLs: [
 		{
 			default: false,

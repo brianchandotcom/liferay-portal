@@ -315,9 +315,11 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		JSONObject expectedVersionJSONObject = version.toJSONObject();
 
-		JSONArray versionsJSONArray = jsonObject.getJSONArray("versions");
+		JSONArray latestVersionsJSONArray = jsonObject.getJSONArray(
+			"latestVersions");
 
-		JSONObject actualVersionJSONObject = versionsJSONArray.getJSONObject(0);
+		JSONObject actualVersionJSONObject =
+			latestVersionsJSONArray.getJSONObject(0);
 
 		Assert.assertEquals(
 			expectedVersionJSONObject.toString(),

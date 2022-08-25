@@ -14,6 +14,8 @@
 
 package com.liferay.account.admin.web.internal.servlet.taglib.util;
 
+import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
+import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountPortletKeys;
@@ -43,12 +45,13 @@ import javax.servlet.http.HttpServletRequest;
 public class AccountUserActionDropdownItemsProvider {
 
 	public AccountUserActionDropdownItemsProvider(
-		long accountEntryId, long accountUserId,
+		AccountEntryDisplay accountEntryDisplay,
+		AccountUserDisplay accountUserDisplay,
 		PermissionChecker permissionChecker, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
-		_accountEntryId = accountEntryId;
-		_accountUserId = accountUserId;
+		_accountEntryDisplay = accountEntryDisplay;
+		_accountUserDisplay = accountUserDisplay;
 		_permissionChecker = permissionChecker;
 		_renderResponse = renderResponse;
 
@@ -82,7 +85,7 @@ public class AccountUserActionDropdownItemsProvider {
 					).setBackURL(
 						_themeDisplay.getURLCurrent()
 					).setParameter(
-						"p_u_i_d", _accountUserId
+						"p_u_i_d", _accountUserDisplay.getUserId()
 					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "edit"));
@@ -90,10 +93,12 @@ public class AccountUserActionDropdownItemsProvider {
 		).add(
 			() ->
 				AccountEntryPermission.contains(
-					_permissionChecker, _accountEntryId,
+					_permissionChecker,
+					_accountEntryDisplay.getAccountEntryId(),
 					ActionKeys.MANAGE_USERS) &&
 				AccountEntryPermission.contains(
-					_permissionChecker, _accountEntryId,
+					_permissionChecker,
+					_accountEntryDisplay.getAccountEntryId(),
 					AccountActionKeys.VIEW_ACCOUNT_ROLES),
 			dropdownItem -> {
 				dropdownItem.putData("action", "assignRoleAccountUsers");
@@ -106,9 +111,10 @@ public class AccountUserActionDropdownItemsProvider {
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).setParameter(
-						"accountEntryId", _accountEntryId
+						"accountEntryId",
+						_accountEntryDisplay.getAccountEntryId()
 					).setParameter(
-						"accountUserIds", _accountUserId
+						"accountUserIds", _accountUserDisplay.getUserId()
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildString());
@@ -121,16 +127,18 @@ public class AccountUserActionDropdownItemsProvider {
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).setParameter(
-						"accountEntryId", _accountEntryId
+						"accountEntryId",
+						_accountEntryDisplay.getAccountEntryId()
 					).setParameter(
-						"accountUserId", _accountUserId
+						"accountUserId", _accountUserDisplay.getUserId()
 					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "assign-roles"));
 			}
 		).add(
 			() -> AccountEntryPermission.contains(
-				_permissionChecker, _accountEntryId, ActionKeys.MANAGE_USERS),
+				_permissionChecker, _accountEntryDisplay.getAccountEntryId(),
+				ActionKeys.MANAGE_USERS),
 			dropdownItem -> {
 				dropdownItem.putData("action", "removeAccountUsers");
 				dropdownItem.putData(
@@ -142,9 +150,10 @@ public class AccountUserActionDropdownItemsProvider {
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).setParameter(
-						"accountEntryId", _accountEntryId
+						"accountEntryId",
+						_accountEntryDisplay.getAccountEntryId()
 					).setParameter(
-						"accountUserIds", _accountUserId
+						"accountUserIds", _accountUserDisplay.getUserId()
 					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "remove"));
@@ -152,8 +161,8 @@ public class AccountUserActionDropdownItemsProvider {
 		).build();
 	}
 
-	private final long _accountEntryId;
-	private final long _accountUserId;
+	private final AccountEntryDisplay _accountEntryDisplay;
+	private final AccountUserDisplay _accountUserDisplay;
 	private final HttpServletRequest _httpServletRequest;
 	private final PermissionChecker _permissionChecker;
 	private final RenderResponse _renderResponse;

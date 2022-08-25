@@ -1,0 +1,72 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.release = "false";
+	property analytics.cloud.upstream = "true";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+        task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownAC();
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@description = "Story: LRAC-11663 | Automation ID: LRAC-11836 | Test Summary: Check that the Email Reports widget does not appear on the property settings page when the property is not synced with any site"
+	@priority = "2"
+	test CheckEmailReportWidgetDisabledWhenPropertyNotSyncedWithSite {
+		var propertyName = "Email Report Test";
+
+		task ("Sign in AC") {
+			ACUtils.launchAC();
+		}
+
+		task ("Go to property and add new property") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACProperties.addNewProperty(propertyName = "${propertyName}");
+		}
+
+        task ("Check that the Email Reports field appears and has the status disabled") {
+			ACUtils.viewGenericText(textValueList = "Email Reports: Disabled");
+		}
+
+        task ("Check that the Email Reports widget icon is disabled if the property is not synced") {
+            AssertVisible(
+				key_text = "",
+				locator1 = "Button#ANY_DISABLED");
+		}
+	}
+
+}

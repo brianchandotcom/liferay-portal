@@ -44,5 +44,10 @@ export default function TemplatesPanel({items}) {
 }
 
 TemplatesPanel.propTypes = {
-	items: PropTypes.array,
+	items: PropTypes.arrayOf(
+		PropTypes.shape({
+			href: PropTypes.string.isRequired,
+			name: PropTypes.string.isRequired,
+		})
+	),
 };

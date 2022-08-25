@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.model.cache.CacheField;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -203,13 +202,19 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			JournalArticleLocalServiceUtil.getArticleLocalizationLanguageIds(
 				getId()));
 
-		Document document = getDocument();
+		DDMStructure ddmStructure = getDDMStructure();
 
-		if (document != null) {
-			for (String availableLanguageId :
-					LocalizationUtil.getAvailableLanguageIds(document)) {
+		if (ddmStructure == null) {
+			return availableLanguageIds.toArray(new String[0]);
+		}
 
-				availableLanguageIds.add(availableLanguageId);
+		DDMFormValues ddmFormValues = DDMFieldLocalServiceUtil.getDDMFormValues(
+			ddmStructure.getDDMForm(), getId());
+
+		if (ddmFormValues != null) {
+			for (Locale availableLocale : ddmFormValues.getAvailableLocales()) {
+				availableLanguageIds.add(
+					LocaleUtil.toLanguageId(availableLocale));
 			}
 		}
 
@@ -731,9 +736,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	private static volatile JournalConverter _journalConverter;
 
 	private Map<Locale, String> _descriptionMap;
-
 	private Document _document;
-
 	private long _imagesFolderId;
 	private String _smallImageType;
 	private Map<Locale, String> _titleMap;

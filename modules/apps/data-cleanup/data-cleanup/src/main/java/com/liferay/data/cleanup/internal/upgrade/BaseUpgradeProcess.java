@@ -22,10 +22,40 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
+
 /**
  * @author Alberto Chaparro
  */
 public abstract class BaseUpgradeProcess extends UpgradeProcess {
+
+	protected void removeExpandoData(String expandoName) throws Exception {
+		String[] tableIds;
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select tableId from ExpandoTable where name = ?")) {
+
+			preparedStatement.setString(1, expandoName);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				ArrayList<String> ids = new ArrayList<>();
+
+				while (resultSet.next()) {
+					ids.add(resultSet.getString("tableId"));
+				}
+
+				tableIds = ids.toArray(new String[0]);
+			}
+		}
+
+		_deleteFrom("ExpandoColumn", "tableId", tableIds);
+
+		_deleteFrom("ExpandoRow", "tableId", tableIds);
+
+		_deleteFrom("ExpandoTable", "tableId", tableIds);
+
+		_deleteFrom("ExpandoValue", "tableId", tableIds);
+	}
 
 	protected void removePortletData(
 			String[] bundleSymbolicNames, String[] oldPortletIds,

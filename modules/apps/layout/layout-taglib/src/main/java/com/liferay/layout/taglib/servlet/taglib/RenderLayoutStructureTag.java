@@ -704,6 +704,14 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			EmptyCollectionOptions emptyCollectionOptions, JspWriter jspWriter)
 		throws Exception {
 
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-160243")) &&
+			(emptyCollectionOptions != null) &&
+			!GetterUtil.getBoolean(
+				emptyCollectionOptions.isDisplayMessage(), true)) {
+
+			return;
+		}
+
 		String message = LanguageUtil.get(getRequest(), "no-results-found");
 
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-160789"))) {

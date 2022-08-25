@@ -35,7 +35,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"enableEmailDomainValidation",
+								"enableEmailDomainValidation", "customTLDs",
 								"blockedEmailDomains"
 							}
 						)

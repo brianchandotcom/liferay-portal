@@ -172,6 +172,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -258,10 +259,36 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			Locale locale, String firstName, String middleName, String lastName)
 		throws PortalException {
 
+		return addDefaultAdminUser(
+			companyId, screenName, emailAddress, locale, firstName, middleName,
+			lastName, null);
+	}
+
+	/**
+	 * Adds a default admin user for the company.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  screenName the user's screen name
+	 * @param  emailAddress the user's email address
+	 * @param  locale the user's locale
+	 * @param  firstName the user's first name
+	 * @param  middleName the user's middle name
+	 * @param  lastName the user's last name
+	 * @param  password1 the password of the user
+	 * @return the new default admin user
+	 */
+	public User addDefaultAdminUser(
+			long companyId, String screenName, String emailAddress,
+			Locale locale, String firstName, String middleName, String lastName,
+			String password1)
+		throws PortalException {
+
 		long creatorUserId = 0;
 		boolean autoPassword = false;
 
-		String password1 = PropsValues.DEFAULT_ADMIN_PASSWORD;
+		if (Validator.isNull(password1)) {
+			password1 = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD);
+		}
 
 		String password2 = password1;
 

@@ -190,6 +190,11 @@ public class DownstreamBuild extends BaseBuild {
 			}
 		}
 
+		if (result.equals("MISSING")) {
+			messageElement.add(
+				Dom4JUtil.toCodeSnippetElement("Build is missing"));
+		}
+
 		if (result.equals("UNSTABLE")) {
 			List<Element> failureElements = getTestResultGitHubElements(
 				getUniqueFailureTestResults());

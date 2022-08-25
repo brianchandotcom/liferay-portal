@@ -2060,15 +2060,33 @@ public abstract class BaseBuild implements Build {
 						JSONObject queueItemJSONObject =
 							getQueueItemJSONObject();
 
-						if (status.equals("starting") &&
-							(queueItemJSONObject != null)) {
-
+						if (queueItemJSONObject != null) {
 							setStatus("queued");
 						}
-						else if (status.equals("queued") &&
-								 (queueItemJSONObject == null)) {
+						else if (status.equals("queued") ||
+								 status.equals("starting")) {
 
 							setStatus("missing");
+						}
+						else {
+							if (_reinvocationCount >= REINVOCATIONS_SIZE_MAX) {
+								setResult("MISSING");
+
+								return;
+							}
+
+							try {
+								JenkinsResultsParserUtil.toString(
+									JenkinsResultsParserUtil.getLocalURL(
+										getInvocationURL()));
+							}
+							catch (IOException ioException) {
+								throw new RuntimeException(ioException);
+							}
+
+							setStatus("starting");
+
+							_reinvocationCount++;
 						}
 					}
 				}
@@ -4214,6 +4232,7 @@ public abstract class BaseBuild implements Build {
 	private Map<String, String> _parameters = new HashMap<>();
 	private final Build _parentBuild;
 	private String _previousStatus;
+	private int _reinvocationCount;
 	private String _status;
 	private Map<String, TestClassResult> _testClassResults;
 	private List<URL> _testrayAttachmentURLs;

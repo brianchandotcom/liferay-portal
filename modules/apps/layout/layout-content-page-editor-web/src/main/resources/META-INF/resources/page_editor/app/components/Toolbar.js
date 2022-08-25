@@ -33,6 +33,7 @@ import {useEditableProcessorUniqueId} from '../contexts/EditableProcessorContext
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectCanPublish from '../selectors/selectCanPublish';
 import redo from '../thunks/redo';
+import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import undo from '../thunks/undo';
 import {useDropClear} from '../utils/drag-and-drop/useDragAndDrop';
 import hideProductMenuIfPresent from '../utils/hideProductMenuIfPresent';
@@ -294,16 +295,11 @@ function ToolbarBody({className}) {
 								<ClayButtonWithIcon
 									className="btn btn-secondary"
 									displayType="secondary"
-									onClick={() => {
-										hideProductMenuIfPresent({
-											onHide: () =>
-												dispatch(
-													Actions.switchSidebarPanel({
-														hidden: !sidebarHidden,
-													})
-												),
-										});
-									}}
+									onClick={() =>
+										switchSidebarPanel({
+											hidden: !sidebarHidden,
+										})
+									}
 									small
 									symbol={sidebarHidden ? 'hidden' : 'view'}
 									title={Liferay.Language.get('preview')}

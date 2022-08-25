@@ -28,6 +28,8 @@ import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedObjectFieldIdException;
 import com.liferay.object.exception.ObjectDefinitionActiveException;
+import com.liferay.object.exception.ObjectDefinitionEnableCategorizationException;
+import com.liferay.object.exception.ObjectDefinitionEnableCommentsException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
@@ -1048,6 +1050,14 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateObjectFieldId(objectDefinition, descriptionObjectFieldId);
 		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
 		_validateActive(objectDefinition, active);
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672"))) {
+			_validateEnableCategorization(
+				enableCategorization, objectDefinition.isSystem());
+			_validateEnableComments(
+				enableComments, objectDefinition.isSystem());
+		}
+
 		_validateLabel(labelMap);
 		_validatePluralLabel(pluralLabelMap);
 
@@ -1067,6 +1077,11 @@ public class ObjectDefinitionLocalServiceImpl
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672"))) {
 			objectDefinition.setEnableCategorization(enableCategorization);
 			objectDefinition.setEnableComments(enableComments);
+		}
+		else {
+			objectDefinition.setEnableCategorization(
+				!objectDefinition.isSystem());
+			objectDefinition.setEnableComments(false);
 		}
 
 		objectDefinition.setAccountEntryRestrictedObjectFieldId(
@@ -1203,6 +1218,26 @@ public class ObjectDefinitionLocalServiceImpl
 		if (active && !objectDefinition.isApproved()) {
 			throw new ObjectDefinitionActiveException(
 				"Object definitions must be published before being activated");
+		}
+	}
+
+	private void _validateEnableCategorization(
+			boolean enableCategorization, boolean system)
+		throws PortalException {
+
+		if (enableCategorization && system) {
+			throw new ObjectDefinitionEnableCategorizationException(
+				"Enable categorization is not allowed for system object " +
+					"definition");
+		}
+	}
+
+	private void _validateEnableComments(boolean enableComments, boolean system)
+		throws PortalException {
+
+		if (enableComments && system) {
+			throw new ObjectDefinitionEnableCommentsException(
+				"Enable comments is not allowed for system object definition");
 		}
 	}
 

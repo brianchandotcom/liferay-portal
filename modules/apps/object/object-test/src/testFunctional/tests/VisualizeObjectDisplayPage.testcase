@@ -749,8 +749,6 @@ definition {
 	@description = "LPS-137106 - Verify if it is possible to link a Mapped URL with the Objects Page Template"
 	@priority = "5"
 	test ObjectMappedURL {
-		property portal.acceptance = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 327",
 			objectName = "CustomObject327",
@@ -815,7 +813,10 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Mapped URL");
 
-		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Display Page URL");
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Display Page URL");
 
 		PageEditor.publish();
 

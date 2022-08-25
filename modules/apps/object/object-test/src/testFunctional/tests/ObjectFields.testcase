@@ -909,8 +909,6 @@ definition {
 	@description = "LPS-143065 - Change the Maximum File Size to 0 (zero) and verify if the Maximum File Size is now set by the System configurations"
 	@priority = "4"
 	test MaximumFileSizeIsSetBySystemConfigurationsWhenZero {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151561",
 			objectName = "CustomObject151561",

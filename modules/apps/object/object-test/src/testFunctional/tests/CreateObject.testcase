@@ -7936,8 +7936,6 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed on a Collection Display with List Style set as Table when the parent object is inactivated"
 	@priority = "4"
 	test RelationshipFieldCannotBeDisplayedForCollectionDisplayTableWhenInactivated {
-		property portal.upstream = "quarantine";
-
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter} 169",

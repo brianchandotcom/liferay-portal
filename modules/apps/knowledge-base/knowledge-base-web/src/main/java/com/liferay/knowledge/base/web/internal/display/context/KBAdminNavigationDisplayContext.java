@@ -30,6 +30,7 @@ import com.liferay.knowledge.base.util.comparator.KBObjectsPriorityComparator;
 import com.liferay.knowledge.base.util.comparator.KBTemplateTitleComparator;
 import com.liferay.knowledge.base.web.internal.display.context.helper.KBArticleURLHelper;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
+import com.liferay.knowledge.base.web.internal.util.KBDropdownItemsProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,10 +39,12 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -54,6 +57,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -72,8 +76,14 @@ public class KBAdminNavigationDisplayContext {
 
 		_kbArticleURLHelper = new KBArticleURLHelper(
 			renderRequest, renderResponse);
+
+		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
+			(PortletRequest)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST));
+
 		_liferayPortletResponse = LiferayPortletUtil.getLiferayPortletResponse(
 			renderResponse);
+
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -352,6 +362,10 @@ public class KBAdminNavigationDisplayContext {
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new KBObjectsPriorityComparator<>(true));
 
+		KBDropdownItemsProvider kbDropdownItemsProvider =
+			new KBDropdownItemsProvider(
+				_liferayPortletRequest, _liferayPortletResponse);
+
 		for (Object kbObject : kbObjects) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -359,6 +373,9 @@ public class KBAdminNavigationDisplayContext {
 				KBFolder kbFolder = (KBFolder)kbObject;
 
 				jsonObject.put(
+					"actions",
+					kbDropdownItemsProvider.getKBFolderDropdownItems(kbFolder)
+				).put(
 					"children", _getChildrenJSONArray(kbFolder.getKbFolderId())
 				).put(
 					"href",
@@ -436,6 +453,7 @@ public class KBAdminNavigationDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final KBArticleURLHelper _kbArticleURLHelper;
+	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
 

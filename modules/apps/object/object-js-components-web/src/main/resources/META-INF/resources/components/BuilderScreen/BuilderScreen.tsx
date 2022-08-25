@@ -17,10 +17,11 @@ import ClayEmptyState from '@clayui/empty-state';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
+import {stringIncludesQuery} from '../../utils/string';
 import {Card} from '../Card';
 import {ManagementToolbarSearch} from '../ManagementToolbarSearch';
 import BuilderListItem from './BuilderListItem';
@@ -49,12 +50,11 @@ export function BuilderScreen({
 }: IProps) {
 	const [query, setQuery] = useState('');
 
-	const filteredItems = objectColumns.filter(
-		(objectColumns: TBuilderScreenColumn) =>
-			objectColumns?.fieldLabel
-				?.toLowerCase()
-				.includes(query.toLowerCase())
-	);
+	const filteredItems = useMemo(() => {
+		return objectColumns.filter(({fieldLabel}: TBuilderScreenColumn) =>
+			stringIncludesQuery(fieldLabel as string, query)
+		);
+	}, [objectColumns, query]);
 
 	const tableItems = query ? filteredItems : objectColumns;
 

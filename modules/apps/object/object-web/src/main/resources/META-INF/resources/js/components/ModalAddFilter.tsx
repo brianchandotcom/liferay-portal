@@ -23,6 +23,7 @@ import {
 	MultipleSelect,
 	SingleSelect,
 	invalidateRequired,
+	stringIncludesQuery,
 } from '@liferay/object-js-components-web';
 import React, {
 	FormEvent,
@@ -65,14 +66,12 @@ export function ModalAddFilter({
 	const [query, setQuery] = useState<string>('');
 
 	const [filterStartDate, setFilterStartDate] = useState('');
-	const [filterEndtDate, setFilterEndDate] = useState('');
+	const [filterEndDate, setFilterEndDate] = useState('');
 
 	const filteredAvailableFields = useMemo(() => {
-		return objectFields.filter(({label}: ObjectField) => {
-			return label[defaultLanguageId]
-				?.toLowerCase()
-				.includes(query.toLowerCase());
-		});
+		return objectFields.filter(({label}: ObjectField) =>
+			stringIncludesQuery(label[defaultLanguageId] as string, query)
+		);
 	}, [objectFields, query]);
 
 	const getCheckedWorkflowStatusItems = (
@@ -472,7 +471,7 @@ export function ModalAddFilter({
 										setFilterEndDate(value);
 									}}
 									required
-									value={filterEndtDate}
+									value={filterEndDate}
 								/>
 							</div>
 						</div>

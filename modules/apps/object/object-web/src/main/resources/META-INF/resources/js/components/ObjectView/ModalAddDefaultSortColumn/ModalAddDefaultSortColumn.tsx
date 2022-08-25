@@ -16,7 +16,11 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
-import {AutoComplete, SingleSelect} from '@liferay/object-js-components-web';
+import {
+	AutoComplete,
+	SingleSelect,
+	stringIncludesQuery,
+} from '@liferay/object-js-components-web';
 import React, {FormEvent, useEffect, useMemo, useState} from 'react';
 
 import {TYPES, useViewContext} from '../objectViewContext';
@@ -83,9 +87,9 @@ export function ModalAddDefaultSortColumn({
 	const [query, setQuery] = useState<string>('');
 
 	const filteredObjectSortColumn = useMemo(() => {
-		return availableViewColumns.filter(({fieldLabel}) => {
-			return fieldLabel?.toLowerCase().includes(query.toLowerCase());
-		});
+		return availableViewColumns.filter(({fieldLabel}) =>
+			stringIncludesQuery(fieldLabel as string, query)
+		);
 	}, [availableViewColumns, query]);
 
 	const onSubmit = (event: FormEvent) => {

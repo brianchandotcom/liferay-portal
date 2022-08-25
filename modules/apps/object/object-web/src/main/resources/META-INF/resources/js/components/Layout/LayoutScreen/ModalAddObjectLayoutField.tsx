@@ -19,6 +19,7 @@ import {Observer} from '@clayui/modal/lib/types';
 import {
 	AutoComplete,
 	FormError,
+	stringIncludesQuery,
 	useForm,
 } from '@liferay/object-js-components-web';
 import classNames from 'classnames';
@@ -97,13 +98,13 @@ export default function ModalAddObjectLayoutField({
 	>();
 
 	const filteredObjectFields = useMemo(() => {
-		return objectFields.filter(({inLayout, label}) => {
-			return (
-				label[defaultLanguageId]
-					?.toLowerCase()
-					.match(query.toLowerCase()) && !inLayout
-			);
-		});
+		return objectFields.filter(
+			({inLayout, label}) =>
+				stringIncludesQuery(
+					label[defaultLanguageId] as string,
+					query
+				) && !inLayout
+		);
 	}, [objectFields, query]);
 
 	const onSubmit = (values: TInitialValues) => {

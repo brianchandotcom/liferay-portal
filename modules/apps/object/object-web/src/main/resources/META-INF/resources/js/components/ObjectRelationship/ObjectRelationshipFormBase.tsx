@@ -20,6 +20,7 @@ import {
 	Input,
 	SingleSelect,
 	invalidateRequired,
+	stringIncludesQuery,
 	useForm,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -172,11 +173,9 @@ export function ObjectRelationshipFormBase({
 
 	const filteredRelationships = useMemo(() => {
 		if (Liferay.FeatureFlags['LPS-158478']) {
-			return objectDefinitions.filter(({label}) => {
-				return label[defaultLanguageId]
-					?.toLocaleLowerCase()
-					.includes(query.toLowerCase());
-			});
+			return objectDefinitions.filter(({label}) =>
+				stringIncludesQuery(label[defaultLanguageId] as string, query)
+			);
 		}
 		else {
 			return filteredObjectDefinitions.filter(({label}) => {

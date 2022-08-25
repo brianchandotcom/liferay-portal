@@ -22,6 +22,7 @@ import {
 	AutoComplete,
 	FormError,
 	Input,
+	stringIncludesQuery,
 	useForm,
 } from '@liferay/object-js-components-web';
 import classNames from 'classnames';
@@ -156,15 +157,15 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 	>();
 
 	const filteredRelationships = useMemo(() => {
-		return objectRelationships.filter(({inLayout, label, name}) => {
-			return (
-				(label[defaultLanguageId]
-					?.toLowerCase()
-					?.match(query.toLowerCase()) ??
-					name.toLowerCase()?.match(query.toLowerCase())) &&
+		return objectRelationships.filter(
+			({inLayout, label, name}) =>
+				(stringIncludesQuery(
+					label[defaultLanguageId] as string,
+					query
+				) ??
+					stringIncludesQuery(name, query)) &&
 				!inLayout
-			);
-		});
+		);
 	}, [objectRelationships, query]);
 
 	const selectedRelationshipInfo: TLabelInfo = useMemo(() => {

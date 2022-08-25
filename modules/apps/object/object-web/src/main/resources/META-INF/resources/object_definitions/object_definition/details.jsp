@@ -233,7 +233,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff='<%= LanguageUtil.get(request, "show-widget") %>' labelOn='<%= LanguageUtil.get(request, "show-widget") %>' name="portlet" type="toggle-switch" value="<%= objectDefinition.isPortlet() %>" />
 				</aui:field-wrapper>
 
-				<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672")) %>'>
+				<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672")) && objectDefinition.isDefaultStorageType() %>'>
 					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 						<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff='<%= LanguageUtil.get(request, "enable-categorization") %>' labelOn='<%= LanguageUtil.get(request, "enable-categorization") %>' name="enableCategorization" type="toggle-switch" value="<%= objectDefinition.isEnableCategorization() %>" />
 					</aui:field-wrapper>

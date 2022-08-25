@@ -43,6 +43,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -91,6 +92,25 @@ public final class DLValidatorImpl implements DLValidator {
 					companyId, mimeType),
 				_dlSizeLimitManagedServiceFactory.getGroupMimeTypeSizeLimit(
 					groupId, mimeType)));
+	}
+
+	@Override
+	public Map<String, Long> getMimeTypeSizeLimit(long groupId) {
+		long companyId = _getCompanyId(groupId);
+
+		Map<String, Long> mimeTypeSizeLimit = new HashMap<>(
+			_dlSizeLimitManagedServiceFactory.getGroupMimeTypeSizeLimit(
+				groupId));
+
+		Map<String, Long> companyMimeTypeSizeLimit =
+			_dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
+				companyId);
+
+		companyMimeTypeSizeLimit.forEach(
+			(key, value) -> mimeTypeSizeLimit.merge(
+				key, value, (v1, v2) -> _min(v1, v2)));
+
+		return mimeTypeSizeLimit;
 	}
 
 	@Override

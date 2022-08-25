@@ -33,6 +33,8 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(lifera
 					HashMapBuilder.<String, Object>put(
 						"maxFileSize", dlEditFileEntryDisplayContext.getMaximumUploadSize()
 					).put(
+						"maxMimeTypeSize", dlEditFileEntryDisplayContext.getAllMimeTypeSizeLimit()
+					).put(
 						"namespace", liferayPortletResponse.getNamespace()
 					).put(
 						"validExtensions", StringUtil.merge(dlConfiguration.fileExtensions())

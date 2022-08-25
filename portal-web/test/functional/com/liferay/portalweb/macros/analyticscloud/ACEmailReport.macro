@@ -1,0 +1,8 @@
+definition {
+
+	macro enableEmailReportToggle {
+		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
+	}
+
+
+}

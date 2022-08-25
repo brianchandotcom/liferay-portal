@@ -103,11 +103,11 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 	private void _synchronizeConfigMap(Company company) {
 		List<String> virtualHostNames = new ArrayList<>();
 
-		for (VirtualHost curVirtualHost :
+		for (VirtualHost virtualHost :
 				_virtualHostLocalService.getVirtualHosts(
 					company.getCompanyId())) {
 
-			virtualHostNames.add(curVirtualHost.getHostname());
+			virtualHostNames.add(virtualHost.getHostname());
 		}
 
 		_portalK8sConfigMapModifier.modifyConfigMap(

@@ -101,8 +101,6 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 	}
 
 	private void _synchronizeConfigMap(Company company) {
-		String webId = company.getWebId();
-
 		List<String> virtualHostNames = new ArrayList<>();
 
 		for (VirtualHost curVirtualHost :
@@ -126,9 +124,11 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 				Map<String, String> labels = model.labels();
 
 				labels.put("lxc.liferay.com/metadataType", "dxp");
-				labels.put("dxp.lxc.liferay.com/virtualInstanceId", webId);
+				labels.put(
+					"dxp.lxc.liferay.com/virtualInstanceId",
+					company.getWebId());
 			},
-			_getConfigMapName(webId));
+			_getConfigMapName(company.getWebId()));
 	}
 
 	@Reference

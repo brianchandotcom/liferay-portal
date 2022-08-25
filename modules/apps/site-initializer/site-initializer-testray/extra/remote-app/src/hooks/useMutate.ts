@@ -26,8 +26,8 @@ const useMutate = () => {
 			mutate(
 				(response: APIResponse) => ({
 					...response,
-					items: [data, ...response.items],
-					totalCount: response.totalCount + 1,
+					items: [data, ...response?.items],
+					totalCount: response?.totalCount + 1,
 				}),
 				options
 			);
@@ -41,8 +41,8 @@ const useMutate = () => {
 			mutate(
 				(response: APIResponse) => ({
 					...response,
-					items: response.items?.filter((item) => item.id !== id),
-					totalCount: response.totalCount - 1,
+					items: response?.items?.filter((item) => item?.id !== id),
+					totalCount: response?.totalCount - 1,
 				}),
 				{revalidate: false, ...options}
 			),
@@ -56,8 +56,8 @@ const useMutate = () => {
 			mutate(
 				(response: APIResponse<any>) => ({
 					...response,
-					items: response.items.map((item) => {
-						if (item.id === id) {
+					items: response?.items?.map((item) => {
+						if (item?.id === id) {
 							return {
 								...item,
 								...(typeof data === 'function'

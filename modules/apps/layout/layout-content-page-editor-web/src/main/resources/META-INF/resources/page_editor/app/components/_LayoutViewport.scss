@@ -53,6 +53,11 @@ html#{$cadmin-selector} #{$selector} {
 				#{$selector}__label-width {
 					right: $defaultSidebarContentWidth;
 				}
+
+				@include media-breakpoint-up(sm) {
+					padding-left: $sidebarButtonWidth +
+						$defaultSidebarContentWidth;
+				}
 			}
 
 			&#{$selector}--with-item-configuration-open {

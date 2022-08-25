@@ -167,6 +167,13 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			commerceBookedQuantity.setSku(sku);
 			commerceBookedQuantity.setExpirationDate(expirationDate);
 		}
+		else {
+			quantity = commerceBookedQuantity.getQuantity() + quantity;
+
+			if (quantity < 0) {
+				quantity = 0;
+			}
+		}
 
 		commerceBookedQuantity.setQuantity(quantity);
 

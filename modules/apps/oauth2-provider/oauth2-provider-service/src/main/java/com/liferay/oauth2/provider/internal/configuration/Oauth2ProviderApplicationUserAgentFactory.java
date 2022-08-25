@@ -71,9 +71,7 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Creating or Updating User Agent profile request with: " +
-					properties);
+			_log.debug("Activate " + properties);
 		}
 
 		OAuth2ProviderApplicationUserAgentConfiguration

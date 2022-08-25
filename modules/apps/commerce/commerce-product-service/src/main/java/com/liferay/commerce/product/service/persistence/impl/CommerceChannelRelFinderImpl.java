@@ -123,18 +123,6 @@ public class CommerceChannelRelFinderImpl
 		}
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public int countByC_C(
-		String className, long classPK, String classPKField, String name,
-		boolean inlineSQLHelper) {
-
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public List<CommerceChannelRel> findByC_C(
 		String className, long classPK, String name, int start, int end) {
@@ -203,18 +191,6 @@ public class CommerceChannelRelFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<CommerceChannelRel> findByC_C(
-		String className, long classPK, String classPKField, String name,
-		int start, int end, boolean inlineSQLHelper) {
-
-		throw new UnsupportedOperationException();
 	}
 
 	private List<Long> _findClassNameIds() {

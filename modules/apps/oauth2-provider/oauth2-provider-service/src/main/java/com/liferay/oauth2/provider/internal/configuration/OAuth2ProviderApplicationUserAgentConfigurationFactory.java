@@ -63,7 +63,8 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = "_portalK8sConfigMapModifier.cardinality.minimum=1", service = {}
 )
-public class OAuth2ProviderApplicationUserAgentConfigurationFactory {
+public class OAuth2ProviderApplicationUserAgentConfigurationFactory
+	extends BaseConfigurationFactory {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {

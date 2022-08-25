@@ -41,27 +41,26 @@ public class SamlIdpSpSessionUpgradeProcess extends UpgradeProcess {
 
 			int latestSamlPeerBindingId = _getLatestSamlPeerBindingId();
 
-			String sql = StringBundler.concat(
+			String sql1 = StringBundler.concat(
 				"insert into SamlPeerBinding (samlPeerBindingId, companyId, ",
 				"createDate, userId, userName, deleted, samlNameIdFormat, ",
 				"samlNameIdNameQualifier, samlNameIdSpNameQualifier, ",
 				"samlNameIdSpProvidedId, samlNameIdValue, samlPeerEntityId) ",
 				"values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
+			String sql2 = StringBundler.concat(
+				"select min(samlIdpSpSessionId) as samlIdpSpSessionId, ",
+				"companyId, min(createDate) as createDate, userId, userName, ",
+				"nameIdFormat, nameIdValue, samlSpEntityId from ",
+				"SamlIdpSpSession group by companyId, userId, userName, ",
+				"nameIdFormat, nameIdValue, samlSpEntityId");
+
 			try (PreparedStatement preparedStatement1 =
-					connection.prepareStatement(
-						StringBundler.concat(
-							"select min(samlIdpSpSessionId) as ",
-							"samlIdpSpSessionId, companyId, min(createDate) ",
-							"as createDate, userId, userName, nameIdFormat, ",
-							"nameIdValue, samlSpEntityId from ",
-							"SamlIdpSpSession group by companyId, userId, ",
-							"userName, nameIdFormat, nameIdValue, ",
-							"samlSpEntityId"));
+					connection.prepareStatement(sql2);
 				ResultSet resultSet = preparedStatement1.executeQuery();
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection, sql)) {
+						connection, sql1)) {
 
 				while (resultSet.next()) {
 					preparedStatement2.setInt(

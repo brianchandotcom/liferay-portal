@@ -35,7 +35,9 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -227,8 +229,13 @@ public class LayoutModelDocumentContributor
 		ServiceContext mockServiceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		try {
 			ServiceContextThreadLocal.pushServiceContext(mockServiceContext);
+			PermissionThreadLocal.setPermissionChecker(
+				mockContextHelper.getPermissionChecker());
 
 			return LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
 				_fragmentRendererController, httpServletRequest,
@@ -243,6 +250,9 @@ public class LayoutModelDocumentContributor
 			if (serviceContext != null) {
 				ServiceContextThreadLocal.pushServiceContext(serviceContext);
 			}
+
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
 		}
 	}
 
@@ -344,6 +354,16 @@ public class LayoutModelDocumentContributor
 			return httpServletRequest;
 		}
 
+		public PermissionChecker getPermissionChecker() throws PortalException {
+			if (_permissionChecker != null) {
+				return _permissionChecker;
+			}
+
+			_permissionChecker = PermissionCheckerFactoryUtil.create(_user);
+
+			return _permissionChecker;
+		}
+
 		private ThemeDisplay _getThemeDisplay() throws PortalException {
 			if (_themeDisplay != null) {
 				return _themeDisplay;
@@ -365,8 +385,7 @@ public class LayoutModelDocumentContributor
 
 			themeDisplay.setLayoutTypePortlet(
 				(LayoutTypePortlet)_layout.getLayoutType());
-			themeDisplay.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(_user));
+			themeDisplay.setPermissionChecker(getPermissionChecker());
 			themeDisplay.setPlid(_layout.getPlid());
 			themeDisplay.setPortalDomain(company.getVirtualHostname());
 			themeDisplay.setPortalURL(
@@ -385,6 +404,7 @@ public class LayoutModelDocumentContributor
 		}
 
 		private final Layout _layout;
+		private PermissionChecker _permissionChecker;
 		private ThemeDisplay _themeDisplay;
 		private final User _user;
 

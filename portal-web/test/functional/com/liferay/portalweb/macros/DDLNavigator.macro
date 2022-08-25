@@ -98,7 +98,7 @@ definition {
 			value1 = "Details");
 
 		AssertTextEquals(
-			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_STATUS",
+			locator1 = "Staging#WORKFLOW_STATUS",
 			value1 = "${workflowStatus}");
 	}
 

@@ -27,6 +27,17 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	public UploadItemSelectorCriterion(
+		String portletId, String url, String repositoryName, long maxFileSize,
+		String[] extensions) {
+
+		_portletId = portletId;
+		_url = url;
+		_repositoryName = repositoryName;
+		_maxFileSize = maxFileSize;
+		_extensions = extensions;
+	}
+
+	public UploadItemSelectorCriterion(
 		String mimeTypeRestriction, String portletId, String url,
 		String repositoryName) {
 
@@ -44,17 +55,6 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_url = url;
 		_repositoryName = repositoryName;
 		_maxFileSize = maxFileSize;
-	}
-
-	public UploadItemSelectorCriterion(
-		String portletId, String url, String repositoryName, long maxFileSize,
-		String[] extensions) {
-
-		_portletId = portletId;
-		_url = url;
-		_repositoryName = repositoryName;
-		_maxFileSize = maxFileSize;
-		_extensions = extensions;
 	}
 
 	public String[] getExtensions() {

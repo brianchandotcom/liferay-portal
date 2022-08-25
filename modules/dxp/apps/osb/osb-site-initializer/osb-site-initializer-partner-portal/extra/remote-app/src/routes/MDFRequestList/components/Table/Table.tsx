@@ -25,7 +25,7 @@ type TableProps<T> = {
 };
 
 const Table = <T extends unknown>({columns, rows, ...props}: TableProps<T>) => (
-	<ClayTable {...props} tableVerticalAlignment="middle">
+	<ClayTable {...props} noWrap={true} tableVerticalAlignment="middle">
 		<ClayTable.Head>
 			<ClayTable.Row>
 				{columns?.map((column: Columns<T>, index: number) => (

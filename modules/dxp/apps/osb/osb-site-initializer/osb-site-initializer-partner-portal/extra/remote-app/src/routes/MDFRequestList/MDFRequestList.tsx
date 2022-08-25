@@ -11,27 +11,19 @@
 
 import ClayButton from '@clayui/button';
 
+import {MDFColumnKey} from '../../common/enums/mdfColumnKey';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import liferayNavigate from '../../common/utils/liferayNavigate';
 import Table from './components/Table';
 import useGetMDFListColumns from './hooks/useGetMDFListColumns';
 import useGetMDFRequestListItems from './hooks/useGetMDFRequestListItems';
 
-interface MDFRequestListItem {
-	activityPeriod?: string;
-	id: string;
-	totalCostOfExpense?: string;
-	totalRequested?: string;
-}
+type MDFRequestListItem = {
+	[key in MDFColumnKey]?: string;
+};
 
 const MDFRequestList = () => {
 	const {data: listItems} = useGetMDFRequestListItems();
-	// eslint-disable-next-line no-console
-	console.log(
-		'🚀 ~ file: MDFRequestList.tsx ~ line 29 ~ MDFRequestList ~ listItems',
-		listItems
-	);
-
 	const {data: listColumns} = useGetMDFListColumns();
 
 	const newMdfRequest = () => {

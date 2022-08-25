@@ -15,22 +15,20 @@ import {customFormatDateOptions} from '../../../common/utils/constants/customFor
 import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
 import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 
-const getActivityPeriod = (
-	minDateActivity: Date | undefined,
-	maxDateActivity: Date | undefined
-) => {
+const getActivityPeriod = (minDateActivity?: Date, maxDateActivity?: Date) => {
 	if (minDateActivity && maxDateActivity) {
 		const startDate = getDateCustomFormat(
 			minDateActivity,
-			customFormatDateOptions.SHORT_MONTH
-		);
-		const endDate = getDateCustomFormat(
-			maxDateActivity,
 			customFormatDateOptions.SHORT_MONTH_YEAR
 		);
 
+		const endDate = getDateCustomFormat(
+			maxDateActivity,
+			customFormatDateOptions.SHORT_MONTH
+		);
+
 		return {
-			activityPeriod: `${startDate} - ${endDate}`,
+			[MDFColumnKey.activityPeriod]: `${startDate} - ${endDate}`,
 		};
 	}
 };
@@ -41,10 +39,31 @@ const getBudgetInfos = (
 ) => {
 	if (totalCostOfExpense && totalRequested) {
 		return {
-			totalCostOfExpense: getIntlNumberFormat().format(
+			[MDFColumnKey.totalCost]: getIntlNumberFormat().format(
 				totalCostOfExpense
 			),
-			totalRequested: getIntlNumberFormat().format(totalRequested),
+			[MDFColumnKey.requested]: getIntlNumberFormat().format(
+				totalRequested
+			),
+		};
+	}
+};
+
+const getDates = (dateCreated?: Date, dateModified?: Date) => {
+	if (dateCreated && dateModified) {
+		const dateSubmitted = getDateCustomFormat(
+			dateCreated,
+			customFormatDateOptions.SHORT_MONTH
+		);
+
+		const lastModified = getDateCustomFormat(
+			dateModified,
+			customFormatDateOptions.SHORT_MONTH
+		);
+
+		return {
+			[MDFColumnKey.dateSubmitted]: `${dateSubmitted}`,
+			[MDFColumnKey.lastModified]: `${lastModified}`,
 		};
 	}
 };
@@ -56,12 +75,18 @@ export default function useGetMDFRequestListItems() {
 		...swr,
 		data: swr.data?.items.map((item) => {
 			return {
+				[MDFColumnKey.id]: `Request-${item.id}`,
 				...getActivityPeriod(
 					item.minDateActivity,
 					item.maxDateActivity
 				),
-				...getBudgetInfos(item.totalCostOfExpense, item.totalRequested),
-				[MDFColumnKey.id]: `Request-${item.id}`,
+				[MDFColumnKey.partner]:
+					item.r_accountToMDFRequests_accountEntry?.name,
+				...getDates(item.dateCreated, item.dateModified),
+				...getBudgetInfos(
+					item.totalCostOfExpense,
+					item.totalMdfRequestAmount
+				),
 			};
 		}),
 	};

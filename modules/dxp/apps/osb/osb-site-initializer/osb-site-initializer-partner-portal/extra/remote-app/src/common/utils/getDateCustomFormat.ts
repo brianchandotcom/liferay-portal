@@ -12,9 +12,11 @@
 import {Liferay} from '../services/liferay';
 
 export default function getDateCustomFormat(
-	date: Date | undefined,
+	rawDate: Date,
 	format: Intl.DateTimeFormatOptions
 ) {
+	const date = new Date(rawDate);
+
 	return date?.toLocaleDateString(
 		Liferay.ThemeDisplay.getBCP47LanguageId(),
 		format

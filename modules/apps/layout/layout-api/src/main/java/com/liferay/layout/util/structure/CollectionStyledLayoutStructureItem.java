@@ -17,6 +17,7 @@ package com.liferay.layout.util.structure;
 import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -59,6 +60,9 @@ public class CollectionStyledLayoutStructureItem
 				_displayAllPages,
 				collectionStyledLayoutStructureItem._displayAllPages) ||
 			!Objects.equals(
+				_emptyCollectionOptions,
+				collectionStyledLayoutStructureItem._emptyCollectionOptions) ||
+			!Objects.equals(
 				_gutters, collectionStyledLayoutStructureItem._gutters) ||
 			!Objects.equals(
 				_listStyle, collectionStyledLayoutStructureItem._listStyle) ||
@@ -94,6 +98,10 @@ public class CollectionStyledLayoutStructureItem
 		return _collectionJSONObject;
 	}
 
+	public EmptyCollectionOptions getEmptyCollectionOptions() {
+		return _emptyCollectionOptions;
+	}
+
 	@Override
 	public JSONObject getItemConfigJSONObject() {
 		JSONObject jsonObject = super.getItemConfigJSONObject();
@@ -104,6 +112,15 @@ public class CollectionStyledLayoutStructureItem
 			"displayAllItems", _displayAllItems
 		).put(
 			"displayAllPages", _displayAllPages
+		).put(
+			"emptyCollectionOptions",
+			() -> {
+				if (_emptyCollectionOptions == null) {
+					return null;
+				}
+
+				return _emptyCollectionOptions.toJSONObject();
+			}
 		).put(
 			"gutters", _gutters
 		).put(
@@ -251,6 +268,12 @@ public class CollectionStyledLayoutStructureItem
 		}
 	}
 
+	public void setEmptyCollectionOptions(
+		EmptyCollectionOptions emptyCollectionOptions) {
+
+		_emptyCollectionOptions = emptyCollectionOptions;
+	}
+
 	public void setGutters(boolean gutters) {
 		_gutters = gutters;
 	}
@@ -344,6 +367,13 @@ public class CollectionStyledLayoutStructureItem
 				itemConfigJSONObject.getBoolean("displayAllPages"));
 		}
 
+		if (itemConfigJSONObject.has("emptyCollectionOptions")) {
+			setEmptyCollectionOptions(
+				EmptyCollectionOptions.of(
+					itemConfigJSONObject.getJSONObject(
+						"emptyCollectionOptions")));
+		}
+
 		if (itemConfigJSONObject.has("gutters")) {
 			setGutters(itemConfigJSONObject.getBoolean("gutters"));
 		}
@@ -409,6 +439,7 @@ public class CollectionStyledLayoutStructureItem
 	private JSONObject _collectionJSONObject;
 	private boolean _displayAllItems;
 	private boolean _displayAllPages = true;
+	private EmptyCollectionOptions _emptyCollectionOptions;
 	private boolean _gutters = true;
 	private String _listItemStyle;
 	private String _listStyle;

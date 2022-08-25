@@ -6,9 +6,15 @@ definition {
 		var groupId = JSONWebcontentSetter.setGroupId(
 			groupName = "${groupName}",
 			site = "${site}");
-		var urlTitle = StringUtil.replace("${title}", " ", "-");
 
-		var urlTitle = StringUtil.lowerCase("${urlTitle}");
+		if (isSet(urlTitle)) {
+			var urlTitle = "${urlTitle}";
+		}
+		else {
+			var urlTitle = StringUtil.replace("${title}", " ", "-");
+
+			var urlTitle = StringUtil.lowerCase("${urlTitle}");
+		}
 
 		var articleId = JSONWebcontentAPI._getArticleIdByURLTitle(
 			groupName = "${groupName}",

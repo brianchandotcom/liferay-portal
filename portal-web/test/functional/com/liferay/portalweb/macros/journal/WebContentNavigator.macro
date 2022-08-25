@@ -202,7 +202,8 @@ definition {
 		var articleId = JSONWebcontentSetter.setArticleId(
 			groupName = "${groupName}",
 			site = "${site}",
-			title = "${webContentTitle}");
+			title = "${webContentTitle}",
+			urlTitle = "${urlTitle}");
 
 		if (isSet(folderName)) {
 			var folderId = JSONWebcontentSetter.setFolderId(

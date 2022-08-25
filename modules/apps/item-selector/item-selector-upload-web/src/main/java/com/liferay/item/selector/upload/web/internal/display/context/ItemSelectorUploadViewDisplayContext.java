@@ -65,6 +65,10 @@ public class ItemSelectorUploadViewDisplayContext {
 		return _uploadItemSelectorCriterion.getMaxFileSize();
 	}
 
+	public String getMimeTypeRestriction() {
+		return _uploadItemSelectorCriterion.getMimeTypeRestriction();
+	}
+
 	public String getNamespace() {
 		if (Validator.isNotNull(_uploadItemSelectorCriterion.getPortletId())) {
 			return PortalUtil.getPortletNamespace(

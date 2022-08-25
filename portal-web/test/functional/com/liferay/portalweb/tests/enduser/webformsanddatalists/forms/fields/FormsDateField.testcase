@@ -92,7 +92,7 @@ definition {
 	@description = "Verify that is able to add a past and range validation using the response date as parameter"
 	@priority = "5"
 	test CanAddPastValidationUsingResponseDate {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
 
 		var displayDateYear = DateUtil.getCurrentYear();

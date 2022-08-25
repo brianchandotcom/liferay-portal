@@ -14,7 +14,6 @@
 
 package com.liferay.account.service.impl;
 
-import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.exception.AccountEntryUserRelEmailAddressException;
@@ -24,7 +23,8 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.base.AccountEntryUserRelLocalServiceBaseImpl;
-import com.liferay.petra.string.CharPool;
+import com.liferay.account.validator.AccountEntryEmailValidator;
+import com.liferay.account.validator.AccountEntryEmailValidatorFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -92,7 +91,8 @@ public class AccountEntryUserRelLocalServiceImpl
 		User accountUser = _userLocalService.getUser(accountUserId);
 
 		_validateEmailAddress(
-			accountEntryId, accountUser.getCompanyId(),
+			_accountEntryEmailValidatorFactory.create(
+				accountUser.getCompanyId(), _getAccountDomains(accountEntryId)),
 			accountUser.getEmailAddress());
 
 		accountEntryUserRel = createAccountEntryUserRel(
@@ -121,7 +121,10 @@ public class AccountEntryUserRelLocalServiceImpl
 			companyId = accountEntry.getCompanyId();
 		}
 
-		_validateEmailAddress(accountEntryId, companyId, emailAddress);
+		_validateEmailAddress(
+			_accountEntryEmailValidatorFactory.create(
+				companyId, _getAccountDomains(accountEntryId)),
+			emailAddress);
 
 		boolean autoPassword = true;
 		String password1 = null;
@@ -442,55 +445,34 @@ public class AccountEntryUserRelLocalServiceImpl
 			accountEntryId, accountRoleIds, userId);
 	}
 
-	private void _validateEmailAddress(
-			long accountEntryId, long companyId, String emailAddress)
-		throws PortalException {
-
-		emailAddress = StringUtil.toLowerCase(emailAddress.trim());
-
-		int index = emailAddress.indexOf(CharPool.AT);
-
-		if (index == -1) {
-			return;
-		}
-
-		String domain = emailAddress.substring(index + 1);
-
-		AccountEntryEmailDomainsConfiguration
-			accountEntryEmailDomainsConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					AccountEntryEmailDomainsConfiguration.class, companyId);
-
-		String[] blockedDomains = StringUtil.split(
-			accountEntryEmailDomainsConfiguration.blockedEmailDomains(),
-			StringPool.RETURN_NEW_LINE);
-
-		if (ArrayUtil.contains(blockedDomains, domain)) {
-			throw new UserEmailAddressException.MustNotUseBlockedDomain(
-				emailAddress,
-				StringUtil.merge(blockedDomains, StringPool.COMMA_AND_SPACE));
-		}
-
-		if (!accountEntryEmailDomainsConfiguration.
-				enableEmailDomainValidation()) {
-
-			return;
-		}
-
+	private String[] _getAccountDomains(long accountEntryId) {
 		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
 			accountEntryId);
 
-		if (accountEntry == null) {
-			return;
+		if (accountEntry != null) {
+			return accountEntry.getDomainsArray();
 		}
 
-		String[] domains = StringUtil.split(accountEntry.getDomains());
+		return new String[0];
+	}
 
-		if (ArrayUtil.isNotEmpty(domains) &&
-			!ArrayUtil.contains(domains, domain)) {
+	private void _validateEmailAddress(
+			AccountEntryEmailValidator accountEntryEmailValidator,
+			String emailAddress)
+		throws PortalException {
 
+		if (accountEntryEmailValidator.isBlockedDomain(emailAddress)) {
+			throw new UserEmailAddressException.MustNotUseBlockedDomain(
+				emailAddress,
+				StringUtil.merge(
+					accountEntryEmailValidator.getBlockedDomains(),
+					StringPool.COMMA_AND_SPACE));
+		}
+
+		if (!accountEntryEmailValidator.isValidDomain(emailAddress)) {
 			throw new UserEmailAddressException.MustHaveValidDomain(
-				emailAddress, accountEntry.getDomains());
+				emailAddress,
+				StringUtil.merge(accountEntryEmailValidator.getValidDomains()));
 		}
 	}
 
@@ -498,13 +480,14 @@ public class AccountEntryUserRelLocalServiceImpl
 		AccountEntryUserRelLocalServiceImpl.class);
 
 	@Reference
+	private AccountEntryEmailValidatorFactory
+		_accountEntryEmailValidatorFactory;
+
+	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

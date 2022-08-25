@@ -26,6 +26,8 @@ import com.liferay.account.model.AccountEntryTable;
 import com.liferay.account.model.AccountEntryUserRelTable;
 import com.liferay.account.model.impl.AccountEntryImpl;
 import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
+import com.liferay.account.validator.AccountEntryEmailValidator;
+import com.liferay.account.validator.AccountEntryEmailValidatorFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
@@ -92,6 +94,7 @@ import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -101,9 +104,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
-
-import org.apache.commons.validator.routines.DomainValidator;
-import org.apache.commons.validator.routines.EmailValidator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -171,11 +171,14 @@ public class AccountEntryLocalServiceImpl
 
 		accountEntry.setDescription(description);
 
-		domains = _validateDomains(domains);
+		AccountEntryEmailValidator accountEntryEmailValidator =
+			_accountEntryEmailValidatorFactory.create(user.getCompanyId());
+
+		domains = _validateDomains(accountEntryEmailValidator, domains);
 
 		accountEntry.setDomains(StringUtil.merge(domains, StringPool.COMMA));
 
-		_validateEmailAddress(emailAddress);
+		_validateEmailAddress(accountEntryEmailValidator, emailAddress);
 
 		accountEntry.setEmailAddress(emailAddress);
 
@@ -589,11 +592,15 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setDescription(description);
 		accountEntry.setName(name);
 
-		domains = _validateDomains(domains);
+		AccountEntryEmailValidator accountEntryEmailValidator =
+			_accountEntryEmailValidatorFactory.create(
+				accountEntry.getCompanyId());
+
+		domains = _validateDomains(accountEntryEmailValidator, domains);
 
 		accountEntry.setDomains(StringUtil.merge(domains, StringPool.COMMA));
 
-		_validateEmailAddress(emailAddress);
+		_validateEmailAddress(accountEntryEmailValidator, emailAddress);
 
 		accountEntry.setEmailAddress(emailAddress);
 
@@ -1007,15 +1014,22 @@ public class AccountEntryLocalServiceImpl
 			null, null, null, 0, 0, null);
 	}
 
-	private String[] _validateDomains(String[] domains) throws PortalException {
+	private String[] _validateDomains(
+			AccountEntryEmailValidator accountEntryEmailValidator,
+			String[] domains)
+		throws PortalException {
+
 		if (ArrayUtil.isEmpty(domains)) {
 			return domains;
 		}
 
-		DomainValidator domainValidator = DomainValidator.getInstance();
+		Arrays.setAll(
+			domains, i -> StringUtil.lowerCase(StringUtil.trim(domains[i])));
 
 		for (String domain : domains) {
-			if (!domainValidator.isValid(domain)) {
+			if (!accountEntryEmailValidator.isValidDomainFormat(domain) ||
+				accountEntryEmailValidator.isBlockedDomain(domain)) {
+
 				throw new AccountEntryDomainsException();
 			}
 		}
@@ -1023,15 +1037,17 @@ public class AccountEntryLocalServiceImpl
 		return ArrayUtil.distinct(domains);
 	}
 
-	private void _validateEmailAddress(String emailAddress)
+	private void _validateEmailAddress(
+			AccountEntryEmailValidator accountEntryEmailValidator,
+			String emailAddress)
 		throws AccountEntryEmailAddressException {
 
-		if (Validator.isNotNull(emailAddress)) {
-			EmailValidator emailValidator = EmailValidator.getInstance();
+		if (Validator.isBlank(emailAddress)) {
+			return;
+		}
 
-			if (!emailValidator.isValid(emailAddress)) {
-				throw new AccountEntryEmailAddressException();
-			}
+		if (!accountEntryEmailValidator.isValidEmailFormat(emailAddress)) {
+			throw new AccountEntryEmailAddressException();
 		}
 	}
 
@@ -1072,6 +1088,10 @@ public class AccountEntryLocalServiceImpl
 						AccountConstants.ACCOUNT_ENTRY_TYPES, ", ")));
 		}
 	}
+
+	@Reference
+	private AccountEntryEmailValidatorFactory
+		_accountEntryEmailValidatorFactory;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

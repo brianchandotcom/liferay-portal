@@ -214,8 +214,21 @@ public class CPDefinitionLinkServiceImpl
 
 		_checkCommerceCatalog(cpDefinitionId, ActionKeys.UPDATE);
 
-		cpDefinitionLinkLocalService.updateCPDefinitionLinks(
-			cpDefinitionId, cpDefinitionIds2, type, serviceContext);
+		if (cpDefinitionIds2 == null) {
+			return;
+		}
+
+		long[] cProductIds = new long[cpDefinitionIds2.length];
+
+		for (int i = 0; i < cProductIds.length; i++) {
+			CPDefinition cpDefinition =
+				cpDefinitionLocalService.fetchCPDefinition(cpDefinitionIds2[i]);
+
+			cProductIds[i] = cpDefinition.getCProductId();
+		}
+
+		cpDefinitionLinkLocalService.updateCPDefinitionLinkCProductIds(
+			cpDefinitionId, cProductIds, type, serviceContext);
 	}
 
 	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)

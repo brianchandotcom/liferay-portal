@@ -341,33 +341,6 @@ public class CPDefinitionLinkLocalServiceImpl
 		reindexCPDefinition(cpDefinitionId);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public void updateCPDefinitionLinks(
-			long cpDefinitionId1, long[] cpDefinitionIds2, String type,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (cpDefinitionIds2 == null) {
-			return;
-		}
-
-		long[] cProductIds = new long[cpDefinitionIds2.length];
-
-		for (int i = 0; i < cProductIds.length; i++) {
-			CPDefinition cpDefinition =
-				cpDefinitionLocalService.fetchCPDefinition(cpDefinitionIds2[i]);
-
-			cProductIds[i] = cpDefinition.getCProductId();
-		}
-
-		cpDefinitionLinkLocalService.updateCPDefinitionLinkCProductIds(
-			cpDefinitionId1, cProductIds, type, serviceContext);
-	}
-
 	protected void reindexCPDefinition(long cpDefinitionId)
 		throws PortalException {
 

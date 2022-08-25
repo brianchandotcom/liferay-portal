@@ -43,4 +43,10 @@ public interface AccountEntryEmailDomainsConfiguration {
 	)
 	public String blockedEmailDomains();
 
+	@Meta.AD(
+		description = "custom-tlds-description", name = "custom-tlds-name",
+		required = false
+	)
+	public String[] customTLDs();
+
 }

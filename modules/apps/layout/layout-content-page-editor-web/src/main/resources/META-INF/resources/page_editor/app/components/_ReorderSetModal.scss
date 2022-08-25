@@ -1,0 +1,20 @@
+@import 'atlas-variables';
+
+html#{$cadmin-selector} {
+	.page-editor__reorder-set-modal {
+		.dropdown-menu {
+			min-width: 192px;
+		}
+
+		.lexicon-icon-drag {
+			height: 16px;
+			margin: 0;
+			width: 16px;
+		}
+
+		.modal-body {
+			max-height: 70vh;
+			overflow: auto;
+		}
+	}
+}

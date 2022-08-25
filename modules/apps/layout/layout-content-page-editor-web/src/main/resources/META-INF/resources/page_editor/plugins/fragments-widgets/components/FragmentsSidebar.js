@@ -15,6 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import React, {useMemo, useState} from 'react';
 
+import {ReorderSetsModal} from '../../../app/components/ReorderSetsModal';
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {config} from '../../../app/config/index';
@@ -142,6 +143,8 @@ export default function FragmentsSidebar() {
 
 	const [searchValue, setSearchValue] = useState('');
 
+	const [showReorderModal, setShowReorderModal] = useState(false);
+
 	const tabs = useMemo(
 		() => [
 			{
@@ -200,6 +203,19 @@ export default function FragmentsSidebar() {
 						onChange={setSearchValue}
 					/>
 
+					{Liferay.FeatureFlags['LPS-158737'] && (
+						<ClayButtonWithIcon
+							borderless
+							className="lfr-portal-tooltip ml-2 mt-0"
+							data-tooltip-align="bottom-right"
+							displayType="secondary"
+							onClick={() => setShowReorderModal(true)}
+							small
+							symbol="order-arrow"
+							title={Liferay.Language.get('reorder-sets')}
+						/>
+					)}
+
 					<ClayButtonWithIcon
 						borderless
 						className="lfr-portal-tooltip ml-2 mt-0"
@@ -240,6 +256,12 @@ export default function FragmentsSidebar() {
 					/>
 				)}
 			</div>
+
+			{showReorderModal && (
+				<ReorderSetsModal
+					onCloseModal={() => setShowReorderModal(false)}
+				/>
+			)}
 		</>
 	);
 }

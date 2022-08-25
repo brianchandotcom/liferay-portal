@@ -47,12 +47,12 @@ const CSS = `
 	top: 0;
 	transform: translateX(100%);
 	z-index: 2000;
+}
 
-	.lfr-spa-loading & {
-		animation: shift-rightwards 1s ease-in-out infinite;
-		animation-delay: 0.4s;
-		display: block;
-	}
+.lfr-spa-loading .lfr-spa-loading-bar {
+	animation: shift-rightwards 1s ease-in-out infinite;
+	animation-delay: 0.4s;
+	display: block;
 }`;
 
 /**

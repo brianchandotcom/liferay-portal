@@ -15,18 +15,17 @@
 package com.liferay.journal.internal.search.spi.model.index.contributor;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.internal.util.JournalUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -41,6 +40,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.trash.TrashHelper;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,25 +75,30 @@ public class JournalArticleModelDocumentContributor
 
 		Localization localization = LocalizationUtil.getLocalization();
 
-		String[] contentAvailableLanguageIds =
-			localization.getAvailableLanguageIds(journalArticle.getDocument());
-
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			_portal.getSiteGroupId(journalArticle.getGroupId()),
 			_portal.getClassNameId(JournalArticle.class),
 			journalArticle.getDDMStructureKey(), true);
 
+		DDMFormValues ddmFormValues = null;
+
 		if (ddmStructure != null) {
-			for (String contentAvailableLanguageId :
-					contentAvailableLanguageIds) {
+			ddmFormValues = _ddmFieldLocalService.getDDMFormValues(
+				ddmStructure.getDDMForm(), journalArticle.getId());
 
-				String content = _extractDDMContent(
-					journalArticle, ddmStructure, contentAvailableLanguageId);
+			if (ddmFormValues != null) {
+				for (Locale contentAvailableLocale :
+						ddmFormValues.getAvailableLocales()) {
 
-				document.addText(
-					localization.getLocalizedName(
-						Field.CONTENT, contentAvailableLanguageId),
-					content);
+					String content = _ddmIndexer.extractIndexableAttributes(
+						ddmStructure, ddmFormValues, contentAvailableLocale);
+
+					document.addText(
+						localization.getLocalizedName(
+							Field.CONTENT,
+							LocaleUtil.toLanguageId(contentAvailableLocale)),
+						content);
+				}
 			}
 		}
 
@@ -139,9 +145,18 @@ public class JournalArticleModelDocumentContributor
 			"ddmStructureKey", journalArticle.getDDMStructureKey());
 		document.addKeyword(
 			"ddmTemplateKey", journalArticle.getDDMTemplateKey());
-		document.addText(
-			"defaultLanguageId",
-			localization.getDefaultLanguageId(journalArticle.getDocument()));
+
+		if (ddmFormValues != null) {
+			document.addText(
+				"defaultLanguageId",
+				LocaleUtil.toLanguageId(ddmFormValues.getDefaultLocale()));
+		}
+		else {
+			document.addText(
+				"defaultLanguageId",
+				_language.getLanguageId(LocaleUtil.getSiteDefault()));
+		}
+
 		document.addKeyword("head", JournalUtil.isHead(journalArticle));
 
 		boolean headListable = JournalUtil.isHeadListable(journalArticle);
@@ -185,7 +200,13 @@ public class JournalArticleModelDocumentContributor
 			"versionCount", GetterUtil.getDouble(journalArticle.getVersion()));
 
 		if (ddmStructure != null) {
-			_addDDMStructureAttributes(ddmStructure, document, journalArticle);
+			document.addKeyword(
+				Field.CLASS_TYPE_ID, ddmStructure.getStructureId());
+
+			if (ddmFormValues != null) {
+				_ddmIndexer.addAttributes(
+					document, ddmStructure, ddmFormValues);
+			}
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -193,63 +214,11 @@ public class JournalArticleModelDocumentContributor
 		}
 	}
 
-	private void _addDDMStructureAttributes(
-		DDMStructure ddmStructure, Document document, JournalArticle article) {
-
-		document.addKeyword(Field.CLASS_TYPE_ID, ddmStructure.getStructureId());
-
-		DDMFormValues ddmFormValues = null;
-
-		try {
-			Fields fields = _journalConverter.getDDMFields(
-				ddmStructure, article.getDocument());
-
-			ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
-				ddmStructure, fields);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return;
-		}
-
-		if (ddmFormValues != null) {
-			_ddmIndexer.addAttributes(document, ddmStructure, ddmFormValues);
-		}
-	}
-
-	private String _extractDDMContent(
-		JournalArticle article, DDMStructure ddmStructure, String languageId) {
-
-		DDMFormValues ddmFormValues = null;
-
-		try {
-			Fields fields = _journalConverter.getDDMFields(
-				ddmStructure, article.getDocument());
-
-			ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
-				ddmStructure, fields);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return StringPool.BLANK;
-		}
-
-		if (ddmFormValues == null) {
-			return StringPool.BLANK;
-		}
-
-		return _ddmIndexer.extractIndexableAttributes(
-			ddmStructure, ddmFormValues, LocaleUtil.fromLanguageId(languageId));
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleModelDocumentContributor.class);
+
+	@Reference
+	private DDMFieldLocalService _ddmFieldLocalService;
 
 	@Reference
 	private DDMIndexer _ddmIndexer;
@@ -258,13 +227,13 @@ public class JournalArticleModelDocumentContributor
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
-	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
-
-	@Reference
 	private Html _html;
 
 	@Reference
 	private JournalConverter _journalConverter;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

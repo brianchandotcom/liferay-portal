@@ -397,6 +397,28 @@ public class LayoutModelDocumentContributor
 					new MockHttpServletRequest(), "p_l_id=" + _layout.getPlid(),
 					false);
 
+			ThemeDisplay themeDisplay = _getThemeDisplay();
+
+			themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
+			themeDisplay.setLocale(locale);
+			themeDisplay.setRequest(httpServletRequest);
+			themeDisplay.setResponse(httpServletResponse);
+
+			httpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
+
+			httpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
+			httpServletRequest.setAttribute(WebKeys.USER, _user);
+			httpServletRequest.setAttribute(WebKeys.USER_ID, _user.getUserId());
+
+			return httpServletRequest;
+		}
+
+		private ThemeDisplay _getThemeDisplay() throws PortalException {
+			if (_themeDisplay != null) {
+				return _themeDisplay;
+			}
+
 			ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
 
 			Company company = _companyLocalService.getCompany(
@@ -427,22 +449,13 @@ public class LayoutModelDocumentContributor
 			themeDisplay.setTimeZone(_user.getTimeZone());
 			themeDisplay.setUser(_user);
 
-			themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
-			themeDisplay.setLocale(locale);
-			themeDisplay.setRequest(httpServletRequest);
-			themeDisplay.setResponse(httpServletResponse);
+			_themeDisplay = themeDisplay;
 
-			httpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, themeDisplay);
-
-			httpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
-			httpServletRequest.setAttribute(WebKeys.USER, _user);
-			httpServletRequest.setAttribute(WebKeys.USER_ID, _user.getUserId());
-
-			return httpServletRequest;
+			return _themeDisplay;
 		}
 
 		private final Layout _layout;
+		private ThemeDisplay _themeDisplay;
 		private final User _user;
 
 	}

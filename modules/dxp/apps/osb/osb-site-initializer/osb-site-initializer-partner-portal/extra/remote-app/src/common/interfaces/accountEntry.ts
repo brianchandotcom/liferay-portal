@@ -9,18 +9,16 @@
  * distribution rights of the Software.
  */
 
-export enum MDFColumnKey {
-	id = 'PRMMDFC-001',
-	status = 'PRMMDFC-002',
-	activityPeriod = 'PRMMDFC-003',
-	partner = 'PRMMDFC-004',
-	totalCost = 'PRMMDFC-005',
-	type = 'PRMMDFC-006',
-	requested = 'PRMMDFC-007',
-	amountClaimed = 'PRMMDFC-008',
-	approved = 'PRMMDFC-009',
-	paid = 'PRMMDFC-010',
-	reimbursementClaims = 'PRMMDFC-011',
-	dateSubmitted = 'PRMMDFC-012',
-	lastModified = 'PRMMDFC-013',
+import LiferayObject from './liferayObject';
+
+export default interface AccountEntry extends Partial<LiferayObject> {
+	createDate: Date;
+	creator: string;
+	description: string;
+	modifiedDate: Date;
+	name: string;
+	objectDefinitionId: number;
+	status: number;
+	type: string;
+	uuid: number;
 }

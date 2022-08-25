@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import AccountEntry from '../accountEntry';
 import MDFRequest from '../mdfRequest';
 
 export default interface MDFRequestDTO
@@ -21,7 +22,11 @@ export default interface MDFRequestDTO
 		| 'company'
 	> {
 	liferayBusinessSalesGoals?: string;
+	r_accountToMDFRequests_accountEntry?: AccountEntry;
 	r_accountToMDFRequests_accountEntryId?: number;
 	targetAudienceRoles?: string;
 	targetMarkets?: string;
+	totalCostOfExpense?: number;
+	totalMdfRequestAmount?: number;
+	totalRequested?: number;
 }

@@ -548,11 +548,6 @@ definition {
 			workflowAssetTitle = "Order",
 			workflowAssetType = "Commerce Order",
 			workflowTask = "Review");
-
-
-
-
-			
 	}
 
 	@description = "Verify that the user can view the Assigned to My Roles page in List View"

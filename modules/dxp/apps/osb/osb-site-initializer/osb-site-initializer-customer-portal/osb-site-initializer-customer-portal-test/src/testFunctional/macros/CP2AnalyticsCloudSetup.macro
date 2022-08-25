@@ -27,8 +27,6 @@ definition {
 			portlet = "Analytics Cloud Workspaces");
 
 		CustomerPortal.deleteCPObject(title = "Analytics Cloud Workspace");
-
-		CustomerPortal.deleteCPObject(title = "Account Subscription Group");
 	}
 
 	macro typeAllSetupAnalyticsCloudInfoFields {

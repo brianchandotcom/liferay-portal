@@ -240,7 +240,7 @@ public class KBAdminNavigationDisplayContext {
 				).put(
 					"key", "template"
 				).put(
-					"navigationItems", _getTemplatesJSONArray()
+					"navigationItems", _getTemplatesNavigationJSONArray()
 				).put(
 					"title", LanguageUtil.get(_httpServletRequest, "templates")
 				));
@@ -410,7 +410,7 @@ public class KBAdminNavigationDisplayContext {
 		return articleNavigationJSONArray;
 	}
 
-	private JSONArray _getTemplatesJSONArray() {
+	private JSONArray _getTemplatesNavigationJSONArray() {
 		JSONArray templateNavigationJSONArray =
 			JSONFactoryUtil.createJSONArray();
 

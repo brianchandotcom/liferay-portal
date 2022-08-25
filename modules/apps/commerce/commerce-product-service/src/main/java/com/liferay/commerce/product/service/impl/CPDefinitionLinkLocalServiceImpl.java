@@ -358,10 +358,8 @@ public class CPDefinitionLinkLocalServiceImpl
 		long[] cProductIds = new long[cpDefinitionIds2.length];
 
 		for (int i = 0; i < cProductIds.length; i++) {
-			long cpDefinitionId = cpDefinitionIds2[i];
-
 			CPDefinition cpDefinition =
-				cpDefinitionPersistence.findByPrimaryKey(cpDefinitionId);
+				cpDefinitionLocalService.fetchCPDefinition(cpDefinitionIds2[i]);
 
 			cProductIds[i] = cpDefinition.getCProductId();
 		}

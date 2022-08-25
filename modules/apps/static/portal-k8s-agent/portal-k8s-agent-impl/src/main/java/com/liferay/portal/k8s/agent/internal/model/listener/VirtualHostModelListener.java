@@ -51,7 +51,7 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 		Company company = _companyLocalService.fetchCompanyById(
 			virtualHost.getCompanyId());
 
-		_synchronizeConfigMap(company);
+		_modifyConfigMap(company);
 	}
 
 	@Override
@@ -88,19 +88,19 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 		Company company = _companyLocalService.fetchCompanyById(
 			virtualHost.getCompanyId());
 
-		_synchronizeConfigMap(company);
+		_modifyConfigMap(company);
 	}
 
 	@Activate
 	protected void activate() {
-		_companyLocalService.forEachCompany(this::_synchronizeConfigMap);
+		_companyLocalService.forEachCompany(this::_modifyConfigMap);
 	}
 
 	private String _getConfigMapName(Company company) {
 		return company.getWebId() + "-lxc-dxp-metadata";
 	}
 
-	private void _synchronizeConfigMap(Company company) {
+	private void _modifyConfigMap(Company company) {
 		List<String> virtualHostNames = new ArrayList<>();
 
 		for (VirtualHost virtualHost :

@@ -561,8 +561,6 @@ definition {
 				value1 = "${navTab}");
 		}
 
-		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
-
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
 			value1 = "${uploadFileName}");
@@ -603,8 +601,6 @@ definition {
 				locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
 				value1 = "${navTab}");
 		}
-
-		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",

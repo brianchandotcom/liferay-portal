@@ -62,8 +62,6 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
-
 			if (isSet(depotName)) {
 				ItemSelector.selectRepositoryImage(
 					customImage = "${customImage}",

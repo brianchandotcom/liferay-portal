@@ -73,8 +73,6 @@ definition {
 		NavItem.click(navItem = "${navItem}");
 
 		if (isSet(uploadFileName)) {
-			AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
-
 			WaitForEditable(locator1 = "TextInput#FILE");
 
 			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(

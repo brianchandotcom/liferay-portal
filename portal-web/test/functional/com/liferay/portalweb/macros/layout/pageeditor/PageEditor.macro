@@ -2631,8 +2631,6 @@ definition {
 		else {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertElementPresent.assertVisible(locator1 = "Button#SELECT_FILE");
-
 			WaitForEditable(locator1 = "TextInput#FILE");
 
 			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(

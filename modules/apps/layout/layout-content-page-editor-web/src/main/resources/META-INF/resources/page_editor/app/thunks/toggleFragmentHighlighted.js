@@ -13,7 +13,6 @@
  */
 
 import toggleFragmentHighlightedAction from '../actions/toggleFragmentHighlighted';
-import FragmentService from '../services/FragmentService';
 
 export default function toggleFragmentHighlighted({
 	fragmentEntryKey,
@@ -21,19 +20,13 @@ export default function toggleFragmentHighlighted({
 	initiallyHighlighted,
 }) {
 	return (dispatch) => {
-		return FragmentService.toggleFragmentHighlighted({
-			fragmentEntryKey,
-			highlighted,
-			onNetworkStatus: dispatch,
-		}).then(({highlightedFragments}) => {
-			dispatch(
-				toggleFragmentHighlightedAction({
-					fragmentEntryKey,
-					highlighted,
-					highlightedFragments,
-					initiallyHighlighted,
-				})
-			);
-		});
+		dispatch(
+			toggleFragmentHighlightedAction({
+				fragmentEntryKey,
+				highlighted,
+				highlightedFragments: [],
+				initiallyHighlighted,
+			})
+		);
 	};
 }

@@ -1,0 +1,285 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayCard from '@clayui/card';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayModal, {useModal} from '@clayui/modal';
+import ClayTabs from '@clayui/tabs';
+import PropTypes from 'prop-types';
+import React, {useEffect, useMemo, useState} from 'react';
+
+import {
+	useDispatch,
+	useSelector,
+	useSelectorRef,
+} from '../contexts/StoreContext';
+import selectWidgetFragmentEntryLinks from '../selectors/selectWidgetFragmentEntryLinks';
+import loadWidgets from '../thunks/loadWidgets';
+import {useId} from '../utils/useId';
+
+const TAB_IDS = {
+	fragments: 'fragments',
+	widgets: 'widgets',
+};
+
+export function ReorderSetsModal({onCloseModal}) {
+	const {observer, onClose} = useModal({
+		onClose: onCloseModal,
+	});
+
+	return (
+		<ClayModal
+			className="page-editor__reorder-set-modal"
+			observer={observer}
+		>
+			<ClayModal.Header>
+				{Liferay.Language.get('reorder-sets')}
+			</ClayModal.Header>
+
+			<ClayModal.Body>
+				<p className="text-secondary">
+					{Liferay.Language.get(
+						'fragments-and-widgets-sets-can-be-ordered-to-give-you-easy-access-to-the-ones-you-use-the-most'
+					)}
+				</p>
+
+				<Tabs />
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton displayType="secondary" onClick={onClose}>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton displayType="primary" onClick={() => {}}>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</ClayModal>
+	);
+}
+
+ReorderSetsModal.propTypes = {
+	onCloseModal: PropTypes.func.isRequired,
+};
+
+function Tabs() {
+	const namespace = useId();
+
+	const getTabId = (id) => `${namespace}tab${id}`;
+	const getTabPanelId = (tabId) => `${namespace}tabPanel${tabId}`;
+
+	const [activeTabId, setActiveTabId] = useState(TAB_IDS.fragments);
+
+	const dispatch = useDispatch();
+	const widgetFragmentEntryLinksRef = useSelectorRef(
+		selectWidgetFragmentEntryLinks
+	);
+
+	const fragments = useSelector((state) => state.fragments);
+	const widgets = useSelector((state) => state.widgets);
+
+	const tabs = useMemo(
+		() => [
+			{
+				id: TAB_IDS.fragments,
+				items: fragments.map(({fragmentCollectionId, name}) => ({
+					id: fragmentCollectionId,
+					name,
+				})),
+				label: Liferay.Language.get('fragments'),
+			},
+			{
+				id: TAB_IDS.widgets,
+				items: widgets
+					? widgets.map(({path, title}) => ({
+							id: path,
+							name: title,
+					  }))
+					: null,
+				label: Liferay.Language.get('widgets'),
+			},
+		],
+		[fragments, widgets]
+	);
+
+	useEffect(() => {
+		if (activeTabId === TAB_IDS.widgets && !widgets) {
+			dispatch(
+				loadWidgets({
+					fragmentEntryLinks: widgetFragmentEntryLinksRef.current,
+				})
+			);
+		}
+	}, [activeTabId, dispatch, widgetFragmentEntryLinksRef, widgets]);
+
+	return (
+		<>
+			<ClayTabs>
+				{tabs.map(({id, label}) => (
+					<ClayTabs.Item
+						active={activeTabId === id}
+						innerProps={{
+							'aria-controls': getTabPanelId(id),
+							'id': getTabId(id),
+						}}
+						key={id}
+						onClick={() => setActiveTabId(id)}
+					>
+						{label}
+					</ClayTabs.Item>
+				))}
+			</ClayTabs>
+
+			<ClayTabs.Content
+				activeIndex={tabs.findIndex((tab) => tab.id === activeTabId)}
+				fade
+			>
+				{tabs.map(({id, items}) => (
+					<ClayTabs.TabPane
+						aria-labelledby={getTabId(id)}
+						id={getTabPanelId(id)}
+						key={id}
+					>
+						{items ? (
+							<Items items={items} />
+						) : (
+							<ClayLoadingIndicator small />
+						)}
+					</ClayTabs.TabPane>
+				))}
+			</ClayTabs.Content>
+		</>
+	);
+}
+
+function Items({items: initialItems}) {
+	const [items, setItems] = useState(initialItems);
+
+	const onChangeItemPosition = (item, currentPosition, newPosition) => {
+		const nextItems = [...items];
+
+		nextItems.splice(currentPosition, 1);
+
+		nextItems.splice(newPosition, 0, item);
+
+		setItems(nextItems);
+	};
+
+	return (
+		<div className="py-4">
+			{items.map((item, index) => (
+				<CardItem
+					index={index}
+					item={item}
+					key={item.id}
+					numberOfItems={items.length}
+					onChangeItemPosition={onChangeItemPosition}
+				/>
+			))}
+		</div>
+	);
+}
+
+Items.propTypes = {
+	items: PropTypes.array.isRequired,
+};
+
+function CardItem({index, item, numberOfItems, onChangeItemPosition}) {
+	const {name} = item;
+
+	return (
+		<ClayCard>
+			<ClayCard.Body className="px-0">
+				<ClayCard.Row className="align-items-center">
+					<ClayLayout.ContentCol gutters>
+						<ClayIcon className="text-secondary" symbol="drag" />
+					</ClayLayout.ContentCol>
+
+					<ClayLayout.ContentCol expand>
+						<ClayCard.Description
+							className="text-uppercase"
+							displayType="title"
+							title={name}
+						>
+							{name}
+						</ClayCard.Description>
+					</ClayLayout.ContentCol>
+
+					<ClayLayout.ContentCol gutters>
+						<ReorderDropdown
+							index={index}
+							item={item}
+							numberOfItems={numberOfItems}
+							onChangeItemPosition={onChangeItemPosition}
+						/>
+					</ClayLayout.ContentCol>
+				</ClayCard.Row>
+			</ClayCard.Body>
+		</ClayCard>
+	);
+}
+
+CardItem.propTypes = {
+	index: PropTypes.number.isRequired,
+	item: PropTypes.object.isRequired,
+	numberOfItems: PropTypes.number.isRequired,
+	onChangeItemPosition: PropTypes.func.isRequired,
+};
+
+function ReorderDropdown({index, item, numberOfItems, onChangeItemPosition}) {
+	const items = [
+		{
+			disabled: index === 0,
+			label: Liferay.Language.get('move-up'),
+			onClick: () => onChangeItemPosition(item, index, index - 1),
+			symbolLeft: 'angle-up',
+		},
+		{
+			disabled: index === numberOfItems - 1,
+			label: Liferay.Language.get('move-down'),
+			onClick: () => onChangeItemPosition(item, index, index + 1),
+			symbolLeft: 'angle-down',
+		},
+	];
+
+	return (
+		<ClayDropDownWithItems
+			items={items}
+			trigger={
+				<ClayButtonWithIcon
+					className="text-secondary"
+					displayType="unstyled"
+					small
+					symbol="ellipsis-v"
+				/>
+			}
+		/>
+	);
+}
+
+ReorderDropdown.propTypes = {
+	index: PropTypes.number.isRequired,
+	item: PropTypes.object.isRequired,
+	numberOfItems: PropTypes.number.isRequired,
+	onChangeItemPosition: PropTypes.func.isRequired,
+};

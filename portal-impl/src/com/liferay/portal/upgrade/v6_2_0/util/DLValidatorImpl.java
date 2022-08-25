@@ -35,6 +35,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Collections;
+import java.util.Map;
+
 /**
  * @author     Adolfo Pérez
  * @deprecated As of Judson (7.1.x), replaced by {@link
@@ -65,6 +68,11 @@ public final class DLValidatorImpl implements DLValidator {
 	@Override
 	public long getMaxAllowableSize(long groupId, String mimeType) {
 		return 104857600;
+	}
+
+	@Override
+	public Map<String, Long> getMimeTypeSizeLimit(long groupId) {
+		return Collections.emptyMap();
 	}
 
 	@Override

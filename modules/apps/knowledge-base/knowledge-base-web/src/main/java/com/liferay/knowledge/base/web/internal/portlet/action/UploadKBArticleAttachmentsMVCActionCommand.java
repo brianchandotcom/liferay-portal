@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ARTICLE,
-		"mvc.command.name=uploadKBArticleAttachments"
+		"mvc.command.name=/knowledge_base/upload_kb_article_attachments"
 	},
 	service = MVCActionCommand.class
 )

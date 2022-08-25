@@ -123,7 +123,7 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 		return PortletURLBuilder.createActionURL(
 			liferayPortletResponse, KBPortletKeys.KNOWLEDGE_BASE_ADMIN
 		).setActionName(
-			"uploadKBArticleAttachments"
+			"/knowledge_base/upload_kb_article_attachments"
 		).setParameter(
 			"resourcePrimKey",
 			_kbAttachmentItemSelectorCriterion.getResourcePrimKey()

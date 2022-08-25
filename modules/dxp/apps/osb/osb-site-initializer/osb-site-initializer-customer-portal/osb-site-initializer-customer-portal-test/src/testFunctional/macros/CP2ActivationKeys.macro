@@ -62,27 +62,37 @@ definition {
 	macro formatLicenseFileName {
 		if(!(isSet(licenseType))) {
 			var licenseType = "";
+		} else {
+			var licenseType = "${licenseType}-";
 		}
 		if(!(isSet(product))) {
 			var product = "";
+		} else {
+			var product = "${product}-";
 		}
 		if(!(isSet(version))) {
 			var version = "";
+		}else {
+			var version = "${version}-";
 		}
 		if(!(isSet(licenseName))) {
 			var licenseName = "";
 		}
 		if(!(isSet(copy))) {
 			var copy = "";
+		} else {
+			var copy = " (${copy})";
 		}
 
-		var downloadedFileName = "${licenseType}-${product}-${version}-${licenseName}";
+		var downloadedFileName = "${licenseType}${product}${version}${licenseName}";
 
 		var downloadedFileName = StringUtil.toLowerCase("${downloadedFileName}");
 
 		var downloadedFileName = StringUtil.replace("${downloadedFileName}", " ", "");
 
 		var downloadedFileName = "${downloadedFileName}${copy}.${fileType}";
+
+		echo("Expected file name: ${downloadedFileName}");
 
 		return "${downloadedFileName}";
 	}

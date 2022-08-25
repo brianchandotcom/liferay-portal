@@ -537,18 +537,6 @@ definition {
 		property custom.properties = "enterprise.product.enterprise.search.enabled=false${line.separator}enterprise.product.notification.enabled=true";
 		property test.run.environment = "EE";
 
-		SelectFrame(value1 = "relative=top");
-
-		AssertTextEquals(
-			locator1 = "Modal#HEADER",
-			value1 = "Terms of Use");
-
-		AssertTextNotEquals.assertNotPartialText(
-			locator1 = "Modal#BODY",
-			value1 = "Use of Liferay Enterprise Search (LES) apps and features is not covered by Liferay Support and other subscription benefits without an active LES add-on subscription. If you do not want to use or have access to LES, access can be disabled completely by following these steps");
-
-		Click(locator1 = "Button#DONE");
-
 		AssertElementNotPresent(locator1 = "Modal#MODAL");
 	}
 

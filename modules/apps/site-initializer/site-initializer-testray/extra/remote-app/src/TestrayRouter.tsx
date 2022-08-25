@@ -252,10 +252,11 @@ const TestrayRoute = () => (
 						<Route element={<UserOutlet />} path="user/me">
 							<Route element={<UserForm />} index />
 
-							<Route
-								element={<ChangeUserPassword />}
-								path="password"
-							/>
+								<Route
+									element={<ChangeUserPassword />}
+									path="update-password"
+								/>
+							</Route>
 						</Route>
 					</Route>
 

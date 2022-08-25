@@ -15,11 +15,13 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
+import {useContext, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useLocation, useNavigate, useOutletContext} from 'react-router-dom';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
+import {AccountContext} from '../../../context/AccountContext';
 import {useFetch} from '../../../hooks/useFetch';
 import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
@@ -93,8 +95,7 @@ const UserForm = () => {
 
 		if (valueInsideList) {
 			newRoles = newRoles.filter((role) => role !== value);
-		}
-		else {
+		} else {
 			newRoles = [...newRoles, Number(value)];
 		}
 
@@ -227,7 +228,48 @@ const UserForm = () => {
 					</ClayLayout.Col>
 				</ClayLayout.Row>
 
-				<Form.Divider />
+				<>
+					<Form.Divider />
+
+					<ClayLayout.Row justify="start">
+						<ClayLayout.Col size={12} sm={12} xl={3}>
+							<h5 className="font-weight-normal">
+								{i18n.translate('active')}
+							</h5>
+						</ClayLayout.Col>
+
+						<ClayLayout.Col size={12} sm={12} xl={9}>
+							<ClayCheckbox
+								checked
+								label="Active"
+								onChange={onChange}
+							/>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+
+					<Form.Divider />
+
+					<ClayLayout.Row justify="start">
+						<ClayLayout.Col size={3} sm={12} xl={3}>
+							<h5 className="font-weight-normal">
+								{i18n.translate('delete-user')}
+							</h5>
+						</ClayLayout.Col>
+
+						<ClayLayout.Col size={3} sm={12} xl={3}>
+							<ClayForm.Group className="form-group-sm">
+								<ClayButton
+									className="bg-neutral-2 borderless neutral text-neutral-7"
+									onClick={() => deleteUser(userAccount.id)}
+								>
+									{i18n.translate('delete-user')}
+								</ClayButton>
+							</ClayForm.Group>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+				</>
+
+				<br />
 
 				<Form.Footer
 					onClose={onClose}

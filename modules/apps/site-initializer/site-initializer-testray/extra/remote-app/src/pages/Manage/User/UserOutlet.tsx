@@ -16,6 +16,7 @@ import {useContext} from 'react';
 import {Outlet, useParams} from 'react-router-dom';
 
 import {AccountContext} from '../../../context/AccountContext';
+import {useAccountContext, useHeader} from '../../../hooks';
 import {useFetch} from '../../../hooks/useFetch';
 import {liferayUserAccountsRest} from '../../../services/rest';
 

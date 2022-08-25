@@ -41,6 +41,6 @@ public interface OAuth2ProviderApplicationHeadlessServerConfiguration {
 		deflt = "<company.default.user>", required = false,
 		type = Meta.Type.String
 	)
-	public String userAccountEmail();
+	public String userAccountEmailAddress();
 
 }

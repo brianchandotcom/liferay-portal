@@ -197,28 +197,31 @@ public class Oauth2ProviderApplicationHeadlessServerFactory {
 			List<String> scopeAliasesList)
 		throws Exception {
 
-		String userAccountEmail =
+		String userAccountEmailAddress =
 			oAuth2ProviderApplicationHeadlessServerConfiguration.
-				userAccountEmail();
+				userAccountEmailAddress();
 
-		if (!Objects.equals(_COMPANY_DEFAULT_USER_TOKEN, userAccountEmail) &&
-			!Validator.isEmailAddress(userAccountEmail)) {
+		if (!Objects.equals(
+				_COMPANY_DEFAULT_USER_TOKEN, userAccountEmailAddress) &&
+			!Validator.isEmailAddress(userAccountEmailAddress)) {
 
 			throw new IllegalArgumentException(
-				"userAccountEmail must be a valid email address or ".concat(
-					_COMPANY_DEFAULT_USER_TOKEN));
+				"userAccountEmailAddress must be a valid email address or ".
+					concat(_COMPANY_DEFAULT_USER_TOKEN));
 		}
 
 		User user = _userLocalService.getDefaultUser(companyId);
 
 		User serviceUser = null;
 
-		if (Objects.equals(_COMPANY_DEFAULT_USER_TOKEN, userAccountEmail)) {
+		if (Objects.equals(
+				_COMPANY_DEFAULT_USER_TOKEN, userAccountEmailAddress)) {
+
 			serviceUser = user;
 		}
 		else {
 			serviceUser = _userLocalService.getUserByEmailAddress(
-				companyId, userAccountEmail);
+				companyId, userAccountEmailAddress);
 		}
 
 		OAuth2Application oAuth2Application =

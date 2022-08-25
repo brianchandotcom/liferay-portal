@@ -31,7 +31,7 @@ definition {
 
 	@description = "This test covers LPS-125475. The default page will be displayed when accessing a page through a language without a specific layout."
 	@priority = "3"
-	test AccessWithSpecificDisabledLanguage {
+	test CanAccessWithSpecificDisabledLanguageAfterSettingLocally {
 		property custom.properties = "locales.enabled=zh_CN,en_US,en_AU,fr_FR,de_DE,it_IT,ja_JP,pt_BR,es_ES${line.separator}locales=zh_CN,en_US,en_AU,fr_FR,de_DE,it_IT,ja_JP,pt_BR,es_ES,ru_RU,pl_PL,sv_SE,hu_HU,ar_SA,nb_NO,hr_HR,fi_FI,nl_NL,cs_CZ";
 
 		var portalURL = PropsUtil.get("portal.url");

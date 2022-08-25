@@ -2664,7 +2664,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						existingStructuredContentFolder.getSiteId(),
 						existingStructuredContentFolder.
 							getExternalReferenceCode(),
-						existingStructuredContentFolder);
+						structuredContentFolder);
 
 			return structuredContentFolder.getId();
 		}

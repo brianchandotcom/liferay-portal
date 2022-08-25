@@ -87,28 +87,6 @@ export default function ShortcutManager() {
 		);
 	};
 
-	const remove = () => {
-		dispatch(
-			deleteItem({
-				itemId: activeItemId,
-				selectItem,
-			})
-		);
-	};
-
-	const save = () => {
-		setOpenSaveModal(true);
-	};
-
-	const undo = (event) => {
-		if (event.shiftKey) {
-			dispatch(redoThunk({store: state}));
-		}
-		else {
-			dispatch(undoThunk({store: state}));
-		}
-	};
-
 	const move = (event) => {
 		const {itemId, parentId} = activeItem;
 
@@ -149,6 +127,28 @@ export default function ShortcutManager() {
 				segmentsExperienceId,
 			})
 		);
+	};
+
+	const remove = () => {
+		dispatch(
+			deleteItem({
+				itemId: activeItemId,
+				selectItem,
+			})
+		);
+	};
+
+	const save = () => {
+		setOpenSaveModal(true);
+	};
+
+	const undo = (event) => {
+		if (event.shiftKey) {
+			dispatch(redoThunk({store: state}));
+		}
+		else {
+			dispatch(undoThunk({store: state}));
+		}
 	};
 
 	const keymapRef = useRef(null);

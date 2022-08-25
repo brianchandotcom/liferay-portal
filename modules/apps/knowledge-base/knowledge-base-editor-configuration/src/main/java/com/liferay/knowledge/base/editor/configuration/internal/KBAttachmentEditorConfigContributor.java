@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.editor.configuration.internal;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.constants.ItemSelectorCriterionConstants;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
@@ -153,7 +154,8 @@ public class KBAttachmentEditorConfigContributor
 
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
-				null, null,
+				ItemSelectorCriterionConstants.MIME_TYPE_RESTRICTION_IMAGE,
+				null,
 				PortletURLBuilder.create(
 					requestBackedPortletURLFactory.createActionURL(
 						KBPortletKeys.KNOWLEDGE_BASE_ADMIN)

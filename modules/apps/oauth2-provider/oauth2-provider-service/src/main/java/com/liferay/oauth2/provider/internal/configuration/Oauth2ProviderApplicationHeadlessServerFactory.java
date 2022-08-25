@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.InputStream;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -202,8 +200,8 @@ public class Oauth2ProviderApplicationHeadlessServerFactory {
 			!Validator.isEmailAddress(userAccountEmailAddress)) {
 
 			throw new IllegalArgumentException(
-				"userAccountEmailAddress must be a valid email address or ".
-					concat(_COMPANY_DEFAULT_USER_TOKEN));
+				"User account email address must be a valid email address or " +
+					_COMPANY_DEFAULT_USER_TOKEN);
 		}
 
 		User user = _userLocalService.getDefaultUser(companyId);
@@ -246,11 +244,9 @@ public class Oauth2ProviderApplicationHeadlessServerFactory {
 
 		Class<?> clazz = getClass();
 
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/logo.png");
-
 		return _oAuth2ApplicationLocalService.updateIcon(
-			oAuth2Application.getOAuth2ApplicationId(), inputStream);
+			oAuth2Application.getOAuth2ApplicationId(),
+			clazz.getResourceAsStream("dependencies/logo.png"));
 	}
 
 	private Company _getCompany(Map<String, Object> properties)

@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.InputStream;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -220,11 +218,9 @@ public class Oauth2ProviderApplicationUserAgentFactory {
 
 		Class<?> clazz = getClass();
 
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/logo.png");
-
 		return _oAuth2ApplicationLocalService.updateIcon(
-			oAuth2Application.getOAuth2ApplicationId(), inputStream);
+			oAuth2Application.getOAuth2ApplicationId(),
+			clazz.getResourceAsStream("dependencies/logo.png"));
 	}
 
 	private Company _getCompany(Map<String, Object> properties)

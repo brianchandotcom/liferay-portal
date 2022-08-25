@@ -157,9 +157,7 @@ public class Oauth2ProviderApplicationHeadlessServerFactory {
 		_oAuth2Application = oAuth2Application;
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Created Headless Server application: ".concat(
-					_oAuth2Application.toString()));
+			_log.debug("OAuth 2 application " + _oAuth2Application);
 		}
 	}
 

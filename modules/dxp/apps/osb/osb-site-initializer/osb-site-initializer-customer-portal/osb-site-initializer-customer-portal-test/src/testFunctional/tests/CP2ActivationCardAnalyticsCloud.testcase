@@ -1,0 +1,88 @@
+@component-name = "portal-solutions"
+definition {
+
+    property osgi.modules.includes = "osb-site-initializer-customer-portal";
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+    property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+    var testSiteName = "Customer Portal Site";
+    var testSiteURL = "customer-portal-site";
+
+    setUp {
+        task ("Set up instance and sign in") {
+            TestCase.setUpPortalInstance();
+
+            User.firstLoginPG();
+        }
+
+        task ("Create a new Customer Portal Site") {
+            CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+        }
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        CustomerPortal.customerPortalApisTearDown();
+        
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        
+        else {
+            JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+        }
+    }
+
+    @description = "Automation ID: LPS-150154 | Test Summary: Verify if the card has the following details - Not Activated (Link only visible to admin roles): Analytics Cloud product logo - Project Name - Start and End Date of Analytics Cloud Subscriptions - Activation form status"
+    @priority = "5"
+    test DetailsFromNotActivatedCard {
+        
+        // TODO LPS-150154 DetailsFromNotActivatedCard pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-150163 | Test Summary: Verify if the Activation form link works"
+    @priority = "5"
+    test IfActivationFormLinkWorks {
+        
+        // TODO LPS-150163 IfActivationFormLinkWorks pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-150370 | Test Summary: Verify the page subtitle: Almost there! Setup Analytics Cloud by finishing the activation form"
+    @priority = "3"
+    test PageSubtitleAlmostThereIsPresent {
+        // TODO LPS-150370 PageSubtitleAlmostThereIsPresent pending implementation
+    }
+
+    @description = "Automation ID: LPS-150371 | Test Summary: Verify if the card has the following details - In Progress: Analytics Cloud product logo - Project Name - Start and End Date of Analytics Cloud Subscriptions - Activation form status"
+    @priority = "5"
+    test DetailsFromInProgressCard {
+        
+        // TODO LPS-150371 DetailsFromInProgressCard pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-150372 | Test Summary: Verify the page subtitle: Your Analytics Cloud workspace is being set up and will be available soon"
+    @priority = "3"
+    test PageSubtitleYourAnalyticsCloud {
+        // TODO LPS-150372 PageSubtitleYourAnalyticsCloud pending implementation
+    }
+
+    @description = "Automation ID: LPS-150373 | Test Summary: Verify if the card has the following details - Active: Analytics Cloud product logo - Project Name - Start and End Date of Analytics Cloud Subscriptions - Activation form status"
+    @priority = "5"
+    test DetailsFromActiveCard {
+        
+        // TODO LPS-150373 DetailsFromActiveCard pending implementation
+
+    }
+
+    @description = "Automation ID: LPS-150374 | Test Summary: Verify activation form link name: Go to Workspace"
+    @priority = "3"
+    test IfGoToWorkspaceLinkWorks {
+        // TODO LPS-150374 IfGoToWorkspaceLinkWorks pending implementation
+    }
+}

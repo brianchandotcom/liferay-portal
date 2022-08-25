@@ -14,6 +14,10 @@
 
 package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
@@ -93,6 +97,8 @@ import org.apache.commons.lang.ArrayUtils;
 public class UserSXPParameterContributor implements SXPParameterContributor {
 
 	public UserSXPParameterContributor(
+		AssetCategoryLocalService assetCategoryLocalService,
+		AssetTagLocalService assetTagLocalService,
 		ExpandoColumnLocalService expandoColumnLocalService,
 		ExpandoValueLocalService expandoValueLocalService, Language language,
 		Portal portal, RoleLocalService roleLocalService,
@@ -102,6 +108,8 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 		UserGroupRoleLocalService userGroupRoleLocalService,
 		UserLocalService userLocalService) {
 
+		_assetCategoryLocalService = assetCategoryLocalService;
+		_assetTagLocalService = assetTagLocalService;
 		_expandoColumnLocalService = expandoColumnLocalService;
 		_expandoValueLocalService = expandoValueLocalService;
 		_language = language;
@@ -147,6 +155,12 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				new SXPParameterContributorDefinition(
 					IntegerSXPParameter.class, "age", "user.age"),
 				new SXPParameterContributorDefinition(
+					LongArraySXPParameter.class, "asset-category-ids",
+					"user.asset_category_ids"),
+				new SXPParameterContributorDefinition(
+					StringArraySXPParameter.class, "asset-tag-names",
+					"user.asset_tag_names"),
+				new SXPParameterContributorDefinition(
 					DateSXPParameter.class, "birthday", "user.birthday"),
 				new SXPParameterContributorDefinition(
 					DateSXPParameter.class, "create-date", "user.create_date"),
@@ -185,11 +199,51 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				new SXPParameterContributorDefinition(
 					StringSXPParameter.class, "last-name", "user.last_name"),
 				new SXPParameterContributorDefinition(
+					LongArraySXPParameter.class, "parent-asset-category-ids",
+					"user.parent_asset_category_ids"),
+				new SXPParameterContributorDefinition(
 					LongArraySXPParameter.class, "regular-role-ids",
 					"user.regular_role_ids"),
 				new SXPParameterContributorDefinition(
 					LongArraySXPParameter.class, "user-group-ids",
 					"user.user_group_ids")));
+	}
+
+	private void _addAssetCategories(
+		Set<SXPParameter> sxpParameters, User user) {
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getCategories(
+				user.getModelClassName(), user.getPrimaryKey());
+
+		if (assetCategories.isEmpty()) {
+			return;
+		}
+
+		List<Long> assetCategoryIds = new ArrayList<>();
+
+		List<Long> parentAssetCategoryIds = new ArrayList<>();
+
+		for (AssetCategory assetCategory : assetCategories) {
+			assetCategoryIds.add(assetCategory.getCategoryId());
+
+			if (assetCategory.getParentCategoryId() > 0) {
+				parentAssetCategoryIds.addAll(
+					_getParentAssetCategoryIds(
+						assetCategory.getParentCategory(),
+						new ArrayList<Long>()));
+			}
+		}
+
+		sxpParameters.add(
+			new LongArraySXPParameter(
+				"user.asset_category_ids", true,
+				assetCategoryIds.toArray(new Long[0])));
+
+		sxpParameters.add(
+			new LongArraySXPParameter(
+				"user.parent_asset_category_ids", true,
+				parentAssetCategoryIds.toArray(new Long[0])));
 	}
 
 	private void _addExpandoSXPParameters(
@@ -423,10 +477,12 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 			new LongArraySXPParameter(
 				"user.active_segment_entry_ids", true,
 				ArrayUtil.toLongArray(segmentsEntryIds)));
-
 		sxpParameters.add(
 			new IntegerSXPParameter(
 				"user.age", true, _getAge(user.getBirthday())));
+		sxpParameters.add(
+			new StringArraySXPParameter(
+				"user.asset_tag_names", true, _getAssetTagNames(user)));
 		sxpParameters.add(
 			new DateSXPParameter("user.birthday", true, user.getBirthday()));
 		sxpParameters.add(
@@ -491,6 +547,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 					)));
 		}
 
+		_addAssetCategories(sxpParameters, user);
 		_addExpandoSXPParameters(searchContext, sxpParameters, user);
 	}
 
@@ -501,6 +558,17 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 		int y = GetterUtil.getInteger(formatter.format(new Date()));
 
 		return (y - x) / 10000;
+	}
+
+	private String[] _getAssetTagNames(User user) {
+		List<AssetTag> assetTags = _assetTagLocalService.getTags(
+			user.getModelClassName(), user.getPrimaryKey());
+
+		if (assetTags.isEmpty()) {
+			return new String[0];
+		}
+
+		return ListUtil.toArray(assetTags, AssetTag.NAME_ACCESSOR);
 	}
 
 	private Long[] _getCurrentSiteRoleIds(Long scopeGroupId, User user) {
@@ -550,6 +618,19 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 		return StringBundler.concat(
 			_getExpandoSXPParameterName(expandoColumn), StringPool.UNDERLINE,
 			_language.getLanguageId(locale));
+	}
+
+	private List<Long> _getParentAssetCategoryIds(
+		AssetCategory assetCategory, List<Long> parentAssetCategoryIds) {
+
+		parentAssetCategoryIds.add(assetCategory.getCategoryId());
+
+		if (assetCategory.getParentCategoryId() > 0) {
+			_getParentAssetCategoryIds(
+				assetCategory.getParentCategory(), parentAssetCategoryIds);
+		}
+
+		return parentAssetCategoryIds;
 	}
 
 	private Long[] _getRegularRoleIds(User user) throws PortalException {
@@ -757,6 +838,8 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserSXPParameterContributor.class);
 
+	private final AssetCategoryLocalService _assetCategoryLocalService;
+	private final AssetTagLocalService _assetTagLocalService;
 	private final ExpandoColumnLocalService _expandoColumnLocalService;
 	private final ExpandoValueLocalService _expandoValueLocalService;
 	private final Language _language;

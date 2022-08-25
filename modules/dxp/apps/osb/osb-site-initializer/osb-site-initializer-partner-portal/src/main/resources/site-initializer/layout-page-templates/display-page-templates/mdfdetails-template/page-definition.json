@@ -1,0 +1,1197 @@
+{
+  "pageElement" : {
+    "pageElements" : [ {
+      "definition" : {
+        "fragmentStyle" : {
+          "backgroundColor" : "colorNeutral1",
+          "paddingBottom" : "4",
+          "paddingLeft" : "10",
+          "paddingRight" : "10",
+          "paddingTop" : "6"
+        },
+        "indexed" : true,
+        "layout" : {
+          "borderWidth" : 0,
+          "marginBottom" : 0,
+          "marginLeft" : 0,
+          "marginRight" : 0,
+          "marginTop" : 0,
+          "paddingBottom" : 2,
+          "paddingLeft" : 0,
+          "paddingRight" : 0,
+          "paddingTop" : 6,
+          "widthType" : "Fluid"
+        },
+        "name" : "Page"
+      },
+      "pageElements" : [ {
+        "definition" : {
+          "fragmentStyle" : {
+            "backgroundColor" : "colorNeutral0",
+            "borderRadius" : "borderRadiusSm",
+            "marginBottom" : "3",
+            "paddingBottom" : "4",
+            "paddingLeft" : "4",
+            "paddingRight" : "4",
+            "paddingTop" : "4"
+          },
+          "indexed" : true,
+          "layout" : {
+            "borderWidth" : 0,
+            "marginBottom" : 1,
+            "marginLeft" : 0,
+            "marginRight" : 0,
+            "marginTop" : 0,
+            "paddingBottom" : 2,
+            "paddingLeft" : 2,
+            "paddingRight" : 2,
+            "paddingTop" : 2,
+            "widthType" : "Fluid"
+          },
+          "name" : "Header"
+        },
+        "pageElements" : [ {
+          "definition" : {
+            "indexed" : true,
+            "layout" : {
+              "align" : "Start",
+              "borderWidth" : 0,
+              "contentDisplay" : "FlexRow",
+              "justify" : "SpaceBetween",
+              "marginBottom" : 0,
+              "marginLeft" : 0,
+              "marginRight" : 0,
+              "marginTop" : 0,
+              "paddingBottom" : 0,
+              "paddingLeft" : 0,
+              "paddingRight" : 0,
+              "paddingTop" : 0,
+              "widthType" : "Fluid"
+            }
+          },
+          "pageElements" : [ {
+            "definition" : {
+              "indexed" : true,
+              "layout" : {
+                "borderWidth" : 0,
+                "contentDisplay" : "FlexColumn",
+                "marginBottom" : 0,
+                "marginLeft" : 0,
+                "marginRight" : 0,
+                "marginTop" : 0,
+                "paddingBottom" : 0,
+                "paddingLeft" : 0,
+                "paddingRight" : 0,
+                "paddingTop" : 0,
+                "widthType" : "Fluid"
+              }
+            },
+            "pageElements" : [ {
+              "definition" : {
+                "fragment" : {
+                  "key" : "DIALECT-dialect-text"
+                },
+                "fragmentConfig" : {
+                  "textType" : "h1"
+                },
+                "fragmentFields" : [ {
+                  "id" : "element-text",
+                  "value" : {
+                    "fragmentLink" : { },
+                    "text" : {
+                      "value_i18n" : {
+                        "en_US" : "Campaign MDF Request&nbsp;"
+                      }
+                    }
+                  }
+                } ],
+                "fragmentStyle" : {
+                  "fontWeight" : "fontWeightBold",
+                  "paddingBottom" : "1",
+                  "textColor" : "colorNeutral10"
+                },
+                "indexed" : true
+              },
+              "type" : "Fragment"
+            }, {
+              "definition" : {
+                "indexed" : true,
+                "layout" : {
+                  "borderWidth" : 0,
+                  "contentDisplay" : "FlexRow",
+                  "marginBottom" : 0,
+                  "marginLeft" : 0,
+                  "marginRight" : 0,
+                  "marginTop" : 0,
+                  "paddingBottom" : 0,
+                  "paddingLeft" : 0,
+                  "paddingRight" : 0,
+                  "paddingTop" : 0,
+                  "widthType" : "Fluid"
+                }
+              },
+              "pageElements" : [ {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "text-paragraph"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Date Submitted:&nbsp;"
+                        }
+                      }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "textColor" : "colorNeutral7"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              }, {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "text-paragraph"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "mapping" : {
+                          "fieldKey" : "ObjectEntry_createDate",
+                          "itemReference" : {
+                            "contextSource" : "DisplayPageItem"
+                          }
+                        }
+                      }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "textColor" : "colorNeutral7"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              }, {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "text-paragraph"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : ", Last Modified:&nbsp;"
+                        }
+                      }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "textColor" : "colorNeutral7"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              }, {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "text-paragraph"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "mapping" : {
+                          "fieldKey" : "ObjectEntry_modifiedDate",
+                          "itemReference" : {
+                            "contextSource" : "DisplayPageItem"
+                          }
+                        }
+                      }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "textColor" : "colorNeutral7"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              } ],
+              "type" : "Section"
+            } ],
+            "type" : "Section"
+          }, {
+            "definition" : {
+              "fragment" : {
+                "key" : "DIALECT-dialect-button"
+              },
+              "fragmentConfig" : {
+                "uppercase" : false,
+                "style" : "primary",
+                "type" : "solid",
+                "inverted" : false,
+                "buttonSize" : ""
+              },
+              "fragmentFields" : [ {
+                "id" : "link",
+                "value" : {
+                  "fragmentLink" : { },
+                  "text" : {
+                    "value_i18n" : {
+                      "en_US" : "Edit"
+                    }
+                  }
+                }
+              } ],
+              "indexed" : true
+            },
+            "type" : "Fragment"
+          } ],
+          "type" : "Section"
+        } ],
+        "type" : "Section"
+      }, {
+        "definition" : {
+          "fragmentStyle" : {
+            "backgroundColor" : "colorNeutral0",
+            "borderRadius" : "borderRadiusSm",
+            "marginBottom" : "3",
+            "paddingBottom" : "4",
+            "paddingLeft" : "4",
+            "paddingRight" : "4",
+            "paddingTop" : "4"
+          },
+          "indexed" : true,
+          "layout" : {
+            "borderWidth" : 0,
+            "marginBottom" : 1,
+            "marginLeft" : 0,
+            "marginRight" : 0,
+            "marginTop" : 0,
+            "paddingBottom" : 2,
+            "paddingLeft" : 2,
+            "paddingRight" : 2,
+            "paddingTop" : 2,
+            "widthType" : "Fluid"
+          },
+          "name" : "Summary"
+        },
+        "pageElements" : [ {
+          "definition" : {
+            "fragment" : {
+              "key" : "DIALECT-dialect-text"
+            },
+            "fragmentConfig" : {
+              "textType" : "h5"
+            },
+            "fragmentFields" : [ {
+              "id" : "element-text",
+              "value" : {
+                "fragmentLink" : { },
+                "text" : {
+                  "value_i18n" : {
+                    "en_US" : "Summary"
+                  }
+                }
+              }
+            } ],
+            "fragmentStyle" : {
+              "fontWeight" : "fontWeightBold",
+              "textColor" : "colorNeutral9"
+            },
+            "indexed" : true
+          },
+          "type" : "Fragment"
+        }, {
+          "definition" : {
+            "fragment" : {
+              "key" : "BASIC_COMPONENT-separator"
+            },
+            "fragmentConfig" : {
+              "separatorColor" : "",
+              "bottomSpacing" : "3"
+            },
+            "fragmentFields" : [ ],
+            "fragmentStyle" : {
+              "marginTop" : "1"
+            },
+            "indexed" : true
+          },
+          "type" : "Fragment"
+        }, {
+          "definition" : {
+            "gutters" : true,
+            "indexed" : true,
+            "modulesPerRow" : 5,
+            "numberOfColumns" : 5,
+            "reverseOrder" : false,
+            "rowViewports" : [ {
+              "id" : "landscapeMobile",
+              "rowViewportDefinition" : {
+                "modulesPerRow" : 1
+              }
+            }, {
+              "id" : "portraitMobile",
+              "rowViewportDefinition" : { }
+            }, {
+              "id" : "tablet",
+              "rowViewportDefinition" : { }
+            } ],
+            "verticalAlignment" : "middle"
+          },
+          "pageElements" : [ {
+            "definition" : {
+              "columnViewports" : [ {
+                "columnViewportDefinition" : {
+                  "size" : 12
+                },
+                "id" : "landscapeMobile"
+              }, {
+                "columnViewportDefinition" : { },
+                "id" : "portraitMobile"
+              }, {
+                "columnViewportDefinition" : { },
+                "id" : "tablet"
+              } ],
+              "size" : 3
+            },
+            "pageElements" : [ {
+              "definition" : {
+                "fragmentStyle" : {
+                  "borderWidth" : "0"
+                },
+                "indexed" : true,
+                "layout" : {
+                  "align" : "Center",
+                  "borderWidth" : 0,
+                  "contentDisplay" : "FlexColumn",
+                  "justify" : "Center",
+                  "marginBottom" : 0,
+                  "marginLeft" : 0,
+                  "marginRight" : 0,
+                  "marginTop" : 0,
+                  "paddingBottom" : 0,
+                  "paddingLeft" : 0,
+                  "paddingRight" : 0,
+                  "paddingTop" : 0,
+                  "widthType" : "Fluid"
+                }
+              },
+              "pageElements" : [ {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "text-paragraph"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Funding Periods"
+                        }
+                      }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "textColor" : "colorNeutral9"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              }, {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "text-paragraph"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "fontWeight" : "fontWeightBolder",
+                    "textColor" : "colorNeutral9"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              } ],
+              "type" : "Section"
+            } ],
+            "type" : "Column"
+          }, {
+            "definition" : {
+              "columnViewports" : [ {
+                "columnViewportDefinition" : {
+                  "size" : 12
+                },
+                "id" : "landscapeMobile"
+              }, {
+                "columnViewportDefinition" : { },
+                "id" : "portraitMobile"
+              }, {
+                "columnViewportDefinition" : { },
+                "id" : "tablet"
+              } ],
+              "size" : 2
+            },
+            "pageElements" : [ {
+              "definition" : {
+                "indexed" : true,
+                "layout" : {
+                  "align" : "Center",
+                  "borderWidth" : 0,
+                  "contentDisplay" : "FlexColumn",
+                  "justify" : "Center",
+                  "marginBottom" : 0,
+                  "marginLeft" : 0,
+                  "marginRight" : 0,
+                  "marginTop" : 0,
+                  "paddingBottom" : 0,
+                  "paddingLeft" : 0,
+                  "paddingRight" : 0,
+                  "paddingTop" : 0,
+                  "widthType" : "Fluid"
+                }
+              },
+              "pageElements" : [ {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "text-paragraph"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Total Cost"
+                        }
+                      }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "textColor" : "colorNeutral9"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              }, {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "text-paragraph"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "fontWeight" : "fontWeightBolder",
+                    "textColor" : "colorNeutral9"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              } ],
+              "type" : "Section"
+            } ],
+            "type" : "Column"
+          }, {
+            "definition" : {
+              "columnViewports" : [ {
+                "columnViewportDefinition" : {
+                  "size" : 12
+                },
+                "id" : "landscapeMobile"
+              }, {
+                "columnViewportDefinition" : { },
+                "id" : "portraitMobile"
+              }, {
+                "columnViewportDefinition" : { },
+                "id" : "tablet"
+              } ],
+              "size" : 2
+            },
+            "pageElements" : [ {
+              "definition" : {
+                "indexed" : true,
+                "layout" : {
+                  "align" : "Center",
+                  "borderWidth" : 0,
+                  "contentDisplay" : "FlexColumn",
+                  "justify" : "Center",
+                  "marginBottom" : 0,
+                  "marginLeft" : 0,
+                  "marginRight" : 0,
+                  "marginTop" : 0,
+                  "paddingBottom" : 0,
+                  "paddingLeft" : 0,
+                  "paddingRight" : 0,
+                  "paddingTop" : 0,
+                  "widthType" : "Fluid"
+                }
+              },
+              "pageElements" : [ {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "text-paragraph"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Requested"
+                        }
+                      }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "textColor" : "colorNeutral9"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              }, {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "text-paragraph"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "fontWeight" : "fontWeightBolder",
+                    "textColor" : "colorNeutral9"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              } ],
+              "type" : "Section"
+            } ],
+            "type" : "Column"
+          }, {
+            "definition" : {
+              "columnViewports" : [ {
+                "columnViewportDefinition" : {
+                  "size" : 12
+                },
+                "id" : "landscapeMobile"
+              }, {
+                "columnViewportDefinition" : { },
+                "id" : "portraitMobile"
+              }, {
+                "columnViewportDefinition" : { },
+                "id" : "tablet"
+              } ],
+              "size" : 2
+            },
+            "pageElements" : [ {
+              "definition" : {
+                "indexed" : true,
+                "layout" : {
+                  "align" : "Center",
+                  "borderWidth" : 0,
+                  "contentDisplay" : "FlexColumn",
+                  "justify" : "Center",
+                  "marginBottom" : 0,
+                  "marginLeft" : 0,
+                  "marginRight" : 0,
+                  "marginTop" : 0,
+                  "paddingBottom" : 0,
+                  "paddingLeft" : 0,
+                  "paddingRight" : 0,
+                  "paddingTop" : 0,
+                  "widthType" : "Fluid"
+                }
+              },
+              "pageElements" : [ {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "text-paragraph"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Approved"
+                        }
+                      }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "textColor" : "colorNeutral9"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              }, {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "text-paragraph"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "fontWeight" : "fontWeightBolder",
+                    "textColor" : "colorNeutral9"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              } ],
+              "type" : "Section"
+            } ],
+            "type" : "Column"
+          }, {
+            "definition" : {
+              "columnViewports" : [ {
+                "columnViewportDefinition" : {
+                  "size" : 12
+                },
+                "id" : "landscapeMobile"
+              }, {
+                "columnViewportDefinition" : { },
+                "id" : "portraitMobile"
+              }, {
+                "columnViewportDefinition" : { },
+                "id" : "tablet"
+              } ],
+              "size" : 3
+            },
+            "pageElements" : [ {
+              "definition" : {
+                "indexed" : true,
+                "layout" : {
+                  "align" : "Center",
+                  "borderWidth" : 0,
+                  "contentDisplay" : "FlexColumn",
+                  "justify" : "Center",
+                  "marginBottom" : 0,
+                  "marginLeft" : 0,
+                  "marginRight" : 0,
+                  "marginTop" : 0,
+                  "paddingBottom" : 0,
+                  "paddingLeft" : 0,
+                  "paddingRight" : 0,
+                  "paddingTop" : 0,
+                  "widthType" : "Fluid"
+                }
+              },
+              "pageElements" : [ {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "text-paragraph"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Total Claim Amount"
+                        }
+                      }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "textColor" : "colorNeutral9"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              }, {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "text-paragraph"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "fontWeight" : "fontWeightBolder",
+                    "textColor" : "colorNeutral9"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              } ],
+              "type" : "Section"
+            } ],
+            "type" : "Column"
+          } ],
+          "type" : "Row"
+        } ],
+        "type" : "Section"
+      }, {
+        "definition" : {
+          "indexed" : true,
+          "layout" : {
+            "borderWidth" : 0,
+            "marginBottom" : 0,
+            "marginLeft" : 0,
+            "marginRight" : 0,
+            "marginTop" : 0,
+            "paddingBottom" : 0,
+            "paddingLeft" : 0,
+            "paddingRight" : 0,
+            "paddingTop" : 0,
+            "widthType" : "Fluid"
+          },
+          "name" : "Body"
+        },
+        "pageElements" : [ {
+          "definition" : {
+            "gutters" : true,
+            "indexed" : true,
+            "modulesPerRow" : 2,
+            "numberOfColumns" : 2,
+            "reverseOrder" : false,
+            "rowViewports" : [ {
+              "id" : "landscapeMobile",
+              "rowViewportDefinition" : {
+                "modulesPerRow" : 1
+              }
+            }, {
+              "id" : "portraitMobile",
+              "rowViewportDefinition" : { }
+            }, {
+              "id" : "tablet",
+              "rowViewportDefinition" : { }
+            } ],
+            "verticalAlignment" : "top"
+          },
+          "pageElements" : [ {
+            "definition" : {
+              "columnViewports" : [ {
+                "columnViewportDefinition" : {
+                  "size" : 12
+                },
+                "id" : "landscapeMobile"
+              }, {
+                "columnViewportDefinition" : { },
+                "id" : "portraitMobile"
+              }, {
+                "columnViewportDefinition" : { },
+                "id" : "tablet"
+              } ],
+              "size" : 9
+            },
+            "pageElements" : [ {
+              "definition" : {
+                "fragmentStyle" : {
+                  "backgroundColor" : "colorNeutral0",
+                  "borderRadius" : "borderRadiusSm",
+                  "borderWidth" : "0",
+                  "paddingBottom" : "4",
+                  "paddingLeft" : "4",
+                  "paddingRight" : "4",
+                  "paddingTop" : "4"
+                },
+                "indexed" : true,
+                "layout" : {
+                  "borderWidth" : 0,
+                  "contentDisplay" : "FlexColumn",
+                  "marginBottom" : 0,
+                  "marginLeft" : 0,
+                  "marginRight" : 0,
+                  "marginTop" : 0,
+                  "paddingBottom" : 2,
+                  "paddingLeft" : 2,
+                  "paddingRight" : 2,
+                  "paddingTop" : 2,
+                  "widthType" : "Fluid"
+                }
+              },
+              "pageElements" : [ {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "h5"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Business Goals"
+                        }
+                      }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "fontWeight" : "fontWeightBold",
+                    "textColor" : "colorNeutral9"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              }, {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "BASIC_COMPONENT-separator"
+                  },
+                  "fragmentConfig" : {
+                    "separatorColor" : "",
+                    "bottomSpacing" : "3"
+                  },
+                  "fragmentFields" : [ ],
+                  "fragmentStyle" : {
+                    "marginTop" : "1"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              }, {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "table"
+                  },
+                  "fragmentConfig" : {
+                    "numberOfRows" : 6
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "rowContent-4",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "mapping" : {
+                          "fieldKey" : "ObjectField_additionalOption",
+                          "itemReference" : {
+                            "contextSource" : "DisplayPageItem"
+                          }
+                        }
+                      }
+                    }
+                  }, {
+                    "id" : "rowContent-5",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "mapping" : {
+                          "fieldKey" : "ObjectField_targetAudienceRoles",
+                          "itemReference" : {
+                            "contextSource" : "DisplayPageItem"
+                          }
+                        }
+                      }
+                    }
+                  }, {
+                    "id" : "rowContent-2",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "mapping" : {
+                          "fieldKey" : "ObjectField_liferayBusinessSalesGoals",
+                          "itemReference" : {
+                            "contextSource" : "DisplayPageItem"
+                          }
+                        }
+                      }
+                    }
+                  }, {
+                    "id" : "rowContent-3",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "mapping" : {
+                          "fieldKey" : "ObjectField_targetMarkets",
+                          "itemReference" : {
+                            "contextSource" : "DisplayPageItem"
+                          }
+                        }
+                      }
+                    }
+                  }, {
+                    "id" : "rowContent-1",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "mapping" : {
+                          "fieldKey" : "ObjectField_overallCampaign",
+                          "itemReference" : {
+                            "contextSource" : "DisplayPageItem"
+                          }
+                        }
+                      }
+                    }
+                  }, {
+                    "id" : "rowTitle-2",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Liferay business/sales goals"
+                        }
+                      }
+                    }
+                  }, {
+                    "id" : "rowTitle-1",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Name and Short description"
+                        }
+                      }
+                    }
+                  }, {
+                    "id" : "rowTitle-4",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Additional Options"
+                        }
+                      }
+                    }
+                  }, {
+                    "id" : "rowTitle-3",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Target Market(s)"
+                        }
+                      }
+                    }
+                  }, {
+                    "id" : "tableTitle",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Activity Summary"
+                        }
+                      }
+                    }
+                  }, {
+                    "id" : "rowTitle-6",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Total Cost of Activity"
+                        }
+                      }
+                    }
+                  }, {
+                    "id" : "rowContent-6",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "mapping" : {
+                          "fieldKey" : "ObjectField_totalCostOfExpense",
+                          "itemReference" : {
+                            "contextSource" : "DisplayPageItem"
+                          }
+                        }
+                      }
+                    }
+                  }, {
+                    "id" : "rowTitle-5",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Target Audience/Role"
+                        }
+                      }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "textAlign" : "justify"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              } ],
+              "type" : "Section"
+            } ],
+            "type" : "Column"
+          }, {
+            "definition" : {
+              "columnViewports" : [ {
+                "columnViewportDefinition" : {
+                  "size" : 12
+                },
+                "id" : "landscapeMobile"
+              }, {
+                "columnViewportDefinition" : { },
+                "id" : "portraitMobile"
+              }, {
+                "columnViewportDefinition" : { },
+                "id" : "tablet"
+              } ],
+              "size" : 3
+            },
+            "pageElements" : [ {
+              "definition" : {
+                "fragmentStyle" : {
+                  "backgroundColor" : "colorNeutral0",
+                  "borderRadius" : "borderRadiusSm",
+                  "paddingBottom" : "4",
+                  "paddingLeft" : "4",
+                  "paddingRight" : "4",
+                  "paddingTop" : "4"
+                },
+                "indexed" : true,
+                "layout" : {
+                  "borderWidth" : 0,
+                  "marginBottom" : 0,
+                  "marginLeft" : 0,
+                  "marginRight" : 0,
+                  "marginTop" : 0,
+                  "paddingBottom" : 2,
+                  "paddingLeft" : 2,
+                  "paddingRight" : 2,
+                  "paddingTop" : 2,
+                  "widthType" : "Fluid"
+                }
+              },
+              "pageElements" : [ {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "DIALECT-dialect-text"
+                  },
+                  "fragmentConfig" : {
+                    "textType" : "h5"
+                  },
+                  "fragmentFields" : [ {
+                    "id" : "element-text",
+                    "value" : {
+                      "fragmentLink" : { },
+                      "text" : {
+                        "value_i18n" : {
+                          "en_US" : "Comments"
+                        }
+                      }
+                    }
+                  } ],
+                  "fragmentStyle" : {
+                    "fontWeight" : "fontWeightBold",
+                    "textColor" : "colorNeutral10"
+                  },
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              }, {
+                "definition" : {
+                  "fragment" : {
+                    "key" : "BASIC_COMPONENT-separator"
+                  },
+                  "fragmentConfig" : {
+                    "separatorColor" : "",
+                    "bottomSpacing" : "3"
+                  },
+                  "fragmentFields" : [ ],
+                  "indexed" : true
+                },
+                "type" : "Fragment"
+              }, {
+                "definition" : {
+                  "widgetInstance" : {
+                    "widgetConfig" : { },
+                    "widgetName" : "com_liferay_comment_page_comments_web_portlet_PageCommentsPortlet"
+                  }
+                },
+                "type" : "Widget"
+              } ],
+              "type" : "Section"
+            } ],
+            "type" : "Column"
+          } ],
+          "type" : "Row"
+        } ],
+        "type" : "Section"
+      } ],
+      "type" : "Section"
+    } ],
+    "type" : "Root"
+  },
+  "settings" : {
+    "colorSchemeName" : "01",
+    "masterPage" : {
+      "key" : "content-template"
+    },
+    "themeName" : "Dialect",
+    "themeSettings" : {
+      "lfr-theme:regular:show-header" : "false",
+      "lfr-theme:regular:wrap-widget-page-content" : "false",
+      "lfr-theme:regular:show-header-search" : "false",
+      "lfr-theme:regular:show-footer" : "false"
+    }
+  },
+  "version" : 1.1
+}

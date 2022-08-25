@@ -93,7 +93,7 @@ public class BlogsEntryContentDashboardItem
 
 	@Override
 	public List<Version> getAllVersions(ThemeDisplay themeDisplay) {
-		return Collections.emptyList();
+		return getLatestVersions(themeDisplay.getLocale());
 	}
 
 	@Override

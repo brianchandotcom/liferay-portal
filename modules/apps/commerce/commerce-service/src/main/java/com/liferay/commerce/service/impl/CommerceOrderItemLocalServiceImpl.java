@@ -1244,7 +1244,8 @@ public class CommerceOrderItemLocalServiceImpl
 
 	protected void validate(
 			Locale locale, CommerceOrder commerceOrder,
-			CPDefinition cpDefinition, CPInstance cpInstance, int quantity)
+			CPDefinition cpDefinition, CPInstance cpInstance, int quantity,
+			boolean validateOrder)
 		throws PortalException {
 
 		if (commerceOrder.getUserId() == 0) {
@@ -1269,7 +1270,7 @@ public class CommerceOrderItemLocalServiceImpl
 					cpDefinition.getCPDefinitionId()));
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
+		if (!ExportImportThreadLocal.isImportInProcess() && validateOrder) {
 			List<CommerceOrderValidatorResult> commerceCartValidatorResults =
 				_commerceOrderValidatorRegistry.validate(
 					locale, commerceOrder, cpInstance, quantity);
@@ -1307,7 +1308,9 @@ public class CommerceOrderItemLocalServiceImpl
 
 		validate(
 			serviceContext.getLocale(), commerceOrder, cpDefinition, cpInstance,
-			quantity);
+			quantity,
+			GetterUtil.getBoolean(
+				serviceContext.getAttribute("validateOrder"), true));
 
 		long commerceOrderItemId = counterLocalService.increment();
 
@@ -1879,7 +1882,9 @@ public class CommerceOrderItemLocalServiceImpl
 
 		validate(
 			serviceContext.getLocale(), commerceOrder, cpDefinition, cpInstance,
-			quantity);
+			quantity,
+			GetterUtil.getBoolean(
+				serviceContext.getAttribute("validateOrder"), true));
 
 		commerceOrderItem.setExternalReferenceCode(externalReferenceCode);
 		commerceOrderItem.setGroupId(commerceOrder.getGroupId());
@@ -1944,7 +1949,9 @@ public class CommerceOrderItemLocalServiceImpl
 		validate(
 			serviceContext.getLocale(), commerceOrder,
 			commerceOrderItem.getCPDefinition(),
-			commerceOrderItem.fetchCPInstance(), quantity);
+			commerceOrderItem.fetchCPInstance(), quantity,
+			GetterUtil.getBoolean(
+				serviceContext.getAttribute("validateOrder"), true));
 
 		_updateBookedQuantity(
 			serviceContext.getUserId(), commerceOrderItem,
@@ -2001,7 +2008,9 @@ public class CommerceOrderItemLocalServiceImpl
 		validate(
 			serviceContext.getLocale(), commerceOrder,
 			commerceOrderItem.getCPDefinition(),
-			commerceOrderItem.fetchCPInstance(), quantity);
+			commerceOrderItem.fetchCPInstance(), quantity,
+			GetterUtil.getBoolean(
+				serviceContext.getAttribute("validateOrder"), true));
 
 		_updateBookedQuantity(
 			serviceContext.getUserId(), commerceOrderItem,

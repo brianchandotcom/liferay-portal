@@ -14,6 +14,8 @@
 
 package com.liferay.search.experiences.internal.blueprint.parameter;
 
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.CharPool;
@@ -139,6 +141,7 @@ public class SXPParameterDataCreator
 			new OpenWeatherMapSXPParameterContributor(_configurationProvider),
 			new TimeSXPParameterContributor(),
 			new UserSXPParameterContributor(
+				_assetCategoryLocalService, _assetTagLocalService,
 				_expandoColumnLocalService, _expandoValueLocalService,
 				_language, _portal, _roleLocalService, _segmentsEntryRetriever,
 				_userGroupGroupRoleLocalService, _userGroupLocalService,
@@ -700,6 +703,12 @@ public class SXPParameterDataCreator
 
 		throw new IllegalArgumentException();
 	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

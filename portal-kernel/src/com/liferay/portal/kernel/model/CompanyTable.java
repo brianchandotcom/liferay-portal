@@ -52,8 +52,6 @@ public class CompanyTable extends BaseTable<CompanyTable> {
 		"homeURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CompanyTable, Long> logoId = createColumn(
 		"logoId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CompanyTable, Boolean> system = createColumn(
-		"system_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<CompanyTable, Integer> maxUsers = createColumn(
 		"maxUsers", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<CompanyTable, Boolean> active = createColumn(

@@ -76,7 +76,7 @@ public class CompanyCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,8 +98,6 @@ public class CompanyCacheModel
 		sb.append(homeURL);
 		sb.append(", logoId=");
 		sb.append(logoId);
-		sb.append(", system=");
-		sb.append(system);
 		sb.append(", maxUsers=");
 		sb.append(maxUsers);
 		sb.append(", active=");
@@ -178,7 +176,6 @@ public class CompanyCacheModel
 		}
 
 		companyImpl.setLogoId(logoId);
-		companyImpl.setSystem(system);
 		companyImpl.setMaxUsers(maxUsers);
 		companyImpl.setActive(active);
 
@@ -272,8 +269,6 @@ public class CompanyCacheModel
 
 		logoId = objectInput.readLong();
 
-		system = objectInput.readBoolean();
-
 		maxUsers = objectInput.readInt();
 
 		active = objectInput.readBoolean();
@@ -332,8 +327,6 @@ public class CompanyCacheModel
 		}
 
 		objectOutput.writeLong(logoId);
-
-		objectOutput.writeBoolean(system);
 
 		objectOutput.writeInt(maxUsers);
 
@@ -416,7 +409,6 @@ public class CompanyCacheModel
 	public String mx;
 	public String homeURL;
 	public long logoId;
-	public boolean system;
 	public int maxUsers;
 	public boolean active;
 	public String name;

@@ -551,7 +551,6 @@
 			<hint-collection name="URL" />
 		</field>
 		<field name="logoId" type="long" />
-		<field name="system" type="boolean" />
 		<field name="maxUsers" type="int" />
 		<field name="active" type="boolean" />
 		<field name="name" type="String" />

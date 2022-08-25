@@ -141,8 +141,6 @@ public class CompanyPersistenceTest {
 
 		newCompany.setLogoId(RandomTestUtil.nextLong());
 
-		newCompany.setSystem(RandomTestUtil.randomBoolean());
-
 		newCompany.setMaxUsers(RandomTestUtil.nextInt());
 
 		newCompany.setActive(RandomTestUtil.randomBoolean());
@@ -190,7 +188,6 @@ public class CompanyPersistenceTest {
 			existingCompany.getHomeURL(), newCompany.getHomeURL());
 		Assert.assertEquals(
 			existingCompany.getLogoId(), newCompany.getLogoId());
-		Assert.assertEquals(existingCompany.isSystem(), newCompany.isSystem());
 		Assert.assertEquals(
 			existingCompany.getMaxUsers(), newCompany.getMaxUsers());
 		Assert.assertEquals(existingCompany.isActive(), newCompany.isActive());
@@ -237,13 +234,6 @@ public class CompanyPersistenceTest {
 	}
 
 	@Test
-	public void testCountBySystem() throws Exception {
-		_persistence.countBySystem(RandomTestUtil.randomBoolean());
-
-		_persistence.countBySystem(RandomTestUtil.randomBoolean());
-	}
-
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Company newCompany = addCompany();
 
@@ -270,10 +260,10 @@ public class CompanyPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"Company", "mvccVersion", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true, "webId",
-			true, "mx", true, "homeURL", true, "logoId", true, "system", true,
-			"maxUsers", true, "active", true, "name", true, "legalName", true,
-			"legalId", true, "legalType", true, "sicCode", true, "tickerSymbol",
-			true, "industry", true, "type", true, "size", true);
+			true, "mx", true, "homeURL", true, "logoId", true, "maxUsers", true,
+			"active", true, "name", true, "legalName", true, "legalId", true,
+			"legalType", true, "sicCode", true, "tickerSymbol", true,
+			"industry", true, "type", true, "size", true);
 	}
 
 	@Test
@@ -569,8 +559,6 @@ public class CompanyPersistenceTest {
 		company.setHomeURL(RandomTestUtil.randomString());
 
 		company.setLogoId(RandomTestUtil.nextLong());
-
-		company.setSystem(RandomTestUtil.randomBoolean());
 
 		company.setMaxUsers(RandomTestUtil.nextInt());
 

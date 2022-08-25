@@ -76,12 +76,12 @@ public class CompanyModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"webId", Types.VARCHAR}, {"mx", Types.VARCHAR},
 		{"homeURL", Types.VARCHAR}, {"logoId", Types.BIGINT},
-		{"system_", Types.BOOLEAN}, {"maxUsers", Types.INTEGER},
-		{"active_", Types.BOOLEAN}, {"name", Types.VARCHAR},
-		{"legalName", Types.VARCHAR}, {"legalId", Types.VARCHAR},
-		{"legalType", Types.VARCHAR}, {"sicCode", Types.VARCHAR},
-		{"tickerSymbol", Types.VARCHAR}, {"industry", Types.VARCHAR},
-		{"type_", Types.VARCHAR}, {"size_", Types.VARCHAR}
+		{"maxUsers", Types.INTEGER}, {"active_", Types.BOOLEAN},
+		{"name", Types.VARCHAR}, {"legalName", Types.VARCHAR},
+		{"legalId", Types.VARCHAR}, {"legalType", Types.VARCHAR},
+		{"sicCode", Types.VARCHAR}, {"tickerSymbol", Types.VARCHAR},
+		{"industry", Types.VARCHAR}, {"type_", Types.VARCHAR},
+		{"size_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,7 +98,6 @@ public class CompanyModelImpl
 		TABLE_COLUMNS_MAP.put("mx", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("homeURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("maxUsers", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
@@ -113,7 +112,7 @@ public class CompanyModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Company (mvccVersion LONG default 0 not null,companyId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,webId VARCHAR(75) null,mx VARCHAR(200) null,homeURL STRING null,logoId LONG,system_ BOOLEAN,maxUsers INTEGER,active_ BOOLEAN,name VARCHAR(75) null,legalName VARCHAR(75) null,legalId VARCHAR(75) null,legalType VARCHAR(75) null,sicCode VARCHAR(75) null,tickerSymbol VARCHAR(75) null,industry VARCHAR(75) null,type_ VARCHAR(75) null,size_ VARCHAR(75) null)";
+		"create table Company (mvccVersion LONG default 0 not null,companyId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,webId VARCHAR(75) null,mx VARCHAR(200) null,homeURL STRING null,logoId LONG,maxUsers INTEGER,active_ BOOLEAN,name VARCHAR(75) null,legalName VARCHAR(75) null,legalId VARCHAR(75) null,legalType VARCHAR(75) null,sicCode VARCHAR(75) null,tickerSymbol VARCHAR(75) null,industry VARCHAR(75) null,type_ VARCHAR(75) null,size_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Company";
 
@@ -162,20 +161,14 @@ public class CompanyModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SYSTEM_COLUMN_BITMASK = 4L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long WEBID_COLUMN_BITMASK = 8L;
+	public static final long WEBID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long COMPANYID_COLUMN_BITMASK = 16L;
+	public static final long COMPANYID_COLUMN_BITMASK = 8L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(
@@ -307,9 +300,6 @@ public class CompanyModelImpl
 		attributeGetterFunctions.put("logoId", Company::getLogoId);
 		attributeSetterBiConsumers.put(
 			"logoId", (BiConsumer<Company, Long>)Company::setLogoId);
-		attributeGetterFunctions.put("system", Company::getSystem);
-		attributeSetterBiConsumers.put(
-			"system", (BiConsumer<Company, Boolean>)Company::setSystem);
 		attributeGetterFunctions.put("maxUsers", Company::getMaxUsers);
 		attributeSetterBiConsumers.put(
 			"maxUsers", (BiConsumer<Company, Integer>)Company::setMaxUsers);
@@ -568,37 +558,6 @@ public class CompanyModelImpl
 	@Deprecated
 	public long getOriginalLogoId() {
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("logoId"));
-	}
-
-	@JSON
-	@Override
-	public boolean getSystem() {
-		return _system;
-	}
-
-	@JSON
-	@Override
-	public boolean isSystem() {
-		return _system;
-	}
-
-	@Override
-	public void setSystem(boolean system) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_system = system;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public boolean getOriginalSystem() {
-		return GetterUtil.getBoolean(
-			this.<Boolean>getColumnOriginalValue("system_"));
 	}
 
 	@JSON
@@ -898,7 +857,6 @@ public class CompanyModelImpl
 		companyImpl.setMx(getMx());
 		companyImpl.setHomeURL(getHomeURL());
 		companyImpl.setLogoId(getLogoId());
-		companyImpl.setSystem(isSystem());
 		companyImpl.setMaxUsers(getMaxUsers());
 		companyImpl.setActive(isActive());
 		companyImpl.setName(getName());
@@ -935,7 +893,6 @@ public class CompanyModelImpl
 		companyImpl.setMx(this.<String>getColumnOriginalValue("mx"));
 		companyImpl.setHomeURL(this.<String>getColumnOriginalValue("homeURL"));
 		companyImpl.setLogoId(this.<Long>getColumnOriginalValue("logoId"));
-		companyImpl.setSystem(this.<Boolean>getColumnOriginalValue("system_"));
 		companyImpl.setMaxUsers(
 			this.<Integer>getColumnOriginalValue("maxUsers"));
 		companyImpl.setActive(this.<Boolean>getColumnOriginalValue("active_"));
@@ -1090,8 +1047,6 @@ public class CompanyModelImpl
 		}
 
 		companyCacheModel.logoId = getLogoId();
-
-		companyCacheModel.system = isSystem();
 
 		companyCacheModel.maxUsers = getMaxUsers();
 
@@ -1280,7 +1235,6 @@ public class CompanyModelImpl
 	private String _mx;
 	private String _homeURL;
 	private long _logoId;
-	private boolean _system;
 	private int _maxUsers;
 	private boolean _active;
 	private String _name;
@@ -1332,7 +1286,6 @@ public class CompanyModelImpl
 		_columnOriginalValues.put("mx", _mx);
 		_columnOriginalValues.put("homeURL", _homeURL);
 		_columnOriginalValues.put("logoId", _logoId);
-		_columnOriginalValues.put("system_", _system);
 		_columnOriginalValues.put("maxUsers", _maxUsers);
 		_columnOriginalValues.put("active_", _active);
 		_columnOriginalValues.put("name", _name);
@@ -1351,7 +1304,6 @@ public class CompanyModelImpl
 	static {
 		Map<String, String> attributeNames = new HashMap<>();
 
-		attributeNames.put("system_", "system");
 		attributeNames.put("active_", "active");
 		attributeNames.put("type_", "type");
 		attributeNames.put("size_", "size");
@@ -1390,29 +1342,27 @@ public class CompanyModelImpl
 
 		columnBitmasks.put("logoId", 512L);
 
-		columnBitmasks.put("system_", 1024L);
+		columnBitmasks.put("maxUsers", 1024L);
 
-		columnBitmasks.put("maxUsers", 2048L);
+		columnBitmasks.put("active_", 2048L);
 
-		columnBitmasks.put("active_", 4096L);
+		columnBitmasks.put("name", 4096L);
 
-		columnBitmasks.put("name", 8192L);
+		columnBitmasks.put("legalName", 8192L);
 
-		columnBitmasks.put("legalName", 16384L);
+		columnBitmasks.put("legalId", 16384L);
 
-		columnBitmasks.put("legalId", 32768L);
+		columnBitmasks.put("legalType", 32768L);
 
-		columnBitmasks.put("legalType", 65536L);
+		columnBitmasks.put("sicCode", 65536L);
 
-		columnBitmasks.put("sicCode", 131072L);
+		columnBitmasks.put("tickerSymbol", 131072L);
 
-		columnBitmasks.put("tickerSymbol", 262144L);
+		columnBitmasks.put("industry", 262144L);
 
-		columnBitmasks.put("industry", 524288L);
+		columnBitmasks.put("type_", 524288L);
 
-		columnBitmasks.put("type_", 1048576L);
-
-		columnBitmasks.put("size_", 2097152L);
+		columnBitmasks.put("size_", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

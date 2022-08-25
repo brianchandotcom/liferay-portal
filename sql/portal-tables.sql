@@ -211,7 +211,6 @@ create table Company (
 	mx VARCHAR(200) null,
 	homeURL STRING null,
 	logoId LONG,
-	system_ BOOLEAN,
 	maxUsers INTEGER,
 	active_ BOOLEAN,
 	name VARCHAR(75) null,

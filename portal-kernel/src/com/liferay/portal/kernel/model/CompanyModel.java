@@ -228,27 +228,6 @@ public interface CompanyModel
 	public void setLogoId(long logoId);
 
 	/**
-	 * Returns the system of this company.
-	 *
-	 * @return the system of this company
-	 */
-	public boolean getSystem();
-
-	/**
-	 * Returns <code>true</code> if this company is system.
-	 *
-	 * @return <code>true</code> if this company is system; <code>false</code> otherwise
-	 */
-	public boolean isSystem();
-
-	/**
-	 * Sets whether this company is system.
-	 *
-	 * @param system the system of this company
-	 */
-	public void setSystem(boolean system);
-
-	/**
 	 * Returns the max users of this company.
 	 *
 	 * @return the max users of this company

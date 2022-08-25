@@ -51,7 +51,6 @@ public class CompanyWrapper
 		attributes.put("mx", getMx());
 		attributes.put("homeURL", getHomeURL());
 		attributes.put("logoId", getLogoId());
-		attributes.put("system", isSystem());
 		attributes.put("maxUsers", getMaxUsers());
 		attributes.put("active", isActive());
 		attributes.put("name", getName());
@@ -127,12 +126,6 @@ public class CompanyWrapper
 
 		if (logoId != null) {
 			setLogoId(logoId);
-		}
-
-		Boolean system = (Boolean)attributes.get("system");
-
-		if (system != null) {
-			setSystem(system);
 		}
 
 		Integer maxUsers = (Integer)attributes.get("maxUsers");
@@ -467,16 +460,6 @@ public class CompanyWrapper
 	}
 
 	/**
-	 * Returns the system of this company.
-	 *
-	 * @return the system of this company
-	 */
-	@Override
-	public boolean getSystem() {
-		return model.getSystem();
-	}
-
-	/**
 	 * Returns the ticker symbol of this company.
 	 *
 	 * @return the ticker symbol of this company
@@ -591,16 +574,6 @@ public class CompanyWrapper
 	@Override
 	public boolean isStrangersWithMx() {
 		return model.isStrangersWithMx();
-	}
-
-	/**
-	 * Returns <code>true</code> if this company is system.
-	 *
-	 * @return <code>true</code> if this company is system; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isSystem() {
-		return model.isSystem();
 	}
 
 	@Override
@@ -791,16 +764,6 @@ public class CompanyWrapper
 	@Override
 	public void setSize(String size) {
 		model.setSize(size);
-	}
-
-	/**
-	 * Sets whether this company is system.
-	 *
-	 * @param system the system of this company
-	 */
-	@Override
-	public void setSystem(boolean system) {
-		model.setSystem(system);
 	}
 
 	/**

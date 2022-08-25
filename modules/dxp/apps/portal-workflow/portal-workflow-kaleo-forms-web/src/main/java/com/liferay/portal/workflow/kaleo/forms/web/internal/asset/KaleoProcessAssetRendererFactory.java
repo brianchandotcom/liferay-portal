@@ -114,45 +114,23 @@ public class KaleoProcessAssetRendererFactory
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.kaleo.forms.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLRecordLocalService(
-		DDLRecordLocalService ddlRecordLocalService) {
-
-		_ddlRecordLocalService = ddlRecordLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKaleoProcessLinkLocalService(
-		KaleoProcessLinkLocalService kaleoProcessLinkLocalService) {
-
-		_kaleoProcessLinkLocalService = kaleoProcessLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKaleoProcessLocalService(
-		KaleoProcessLocalService kaleoProcessLocalService) {
-
-		_kaleoProcessLocalService = kaleoProcessLocalService;
-	}
-
-	@Reference(
-		target = "(javax.portlet.name=" + KaleoFormsPortletKeys.KALEO_FORMS_ADMIN + ")",
-		unbind = "-"
-	)
-	protected void setPortlet(Portlet portlet) {
-	}
-
+	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
+
+	@Reference
 	private KaleoProcessLinkLocalService _kaleoProcessLinkLocalService;
+
+	@Reference
 	private KaleoProcessLocalService _kaleoProcessLocalService;
+
+	@Reference(
+		target = "(javax.portlet.name=" + KaleoFormsPortletKeys.KALEO_FORMS_ADMIN + ")"
+	)
+	private Portlet _portlet;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.kaleo.forms.web)"
+	)
 	private ServletContext _servletContext;
 
 }

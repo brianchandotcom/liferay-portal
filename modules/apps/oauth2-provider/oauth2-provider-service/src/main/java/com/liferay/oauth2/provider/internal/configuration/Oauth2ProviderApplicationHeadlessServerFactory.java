@@ -270,8 +270,8 @@ public class Oauth2ProviderApplicationHeadlessServerFactory {
 		}
 
 		throw new IllegalStateException(
-			"Either companyId or dxp.lxc.liferay.com.virtualInstanceId " +
-				"property must be present");
+			"The property \"companyId\" or " +
+				"\"dxp.lxc.liferay.com.virtualInstanceId\" must be set");
 	}
 
 	private String _getConfigMapName(String serviceId, String webId) {

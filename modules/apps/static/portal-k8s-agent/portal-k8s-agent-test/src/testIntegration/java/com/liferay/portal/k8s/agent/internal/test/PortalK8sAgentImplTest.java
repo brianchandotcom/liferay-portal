@@ -172,23 +172,21 @@ public class PortalK8sAgentImplTest {
 		_companyLocalService.addCompany(
 			null, webId, webId, webId, false, 0, true);
 
-		String configMapName = webId.concat("-lxc-dxp-metadata");
-
 		ConfigMap configMap = _kubernetesMockClient.configMaps(
 		).withName(
-			configMapName
+			webId.concat("-lxc-dxp-metadata")
 		).waitUntilCondition(
 			it -> it != null, 20, TimeUnit.SECONDS
 		);
 
 		Assert.assertNotNull(configMap);
 
-		ObjectMeta objectMeta = configMap.getMetadata();
-
 		Map<String, String> data = configMap.getData();
 
 		Assert.assertEquals(webId, data.get("com.liferay.lxc.dxp.domains"));
 		Assert.assertEquals(webId, data.get("com.liferay.lxc.dxp.mainDomain"));
+
+		ObjectMeta objectMeta = configMap.getMetadata();
 
 		Map<String, String> labels = objectMeta.getLabels();
 
@@ -235,8 +233,6 @@ public class PortalK8sAgentImplTest {
 
 		Assert.assertNotNull(configMap);
 
-		ObjectMeta objectMeta = configMap.getMetadata();
-
 		Map<String, String> data = configMap.getData();
 
 		Assert.assertEquals(
@@ -245,6 +241,8 @@ public class PortalK8sAgentImplTest {
 		Assert.assertEquals(
 			TestPropsValues.COMPANY_WEB_ID,
 			data.get("com.liferay.lxc.dxp.mainDomain"));
+
+		ObjectMeta objectMeta = configMap.getMetadata();
 
 		Map<String, String> labels = objectMeta.getLabels();
 
@@ -293,12 +291,12 @@ public class PortalK8sAgentImplTest {
 			).build()
 		);
 
-		try (ConfigurationHolder configurationHolder2 =
+		try (ConfigurationHolder configurationHolder =
 				new AwaitingConfigurationHolder(
 					_bundleContext, "test.pid", 10000, TimeUnit.MILLISECONDS)) {
 
 			Dictionary<String, Object> properties =
-				configurationHolder2.getProperties();
+				configurationHolder.getProperties();
 
 			Assert.assertEquals(
 				Http.HTTPS_WITH_SLASH.concat(mainDomain),

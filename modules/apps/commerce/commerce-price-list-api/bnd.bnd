@@ -1,4 +1,4 @@
-iBundle-Name: Liferay Commerce Price List API
+Bundle-Name: Liferay Commerce Price List API
 Bundle-SymbolicName: com.liferay.commerce.price.list.api
 Bundle-Version: 15.0.1
 Export-Package:\

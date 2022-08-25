@@ -61,9 +61,9 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 		Company company = _companyLocalService.fetchCompanyById(
 			virtualHost.getCompanyId());
 
-		String webId = company.getWebId();
+		if (Objects.equals(
+				company.getWebId(), PropsValues.COMPANY_DEFAULT_WEB_ID)) {
 
-		if (Objects.equals(webId, PropsValues.COMPANY_DEFAULT_WEB_ID)) {
 			return;
 		}
 
@@ -77,7 +77,7 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 
 				labels.clear();
 			},
-			_getConfigMapName(webId));
+			_getConfigMapName(company.getWebId()));
 	}
 
 	@Override

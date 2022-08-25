@@ -15,7 +15,7 @@
 package com.liferay.oauth2.provider.configuration.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration;
+import com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -42,7 +42,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author Raymond Augé
  */
 @RunWith(Arquillian.class)
-public class Oauth2ProviderApplicationHeadlessServerFactoryTest {
+public class OAuth2ProviderApplicationUserAgentConfigurationFactoryTest {
 
 	@ClassRule
 	@Rule
@@ -50,14 +50,14 @@ public class Oauth2ProviderApplicationHeadlessServerFactoryTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testCreateHeadlessServerApplicationUsingConfiguration()
+	public void testCreateUserAgentApplicationUsingConfiguration()
 		throws Exception {
 
 		String externalReferenceCode = "foo";
 
 		try (ConfigurationHolder configurationHolder1 = new ConfigurationHolder(
 				() -> _configurationAdmin.getFactoryConfiguration(
-					OAuth2ProviderApplicationHeadlessServerConfiguration.class.
+					OAuth2ProviderApplicationUserAgentConfiguration.class.
 						getName(),
 					externalReferenceCode, "?"))) {
 

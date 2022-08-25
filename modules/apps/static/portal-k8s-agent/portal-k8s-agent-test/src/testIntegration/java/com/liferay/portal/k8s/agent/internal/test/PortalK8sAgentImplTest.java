@@ -248,8 +248,7 @@ public class PortalK8sAgentImplTest {
 
 			String webId = "foo-prd.lxc.com";
 
-			_companyLocalService.addCompany(
-				null, webId, webId, webId, false, 0, true);
+			_companyLocalService.addCompany(null, webId, webId, webId, 0, true);
 
 			String configMapName = webId.concat("-lxc-dxp-metadata");
 

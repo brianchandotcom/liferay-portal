@@ -122,8 +122,8 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 
 		Company company = _companyService.addCompany(
 			companyId, portalInstance.getPortalInstanceId(),
-			portalInstance.getVirtualHost(), portalInstance.getDomain(), false,
-			0, true);
+			portalInstance.getVirtualHost(), portalInstance.getDomain(), 0,
+			true);
 
 		Admin admin = portalInstance.getAdmin();
 

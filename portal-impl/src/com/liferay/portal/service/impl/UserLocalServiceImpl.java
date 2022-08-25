@@ -6706,7 +6706,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Company company = _companyPersistence.findByPrimaryKey(companyId);
 
-		if (company.isSystem() || (company.getMaxUsers() == 0)) {
+		if (company.getMaxUsers() == 0) {
 			return;
 		}
 

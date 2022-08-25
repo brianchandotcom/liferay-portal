@@ -181,7 +181,7 @@ public abstract class BaseTestPreparatorBundleActivator
 		String virtualHostname = hostName + ".xyz";
 
 		Company company = CompanyLocalServiceUtil.addCompany(
-			null, hostName, virtualHostname, virtualHostname, false, 0, true);
+			null, hostName, virtualHostname, virtualHostname, 0, true);
 
 		autoCloseables.add(
 			() -> CompanyLocalServiceUtil.deleteCompany(

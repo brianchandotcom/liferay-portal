@@ -100,7 +100,7 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
 		Company company = _companyService.addCompany(
-			webId, virtualHostname, mx, false, maxUsers, active);
+			webId, virtualHostname, mx, maxUsers, active);
 
 		String siteInitializerKey = ParamUtil.getString(
 			actionRequest, "siteInitializerKey");

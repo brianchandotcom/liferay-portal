@@ -4824,9 +4824,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			String friendlyURL)
 		throws PortalException {
 
-		Company company = _companyPersistence.findByPrimaryKey(companyId);
-
-		if (company.isSystem() || Validator.isNull(friendlyURL)) {
+		if (Validator.isNull(friendlyURL)) {
 			return;
 		}
 

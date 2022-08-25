@@ -45,9 +45,7 @@ definition {
 			key_filterName = "${filterName}",
 			locator1 = "ACEventAnalysis#CHOOSE_FILTER");
 
-		Select(
-			locator1 = "Select#SELECT",
-			value1 = "${optionValue}");
+		ACUtils.selectGenericOption(optionValue = "${optionValue}");
 
 		if ((IsElementNotPresent(key_text = "calendar", locator1 = "Icon#ANY")) && ("${optionValue}" != "True") && ("${optionValue}" != "False")) {
 			Type(

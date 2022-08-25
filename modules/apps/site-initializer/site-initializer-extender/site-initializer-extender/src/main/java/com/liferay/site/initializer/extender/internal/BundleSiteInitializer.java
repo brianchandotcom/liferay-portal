@@ -2597,7 +2597,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				putSiteKnowledgeBaseArticleByExternalReferenceCode(
 					existingKnowledgeBaseArticle.getSiteId(),
 					existingKnowledgeBaseArticle.getExternalReferenceCode(),
-					existingKnowledgeBaseArticle);
+					knowledgeBaseArticle);
 		}
 		catch (NoSuchModelException noSuchModelException) {
 			if (!folder) {
@@ -2647,7 +2647,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				putSiteKnowledgeBaseFolderByExternalReferenceCode(
 					existingKnowledgeBaseFolder.getSiteId(),
 					existingKnowledgeBaseFolder.getExternalReferenceCode(),
-					existingKnowledgeBaseFolder);
+					knowledgeBaseFolder);
 		}
 		catch (NoSuchModelException noSuchModelException) {
 			if (parentKnowledgeBaseObjectId == 0) {

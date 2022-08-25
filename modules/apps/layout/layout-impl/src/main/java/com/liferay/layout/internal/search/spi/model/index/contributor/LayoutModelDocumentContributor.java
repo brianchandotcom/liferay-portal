@@ -158,16 +158,16 @@ public class LayoutModelDocumentContributor
 			httpServletResponse = serviceContext.getResponse();
 		}
 
-		if ((httpServletRequest == null) || (httpServletResponse == null)) {
-			return StringPool.BLANK;
+		if ((httpServletRequest != null) && (httpServletResponse != null)) {
+			return LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
+				_fragmentRendererController, httpServletRequest,
+				httpServletResponse, layoutPageTemplateStructure,
+				FragmentEntryLinkConstants.VIEW, locale,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(layout.getPlid()));
 		}
 
-		return LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
-			_fragmentRendererController, httpServletRequest,
-			httpServletResponse, layoutPageTemplateStructure,
-			FragmentEntryLinkConstants.VIEW, locale,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid()));
+		return StringPool.BLANK;
 	}
 
 	private int _getStatus(Layout layout) {

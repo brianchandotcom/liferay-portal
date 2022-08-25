@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -29,9 +30,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -69,27 +67,21 @@ public class EntityFieldConfigurationFieldOptionsProvider
 		Map<String, EntityField> entityFieldsMap =
 			_entityModel.getEntityFieldsMap();
 
-		Set<Map.Entry<String, EntityField>> entries =
-			entityFieldsMap.entrySet();
+		_options = new ArrayList<>();
 
-		Stream<Map.Entry<String, EntityField>> stream = entries.stream();
+		for (Map.Entry<String, EntityField> entry :
+				entityFieldsMap.entrySet()) {
 
-		_options = stream.filter(
-			entry -> {
-				EntityField entityField = entry.getValue();
+			EntityField entityField = entry.getValue();
 
-				return Objects.equals(
-					entityField.getType(), EntityField.Type.STRING);
+			if (Objects.equals(
+					entityField.getType(), EntityField.Type.STRING)) {
+
+				_options.add(_toOption(entityField.getName()));
 			}
-		).map(
-			Map.Entry::getKey
-		).map(
-			this::_toOption
-		).sorted(
-			Comparator.comparing(Option::getValue)
-		).collect(
-			Collectors.toList()
-		);
+		}
+
+		Collections.sort(_options, Comparator.comparing(Option::getValue));
 	}
 
 	@Deactivate

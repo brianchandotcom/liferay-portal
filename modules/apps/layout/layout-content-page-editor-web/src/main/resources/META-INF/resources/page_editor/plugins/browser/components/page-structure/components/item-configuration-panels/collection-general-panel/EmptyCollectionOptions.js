@@ -12,15 +12,21 @@
  * details.
  */
 
-import {ClayCheckbox} from '@clayui/form';
+import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import {useSelector} from '../../../../../../../app/contexts/StoreContext';
+import selectLanguageId from '../../../../../../../app/selectors/selectLanguageId';
+import {getEditableLocalizedValue} from '../../../../../../../app/utils/getEditableLocalizedValue';
 import {useId} from '../../../../../../../app/utils/useId';
+import CurrentLanguageFlag from '../../../../../../../common/components/CurrentLanguageFlag';
+import useControlledState from '../../../../../../../core/hooks/useControlledState';
 
 export function EmptyCollectionOptions({
+	collectionEmptyCollectionMessageId,
 	emptyCollectionOptions,
 	handleConfigurationChanged,
 }) {
@@ -33,6 +39,19 @@ export function EmptyCollectionOptions({
 				displayMessage: event.target.checked,
 			},
 		});
+
+	const languageId = useSelector(selectLanguageId);
+
+	const [
+		messageForSelectedLanguage,
+		setMessageForSelectedLanguage,
+	] = useControlledState(
+		getEditableLocalizedValue(
+			emptyCollectionOptions?.message,
+			languageId,
+			Liferay.Language.get('no-results-found')
+		)
+	);
 
 	return (
 		<>
@@ -50,6 +69,43 @@ export function EmptyCollectionOptions({
 				</div>
 			)}
 
+			{Liferay.FeatureFlags['LPS-160789'] && displayMessage && (
+				<ClayForm.Group small>
+					<label htmlFor={collectionEmptyCollectionMessageId}>
+						{Liferay.Language.get('empty-collection-alert')}
+					</label>
+
+					<ClayInput.Group small>
+						<ClayInput.GroupItem>
+							<ClayInput
+								id={collectionEmptyCollectionMessageId}
+								onBlur={() =>
+									handleConfigurationChanged({
+										emptyCollectionOptions: {
+											...emptyCollectionOptions,
+											message: {
+												...emptyCollectionOptions?.message,
+												[languageId]: messageForSelectedLanguage,
+											},
+										},
+									})
+								}
+								onChange={(event) =>
+									setMessageForSelectedLanguage(
+										event.target.value
+									)
+								}
+								type="text"
+								value={messageForSelectedLanguage || ''}
+							/>
+						</ClayInput.GroupItem>
+
+						<ClayInput.GroupItem shrink>
+							<CurrentLanguageFlag />
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</ClayForm.Group>
+			)}
 		</>
 	);
 }
@@ -93,8 +149,10 @@ function EmptyCollectionHelp() {
 }
 
 EmptyCollectionOptions.propTypes = {
+	collectionEmptyCollectionMessageId: PropTypes.string.isRequired,
 	emptyCollectionOptions: PropTypes.shape({
 		displayMessage: PropTypes.bool,
+		message: PropTypes.object,
 	}),
 	handleConfigurationChanged: PropTypes.func.isRequired,
 };

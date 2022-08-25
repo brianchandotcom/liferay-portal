@@ -70,6 +70,7 @@ export function CollectionGeneralPanel({item}) {
 	const [collectionConfiguration, setCollectionConfiguration] = useState(
 		null
 	);
+	const collectionEmptyCollectionMessageId = useId();
 	const collectionItemType = collection?.itemType || null;
 	const collectionLayoutId = useId();
 	const collectionListItemStyleId = useId();
@@ -321,6 +322,9 @@ export function CollectionGeneralPanel({item}) {
 										)}
 
 									<EmptyCollectionOptions
+										collectionEmptyCollectionMessageId={
+											collectionEmptyCollectionMessageId
+										}
 										emptyCollectionOptions={
 											emptyCollectionOptions
 										}

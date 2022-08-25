@@ -315,15 +315,11 @@ public class JournalArticleCacheModel
 
 		journalArticleImpl.resetOriginalValues();
 
-		journalArticleImpl.setDocument(_document);
-
 		return journalArticleImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput)
-		throws ClassNotFoundException, IOException {
-
+	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
@@ -374,9 +370,6 @@ public class JournalArticleCacheModel
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
-
-		_document =
-			(com.liferay.portal.kernel.xml.Document)objectInput.readObject();
 	}
 
 	@Override
@@ -507,8 +500,6 @@ public class JournalArticleCacheModel
 		}
 
 		objectOutput.writeLong(statusDate);
-
-		objectOutput.writeObject(_document);
 	}
 
 	public long mvccVersion;
@@ -546,6 +537,5 @@ public class JournalArticleCacheModel
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
-	public com.liferay.portal.kernel.xml.Document _document;
 
 }

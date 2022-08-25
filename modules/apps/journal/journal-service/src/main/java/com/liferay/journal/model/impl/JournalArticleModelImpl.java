@@ -1397,13 +1397,6 @@ public class JournalArticleModelImpl
 		_statusDate = statusDate;
 	}
 
-	public com.liferay.portal.kernel.xml.Document getDocument() {
-		return null;
-	}
-
-	public void setDocument(com.liferay.portal.kernel.xml.Document document) {
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1882,8 +1875,6 @@ public class JournalArticleModelImpl
 
 		_setModifiedDate = false;
 
-		setDocument(null);
-
 		_columnBitmask = 0;
 	}
 
@@ -2087,10 +2078,6 @@ public class JournalArticleModelImpl
 		else {
 			journalArticleCacheModel.statusDate = Long.MIN_VALUE;
 		}
-
-		setDocument(null);
-
-		journalArticleCacheModel._document = getDocument();
 
 		return journalArticleCacheModel;
 	}

@@ -38,6 +38,11 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 
 	@Override
+	public String getJaxRsApplicationName() {
+		return "Liferay.Headless.Commerce.Admin.Catalog";
+	}
+
+	@Override
 	public Map<Locale, String> getLabelMap() {
 		return createLabelMap("cp-definition");
 	}

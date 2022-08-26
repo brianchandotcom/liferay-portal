@@ -42,6 +42,11 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 
 	@Override
+	public String getJaxRsApplicationName() {
+		return "Liferay.Headless.Commerce.Admin.Order";
+	}
+
+	@Override
 	public Map<Locale, String> getLabelMap() {
 		return createLabelMap("commerce-order");
 	}

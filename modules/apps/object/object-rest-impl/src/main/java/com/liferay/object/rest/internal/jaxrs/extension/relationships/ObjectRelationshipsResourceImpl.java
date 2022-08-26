@@ -15,7 +15,7 @@
 package com.liferay.object.rest.internal.jaxrs.extension.relationships;
 
 import com.liferay.object.rest.extension.relationships.ObjectRelationships;
-import com.liferay.object.rest.extension.relationships.SystemObjectRelationshipsResource;
+import com.liferay.object.rest.extension.relationships.ObjectRelationshipsResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -41,47 +41,43 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luis Miguel Barcos
  */
 @Component(
-	factory = "com.liferay.object.rest.extension.relationships.SystemObjectRelationshipsResource",
+	factory = "com.liferay.object.rest.extension.relationships.ObjectRelationshipsResource",
 	property = {"api.version=v1.0", "osgi.jaxrs.resource=true"},
-	service = SystemObjectRelationshipsResource.class
+	service = ObjectRelationshipsResource.class
 )
 @Path("/v1.0")
-public class SystemObjectRelationshipsResourceImpl
-	implements SystemObjectRelationshipsResource {
+public class ObjectRelationshipsResourceImpl
+	implements ObjectRelationshipsResource {
 
 	@GET
 	@Override
 	@Parameters(
 		{
 			@Parameter(in = ParameterIn.PATH, name = "previousPath"),
-			@Parameter(in = ParameterIn.PATH, name = "currentSystemObjectId"),
-			@Parameter(
-				in = ParameterIn.PATH, name = "systemObjectRelationshipName"
-			),
+			@Parameter(in = ParameterIn.PATH, name = "objectEntryId"),
+			@Parameter(in = ParameterIn.PATH, name = "objectRelationshipName"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
 	@Path(
-		"/{previousPath: [a-zA-Z0-9-]+}/{currentSystemObjectId: \\d+}/{systemObjectRelationshipName: [a-zA-Z0-9-]+}"
+		"/{previousPath: [a-zA-Z0-9-]+}/{objectEntryId: \\d+}/{objectRelationshipName: [a-zA-Z0-9-]+}"
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags({@Tag(name = "ObjectEntry")})
-	public Page<Object> getSystemObjectRelatedObjectsPage(
+	public Page<Object> getObjectRelatedObjectsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("previousPath") String
 				previousPath,
+			@NotNull @Parameter(hidden = true) @PathParam("objectEntryId") Long
+				objectEntryId,
 			@NotNull @Parameter(hidden = true)
-			@PathParam("currentSystemObjectId")
-			Long currentSystemObjectId,
-			@NotNull @Parameter(hidden = true)
-			@PathParam("systemObjectRelationshipName")
-			String systemObjectRelationshipName,
+			@PathParam("objectRelationshipName")
+			String objectRelationshipName,
 			@Context Pagination pagination)
 		throws Exception {
 
 		return _objectRelationships.getObjectRelatedObjectsPage(
-			currentSystemObjectId, systemObjectRelationshipName, pagination,
-			_uriInfo);
+			objectEntryId, objectRelationshipName, pagination, _uriInfo);
 	}
 
 	@Reference

@@ -78,13 +78,6 @@ public class SynonymSetIndexReaderImpl implements SynonymSetIndexReader {
 			searchSearchResponse.getSearchHits());
 	}
 
-	@Reference(unbind = "-")
-	protected void setSearchEngineAdapter(
-		SearchEngineAdapter searchEngineAdapter) {
-
-		_searchEngineAdapter = searchEngineAdapter;
-	}
-
 	protected SynonymSet translate(Document document, String id) {
 		return _documentToSynonymSetTranslator.translate(document, id);
 	}

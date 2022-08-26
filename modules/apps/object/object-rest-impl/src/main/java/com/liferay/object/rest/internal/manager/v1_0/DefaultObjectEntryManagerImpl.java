@@ -646,14 +646,12 @@ public class DefaultObjectEntryManagerImpl
 
 	private ObjectDefinition _getRelatedObjectDefinition(
 			ObjectRelationship objectRelationship,
-			ObjectDefinition currentObjectDefinition)
+			ObjectDefinition objectDefinition)
 		throws Exception {
 
 		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
-		long currentObjectDefinitionId =
-			currentObjectDefinition.getObjectDefinitionId();
 
-		if (objectDefinitionId1 != currentObjectDefinitionId) {
+		if (objectDefinitionId1 != objectDefinition.getObjectDefinitionId()) {
 			return _objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
 		}
@@ -687,7 +685,7 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private Page<ObjectEntry> _getSystemObjectRelatedObjectEntries(
-			ObjectDefinition currentObjectDefinition, long currentObjectEntryId,
+			ObjectDefinition objectDefinition, long objectEntryId,
 			ObjectRelatedModelsProvider objectRelatedModelsProvider,
 			DTOConverterContext dtoConverterContext,
 			ObjectRelationship objectRelationship, Pagination pagination)
@@ -695,12 +693,10 @@ public class DefaultObjectEntryManagerImpl
 
 		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
 			_systemObjectDefinitionMetadataTracker.
-				getSystemObjectDefinitionMetadata(
-					currentObjectDefinition.getName());
+				getSystemObjectDefinitionMetadata(objectDefinition.getName());
 
 		AssetEntry entry = _assetEntryLocalService.getEntry(
-			systemObjectDefinitionMetadata.getModelClassName(),
-			currentObjectEntryId);
+			systemObjectDefinitionMetadata.getModelClassName(), objectEntryId);
 
 		long groupId = GroupThreadLocal.getGroupId();
 
@@ -712,8 +708,8 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		return _getObjectEntries(
-			currentObjectEntryId, entry.getUserId(),
-			currentObjectDefinition.getObjectDefinitionId(), entry.getGroupId(),
+			objectEntryId, entry.getUserId(),
+			objectDefinition.getObjectDefinitionId(), entry.getGroupId(),
 			dtoConverterContext,
 			objectRelatedModelsProvider.getRelatedModels(
 				groupId, objectRelationship.getObjectRelationshipId(),
@@ -809,9 +805,8 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private List<ObjectEntry> _toObjectEntries(
-			DTOConverterContext dtoConverterContext,
-			List<com.liferay.object.model.ObjectEntry> objectEntries)
-		throws Exception {
+		DTOConverterContext dtoConverterContext,
+		List<com.liferay.object.model.ObjectEntry> objectEntries) {
 
 		return TransformUtil.transform(
 			objectEntries,

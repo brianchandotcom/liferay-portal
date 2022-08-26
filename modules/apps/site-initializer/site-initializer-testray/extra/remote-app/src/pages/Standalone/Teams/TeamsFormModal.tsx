@@ -137,7 +137,11 @@ const TeamFormModal: React.FC<TeamProps> = ({
 			}
 			observer={observer}
 			size="full-screen"
-			title={i18n.translate(modalState?.id ? 'edit-team' : 'new-team')}
+			title={
+				modalState?.id
+					? i18n.sub('edit-x', 'team')
+					: i18n.translate('new-team')
+			}
 			visible
 		>
 			<Form.Input

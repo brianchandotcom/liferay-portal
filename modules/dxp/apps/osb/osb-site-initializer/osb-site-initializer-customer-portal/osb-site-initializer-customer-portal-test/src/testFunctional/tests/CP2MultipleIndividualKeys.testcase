@@ -79,6 +79,7 @@ definition {
     }
 
 	@description = "Automation ID: LPS-152781 | Test Summary: Verify success message when the Individual Key is downloaded."
+	@ignore = "true"
 	@priority = "5"
 	test SuccessMessageFromIndividualKey {
 		property portal.upstream = "quarantine";
@@ -172,6 +173,7 @@ definition {
 	}
 
 	@description = "Verify that user can see the correct option of download when they select two keys with the same expiration date."
+	@ignore = "true"
 	@priority = "5"
 	test MultipleIndividualKeysAgregatedDowloadOptions {
 		property portal.upstream = "quarantine";
@@ -270,6 +272,7 @@ definition {
 	}
 
 	@description = "Verify that user can see the correct option of download when they select two keys with different expiration dates"
+	@ignore = "true"
 	@priority = "5"
 	test MultipleIndividualKeysNotAgregatedDowloadOptions {
 		property portal.upstream = "quarantine";

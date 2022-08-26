@@ -25,8 +25,6 @@ definition {
 		CP2DXPCloudSetup.deleteEntryCloudEnvironments(
 			entry = "${entry}",
 			portlet = "Analytics Cloud Workspaces");
-
-		CustomerPortal.deleteCPObject(title = "Analytics Cloud Workspace");
 	}
 
 	macro typeAllSetupAnalyticsCloudInfoFields {
@@ -76,6 +74,10 @@ definition {
 		Type(
 			locator1 = "CustomerPortalSite#SETUP_FIELDS",
 			value1 = "${value}");
+	}
+
+	macro clickOnWorkspaceLink {
+		Click(locator1 = "CP2AnalyticsCloudSetup#WORKSPACE");
 	}
 
 }

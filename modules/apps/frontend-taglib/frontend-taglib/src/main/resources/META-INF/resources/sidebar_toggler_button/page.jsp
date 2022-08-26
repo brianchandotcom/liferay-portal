@@ -16,7 +16,7 @@
 
 <%@ include file="/sidebar_toggler_button/init.jsp" %>
 
-<aui:a cssClass="<%= cssClass %>" href="#<%= sidenavId %>" id="<%= StringUtil.randomId() %>">
+<aui:a cssClass="<%= cssClass %>" href='<%= "#" + sidenavId %>' id="<%= StringUtil.randomId() %>">
 	<c:if test="<%= Validator.isNotNull(icon) %>">
 		<aui:icon cssClass="icon-monospaced" image="<%= icon %>" markupView="lexicon" />
 	</c:if>

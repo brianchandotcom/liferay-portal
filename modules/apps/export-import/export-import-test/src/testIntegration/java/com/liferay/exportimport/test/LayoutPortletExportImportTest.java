@@ -30,7 +30,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -49,7 +48,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -107,22 +105,18 @@ public class LayoutPortletExportImportTest {
 	public void testGloballyScopedPortletExportImportDoesNotOverrideGlobalSitePermissions()
 		throws Exception {
 
-		LayoutSetPrototype exportLayoutSetPrototype =
-			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
+		_exportGroup = GroupTestUtil.addGroup();
 
-		Group exportGroup = exportLayoutSetPrototype.getGroup();
-
-		Layout exportLayout = LayoutTestUtil.addTypeContentPublishedLayout(
-			exportGroup, RandomTestUtil.randomString(), 0);
+		Layout exportLayout = LayoutTestUtil.addTypePortletLayout(_exportGroup);
 
 		_addPortletToLayoutWithGlobalScope(exportLayout);
 
 		ResourcePermissionLocalServiceUtil.addModelResourcePermissions(
-			exportGroup.getCompanyId(), exportGroup.getGroupId(),
+			_exportGroup.getCompanyId(), _exportGroup.getGroupId(),
 			TestPropsValues.getUserId(), DLConstants.RESOURCE_NAME,
-			String.valueOf(exportGroup.getGroupId()), null, null);
+			String.valueOf(_exportGroup.getGroupId()), null, null);
 
-		_initExport(exportGroup);
+		_initExport(_exportGroup);
 
 		Map<String, List<KeyValuePair>> permissionsMap =
 			_portletDataContext.getPermissions();
@@ -134,13 +128,13 @@ public class LayoutPortletExportImportTest {
 
 		Group importGroup = GroupTestUtil.addGroup();
 
-		_initImport(exportGroup, importGroup);
+		_initImport(_exportGroup, importGroup);
 
 		_portletDataContext.addPermissions(
-			DLConstants.RESOURCE_NAME, exportGroup.getGroupId(),
+			DLConstants.RESOURCE_NAME, _exportGroup.getGroupId(),
 			permissionsMap.get(
 				DLConstants.RESOURCE_NAME + "#" +
-					String.valueOf(exportGroup.getGroupId())));
+					String.valueOf(_exportGroup.getGroupId())));
 
 		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 			ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED,
@@ -171,7 +165,7 @@ public class LayoutPortletExportImportTest {
 				_ownerRole.getRoleId());
 
 		Assert.assertEquals(0, _resourcePermission.getActionIds());
-		Assert.assertFalse(_resourcePermission.getViewActionId());
+		Assert.assertFalse(_resourcePermission.isViewActionId());
 	}
 
 	private void _addPortletToLayoutWithGlobalScope(Layout exportLayout)
@@ -310,7 +304,9 @@ public class LayoutPortletExportImportTest {
 			stagedModelPath);
 	}
 
-	private void _removeOwnerPermissionsFromDLHomeFolderPermissionsInGlobalSite() {
+	private void _removeOwnerPermissionsFromDLHomeFolderPermissionsInGlobalSite()
+		throws Exception {
+
 		long globalGroupId = _globalGroup.getGroupId();
 
 		ResourcePermissionLocalServiceUtil.addModelResourcePermissions(
@@ -332,6 +328,10 @@ public class LayoutPortletExportImportTest {
 	}
 
 	private long _companyId;
+
+	@DeleteAfterTestRun
+	private Group _exportGroup;
+
 	private Group _globalGroup;
 	private Element _missingReferencesElement;
 	private Role _ownerRole;

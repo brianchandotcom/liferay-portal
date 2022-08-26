@@ -54,8 +54,8 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 	}
 
 	@Override
-	public String getPreviousState(Locale locale) {
-		return _toState(_previousState, locale);
+	public String getPreviousStateLabel(Locale locale) {
+		return _previousState.getLabel(locale);
 	}
 
 	@Override
@@ -69,8 +69,8 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 	}
 
 	@Override
-	public String getState(Locale locale) {
-		return _toState(_state, locale);
+	public String getStateLabel(Locale locale) {
+		return _state.getLabel(locale);
 	}
 
 	@Override
@@ -139,22 +139,6 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 
 	public void setWorkflowTaskId(long workflowTaskId) {
 		_workflowTaskId = workflowTaskId;
-	}
-
-	private String _toState(String state, Locale locale) {
-		if (state == null) {
-			return null;
-		}
-
-		if (!Validator.isXml(state)) {
-			Language language = LanguageUtil.getLanguage();
-
-			return HtmlUtil.escape(language.get(locale, state));
-		}
-
-		return HtmlUtil.escape(
-			LocalizationUtil.getLocalization(
-				state, LocaleUtil.toLanguageId(locale), true));
 	}
 
 	private long _auditUserId;

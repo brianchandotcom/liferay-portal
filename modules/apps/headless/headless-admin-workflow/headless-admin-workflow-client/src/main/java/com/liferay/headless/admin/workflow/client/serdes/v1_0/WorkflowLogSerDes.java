@@ -168,6 +168,20 @@ public class WorkflowLogSerDes {
 			sb.append("\"");
 		}
 
+		if (workflowLog.getPreviousStateLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"previousStateLabel\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(workflowLog.getPreviousStateLabel()));
+
+			sb.append("\"");
+		}
+
 		if (workflowLog.getRole() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -188,6 +202,20 @@ public class WorkflowLogSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(workflowLog.getState()));
+
+			sb.append("\"");
+		}
+
+		if (workflowLog.getStateLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"stateLabel\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(workflowLog.getStateLabel()));
 
 			sb.append("\"");
 		}
@@ -310,6 +338,15 @@ public class WorkflowLogSerDes {
 				String.valueOf(workflowLog.getPreviousState()));
 		}
 
+		if (workflowLog.getPreviousStateLabel() == null) {
+			map.put("previousStateLabel", null);
+		}
+		else {
+			map.put(
+				"previousStateLabel",
+				String.valueOf(workflowLog.getPreviousStateLabel()));
+		}
+
 		if (workflowLog.getRole() == null) {
 			map.put("role", null);
 		}
@@ -322,6 +359,13 @@ public class WorkflowLogSerDes {
 		}
 		else {
 			map.put("state", String.valueOf(workflowLog.getState()));
+		}
+
+		if (workflowLog.getStateLabel() == null) {
+			map.put("stateLabel", null);
+		}
+		else {
+			map.put("stateLabel", String.valueOf(workflowLog.getStateLabel()));
 		}
 
 		if (workflowLog.getType() == null) {
@@ -412,6 +456,14 @@ public class WorkflowLogSerDes {
 					workflowLog.setPreviousState((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "previousStateLabel")) {
+
+				if (jsonParserFieldValue != null) {
+					workflowLog.setPreviousStateLabel(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "role")) {
 				if (jsonParserFieldValue != null) {
 					workflowLog.setRole(
@@ -421,6 +473,11 @@ public class WorkflowLogSerDes {
 			else if (Objects.equals(jsonParserFieldName, "state")) {
 				if (jsonParserFieldValue != null) {
 					workflowLog.setState((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "stateLabel")) {
+				if (jsonParserFieldValue != null) {
+					workflowLog.setStateLabel((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

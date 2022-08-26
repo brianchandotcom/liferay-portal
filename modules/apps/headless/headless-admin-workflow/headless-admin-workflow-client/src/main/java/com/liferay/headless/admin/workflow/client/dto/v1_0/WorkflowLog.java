@@ -222,6 +222,27 @@ public class WorkflowLog implements Cloneable, Serializable {
 
 	protected String previousState;
 
+	public String getPreviousStateLabel() {
+		return previousStateLabel;
+	}
+
+	public void setPreviousStateLabel(String previousStateLabel) {
+		this.previousStateLabel = previousStateLabel;
+	}
+
+	public void setPreviousStateLabel(
+		UnsafeSupplier<String, Exception> previousStateLabelUnsafeSupplier) {
+
+		try {
+			previousStateLabel = previousStateLabelUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String previousStateLabel;
+
 	public Role getRole() {
 		return role;
 	}
@@ -261,6 +282,27 @@ public class WorkflowLog implements Cloneable, Serializable {
 	}
 
 	protected String state;
+
+	public String getStateLabel() {
+		return stateLabel;
+	}
+
+	public void setStateLabel(String stateLabel) {
+		this.stateLabel = stateLabel;
+	}
+
+	public void setStateLabel(
+		UnsafeSupplier<String, Exception> stateLabelUnsafeSupplier) {
+
+		try {
+			stateLabel = stateLabelUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String stateLabel;
 
 	public Type getType() {
 		return type;

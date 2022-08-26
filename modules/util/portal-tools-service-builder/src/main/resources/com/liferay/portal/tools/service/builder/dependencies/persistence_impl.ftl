@@ -76,7 +76,10 @@ import ${apiPackagePath}.service.persistence.${entity.name}Util;
 	import ${packagePath}.service.persistence.impl.constants.${portletShortName}PersistenceConstants;
 </#if>
 
-import com.liferay.petra.lang.SafeCloseable;
+<#if stringUtil.equals(entity.name, "Company")>
+	import com.liferay.petra.lang.SafeCloseable;
+</#if>
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;

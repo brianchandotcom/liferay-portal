@@ -14,6 +14,7 @@
 
 package com.liferay.product.navigation.control.menu.web.internal;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -181,6 +182,16 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL)) {
 
 			return _portal.getPortletTitle(portletId, themeDisplay.getLocale());
+		}
+
+		if (layout.isTypeAssetDisplay()) {
+			AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY);
+
+			if (assetEntry != null) {
+				return HtmlUtil.escape(
+					assetEntry.getTitle(themeDisplay.getLanguageId()));
+			}
 		}
 
 		return HtmlUtil.escape(layout.getName(themeDisplay.getLocale()));

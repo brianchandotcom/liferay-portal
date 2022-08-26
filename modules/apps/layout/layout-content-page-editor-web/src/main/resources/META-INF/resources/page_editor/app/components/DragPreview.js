@@ -137,7 +137,9 @@ export default function DragPreview() {
 						</div>
 					)}
 
-					<span className="ml-3 text-truncate">
+					<span
+						className={classNames('text-truncate', {'ml-3': icon})}
+					>
 						{item?.name
 							? item.name
 							: Liferay.Language.get('element')}

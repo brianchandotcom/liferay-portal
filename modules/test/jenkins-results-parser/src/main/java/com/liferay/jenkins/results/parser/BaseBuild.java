@@ -3043,17 +3043,15 @@ public abstract class BaseBuild implements Build {
 		String estimatedDurationString = "n/a";
 		String diffDurationString = "n/a";
 
-		if (this instanceof DownstreamBuild) {
+		if ((this instanceof DownstreamBuild) && buildDurationsEnabled()) {
 			DownstreamBuild downstreamBuild = (DownstreamBuild)this;
 
-			if (buildDurationsEnabled()) {
-				long averageDuration = downstreamBuild.getAverageDuration();
+			long averageDuration = downstreamBuild.getAverageDuration();
 
-				estimatedDurationString =
-					JenkinsResultsParserUtil.toDurationString(averageDuration);
-				diffDurationString = getDiffDurationString(
-					duration - averageDuration);
-			}
+			estimatedDurationString = JenkinsResultsParserUtil.toDurationString(
+				averageDuration);
+			diffDurationString = getDiffDurationString(
+				duration - averageDuration);
 		}
 
 		Dom4JUtil.addToElement(

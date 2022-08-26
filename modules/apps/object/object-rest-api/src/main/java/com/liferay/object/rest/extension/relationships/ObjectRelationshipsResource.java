@@ -20,11 +20,11 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 /**
  * @author Luis Miguel Barcos
  */
-public interface SystemObjectRelationshipsResource {
+public interface ObjectRelationshipsResource {
 
-	public Page<Object> getSystemObjectRelatedObjectsPage(
-			String previousPath, Long currentSystemObjectId,
-			String systemObjectRelationshipName, Pagination pagination)
+	public Page<Object> getObjectRelatedObjectsPage(
+			String previousPath, Long objectEntryId,
+			String objectRelationshipName, Pagination pagination)
 		throws Exception;
 
 }

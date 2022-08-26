@@ -29,7 +29,7 @@ KBArticle kbArticle = (KBArticle)request.getAttribute("info_panel.jsp-kbArticle"
 			</liferay-portlet:actionURL>
 
 			<liferay-ui:icon
-				icon="star"
+				icon="bell-off"
 				linkCssClass="icon-monospaced"
 				markupView="lexicon"
 				message="unsubscribe"
@@ -43,7 +43,7 @@ KBArticle kbArticle = (KBArticle)request.getAttribute("info_panel.jsp-kbArticle"
 			</liferay-portlet:actionURL>
 
 			<liferay-ui:icon
-				icon="star-o"
+				icon="bell-on"
 				linkCssClass="icon-monospaced"
 				markupView="lexicon"
 				message="subscribe"

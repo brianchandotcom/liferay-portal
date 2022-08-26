@@ -56,14 +56,17 @@ export function EmptyCollectionOptions({
 	return (
 		<>
 			{Liferay.FeatureFlags['LPS-160243'] && (
-				<div className="d-flex mb-2 pt-1">
-					<ClayCheckbox
-						checked={displayMessage}
-						label={Liferay.Language.get(
-							'show-empty-collection-alert'
-						)}
-						onChange={handleDisplayMessageChanged}
-					/>
+				<div className="align-items-center d-flex mb-2 pt-1">
+					<div>
+						<ClayCheckbox
+							checked={displayMessage}
+							className="mb-0"
+							label={Liferay.Language.get(
+								'show-empty-collection-alert'
+							)}
+							onChange={handleDisplayMessageChanged}
+						/>
+					</div>
 
 					<EmptyCollectionHelp />
 				</div>
@@ -117,7 +120,7 @@ function EmptyCollectionHelp() {
 
 	return (
 		<ClayPopover
-			alignPosition="top"
+			alignPosition="top-right"
 			className="position-fixed"
 			disableScroll
 			header={Liferay.Language.get('empty-collection-alert')}
@@ -135,8 +138,8 @@ function EmptyCollectionHelp() {
 					tabIndex="0"
 				>
 					<ClayIcon
-						className="text-secondary"
-						symbol="question-circle"
+						className="ml-2 text-secondary"
+						symbol="question-circle-full"
 					/>
 				</span>
 			}

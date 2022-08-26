@@ -50,6 +50,12 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 
 			</c:if>
 
+			<%
+			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(kbComment.getClassPK(), WorkflowConstants.STATUS_ANY);
+
+			request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
+			%>
+
 			<liferay-ui:search-container-column-user
 				showDetails="<%= false %>"
 				userId="<%= kbComment.getUserId() %>"
@@ -87,10 +93,6 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 					</span>
 
 					<%
-					KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(kbComment.getClassPK(), WorkflowConstants.STATUS_ANY);
-
-					request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
-
 					KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse);
 
 					PortletURL viewKBArticleURL = kbArticleURLHelper.createViewWithRedirectURL(kbArticle, currentURL);
@@ -102,9 +104,17 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 				</span>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-jsp
-				path="/admin/common/suggestion_action.jsp"
-			/>
+			<liferay-ui:search-container-column-text>
+
+				<%
+				KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse);
+				%>
+
+				<clay:dropdown-actions
+					dropdownItems="<%= kbDropdownItemsProvider.getKBCommentDropdownItems(kbArticle, kbComment) %>"
+					propsTransformer="admin/js/KBDropdownPropsTransformer"
+				/>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

@@ -170,7 +170,6 @@ page import="com.liferay.ratings.kernel.RatingsType" %><%@
 page import="com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil" %><%@
 page import="com.liferay.subscription.exception.NoSuchSubscriptionException" %><%@
 page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
-page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.wiki.model.WikiPage" %>
 
 <%@ page import="java.math.BigDecimal" %>

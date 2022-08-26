@@ -54,6 +54,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.xml.XMLConstants;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Templates;
@@ -171,6 +172,10 @@ public class BuildTutorial {
 		try {
 			// Create transformer factory
 			TransformerFactory factory = TransformerFactory.newInstance();
+
+			try {
+				factory.setAttribute(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			} catch (Exception exc) {}
 
 			// Use the factory to create a template containing the xsl file
 			Templates template = factory.newTemplates(new StreamSource(

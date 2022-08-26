@@ -13,8 +13,8 @@ import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 
 export default function getMDFBudgetInfos(
-	totalCostOfExpense: number | undefined,
-	totalRequested: number | undefined
+	totalCostOfExpense?: number,
+	totalRequested?: number
 ) {
 	if (totalCostOfExpense && totalRequested) {
 		return {

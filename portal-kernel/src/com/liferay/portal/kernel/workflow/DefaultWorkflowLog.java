@@ -14,15 +14,7 @@
 
 package com.liferay.portal.kernel.workflow;
 
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.Validator;
-
 import java.io.Serializable;
-
 import java.util.Date;
 import java.util.Locale;
 
@@ -54,6 +46,11 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 	}
 
 	@Override
+	public String getPreviousStateName() {
+		return _previousState.getName();
+	}
+
+	@Override
 	public String getPreviousStateLabel(Locale locale) {
 		return _previousState.getLabel(locale);
 	}
@@ -66,6 +63,11 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 	@Override
 	public long getRoleId() {
 		return _roleId;
+	}
+
+	@Override
+	public String getStateName() {
+		return _state.getName();
 	}
 
 	@Override

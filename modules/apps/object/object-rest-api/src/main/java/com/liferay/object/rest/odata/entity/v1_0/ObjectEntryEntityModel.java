@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.rest.internal.odata.entity.v1_0;
+package com.liferay.object.rest.odata.entity.v1_0;
 
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
@@ -82,6 +82,10 @@ public class ObjectEntryEntityModel implements EntityModel {
 		).build();
 
 		for (ObjectField objectField : objectFields) {
+			if (objectField.isSystem()) {
+				continue;
+			}
+
 			if (Objects.equals(
 					objectField.getRelationshipType(), "oneToMany")) {
 

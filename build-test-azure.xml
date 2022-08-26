@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-azure" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="assert-document-in-container">
+		<local name="container.blobs" />
+
+		<exec executable="az" outputproperty="container.blobs">
+			<arg line="storage blob list --container-name lfr-qa-poshi-test-${azure.container.id} --account-name blobstoragesmoketest --prefix ${companyId}/${groupId} --output table" />
+		</exec>
+
+		<echo>${container.blobs}</echo>
+
+		<if>
+			<contains string="${container.blobs}" substring="1.0" />
+			<then>
+				<echo>Document is in container.</echo>
+			</then>
+			<else>
+				<fail>Document is not in container.</fail>
+			</else>
+		</if>
+	</target>
+
+	<target name="assert-no-document-in-container">
+		<local name="container.blobs" />
+
+		<exec executable="az" outputproperty="container.blobs">
+			<arg line="storage blob list --container-name lfr-qa-poshi-test-${azure.container.id} --account-name blobstoragesmoketest --prefix ${companyId}/${groupId} --output table" />
+		</exec>
+
+		<echo>${container.blobs}</echo>
+
+		<if>
+			<equals arg1="${container.blobs}" arg2="" />
+			<then>
+				<echo>The container is empty.</echo>
+			</then>
+			<else>
+				<fail>The container is not empty.</fail>
+			</else>
+		</if>
+	</target>
+
+	<target name="create-azure-container">
+		<local name="container.create.output" />
+
+		<exec executable="az" outputproperty="container.create.output">
+			<arg line="storage container create -n lfr-qa-poshi-test-${azure.container.id} --public-access container --account-name blobstoragesmoketest" />
+		</exec>
+
+		<echo>${container.create.output}</echo>
+	</target>
+
+	<target name="delete-azure-container">
+		<exec executable="az">
+			<arg line="storage container delete --account-name blobstoragesmoketest --name lfr-qa-poshi-test-${azure.container.id}" />
+		</exec>
+	</target>
+
+	<target name="login-azure-cli">
+		<exec executable="az">
+			<arg line="login -u ${azure.account.email.address} -p ${azure.account.password}" />
+		</exec>
+	</target>
+</project>

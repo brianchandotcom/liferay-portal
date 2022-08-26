@@ -2257,6 +2257,15 @@ s3Endpoint=&quot;s3.us-west-1.amazonaws.com&quot;</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-azure-store-configuration">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.store.azure.configuration.AzureStoreConfiguration.config">
+connectionString=&quot;${azure.connection.string}&quot;
+containerName=&quot;lfr-qa-poshi-test-${azure.container.id}&quot;
+httpLoggingEnabled=&quot;false&quot;</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-blacklist-configuration">
 		<sequential>
 			<var name="blacklistBundleSymbolicNames" value="[&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.api&quot;,&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise&quot;,&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data&quot;,&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees&quot;]" />
@@ -10951,6 +10960,27 @@ dl.store.impl=com.liferay.portal.store.s3.S3Store</echo>
 		</if>
 
 		<if>
+			<or>
+				<equals arg1="azure.store.enabled" arg2="" />
+				<not>
+					<isset property="azure.store.enabled" />
+				</not>
+			</or>
+			<then>
+				<get-testcase-property property.name="azure.store.enabled" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${azure.store.enabled}" arg2="true" />
+			<then>
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+dl.store.impl=com.liferay.portal.store.azure.AzureStore</echo>
+			</then>
+		</if>
+
+		<if>
 			<not>
 				<isset property="commerce.enabled" />
 			</not>
@@ -11570,6 +11600,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					aws.bucket.id=${aws.bucket.id}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="azure.container.id" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					azure.container.id=${azure.container.id}
 				</echo>
 			</then>
 		</if>
@@ -14404,6 +14443,23 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="azure.store.enabled" />
+
+		<if>
+			<equals arg1="${azure.store.enabled}" arg2="true" />
+			<then>
+				<tstamp>
+					<format pattern="yyyyMMddkkmmssSSS" property="azure.container.id" />
+				</tstamp>
+
+				<ant antfile="build-test-azure.xml" target="login-azure-cli" />
+
+				<ant antfile="build-test-azure.xml" target="create-azure-container" />
+
+				<prepare-azure-store-configuration />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="cas.enabled" />
 
 		<if>
@@ -14976,6 +15032,15 @@ url=${short.hostname}:8080</echo>
 			<equals arg1="${aws.store.enabled}" arg2="true" />
 			<then>
 				<ant antfile="build-test-aws-s3.xml" target="delete-s3-bucket" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="azure.store.enabled" />
+
+		<if>
+			<equals arg1="${azure.store.enabled}" arg2="true" />
+			<then>
+				<ant antfile="build-test-azure.xml" target="delete-azure-container" />
 			</then>
 		</if>
 

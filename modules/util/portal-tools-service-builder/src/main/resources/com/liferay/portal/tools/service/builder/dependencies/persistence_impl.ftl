@@ -405,7 +405,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				}
 			</#if>
 
-			<#if serviceBuilder.isVersionGTE_7_4_0() && stringUtil.equals(entity.name, "Company")>
+			<#if stringUtil.equals(entity.name, "Company")>
 				try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setWithSafeCloseable(${entity.variableName}.getPrimaryKey())) {
 			</#if>
@@ -445,7 +445,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				</#if>
 			</#if>
 
-			<#if serviceBuilder.isVersionGTE_7_4_0() && stringUtil.equals(entity.name, "Company")>
+			<#if stringUtil.equals(entity.name, "Company")>
 				}
 			</#if>
 		}

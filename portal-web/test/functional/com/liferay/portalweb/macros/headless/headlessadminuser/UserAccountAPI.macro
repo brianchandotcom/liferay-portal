@@ -43,6 +43,31 @@ definition {
 		JSONCurlUtil.delete("${curl}");
 	}
 
+	macro getUpdatedFieldOfUserAccountWithPutRequest {
+		Variables.assertDefined(parameterList = "${alternateName},${emailAddress},${familyName},${givenName},${fieldName},${updatedFieldValue}");
+
+		if (!(isSet(userAccountId))) {
+			var userAccountId = "${staticUserAccountId}";
+		}
+
+		var curl = UserAccountAPI._curlUserAccount(userAccountId = "${userAccountId}");
+		var body = '''
+			-d {
+				"alternateName": "${alternateName}",
+				"emailAddress": "${emailAddress}",
+				"familyName": "${familyName}",
+				"givenName": "${givenName}",
+				"${fieldName}":"${updatedFieldValue}"
+			}
+		''';
+
+		var curl = StringUtil.add("${curl}", "${body}", "");
+
+		var valueOfField = JSONCurlUtil.put("${curl}", "$.${fieldName}");
+
+		return "${valueOfField}";
+	}
+
 	macro setUpGlobalUserAccountId {
 		var response = UserAccountAPI.createUserAccount(
 			alternateName = "${alternateName}",

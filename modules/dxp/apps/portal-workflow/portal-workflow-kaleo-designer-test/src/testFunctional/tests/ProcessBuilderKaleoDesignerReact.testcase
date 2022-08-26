@@ -86,7 +86,8 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
 			actionsTemplateValue = "Action Template",
 			executionTypeOption = "On Entry",
-			name = "Liferay Actions");
+			name = "Liferay Actions",
+			singleAction = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -788,7 +789,8 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
 			actionsTemplateValue = "Action Script Template",
-			name = "Liferay Actions");
+			name = "Liferay Actions",
+			singleAction = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 

@@ -2,11 +2,16 @@
 
 html#{$cadmin-selector} {
 	.page-editor__reorder-set-modal {
+		.card.dragging {
+			opacity: 0.4;
+		}
+
 		.dropdown-menu {
 			min-width: 192px;
 		}
 
 		.lexicon-icon-drag {
+			cursor: grab;
 			height: 16px;
 			margin: 0;
 			width: 16px;

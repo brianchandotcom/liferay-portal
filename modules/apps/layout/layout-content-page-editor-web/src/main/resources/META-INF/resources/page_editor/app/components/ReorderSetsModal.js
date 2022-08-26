@@ -20,8 +20,11 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayTabs from '@clayui/tabs';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
+import {useDrag, useDrop} from 'react-dnd';
+import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {
 	useDispatch,
@@ -36,6 +39,8 @@ const TAB_IDS = {
 	fragments: 'fragments',
 	widgets: 'widgets',
 };
+
+const ACCEPTING_ITEM_TYPE = 'acceptingItemType';
 
 export function ReorderSetsModal({onCloseModal}) {
 	const {observer, onClose} = useModal({
@@ -210,35 +215,43 @@ Items.propTypes = {
 function CardItem({index, item, numberOfItems, onChangeItemPosition}) {
 	const {name} = item;
 
+	const {handlerRef, isDragging} = useDragItem(item);
+	const {targetRef} = useDropTarget(item.id, index, onChangeItemPosition);
+
 	return (
-		<ClayCard>
-			<ClayCard.Body className="px-0">
-				<ClayCard.Row className="align-items-center">
-					<ClayLayout.ContentCol gutters>
-						<ClayIcon className="text-secondary" symbol="drag" />
-					</ClayLayout.ContentCol>
+		<div ref={targetRef}>
+			<ClayCard className={classNames({dragging: isDragging})}>
+				<ClayCard.Body className="px-0">
+					<ClayCard.Row className="align-items-center">
+						<ClayLayout.ContentCol gutters ref={handlerRef}>
+							<ClayIcon
+								className="text-secondary"
+								symbol="drag"
+							/>
+						</ClayLayout.ContentCol>
 
-					<ClayLayout.ContentCol expand>
-						<ClayCard.Description
-							className="text-uppercase"
-							displayType="title"
-							title={name}
-						>
-							{name}
-						</ClayCard.Description>
-					</ClayLayout.ContentCol>
+						<ClayLayout.ContentCol expand>
+							<ClayCard.Description
+								className="text-uppercase"
+								displayType="title"
+								title={name}
+							>
+								{name}
+							</ClayCard.Description>
+						</ClayLayout.ContentCol>
 
-					<ClayLayout.ContentCol gutters>
-						<ReorderDropdown
-							index={index}
-							item={item}
-							numberOfItems={numberOfItems}
-							onChangeItemPosition={onChangeItemPosition}
-						/>
-					</ClayLayout.ContentCol>
-				</ClayCard.Row>
-			</ClayCard.Body>
-		</ClayCard>
+						<ClayLayout.ContentCol gutters>
+							<ReorderDropdown
+								index={index}
+								item={item}
+								numberOfItems={numberOfItems}
+								onChangeItemPosition={onChangeItemPosition}
+							/>
+						</ClayLayout.ContentCol>
+					</ClayCard.Row>
+				</ClayCard.Body>
+			</ClayCard>
+		</div>
 	);
 }
 
@@ -286,3 +299,44 @@ ReorderDropdown.propTypes = {
 	numberOfItems: PropTypes.number.isRequired,
 	onChangeItemPosition: PropTypes.func.isRequired,
 };
+
+function useDragItem(item) {
+	const [{isDragging}, handlerRef, previewRef] = useDrag({
+		begin() {},
+		collect: (monitor) => ({
+			isDragging: !!monitor.isDragging(),
+		}),
+		item: {...item, type: ACCEPTING_ITEM_TYPE},
+	});
+
+	useEffect(() => {
+		previewRef(getEmptyImage(), {captureDraggingState: true});
+	}, [previewRef]);
+
+	return {
+		handlerRef,
+		isDragging,
+	};
+}
+
+export function useDropTarget(itemId, itemIndex, onChangeItemPosition) {
+	const [, targetRef] = useDrop({
+		accept: ACCEPTING_ITEM_TYPE,
+		canDrop(source, monitor) {
+			return monitor.isOver();
+		},
+		hover(source, monitor) {
+			if (monitor.canDrop(source, monitor)) {
+				if (source.id === itemId) {
+					return;
+				}
+
+				onChangeItemPosition(source.id, itemIndex);
+			}
+		},
+	});
+
+	return {
+		targetRef,
+	};
+}

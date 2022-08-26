@@ -735,6 +735,16 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
 	}
 
+	macro deleteOwnedAccountRole {
+		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+		Search.searchCP(searchTerm = "${accountRoleTitle}");
+
+		LexiconEntry.delete(
+			menuItem = "Delete",
+			rowEntry = "${accountRoleTitle}");
+	}
+
 	macro editAddress {
 		LexiconEntry.gotoEntry(rowEntry = "${addressName}");
 

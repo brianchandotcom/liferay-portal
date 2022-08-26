@@ -25,6 +25,7 @@ import {navigate} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 export default function SearchBar({
+	destinationFriendlyURL,
 	emptySearchEnabled,
 	keywords = '',
 	keywordsParameterName = 'q',
@@ -84,8 +85,8 @@ export default function SearchBar({
 		},
 		variables: {
 			currentURL: window.location.href,
-			destinationFriendlyURL: searchURL.trim().length
-				? searchURL
+			destinationFriendlyURL: destinationFriendlyURL.trim().length
+				? destinationFriendlyURL
 				: '/search',
 			groupId: Liferay.ThemeDisplay.getScopeGroupId(),
 			plid: Liferay.ThemeDisplay.getPlid(),

@@ -442,7 +442,7 @@ public class WorkflowTaskDisplayContext {
 				PortalUtil.getUserName(
 					workflowLog.getAuditUserId(),
 					String.valueOf(workflowLog.getAuditUserId()))),
-			workflowLog.getState(_workflowTaskRequestHelper.getLocale())
+			workflowLog.getStateLabel(_workflowTaskRequestHelper.getLocale())
 		};
 	}
 
@@ -481,9 +481,9 @@ public class WorkflowTaskDisplayContext {
 				PortalUtil.getUserName(
 					workflowLog.getAuditUserId(),
 					String.valueOf(workflowLog.getAuditUserId()))),
-			workflowLog.getPreviousState(
+			workflowLog.getPreviousStateLabel(
 				_workflowTaskRequestHelper.getLocale()),
-			workflowLog.getState(_workflowTaskRequestHelper.getLocale())
+			workflowLog.getStateLabel(_workflowTaskRequestHelper.getLocale())
 		};
 	}
 

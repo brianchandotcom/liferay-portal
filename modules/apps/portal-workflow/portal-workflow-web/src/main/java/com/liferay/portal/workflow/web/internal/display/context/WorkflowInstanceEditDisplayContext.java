@@ -179,7 +179,7 @@ public class WorkflowInstanceEditDisplayContext
 				PortalUtil.getUserName(
 					workflowLog.getAuditUserId(),
 					String.valueOf(workflowLog.getAuditUserId()))),
-			workflowLog.getState(workflowInstanceRequestHelper.getLocale())
+			workflowLog.getStateLabel(workflowInstanceRequestHelper.getLocale())
 		};
 	}
 
@@ -221,9 +221,9 @@ public class WorkflowInstanceEditDisplayContext
 				PortalUtil.getUserName(
 					workflowLog.getAuditUserId(),
 					String.valueOf(workflowLog.getAuditUserId()))),
-			workflowLog.getPreviousState(
+			workflowLog.getPreviousStateLabel(
 				workflowInstanceRequestHelper.getLocale()),
-			workflowLog.getState(workflowInstanceRequestHelper.getLocale())
+			workflowLog.getStateLabel(workflowInstanceRequestHelper.getLocale())
 		};
 	}
 

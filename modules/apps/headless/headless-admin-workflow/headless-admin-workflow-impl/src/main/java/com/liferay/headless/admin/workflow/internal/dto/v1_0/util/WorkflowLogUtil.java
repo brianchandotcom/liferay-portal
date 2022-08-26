@@ -44,7 +44,7 @@ public class WorkflowLogUtil {
 					portal.getUserName(
 						workflowLog.getAuditUserId(),
 						String.valueOf(workflowLog.getAuditUserId())),
-					workflowLog.getState(locale)
+					workflowLog.getStateLabel(locale)
 				},
 				false);
 		}
@@ -65,8 +65,8 @@ public class WorkflowLogUtil {
 					portal.getUserName(
 						workflowLog.getAuditUserId(),
 						String.valueOf(workflowLog.getAuditUserId())),
-					workflowLog.getPreviousState(locale),
-					workflowLog.getState(locale)
+					workflowLog.getPreviousStateLabel(locale),
+					workflowLog.getStateLabel(locale)
 				},
 				false);
 		}

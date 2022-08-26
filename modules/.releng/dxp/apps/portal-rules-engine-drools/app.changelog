@@ -1,0 +1,21 @@
+#
+# Liferay App Version 7.0.0
+#
+
+app.artifacts-7.0.0=\
+	com.liferay.portal.rules.engine.drools-5.0.8.jar
+
+app.change.log-7.0.0=LPS-77425 LPS-84119 LPS-95013 LPS-95555 LPS-96095 LPS-98631 LPS-105380 LPS-115716 LPS-121824 LPS-123870 LPS-125387 LPS-129336 LPS-130806 LPS-134486
+
+app.git.id-7.0.0=78953d984a3c1a94e13b9dc0488207de613e2f66
+
+#
+# Liferay App Version 7.1.0
+#
+
+app.artifacts-7.1.0=\
+	com.liferay.portal.rules.engine.drools-5.0.12.jar
+
+app.change.log-7.1.0=LPS-143953 LPS-146451 LPS-147094 LPS-150378
+
+app.git.id-7.1.0=6c109f2c232164b0430b37bc78b12e722a2ee6a7

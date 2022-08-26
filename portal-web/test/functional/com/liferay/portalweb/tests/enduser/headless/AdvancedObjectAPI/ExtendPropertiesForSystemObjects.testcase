@@ -1,0 +1,52 @@
+@component-name = "portal-headless-frontend-infrastructure"
+definition {
+
+	property custom.properties = "feature.flag.LPS-135404=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless Frontend Infrastructure";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given system User object with a new field added through the objects framework") {
+			var userObjectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "User");
+
+			ObjectFieldAPI.setUpGlobalObjectFieldId(
+				dbType = "String",
+				name = "passportNumber",
+				objectDefinitionId = "${userObjectId}");
+		}
+	}
+
+	tearDown {
+		UserAccountAPI.deleteUserAccount();
+
+		ObjectFieldAPI.deleteObjectField();
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanCreateUserAndSetValueOfPropertyAddedtoSystemObject {
+		property portal.acceptance = "true";
+
+		task ("When with post request postUserAccount to create a user with the new field") {
+			var response = UserAccountAPI.setUpGlobalUserAccountId(
+				alternateName = "userln",
+				emailAddress = "userln@liferay.com",
+				familyName = "userfn",
+				fieldName = "passportNumber",
+				fieldValue = "passportNum2022",
+				givenName = "usergn");
+		}
+
+		task ("Then the value of the added field is set successfully in response") {
+			var passportNumberInResponse = JSONUtil.getWithJSONPath("${response}", "$.passportNumber");
+
+			TestUtils.assertEquals(
+				actual = "${passportNumberInResponse}",
+				expected = "passportNum2022");
+		}
+	}
+
+}

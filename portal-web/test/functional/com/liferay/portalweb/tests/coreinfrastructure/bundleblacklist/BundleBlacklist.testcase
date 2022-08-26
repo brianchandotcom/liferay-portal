@@ -202,7 +202,6 @@ definition {
 
 	@priority = "3"
 	test CanEnableBlacklistedModuleLPKGAfterRestart {
-		property osgi.app.includes = "gogo-shell";
 		property test.name.skip.portal.instance = "BundleBlacklist#CanEnableBlacklistedModuleLPKGAfterRestart";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
@@ -319,7 +318,6 @@ definition {
 
 	@priority = "3"
 	test CanRemoveBlacklistedModuleLPKGViaUI {
-		property osgi.app.includes = "gogo-shell";
 		property test.name.skip.portal.instance = "BundleBlacklist#CanRemoveBlacklistedModuleLPKGViaUI";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
@@ -543,7 +541,6 @@ definition {
 
 	@priority = "3"
 	test RestartCanNotEnableBlacklistedModuleLPKGViaUI {
-		property osgi.app.includes = "gogo-shell";
 		property test.name.skip.portal.instance = "BundleBlacklist#RestartCanNotEnableBlacklistedModuleLPKGViaUI";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");

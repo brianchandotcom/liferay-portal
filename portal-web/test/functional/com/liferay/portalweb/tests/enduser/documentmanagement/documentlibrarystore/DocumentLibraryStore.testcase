@@ -153,6 +153,54 @@ definition {
 			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
 	}
 
+	@ignore = "true"
+	@priority = "5"
+	test AzureStoreSmoke {
+		property azure.store.enabled = "true";
+		property test.name.skip.portal.instance = "DocumentLibraryStore#AzureStoreSmoke";
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		var containerId = PropsUtil.get("azure.container.id");
+		var companyId = JSONCompany.getCompanyId();
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Test Site Name",
+			site = "true");
+
+		AntCommand(
+			locator1 = "build-test-azure.xml",
+			value1 = "assert-no-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Site Name",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		AntCommand(
+			locator1 = "build-test-azure.xml",
+			value1 = "assert-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			portlet = "Recycle Bin");
+
+		// Commented due to LPS-160953
+
+		//RecycleBin.emptyCP();
+		//AntCommand(
+		//	locator1 = "build-test-azure.xml",
+		//	value1 = "assert-no-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+
+	}
+
 	@priority = "5"
 	@refactorneeded
 	test DBStoreSmoke {

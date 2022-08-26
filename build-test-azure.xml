@@ -3,6 +3,55 @@
 <project basedir="." name="portal-test-azure" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<macrodef name="delete-azure-containers">
+		<sequential>
+			<local name="container.list" />
+
+			<exec executable="az" outputproperty="container.list">
+				<arg line="storage container list --account-name blobstoragesmoketest --prefix lfr-qa-poshi-test --auth-mode login" />
+			</exec>
+
+			<script language="javascript"><![CDATA[
+				var containerList = project.getProperty("container.list");
+
+				var expiredContainers = [];
+
+				var json = JSON.parse(containerList);
+
+				for (var i = 0; i < json.length; i++) {
+					var container = json[i];
+
+					var name = JSON.stringify(container.name);
+
+					if (name.indexOf('lfr-qa-poshi-test') > -1) {
+						var lastModified = container.properties.lastModified;
+
+						var currentDate = new Date();
+						var containerDate = new Date(lastModified);
+
+						var diffHours = (currentDate - containerDate) / (1000 * 60 * 60);
+
+						if (diffHours > 12) {
+							expiredContainers.push(name);
+						}
+					}
+				}
+
+				project.setProperty("expired.containers", expiredContainers.toString());]]>
+			</script>
+
+			<for list="${expired.containers}" param="delete.name">
+				<sequential>
+					<echo>Expired Container: @{delete.name}</echo>
+
+					<exec executable="az">
+						<arg line="storage container delete --account-name blobstoragesmoketest --name @{delete.name} --auth-mode login" />
+					</exec>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
 	<target name="assert-document-in-container">
 		<local name="container.blobs" />
 
@@ -33,7 +82,9 @@
 		<echo>${container.blobs}</echo>
 
 		<if>
-			<equals arg1="${container.blobs}" arg2="" />
+			<not>
+				<isset property="${container.blobs}" />
+			</not>
 			<then>
 				<echo>The container is empty.</echo>
 			</then>
@@ -57,6 +108,8 @@
 		<exec executable="az">
 			<arg line="storage container delete --account-name blobstoragesmoketest --name lfr-qa-poshi-test-${azure.container.id}" />
 		</exec>
+
+		<delete-azure-containers />
 	</target>
 
 	<target name="login-azure-cli">

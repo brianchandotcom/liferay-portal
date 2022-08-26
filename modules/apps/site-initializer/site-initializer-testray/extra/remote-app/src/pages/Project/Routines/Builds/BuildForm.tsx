@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
@@ -296,22 +297,28 @@ const BuildForm = () => {
 
 				<Form.Divider />
 
-				<ClayButton.Group className="mb-4">
-					<ClayButton
-						displayType="secondary"
-						onClick={() => optionModal.open()}
-					>
-						{i18n.translate('add-option')}
-					</ClayButton>
+				{factorItems.length ? (
+					<ClayButton.Group className="mb-4">
+						<ClayButton
+							displayType="secondary"
+							onClick={() => optionModal.open()}
+						>
+							{i18n.translate('add-option')}
+						</ClayButton>
 
-					<ClayButton
-						className="ml-1"
-						displayType="secondary"
-						onClick={() => optionSelectModal.open()}
-					>
-						{i18n.translate('select-stacks')}
-					</ClayButton>
-				</ClayButton.Group>
+						<ClayButton
+							className="ml-1"
+							displayType="secondary"
+							onClick={() => optionSelectModal.open()}
+						>
+							{i18n.translate('select-stacks')}
+						</ClayButton>
+					</ClayButton.Group>
+				) : (
+					<ClayAlert>
+						Create environment factors if you want to generate runs.
+					</ClayAlert>
+				)}
 
 				<ClayLayout.Row>
 					{fields.map((field, index) => (
@@ -340,22 +347,28 @@ const BuildForm = () => {
 										</ClayLayout.Col>
 									))}
 
-									<ClayLayout.Col className="d-flex justify-content-end">
-										<ClayButtonWithIcon
-											displayType="secondary"
-											onClick={() => append({} as any)}
-											symbol="plus"
-										/>
-
-										{index !== 0 && (
+									{!!factorItems.length && (
+										<ClayLayout.Col className="d-flex justify-content-end">
 											<ClayButtonWithIcon
-												className="ml-1"
 												displayType="secondary"
-												onClick={() => remove(index)}
-												symbol="hr"
+												onClick={() =>
+													append({} as any)
+												}
+												symbol="plus"
 											/>
-										)}
-									</ClayLayout.Col>
+
+											{index !== 0 && (
+												<ClayButtonWithIcon
+													className="ml-1"
+													displayType="secondary"
+													onClick={() =>
+														remove(index)
+													}
+													symbol="hr"
+												/>
+											)}
+										</ClayLayout.Col>
+									)}
 								</ClayLayout.Row>
 
 								<Form.Divider />
@@ -385,7 +398,7 @@ const BuildForm = () => {
 					</ClayButton>
 				</ClayButton.Group>
 
-				{!!cases.length && (
+				{cases.length ? (
 					<CaseListView
 						listViewProps={{
 							managementToolbarProps: {visible: false},
@@ -424,6 +437,8 @@ const BuildForm = () => {
 							},
 						}}
 					/>
+				) : (
+					<ClayAlert>There are no linked cases</ClayAlert>
 				)}
 
 				<div className="mt-4">

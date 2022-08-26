@@ -35,8 +35,8 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const actionsRef = useRef([
 		{
 			action: () => alert('Archive'),
-			icon: 'archive',
-			name: i18n.translate('archive'),
+			icon: 'download',
+			name: i18n.translate('export-csv'),
 		},
 		{
 			action: (testrayBuild) =>
@@ -50,21 +50,32 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id, promoted}, mutate) =>
+			action: ({id, promoted}, mutate) => {
 				testrayBuildRest
 					.update(id, {
 						promoted: !promoted,
 					})
 					.then(() =>
-						updateItemFromList(mutate, id, {
-							promoted: !promoted,
-						})
+						isHeaderActions
+							? mutate((prevData: any) => ({
+									...prevData,
+									promoted: !prevData?.promoted,
+							  }))
+							: updateItemFromList(mutate, id, {
+									promoted: !promoted,
+							  })
 					)
-					.then(modal.onSuccess),
+					.then(modal.onSuccess);
+			},
 			icon: 'star',
 			name: (build) =>
 				i18n.translate(build?.promoted ? 'demote' : 'promote'),
 			permission: 'UPDATE',
+		},
+		{
+			action: () => alert('Archive'),
+			icon: 'archive',
+			name: i18n.translate('archive'),
 		},
 		{
 			action: ({id}, mutate) =>

@@ -38,6 +38,11 @@ public class CommercePricingClassSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 
 	@Override
+	public String getJaxRsApplicationName() {
+		return "Liferay.Headless.Commerce.Admin.Catalog";
+	}
+
+	@Override
 	public Map<Locale, String> getLabelMap() {
 		return createLabelMap("commerce-product-group");
 	}

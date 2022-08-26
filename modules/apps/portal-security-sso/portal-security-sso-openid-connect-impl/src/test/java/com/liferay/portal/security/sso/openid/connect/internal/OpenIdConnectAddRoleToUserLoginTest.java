@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.RoleImpl;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -81,7 +83,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		Role role = new RoleImpl();
 
-		role.setRoleId(3333);
+		role.setRoleId(_ROLE_ID);
 		role.setName(roleName);
 		role.setType(RoleConstants.TYPE_REGULAR);
 
@@ -94,7 +96,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
+				_userInfo, _COMPANY_ID, issuer, Portal.PATH_MAIN, _PORTAL_URL));
 	}
 
 	@Test
@@ -113,7 +115,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
+				_userInfo, _COMPANY_ID, issuer, Portal.PATH_MAIN, _PORTAL_URL));
 	}
 
 	@Test
@@ -125,28 +127,28 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		Role role = new RoleImpl();
 
-		role.setRoleId(3333);
+		role.setRoleId(_ROLE_ID);
 		role.setCompanyId(_COMPANY_ID);
 		role.setName(roleName);
 		role.setType(RoleConstants.TYPE_REGULAR);
 
 		long[] roleIds = {role.getRoleId()};
 
-		User userExists = new UserImpl();
+		User existsUser = new UserImpl();
 
-		userExists.setUserId(_CORRECT_USER_ID);
-		userExists.setDigest("digest");
-		userExists.setScreenName(StringPool.BLANK);
-		userExists.setEmailAddress(StringPool.BLANK);
+		existsUser.setUserId(_CORRECT_USER_ID);
+		existsUser.setDigest(_DIGEST_USER);
+		existsUser.setScreenName(StringPool.BLANK);
+		existsUser.setEmailAddress(StringPool.BLANK);
 
-		_setUpEnvironment(role, roleIds, userExists);
+		_setUpEnvironment(role, roleIds, existsUser);
 
 		setUpPropsUtil(issuer, roleName);
 
 		Assert.assertEquals(
 			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
+				_userInfo, _COMPANY_ID, issuer, Portal.PATH_MAIN, _PORTAL_URL));
 	}
 
 	@Test
@@ -156,23 +158,23 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		String issuer = RandomTestUtil.randomString();
 		String roleName = _CORRECT_ROLE_NAME;
 
-		Role role = new RoleImpl();
+		Role regularRole = new RoleImpl();
 
-		role.setRoleId(3333);
-		role.setCompanyId(_COMPANY_ID);
-		role.setName(roleName);
-		role.setType(RoleConstants.TYPE_REGULAR);
+		regularRole.setRoleId(_ROLE_ID);
+		regularRole.setCompanyId(_COMPANY_ID);
+		regularRole.setName(roleName);
+		regularRole.setType(RoleConstants.TYPE_REGULAR);
 
 		long[] roleIds = null;
 		String issuerProvider = RandomTestUtil.randomString();
 
-		_setUpEnvironment(role, roleIds, null);
+		_setUpEnvironment(regularRole, roleIds, null);
 		setUpPropsUtil(issuer, roleName);
 
 		Assert.assertEquals(
 			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuerProvider, _MAIN_PATH,
+				_userInfo, _COMPANY_ID, issuerProvider, Portal.PATH_MAIN,
 				_PORTAL_URL));
 	}
 
@@ -185,7 +187,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		Role role = new RoleImpl();
 
-		role.setRoleId(3333);
+		role.setRoleId(_ROLE_ID);
 		role.setCompanyId(_COMPANY_ID);
 		role.setName(roleName);
 		role.setType(RoleConstants.TYPE_SITE);
@@ -199,7 +201,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
+				_userInfo, _COMPANY_ID, issuer, Portal.PATH_MAIN, _PORTAL_URL));
 	}
 
 	@Test
@@ -218,7 +220,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
+				_userInfo, _COMPANY_ID, issuer, Portal.PATH_MAIN, _PORTAL_URL));
 	}
 
 	@Test
@@ -237,7 +239,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
+				_userInfo, _COMPANY_ID, issuer, Portal.PATH_MAIN, _PORTAL_URL));
 	}
 
 	@Test
@@ -256,7 +258,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		Assert.assertEquals(
 			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuer, _MAIN_PATH, _PORTAL_URL));
+				_userInfo, _COMPANY_ID, issuer, Portal.PATH_MAIN, _PORTAL_URL));
 	}
 
 	@Test
@@ -264,23 +266,23 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 		String issuer = null;
 		String roleName = _CORRECT_ROLE_NAME;
 
-		Role role = new RoleImpl();
+		Role regularRole = new RoleImpl();
 
-		role.setRoleId(3333);
-		role.setCompanyId(_COMPANY_ID);
-		role.setName(roleName);
-		role.setType(RoleConstants.TYPE_REGULAR);
+		regularRole.setRoleId(_ROLE_ID);
+		regularRole.setCompanyId(_COMPANY_ID);
+		regularRole.setName(roleName);
+		regularRole.setType(RoleConstants.TYPE_REGULAR);
 
 		long[] roleIds = null;
 		String issuerProvider = RandomTestUtil.randomString();
 
-		_setUpEnvironment(role, roleIds, null);
+		_setUpEnvironment(regularRole, roleIds, null);
 		setUpPropsUtil(issuer, roleName);
 
 		Assert.assertEquals(
 			_CORRECT_USER_ID,
 			_openIdConnectUserInfoProcessorImpl.processUserInfo(
-				_userInfo, _COMPANY_ID, issuerProvider, _MAIN_PATH,
+				_userInfo, _COMPANY_ID, issuerProvider, Portal.PATH_MAIN,
 				_PORTAL_URL));
 	}
 
@@ -305,7 +307,13 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		_setUpLocaleUtil();
 
-		String emailAddress = "email@liferay.com";
+		String domain = StringUtil.toLowerCase(RandomTestUtil.randomString());
+
+		String mx = domain + ".com";
+
+		String emailAddress =
+			StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+				StringPool.AT + mx;
 
 		Mockito.when(
 			_companyLocalServiceMock.getCompany(_COMPANY_ID)
@@ -343,23 +351,21 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 			emailAddress
 		);
 
-		User user = new UserImpl();
+		User correctUser = new UserImpl();
 
-		String digest = RandomTestUtil.randomString();
+		correctUser.setUserId(_CORRECT_USER_ID);
+		correctUser.setDigest(_DIGEST_USER);
+		correctUser.setScreenName(StringPool.BLANK);
+		correctUser.setEmailAddress(emailAddress);
+		correctUser.setLanguageId(LocaleUtil.US.getLanguage());
 
-		user.setUserId(_CORRECT_USER_ID);
-		user.setDigest(digest);
-		user.setScreenName(StringPool.BLANK);
-		user.setEmailAddress(emailAddress);
-		user.setLanguageId("en");
+		User errorUser = new UserImpl();
 
-		User userError = new UserImpl();
-
-		userError.setUserId(_INCORRECT_USER_ID);
-		userError.setDigest(digest);
-		userError.setScreenName(StringPool.BLANK);
-		userError.setEmailAddress(emailAddress);
-		userError.setLanguageId("en");
+		errorUser.setUserId(_INCORRECT_USER_ID);
+		errorUser.setDigest(_DIGEST_USER);
+		errorUser.setScreenName(StringPool.BLANK);
+		errorUser.setEmailAddress(emailAddress);
+		errorUser.setLanguageId(LocaleUtil.US.getLanguage());
 
 		Mockito.when(
 			_userLocalServiceMock.fetchUserByEmailAddress(
@@ -398,7 +404,7 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 				Mockito.eq(null), Mockito.anyBoolean(),
 				Mockito.any(ServiceContext.class))
 		).thenReturn(
-			user
+			correctUser
 		);
 		Mockito.when(
 			_userLocalServiceMock.addUser(
@@ -414,19 +420,19 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 				Mockito.any(long[].class), Mockito.anyBoolean(),
 				Mockito.any(ServiceContext.class))
 		).thenReturn(
-			userError
+			errorUser
 		);
 		Mockito.when(
 			_userLocalServiceMock.updatePasswordReset(
-				Mockito.eq(user.getUserId()), Mockito.eq(false))
+				Mockito.eq(correctUser.getUserId()), Mockito.eq(false))
 		).thenReturn(
-			user
+			correctUser
 		);
 		Mockito.when(
 			_userLocalServiceMock.updatePasswordReset(
-				Mockito.eq(userError.getUserId()), Mockito.eq(false))
+				Mockito.eq(errorUser.getUserId()), Mockito.eq(false))
 		).thenReturn(
-			userError
+			errorUser
 		);
 	}
 
@@ -439,20 +445,23 @@ public class OpenIdConnectAddRoleToUserLoginTest {
 
 		locales.clear();
 
-		locales.put("en", LocaleUtil.ENGLISH);
+		locales.put(LocaleUtil.US.getLanguage(), LocaleUtil.US);
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
-	private static final String _CORRECT_ROLE_NAME = RandomTestUtil.randomString();
+	private static final String _CORRECT_ROLE_NAME =
+		RandomTestUtil.randomString();
 
 	private static final long _CORRECT_USER_ID = 1;
 
+	private static final String _DIGEST_USER = RandomTestUtil.randomString();
+
 	private static final long _INCORRECT_USER_ID = 0;
 
-	private static final String _MAIN_PATH = "/c";
-
 	private static final String _PORTAL_URL = RandomTestUtil.randomString();
+
+	private static final long _ROLE_ID = RandomTestUtil.randomLong();
 
 	private static OpenIdConnectUserInfoProcessorImpl
 		_openIdConnectUserInfoProcessorImpl;

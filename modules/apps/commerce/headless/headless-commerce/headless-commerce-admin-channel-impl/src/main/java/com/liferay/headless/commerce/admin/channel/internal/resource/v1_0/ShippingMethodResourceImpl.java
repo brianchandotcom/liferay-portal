@@ -62,8 +62,8 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 		return Page.of(
 			TransformUtil.transform(
 				_commerceShippingMethodService.getCommerceShippingMethods(
-					commerceChannel.getGroupId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS,
+					commerceChannel.getGroupId(), pagination.getStartPosition(),
+					pagination.getEndPosition(),
 					new CommerceShippingMethodPriorityComparator()),
 				this::_toShippingMethod),
 			pagination,
@@ -115,7 +115,7 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 								commerceShippingMethod.getDescriptionMap())) {
 
 							return LanguageUtils.getLanguageIdMap(
-								commerceShippingMethod.getNameMap());
+								commerceShippingMethod.getDescriptionMap());
 						}
 
 						CommerceShippingEngine commerceShippingEngine =

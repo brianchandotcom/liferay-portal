@@ -1,0 +1,24 @@
+<table class="table table-borderless w-100">
+	<thead>
+		<tr>
+			<th class="w-50"><lfr-editable class="text-neutral-10" id="tableTitle" type="rich-text">
+					This is editable text!
+				</lfr-editable></th>
+			<th class="w-50"></th>
+		</tr>
+	</thead>
+
+	<tbody class="ml-1">
+			[#list 0..configuration.numberOfRows-1 as i]
+		<tr>
+			<td class="w-50">
+				<lfr-editable class="text-neutral-10" id="rowTitle-${i+1}" type="rich-text">
+					This is editable text!
+				</lfr-editable></td>
+			<td class="w-50"><lfr-editable class="text-neutral-10" id="rowValue-${i+1}" type="rich-text">
+					This is editable text!
+				</lfr-editable></td>
+	</tr>
+	[/#list]
+	</tbody>
+</table>

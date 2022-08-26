@@ -93,7 +93,13 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 					"lfrScopeType", new String[] {"company"}
 				).build());
 
-			_removeOwnerPermissionsFromDLHomeFolderPermissionsInGlobalSite();
+			ResourcePermission groupDLModelResourcePermission =
+				_resourcePermissionLocalService.getResourcePermission(
+					_companyId, DLConstants.RESOURCE_NAME,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(group.getGroupId()), _ownerRole.getRoleId());
+
+			_removePermissions(groupDLModelResourcePermission);
 
 			exportLayouts(
 				new long[] {layout.getLayoutId()},
@@ -120,8 +126,10 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 					_ownerRole.getRoleId());
 
 			Assert.assertEquals(
-				0, globalGroupDLModelResourcePermission.getActionIds());
-			Assert.assertFalse(
+				originalGlobalGroupDLModelResourcePermission.getActionIds(),
+				globalGroupDLModelResourcePermission.getActionIds());
+			Assert.assertEquals(
+				originalGlobalGroupDLModelResourcePermission.isViewActionId(),
 				globalGroupDLModelResourcePermission.isViewActionId());
 		}
 		finally {
@@ -146,22 +154,14 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 			companyId, groupId, 0, name, primaryKey, false, true, true);
 	}
 
-	private void _removeOwnerPermissionsFromDLHomeFolderPermissionsInGlobalSite()
-		throws Exception {
+	private ResourcePermission _removePermissions(
+		ResourcePermission resourcePermission) {
 
-		long globalGroupId = _globalGroup.getGroupId();
+		resourcePermission.setActionIds(0);
+		resourcePermission.setViewActionId(false);
 
-		ResourcePermission globalGroupDLModelResourcePermission =
-			_resourcePermissionLocalService.getResourcePermission(
-				_globalGroup.getCompanyId(), DLConstants.RESOURCE_NAME,
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(globalGroupId), _ownerRole.getRoleId());
-
-		globalGroupDLModelResourcePermission.setActionIds(0);
-		globalGroupDLModelResourcePermission.setViewActionId(false);
-
-		_resourcePermissionLocalService.updateResourcePermission(
-			globalGroupDLModelResourcePermission);
+		return _resourcePermissionLocalService.updateResourcePermission(
+			resourcePermission);
 	}
 
 	private void _restoreModelResourcePermission(

@@ -35,7 +35,10 @@ const useCaseActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}) => navigate(`${id}/requirements`),
+			action: ({id}) =>
+				navigate(
+					isHeaderActions ? 'requirements' : `${id}/requirements`
+				),
 			icon: 'shortcut',
 			name: i18n.translate('link-requirements'),
 		},

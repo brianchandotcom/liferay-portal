@@ -48,12 +48,20 @@ const UNMAPPED_OPTION = {
 
 function filterFields(fields, fieldType) {
 	return fields.reduce((acc, fieldSet) => {
-		const newFields = fieldSet.fields.filter((field) =>
-			fieldType === EDITABLE_TYPES.image ||
-			fieldType === EDITABLE_TYPES.backgroundImage
-				? field.type === EDITABLE_TYPES.image
-				: field.type !== EDITABLE_TYPES.image
-		);
+		const newFields = fieldSet.fields.filter((field) => {
+			if (fieldType === EDITABLE_TYPES['date-time']) {
+				return field.type === 'date';
+			}
+			else if (
+				fieldType === EDITABLE_TYPES.image ||
+				fieldType === EDITABLE_TYPES.backgroundImage
+			) {
+				return field.type === EDITABLE_TYPES.image;
+			}
+			else {
+				return field.type !== EDITABLE_TYPES.image;
+			}
+		});
 
 		if (newFields.length) {
 			return [

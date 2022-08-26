@@ -17,6 +17,7 @@
  */
 export const EDITABLE_TYPES = {
 	'backgroundImage': 'background-image',
+	'date-time': 'date-time',
 	'html': 'html',
 	'image': 'image',
 	'link': 'link',

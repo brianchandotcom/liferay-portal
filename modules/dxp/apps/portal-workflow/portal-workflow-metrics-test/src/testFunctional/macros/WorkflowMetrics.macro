@@ -1259,6 +1259,26 @@ definition {
 		}
 	}
 
+	macro setSLADefinitionsJobInterval {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Workflow",
+			configurationName = "Workflow Metrics",
+			configurationScope = "System Scope");
+
+		Type(
+			locator1 = "SystemSettings#SLA_DEFINITIONS_JOB_INTERVAL",
+			value1 = "${jobInterval}");
+
+		Button.click(button = "Save");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro singleReassignSetup {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

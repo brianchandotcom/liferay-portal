@@ -96,6 +96,14 @@
 	<td>//div[@class='position-relative row']//div[2]//div[1]//button[contains(@aria-label,'trash')]</td>
 	<td></td>
 </tr>
+
+<!--WORKFLOW-->
+
+<tr>
+	<td>SLA_DEFINITIONS_JOB_INTERVAL</td>
+	<td>//input[contains(@id, 'checkSLADefinitionsJobInterval')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td></td>
 	<td></td>

@@ -27,7 +27,10 @@ definition {
 	@description = "LPS-89082 - Verify that a blocked SLA can be fixed"
 	@priority = "5"
 	test BlockedSLACanBeFixed {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#BlockedSLACanBeFixed";
+
+		WorkflowMetrics.setSLADefinitionsJobInterval(jobInterval = "1");
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -289,6 +292,8 @@ definition {
 	test ErrorAlertIsDisplayedAgainWhenClosed {
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#ErrorAlertIsDisplayedAgainWhenClosed";
 
+		WorkflowMetrics.setSLADefinitionsJobInterval(jobInterval = "1");
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -344,6 +349,8 @@ definition {
 	@priority = "4"
 	test ErrorMessagesAreDisplayedAndClickableWhenSLABlocked {
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#ErrorMessagesAreDisplayedAndClickableWhenSLABlocked";
+
+		WorkflowMetrics.setSLADefinitionsJobInterval(jobInterval = "1");
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -798,6 +805,8 @@ definition {
 	@priority = "4"
 	test SLAListIsGroupedWhenSLABlocked {
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#SLAListIsGroupedWhenSLABlocked";
+
+		WorkflowMetrics.setSLADefinitionsJobInterval(jobInterval = "1");
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 

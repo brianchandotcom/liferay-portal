@@ -69,7 +69,21 @@ export function ModalAddFilter({
 	const [filterEndDate, setFilterEndDate] = useState('');
 
 	const filteredAvailableFields = useMemo(() => {
-		return objectFields.filter(({label}: ObjectField) =>
+		const availableFields = objectFields.filter(
+			(objectField: ObjectFieldView) => {
+				if (
+					(objectField.businessType === 'Picklist' &&
+						!objectField.hasFilter) ||
+					objectField.name === 'createDate' ||
+					objectField.name === 'modifiedDate' ||
+					(objectField.name === 'status' && !objectField.hasFilter)
+				) {
+					return objectField;
+				}
+			}
+		);
+
+		return availableFields.filter(({label}: ObjectField) =>
 			stringIncludesQuery(label[defaultLanguageId] as string, query)
 		);
 	}, [objectFields, query]);

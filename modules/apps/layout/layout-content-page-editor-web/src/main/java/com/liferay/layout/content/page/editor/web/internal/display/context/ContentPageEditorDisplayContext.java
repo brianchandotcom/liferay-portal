@@ -680,11 +680,11 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"state",
 			HashMapBuilder.<String, Object>put(
-				"collections", _getFragmentCollections(true, false)
+				"collections", _getFragmentCollectionMapsList(true, false)
 			).put(
 				"fragmentEntryLinks", _getFragmentEntryLinks()
 			).put(
-				"fragments", _getFragmentCollections(false, true)
+				"fragments", _getFragmentCollectionMapsList(false, true)
 			).put(
 				"languageId",
 				LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale())
@@ -950,41 +950,42 @@ public class ContentPageEditorDisplayContext {
 	protected final StagingGroupHelper stagingGroupHelper;
 	protected final ThemeDisplay themeDisplay;
 
-	private List<Map<String, Object>> _addLayoutElements(
-		Map<String, Map<String, Object>> fragmentCollectionMap) {
+	private List<Map<String, Object>> _addLayoutElementMaps(
+		Map<String, Map<String, Object>> fragmentCollectionMaps) {
 
 		for (Map.Entry<String, List<Map<String, Object>>> entry :
-				_layoutElementsMap.entrySet()) {
+				_layoutElementMapsListMap.entrySet()) {
 
-			List<Map<String, Object>> collectionItems = new LinkedList<>();
+			List<Map<String, Object>> layoutElementMapsList =
+				new LinkedList<>();
 
-			for (Map<String, Object> layoutElement : entry.getValue()) {
-				String fragmentEntryKey = (String)layoutElement.get(
+			for (Map<String, Object> layoutElementMap : entry.getValue()) {
+				String fragmentEntryKey = (String)layoutElementMap.get(
 					"fragmentEntryKey");
 
 				if (!_isAllowedFragmentEntryKey(fragmentEntryKey)) {
 					continue;
 				}
 
-				collectionItems.add(
+				layoutElementMapsList.add(
 					HashMapBuilder.create(
-						layoutElement
+						layoutElementMap
 					).put(
 						"name",
 						LanguageUtil.get(
 							themeDisplay.getLocale(),
-							(String)layoutElement.get("languageKey"))
+							(String)layoutElementMap.get("languageKey"))
 					).build());
 			}
 
-			if (collectionItems.isEmpty()) {
+			if (layoutElementMapsList.isEmpty()) {
 				continue;
 			}
 
 			String collectionKey = entry.getKey();
 
-			Map<String, Object> fragmentCollection =
-				fragmentCollectionMap.computeIfAbsent(
+			Map<String, Object> fragmentCollectionMap =
+				fragmentCollectionMaps.computeIfAbsent(
 					collectionKey,
 					key -> HashMapBuilder.<String, Object>put(
 						"fragmentCollectionId", collectionKey
@@ -996,30 +997,31 @@ public class ContentPageEditorDisplayContext {
 								StringUtil.toLowerCase(collectionKey))
 					).build());
 
-			List<Map<String, Object>> currentCollectionItems =
-				(List<Map<String, Object>>)fragmentCollection.computeIfAbsent(
-					"fragmentEntries", key -> new LinkedList<>());
+			List<Map<String, Object>> fragmentEntryMapsList =
+				(List<Map<String, Object>>)
+					fragmentCollectionMap.computeIfAbsent(
+						"fragmentEntries", key -> new LinkedList<>());
 
-			currentCollectionItems.addAll(0, collectionItems);
+			fragmentEntryMapsList.addAll(0, layoutElementMapsList);
 		}
 
-		List<Map<String, Object>> systemFragmentCollections =
+		List<Map<String, Object>> fragmentCollectionMapsList =
 			new LinkedList<>();
 
 		for (String collectionKey : _SORTED_FRAGMENT_COLLECTION_KEYS) {
-			Map<String, Object> fragmentCollection =
-				fragmentCollectionMap.remove(collectionKey);
+			Map<String, Object> fragmentCollectionMap =
+				fragmentCollectionMaps.remove(collectionKey);
 
-			if (fragmentCollection == null) {
+			if (fragmentCollectionMap == null) {
 				continue;
 			}
 
-			systemFragmentCollections.add(fragmentCollection);
+			fragmentCollectionMapsList.add(fragmentCollectionMap);
 		}
 
-		systemFragmentCollections.addAll(fragmentCollectionMap.values());
+		fragmentCollectionMapsList.addAll(fragmentCollectionMaps.values());
 
-		return systemFragmentCollections;
+		return fragmentCollectionMapsList;
 	}
 
 	private String _getAssetCategoryTreeNodeItemSelectorURL() {
@@ -1225,8 +1227,10 @@ public class ContentPageEditorDisplayContext {
 		).buildString();
 	}
 
-	private Map<String, Map<String, Object>> _getDynamicFragments() {
-		Map<String, Map<String, Object>> dynamicFragmentCollectionsMap =
+	private Map<String, Map<String, Object>>
+		_getDynamicFragmentCollectionMaps() {
+
+		Map<String, Map<String, Object>> dynamicFragmentCollectionMaps =
 			new LinkedHashMap<>();
 
 		for (FragmentRenderer fragmentRenderer :
@@ -1239,7 +1243,7 @@ public class ContentPageEditorDisplayContext {
 			}
 
 			Map<String, Object> dynamicFragmentCollectionMap =
-				dynamicFragmentCollectionsMap.computeIfAbsent(
+				dynamicFragmentCollectionMaps.computeIfAbsent(
 					fragmentRenderer.getCollectionKey(),
 					key -> HashMapBuilder.<String, Object>put(
 						"fragmentCollectionId",
@@ -1252,12 +1256,12 @@ public class ContentPageEditorDisplayContext {
 								fragmentRenderer.getCollectionKey())
 					).build());
 
-			List<Map<String, Object>> fragmentEntries =
+			List<Map<String, Object>> fragmentEntryMapsList =
 				(List<Map<String, Object>>)
 					dynamicFragmentCollectionMap.computeIfAbsent(
 						"fragmentEntries", key -> new LinkedList<>());
 
-			fragmentEntries.add(
+			fragmentEntryMapsList.add(
 				HashMapBuilder.<String, Object>put(
 					"fragmentEntryKey", fragmentRenderer.getKey()
 				).put(
@@ -1270,13 +1274,13 @@ public class ContentPageEditorDisplayContext {
 				).build());
 		}
 
-		return dynamicFragmentCollectionsMap;
+		return dynamicFragmentCollectionMaps;
 	}
 
 	private Map<String, Map<String, Object>>
-		_getFragmentCollectionContributors() {
+		_getFragmentCollectionContributorMaps() {
 
-		Map<String, Map<String, Object>> fragmentCollectionContributorsMap =
+		Map<String, Map<String, Object>> fragmentCollectionContributorMaps =
 			new LinkedHashMap<>();
 
 		List<FragmentCollectionContributor> fragmentCollectionContributors =
@@ -1304,33 +1308,33 @@ public class ContentPageEditorDisplayContext {
 				continue;
 			}
 
-			List<Map<String, Object>> filteredFragmentEntries =
-				_getFragmentEntries(fragmentEntries);
+			List<Map<String, Object>> fragmentEntryMapsList =
+				_getFragmentEntryMapsList(fragmentEntries);
 
-			filteredFragmentEntries.addAll(
-				_getFragmentCompositions(fragmentCompositions));
+			fragmentEntryMapsList.addAll(
+				_getFragmentCompositionMapsList(fragmentCompositions));
 
-			if (ListUtil.isEmpty(filteredFragmentEntries)) {
+			if (ListUtil.isEmpty(fragmentEntryMapsList)) {
 				continue;
 			}
 
-			filteredFragmentEntries.sort(
-				(filteredFragmentEntry1, filteredFragmentEntry2) -> {
+			fragmentEntryMapsList.sort(
+				(fragmentEntryMap1, fragmentEntryMap2) -> {
 					String name1 = String.valueOf(
-						filteredFragmentEntry1.get("name"));
+						fragmentEntryMap1.get("name"));
 					String name2 = String.valueOf(
-						filteredFragmentEntry2.get("name"));
+						fragmentEntryMap2.get("name"));
 
 					return name1.compareTo(name2);
 				});
 
-			fragmentCollectionContributorsMap.put(
+			fragmentCollectionContributorMaps.put(
 				fragmentCollectionContributor.getFragmentCollectionKey(),
 				HashMapBuilder.<String, Object>put(
 					"fragmentCollectionId",
 					fragmentCollectionContributor.getFragmentCollectionKey()
 				).put(
-					"fragmentEntries", filteredFragmentEntries
+					"fragmentEntries", fragmentEntryMapsList
 				).put(
 					"name",
 					fragmentCollectionContributor.getName(
@@ -1338,22 +1342,24 @@ public class ContentPageEditorDisplayContext {
 				).build());
 		}
 
-		return fragmentCollectionContributorsMap;
+		return fragmentCollectionContributorMaps;
 	}
 
-	private List<Map<String, Object>> _getFragmentCollections(
+	private List<Map<String, Object>> _getFragmentCollectionMapsList(
 		boolean includeEmpty, boolean includeSystem) {
 
-		List<Map<String, Object>> allFragmentCollections = new ArrayList<>();
+		List<Map<String, Object>> allFragmentCollectionMapsList =
+			new ArrayList<>();
 
 		if (includeSystem) {
-			Map<String, Map<String, Object>> systemFragmentCollections =
-				_getFragmentCollectionContributors();
+			Map<String, Map<String, Object>> systemFragmentCollectionMaps =
+				_getFragmentCollectionContributorMaps();
 
-			systemFragmentCollections.putAll(_getDynamicFragments());
+			systemFragmentCollectionMaps.putAll(
+				_getDynamicFragmentCollectionMaps());
 
-			allFragmentCollections.addAll(
-				_addLayoutElements(systemFragmentCollections));
+			allFragmentCollectionMapsList.addAll(
+				_addLayoutElementMaps(systemFragmentCollectionMaps));
 		}
 
 		List<FragmentCollection> fragmentCollections =
@@ -1370,17 +1376,17 @@ public class ContentPageEditorDisplayContext {
 					fragmentCollection.getFragmentCollectionId(),
 					WorkflowConstants.STATUS_APPROVED);
 
-			List<Map<String, Object>> filteredFragmentEntries =
-				_getFragmentEntries(fragmentEntries);
+			List<Map<String, Object>> fragmentEntryMapsList =
+				_getFragmentEntryMapsList(fragmentEntries);
 
-			filteredFragmentEntries.addAll(
-				_getFragmentCompositions(
+			fragmentEntryMapsList.addAll(
+				_getFragmentCompositionMapsList(
 					FragmentCompositionServiceUtil.getFragmentCompositions(
 						fragmentCollection.getGroupId(),
 						fragmentCollection.getFragmentCollectionId(),
 						WorkflowConstants.STATUS_APPROVED)));
 
-			if (!includeEmpty && ListUtil.isEmpty(filteredFragmentEntries)) {
+			if (!includeEmpty && ListUtil.isEmpty(fragmentEntryMapsList)) {
 				continue;
 			}
 
@@ -1391,21 +1397,21 @@ public class ContentPageEditorDisplayContext {
 				continue;
 			}
 
-			allFragmentCollections.add(
+			allFragmentCollectionMapsList.add(
 				HashMapBuilder.<String, Object>put(
 					"fragmentCollectionId",
 					fragmentCollection.getFragmentCollectionId()
 				).put(
-					"fragmentEntries", filteredFragmentEntries
+					"fragmentEntries", fragmentEntryMapsList
 				).put(
 					"name", fragmentCollection.getName()
 				).build());
 		}
 
-		return allFragmentCollections;
+		return allFragmentCollectionMapsList;
 	}
 
-	private List<Map<String, Object>> _getFragmentCompositions(
+	private List<Map<String, Object>> _getFragmentCompositionMapsList(
 		List<FragmentComposition> fragmentCompositions) {
 
 		List<Map<String, Object>> filteredFragmentCompositions =
@@ -1437,39 +1443,6 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return filteredFragmentCompositions;
-	}
-
-	private List<Map<String, Object>> _getFragmentEntries(
-		List<FragmentEntry> fragmentEntries) {
-
-		List<Map<String, Object>> filteredFragmentEntries = new ArrayList<>();
-
-		for (FragmentEntry fragmentEntry : fragmentEntries) {
-			if (!_isAllowedFragmentEntryKey(
-					fragmentEntry.getFragmentEntryKey())) {
-
-				continue;
-			}
-
-			filteredFragmentEntries.add(
-				HashMapBuilder.<String, Object>put(
-					"fragmentEntryKey", fragmentEntry.getFragmentEntryKey()
-				).put(
-					"groupId", fragmentEntry.getGroupId()
-				).put(
-					"icon", fragmentEntry.getIcon()
-				).put(
-					"imagePreviewURL",
-					fragmentEntry.getImagePreviewURL(themeDisplay)
-				).put(
-					"name", fragmentEntry.getName()
-				).put(
-					"type",
-					FragmentConstants.getTypeLabel(fragmentEntry.getType())
-				).build());
-		}
-
-		return filteredFragmentEntries;
 	}
 
 	private List<String> _getFragmentEntryKeys() {
@@ -1644,6 +1617,39 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return fragmentEntryLinksMap;
+	}
+
+	private List<Map<String, Object>> _getFragmentEntryMapsList(
+		List<FragmentEntry> fragmentEntries) {
+
+		List<Map<String, Object>> fragmentEntryMapsList = new ArrayList<>();
+
+		for (FragmentEntry fragmentEntry : fragmentEntries) {
+			if (!_isAllowedFragmentEntryKey(
+					fragmentEntry.getFragmentEntryKey())) {
+
+				continue;
+			}
+
+			fragmentEntryMapsList.add(
+				HashMapBuilder.<String, Object>put(
+					"fragmentEntryKey", fragmentEntry.getFragmentEntryKey()
+				).put(
+					"groupId", fragmentEntry.getGroupId()
+				).put(
+					"icon", fragmentEntry.getIcon()
+				).put(
+					"imagePreviewURL",
+					fragmentEntry.getImagePreviewURL(themeDisplay)
+				).put(
+					"name", fragmentEntry.getName()
+				).put(
+					"type",
+					FragmentConstants.getTypeLabel(fragmentEntry.getType())
+				).build());
+		}
+
+		return fragmentEntryMapsList;
 	}
 
 	private ItemSelectorCriterion _getImageItemSelectorCriterion() {
@@ -2258,14 +2264,14 @@ public class ContentPageEditorDisplayContext {
 		ContentPageEditorDisplayContext.class);
 
 	private static final Map<String, List<Map<String, Object>>>
-		_layoutElementsMap =
+		_layoutElementMapsListMap =
 			LinkedHashMapBuilder.<String, List<Map<String, Object>>>put(
 				"layout-elements",
 				() -> {
-					List<Map<String, Object>> layoutElementsCollectionItems =
+					List<Map<String, Object>> layoutElementMapsList =
 						new LinkedList<>();
 
-					layoutElementsCollectionItems.add(
+					layoutElementMapsList.add(
 						HashMapBuilder.<String, Object>put(
 							"fragmentEntryKey", "container"
 						).put(
@@ -2276,7 +2282,7 @@ public class ContentPageEditorDisplayContext {
 							"languageKey", "container"
 						).build());
 
-					layoutElementsCollectionItems.add(
+					layoutElementMapsList.add(
 						HashMapBuilder.<String, Object>put(
 							"fragmentEntryKey", "row"
 						).put(
@@ -2287,7 +2293,7 @@ public class ContentPageEditorDisplayContext {
 							"languageKey", "grid"
 						).build());
 
-					return layoutElementsCollectionItems;
+					return layoutElementMapsList;
 				}
 			).put(
 				"INPUTS",

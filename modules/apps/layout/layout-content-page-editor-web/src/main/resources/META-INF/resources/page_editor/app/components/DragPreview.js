@@ -103,9 +103,6 @@ export default function DragPreview() {
 			widgets
 		);
 	}
-	else if (process.env.NODE_ENV === 'development') {
-		console.error('There is no icon for item ', item);
-	}
 
 	return (
 		<div className="cadmin">

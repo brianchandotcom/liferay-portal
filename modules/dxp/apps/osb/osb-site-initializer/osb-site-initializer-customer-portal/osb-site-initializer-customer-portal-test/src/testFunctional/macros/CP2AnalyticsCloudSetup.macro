@@ -34,33 +34,33 @@ definition {
 			label = "Address",
 			value = "test@liferay.com");
 
-		CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields(
+		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 			label = "workspaceName",
-			value = "Liferay Testing");
+			value = "testing1");
 
 		Select(
 			locator1 = "CP2AnalyticsCloudSetup#SELECT_LOCATION",
 			value1 = "Sao Paulo, Brazil");
 
-		CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields(
+		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 			label = "workspaceURL",
 			value = "/mytest");
 
-		CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields(
+		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 			label = "EmailDomains",
 			value = "@liferay.com");
 
-		CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields(
+		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 			label = "timeZone",
 			value = "UTC-08:00");
 
-		CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields(
+		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 			label = "email",
 			value = "test@liferay.com");
 	}
 
-	macro typeAllSetupAnalyticsCloufEXtraInfo {
-		CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields(
+	macro typeAllSetupAnalyticsCloudExtraInfo {
+		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 			label = "email",
 			position = "2",
 			value = "test.user1@liferay.com");

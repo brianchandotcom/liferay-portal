@@ -79,9 +79,9 @@ definition {
 			locator1 = "Portlet#H2_HEADER",
 			value1 = "Clay Sample");
 
-		AssertTextNotPresent(
-			locator1 = "Portlet#PORTLET_CONTENT",
-			value1 = "Clay Sample");
+		AssertNotVisible(
+			key_portletName = "Clay Sample",
+			locator1 = "Portlet#BODY");
 
 		Portlet.gotoPortletOptions(portletName = "Clay Sample");
 

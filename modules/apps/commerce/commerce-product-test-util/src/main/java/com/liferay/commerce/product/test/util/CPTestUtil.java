@@ -236,7 +236,8 @@ public class CPTestUtil {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute, true,
-			false, false, 1, StringPool.BLANK, null, 0, serviceContext);
+			false, false, 1, StringPool.BLANK, null, 0, false, 1, null, null, 0,
+			null, false, null, 0, 0, 0, 0, serviceContext);
 	}
 
 	public static CPInstance addCPDefinitionCPInstanceWithPrice(
@@ -335,7 +336,7 @@ public class CPTestUtil {
 				cpDefinitionOptionValueRel.getNameMap(),
 				cpDefinitionOptionValueRel.getPriority(),
 				cpDefinitionOptionValueRel.getKey(), cpInstanceId, quantity,
-				price, serviceContext);
+				false, price, serviceContext);
 	}
 
 	public static CPDefinition addCPDefinitionWithChildCPDefinitions(
@@ -1220,7 +1221,7 @@ public class CPTestUtil {
 						cpInstanceOptionValueRel.getNameMap(),
 						cpInstanceOptionValueRel.getPriority(),
 						cpInstanceOptionValueRel.getKey(),
-						cpInstance.getCPInstanceId(), 2, price,
+						cpInstance.getCPInstanceId(), 2, false, price,
 						serviceContext));
 		}
 

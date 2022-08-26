@@ -946,7 +946,8 @@ public class CPDefinitionsImporter {
 			subscriptionLength, subscriptionType,
 			_getSubscriptionTypeSettingsUnicodeProperties(
 				subscriptionInfoJSONObject),
-			maxSubscriptionCycles, serviceContext);
+			maxSubscriptionCycles, false, 1, null, null, 0, null, false, null,
+			0, 0, 0, 0, serviceContext);
 
 		_addWarehouseQuantities(
 			skuJSONObject, commerceInventoryWarehouseIds, serviceContext,

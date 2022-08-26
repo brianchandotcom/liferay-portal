@@ -58,7 +58,7 @@ public class ProductSubscriptionConfigurationUtil {
 			GetterUtil.get(
 				productSubscriptionConfiguration.getNumberOfLength(),
 				cpDefinition.getMaxSubscriptionCycles()),
-			serviceContext);
+			false, 1, null, null, 0);
 	}
 
 }

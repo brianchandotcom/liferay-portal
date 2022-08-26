@@ -57,7 +57,8 @@ public class ProductOptionValueUtil {
 						GetterUtil.get(
 							productOptionValue.getPriority(),
 							cpDefinitionOptionValueRel.getPriority()),
-						productOptionValue.getKey(), serviceContext);
+						productOptionValue.getKey(), 0, 0, false, null,
+						serviceContext);
 		}
 
 		return cpDefinitionOptionValueRel;

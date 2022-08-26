@@ -946,7 +946,7 @@ public class CommerceOrderItemLocalServiceTest {
 					cpOptionValue.getNameMap(), cpOptionValue.getPriority(),
 					commerceOptionValue.getOptionValueKey(),
 					commerceOptionValue.getCPInstanceId(),
-					commerceOptionValue.getQuantity(),
+					commerceOptionValue.getQuantity(), false,
 					commerceOptionValue.getPrice(), _serviceContext);
 		}
 	}

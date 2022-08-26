@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
 
@@ -76,15 +77,11 @@ public class SystemPropertiesTest {
 		SystemProperties.set(_PREFIX + _KEY, _TEST_VALUE);
 
 		Assert.assertEquals(
-			HashMapBuilder.put(
-				_KEY, _TEST_VALUE
-			).build(),
+			Collections.singletonMap(_KEY, _TEST_VALUE),
 			SystemProperties.getProperties(_PREFIX, true));
 
 		Assert.assertEquals(
-			HashMapBuilder.put(
-				_PREFIX + _KEY, _TEST_VALUE
-			).build(),
+			Collections.singletonMap(_PREFIX + _KEY, _TEST_VALUE),
 			SystemProperties.getProperties(_PREFIX, false));
 	}
 

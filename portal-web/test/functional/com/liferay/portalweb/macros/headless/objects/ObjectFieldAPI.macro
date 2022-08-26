@@ -1,0 +1,68 @@
+definition {
+
+	macro _curlObjectField {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(objectDefinitionId)) {
+			var api = "object-definitions/${objectDefinitionId}/object-fields";
+		}
+		else {
+			var api = "/object-fields/${objectFieldId}";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/${api} \
+			-H accept: application/json \
+			-H Content-Type: application/json \
+			-u test@liferay.com:test \
+		''';
+
+		return "${curl}";
+	}
+
+	macro deleteObjectField {
+		var curl = ObjectFieldAPI._curlObjectField(objectFieldId = "${staticObjectFieldId}");
+
+		JSONCurlUtil.delete("${curl}");
+	}
+
+	macro getIdOfcreatedObjectField {
+		Variables.assertDefined(parameterList = "${objectDefinitionId},${dbType},${name}");
+
+		var curl = ObjectFieldAPI._curlObjectField(objectDefinitionId = "${objectDefinitionId}");
+
+		if (!(isSet(label))) {
+			var label = "${name}";
+		}
+
+		var body = '''
+			-d {
+				"DBType": "${dbType}",
+				"indexed": true,
+				"indexedAsKeyword": false,
+				"label":{"en_US":"${label}"},
+				"listTypeDefinitionId": 0,
+				"name": "${name}",
+				"required": false
+			}
+		''';
+
+		var curl = StringUtil.add("${curl}", "${body}", " ");
+
+		var objectFieldId = JSONCurlUtil.post("${curl}", "$.id");
+
+		return "${objectFieldId}";
+	}
+
+	macro setUpGlobalObjectFieldId {
+		var objectFieldId = ObjectFieldAPI.getIdOfcreatedObjectField(
+			dbType = "${dbType}",
+			name = "${name}",
+			objectDefinitionId = "${objectDefinitionId}");
+
+		static var staticObjectFieldId = "${objectFieldId}";
+
+		return "${staticObjectFieldId}";
+	}
+
+}

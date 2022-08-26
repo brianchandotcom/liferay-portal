@@ -1,0 +1,60 @@
+definition {
+
+	macro _curlUserAccount {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(userAccountId)) {
+			var api = "user-accounts/${userAccountId}";
+		}
+		else {
+			var api = "user-accounts";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-admin-user/v1.0/${api} \
+			-H accept: application/json \
+			-H Content-Type: application/json \
+			-u test@liferay.com:test \
+		''';
+
+		return "${curl}";
+	}
+
+	macro createUserAccount {
+		Variables.assertDefined(parameterList = "${alternateName},${emailAddress},${familyName},${givenName}");
+
+		var curl = UserAccountAPI._curlUserAccount();
+		var body = '''"alternateName": "${alternateName}","emailAddress": "${emailAddress}","familyName": "${familyName}","givenName": "${givenName}"''';
+
+		if (isSet(fieldName) && isSet(fieldValue)) {
+			var body = StringUtil.add("${body},", "\"${fieldName}\":\"${fieldValue}\"", "");
+		}
+
+		var curl = StringUtil.add("${curl}", "-d {${body}}", " ");
+
+		var response = JSONCurlUtil.post("${curl}");
+
+		return "${response}";
+	}
+
+	macro deleteUserAccount {
+		var curl = UserAccountAPI._curlUserAccount(userAccountId = "${staticUserAccountId}");
+
+		JSONCurlUtil.delete("${curl}");
+	}
+
+	macro setUpGlobalUserAccountId {
+		var response = UserAccountAPI.createUserAccount(
+			alternateName = "${alternateName}",
+			emailAddress = "${emailAddress}",
+			familyName = "${familyName}",
+			fieldName = "${fieldName}",
+			fieldValue = "${fieldValue}",
+			givenName = "${givenName}");
+
+		static var staticUserAccountId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+		return "${response}";
+	}
+
+}

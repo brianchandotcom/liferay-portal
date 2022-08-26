@@ -632,6 +632,22 @@ definition {
 		ObjectDefinitionAPI._deleteRelationship(relationshipId = "${relationshipId}");
 	}
 
+	macro getObjectDefinitionIdByName {
+		Variables.assertDefined(parameterList = "${name}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions?filter=name%20eq%20%27${name}%27 \
+			-H Content-Type: application/json \
+			-u test@liferay.com:test
+		''';
+
+		var objectDefinitionId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${name}')]['id']");
+
+		return "${objectDefinitionId}";
+	}
+
 	macro getObjectEntryRelation {
 		var getObjectEntryRelation = ObjectDefinitionAPI._getObjectEntryRelation(
 			en_US_plural_label = "${en_US_plural_label}",

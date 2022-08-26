@@ -243,8 +243,6 @@ definition {
 			ClickNoError(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
 		}
 
-		AssertElementPresent(locator1 = "PageAudit#PROGRESS_BAR");
-
 		WaitForElementPresent(locator1 = "PageAudit#ALERT_BOX");
 	}
 

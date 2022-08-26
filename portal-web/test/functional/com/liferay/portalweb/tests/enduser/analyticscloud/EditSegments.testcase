@@ -292,7 +292,7 @@ definition {
 
 		ACUtils.createBlogsAndAddToPage();
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
@@ -316,7 +316,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 
 		ACNavigation.goToSegments();
 
@@ -338,13 +338,13 @@ definition {
 
 		ACSegments.editSegment(segmentName = "Dynamic Segment Test");
 
-		ACUtils.setItemName(itemName = "Rename Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Rename Segment");
 
 		ACSegments.saveSegment();
 
 		ACNavigation.goToSegments();
 
-		ACSegments.viewSegmentName(searchTerm = "Rename Dynamic Segment Test");
+		ACSegments.viewSegmentName(searchTerm = "Rename Segment");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8585 | Test Summary: It is not possible to add a duplicate user to a static segment"

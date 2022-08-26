@@ -37,7 +37,7 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 		runSQL(
 			StringBundler.concat(
 				"update ObjectDefinition set enableCategorization = ",
-				"[$FALSE$], enableComments = [$FALSE$] where storageType <> ",
+				"[$FALSE$], enableComments = [$FALSE$] where storageType != ",
 				"'default' or system_ = [$TRUE$]"));
 	}
 

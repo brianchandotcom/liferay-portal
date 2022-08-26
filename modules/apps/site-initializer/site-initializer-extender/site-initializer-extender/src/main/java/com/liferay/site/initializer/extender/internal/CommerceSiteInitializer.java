@@ -267,12 +267,18 @@ public class CommerceSiteInitializer {
 
 			return null;
 		}
+
 		try {
-			Channel channel2 = channelResource.getChannelByExternalReferenceCode(jsonObject.getString("externalReferenceCode"));
-			channel1 = channelResource.patchChannel(channel2.getId(),channel1);
-		} catch (Exception exception){
+			Channel channel2 =
+				channelResource.getChannelByExternalReferenceCode(
+					jsonObject.getString("externalReferenceCode"));
+
+			channel1 = channelResource.patchChannel(channel2.getId(), channel1);
+		}
+		catch (Exception exception) {
 			channel1 = channelResource.postChannel(channel1);
 		}
+
 		_addDefaultCPDisplayLayout(
 			channel1,
 			StringUtil.replaceLast(

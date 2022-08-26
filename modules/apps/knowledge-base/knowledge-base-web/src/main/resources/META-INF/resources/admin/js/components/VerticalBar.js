@@ -59,7 +59,6 @@ const VerticalNavigationBar = ({
 				'closedStart.lexicon.sidenav',
 				() => {
 					setProductMenuOpen(false);
-					setVerticalBarOpen(true);
 				}
 			);
 

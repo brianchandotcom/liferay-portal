@@ -15,6 +15,10 @@
 package com.liferay.product.navigation.control.menu.web.internal;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -185,6 +189,39 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		}
 
 		if (layout.isTypeAssetDisplay()) {
+			Object infoItem = httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM);
+
+			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+				(InfoItemFieldValuesProvider)httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER);
+
+			if ((infoItem != null) && (infoItemFieldValuesProvider != null)) {
+				InfoItemFieldValues infoItemFieldValues =
+					infoItemFieldValuesProvider.getInfoItemFieldValues(
+						infoItem);
+
+				InfoFieldValue<Object> titleInfoFieldValue =
+					infoItemFieldValues.getInfoFieldValue("title");
+
+				if (titleInfoFieldValue != null) {
+					return HtmlUtil.escape(
+						String.valueOf(
+							titleInfoFieldValue.getValue(
+								themeDisplay.getLocale())));
+				}
+
+				InfoFieldValue<Object> nameInfoFieldValue =
+					infoItemFieldValues.getInfoFieldValue("name");
+
+				if (nameInfoFieldValue != null) {
+					return HtmlUtil.escape(
+						String.valueOf(
+							nameInfoFieldValue.getValue(
+								themeDisplay.getLocale())));
+				}
+			}
+
 			AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY);
 

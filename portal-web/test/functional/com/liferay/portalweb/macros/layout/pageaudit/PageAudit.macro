@@ -246,19 +246,6 @@ definition {
 		WaitForElementPresent(locator1 = "PageAudit#ALERT_BOX");
 	}
 
-	macro runPageAuditWithError {
-		PageAudit.openPageAuditSidebar();
-
-		if (IsElementNotPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON")) {
-			Click(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON");
-		}
-		else {
-			ClickNoError(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
-		}
-
-		WaitForElementPresent(locator1 = "PageAudit#ERROR_WARNING_BOX");
-	}
-
 	macro setAPISettings {
 		Click(locator1 = "PageAudit#API_FIELD");
 

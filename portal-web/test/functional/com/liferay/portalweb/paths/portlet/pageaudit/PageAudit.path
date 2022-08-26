@@ -51,11 +51,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ERROR_WARNING_BOX</td>
-	<td>//div[contains(@class, 'sidebar')] //div[contains(@class, 'alert')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FAILING_CHECK_CATEGORY_NAME</td>
 	<td>//button[contains(@class, 'panel-header') and contains(., '${failingCheckCategory}')]/.. //li[contains(.,'${failingCheckName}')]</td>
 	<td></td>

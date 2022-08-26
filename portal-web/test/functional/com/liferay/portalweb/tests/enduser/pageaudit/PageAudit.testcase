@@ -464,7 +464,7 @@ definition {
 		task ("Open Page Audit panel and assert 'Show details' link") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAuditWithError();
+			PageAudit.runPageAudit();
 
 			AssertElementPresent(
 				errorTitle = "The API key is invalid.",
@@ -1096,8 +1096,6 @@ definition {
 
 		task ("Open Page Audit tab and Assert reload button id not present") {
 			PageAudit.openPageAuditSidebar();
-
-			AssertVisible(locator1 = "PageAudit#ERROR_WARNING_BOX");
 
 			AssertElementNotPresent(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON");
 		}
@@ -3075,7 +3073,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAuditWithError();
+			PageAudit.runPageAudit();
 
 			AssertVisible(
 				errorTitle = "The API key is invalid.",

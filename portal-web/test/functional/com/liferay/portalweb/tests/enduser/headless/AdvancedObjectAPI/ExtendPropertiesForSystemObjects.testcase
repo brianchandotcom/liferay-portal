@@ -41,11 +41,43 @@ definition {
 		}
 
 		task ("Then the value of the added field is set successfully in response") {
-			var passportNumberInResponse = JSONUtil.getWithJSONPath("${response}", "$.passportNumber");
+			var actualValueOfPassportNumber = JSONUtil.getWithJSONPath("${response}", "$.passportNumber");
 
 			TestUtils.assertEquals(
-				actual = "${passportNumberInResponse}",
+				actual = "${actualValueOfPassportNumber}",
 				expected = "passportNum2022");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CanUpdateValueOfPropertyAddedToSystemObjectWithPutRequest {
+		property portal.acceptance = "true";
+
+		task ("Given with post request postUserAccount to create a user with the new field") {
+			UserAccountAPI.setUpGlobalUserAccountId(
+				alternateName = "userln",
+				emailAddress = "userln@liferay.com",
+				familyName = "userfn",
+				fieldName = "passportNumber",
+				fieldValue = "passportNum2022",
+				givenName = "usergn");
+		}
+
+		task ("When with PUT request and existingUserAccountId I update the value of the new field") {
+			var actualValueOfPassportNumber = UserAccountAPI.getUpdatedFieldOfUserAccountWithPutRequest(
+				alternateName = "userln",
+				emailAddress = "userln@liferay.com",
+				familyName = "userfn",
+				fieldName = "passportNumber",
+				givenName = "usergn",
+				updatedFieldValue = "updateByPut-passportNum2022");
+		}
+
+		task ("Then the value of the added filed is replaced successfully in response") {
+			TestUtils.assertEquals(
+				actual = "${actualValueOfPassportNumber}",
+				expected = "updateByPut-passportNum2022");
 		}
 	}
 

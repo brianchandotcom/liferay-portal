@@ -10,82 +10,29 @@
  */
 
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
-import useGetMDFRequest from '../../../common/services/liferay/object/mdf-requests/useGetMDFRequest';
-import {customFormatDateOptions} from '../../../common/utils/constants/customFormatDateOptions';
-import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
-import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
-
-const getActivityPeriod = (minDateActivity?: Date, maxDateActivity?: Date) => {
-	if (minDateActivity && maxDateActivity) {
-		const startDate = getDateCustomFormat(
-			minDateActivity,
-			customFormatDateOptions.SHORT_MONTH_YEAR
-		);
-
-		const endDate = getDateCustomFormat(
-			maxDateActivity,
-			customFormatDateOptions.SHORT_MONTH
-		);
-
-		return {
-			[MDFColumnKey.activityPeriod]: `${startDate} - ${endDate}`,
-		};
-	}
-};
-
-const getBudgetInfos = (
-	totalCostOfExpense: number | undefined,
-	totalRequested: number | undefined
-) => {
-	if (totalCostOfExpense && totalRequested) {
-		return {
-			[MDFColumnKey.totalCost]: getIntlNumberFormat().format(
-				totalCostOfExpense
-			),
-			[MDFColumnKey.requested]: getIntlNumberFormat().format(
-				totalRequested
-			),
-		};
-	}
-};
-
-const getDates = (dateCreated?: Date, dateModified?: Date) => {
-	if (dateCreated && dateModified) {
-		const dateSubmitted = getDateCustomFormat(
-			dateCreated,
-			customFormatDateOptions.SHORT_MONTH
-		);
-
-		const lastModified = getDateCustomFormat(
-			dateModified,
-			customFormatDateOptions.SHORT_MONTH
-		);
-
-		return {
-			[MDFColumnKey.dateSubmitted]: `${dateSubmitted}`,
-			[MDFColumnKey.lastModified]: `${lastModified}`,
-		};
-	}
-};
+import useGetMDFRequests from '../../../common/services/liferay/object/mdf-requests/useGetMDFRequests';
+import getMDFActivityPeriod from '../utils/getMDFActivityPeriod';
+import getMDFBudgetInfos from '../utils/getMDFBudgetInfos';
+import getMDFDates from '../utils/getMDFDates';
 
 export default function useGetMDFRequestListItems() {
-	const swr = useGetMDFRequest();
+	const swr = useGetMDFRequests();
 
 	return {
 		...swr,
 		data: swr.data?.items.map((item) => {
 			return {
-				[MDFColumnKey.id]: `Request-${item.id}`,
-				...getActivityPeriod(
+				[MDFColumnKey.ID]: `Request-${item.id}`,
+				...getMDFActivityPeriod(
 					item.minDateActivity,
 					item.maxDateActivity
 				),
-				[MDFColumnKey.partner]:
+				[MDFColumnKey.PARTNER]:
 					item.r_accountToMDFRequests_accountEntry?.name,
-				...getDates(item.dateCreated, item.dateModified),
-				...getBudgetInfos(
+				...getMDFDates(item.dateCreated, item.dateModified),
+				...getMDFBudgetInfos(
 					item.totalCostOfExpense,
-					item.totalMdfRequestAmount
+					item.totalMDFRequestAmount
 				),
 			};
 		}),

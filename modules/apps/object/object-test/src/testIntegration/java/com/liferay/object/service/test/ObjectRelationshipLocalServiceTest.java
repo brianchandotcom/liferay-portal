@@ -661,6 +661,11 @@ public class ObjectRelationshipLocalServiceTest {
 		}
 
 		@Override
+		public String getJaxRsApplicationName() {
+			return "";
+		}
+
+		@Override
 		public Map<Locale, String> getLabelMap() {
 			return null;
 		}

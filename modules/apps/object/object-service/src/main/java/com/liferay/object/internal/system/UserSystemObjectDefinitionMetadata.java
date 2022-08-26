@@ -39,6 +39,11 @@ public class UserSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 
 	@Override
+	public String getJaxRsApplicationName() {
+		return "Liferay.Headless.Admin.User";
+	}
+
+	@Override
 	public Map<Locale, String> getLabelMap() {
 		return createLabelMap("user");
 	}

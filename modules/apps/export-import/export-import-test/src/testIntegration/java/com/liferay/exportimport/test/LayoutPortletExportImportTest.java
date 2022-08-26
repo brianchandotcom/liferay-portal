@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -104,15 +103,17 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 				new String[] {Boolean.TRUE.toString()}
 			).build());
 
-		_resourcePermission =
+		ResourcePermission globalGroupDLModelResourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(
 				_companyId, DLConstants.RESOURCE_NAME,
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(_globalGroup.getGroupId()),
 				_ownerRole.getRoleId());
 
-		Assert.assertEquals(0, _resourcePermission.getActionIds());
-		Assert.assertFalse(_resourcePermission.isViewActionId());
+		Assert.assertEquals(
+			0, globalGroupDLModelResourcePermission.getActionIds());
+		Assert.assertFalse(
+			globalGroupDLModelResourcePermission.isViewActionId());
 	}
 
 	private void _initModelResource(long companyId, long groupId, String name)
@@ -136,17 +137,17 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 
 		long globalGroupId = _globalGroup.getGroupId();
 
-		_resourcePermission =
+		ResourcePermission globalGroupDLModelResourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(
 				_globalGroup.getCompanyId(), DLConstants.RESOURCE_NAME,
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(globalGroupId), _ownerRole.getRoleId());
 
-		_resourcePermission.setActionIds(0);
-		_resourcePermission.setViewActionId(false);
+		globalGroupDLModelResourcePermission.setActionIds(0);
+		globalGroupDLModelResourcePermission.setViewActionId(false);
 
 		_resourcePermissionLocalService.updateResourcePermission(
-			_resourcePermission);
+			globalGroupDLModelResourcePermission);
 	}
 
 	private long _companyId;
@@ -155,9 +156,6 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 
 	@Inject
 	private ResourceLocalService _resourceLocalService;
-
-	@DeleteAfterTestRun
-	private ResourcePermission _resourcePermission;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

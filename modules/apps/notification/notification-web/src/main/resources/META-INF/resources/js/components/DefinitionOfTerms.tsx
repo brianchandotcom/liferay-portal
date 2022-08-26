@@ -115,11 +115,7 @@ export function DefinitionOfTerms({baseResourceURL}: IProps) {
 
 	useEffect(() => {
 		API.getObjectDefinitions().then((items) => {
-			const objectDefinitions = items.filter(
-				({system}: ObjectDefinition) => !system
-			);
-
-			setObjectDefinitions(objectDefinitions);
+			setObjectDefinitions(items);
 		});
 	}, []);
 

@@ -735,20 +735,21 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition objectDefinition = objectDefinitionPersistence.create(
 			counterLocalService.increment());
 
+		storageType = Validator.isNotNull(storageType) ? storageType :
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT;
+
 		objectDefinition.setCompanyId(user.getCompanyId());
 		objectDefinition.setUserId(user.getUserId());
 		objectDefinition.setUserName(user.getFullName());
 		objectDefinition.setActive(system);
-
-		objectDefinition.setEnableCategorization(
-			!system &&
-			StringUtil.equals(
-				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
-
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setClassName(
 			_getClassName(
 				objectDefinition.getObjectDefinitionId(), className, system));
+		objectDefinition.setEnableCategorization(
+			!system &&
+			StringUtil.equals(
+				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setName(name);
 		objectDefinition.setPanelAppOrder(panelAppOrder);

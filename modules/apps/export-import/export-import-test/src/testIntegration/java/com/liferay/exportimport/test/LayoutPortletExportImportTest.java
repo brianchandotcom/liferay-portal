@@ -25,7 +25,8 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
@@ -72,16 +74,16 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 	public void testGloballyScopedPortletExportImportDoesNotOverrideGlobalSitePermissions()
 		throws Exception {
 
+		_initModelResource(
+			_companyId, _globalGroup.getGroupId(), DLConstants.RESOURCE_NAME);
+		_initModelResource(
+			_companyId, group.getGroupId(), DLConstants.RESOURCE_NAME);
+
 		LayoutTestUtil.addPortletToLayout(
 			layout, DLPortletKeys.DOCUMENT_LIBRARY,
 			HashMapBuilder.put(
 				"lfrScopeType", new String[] {"company"}
 			).build());
-
-		ResourcePermissionLocalServiceUtil.addModelResourcePermissions(
-			_companyId, group.getGroupId(), TestPropsValues.getUserId(),
-			DLConstants.RESOURCE_NAME, String.valueOf(group.getGroupId()), null,
-			null);
 
 		_removeOwnerPermissionsFromDLHomeFolderPermissionsInGlobalSite();
 
@@ -103,7 +105,7 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 			).build());
 
 		_resourcePermission =
-			ResourcePermissionLocalServiceUtil.getResourcePermission(
+			_resourcePermissionLocalService.getResourcePermission(
 				_companyId, DLConstants.RESOURCE_NAME,
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(_globalGroup.getGroupId()),
@@ -113,18 +115,29 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 		Assert.assertFalse(_resourcePermission.isViewActionId());
 	}
 
+	private void _initModelResource(long companyId, long groupId, String name)
+		throws Exception {
+
+		String primaryKey = String.valueOf(groupId);
+
+		int count = _resourcePermissionLocalService.getResourcePermissionsCount(
+			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primaryKey);
+
+		if (count > 0) {
+			return;
+		}
+
+		_resourceLocalService.addResources(
+			companyId, groupId, 0, name, primaryKey, false, true, true);
+	}
+
 	private void _removeOwnerPermissionsFromDLHomeFolderPermissionsInGlobalSite()
 		throws Exception {
 
 		long globalGroupId = _globalGroup.getGroupId();
 
-		ResourcePermissionLocalServiceUtil.addModelResourcePermissions(
-			_globalGroup.getCompanyId(), globalGroupId,
-			TestPropsValues.getUserId(), DLConstants.RESOURCE_NAME,
-			String.valueOf(globalGroupId), null, null);
-
 		_resourcePermission =
-			ResourcePermissionLocalServiceUtil.getResourcePermission(
+			_resourcePermissionLocalService.getResourcePermission(
 				_globalGroup.getCompanyId(), DLConstants.RESOURCE_NAME,
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(globalGroupId), _ownerRole.getRoleId());
@@ -132,7 +145,7 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 		_resourcePermission.setActionIds(0);
 		_resourcePermission.setViewActionId(false);
 
-		ResourcePermissionLocalServiceUtil.updateResourcePermission(
+		_resourcePermissionLocalService.updateResourcePermission(
 			_resourcePermission);
 	}
 
@@ -140,7 +153,13 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 	private Group _globalGroup;
 	private Role _ownerRole;
 
+	@Inject
+	private ResourceLocalService _resourceLocalService;
+
 	@DeleteAfterTestRun
 	private ResourcePermission _resourcePermission;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

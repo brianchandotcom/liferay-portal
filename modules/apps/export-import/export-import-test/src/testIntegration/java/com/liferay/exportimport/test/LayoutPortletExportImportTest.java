@@ -19,32 +19,22 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.test.util.lar.BaseExportImportTestCase;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.portlet.PortletConfigurationListener;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
-
-import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -82,7 +72,11 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 	public void testGloballyScopedPortletExportImportDoesNotOverrideGlobalSitePermissions()
 		throws Exception {
 
-		_addPortletToLayoutWithGlobalScope(layout);
+		LayoutTestUtil.addPortletToLayout(
+			layout, DLPortletKeys.DOCUMENT_LIBRARY,
+			HashMapBuilder.put(
+				"lfrScopeType", new String[] {"company"}
+			).build());
 
 		ResourcePermissionLocalServiceUtil.addModelResourcePermissions(
 			_companyId, group.getGroupId(), TestPropsValues.getUserId(),
@@ -117,45 +111,6 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 
 		Assert.assertEquals(0, _resourcePermission.getActionIds());
 		Assert.assertFalse(_resourcePermission.isViewActionId());
-	}
-
-	private void _addPortletToLayoutWithGlobalScope(Layout exportLayout)
-		throws Exception {
-
-		String portletId = LayoutTestUtil.addPortletToLayout(
-			exportLayout, DLPortletKeys.DOCUMENT_LIBRARY);
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				exportLayout, portletId);
-
-		portletPreferences.setValue("lfrScopeType", "company");
-
-		portletPreferences.setValue("lfrScopeLayoutUuid", "");
-
-		String languageId = LanguageUtil.getLanguageId(LocaleUtil.getDefault());
-
-		String portletTitle = portletPreferences.getValue(
-			"portletSetupTitle_" + languageId, StringPool.BLANK);
-
-		portletPreferences.setValue(
-			"portletSetupTitle_" + languageId,
-			PortalUtil.getNewPortletTitle(portletTitle, null, "global"));
-
-		portletPreferences.setValue(
-			"portletSetupUseCustomTitle", Boolean.TRUE.toString());
-
-		portletPreferences.store();
-
-		PortletConfigurationListener portletConfigurationListener =
-			portlet.getPortletConfigurationListenerInstance();
-
-		if (portletConfigurationListener != null) {
-			portletConfigurationListener.onUpdateScope(
-				portletId, portletPreferences);
-		}
 	}
 
 	private void _removeOwnerPermissionsFromDLHomeFolderPermissionsInGlobalSite()

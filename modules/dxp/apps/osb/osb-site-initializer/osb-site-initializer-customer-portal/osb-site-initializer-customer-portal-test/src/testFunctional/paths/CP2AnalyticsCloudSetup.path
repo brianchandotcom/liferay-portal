@@ -25,6 +25,11 @@
 	<td>//button[contains(@class, 'btn-secondary') and contains(text(), 'Remove Incident Report Contact')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WORKSPACE</td>
+	<td>//a[contains(@class, 'text-paragraph') and contains(text(),'Go to Workspace')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

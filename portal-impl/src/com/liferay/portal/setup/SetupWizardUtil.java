@@ -48,10 +48,12 @@ import java.io.IOException;
 import java.sql.Connection;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -294,9 +296,7 @@ public class SetupWizardUtil {
 			String password, String jndiName)
 		throws Exception {
 
-		Collection<Object> driverClassNameWhiteList = _properties.values();
-
-		if (!driverClassNameWhiteList.contains(driverClassName)) {
+		if (!DriverClassNamesHolder.contains(driverClassName)) {
 			throw new Exception(
 				driverClassName + " is not a valid driver class name!");
 		}
@@ -517,7 +517,27 @@ public class SetupWizardUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SetupWizardUtil.class);
 
-	private static final Properties _properties = PropsUtil.getProperties(
-		PropsKeys.SETUP_DATABASE_DRIVER_CLASS_NAME, true);
+	private static class DriverClassNamesHolder {
+
+		public static boolean contains(String driverClassName) {
+			return _driverClassNames.contains(driverClassName);
+		}
+
+		private static void _add(Object object) {
+			_driverClassNames.add(String.valueOf(object));
+		}
+
+		private static final Set<String> _driverClassNames = new HashSet<>();
+
+		static {
+			Properties properties = PropsUtil.getProperties(
+				PropsKeys.SETUP_DATABASE_DRIVER_CLASS_NAME, true);
+
+			Collection<Object> values = properties.values();
+
+			values.forEach(DriverClassNamesHolder::_add);
+		}
+
+	}
 
 }

@@ -391,9 +391,9 @@ definition {
 	}
 
 	macro viewAndFillActions {
-			Click(
-				key_propertyName = "Actions",
-				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_NEW_BUTTON");
+		Click(
+			key_propertyName = "Actions",
+			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_NEW_BUTTON");
 
 		AssertElementPresent(
 			key_inputOption = "Name",

@@ -422,20 +422,14 @@ public class KaleoWorkflowModelConverterImpl
 		return versionParts[0];
 	}
 
-	private String _getState(long kaleoNodeId) {
+	private WorkflowNode _getState(long kaleoNodeId) {
 		if (kaleoNodeId == 0) {
 			return null;
 		}
 
 		try {
-			KaleoNode kaleoNode = _kaleoNodeLocalService.getKaleoNode(
-				kaleoNodeId);
-
-			if (Validator.isNotNull(kaleoNode.getLabel())) {
-				return kaleoNode.getLabel();
-			}
-
-			return kaleoNode.getName();
+			return _toWorkflowNode(_kaleoNodeLocalService.getKaleoNode(
+				kaleoNodeId));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

@@ -14,7 +14,6 @@
 
 package com.liferay.asset.taglib.servlet.taglib;
 
-import com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -25,11 +24,13 @@ import com.liferay.asset.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.asset.taglib.internal.util.AssetCategoryUtil;
 import com.liferay.asset.taglib.internal.util.AssetVocabularyUtil;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
+import com.liferay.learn.LearnMessage;
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -408,22 +409,22 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				).put(
 					"inputName", _getInputName()
 				).put(
-					"learnHowURL",
+					"learnHowLink",
 					() -> {
 						ThemeDisplay themeDisplay =
 							(ThemeDisplay)httpServletRequest.getAttribute(
 								WebKeys.THEME_DISPLAY);
 
-						AssetCategoriesCompanyConfiguration
-							assetCategoriesCompanyConfiguration =
-								ConfigurationProviderUtil.
-									getCompanyConfiguration(
-										AssetCategoriesCompanyConfiguration.
-											class,
-										themeDisplay.getCompanyId());
+						LearnMessage learnMessage =
+							LearnMessageUtil.getLearnMessage(
+								"general", themeDisplay.getLanguageId(),
+								"asset-taglib");
 
-						return assetCategoriesCompanyConfiguration.
-							linkToDocumentationURL();
+						return JSONUtil.put(
+							"message", learnMessage.getMessage()
+						).put(
+							"url", learnMessage.getURL()
+						);
 					}
 				).put(
 					"portletURL", String.valueOf(getPortletURL())

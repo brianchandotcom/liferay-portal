@@ -19,6 +19,7 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.test.util.lar.BaseExportImportTestCase;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -78,42 +79,55 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 		_initModelResource(
 			_companyId, group.getGroupId(), DLConstants.RESOURCE_NAME);
 
-		LayoutTestUtil.addPortletToLayout(
-			layout, DLPortletKeys.DOCUMENT_LIBRARY,
-			HashMapBuilder.put(
-				"lfrScopeType", new String[] {"company"}
-			).build());
-
-		_removeOwnerPermissionsFromDLHomeFolderPermissionsInGlobalSite();
-
-		exportLayouts(
-			new long[] {layout.getLayoutId()},
-			LinkedHashMapBuilder.putAll(
-				getExportParameterMap()
-			).put(
-				PortletDataHandlerKeys.PERMISSIONS,
-				new String[] {Boolean.TRUE.toString()}
-			).build());
-
-		importLayouts(
-			LinkedHashMapBuilder.putAll(
-				getImportParameterMap()
-			).put(
-				PortletDataHandlerKeys.PERMISSIONS,
-				new String[] {Boolean.TRUE.toString()}
-			).build());
-
-		ResourcePermission globalGroupDLModelResourcePermission =
+		ResourcePermission originalGlobalGroupDLModelResourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(
 				_companyId, DLConstants.RESOURCE_NAME,
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(_globalGroup.getGroupId()),
 				_ownerRole.getRoleId());
 
-		Assert.assertEquals(
-			0, globalGroupDLModelResourcePermission.getActionIds());
-		Assert.assertFalse(
-			globalGroupDLModelResourcePermission.isViewActionId());
+		try {
+			LayoutTestUtil.addPortletToLayout(
+				layout, DLPortletKeys.DOCUMENT_LIBRARY,
+				HashMapBuilder.put(
+					"lfrScopeType", new String[] {"company"}
+				).build());
+
+			_removeOwnerPermissionsFromDLHomeFolderPermissionsInGlobalSite();
+
+			exportLayouts(
+				new long[] {layout.getLayoutId()},
+				LinkedHashMapBuilder.putAll(
+					getExportParameterMap()
+				).put(
+					PortletDataHandlerKeys.PERMISSIONS,
+					new String[] {Boolean.TRUE.toString()}
+				).build());
+
+			importLayouts(
+				LinkedHashMapBuilder.putAll(
+					getImportParameterMap()
+				).put(
+					PortletDataHandlerKeys.PERMISSIONS,
+					new String[] {Boolean.TRUE.toString()}
+				).build());
+
+			ResourcePermission globalGroupDLModelResourcePermission =
+				_resourcePermissionLocalService.getResourcePermission(
+					_companyId, DLConstants.RESOURCE_NAME,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(_globalGroup.getGroupId()),
+					_ownerRole.getRoleId());
+
+			Assert.assertEquals(
+				0, globalGroupDLModelResourcePermission.getActionIds());
+			Assert.assertFalse(
+				globalGroupDLModelResourcePermission.isViewActionId());
+		}
+		finally {
+			_restoreModelResourcePermission(
+				originalGlobalGroupDLModelResourcePermission);
+		}
 	}
 
 	private void _initModelResource(long companyId, long groupId, String name)
@@ -148,6 +162,23 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 
 		_resourcePermissionLocalService.updateResourcePermission(
 			globalGroupDLModelResourcePermission);
+	}
+
+	private void _restoreModelResourcePermission(
+			ResourcePermission originalResourcePermission)
+		throws PortalException {
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				originalResourcePermission.getResourcePermissionId());
+
+		resourcePermission.setActionIds(
+			originalResourcePermission.getActionIds());
+		resourcePermission.setViewActionId(
+			originalResourcePermission.isViewActionId());
+
+		_resourcePermissionLocalService.updateResourcePermission(
+			resourcePermission);
 	}
 
 	private long _companyId;

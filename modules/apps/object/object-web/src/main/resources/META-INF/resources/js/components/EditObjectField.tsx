@@ -497,7 +497,7 @@ export default function EditObjectField({
 					{(values.businessType === 'Text' ||
 						values.businessType === 'LongText') && (
 						<MaxLengthProperties
-							disabled={disableFieldFormBase}
+							disabled={values.system}
 							errors={errors}
 							objectField={values}
 							objectFieldSettings={
@@ -864,7 +864,7 @@ interface IAttachmentPropertiesProps {
 }
 
 interface IMaxLengthPropertiesProps {
-	disabled: boolean;
+	disabled?: boolean;
 	errors: ObjectFieldErrors;
 	objectField: Partial<ObjectField>;
 	objectFieldSettings: ObjectFieldSetting[];

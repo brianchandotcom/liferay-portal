@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -338,6 +339,16 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			catch (Exception exception) {
 				throw new RuntimeException(exception);
 			}
+		}
+		else {
+
+			// Check class names
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Check class names");
+			}
+
+			ClassNameLocalServiceUtil.checkClassNames();
 		}
 
 		ModuleFrameworkUtil.registerContext(applicationContext);

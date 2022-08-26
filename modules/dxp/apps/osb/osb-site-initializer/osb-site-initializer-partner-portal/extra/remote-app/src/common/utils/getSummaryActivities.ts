@@ -43,19 +43,25 @@ export default function getSummaryActivities(
 			{endDates: [] as Date[], startDates: [] as Date[]}
 		);
 
-		const maxDateActivity = datesActivities.startDates.reduce((a, b) => {
-			return a < b ? a : b;
-		});
+		const maxDateActivity = datesActivities.startDates.reduce(
+			(dateAccumulator, startDate) => {
+				return dateAccumulator < startDate
+					? dateAccumulator
+					: startDate;
+			}
+		);
 
-		const minDateActivity = datesActivities.endDates.reduce((a, b) => {
-			return a > b ? a : b;
-		});
+		const minDateActivity = datesActivities.endDates.reduce(
+			(dateAccumulator, endDate) => {
+				return dateAccumulator > endDate ? dateAccumulator : endDate;
+			}
+		);
 
 		return {
 			maxDateActivity,
 			minDateActivity,
 			totalCostOfExpense: getTotalBudget(mdfRequestActivities),
-			totalMdfRequestAmount: getTotalMDFRequest(mdfRequestActivities),
+			totalMDFRequestAmount: getTotalMDFRequest(mdfRequestActivities),
 		};
 	}
 }

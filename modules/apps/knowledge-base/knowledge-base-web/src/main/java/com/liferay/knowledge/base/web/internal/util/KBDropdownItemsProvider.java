@@ -17,14 +17,18 @@ package com.liferay.knowledge.base.web.internal.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
+import com.liferay.knowledge.base.web.internal.KBUtil;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.DisplayPermission;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBArticlePermission;
+import com.liferay.knowledge.base.web.internal.security.permission.resource.KBCommentPermission;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBFolderPermission;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBTemplatePermission;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -196,6 +200,83 @@ public class KBDropdownItemsProvider {
 						_currentURL
 					).setParameter(
 						"resourcePrimKey", kbArticle.getResourcePrimKey()
+					).buildString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_liferayPortletRequest.getHttpServletRequest(),
+						"delete"));
+			}
+		).build();
+	}
+
+	public List<DropdownItem> getKBCommentDropdownItems(
+			KBArticle kbArticle, KBComment kbComment)
+		throws Exception {
+
+		if (!KBArticlePermission.contains(
+				_themeDisplay.getPermissionChecker(), kbArticle,
+				KBActionKeys.UPDATE)) {
+
+			return null;
+		}
+
+		int previousStatus = KBUtil.getPreviousStatus(kbComment.getStatus());
+		int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
+
+		return DropdownItemListBuilder.add(
+			() -> previousStatus != KBCommentConstants.STATUS_NONE,
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createActionURL(
+						_liferayPortletResponse
+					).setActionName(
+						"/knowledge_base/update_kb_comment_status"
+					).setRedirect(
+						_currentURL
+					).setParameter(
+						"kbCommentId", kbComment.getKbCommentId()
+					).setParameter(
+						"kbCommentStatus", previousStatus
+					).buildActionURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_liferayPortletRequest.getHttpServletRequest(),
+						KBUtil.getStatusTransitionLabel(previousStatus)));
+			}
+		).add(
+			() -> nextStatus != KBCommentConstants.STATUS_NONE,
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createActionURL(
+						_liferayPortletResponse
+					).setActionName(
+						"/knowledge_base/update_kb_comment_status"
+					).setRedirect(
+						_currentURL
+					).setParameter(
+						"kbCommentId", kbComment.getKbCommentId()
+					).setParameter(
+						"kbCommentStatus", nextStatus
+					).buildActionURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_liferayPortletRequest.getHttpServletRequest(),
+						KBUtil.getStatusTransitionLabel(nextStatus)));
+			}
+		).add(
+			() -> _hasDeletePermission(kbComment),
+			dropdownItem -> {
+				dropdownItem.putData("action", "delete");
+				dropdownItem.putData(
+					"deleteURL",
+					PortletURLBuilder.createActionURL(
+						_liferayPortletResponse
+					).setActionName(
+						"/knowledge_base/delete_kb_comment"
+					).setRedirect(
+						_currentURL
+					).setParameter(
+						"kbCommentId", kbComment.getKbCommentId()
 					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(
@@ -409,6 +490,17 @@ public class KBDropdownItemsProvider {
 	private boolean _hasDeletePermission(KBArticle kbArticle) throws Exception {
 		if (KBArticlePermission.contains(
 				_themeDisplay.getPermissionChecker(), kbArticle,
+				KBActionKeys.DELETE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasDeletePermission(KBComment kbComment) throws Exception {
+		if (KBCommentPermission.contains(
+				_themeDisplay.getPermissionChecker(), kbComment,
 				KBActionKeys.DELETE)) {
 
 			return true;

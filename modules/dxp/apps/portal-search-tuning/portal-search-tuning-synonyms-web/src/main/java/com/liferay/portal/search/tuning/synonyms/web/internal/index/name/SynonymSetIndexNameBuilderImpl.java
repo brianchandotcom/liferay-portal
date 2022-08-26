@@ -36,14 +36,10 @@ public class SynonymSetIndexNameBuilderImpl
 				SYNONYMS_INDEX_NAME_SUFFIX);
 	}
 
-	@Reference(unbind = "-")
-	protected void setIndexNameBuilder(IndexNameBuilder indexNameBuilder) {
-		_indexNameBuilder = indexNameBuilder;
-	}
-
 	protected static final String SYNONYMS_INDEX_NAME_SUFFIX =
 		"search-tuning-synonyms";
 
+	@Reference
 	private IndexNameBuilder _indexNameBuilder;
 
 	private static class SynonymSetIndexNameImpl

@@ -84,18 +84,6 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		return indicesExistsIndexResponse.isExists();
 	}
 
-	@Reference(unbind = "-")
-	protected void setQueries(Queries queries) {
-		_queries = queries;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchEngineAdapter(
-		SearchEngineAdapter searchEngineAdapter) {
-
-		_searchEngineAdapter = searchEngineAdapter;
-	}
-
 	protected Ranking translate(Document document, String id) {
 		return _documentToRankingTranslator.translate(document, id);
 	}
@@ -157,7 +145,10 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 	@Reference
 	private DocumentToRankingTranslator _documentToRankingTranslator;
 
+	@Reference
 	private Queries _queries;
+
+	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
 
 }

@@ -37,13 +37,7 @@ public class SynonymSetToDocumentTranslatorImpl
 		).build();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDocumentBuilderFactory(
-		DocumentBuilderFactory documentBuilderFactory) {
-
-		_documentBuilderFactory = documentBuilderFactory;
-	}
-
+	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;
 
 }

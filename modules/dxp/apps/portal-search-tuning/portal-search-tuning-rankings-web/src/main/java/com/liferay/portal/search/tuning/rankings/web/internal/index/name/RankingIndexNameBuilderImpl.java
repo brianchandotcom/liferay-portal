@@ -34,11 +34,6 @@ public class RankingIndexNameBuilderImpl implements RankingIndexNameBuilder {
 				RANKINGS_INDEX_NAME_SUFFIX);
 	}
 
-	@Reference(unbind = "-")
-	protected void setIndexNameBuilder(IndexNameBuilder indexNameBuilder) {
-		_indexNameBuilder = indexNameBuilder;
-	}
-
 	protected static final String RANKINGS_INDEX_NAME_SUFFIX =
 		"search-tuning-rankings";
 
@@ -57,6 +52,7 @@ public class RankingIndexNameBuilderImpl implements RankingIndexNameBuilder {
 
 	}
 
+	@Reference
 	private IndexNameBuilder _indexNameBuilder;
 
 }

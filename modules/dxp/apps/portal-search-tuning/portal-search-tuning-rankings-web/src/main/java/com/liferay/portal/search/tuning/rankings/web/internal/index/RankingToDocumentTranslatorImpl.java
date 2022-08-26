@@ -60,13 +60,6 @@ public class RankingToDocumentTranslatorImpl
 		).build();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDocumentBuilderFactory(
-		DocumentBuilderFactory documentBuilderFactory) {
-
-		_documentBuilderFactory = documentBuilderFactory;
-	}
-
 	private Collection<Object> _toMaps(List<Ranking.Pin> pins) {
 		Stream<Ranking.Pin> stream = pins.stream();
 
@@ -81,6 +74,7 @@ public class RankingToDocumentTranslatorImpl
 		);
 	}
 
+	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;
 
 }

@@ -413,6 +413,11 @@ public class ObjectDefinitionLocalServiceTest {
 				new BaseSystemObjectDefinitionMetadata() {
 
 					@Override
+					public String getJaxRsApplicationName() {
+						return "";
+					}
+
+					@Override
 					public Map<Locale, String> getLabelMap() {
 						return LocalizedMapUtil.getLocalizedMap(
 							"User Notification Event");
@@ -507,6 +512,11 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService.addOrUpdateSystemObjectDefinition(
 				TestPropsValues.getCompanyId(),
 				new BaseSystemObjectDefinitionMetadata() {
+
+					@Override
+					public String getJaxRsApplicationName() {
+						return "";
+					}
 
 					@Override
 					public Map<Locale, String> getLabelMap() {

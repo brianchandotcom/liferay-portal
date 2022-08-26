@@ -12,7 +12,7 @@
  * details.
  */
 
-export default function ({namespace}) {
+export default function ({defaultTarget = '', namespace}) {
 	const targetType = document.getElementById(`${namespace}targetType`);
 
 	targetType.addEventListener('change', (event) => {
@@ -26,7 +26,8 @@ export default function ({namespace}) {
 		}
 		else {
 			specificFrameWrapper.classList.remove('hide');
-			target.value = '';
+
+			target.value = defaultTarget;
 		}
 	});
 }

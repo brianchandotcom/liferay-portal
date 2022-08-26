@@ -29,6 +29,7 @@
 			cssClass="table-cell-expand table-cell-minw-200 table-title"
 			href="<%= layoutsAdminDisplayContext.getEditOrViewLayoutURL(layout) %>"
 			name="title"
+			target="<%= layoutsAdminDisplayContext.getTarget(layout) %>"
 			value="<%= layout.getName(locale) %>"
 		/>
 

@@ -65,5 +65,12 @@ String targetType = GetterUtil.getString(layoutTypeSettings.getProperty("targetT
 
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "addLayout" %>'
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"defaultTarget", Objects.equals(targetType, "useNewTab") ? StringPool.BLANK : GetterUtil.getString(layoutTypeSettings.getProperty("target"))
+		).put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).build()
+	%>'
 	module="js/Advanced"
 />

@@ -1227,6 +1227,10 @@ public class LayoutsAdminDisplayContext {
 		return _tabs1;
 	}
 
+	public String getTarget(Layout layout) {
+		return HtmlUtil.escape(layout.getTypeSettingsProperty("target"));
+	}
+
 	public Map<String, Object> getThemeCSSReplacementSelectorProps()
 		throws PortalException {
 

@@ -73,10 +73,8 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 
 			while (resultSet.next()) {
 				String name = resultSet.getString("name");
-
 				Company company = _companyLocalService.getCompany(
 					resultSet.getLong("companyId"));
-
 				String newName = name;
 
 				for (int i = 1;; i++) {

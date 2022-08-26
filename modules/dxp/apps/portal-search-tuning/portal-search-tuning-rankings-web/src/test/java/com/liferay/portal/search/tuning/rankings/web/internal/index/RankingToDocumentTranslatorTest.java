@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.Field;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
@@ -144,11 +145,14 @@ public class RankingToDocumentTranslatorTest {
 	private RankingToDocumentTranslatorImpl
 		_createRankingToDocumentTranslator() {
 
-		return new RankingToDocumentTranslatorImpl() {
-			{
-				setDocumentBuilderFactory(new DocumentBuilderFactoryImpl());
-			}
-		};
+		RankingToDocumentTranslatorImpl rankingToDocumentTranslatorImpl =
+			new RankingToDocumentTranslatorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			rankingToDocumentTranslatorImpl, "_documentBuilderFactory",
+			new DocumentBuilderFactoryImpl());
+
+		return rankingToDocumentTranslatorImpl;
 	}
 
 	private String _toString(List<Ranking.Pin> pins) {

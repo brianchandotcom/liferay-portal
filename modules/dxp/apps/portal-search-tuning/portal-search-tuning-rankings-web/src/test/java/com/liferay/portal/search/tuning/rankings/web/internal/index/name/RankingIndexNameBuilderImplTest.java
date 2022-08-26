@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index.name;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -45,7 +46,8 @@ public class RankingIndexNameBuilderImplTest {
 		RankingIndexNameBuilderImpl rankingIndexNameBuilderImpl =
 			new RankingIndexNameBuilderImpl();
 
-		rankingIndexNameBuilderImpl.setIndexNameBuilder(indexNameBuilder);
+		ReflectionTestUtil.setFieldValue(
+			rankingIndexNameBuilderImpl, "_indexNameBuilder", indexNameBuilder);
 
 		RankingIndexName rankingIndexName =
 			rankingIndexNameBuilderImpl.getRankingIndexName(companyId);

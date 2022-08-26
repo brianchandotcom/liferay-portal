@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -43,9 +44,13 @@ public class RankingIndexWriterImplTest extends BaseRankingsIndexTestCase {
 	public void setUp() throws Exception {
 		_rankingIndexWriterImpl = new RankingIndexWriterImpl();
 
-		_rankingIndexWriterImpl.setRankingToDocumentTranslator(
+		ReflectionTestUtil.setFieldValue(
+			_rankingIndexWriterImpl, "_rankingToDocumentTranslator",
 			_rankingToDocumentTranslator);
-		_rankingIndexWriterImpl.setSearchEngineAdapter(searchEngineAdapter);
+
+		ReflectionTestUtil.setFieldValue(
+			_rankingIndexWriterImpl, "_searchEngineAdapter",
+			searchEngineAdapter);
 	}
 
 	@Test

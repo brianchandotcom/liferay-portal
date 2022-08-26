@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.index.name;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -46,7 +47,9 @@ public class SynonymSetIndexNameBuilderImplTest {
 		SynonymSetIndexNameBuilderImpl synonymSetIndexNameBuilderImpl =
 			new SynonymSetIndexNameBuilderImpl();
 
-		synonymSetIndexNameBuilderImpl.setIndexNameBuilder(indexNameBuilder);
+		ReflectionTestUtil.setFieldValue(
+			synonymSetIndexNameBuilderImpl, "_indexNameBuilder",
+			indexNameBuilder);
 
 		SynonymSetIndexName synonymSetIndexName =
 			synonymSetIndexNameBuilderImpl.getSynonymSetIndexName(companyId);

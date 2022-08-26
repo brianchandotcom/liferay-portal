@@ -147,7 +147,7 @@ public class ObjectRelationshipEndpointsExtensionImpl
 		new HashMap<>();
 
 	@Reference(
-		target = "(component.factory=com.liferay.object.rest.extension.relationships.SystemObjectRelationshipsResource)"
+		target = "(component.factory=com.liferay.object.rest.extension.relationships.ObjectRelationshipsResource)"
 	)
 	private ComponentFactory _relationshipsResourceComponentFactory;
 

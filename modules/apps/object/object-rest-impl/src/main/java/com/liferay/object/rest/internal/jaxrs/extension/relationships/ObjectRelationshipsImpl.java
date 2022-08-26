@@ -49,12 +49,12 @@ public class ObjectRelationshipsImpl implements ObjectRelationships {
 
 	@Override
 	public Page<Object> getObjectRelatedObjectsPage(
-			Long currentObjectEntryId, String objectRelationshipName,
+			Long objectEntryId, String objectRelationshipName,
 			Pagination pagination, UriInfo uriInfo)
 		throws Exception {
 
 		ObjectDefinition currentObjectDefinition = _getCurrentObjectDefinition(
-			currentObjectEntryId, objectRelationshipName, uriInfo);
+			objectEntryId, objectRelationshipName, uriInfo);
 
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
 			_getObjectRelationshipByName(objectRelationshipName),
@@ -66,39 +66,38 @@ public class ObjectRelationshipsImpl implements ObjectRelationships {
 
 		if (relatedObjectDefinition.isSystem()) {
 			return objectEntryManager.getRelatedSystemObjectEntries(
-				currentObjectDefinition, currentObjectEntryId,
-				objectRelationshipName, pagination);
+				currentObjectDefinition, objectEntryId, objectRelationshipName,
+				pagination);
 		}
 
 		return (Page)objectEntryManager.getObjectEntryRelatedObjectEntries(
 			_getDefaultDTOConverterContext(
-				currentObjectDefinition, currentObjectEntryId, uriInfo),
-			currentObjectDefinition, currentObjectEntryId,
-			objectRelationshipName, pagination);
+				currentObjectDefinition, objectEntryId, uriInfo),
+			currentObjectDefinition, objectEntryId, objectRelationshipName,
+			pagination);
 	}
 
 	private ObjectDefinition _getCurrentObjectDefinition(
-			long currentObjectEntryId, String objectRelationshipName,
-			UriInfo uriInfo)
+			long objectEntryId, String objectRelationshipName, UriInfo uriInfo)
 		throws Exception {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			currentObjectEntryId);
+			objectEntryId);
 
 		if (objectEntry != null) {
 			return _objectDefinitionLocalService.getObjectDefinition(
 				objectEntry.getObjectDefinitionId());
 		}
 
-		ObjectRelationship currentObjectRelationship =
-			_getObjectRelationshipByName(objectRelationshipName);
+		ObjectRelationship objectRelationship = _getObjectRelationshipByName(
+			objectRelationshipName);
 
-		ObjectDefinition currentObjectDefinition =
+		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
-				currentObjectRelationship.getObjectDefinitionId1());
+				objectRelationship.getObjectDefinitionId1());
 
-		String currentObjectDefinitionRESTContextPath =
-			currentObjectDefinition.getRESTContextPath();
+		String objectDefinitionRESTContextPath =
+			objectDefinition.getRESTContextPath();
 
 		URI baseURI = uriInfo.getBaseUri();
 
@@ -106,13 +105,13 @@ public class ObjectRelationshipsImpl implements ObjectRelationships {
 
 		String endpointBasePath = path.split("/")[2];
 
-		if (!currentObjectDefinitionRESTContextPath.equals(endpointBasePath)) {
-			currentObjectDefinition =
+		if (!objectDefinitionRESTContextPath.equals(endpointBasePath)) {
+			objectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
-					currentObjectRelationship.getObjectDefinitionId2());
+					objectRelationship.getObjectDefinitionId2());
 		}
 
-		return currentObjectDefinition;
+		return objectDefinition;
 	}
 
 	private DefaultDTOConverterContext _getDefaultDTOConverterContext(
@@ -151,14 +150,12 @@ public class ObjectRelationshipsImpl implements ObjectRelationships {
 
 	private ObjectDefinition _getRelatedObjectDefinition(
 			ObjectRelationship objectRelationship,
-			ObjectDefinition currentObjectDefinition)
+			ObjectDefinition objectDefinition)
 		throws Exception {
 
 		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
-		long currentObjectDefinitionId =
-			currentObjectDefinition.getObjectDefinitionId();
 
-		if (objectDefinitionId1 != currentObjectDefinitionId) {
+		if (objectDefinitionId1 != objectDefinition.getObjectDefinitionId()) {
 			return _objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
 		}

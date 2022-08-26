@@ -175,10 +175,13 @@ function Tabs() {
 function Items({items: initialItems}) {
 	const [items, setItems] = useState(initialItems);
 
-	const onChangeItemPosition = (item, currentPosition, newPosition) => {
+	const onChangeItemPosition = (itemId, newPosition) => {
+		const itemIndex = items.findIndex(({id}) => id === itemId);
+		const item = items[itemIndex];
+
 		const nextItems = [...items];
 
-		nextItems.splice(currentPosition, 1);
+		nextItems.splice(itemIndex, 1);
 
 		nextItems.splice(newPosition, 0, item);
 
@@ -251,13 +254,13 @@ function ReorderDropdown({index, item, numberOfItems, onChangeItemPosition}) {
 		{
 			disabled: index === 0,
 			label: Liferay.Language.get('move-up'),
-			onClick: () => onChangeItemPosition(item, index, index - 1),
+			onClick: () => onChangeItemPosition(item.id, index - 1),
 			symbolLeft: 'angle-up',
 		},
 		{
 			disabled: index === numberOfItems - 1,
 			label: Liferay.Language.get('move-down'),
-			onClick: () => onChangeItemPosition(item, index, index + 1),
+			onClick: () => onChangeItemPosition(item.id, index + 1),
 			symbolLeft: 'angle-down',
 		},
 	];

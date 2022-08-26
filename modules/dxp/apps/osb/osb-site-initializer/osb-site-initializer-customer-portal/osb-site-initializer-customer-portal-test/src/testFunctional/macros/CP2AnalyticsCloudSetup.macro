@@ -27,6 +27,17 @@ definition {
 			portlet = "Analytics Cloud Workspaces");
 	}
 
+	macro clickOnWorkspaceLink {
+		Click(locator1 = "CP2AnalyticsCloudSetup#WORKSPACE");
+	}
+
+	macro typeAllSetupAnalyticsCloudExtraInfo {
+		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
+			label = "email",
+			position = "2",
+			value = "test.user1@liferay.com");
+	}
+
 	macro typeAllSetupAnalyticsCloudInfoFields {
 		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 			label = "Address",
@@ -57,13 +68,6 @@ definition {
 			value = "test@liferay.com");
 	}
 
-	macro typeAllSetupAnalyticsCloudExtraInfo {
-		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
-			label = "email",
-			position = "2",
-			value = "test.user1@liferay.com");
-	}
-
 	macro typeSetupAnalyticsCloudInfoFields {
 		if (!(isSet(position))) {
 			var position = "1";
@@ -74,10 +78,6 @@ definition {
 		Type(
 			locator1 = "CustomerPortalSite#SETUP_FIELDS",
 			value1 = "${value}");
-	}
-
-	macro clickOnWorkspaceLink {
-		Click(locator1 = "CP2AnalyticsCloudSetup#WORKSPACE");
 	}
 
 }

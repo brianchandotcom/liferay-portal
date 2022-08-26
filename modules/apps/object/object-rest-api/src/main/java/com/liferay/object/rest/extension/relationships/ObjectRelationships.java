@@ -25,7 +25,7 @@ import javax.ws.rs.core.UriInfo;
 public interface ObjectRelationships {
 
 	public Page<Object> getObjectRelatedObjectsPage(
-			Long currentObjectEntryId, String objectRelationshipName,
+			Long objectEntryId, String objectRelationshipName,
 			Pagination pagination, UriInfo uriInfo)
 		throws Exception;
 

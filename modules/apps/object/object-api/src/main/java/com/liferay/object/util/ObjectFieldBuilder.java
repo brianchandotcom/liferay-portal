@@ -125,6 +125,12 @@ public class ObjectFieldBuilder {
 		return this;
 	}
 
+	public ObjectFieldBuilder relationshipType(String relationshipType) {
+		_objectField.setRelationshipType(relationshipType);
+
+		return this;
+	}
+
 	public ObjectFieldBuilder required(boolean required) {
 		_objectField.setRequired(required);
 

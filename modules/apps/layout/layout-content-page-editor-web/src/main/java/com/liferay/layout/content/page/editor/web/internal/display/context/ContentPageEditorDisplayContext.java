@@ -1358,8 +1358,8 @@ public class ContentPageEditorDisplayContext {
 			systemFragmentCollectionMaps.putAll(
 				_getDynamicFragmentCollectionMaps());
 
-			allFragmentCollectionMapsList.addAll(
-				_addLayoutElementMaps(systemFragmentCollectionMaps));
+			allFragmentCollectionMapsList = _addLayoutElementMaps(
+				systemFragmentCollectionMaps);
 		}
 
 		List<FragmentCollection> fragmentCollections =

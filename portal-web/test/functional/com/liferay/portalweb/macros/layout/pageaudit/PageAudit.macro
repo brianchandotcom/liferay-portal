@@ -259,6 +259,31 @@ definition {
 		WaitForElementPresent(locator1 = "PageAudit#ERROR_WARNING_BOX");
 	}
 
+	macro setAPISettings {
+		Click(locator1 = "PageAudit#API_FIELD");
+
+		if (!(isSet(key_apiKey))) {
+			var key_apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE";
+		}
+
+		Type(
+			locator1 = "PageAudit#API_FIELD",
+			value1 = "${key_apiKey}");
+
+		if (isSet(preferredStrategy)) {
+			PageAudit.setPreferredStrategy(key_preferredStrategy = "${preferredStrategy}");
+		}
+
+		if (IsElementPresent(locator1 = "Button#SAVE")) {
+			Click(locator1 = "Button#SAVE");
+		}
+		else {
+			Click(locator1 = "Button#UPDATE");
+		}
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro setAPIViaInstanceSettings {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -270,28 +295,7 @@ definition {
 			configurationName = "Google PageSpeed Insights",
 			configurationScope = "Site Scope");
 
-		Click(locator1 = "PageAudit#API_FIELD");
-
-		if (!(isSet(apiKey))) {
-			var apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE";
-		}
-
-		Type(
-			locator1 = "PageAudit#API_FIELD",
-			value1 = "${apiKey}");
-
-		if (isSet(preferredStrategy)) {
-			PageAudit.setPreferredStrategy(key_preferredStrategy = "${preferredStrategy}");
-		}
-
-		if (IsElementPresent(locator1 = "Button#SAVE")) {
-			Click(locator1 = "Button#SAVE");
-		}
-		else if (IsElementPresent(locator1 = "Button#UPDATE")) {
-			Click(locator1 = "Button#UPDATE");
-		}
-
-		Alert.viewSuccessMessage();
+		PageAudit.setAPISettings(key_apiKey = "${apiKey}");
 	}
 
 	macro setAPIViaSiteSettings {
@@ -304,57 +308,13 @@ definition {
 			configurationName = "Google PageSpeed Insights",
 			configurationScope = "Site Scope");
 
-		Click(locator1 = "PageAudit#API_FIELD");
-
-		if (!(isSet(apiKey))) {
-			var apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE";
-		}
-
-		Type(
-			locator1 = "PageAudit#API_FIELD",
-			value1 = "${apiKey}");
-
-		if (isSet(preferredStrategy)) {
-			PageAudit.setPreferredStrategy(key_preferredStrategy = "${preferredStrategy}");
-		}
-
-		if (IsElementPresent(locator1 = "Button#SAVE")) {
-			Click(locator1 = "Button#SAVE");
-		}
-
-		if (IsElementPresent(locator1 = "Button#UPDATE")) {
-			Click(locator1 = "Button#UPDATE");
-		}
-
-		Alert.viewSuccessMessage();
+		PageAudit.setAPISettings(key_apiKey = "${apiKey}");
 	}
 
 	macro setAPIViaSystemSettings {
 		PageAudit.goToGooglePageSpeedInsightsSystemSettingConfiguration();
 
-		Click(locator1 = "PageAudit#API_FIELD");
-
-		if (!(isSet(apiKey))) {
-			var apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE";
-		}
-
-		Type(
-			locator1 = "PageAudit#API_FIELD",
-			value1 = "${apiKey}");
-
-		if (isSet(preferredStrategy)) {
-			PageAudit.setPreferredStrategy(key_preferredStrategy = "${preferredStrategy}");
-		}
-
-		if (IsElementPresent(locator1 = "Button#SAVE")) {
-			Click(locator1 = "Button#SAVE");
-		}
-
-		if (IsElementPresent(locator1 = "Button#UPDATE")) {
-			Click(locator1 = "Button#UPDATE");
-		}
-
-		Alert.viewSuccessMessage();
+		PageAudit.setAPISettings(key_apiKey = "${apiKey}");
 	}
 
 	macro setPreferredStrategy {

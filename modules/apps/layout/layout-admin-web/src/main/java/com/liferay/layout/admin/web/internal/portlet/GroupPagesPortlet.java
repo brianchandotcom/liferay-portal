@@ -107,7 +107,8 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.supported-public-render-parameter=layoutSetBranchId",
-		"javax.portlet.supported-public-render-parameter=selPlid"
+		"javax.portlet.supported-public-render-parameter=selPlid",
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )

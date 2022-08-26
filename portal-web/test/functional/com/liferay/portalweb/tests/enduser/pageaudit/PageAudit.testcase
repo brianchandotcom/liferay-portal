@@ -287,7 +287,11 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 		task ("Open Page Audit panel and assert the progress bar") {
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.openPageAuditSidebar();
+
+			ClickNoError(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
+
+			AssertVisible(locator1 = "PageAudit#PROGRESS_BAR");
 		}
 
 		task ("Reset Google PageSpeed API to default at System Settings") {
@@ -451,8 +455,6 @@ definition {
 
 		task ("Enable Google PageSpeed") {
 			PageAudit.enableGooglePageSpeed();
-
-			Refresh();
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -466,13 +468,13 @@ definition {
 
 			PageAudit.runPageAudit();
 
-			AssertElementPresent(
+			Button.click(button = "Show Details");
+
+			AssertVisible(
 				errorTitle = "The API key is invalid.",
 				locator1 = "PageAudit#ERROR_WARNING_TITLE");
 
-			Button.click(button = "Show Details");
-
-			AssertElementPresent(
+			AssertVisible(
 				errorMessage = "API key not valid. Please pass a valid API key.",
 				locator1 = "PageAudit#ERROR_WARNING_MESSAGE");
 		}
@@ -3613,10 +3615,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "WC Title");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			LexiconTable.clickTableEntryColumnLink(
 				columnName = "title",
@@ -3670,10 +3669,7 @@ definition {
 				groupName = "Test Site Name",
 				title = "WC Title");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			LexiconTable.clickTableEntryColumnLink(
 				columnName = "title",

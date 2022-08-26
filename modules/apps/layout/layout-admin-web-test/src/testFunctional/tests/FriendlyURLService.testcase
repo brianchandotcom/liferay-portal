@@ -63,16 +63,20 @@ definition {
 
 		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
+		WebContentNavigator.openToAddBasicArticle(
+			groupName = "Test Site Name",
+			siteURLKey = "test-site-name");
 
 		WebContent.addWithFriendlyURL(
 			friendlyURL = '''link&''',
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Test Site Name",
+			siteURLKey = "test-site-name",
+			urlTitle = '''link-''',
+			webContentTitle = "WC WebContent Title");
 
 		WebContent.editDisplayPage(
 			pageName = "Test Source Page",
@@ -120,7 +124,12 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Article");
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Test Site Name",
+			siteURLKey = "test-site-name",
+			urlTitle = "friendlyurl",
+			version = "1.1",
+			webContentTitle = "Web Content Article");
 
 		WebContent.editFriendlyURL(webContentFriendlyURL = "web-content-article");
 
@@ -147,16 +156,20 @@ definition {
 
 		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
+		WebContentNavigator.openToAddBasicArticle(
+			groupName = "Test Site Name",
+			siteURLKey = "test-site-name");
 
 		WebContent.addWithFriendlyURL(
 			friendlyURL = "friendlyUrl",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Test Site Name",
+			siteURLKey = "test-site-name",
+			urlTitle = "friendlyurl",
+			webContentTitle = "Web Content Article");
 
 		WebContent.editFriendlyURL(webContentFriendlyURL = "editedfriendlyUrl");
 
@@ -264,11 +277,10 @@ definition {
 	test RedirectToUpdatedFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Source Page");
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name",
+			layoutName = "Test Source Page",
+			siteURLKey = "test-site-name");
 
 		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
@@ -286,11 +298,10 @@ definition {
 	test RedirectToUpdatedLocalizedFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Source Page");
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name",
+			layoutName = "Test Source Page",
+			siteURLKey = "test-site-name");
 
 		PagesAdmin.addLocalizedFriendlyURL(
 			friendlyURLLocalizedList = "es-ES,es-ES",
@@ -315,11 +326,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page");
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name",
+			layoutName = "Test Page",
+			siteURLKey = "test-site-name");
 
 		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
@@ -341,11 +351,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page");
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name",
+			layoutName = "Test Page",
+			siteURLKey = "test-site-name");
 
 		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
@@ -371,11 +380,11 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Test Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Source Page");
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name (Staging)",
+			layoutName = "Test Source Page",
+			site = "false",
+			siteURLKey = "test-site-name-staging");
 
 		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
@@ -405,11 +414,11 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Test Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Source Page");
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name (Staging)",
+			layoutName = "Test Source Page",
+			site = "false",
+			siteURLKey = "test-site-name-staging");
 
 		PagesAdmin.addLocalizedFriendlyURL(
 			friendlyURLLocalizedList = "es-ES",
@@ -424,11 +433,11 @@ definition {
 
 		Staging.publishToLive();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Source Page");
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name (Staging)",
+			layoutName = "Test Source Page",
+			site = "false",
+			siteURLKey = "test-site-name-staging");
 
 		PagesAdmin.addLocalizedFriendlyURL(
 			friendlyURLLocalizedList = "es-ES",
@@ -541,11 +550,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page");
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name",
+			layoutName = "Test Page",
+			siteURLKey = "test-site-name");
 
 		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
@@ -567,11 +575,10 @@ definition {
 	@description = "This test covers LPS-116068. It ensures that both the active URL and old friendlyURL can be viewed from the history of a default page."
 	@priority = "5"
 	test ViewFriendlyURLsViaDefaultPage {
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Search");
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Guest",
+			layoutName = "Search",
+			siteURLKey = "guest");
 
 		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-search-page");
 
@@ -595,11 +602,10 @@ definition {
 	test ViewFriendlyURLWithSpecialCharacters {
 		property portal.acceptance = "false";
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Source Page");
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name",
+			layoutName = "Test Source Page",
+			siteURLKey = "test-site-name");
 
 		PagesAdmin.addLocalizedFriendlyURL(
 			friendlyURLLocalizedList = "es-ES",
@@ -616,11 +622,10 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "en/web/test-site-name/test-source-page");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Source Page");
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name",
+			layoutName = "Test Source Page",
+			siteURLKey = "test-site-name");
 
 		PagesAdmin.addLocalizedFriendlyURL(
 			friendlyURLLocalizedList = "es-ES",
@@ -649,11 +654,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page");
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name",
+			layoutName = "Test Page",
+			siteURLKey = "test-site-name");
 
 		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
@@ -688,11 +692,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page");
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name",
+			layoutName = "Test Page",
+			siteURLKey = "test-site-name");
 
 		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 
@@ -714,11 +717,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page");
+		PagesAdmin.openToConfigurePublicPage(
+			groupName = "Test Site Name",
+			layoutName = "Test Page",
+			siteURLKey = "test-site-name");
 
 		PagesAdmin.editFriendlyURL(friendlyURLEdit = "/new-test-page");
 

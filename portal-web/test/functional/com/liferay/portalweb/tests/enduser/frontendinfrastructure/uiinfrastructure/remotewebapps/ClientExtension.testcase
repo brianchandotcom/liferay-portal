@@ -38,35 +38,6 @@ definition {
 	}
 
 	@priority = "5"
-	test CanUseOsgiClientExtensionCustomElementAsPortlet {
-		property custom.element.client.extension.created = "true";
-		property test.name.skip.portal.instance = "ClientExtension#CanUseOsgiClientExtensionCustomElementAsPortlet";
-
-		task ("Given config file for client extension of type custom element created") {
-			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
-
-			ClientExtension.checkConfigFileCreatedProperly();
-		}
-
-		task ("When adding created portlet to a widget page") {
-			ClientExtension.addPortletToWidgetPage(
-				portletName = "Vanilla Counter",
-				widgetPageName = "My Widget Page");
-		}
-
-		task ("Then Vanilla Counter is displayed correctly") {
-			AssertElementPresent(locator1 = "//vanilla-counter[@test-data-user='QAuser']");
-
-			Refresh();
-
-			AssertAttributeValue(
-				attribute1 = "src",
-				locator1 = "RemoteAppsEntry#CUSTOM_ELEMENT_MODULE_SCRIPT",
-				value1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
-		}
-	}
-
-	@priority = "5"
 	test CanUseOsgiClientExtensionIframeAsPortlet {
 		property iframe.client.extension.created = "true";
 		property test.name.skip.portal.instance = "ClientExtension#CanUseOsgiClientExtensionIframeAsPortlet";
@@ -85,6 +56,35 @@ definition {
 
 		task ("Then My Pretty IFrame is displayed correctly") {
 			AssertElementPresent(locator1 = "//iframe[contains(@src,'https://liferay.github.io/liferay-frontend-projects/index.html?b=2&a=1')]");
+		}
+	}
+
+	@priority = "5"
+	test OsgiClientExtensionOfTypeCustomElementRendersCorrectlyWhenPlacedOnWidgetPage {
+		property custom.element.client.extension.created = "true";
+		property test.name.skip.portal.instance = "ClientExtension#CanUseOsgiClientExtensionCustomElementAsPortlet";
+
+		task ("Given config file for client extension of type custom element created") {
+			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
+
+			ClientExtension.checkConfigFileCreatedProperly();
+		}
+
+		task ("When placing created portlet on a widget page") {
+			ClientExtension.addPortletToWidgetPage(
+				portletName = "Vanilla Counter",
+				widgetPageName = "My Widget Page");
+		}
+
+		task ("Then Vanilla Counter is displayed correctly") {
+			AssertElementPresent(locator1 = "//vanilla-counter[@test-data-user='QAuser']");
+
+			Refresh();
+
+			AssertAttributeValue(
+				attribute1 = "src",
+				locator1 = "RemoteAppsEntry#CUSTOM_ELEMENT_MODULE_SCRIPT",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 	}
 

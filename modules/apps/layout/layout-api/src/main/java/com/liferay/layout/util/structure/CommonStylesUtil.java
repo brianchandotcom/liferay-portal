@@ -124,8 +124,15 @@ public class CommonStylesUtil {
 					LanguageUtil.get(
 						resourceBundle, styleJSONObject.getString("label")));
 
-				JSONArray validValuesJSONArray = styleJSONObject.getJSONArray(
-					"validValues");
+				JSONObject typeOptionsJSONObject =
+					styleJSONObject.getJSONObject("typeOptions");
+
+				if (typeOptionsJSONObject == null) {
+					continue;
+				}
+
+				JSONArray validValuesJSONArray =
+					typeOptionsJSONObject.getJSONArray("validValues");
 
 				if (validValuesJSONArray == null) {
 					continue;

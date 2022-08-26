@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.servlet.taglib.aui.ESImport;
 import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
 import com.liferay.portal.kernel.servlet.taglib.aui.PortletData;
 import com.liferay.portal.kernel.servlet.taglib.aui.PortletDataRenderer;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -258,7 +257,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 		Map<ESImport, ESImport> esImportMap,
 		Collection<PortletData> portletDatas) {
 
-		StringBundler sb = new StringBundler();
+		StringBuilder sb = new StringBuilder();
 
 		for (PortletData portletData : portletDatas) {
 			for (JSFragment jsFragment : portletData.getJSFragments()) {
@@ -342,7 +341,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 	}
 
 	private String _computeRawCode(Collection<PortletData> portletDatas) {
-		StringBundler sb = new StringBundler();
+		StringBuilder sb = new StringBuilder();
 
 		for (PortletData portletData : portletDatas) {
 			for (JSFragment jsFragment : portletData.getJSFragments()) {

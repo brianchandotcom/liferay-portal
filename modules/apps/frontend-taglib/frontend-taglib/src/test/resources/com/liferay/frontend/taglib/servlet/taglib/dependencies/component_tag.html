@@ -1,14 +1,14 @@
-<script type="text/javascript">
-// <![CDATA[
-Liferay.Loader.require('null/module', function(nullModule) {
+<script type="module">
+Liferay.Loader.require(
+'null/module',
+function(module) {
 try {
 (function() {
-var module = nullModule;
 Liferay.component('componentId', new module.default({"name":"value","namespace":"namespace","spritemap":"\/clay\/icons.svg"}), { destroyOnNavigate: true, portletId: ''});
 })();
 } catch (err) {
 	console.error(err);
 }
 });
-// ]]>
+
 </script>

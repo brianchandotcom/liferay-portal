@@ -85,6 +85,8 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 								module="js/components/SearchBar"
 								props='<%=
 									HashMapBuilder.<String, Object>put(
+										"destinationFriendlyURL", searchBarPortletDisplayContext.getDestination()
+									).put(
 										"emptySearchEnabled", searchBarPortletDisplayContext.isEmptySearchEnabled()
 									).put(
 										"keywords", searchBarPortletDisplayContext.getKeywords()

@@ -50,7 +50,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Run Page Audit") {
@@ -85,7 +85,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Configure canonical URL") {
@@ -138,7 +138,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Configure canonical URL") {
@@ -202,7 +202,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-2");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Configure canonical URL") {
@@ -244,7 +244,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Configure canonical URL") {
@@ -281,7 +281,7 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaSystemSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSystemSettings();
 		}
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
@@ -302,11 +302,11 @@ definition {
 	test CachedDataAlert {
 		task ("Create second content page") {
 			task ("Create content page") {
-				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Second Page",
-					type = "content");
-			}
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Second Page",
+				type = "content");
+		}
 		}
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
@@ -314,9 +314,7 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaSiteSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Mobile");
+			PageAudit.setAPIViaSiteSettings(preferredStrategy = "Mobile");
 		}
 
 		task ("Open Page Audit panel and run it") {
@@ -358,7 +356,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
@@ -409,7 +407,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
@@ -504,7 +502,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
@@ -540,7 +538,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
@@ -588,7 +586,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
@@ -647,7 +645,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Login with new user") {
@@ -699,7 +697,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
@@ -739,7 +737,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
@@ -779,7 +777,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
@@ -823,7 +821,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
@@ -863,7 +861,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
@@ -903,7 +901,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
@@ -943,7 +941,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
@@ -1006,7 +1004,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Login with new user") {
@@ -1058,7 +1056,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
@@ -2648,7 +2646,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
@@ -2711,7 +2709,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Login with new user") {
@@ -2763,7 +2761,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
@@ -2796,9 +2794,7 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaInstanceSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Choose an Option");
+			PageAudit.setAPIViaInstanceSettings(preferredStrategy = "Choose an Option");
 		}
 
 		task ("Open Page Audit panel and run it") {
@@ -2844,9 +2840,7 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaSiteSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Choose an Option");
+			PageAudit.setAPIViaSiteSettings(preferredStrategy = "Choose an Option");
 		}
 
 		task ("Open Page Audit panel and run it") {
@@ -2879,9 +2873,7 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaSystemSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Choose an Option");
+			PageAudit.setAPIViaSystemSettings(preferredStrategy = "Choose an Option");
 		}
 
 		task ("Open Page Audit panel and run it") {
@@ -2917,9 +2909,7 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaSiteSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Desktop");
+			PageAudit.setAPIViaSiteSettings(preferredStrategy = "Desktop");
 		}
 
 		task ("Open Page Audit panel and run it") {
@@ -2952,9 +2942,7 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaSystemSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Desktop");
+			PageAudit.setAPIViaSystemSettings(preferredStrategy = "Desktop");
 		}
 
 		task ("Open Page Audit panel and run it") {
@@ -2993,7 +2981,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Run Page Audit") {
@@ -3021,9 +3009,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#InstanceSettingsHierarchy";
 
 		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaInstanceSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Mobile");
+			PageAudit.setAPIViaInstanceSettings(preferredStrategy = "Mobile");
 		}
 
 		task ("Go to Site Settings") {
@@ -3128,9 +3114,7 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaSiteSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Mobile");
+			PageAudit.setAPIViaSiteSettings(preferredStrategy = "Mobile");
 		}
 
 		task ("Open Page Audit panel and run it") {
@@ -3171,7 +3155,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Run Page Audit") {
@@ -3204,9 +3188,7 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaInstanceSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Mobile");
+			PageAudit.setAPIViaInstanceSettings(preferredStrategy = "Mobile");
 		}
 
 		task ("Open Page Audit panel and run it") {
@@ -3252,9 +3234,7 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaSiteSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Mobile");
+			PageAudit.setAPIViaSiteSettings(preferredStrategy = "Mobile");
 		}
 
 		task ("Open Page Audit panel and run it") {
@@ -3287,9 +3267,7 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaSystemSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Mobile");
+			PageAudit.setAPIViaSystemSettings(preferredStrategy = "Mobile");
 		}
 
 		task ("Open Page Audit panel and run it") {
@@ -3333,7 +3311,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
@@ -3425,7 +3403,7 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API to first page") {
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Run Page Audit for first language") {
@@ -3809,7 +3787,7 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API") {
-			PageAudit.setAPIViaSystemSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSystemSettings();
 		}
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
@@ -3840,7 +3818,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Open Page Audit sidebar") {
@@ -3875,7 +3853,7 @@ definition {
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+			PageAudit.setAPIViaSiteSettings();
 		}
 
 		task ("Run Page Audit") {
@@ -3940,17 +3918,13 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API by System Settings") {
-			PageAudit.setAPIViaInstanceSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Desktop");
+			PageAudit.setAPIViaInstanceSettings(preferredStrategy = "Desktop");
 		}
 
 		task ("Set Google PageSpeed API by Site Settings and selecting a different strategy") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Mobile");
+			PageAudit.setAPIViaSiteSettings(preferredStrategy = "Mobile");
 		}
 
 		task ("Open Page Audit panel and run it") {
@@ -3997,17 +3971,13 @@ definition {
 		}
 
 		task ("Set Google PageSpeed API by System Settings") {
-			PageAudit.setAPIViaSystemSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Desktop");
+			PageAudit.setAPIViaSystemSettings(preferredStrategy = "Desktop");
 		}
 
 		task ("Set Google PageSpeed API by Site Settings and selecting a different strategy") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.setAPIViaSiteSettings(
-				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
-				preferredStrategy = "Mobile");
+			PageAudit.setAPIViaSiteSettings(preferredStrategy = "Mobile");
 		}
 
 		task ("Open Page Audit panel and run it") {

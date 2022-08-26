@@ -272,6 +272,10 @@ definition {
 
 		Click(locator1 = "PageAudit#API_FIELD");
 
+		if (!(isSet(apiKey))) {
+			var apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE";
+		}
+
 		Type(
 			locator1 = "PageAudit#API_FIELD",
 			value1 = "${apiKey}");
@@ -302,6 +306,10 @@ definition {
 
 		Click(locator1 = "PageAudit#API_FIELD");
 
+		if (!(isSet(apiKey))) {
+			var apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE";
+		}
+
 		Type(
 			locator1 = "PageAudit#API_FIELD",
 			value1 = "${apiKey}");
@@ -325,6 +333,10 @@ definition {
 		PageAudit.goToGooglePageSpeedInsightsSystemSettingConfiguration();
 
 		Click(locator1 = "PageAudit#API_FIELD");
+
+		if (!(isSet(apiKey))) {
+			var apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE";
+		}
 
 		Type(
 			locator1 = "PageAudit#API_FIELD",

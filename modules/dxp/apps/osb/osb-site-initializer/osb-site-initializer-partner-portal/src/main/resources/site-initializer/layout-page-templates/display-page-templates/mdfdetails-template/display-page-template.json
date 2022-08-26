@@ -1,6 +1,6 @@
 {
-  "contentType" : {
-    "className" : "com.liferay.object.model.ObjectDefinition#44491"
-  },
-  "name" : "MDFDetails"
+	"contentType": {
+		"className": "com.liferay.object.model.ObjectDefinition#44493"
+	},
+	"name": "MDFDetails"
 }

@@ -19,17 +19,20 @@ import Modal from '../../../components/Modal';
 import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
+import {TestrayRequirementCase} from '../../../services/rest';
 import {searchUtil} from '../../../util/search';
 import {CaseListView} from '../Cases';
 
 type RequirementCaseLinkModalProps = {
+	items: TestrayRequirementCase[];
 	modal: FormModalOptions;
 	projectId: string;
 };
 
-type State = {caseId: number}[];
+export type State = {caseId?: number; requirementId?: number}[];
 
 const RequirementCaseLinkModal: React.FC<RequirementCaseLinkModalProps> = ({
+	items,
 	modal: {observer, onClose, onSave, visible},
 	projectId,
 }) => {
@@ -41,7 +44,7 @@ const RequirementCaseLinkModal: React.FC<RequirementCaseLinkModalProps> = ({
 				<Form.Footer
 					isModal
 					onClose={onClose}
-					onSubmit={() => onSave(state)}
+					onSubmit={() => onSave({items, state})}
 					primaryButtonTitle={i18n.translate('select-cases')}
 				/>
 			}
@@ -52,11 +55,17 @@ const RequirementCaseLinkModal: React.FC<RequirementCaseLinkModalProps> = ({
 		>
 			<CaseListView
 				listViewProps={{
+					initialContext: {
+						selectedRows: items.map(({case: {id}}) => id),
+					},
 					managementToolbarProps: {
 						title: i18n.translate('cases'),
 					},
-					onContextChange: ({selectedRows}) =>
-						setState(selectedRows.map((caseId) => ({caseId}))),
+					onContextChange: (context) => {
+						setState(
+							context.selectedRows.map((caseId) => ({caseId}))
+						);
+					},
 				}}
 				tableProps={{navigateTo: undefined, rowSelectable: true}}
 				variables={{

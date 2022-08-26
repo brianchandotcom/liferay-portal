@@ -171,15 +171,18 @@ const ListViewRest: React.FC<ListViewProps> = ({
 		[dispatch]
 	);
 
+	const contextString = JSON.stringify(listViewContext);
+
 	const onSelectAllRows = useCallback(() => {
 		onSelectRow(items.map(({id}) => id));
 	}, [items, onSelectRow]);
 
 	useEffect(() => {
 		if (onContextChange) {
-			onContextChange(listViewContext);
+			onContextChange(JSON.parse(contextString));
 		}
-	}, [listViewContext, onContextChange]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [contextString]);
 
 	useEffect(() => {
 		if (tableProps.rowSelectable) {

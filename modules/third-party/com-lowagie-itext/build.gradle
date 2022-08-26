@@ -13,13 +13,20 @@ dependencies {
 }
 
 patch {
-    ext {
-        autoClean = false
-    }
+	ext {
+		autoClean = false
 
-    originalLibModuleName = "itext"
-    originalLibSrcDirName = "core"
-    originalLibSrcBaseUrl = "https://jaspersoft.jfrog.io/artifactory/third-party-ce-artifacts/com/lowagie/"
+	}
+
+	fileNames "**/com/lowagie/text/pdf/PdfContentParser.java"
+	fileNames "**/com/lowagie/text/pdf/PdfReader.java"
+	fileNames "**/com/lowagie/text/pdf/XfaForm.java"
+	fileNames "**/com/lowagie/text/xml/xmp/XmpReader.java"
+	fileNames "**/com/lowagie/tools/BuildTutorial.java"
+
+	originalLibModuleName = "itext"
+	originalLibSrcDirName = "core"
+	originalLibSrcBaseUrl = "https://jaspersoft.jfrog.io/artifactory/third-party-ce-artifacts/com/lowagie/"
 }
 
 repositories {

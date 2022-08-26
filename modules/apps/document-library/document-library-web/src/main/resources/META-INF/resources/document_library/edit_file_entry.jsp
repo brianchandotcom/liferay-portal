@@ -677,11 +677,28 @@ renderResponse.setTitle(headerTitle);
 	var form = document.<portlet:namespace />fm;
 
 	function <portlet:namespace />changeFileEntryType() {
-		Liferay.Util.setFormValues(form, {
-			<%= Constants.CMD %>: '<%= Constants.PREVIEW %>',
-		});
+		Liferay.Util.openConfirmModal({
+			message: Liferay.Language.get(
+				'changing-the-document-type-will-cause-data-loss'
+			),
 
-		form.submit();
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					Liferay.Util.setFormValues(form, {
+						<%= Constants.CMD %>: '<%= Constants.PREVIEW %>',
+					});
+
+					form.submit();
+				}
+				else {
+					var formFileEntryType = document.getElementById(
+						'<portlet:namespace />fileEntryTypeId'
+					);
+
+					formFileEntryType.selectedIndex = formFileEntryType.prevValue;
+				}
+			},
+		});
 	}
 
 	function <portlet:namespace />cancelCheckOut() {

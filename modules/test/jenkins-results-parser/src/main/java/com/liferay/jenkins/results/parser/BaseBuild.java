@@ -3040,29 +3040,33 @@ public abstract class BaseBuild implements Build {
 				cellElementTagName, null,
 				JenkinsResultsParserUtil.toDurationString(duration)));
 
-		String estimatedDurationString = "n/a";
-		String diffDurationString = "n/a";
+		Element estimatedDurationElement = null;
+		Element diffDurationElement = null;
 
-		if ((this instanceof DownstreamBuild) && buildDurationsEnabled()) {
-			DownstreamBuild downstreamBuild = (DownstreamBuild)this;
+		if (buildDurationsEnabled()) {
+			String estimatedDurationString = "n/a";
+			String diffDurationString = "n/a";
 
-			long averageDuration = downstreamBuild.getAverageDuration();
+			if (this instanceof DownstreamBuild) {
+				DownstreamBuild downstreamBuild = (DownstreamBuild)this;
 
-			estimatedDurationString = JenkinsResultsParserUtil.toDurationString(
-				averageDuration);
-			diffDurationString = getDiffDurationString(
-				duration - averageDuration);
+				long averageDuration = downstreamBuild.getAverageDuration();
+
+				estimatedDurationString =
+					JenkinsResultsParserUtil.toDurationString(averageDuration);
+				diffDurationString = getDiffDurationString(
+					duration - averageDuration);
+			}
+
+			estimatedDurationElement = Dom4JUtil.getNewElement(
+				cellElementTagName, null, estimatedDurationString);
+			diffDurationElement = Dom4JUtil.getNewElement(
+				cellElementTagName, null, diffDurationString);
 		}
 
-		Dom4JUtil.addToElement(
-			buildInfoElement,
-			Dom4JUtil.getNewElement(
-				cellElementTagName, null, estimatedDurationString));
+		Dom4JUtil.addToElement(buildInfoElement, estimatedDurationElement);
 
-		Dom4JUtil.addToElement(
-			buildInfoElement,
-			Dom4JUtil.getNewElement(
-				cellElementTagName, null, diffDurationString));
+		Dom4JUtil.addToElement(buildInfoElement, diffDurationElement);
 
 		String status = getStatus();
 

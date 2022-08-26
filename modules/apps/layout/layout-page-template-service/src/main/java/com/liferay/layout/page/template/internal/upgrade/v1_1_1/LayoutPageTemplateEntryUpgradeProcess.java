@@ -17,12 +17,17 @@ package com.liferay.layout.page.template.internal.upgrade.v1_1_1;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jonathan McCann
@@ -37,50 +42,49 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement countPreparedStatement =
-				connection.prepareStatement(
-					"select count(*) from LayoutPageTemplateEntry where " +
-						"groupId = ? and name = ?");
-			PreparedStatement deletePreparedStatement =
-				connection.prepareStatement(
-					"delete from LayoutPageTemplateEntry where groupId <> ? " +
-						"and layoutPageTemplateCollectionId <> 0 and type_ = " +
-							"? and layoutPrototypeId = ?");
-			PreparedStatement selectPreparedStatement =
-				connection.prepareStatement(
-					SQLTransformer.transform(
-						StringBundler.concat(
-							"select layoutPageTemplateEntryId, companyId, ",
-							"name, layoutPrototypeId from ",
-							"LayoutPageTemplateEntry where type_ = ",
-							LayoutPageTemplateEntryTypeConstants.
-								TYPE_WIDGET_PAGE,
-							" and groupId in (select groupId from Group_ ",
-							"where site = [$FALSE$])")));
-			PreparedStatement updatePreparedStatement =
-				connection.prepareStatement(
+		List<PreparedStatement> preparedStatements1 = new ArrayList<>();
+		List<PreparedStatement> preparedStatements2 = new ArrayList<>();
+
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				SQLTransformer.transform(
+					StringBundler.concat(
+						"select layoutPageTemplateEntryId, companyId, name, ",
+						"layoutPrototypeId from LayoutPageTemplateEntry where ",
+						"type_ = ",
+						LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
+						" and groupId in (select groupId from Group_ where ",
+						"site = [$FALSE$])")));
+			PreparedStatement preparedStatement2 = connection.prepareStatement(
+				"select count(*) from LayoutPageTemplateEntry where groupId " +
+					"= ? and name = ?");
+			PreparedStatement preparedStatement3 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
 					"update LayoutPageTemplateEntry set groupId = ? , " +
 						"layoutPageTemplateCollectionId = 0, name = ? where " +
 							"layoutPageTemplateEntryId = ?");
-			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
+			PreparedStatement preparedStatement4 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"delete from LayoutPageTemplateEntry where groupId <> ? " +
+						"and layoutPageTemplateCollectionId <> 0 and type_ = " +
+							"? and layoutPrototypeId = ?");
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
-				long layoutPageTemplateEntryId = resultSet.getLong(
-					"layoutPageTemplateEntryId");
-				long companyId = resultSet.getLong("companyId");
 				String name = resultSet.getString("name");
-				long layoutPrototypeId = resultSet.getLong("layoutPrototypeId");
 
-				Company company = _companyLocalService.getCompany(companyId);
+				Company company = _companyLocalService.getCompany(
+					resultSet.getLong("companyId"));
 
 				String newName = name;
 
 				for (int i = 1;; i++) {
-					countPreparedStatement.setLong(1, company.getGroupId());
-					countPreparedStatement.setString(2, newName);
+					preparedStatement2.setLong(1, company.getGroupId());
+					preparedStatement2.setString(2, newName);
 
 					ResultSet countResultSet =
-						countPreparedStatement.executeQuery();
+						preparedStatement2.executeQuery();
 
 					if (countResultSet.next() &&
 						(countResultSet.getInt(1) > 0)) {
@@ -92,18 +96,45 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 					}
 				}
 
-				updatePreparedStatement.setLong(1, company.getGroupId());
-				updatePreparedStatement.setString(2, newName);
-				updatePreparedStatement.setLong(3, layoutPageTemplateEntryId);
+				preparedStatement3.setLong(1, company.getGroupId());
+				preparedStatement3.setString(2, newName);
+				preparedStatement3.setLong(
+					3, resultSet.getLong("layoutPageTemplateEntryId"));
 
-				updatePreparedStatement.executeUpdate();
+				preparedStatement3.addBatch();
 
-				deletePreparedStatement.setLong(1, company.getGroupId());
-				deletePreparedStatement.setInt(
+				preparedStatements1.add(preparedStatement3);
+
+				preparedStatement4.setLong(1, company.getGroupId());
+				preparedStatement4.setInt(
 					2, LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE);
-				deletePreparedStatement.setLong(3, layoutPrototypeId);
+				preparedStatement4.setLong(
+					3, resultSet.getLong("layoutPrototypeId"));
 
-				deletePreparedStatement.executeUpdate();
+				preparedStatement4.addBatch();
+
+				preparedStatements2.add(preparedStatement4);
+			}
+
+			PreparedStatement preparedStatement5 = null;
+
+			for (int i = 0; i < preparedStatements1.size(); i++) {
+				preparedStatement5 = preparedStatements1.get(i);
+
+				preparedStatement5.executeBatch();
+
+				preparedStatement5 = preparedStatements2.get(i);
+
+				preparedStatement5.executeBatch();
+			}
+		}
+		finally {
+			for (PreparedStatement preparedStatement : preparedStatements1) {
+				DataAccess.cleanUp(preparedStatement);
+			}
+
+			for (PreparedStatement preparedStatement : preparedStatements2) {
+				DataAccess.cleanUp(preparedStatement);
 			}
 		}
 	}

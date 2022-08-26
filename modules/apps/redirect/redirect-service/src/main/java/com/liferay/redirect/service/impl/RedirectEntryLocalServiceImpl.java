@@ -88,6 +88,8 @@ public class RedirectEntryLocalServiceImpl
 			boolean permanent, String sourceURL, ServiceContext serviceContext)
 		throws PortalException {
 
+		sourceURL = StringUtil.toLowerCase(sourceURL);
+
 		_validate(destinationURL, sourceURL);
 
 		if (redirectEntryPersistence.fetchByG_S(groupId, sourceURL) != null) {
@@ -141,6 +143,8 @@ public class RedirectEntryLocalServiceImpl
 			String groupBaseURL, boolean permanent, String sourceURL,
 			boolean updateChainedRedirectEntries, ServiceContext serviceContext)
 		throws PortalException {
+
+		sourceURL = StringUtil.toLowerCase(sourceURL);
 
 		_checkDestinationURLMustNotBeEqualToSourceURL(
 			destinationURL, groupBaseURL, sourceURL);
@@ -250,6 +254,8 @@ public class RedirectEntryLocalServiceImpl
 			boolean permanent, String sourceURL)
 		throws PortalException {
 
+		sourceURL = StringUtil.toLowerCase(sourceURL);
+
 		_validate(destinationURL, sourceURL);
 
 		RedirectEntry redirectEntry = getRedirectEntry(redirectEntryId);
@@ -279,6 +285,8 @@ public class RedirectEntryLocalServiceImpl
 			String groupBaseURL, boolean permanent, String sourceURL,
 			boolean updateChainedRedirectEntries)
 		throws PortalException {
+
+		sourceURL = StringUtil.toLowerCase(sourceURL);
 
 		_checkDestinationURLMustNotBeEqualToSourceURL(
 			destinationURL, groupBaseURL, sourceURL);

@@ -62,7 +62,7 @@ public class DefaultGuestGroupLogoSwapper {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
-		List<Company> companies = _companyLocalService.getCompanies(0, 1);
+		List<Company> companies = _companyLocalService.getCompanies();
 
 		Company company = companies.get(0);
 

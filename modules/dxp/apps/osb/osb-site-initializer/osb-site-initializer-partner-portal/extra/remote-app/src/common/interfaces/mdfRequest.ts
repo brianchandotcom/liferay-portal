@@ -28,6 +28,6 @@ export default interface MDFRequest extends Partial<LiferayObject> {
 	targetAudienceRoles: string[];
 	targetMarkets: string[];
 	totalCostOfExpense?: number;
-	totalMdfRequestAmount?: number;
+	totalMDFRequestAmount?: number;
 	totalRequested?: number;
 }

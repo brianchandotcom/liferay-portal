@@ -27,6 +27,6 @@ export default interface MDFRequestDTO
 	targetAudienceRoles?: string;
 	targetMarkets?: string;
 	totalCostOfExpense?: number;
-	totalMdfRequestAmount?: number;
+	totalMDFRequestAmount?: number;
 	totalRequested?: number;
 }

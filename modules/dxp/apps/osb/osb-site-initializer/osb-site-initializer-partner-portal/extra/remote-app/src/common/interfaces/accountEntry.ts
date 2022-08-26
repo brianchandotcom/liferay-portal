@@ -12,13 +12,5 @@
 import LiferayObject from './liferayObject';
 
 export default interface AccountEntry extends Partial<LiferayObject> {
-	createDate: Date;
-	creator: string;
-	description: string;
-	modifiedDate: Date;
 	name: string;
-	objectDefinitionId: number;
-	status: number;
-	type: string;
-	uuid: number;
 }

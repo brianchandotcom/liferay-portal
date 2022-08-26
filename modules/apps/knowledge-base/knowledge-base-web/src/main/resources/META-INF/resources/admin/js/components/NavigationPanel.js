@@ -21,10 +21,13 @@ import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import normalizeDropdownItems from './normalizeDropdownItems';
+
 const ITEM_TYPES_SYMBOL = {
 	article: 'document-text',
 	folder: 'folder',
 };
+
 export default function NavigationPanel({items, selectedItemId}) {
 	const handleClickItem = (event, item) => {
 		if (event.defaultPrevented) {
@@ -69,7 +72,9 @@ export default function NavigationPanel({items, selectedItemId}) {
 										actions={
 											item?.actions?.length && (
 												<ClayDropDownWithItems
-													items={item.actions}
+													items={normalizeDropdownItems(
+														item.actions
+													)}
 													trigger={
 														<ClayButtonWithIcon
 															displayType="unstyled"

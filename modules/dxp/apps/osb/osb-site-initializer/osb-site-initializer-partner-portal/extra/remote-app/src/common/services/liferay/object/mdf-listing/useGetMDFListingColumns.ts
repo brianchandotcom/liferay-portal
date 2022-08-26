@@ -17,15 +17,23 @@ import {LiferayAPIs} from '../../common/enums/apis';
 import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';
 
-interface MDFListingColumns {
+interface MDFListingColumn {
 	externalReferenceCode: MDFColumnKey;
 	label: string;
 }
 
 export default function useGetMDFListingColumns() {
-	return useSWR(
+	const swr = useSWR(
 		[`/o/${LiferayAPIs.OBJECT}/mdflistingcolumns`, Liferay.authToken],
 		(url, token) =>
-			liferayFetcher<LiferayItems<MDFListingColumns[]>>(url, token)
+			liferayFetcher<LiferayItems<MDFListingColumn[]>>(url, token)
 	);
+
+	return {
+		...swr,
+		data: swr.data?.items.map((item) => ({
+			columnKey: item.externalReferenceCode,
+			label: item.label,
+		})),
+	};
 }

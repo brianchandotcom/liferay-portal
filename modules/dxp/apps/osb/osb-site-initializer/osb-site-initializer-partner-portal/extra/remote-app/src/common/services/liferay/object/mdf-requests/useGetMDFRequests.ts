@@ -17,7 +17,7 @@ import {LiferayAPIs} from '../../common/enums/apis';
 import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';
 
-export default function useGetMDFRequest() {
+export default function useGetMDFRequests() {
 	return useSWR(
 		[
 			`/o/${LiferayAPIs.OBJECT}/mdfrequests?nestedFields=r_accountToMDFRequests_accountEntryId`,

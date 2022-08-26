@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -61,30 +61,27 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 		super.setUp();
 
 		UserTestUtil.setUser(TestPropsValues.getUser());
-
-		_companyId = TestPropsValues.getCompanyId();
-
-		_globalGroup = GroupLocalServiceUtil.getCompanyGroup(_companyId);
-
-		_ownerRole = RoleLocalServiceUtil.getRole(
-			_companyId, RoleConstants.OWNER);
 	}
 
 	@Test
-	public void testGloballyScopedPortletExportImportDoesNotOverrideGlobalSitePermissions()
+	public void testExportImportLayoutWithGloballyScopedPortletDoesNotOverrideGlobalSitePermissions()
 		throws Exception {
 
+		long companyId = TestPropsValues.getCompanyId();
+
+		Group globalGroup = _groupLocalService.getCompanyGroup(companyId);
+		Role ownerRole = _roleLocalService.getRole(
+			companyId, RoleConstants.OWNER);
+
 		_initModelResource(
-			_companyId, _globalGroup.getGroupId(), DLConstants.RESOURCE_NAME);
+			companyId, globalGroup.getGroupId(), DLConstants.RESOURCE_NAME);
 		_initModelResource(
-			_companyId, group.getGroupId(), DLConstants.RESOURCE_NAME);
+			companyId, group.getGroupId(), DLConstants.RESOURCE_NAME);
 
 		ResourcePermission originalGlobalGroupDLModelResourcePermission =
-			_resourcePermissionLocalService.getResourcePermission(
-				_companyId, DLConstants.RESOURCE_NAME,
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(_globalGroup.getGroupId()),
-				_ownerRole.getRoleId());
+			_getModelResourcePermission(
+				companyId, globalGroup.getGroupId(), DLConstants.RESOURCE_NAME,
+				ownerRole.getRoleId());
 
 		try {
 			LayoutTestUtil.addPortletToLayout(
@@ -94,10 +91,9 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 				).build());
 
 			ResourcePermission groupDLModelResourcePermission =
-				_resourcePermissionLocalService.getResourcePermission(
-					_companyId, DLConstants.RESOURCE_NAME,
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(group.getGroupId()), _ownerRole.getRoleId());
+				_getModelResourcePermission(
+					companyId, group.getGroupId(), DLConstants.RESOURCE_NAME,
+					ownerRole.getRoleId());
 
 			_removePermissions(groupDLModelResourcePermission);
 
@@ -119,16 +115,18 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 				).build());
 
 			ResourcePermission globalGroupDLModelResourcePermission =
-				_resourcePermissionLocalService.getResourcePermission(
-					_companyId, DLConstants.RESOURCE_NAME,
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(_globalGroup.getGroupId()),
-					_ownerRole.getRoleId());
+				_getModelResourcePermission(
+					companyId, globalGroup.getGroupId(),
+					DLConstants.RESOURCE_NAME, ownerRole.getRoleId());
 
 			Assert.assertEquals(
+				"Permissions on the Global Site should not be changed by an " +
+					"import of another site.",
 				originalGlobalGroupDLModelResourcePermission.getActionIds(),
 				globalGroupDLModelResourcePermission.getActionIds());
 			Assert.assertEquals(
+				"Permissions on the Global Site should not be changed by an " +
+					"import of another site.",
 				originalGlobalGroupDLModelResourcePermission.isViewActionId(),
 				globalGroupDLModelResourcePermission.isViewActionId());
 		}
@@ -136,6 +134,15 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 			_restoreModelResourcePermission(
 				originalGlobalGroupDLModelResourcePermission);
 		}
+	}
+
+	private ResourcePermission _getModelResourcePermission(
+			long companyId, long groupId, String name, long roleId)
+		throws PortalException {
+
+		return _resourcePermissionLocalService.getResourcePermission(
+			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(groupId), roleId);
 	}
 
 	private void _initModelResource(long companyId, long groupId, String name)
@@ -181,14 +188,16 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 			resourcePermission);
 	}
 
-	private long _companyId;
-	private Group _globalGroup;
-	private Role _ownerRole;
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private ResourceLocalService _resourceLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

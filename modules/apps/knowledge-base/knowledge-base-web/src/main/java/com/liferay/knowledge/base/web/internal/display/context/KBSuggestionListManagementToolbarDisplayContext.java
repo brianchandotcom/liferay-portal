@@ -71,7 +71,7 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteKBComments");
-				dropdownItem.setIcon("times-circle");
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);

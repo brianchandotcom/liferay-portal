@@ -98,7 +98,7 @@ public class KBAdminManagementToolbarDisplayContext {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteEntries");
-				dropdownItem.setIcon("times-circle");
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);

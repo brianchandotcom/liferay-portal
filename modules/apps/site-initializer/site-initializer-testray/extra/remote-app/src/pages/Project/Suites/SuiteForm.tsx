@@ -15,7 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
@@ -50,7 +50,7 @@ const SuiteForm = () => {
 		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
 
-	const {setTabs} = useHeader({shouldUpdate: false});
+	useHeader({timeout: 100, useTabs: []});
 	const [cases, setCases] = useState<number[]>([]);
 	const {projectId} = useParams();
 	const context: {
@@ -58,12 +58,6 @@ const SuiteForm = () => {
 		testrayProject?: any;
 		testraySuite?: TestraySuite;
 	} = useOutletContext();
-
-	useEffect(() => {
-		setTimeout(() => {
-			setTabs([]);
-		}, 10);
-	}, [setTabs]);
 
 	const {
 		formState: {errors},

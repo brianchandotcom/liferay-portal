@@ -1350,6 +1350,10 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getStatus() {
+		if (_status == null) {
+			getResult();
+		}
+
 		return _status;
 	}
 

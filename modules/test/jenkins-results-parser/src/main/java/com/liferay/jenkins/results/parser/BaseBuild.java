@@ -2510,6 +2510,45 @@ public abstract class BaseBuild implements Build {
 		return archiveFile.exists();
 	}
 
+	protected boolean buildDurationsEnabled() {
+		if (_buildDurationsEnabled != null) {
+			return _buildDurationsEnabled;
+		}
+
+		String buildDurationsEnabled = null;
+
+		try {
+			TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+			String topLevelBranchName = null;
+			String topLevelJobName = null;
+			String topLevelTestSuiteName = null;
+
+			if (topLevelBuild != null) {
+				topLevelBranchName = topLevelBuild.getBranchName();
+				topLevelJobName = topLevelBuild.getJobName();
+				topLevelTestSuiteName = topLevelBuild.getTestSuiteName();
+			}
+
+			buildDurationsEnabled = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(),
+				"build.durations.enabled", topLevelBranchName, topLevelJobName,
+				topLevelTestSuiteName);
+
+			if (Objects.equals(buildDurationsEnabled, "true")) {
+				_buildDurationsEnabled = true;
+
+				return _buildDurationsEnabled;
+			}
+		}
+		catch (IOException ioException) {
+		}
+
+		_buildDurationsEnabled = false;
+
+		return _buildDurationsEnabled;
+	}
+
 	protected void checkForReinvocation(String consoleText) {
 		if ((consoleText == null) || consoleText.isEmpty()) {
 			return;
@@ -2962,8 +3001,11 @@ public abstract class BaseBuild implements Build {
 
 		List<String> childStopWatchRows = new ArrayList<>();
 
-		childStopWatchRows.add("build-durations-header");
-		childStopWatchRows.add("test-durations-header");
+		if (buildDurationsEnabled()) {
+			childStopWatchRows.add("build-durations-header");
+			childStopWatchRows.add("test-durations-header");
+		}
+
 		childStopWatchRows.add("stop-watch-record-header");
 
 		buildInfoElement.addAttribute(
@@ -3004,12 +3046,14 @@ public abstract class BaseBuild implements Build {
 		if (this instanceof DownstreamBuild) {
 			DownstreamBuild downstreamBuild = (DownstreamBuild)this;
 
-			long averageDuration = downstreamBuild.getAverageDuration();
+			if (buildDurationsEnabled()) {
+				long averageDuration = downstreamBuild.getAverageDuration();
 
-			estimatedDurationString = JenkinsResultsParserUtil.toDurationString(
-				averageDuration);
-			diffDurationString = getDiffDurationString(
-				duration - averageDuration);
+				estimatedDurationString =
+					JenkinsResultsParserUtil.toDurationString(averageDuration);
+				diffDurationString = getDiffDurationString(
+					duration - averageDuration);
+			}
 		}
 
 		Dom4JUtil.addToElement(
@@ -3055,9 +3099,12 @@ public abstract class BaseBuild implements Build {
 
 			tableRowElements.add(getJenkinsReportTableRowElement());
 
-			tableRowElements.addAll(getJenkinsReportBuildDurationsElements());
-
-			tableRowElements.addAll(getJenkinsReportTestDurationsElements());
+			if (buildDurationsEnabled()) {
+				tableRowElements.addAll(
+					getJenkinsReportBuildDurationsElements());
+				tableRowElements.addAll(
+					getJenkinsReportTestDurationsElements());
+			}
 
 			tableRowElements.addAll(getJenkinsReportStopWatchRecordElements());
 		}
@@ -4206,6 +4253,7 @@ public abstract class BaseBuild implements Build {
 	private final Map<String, BranchInformation> _branchInformationMap =
 		new HashMap<>();
 	private String _buildDescription;
+	private Boolean _buildDurationsEnabled;
 	private int _buildNumber = -1;
 	private JenkinsConsoleTextLoader _jenkinsConsoleTextLoader;
 	private JenkinsMaster _jenkinsMaster;

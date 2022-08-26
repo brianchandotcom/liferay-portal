@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.object.rest.internal.jaxrs.extension.relationships;
+package com.liferay.object.rest.internal.helper;
 
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.rest.extension.relationships.ObjectRelationships;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -44,10 +43,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Luis Miguel Barcos
  */
-@Component(service = ObjectRelationships.class)
-public class ObjectRelationshipsImpl implements ObjectRelationships {
+@Component(service = ObjectRelationshipsResourceHelper.class)
+public class ObjectRelationshipsResourceHelper {
 
-	@Override
 	public Page<Object> getObjectRelatedObjectsPage(
 			Long objectEntryId, String objectRelationshipName,
 			Pagination pagination, UriInfo uriInfo)

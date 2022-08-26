@@ -12,10 +12,8 @@
  * details.
  */
 
-package com.liferay.object.rest.internal.jaxrs.extension.relationships;
+package com.liferay.object.rest.internal.resource.v1_0;
 
-import com.liferay.object.rest.extension.relationships.ObjectRelationships;
-import com.liferay.object.rest.extension.relationships.ObjectRelationshipsResource;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -32,25 +30,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luis Miguel Barcos
  */
-@Component(
-	factory = "com.liferay.object.rest.extension.relationships.ObjectRelationshipsResource",
-	property = {"api.version=v1.0", "osgi.jaxrs.resource=true"},
-	service = ObjectRelationshipsResource.class
-)
 @Path("/v1.0")
-public class ObjectRelationshipsResourceImpl
-	implements ObjectRelationshipsResource {
+public class BaseObjectRelationshipsResourceImpl {
 
 	@GET
-	@Override
 	@Parameters(
 		{
 			@Parameter(in = ParameterIn.PATH, name = "previousPath"),
@@ -76,14 +63,7 @@ public class ObjectRelationshipsResourceImpl
 			@Context Pagination pagination)
 		throws Exception {
 
-		return _objectRelationships.getObjectRelatedObjectsPage(
-			objectEntryId, objectRelationshipName, pagination, _uriInfo);
+		return null;
 	}
-
-	@Reference
-	private ObjectRelationships _objectRelationships;
-
-	@Context
-	private UriInfo _uriInfo;
 
 }

@@ -189,59 +189,61 @@ const Routine = () => {
 					filter: searchUtil.eq('routineId', routineId as string),
 				}}
 			>
-				{() => (
-					<div className="graph-container graph-container-sm">
-						<ClayChart
-							axis={{
-								x: {
-									label: {
-										position: 'outer-center',
-										text: i18n.translate(
-											'builds-ordered-by-date'
-										),
+				{({totalCount}) =>
+					Boolean(totalCount) && (
+						<div className="graph-container graph-container-sm">
+							<ClayChart
+								axis={{
+									x: {
+										label: {
+											position: 'outer-center',
+											text: i18n.translate(
+												'builds-ordered-by-date'
+											),
+										},
 									},
-								},
-								y: {
-									label: {
-										position: 'outer-middle',
-										text: i18n
-											.translate('tests')
-											.toUpperCase(),
+									y: {
+										label: {
+											position: 'outer-middle',
+											text: i18n
+												.translate('tests')
+												.toUpperCase(),
+										},
 									},
-								},
-							}}
-							bar={{
-								width: {
-									max: 30,
-								},
-							}}
-							data={{
-								colors,
-								columns: barChart.columns,
-								stack: {
-									normalize: true,
-								},
-								type: 'area',
-							}}
-							legend={{
-								inset: {
-									anchor: 'top-right',
-									step: 1,
-									x: 10,
-									y: -30,
-								},
-								item: {
-									tile: {
-										height: 12,
-										width: 12,
+								}}
+								bar={{
+									width: {
+										max: 30,
 									},
-								},
-								position: 'inset',
-							}}
-							padding={{bottom: 5, top: 30}}
-						/>
-					</div>
-				)}
+								}}
+								data={{
+									colors,
+									columns: barChart.columns,
+									stack: {
+										normalize: true,
+									},
+									type: 'area',
+								}}
+								legend={{
+									inset: {
+										anchor: 'top-right',
+										step: 1,
+										x: 10,
+										y: -30,
+									},
+									item: {
+										tile: {
+											height: 12,
+											width: 12,
+										},
+									},
+									position: 'inset',
+								}}
+								padding={{bottom: 5, top: 30}}
+							/>
+						</div>
+					)
+				}
 			</ListView>
 		</Container>
 	);

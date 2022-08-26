@@ -376,9 +376,7 @@ definition {
 	test StagingFriendlyURLRedirect {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name");
-
-		Staging.activateStagingCP(siteName = "Test Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Test Site Name");
 
 		PagesAdmin.openToConfigurePublicPage(
 			groupName = "Test Site Name (Staging)",
@@ -410,9 +408,7 @@ definition {
 	test StagingLocalizedFriendlyURLRedirect {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name");
-
-		Staging.activateStagingCP(siteName = "Test Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Test Site Name");
 
 		PagesAdmin.openToConfigurePublicPage(
 			groupName = "Test Site Name (Staging)",

@@ -1,0 +1,68 @@
+{
+	"general": {
+		"ar_SA": {
+			"message": "تعلم كيفية تخصيص الفئات حسب احتياجاتك.",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"ca_ES": {
+			"message": "Apreneu a adaptar les categories a les vostres necessitats.",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"de_DE": {
+			"message": "Erfahren Sie, wie Sie Kategorien an Ihre Bedürfnisse anpassen können.",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"en_US": {
+			"message": "Learn how to tailor categories to your needs.",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"es_ES": {
+			"message": "Obtenga información sobre cómo adaptar las categorías a sus necesidades.",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"fi_FI": {
+			"message": "Opi miten räätälöidä luokkia tarpeisiisi.",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"fr_CA": {
+			"message": "Apprenez comment adapter les catégories à vos besoins.",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"fr_FR": {
+			"message": "Apprenez comment adapter les catégories à vos besoins.",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"gl_ES": {
+			"message": "Descubra como crear categorías de acordo coas súas necesidades.",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"hu_HU": {
+			"message": "Megtanulhatja, hogyan szabhatja igényeire a kategóriákat.",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"ja_JP": {
+			"message": "必要に応じてカテゴリを調整する方法を確認してください。",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"nl_NL": {
+			"message": "Leer hoe u categorieën kunt aanpassen aan uw behoeften.",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"pt_BR": {
+			"message": "Descubra como criar categorias de acordo com suas necessidades.",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"sv_SE": {
+			"message": "Ta reda på hur du anpassar kategorier efter dina behov.",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"zh_CN": {
+			"message": "了解如何根据您的需求定制类别。",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		},
+		"zh_TW": {
+			"message": "瞭解如何根據您的需求定制類別。",
+			"url": "https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html"
+		}
+	}
+}

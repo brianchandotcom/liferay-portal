@@ -361,6 +361,11 @@ components:
                         The workflow's previous state.
                     readOnly: true
                     type: string
+                previousStateLabel:
+                    description:
+                        The workflow's previous state Label.
+                    readOnly: true
+                    type: string
                 role:
                     allOf:
                         - $ref: "#/components/schemas/Role"
@@ -368,6 +373,11 @@ components:
                 state:
                     description:
                         The workflow's current state.
+                    readOnly: true
+                    type: string
+                stateLabel:
+                    description:
+                        The workflow's current state Label.
                     readOnly: true
                     type: string
                 type:

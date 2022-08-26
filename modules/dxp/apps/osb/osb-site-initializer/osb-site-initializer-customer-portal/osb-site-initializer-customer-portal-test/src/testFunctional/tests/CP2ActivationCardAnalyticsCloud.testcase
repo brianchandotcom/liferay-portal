@@ -35,13 +35,9 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-150373 | Test Summary: Verify if the card has the following details - Active: Analytics Cloud product logo - Project Name - Start and End Date of Analytics Cloud Subscriptions - Activation form status"
+	@description = "Automation ID: LPS-150373 | Test Summary: Verify if the card has the following details Active: Activation form status"
 	@priority = "5"
 	test DetailsFromActiveCard {
-		task ("Create objects for CP2.0") {
-			CustomerPortal.addCPObject(title = "Analytics Cloud Workspace");
-		}
-
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -81,7 +77,7 @@ definition {
 		}
 
 		task ("Change the activation card status to Active") {
-			CustomerPortal.activeStatus();
+			CustomerPortal.activeStatus(index = "3");
 		}
 
 		task ("Go to CP2.0 and join a project") {
@@ -98,34 +94,20 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
 
 			AssertElementPresent(
-				locator1 = "CustomerPortalSite#PRODUCT_CONSOLE",
-				value1 = "Go to Product Console");
-		}
-
-		task ("Access the link and affirm that a new page has opened") {
-			CP2DXPCloudSetup.clickOnProductConsoleLink();
-
-			SelectWindow(locator1 = "title=Log in | Analytics Cloud");
-
-			AssertElementPresent(locator1 = "CustomerPortalSite#YOUR_ACCOUNT");
-
-			Navigator.closeWindow();
+				locator1 = "CP2AnalyticsCloudSetup#WORKSPACE",
+				value1 = "Go to Workspace");
 		}
 
 		task ("Delete the entries and objects created") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-003");
-
 			CP2AnalyticsCloudSetup.clearAndDeleteCloudEntries(status = "Active");
+
+			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-003");
 		}
 	}
 
 	@description = "Automation ID: LPS-150371 | Test Summary: Verify if the card has the following details - In Progress: Analytics Cloud product logo - Project Name - Start and End Date of Analytics Cloud Subscriptions - Activation form status"
 	@priority = "5"
 	test DetailsFromInProgressCard {
-		task ("Create objects for CP2.0") {
-			CustomerPortal.addCPObject(title = "Analytics Cloud Workspace");
-		}
-
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -162,12 +144,6 @@ definition {
 			Button.click(button = "Submit");
 
 			Button.click(button = "Done");
-		}
-
-		task ("Go to the product activation page") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "Analytics Cloud");
 		}
 
 		task ("View card details after submitting the form") {

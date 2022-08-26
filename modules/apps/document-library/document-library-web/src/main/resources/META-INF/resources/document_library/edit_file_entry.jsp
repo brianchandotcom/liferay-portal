@@ -388,7 +388,7 @@ renderResponse.setTitle(headerTitle);
 
 							<c:choose>
 								<c:when test="<%= dlFileEntryTypes.size() > 1 %>">
-									<aui:select changesContext="<%= true %>" label="document-type" name="fileEntryTypeId" onChange='<%= liferayPortletResponse.getNamespace() + "changeFileEntryType();" %>'>
+									<aui:select changesContext="<%= true %>" label="document-type" name="fileEntryTypeId" onChange='<%= liferayPortletResponse.getNamespace() + "changeFileEntryType();" %>' onFocus="this.prevValue = this.selectedOptions[0].index">
 
 										<%
 										for (DLFileEntryType curDLFileEntryType : dlFileEntryTypes) {

@@ -325,6 +325,34 @@ public class WorkflowLog implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String previousState;
 
+	@Schema(description = "The workflow's previous state Label.")
+	public String getPreviousStateLabel() {
+		return previousStateLabel;
+	}
+
+	public void setPreviousStateLabel(String previousStateLabel) {
+		this.previousStateLabel = previousStateLabel;
+	}
+
+	@JsonIgnore
+	public void setPreviousStateLabel(
+		UnsafeSupplier<String, Exception> previousStateLabelUnsafeSupplier) {
+
+		try {
+			previousStateLabel = previousStateLabelUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The workflow's previous state Label.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String previousStateLabel;
+
 	@Schema
 	@Valid
 	public Role getRole() {
@@ -379,6 +407,34 @@ public class WorkflowLog implements Serializable {
 	@GraphQLField(description = "The workflow's current state.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String state;
+
+	@Schema(description = "The workflow's current state Label.")
+	public String getStateLabel() {
+		return stateLabel;
+	}
+
+	public void setStateLabel(String stateLabel) {
+		this.stateLabel = stateLabel;
+	}
+
+	@JsonIgnore
+	public void setStateLabel(
+		UnsafeSupplier<String, Exception> stateLabelUnsafeSupplier) {
+
+		try {
+			stateLabel = stateLabelUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The workflow's current state Label.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String stateLabel;
 
 	@Schema(description = "The workflow log's type.")
 	@Valid
@@ -580,6 +636,20 @@ public class WorkflowLog implements Serializable {
 			sb.append("\"");
 		}
 
+		if (previousStateLabel != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"previousStateLabel\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(previousStateLabel));
+
+			sb.append("\"");
+		}
+
 		if (role != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -600,6 +670,20 @@ public class WorkflowLog implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(state));
+
+			sb.append("\"");
+		}
+
+		if (stateLabel != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"stateLabel\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(stateLabel));
 
 			sb.append("\"");
 		}

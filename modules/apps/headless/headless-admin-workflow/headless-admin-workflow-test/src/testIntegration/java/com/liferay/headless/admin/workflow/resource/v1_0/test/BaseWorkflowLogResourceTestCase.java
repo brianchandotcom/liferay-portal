@@ -184,7 +184,9 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		workflowLog.setCommentLog(regex);
 		workflowLog.setDescription(regex);
 		workflowLog.setPreviousState(regex);
+		workflowLog.setPreviousStateLabel(regex);
 		workflowLog.setState(regex);
+		workflowLog.setStateLabel(regex);
 
 		String json = WorkflowLogSerDes.toJSON(workflowLog);
 
@@ -195,7 +197,9 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		Assert.assertEquals(regex, workflowLog.getCommentLog());
 		Assert.assertEquals(regex, workflowLog.getDescription());
 		Assert.assertEquals(regex, workflowLog.getPreviousState());
+		Assert.assertEquals(regex, workflowLog.getPreviousStateLabel());
 		Assert.assertEquals(regex, workflowLog.getState());
+		Assert.assertEquals(regex, workflowLog.getStateLabel());
 	}
 
 	@Test
@@ -642,6 +646,16 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"previousStateLabel", additionalAssertFieldName)) {
+
+				if (workflowLog.getPreviousStateLabel() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("role", additionalAssertFieldName)) {
 				if (workflowLog.getRole() == null) {
 					valid = false;
@@ -652,6 +666,14 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 			if (Objects.equals("state", additionalAssertFieldName)) {
 				if (workflowLog.getState() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("stateLabel", additionalAssertFieldName)) {
+				if (workflowLog.getStateLabel() == null) {
 					valid = false;
 				}
 
@@ -864,6 +886,19 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"previousStateLabel", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						workflowLog1.getPreviousStateLabel(),
+						workflowLog2.getPreviousStateLabel())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("role", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						workflowLog1.getRole(), workflowLog2.getRole())) {
@@ -877,6 +912,17 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			if (Objects.equals("state", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						workflowLog1.getState(), workflowLog2.getState())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("stateLabel", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						workflowLog1.getStateLabel(),
+						workflowLog2.getStateLabel())) {
 
 					return false;
 				}
@@ -1083,6 +1129,14 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("previousStateLabel")) {
+			sb.append("'");
+			sb.append(String.valueOf(workflowLog.getPreviousStateLabel()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("role")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1091,6 +1145,14 @@ public abstract class BaseWorkflowLogResourceTestCase {
 		if (entityFieldName.equals("state")) {
 			sb.append("'");
 			sb.append(String.valueOf(workflowLog.getState()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("stateLabel")) {
+			sb.append("'");
+			sb.append(String.valueOf(workflowLog.getStateLabel()));
 			sb.append("'");
 
 			return sb.toString();
@@ -1158,7 +1220,11 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				previousState = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				previousStateLabel = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				state = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				stateLabel = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				workflowTaskId = RandomTestUtil.randomLong();
 			}
 		};

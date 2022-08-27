@@ -43,7 +43,7 @@ definition {
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
-
+		
 		task ("Assert the signature card details") {
 			CustomerPortal.viewCardValue();
 		}
@@ -74,12 +74,12 @@ definition {
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
-				title = "Test Account Analyticd Cloud");
+				title = "Test Account Analytics Cloud");
 		}
 
 		task ("Assert if the Expired status reflects the dates") {
 			AssertElementPresent(
-				date = "03/31/2021 - 06/30/2021",
+				date = "12/31/2020 - 03/30/2021",
 				locator1 = "CustomerPortalSite#CARD_DATE",
 				status = "Expired");
 		}
@@ -170,7 +170,7 @@ definition {
 		}
 
 		task ("Assert the drop-down list") {
-			CustomerPortal.viewSubscriptionManagementList(productList = "LXC-SM,DXP,Analytics Cloud,Commerce,Enterprise Search,Portal,Partnership");
+			CustomerPortal.viewSubscriptionManagementList(productList = "LXC-SM,DXP,Analytics Cloud,Commerce,Enterprise Search,Portal");
 		}
 	}
 

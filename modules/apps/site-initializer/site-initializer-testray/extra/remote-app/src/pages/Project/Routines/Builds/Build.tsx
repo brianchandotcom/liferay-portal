@@ -21,6 +21,7 @@ import Container from '../../../../components/Layout/Container';
 import ListViewRest from '../../../../components/ListView';
 import StatusBadge from '../../../../components/StatusBadge';
 import useAssignCaseResult from '../../../../hooks/useAssignCaseResult';
+import useMutate from '../../../../hooks/useMutate';
 import i18n from '../../../../i18n';
 import {filters} from '../../../../schema/filter';
 import {
@@ -30,10 +31,13 @@ import {
 } from '../../../../services/rest';
 import {getStatusLabel} from '../../../../util/constants';
 import {searchUtil} from '../../../../util/search';
+import useBuildTestActions from './useBuildTestActions';
 
 const Build = () => {
 	const {buildId} = useParams();
 	const {onAssignToMeFetch} = useAssignCaseResult();
+	const {updateItemFromList} = useMutate();
+	const {actions} = useBuildTestActions();
 
 	return (
 		<Container className="mt-4">
@@ -44,6 +48,7 @@ const Build = () => {
 				}}
 				resource={caseResultResource}
 				tableProps={{
+					actions,
 					columns: [
 						{
 							clickable: true,
@@ -78,24 +83,47 @@ const Build = () => {
 						},
 						{
 							key: 'user',
-							render: (_: any, caseResult: TestrayCaseResult) =>
-								caseResult?.user ? (
-									<Avatar
-										displayName
-										name={caseResult.user.givenName}
-									/>
-								) : (
+							render: (
+								_: any,
+								caseResult: TestrayCaseResult,
+								mutate
+							) => {
+								if (caseResult?.user) {
+									return (
+										<Avatar
+											className="text-capitalize"
+											displayName
+											name={`${caseResult.user.emailAddress
+												.split('@')[0]
+												.replace('.', ' ')}`}
+										/>
+									);
+								}
+
+								return (
 									<AssignToMe
 										onClick={() =>
-											onAssignToMeFetch(caseResult)
+											onAssignToMeFetch(caseResult).then(
+												() => {
+													updateItemFromList(
+														mutate,
+														0,
+														{},
+														{
+															revalidate: true,
+														}
+													);
+												}
+											)
 										}
 									/>
-								),
+								);
+							},
 							value: i18n.translate('assignee'),
 						},
 						{
 							key: 'dueStatus',
-							render: (dueStatus: any) => (
+							render: (dueStatus: number) => (
 								<StatusBadge type={getStatusLabel(dueStatus)}>
 									{getStatusLabel(dueStatus)}
 								</StatusBadge>

@@ -24,6 +24,8 @@ import {useFetch} from '../../../../hooks/useFetch';
 import useHeader from '../../../../hooks/useHeader';
 import i18n from '../../../../i18n';
 import {
+	TestrayProject,
+	TestrayRoutine,
 	getTasksTransformData,
 	tasksResource,
 	testrayBuildRest,
@@ -36,12 +38,16 @@ type BuildOutletProps = {
 	ignorePaths: string[];
 };
 
+type OutletContext = {
+	testrayProject: TestrayProject;
+	testrayRoutine: TestrayRoutine;
+};
+
 const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 	const {actions} = useBuildActions({isHeaderActions: true});
-	const {buildId, projectId, routineId} = useParams();
+	const {buildId, projectId, routineId, ...otherParams} = useParams();
 	const {pathname} = useLocation();
-	const {setHeaderActions, setHeading, setTabs} = useHeader({timeout: 200});
-	const {testrayProject, testrayRoutine}: any = useOutletContext();
+	const {testrayProject, testrayRoutine}: OutletContext = useOutletContext();
 
 	const {
 		data: testrayBuild,
@@ -49,6 +55,13 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 	} = useFetch(testrayBuildRest.getResource(buildId as string), (response) =>
 		testrayBuildRest.transformData(response)
 	);
+
+	const hasOtherParams = !!Object.values(otherParams).length;
+
+	const {setHeaderActions, setHeading, setTabs} = useHeader({
+		shouldUpdate: !hasOtherParams,
+		timeout: 200,
+	});
 
 	const {data: testrayTasksData} = useFetch(
 		tasksResource,
@@ -67,14 +80,12 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 
 	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}`;
 
-	const buildName = testrayBuild?.name;
-
 	useEffect(() => {
 		setHeaderActions({actions, item: testrayBuild, mutate: mutateBuild});
 	}, [actions, mutateBuild, setHeaderActions, testrayBuild]);
 
 	useEffect(() => {
-		if (buildName) {
+		if (testrayBuild.name) {
 			setHeading([
 				{
 					category: i18n.translate('project').toUpperCase(),
@@ -88,12 +99,12 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 				},
 				{
 					category: i18n.translate('build').toUpperCase(),
-					path: basePath,
-					title: buildName,
+					path: `/project/${testrayProject.id}/routines/${testrayRoutine.id}/build/${testrayBuild.id}`,
+					title: testrayBuild.name,
 				},
 			]);
 		}
-	}, [basePath, setHeading, buildName, testrayProject, testrayRoutine]);
+	}, [setHeading, testrayProject, testrayRoutine, testrayBuild]);
 
 	useEffect(() => {
 		if (!isCurrentPathIgnored) {

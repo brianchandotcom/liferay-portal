@@ -20,16 +20,10 @@ definition {
 		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
-
-		task ("Add Objects for CP2.0") {
-			CustomerPortal.showCPObject(title = "Account Flag");
-		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		CustomerPortal.deleteCPObject(title = "Account Flag");
 
 		CustomerPortal.customerPortalApisTearDown();
 
@@ -91,9 +85,11 @@ definition {
 		}
 
 		task ("View the checkbox of role entry is unchecked") {
-			AssertElementPresent(
+			AssertElementNotPresent(
 				key_tableEntry = "Account Administrator",
-				locator1 = "LexiconTable#TABLE_ENTRY_UNCHECKED");
+				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+			Button.click(button = "Done");
 		}
 
 		task ("Assert that the Liferay Staff user has not gone through onboarding") {

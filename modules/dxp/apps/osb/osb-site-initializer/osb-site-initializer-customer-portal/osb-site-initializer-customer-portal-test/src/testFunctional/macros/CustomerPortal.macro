@@ -344,7 +344,7 @@ definition {
 	macro openAccountsAdminForCP {
 		Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+		CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
 
 		Navigator.gotoNavTab(navTab = "Users");
 

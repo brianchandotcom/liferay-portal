@@ -47,12 +47,13 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 
 	@Override
 	public String getPreviousStateName() {
-		return _previousState.getName();
+		return (_previousState != null) ? _previousState.getName() : null;
 	}
 
 	@Override
 	public String getPreviousStateLabel(Locale locale) {
-		return _previousState.getLabel(locale);
+		return (_previousState != null) ?
+			_previousState.getLabel(locale) : null;
 	}
 
 	@Override
@@ -67,12 +68,12 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 
 	@Override
 	public String getStateName() {
-		return _state.getName();
+		return (_state != null) ? _state.getName() : null;
 	}
 
 	@Override
 	public String getStateLabel(Locale locale) {
-		return _state.getLabel(locale);
+		return (_state != null) ? _state.getLabel(locale) : null;
 	}
 
 	@Override

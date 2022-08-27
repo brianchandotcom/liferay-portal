@@ -189,6 +189,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144930 | Test Summary: Verify if Latest Fix Packs appears in Quick Links panel when DXP Cloud is Active"
+	@ignore = "true"
 	@priority = "5"
 	test IfDXPCloudActiveShowLatestFix {
 		task ("Go to CP2.0 and join a project") {
@@ -372,7 +373,7 @@ definition {
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "DXP Cloud");
+			CP2NavigationMenu.clickOnProductButton(product = "LXC-SM");
 		}
 
 		task ("Assert that the desired card appears in the panel") {

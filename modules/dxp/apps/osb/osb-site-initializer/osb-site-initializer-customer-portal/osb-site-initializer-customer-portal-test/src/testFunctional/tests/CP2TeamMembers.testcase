@@ -214,8 +214,8 @@ definition {
 
 		task ("Assert that object Koroneiki reflects the same number as modal team members displays") {
 			CustomerPortal.viewValueFieldKoroneiki(
-				index = "3",
 				field = "maxRequestors",
+				index = "3",
 				value = "2");
 		}
 	}

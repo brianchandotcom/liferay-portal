@@ -50,7 +50,7 @@ const useModalContext = () => {
 		});
 	};
 
-	return {onOpenModal};
+	return {onOpenModal, state};
 };
 
 export default useModalContext;

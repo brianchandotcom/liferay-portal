@@ -42,8 +42,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		List<PreparedStatement> preparedStatements1 = new ArrayList<>();
-		List<PreparedStatement> preparedStatements2 = new ArrayList<>();
+		List<PreparedStatement> preparedStatements = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				SQLTransformer.transform(
@@ -101,7 +100,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 
 				preparedStatement3.addBatch();
 
-				preparedStatements1.add(preparedStatement3);
+				preparedStatements.add(preparedStatement3);
 
 				preparedStatement4.setLong(1, company.getGroupId());
 				preparedStatement4.setInt(
@@ -111,27 +110,15 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 
 				preparedStatement4.addBatch();
 
-				preparedStatements2.add(preparedStatement4);
+				preparedStatements.add(preparedStatement4);
 			}
 
-			PreparedStatement preparedStatement5 = null;
-
-			for (int i = 0; i < preparedStatements1.size(); i++) {
-				preparedStatement5 = preparedStatements1.get(i);
-
-				preparedStatement5.executeBatch();
-
-				preparedStatement5 = preparedStatements2.get(i);
-
-				preparedStatement5.executeBatch();
+			for (PreparedStatement preparedStatement : preparedStatements) {
+				preparedStatement.executeBatch();
 			}
 		}
 		finally {
-			for (PreparedStatement preparedStatement : preparedStatements1) {
-				DataAccess.cleanUp(preparedStatement);
-			}
-
-			for (PreparedStatement preparedStatement : preparedStatements2) {
+			for (PreparedStatement preparedStatement : preparedStatements) {
 				DataAccess.cleanUp(preparedStatement);
 			}
 		}

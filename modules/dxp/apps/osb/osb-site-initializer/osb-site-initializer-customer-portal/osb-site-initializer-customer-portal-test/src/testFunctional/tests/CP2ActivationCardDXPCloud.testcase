@@ -68,8 +68,6 @@ definition {
 			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
 			Button.click(button = "Submit");
-
-			Button.click(button = "Done");
 		}
 
 		task ("Change the activation card status to Active") {
@@ -167,8 +165,6 @@ definition {
 			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
 			Button.click(button = "Submit");
-
-			Button.click(button = "Done");
 		}
 
 		task ("Assert the card legend change") {
@@ -240,6 +236,8 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
+			Refresh();
+
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
 
@@ -255,7 +253,7 @@ definition {
 
 		task ("Assert that the activation link is present on the card") {
 			AssertElementPresent(
-				locator1 = "CustomerPortalSiteFINISH_ACTIVATION",
+				locator1 = "CustomerPortalSite#FINISH_ACTIVATION",
 				value1 = "Finish Activation");
 		}
 

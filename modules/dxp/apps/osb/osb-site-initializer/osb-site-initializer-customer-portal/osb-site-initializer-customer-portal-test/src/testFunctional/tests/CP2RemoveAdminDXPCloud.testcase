@@ -20,10 +20,6 @@ definition {
 		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
-
-		task ("Create CP2.0 objects") {
-			CustomerPortal.createCPSiteObjects();
-		}
 	}
 
 	tearDown {
@@ -59,7 +55,13 @@ definition {
 		}
 
 		task ("Going through onboarding to Setup") {
-			CustomerPortal.onboardingFlow(cloudEnvironment = "true");
+			CustomerPortal.clickOnStartProjectSetup();
+
+			CustomerPortal.clickOnSkipForNowButton();
+		}
+
+		task ("Fill out all the fields in the form") {
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 		}
 
 		task ("Add new administrators and before submitting remove them") {

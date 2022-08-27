@@ -50,6 +50,7 @@ definition {
 		}
 
 		// Reason: Not able to reproduce scenario without OKTA workaround.
+
 		task ("Login in Okta") {
 			CustomerPortal.loginOktaToUpdateCP();
 
@@ -88,7 +89,9 @@ definition {
 				accountRoleTitle = "Partner Manager",
 				accountUserName = "Test Test");
 		}
+
 		// Reason: Not able to reproduce scenario without OKTA workaround.
+
 		task ("Login in Okta") {
 			CustomerPortal.loginOktaToUpdateCP();
 

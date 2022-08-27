@@ -232,10 +232,6 @@ definition {
 	macro customerPortalTearDown {
 		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
 
-		CustomerPortal.deleteCPObject(title = "Account Flag");
-
-		CustomerPortal.deleteCPObject(title = "Koroneiki Account");
-
 		CustomerPortal.customerPortalApisTearDown();
 	}
 
@@ -597,8 +593,9 @@ definition {
 			locator1 = "CustomerPortalSite#CARD_NAME");
 
 		AssertElementPresent(
+			key_index = "2",
 			locator1 = "CustomerPortalSite#CARD_INSTANCE",
-			title = "Instance Size: ");
+			title = "1");
 
 		AssertElementPresent(
 			date = "03/31/2021 - 03/30/2022",

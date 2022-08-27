@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>ADD_ANOTHER_ADMIN</td>
-	<td>//button[contains(@class, 'add-dxp-cloud')]</td>
+	<td>//*[contains(@class, 'cp-btn-add-lxc-sm')]</td>
 	<td></td>
 </tr>
 <tr>

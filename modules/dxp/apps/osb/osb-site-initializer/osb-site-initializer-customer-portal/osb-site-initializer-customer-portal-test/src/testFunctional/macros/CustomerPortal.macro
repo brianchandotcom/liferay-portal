@@ -691,7 +691,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Koroneiki Accounts");
 
-		CustomerPortal.viewCPObjectInfo();
+		CustomerPortal.viewObjectInfo(index = "${index}");
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI");
 	}

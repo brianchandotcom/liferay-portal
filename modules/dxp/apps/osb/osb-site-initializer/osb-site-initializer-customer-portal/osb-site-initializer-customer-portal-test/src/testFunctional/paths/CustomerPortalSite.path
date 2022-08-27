@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>CARD_INSTANCE</td>
-	<td>//div[contains(@class, 'card-subscription')]//..//p[contains(text(), '${title}')]</td>
+	<td>xpath=(//div[contains(@class, 'card-subscription')]//..//p[contains(text(), '${title}')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

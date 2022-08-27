@@ -43,7 +43,7 @@ definition {
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
-		
+
 		task ("Assert the signature card details") {
 			CustomerPortal.viewCardValue();
 		}
@@ -79,7 +79,7 @@ definition {
 
 		task ("Assert if the Expired status reflects the dates") {
 			AssertElementPresent(
-				date = "12/31/2020 - 03/30/2021",
+				date = "01/15/2021 - 03/14/2021",
 				locator1 = "CustomerPortalSite#CARD_DATE",
 				status = "Expired");
 		}

@@ -20,10 +20,6 @@ definition {
 		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
-
-		task ("Create CP2.0 objects") {
-			CustomerPortal.createCPSiteObjects();
-		}
 	}
 
 	tearDown {
@@ -40,6 +36,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-146292 | Test Summary: Check if there is a 'Cancel' button if the user wants to leave the process"
+	@ignore = "true"
 	@priority = "4"
 	test CancelButtonIsPresent {
 		task ("Change the user role in the project") {
@@ -50,6 +47,13 @@ definition {
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Partner Manager",
 				accountUserName = "Test Test");
+		}
+
+		// Reason: Not able to reproduce scenario without OKTA workaround.
+		task ("Login in Okta") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
 		}
 
 		task ("Go to CP2.0 and join a project") {
@@ -72,6 +76,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-146292 | Test Summary: Verify if after inviting member, the screen goes back to previous screen (Team Members page)"
+	@ignore = "true"
 	@priority = "4"
 	test CanGoBackOnTeamMembersPage {
 		task ("Change the user role in the project") {
@@ -82,6 +87,12 @@ definition {
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Partner Manager",
 				accountUserName = "Test Test");
+		}
+		// Reason: Not able to reproduce scenario without OKTA workaround.
+		task ("Login in Okta") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
 		}
 
 		task ("Go to CP2.0 and join a project") {

@@ -116,7 +116,8 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 							_portal.getUserName(
 								TestPropsValues.getUserId(), StringPool.BLANK),
 							false);
-						state = "Review";
+						state = "review";
+						stateLabel = "Review";
 						type = Type.TASK_ASSIGN;
 						workflowTaskId = workflowTask.getId();
 					}
@@ -131,7 +132,8 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 							_siteContentReviewerRole.getTitle(
 								LocaleUtil.getDefault()),
 							false);
-						state = "Review";
+						state = "review";
+						stateLabel = "Review";
 						type = Type.TASK_ASSIGN;
 						workflowTaskId = workflowTask.getId();
 					}
@@ -175,7 +177,8 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 							_portal.getUserName(
 								TestPropsValues.getUserId(), StringPool.BLANK),
 							false);
-						state = "Review";
+						state = "review";
+						stateLabel = "Review";
 						type = Type.TASK_ASSIGN;
 						workflowTaskId = workflowTask.getId();
 					}
@@ -206,7 +209,8 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 							_siteContentReviewerRole.getTitle(
 								LocaleUtil.getDefault()),
 							false);
-						state = "Review";
+						state = "review";
+						stateLabel = "Review";
 						type = Type.TASK_ASSIGN;
 						workflowTaskId = workflowTask.getId();
 					}
@@ -240,7 +244,8 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 							_siteContentReviewerRole.getTitle(
 								LocaleUtil.getDefault()),
 							false);
-						state = "Review";
+						state = "review";
+						stateLabel = "Review";
 						type = Type.TASK_ASSIGN;
 						workflowTaskId = workflowTask.getId();
 					}
@@ -284,7 +289,8 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 							_portal.getUserName(
 								TestPropsValues.getUserId(), StringPool.BLANK),
 							false);
-						state = "Review";
+						state = "review";
+						stateLabel = "Review";
 						type = Type.TASK_ASSIGN;
 						workflowTaskId = workflowTask.getId();
 					}
@@ -315,7 +321,8 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 							_siteContentReviewerRole.getTitle(
 								LocaleUtil.getDefault()),
 							false);
-						state = "Review";
+						state = "review";
+						stateLabel = "Review";
 						type = Type.TASK_ASSIGN;
 						workflowTaskId = workflowTask.getId();
 					}
@@ -326,7 +333,8 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"commentLog", "description", "state", "type", "workflowTaskId"
+			"commentLog", "description", "state", "stateLabel", "type",
+			"workflowTaskId"
 		};
 	}
 

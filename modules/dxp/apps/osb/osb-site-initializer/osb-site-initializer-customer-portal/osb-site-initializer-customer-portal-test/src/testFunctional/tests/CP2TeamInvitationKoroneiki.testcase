@@ -20,10 +20,6 @@ definition {
 		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
-
-		task ("Create CP2.0 objects") {
-			CustomerPortal.createCPSiteObjects();
-		}
 	}
 
 	tearDown {

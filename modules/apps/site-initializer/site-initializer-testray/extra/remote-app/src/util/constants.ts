@@ -14,6 +14,13 @@
 
 import {StatusBarOptions} from '../components/StatusBadge/StatusBadge';
 
+export enum RoleTypes {
+	REGULAR = 1,
+	SITE = 2,
+	ORGANIZATION = 3,
+	ASSET_LIBRARY = 5,
+}
+
 export const DATA_COLORS = {
 	'metrics.blocked': '#F8D72E',
 	'metrics.failed': '#E73A45',

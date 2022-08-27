@@ -43,17 +43,17 @@ public interface WorkflowLog extends WorkflowModel {
 
 	public long getPreviousRoleId();
 
-	public String getPreviousStateName();
-
 	public String getPreviousStateLabel(Locale locale);
+
+	public String getPreviousStateName();
 
 	public long getPreviousUserId();
 
 	public long getRoleId();
 
-	public String getStateName();
-
 	public String getStateLabel(Locale locale);
+
+	public String getStateName();
 
 	public int getType();
 

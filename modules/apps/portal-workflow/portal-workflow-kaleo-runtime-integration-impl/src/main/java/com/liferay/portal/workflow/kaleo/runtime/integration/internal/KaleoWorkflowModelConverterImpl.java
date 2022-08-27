@@ -428,8 +428,8 @@ public class KaleoWorkflowModelConverterImpl
 		}
 
 		try {
-			return _toWorkflowNode(_kaleoNodeLocalService.getKaleoNode(
-				kaleoNodeId));
+			return _toWorkflowNode(
+				_kaleoNodeLocalService.getKaleoNode(kaleoNodeId));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

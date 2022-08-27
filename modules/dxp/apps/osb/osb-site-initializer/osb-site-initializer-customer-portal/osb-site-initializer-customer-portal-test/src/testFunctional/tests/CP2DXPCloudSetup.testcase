@@ -20,10 +20,6 @@ definition {
 		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
-
-		task ("Create CP2.0 objects") {
-			CustomerPortal.createCPSiteObjects();
-		}
 	}
 
 	tearDown {
@@ -69,14 +65,14 @@ definition {
 		task ("Assert the new form fields") {
 			CP2DXPCloudSetup.clickOnAddAnotherAdminButton();
 
-			CP2DXPCloudSetup.viewSetupDXPCloufEXtraFields();
+			CP2DXPCloudSetup.viewSetupDXPCloudExtraFields();
 		}
 	}
 
 	@description = "Automation ID: LPS-144976 | Test Summary: Verify if the user can choose an option at Disaster Recovery Data Center Region"
 	@priority = "5"
 	test CanChooseDisasterRecoveryDataCenter {
-		task ("Create and activate object for disaster data center region") {
+		task ("Activate object for disaster data center region") {
 			CP2DXPCloudSetup.activeDisasterRecoveryDataCenter();
 		}
 
@@ -97,14 +93,16 @@ definition {
 		}
 
 		task ("Going through onboarding to Setup") {
-			CustomerPortal.onboardingFlow(cloudEnvironment = "true");
+			CustomerPortal.clickOnStartProjectSetup();
+
+			CustomerPortal.clickOnSkipForNowButton();
 		}
 
 		task ("Assert the region options from the drop-down") {
 			CP2DXPCloudSetup.viewDisasterRegionList(regionRow = "Oregon, USA,Iowa, USA,London, England,Frankfurt, Germany,Sao Paulo, Brazil,Sydney, Australia,Mumbai, India,Tokyo, Japan,Montreal, Canada,Dubai, UAE,Hamina, Finland");
 		}
 
-		task ("Deactivating and deleting object for the disaster data center region") {
+		task ("Deactivating object for the disaster data center region") {
 			CP2DXPCloudSetup.deactivateDisasterRecoveryDataCenter();
 		}
 	}
@@ -129,7 +127,9 @@ definition {
 		}
 
 		task ("Going through onboarding to Setup") {
-			CustomerPortal.onboardingFlow(cloudEnvironment = "true");
+			CustomerPortal.clickOnStartProjectSetup();
+
+			CustomerPortal.clickOnSkipForNowButton();
 		}
 
 		task ("Assert the drop-down options in primary data center region") {
@@ -157,7 +157,9 @@ definition {
 		}
 
 		task ("Going through onboarding to Setup") {
-			CustomerPortal.onboardingFlow(cloudEnvironment = "true");
+			CustomerPortal.clickOnStartProjectSetup();
+
+			CustomerPortal.clickOnSkipForNowButton();
 		}
 
 		task ("Assert that the submit button is enabled") {
@@ -200,10 +202,6 @@ definition {
 	@description = "Automation ID: LPS-144989 | Test Summary: Verify a success message is shown after finishing setting DXP Cloud up"
 	@priority = "4"
 	test CanViewDXPCloudSetupSuccessMessage {
-		task ("Creating objects for the DXP Cloud ") {
-			CP2DXPCloudSetup.createDXPCloudObjects();
-		}
-
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -220,14 +218,20 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
 
-		task ("Going through onboarding to Setup") {
-			CustomerPortal.onboardingFlow(cloudEnvironment = "true");
+		task ("Going through onboarding") {
+			CustomerPortal.clickOnStartProjectSetup();
+
+			CustomerPortal.clickOnSkipForNowButton();
+		}
+
+		task ("Fill out the form and submit it") {
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
 			Button.click(button = "Submit");
 		}
 
 		task ("Assert the success message when submitting the form") {
-			AssertElementPresent(locator1 = "CustomerPortalSite#SUCCESS_MESSAGE");
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Delete the entries and objects created") {
@@ -311,15 +315,13 @@ definition {
 				label = "email",
 				value = "");
 
-			Select(
-				locator1 = "CP2DXPCloudSetup#SELECT_DATA_CENTER_REGION",
-				value1 = "Iowa, USA");
+			KeyPress(
+				locator1 = "//body",
+				value1 = "\ESCAPE");
 		}
 
 		task ("Assert the error message") {
-			AssertTextEquals(
-				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-				value1 = "This field is required.");
+			Alert.viewErrorMessage(errorMessage = "This field is required.");
 		}
 	}
 
@@ -353,15 +355,13 @@ definition {
 				label = "email",
 				value = "test.com");
 
-			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-				label = "projectId",
-				value = "006");
+			KeyPress(
+				locator1 = "//body",
+				value1 = "\ESCAPE");
 		}
 
 		task ("Assert the error message") {
-			AssertTextEquals(
-				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-				value1 = "Please insert a valid e-mail.");
+			Alert.viewErrorMessage(errorMessage = "Please insert a valid e-mail.");
 		}
 	}
 
@@ -399,15 +399,13 @@ definition {
 				label = "projectId",
 				value = "");
 
-			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-				label = "firstName",
-				value = "FirstName");
+			KeyPress(
+				locator1 = "//body",
+				value1 = "\ESCAPE");
 		}
 
 		task ("Assert the error message") {
-			AssertTextEquals(
-				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-				value1 = "This field is required.");
+			Alert.viewErrorMessage(errorMessage = "This field is required.");
 		}
 	}
 
@@ -442,18 +440,16 @@ definition {
 				value = "FirstName");
 
 			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-				label = "dxp.admins[0].firstName",
+				label = "firstName",
 				value = "");
 
-			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-				label = "email",
-				value = "test@liferay.com");
+			KeyPress(
+				locator1 = "//body",
+				value1 = "\ESCAPE");
 		}
 
 		task ("Assert the error message") {
-			AssertTextEquals(
-				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-				value1 = "This field is required.");
+			Alert.viewErrorMessage(errorMessage = "This field is required.");
 		}
 	}
 
@@ -491,15 +487,13 @@ definition {
 				label = "github",
 				value = "");
 
-			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-				label = "lastName",
-				value = "LastName");
+			KeyPress(
+				locator1 = "//body",
+				value1 = "\ESCAPE");
 		}
 
 		task ("Assert the error message") {
-			AssertTextEquals(
-				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-				value1 = "This field is required.");
+			Alert.viewErrorMessage(errorMessage = "This field is required.");
 		}
 	}
 
@@ -543,9 +537,7 @@ definition {
 		}
 
 		task ("Assert the error message") {
-			AssertTextEquals(
-				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-				value1 = "This field is required.");
+			Alert.viewErrorMessage(errorMessage = "This field is required.");
 		}
 	}
 
@@ -586,9 +578,9 @@ definition {
 
 		task ("Assert the project name and version") {
 			AssertTextEquals(
-				key_name = "Test Account 01",
+				key_name = "Test Account LXC-SM",
 				locator1 = "CP2DXPCloudSetup#PROJECT_NAME_SETUP",
-				value1 = "Test Account 01");
+				value1 = "Test Account LXC-SM");
 		}
 	}
 
@@ -637,10 +629,6 @@ definition {
 	@description = "Automation ID: LPS-146686 | Test Summary: Verify if the activation status of the card changes to (In Progress) after filling out the DXP Cloud Set up"
 	@priority = "4"
 	test SeeIfTheCardActivationStatusChanges {
-		task ("Creating objects for the LXC-SM") {
-			CP2DXPCloudSetup.createDXPCloudObjects();
-		}
-
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -673,20 +661,18 @@ definition {
 			CustomerPortal.clickOnFinishActivationButton();
 		}
 
-		task ("Going through onboarding to Setup") {
-			CustomerPortal.onboardingFlow(cloudEnvironment = "true");
+		task ("Fill out the form and submit it") {
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
 			Button.click(button = "Submit");
 		}
 
 		task ("Assert that the card status has changed") {
-			CP2DXPCloudSetup.assertCardStatusChanged(
-				status = "In Progress",
-				value = "In Progress");
+			CP2DXPCloudSetup.assertCardStatusChanged(status = "In Progress");
 		}
 
 		task ("Delete the entries and objects created") {
-			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries();
+			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(status = "In-Progress");
 		}
 	}
 

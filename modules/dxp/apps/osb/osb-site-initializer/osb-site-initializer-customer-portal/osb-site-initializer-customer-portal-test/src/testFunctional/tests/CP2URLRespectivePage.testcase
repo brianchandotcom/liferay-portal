@@ -116,12 +116,15 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-148480 | Test Summary: Verify if when the user choose the ERC-002 and clicks on the Partnership product the url follow the respective page"
+	@ignore = "true"
 	@priority = "5"
 	test IfPartnershipUrlFollowsRespectivePage {
+		//Reason: Partnership page not yet implemented
+
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-013/activation/partnership");
+			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-007/activation/partnership");
 		}
 
 		task ("Assert that the URL displays the page of the Partnership product") {
@@ -153,13 +156,13 @@ definition {
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-002/activation/dxp");
+			Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal-site/project/#/ERC-008/activation/lxc-sm");
 		}
 
 		task ("Assert that the URL displays the page of the DXP product") {
 			AssertElementPresent(
 				locator1 = "CP2NavigationMenu#PRODUCT",
-				product = "DXP");
+				product = "LXC-SM");
 		}
 
 		task ("Navigate to the homepage and assert that the URL displays the homepage") {

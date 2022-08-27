@@ -20,10 +20,6 @@ definition {
 		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
-
-		task ("Create CP2.0 objects") {
-			CustomerPortal.createCPSiteObjects();
-		}
 	}
 
 	tearDown {
@@ -65,13 +61,11 @@ definition {
 				position = "0",
 				positionNumber = "0",
 				rowEmail = "0-mail.com",
-				rowRole = "User");
+				rowRole = "Requester");
 		}
 
 		task ("Assert the error message") {
-			AssertTextEquals(
-				locator1 = "CustomerPortalSite#ERROR_MESSAGE",
-				value1 = "Please insert a valid e-mail.");
+			Alert.viewErrorMessage(errorMessage = "Please insert a valid e-mail.");
 		}
 	}
 
@@ -81,7 +75,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
+			CustomerPortal.accountTableProject(title = "Test Account Analytics Cloud");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -91,7 +85,9 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(
+				status = "Expired",
+				title = "Test Account Analytics Cloud");
 		}
 
 		task ("Start the project configuration and invite a user to the project") {
@@ -119,7 +115,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
+			CustomerPortal.accountTableProject(title = "Test Account Analytics Cloud");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -129,7 +125,9 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(
+				status = "Expired",
+				title = "Test Account Analytics Cloud");
 		}
 
 		task ("Start the project configuration and invite a user to the project") {
@@ -157,7 +155,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
+			CustomerPortal.accountTableProject(title = "Test Account Analytics Cloud");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -167,7 +165,9 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(
+				status = "Expired",
+				title = "Test Account Analytics Cloud");
 		}
 
 		task ("Going through onboarding to Setup") {
@@ -179,7 +179,7 @@ definition {
 		task ("Assert the LCX-SM Setup page") {
 			AssertElementPresent(
 				locator1 = "CustomerPortalSite#MODAL_PAGE",
-				modal = "Set up LXC-SM");
+				modal = "Set up Analytics Cloud");
 		}
 	}
 
@@ -189,7 +189,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
+			CustomerPortal.accountTableProject(title = "Test Account Analytics Cloud");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -199,7 +199,9 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(
+				status = "Expired",
+				title = "Test Account Analytics Cloud");
 		}
 
 		task ("Start the project configuration and assert de subtitle") {
@@ -207,20 +209,14 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "CustomerPortalSite#SUBTITLE_SUPPORT",
-				value1 = "Only 3 members per project (including yourself) have role permissions (Admins & Support Seats) to open Support tickets.");
+				value1 = "Only 2 members per project (including yourself) have role permissions (Admins & Support Seats) to open Support tickets.");
 		}
 
 		task ("Assert that object Koroneiki reflects the same number as modal team members displays") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Koroneiki Accounts");
-
-			CustomerPortal.viewCPObjectInfo();
-
 			CustomerPortal.viewValueFieldKoroneiki(
+				index = "3",
 				field = "maxRequestors",
-				value = "3");
+				value = "2");
 		}
 	}
 

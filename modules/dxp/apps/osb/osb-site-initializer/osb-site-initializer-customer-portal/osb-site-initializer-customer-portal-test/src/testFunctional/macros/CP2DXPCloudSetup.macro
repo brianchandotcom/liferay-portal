@@ -27,8 +27,8 @@ definition {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 		CP2DXPCloudSetup.deleteEntryCloudEnvironments(
-			portlet = "DXP Cloud Environments",
-			entry = "ERC-001");
+			entry = "ERC-001",
+			portlet = "DXP Cloud Environments");
 	}
 
 	macro clickOnAddAnotherAdminButton {
@@ -49,7 +49,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Account Subscriptions");
 
-		CustomerPortal.viewCPObjectCustomInfo(index = "4");
+		CustomerPortal.viewCPObjectCustomInfo(index = "${index}");
 
 		Click(locator1 = "CP2DXPCloudSetup#HAS_DISASTER_DATA_CENTER_REGION");
 
@@ -89,23 +89,23 @@ definition {
 
 	macro notViewSetupDXPCloufEXtraInfo {
 		AssertElementNotPresent(
+			key_index = "2",
 			label = "email",
-			key_index = "2",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementNotPresent(
+			key_index = "2",
 			label = "firstName",
-			key_index = "2",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementNotPresent(
+			key_index = "2",
 			label = "lastName",
-			key_index = "2",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementNotPresent(
-			label = "github",
 			key_index = "2",
+			label = "github",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 	}
 
@@ -191,48 +191,48 @@ definition {
 
 	macro viewSetupDXPCloudExtraFields {
 		AssertElementPresent(
+			key_index = "2",
 			label = "email",
-			key_index = "2",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementPresent(
+			key_index = "2",
 			label = "firstName",
-			key_index = "2",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementPresent(
+			key_index = "2",
 			label = "lastName",
-			key_index = "2",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementPresent(
-			label = "github",
 			key_index = "2",
+			label = "github",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 	}
 
 	macro viewSetupDXPCloudExtraInfo {
 		AssertElementPresent(
-			label = "email",
 			key_index = "2",
+			label = "email",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "test@liferay.com");
 
 		AssertElementPresent(
-			label = "firstName",
 			key_index = "2",
+			label = "firstName",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "FirstName");
 
 		AssertElementPresent(
-			label = "lastName",
 			key_index = "2",
+			label = "lastName",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "LastName");
 
 		AssertElementPresent(
-			label = "github",
 			key_index = "2",
+			label = "github",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "GitHubUser");
 	}

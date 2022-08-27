@@ -60,6 +60,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144483 | Test Summary: Verify there if status Active shows up"
+	@ignore = "true"
 	@priority = "3"
 	test IfActiveStatusShowsUp {
 		task ("Go to CP2.0 and join a project") {
@@ -90,6 +91,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144484 | Test Summary: Verify there if status Expired shows up"
+	@ignore = "true"
 	@priority = "2"
 	test IfExpiredStatusShowsUp {
 		task ("Go to CP2.0 and join a project") {
@@ -108,6 +110,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144485 | Test Summary: Verify there if status Future shows up"
+	@ignore = "true"
 	@priority = "2"
 	test IfFutureStatusShowsUp {
 		task ("Go to CP2.0 and join a project") {
@@ -166,6 +169,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144464 | Test Summary: Verify that the Provisioned column appears for Commerce"
+	@ignore = "true"
 	@priority = "3"
 	test ProvisionedColumnAppearsForCommerce {
 		task ("Width desktop") {
@@ -195,6 +199,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144466 | Test Summary: Verify that the Provisioned column appears for DXP."
+	@ignore = "true"
 	@priority = "3"
 	test ProvisionedColumnAppearsForDXP {
 		task ("Width desktop") {
@@ -249,6 +254,7 @@ definition {
 	}
 
 	@description = "Automation ID: LPS-144454 | Test Summary: Verify there is value under the Start - End Date column"
+	@ignore = "true"
 	@priority = "4"
 	test ValueUnderColumnFields {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");

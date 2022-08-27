@@ -1,14 +1,12 @@
 definition {
 
 	macro activeDisasterRecoveryDataCenter {
-		CustomerPortal.showCPObject(title = "Account Subscription");
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
 			portlet = "Account Subscriptions");
 
-		CustomerPortal.viewCPObjectCustomInfo(index = "4");
+		CustomerPortal.viewCPObjectCustomInfo(index = "6");
 
 		Click(locator1 = "CP2DXPCloudSetup#HAS_DISASTER_DATA_CENTER_REGION");
 
@@ -18,10 +16,9 @@ definition {
 	}
 
 	macro assertCardStatusChanged {
-		AssertTextEquals(
+		AssertElementPresent(
 			key_status = "${status}",
-			locator1 = "CustomerPortalSite#STATUS_CARD",
-			value1 = "${value}");
+			locator1 = "CustomerPortalSite#STATUS_CARD");
 	}
 
 	macro clearAndDeleteDXPCloudEntries {
@@ -29,11 +26,9 @@ definition {
 
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-		CP2DXPCloudSetup.deleteEntryCloudEnvironments(entry = "ERC-001");
-
-		CustomerPortal.deleteCPObject(title = "DXP Cloud Environment");
-
-		CustomerPortal.deleteCPObject(title = "Account Subscription Group");
+		CP2DXPCloudSetup.deleteEntryCloudEnvironments(
+			portlet = "DXP Cloud Environments",
+			entry = "ERC-001");
 	}
 
 	macro clickOnAddAnotherAdminButton {
@@ -46,12 +41,6 @@ definition {
 
 	macro clickOnRemoveThisAdminButton {
 		Click(locator1 = "CP2DXPCloudSetup#REMOVE_THIS_ADMIN_DXP_CLOUD");
-	}
-
-	macro createDXPCloudObjects {
-		CustomerPortal.showCPObject(title = "Account Subscription Group");
-
-		CustomerPortal.addCPObject(title = "DXP Cloud Environment");
 	}
 
 	macro deactivateDisasterRecoveryDataCenter {
@@ -67,8 +56,6 @@ definition {
 		Click(locator1 = "Button#SAVE");
 
 		Alert.viewSuccessMessage();
-
-		CustomerPortal.deleteCPObject(title = "Account Subscription");
 	}
 
 	macro deleteDXPCloudEnvironments {
@@ -102,20 +89,24 @@ definition {
 
 	macro notViewSetupDXPCloufEXtraInfo {
 		AssertElementNotPresent(
-			label = "dxp.admins[1].email",
-			locator1 = "CustomerPortalSite#SETUP_VALUE");
+			label = "email",
+			key_index = "2",
+			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementNotPresent(
-			label = "dxp.admins[1].firstName",
-			locator1 = "CustomerPortalSite#SETUP_VALUE");
+			label = "firstName",
+			key_index = "2",
+			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementNotPresent(
-			label = "dxp.admins[1].lastName",
-			locator1 = "CustomerPortalSite#SETUP_VALUE");
+			label = "lastName",
+			key_index = "2",
+			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementNotPresent(
-			label = "dxp.admins[1].github",
-			locator1 = "CustomerPortalSite#SETUP_VALUE");
+			label = "github",
+			key_index = "2",
+			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 	}
 
 	macro typeAllSetupDXPCloudInfoFields {
@@ -198,49 +189,57 @@ definition {
 		}
 	}
 
-	macro viewSetupDXPCloufEXtraFields {
+	macro viewSetupDXPCloudExtraFields {
 		AssertElementPresent(
-			label = "dxp.admins[1].email",
+			label = "email",
+			key_index = "2",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementPresent(
-			label = "dxp.admins[1].firstName",
+			label = "firstName",
+			key_index = "2",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementPresent(
-			label = "dxp.admins[1].lastName",
+			label = "lastName",
+			key_index = "2",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 
 		AssertElementPresent(
-			label = "dxp.admins[1].github",
+			label = "github",
+			key_index = "2",
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 	}
 
-	macro viewSetupDXPCloufEXtraInfo {
+	macro viewSetupDXPCloudExtraInfo {
 		AssertElementPresent(
-			label = "dxp.admins[1].email",
+			label = "email",
+			key_index = "2",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "test@liferay.com");
 
 		AssertElementPresent(
-			label = "dxp.admins[1].firstName",
+			label = "firstName",
+			key_index = "2",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "FirstName");
 
 		AssertElementPresent(
-			label = "dxp.admins[1].lastName",
+			label = "lastName",
+			key_index = "2",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "LastName");
 
 		AssertElementPresent(
-			label = "dxp.admins[1].github",
+			label = "github",
+			key_index = "2",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "GitHubUser");
 	}
 
 	macro viewSetupDXPCloufInfo {
 		AssertElementPresent(
-			label = "dxp.projectId",
+			label = "projectId",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "001");
 
@@ -249,22 +248,22 @@ definition {
 			value1 = "Iowa, USA");
 
 		AssertElementPresent(
-			label = "dxp.admins[0].email",
+			label = "email",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "test@liferay.com");
 
 		AssertElementPresent(
-			label = "dxp.admins[0].firstName",
+			label = "firstName",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "FirstName");
 
 		AssertElementPresent(
-			label = "dxp.admins[0].lastName",
+			label = "lastName",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "LastName");
 
 		AssertElementPresent(
-			label = "dxp.admins[0].github",
+			label = "github",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",
 			value = "GitHubUser");
 	}

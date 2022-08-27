@@ -237,7 +237,7 @@
 </tr>
 <tr>
 	<td>SETUP_VALUE</td>
-	<td>//input[contains(@name,'${label}') and contains(@value,'${value}')]</td>
+	<td>xpath=(//*[contains(@name,'${label}') and contains(@value,'${value}')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -12,10 +12,11 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useForm} from 'react-hook-form';
-import {useOutletContext, useParams} from 'react-router-dom';
+import {useLocation, useNavigate, useOutletContext} from 'react-router-dom';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
@@ -24,6 +25,7 @@ import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
 import {createUserAccount, updateUserAccount} from '../../../services/rest';
+import {RoleTypes} from '../../../util/constants';
 
 type UserFormDefault = {
 	alternateName: string;
@@ -39,13 +41,13 @@ type UserFormDefault = {
 };
 
 const UserForm = () => {
-	const {data} = useFetch('/roles');
+	const {data} = useFetch(`/roles?types=${RoleTypes.REGULAR}&fields=id,name`);
+	const navigate = useNavigate();
+	const {pathname} = useLocation();
+	const isCreateForm = pathname.includes('create');
 
-	const {userId} = useParams();
+	const {mutateUser = () => {}, userAccount} = useOutletContext<any>() || {};
 
-	const userAccount = useOutletContext<any>();
-
-	const currentUser = userAccount?.userAccount || [];
 	const roles = data?.items || [];
 
 	const {
@@ -59,7 +61,7 @@ const UserForm = () => {
 		setValue,
 		watch,
 	} = useForm<UserFormDefault>({
-		defaultValues: userId ? currentUser : {},
+		defaultValues: userAccount,
 		resolver: yupResolver(yupSchema.user),
 	});
 
@@ -70,13 +72,14 @@ const UserForm = () => {
 		delete form.roleBriefs;
 
 		onSubmit(
-			{...form, userId},
+			{...form, userId: userAccount.id},
 			{
 				create: createUserAccount,
 				update: updateUserAccount,
 			}
 		)
 			.then(onSave)
+			.then(mutateUser)
 			.catch(onError);
 	};
 
@@ -88,8 +91,7 @@ const UserForm = () => {
 
 		if (valueInsideList) {
 			newRoles = newRoles.filter((role) => role !== value);
-		}
-		else {
+		} else {
 			newRoles = [...newRoles, Number(value)];
 		}
 
@@ -147,32 +149,55 @@ const UserForm = () => {
 
 				<Form.Divider />
 
-				<ClayLayout.Row justify="start">
-					<ClayLayout.Col size={12} sm={12} xl={3}>
-						<h5 className="font-weight-normal mt-1">
-							{i18n.translate('password')}
-						</h5>
-					</ClayLayout.Col>
+				{isCreateForm && (
+					<ClayLayout.Row justify="start">
+						<ClayLayout.Col size={12} sm={12} xl={3}>
+							<h5 className="font-weight-normal mt-1">
+								{i18n.translate('password')}
+							</h5>
+						</ClayLayout.Col>
 
-					<ClayLayout.Col size={12} sm={12} xl={9}>
-						<ClayForm.Group className="form-group-sm">
-							<Form.Input
-								{...inputProps}
-								label={i18n.translate('password')}
-								name="password"
-								type="password"
-							/>
+						<ClayLayout.Col size={12} sm={12} xl={9}>
+							<ClayForm.Group className="form-group-sm">
+								<Form.Input
+									{...inputProps}
+									label={i18n.translate('password')}
+									name="password"
+									type="password"
+								/>
 
-							<Form.Input
-								{...inputProps}
-								label="Confirm Password"
-								name="repassword"
-								required
-								type="password"
-							/>
-						</ClayForm.Group>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
+								<Form.Input
+									{...inputProps}
+									label="Confirm Password"
+									name="repassword"
+									required
+									type="password"
+								/>
+							</ClayForm.Group>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+				)}
+
+				{!isCreateForm && (
+					<ClayLayout.Row justify="start">
+						<ClayLayout.Col size={3} sm={12} xl={3}>
+							<h5 className="font-weight-normal">
+								{i18n.translate('change-password')}
+							</h5>
+						</ClayLayout.Col>
+
+						<ClayLayout.Col size={3} sm={12} xl={3}>
+							<ClayForm.Group className="form-group-sm">
+								<ClayButton
+									className="bg-neutral-2 borderless neutral text-neutral-7"
+									onClick={() => navigate('password')}
+								>
+									{i18n.translate('change-password')}
+								</ClayButton>
+							</ClayForm.Group>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+				)}
 
 				<Form.Divider />
 

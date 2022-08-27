@@ -23,7 +23,6 @@ import CompareRunsDetails from './pages/CompareRuns/Details';
 import CompareRunsTeams from './pages/CompareRuns/Teams';
 import Users from './pages/Manage/User';
 import ChangeUserPassword from './pages/Manage/User/ChangeUserPassword';
-import UserManagement from './pages/Manage/User/User';
 import UserForm from './pages/Manage/User/UserForm';
 import UserOutlet from './pages/Manage/User/UserOutlet';
 import OutletBridge from './pages/OutletBridge';
@@ -239,12 +238,19 @@ const TestrayRoute = () => (
 							<Route element={<UserForm />} path="create" />
 
 							<Route element={<UserOutlet />} path=":userId">
-								<Route element={<UserForm />} path="update" />
+								<Route element={<OutletBridge />} path="update">
+									<Route element={<UserForm />} index />
+
+									<Route
+										element={<ChangeUserPassword />}
+										path="password"
+									/>
+								</Route>
 							</Route>
 						</Route>
 
-						<Route element={<OutletBridge />} path="user/me">
-							<Route element={<UserManagement />} index />
+						<Route element={<UserOutlet />} path="user/me">
+							<Route element={<UserForm />} index />
 
 							<Route
 								element={<ChangeUserPassword />}

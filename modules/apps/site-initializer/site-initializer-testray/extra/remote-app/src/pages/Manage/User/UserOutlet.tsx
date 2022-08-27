@@ -12,45 +12,30 @@
  * details.
  */
 
-import {useEffect} from 'react';
+import {useContext} from 'react';
 import {Outlet, useParams} from 'react-router-dom';
 
-import {useHeader} from '../../../hooks';
+import {AccountContext} from '../../../context/AccountContext';
 import {useFetch} from '../../../hooks/useFetch';
-import i18n from '../../../i18n';
 import {getUserAccountQuery} from '../../../services/rest';
 
 const UserOutlet = () => {
 	const {userId} = useParams();
-	const {data} = useFetch(getUserAccountQuery(userId as string));
 
-	const userAccount = data;
-	const {setHeading, setTabs} = useHeader();
+	const [{myUserAccount}, , mutateMyUserAccount] = useContext(AccountContext);
+	const {data, mutate} = useFetch(
+		userId ? getUserAccountQuery(userId as string) : null
+	);
 
-	useEffect(() => {
-		if (userAccount) {
-			setTimeout(() => {
-				setHeading(
-					[
-						{
-							category: i18n.translate('manage').toUpperCase(),
-							title: i18n.translate('manage-user'),
-						},
-					],
-					true
-				);
-			}, 0);
-		}
-	}, [setHeading, userAccount]);
+	const context = {
+		mutateUser: userId ? mutate : mutateMyUserAccount,
+		userAccount: userId ? data : myUserAccount,
+	};
 
-	useEffect(() => {
-		setTabs([]);
-	}, [setTabs]);
-
-	if (!userAccount) {
+	if (!context.userAccount) {
 		return null;
 	}
 
-	return <Outlet context={{userAccount}} />;
+	return <Outlet context={context} />;
 };
 export default UserOutlet;

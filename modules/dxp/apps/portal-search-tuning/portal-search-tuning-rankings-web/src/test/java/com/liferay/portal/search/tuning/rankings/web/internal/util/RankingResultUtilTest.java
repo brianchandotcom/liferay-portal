@@ -142,9 +142,9 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 	}
 
 	private AssetEntry _setUpAssetEntry(AssetEntry assetEntry) {
-		if (assetEntry == null)
-
+		if (assetEntry == null) {
 			return assetEntry;
+		}
 
 		Mockito.doReturn(
 			111L

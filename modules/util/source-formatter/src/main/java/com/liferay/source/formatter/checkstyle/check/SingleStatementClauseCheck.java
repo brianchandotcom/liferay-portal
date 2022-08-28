@@ -34,7 +34,9 @@ public class SingleStatementClauseCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST lastChildDetailAST = detailAST.getLastChild();
 
-		if (lastChildDetailAST.getType() == TokenTypes.SEMI) {
+		if ((lastChildDetailAST.getType() == TokenTypes.LITERAL_RETURN) ||
+			(lastChildDetailAST.getType() == TokenTypes.SEMI)) {
+
 			log(detailAST, _MSG_MISSING_BRACES, detailAST.getText());
 		}
 	}

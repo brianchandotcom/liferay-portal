@@ -13,9 +13,14 @@
 		overflow: hidden;
 
 		&.form-control {
-			height: 472px;
+			height: 603px;
 			overflow: hidden;
 			padding: 0;
 		}
 	}
+}
+
+.lfr-objects__expression-builder-modal .modal-dialog.modal-lg .modal-content {
+	height: 790px;
+	width: 898px;
 }

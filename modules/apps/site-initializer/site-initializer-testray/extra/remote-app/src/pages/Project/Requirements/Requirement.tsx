@@ -61,11 +61,6 @@ const Requirement = () => {
 
 	return (
 		<>
-			<RequirementCaseLinkModal
-				modal={formModal}
-				projectId={projectId as string}
-			/>
-
 			<Container collapsable title={i18n.translate('details')}>
 				<QATable
 					items={[
@@ -187,7 +182,15 @@ const Requirement = () => {
 							testrayRequirement.id
 						),
 					}}
-				/>
+				>
+					{({items}) => (
+						<RequirementCaseLinkModal
+							items={items}
+							modal={formModal}
+							projectId={projectId as string}
+						/>
+					)}
+				</ListView>
 			</Container>
 		</>
 	);

@@ -51,19 +51,22 @@ const CaseRequirementLinkModal: React.FC<CaseRequirementLinkModalProps> = ({
 			visible={visible}
 		>
 			<RequirementListView
-				initialContext={{
-					selectedRows: items.map(({requirement}) => requirement?.id),
-				}}
 				listViewProps={{
+					initialContext: {
+						selectedRows: items.map(
+							({requirement}) => requirement?.id
+						),
+					},
 					managementToolbarProps: {
 						title: i18n.translate('requirements'),
 					},
-					onContextChange: ({selectedRows}) =>
+					onContextChange: ({selectedRows}) => {
 						setState(
 							selectedRows.map((requirementId) => ({
 								requirementId,
 							}))
-						),
+						);
+					},
 				}}
 				tableProps={{navigateTo: undefined, rowSelectable: true}}
 			/>

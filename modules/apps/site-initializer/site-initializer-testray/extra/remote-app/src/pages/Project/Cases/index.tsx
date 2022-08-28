@@ -17,6 +17,7 @@ import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import Container from '../../../components/Layout/Container';
 import ListView, {ListViewProps} from '../../../components/ListView';
 import {TableProps} from '../../../components/Table';
+import {ListViewContextProviderProps} from '../../../context/ListViewContext';
 import {FormModal} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';
@@ -32,7 +33,9 @@ type CaseListViewProps = {
 	projectId?: number | string;
 	variables?: any;
 } & {
-	listViewProps?: Partial<ListViewProps> & {initialContext?: any};
+	listViewProps?: Partial<ListViewProps> & {
+		initialContext?: Partial<ListViewContextProviderProps>;
+	};
 	tableProps?: Partial<TableProps>;
 };
 

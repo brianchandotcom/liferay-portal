@@ -36,14 +36,14 @@ type RequirementListViewProps = {
 	projectId?: number | string;
 	variables?: any;
 } & {
-	initialContext?: Partial<ListViewContextProviderProps>;
-	listViewProps?: Partial<ListViewProps>;
+	listViewProps?: Partial<
+		ListViewProps & {initialContext?: Partial<ListViewContextProviderProps>}
+	>;
 	tableProps?: Partial<TableProps>;
 };
 
 const RequirementListView: React.FC<RequirementListViewProps> = ({
 	actions,
-	initialContext,
 	listViewProps,
 	tableProps,
 	variables,
@@ -52,7 +52,6 @@ const RequirementListView: React.FC<RequirementListViewProps> = ({
 
 	return (
 		<ListView
-			initialContext={initialContext}
 			managementToolbarProps={{
 				addButton: () => navigate('create'),
 				buttons: (

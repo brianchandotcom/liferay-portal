@@ -35,6 +35,11 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			permission: 'UPDATE',
 		},
 		{
+			action: (routine) => alert(routine),
+			icon: 'cog',
+			name: i18n.translate('manage-templates'),
+		},
+		{
 			action: () => alert('Select Default Environment Factors'),
 			icon: 'display',
 			name: i18n.translate('select-default-environment-factors'),

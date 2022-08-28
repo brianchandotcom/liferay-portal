@@ -14,6 +14,7 @@
  */
 
 import {ReactNode, createContext, useEffect, useReducer} from 'react';
+import {KeyedMutator} from 'swr';
 
 import {useFetch} from '../hooks/useFetch';
 import {UserAccount} from '../services/rest';
@@ -40,8 +41,12 @@ type AccountPayload = {
 type AppActions = ActionMap<AccountPayload>[keyof ActionMap<AccountPayload>];
 
 export const AccountContext = createContext<
-	[InitialState, (param: AppActions) => void]
->([initialState, () => null]);
+	[
+		InitialState,
+		(param: AppActions) => void,
+		KeyedMutator<UserAccount> | null
+	]
+>([initialState, () => null, null]);
 
 const reducer = (state: InitialState, action: AppActions) => {
 	switch (action.type) {
@@ -62,7 +67,7 @@ const AccountContextProvider: React.FC<{
 	children: ReactNode;
 }> = ({children}) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
-	const {data: myUserAccount} = useFetch(
+	const {data: myUserAccount, mutate} = useFetch(
 		'/my-user-account',
 		(user: UserAccount) => ({
 			additionalName: user?.additionalName,
@@ -89,7 +94,7 @@ const AccountContextProvider: React.FC<{
 	}, [myUserAccount]);
 
 	return (
-		<AccountContext.Provider value={[state, dispatch]}>
+		<AccountContext.Provider value={[state, dispatch, mutate]}>
 			{children}
 		</AccountContext.Provider>
 	);

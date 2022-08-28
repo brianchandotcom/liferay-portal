@@ -17,6 +17,33 @@ import * as yup from 'yup';
 
 import i18n from '../i18n';
 
+const userSchema = yup.object({
+	alternateName: yup.string().required(),
+	emailAddress: yup.string().email().required(),
+	familyName: yup.string().required(),
+	givenName: yup.string().required(),
+});
+
+const passwordStructure = {
+	password: yup
+		.string()
+		.required(i18n.translate('no-password-provided'))
+		.min(
+			8,
+			i18n.translate('password-is-too-short-should-be-8-chars-minimum')
+		)
+		.matches(
+			/[a-zA-Z]/,
+			i18n.translate('password-can-only-contain-latin-letters')
+		),
+	repassword: yup
+		.string()
+		.oneOf(
+			[yup.ref('password'), null],
+			i18n.translate('passwords-must-match')
+		),
+};
+
 const yupSchema = {
 	build: yup.object({
 		description: yup.string(),
@@ -66,22 +93,7 @@ const yupSchema = {
 	option: yup.object({
 		name: yup.string(),
 	}),
-	password: yup.object({
-		confirmpassword: yup
-			.string()
-			.required()
-			.oneOf(
-				[yup.ref('password'), null],
-				i18n.translate('passwords-must-match')
-			),
-		password: yup
-			.string()
-			.required()
-			.matches(
-				/[a-zA-Z]/,
-				i18n.translate('password-can-only-contain-latin-letters')
-			),
-	}),
+	password: yup.object(passwordStructure),
 	productVersion: yup.object({
 		id: yup.string(),
 		name: yup.string().required(),
@@ -121,31 +133,8 @@ const yupSchema = {
 		projectId: yup.string(),
 		teamId: yup.string(),
 	}),
-	user: yup.object({
-		alternateName: yup.string().required(),
-		emailAddress: yup.string().email().required(),
-		familyName: yup.string().required(),
-		givenName: yup.string().required(),
-		password: yup
-			.string()
-			.required(i18n.translate('no-password-provided'))
-			.min(
-				8,
-				i18n.translate(
-					'password-is-too-short-should-be-8-chars-minimum'
-				)
-			)
-			.matches(
-				/[a-zA-Z]/,
-				i18n.translate('password-can-only-contain-latin-letters')
-			),
-		repassword: yup
-			.string()
-			.oneOf(
-				[yup.ref('password'), null],
-				i18n.translate('passwords-must-match')
-			),
-	}),
+	user: userSchema,
+	userWithPassword: userSchema.shape(passwordStructure),
 };
 
 export {yupResolver};

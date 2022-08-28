@@ -35,6 +35,10 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 	const [{myUserAccount}] = useContext(AccountContext);
 	const MANAGE_DROPDOWN = useSidebarActions();
 
+	const loggedUserName = myUserAccount
+		? `${myUserAccount?.givenName} ${myUserAccount?.alternateName}`
+		: Liferay.ThemeDisplay.getUserName();
+
 	return (
 		<div className="cursor-pointer testray-sidebar-footer">
 			<div className="d-flex justify-content-end">
@@ -107,17 +111,13 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 					<div>
 						<Tooltip
 							position="right"
-							title={
-								expanded
-									? undefined
-									: Liferay.ThemeDisplay.getUserName()
-							}
+							title={expanded ? undefined : loggedUserName}
 						>
 							<div className="testray-avatar-dropdown testray-sidebar-item">
 								<Avatar
 									displayName
 									expanded={expanded}
-									name={Liferay.ThemeDisplay.getUserName()}
+									name={loggedUserName}
 									url={myUserAccount?.image}
 								/>
 							</div>

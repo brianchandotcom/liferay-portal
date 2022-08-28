@@ -37,6 +37,11 @@ const useRequirementActions = ({
 			permission: 'UPDATE',
 		},
 		{
+			action: ({id}) => alert(id),
+			icon: 'reload',
+			name: i18n.translate('resync-with-jira'),
+		},
+		{
 			action: ({id}, mutate) =>
 				deleteResource(`/requirements/${id}`)
 					?.then(() => {

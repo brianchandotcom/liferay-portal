@@ -81,9 +81,13 @@ const Avatar: React.FC<AvatarProps> & {Group: React.FC<AvatarGroupProps>} = ({
 
 		{displayName && (
 			<span
-				className={classNames('ml-3 testray-avatar-dropdown-text', {
-					'testray-avatar-dropdown-text-expanded': expanded,
-				})}
+				className={classNames(
+					className,
+					'ml-3 testray-avatar-dropdown-text',
+					{
+						'testray-avatar-dropdown-text-expanded': expanded,
+					}
+				)}
 			>
 				{name}
 			</span>

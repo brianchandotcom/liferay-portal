@@ -31,7 +31,9 @@ const useSuiteActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			action: (suite) =>
 				navigate(isHeaderActions ? 'update' : `${suite}/update`),
 			icon: 'pencil',
-			name: i18n.translate(isHeaderActions ? 'edit-suite' : 'edit'),
+			name: isHeaderActions
+				? i18n.sub('edit-x', 'suite')
+				: i18n.translate('edit'),
 			permission: 'UPDATE',
 		},
 		{
@@ -41,7 +43,9 @@ const useSuiteActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 					.then(form.onSuccess)
 					.catch(form.onError),
 			icon: 'trash',
-			name: i18n.translate(isHeaderActions ? 'delete-suite' : 'delete'),
+			name: isHeaderActions
+				? i18n.sub('delete-x', 'suite')
+				: i18n.translate('delete'),
 			permission: 'DELETE',
 		},
 	] as Action<TestraySuite>[]);

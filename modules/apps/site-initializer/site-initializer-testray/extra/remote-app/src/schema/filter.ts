@@ -73,7 +73,7 @@ const baseFilters: Filter = {
 	},
 	component: {
 		label: i18n.translate('Component'),
-		name: 'component',
+		name: 'componentId',
 		resource: '/components?fields=id,name',
 		transformData(item) {
 			return dataToOptions(transformData<TestrayComponent>(item));
@@ -106,7 +106,7 @@ const baseFilters: Filter = {
 	},
 	team: {
 		label: i18n.translate('team'),
-		name: 'team',
+		name: 'teamId',
 		options: [{label: 'Solutions', value: 'solutions'}],
 		resource: '/teams?fields=id,name',
 		transformData(item) {

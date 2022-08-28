@@ -72,14 +72,22 @@ const UserListView: React.FC<UserListViewProps> = ({
 				],
 				...tableProps,
 			}}
+			transformData={(response) => ({
+				...response,
+				actions: {
+					...response.actions,
+					create: response.actions['post-user-account'],
+				},
+			})}
 			variables={variables}
 			{...listViewProps}
 		/>
 	);
 };
 
-const Users: React.FC = () => {
+const Users = () => {
 	const {actions, formModal} = useUserActions();
+	const navigate = useNavigate();
 
 	useHeader({
 		useDropdown: [],
@@ -88,11 +96,18 @@ const Users: React.FC = () => {
 				title: i18n.translate('manage-users'),
 			},
 		],
+		useIcon: 'cog',
 	});
 
 	return (
 		<Container>
-			<UserListView actions={actions} formModal={formModal} />
+			<UserListView
+				actions={actions}
+				formModal={formModal}
+				tableProps={{
+					onClickRow: (user) => navigate(`${user.id}/update`),
+				}}
+			/>
 		</Container>
 	);
 };

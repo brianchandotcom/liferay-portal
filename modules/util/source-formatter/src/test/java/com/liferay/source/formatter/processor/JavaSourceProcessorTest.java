@@ -530,9 +530,10 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new String[] {
 				"Use braces around if-statement clause",
 				"Use braces around while-statement clause",
-				"Use braces around for-statement clause"
+				"Use braces around for-statement clause",
+				"Use braces around if-statement clause"
 			},
-			new Integer[] {23, 28, 31});
+			new Integer[] {23, 28, 31, 34});
 	}
 
 	@Test

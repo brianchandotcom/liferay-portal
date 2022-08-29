@@ -35,13 +35,13 @@ export enum Statuses {
 	BLOCKED = 'BLOCKED',
 	TEST_FIX = 'TEST FIX',
 	INCOMPLETE = 'INCOMPLETE',
-	SELF = 'SELF',
-	OTHER = 'OTHER',
+	SELF = 'SELF COMPLETED',
+	OTHER = 'OTHERS COMPLETED',
 }
 
 export enum StatusesProgressScore {
-	SELF = 'SELF',
-	OTHER = 'OTHER',
+	SELF = 'SELF COMPLETED',
+	OTHER = 'OTHERS COMPLETED',
 	INCOMPLETE = 'INCOMPLETE',
 }
 
@@ -106,14 +106,14 @@ export enum SUB_TASK_STATUS {
 }
 
 export const SUBTASK_STATUS = {
-	1: {color: 'label-warning', label: 'IN ANALYSIS'},
+	1: {color: 'label-chart-in-analysis', label: 'IN ANALYSIS'},
 	2: {color: 'label-secondary', label: 'ABANDONED'},
 	3: {color: 'label-primary', label: 'COMPLETE'},
 	4: {color: 'label-secondary', label: 'OPEN'},
 };
 
 export const BUILD_STATUS = {
-	0: {color: 'label-warning', label: 'IN ANALYSIS'},
+	0: {color: 'label-chart-in-analysis', label: 'IN ANALYSIS'},
 	2: {color: 'label-secondary', label: 'OPEN'},
 };
 

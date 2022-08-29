@@ -40,7 +40,7 @@ const CaseResultOutlet = () => {
 		timeout: 300,
 	});
 
-	const maxHeads = context.heading.length === 4;
+	const maxHeads = context.heading.length >= 4;
 
 	useEffect(() => {
 		setHeaderActions({actions, item: caseResult, mutate: mutateCaseResult});

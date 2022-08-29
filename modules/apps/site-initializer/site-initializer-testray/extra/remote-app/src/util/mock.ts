@@ -57,17 +57,6 @@ type Routine = {
 	task?: any;
 };
 
-export const Status = {
-	blocked: 'label-inverse-secondary',
-	failed: 'label-inverse-danger',
-	in_analisys: 'label-inverse-secondary',
-	incomplete: 'label-inverse-light',
-	other: 'label-inverse-primary',
-	passed: 'label-inverse-success',
-	self: 'label-inverse-info',
-	test_fix: 'label-tonal-success',
-};
-
 export type Tests = {
 	case: string;
 	component: string;

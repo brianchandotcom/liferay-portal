@@ -294,6 +294,7 @@ export default {
 		'This role is for general Liferay employees and enables authenticated users to view test results.',
 	'time-x-total-issues': 'Time {0} Total Issues',
 	'total': 'Total',
+	'total-completed': 'Total Completed',
 	'total-estimated-time': 'Total Estimated Time',
 	'total-test-cases': 'Total test cases',
 	'type': 'Type',

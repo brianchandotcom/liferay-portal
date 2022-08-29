@@ -15,7 +15,7 @@
 import yupSchema from '../../schema/yup';
 import fetcher from '../fetcher';
 
-type User = typeof yupSchema.user.__outputType;
+type User = typeof yupSchema.userWithPassword.__outputType;
 
 const adapter = ({
 	alternateName,

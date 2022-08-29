@@ -185,7 +185,7 @@ const TestFlowTasks = () => {
 							<TaskbarProgress
 								displayTotalCompleted={false}
 								items={columns as any}
-								legend={true}
+								legend
 								taskbarClassNames={chartClassNames}
 							/>
 						</div>

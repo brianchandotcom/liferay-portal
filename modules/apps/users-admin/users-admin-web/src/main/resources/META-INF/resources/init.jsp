@@ -186,7 +186,7 @@ page import="com.liferay.users.admin.web.internal.display.context.ViewFlatUsersD
 page import="com.liferay.users.admin.web.internal.display.context.ViewFlatUsersDisplayContextFactory" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.ViewOrganizationsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.ViewTreeManagementToolbarDisplayContext" %><%@
-page import="com.liferay.users.admin.web.internal.servlet.taglib.clay.UserVerticalCard" %><%@
+page import="com.liferay.users.admin.web.internal.frontend.taglib.clay.servlet.taglib.UserVerticalCard" %><%@
 page import="com.liferay.users.admin.web.internal.util.CSSClasses" %><%@
 page import="com.liferay.users.admin.web.internal.util.UsersAdminPortletURLUtil" %>
 

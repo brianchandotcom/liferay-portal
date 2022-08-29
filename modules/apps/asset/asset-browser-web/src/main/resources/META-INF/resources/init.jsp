@@ -27,7 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.asset.browser.web.internal.display.context.AssetBrowserDisplayContext" %><%@
 page import="com.liferay.asset.browser.web.internal.display.context.AssetBrowserManagementToolbarDisplayContext" %><%@
-page import="com.liferay.asset.browser.web.internal.servlet.taglib.clay.AssetEntryVerticalCard" %><%@
+page import="com.liferay.asset.browser.web.internal.frontend.taglib.clay.servlet.taglib.AssetEntryVerticalCard" %><%@
 page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@

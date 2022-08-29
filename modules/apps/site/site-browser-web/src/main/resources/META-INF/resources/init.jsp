@@ -29,7 +29,7 @@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.site.browser.web.internal.display.context.SiteBrowserDisplayContext" %><%@
 page import="com.liferay.site.browser.web.internal.display.context.SiteBrowserManagementToolbarDisplayContext" %><%@
-page import="com.liferay.site.browser.web.internal.servlet.taglib.clay.SiteVerticalCard" %>
+page import="com.liferay.site.browser.web.internal.frontend.taglib.clay.servlet.taglib.SiteVerticalCard" %>
 
 <%@ page import="java.util.Map" %><%@
 page import="java.util.Objects" %>

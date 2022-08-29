@@ -26,7 +26,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.knowledge.base.model.KBArticle" %><%@
 page import="com.liferay.knowledge.base.web.internal.constants.KBWebKeys" %><%@
-page import="com.liferay.knowledge.base.web.internal.servlet.taglib.clay.KBArticleAttachmentHorizontalCard" %><%@
+page import="com.liferay.knowledge.base.web.internal.frontend.taglib.clay.servlet.taglib.KBArticleAttachmentHorizontalCard" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>

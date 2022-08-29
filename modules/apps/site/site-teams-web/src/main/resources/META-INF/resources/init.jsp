@@ -65,8 +65,8 @@ page import="com.liferay.site.teams.web.internal.display.context.SelectUsersDisp
 page import="com.liferay.site.teams.web.internal.display.context.SelectUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.display.context.SiteTeamsDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.display.context.SiteTeamsManagementToolbarDisplayContext" %><%@
-page import="com.liferay.site.teams.web.internal.servlet.taglib.clay.SelectUserUserCard" %><%@
-page import="com.liferay.site.teams.web.internal.servlet.taglib.clay.UserUserCard" %><%@
+page import="com.liferay.site.teams.web.internal.frontend.taglib.clay.servlet.taglib.SelectUserUserCard" %><%@
+page import="com.liferay.site.teams.web.internal.frontend.taglib.clay.servlet.taglib.UserUserCard" %><%@
 page import="com.liferay.site.teams.web.internal.servlet.taglib.util.UserActionDropdownItemsProvider" %>
 
 <%@ page import="java.util.Map" %><%@

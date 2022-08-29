@@ -39,7 +39,7 @@ page import="com.liferay.wiki.constants.WikiWebKeys" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.model.WikiPageDisplay" %><%@
 page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@
-page import="com.liferay.wiki.web.internal.servlet.taglib.clay.WikiPageAttachmentHorizontalCard" %>
+page import="com.liferay.wiki.web.internal.frontend.taglib.clay.servlet.taglib.WikiPageAttachmentHorizontalCard" %>
 
 <%@ page import="java.util.function.Supplier" %>
 

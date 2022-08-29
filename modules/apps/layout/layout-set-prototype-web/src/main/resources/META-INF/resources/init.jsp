@@ -27,7 +27,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys" %><%@
 page import="com.liferay.layout.set.prototype.web.internal.display.context.LayoutSetPrototypeDisplayContext" %><%@
-page import="com.liferay.layout.set.prototype.web.internal.servlet.taglib.clay.LayoutSetPrototypeVerticalCard" %><%@
+page import="com.liferay.layout.set.prototype.web.internal.frontend.taglib.clay.servlet.taglib.LayoutSetPrototypeVerticalCard" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchLayoutSetPrototypeException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredLayoutSetPrototypeException" %><%@

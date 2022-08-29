@@ -25,7 +25,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.asset.display.page.item.selector.web.internal.constants.AssetDisplayPageItemSelectorWebKeys" %><%@
 page import="com.liferay.asset.display.page.item.selector.web.internal.display.context.AssetDisplayPagesItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.asset.display.page.item.selector.web.internal.display.context.AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext" %><%@
-page import="com.liferay.asset.display.page.item.selector.web.internal.servlet.taglib.clay.LayoutPageTemplateEntryVerticalCard" %>
+page import="com.liferay.asset.display.page.item.selector.web.internal.frontend.taglib.clay.servlet.taglib.LayoutPageTemplateEntryVerticalCard" %>
 
 <liferay-frontend:defineObjects />
 

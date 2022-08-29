@@ -251,7 +251,6 @@ export default {
 	 * @param {string} options.segmentsExperienceId Experience id
 	 */
 	renderFragmentEntryLinkContent({
-		collectionItemIndex,
 		fragmentEntryLinkId,
 		itemClassName,
 		itemClassPK,
@@ -263,7 +262,6 @@ export default {
 			config.renderFragmentEntryURL,
 			{
 				body: {
-					collectionItemIndex,
 					fragmentEntryLinkId,
 					itemClassName,
 					itemClassPK,

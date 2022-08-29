@@ -137,7 +137,6 @@ const useGetContent = (
 			})
 		) {
 			FragmentService.renderFragmentEntryLinkContent({
-				collectionItemIndex,
 				fragmentEntryLinkId,
 				itemClassName,
 				itemClassPK,
@@ -156,7 +155,6 @@ const useGetContent = (
 		}
 	}, [
 		collectionContentId,
-		collectionItemIndex,
 		dispatch,
 		editableValues,
 		fieldSets,
@@ -291,37 +289,9 @@ const useGetFieldValue = () => {
 	}
 };
 
-const useRenderFragmentContent = () => {
-	const collectionItemContext = useContext(CollectionItemContext);
-
-	const {className: collectionItemClassName, classPK: collectionItemClassPK} =
-		collectionItemContext.collectionItem || {};
-	const {collectionItemIndex} = collectionItemContext;
-
-	return useCallback(
-		({fragmentEntryLinkId, onNetworkStatus, segmentsExperienceId}) => {
-			return FragmentService.renderFragmentEntryLinkContent({
-				collectionItemClassName,
-				collectionItemClassPK,
-				collectionItemIndex,
-				fragmentEntryLinkId,
-				onNetworkStatus,
-				segmentsExperienceId,
-			}).then(({content}) => {
-				return {
-					collectionItemIndex,
-					content,
-				};
-			});
-		},
-		[collectionItemClassName, collectionItemClassPK, collectionItemIndex]
-	);
-};
-
 export {
 	CollectionItemContext,
 	CollectionItemContextProvider,
-	useRenderFragmentContent,
 	useGetContent,
 	useCollectionConfig,
 	useCollectionItemIndex,

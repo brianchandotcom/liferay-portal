@@ -49,9 +49,9 @@ const ObjectLayoutBox: React.FC<IObjectLayoutBoxProps> = ({
 
 	const disabled =
 		(Liferay.FeatureFlags['LPS-158672'] &&
-			((type === 'comments' && !objectDefinition.enabledComments) ||
+			((type === 'comments' && !objectDefinition.enableComments) ||
 				(type === 'categorization' &&
-					!objectDefinition.enabledCategorization))) ||
+					!objectDefinition.enableCategorization))) ||
 		isViewOnly;
 
 	return (

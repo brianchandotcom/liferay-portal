@@ -65,7 +65,7 @@ const HeaderDropdown: FC<IHeaderDropdown> = ({
 						disabled={
 							isThereFramework('categorization') ||
 							(Liferay.FeatureFlags['LPS-158672'] &&
-								!objectDefinition.enabledCategorization)
+								!objectDefinition.enableCategorization)
 						}
 						onClick={() => handleOnClick(addCategorization)}
 					>
@@ -77,7 +77,7 @@ const HeaderDropdown: FC<IHeaderDropdown> = ({
 					<ClayDropDown.Item
 						disabled={
 							isThereFramework('comments') ||
-							!objectDefinition.enabledComments
+							!objectDefinition.enableComments
 						}
 						onClick={() => handleOnClick(addComments)}
 					>

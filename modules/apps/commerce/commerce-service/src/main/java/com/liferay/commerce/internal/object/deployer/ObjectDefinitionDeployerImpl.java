@@ -51,7 +51,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
-		if (Objects.equals(
+		if (objectDefinition.isSystem() ||
+			Objects.equals(
 				objectDefinition.getScope(),
 				ObjectDefinitionConstants.SCOPE_COMPANY)) {
 

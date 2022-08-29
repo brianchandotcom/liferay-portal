@@ -131,7 +131,7 @@ public class ObjectRelationshipEndpointDeployer {
 		new HashMap<>();
 
 	@Reference(
-		target = "(component.factory=com.liferay.object.rest.internal.resource.v1_0.ObjectRelationshipsResource)"
+		target = "(component.factory=com.liferay.object.rest.internal.resource.v1_0.ObjectRelationshipResource)"
 	)
 	private ComponentFactory _relationshipsResourceComponentFactory;
 

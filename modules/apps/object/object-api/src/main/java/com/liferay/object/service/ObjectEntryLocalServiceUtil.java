@@ -323,22 +323,23 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static List<ObjectEntry> getManyToManyRelatedObjectEntries(
+	public static List<ObjectEntry> getManyToManyObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean reverse, int start, int end)
+			boolean related, boolean reverse, int start, int end)
 		throws PortalException {
 
-		return getService().getManyToManyRelatedObjectEntries(
-			groupId, objectRelationshipId, primaryKey, reverse, start, end);
+		return getService().getManyToManyObjectEntries(
+			groupId, objectRelationshipId, primaryKey, related, reverse, start,
+			end);
 	}
 
-	public static int getManyToManyRelatedObjectEntriesCount(
+	public static int getManyToManyObjectEntriesCount(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean reverse)
+			boolean related, boolean reverse)
 		throws PortalException {
 
-		return getService().getManyToManyRelatedObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, reverse);
+		return getService().getManyToManyObjectEntriesCount(
+			groupId, objectRelationshipId, primaryKey, related, reverse);
 	}
 
 	/**
@@ -455,21 +456,22 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().getObjectEntryByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static List<ObjectEntry> getOneToManyRelatedObjectEntries(
-			long groupId, long objectRelationshipId, long primaryKey, int start,
-			int end)
+	public static List<ObjectEntry> getOneToManyObjectEntries(
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean related, int start, int end)
 		throws PortalException {
 
-		return getService().getOneToManyRelatedObjectEntries(
-			groupId, objectRelationshipId, primaryKey, start, end);
+		return getService().getOneToManyObjectEntries(
+			groupId, objectRelationshipId, primaryKey, related, start, end);
 	}
 
-	public static int getOneToManyRelatedObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey)
+	public static int getOneToManyObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey,
+			boolean related)
 		throws PortalException {
 
-		return getService().getOneToManyRelatedObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey);
+		return getService().getOneToManyObjectEntriesCount(
+			groupId, objectRelationshipId, primaryKey, related);
 	}
 
 	/**

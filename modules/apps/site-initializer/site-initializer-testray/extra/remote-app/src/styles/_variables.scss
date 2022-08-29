@@ -56,46 +56,19 @@ $color-blue: #59bbfc;
 	color: #fff;
 }
 
-// ---------- Result status colors ----------
-
-.label-inverse-secondary {
-	background-color: #5924eb;
-}
-
-.label-inverse-danger {
-	background-color: #da1414;
-}
-
-.label-inverse-secondary {
-	background-color: #ed7105;
-}
-
-.label-inverse-light {
-	background-color: #f7f6f9;
-}
-
-.label-inverse-primary {
-	background-color: #5924eb;
-}
-
-.label-inverse-success {
-	background-color: #4aab3b;
-}
-
-.label-inverse-info {
-	background-color: #2e5aac;
-}
-
-.label-tonal-success {
-	background-color: #edf7eb;
-}
-
 $blocked-color: $color-yellow;
 $dnr-color: $color-gray;
 $failed-color: $color-red;
 $incomplete-color: $color-gray-light;
 $passed-color: $color-green;
 $test-fix-color: $color-blue;
+
+$blockedColor: #ffd764;
+$failedColor: #fe5160;
+$incompleteColor: #bcbdc0;
+$passedColor: #37d27e;
+$testFixColor: #68d8ff;
+$untestedColor: #bcbdc0;
 
 // ---------- TestFlow status colors ----------
 
@@ -260,4 +233,139 @@ $sidebar-divider-color: #8b8db2;
 	--primary: #373ecc;
 	--btn-primary-hover-border-color: #0e1387;
 	--btn-primary-hover-background-color: #0e1387;
+}
+
+// ---------- Result status colors ----------
+
+.label-chart {
+	font-weight: 500;
+
+	&.blocked {
+		background-color: $blockedColor;
+		border-color: $blockedColor;
+		color: $color-black;
+	}
+
+	&.failed {
+		background-color: $failedColor;
+		border-color: $failedColor;
+		color: $color-white;
+	}
+
+	&.in-analysis {
+		background-color: $in-analysis-color;
+		border-color: $in-analysis-color;
+		color: $color-white;
+	}
+
+	&.untested {
+		background-color: $color-gray-light;
+		border-color: $color-gray-light;
+		color: $color-black;
+	}
+
+	&.in-progress {
+		background-color: $color-gray-light;
+		border-color: $color-gray-light;
+		color: $color-black;
+	}
+
+	&.test-fix {
+		background-color: $testFixColor;
+		border-color: $testFixColor;
+		color: $color-white;
+	}
+
+	&.secondary {
+		background-color: #ed7105;
+		border-color: #ed7105;
+	}
+
+	&.light {
+		background-color: #f7f6f9;
+		border-color: #f7f6f9;
+	}
+
+	&.primary {
+		background-color: #5924eb;
+		border-color: #5924eb;
+	}
+
+	&.passed {
+		background-color: $passedColor;
+		border-color: $passedColor;
+		color: $color-white;
+	}
+
+	&.info {
+		background-color: #2e5aac;
+		border-color: #2e5aac;
+	}
+}
+
+.build-alert-bar {
+	.alert-indicator {
+		display: none;
+	}
+
+	&.alert-primary {
+		background-color: #dadbf5;
+		border-color: #dadbf5;
+		color: #101698;
+
+		.lead {
+			color: #101698;
+			font-weight: 400;
+		}
+
+		.label {
+			&.label-primary {
+				background-color: $color-primary;
+				border-color: $color-primary;
+				color: $color-white;
+			}
+		}
+	}
+
+	&.alert-warning {
+		background-color: #fff0e5;
+		border-color: #fff0e5;
+		color: #d87827;
+
+		.lead {
+			color: #d87827;
+			font-weight: 400;
+		}
+
+		.label {
+			&.label-warning {
+				background-color: #f78c52;
+				border-color: #f78c52;
+				color: $color-white;
+			}
+		}
+	}
+
+	&.alert-secondary {
+		background-color: transparent;
+		border-color: transparent;
+		color: #768b99;
+
+		.lead {
+			color: #768b99;
+			font-weight: 400;
+		}
+
+		.label {
+			&.label-secondary {
+				background-color: #acbcc7;
+				border-color: #acbcc7;
+				color: $color-white;
+			}
+		}
+	}
+}
+
+.label-tonal-success {
+	background-color: #edf7eb;
 }

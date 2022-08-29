@@ -14,6 +14,9 @@
 
 import classNames from 'classnames';
 
+import i18n from '../../i18n';
+import {getPercentLabel} from '../../util/graph.util';
+
 type TaskbarProgress = {
 	displayTotalCompleted: boolean;
 	items: [string, number][];
@@ -50,21 +53,26 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 			<div className="testray-progress-bar">
 				{items.map((item, index) => {
 					const [label, value] = item;
-					const percent = NaNToZero(Math.ceil((value * 100) / total));
 
-					if (value) {
-						return (
-							<div
-								className={classNames(
-									'progress-bar-item',
-									taskbarClassNames[label]
-								)}
-								key={index}
-								style={{width: `${percent}%`}}
-								title={`${percent}% ${label}`}
-							/>
-						);
-					}
+					const percent = NaNToZero(
+						(value / (total as number)) * 100
+					);
+
+					const percentLabel = getPercentLabel(
+						(value / (total as number)) * 100
+					);
+
+					return (
+						<div
+							className={classNames(
+								'progress-bar-item',
+								taskbarClassNames[label]
+							)}
+							key={index}
+							style={{width: `${percent}%`}}
+							title={`${percentLabel} ${label}`}
+						/>
+					);
 				})}
 			</div>
 
@@ -84,18 +92,20 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 								</span>
 							</div>
 
-							<span className="font-family-sans-serif text-neutral-6 text-paragraph-xs">
-								TOTAL COMPLETED
+							<span className="font-family-sans-serif legend-item-label text-neutral-6">
+								{i18n.translate('total-completed')}
 							</span>
 						</div>
 					)}
 
 					{items.map((item, index) => {
 						const [label, value] = item;
-						const percent = NaNToZero(
-							Math.ceil((value * 100) / total)
+
+						const percentLabel = getPercentLabel(
+							(value / (total as number)) * 100
 						);
-						const percentTitle = `${percent}% (${value})`;
+
+						const percentTitle = `${percentLabel} (${value})`;
 
 						return (
 							<div className="d-flex flex-column" key={index}>
@@ -116,7 +126,7 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 									</span>
 								</div>
 
-								<span className="mt-1 text-neutral-6 text-paragraph-xs">
+								<span className="legend-item-label mt-1 text-neutral-6">
 									{label.toUpperCase()}
 								</span>
 							</div>

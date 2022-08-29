@@ -44,10 +44,16 @@
 		}
 	}
 
+	.legend-item-label {
+		color: $label-color;
+		font-size: 12px;
+		font-weight: $font-header-weight;
+		text-transform: uppercase;
+	}
+
 	.legend-bar-item {
-		border-radius: 50%;
-		height: 20px;
-		width: 20px;
+		height: 16px;
+		width: 16px;
 
 		&.blocked {
 			background-color: $color-yellow;

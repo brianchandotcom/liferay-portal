@@ -71,6 +71,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public synchronized List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
+		if (objectDefinition.isSystem()) {
+			return Collections.emptyList();
+		}
+
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
 		ObjectScopeProvider objectScopeProvider =

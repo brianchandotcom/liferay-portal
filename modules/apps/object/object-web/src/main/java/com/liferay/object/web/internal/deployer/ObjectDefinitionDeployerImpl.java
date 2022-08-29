@@ -90,6 +90,7 @@ import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 import com.liferay.upload.UploadHandler;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.Portlet;
@@ -113,6 +114,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Override
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
+
+		if (objectDefinition.isSystem()) {
+			return Collections.emptyList();
+		}
 
 		InfoItemFormProvider<ObjectEntry> infoItemFormProvider =
 			new ObjectEntryInfoItemFormProvider(

@@ -390,10 +390,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	public void deployObjectDefinition(ObjectDefinition objectDefinition) {
-		if (objectDefinition.isSystem()) {
-			return;
-		}
-
 		undeployObjectDefinition(objectDefinition);
 
 		for (Map.Entry
@@ -691,8 +687,7 @@ public class ObjectDefinitionLocalServiceImpl
 			companyId -> {
 				List<ObjectDefinition> objectDefinitions =
 					objectDefinitionLocalService.getObjectDefinitions(
-						companyId, true, false,
-						WorkflowConstants.STATUS_APPROVED);
+						companyId, true, WorkflowConstants.STATUS_APPROVED);
 
 				for (ObjectDefinition objectDefinition : objectDefinitions) {
 					serviceRegistrationsMap.put(

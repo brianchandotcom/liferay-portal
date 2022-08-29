@@ -1858,6 +1858,15 @@ definition {
 
 	@summary = "Log into Liferay using URL navigation"
 	macro firstLoginPG {
+		var appServerType = PropsUtil.get("app.server.type");
+
+		if ("${appServerType}" == "weblogic") {
+
+			// Pausing 2 seconds due to LPS-159595
+
+			Pause(locator1 = "2000");
+		}
+
 		if (isSet(virtualHostsURL)) {
 			Navigator.openSpecificURL(
 				domain = "${domain}",

@@ -5,6 +5,15 @@ definition {
 	var userPasswordReminderAnswer = "test";
 
 	macro _signIn {
+		var appServerType = PropsUtil.get("app.server.type");
+
+		if ("${appServerType}" == "weblogic") {
+
+			// Pausing 2 seconds due to LPS-159595
+
+			Pause(locator1 = "2000");
+		}
+
 		if (isSet(virtualHostsURL)) {
 			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}

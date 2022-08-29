@@ -100,7 +100,7 @@ definition {
 				User.firstLoginUI(
 					password = "test",
 					specificURL = "http://www.able.com:8080",
-					userEmailAddress = "test@able.com");
+					userEmailAddress = "test@www.able.com");
 			}
 		}
 
@@ -146,7 +146,7 @@ definition {
 				User.firstLoginUI(
 					password = "test",
 					specificURL = "http://www.able.com:8080",
-					userEmailAddress = "test@able.com");
+					userEmailAddress = "test@www.able.com");
 			}
 		}
 

@@ -440,6 +440,22 @@ definition {
 		Click(locator1 = "ACSegments#SEGMENT_ELLIPSIS");
 	}
 
+	macro clickOnDistributionBar {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		while (IsElementNotPresent(index = "${index}", locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR")) {
+			TestUtils.hardRefresh();
+
+			ACUtils.waitForChartLoad();
+		}
+
+		Click(
+			index = "${index}",
+			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
+	}
+
 	macro closeAllSessions {
 		AntCommand(
 			locator1 = "build-test.xml",
@@ -1122,6 +1138,13 @@ definition {
 		}
 	}
 
+	macro waitForChartLoad {
+
+		// The pause is necessary because the bar takes a while to load into the chart. For more information about pause see LRAC-9517
+
+		Pause(locator1 = "2000");
+	}
+
 	macro waitForClearProperty {
 
 		// This pause is necessary as it takes time for the data to be cleared from the property. See LRAC-11595
@@ -1153,29 +1176,6 @@ definition {
 
 			Pause(locator1 = "5000");
 		}
-	}
-
-	macro waitForChartLoad {
-
-		// The pause is necessary because the bar takes a while to load into the chart. For more information about pause see LRAC-9517
-
-		Pause(locator1 = "2000");
-	}
-
-	macro clickOnDistributionBar {
-		if (!(isSet(index))) {
-			var index = "1";
-		}
-
-		while (IsElementNotPresent(locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR",index = "${index}")) {
-			TestUtils.hardRefresh();
-
-			ACUtils.waitForChartLoad();
-		}
-
-		Click(
-			index = "${index}",
-			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
 	}
 
 }

@@ -229,6 +229,27 @@ definition {
 			value1 = "${fillColor}");
 	}
 
+	macro viewDistributionBarByAttribute {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		while (IsElementNotPresent(index = "${index}", locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR")) {
+			TestUtils.hardRefresh();
+
+			ACUtils.waitForChartLoad();
+		}
+
+		MouseOver.mouseUp(
+			index = "${index}",
+			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
+
+		AssertElementPresent(
+			key_value = "${value}",
+			key_visitors = "${type}",
+			locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
+	}
+
 	macro viewIndividualDetailsCard {
 		AssertVisible(locator1 = "ACIndividualsDashboard#INDIVIDUAL_DETAILS_CARD_AVATAR");
 
@@ -330,27 +351,6 @@ definition {
 
 			var i = StringUtil.valueOf("${i}");
 		}
-	}
-
-	macro viewDistributionBarByAttribute {
-		if (!(isSet(index))) {
-			var index = "1";
-		}
-
-		while (IsElementNotPresent(locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR",index = "${index}")) {
-			TestUtils.hardRefresh();
-
-			ACUtils.waitForChartLoad();
-		}
-
-		MouseOver.mouseUp(
-			index = "${index}",
-			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
-
-		AssertElementPresent(
-			key_value = "${value}",
-			key_visitors = "${type}",
-			locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
 	}
 
 }

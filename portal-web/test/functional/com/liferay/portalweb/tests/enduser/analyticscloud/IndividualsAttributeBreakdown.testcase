@@ -184,61 +184,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9000 | Test Summary: As a Business User, I should be able to select different tabs in breakdown"
-	@priority = "3"
-	test SelectDifferentTabsInbreakdown {
-		task ("View the blog page") {
-			ACUtils.navigateToSitePageWithUser(
-				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
-				emailList = "ac@liferay.com",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch to new property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-		}
-
-		task ("Navigate to the Individuals dashboard") {
-			ACNavigation.goToIndividuals();
-		}
-
-		task ("Add the first breakdown") {
-			ACSegments.addBreakdownByAttribute(
-				attribute = "email",
-				breakdownName = "Breakdown by Email");
-		}
-
-		task ("Add the second breakdown") {
-			ACSegments.addBreakdownByAttribute(
-				attribute = "familyName",
-				breakdownName = "Breakdown by Family Name");
-		}
-
-		task ("Switch to the first breakdown") {
-			ACIndividualsDashboard.clickBreakdownTab(breakdownName = "Breakdown by Email");
-
-			ACIndividualsDashboard.viewBreakdownRecharts(
-				fillColor = "#4B9BFF",
-				tick = "ac@liferay.com");
-		}
-
-		task ("Switch to the second breakdown") {
-			ACIndividualsDashboard.clickBreakdownTab(breakdownName = "Breakdown by Family Name");
-
-			ACIndividualsDashboard.viewBreakdownRecharts(
-				fillColor = "#4B9BFF",
-				tick = "ac");
-		}
-	}
-
 	@description = "Bug: LRAC-11573 | Automation ID: LRAC-11825 | Test Summary: Check that the number of members shown in the chart is equal to the number of members shown in the chart's details sidebar"
 	@priority = "5"
 	test DistributionChartShowsSameAmountOfMembersAsSidebar {
@@ -262,7 +207,7 @@ definition {
 		task ("Sync the Contact Data") {
 			ACDXPSettings.syncNewContactData();
 		}
-		
+
 		task ("View the blog page with the users") {
 			ACUtils.navigateToSitePageWithUser(
 				actionType = "View Blog",
@@ -317,6 +262,61 @@ definition {
 
 		task ("Check that the number of users shown in the sidebar list is correct") {
 			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entry.");
+		}
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9000 | Test Summary: As a Business User, I should be able to select different tabs in breakdown"
+	@priority = "3"
+	test SelectDifferentTabsInbreakdown {
+		task ("View the blog page") {
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				emailList = "ac@liferay.com",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+		}
+
+		task ("Add the first breakdown") {
+			ACSegments.addBreakdownByAttribute(
+				attribute = "email",
+				breakdownName = "Breakdown by Email");
+		}
+
+		task ("Add the second breakdown") {
+			ACSegments.addBreakdownByAttribute(
+				attribute = "familyName",
+				breakdownName = "Breakdown by Family Name");
+		}
+
+		task ("Switch to the first breakdown") {
+			ACIndividualsDashboard.clickBreakdownTab(breakdownName = "Breakdown by Email");
+
+			ACIndividualsDashboard.viewBreakdownRecharts(
+				fillColor = "#4B9BFF",
+				tick = "ac@liferay.com");
+		}
+
+		task ("Switch to the second breakdown") {
+			ACIndividualsDashboard.clickBreakdownTab(breakdownName = "Breakdown by Family Name");
+
+			ACIndividualsDashboard.viewBreakdownRecharts(
+				fillColor = "#4B9BFF",
+				tick = "ac");
 		}
 	}
 

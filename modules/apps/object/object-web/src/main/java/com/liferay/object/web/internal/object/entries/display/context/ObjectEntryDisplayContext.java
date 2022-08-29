@@ -385,6 +385,8 @@ public class ObjectEntryDisplayContext {
 					"selectRelatedModalEntry",
 				infoItemItemSelectorCriterion)
 		).setParameter(
+			"groupId", _getGroupId()
+		).setParameter(
 			"objectDefinitionId",
 			() -> {
 				ObjectDefinition objectDefinition1 =

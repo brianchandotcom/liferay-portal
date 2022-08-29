@@ -952,6 +952,12 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItem.setDiscountManuallyAdjusted(true);
 		}
 
+		if (_isPriceChanged(
+				finalPrice, promoPrice, unitPrice, commerceOrderItem)) {
+
+			commerceOrderItem.setPriceManuallyAdjusted(true);
+		}
+
 		commerceOrderItem.setDiscountAmount(
 			(BigDecimal)GetterUtil.get(discountAmount, BigDecimal.ZERO));
 		commerceOrderItem.setDiscountPercentageLevel1(
@@ -1003,6 +1009,14 @@ public class CommerceOrderItemLocalServiceImpl
 				commerceOrderItem)) {
 
 			commerceOrderItem.setDiscountManuallyAdjusted(true);
+		}
+
+		if (_isPriceChanged(
+				finalPrice, finalPriceWithTaxAmount, promoPrice,
+				promoPriceWithTaxAmount, unitPrice, unitPriceWithTaxAmount,
+				commerceOrderItem)) {
+
+			commerceOrderItem.setPriceManuallyAdjusted(true);
 		}
 
 		commerceOrderItem.setDiscountAmount(
@@ -1076,6 +1090,10 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
+		if (_isPriceChanged(unitPrice, commerceOrderItem)) {
+			commerceOrderItem.setPriceManuallyAdjusted(true);
+		}
+
 		commerceOrderItem.setUnitPrice(unitPrice);
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
@@ -1089,6 +1107,10 @@ public class CommerceOrderItemLocalServiceImpl
 
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		if (_isPriceChanged(unitPrice, commerceOrderItem)) {
+			commerceOrderItem.setPriceManuallyAdjusted(true);
+		}
 
 		_updateBookedQuantity(
 			userId, commerceOrderItem, commerceOrderItem.getBookedQuantityId(),
@@ -1109,6 +1131,10 @@ public class CommerceOrderItemLocalServiceImpl
 
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		if (_isPriceChanged(unitPrice, commerceOrderItem)) {
+			commerceOrderItem.setPriceManuallyAdjusted(true);
+		}
 
 		_updateBookedQuantity(
 			userId, commerceOrderItem, commerceOrderItem.getBookedQuantityId(),
@@ -1609,6 +1635,72 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItem.getDiscountAmount());
 
 		if (discountAmountCompareTo != 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isPriceChanged(
+		BigDecimal finalPrice, BigDecimal finalPriceWithTaxAmount,
+		BigDecimal promoPrice, BigDecimal promoPriceWithTaxAmount,
+		BigDecimal unitPrice, BigDecimal unitPriceWithTaxAmount,
+		CommerceOrderItem commerceOrderItem) {
+
+		int finalPriceCompareTo = finalPrice.compareTo(
+			commerceOrderItem.getFinalPrice());
+		int promoPriceCompareTo = promoPrice.compareTo(
+			commerceOrderItem.getPromoPrice());
+		int unitPriceCompareTo = unitPrice.compareTo(
+			commerceOrderItem.getUnitPrice());
+		int finalPriceWithTaxAmountCompareTo =
+			finalPriceWithTaxAmount.compareTo(
+				commerceOrderItem.getFinalPriceWithTaxAmount());
+		int promoPriceWithTaxAmountCompareTo =
+			promoPriceWithTaxAmount.compareTo(
+				commerceOrderItem.getPromoPriceWithTaxAmount());
+		int unitPriceWithTaxAmountCompareTo = unitPriceWithTaxAmount.compareTo(
+			commerceOrderItem.getUnitPriceWithTaxAmount());
+
+		if ((finalPriceCompareTo != 0) || (promoPriceCompareTo != 0) ||
+			(unitPriceCompareTo != 0) ||
+			(finalPriceWithTaxAmountCompareTo != 0) ||
+			(promoPriceWithTaxAmountCompareTo != 0) ||
+			(unitPriceWithTaxAmountCompareTo != 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isPriceChanged(
+		BigDecimal finalPrice, BigDecimal promoPrice, BigDecimal unitPrice,
+		CommerceOrderItem commerceOrderItem) {
+
+		int finalPriceCompareTo = finalPrice.compareTo(
+			commerceOrderItem.getFinalPrice());
+		int promoPriceCompareTo = promoPrice.compareTo(
+			commerceOrderItem.getPromoPrice());
+		int unitPriceCompareTo = unitPrice.compareTo(
+			commerceOrderItem.getUnitPrice());
+
+		if ((finalPriceCompareTo != 0) || (promoPriceCompareTo != 0) ||
+			(unitPriceCompareTo != 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isPriceChanged(
+		BigDecimal unitPrice, CommerceOrderItem commerceOrderItem) {
+
+		int unitPriceCompareTo = unitPrice.compareTo(
+			commerceOrderItem.getUnitPrice());
+
+		if (unitPriceCompareTo != 0) {
 			return true;
 		}
 

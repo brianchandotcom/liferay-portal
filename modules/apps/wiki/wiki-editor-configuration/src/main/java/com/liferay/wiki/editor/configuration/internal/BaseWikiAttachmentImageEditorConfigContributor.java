@@ -16,6 +16,7 @@ package com.liferay.wiki.editor.configuration.internal;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.constants.ItemSelectorCriterionConstants;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
@@ -134,7 +135,8 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 
 		ItemSelectorCriterion itemSelectorCriterion =
 			new UploadItemSelectorCriterion(
-				null, WikiPortletKeys.WIKI,
+				ItemSelectorCriterionConstants.MIME_TYPE_RESTRICTION_IMAGE,
+				WikiPortletKeys.WIKI,
 				PortletURLBuilder.create(
 					requestBackedPortletURLFactory.createActionURL(
 						WikiPortletKeys.WIKI)

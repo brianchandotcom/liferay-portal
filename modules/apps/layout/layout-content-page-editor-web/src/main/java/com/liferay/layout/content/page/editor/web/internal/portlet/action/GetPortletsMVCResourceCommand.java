@@ -40,9 +40,11 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -265,7 +267,9 @@ public class GetPortletsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		Set<String> portletIds = portletCategory.getPortletIds();
 
-		if (Objects.equals(portletCategory.getName(), "category.highlighted")) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158737")) &&
+			Objects.equals(portletCategory.getName(), "category.highlighted")) {
+
 			portletIds = highlightedPortletIds;
 		}
 

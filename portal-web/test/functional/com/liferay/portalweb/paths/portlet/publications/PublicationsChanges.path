@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>MESSAGE_NO_CHANGES</td>
-	<td>//div[contains(@class, 'taglib-empty-result-message')]/div[contains(.,'No changes were found.')]</td>
+	<td>//div[contains(@class, 'taglib-empty-result-message')]/div[contains(.,'No changes were found.')] | //div[contains(@class, 'taglib-empty-result-message')]/div[contains(.,'There are no changes to display in this view.')]</td>
 	<td></td>
 </tr>
 <tr>

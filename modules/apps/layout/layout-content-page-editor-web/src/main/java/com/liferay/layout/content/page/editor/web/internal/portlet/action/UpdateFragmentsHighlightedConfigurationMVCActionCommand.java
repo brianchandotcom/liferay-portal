@@ -30,12 +30,14 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -44,6 +46,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -91,8 +94,78 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 			_updateFragmentsHighlightedConfiguration(actionRequest));
 	}
 
+	private String _getFragmentEntryKey(ActionRequest actionRequest) {
+		String fragmentEntryKey = ParamUtil.getString(
+			actionRequest, "fragmentEntryKey");
+
+		if (Validator.isNull(fragmentEntryKey)) {
+			return null;
+		}
+
+		Map<String, Map<String, Object>> layoutElementMaps =
+			_getLayoutElementMaps();
+
+		if (layoutElementMaps.containsKey(fragmentEntryKey)) {
+			return fragmentEntryKey;
+		}
+
+		FragmentRenderer fragmentRenderer =
+			_fragmentRendererTracker.getFragmentRenderer(fragmentEntryKey);
+
+		if (fragmentRenderer != null) {
+			return fragmentEntryKey;
+		}
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorTracker.getFragmentEntry(
+				fragmentEntryKey);
+
+		if (fragmentEntry != null) {
+			return fragmentEntryKey;
+		}
+
+		FragmentComposition fragmentComposition =
+			_fragmentCollectionContributorTracker.getFragmentComposition(
+				fragmentEntryKey);
+
+		if (fragmentComposition != null) {
+			return fragmentEntryKey;
+		}
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
+			groupId, fragmentEntryKey);
+
+		if (fragmentEntry != null) {
+			return _getFragmentUniqueKey(fragmentEntryKey, groupId);
+		}
+
+		fragmentComposition =
+			_fragmentCompositionService.fetchFragmentComposition(
+				groupId, fragmentEntryKey);
+
+		if (fragmentComposition != null) {
+			return _getFragmentUniqueKey(fragmentEntryKey, groupId);
+		}
+
+		return null;
+	}
+
+	private String _getFragmentUniqueKey(
+		String fragmentEntryKey, long groupId) {
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return fragmentEntryKey;
+		}
+
+		return fragmentEntryKey + StringPool.POUND + group.getGroupKey();
+	}
+
 	private JSONArray _getHighlightedFragmentsJSONArray(
-		long groupId, Set<String> highlightedFragmentEntryKeys,
+		Set<String> highlightedFragmentEntryKeys,
 		HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay =
@@ -106,6 +179,23 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 			new TreeMap<>();
 
 		for (String key : highlightedFragmentEntryKeys) {
+			int pos = key.indexOf(StringPool.POUND);
+
+			long groupId = 0;
+
+			if (pos > 0) {
+				String groupKey = GetterUtil.getString(key.substring(pos + 1));
+
+				Group group = _groupLocalService.fetchGroup(
+					themeDisplay.getCompanyId(), groupKey);
+
+				if (group != null) {
+					groupId = group.getGroupId();
+				}
+
+				key = key.substring(0, pos);
+			}
+
 			if (!_isAllowedFragmentEntryKey(
 					key, masterDropZoneLayoutStructureItem)) {
 
@@ -328,8 +418,7 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 			ActionRequest actionRequest)
 		throws Exception {
 
-		String fragmentEntryKey = ParamUtil.getString(
-			actionRequest, "fragmentEntryKey");
+		String fragmentEntryKey = _getFragmentEntryKey(actionRequest);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
@@ -369,7 +458,6 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 		return JSONUtil.put(
 			"highlightedFragments",
 			_getHighlightedFragmentsJSONArray(
-				ParamUtil.getLong(actionRequest, "groupId"),
 				highlightedFragmentEntryKeys, httpServletRequest));
 	}
 

@@ -261,11 +261,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INFO_ACTIVE</td>
-	<td>//*[contains(@class,'active') and contains(@class,'open') and @data-qa-id='infoButton']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MARK_AS_READ</td>
 	<td>//nav[contains(@class,'management-bar')]//button[*[name()='svg'][contains(@class,'envelope-open')]]</td>
 	<td></td>

@@ -126,9 +126,39 @@ definition {
     @description = "Automation ID: LPS-149754 | Test Summary: Verify that the text in the upper right corner is similar to 'Support Seats: 1 of 3 available', if the project has a support seats limit"
     @priority = "4"
     test CanViewTextIfProjectHasLimitOfSupportSeats {
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-        // TODO LPS-149754 archive pending implementation
+			CustomerPortal.accountTableProject(title = "Test Account DXP");
 
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Go to CP2.0") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		}
+
+		task ("Login in Okta") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
+
+			Refresh();
+		}
+
+		task ("Get into the project and go to Team Members page") {
+			CP2TeamMembers.teamMembersFlow();
+		}
+
+		task ("Assert in the number of support seats available") {
+			CP2TeamMembers.viewSupportSeatsAvailable(available = "2 of 3 available");
+		}
+
+		task ("Delete the entries and objects created") {
+			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-002");
+		}
     }
 
     @description = "Automation ID: LPS-149756 | Test Summary: Verify if the '+ Invite' button is visible for administrator roles only"

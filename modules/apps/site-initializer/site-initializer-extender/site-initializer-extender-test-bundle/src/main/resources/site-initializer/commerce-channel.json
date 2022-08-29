@@ -1,6 +1,6 @@
 {
 	"currencyCode": "USD",
-	"externalReferenceCode": "TESTVOC0001",
+	"externalReferenceCode": "TESTCOMMERCECHANNEL",
 	"name": "Test Commerce Channel",
 	"type": "site"
 }

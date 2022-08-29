@@ -305,12 +305,10 @@ definition {
 	@priority = "3"
 	test CachedDataAlert {
 		task ("Create second content page") {
-			task ("Create content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Second Page",
 				type = "content");
-		}
 		}
 
 		task ("Set a custom page as canonical URL to have data already loaded") {

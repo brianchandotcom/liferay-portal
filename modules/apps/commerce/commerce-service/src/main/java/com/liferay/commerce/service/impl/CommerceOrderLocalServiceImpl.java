@@ -915,6 +915,23 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	@Override
+	public void removeCommerceOrderAddresses(long addressId)
+		throws PortalException {
+
+		List<CommerceOrder> commerceOrders =
+			commerceOrderLocalService.getCommerceOrdersByBillingAddress(
+				addressId);
+
+		removeCommerceOrderAddresses(commerceOrders, addressId);
+
+		commerceOrders =
+			commerceOrderLocalService.getCommerceOrdersByShippingAddress(
+				addressId);
+
+		removeCommerceOrderAddresses(commerceOrders, addressId);
+	}
+
+	@Override
 	public CommerceOrder reorderCommerceOrder(
 			long userId, long commerceOrderId, CommerceContext commerceContext)
 		throws PortalException {
@@ -1006,6 +1023,24 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setShippingOptionName(null);
 
 		return commerceOrderPersistence.update(commerceOrder);
+	}
+
+	@Override
+	public void resetCommerceOrderShippingByAddressId(long addressId)
+		throws PortalException {
+
+		List<CommerceOrder> commerceOrders =
+			commerceOrderLocalService.getCommerceOrdersByShippingAddress(
+				addressId);
+
+		for (CommerceOrder commerceOrder : commerceOrders) {
+			if (!commerceOrder.isDraft() && !commerceOrder.isOpen()) {
+				continue;
+			}
+
+			commerceOrderLocalService.resetCommerceOrderShipping(
+				commerceOrder.getCommerceOrderId());
+		}
 	}
 
 	@Override
@@ -1844,6 +1879,42 @@ public class CommerceOrderLocalServiceImpl
 		return _workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 			group.getCompanyId(), group.getGroupId(),
 			CommerceOrder.class.getName(), 0, typePK);
+	}
+
+	protected void removeCommerceOrderAddresses(
+			List<CommerceOrder> commerceOrders, long addressId)
+		throws PortalException {
+
+		for (CommerceOrder commerceOrder : commerceOrders) {
+			long billingAddressId = commerceOrder.getBillingAddressId();
+			long shippingAddressId = commerceOrder.getShippingAddressId();
+
+			long commerceShippingMethodId =
+				commerceOrder.getCommerceShippingMethodId();
+			String shippingOptionName = commerceOrder.getShippingOptionName();
+			BigDecimal shippingPrice = commerceOrder.getShippingAmount();
+
+			if (billingAddressId == addressId) {
+				billingAddressId = 0;
+			}
+
+			if (shippingAddressId == addressId) {
+				shippingAddressId = 0;
+
+				commerceShippingMethodId = 0;
+				shippingOptionName = null;
+				shippingPrice = BigDecimal.ZERO;
+			}
+
+			commerceOrderLocalService.updateCommerceOrder(
+				null, commerceOrder.getCommerceOrderId(), billingAddressId,
+				commerceShippingMethodId, shippingAddressId,
+				commerceOrder.getAdvanceStatus(),
+				commerceOrder.getCommercePaymentMethodKey(),
+				commerceOrder.getPurchaseOrderNumber(), shippingPrice,
+				shippingOptionName, commerceOrder.getSubtotal(),
+				commerceOrder.getTotal(), null);
+		}
 	}
 
 	protected void sendPaymentStatusMessage(

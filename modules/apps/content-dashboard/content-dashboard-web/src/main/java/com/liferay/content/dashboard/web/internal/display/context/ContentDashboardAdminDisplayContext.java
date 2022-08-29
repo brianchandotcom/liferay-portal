@@ -17,6 +17,7 @@ package com.liferay.content.dashboard.web.internal.display.context;
 import com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.content.dashboard.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
@@ -241,10 +242,16 @@ public class ContentDashboardAdminDisplayContext {
 						Class<?> genericClass = GenericUtil.getGenericClass(
 							contentDashboardItemSubtype);
 
+						ClassNameClassPKInfoItemIdentifier
+							classNameClassPKInfoItemIdentifier =
+								(ClassNameClassPKInfoItemIdentifier)
+									infoItemReference.getInfoItemIdentifier();
+
 						return JSONUtil.put(
 							"className", infoItemReference.getClassName()
 						).put(
-							"classPK", infoItemReference.getClassPK()
+							"classPK",
+							classNameClassPKInfoItemIdentifier.getClassPK()
 						).put(
 							"entryClassName", genericClass.getName()
 						).toString();

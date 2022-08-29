@@ -310,6 +310,11 @@
 	<td>//*[contains(@class, 'alert-notifications')]//*[text()='${key_alertText}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ANY</td>
+	<td>//p[contains(text(), 'Support Seat')]//..//*[*[name()='svg'][contains(@class,'lexicon-icon-info-circle')]]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

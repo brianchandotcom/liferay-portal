@@ -21,6 +21,7 @@ import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import propsTransformer from '../KBDropdownPropsTransformer';
 import normalizeDropdownItems from './normalizeDropdownItems';
 
 const ITEM_TYPES_SYMBOL = {
@@ -67,14 +68,24 @@ export default function NavigationPanel({items, selectedItemId}) {
 
 						<ClayTreeView.Group items={item.children}>
 							{(item) => {
+								let transformedActions;
+
+								if (item?.actions?.length) {
+									transformedActions = propsTransformer({
+										items: normalizeDropdownItems(
+											item.actions
+										),
+									});
+								}
+
 								return (
 									<ClayTreeView.Item
 										actions={
 											item?.actions?.length && (
 												<ClayDropDownWithItems
-													items={normalizeDropdownItems(
-														item.actions
-													)}
+													items={
+														transformedActions.items
+													}
 													trigger={
 														<ClayButtonWithIcon
 															displayType="unstyled"

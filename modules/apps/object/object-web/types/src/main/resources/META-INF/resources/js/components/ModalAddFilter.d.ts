@@ -22,11 +22,13 @@ export declare function ModalAddFilter({
 	editingFilter,
 	editingObjectFieldName,
 	filterOperators,
+	filterTypeRequired,
 	header,
 	objectFields,
 	observer,
 	onClose,
 	onSave,
+	validate,
 	workflowStatusJSONArray,
 }: IProps): JSX.Element;
 interface IProps {
@@ -35,6 +37,7 @@ interface IProps {
 	editingFilter: boolean;
 	editingObjectFieldName: string;
 	filterOperators: TFilterOperators;
+	filterTypeRequired?: boolean;
 	header: string;
 	objectFields: ObjectField[];
 	observer: Observer;
@@ -48,11 +51,37 @@ interface IProps {
 		valueList?: IItem[],
 		value?: string
 	) => void;
+	validate: ({
+		checkedItems,
+		disableDateValues,
+		items,
+		selectedFilterBy,
+		selectedFilterType,
+		setErrors,
+		value,
+	}: FilterValidation) => FilterErrors;
 	workflowStatusJSONArray: TWorkflowStatus[];
 }
 interface IItem extends LabelValueObject {
 	checked?: boolean;
 }
+export declare type FilterErrors = {
+	endDate?: string;
+	items?: string;
+	selectedFilterBy?: string;
+	selectedFilterType?: string;
+	startDate?: string;
+	value?: string;
+};
+export declare type FilterValidation = {
+	checkedItems: IItem[];
+	disableDateValues?: boolean;
+	items: IItem[];
+	selectedFilterBy?: ObjectField;
+	selectedFilterType?: LabelValueObject | null;
+	setErrors: (value: FilterErrors) => void;
+	value?: string;
+};
 declare type TCurrentFilter = {
 	definition: {
 		[key: string]: string[];

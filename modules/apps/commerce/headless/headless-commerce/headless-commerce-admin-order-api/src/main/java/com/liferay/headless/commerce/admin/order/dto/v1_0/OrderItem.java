@@ -211,6 +211,36 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal discountAmount;
 
+	@Schema(example = "true")
+	public Boolean getDiscountManuallyAdjusted() {
+		return discountManuallyAdjusted;
+	}
+
+	public void setDiscountManuallyAdjusted(Boolean discountManuallyAdjusted) {
+		this.discountManuallyAdjusted = discountManuallyAdjusted;
+	}
+
+	@JsonIgnore
+	public void setDiscountManuallyAdjusted(
+		UnsafeSupplier<Boolean, Exception>
+			discountManuallyAdjustedUnsafeSupplier) {
+
+		try {
+			discountManuallyAdjusted =
+				discountManuallyAdjustedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean discountManuallyAdjusted;
+
 	@DecimalMin("0")
 	@Schema(example = "20")
 	@Valid
@@ -783,6 +813,35 @@ public class OrderItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long orderId;
 
+	@Schema(example = "true")
+	public Boolean getPriceManuallyAdjusted() {
+		return priceManuallyAdjusted;
+	}
+
+	public void setPriceManuallyAdjusted(Boolean priceManuallyAdjusted) {
+		this.priceManuallyAdjusted = priceManuallyAdjusted;
+	}
+
+	@JsonIgnore
+	public void setPriceManuallyAdjusted(
+		UnsafeSupplier<Boolean, Exception>
+			priceManuallyAdjustedUnsafeSupplier) {
+
+		try {
+			priceManuallyAdjusted = priceManuallyAdjustedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean priceManuallyAdjusted;
+
 	@Schema(example = "Order item printed note")
 	public String getPrintedNote() {
 		return printedNote;
@@ -1312,6 +1371,16 @@ public class OrderItem implements Serializable {
 			sb.append(discountAmount);
 		}
 
+		if (discountManuallyAdjusted != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountManuallyAdjusted\": ");
+
+			sb.append(discountManuallyAdjusted);
+		}
+
 		if (discountPercentageLevel1 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1506,6 +1575,16 @@ public class OrderItem implements Serializable {
 			sb.append("\"orderId\": ");
 
 			sb.append(orderId);
+		}
+
+		if (priceManuallyAdjusted != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceManuallyAdjusted\": ");
+
+			sb.append(priceManuallyAdjusted);
 		}
 
 		if (printedNote != null) {

@@ -1415,7 +1415,7 @@ definition {
 			groupName = "Test Site Name",
 			sourceURL = "google");
 
-		Navigator.openSpecificURL(url = "${portalURL}/hu/google");
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/hu/google");
 
 		AssertLocation(value1 = "https://www.google.hu/");
 	}

@@ -1037,7 +1037,11 @@ public class ContentPageEditorDisplayContext {
 
 		fragmentCollectionMapsList.addAll(fragmentCollectionMaps.values());
 
-		if (!SetUtil.isEmpty(_getHighlightedFragmentEntryKeys())) {
+		if (GetterUtil.getBoolean(
+				com.liferay.portal.kernel.util.PropsUtil.get(
+					"feature.flag.LPS-158737")) &&
+			!SetUtil.isEmpty(_getHighlightedFragmentEntryKeys())) {
+
 			List<Map<String, Object>> highlightedFragmentMapsList =
 				new LinkedList<>();
 

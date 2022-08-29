@@ -2831,6 +2831,22 @@ plugins.includes=</echo>
 					/>
 				</tar>
 
+				<zip
+					destfile="dist/${zip.executable.file}-${lp.version}.zip"
+				>
+					<zipfileset
+						dir="dist/${tstamp.value}/liferay-portal-${lp.version}"
+						excludes="**/*.sh"
+						prefix="liferay-portal-${lp.version}"
+					/>
+					<zipfileset
+						dir="dist/${tstamp.value}/liferay-portal-${lp.version}"
+						filemode="744"
+						includes="**/*.sh"
+						prefix="liferay-portal-${lp.version}"
+					/>
+				</zip>
+
 				<delete dir="dist/${tstamp.value}" />
 			</then>
 		</if>

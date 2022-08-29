@@ -143,6 +143,29 @@ public class OrderItem implements Cloneable, Serializable {
 
 	protected BigDecimal discountAmount;
 
+	public Boolean getDiscountManuallyAdjusted() {
+		return discountManuallyAdjusted;
+	}
+
+	public void setDiscountManuallyAdjusted(Boolean discountManuallyAdjusted) {
+		this.discountManuallyAdjusted = discountManuallyAdjusted;
+	}
+
+	public void setDiscountManuallyAdjusted(
+		UnsafeSupplier<Boolean, Exception>
+			discountManuallyAdjustedUnsafeSupplier) {
+
+		try {
+			discountManuallyAdjusted =
+				discountManuallyAdjustedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean discountManuallyAdjusted;
+
 	public BigDecimal getDiscountPercentageLevel1() {
 		return discountPercentageLevel1;
 	}
@@ -561,6 +584,28 @@ public class OrderItem implements Cloneable, Serializable {
 	}
 
 	protected Long orderId;
+
+	public Boolean getPriceManuallyAdjusted() {
+		return priceManuallyAdjusted;
+	}
+
+	public void setPriceManuallyAdjusted(Boolean priceManuallyAdjusted) {
+		this.priceManuallyAdjusted = priceManuallyAdjusted;
+	}
+
+	public void setPriceManuallyAdjusted(
+		UnsafeSupplier<Boolean, Exception>
+			priceManuallyAdjustedUnsafeSupplier) {
+
+		try {
+			priceManuallyAdjusted = priceManuallyAdjustedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean priceManuallyAdjusted;
 
 	public String getPrintedNote() {
 		return printedNote;

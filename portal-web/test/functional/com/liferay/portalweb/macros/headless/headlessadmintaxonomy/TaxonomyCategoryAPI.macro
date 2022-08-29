@@ -1,0 +1,58 @@
+definition {
+
+	macro _createTaxonomyCategory {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+			-d {
+				"externalReferenceCode": "${externalReferenceCode}",
+				"name": "${name}"
+			}
+		''';
+
+		var curl = JSONCurlUtil.post("${curl}", "$.id");
+
+		return "${curl}";
+	}
+
+	macro _getTaxonomyCategory {
+		Variables.assertDefined(parameterList = "${taxonomyCategoryId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-admin-taxonomy/v1.0/taxonomy-categories/${taxonomyCategoryId} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
+	macro createTaxonomyCategory {
+		Variables.assertDefined(parameterList = "${taxonomyVocabularyId},${name}");
+
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
+		var taxonomyCategoryId = TaxonomyCategoryAPI._createTaxonomyCategory(
+			externalReferenceCode = "${externalReferenceCode}",
+			name = "${name}",
+			taxonomyVocabularyId = "${taxonomyVocabularyId}");
+
+		return "${taxonomyCategoryId}";
+	}
+
+	macro getTaxonomyCategory {
+		var getTaxonomyCategoryDetails = TaxonomyCategoryAPI._getTaxonomyCategory(taxonomyCategoryId = "${taxonomyCategoryId}");
+
+		return "${getTaxonomyCategoryDetails}";
+	}
+
+}

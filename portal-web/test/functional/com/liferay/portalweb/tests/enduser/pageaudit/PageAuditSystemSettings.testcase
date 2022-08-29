@@ -36,10 +36,599 @@ definition {
 		}
 	}
 
-    @ignore = "true"
-    test TestName {
-        property portal.acceptance = "false";
+	@description = "LPS-119066: Given the Page Audit Panel
+	When the audit is launched (the API is called)
+	Then a progress bar shows and moves forward while retrieving the data until they can be shown"
+	@priority = "3"
+	@uitest
+	test AssertProgressBar {
+		property test.name.skip.portal.instance = "PageAudit#AssertProgressBar";
 
-        //To be implemented in next commits
-    }
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSystemSettings();
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+		task ("Open Page Audit panel and assert the progress bar") {
+			PageAudit.openPageAuditSidebar();
+
+			ClickNoError(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
+
+			AssertVisible(locator1 = "PageAudit#PROGRESS_BAR");
+		}
+
+		task ("Reset Google PageSpeed API to default at System Settings") {
+			PageAudit.configurationTeardown();
+		}
+	}
+
+    @description = "LPS-134760: Given the Page Audit panel
+	When the API key is set but it is not valid
+	Then the Page Speed API will show a "Show details" link, that will display the info details of the error, provided by the API."
+	@priority = "3"
+	test CheckErrorDetailsDisplayedInvalidApiKey {
+		property test.name.skip.portal.instance = "PageAudit#CheckErrorDetailsDisplayedInvalidApiKey";
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSystemSettings(apiKey = "invalidAPI");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Open Page Audit panel and assert 'Show details' link") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.runPageAudit();
+
+			Button.click(button = "Show Details");
+
+			AssertVisible(
+				errorTitle = "The API key is invalid.",
+				locator1 = "PageAudit#ERROR_WARNING_TITLE");
+
+			AssertVisible(
+				errorMessage = "API key not valid. Please pass a valid API key.",
+				locator1 = "PageAudit#ERROR_WARNING_MESSAGE");
+		}
+
+		task ("Reset Google PageSpeed API to default at System Settings") {
+			PageAudit.configurationTeardown();
+		}
+	}
+
+	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
+	When the value is void ('Choose an option')
+	Then the call is made for Google Page Speed default value - desktop"
+	@priority = "3"
+	test DefaultStrategyAtSystemSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#DefaultStrategyAtSystemSettings";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSystemSettings(preferredStrategy = "Choose an Option");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.runPageAudit(pageName = "Content Page");
+		}
+
+		task ("Assert if a mobile failure is not shown") {
+			AssertElementNotPresent(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
+			AssertElementPresent(
+				failingCheckName = "Invalid Canonical URL",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+		}
+
+		task ("Reset configurations to default") {
+			PageAudit.configurationTeardown();
+		}
+	}
+
+	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
+	When the value is Desktop
+	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are NOT retrieved"
+	@priority = "4"
+	test DesktopStrategyAtSystemSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#DesktopStrategyAtSystemSettings";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSystemSettings(preferredStrategy = "Desktop");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.runPageAudit(pageName = "Content Page");
+		}
+
+		task ("Assert if a mobile failure is not shown") {
+			AssertElementNotPresent(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
+			AssertElementPresent(
+				failingCheckName = "Invalid Canonical URL",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+		}
+
+		task ("Reset configurations to default") {
+			PageAudit.configurationTeardown();
+		}
+	}
+
+	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
+	When the value is Mobile
+	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
+	@priority = "4"
+	test MobileStrategyAtSystemSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#MobileStrategyAtSystemSettings";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSystemSettings(preferredStrategy = "Mobile");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.runPageAudit(pageName = "Content Page");
+		}
+
+		task ("Assert if mobile failure are shown") {
+			AssertElementPresent(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
+			AssertElementPresent(
+				failingCheckName = "Illegible Font Sizes",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+		}
+
+		task ("Reset configurations to default") {
+			PageAudit.configurationTeardown();
+		}
+	}
+
+    @description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the content pages doesn't show"
+	@priority = "3"
+	test PageAuditContentPageDisabled {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#PageAuditContentPageDisabled";
+
+		task ("Disable Google PageSpeed") {
+			PageAudit.disableGooglePageSpeed();
+		}
+
+		task ("Add Content Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page",
+				type = "content");
+		}
+
+		task ("Go to the Content Page and assert the Page Audit panel is not shown") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+	}
+
+	@description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the display pages doesn't show"
+	@priority = "3"
+	test PageAuditDisplayPageDisabled {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#PageAuditDisplayPageDisabled";
+
+		task ("Disable Google PageSpeed") {
+			PageAudit.disableGooglePageSpeed();
+		}
+
+		task ("Create a default Display Page Template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				statusKey = "APPROVED",
+				subType = "Basic Web Content");
+
+			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
+				groupName = "Test Site Name",
+				layoutPageTemplateEntryName = "Display Page Name",
+				type = "Display Page Template");
+		}
+
+		task ("Add Web Content and check it in its display page") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+
+			ContentDashboard.goToContentDashboard();
+
+			LexiconTable.clickTableEntryColumnLink(
+				columnName = "title",
+				tableEntry = "");
+		}
+
+		task ("Assert the Page Audit panel is not shown") {
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+	}
+
+	@description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the widget pages doesn't show"
+	@priority = "3"
+	test PageAuditWidgetPageDisabled {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#PageAuditWidgetPageDisabled";
+
+		task ("Disable Google PageSpeed") {
+			PageAudit.disableGooglePageSpeed();
+		}
+
+		task ("Add Widget Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
+		}
+
+		task ("Assert the Page Audit panel is not shown") {
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+	}
+
+    @description = "LPS-132232: Given the Page Audit Panel
+	When the user opens it and there are no failing elements retrieved for any of the checks
+	Then a message "Your page has no issues" and the matching image show, the two sections SEO and Accessibility show and they are collapsed by default"
+	@priority = "3"
+	@uitest
+	test PageWithNoIssues {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#PageWithNoIssues";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test-no-issues");
+		}
+
+		task ("Enable Google PageSpeed") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSystemSettings();
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+		task ("Open Page Audit panel and assert there are no issues") {
+			PageAudit.runPageAudit(pageName = "Content Page");
+
+			AssertElementPresent(locator1 = "PageAudit#IMAGE_SUCCESS");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#NO_ISSUES_MESSAGE",
+				value1 = "Your page has no issues.");
+		}
+
+		task ("Reset Google PageSpeed API to default at System Settings") {
+			PageAudit.configurationTeardown();
+		}
+	}
+
+	@description = "LPS-125851: Given any value in the Site Scope section
+	When that value has been overwritten in any of the sites
+	Then the value in the site prevails over any changes in the System Settings Site Scope section"
+	@priority = "5"
+	test SiteSettingsHierarchyOverSystemSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#SiteSettingsHierarchyOverSystemSettings";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API by System Settings") {
+			PageAudit.setAPIViaSystemSettings(preferredStrategy = "Desktop");
+		}
+
+		task ("Set Google PageSpeed API by Site Settings and selecting a different strategy") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(preferredStrategy = "Mobile");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.runPageAudit(pageName = "Content Page");
+		}
+
+		task ("Assert if mobile failures are checked") {
+			AssertElementPresent(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
+			AssertElementPresent(
+				failingCheckName = "Illegible Font Sizes",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+		}
+
+		task ("Reset configurations to default") {
+			PageAudit.configurationTeardown();
+		}
+	}
+
+    @description = "LPS-125851: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab isn't visible in the Site settings of any of the sites of the current Instance."
+	@priority = "3"
+	test UncheckedSystemSettingsVirtualInstanceThenNotVisibleAtTabSiteSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsVirtualInstanceThenNotVisibleAtTabSiteSettings";
+
+		task ("Disable Google PageSpeed settings tab in the System Scope section") {
+			PageAudit.disableGooglePageSpeed();
+		}
+
+		task ("Navigate to Site Settings and check if tab is not visible") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Site Settings");
+
+			Click(
+				key_itemName = "Pages",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			AssertElementNotPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Site Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+
+		task ("Enable Google PageSpeed settings tab in the System Scope section") {
+			PageAudit.enableGooglePageSpeed();
+		}
+
+		task ("Navigate to Site Settings and check if tab is visible") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Site Settings");
+
+			Click(
+				key_itemName = "Pages",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			AssertElementPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Site Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+	}
+
+    @description = "LPS-125851: Given the Google PageSpeed settings tab in the 'SITE SCOPE' section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"
+	@priority = "3"
+	test UncheckedSystemSettingsSiteScopeThenUncheckedAtTabSiteSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsSiteScopeThenUncheckedAtTabSiteSettings";
+
+		task ("Disable Google PageSpeed settings tab in the System Scope section") {
+			PageAudit.disableGooglePageSpeed(settingsScope = "Site Scope");
+		}
+
+		task ("Navigate to Site Settings and check if tab is not visible") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Site Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "Site Scope");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "Enable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Disable Google PageSpeed settings tab in the System Scope section") {
+			PageAudit.enableGooglePageSpeed(settingsScope = "Site Scope");
+		}
+
+		task ("Navigate to Site Settings and check if tab is not visible") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Site Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "Site Scope");
+
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "Enable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+	}
+
+	@description = "LPS-125851: Given the Google PageSpeed settings tab in the System Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab isn't visible in the 'SITE SCOPE' section "
+	@priority = "3"
+	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtSiteScope {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsSystemScopeThenNotVisibleAtSiteScope";
+
+		task ("Disable Google PageSpeed settings tab in the System Scope section") {
+			PageAudit.disableGooglePageSpeed(settingsScope = "System Scope");
+		}
+
+		task ("Check if Google PageSpeed Insights tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section") {
+			AssertElementNotPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Site Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+
+		task ("Enable Google PageSpeed settings tab in the System Scope section") {
+			PageAudit.enableGooglePageSpeed(settingsScope = "System Scope");
+		}
+
+		task ("Check if Google PageSpeed Insights tab is visible in the 'VIRTUAL INSTANCE SCOPE' section") {
+			AssertElementPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Site Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+	}
+
+	@description = "LPS-125851: Given the Google PageSpeed settings tab in the System Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section"
+	@priority = "3"
+	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtVirtualInstance {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsSystemScopeThenNotVisibleAtVirtualInstance";
+
+		task ("Disable Google PageSpeed settings tab in the System Scope section") {
+			PageAudit.disableGooglePageSpeed(settingsScope = "System Scope");
+		}
+
+		task ("Check if Google PageSpeed Insights tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section") {
+			AssertElementNotPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+
+		task ("Enable Google PageSpeed settings tab in the System Scope section") {
+			PageAudit.enableGooglePageSpeed(settingsScope = "System Scope");
+		}
+
+		task ("Check if Google PageSpeed Insights tab is visible in the 'VIRTUAL INSTANCE SCOPE' section") {
+			AssertElementPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+	}
+
+	@description = "LPS-128383: Given the PageSpeed Insights settings in the System Settings
+	When Google PageSpeed Insights is not enabled (unchecked)
+	Then the tab Google PageSpeed Insights is not visible from Instance settings"
+	@priority = "4"
+	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtInstanceSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsSystemScopeThenNotVisibleAtInstanceSettings";
+
+		task ("Disable Google PageSpeed settings tab in the System Scope section in System Settings") {
+			PageAudit.disableGooglePageSpeed(settingsScope = "System Scope");
+		}
+
+		task ("Go to Instance Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			Click(
+				key_itemName = "Pages",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+
+		task ("Check if PageSpeed tabs are not visible in Instance Settings") {
+			AssertElementNotPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+
+			AssertElementNotPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Site Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+
+		task ("Enable Google PageSpeed settings tab in the System Scope section") {
+			PageAudit.enableGooglePageSpeed(settingsScope = "System Scope");
+		}
+	}
+
+	@description = "LPS-125851: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab is visible in the 'SITE SCOPE' section "
+	@priority = "3"
+	test UncheckedSystemSettingsVirtualInstanceThenVisibleAtSiteScope {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsVirtualInstanceThenVisibleAtSiteScope";
+
+		task ("Disable Google PageSpeed settings tab in the System Scope section") {
+			PageAudit.disableGooglePageSpeed(settingsScope = "Virtual Instance Scope");
+		}
+
+		task ("Check if Google PageSpeed Insights tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section") {
+			AssertElementNotPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Site Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+
+		task ("Enable Google PageSpeed settings tab again") {
+			Click.javaScriptClick(
+				checkboxName = "Enable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Click(locator1 = "Button#UPDATE");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Check if Google PageSpeed Insights tab is visible in the 'VIRTUAL INSTANCE SCOPE' section") {
+			AssertElementPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Site Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+	}
+
 }

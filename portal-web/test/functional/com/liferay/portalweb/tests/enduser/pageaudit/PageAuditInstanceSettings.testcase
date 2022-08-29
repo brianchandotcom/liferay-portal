@@ -35,11 +35,334 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 	}
+    
+	@description = "LPS-128383: Given the preferred strategy dropdown in the Site Scope section
+	When the value is void ('Choose an option')
+	Then the call is made for Google Page Speed default value - desktop"
+	@priority = "3"
+	test DefaultStrategyAtInstanceSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#DefaultStrategyAtInstanceSettings";
 
-    @ignore = "true"
-    test TestName {
-        property portal.acceptance = "false";
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
 
-        //To be implemented in next commits
-    }
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaInstanceSettings(preferredStrategy = "Choose an Option");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.runPageAudit(pageName = "Content Page");
+		}
+
+		task ("Assert if a mobile failure is not shown") {
+			AssertElementNotPresent(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
+			AssertElementPresent(
+				failingCheckName = "Invalid Canonical URL",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+		}
+
+		task ("Reset configurations to default") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "Site Scope");
+
+			PageAudit.resetDefaultValues();
+		}
+	}
+
+
+	@description = "LPS-128383: Given any value in the Instance settings Site scope section
+	Then all sites shows the same value (also void fields)"
+	@priority = "5"
+	test InstanceSettingsHierarchy {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#InstanceSettingsHierarchy";
+
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaInstanceSettings(preferredStrategy = "Mobile");
+		}
+
+		task ("Go to Site Settings") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Site Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "Site Scope");
+		}
+
+		task ("Check if values are the same as Instance Settings") {
+			AssertTextEquals(
+				locator1 = "PageAudit#API_FIELD",
+				value1 = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+
+			AssertTextEquals(
+				locator1 = "PageAudit#PREFERRED_STRATEGY_OPTION_SELECTED",
+				value1 = "Mobile");
+		}
+
+		task ("Reset configurations to default") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "Site Scope");
+
+			PageAudit.resetDefaultValues();
+		}
+	}
+
+    @description = "LPS-128383: Given the preferred strategy dropdown in the Site Scope section
+	When the value is Mobile
+	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
+	@priority = "4"
+	test MobileStrategyAtInstanceSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#MobileStrategyAtInstanceSettings";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaInstanceSettings(preferredStrategy = "Mobile");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.runPageAudit(pageName = "Content Page");
+		}
+
+		task ("Assert if a mobile failure is not shown") {
+			AssertElementPresent(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
+			AssertElementPresent(
+				failingCheckName = "Illegible Font Sizes",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+		}
+
+		task ("Reset configurations to default") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "Site Scope");
+
+			PageAudit.resetDefaultValues();
+		}
+	}
+
+    @description = "LPS-128383: Given any value in the Instance settings Site scope section
+	When the same value has been overwritten in any of the sites
+	Then the value in the site prevails over any changes in the Instance settings"
+	@priority = "5"
+	test SiteSettingsHierarchyOverInstanceSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#SiteSettingsHierarchyOverInstanceSettings";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API by System Settings") {
+			PageAudit.setAPIViaInstanceSettings(preferredStrategy = "Desktop");
+		}
+
+		task ("Set Google PageSpeed API by Site Settings and selecting a different strategy") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(preferredStrategy = "Mobile");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.runPageAudit(pageName = "Content Page");
+		}
+
+		task ("Assert if mobile failures are checked") {
+			AssertElementPresent(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+
+			AssertElementPresent(
+				failingCheckName = "Illegible Font Sizes",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+		}
+
+		task ("Reset configurations to default") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "Site Scope");
+
+			PageAudit.resetDefaultValues();
+		}
+	}
+
+    @description = "LPS-128383: Given the Google PageSpeed settings tab in the Site Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"
+	@priority = "3"
+	test UncheckedInstanceSettingsSiteScopeThenUncheckedAtSiteSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsSiteScopeThenUncheckedAtSiteSettings";
+
+		task ("Uncheck PageSpeed at Instance Settings") {
+			PageAudit.disableGooglePageSpeedViaInstanceSettings(scope = "Site Scope");
+		}
+
+		task ("Navigate to Site Settings and check if tab is not visible") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Site Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "Site Scope");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "Enable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Reset Instance Settings to default") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "Site Scope");
+
+			PageAudit.resetDefaultValues();
+		}
+	}
+
+	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab won't be visible in the 'SITE SCOPE' section"
+	@ignore = "true"
+	@priority = "3"
+	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteScope {
+
+		// TODO LPS-128383 - Not possible to automate now LPS-135167
+
+	}
+
+	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab won't be visible from the Site settings of any of the sites in the instance"
+	@priority = "3"
+	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteSettings";
+
+		task ("Uncheck PageSpeed at Instance Settings") {
+			PageAudit.disableGooglePageSpeedViaInstanceSettings();
+		}
+
+		task ("Navigate to Site Settings and check if tab is not visible") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Site Settings");
+
+			Click(
+				key_itemName = "Pages",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			AssertElementNotPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Site Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+
+		task ("Reset Instance Settings to default") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "Virtual Instance Scope");
+
+			PageAudit.resetDefaultValues();
+		}
+	}
+
+	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the Page Audit icon won't be visible from the view mode of the pages of any of the sites in the instance"
+	@priority = "3"
+	test UncheckedInstanceSettingsVirtualInstanceThenNotVisiblePageAuditIcon {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsVirtualInstanceThenNotVisiblePageAuditIcon";
+
+		task ("Uncheck PageSpeed at Instance Settings") {
+			PageAudit.disableGooglePageSpeedViaInstanceSettings();
+		}
+
+		task ("Navigate to Site and check if icon is not visible") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+
+		task ("Reset Instance Settings to default") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "Virtual Instance Scope");
+
+			PageAudit.resetDefaultValues();
+		}
+	}
+
 }

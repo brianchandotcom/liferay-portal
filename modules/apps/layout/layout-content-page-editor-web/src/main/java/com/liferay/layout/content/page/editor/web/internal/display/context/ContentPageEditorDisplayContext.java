@@ -963,8 +963,11 @@ public class ContentPageEditorDisplayContext {
 	protected final StagingGroupHelper stagingGroupHelper;
 	protected final ThemeDisplay themeDisplay;
 
-	private List<Map<String, Object>> _addLayoutElementMaps(
-		Map<String, Map<String, Object>> fragmentCollectionMaps) {
+	private List<Map<String, Object>> _addLayoutElementMaps() {
+		Map<String, Map<String, Object>> fragmentCollectionMaps =
+			_getFragmentCollectionContributorMaps();
+
+		fragmentCollectionMaps.putAll(_getDynamicFragmentCollectionMaps());
 
 		for (Map.Entry<String, List<Map<String, Object>>> entry :
 				ContentPageEditorConstants.layoutElementMapsListMap.
@@ -1413,14 +1416,7 @@ public class ContentPageEditorDisplayContext {
 			new ArrayList<>();
 
 		if (includeSystem) {
-			Map<String, Map<String, Object>> systemFragmentCollectionMaps =
-				_getFragmentCollectionContributorMaps();
-
-			systemFragmentCollectionMaps.putAll(
-				_getDynamicFragmentCollectionMaps());
-
-			allFragmentCollectionMapsList = _addLayoutElementMaps(
-				systemFragmentCollectionMaps);
+			allFragmentCollectionMapsList = _addLayoutElementMaps();
 		}
 
 		List<FragmentCollection> fragmentCollections =

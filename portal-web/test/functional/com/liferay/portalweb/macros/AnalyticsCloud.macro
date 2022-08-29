@@ -18,50 +18,6 @@ definition {
 		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_LOGIN_BUTTON");
 	}
 
-	macro syncAnalyticsCloud {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_DXP_BUTTON");
-
-		Click(locator1 = "AnalyticsCloudConnection#DXP_TOKEN_INPUT");
-
-		Paste(locator1 = "AnalyticsCloudConnection#DXP_TOKEN_INPUT");
-
-		Click(locator1 = "AnalyticsCloudConnection#CONNECT_ANALYTICS_CLOUD_BUTTON");
-
-		AssertTextEquals(
-			locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_CONNECTED_CONFIRMATION_MESSAGE",
-			value1 = "Your DXP instance is connected to Analytics Cloud.");
-
-		Click(locator1 = "AnalyticsCloudConnection#SYNCED_SITES_LINK");
-
-		Click(locator1 = "AnalyticsCloudConnection#NEW_PROPERTY_BUTTON");
-
-		Click(locator1 = "AnalyticsCloudConnection#SYNCED_SITES_SEARCH_FIELD");
-
-		Type(
-			locator1 = "AnalyticsCloudConnection#SYNCED_SITES_SEARCH_FIELD",
-			value1 = "${siteName}");
-
-		KeyPress(
-			locator1 = "AnalyticsCloudConnection#SYNCED_SITES_SEARCH_FIELD",
-			value1 = "\ENTER");
-
-		Click(locator1 = "AnalyticsCloudConnection#INPUT_LIFERAY_DXP_CHECKBOX");
-
-		Click(locator1 = "AnalyticsCloudConnection#DONE_BUTTON");
-
-		//Click(locator1 = "AnalyticsCloudConnection#SYNCED_CONTACT_DATA_LINK");
-		//Click(locator1 = "AnalyticsCloudConnection#SYNCED_CONTACTS_BUTTON");
-		//Check.checkToggleSwitch(locator1 = "AnalyticsCloudConnection#SYNC_ALL_CONTACTS_TOGGLE");
-		//Click(locator1 = "AnalyticsCloudConnection#SAVE_AND_NEXT_BUTTON");
-		//Click(locator1 = "Button#SAVE");
-
-	}
-
 	macro takeInvalidTokenFromAnalyticsCloud {
 		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_SETTINGS_BUTTON");
 
@@ -88,28 +44,6 @@ definition {
 		Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
 
 		Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
-	}
-
-	macro takeTokenFromAnalyticsCloud {
-		Click(locator1 = "AnalyticsCloudConnection#FARO_WORKSPACE_BUTTON");
-
-		if (IsElementPresent(locator1 = "AnalyticsCloudConnection#INTRODUCING_PROPERTIES_NEXT_BUTTON")) {
-			Click(locator1 = "AnalyticsCloudConnection#INTRODUCING_PROPERTIES_NEXT_BUTTON");
-
-			Click(locator1 = "AnalyticsCloudConnection#SKIP_FOR_NOW_BUTTON");
-		}
-
-		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_SETTINGS_BUTTON");
-
-		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_ADD_DATA_SOURCE_BUTTON");
-
-		Click(locator1 = "AnalyticsCloudConnection#LIFERAY_DXP_SOURCE");
-
-		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_CONNECT_WITH_TOKEN_BUTTON");
-
-		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
-
-		Copy(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
 	}
 
 	macro teardownAnalyticsCloud {

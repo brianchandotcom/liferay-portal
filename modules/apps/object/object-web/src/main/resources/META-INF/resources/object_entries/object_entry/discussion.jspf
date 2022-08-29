@@ -29,6 +29,8 @@ ObjectLayoutBox commentsObjectLayoutBox = objectEntryDisplayContext.getObjectLay
 			>
 				<c:if test="<%= objectEntry != null %>">
 					<liferay-ui:panel
+						collapsible="<%= commentsObjectLayoutBox.isCollapsable() %>"
+						cssClass='<%= commentsObjectLayoutBox.isCollapsable() ? "" : "panel-header" %>'
 						markupView="lexicon"
 						title="comments"
 					>

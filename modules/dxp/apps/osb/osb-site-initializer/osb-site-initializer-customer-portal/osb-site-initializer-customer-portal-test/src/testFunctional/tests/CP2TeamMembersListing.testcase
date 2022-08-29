@@ -38,6 +38,9 @@ definition {
 	@description = "Automation ID: LPS-149746 | Test Summary: Verify if the team member table contains the following data (Name - Email - Support Seat - Role - Status)"
 	@priority = "4"
 	test AssertAllItemsInTheTable {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not eble to reproduce scenario without OKTA workaround."
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -88,6 +91,9 @@ definition {
 	@description = "Automation ID: LPS-149754 | Test Summary: Verify that the text in the upper right corner is similar to 'Support Seats: 1 of 3 available', if the project has a support seats limit"
 	@priority = "4"
 	test CanViewTextIfProjectHasLimitOfSupportSeats {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not eble to reproduce scenario without OKTA workaround."
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -126,6 +132,9 @@ definition {
 	@description = "Automation ID: LPS-149756 | Test Summary: Verify if the '+ Invite' button is visible for administrator roles only"
 	@priority = "5"
 	test CanViewTheInviteButton {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not eble to reproduce scenario without OKTA workaround."
 		task ("Go to CP2.0") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 		}
@@ -176,6 +185,9 @@ definition {
 	@description = "Automation ID: LPS-149748 | Test Summary: Verify if in the third column next to the 'Support Seat' heading the information icon has a tooltip"
 	@priority = "4"
 	test CanViewTooltipInSupportSeat {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not eble to reproduce scenario without OKTA workaround."
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 

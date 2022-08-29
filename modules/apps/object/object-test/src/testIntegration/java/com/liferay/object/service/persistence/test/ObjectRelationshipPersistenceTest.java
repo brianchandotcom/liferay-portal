@@ -639,17 +639,6 @@ public class ObjectRelationshipPersistenceTest {
 				objectRelationship, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "objectDefinitionId1"));
 		Assert.assertEquals(
-			objectRelationship.getName(),
-			ReflectionTestUtil.invoke(
-				objectRelationship, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "name"));
-
-		Assert.assertEquals(
-			Long.valueOf(objectRelationship.getObjectDefinitionId1()),
-			ReflectionTestUtil.<Long>invoke(
-				objectRelationship, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "objectDefinitionId1"));
-		Assert.assertEquals(
 			Long.valueOf(objectRelationship.getObjectDefinitionId2()),
 			ReflectionTestUtil.<Long>invoke(
 				objectRelationship, "getColumnOriginalValue",

@@ -161,9 +161,9 @@ public class ContentDashboardItemSubtypeItemSelectorView
 			Objects::nonNull
 		).map(
 			jsonObject -> new InfoItemReference(
-				jsonObject.getString("entryClassName"),
+				jsonObject.getString("className"),
 				new ClassNameClassPKInfoItemIdentifier(
-					jsonObject.getString("className"),
+					jsonObject.getString("entryClassName"),
 					jsonObject.getLong("classPK")))
 		).collect(
 			Collectors.toSet()

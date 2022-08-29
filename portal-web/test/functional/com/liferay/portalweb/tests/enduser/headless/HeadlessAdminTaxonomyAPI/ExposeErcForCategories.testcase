@@ -1,0 +1,65 @@
+@component-name = "portal-headless-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless Frontend Infrastructure";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given an asset library is created") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+		}
+	}
+
+	@priority = "4"
+	test CanRecieveCorrectErcValueInCategory {
+		property portal.acceptance = "true";
+
+		task ("Given a vocabulary with assetLibrary") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var responseOfCreated = TaxonomyVocabularyAPI.createTaxonomyVocabulary(
+				assetLibraryId = "${assetLibraryId}",
+				name = "Vocabulary Name");
+		}
+
+		task ("And Given a TaxonomyCategory with custom external reference code") {
+			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
+				element = "$.id",
+				responseToParse = "${responseOfCreated}");
+
+			var taxonomyCategoryId = TaxonomyCategoryAPI.createTaxonomyCategory(
+				externalReferenceCode = "erc",
+				name = "Category Name",
+				taxonomyVocabularyId = "${taxonomyVocabularyId}");
+		}
+
+		task ("When with GET request getTaxonomyCategory") {
+			var response = TaxonomyCategoryAPI.getTaxonomyCategory(taxonomyCategoryId = "${taxonomyCategoryId}");
+		}
+
+		task ("Then I can receive the correct custom external reference code value in the response") {
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.externalReferenceCode");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "erc");
+		}
+	}
+
+}

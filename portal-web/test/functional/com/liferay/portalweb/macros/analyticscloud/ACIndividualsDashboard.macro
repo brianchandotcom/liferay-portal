@@ -332,4 +332,25 @@ definition {
 		}
 	}
 
+	macro viewDistributionBarByAttribute {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		while (IsElementNotPresent(locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR",index = "${index}")) {
+			TestUtils.hardRefresh();
+
+			ACUtils.waitForChartLoad();
+		}
+
+		MouseOver.mouseUp(
+			index = "${index}",
+			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
+
+		AssertElementPresent(
+			key_value = "${value}",
+			key_visitors = "${type}",
+			locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
+	}
+
 }

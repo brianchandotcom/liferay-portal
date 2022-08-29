@@ -1,5 +1,23 @@
 definition {
 
+	macro assertDropdownItemIsDisabled {
+		var key_dropdownItem = "${dropdownItem}";
+
+		AssertElementPresent(locator1 = "CP2ActivationKeys#DISABLED_DROPDOWN_ITEM_BUTTON");
+	}
+
+	macro assertDropdownItemIsEnabled {
+		var key_dropdownItem = "${dropdownItem}";
+
+		AssertElementPresent(locator1 = "CP2ActivationKeys#ENABLED_DROPDOWN_ITEM_BUTTON");
+	}
+
+	macro assertDropdownItemIsVisible {
+		var key_dropdownItem = "${dropdownItem}";
+
+		AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
+	}
+
 	macro assertDropdownSelection {
 		var key_option = "${option}";
 
@@ -12,6 +30,12 @@ definition {
 
 			AssertVisible(locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
 		}
+	}
+
+	macro clickAtDropdownItem {
+		var key_dropdownItem = "${dropdownItem}";
+
+		Click(locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
 	}
 
 	macro exportAllKeyDetails {
@@ -28,59 +52,48 @@ definition {
 		CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${fileName}");
 	}
 
-	macro assertDropdownItemIsVisible {
-		var key_dropdownItem = "${dropdownItem}";
-		AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
-	}
+	macro filterKeyTable {
+		var key_filterOption = "${filterOption}";
 
-	macro assertDropdownItemIsDisabled{
-		var key_dropdownItem = "${dropdownItem}";
-		AssertElementPresent(locator1 = "CP2ActivationKeys#DISABLED_DROPDOWN_ITEM_BUTTON");
-	}
+		CustomerPortal.clickAtButton(text = "Filter");
 
-	macro assertDropdownItemIsEnabled{
-		var key_dropdownItem = "${dropdownItem}";
-		AssertElementPresent(locator1 = "CP2ActivationKeys#ENABLED_DROPDOWN_ITEM_BUTTON");
-	}
+		CP2ActivationKeys.clickAtDropdownItem(key_dropdownItem = "${filterType}");
 
-	macro clickAtDropdownItem {
-		var key_dropdownItem = "${dropdownItem}";
-		Click(locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
-	}
+		Check.checkNotVisible(locator1 = "CP2ActivationKeys#FILTER_CHECKBOX");
 
-	macro selectKeyCheckboxByEnvironmentName {
-		var key_environmentName = "${environmentName}";
-		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX");
-	}
-
-	macro selectKeyCheckboxByExpirationDate {
-		var key_position = "${position}";
-		var key_date = "${date}";
-		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX_BY_EXPIRATION_DATE");
+		CustomerPortal.clickAtButton(text = "Apply");
 	}
 
 	macro formatLicenseFileName {
-		if(!(isSet(licenseType))) {
+		if (!(isSet(licenseType))) {
 			var licenseType = "";
-		} else {
+		}
+		else {
 			var licenseType = "${licenseType}-";
 		}
-		if(!(isSet(product))) {
+
+		if (!(isSet(product))) {
 			var product = "";
-		} else {
+		}
+		else {
 			var product = "${product}-";
 		}
-		if(!(isSet(version))) {
+
+		if (!(isSet(version))) {
 			var version = "";
-		}else {
+		}
+		else {
 			var version = "${version}-";
 		}
-		if(!(isSet(licenseName))) {
+
+		if (!(isSet(licenseName))) {
 			var licenseName = "";
 		}
-		if(!(isSet(copy))) {
+
+		if (!(isSet(copy))) {
 			var copy = "";
-		} else {
+		}
+		else {
 			var copy = " (${copy})";
 		}
 
@@ -97,16 +110,17 @@ definition {
 		return "${downloadedFileName}";
 	}
 
-	macro filterKeyTable {
-		var key_filterOption = "${filterOption}";
+	macro selectKeyCheckboxByEnvironmentName {
+		var key_environmentName = "${environmentName}";
 
-		CustomerPortal.clickAtButton(text = "Filter");
+		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX");
+	}
 
-		CP2ActivationKeys.clickAtDropdownItem(key_dropdownItem = "${filterType}");
-		
-		Check.checkNotVisible(locator1 = "CP2ActivationKeys#FILTER_CHECKBOX");
+	macro selectKeyCheckboxByExpirationDate {
+		var key_position = "${position}";
+		var key_date = "${date}";
 
-		CustomerPortal.clickAtButton(text = "Apply");
+		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX_BY_EXPIRATION_DATE");
 	}
 
 }

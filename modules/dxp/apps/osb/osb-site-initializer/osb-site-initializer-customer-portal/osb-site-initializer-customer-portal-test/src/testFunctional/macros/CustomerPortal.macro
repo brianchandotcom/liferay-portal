@@ -193,23 +193,20 @@ definition {
 		}
 	}
 
+	macro clickAtButton {
+		var key_text = "${text}";
+
+		Click(locator1 = "CustomerPortalSite#ANY_BUTTON");
+	}
+
 	macro clickOnCancelButton {
 		var key_text = "Cancel";
+
 		Click(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
 	macro clickOnFinishActivationButton {
 		Click(locator1 = "CustomerPortalSite#FINISH_ACTIVATION");
-	}
-
-	macro clickAtButton {
-		var key_text = "${text}";
-		Click(locator1 = "CustomerPortalSite#ANY_BUTTON");
-	}
-
-	macro viewButton {
-		var key_text = "${text}";
-		AssertVisible(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
 	macro clickOnSkipForNowButton {
@@ -341,10 +338,6 @@ definition {
 		}
 	}
 
-	macro waitToLiferayPage {
-        WaitForElementPresent(locator1 = "CustomerPortalSite#LIFERAY_SITE");
-    }
-
 	macro onboardingFlow {
 		CustomerPortal.clickOnStartProjectSetup();
 
@@ -370,12 +363,6 @@ definition {
 		Accounts.goToEntryMenuItem(
 			menuItem = "Assign Roles",
 			rowEntry = "Test Test");
-	}
-
-	macro search {
-		Type(
-			locator1 = "CustomerPortalSite#SEARCH_BAR",
-			value1 = "${searchItem}");
 	}
 
 	macro replaceCertificateAndPrivateKey {
@@ -429,6 +416,12 @@ definition {
 		AssertElementPresent(
 			key_certificateUsage = "${certificateUsage}",
 			locator1 = "CPSAMLAdmin#REPLACE_CERTIFICATE");
+	}
+
+	macro search {
+		Type(
+			locator1 = "CustomerPortalSite#SEARCH_BAR",
+			value1 = "${searchItem}");
 	}
 
 	macro selectNavigatorWindow {
@@ -604,8 +597,20 @@ definition {
 			locator1 = "CustomerPortalSite#STATUS_CARD");
 	}
 
+	macro viewAlert {
+		var key_alertText = "${alertText}";
+
+		AssertVisible(locator1 = "CustomerPortalSite#ALERT_NOTIFICATIONS");
+	}
+
 	macro viewAllProjectsTitlePage {
 		AssertElementPresent(locator1 = "CustomerPortalSite#PROJECT_TITLE_MAIN_PAGE");
+	}
+
+	macro viewButton {
+		var key_text = "${text}";
+
+		AssertVisible(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
 	macro viewCardValue {
@@ -727,9 +732,8 @@ definition {
 			locator1 = "CustomerPortalSite#WELCOME_PAGE_USER_NAME");
 	}
 
-	macro viewAlert {
-		var key_alertText = "${alertText}";
-		AssertVisible(locator1 = "CustomerPortalSite#ALERT_NOTIFICATIONS");
+	macro waitToLiferayPage {
+		WaitForElementPresent(locator1 = "CustomerPortalSite#LIFERAY_SITE");
 	}
 
 }

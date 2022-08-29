@@ -55,10 +55,21 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewTeamMembersPage {
-		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
+	macro teamMembersFlow {
+		CustomerPortal.enterOnProject(title = "Test Account DXP");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2NavigationMenu.goToTeamMembers();
 	}
 
+	macro viewSupportSeatsAvailable {
+		AssertElementPresent(
+			key_number = "${available}",
+			locator1 = "CP2TeamMembers#SUPPORT_SEATS");
+	}
 
 	macro viewTableValue {
 		AssertElementPresent(
@@ -76,24 +87,12 @@ definition {
 			value = "${role}");
 
 		AssertElementPresent(
-			locator1 = "CustomerPortalSite#STATUS_CARD",
-			key_status = "${status}");
+			key_status = "${status}",
+			locator1 = "CustomerPortalSite#STATUS_CARD");
 	}
 
-	macro teamMembersFlow {
-		CustomerPortal.enterOnProject(title = "Test Account DXP");
-
-		CustomerPortal.clickOnStartProjectSetup();
-
-		CustomerPortal.clickOnSkipForNowButton();
-
-		CP2NavigationMenu.goToTeamMembers();
-	}
-
-	macro viewSupportSeatsAvailable {
-		AssertElementPresent(
-			locator1 = "CP2TeamMembers#SUPPORT_SEATS",
-			key_number = "${available}");
+	macro viewTeamMembersPage {
+		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
 	}
 
 }

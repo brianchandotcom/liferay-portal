@@ -1,5 +1,13 @@
 definition {
 
+	macro viewHelpInfo {
+		Click(locator1 = "CustomerPortalSite#ANY");
+
+		AssertVisible(
+			key_content = "${info}",
+			locator1 = "Tooltip#POPOVER_BODY");
+	}
+
 	macro viewHelpInformation {
 		MouseOver(
 			key_text = "question-circle",
@@ -8,14 +16,6 @@ definition {
 		AssertVisible(
 			key_content = "${info}",
 			locator1 = "Tooltip#POPOVER_BODY_CONTENT");
-	}
-
-	macro viewHelpInfo {
-		Click(locator1 = "CustomerPortalSite#ANY");
-
-		AssertVisible(
-			key_content = "${info}",
-			locator1 = "Tooltip#POPOVER_BODY");
 	}
 
 }

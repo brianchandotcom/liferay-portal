@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.internal.model.listener;
 
-import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,93 +21,37 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
-import java.math.BigDecimal;
-
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Hai Yu
+ * @author Danny Situ
  */
 @Component(enabled = false, immediate = true, service = ModelListener.class)
 public class AddressModelListener extends BaseModelListener<Address> {
-
-	@Override
-	public void onAfterRemove(Address address) throws ModelListenerException {
-		try {
-			List<CommerceOrder> commerceOrders =
-				_commerceOrderLocalService.getCommerceOrdersByBillingAddress(
-					address.getAddressId());
-
-			_removeCommerceOrderAddresses(
-				commerceOrders, address.getAddressId());
-
-			commerceOrders =
-				_commerceOrderLocalService.getCommerceOrdersByShippingAddress(
-					address.getAddressId());
-
-			_removeCommerceOrderAddresses(
-				commerceOrders, address.getAddressId());
-		}
-		catch (Exception exception) {
-			throw new ModelListenerException(exception);
-		}
-	}
 
 	@Override
 	public void onAfterUpdate(Address originalAddress, Address address)
 		throws ModelListenerException {
 
 		try {
-			List<CommerceOrder> commerceOrders =
-				_commerceOrderLocalService.getCommerceOrdersByShippingAddress(
-					address.getAddressId());
-
-			for (CommerceOrder commerceOrder : commerceOrders) {
-				_commerceOrderLocalService.resetCommerceOrderShipping(
-					commerceOrder.getCommerceOrderId());
-			}
+			_commerceOrderLocalService.resetCommerceOrderShippingByAddressId(
+				address.getAddressId());
 		}
-		catch (Exception exception) {
-			throw new ModelListenerException(exception);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 
-	private void _removeCommerceOrderAddresses(
-			List<CommerceOrder> commerceOrders, long commerceAddressId)
-		throws PortalException {
-
-		for (CommerceOrder commerceOrder : commerceOrders) {
-			long billingAddressId = commerceOrder.getBillingAddressId();
-			long shippingAddressId = commerceOrder.getShippingAddressId();
-
-			long commerceShippingMethodId =
-				commerceOrder.getCommerceShippingMethodId();
-			String shippingOptionName = commerceOrder.getShippingOptionName();
-			BigDecimal shippingPrice = commerceOrder.getShippingAmount();
-
-			if (billingAddressId == commerceAddressId) {
-				billingAddressId = 0;
-			}
-
-			if (shippingAddressId == commerceAddressId) {
-				shippingAddressId = 0;
-
-				commerceShippingMethodId = 0;
-				shippingOptionName = null;
-				shippingPrice = BigDecimal.ZERO;
-			}
-
-			_commerceOrderLocalService.updateCommerceOrder(
-				null, commerceOrder.getCommerceOrderId(), billingAddressId,
-				commerceShippingMethodId, shippingAddressId,
-				commerceOrder.getAdvanceStatus(),
-				commerceOrder.getCommercePaymentMethodKey(),
-				commerceOrder.getPurchaseOrderNumber(), shippingPrice,
-				shippingOptionName, commerceOrder.getSubtotal(),
-				commerceOrder.getTotal(), null);
+	@Override
+	public void onBeforeRemove(Address address) throws ModelListenerException {
+		try {
+			_commerceOrderLocalService.updateCommerceOrderAddresses(
+				address.getAddressId());
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

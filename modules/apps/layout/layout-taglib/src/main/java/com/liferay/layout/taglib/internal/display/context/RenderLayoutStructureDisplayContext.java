@@ -351,8 +351,7 @@ public class RenderLayoutStructureDisplayContext {
 	}
 
 	public DefaultFragmentRendererContext getDefaultFragmentRendererContext(
-		int collectionElementIndex, FragmentEntryLink fragmentEntryLink,
-		InfoForm infoForm, String itemId) {
+		FragmentEntryLink fragmentEntryLink, InfoForm infoForm, String itemId) {
 
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
@@ -384,12 +383,6 @@ public class RenderLayoutStructureDisplayContext {
 
 			defaultFragmentRendererContext.setUseCachedContent(false);
 		}
-
-		defaultFragmentRendererContext.
-			setCollectionStyledLayoutStructureItemIds(
-				getCollectionStyledLayoutStructureItemIds());
-		defaultFragmentRendererContext.setCollectionElementIndex(
-			collectionElementIndex);
 
 		return defaultFragmentRendererContext;
 	}

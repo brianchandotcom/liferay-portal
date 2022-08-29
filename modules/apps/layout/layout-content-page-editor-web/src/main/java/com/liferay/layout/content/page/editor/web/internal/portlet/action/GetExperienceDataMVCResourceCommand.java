@@ -112,15 +112,6 @@ public class GetExperienceDataMVCResourceCommand
 			DefaultFragmentRendererContext defaultFragmentRendererContext =
 				new DefaultFragmentRendererContext(fragmentEntryLink);
 
-			defaultFragmentRendererContext.
-				setCollectionStyledLayoutStructureItemIds(
-					LayoutStructureUtil.
-						getCollectionStyledLayoutStructureItemIds(
-							fragmentEntryLink.getFragmentEntryLinkId(),
-							LayoutStructureUtil.getLayoutStructure(
-								themeDisplay.getScopeGroupId(),
-								themeDisplay.getPlid(), segmentsExperienceId)));
-
 			jsonObject.put(
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(

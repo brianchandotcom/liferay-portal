@@ -17,12 +17,9 @@ package com.liferay.fragment.renderer;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.info.form.InfoForm;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -97,17 +94,6 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		return _useCachedContent;
 	}
 
-	public void setCollectionElementIndex(int collectionElementIndex) {
-		_collectionElementIndex = collectionElementIndex;
-	}
-
-	public void setCollectionStyledLayoutStructureItemIds(
-		List<String> collectionStyledLayoutStructureItemIds) {
-
-		_collectionStyledLayoutStructureItemIds =
-			collectionStyledLayoutStructureItemIds;
-	}
-
 	public void setDisplayObject(Object object) {
 		_displayObject = object;
 	}
@@ -148,8 +134,6 @@ public class DefaultFragmentRendererContext implements FragmentRendererContext {
 		_useCachedContent = useCachedContent;
 	}
 
-	private int _collectionElementIndex = -1;
-	private List<String> _collectionStyledLayoutStructureItemIds;
 	private Object _displayObject;
 	private final String _fragmentEntryElementId;
 	private final FragmentEntryLink _fragmentEntryLink;

@@ -90,25 +90,8 @@ public class GetFragmentEntryLinkMVCResourceCommand
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
-		int collectionItemIndex = ParamUtil.getInteger(
-			resourceRequest, "collectionItemIndex", -1);
-
-		defaultFragmentRendererContext.setCollectionElementIndex(
-			collectionItemIndex);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		long segmentsExperienceId = ParamUtil.getLong(
-			resourceRequest, "segmentsExperienceId");
-
-		defaultFragmentRendererContext.
-			setCollectionStyledLayoutStructureItemIds(
-				LayoutStructureUtil.getCollectionStyledLayoutStructureItemIds(
-					fragmentEntryLink.getFragmentEntryLinkId(),
-					LayoutStructureUtil.getLayoutStructure(
-						themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-						segmentsExperienceId)));
 
 		String itemClassName = ParamUtil.getString(
 			resourceRequest, "itemClassName");

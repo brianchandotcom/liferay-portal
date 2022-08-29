@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -45,10 +46,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
+import com.liferay.portal.util.WebAppPool;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -239,10 +242,38 @@ public class UpdatePortletsHighlightedConfigurationMVCActionCommand
 			"highlightedPortletIds",
 			highlightedPortletIds.toArray(new String[0]));
 
+		PortletCategory rootPortletCategory = (PortletCategory)WebAppPool.get(
+			themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+
+		PortletCategory highlightedPortletCategory =
+			rootPortletCategory.getCategory("category.highlighted");
+
+		Set<String> defaultHighlightedPortletIds =
+			highlightedPortletCategory.getPortletIds();
+
+		Set<String> nonhighlightedPortletIds = SetUtil.fromArray(
+			portalPreferences.getValues(
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+				"nonhighlightedPortletIds", new String[0]));
+
+		if (!highlighted && defaultHighlightedPortletIds.contains(portletId)) {
+			nonhighlightedPortletIds.add(portletId);
+
+			portalPreferences.setValues(
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+				"nonhighlightedPortletIds",
+				nonhighlightedPortletIds.toArray(new String[0]));
+		}
+
+		Set<String> portletIds = new TreeSet<>(defaultHighlightedPortletIds);
+
+		portletIds.removeAll(nonhighlightedPortletIds);
+		portletIds.addAll(highlightedPortletIds);
+
 		return JSONUtil.put(
 			"highlightedPortlets",
 			_getPortletsJSONArray(
-				httpServletRequest, highlightedPortletIds, themeDisplay));
+				httpServletRequest, portletIds, themeDisplay));
 	}
 
 	private static final String[] _UNSUPPORTED_PORTLETS_NAMES = {

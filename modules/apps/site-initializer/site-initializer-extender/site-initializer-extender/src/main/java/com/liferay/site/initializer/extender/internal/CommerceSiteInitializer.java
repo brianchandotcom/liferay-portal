@@ -259,33 +259,25 @@ public class CommerceSiteInitializer {
 
 		jsonObject.put("siteGroupId", serviceContext.getScopeGroupId());
 
-		Channel channel1 = Channel.toDTO(jsonObject.toString());
+		Channel channel = Channel.toDTO(jsonObject.toString());
 
-		if (channel1 == null) {
+		if (channel == null) {
 			_log.error(
 				"Unable to transform commerce channel from JSON: " + json);
 
 			return null;
 		}
 
-		try {
-			Channel channel2 =
-				channelResource.getChannelByExternalReferenceCode(
-					jsonObject.getString("externalReferenceCode"));
-
-			channel1 = channelResource.patchChannel(channel2.getId(), channel1);
-		}
-		catch (Exception exception) {
-			channel1 = channelResource.postChannel(channel1);
-		}
+		channel = channelResource.putChannelByExternalReferenceCode(
+			jsonObject.getString("externalReferenceCode"), channel);
 
 		_addDefaultCPDisplayLayout(
-			channel1,
+			channel,
 			StringUtil.replaceLast(
 				resourcePath, ".json", ".default-cp-display-layout.json"),
 			serviceContext, servletContext);
 		_addModelResourcePermissions(
-			CommerceChannel.class.getName(), String.valueOf(channel1.getId()),
+			CommerceChannel.class.getName(), String.valueOf(channel.getId()),
 			StringUtil.replaceLast(
 				resourcePath, ".json", ".model-resource-permissions.json"),
 			serviceContext, servletContext);
@@ -310,7 +302,7 @@ public class CommerceSiteInitializer {
 
 		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 
-		return channel1;
+		return channel;
 	}
 
 	private List<CommerceInventoryWarehouse> _addCommerceInventoryWarehouses(

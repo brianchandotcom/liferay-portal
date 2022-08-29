@@ -33,6 +33,12 @@ const useProjectActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 
 	const actionsRef = useRef([
 		{
+			action: (project) => navigate(`/project/${project.id}/update`),
+			icon: 'pencil',
+			name: i18n.translate(isHeaderActions ? 'edit-project' : 'edit'),
+			permission: 'UPDATE',
+		},
+		{
 			action: (project) =>
 				onOpenModal({
 					body: <ComponentsModal projectId={project.id} />,
@@ -64,12 +70,7 @@ const useProjectActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			icon: 'cog',
 			name: i18n.translate('manage-product-versions'),
 		},
-		{
-			action: (project) => navigate(`/project/${project.id}/update`),
-			icon: 'pencil',
-			name: i18n.translate(isHeaderActions ? 'edit-project' : 'edit'),
-			permission: 'UPDATE',
-		},
+
 		{
 			action: ({id}, mutate) =>
 				deleteResource(`/projects/${id}`)
@@ -79,6 +80,11 @@ const useProjectActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			icon: 'trash',
 			name: i18n.translate(isHeaderActions ? 'delete-project' : 'delete'),
 			permission: 'DELETE',
+		},
+		{
+			action: ({id}) => alert(id),
+			icon: 'print',
+			name: i18n.translate('export-cases'),
 		},
 	] as Action<TestrayProject>[]);
 

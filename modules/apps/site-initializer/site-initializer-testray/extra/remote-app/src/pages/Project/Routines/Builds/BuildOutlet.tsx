@@ -85,22 +85,22 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 	}, [actions, mutateBuild, setHeaderActions, testrayBuild]);
 
 	useEffect(() => {
-		if (testrayBuild.name) {
+		if (testrayBuild?.name) {
 			setHeading([
 				{
 					category: i18n.translate('project').toUpperCase(),
 					path: `/project/${testrayProject.id}/routines`,
-					title: testrayProject.name,
+					title: testrayProject?.name,
 				},
 				{
 					category: i18n.translate('routine').toUpperCase(),
 					path: `/project/${testrayProject.id}/routines/${testrayRoutine.id}`,
-					title: testrayRoutine.name,
+					title: testrayRoutine?.name,
 				},
 				{
 					category: i18n.translate('build').toUpperCase(),
 					path: `/project/${testrayProject.id}/routines/${testrayRoutine.id}/build/${testrayBuild.id}`,
-					title: testrayBuild.name,
+					title: testrayBuild?.name,
 				},
 			]);
 		}

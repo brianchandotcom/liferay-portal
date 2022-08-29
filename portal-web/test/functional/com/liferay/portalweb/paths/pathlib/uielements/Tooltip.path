@@ -30,6 +30,11 @@
 	<td>//div[contains(@class,'popover-body')][normalize-space(text())='${key_content}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>POPOVER_BODY</td>
+	<td>//div[contains(@class, 'popover-body')]//p[contains(@class, 'text-neutral') and contains(text(), '${key_content}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

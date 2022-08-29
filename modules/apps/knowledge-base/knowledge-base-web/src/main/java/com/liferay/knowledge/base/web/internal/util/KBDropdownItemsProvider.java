@@ -279,6 +279,38 @@ public class KBDropdownItemsProvider {
 						"move"));
 			}
 		).add(
+			() -> _hasSubscriptionPermission(kbFolder) && !_hasSubscription(),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createActionURL(
+						_liferayPortletResponse
+					).setActionName(
+						"/knowledge_base/subscribe_group_kb_articles"
+					).setRedirect(
+						_currentURL
+					).buildActionURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_liferayPortletRequest.getHttpServletRequest(),
+						"subscribe"));
+			}
+		).add(
+			() -> _hasSubscriptionPermission(kbFolder) && _hasSubscription(),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createActionURL(
+						_liferayPortletResponse
+					).setActionName(
+						"/knowledge_base/unsubscribe_group_kb_articles"
+					).setRedirect(
+						_currentURL
+					).buildActionURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_liferayPortletRequest.getHttpServletRequest(),
+						"unsubscribe"));
+			}
+		).add(
 			() -> _hasPermissionsPermission(kbFolder),
 			dropdownItem -> {
 				dropdownItem.putData("action", "permissions");
@@ -576,10 +608,33 @@ public class KBDropdownItemsProvider {
 		return false;
 	}
 
+	private boolean _hasSubscription() {
+		if (SubscriptionLocalServiceUtil.isSubscribed(
+				_themeDisplay.getCompanyId(), _themeDisplay.getUserId(),
+				KBArticle.class.getName(), _themeDisplay.getScopeGroupId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _hasSubscription(KBArticle kbArticle) {
 		if (SubscriptionLocalServiceUtil.isSubscribed(
 				_themeDisplay.getCompanyId(), _themeDisplay.getUserId(),
 				KBArticle.class.getName(), kbArticle.getResourcePrimKey())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasSubscriptionPermission(KBFolder kbFolder) {
+		if ((kbFolder == null) &&
+			AdminPermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), KBActionKeys.SUBSCRIBE)) {
 
 			return true;
 		}

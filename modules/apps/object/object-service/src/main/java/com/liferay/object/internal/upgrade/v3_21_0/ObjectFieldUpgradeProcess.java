@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.internal.upgrade.v3_20_0;
+package com.liferay.object.internal.upgrade.v3_22_0;
 
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectEntryTable;

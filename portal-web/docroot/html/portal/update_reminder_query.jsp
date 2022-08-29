@@ -31,7 +31,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 		<div class="autofit-padded-no-gutters-x autofit-row">
 			<div class="autofit-col autofit-col-expand">
 				<h2 class="sheet-title">
-					<liferay-ui:message key="password-reminder" />
+					<liferay-ui:message key="password-recovery-question-answer" />
 				</h2>
 			</div>
 

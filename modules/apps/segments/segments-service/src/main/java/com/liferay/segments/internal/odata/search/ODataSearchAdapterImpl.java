@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -180,13 +178,6 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setGroupIds(new long[] {-1L});
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (permissionChecker != null) {
-			searchContext.setUserId(permissionChecker.getUserId());
-		}
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

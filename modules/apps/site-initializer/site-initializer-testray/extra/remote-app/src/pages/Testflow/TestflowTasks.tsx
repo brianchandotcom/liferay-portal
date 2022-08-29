@@ -61,32 +61,27 @@ const ShortcutIcon = () => (
 const TestFlowTasks = () => {
 	const {testrayTaskId} = useParams();
 
-	const {data, loading} = useFetch(
+	const {data: testrayTask, loading} = useFetch(
 		getTaskQuery(testrayTaskId),
 		getTaskTransformData
 	);
-	const testrayTask = data;
 
 	const {
 		donut: {columns},
 	} = useCaseResultGroupBy(testrayTask?.build?.id);
 
-	const {setHeading, setTabs} = useHeader();
+	const {setHeading} = useHeader({timeout: 50, useTabs: []});
 
 	useEffect(() => {
 		if (testrayTask) {
-			setTimeout(() => {
-				setHeading([
-					{
-						category: i18n.translate('tasks'),
-						title: testrayTask.name,
-					},
-				]);
-			});
+			setHeading([
+				{
+					category: i18n.translate('tasks'),
+					title: testrayTask.name,
+				},
+			]);
 		}
-
-		setTabs([]);
-	}, [setHeading, testrayTask, setTabs]);
+	}, [setHeading, testrayTask]);
 
 	if (loading || !testrayTask) {
 		return <Loading />;

@@ -76,7 +76,7 @@ const AccountContextProvider: React.FC<{
 			familyName: user?.familyName,
 			givenName: user?.givenName,
 			id: user?.id,
-			image: '',
+			image: user.image,
 			roleBriefs: user?.roleBriefs,
 			uuid: user?.uuid,
 		})

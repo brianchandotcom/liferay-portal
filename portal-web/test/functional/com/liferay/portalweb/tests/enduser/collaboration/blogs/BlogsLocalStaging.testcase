@@ -164,7 +164,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+		ControlMenu.viewHeaderTitle(headerTitle = "Blogs Entry Title");
 
 		AssertLocation(value1 = "${portalURL}/web/site-name/b/blogs-entry-title");
 	}

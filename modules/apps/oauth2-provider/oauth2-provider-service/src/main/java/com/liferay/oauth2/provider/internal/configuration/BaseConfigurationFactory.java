@@ -22,6 +22,7 @@ import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -75,7 +76,7 @@ public abstract class BaseConfigurationFactory {
 		long companyId = GetterUtil.getLong(properties.get("companyId"));
 
 		if (companyId > 0) {
-			return _companyLocalService.getCompanyById(companyId);
+			return companyLocalService.getCompanyById(companyId);
 		}
 
 		String webId = (String)properties.get(
@@ -86,7 +87,7 @@ public abstract class BaseConfigurationFactory {
 				webId = PropsValues.COMPANY_DEFAULT_WEB_ID;
 			}
 
-			return _companyLocalService.getCompanyByWebId(webId);
+			return companyLocalService.getCompanyByWebId(webId);
 		}
 
 		throw new IllegalStateException(
@@ -164,6 +165,12 @@ public abstract class BaseConfigurationFactory {
 			_configMapName);
 	}
 
+	@Reference
+	protected CompanyLocalService companyLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	protected ModuleServiceLifecycle moduleServiceLifecycle;
+
 	protected volatile OAuth2Application oAuth2Application;
 
 	@Reference
@@ -174,9 +181,6 @@ public abstract class BaseConfigurationFactory {
 
 	@Reference
 	protected UserLocalService userLocalService;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	private volatile String _configMapName;
 	private volatile Map<String, String> _extensionProperties;

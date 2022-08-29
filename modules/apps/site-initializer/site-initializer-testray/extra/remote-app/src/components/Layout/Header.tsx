@@ -20,6 +20,7 @@ import {useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {HeaderContext} from '../../context/HeaderContext';
+import {Permission} from '../../util/permission';
 import DropDown from '../DropDown';
 import DropDownWithActions from '../DropDown/DropDown';
 
@@ -32,6 +33,11 @@ type BreadCrumbTriggerProps = {
 const Header = () => {
 	const [{dropdown, headerActions, heading, symbol, tabs}] = useContext(
 		HeaderContext
+	);
+
+	const filteredHeaderActions = Permission.filterActions(
+		headerActions.actions,
+		headerActions.item?.actions
 	);
 
 	const navigate = useNavigate();
@@ -123,9 +129,9 @@ const Header = () => {
 						})}
 					</div>
 
-					{!!headerActions.actions.length && (
+					{!!filteredHeaderActions.length && (
 						<DropDownWithActions
-							actions={headerActions.actions}
+							actions={filteredHeaderActions}
 							item={headerActions.item}
 							mutate={headerActions.mutate}
 							position={Align.BottomLeft}

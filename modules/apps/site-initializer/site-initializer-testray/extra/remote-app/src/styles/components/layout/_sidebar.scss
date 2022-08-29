@@ -36,6 +36,11 @@ $normal-transition: opacity 1s ease;
 
 	.testray-sidebar-footer {
 		overflow: hidden;
+
+		.sticker-circle {
+			min-height: 48px;
+			min-width: 48px;
+		}
 	}
 
 	.testray-sidebar-item {

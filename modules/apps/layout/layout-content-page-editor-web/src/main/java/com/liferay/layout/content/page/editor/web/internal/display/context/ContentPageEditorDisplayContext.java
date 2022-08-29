@@ -102,12 +102,15 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -124,6 +127,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -981,6 +985,8 @@ public class ContentPageEditorDisplayContext {
 					HashMapBuilder.create(
 						layoutElementMap
 					).put(
+						"highlighted", _isHighlightedFragment(fragmentEntryKey)
+					).put(
 						"name",
 						LanguageUtil.get(
 							themeDisplay.getLocale(),
@@ -1275,6 +1281,9 @@ public class ContentPageEditorDisplayContext {
 				HashMapBuilder.<String, Object>put(
 					"fragmentEntryKey", fragmentRenderer.getKey()
 				).put(
+					"highlighted",
+					_isHighlightedFragment(fragmentRenderer.getKey())
+				).put(
 					"icon", fragmentRenderer.getIcon()
 				).put(
 					"imagePreviewURL",
@@ -1440,6 +1449,12 @@ public class ContentPageEditorDisplayContext {
 					fragmentComposition.getFragmentCompositionKey()
 				).put(
 					"groupId", fragmentComposition.getGroupId()
+				).put(
+					"highlighted",
+					_isHighlightedFragment(
+						_getFragmentUniqueKey(
+							fragmentComposition.getFragmentCompositionKey(),
+							fragmentComposition.getGroupId()))
 				).put(
 					"icon", fragmentComposition.getIcon()
 				).put(
@@ -1642,6 +1657,12 @@ public class ContentPageEditorDisplayContext {
 				).put(
 					"groupId", fragmentEntry.getGroupId()
 				).put(
+					"highlighted",
+					_isHighlightedFragment(
+						_getFragmentUniqueKey(
+							fragmentEntry.getFragmentEntryKey(),
+							fragmentEntry.getGroupId()))
+				).put(
 					"icon", fragmentEntry.getIcon()
 				).put(
 					"imagePreviewURL",
@@ -1655,6 +1676,39 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return fragmentEntryMapsList;
+	}
+
+	private String _getFragmentUniqueKey(
+		String fragmentEntryKey, long groupId) {
+
+		if (groupId <= 0) {
+			return fragmentEntryKey;
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if (group == null) {
+			return fragmentEntryKey;
+		}
+
+		return fragmentEntryKey + StringPool.POUND + group.getGroupKey();
+	}
+
+	private Set<String> _getHighlightedFragmentEntryKeys() {
+		if (_highlightedFragmentEntryKeys != null) {
+			return _highlightedFragmentEntryKeys;
+		}
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				httpServletRequest);
+
+		_highlightedFragmentEntryKeys = SetUtil.fromArray(
+			portalPreferences.getValues(
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+				"highlightedFragmentEntryKeys", new String[0]));
+
+		return _highlightedFragmentEntryKeys;
 	}
 
 	private ItemSelectorCriterion _getImageItemSelectorCriterion() {
@@ -2214,6 +2268,17 @@ public class ContentPageEditorDisplayContext {
 		return false;
 	}
 
+	private boolean _isHighlightedFragment(String fragmentEntryKey) {
+		Set<String> highlightedFragmentEntryKeys =
+			_getHighlightedFragmentEntryKeys();
+
+		if (highlightedFragmentEntryKeys.contains(fragmentEntryKey)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isMasterUsed() {
 		if (_getLayoutType() !=
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {
@@ -2283,6 +2348,7 @@ public class ContentPageEditorDisplayContext {
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
 	private Long _groupId;
+	private Set<String> _highlightedFragmentEntryKeys;
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final ItemSelector _itemSelector;
 	private LayoutStructure _layoutStructure;

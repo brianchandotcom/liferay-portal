@@ -1,14 +1,14 @@
 {
-	"name": "@liferay/site-initializer-partner-portal-fragments",
-	"version": "1.0.0",
-	"scripts": {
-		"build": "yo liferay-fragments:build"
-	},
 	"dependencies": {
-		"react": "16.8.6",
-		"react-dom": "16.8.6"
+		"react": "16.12.0",
+		"react-dom": "16.12.0"
 	},
 	"devDependencies": {
 		"generator-liferay-fragments": "2.0.2"
-	}
+	},
+	"name": "@liferay/site-initializer-partner-portal-fragments",
+	"scripts": {
+		"build": "yo liferay-fragments:build"
+	},
+	"version": "1.0.0"
 }

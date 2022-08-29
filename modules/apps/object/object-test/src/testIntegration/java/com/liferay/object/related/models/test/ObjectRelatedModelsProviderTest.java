@@ -246,9 +246,9 @@ public class ObjectRelatedModelsProviderTest {
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 		Assert.assertEquals(
 			objectEntries,
-			_objectEntryLocalService.getOneToManyRelatedObjectEntries(
+			_objectEntryLocalService.getOneToManyObjectEntries(
 				0, objectRelationship.getObjectRelationshipId(),
-				objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
+				objectEntry1.getObjectEntryId(), true, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS));
 
 		_objectEntryLocalService.updateObjectEntry(

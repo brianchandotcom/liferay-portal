@@ -149,10 +149,11 @@ public class ObjectEntryDTOConverter
 
 			return _toObjectEntries(
 				dtoConverterContext, nestedFieldsDepth,
-				_objectEntryLocalService.getManyToManyRelatedObjectEntries(
+				_objectEntryLocalService.getManyToManyObjectEntries(
 					objectEntry.getGroupId(),
 					objectRelationship.getObjectRelationshipId(),
-					objectEntry.getObjectEntryId(), reverse, QueryUtil.ALL_POS,
+					objectEntry.getObjectEntryId(), true,
+					objectRelationship.isReverse(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS));
 		}
 		catch (PortalException portalException) {
@@ -190,10 +191,10 @@ public class ObjectEntryDTOConverter
 		try {
 			return _toObjectEntries(
 				dtoConverterContext, nestedFieldsDepth,
-				_objectEntryLocalService.getOneToManyRelatedObjectEntries(
+				_objectEntryLocalService.getOneToManyObjectEntries(
 					objectEntry.getGroupId(),
 					objectRelationship.getObjectRelationshipId(),
-					objectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
+					objectEntry.getObjectEntryId(), true, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS));
 		}
 		catch (PortalException portalException) {

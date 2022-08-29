@@ -151,8 +151,8 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 			int end)
 		throws PortalException {
 
-		return _objectEntryLocalService.getOneToManyRelatedObjectEntries(
-			groupId, objectRelationshipId, primaryKey, 0, 1);
+		return _objectEntryLocalService.getOneToManyObjectEntries(
+			groupId, objectRelationshipId, primaryKey, true, 0, 1);
 	}
 
 	@Override

@@ -130,9 +130,9 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 					objectRelationship, false);
 		}
 
-		return _objectEntryLocalService.getManyToManyRelatedObjectEntries(
+		return _objectEntryLocalService.getManyToManyObjectEntries(
 			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
-			reverse, start, end);
+			true, reverse, start, end);
 	}
 
 	@Override
@@ -152,9 +152,9 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 					objectRelationship, false);
 		}
 
-		return _objectEntryLocalService.getManyToManyRelatedObjectEntriesCount(
+		return _objectEntryLocalService.getManyToManyObjectEntriesCount(
 			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
-			reverse);
+			true, reverse);
 	}
 
 	private final String _className;

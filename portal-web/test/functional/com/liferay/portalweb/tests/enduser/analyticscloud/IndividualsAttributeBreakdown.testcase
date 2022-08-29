@@ -239,4 +239,85 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-11573 | Automation ID: LRAC-11825 | Test Summary: Check that the number of members shown in the chart is equal to the number of members shown in the chart's details sidebar"
+	@priority = "5"
+	test DistributionChartShowsSameAmountOfMembersAsSidebar {
+		var usernameList = "user1,user2";
+
+		task ("Add a new user") {
+			for (var name : list "${usernameList}") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "user1",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "${name}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+		
+		task ("View the blog page with the users") {
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				emailList = "user1@liferay.com,user2@liferay.com,ac@liferay.com",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to the Distribution tab of Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Distribution");
+		}
+
+		task ("Select the Distribution by Attribute") {
+			ACSegments.selectDistributionByAttribute(attribute = "givenName");
+		}
+
+		task ("Check that the number of users shown in the tooltip is correct") {
+			ACIndividualsDashboard.viewDistributionBarByAttribute(
+				type = "count",
+				value = "2");
+
+			ACIndividualsDashboard.viewDistributionBarByAttribute(
+				index = "2",
+				type = "count",
+				value = "1");
+		}
+
+		task ("Click on the chart in the dashboard") {
+			ACUtils.clickOnDistributionBar(index = "1");
+		}
+
+		task ("Check that the number of users shown in the sidebar list is correct") {
+			ACUtils.viewResultsMessage(results = "Showing 1 to 2 of 2 entries.");
+		}
+
+		task ("Click on the chart in the dashboard") {
+			ACUtils.clickOnDistributionBar(index = "2");
+		}
+
+		task ("Check that the number of users shown in the sidebar list is correct") {
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entry.");
+		}
+	}
+
 }

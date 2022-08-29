@@ -17,6 +17,7 @@ package com.liferay.portal.k8s.agent.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
 import com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration;
 import com.liferay.portal.kernel.log.Log;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
 import io.fabric8.kubernetes.api.model.ConfigMap;
 import io.fabric8.kubernetes.api.model.ConfigMapBuilder;
@@ -56,9 +58,9 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -83,10 +85,11 @@ public class PortalK8sAgentImplTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
-	@Before
-	public void setUp() {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_bundle = FrameworkUtil.getBundle(PortalK8sAgentImplTest.class);
 
 		_bundleContext = _bundle.getBundleContext();
@@ -122,283 +125,205 @@ public class PortalK8sAgentImplTest {
 		_kubernetesMockServer.init(InetAddress.getLoopbackAddress(), 0);
 
 		_kubernetesMockClient = _kubernetesMockServer.createClient();
+
+		_agentConfigurationHolder = new CreatingConfigurationHolder(
+			PortalK8sAgentConfiguration.class.getName());
+		_portalK8sConfigMapModifierHolder =
+			new PortalK8sConfigMapModifierClosableHolder(_bundleContext);
+
+		_agentConfigurationHolder.update(
+			HashMapDictionaryBuilder.<String, Object>put(
+				"apiServerHost", _kubernetesMockServer.getHostName()
+			).put(
+				"apiServerPort", _kubernetesMockServer.getPort()
+			).put(
+				"apiServerSSL", Boolean.FALSE
+			).put(
+				"caCertData",
+				StringUtil.read(
+					PortalK8sAgentImplTest.class, "dependencies/ca.crt")
+			).put(
+				"namespace", "test"
+			).put(
+				"saToken", "saToken"
+			).build());
+
+		_portalK8sConfigMapModifier =
+			_portalK8sConfigMapModifierHolder.waitForService(2000);
+
+		Assert.assertNotNull(_portalK8sConfigMapModifier);
 	}
 
-	@After
-	public void tearDown() {
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_agentConfigurationHolder.close();
+
 		_kubernetesMockClient.close();
 
 		_kubernetesMockServer.destroy();
+
+		_portalK8sConfigMapModifierHolder.close();
 	}
 
 	@Test
 	public void testCreateDXPMetadata() throws Exception {
-		try (ConfigurationHolder configurationHolder =
-				new CreatingConfigurationHolder(
-					PortalK8sAgentConfiguration.class.getName());
-			PortalK8sConfigMapModifierClosableHolder
-				portalK8sConfigMapModifierHolder =
-					new PortalK8sConfigMapModifierClosableHolder(
-						_bundleContext)) {
+		String webId = "foo.lxc.com";
 
-			configurationHolder.update(
-				HashMapDictionaryBuilder.<String, Object>put(
-					"apiServerHost", _kubernetesMockServer.getHostName()
-				).put(
-					"apiServerPort", _kubernetesMockServer.getPort()
-				).put(
-					"apiServerSSL", Boolean.FALSE
-				).put(
-					"caCertData",
-					StringUtil.read(
-						PortalK8sAgentImplTest.class, "dependencies/ca.crt")
-				).put(
-					"namespace", "test"
-				).put(
-					"saToken", "saToken"
-				).build());
+		_companyLocalService.addCompany(null, webId, webId, webId, 0, true);
 
-			PortalK8sConfigMapModifier portalK8sConfigMapModifier =
-				portalK8sConfigMapModifierHolder.waitForService(2000);
+		String configMapName = webId.concat("-lxc-dxp-metadata");
 
-			Assert.assertNotNull(portalK8sConfigMapModifier);
+		ConfigMap configMap = _kubernetesMockClient.configMaps(
+		).withName(
+			configMapName
+		).waitUntilCondition(
+			it -> it != null, 20, TimeUnit.SECONDS
+		);
 
-			String configMapName = TestPropsValues.COMPANY_WEB_ID.concat(
-				"-lxc-dxp-metadata");
+		Assert.assertNotNull(configMap);
 
-			portalK8sConfigMapModifier.modifyConfigMap(
-				model -> {
-					Map<String, String> data = model.data();
+		ObjectMeta objectMeta = configMap.getMetadata();
 
-					data.put(
-						"com.liferay.lxc.dxp.domains",
-						TestPropsValues.COMPANY_WEB_ID);
-					data.put(
-						"com.liferay.lxc.dxp.mainDomain",
-						TestPropsValues.COMPANY_WEB_ID);
+		Map<String, String> data = configMap.getData();
 
-					Map<String, String> labels = model.labels();
+		Assert.assertEquals(webId, data.get("com.liferay.lxc.dxp.domains"));
+		Assert.assertEquals(webId, data.get("com.liferay.lxc.dxp.mainDomain"));
 
-					labels.put(
-						"dxp.lxc.liferay.com/virtualInstanceId",
-						TestPropsValues.COMPANY_WEB_ID);
-					labels.put("lxc.liferay.com/metadataType", "dxp");
-				},
-				configMapName);
+		Map<String, String> labels = objectMeta.getLabels();
 
-			ConfigMap configMap = _kubernetesMockClient.configMaps(
-			).withName(
-				configMapName
-			).get();
-
-			Assert.assertNotNull(configMap);
-
-			ObjectMeta objectMeta = configMap.getMetadata();
-
-			Map<String, String> data = configMap.getData();
-
-			Assert.assertEquals(
-				TestPropsValues.COMPANY_WEB_ID,
-				data.get("com.liferay.lxc.dxp.domains"));
-			Assert.assertEquals(
-				TestPropsValues.COMPANY_WEB_ID,
-				data.get("com.liferay.lxc.dxp.mainDomain"));
-
-			Map<String, String> labels = objectMeta.getLabels();
-
-			Assert.assertEquals(
-				TestPropsValues.COMPANY_WEB_ID,
-				labels.get("dxp.lxc.liferay.com/virtualInstanceId"));
-			Assert.assertEquals(
-				"dxp", labels.get("lxc.liferay.com/metadataType"));
-		}
+		Assert.assertEquals(
+			webId, labels.get("dxp.lxc.liferay.com/virtualInstanceId"));
+		Assert.assertEquals("dxp", labels.get("lxc.liferay.com/metadataType"));
 	}
 
 	@Test
-	public void testCreateDXPMetadataFromCompany() throws Exception {
-		try (ConfigurationHolder configurationHolder =
-				new CreatingConfigurationHolder(
-					PortalK8sAgentConfiguration.class.getName());
-			PortalK8sConfigMapModifierClosableHolder
-				portalK8sConfigMapModifierHolder =
-					new PortalK8sConfigMapModifierClosableHolder(
-						_bundleContext)) {
+	public void testCreateExtInitMetadata() throws Exception {
+		String serviceId = RandomTestUtil.randomString();
 
-			configurationHolder.update(
-				HashMapDictionaryBuilder.<String, Object>put(
-					"apiServerHost", _kubernetesMockServer.getHostName()
-				).put(
-					"apiServerPort", _kubernetesMockServer.getPort()
-				).put(
-					"apiServerSSL", Boolean.FALSE
-				).put(
-					"caCertData",
-					StringUtil.read(
-						PortalK8sAgentImplTest.class, "dependencies/ca.crt")
-				).put(
-					"namespace", "test"
-				).put(
-					"saToken", "saToken"
-				).build());
+		String configMapName = StringBundler.concat(
+			serviceId, StringPool.DASH, TestPropsValues.COMPANY_WEB_ID,
+			"-lxc-ext-init-metadata");
 
-			PortalK8sConfigMapModifier portalK8sConfigMapModifier =
-				portalK8sConfigMapModifierHolder.waitForService(2000);
+		_portalK8sConfigMapModifier.modifyConfigMap(
+			model -> {
+				Map<String, String> data = model.data();
 
-			Assert.assertNotNull(portalK8sConfigMapModifier);
+				data.put(
+					"com.liferay.lxc.dxp.domains",
+					TestPropsValues.COMPANY_WEB_ID);
+				data.put(
+					"com.liferay.lxc.dxp.mainDomain",
+					TestPropsValues.COMPANY_WEB_ID);
 
-			String webId = "foo-prd.lxc.com";
+				Map<String, String> labels = model.labels();
 
-			_companyLocalService.addCompany(null, webId, webId, webId, 0, true);
+				labels.put("lxc.liferay.com/metadataType", "ext-init");
+				labels.put("ext.lxc.liferay.com/serviceId", serviceId);
+				labels.put(
+					"dxp.lxc.liferay.com/virtualInstanceId",
+					TestPropsValues.COMPANY_WEB_ID);
+			},
+			configMapName);
 
-			String configMapName = webId.concat("-lxc-dxp-metadata");
+		ConfigMap configMap = _kubernetesMockClient.configMaps(
+		).withName(
+			configMapName
+		).waitUntilCondition(
+			it -> it != null, 20, TimeUnit.SECONDS
+		);
 
-			ConfigMap configMap = _kubernetesMockClient.configMaps(
-			).withName(
-				configMapName
-			).get();
+		Assert.assertNotNull(configMap);
 
-			Assert.assertNotNull(configMap);
+		ObjectMeta objectMeta = configMap.getMetadata();
 
-			ObjectMeta objectMeta = configMap.getMetadata();
+		Map<String, String> data = configMap.getData();
 
-			Map<String, String> data = configMap.getData();
+		Assert.assertEquals(
+			TestPropsValues.COMPANY_WEB_ID,
+			data.get("com.liferay.lxc.dxp.domains"));
+		Assert.assertEquals(
+			TestPropsValues.COMPANY_WEB_ID,
+			data.get("com.liferay.lxc.dxp.mainDomain"));
 
-			Assert.assertEquals(webId, data.get("com.liferay.lxc.dxp.domains"));
-			Assert.assertEquals(
-				webId, data.get("com.liferay.lxc.dxp.mainDomain"));
+		Map<String, String> labels = objectMeta.getLabels();
 
-			Map<String, String> labels = objectMeta.getLabels();
-
-			Assert.assertEquals(
-				webId, labels.get("dxp.lxc.liferay.com/virtualInstanceId"));
-			Assert.assertEquals(
-				"dxp", labels.get("lxc.liferay.com/metadataType"));
-		}
-	}
-
-	@Test
-	public void testInitialization() throws Exception {
-		try (ConfigurationHolder configurationHolder =
-				new CreatingConfigurationHolder(
-					PortalK8sAgentConfiguration.class.getName());
-			PortalK8sConfigMapModifierClosableHolder
-				portalK8sConfigMapModifierHolder =
-					new PortalK8sConfigMapModifierClosableHolder(
-						_bundleContext)) {
-
-			PortalK8sConfigMapModifier portalK8sConfigMapModifier =
-				portalK8sConfigMapModifierHolder.waitForService(2000);
-
-			Assert.assertNull(portalK8sConfigMapModifier);
-
-			configurationHolder.update(
-				HashMapDictionaryBuilder.<String, Object>put(
-					"apiServerHost", _kubernetesMockServer.getHostName()
-				).put(
-					"apiServerPort", _kubernetesMockServer.getPort()
-				).put(
-					"apiServerSSL", Boolean.FALSE
-				).put(
-					"caCertData",
-					StringUtil.read(
-						PortalK8sAgentImplTest.class, "dependencies/ca.crt")
-				).put(
-					"namespace", "default"
-				).put(
-					"saToken", "saToken"
-				).build());
-
-			portalK8sConfigMapModifier =
-				portalK8sConfigMapModifierHolder.waitForService(2000);
-
-			Assert.assertNotNull(portalK8sConfigMapModifier);
-		}
+		Assert.assertEquals(
+			serviceId, labels.get("ext.lxc.liferay.com/serviceId"));
+		Assert.assertEquals(
+			TestPropsValues.COMPANY_WEB_ID,
+			labels.get("dxp.lxc.liferay.com/virtualInstanceId"));
+		Assert.assertEquals(
+			"ext-init", labels.get("lxc.liferay.com/metadataType"));
 	}
 
 	@Test
 	public void testListenForExtProvisionMetadata() throws Exception {
-		try (ConfigurationHolder configurationHolder1 =
-				new CreatingConfigurationHolder(
-					PortalK8sAgentConfiguration.class.getName());
-			PortalK8sConfigMapModifierClosableHolder
-				portalK8sConfigMapModifierHolder =
-					new PortalK8sConfigMapModifierClosableHolder(
-						_bundleContext)) {
+		ConfigMapBuilder configMapBuilder = new ConfigMapBuilder();
 
-			configurationHolder1.update(
-				HashMapDictionaryBuilder.<String, Object>put(
-					"apiServerHost", _kubernetesMockServer.getHostName()
-				).put(
-					"apiServerPort", _kubernetesMockServer.getPort()
-				).put(
-					"apiServerSSL", Boolean.FALSE
-				).put(
-					"caCertData",
-					StringUtil.read(
-						PortalK8sAgentImplTest.class, "dependencies/ca.crt")
-				).put(
-					"namespace", "test"
-				).put(
-					"saToken", "saToken"
-				).build());
+		String serviceId = RandomTestUtil.randomString();
 
-			PortalK8sConfigMapModifier portalK8sConfigMapModifier =
-				portalK8sConfigMapModifierHolder.waitForService(2000);
+		String mainDomain = serviceId.concat("-extproject.lfr.sh");
 
-			Assert.assertNotNull(portalK8sConfigMapModifier);
+		_kubernetesMockClient.configMaps(
+		).createOrReplace(
+			configMapBuilder.withNewMetadata(
+			).withName(
+				StringBundler.concat(
+					serviceId, "-", TestPropsValues.COMPANY_WEB_ID,
+					"-lxc-ext-provision-metadata")
+			).addToAnnotations(
+				"ext.lxc.liferay.com/domains",
+				serviceId.concat("-extproject.lfr.sh")
+			).addToAnnotations(
+				"ext.lxc.liferay.com/mainDomain", mainDomain
+			).addToLabels(
+				"dxp.lxc.liferay.com/virtualInstanceId",
+				TestPropsValues.COMPANY_WEB_ID
+			).addToLabels(
+				"ext.lxc.liferay.com/projectId", RandomTestUtil.randomString()
+			).addToLabels(
+				"ext.lxc.liferay.com/serviceId", serviceId
+			).addToLabels(
+				"lxc.liferay.com/metadataType", "ext-provision"
+			).endMetadata(
+			).addToData(
+				"foo.client-extension-config.json",
+				"{\"test.pid\": {\"test.key\": \"test.value\"}}"
+			).build()
+		);
 
-			ConfigMapBuilder configMapBuilder = new ConfigMapBuilder();
+		try (ConfigurationHolder configurationHolder2 =
+				new AwaitingConfigurationHolder(
+					_bundleContext, "test.pid", 10000, TimeUnit.MILLISECONDS)) {
 
-			String serviceId = RandomTestUtil.randomString();
+			Dictionary<String, Object> properties =
+				configurationHolder2.getProperties();
 
-			String mainDomain = serviceId.concat("-extproject.lfr.sh");
-
-			_kubernetesMockClient.configMaps(
-			).createOrReplace(
-				configMapBuilder.withNewMetadata(
-				).withName(
-					StringBundler.concat(
-						serviceId, "-", TestPropsValues.COMPANY_WEB_ID,
-						"-lxc-ext-provision-metadata")
-				).addToAnnotations(
-					"ext.lxc.liferay.com/domains",
-					serviceId.concat("-extproject.lfr.sh")
-				).addToAnnotations(
-					"ext.lxc.liferay.com/mainDomain", mainDomain
-				).addToLabels(
-					"dxp.lxc.liferay.com/virtualInstanceId",
-					TestPropsValues.COMPANY_WEB_ID
-				).addToLabels(
-					"ext.lxc.liferay.com/projectId",
-					RandomTestUtil.randomString()
-				).addToLabels(
-					"ext.lxc.liferay.com/serviceId", serviceId
-				).addToLabels(
-					"lxc.liferay.com/metadataType", "ext-provision"
-				).endMetadata(
-				).addToData(
-					"foo.client-extension-config.json",
-					"{\"test.pid\": {\"test.key\": \"test.value\"}}"
-				).build()
-			);
-
-			try (ConfigurationHolder configurationHolder2 =
-					new AwaitingConfigurationHolder(
-						_bundleContext, "test.pid", 10000,
-						TimeUnit.MILLISECONDS)) {
-
-				Dictionary<String, Object> properties =
-					configurationHolder2.getProperties();
-
-				Assert.assertEquals(
-					Http.HTTPS_WITH_SLASH.concat(mainDomain),
-					properties.get("baseURL"));
-				Assert.assertEquals(
-					TestPropsValues.getCompanyId(),
-					(long)properties.get("companyId"));
-				Assert.assertEquals("test.value", properties.get("test.key"));
-			}
+			Assert.assertEquals(
+				Http.HTTPS_WITH_SLASH.concat(mainDomain),
+				properties.get("baseURL"));
+			Assert.assertEquals(
+				TestPropsValues.getCompanyId(),
+				(long)properties.get("companyId"));
+			Assert.assertEquals("test.value", properties.get("test.key"));
 		}
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testPortalK8sConfigMapModifierValidateConfigMapNameNotNull()
+		throws Exception {
+
+		_portalK8sConfigMapModifier.modifyConfigMap(
+			model -> {
+			},
+			null);
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testPortalK8sConfigMapModifierValidateModelNotNull()
+		throws Exception {
+
+		_portalK8sConfigMapModifier.modifyConfigMap(null, null);
 	}
 
 	public static class AwaitingConfigurationHolder
@@ -543,15 +468,20 @@ public class PortalK8sAgentImplTest {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalK8sAgentImplTest.class);
 
+	private static ConfigurationHolder _agentConfigurationHolder;
+	private static Bundle _bundle;
+	private static BundleContext _bundleContext;
+
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
 
-	private Bundle _bundle;
-	private BundleContext _bundleContext;
-	private NamespacedKubernetesClient _kubernetesMockClient;
-	private KubernetesMockServer _kubernetesMockServer;
+	private static NamespacedKubernetesClient _kubernetesMockClient;
+	private static KubernetesMockServer _kubernetesMockServer;
+	private static PortalK8sConfigMapModifier _portalK8sConfigMapModifier;
+	private static PortalK8sConfigMapModifierClosableHolder
+		_portalK8sConfigMapModifierHolder;
 
 }

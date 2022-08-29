@@ -1498,7 +1498,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				className);
 
-		if (!stagedModelDataHandler.validateReference(
+		if ((stagedModelDataHandler == null) ||
+			!stagedModelDataHandler.validateReference(
 				portletDataContext, element)) {
 
 			MissingReference missingReference = new MissingReference(element);

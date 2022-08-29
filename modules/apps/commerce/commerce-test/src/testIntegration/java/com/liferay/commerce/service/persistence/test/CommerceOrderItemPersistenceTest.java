@@ -186,6 +186,9 @@ public class CommerceOrderItemPersistenceTest {
 		newCommerceOrderItem.setDiscountAmount(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
+		newCommerceOrderItem.setDiscountManuallyAdjusted(
+			RandomTestUtil.randomBoolean());
+
 		newCommerceOrderItem.setDiscountPercentageLevel1(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
@@ -232,6 +235,9 @@ public class CommerceOrderItemPersistenceTest {
 			RandomTestUtil.nextLong());
 
 		newCommerceOrderItem.setName(RandomTestUtil.randomString());
+
+		newCommerceOrderItem.setPriceManuallyAdjusted(
+			RandomTestUtil.randomBoolean());
 
 		newCommerceOrderItem.setPrintedNote(RandomTestUtil.randomString());
 
@@ -359,6 +365,9 @@ public class CommerceOrderItemPersistenceTest {
 			existingCommerceOrderItem.getDiscountAmount(),
 			newCommerceOrderItem.getDiscountAmount());
 		Assert.assertEquals(
+			existingCommerceOrderItem.isDiscountManuallyAdjusted(),
+			newCommerceOrderItem.isDiscountManuallyAdjusted());
+		Assert.assertEquals(
 			existingCommerceOrderItem.getDiscountPercentageLevel1(),
 			newCommerceOrderItem.getDiscountPercentageLevel1());
 		Assert.assertEquals(
@@ -413,6 +422,9 @@ public class CommerceOrderItemPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceOrderItem.getName(),
 			newCommerceOrderItem.getName());
+		Assert.assertEquals(
+			existingCommerceOrderItem.isPriceManuallyAdjusted(),
+			newCommerceOrderItem.isPriceManuallyAdjusted());
 		Assert.assertEquals(
 			existingCommerceOrderItem.getPrintedNote(),
 			newCommerceOrderItem.getPrintedNote());
@@ -594,9 +606,9 @@ public class CommerceOrderItemPersistenceTest {
 			"deliveryMaxSubscriptionCycles", true, "deliverySubscriptionLength",
 			true, "deliverySubscriptionType", true,
 			"deliverySubscriptionTypeSettings", true, "depth", true,
-			"discountAmount", true, "discountPercentageLevel1", true,
-			"discountPercentageLevel2", true, "discountPercentageLevel3", true,
-			"discountPercentageLevel4", true,
+			"discountAmount", true, "discountManuallyAdjusted", true,
+			"discountPercentageLevel1", true, "discountPercentageLevel2", true,
+			"discountPercentageLevel3", true, "discountPercentageLevel4", true,
 			"discountPercentageLevel1WithTaxAmount", true,
 			"discountPercentageLevel2WithTaxAmount", true,
 			"discountPercentageLevel3WithTaxAmount", true,
@@ -604,11 +616,11 @@ public class CommerceOrderItemPersistenceTest {
 			"discountWithTaxAmount", true, "finalPrice", true,
 			"finalPriceWithTaxAmount", true, "freeShipping", true, "height",
 			true, "manuallyAdjusted", true, "maxSubscriptionCycles", true,
-			"name", true, "printedNote", true, "promoPrice", true,
-			"promoPriceWithTaxAmount", true, "quantity", true,
-			"requestedDeliveryDate", true, "shipSeparately", true, "shippable",
-			true, "shippedQuantity", true, "shippingExtraPrice", true, "sku",
-			true, "subscription", true, "subscriptionLength", true,
+			"name", true, "priceManuallyAdjusted", true, "printedNote", true,
+			"promoPrice", true, "promoPriceWithTaxAmount", true, "quantity",
+			true, "requestedDeliveryDate", true, "shipSeparately", true,
+			"shippable", true, "shippedQuantity", true, "shippingExtraPrice",
+			true, "sku", true, "subscription", true, "subscriptionLength", true,
 			"subscriptionType", true, "subscriptionTypeSettings", true,
 			"unitPrice", true, "unitPriceWithTaxAmount", true, "weight", true,
 			"width", true);
@@ -979,6 +991,9 @@ public class CommerceOrderItemPersistenceTest {
 		commerceOrderItem.setDiscountAmount(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
+		commerceOrderItem.setDiscountManuallyAdjusted(
+			RandomTestUtil.randomBoolean());
+
 		commerceOrderItem.setDiscountPercentageLevel1(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
@@ -1023,6 +1038,9 @@ public class CommerceOrderItemPersistenceTest {
 		commerceOrderItem.setMaxSubscriptionCycles(RandomTestUtil.nextLong());
 
 		commerceOrderItem.setName(RandomTestUtil.randomString());
+
+		commerceOrderItem.setPriceManuallyAdjusted(
+			RandomTestUtil.randomBoolean());
 
 		commerceOrderItem.setPrintedNote(RandomTestUtil.randomString());
 

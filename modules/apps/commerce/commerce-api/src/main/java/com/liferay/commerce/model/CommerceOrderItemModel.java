@@ -472,6 +472,27 @@ public interface CommerceOrderItemModel
 	public void setDiscountAmount(BigDecimal discountAmount);
 
 	/**
+	 * Returns the discount manually adjusted of this commerce order item.
+	 *
+	 * @return the discount manually adjusted of this commerce order item
+	 */
+	public boolean getDiscountManuallyAdjusted();
+
+	/**
+	 * Returns <code>true</code> if this commerce order item is discount manually adjusted.
+	 *
+	 * @return <code>true</code> if this commerce order item is discount manually adjusted; <code>false</code> otherwise
+	 */
+	public boolean isDiscountManuallyAdjusted();
+
+	/**
+	 * Sets whether this commerce order item is discount manually adjusted.
+	 *
+	 * @param discountManuallyAdjusted the discount manually adjusted of this commerce order item
+	 */
+	public void setDiscountManuallyAdjusted(boolean discountManuallyAdjusted);
+
+	/**
 	 * Returns the discount percentage level1 of this commerce order item.
 	 *
 	 * @return the discount percentage level1 of this commerce order item
@@ -816,6 +837,27 @@ public interface CommerceOrderItemModel
 	 * @param defaultLocale the default locale
 	 */
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
+
+	/**
+	 * Returns the price manually adjusted of this commerce order item.
+	 *
+	 * @return the price manually adjusted of this commerce order item
+	 */
+	public boolean getPriceManuallyAdjusted();
+
+	/**
+	 * Returns <code>true</code> if this commerce order item is price manually adjusted.
+	 *
+	 * @return <code>true</code> if this commerce order item is price manually adjusted; <code>false</code> otherwise
+	 */
+	public boolean isPriceManuallyAdjusted();
+
+	/**
+	 * Sets whether this commerce order item is price manually adjusted.
+	 *
+	 * @param priceManuallyAdjusted the price manually adjusted of this commerce order item
+	 */
+	public void setPriceManuallyAdjusted(boolean priceManuallyAdjusted);
 
 	/**
 	 * Returns the printed note of this commerce order item.

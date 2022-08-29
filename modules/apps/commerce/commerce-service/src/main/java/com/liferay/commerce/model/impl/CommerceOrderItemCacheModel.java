@@ -80,7 +80,7 @@ public class CommerceOrderItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(123);
+		StringBundler sb = new StringBundler(127);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -134,6 +134,8 @@ public class CommerceOrderItemCacheModel
 		sb.append(depth);
 		sb.append(", discountAmount=");
 		sb.append(discountAmount);
+		sb.append(", discountManuallyAdjusted=");
+		sb.append(discountManuallyAdjusted);
 		sb.append(", discountPercentageLevel1=");
 		sb.append(discountPercentageLevel1);
 		sb.append(", discountPercentageLevel2=");
@@ -168,6 +170,8 @@ public class CommerceOrderItemCacheModel
 		sb.append(maxSubscriptionCycles);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", priceManuallyAdjusted=");
+		sb.append(priceManuallyAdjusted);
 		sb.append(", printedNote=");
 		sb.append(printedNote);
 		sb.append(", promoPrice=");
@@ -298,6 +302,8 @@ public class CommerceOrderItemCacheModel
 
 		commerceOrderItemImpl.setDepth(depth);
 		commerceOrderItemImpl.setDiscountAmount(discountAmount);
+		commerceOrderItemImpl.setDiscountManuallyAdjusted(
+			discountManuallyAdjusted);
 		commerceOrderItemImpl.setDiscountPercentageLevel1(
 			discountPercentageLevel1);
 		commerceOrderItemImpl.setDiscountPercentageLevel2(
@@ -337,6 +343,8 @@ public class CommerceOrderItemCacheModel
 		else {
 			commerceOrderItemImpl.setName(name);
 		}
+
+		commerceOrderItemImpl.setPriceManuallyAdjusted(priceManuallyAdjusted);
 
 		if (printedNote == null) {
 			commerceOrderItemImpl.setPrintedNote("");
@@ -443,6 +451,8 @@ public class CommerceOrderItemCacheModel
 
 		depth = objectInput.readDouble();
 		discountAmount = (BigDecimal)objectInput.readObject();
+
+		discountManuallyAdjusted = objectInput.readBoolean();
 		discountPercentageLevel1 = (BigDecimal)objectInput.readObject();
 		discountPercentageLevel2 = (BigDecimal)objectInput.readObject();
 		discountPercentageLevel3 = (BigDecimal)objectInput.readObject();
@@ -468,6 +478,8 @@ public class CommerceOrderItemCacheModel
 
 		maxSubscriptionCycles = objectInput.readLong();
 		name = objectInput.readUTF();
+
+		priceManuallyAdjusted = objectInput.readBoolean();
 		printedNote = objectInput.readUTF();
 		promoPrice = (BigDecimal)objectInput.readObject();
 		promoPriceWithTaxAmount = (BigDecimal)objectInput.readObject();
@@ -577,6 +589,8 @@ public class CommerceOrderItemCacheModel
 
 		objectOutput.writeDouble(depth);
 		objectOutput.writeObject(discountAmount);
+
+		objectOutput.writeBoolean(discountManuallyAdjusted);
 		objectOutput.writeObject(discountPercentageLevel1);
 		objectOutput.writeObject(discountPercentageLevel2);
 		objectOutput.writeObject(discountPercentageLevel3);
@@ -610,6 +624,8 @@ public class CommerceOrderItemCacheModel
 		else {
 			objectOutput.writeUTF(name);
 		}
+
+		objectOutput.writeBoolean(priceManuallyAdjusted);
 
 		if (printedNote == null) {
 			objectOutput.writeUTF("");
@@ -691,6 +707,7 @@ public class CommerceOrderItemCacheModel
 	public String deliverySubscriptionTypeSettings;
 	public double depth;
 	public BigDecimal discountAmount;
+	public boolean discountManuallyAdjusted;
 	public BigDecimal discountPercentageLevel1;
 	public BigDecimal discountPercentageLevel2;
 	public BigDecimal discountPercentageLevel3;
@@ -708,6 +725,7 @@ public class CommerceOrderItemCacheModel
 	public boolean manuallyAdjusted;
 	public long maxSubscriptionCycles;
 	public String name;
+	public boolean priceManuallyAdjusted;
 	public String printedNote;
 	public BigDecimal promoPrice;
 	public BigDecimal promoPriceWithTaxAmount;

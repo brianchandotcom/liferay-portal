@@ -192,6 +192,7 @@
 		<field name="deliverySubscriptionTypeSettings" type="String" />
 		<field name="depth" type="double" />
 		<field name="discountAmount" type="BigDecimal" />
+		<field name="discountManuallyAdjusted" type="boolean" />
 		<field name="discountPercentageLevel1" type="BigDecimal" />
 		<field name="discountPercentageLevel2" type="BigDecimal" />
 		<field name="discountPercentageLevel3" type="BigDecimal" />
@@ -211,6 +212,7 @@
 		<field name="manuallyAdjusted" type="boolean" />
 		<field name="maxSubscriptionCycles" type="long" />
 		<field localized="true" name="name" type="String" />
+		<field name="priceManuallyAdjusted" type="boolean" />
 		<field name="printedNote" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>

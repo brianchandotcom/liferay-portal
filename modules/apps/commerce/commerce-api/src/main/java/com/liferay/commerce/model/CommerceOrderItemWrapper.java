@@ -79,6 +79,8 @@ public class CommerceOrderItemWrapper
 		attributes.put("depth", getDepth());
 		attributes.put("discountAmount", getDiscountAmount());
 		attributes.put(
+			"discountManuallyAdjusted", isDiscountManuallyAdjusted());
+		attributes.put(
 			"discountPercentageLevel1", getDiscountPercentageLevel1());
 		attributes.put(
 			"discountPercentageLevel2", getDiscountPercentageLevel2());
@@ -107,6 +109,7 @@ public class CommerceOrderItemWrapper
 		attributes.put("manuallyAdjusted", isManuallyAdjusted());
 		attributes.put("maxSubscriptionCycles", getMaxSubscriptionCycles());
 		attributes.put("name", getName());
+		attributes.put("priceManuallyAdjusted", isPriceManuallyAdjusted());
 		attributes.put("printedNote", getPrintedNote());
 		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("promoPriceWithTaxAmount", getPromoPriceWithTaxAmount());
@@ -297,6 +300,13 @@ public class CommerceOrderItemWrapper
 			setDiscountAmount(discountAmount);
 		}
 
+		Boolean discountManuallyAdjusted = (Boolean)attributes.get(
+			"discountManuallyAdjusted");
+
+		if (discountManuallyAdjusted != null) {
+			setDiscountManuallyAdjusted(discountManuallyAdjusted);
+		}
+
 		BigDecimal discountPercentageLevel1 = (BigDecimal)attributes.get(
 			"discountPercentageLevel1");
 
@@ -412,6 +422,13 @@ public class CommerceOrderItemWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Boolean priceManuallyAdjusted = (Boolean)attributes.get(
+			"priceManuallyAdjusted");
+
+		if (priceManuallyAdjusted != null) {
+			setPriceManuallyAdjusted(priceManuallyAdjusted);
 		}
 
 		String printedNote = (String)attributes.get("printedNote");
@@ -786,6 +803,16 @@ public class CommerceOrderItemWrapper
 	}
 
 	/**
+	 * Returns the discount manually adjusted of this commerce order item.
+	 *
+	 * @return the discount manually adjusted of this commerce order item
+	 */
+	@Override
+	public boolean getDiscountManuallyAdjusted() {
+		return model.getDiscountManuallyAdjusted();
+	}
+
+	/**
 	 * Returns the discount percentage level1 of this commerce order item.
 	 *
 	 * @return the discount percentage level1 of this commerce order item
@@ -1101,6 +1128,16 @@ public class CommerceOrderItemWrapper
 	}
 
 	/**
+	 * Returns the price manually adjusted of this commerce order item.
+	 *
+	 * @return the price manually adjusted of this commerce order item
+	 */
+	@Override
+	public boolean getPriceManuallyAdjusted() {
+		return model.getPriceManuallyAdjusted();
+	}
+
+	/**
 	 * Returns the primary key of this commerce order item.
 	 *
 	 * @return the primary key of this commerce order item
@@ -1377,6 +1414,16 @@ public class CommerceOrderItemWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this commerce order item is discount manually adjusted.
+	 *
+	 * @return <code>true</code> if this commerce order item is discount manually adjusted; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDiscountManuallyAdjusted() {
+		return model.isDiscountManuallyAdjusted();
+	}
+
+	/**
 	 * Returns <code>true</code> if this commerce order item is free shipping.
 	 *
 	 * @return <code>true</code> if this commerce order item is free shipping; <code>false</code> otherwise
@@ -1394,6 +1441,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public boolean isManuallyAdjusted() {
 		return model.isManuallyAdjusted();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce order item is price manually adjusted.
+	 *
+	 * @return <code>true</code> if this commerce order item is price manually adjusted; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPriceManuallyAdjusted() {
+		return model.isPriceManuallyAdjusted();
 	}
 
 	/**
@@ -1619,6 +1676,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public void setDiscountAmount(BigDecimal discountAmount) {
 		model.setDiscountAmount(discountAmount);
+	}
+
+	/**
+	 * Sets whether this commerce order item is discount manually adjusted.
+	 *
+	 * @param discountManuallyAdjusted the discount manually adjusted of this commerce order item
+	 */
+	@Override
+	public void setDiscountManuallyAdjusted(boolean discountManuallyAdjusted) {
+		model.setDiscountManuallyAdjusted(discountManuallyAdjusted);
 	}
 
 	/**
@@ -1912,6 +1979,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public void setParentCommerceOrderItemId(long parentCommerceOrderItemId) {
 		model.setParentCommerceOrderItemId(parentCommerceOrderItemId);
+	}
+
+	/**
+	 * Sets whether this commerce order item is price manually adjusted.
+	 *
+	 * @param priceManuallyAdjusted the price manually adjusted of this commerce order item
+	 */
+	@Override
+	public void setPriceManuallyAdjusted(boolean priceManuallyAdjusted) {
+		model.setPriceManuallyAdjusted(priceManuallyAdjusted);
 	}
 
 	/**

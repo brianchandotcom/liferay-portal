@@ -37,7 +37,7 @@ public class DLFileEntryTypeContentDashboardItemSubtypeFactory
 
 	@Override
 	public ContentDashboardItemSubtype<DLFileEntryType> create(
-			long classPK, long entryClassPK)
+			long classPK, long entityClassPK)
 		throws PortalException {
 
 		DLFileEntryType dlFileEntryType =
@@ -49,7 +49,7 @@ public class DLFileEntryTypeContentDashboardItemSubtypeFactory
 
 		return new DLFileEntryTypeContentDashboardItemSubtype(
 			basicDocumentDLFileEntryType,
-			_dlFileEntryLocalService.fetchDLFileEntry(entryClassPK),
+			_dlFileEntryLocalService.fetchDLFileEntry(entityClassPK),
 			dlFileEntryType, _fileExtensionGroupsProvider,
 			_groupLocalService.fetchGroup(dlFileEntryType.getGroupId()),
 			_language);

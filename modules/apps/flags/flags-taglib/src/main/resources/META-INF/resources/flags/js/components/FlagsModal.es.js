@@ -120,7 +120,7 @@ const ModalContentForm = ({
 							autoFocus
 							className="form-control"
 							id={`${namespace}otherReason`}
-							maxLength={75}
+							maxLength={OTHER_REASON_MAX_LENGTH}
 							name="otherReason"
 							onChange={handleInputChange}
 							value={form.otherReason}

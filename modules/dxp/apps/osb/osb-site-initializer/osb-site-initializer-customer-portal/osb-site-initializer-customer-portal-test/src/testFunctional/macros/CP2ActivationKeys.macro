@@ -1,6 +1,6 @@
 definition {
 
-	macro assertDropDownSelection {
+	macro assertDropdownSelection {
 		var key_option = "${option}";
 
 		AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN");

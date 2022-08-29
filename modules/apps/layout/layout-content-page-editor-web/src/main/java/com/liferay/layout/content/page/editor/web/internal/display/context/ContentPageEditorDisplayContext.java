@@ -1037,6 +1037,44 @@ public class ContentPageEditorDisplayContext {
 
 		fragmentCollectionMapsList.addAll(fragmentCollectionMaps.values());
 
+		if (!SetUtil.isEmpty(_getHighlightedFragmentEntryKeys())) {
+			List<Map<String, Object>> highlightedFragmentMapsList =
+				new LinkedList<>();
+
+			for (Map<String, Object> fragmentCollection :
+					fragmentCollectionMapsList) {
+
+				List<Map<String, Object>> fragmentEntryMapsList =
+					(List<Map<String, Object>>)
+						fragmentCollection.computeIfAbsent(
+							"fragmentEntries", key -> new LinkedList<>());
+
+				for (Map<String, Object> fragmentEntryMap :
+						fragmentEntryMapsList) {
+
+					if (GetterUtil.getBoolean(
+							fragmentEntryMap.get("highlighted"))) {
+
+						highlightedFragmentMapsList.add(fragmentEntryMap);
+					}
+				}
+			}
+
+			if (!highlightedFragmentMapsList.isEmpty()) {
+				fragmentCollectionMapsList.add(
+					0,
+					HashMapBuilder.<String, Object>put(
+						"fragmentCollectionId", "highlighted"
+					).put(
+						"fragmentEntries", highlightedFragmentMapsList
+					).put(
+						"name",
+						() -> LanguageUtil.get(
+							themeDisplay.getLocale(), "favorites")
+					).build());
+			}
+		}
+
 		return fragmentCollectionMapsList;
 	}
 

@@ -80,4 +80,14 @@ definition {
 			value1 = "${value}");
 	}
 
+	macro analyticsCloudFlow{
+		CustomerPortal.clickOnFinishActivationButton();
+
+		CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
+
+		Button.click(button = "Submit");
+
+		Button.click(button = "Done");
+	}
+
 }

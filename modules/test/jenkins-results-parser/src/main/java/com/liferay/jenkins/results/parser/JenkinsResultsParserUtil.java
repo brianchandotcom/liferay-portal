@@ -5725,8 +5725,13 @@ public class JenkinsResultsParserUtil {
 		}
 
 		for (int i = 0; i < indices.size(); i++) {
-			String opt = propertyName.substring(
-				indices.get(i) + 1, indices.get(i + 1));
+			int nextIndex = propertyName.length();
+
+			if (indices.size() > (i + 1)) {
+				nextIndex = indices.get(i + 1);
+			}
+
+			String opt = propertyName.substring(indices.get(i) + 1, nextIndex);
 
 			opt = Pattern.quote(opt);
 

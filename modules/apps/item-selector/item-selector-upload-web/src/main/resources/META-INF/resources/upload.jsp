@@ -59,6 +59,8 @@ if (Validator.isNotNull(namespace)) {
 						).put(
 							"maxFileSize", itemSelectorUploadViewDisplayContext.getMaxFileSize()
 						).put(
+							"mimeTypeRestriction", itemSelectorUploadViewDisplayContext.getMimeTypeRestriction()
+						).put(
 							"rootNode", "#itemSelectorUploadContainer"
 						).put(
 							"uploadItemReturnType", HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName())

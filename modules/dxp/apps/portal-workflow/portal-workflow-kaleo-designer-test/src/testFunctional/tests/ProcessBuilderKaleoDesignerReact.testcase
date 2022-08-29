@@ -972,7 +972,6 @@ definition {
 			sidebarPropertyName = "Notification");
 
 		ProcessBuilderKaleoDesignerReact.viewNotificationNotPresent(notificationName = "Liferay Notification 1,Liferay Notification 2");
-
 	}
 
 	@description = "LPS-139387 - Verify that the user is able to delete a node using the Delete key"
@@ -1063,7 +1062,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.viewNotificationNotPresent(notificationName = "Liferay Notification 1");
-		
 	}
 
 	@description = "Verify that the user can delete Nodes of Start"

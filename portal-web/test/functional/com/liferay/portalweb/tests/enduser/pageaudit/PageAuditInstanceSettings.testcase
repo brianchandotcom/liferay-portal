@@ -1,0 +1,45 @@
+@component-name = "portal-page-audit"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Page Audit";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		task ("Create content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		JSONUser.tearDownNonAdminUsers();
+
+		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+    @ignore = "true"
+    test TestName {
+        property portal.acceptance = "false";
+
+        //To be implemented in next commits
+    }
+}

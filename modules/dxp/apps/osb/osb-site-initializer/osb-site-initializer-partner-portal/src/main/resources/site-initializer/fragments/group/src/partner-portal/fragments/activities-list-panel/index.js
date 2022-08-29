@@ -13,20 +13,17 @@ import ClayPanel from '@clayui/panel';
 import ClayTable from '@clayui/table';
 import React, {useEffect, useState} from 'react';
 
-const ID_MDF_REQUEST = 87707;
+const currentPath = Liferay.currentURL.split('/');
+const mdfRequestId = +currentPath[currentPath.length - 1];
 
-export function getIntlNumberFormat() {
-	return new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
+const getIntlNumberFormat = () =>
+	new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
 		currency: 'USD',
 		style: 'currency',
 	});
-}
+const getBooleanValue = (value) => (value === 'true' ? 'Yes' : 'No');
 
-export function getBooleanValue(value) {
-	return value === 'true' ? 'Yes' : 'No';
-}
-
-export function BudgetTable({mdfRequestActivity}) {
+const BudgetTable = ({mdfRequestActivity}) => {
 	const [budgets, setBudgets] = useState();
 
 	useEffect(() => {
@@ -60,181 +57,115 @@ export function BudgetTable({mdfRequestActivity}) {
 			title="Budget Breakdown"
 		/>
 	);
-}
+};
 
-export function LeadTable({mdfRequestActivity}) {
-	return (
-		<Table
-			items={[
-				{
-					title: 'Is a lead list an outcome of this activity?',
-					value: getBooleanValue(mdfRequestActivity.leadGenerated),
-				},
-				{
-					title: 'Target # of Leads',
-					value: mdfRequestActivity.targetOfLeads,
-				},
-				{
-					title: 'Lead Follow Up strategy',
-					value: mdfRequestActivity.leadFollowUpStrategies,
-				},
-				{
-					title: 'Details on Lead Follow Up',
-					value: mdfRequestActivity.detailsLeadFollowUp,
-				},
-			]}
-			title="Lead List"
-		/>
-	);
-}
+const LeadTable = ({mdfRequestActivity}) => (
+	<Table
+		items={[
+			{
+				title: 'Is a lead list an outcome of this activity?',
+				value: getBooleanValue(mdfRequestActivity.leadGenerated),
+			},
+			{
+				title: 'Target # of Leads',
+				value: mdfRequestActivity.targetOfLeads,
+			},
+			{
+				title: 'Lead Follow Up strategy',
+				value: mdfRequestActivity.leadFollowUpStrategies,
+			},
+			{
+				title: 'Details on Lead Follow Up',
+				value: mdfRequestActivity.detailsLeadFollowUp,
+			},
+		]}
+		title="Lead List"
+	/>
+);
 
-export function getDigitalMarketFields(mdfRequestActivity) {
-	return [
-		{
-			title: 'Overall message, content or CTA',
-			value: mdfRequestActivity.overallMessageContentCTA,
-		},
-		{
-			title: 'Specific sites to be used',
-			value: mdfRequestActivity.specificSites,
-		},
-		{
-			title: 'Keywords for PPC campaigns',
-			value: mdfRequestActivity.keywordsForPPCCampaigns,
-		},
-		{
-			title: 'Ad (any size/type)',
-			value: mdfRequestActivity.ad,
-		},
-		{
-			title: 'Do you require any assets from Liferay?',
-			value: getBooleanValue(mdfRequestActivity.assetsLiferayRequired),
-		},
-		{
-			title: 'How will the Liferay brand be used in the campaign?',
-			value: mdfRequestActivity.howLiferayBrandUsed,
-		},
-	];
-}
+const getDigitalMarketFields = (mdfRequestActivity) => [
+	{
+		title: 'Overall message, content or CTA',
+		value: mdfRequestActivity.overallMessageContentCTA,
+	},
+	{
+		title: 'Specific sites to be used',
+		value: mdfRequestActivity.specificSites,
+	},
+	{
+		title: 'Keywords for PPC campaigns',
+		value: mdfRequestActivity.keywordsForPPCCampaigns,
+	},
+	{
+		title: 'Ad (any size/type)',
+		value: mdfRequestActivity.ad,
+	},
+	{
+		title: 'Do you require any assets from Liferay?',
+		value: getBooleanValue(mdfRequestActivity.assetsLiferayRequired),
+	},
+	{
+		title: 'How will the Liferay brand be used in the campaign?',
+		value: mdfRequestActivity.howLiferayBrandUsed,
+	},
+];
 
-export function getContentMarketFields(mdfRequestActivity) {
-	return [
-		{
-			title: 'Will this content be gated and have a landing page?',
-			value: getBooleanValue(mdfRequestActivity.gatedLandingPage),
-		},
-		{
-			title: 'Primary theme or message of your content',
-			value: mdfRequestActivity.primaryThemeOrMessage,
-		},
+const getContentMarketFields = (mdfRequestActivity) => [
+	{
+		title: 'Will this content be gated and have a landing page?',
+		value: getBooleanValue(mdfRequestActivity.gatedLandingPage),
+	},
+	{
+		title: 'Primary theme or message of your content',
+		value: mdfRequestActivity.primaryThemeOrMessage,
+	},
 
-		{
-			title: 'Goal of Content',
-			value: mdfRequestActivity.goalOfContent,
-		},
-		{
-			title:
-				'Are you hiring an outside writer or agency to prepare the content?',
-			value: getBooleanValue(
-				mdfRequestActivity.hiringOutsideWriterOrAgency
-			),
-		},
-	];
-}
+	{
+		title: 'Goal of Content',
+		value: mdfRequestActivity.goalOfContent,
+	},
+	{
+		title:
+			'Are you hiring an outside writer or agency to prepare the content?',
+		value: getBooleanValue(mdfRequestActivity.hiringOutsideWriterOrAgency),
+	},
+];
 
-export function getEventFields(mdfRequestActivity) {
-	return [
-		{
-			title: 'Activity Description',
-			value: mdfRequestActivity.description,
-		},
-		{
-			title: 'Venue Name',
-			value: mdfRequestActivity.venueName,
-		},
-		{
-			title: 'Liferay Branding',
-			value: mdfRequestActivity.liferayBranding,
-		},
-		{
-			title: 'Liferay Participation / Requirements',
-			value: mdfRequestActivity.liferayParticipationRequirements,
-		},
-		{
-			title: 'Source and Size of Invitee List',
-			value: mdfRequestActivity.sourceAndSizeOfInviteeList,
-		},
-		{
-			title: 'Activity Promotion',
-			value: mdfRequestActivity.activityPromotion,
-		},
-	];
-}
+const getEventFields = (mdfRequestActivity) => [
+	{
+		title: 'Activity Description',
+		value: mdfRequestActivity.description,
+	},
+	{
+		title: 'Venue Name',
+		value: mdfRequestActivity.venueName,
+	},
+	{
+		title: 'Liferay Branding',
+		value: mdfRequestActivity.liferayBranding,
+	},
+	{
+		title: 'Liferay Participation / Requirements',
+		value: mdfRequestActivity.liferayParticipationRequirements,
+	},
+	{
+		title: 'Source and Size of Invitee List',
+		value: mdfRequestActivity.sourceAndSizeOfInviteeList,
+	},
+	{
+		title: 'Activity Promotion',
+		value: mdfRequestActivity.activityPromotion,
+	},
+];
 
-export function getMiscellaneousMarketing(mdfRequestActivity) {
-	return [
-		{
-			title: 'Marketing activity',
-			value: mdfRequestActivity.marketingActivity,
-		},
-	];
-}
+const getMiscellaneousMarketing = (mdfRequestActivity) => [
+	{
+		title: 'Marketing activity',
+		value: mdfRequestActivity.marketingActivity,
+	},
+];
 
-export function CampaignTable({mdfRequestActivity}) {
-	const [typeOfActivity, setTypeOfActivity] = useState({
-		externalReferenceCode: '',
-		name: '',
-	});
-	const [tacticName, setTacticName] = useState();
-
-	useEffect(() => {
-		const getTypeOfActivity = async () => {
-			// eslint-disable-next-line @liferay/portal/no-global-fetch
-			const response = await fetch(
-				`/o/c/typeactivities/${mdfRequestActivity.r_typeActivityToActivities_c_typeActivityId}`,
-				{
-					headers: {
-						'accept': 'application/json',
-						'x-csrf-token': Liferay.authToken,
-					},
-				}
-			);
-
-			if (response.ok) {
-				const typeOfActivityResponse = await response.json();
-
-				setTypeOfActivity({
-					externalReferenceCode:
-						typeOfActivityResponse.externalReferenceCode,
-					name: typeOfActivityResponse.name,
-				});
-			}
-		};
-		getTypeOfActivity();
-	}, [mdfRequestActivity.r_typeActivityToActivities_c_typeActivityId]);
-
-	useEffect(() => {
-		const getTactic = async () => {
-			// eslint-disable-next-line @liferay/portal/no-global-fetch
-			const response = await fetch(
-				`/o/c/tactics/${mdfRequestActivity.r_tacticToActivities_c_tacticId}`,
-				{
-					headers: {
-						'accept': 'application/json',
-						'x-csrf-token': Liferay.authToken,
-					},
-				}
-			);
-
-			if (response.ok) {
-				const tacticResponse = await response.json();
-
-				setTacticName(tacticResponse.name);
-			}
-		};
-		getTactic();
-	}, [mdfRequestActivity.r_tacticToActivities_c_tacticId]);
-
+const CampaignTable = ({mdfRequestActivity}) => {
 	const TypeActivityExternalReferenceCode = {
 		CONTENT_MARKETING: 'PRMTACT-003',
 		DIGITAL_MARKETING: 'PRMTACT-002',
@@ -266,15 +197,23 @@ export function CampaignTable({mdfRequestActivity}) {
 				},
 				{
 					title: 'Type of Activity',
-					value: typeOfActivity.name,
+					value:
+						mdfRequestActivity
+							.r_typeActivityToActivities_c_typeActivity.name,
 				},
 				{
 					title: 'Tactic',
-					value: tacticName,
+					value:
+						mdfRequestActivity.r_tacticToActivities_c_tactic.name,
 				},
-				...(typeOfActivity &&
-					typeOfActivity.externalReferenceCode &&
-					fieldsByTypeActivity[typeOfActivity.externalReferenceCode]),
+				...(mdfRequestActivity.r_typeActivityToActivities_c_typeActivity &&
+					mdfRequestActivity.r_typeActivityToActivities_c_typeActivity
+						.externalReferenceCode &&
+					fieldsByTypeActivity[
+						mdfRequestActivity
+							.r_typeActivityToActivities_c_typeActivity
+							.externalReferenceCode
+					]),
 				{
 					title: 'Start Date',
 					value:
@@ -289,9 +228,7 @@ export function CampaignTable({mdfRequestActivity}) {
 					title: 'End Date',
 					value:
 						mdfRequestActivity.endDate &&
-						new Date(
-							mdfRequestActivity.startDate
-						).toLocaleDateString(
+						new Date(mdfRequestActivity.endDate).toLocaleDateString(
 							Liferay.ThemeDisplay.getBCP47LanguageId()
 						),
 				},
@@ -299,43 +236,41 @@ export function CampaignTable({mdfRequestActivity}) {
 			title="Campaign Activity"
 		/>
 	);
-}
+};
 
-export function Table({items, title}) {
-	return (
-		<ClayTable className="bg-brand-primary-lighten-6 border-0 table-striped">
-			<ClayTable.Head>
-				<ClayTable.Row>
-					<ClayTable.Cell
-						className="border-neutral-2 border-top rounded-0 w-50"
-						expanded
-						headingCell
-					>
-						<p className="mt-4 text-neutral-10">{title}</p>
+const Table = ({items, title}) => (
+	<ClayTable className="bg-brand-primary-lighten-6 border-0 table-striped">
+		<ClayTable.Head>
+			<ClayTable.Row>
+				<ClayTable.Cell
+					className="border-neutral-2 border-top rounded-0 w-50"
+					expanded
+					headingCell
+				>
+					<p className="mt-4 text-neutral-10">{title}</p>
+				</ClayTable.Cell>
+
+				<ClayTable.Cell className="border-neutral-2 border-top rounded-0 w-50"></ClayTable.Cell>
+			</ClayTable.Row>
+		</ClayTable.Head>
+
+		<ClayTable.Body>
+			{items?.map((item, index) => (
+				<ClayTable.Row key={index}>
+					<ClayTable.Cell className="border-0 w-50">
+						<p className="text-neutral-10">{item.title}</p>
 					</ClayTable.Cell>
 
-					<ClayTable.Cell className="border-neutral-2 border-top rounded-0 w-50"></ClayTable.Cell>
+					<ClayTable.Cell className="border-0 w-50">
+						<p className="text-neutral-10">{item.value}</p>
+					</ClayTable.Cell>
 				</ClayTable.Row>
-			</ClayTable.Head>
+			))}
+		</ClayTable.Body>
+	</ClayTable>
+);
 
-			<ClayTable.Body>
-				{items?.map((item, index) => (
-					<ClayTable.Row key={index}>
-						<ClayTable.Cell className="border-0 w-50">
-							<p className="text-neutral-10">{item.title}</p>
-						</ClayTable.Cell>
-
-						<ClayTable.Cell className="border-0 w-50">
-							<p className="text-neutral-10">{item.value}</p>
-						</ClayTable.Cell>
-					</ClayTable.Row>
-				))}
-			</ClayTable.Body>
-		</ClayTable>
-	);
-}
-
-export function RangeDate({endDate, startDate}) {
+const RangeDate = ({endDate, startDate}) => {
 	const dateOptions = {
 		day: 'numeric',
 		month: 'short',
@@ -356,46 +291,36 @@ export function RangeDate({endDate, startDate}) {
 			{new Date(endDate).getFullYear()}
 		</div>
 	);
-}
+};
 
-export function Panel({children, mdfRequestActivity}) {
-	return (
-		<ClayPanel
-			className="border-brand-primary-lighten-4"
-			collapsable
-			displayTitle={
-				<ClayPanel.Title className="py-2 text-dark">
-					<RangeDate
-						endDate={
-							mdfRequestActivity.endDate &&
-							new Date(mdfRequestActivity.endDate)
-						}
-						startDate={
-							mdfRequestActivity.startDate &&
-							new Date(mdfRequestActivity.startDate)
-						}
-					/>
+const Panel = ({children, mdfRequestActivity}) => (
+	<ClayPanel
+		className="border-brand-primary-lighten-4"
+		collapsable
+		displayTitle={
+			<ClayPanel.Title className="py-2 text-dark">
+				<RangeDate
+					endDate={
+						mdfRequestActivity.endDate &&
+						new Date(mdfRequestActivity.endDate)
+					}
+					startDate={
+						mdfRequestActivity.startDate &&
+						new Date(mdfRequestActivity.startDate)
+					}
+				/>
 
-					<div>
-						<h5 className="mb-1">{mdfRequestActivity.name}</h5>
-					</div>
-
-					<div className="font-weight-semi-bold mt-1 text-neutral-7 text-paragraph-sm">
-						Claim Status:
-					</div>
-
-					<div className="font-weight-semi-bold mt-1 text-neutral-7 text-paragraph-sm">
-						Activity Status:
-					</div>
-				</ClayPanel.Title>
-			}
-			showCollapseIcon
-			spritemap
-		>
-			<ClayPanel.Body>{children}</ClayPanel.Body>
-		</ClayPanel>
-	);
-}
+				<div>
+					<h5 className="mb-1">{mdfRequestActivity.name}</h5>
+				</div>
+			</ClayPanel.Title>
+		}
+		showCollapseIcon
+		spritemap
+	>
+		<ClayPanel.Body>{children}</ClayPanel.Body>
+	</ClayPanel>
+);
 
 export default function () {
 	const [activities, setActivities] = useState();
@@ -404,7 +329,7 @@ export default function () {
 		const getActivities = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
 			const response = await fetch(
-				`/o/c/mdfrequests/${ID_MDF_REQUEST}/mdfRequestToActivities`,
+				`/o/c/mdfrequests/${mdfRequestId}/mdfRequestToActivities/?nestedFields=typeActivity,tactic`,
 				{
 					headers: {
 						'accept': 'application/json',

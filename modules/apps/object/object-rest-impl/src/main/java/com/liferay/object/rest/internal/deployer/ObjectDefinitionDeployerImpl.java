@@ -30,10 +30,14 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
 
@@ -72,6 +76,37 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectDefinition objectDefinition) {
 
 		if (objectDefinition.isSystem()) {
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-153324"))) {
+
+				return Collections.emptyList();
+			}
+
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+				_systemObjectDefinitionMetadataTracker.
+					getSystemObjectDefinitionMetadata(
+						objectDefinition.getName());
+
+			_componentInstancesMap.computeIfAbsent(
+				systemObjectDefinitionMetadata.getRESTContextPath(),
+				key -> Arrays.asList(
+					_objectRelationshipResourceFactory.newInstance(
+						HashMapDictionaryBuilder.<String, Object>put(
+							"api.version", "v1.0"
+						).put(
+							"osgi.jaxrs.application.select",
+							() -> {
+								String jaxRsApplicationName =
+									systemObjectDefinitionMetadata.
+										getJaxRsApplicationName();
+
+								return "(osgi.jaxrs.name=" +
+									jaxRsApplicationName + ")";
+							}
+						).put(
+							"osgi.jaxrs.resource", "true"
+						).build())));
+
 			return Collections.emptyList();
 		}
 
@@ -362,10 +397,19 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
+	@Reference(
+		target = "(component.factory=com.liferay.object.rest.internal.resource.v1_0.ObjectRelationshipResource)"
+	)
+	private ComponentFactory _objectRelationshipResourceFactory;
+
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SystemObjectDefinitionMetadataTracker
+		_systemObjectDefinitionMetadataTracker;
 
 }

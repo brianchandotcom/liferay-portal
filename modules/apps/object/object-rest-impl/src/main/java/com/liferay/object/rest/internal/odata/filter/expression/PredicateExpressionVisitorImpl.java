@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
+import com.liferay.portal.odata.filter.expression.CollectionPropertyExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
+import com.liferay.portal.odata.filter.expression.LambdaFunctionExpression;
+import com.liferay.portal.odata.filter.expression.LambdaVariableExpression;
 import com.liferay.portal.odata.filter.expression.ListExpression;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
@@ -33,7 +36,10 @@ import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -47,8 +53,7 @@ public class PredicateExpressionVisitorImpl
 		long objectDefinitionId,
 		ObjectFieldLocalService objectFieldLocalService) {
 
-		_objectDefinitionId = objectDefinitionId;
-		_objectFieldLocalService = objectFieldLocalService;
+		this(objectDefinitionId, objectFieldLocalService, new HashMap<>());
 	}
 
 	@Override
@@ -62,6 +67,39 @@ public class PredicateExpressionVisitorImpl
 			() -> new UnsupportedOperationException(
 				"Unsupported method visitBinaryExpressionOperation with " +
 					"operation " + operation));
+	}
+
+	@Override
+	public Predicate visitCollectionPropertyExpression(
+			CollectionPropertyExpression collectionPropertyExpression)
+		throws ExpressionVisitException {
+
+		LambdaFunctionExpression lambdaFunctionExpression =
+			collectionPropertyExpression.getLambdaFunctionExpression();
+
+		return (Predicate)lambdaFunctionExpression.accept(
+			new PredicateExpressionVisitorImpl(
+				_objectDefinitionId, _objectFieldLocalService,
+				Collections.singletonMap(
+					lambdaFunctionExpression.getVariableName(),
+					collectionPropertyExpression.getName())));
+	}
+
+	@Override
+	public Object visitLambdaFunctionExpression(
+			LambdaFunctionExpression.Type type, String variableName,
+			Expression expression)
+		throws ExpressionVisitException {
+
+		return expression.accept(this);
+	}
+
+	@Override
+	public Object visitLambdaVariableExpression(
+		LambdaVariableExpression lambdaVariableExpression) {
+
+		return _lambdaVariableExpressionFieldNames.get(
+			lambdaVariableExpression.getVariableName());
 	}
 
 	@Override
@@ -183,6 +221,17 @@ public class PredicateExpressionVisitorImpl
 				operation);
 	}
 
+	private PredicateExpressionVisitorImpl(
+		long objectDefinitionId,
+		ObjectFieldLocalService objectFieldLocalService,
+		Map<String, String> lambdaVariableExpressionFieldNames) {
+
+		_objectDefinitionId = objectDefinitionId;
+		_objectFieldLocalService = objectFieldLocalService;
+		_lambdaVariableExpressionFieldNames =
+			lambdaVariableExpressionFieldNames;
+	}
+
 	private Predicate _contains(Object fieldName, Object fieldValue) {
 		Column<?, ?> column = _objectFieldLocalService.getColumn(
 			_objectDefinitionId, GetterUtil.getString(fieldName));
@@ -243,6 +292,7 @@ public class PredicateExpressionVisitorImpl
 		return column.like(fieldValue + StringPool.PERCENT);
 	}
 
+	private Map<String, String> _lambdaVariableExpressionFieldNames;
 	private final long _objectDefinitionId;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 

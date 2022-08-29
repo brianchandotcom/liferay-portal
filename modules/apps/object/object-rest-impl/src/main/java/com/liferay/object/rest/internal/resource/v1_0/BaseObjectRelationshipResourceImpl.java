@@ -35,7 +35,7 @@ import javax.ws.rs.core.Context;
  * @author Luis Miguel Barcos
  */
 @Path("/v1.0")
-public class BaseObjectRelationshipsResourceImpl {
+public class BaseObjectRelationshipResourceImpl {
 
 	@GET
 	@Parameters(

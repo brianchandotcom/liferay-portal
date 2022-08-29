@@ -40,7 +40,8 @@ definition {
 	test AssertAllItemsInTheTable {
 		property portal.upstream = "quarantine";
 
-		// "Reason: Not eble to reproduce scenario without OKTA workaround."
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
+
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -67,12 +68,18 @@ definition {
 			CP2TeamMembers.teamMembersFlow();
 		}
 
-		task ("Assert the details of the table") {
+		task ("Assert the details of the table and page") {
 			CP2TeamMembers.viewTableValue(
 				email = "test@liferay.com",
 				name = "Test Test",
 				role = "Administrator",
 				status = "Active");
+
+			CP2TeamMembers.viewSupportSeatsAvailable(available = "2 of 3 available");
+
+			AssertElementPresent(locator1 = "CP2TeamMembers#INVITE_BUTTON");
+
+			Tooltip.viewHelpInfo(info = "The limit of support seats available counts the total of Administrators & Requesters roles assigned due to both have role permissions to open support tickets.");
 		}
 
 		task ("Delete the entries and objects created") {
@@ -83,17 +90,27 @@ definition {
 	@description = "Automation ID: LPS-149752 | Test Summary: Verify that in the table the guest user is below the current user and its status is displayed as invited"
 	@priority = "5"
 	test AssertTheStatusAndOrderOfTheGuestUser {
-
-		// TODO LPS-149752 archive pending implementation
-
-	}
-
-	@description = "Automation ID: LPS-149754 | Test Summary: Verify that the text in the upper right corner is similar to 'Support Seats: 1 of 3 available', if the project has a support seats limit"
-	@priority = "4"
-	test CanViewTextIfProjectHasLimitOfSupportSeats {
 		property portal.upstream = "quarantine";
 
-		// "Reason: Not eble to reproduce scenario without OKTA workaround."
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
+
+		task ("Adding a user to the project") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Power User",
+				userEmailAddress = "test.user@liferay.com",
+				userFirstName = "Test",
+				userLastName = "User",
+				userScreenName = "Test");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account DXP");
+
+			Accounts.assignUsers(
+				accountName = "Test Account DXP",
+				assigneeName = "Test User");
+		}
+
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -120,106 +137,14 @@ definition {
 			CP2TeamMembers.teamMembersFlow();
 		}
 
-		task ("Assert in the number of support seats available") {
-			CP2TeamMembers.viewSupportSeatsAvailable(available = "2 of 3 available");
+		task ("Assert the users and their respective statuses") {
+			CP2TeamMembers.assertTheInvitedUser(
+				name = "Test User",
+				status = "Invited");
 		}
 
-		task ("Delete the entries and objects created") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-002");
-		}
-	}
-
-	@description = "Automation ID: LPS-149756 | Test Summary: Verify if the '+ Invite' button is visible for administrator roles only"
-	@priority = "5"
-	test CanViewTheInviteButton {
-		property portal.upstream = "quarantine";
-
-		// "Reason: Not eble to reproduce scenario without OKTA workaround."
-		task ("Go to CP2.0") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-		}
-
-		task ("Login in Okta") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
-
-			Refresh();
-		}
-
-		task ("Get into the project and go to Team Members page") {
-			CustomerPortal.enterOnProject(title = "Test Account DXP");
-
-			CP2NavigationMenu.goToTeamMembers();
-		}
-
-		task ("Assert that the button is not on the screen") {
-			AssertElementNotPresent(locator1 = "CP2TeamMembers#INVITE_BUTTON");
-		}
-
-		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
-
-			CustomerPortal.accountTableProject(title = "Test Account DXP");
-
-			Accounts.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Account Administrator",
-				accountUserName = "Test Test");
-		}
-
-		task ("Get into the project and go to Team Members page") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			CP2TeamMembers.teamMembersFlow();
-		}
-
-		task ("Assert that the Invite button is present on the screen") {
-			AssertElementPresent(locator1 = "CP2TeamMembers#INVITE_BUTTON");
-		}
-
-		task ("Delete the entries and objects created") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-002");
-		}
-	}
-
-	@description = "Automation ID: LPS-149748 | Test Summary: Verify if in the third column next to the 'Support Seat' heading the information icon has a tooltip"
-	@priority = "4"
-	test CanViewTooltipInSupportSeat {
-		property portal.upstream = "quarantine";
-
-		// "Reason: Not eble to reproduce scenario without OKTA workaround."
-		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
-
-			CustomerPortal.accountTableProject(title = "Test Account DXP");
-
-			Accounts.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Account Administrator",
-				accountUserName = "Test Test");
-		}
-
-		task ("Go to CP2.0") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-		}
-
-		task ("Login in Okta") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
-
-			Refresh();
-		}
-
-		task ("Get into the project and go to Team Members page") {
-			CP2TeamMembers.teamMembersFlow();
-		}
-
-		task ("View the help information") {
-			Tooltip.viewHelpInfo(info = "The limit of support seats available counts the total of Administrators & Requesters roles assigned due to both have role permissions to open support tickets.");
-		}
-
-		task ("Delete the entries and objects created") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-002");
+		task ("Delete user created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "test.user@liferay.com");
 		}
 	}
 

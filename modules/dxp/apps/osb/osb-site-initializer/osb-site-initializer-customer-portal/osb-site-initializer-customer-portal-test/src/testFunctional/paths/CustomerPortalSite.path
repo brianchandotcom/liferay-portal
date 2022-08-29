@@ -311,7 +311,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ANY</td>
+	<td>SUPPORT_SEAT</td>
 	<td>//p[contains(text(), 'Support Seat')]//..//*[*[name()='svg'][contains(@class,'lexicon-icon-info-circle')]]</td>
 	<td></td>
 </tr>

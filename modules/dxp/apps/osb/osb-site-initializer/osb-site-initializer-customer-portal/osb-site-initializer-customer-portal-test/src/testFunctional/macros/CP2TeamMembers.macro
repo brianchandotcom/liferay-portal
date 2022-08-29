@@ -31,6 +31,13 @@ definition {
 		}
 	}
 
+	macro assertTheInvitedUser {
+		AssertVisible(
+			key_name = "${name}",
+			key_status = "${status}",
+			locator1 = "CP2TeamMembers#TEAM_MEMBERS_TABLE");
+	}
+
 	macro clickInviteMembers {
 		Click(locator1 = "CP2TeamMembers#INVITE_BUTTON");
 	}

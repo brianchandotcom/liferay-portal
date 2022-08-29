@@ -1,7 +1,7 @@
 definition {
 
 	macro viewHelpInfo {
-		Click(locator1 = "CustomerPortalSite#ANY");
+		Click(locator1 = "CustomerPortalSite#SUPPORT_SEAT");
 
 		AssertVisible(
 			key_content = "${info}",

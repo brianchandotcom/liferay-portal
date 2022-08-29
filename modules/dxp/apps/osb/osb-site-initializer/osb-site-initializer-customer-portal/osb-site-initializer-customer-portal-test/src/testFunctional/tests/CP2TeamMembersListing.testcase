@@ -38,9 +38,43 @@ definition {
     @description = "Automation ID: LPS-149746 | Test Summary: Verify if the team member table contains the following data (Name - Email - Support Seat - Role - Status)"
     @priority = "4"
     test AssertAllItemsInTheTable {
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
 
-        // TODO LPS-149746 archive pending implementation
+			CustomerPortal.accountTableProject(title = "Test Account DXP");
 
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Go to CP2.0") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		}
+
+		task ("Login in Okta") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
+
+			Refresh();
+		}
+
+		task ("Get into the project and go to Team Members page") {
+			CP2TeamMembers.teamMembersFlow();
+		}
+
+		task ("Assert the details of the table") {
+			CP2TeamMembers.viewTableValue(
+				name = "Test Test",
+				email = "test@liferay.com",
+				role = "Administrator",
+				status = "Active");
+		}
+
+		task ("Delete the entries and objects created") {
+			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-002");
+		}
     }
 
     @description = "Automation ID: LPS-149748 | Test Summary: Verify if in the third column next to the 'Support Seat' heading the information icon has a tooltip"

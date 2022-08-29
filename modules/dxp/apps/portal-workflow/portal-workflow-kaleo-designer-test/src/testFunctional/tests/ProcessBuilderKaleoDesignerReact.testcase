@@ -2568,12 +2568,31 @@ definition {
 	}
 
 	@description = "Verify that the user can select On Exit as Execution Type"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectOnExitAsExecutionTypeAtActions {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnExitAsExecutionTypeAtActions";
 
-		// TODO CanSelectOnExitAsExecutionTypeAtActions pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
+			actionsTemplateValue = "Action Template",
+			executionTypeOption = "On Exit",
+			name = "Liferay Actions",
+			singleAction = "true");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Actions",
+			propertyValue = "Liferay Actions");
+
+		ProcessBuilderKaleoDesignerReact.viewActionsInfo(executionTypeOption = "On Exit");
 	}
 
 	@description = "Verify that the user can select On Exit as the time when the notification will be sent"

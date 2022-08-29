@@ -55,6 +55,21 @@
 	<td>//td[contains(@class, 'lfr-email-address-column') and contains(text(), '${email}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TABLE</td>
+	<td>//div[contains(@class, 'table-responsive')]//p[contains(text(),'${value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ICON_CHECK</td>
+	<td>//td[contains(@class, 'table-column-text-center')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUPPORT_SEATS</td>
+	<td>//p[contains(@class, 'text-neutral-7') and contains(text(), '${key_number}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

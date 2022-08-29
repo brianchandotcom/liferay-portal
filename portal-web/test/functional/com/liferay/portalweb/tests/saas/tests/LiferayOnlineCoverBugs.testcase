@@ -128,14 +128,27 @@ definition {
 		}
 
 		task ("Create a new Virtual instance using localhost") {
-			PortalInstances.addCP(
-				mailDomain = "www.baker.com",
-				virtualHost = "localhost",
-				webId = "www.baker.com");
+			LexiconEntry.gotoAdd();
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Type(
+				locator1 = "TextInput#WEB_ID",
+				value1 = "www.baker.com");
+
+			Type(
+				locator1 = "TextInput#VIRTUAL_HOST",
+				value1 = "localhost");
+
+			Type(
+				locator1 = "TextInput#MAIL_DOMAIN",
+				value1 = "www.baker.com");
+
+			Button.clickAdd();
 		}
 
 		task ("Assert the error message") {
-			AssertElementPresent(locator1 = "Message#ERROR_DISMISSIBLE");
+			Alert.viewErrorMessage(errorMessage = "Please enter a valid virtual host.");
 		}
 	}
 

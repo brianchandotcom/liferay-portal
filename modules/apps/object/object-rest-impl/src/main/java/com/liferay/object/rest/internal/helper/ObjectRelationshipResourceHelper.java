@@ -43,8 +43,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Luis Miguel Barcos
  */
-@Component(service = ObjectRelationshipsResourceHelper.class)
-public class ObjectRelationshipsResourceHelper {
+@Component(service = ObjectRelationshipResourceHelper.class)
+public class ObjectRelationshipResourceHelper {
 
 	public Page<Object> getObjectRelatedObjectsPage(
 			Long objectEntryId, String objectRelationshipName,

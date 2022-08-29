@@ -100,6 +100,7 @@ public class CommerceOrderItemModelImpl
 		{"deliverySubscriptionType", Types.VARCHAR},
 		{"deliverySubTypeSettings", Types.VARCHAR}, {"depth", Types.DOUBLE},
 		{"discountAmount", Types.DECIMAL},
+		{"discountManuallyAdjusted", Types.BOOLEAN},
 		{"discountPercentageLevel1", Types.DECIMAL},
 		{"discountPercentageLevel2", Types.DECIMAL},
 		{"discountPercentageLevel3", Types.DECIMAL},
@@ -113,6 +114,7 @@ public class CommerceOrderItemModelImpl
 		{"freeShipping", Types.BOOLEAN}, {"height", Types.DOUBLE},
 		{"json", Types.CLOB}, {"manuallyAdjusted", Types.BOOLEAN},
 		{"maxSubscriptionCycles", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"priceManuallyAdjusted", Types.BOOLEAN},
 		{"printedNote", Types.VARCHAR}, {"promoPrice", Types.DECIMAL},
 		{"promoPriceWithTaxAmount", Types.DECIMAL}, {"quantity", Types.INTEGER},
 		{"requestedDeliveryDate", Types.TIMESTAMP},
@@ -156,6 +158,7 @@ public class CommerceOrderItemModelImpl
 		TABLE_COLUMNS_MAP.put("deliverySubTypeSettings", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("depth", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("discountAmount", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("discountManuallyAdjusted", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("discountPercentageLevel1", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("discountPercentageLevel2", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("discountPercentageLevel3", Types.DECIMAL);
@@ -173,6 +176,7 @@ public class CommerceOrderItemModelImpl
 		TABLE_COLUMNS_MAP.put("manuallyAdjusted", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("maxSubscriptionCycles", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("priceManuallyAdjusted", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("printedNote", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("promoPrice", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("promoPriceWithTaxAmount", Types.DECIMAL);
@@ -194,7 +198,7 @@ public class CommerceOrderItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,bookedQuantityId LONG,commerceOrderId LONG,commercePriceListId LONG,CPInstanceId LONG,CPMeasurementUnitId LONG,CProductId LONG,parentCommerceOrderItemId LONG,shippingAddressId LONG,decimalQuantity DECIMAL(30, 16) null,deliveryGroup VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,depth DOUBLE,discountAmount DECIMAL(30, 16) null,discountPercentageLevel1 DECIMAL(30, 16) null,discountPercentageLevel2 DECIMAL(30, 16) null,discountPercentageLevel3 DECIMAL(30, 16) null,discountPercentageLevel4 DECIMAL(30, 16) null,discountPctLevel1WithTaxAmount DECIMAL(30, 16) null,discountPctLevel2WithTaxAmount DECIMAL(30, 16) null,discountPctLevel3WithTaxAmount DECIMAL(30, 16) null,discountPctLevel4WithTaxAmount DECIMAL(30, 16) null,discountWithTaxAmount DECIMAL(30, 16) null,finalPrice DECIMAL(30, 16) null,finalPriceWithTaxAmount DECIMAL(30, 16) null,freeShipping BOOLEAN,height DOUBLE,json TEXT null,manuallyAdjusted BOOLEAN,maxSubscriptionCycles LONG,name STRING null,printedNote STRING null,promoPrice DECIMAL(30, 16) null,promoPriceWithTaxAmount DECIMAL(30, 16) null,quantity INTEGER,requestedDeliveryDate DATE null,shipSeparately BOOLEAN,shippable BOOLEAN,shippedQuantity INTEGER,shippingExtraPrice DOUBLE,sku VARCHAR(75) null,subscription BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings VARCHAR(75) null,unitPrice DECIMAL(30, 16) null,unitPriceWithTaxAmount DECIMAL(30, 16) null,weight DOUBLE,width DOUBLE)";
+		"create table CommerceOrderItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,bookedQuantityId LONG,commerceOrderId LONG,commercePriceListId LONG,CPInstanceId LONG,CPMeasurementUnitId LONG,CProductId LONG,parentCommerceOrderItemId LONG,shippingAddressId LONG,decimalQuantity DECIMAL(30, 16) null,deliveryGroup VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,depth DOUBLE,discountAmount DECIMAL(30, 16) null,discountManuallyAdjusted BOOLEAN,discountPercentageLevel1 DECIMAL(30, 16) null,discountPercentageLevel2 DECIMAL(30, 16) null,discountPercentageLevel3 DECIMAL(30, 16) null,discountPercentageLevel4 DECIMAL(30, 16) null,discountPctLevel1WithTaxAmount DECIMAL(30, 16) null,discountPctLevel2WithTaxAmount DECIMAL(30, 16) null,discountPctLevel3WithTaxAmount DECIMAL(30, 16) null,discountPctLevel4WithTaxAmount DECIMAL(30, 16) null,discountWithTaxAmount DECIMAL(30, 16) null,finalPrice DECIMAL(30, 16) null,finalPriceWithTaxAmount DECIMAL(30, 16) null,freeShipping BOOLEAN,height DOUBLE,json TEXT null,manuallyAdjusted BOOLEAN,maxSubscriptionCycles LONG,name STRING null,priceManuallyAdjusted BOOLEAN,printedNote STRING null,promoPrice DECIMAL(30, 16) null,promoPriceWithTaxAmount DECIMAL(30, 16) null,quantity INTEGER,requestedDeliveryDate DATE null,shipSeparately BOOLEAN,shippable BOOLEAN,shippedQuantity INTEGER,shippingExtraPrice DOUBLE,sku VARCHAR(75) null,subscription BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings VARCHAR(75) null,unitPrice DECIMAL(30, 16) null,unitPriceWithTaxAmount DECIMAL(30, 16) null,weight DOUBLE,width DOUBLE)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderItem";
 
@@ -553,6 +557,13 @@ public class CommerceOrderItemModelImpl
 			(BiConsumer<CommerceOrderItem, BigDecimal>)
 				CommerceOrderItem::setDiscountAmount);
 		attributeGetterFunctions.put(
+			"discountManuallyAdjusted",
+			CommerceOrderItem::getDiscountManuallyAdjusted);
+		attributeSetterBiConsumers.put(
+			"discountManuallyAdjusted",
+			(BiConsumer<CommerceOrderItem, Boolean>)
+				CommerceOrderItem::setDiscountManuallyAdjusted);
+		attributeGetterFunctions.put(
 			"discountPercentageLevel1",
 			CommerceOrderItem::getDiscountPercentageLevel1);
 		attributeSetterBiConsumers.put(
@@ -660,6 +671,13 @@ public class CommerceOrderItemModelImpl
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<CommerceOrderItem, String>)CommerceOrderItem::setName);
+		attributeGetterFunctions.put(
+			"priceManuallyAdjusted",
+			CommerceOrderItem::getPriceManuallyAdjusted);
+		attributeSetterBiConsumers.put(
+			"priceManuallyAdjusted",
+			(BiConsumer<CommerceOrderItem, Boolean>)
+				CommerceOrderItem::setPriceManuallyAdjusted);
 		attributeGetterFunctions.put(
 			"printedNote", CommerceOrderItem::getPrintedNote);
 		attributeSetterBiConsumers.put(
@@ -1309,6 +1327,27 @@ public class CommerceOrderItemModelImpl
 
 	@JSON
 	@Override
+	public boolean getDiscountManuallyAdjusted() {
+		return _discountManuallyAdjusted;
+	}
+
+	@JSON
+	@Override
+	public boolean isDiscountManuallyAdjusted() {
+		return _discountManuallyAdjusted;
+	}
+
+	@Override
+	public void setDiscountManuallyAdjusted(boolean discountManuallyAdjusted) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_discountManuallyAdjusted = discountManuallyAdjusted;
+	}
+
+	@JSON
+	@Override
 	public BigDecimal getDiscountPercentageLevel1() {
 		return _discountPercentageLevel1;
 	}
@@ -1689,6 +1728,27 @@ public class CommerceOrderItemModelImpl
 			LocalizationUtil.updateLocalization(
 				nameMap, getName(), "Name",
 				LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@JSON
+	@Override
+	public boolean getPriceManuallyAdjusted() {
+		return _priceManuallyAdjusted;
+	}
+
+	@JSON
+	@Override
+	public boolean isPriceManuallyAdjusted() {
+		return _priceManuallyAdjusted;
+	}
+
+	@Override
+	public void setPriceManuallyAdjusted(boolean priceManuallyAdjusted) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_priceManuallyAdjusted = priceManuallyAdjusted;
 	}
 
 	@JSON
@@ -2170,6 +2230,8 @@ public class CommerceOrderItemModelImpl
 			getDeliverySubscriptionTypeSettings());
 		commerceOrderItemImpl.setDepth(getDepth());
 		commerceOrderItemImpl.setDiscountAmount(getDiscountAmount());
+		commerceOrderItemImpl.setDiscountManuallyAdjusted(
+			isDiscountManuallyAdjusted());
 		commerceOrderItemImpl.setDiscountPercentageLevel1(
 			getDiscountPercentageLevel1());
 		commerceOrderItemImpl.setDiscountPercentageLevel2(
@@ -2198,6 +2260,8 @@ public class CommerceOrderItemModelImpl
 		commerceOrderItemImpl.setMaxSubscriptionCycles(
 			getMaxSubscriptionCycles());
 		commerceOrderItemImpl.setName(getName());
+		commerceOrderItemImpl.setPriceManuallyAdjusted(
+			isPriceManuallyAdjusted());
 		commerceOrderItemImpl.setPrintedNote(getPrintedNote());
 		commerceOrderItemImpl.setPromoPrice(getPromoPrice());
 		commerceOrderItemImpl.setPromoPriceWithTaxAmount(
@@ -2283,6 +2347,8 @@ public class CommerceOrderItemModelImpl
 			this.<Double>getColumnOriginalValue("depth"));
 		commerceOrderItemImpl.setDiscountAmount(
 			this.<BigDecimal>getColumnOriginalValue("discountAmount"));
+		commerceOrderItemImpl.setDiscountManuallyAdjusted(
+			this.<Boolean>getColumnOriginalValue("discountManuallyAdjusted"));
 		commerceOrderItemImpl.setDiscountPercentageLevel1(
 			this.<BigDecimal>getColumnOriginalValue(
 				"discountPercentageLevel1"));
@@ -2325,6 +2391,8 @@ public class CommerceOrderItemModelImpl
 			this.<Long>getColumnOriginalValue("maxSubscriptionCycles"));
 		commerceOrderItemImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
+		commerceOrderItemImpl.setPriceManuallyAdjusted(
+			this.<Boolean>getColumnOriginalValue("priceManuallyAdjusted"));
 		commerceOrderItemImpl.setPrintedNote(
 			this.<String>getColumnOriginalValue("printedNote"));
 		commerceOrderItemImpl.setPromoPrice(
@@ -2558,6 +2626,9 @@ public class CommerceOrderItemModelImpl
 
 		commerceOrderItemCacheModel.discountAmount = getDiscountAmount();
 
+		commerceOrderItemCacheModel.discountManuallyAdjusted =
+			isDiscountManuallyAdjusted();
+
 		commerceOrderItemCacheModel.discountPercentageLevel1 =
 			getDiscountPercentageLevel1();
 
@@ -2614,6 +2685,9 @@ public class CommerceOrderItemModelImpl
 		if ((name != null) && (name.length() == 0)) {
 			commerceOrderItemCacheModel.name = null;
 		}
+
+		commerceOrderItemCacheModel.priceManuallyAdjusted =
+			isPriceManuallyAdjusted();
 
 		commerceOrderItemCacheModel.printedNote = getPrintedNote();
 
@@ -2811,6 +2885,7 @@ public class CommerceOrderItemModelImpl
 	private String _deliverySubscriptionTypeSettings;
 	private double _depth;
 	private BigDecimal _discountAmount;
+	private boolean _discountManuallyAdjusted;
 	private BigDecimal _discountPercentageLevel1;
 	private BigDecimal _discountPercentageLevel2;
 	private BigDecimal _discountPercentageLevel3;
@@ -2829,6 +2904,7 @@ public class CommerceOrderItemModelImpl
 	private long _maxSubscriptionCycles;
 	private String _name;
 	private String _nameCurrentLanguageId;
+	private boolean _priceManuallyAdjusted;
 	private String _printedNote;
 	private BigDecimal _promoPrice;
 	private BigDecimal _promoPriceWithTaxAmount;
@@ -2910,6 +2986,8 @@ public class CommerceOrderItemModelImpl
 		_columnOriginalValues.put("depth", _depth);
 		_columnOriginalValues.put("discountAmount", _discountAmount);
 		_columnOriginalValues.put(
+			"discountManuallyAdjusted", _discountManuallyAdjusted);
+		_columnOriginalValues.put(
 			"discountPercentageLevel1", _discountPercentageLevel1);
 		_columnOriginalValues.put(
 			"discountPercentageLevel2", _discountPercentageLevel2);
@@ -2941,6 +3019,8 @@ public class CommerceOrderItemModelImpl
 		_columnOriginalValues.put(
 			"maxSubscriptionCycles", _maxSubscriptionCycles);
 		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put(
+			"priceManuallyAdjusted", _priceManuallyAdjusted);
 		_columnOriginalValues.put("printedNote", _printedNote);
 		_columnOriginalValues.put("promoPrice", _promoPrice);
 		_columnOriginalValues.put(
@@ -3052,75 +3132,79 @@ public class CommerceOrderItemModelImpl
 
 		columnBitmasks.put("discountAmount", 33554432L);
 
-		columnBitmasks.put("discountPercentageLevel1", 67108864L);
+		columnBitmasks.put("discountManuallyAdjusted", 67108864L);
 
-		columnBitmasks.put("discountPercentageLevel2", 134217728L);
+		columnBitmasks.put("discountPercentageLevel1", 134217728L);
 
-		columnBitmasks.put("discountPercentageLevel3", 268435456L);
+		columnBitmasks.put("discountPercentageLevel2", 268435456L);
 
-		columnBitmasks.put("discountPercentageLevel4", 536870912L);
+		columnBitmasks.put("discountPercentageLevel3", 536870912L);
 
-		columnBitmasks.put("discountPctLevel1WithTaxAmount", 1073741824L);
+		columnBitmasks.put("discountPercentageLevel4", 1073741824L);
 
-		columnBitmasks.put("discountPctLevel2WithTaxAmount", 2147483648L);
+		columnBitmasks.put("discountPctLevel1WithTaxAmount", 2147483648L);
 
-		columnBitmasks.put("discountPctLevel3WithTaxAmount", 4294967296L);
+		columnBitmasks.put("discountPctLevel2WithTaxAmount", 4294967296L);
 
-		columnBitmasks.put("discountPctLevel4WithTaxAmount", 8589934592L);
+		columnBitmasks.put("discountPctLevel3WithTaxAmount", 8589934592L);
 
-		columnBitmasks.put("discountWithTaxAmount", 17179869184L);
+		columnBitmasks.put("discountPctLevel4WithTaxAmount", 17179869184L);
 
-		columnBitmasks.put("finalPrice", 34359738368L);
+		columnBitmasks.put("discountWithTaxAmount", 34359738368L);
 
-		columnBitmasks.put("finalPriceWithTaxAmount", 68719476736L);
+		columnBitmasks.put("finalPrice", 68719476736L);
 
-		columnBitmasks.put("freeShipping", 137438953472L);
+		columnBitmasks.put("finalPriceWithTaxAmount", 137438953472L);
 
-		columnBitmasks.put("height", 274877906944L);
+		columnBitmasks.put("freeShipping", 274877906944L);
 
-		columnBitmasks.put("json", 549755813888L);
+		columnBitmasks.put("height", 549755813888L);
 
-		columnBitmasks.put("manuallyAdjusted", 1099511627776L);
+		columnBitmasks.put("json", 1099511627776L);
 
-		columnBitmasks.put("maxSubscriptionCycles", 2199023255552L);
+		columnBitmasks.put("manuallyAdjusted", 2199023255552L);
 
-		columnBitmasks.put("name", 4398046511104L);
+		columnBitmasks.put("maxSubscriptionCycles", 4398046511104L);
 
-		columnBitmasks.put("printedNote", 8796093022208L);
+		columnBitmasks.put("name", 8796093022208L);
 
-		columnBitmasks.put("promoPrice", 17592186044416L);
+		columnBitmasks.put("priceManuallyAdjusted", 17592186044416L);
 
-		columnBitmasks.put("promoPriceWithTaxAmount", 35184372088832L);
+		columnBitmasks.put("printedNote", 35184372088832L);
 
-		columnBitmasks.put("quantity", 70368744177664L);
+		columnBitmasks.put("promoPrice", 70368744177664L);
 
-		columnBitmasks.put("requestedDeliveryDate", 140737488355328L);
+		columnBitmasks.put("promoPriceWithTaxAmount", 140737488355328L);
 
-		columnBitmasks.put("shipSeparately", 281474976710656L);
+		columnBitmasks.put("quantity", 281474976710656L);
 
-		columnBitmasks.put("shippable", 562949953421312L);
+		columnBitmasks.put("requestedDeliveryDate", 562949953421312L);
 
-		columnBitmasks.put("shippedQuantity", 1125899906842624L);
+		columnBitmasks.put("shipSeparately", 1125899906842624L);
 
-		columnBitmasks.put("shippingExtraPrice", 2251799813685248L);
+		columnBitmasks.put("shippable", 2251799813685248L);
 
-		columnBitmasks.put("sku", 4503599627370496L);
+		columnBitmasks.put("shippedQuantity", 4503599627370496L);
 
-		columnBitmasks.put("subscription", 9007199254740992L);
+		columnBitmasks.put("shippingExtraPrice", 9007199254740992L);
 
-		columnBitmasks.put("subscriptionLength", 18014398509481984L);
+		columnBitmasks.put("sku", 18014398509481984L);
 
-		columnBitmasks.put("subscriptionType", 36028797018963968L);
+		columnBitmasks.put("subscription", 36028797018963968L);
 
-		columnBitmasks.put("subscriptionTypeSettings", 72057594037927936L);
+		columnBitmasks.put("subscriptionLength", 72057594037927936L);
 
-		columnBitmasks.put("unitPrice", 144115188075855872L);
+		columnBitmasks.put("subscriptionType", 144115188075855872L);
 
-		columnBitmasks.put("unitPriceWithTaxAmount", 288230376151711744L);
+		columnBitmasks.put("subscriptionTypeSettings", 288230376151711744L);
 
-		columnBitmasks.put("weight", 576460752303423488L);
+		columnBitmasks.put("unitPrice", 576460752303423488L);
 
-		columnBitmasks.put("width", 1152921504606846976L);
+		columnBitmasks.put("unitPriceWithTaxAmount", 1152921504606846976L);
+
+		columnBitmasks.put("weight", 2305843009213693952L);
+
+		columnBitmasks.put("width", 4611686018427387904L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

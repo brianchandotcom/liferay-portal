@@ -2115,6 +2115,9 @@ public class ObjectEntryLocalServiceImpl
 			}
 
 			preparedStatement.executeUpdate();
+
+			FinderCacheUtil.clearDSLQueryCache(
+				dynamicObjectDefinitionTable.getTableName());
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

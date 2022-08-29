@@ -138,13 +138,7 @@ const CoverageInfoForm = () => {
 
 			const isAbleToNextStep =
 				isAbleToSave &&
-				!hasError.bodilyInjury &&
-				!hasError.collision &&
-				!hasError.comprehensive &&
-				!hasError.medical &&
-				!hasError.propertyDamage &&
-				!hasError.uninsuredOrUnderinsuredMBI &&
-				!hasError.uninsuredOrUnderinsuredMPD;
+				Object.values(hasError).every((value) => value === false);
 
 			const hasAllRequiredFieldsToNextStep =
 				hasSomeField &&

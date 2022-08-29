@@ -1487,15 +1487,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext);
 		}
 		else {
-			URL url = _servletContext.getResource(
-				parentResourcePath + "/favicon.png");
-
-			byte[] iconBytes = null;
-
-			if (url != null) {
-				iconBytes = FileUtil.getBytes(url.openStream());
-			}
-
 			layout = _layoutLocalService.updateLayout(
 				serviceContext.getScopeGroupId(),
 				jsonObject.getBoolean("private"), layout.getLayoutId(),
@@ -1507,7 +1498,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getString("keywords_i18n")),
 				SiteInitializerUtil.toMap(jsonObject.getString("robots_i18n")),
 				type, jsonObject.getBoolean("hidden"), friendlyURLMap,
-				layout.getIconImage(), iconBytes, layout.getStyleBookEntryId(),
+				layout.getIconImage(), null, layout.getStyleBookEntryId(),
 				layout.getFaviconFileEntryId(), layout.getMasterLayoutPlid(),
 				serviceContext);
 		}

@@ -37,7 +37,7 @@ const Build = () => {
 	const {buildId} = useParams();
 	const {onAssignToMeFetch} = useAssignCaseResult();
 	const {updateItemFromList} = useMutate();
-	const {actions} = useBuildTestActions();
+	const {actions, form} = useBuildTestActions();
 
 	return (
 		<Container className="mt-4">
@@ -96,6 +96,7 @@ const Build = () => {
 											name={`${caseResult.user.emailAddress
 												.split('@')[0]
 												.replace('.', ' ')}`}
+											size="sm"
 										/>
 									);
 								}
@@ -103,8 +104,8 @@ const Build = () => {
 								return (
 									<AssignToMe
 										onClick={() =>
-											onAssignToMeFetch(caseResult).then(
-												() => {
+											onAssignToMeFetch(caseResult)
+												.then(() => {
 													updateItemFromList(
 														mutate,
 														0,
@@ -113,8 +114,9 @@ const Build = () => {
 															revalidate: true,
 														}
 													);
-												}
-											)
+												})
+												.then(form.onSuccess)
+												.catch(form.onError)
 										}
 									/>
 								);

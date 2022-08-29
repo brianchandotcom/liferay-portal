@@ -19,6 +19,7 @@ import useFormActions from '../../../../hooks/useFormActions';
 import useModalContext from '../../../../hooks/useModalContext';
 import useMutate from '../../../../hooks/useMutate';
 import i18n from '../../../../i18n';
+import {Liferay} from '../../../../services/liferay';
 import {TestrayCaseResult, deleteResource} from '../../../../services/rest';
 import {Action} from '../../../../types';
 import {UserListView} from '../../../Manage/User';
@@ -26,7 +27,11 @@ import {UserListView} from '../../../Manage/User';
 const useBuildTestActions = () => {
 	const {form} = useFormActions();
 	const {removeItemFromList, updateItemFromList} = useMutate();
-	const {onAssignToFetch, onAssignToMeFetch} = useAssignCaseResult();
+	const {
+		onAssignToFetch,
+		onAssignToMeFetch,
+		onRemoveAssignFetch,
+	} = useAssignCaseResult();
 	const {onOpenModal, state} = useModalContext();
 
 	const actionsRef = useRef([
@@ -52,6 +57,8 @@ const useBuildTestActions = () => {
 												{revalidate: true}
 											)
 										)
+										.then(form.onSuccess)
+										.catch(form.onError)
 										.finally(state.onClose);
 								},
 							}}
@@ -64,17 +71,34 @@ const useBuildTestActions = () => {
 			name: i18n.translate('assign'),
 		},
 		{
-			action: (caseResult, mutate) =>
-				onAssignToMeFetch(caseResult).then((user) =>
+			action: (caseResult, mutate) => {
+				const fn =
+					caseResult.user &&
+					caseResult.user.id.toString() ===
+						Liferay.ThemeDisplay.getUserId()
+						? onRemoveAssignFetch
+						: onAssignToMeFetch;
+
+				fn(caseResult).then((user) =>
 					updateItemFromList(
 						mutate,
 						caseResult.id,
 						{user},
 						{revalidate: true}
 					)
-				),
+						.then(form.onSuccess)
+						.catch(form.onError)
+				);
+			},
 			icon: 'user',
-			name: i18n.translate('assign-to-me'),
+			name: (caseResult) =>
+				i18n.translate(
+					caseResult.user &&
+						caseResult.user.id.toString() ===
+							Liferay.ThemeDisplay.getUserId()
+						? 'unassign-myself'
+						: 'assign-to-me'
+				),
 		},
 		{
 			action: ({id}, mutate) =>
@@ -90,6 +114,7 @@ const useBuildTestActions = () => {
 
 	return {
 		actions: actionsRef.current,
+		form,
 	};
 };
 

@@ -14,6 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import ClayLabel from '@clayui/label';
 import {useNavigate} from 'react-router-dom';
 
 import i18n from '../../../../i18n';
@@ -27,14 +28,20 @@ type BuildAlertBarProps = {
 const alertProperties = {
 	[SUB_TASK_STATUS.IN_ANALYSIS]: {
 		...SUBTASK_STATUS[SUB_TASK_STATUS.IN_ANALYSIS],
+		displayType: 'warning',
+		label: i18n.translate('in-analysis'),
 		text: i18n.translate('this-build-is-currently-in-analysis'),
 	},
 	[SUB_TASK_STATUS.ABANDONED]: {
 		...SUBTASK_STATUS[SUB_TASK_STATUS.ABANDONED],
+		displayType: 'secondary',
+		label: i18n.translate('abandoned'),
 		text: i18n.translate('this-builds-task-has-been-abandoned'),
 	},
 	[SUB_TASK_STATUS.COMPLETE]: {
 		...SUBTASK_STATUS[SUB_TASK_STATUS.COMPLETE],
+		displayType: 'primary',
+		label: i18n.translate('complete'),
 		text: i18n.translate('this-build-has-been-analyzed'),
 	},
 };
@@ -51,18 +58,28 @@ const BuildAlertBar: React.FC<BuildAlertBarProps> = ({testrayTask}) => {
 	return (
 		<ClayAlert
 			actions={
-				<ClayButton.Group>
-					<ClayButton
-						alert
-						onClick={() => navigate(`/testflow/${testrayTask.id}`)}
-					>
-						{i18n.translate('view-task')}
-					</ClayButton>
-				</ClayButton.Group>
+				<ClayButton
+					displayType={alertProperty.displayType}
+					onClick={() => navigate(`/testflow/${testrayTask.id}`)}
+					outline
+					small
+				>
+					{i18n.translate('view-task')}
+				</ClayButton>
 			}
-			className="w-100"
-			displayType={alertProperty.color.replace('label-', '')}
-			title={alertProperty.text}
+			className="build-alert-bar w-100"
+			displayType={alertProperty.displayType}
+			title={
+				((
+					<>
+						<ClayLabel displayType={alertProperty.displayType}>
+							{alertProperty.label}
+						</ClayLabel>
+
+						{alertProperty.text}
+					</>
+				) as unknown) as string
+			}
 			variant="inline"
 		/>
 	);

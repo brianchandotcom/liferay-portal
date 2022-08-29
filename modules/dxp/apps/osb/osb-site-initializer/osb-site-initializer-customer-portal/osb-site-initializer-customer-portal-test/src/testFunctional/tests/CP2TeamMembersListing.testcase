@@ -164,8 +164,50 @@ definition {
     @description = "Automation ID: LPS-149756 | Test Summary: Verify if the '+ Invite' button is visible for administrator roles only"
     @priority = "5"
     test CanViewTheInviteButton {
+		task ("Go to CP2.0") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		}
 
-        // TODO LPS-149756 archive pending implementation
+		task ("Login in Okta") {
+			CustomerPortal.loginOktaToUpdateCP();
 
+			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
+
+			Refresh();
+		}
+
+		task ("Get into the project and go to Team Members page") {
+			CustomerPortal.enterOnProject(title = "Test Account DXP");
+
+			CP2NavigationMenu.goToTeamMembers();
+		}
+
+		task ("Assert that the button is not on the screen") {
+			AssertElementNotPresent(locator1 = "CP2TeamMembers#INVITE_BUTTON");
+		}
+
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = "Test Account DXP");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Get into the project and go to Team Members page") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			CP2TeamMembers.teamMembersFlow();
+		}
+
+		task ("Assert that the Invite button is present on the screen") {
+			AssertElementPresent(locator1 = "CP2TeamMembers#INVITE_BUTTON");
+		}
+
+		task ("Delete the entries and objects created") {
+			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-002");
+		}
     }
 }

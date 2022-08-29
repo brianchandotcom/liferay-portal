@@ -19,6 +19,8 @@ import OpenStreetMapGeoJSON from './OpenStreetMapGeoJSON';
 import OpenStreetMapGeocoder from './OpenStreetMapGeocoder';
 import OpenStreetMapMarker from './OpenStreetMapMarker';
 
+const defaultTileURI = '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
 /**
  * MapOpenStreetMap
  * @review
@@ -30,17 +32,23 @@ class MapOpenStreetMap extends MapBase {
 	 * @param  {Array} args List of arguments to be passed to State
 	 * @review
 	 */
-	constructor(...args) {
+	constructor(args = {...args, tileURI: defaultTileURI}) {
 		MapBase.DialogImpl = OpenStreetMapDialog;
 		MapBase.GeocoderImpl = OpenStreetMapGeocoder;
 		MapBase.GeoJSONImpl = OpenStreetMapGeoJSON;
 		MapBase.MarkerImpl = OpenStreetMapMarker;
 		MapBase.SearchImpl = null;
 
-		super(...args);
+		args = {...args, tileURI: defaultTileURI};
+
+		super(args);
+
+		const {boundingBox, tileURI} = args;
+
+		this.tileURI = tileURI;
+		this.boundingBox = boundingBox;
 
 		this._map = null;
-		this.tileURI = '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 	}
 
 	/**

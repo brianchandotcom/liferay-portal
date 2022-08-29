@@ -81,14 +81,15 @@ class MapBase extends EventEmitter {
 	 * @param  {Array} args List of arguments to be sent to State constructor
 	 * @review
 	 */
-	constructor({boundingBox, controls, geolocation, position}) {
-		super({boundingBox, controls, geolocation, position});
+	constructor(args = {}) {
+		super(args);
+
+		const {controls, geolocation, position} = args;
 
 		this._STATE_ = {
 			position,
 		};
 
-		this.boundingBox = boundingBox;
 		this.controls = controls;
 		this.geolocation = geolocation;
 		this.position = position;
@@ -122,12 +123,12 @@ class MapBase extends EventEmitter {
 
 		this.on('positionChange', this._handlePositionChanged);
 
-		const location =
+		const currentGeolocation =
 			this.position && this.position.location
 				? this.position.location
 				: {};
 
-		if (!location.lat && !location.lng) {
+		if (!currentGeolocation.lat && !currentGeolocation.lng) {
 			Liferay.Util.getGeolocation(
 				(lat, lng) => {
 					this._initializeLocation({lat, lng});
@@ -139,7 +140,7 @@ class MapBase extends EventEmitter {
 			);
 		}
 		else {
-			this._initializeLocation(location);
+			this._initializeLocation(currentGeolocation);
 		}
 	}
 

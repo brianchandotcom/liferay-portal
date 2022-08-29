@@ -440,7 +440,7 @@
 </tr>
 <tr>
 	<td>ROW_VERTICAL_ELLIPSIS_2</td>
-	<td>xPath=(//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]])[2]</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')][2]//*[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>

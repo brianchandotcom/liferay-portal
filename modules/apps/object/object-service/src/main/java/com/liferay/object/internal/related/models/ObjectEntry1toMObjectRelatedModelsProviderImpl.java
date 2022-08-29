@@ -151,8 +151,8 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 			int end)
 		throws PortalException {
 
-		return _objectEntryLocalService.getOneToManyRelatedObjectEntries(
-			groupId, objectRelationshipId, primaryKey, start, end);
+		return _objectEntryLocalService.getOneToManyObjectEntries(
+			groupId, objectRelationshipId, primaryKey, true, start, end);
 	}
 
 	@Override
@@ -160,8 +160,8 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException {
 
-		return _objectEntryLocalService.getOneToManyRelatedObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey);
+		return _objectEntryLocalService.getOneToManyObjectEntriesCount(
+			groupId, objectRelationshipId, primaryKey, true);
 	}
 
 	private final String _className;

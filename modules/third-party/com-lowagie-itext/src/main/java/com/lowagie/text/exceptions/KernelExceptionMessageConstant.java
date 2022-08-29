@@ -347,3 +347,4 @@ public final class KernelExceptionMessageConstant {
 
 	private KernelExceptionMessageConstant(){}
 }
+/* @generated */

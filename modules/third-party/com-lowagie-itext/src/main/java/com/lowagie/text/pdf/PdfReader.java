@@ -3513,3 +3513,4 @@ public class PdfReader implements PdfViewerPreferences {
     	return decrypt.computeUserPassword(password);
     }
 }
+/* @generated */

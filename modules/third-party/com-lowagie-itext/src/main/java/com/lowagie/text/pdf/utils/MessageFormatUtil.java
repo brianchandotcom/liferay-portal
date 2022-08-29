@@ -60,3 +60,4 @@ public final class MessageFormatUtil {
 		return new MessageFormat(pattern, Locale.ROOT).format(arguments);
 	}
 }
+/* @generated */

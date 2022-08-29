@@ -120,7 +120,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -964,7 +963,8 @@ public class ContentPageEditorDisplayContext {
 		Map<String, Map<String, Object>> fragmentCollectionMaps) {
 
 		for (Map.Entry<String, List<Map<String, Object>>> entry :
-				_layoutElementMapsListMap.entrySet()) {
+				ContentPageEditorConstants.layoutElementMapsListMap.
+					entrySet()) {
 
 			List<Map<String, Object>> layoutElementMapsList =
 				new LinkedList<>();
@@ -2267,64 +2267,6 @@ public class ContentPageEditorDisplayContext {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentPageEditorDisplayContext.class);
-
-	private static final Map<String, List<Map<String, Object>>>
-		_layoutElementMapsListMap =
-			LinkedHashMapBuilder.<String, List<Map<String, Object>>>put(
-				"layout-elements",
-				() -> {
-					List<Map<String, Object>> layoutElementMapsList =
-						new LinkedList<>();
-
-					layoutElementMapsList.add(
-						HashMapBuilder.<String, Object>put(
-							"fragmentEntryKey", "container"
-						).put(
-							"icon", "container"
-						).put(
-							"itemType", "container"
-						).put(
-							"languageKey", "container"
-						).build());
-
-					layoutElementMapsList.add(
-						HashMapBuilder.<String, Object>put(
-							"fragmentEntryKey", "row"
-						).put(
-							"icon", "table"
-						).put(
-							"itemType", "row"
-						).put(
-							"languageKey", "grid"
-						).build());
-
-					return layoutElementMapsList;
-				}
-			).put(
-				"INPUTS",
-				ListUtil.fromArray(
-					HashMapBuilder.<String, Object>put(
-						"fragmentEntryKey", "form"
-					).put(
-						"icon", "container"
-					).put(
-						"itemType", "form"
-					).put(
-						"languageKey", "form-container"
-					).build())
-			).put(
-				"content-display",
-				ListUtil.fromArray(
-					HashMapBuilder.<String, Object>put(
-						"fragmentEntryKey", "collection-display"
-					).put(
-						"icon", "list"
-					).put(
-						"itemType", "collection"
-					).put(
-						"languageKey", "collection-display"
-					).build())
-			).build();
 
 	private Boolean _allowNewFragmentEntries;
 	private final List<ContentPageEditorSidebarPanel>

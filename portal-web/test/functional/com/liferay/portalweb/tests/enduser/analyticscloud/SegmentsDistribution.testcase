@@ -342,7 +342,7 @@ definition {
 		}
 
 		task ("Click on the category in the dashboard") {
-			Click(locator1 = "ACSegments#BREAKDOWN_CHART");
+			ACUtils.clickOnDistributionBar();
 		}
 
 		task ("Assert that a right word will be found") {
@@ -430,7 +430,7 @@ definition {
 		}
 
 		task ("Click in Chart Entry") {
-			Click(locator1 = "ACSegments#BREAKDOWN_CHART");
+			ACUtils.clickOnDistributionBar();
 		}
 
 		task ("Sort the Names in ascending order") {

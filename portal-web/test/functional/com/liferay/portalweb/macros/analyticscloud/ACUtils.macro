@@ -1161,4 +1161,21 @@ definition {
 
 		Pause(locator1 = "2000");
 	}
+
+	macro clickOnDistributionBar {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		while (IsElementNotPresent(locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR",index = "${index}")) {
+			TestUtils.hardRefresh();
+
+			ACUtils.waitForChartLoad();
+		}
+
+		Click(
+			index = "${index}",
+			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
+	}
+
 }

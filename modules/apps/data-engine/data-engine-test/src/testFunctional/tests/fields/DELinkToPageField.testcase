@@ -470,7 +470,7 @@ definition {
 			fieldName = "Link to Page");
 	}
 
-	@description = ""
+	@description = "Check if Link to Page Field details can be seen."
 	@priority = "4"
 	test ViewLinkToPageFieldDetails {
 		property portal.acceptance = "true";

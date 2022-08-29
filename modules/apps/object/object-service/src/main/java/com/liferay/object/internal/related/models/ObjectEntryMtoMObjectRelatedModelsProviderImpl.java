@@ -23,6 +23,7 @@ import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -155,6 +156,30 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 		return _objectEntryLocalService.getManyToManyObjectEntriesCount(
 			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
 			true, reverse);
+	}
+
+	@Override
+	public List<ObjectEntry> getUnrelatedModels(
+			long companyId, long groupId, ObjectDefinition objectDefinition,
+			long objectEntryId, long objectRelationshipId)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
+
+		boolean reverse = objectRelationship.isReverse();
+
+		if (objectRelationship.isReverse()) {
+			objectRelationship =
+				_objectRelationshipLocalService.fetchReverseObjectRelationship(
+					objectRelationship, false);
+		}
+
+		return _objectEntryLocalService.getManyToManyObjectEntries(
+			groupId, objectRelationship.getObjectRelationshipId(),
+			objectEntryId, false, reverse, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 	}
 
 	private final String _className;

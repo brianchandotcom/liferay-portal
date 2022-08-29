@@ -164,6 +164,17 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 			groupId, objectRelationshipId, primaryKey, true);
 	}
 
+	@Override
+	public List<ObjectEntry> getUnrelatedModels(
+			long companyId, long groupId, ObjectDefinition objectDefinition,
+			long objectEntryId, long objectRelationshipId)
+		throws PortalException {
+
+		return _objectEntryLocalService.getOneToManyObjectEntries(
+			groupId, objectRelationshipId, objectEntryId, false,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
 	private final String _className;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;

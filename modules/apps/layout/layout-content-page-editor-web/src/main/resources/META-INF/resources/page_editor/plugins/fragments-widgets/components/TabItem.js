@@ -159,15 +159,14 @@ const CardItem = React.forwardRef(
 		return (
 			<li
 				className={classNames(
-					'mb-2 page-editor__fragments-widgets__tab-card-item',
-					{
-						disabled,
-					}
+					'page-editor__fragments-widgets__tab-card-item',
+					{disabled}
 				)}
 				ref={ref}
 			>
 				<ClayCard
 					aria-label={item.label}
+					className="mb-0"
 					displayType={item.preview ? 'image' : 'file'}
 					selectable
 				>

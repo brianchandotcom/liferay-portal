@@ -1,0 +1,16 @@
+@import 'cadmin-variables';
+
+html#{$cadmin-selector}
+	.cadmin
+	.page-editor__fragments-widgets__tab-collection {
+	&-cards {
+		display: grid;
+		gap: 8px;
+		grid-template-columns: repeat(auto-fill, minmax(119px, 1fr));
+	}
+
+	&-list {
+		display: flex;
+		flex-wrap: wrap;
+	}
+}

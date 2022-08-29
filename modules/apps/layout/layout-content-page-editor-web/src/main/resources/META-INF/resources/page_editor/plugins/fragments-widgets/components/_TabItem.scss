@@ -5,9 +5,7 @@ html#{$cadmin-selector} {
 		.page-editor__fragments-widgets__tab {
 			&-card-item {
 				cursor: grab;
-				height: 120px;
 				transition: transform ease 0.3s;
-				width: calc(50% - 4px);
 
 				&:hover:not(.disabled) {
 					box-shadow: 0 4px 8px fade_out($cadmin-gray-900, 0.9);
@@ -37,9 +35,6 @@ html#{$cadmin-selector} {
 
 				.file-card .card {
 					background-color: $cadmin-light;
-				}
-				&:nth-child(even) {
-					margin-left: 8px;
 				}
 
 				.card {

@@ -162,6 +162,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -2138,8 +2139,8 @@ public class ContentPageEditorDisplayContext {
 					"feature.flag.LPS-158737")) &&
 			!SetUtil.isEmpty(_getHighlightedFragmentEntryKeys())) {
 
-			List<Map<String, Object>> highlightedFragmentMapsList =
-				new LinkedList<>();
+			Map<String, Map<String, Object>> highlightedFragmentMaps =
+				new TreeMap<>();
 
 			for (Map<String, Object> fragmentCollection :
 					fragmentCollectionMapsList) {
@@ -2155,18 +2156,20 @@ public class ContentPageEditorDisplayContext {
 					if (GetterUtil.getBoolean(
 							fragmentEntryMap.get("highlighted"))) {
 
-						highlightedFragmentMapsList.add(fragmentEntryMap);
+						highlightedFragmentMaps.put(
+							(String)fragmentEntryMap.get("name"),
+							fragmentEntryMap);
 					}
 				}
 			}
 
-			if (!highlightedFragmentMapsList.isEmpty()) {
+			if (!highlightedFragmentMaps.isEmpty()) {
 				fragmentCollectionMapsList.add(
 					0,
 					HashMapBuilder.<String, Object>put(
 						"fragmentCollectionId", "highlighted"
 					).put(
-						"fragmentEntries", highlightedFragmentMapsList
+						"fragmentEntries", highlightedFragmentMaps.values()
 					).put(
 						"name",
 						() -> LanguageUtil.get(

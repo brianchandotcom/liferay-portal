@@ -29,7 +29,7 @@ const Root = React.forwardRef(({children, item}, ref) => {
 	return (
 		<TopperEmpty item={item}>
 			<div className="page-editor__root" ref={ref}>
-				{isEmpty ? (
+				{isEmpty && (
 					<div className="page-editor__no-fragments-state">
 						<p className="page-editor__no-fragments-state__message">
 							{Liferay.Language.get(
@@ -37,9 +37,9 @@ const Root = React.forwardRef(({children, item}, ref) => {
 							)}
 						</p>
 					</div>
-				) : (
-					children
 				)}
+
+				{children}
 			</div>
 		</TopperEmpty>
 	);

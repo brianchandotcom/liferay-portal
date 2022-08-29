@@ -14,7 +14,7 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
-import com.liferay.object.rest.internal.helper.ObjectRelationshipsResourceHelper;
+import com.liferay.object.rest.internal.helper.ObjectRelationshipResourceHelper;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -28,12 +28,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luis Miguel Barcos
  */
 @Component(
-	factory = "com.liferay.object.rest.internal.resource.v1_0.ObjectRelationshipsResource",
+	factory = "com.liferay.object.rest.internal.resource.v1_0.ObjectRelationshipResource",
 	property = {"api.version=v1.0", "osgi.jaxrs.resource=true"},
-	service = ObjectRelationshipsResourceImpl.class
+	service = ObjectRelationshipResourceImpl.class
 )
-public class ObjectRelationshipsResourceImpl
-	extends BaseObjectRelationshipsResourceImpl {
+public class ObjectRelationshipResourceImpl
+	extends BaseObjectRelationshipResourceImpl {
 
 	@Override
 	public Page<Object> getObjectRelatedObjectsPage(
@@ -41,13 +41,12 @@ public class ObjectRelationshipsResourceImpl
 			String objectRelationshipName, Pagination pagination)
 		throws Exception {
 
-		return _objectRelationshipsResourceHelper.getObjectRelatedObjectsPage(
+		return _objectRelationshipResourceHelper.getObjectRelatedObjectsPage(
 			objectEntryId, objectRelationshipName, pagination, _uriInfo);
 	}
 
 	@Reference
-	private ObjectRelationshipsResourceHelper
-		_objectRelationshipsResourceHelper;
+	private ObjectRelationshipResourceHelper _objectRelationshipResourceHelper;
 
 	@Context
 	private UriInfo _uriInfo;

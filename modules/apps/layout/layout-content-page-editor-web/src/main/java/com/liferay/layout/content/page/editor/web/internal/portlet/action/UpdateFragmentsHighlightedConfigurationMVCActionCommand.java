@@ -14,22 +14,50 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.model.FragmentComposition;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.service.FragmentCompositionService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -61,6 +89,239 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
 			_updateFragmentsHighlightedConfiguration(actionRequest));
+	}
+
+	private JSONArray _getHighlightedFragmentsJSONArray(
+		long groupId, Set<String> highlightedFragmentEntryKeys,
+		HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		DropZoneLayoutStructureItem masterDropZoneLayoutStructureItem =
+			_getMasterDropZoneLayoutStructureItem(themeDisplay);
+
+		Map<String, JSONObject> highlightedFragmentJSONObjectMap =
+			new TreeMap<>();
+
+		for (String key : highlightedFragmentEntryKeys) {
+			if (!_isAllowedFragmentEntryKey(
+					key, masterDropZoneLayoutStructureItem)) {
+
+				continue;
+			}
+
+			Map<String, Map<String, Object>> layoutElementMaps =
+				_getLayoutElementMaps();
+
+			if (layoutElementMaps.containsKey(key)) {
+				Map<String, Object> layoutElementMap = layoutElementMaps.get(
+					key);
+
+				String label = _language.get(
+					themeDisplay.getLocale(),
+					(String)layoutElementMap.get("languageKey"));
+
+				highlightedFragmentJSONObjectMap.put(
+					label,
+					JSONUtil.put(
+						"fragmentEntryKey", key
+					).put(
+						"highlighted", true
+					).put(
+						"icon", (String)layoutElementMap.get("icon")
+					).put(
+						"itemType", (String)layoutElementMap.get("itemType")
+					).put(
+						"name", label
+					));
+			}
+
+			FragmentRenderer fragmentRenderer =
+				_fragmentRendererTracker.getFragmentRenderer(key);
+
+			if (fragmentRenderer != null) {
+				String label = fragmentRenderer.getLabel(
+					themeDisplay.getLocale());
+
+				highlightedFragmentJSONObjectMap.put(
+					label,
+					JSONUtil.put(
+						"fragmentEntryKey", fragmentRenderer.getKey()
+					).put(
+						"highlighted", true
+					).put(
+						"icon", fragmentRenderer.getIcon()
+					).put(
+						"imagePreviewURL",
+						fragmentRenderer.getImagePreviewURL(httpServletRequest)
+					).put(
+						"name", label
+					));
+
+				continue;
+			}
+
+			FragmentEntry fragmentEntry =
+				_fragmentEntryLinkManager.getFragmentEntry(
+					groupId, key, themeDisplay.getLocale());
+
+			if (fragmentEntry != null) {
+				highlightedFragmentJSONObjectMap.put(
+					fragmentEntry.getName(),
+					JSONUtil.put(
+						"fragmentEntryKey", fragmentEntry.getFragmentEntryKey()
+					).put(
+						"groupId", fragmentEntry.getGroupId()
+					).put(
+						"highlighted", true
+					).put(
+						"icon", fragmentEntry.getIcon()
+					).put(
+						"imagePreviewURL",
+						fragmentEntry.getImagePreviewURL(themeDisplay)
+					).put(
+						"name", fragmentEntry.getName()
+					).put(
+						"type",
+						FragmentConstants.getTypeLabel(fragmentEntry.getType())
+					));
+
+				continue;
+			}
+
+			FragmentComposition fragmentComposition =
+				_fragmentCollectionContributorTracker.getFragmentComposition(
+					key);
+
+			if (fragmentComposition == null) {
+				fragmentComposition =
+					_fragmentCompositionService.fetchFragmentComposition(
+						groupId, key);
+			}
+
+			if (fragmentComposition == null) {
+				continue;
+			}
+
+			highlightedFragmentJSONObjectMap.put(
+				fragmentComposition.getName(),
+				JSONUtil.put(
+					"fragmentEntryKey",
+					fragmentComposition.getFragmentCompositionKey()
+				).put(
+					"groupId", fragmentComposition.getGroupId()
+				).put(
+					"highlighted", true
+				).put(
+					"icon", fragmentComposition.getIcon()
+				).put(
+					"imagePreviewURL",
+					fragmentComposition.getImagePreviewURL(themeDisplay)
+				).put(
+					"name", fragmentComposition.getName()
+				).put(
+					"type", ContentPageEditorConstants.TYPE_COMPOSITION
+				));
+		}
+
+		List<JSONObject> sortedHighlightedFragments = new ArrayList<>(
+			highlightedFragmentJSONObjectMap.values());
+
+		return JSONUtil.putAll(
+			sortedHighlightedFragments.toArray(new JSONObject[0]));
+	}
+
+	private Map<String, Map<String, Object>> _getLayoutElementMaps() {
+		if (_layoutElementMaps != null) {
+			return _layoutElementMaps;
+		}
+
+		Map<String, Map<String, Object>> layoutElementMaps = new HashMap<>();
+
+		for (Map.Entry<String, List<Map<String, Object>>> entry :
+				ContentPageEditorConstants.layoutElementMapsListMap.
+					entrySet()) {
+
+			for (Map<String, Object> layoutElementMap : entry.getValue()) {
+				String fragmentEntryKey = (String)layoutElementMap.get(
+					"fragmentEntryKey");
+
+				layoutElementMaps.put(fragmentEntryKey, layoutElementMap);
+			}
+		}
+
+		_layoutElementMaps = layoutElementMaps;
+
+		return _layoutElementMaps;
+	}
+
+	private DropZoneLayoutStructureItem _getMasterDropZoneLayoutStructureItem(
+		ThemeDisplay themeDisplay) {
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.getMasterLayoutPlid() <= 0) {
+			return null;
+		}
+
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(
+					layout.getMasterLayoutPlid());
+
+		if (masterLayoutPageTemplateEntry == null) {
+			return null;
+		}
+
+		try {
+			LayoutStructure masterLayoutStructure =
+				LayoutStructureUtil.getLayoutStructure(
+					masterLayoutPageTemplateEntry.getGroupId(),
+					masterLayoutPageTemplateEntry.getPlid(),
+					SegmentsExperienceConstants.KEY_DEFAULT);
+
+			return (DropZoneLayoutStructureItem)
+				masterLayoutStructure.getDropZoneLayoutStructureItem();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get master layout structure", exception);
+			}
+		}
+
+		return null;
+	}
+
+	private boolean _isAllowedFragmentEntryKey(
+		String fragmentEntryKey,
+		DropZoneLayoutStructureItem masterDropZoneLayoutStructureItem) {
+
+		if (masterDropZoneLayoutStructureItem == null) {
+			return true;
+		}
+
+		List<String> fragmentEntryKeys =
+			masterDropZoneLayoutStructureItem.getFragmentEntryKeys();
+
+		if (masterDropZoneLayoutStructureItem.isAllowNewFragmentEntries()) {
+			if (ListUtil.isEmpty(fragmentEntryKeys) ||
+				!fragmentEntryKeys.contains(fragmentEntryKey)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		if (ListUtil.isNotEmpty(fragmentEntryKeys) &&
+			fragmentEntryKeys.contains(fragmentEntryKey)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private JSONObject _updateFragmentsHighlightedConfiguration(
@@ -106,11 +367,42 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 			highlightedFragmentEntryKeys.toArray(new String[0]));
 
 		return JSONUtil.put(
-			"highlightedFragments", JSONFactoryUtil.createJSONArray());
+			"highlightedFragments",
+			_getHighlightedFragmentsJSONArray(
+				ParamUtil.getLong(actionRequest, "groupId"),
+				highlightedFragmentEntryKeys, httpServletRequest));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpdateFragmentsHighlightedConfigurationMVCActionCommand.class);
+
+	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentCompositionService _fragmentCompositionService;
+
+	@Reference
+	private FragmentEntryLinkManager _fragmentEntryLinkManager;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;
+
+	private Map<String, Map<String, Object>> _layoutElementMaps;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private Portal _portal;

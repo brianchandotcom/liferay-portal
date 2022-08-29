@@ -59,4 +59,41 @@ definition {
 		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
 	}
 
+
+	macro viewTableValue {
+		AssertElementPresent(
+			locator1 = "CP2TeamMembers#TABLE",
+			value = "${name}");
+
+		AssertElementPresent(
+			locator1 = "CP2TeamMembers#TABLE",
+			value = "${email}");
+
+		AssertElementPresent(locator1 = "CP2TeamMembers#ICON_CHECK");
+
+		AssertElementPresent(
+			locator1 = "CP2TeamMembers#TABLE",
+			value = "${role}");
+
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#STATUS_CARD",
+			key_status = "${status}");
+	}
+
+	macro teamMembersFlow {
+		CustomerPortal.enterOnProject(title = "Test Account DXP");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2NavigationMenu.goToTeamMembers();
+	}
+
+	macro viewSupportSeatsAvailable {
+		AssertElementPresent(
+			locator1 = "CP2TeamMembers#SUPPORT_SEATS",
+			key_number = "${available}");
+	}
+
 }

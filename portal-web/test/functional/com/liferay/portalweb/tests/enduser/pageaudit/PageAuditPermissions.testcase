@@ -22,12 +22,39 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Content Page");
 		}
+
+		task ("Create a Role") {
+			JSONRole.addRegularRole(
+				roleKey = "Page Audit Test Role",
+				roleTitle = "Page Audit Test Role");
+		}
+
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign create role to new user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Page Audit Test Role",
+				userEmailAddress = "userea@liferay.com");
+		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		JSONUser.tearDownNonAdminUsers();
+
+		JSONRole.deleteRole(roleTitle = "Page Audit Test Role");
 
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
@@ -80,32 +107,11 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#CheckInvalidCanonicalURL";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "WebContentEditorRole Name",
-				roleTitle = "WebContentEditorRole Name");
-
+		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "WebContentEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = "Page Audit Test Role");
 		}
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
@@ -140,10 +146,6 @@ definition {
 			AssertElementNotPresent(
 				key_text = "Instance Settings > Pages > SEO",
 				locator1 = "Link#ANY");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
 		}
 	}
 
@@ -279,32 +281,11 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#CheckInvalidCanonicalURL";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "WebContentEditorRole Name",
-				roleTitle = "WebContentEditorRole Name");
-
+		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "WebContentEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = "Page Audit Test Role");
 		}
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
@@ -339,10 +320,6 @@ definition {
 			AssertElementNotPresent(
 				key_text = "Add a description",
 				locator1 = "Link#ANY");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
 		}
 	}
 
@@ -391,32 +368,11 @@ definition {
 	test CheckPageAuditIconInContentPageWithEditBlogsPermission {
 		property portal.acceptance = "true";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "BlogsEditorRole Name",
-				roleTitle = "BlogsEditorRole Name");
-
+		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.blogs.model.BlogsEntry",
-				roleTitle = "BlogsEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "BlogsEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = "Page Audit Test Role");
 		}
 
 		task ("Login with new user") {
@@ -429,10 +385,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "BlogsEditorRole Name");
 		}
 	}
 
@@ -441,32 +393,11 @@ definition {
 	test CheckPageAuditIconInContentPageWithEditDocumentsPermission {
 		property portal.acceptance = "true";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "DocumentEditorRole Name",
-				roleTitle = "DocumentEditorRole Name");
-
+		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
-				roleTitle = "DocumentEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "DocumentEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = "Page Audit Test Role");
 		}
 
 		task ("Login with new user") {
@@ -479,10 +410,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "DocumentEditorRole Name");
 		}
 	}
 
@@ -491,32 +418,11 @@ definition {
 	test CheckPageAuditIconInContentPageWithEditPagesPermission {
 		property portal.acceptance = "true";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "PagesEditorRole Name",
-				roleTitle = "PagesEditorRole Name");
-
+		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "PagesEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "PagesEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = "Page Audit Test Role");
 		}
 
 		task ("Login with new user") {
@@ -529,10 +435,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "PagesEditorRole Name");
 		}
 	}
 
@@ -541,32 +443,11 @@ definition {
 	test CheckPageAuditIconInContentPageWithEditWebContentPermission {
 		property portal.acceptance = "true";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "WebContentEditorRole Name",
-				roleTitle = "WebContentEditorRole Name");
-
+		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "WebContentEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = "Page Audit Test Role");
 		}
 
 		task ("Login with new user") {
@@ -580,38 +461,11 @@ definition {
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a content page	When a user with NO permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInContentPageWithoutEditBlogsPermission {
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "BlogsRole Name",
-				roleTitle = "BlogsRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "BlogsRole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Login with new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -622,39 +476,12 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "BlogsRole Name");
 		}
 	}
 
 	@description = "LPS-137227 Given a content page	When a user with NO permissions to edit documents visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInContentPageWithoutEditDocumentsPermission {
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "DocumentRole Name",
-				roleTitle = "DocumentRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "DocumentRole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Login with new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -665,39 +492,12 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "DocumentRole Name");
 		}
 	}
 
 	@description = "LPS-137227 Given a content page	When the user with NO permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInContentPageWithoutEditPagesPermission {
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "PagesRole Name",
-				roleTitle = "PagesRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "PagesRole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Login with new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -708,39 +508,12 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "PagesRole Name");
 		}
 	}
 
 	@description = "LPS-137227 Given a content page	When a user with NO permissions to edit web content visits the page	Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInContentPageWithoutEditWebContentPermission {
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "WebContentRole Name",
-				roleTitle = "WebContentRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentRole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Login with new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -751,10 +524,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "WebContentRole Name");
 		}
 	}
 
@@ -763,34 +532,13 @@ definition {
 	test CheckPageAuditIconInDisplayPageWithEditBlogsPermission {
 		property portal.acceptance = "true";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "BlogsEditorRole Name",
-				roleTitle = "BlogsEditorRole Name");
-
+		task ("Add permissions to Role") {
 			for (var resourceActionIndex : list "UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "${resourceActionIndex}",
 					resourceName = "com.liferay.blogs.model.BlogsEntry",
-					roleTitle = "BlogsEditorRole Name");
+					roleTitle = "Page Audit Test Role");
 			}
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "BlogsEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Create a default Display Page Template") {
@@ -836,10 +584,6 @@ definition {
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "BlogsEditorRole Name");
 		}
 	}
 
@@ -848,34 +592,13 @@ definition {
 	test CheckPageAuditIconInDisplayPageWithEditDocumentsPermission {
 		property portal.acceptance = "true";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "DocumentEditorRole Name",
-				roleTitle = "DocumentEditorRole Name");
-
+		task ("Add permissions to Role") {
 			for (var resourceActionIndex : list "UPDATE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "${resourceActionIndex}",
 					resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
-					roleTitle = "DocumentEditorRole Name");
+					roleTitle = "Page Audit Test Role");
 			}
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "DocumentEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Create a default Display Page Template") {
@@ -922,10 +645,6 @@ definition {
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "DM Document Title");
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "DocumentEditorRole Name");
 		}
 	}
 
@@ -934,32 +653,11 @@ definition {
 	test CheckPageAuditIconInDisplayPageWithEditPagesPermission {
 		property portal.acceptance = "true";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "PagesEditorRole Name",
-				roleTitle = "PagesEditorRole Name");
-
+		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "PagesEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "PagesEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = "Page Audit Test Role");
 		}
 
 		task ("Create a default Display Page Template") {
@@ -1006,10 +704,6 @@ definition {
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "PagesEditorRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a display page	When a user with permissions to edit web content visits the page Then the issue icon for displaying the page audit panel shows"
@@ -1017,32 +711,11 @@ definition {
 	test CheckPageAuditIconInDisplayPageWithEditWebContentPermission {
 		property portal.acceptance = "true";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "WebContentEditorRole Name",
-				roleTitle = "WebContentEditorRole Name");
-
+		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "WebContentEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = "Page Audit Test Role");
 		}
 
 		task ("Create a default Display Page Template") {
@@ -1090,38 +763,11 @@ definition {
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a display page	When a user with NO permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInDisplayPageWithoutEditBlogsPermission {
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "BlogsRole Name",
-				roleTitle = "BlogsRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "BlogsRole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
@@ -1166,41 +812,16 @@ definition {
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "BlogsRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a display page	When a user with NO permissions to edit documents visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInDisplayPageWithoutEditDocumentsPermission {
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "DocumentRole Name",
-				roleTitle = "DocumentRole Name");
-
+		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
-				roleTitle = "DocumentRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "DocumentRole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = "Page Audit Test Role");
 		}
 
 		task ("Create a default Display Page Template") {
@@ -1248,38 +869,11 @@ definition {
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "DocumentRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a display page When the user with NO permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel is not shown"
 	@priority = "3"
 	test CheckPageAuditIconInDisplayPageWithoutEditPagesPermission {
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "PagesRole Name",
-				roleTitle = "PagesRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "PagesRole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
@@ -1324,38 +918,11 @@ definition {
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "PagesRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a display page	When a user with NO permissions to edit web content visits the page	Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInDisplayPageWithoutEditWebContentPermission {
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "WebContentRole Name",
-				roleTitle = "WebContentRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentRole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
@@ -1401,10 +968,6 @@ definition {
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "WebContentRole Name");
-		}
 	}
 
 	@description = "Given a widget page When a user with permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
@@ -1412,32 +975,11 @@ definition {
 	test CheckPageAuditIconInWidgetPageWithEditBlogsPermission {
 		property portal.acceptance = "true";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "BlogsEditorRole Name",
-				roleTitle = "BlogsEditorRole Name");
-
+		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.blogs.model.BlogsEntry",
-				roleTitle = "BlogsEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "BlogsEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = "Page Audit Test Role");
 		}
 
 		task ("Create Widget Page") {
@@ -1461,10 +1003,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "BlogsEditorRole Name");
 		}
 	}
 
@@ -1473,32 +1011,11 @@ definition {
 	test CheckPageAuditIconInWidgetPageWithEditDocumentsPermission {
 		property portal.acceptance = "true";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "DocumentEditorRole Name",
-				roleTitle = "DocumentEditorRole Name");
-
+		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
-				roleTitle = "DocumentEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "DocumentEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = "Page Audit Test Role");
 		}
 
 		task ("Create Widget Page") {
@@ -1522,10 +1039,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "DocumentEditorRole Name");
 		}
 	}
 
@@ -1534,32 +1047,11 @@ definition {
 	test CheckPageAuditIconInWidgetPageWithEditPagesPermission {
 		property portal.acceptance = "true";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "PagesEditorRole Name",
-				roleTitle = "PagesEditorRole Name");
-
+		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "PagesEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "PagesEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = "Page Audit Test Role");
 		}
 
 		task ("Create Widget Page") {
@@ -1583,10 +1075,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "PagesEditorRole Name");
 		}
 	}
 
@@ -1595,32 +1083,11 @@ definition {
 	test CheckPageAuditIconInWidgetPageWithEditWebContentPermission {
 		property portal.acceptance = "true";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "WebContentEditorRole Name",
-				roleTitle = "WebContentEditorRole Name");
-
+		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "WebContentEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = "Page Audit Test Role");
 		}
 
 		task ("Create Widget Page") {
@@ -1645,38 +1112,11 @@ definition {
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
-		}
 	}
 
 	@description = "LPS-137227 Given a widget page When a user with NO permissions to edit blogs visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInWidgetPageWithoutEditBlogsPermission {
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "BlogsRole Name",
-				roleTitle = "BlogsRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "BlogsRole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Create Widget Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1698,39 +1138,12 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "BlogsRole Name");
 		}
 	}
 
 	@description = "LPS-137227 Given a widget page When a user with NO permissions to edit documents visits the page Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInWidgetPageWithoutEditDocumentsPermission {
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "DocumentRole Name",
-				roleTitle = "DocumentRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "DocumentRole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Create Widget Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1752,39 +1165,12 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "DocumentRole Name");
 		}
 	}
 
 	@description = "LPS-137227 Given a widget page When the user with NO permissions to edit pages visits the view mode Then the issue icon for displaying the page audit panel is not shown"
 	@priority = "3"
 	test CheckPageAuditIconInWidgetPageWithoutEditPagesPermission {
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "PagesRole Name",
-				roleTitle = "PagesRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "PagesRole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Create Widget Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1806,39 +1192,12 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "PagesRole Name");
 		}
 	}
 
 	@description = "LPS-137227 Given a widget page	When a user with NO permissions to edit web content visits the page	Then the issue icon for displaying the page audit panel shows"
 	@priority = "3"
 	test CheckPageAuditIconInWidgetPageWithoutEditWebContentPermission {
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "WebContentRole Name",
-				roleTitle = "WebContentRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentRole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Create Widget Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1860,10 +1219,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "WebContentRole Name");
 		}
 	}
 
@@ -1915,32 +1270,11 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#CheckInvalidCanonicalURL";
 
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "WebContentEditorRole Name",
-				roleTitle = "WebContentEditorRole Name");
-
+		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = "WebContentEditorRole Name");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "WebContentEditorRole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = "Page Audit Test Role");
 		}
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
@@ -1975,10 +1309,6 @@ definition {
 			AssertElementNotPresent(
 				key_text = "Change the robots.txt  setting",
 				locator1 = "Link#ANY");
-		}
-
-		task ("Delete Role created") {
-			JSONRole.deleteRole(roleTitle = "WebContentEditorRole Name");
 		}
 	}
 

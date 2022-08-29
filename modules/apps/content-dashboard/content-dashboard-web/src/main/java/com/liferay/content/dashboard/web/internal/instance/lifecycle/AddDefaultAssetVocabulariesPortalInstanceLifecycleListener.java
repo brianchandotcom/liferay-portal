@@ -37,11 +37,10 @@ import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,18 +58,14 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 			company, PropsValues.ASSET_VOCABULARY_DEFAULT,
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
-		Collection<Long> classNameIds =
-			_contentDashboardItemFactoryTracker.getClassNameIds();
+		Collection<String> classNames =
+			_contentDashboardItemFactoryTracker.getClassNames();
 
-		Stream<Long> stream = classNameIds.stream();
+		Set<Long> searchClassNameIds = new HashSet<>();
 
-		Set<Long> searchClassNameIds = stream.map(
-			classNameId -> _portal.getClassNameId(
-				_infoSearchClassMapperTracker.getSearchClassName(
-					_portal.getClassName(classNameId)))
-		).collect(
-			Collectors.toSet()
-		);
+		for (String className : classNames) {
+			searchClassNameIds.add(_portal.getClassNameId(className));
+		}
 
 		for (ContentDashboardConstants.DefaultInternalAssetVocabularyName
 				defaultInternalAssetVocabularyName :

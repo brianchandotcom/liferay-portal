@@ -641,6 +641,11 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/update_form_item_config")
 			).put(
+				"updateFragmentCollectionsSortConfigurationURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor" +
+						"/update_fragment_collections_sort_configuration")
+			).put(
 				"updateFragmentsHighlightedConfigurationURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor" +
@@ -654,6 +659,11 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor" +
 						"/update_layout_page_template_data")
+			).put(
+				"updatePortletCategoriesSortConfigurationURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor" +
+						"/update_portlet_categories_sort_configuration")
 			).put(
 				"updatePortletsHighlightedConfigurationURL",
 				getFragmentEntryActionURL(

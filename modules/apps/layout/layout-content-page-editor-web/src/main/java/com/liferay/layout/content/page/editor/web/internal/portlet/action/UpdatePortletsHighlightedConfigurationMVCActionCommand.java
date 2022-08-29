@@ -25,9 +25,13 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Set;
 
@@ -67,14 +71,32 @@ public class UpdatePortletsHighlightedConfigurationMVCActionCommand
 			ActionRequest actionRequest)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
-		boolean highlighted = ParamUtil.getBoolean(
-			actionRequest, "highlighted");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String portletId = PortletIdCodec.decodePortletName(
 			ParamUtil.getString(actionRequest, "portletId"));
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+
+		if (!PortletPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), themeDisplay.getLayout(),
+				portletId, ActionKeys.ADD_TO_PAGE)) {
+
+			hideDefaultSuccessMessage(actionRequest);
+
+			return JSONUtil.put(
+				"error",
+				_language.get(
+					httpServletRequest,
+					"you-do-not-have-the-roles-required-to-access-this-" +
+						"portlet"));
+		}
+
+		boolean highlighted = ParamUtil.getBoolean(
+			actionRequest, "highlighted");
 
 		PortalPreferences portalPreferences =
 			_portletPreferencesFactory.getPortalPreferences(httpServletRequest);

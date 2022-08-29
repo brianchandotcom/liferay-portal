@@ -8,17 +8,11 @@ definition {
 
 	setUp {
 		task ("Open Analytics Cloud") {
-			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-
-			Navigator.openURL(baseURL = "${analyticsCloudURL}");
+			ACUtils.launchAC();
 		}
 
 		task ("Take token from Analytics Cloud") {
-			AnalyticsCloud.loginAnalyticsCloud(
-				emailAddress = "test@liferay.com",
-				password = "test");
-
-			AnalyticsCloud.takeTokenFromAnalyticsCloud();
+			ACSettings.takeTokenFromAnalyticsCloud();
 		}
 
 		task ("Go to DXP portal, login and create site") {
@@ -32,7 +26,7 @@ definition {
 		}
 
 		task ("Connect and synchronyze with Analytics Cloud") {
-			AnalyticsCloud.syncAnalyticsCloud(siteName = "Test Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Test Site Name");
 		}
 
 		Navigator.openURL();

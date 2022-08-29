@@ -26,6 +26,7 @@ definition {
 
 	@priority = "5"
 	test CanAddAndDeletePortalInstance {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "VirtualInstances#CanAddAndDeletePortalInstance";
 
 		ApplicationsMenu.gotoPortlet(

@@ -56,6 +56,8 @@ public class ObjectActionVariablesUtil {
 			).put(
 				"currentUserId", payloadJSONObject.getLong("userId")
 			).put(
+				"id", payloadJSONObject.getLong("classPK")
+			).put(
 				"objectDefinitionId",
 				payloadJSONObject.getLong("objectDefinitionId")
 			).build();
@@ -73,6 +75,7 @@ public class ObjectActionVariablesUtil {
 		}
 
 		variables.put("currentUserId", payloadJSONObject.getLong("userId"));
+		variables.put("id", payloadJSONObject.getLong("classPK"));
 
 		return variables;
 	}

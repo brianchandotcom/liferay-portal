@@ -43,7 +43,7 @@ public class ObjectDefinitionNotificationType implements NotificationType {
 
 		Map<String, Object> values = (Map<String, Object>)object;
 
-		return (Long)values.get("objectEntryId");
+		return (Long)values.get("id");
 	}
 
 	@Override

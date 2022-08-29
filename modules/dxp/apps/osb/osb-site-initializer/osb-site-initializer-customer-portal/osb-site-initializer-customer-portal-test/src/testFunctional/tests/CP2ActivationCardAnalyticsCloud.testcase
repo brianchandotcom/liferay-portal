@@ -67,13 +67,7 @@ definition {
 		}
 
 		task ("Submit the card activation form") {
-			CustomerPortal.clickOnFinishActivationButton();
-
-			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
-
-			Button.click(button = "Submit");
-
-			Button.click(button = "Done");
+			CP2AnalyticsCloudSetup.analyticsCloudFlow();
 		}
 
 		task ("Change the activation card status to Active") {
@@ -137,13 +131,7 @@ definition {
 		}
 
 		task ("Submit the card activation form") {
-			CustomerPortal.clickOnFinishActivationButton();
-
-			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
-
-			Button.click(button = "Submit");
-
-			Button.click(button = "Done");
+			CP2AnalyticsCloudSetup.analyticsCloudFlow();
 		}
 
 		task ("View card details after submitting the form") {

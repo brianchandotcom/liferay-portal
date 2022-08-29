@@ -15,7 +15,7 @@
 --%>
 
 <%
-ObjectLayoutBox commentsObjectLayoutBox = objectEntryDisplayContext.getCommentsObjectLayoutBox();
+ObjectLayoutBox commentsObjectLayoutBox = objectEntryDisplayContext.getObjectLayoutBoxByType(ObjectLayoutBoxConstants.TYPE_COMMENTS);
 %>
 
 <c:if test="<%= commentsObjectLayoutBox != null %>">

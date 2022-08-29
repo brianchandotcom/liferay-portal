@@ -27,6 +27,10 @@ const ITEM_TYPES_SYMBOL = {
 };
 export default function NavigationPanel({items, selectedItemId}) {
 	const handleClickItem = (event, item) => {
+		if (event.defaultPrevented) {
+			return;
+		}
+
 		event.stopPropagation();
 		event.preventDefault();
 

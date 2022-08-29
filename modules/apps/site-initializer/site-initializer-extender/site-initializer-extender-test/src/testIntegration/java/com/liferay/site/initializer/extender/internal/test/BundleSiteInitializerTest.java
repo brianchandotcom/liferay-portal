@@ -223,11 +223,10 @@ public class BundleSiteInitializerTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setParameter(
-			"currentURL", "http://www.liferay.com");
-
 		mockHttpServletRequest.setAttribute(
 			WebKeys.USER, TestPropsValues.getUser());
+		mockHttpServletRequest.setParameter(
+			"currentURL", "http://www.liferay.com");
 
 		serviceContext.setRequest(mockHttpServletRequest);
 

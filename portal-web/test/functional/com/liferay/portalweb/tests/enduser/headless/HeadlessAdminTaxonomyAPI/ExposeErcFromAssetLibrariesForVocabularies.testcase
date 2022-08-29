@@ -176,14 +176,14 @@ definition {
 				element = "$.id",
 				responseToParse = "${responseOfCreated}");
 
-			var taxonomyCategoryId = TaxonomyVocabularyAPI.createTaxonomyCategory(
+			var taxonomyCategoryId = TaxonomyCategoryAPI.createTaxonomyCategory(
 				externalReferenceCode = "erc",
 				name = "Category Name",
 				taxonomyVocabularyId = "${taxonomyVocabularyId}");
 		}
 
 		task ("When with GET request getTaxonomyCategory") {
-			var response = TaxonomyVocabularyAPI.getTaxonomyCategory(taxonomyCategoryId = "${taxonomyCategoryId}");
+			var response = TaxonomyCategoryAPI.getTaxonomyCategory(taxonomyCategoryId = "${taxonomyCategoryId}");
 		}
 
 		task ("Then I can receive the correct custom external reference code value in the response") {

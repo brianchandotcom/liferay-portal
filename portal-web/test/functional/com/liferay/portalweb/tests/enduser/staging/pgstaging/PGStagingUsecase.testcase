@@ -24,6 +24,7 @@ definition {
 		}
 	}
 
+	@description = "Check the actions of organizational users with different identities in the workflow of publishing Blogs in local staging."
 	@priority = "3"
 	test BlogsOrganizationWorkflowStaging {
 		property test.name.skip.portal.instance = "PGStagingUsecase#BlogsOrganizationWorkflowStaging";

@@ -39,6 +39,7 @@ definition {
 	@priority = "4"
 	test CannotPreviewAndDiscardDraftAsUserWithoutUpdatePermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.name.skip.portal.instance = "ContentPagesWithStaging#CannotPreviewAndDiscardDraftAsUserWithoutUpdatePermission";
 
 		task ("Add a new user") {
 			JSONUser.addUser(

@@ -51,6 +51,10 @@ package com.lowagie.text.pdf;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import com.lowagie.text.exceptions.KernelExceptionMessageConstant;
+import com.lowagie.text.pdf.utils.MessageFormatUtil;
+
 /**
  * Parses the page or template content.
  * @author Paulo Soares (psoares@consiste.pt)
@@ -149,10 +153,15 @@ public class PdfContentParser {
         while (true) {
             PdfObject obj = readPRObject();
             int type = obj.type();
-            if (-type == PRTokeniser.TK_END_ARRAY)
+
+            if (-type == PRTokeniser.TK_END_ARRAY) {
                 break;
-            if (-type == PRTokeniser.TK_END_DIC)
-                throw new IOException("Unexpected '>>'");
+            }
+
+            if (-type == PRTokeniser.TK_END_DIC) {
+                tokeniser.throwError(MessageFormatUtil.format(KernelExceptionMessageConstant.UNEXPECTED_TOKEN, ">>"));
+            }
+
             array.add(obj);
         }
         return array;

@@ -57,6 +57,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -76,9 +77,11 @@ import com.lowagie.text.PageSize;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.exceptions.BadPasswordException;
 import com.lowagie.text.exceptions.InvalidPdfException;
+import com.lowagie.text.exceptions.KernelExceptionMessageConstant;
 import com.lowagie.text.exceptions.UnsupportedPdfException;
 import com.lowagie.text.pdf.interfaces.PdfViewerPreferences;
 import com.lowagie.text.pdf.internal.PdfViewerPreferencesImp;
+import com.lowagie.text.pdf.utils.MessageFormatUtil;
 
 import org.bouncycastle.cms.CMSEnvelopedData;
 import org.bouncycastle.cms.RecipientInformation;
@@ -1546,9 +1549,11 @@ public class PdfReader implements PdfViewerPreferences {
             PdfObject obj = readPRObject();
             int type = obj.type();
             if (-type == PRTokeniser.TK_END_DIC)
-                tokens.throwError("Unexpected '>>'");
+                tokens.throwError(MessageFormatUtil.
+                    format(KernelExceptionMessageConstant.UNEXPECTED_TOKEN, ">>"));
             if (-type == PRTokeniser.TK_END_ARRAY)
-                tokens.throwError("Unexpected ']'");
+                tokens.throwError(MessageFormatUtil.
+                    format(KernelExceptionMessageConstant.UNEXPECTED_TOKEN, "]"));
             dic.put(name, obj);
         }
         return dic;
@@ -1558,11 +1563,20 @@ public class PdfReader implements PdfViewerPreferences {
         PdfArray array = new PdfArray();
         while (true) {
             PdfObject obj = readPRObject();
-            int type = obj.type();
-            if (-type == PRTokeniser.TK_END_ARRAY)
+
+            if (obj instanceof PdfLiteral) {
+                int type = obj.type();
+
+                if (-type != PRTokeniser.TK_END_ARRAY) {
+                    tokens.throwError(
+                        MessageFormatUtil.format(
+                            KernelExceptionMessageConstant.UNEXPECTED_TOKEN,
+                            tokens.getStringValue()));
+                }
+
                 break;
-            if (-type == PRTokeniser.TK_END_DIC)
-                tokens.throwError("Unexpected '>>'");
+            }
+
             array.add(obj);
         }
         return array;

@@ -349,6 +349,9 @@ public class GetPortletsMVCResourceCommand extends BaseMVCResourceCommand {
 		for (Portlet portlet : portlets) {
 			jsonArray.put(
 				JSONUtil.put(
+					"highlighted",
+					highlightedPortletIds.contains(portlet.getPortletId())
+				).put(
 					"instanceable", portlet.isInstanceable()
 				).put(
 					"portletId", portlet.getPortletId()

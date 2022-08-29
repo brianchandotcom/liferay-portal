@@ -428,7 +428,7 @@ definition {
 				entry = "Web Content Title",
 				menuItem = "View Content");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 		}
 
 		task ("View the name of associated categories are shown in the first module") {
@@ -2237,7 +2237,7 @@ definition {
 
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Web Content Title");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Web Content DPT");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 
 			var n = "1";
 
@@ -2297,7 +2297,7 @@ definition {
 
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Blogs Entry DPT");
+			ControlMenu.viewHeaderTitle(headerTitle = "Blogs Entry Title");
 
 			var n = "1";
 
@@ -2356,7 +2356,7 @@ definition {
 
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Document Title");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Document DPT");
+			ControlMenu.viewHeaderTitle(headerTitle = "Document Title");
 
 			var n = "1";
 
@@ -2529,7 +2529,7 @@ definition {
 
 				AssetPublisherPortlet.clickAssetTitle(assetTitle = "${assetType} Title");
 
-				ControlMenu.viewHeaderTitle(headerTitle = "${assetType} DPT");
+				ControlMenu.viewHeaderTitle(headerTitle = "${assetType} Title");
 
 				for (var n : list "1,2,3") {
 					AssertTextEquals(

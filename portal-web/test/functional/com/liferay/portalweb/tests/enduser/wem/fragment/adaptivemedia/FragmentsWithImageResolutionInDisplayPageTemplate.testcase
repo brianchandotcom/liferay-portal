@@ -158,9 +158,7 @@ definition {
 				entry = "Web Content Title",
 				menuItem = "View Content");
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#HEADING",
-				value1 = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 		}
 
 		task ("Select Desktop Device in simulation menu") {
@@ -322,9 +320,7 @@ definition {
 				entry = "Web Content Title",
 				menuItem = "View Content");
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#HEADING",
-				value1 = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 		}
 
 		task ("Select Desktop Device in simulation menu") {
@@ -486,9 +482,7 @@ definition {
 				entry = "Web Content Title",
 				menuItem = "View Content");
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#HEADING",
-				value1 = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 		}
 
 		task ("Select Desktop Device in simulation menu") {
@@ -613,9 +607,7 @@ definition {
 				entry = "Web Content Title",
 				menuItem = "View Content");
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#HEADING",
-				value1 = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 		}
 
 		task ("Select Desktop Device in simulation menu") {
@@ -737,9 +729,7 @@ definition {
 				entry = "Web Content Title",
 				menuItem = "View Content");
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#HEADING",
-				value1 = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 		}
 
 		task ("Select Desktop Device in simulation menu") {
@@ -859,9 +849,7 @@ definition {
 				entry = "Web Content Title",
 				menuItem = "View Content");
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#HEADING",
-				value1 = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 		}
 
 		task ("Select Desktop Device in simulation menu") {

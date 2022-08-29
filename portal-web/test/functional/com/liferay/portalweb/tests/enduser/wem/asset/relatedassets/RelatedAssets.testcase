@@ -193,7 +193,7 @@ definition {
 		task ("When the page designer accesses to the associated display page template") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/w/web-content-title");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 		}
 
 		task ("Then the page designer can see blogs entry on Related Assets widget") {

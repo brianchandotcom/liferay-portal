@@ -125,7 +125,7 @@ definition {
 
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Document Title");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Document DPT");
+			ControlMenu.viewHeaderTitle(headerTitle = "Document Title");
 
 			AssertVisible(
 				key_imageFileName = "Document_1.jpg",
@@ -469,7 +469,7 @@ definition {
 				entry = "Web Content Title",
 				menuItem = "View Content");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 
 			ContentPages.viewFragmentText(
 				contributed = "false",
@@ -519,7 +519,7 @@ definition {
 				entry = "Web Content Title",
 				menuItem = "View Content");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 
 			ContentPages.viewFragmentText(
 				contributed = "false",

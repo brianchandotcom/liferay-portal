@@ -122,7 +122,7 @@ definition {
 				entry = "Web Content Title",
 				menuItem = "View Content");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 
 			var baseURL = PropsUtil.get("portal.url");
 

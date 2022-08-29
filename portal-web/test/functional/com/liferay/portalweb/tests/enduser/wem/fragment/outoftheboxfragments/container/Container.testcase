@@ -678,9 +678,7 @@ definition {
 				key_url = "${baseURL}/web/test-site-name/w/web-content-title",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#HEADING",
-				value1 = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 
 			ContentPages.viewFragmentText(
 				assetType = "journal",
@@ -1033,9 +1031,7 @@ definition {
 				entry = "Web Content Title",
 				menuItem = "View Content");
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#HEADING",
-				value1 = "Test Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 		}
 
 		task ("Assert mapped image is shown in display page template") {

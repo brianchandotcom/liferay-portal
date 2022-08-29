@@ -691,7 +691,7 @@ definition {
 
 			MenuItem.click(menuItem = "View");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 
 			var jornalURL = Navigator.getCurrentURL();
 
@@ -1032,7 +1032,7 @@ definition {
 		}
 
 		task ("View the second display page template is shown") {
-			ControlMenu.viewHeaderTitle(headerTitle = "Non-Default Display Page");
+			ControlMenu.viewHeaderTitle(headerTitle = "Webcontent Title");
 		}
 
 		task ("View the content of web content shown in Button") {

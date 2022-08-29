@@ -249,7 +249,7 @@ definition {
 				key_pageName = "Web Content Title",
 				locator1 = "Home#PAGE");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Web Content DPT");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 
 			AssertTextEquals(
 				index = "1",
@@ -260,7 +260,7 @@ definition {
 				key_pageName = "Blogs Entry Title",
 				locator1 = "Home#PAGE");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Blogs Entry DPT");
+			ControlMenu.viewHeaderTitle(headerTitle = "Blogs Entry Title");
 
 			AssertVisible(
 				key_entryContent = "Blogs Entry Content",
@@ -270,7 +270,7 @@ definition {
 				key_pageName = "Document Title",
 				locator1 = "Home#PAGE");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Document DPT");
+			ControlMenu.viewHeaderTitle(headerTitle = "Document Title");
 
 			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
 
@@ -278,7 +278,7 @@ definition {
 				key_pageName = "Category Name",
 				locator1 = "Home#PAGE");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Category DPT");
+			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "Content Display",
@@ -302,7 +302,7 @@ definition {
 				key_pageName = "Web Content Title",
 				locator1 = "Home#PAGE");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Web Content DPT");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 
 			AssertVisible(
 				key_tab = "Live",
@@ -317,7 +317,7 @@ definition {
 				key_pageName = "Blogs Entry Title",
 				locator1 = "Home#PAGE");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Blogs Entry DPT");
+			ControlMenu.viewHeaderTitle(headerTitle = "Blogs Entry Title");
 
 			AssertVisible(
 				key_tab = "Live",
@@ -331,7 +331,7 @@ definition {
 				key_pageName = "Document Title",
 				locator1 = "Home#PAGE");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Document DPT");
+			ControlMenu.viewHeaderTitle(headerTitle = "Document Title");
 
 			AssertVisible(
 				key_tab = "Live",
@@ -343,7 +343,7 @@ definition {
 				key_pageName = "Category Name",
 				locator1 = "Home#PAGE");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Category DPT");
+			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 
 			AssertVisible(
 				key_tab = "Live",

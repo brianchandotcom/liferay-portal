@@ -229,7 +229,7 @@ definition {
 				entry = "Web Content Title",
 				menuItem = "View Content");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 		}
 
 		task ("Then the display page template designer could see view mode shown on fragment") {

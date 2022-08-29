@@ -110,7 +110,7 @@ definition {
 
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Blogs Entry Title");
 		}
 
 		task ("View mapped content in display page template") {

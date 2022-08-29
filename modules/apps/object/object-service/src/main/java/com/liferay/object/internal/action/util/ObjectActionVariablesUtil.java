@@ -95,7 +95,10 @@ public class ObjectActionVariablesUtil {
 					getSystemObjectDefinitionMetadata(
 						objectDefinition.getName());
 
-			return systemObjectDefinitionMetadata.getModelClassName();
+			Class<?> modelClass =
+				systemObjectDefinitionMetadata.getModelClass();
+
+			return modelClass.getSimpleName();
 		}
 
 		return dtoConverter.getContentType();

@@ -2007,7 +2007,7 @@ definition {
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#DISPLAY_PAGE_TITLE",
-				value1 = "Display Page Name");
+				value1 = "WC Title");
 		}
 
 		task ("Delete Role and User created") {
@@ -2185,7 +2185,7 @@ definition {
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#DISPLAY_PAGE_TITLE",
-				value1 = "Display Page Name");
+				value1 = "Blogs Entry Content");
 		}
 	}
 
@@ -2435,7 +2435,7 @@ definition {
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#DISPLAY_PAGE_TITLE",
-				value1 = "Display Page Name");
+				value1 = "DM Document Title");
 		}
 	}
 

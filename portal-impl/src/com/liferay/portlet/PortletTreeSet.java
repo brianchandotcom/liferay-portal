@@ -15,9 +15,9 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.util.comparator.PortletNameComparator;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.TreeSet;
 
 /**
@@ -26,20 +26,20 @@ import java.util.TreeSet;
 public class PortletTreeSet extends TreeSet<Portlet> {
 
 	public PortletTreeSet(Collection<Portlet> collection) {
-		super(_portletNameComparator);
+		super(_portletIdComparator);
 
 		addAll(collection);
 	}
 
 	public PortletTreeSet(Portlet... portlets) {
-		super(_portletNameComparator);
+		super(_portletIdComparator);
 
 		for (Portlet portlet : portlets) {
 			add(portlet);
 		}
 	}
 
-	private static final PortletNameComparator _portletNameComparator =
-		new PortletNameComparator();
+	private static final Comparator<Portlet> _portletIdComparator =
+		Comparator.comparing(Portlet::getPortletId);
 
 }

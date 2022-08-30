@@ -280,6 +280,7 @@ public class ExecutePoshiElement extends PoshiElement {
 				(parentheticalContent.charAt(i - 1) != '\\')) {
 
 				stack.pop();
+
 				expectedComma = true;
 
 				continue;

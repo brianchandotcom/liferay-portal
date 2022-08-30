@@ -61,11 +61,6 @@ public class WikiSimilarResultsContributor
 		super.setAssetEntryLocalService(assetEntryLocalService);
 	}
 
-	@Reference(unbind = "-")
-	protected void setHttpHelper(HttpHelper httpHelper) {
-		_httpHelper = httpHelper;
-	}
-
 	@Override
 	@Reference(unbind = "-")
 	protected void setUIDFactory(UIDFactory uidFactory) {
@@ -88,6 +83,7 @@ public class WikiSimilarResultsContributor
 		super.setWikiPageLocalService(wikiPageLocalService);
 	}
 
+	@Reference
 	private HttpHelper _httpHelper;
 
 }

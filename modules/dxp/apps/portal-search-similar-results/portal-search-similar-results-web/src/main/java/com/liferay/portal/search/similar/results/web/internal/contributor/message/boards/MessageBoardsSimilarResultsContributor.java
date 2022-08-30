@@ -87,32 +87,6 @@ public class MessageBoardsSimilarResultsContributor
 		);
 	}
 
-	@Reference(unbind = "-")
-	public void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setHttpHelper(HttpHelper httpHelper) {
-		_httpHelper = httpHelper;
-	}
-
-	@Reference(unbind = "-")
-	public void setMbCategoryLocalService(
-		MBCategoryLocalService mbCategoryLocalService) {
-
-		_mbCategoryLocalService = mbCategoryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setMbMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
 	@Override
 	public void writeDestination(
 		DestinationBuilder destinationBuilder,
@@ -175,9 +149,16 @@ public class MessageBoardsSimilarResultsContributor
 		routeBuilder.addAttribute(name, value);
 	}
 
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
 	private HttpHelper _httpHelper;
+
+	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
 }

@@ -70,11 +70,6 @@ public class ClassNameClassPKSimilarResultsContributor
 				String.valueOf(criteriaHelper.getRouteParameter(CLASS_PK))));
 	}
 
-	@Reference(unbind = "-")
-	public void setHttpHelper(HttpHelper httpHelper) {
-		_httpHelper = httpHelper;
-	}
-
 	@Override
 	public void writeDestination(
 		DestinationBuilder destinationBuilder,
@@ -89,6 +84,7 @@ public class ClassNameClassPKSimilarResultsContributor
 		);
 	}
 
+	@Reference
 	private HttpHelper _httpHelper;
 
 }

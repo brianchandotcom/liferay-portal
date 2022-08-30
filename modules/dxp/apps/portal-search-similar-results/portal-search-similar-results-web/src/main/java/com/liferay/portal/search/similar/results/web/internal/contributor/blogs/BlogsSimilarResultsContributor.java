@@ -92,29 +92,17 @@ public class BlogsSimilarResultsContributor
 			_getBlogsURLParameterPattern(assetRenderer.getUrlTitle()));
 	}
 
-	@Reference(unbind = "-")
-	protected void setBlogsEntryLocalService(
-		BlogsEntryLocalService blogsEntryLocalService) {
-
-		_blogsEntryLocalService = blogsEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setHttpHelper(HttpHelper httpHelper) {
-		_httpHelper = httpHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUIDFactory(UIDFactory uidFactory) {
-		_uidFactory = uidFactory;
-	}
-
 	private String _getBlogsURLParameterPattern(String parameterValue) {
 		return "-/blogs/" + parameterValue + "?";
 	}
 
+	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Reference
 	private HttpHelper _httpHelper;
+
+	@Reference
 	private UIDFactory _uidFactory;
 
 }

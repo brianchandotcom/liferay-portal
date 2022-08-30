@@ -72,18 +72,6 @@ public class ClassUUIDSimilarResultsContributor
 				String.valueOf(assetEntry.getClassPK())));
 	}
 
-	@Reference(unbind = "-")
-	public void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setHttpHelper(HttpHelper httpHelper) {
-		_httpHelper = httpHelper;
-	}
-
 	@Override
 	public void writeDestination(
 		DestinationBuilder destinationBuilder,
@@ -95,7 +83,10 @@ public class ClassUUIDSimilarResultsContributor
 			CLASS_UUID, assetEntry.getClassUuid());
 	}
 
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
 	private HttpHelper _httpHelper;
 
 }

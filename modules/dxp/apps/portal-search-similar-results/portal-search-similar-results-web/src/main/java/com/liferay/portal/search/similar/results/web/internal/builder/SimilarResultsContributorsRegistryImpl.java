@@ -53,13 +53,6 @@ public class SimilarResultsContributorsRegistryImpl
 		).findFirst();
 	}
 
-	@Reference(unbind = "-")
-	public void setSimilarResultsContributorsHolder(
-		SimilarResultsContributorsHolder similarResultsContributorsHolder) {
-
-		_similarResultsContributorsHolder = similarResultsContributorsHolder;
-	}
-
 	private Optional<SimilarResultsRoute> _detectRoute(
 		SimilarResultsContributor similarResultsContributor, String urlString) {
 
@@ -91,6 +84,7 @@ public class SimilarResultsContributorsRegistryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SimilarResultsContributorsRegistryImpl.class);
 
+	@Reference
 	private SimilarResultsContributorsHolder _similarResultsContributorsHolder;
 
 }

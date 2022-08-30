@@ -833,6 +833,8 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("View the viewport resizer not shown in Desktop viewport") {
+			TestUtils.maximizeWindow();
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");

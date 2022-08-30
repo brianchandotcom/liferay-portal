@@ -605,10 +605,7 @@ public class ObjectLayoutLocalServiceTest {
 		objectLayoutBox.setPriority(0);
 		objectLayoutBox.setType(type);
 
-		if (!StringUtil.equals(
-				type, ObjectLayoutBoxConstants.TYPE_CATEGORIZATION) &&
-			!StringUtil.equals(type, ObjectLayoutBoxConstants.TYPE_COMMENTS)) {
-
+		if (StringUtil.equals(type, ObjectLayoutBoxConstants.TYPE_REGULAR)) {
 			objectLayoutBox.setObjectLayoutRows(
 				Arrays.asList(
 					_addObjectLayoutRow(), _addObjectLayoutRow(),

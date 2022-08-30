@@ -141,10 +141,25 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 					ActionKeys.MANAGE_TAG, "postSiteKeyword",
 					AssetTagsPermission.RESOURCE_NAME, siteId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.MANAGE_TAG, "postSiteKeywordBatch",
+					AssetTagsPermission.RESOURCE_NAME, siteId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteKeywordBatch",
+					AssetTagsPermission.RESOURCE_NAME, null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.MANAGE_TAG, "getSiteKeywordsPage",
 					AssetTagsPermission.RESOURCE_NAME, siteId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putKeywordBatch",
+					AssetTagsPermission.RESOURCE_NAME, null)
 			).build(),
 			booleanQuery -> {
 			},

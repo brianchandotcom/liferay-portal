@@ -233,10 +233,25 @@ public class TaxonomyCategoryResourceImpl
 					ActionKeys.ADD_CATEGORY, assetVocabulary,
 					"postTaxonomyVocabularyTaxonomyCategory")
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.VIEW, assetVocabulary,
+					"postTaxonomyVocabularyTaxonomyCategoryBatch")
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, assetVocabulary,
+					"deleteTaxonomyCategoryBatch")
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, assetVocabulary,
 					"getTaxonomyVocabularyTaxonomyCategoriesPage")
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, assetVocabulary,
+					"putTaxonomyCategoryBatch")
 			).build(),
 			aggregation,
 			booleanQuery -> {

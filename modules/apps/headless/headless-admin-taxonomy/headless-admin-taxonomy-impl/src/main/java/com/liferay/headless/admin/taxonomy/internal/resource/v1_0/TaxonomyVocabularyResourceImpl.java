@@ -162,10 +162,26 @@ public class TaxonomyVocabularyResourceImpl
 					ActionKeys.ADD_VOCABULARY, "postSiteTaxonomyVocabulary",
 					AssetCategoriesPermission.RESOURCE_NAME, siteId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_VOCABULARY,
+					"postSiteTaxonomyVocabularyBatch",
+					AssetCategoriesPermission.RESOURCE_NAME, siteId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteTaxonomyVocabularyBatch",
+					AssetCategoriesPermission.RESOURCE_NAME, null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getSiteTaxonomyVocabulariesPage",
 					AssetCategoriesPermission.RESOURCE_NAME, siteId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putTaxonomyVocabularyBatch",
+					AssetCategoriesPermission.RESOURCE_NAME, null)
 			).build(),
 			booleanQuery -> {
 			},

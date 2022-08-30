@@ -170,7 +170,7 @@ public class ActionUtil {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (modelResourcePermission == null) {
+		if ((modelResourcePermission == null) && (id != null)) {
 			List<String> modelResourceActions =
 				ResourceActionsUtil.getModelResourceActions(permissionName);
 
@@ -182,8 +182,9 @@ public class ActionUtil {
 				return null;
 			}
 		}
-		else if (!modelResourcePermission.contains(
-					permissionChecker, id, actionName)) {
+		else if ((id != null) &&
+				 !modelResourcePermission.contains(
+					 permissionChecker, id, actionName)) {
 
 			return null;
 		}

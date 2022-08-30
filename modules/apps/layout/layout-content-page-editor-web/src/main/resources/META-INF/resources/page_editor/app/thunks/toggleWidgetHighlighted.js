@@ -13,6 +13,7 @@
  */
 
 import toggleWidgetHighlightedAction from '../actions/toggleWidgetHighlighted';
+import WidgetService from '../services/WidgetService';
 
 export default function toggleWidgetHighlighted({
 	highlighted,
@@ -20,13 +21,19 @@ export default function toggleWidgetHighlighted({
 	portletId,
 }) {
 	return (dispatch) => {
-		dispatch(
-			toggleWidgetHighlightedAction({
-				highlighted,
-				highlightedPortlets: [],
-				initiallyHighlighted,
-				portletId,
-			})
-		);
+		return WidgetService.toggleWidgetHighlighted({
+			highlighted,
+			onNetworkStatus: dispatch,
+			portletId,
+		}).then(({highlightedPortlets}) => {
+			dispatch(
+				toggleWidgetHighlightedAction({
+					highlighted,
+					highlightedPortlets,
+					initiallyHighlighted,
+					portletId,
+				})
+			);
+		});
 	};
 }

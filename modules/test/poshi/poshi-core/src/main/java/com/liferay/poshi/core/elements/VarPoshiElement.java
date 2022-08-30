@@ -343,7 +343,7 @@ public class VarPoshiElement extends PoshiElement {
 				}
 			}
 			else {
-				value = StringUtil.replace(value, "\"", "&quot;");
+				value = StringUtil.replace(value, "\"", "\\\"");
 
 				value = doubleQuoteContent(value);
 			}

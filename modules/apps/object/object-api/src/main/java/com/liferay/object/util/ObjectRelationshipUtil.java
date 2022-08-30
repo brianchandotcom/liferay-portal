@@ -14,15 +14,43 @@
 
 package com.liferay.object.util;
 
+import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * @author Marcela Cunha
  */
 public class ObjectRelationshipUtil {
+
+	public static ObjectRelationship getObjectRelationship(
+			List<ObjectRelationship> objectRelationships)
+		throws PortalException {
+
+		if (objectRelationships.isEmpty()) {
+			return null;
+		}
+
+		if (objectRelationships.size() == 1) {
+			return objectRelationships.get(0);
+		}
+
+		Stream<ObjectRelationship> objectRelationshipsStream =
+			objectRelationships.stream();
+
+		return objectRelationshipsStream.filter(
+			objectRelationship -> !objectRelationship.isReverse()
+		).findFirst(
+		).orElseThrow(
+			ObjectRelationshipReverseException::new
+		);
+	}
 
 	public static Map<String, String> getPKObjectFieldDBColumnNames(
 		ObjectDefinition objectDefinition1, ObjectDefinition objectDefinition2,

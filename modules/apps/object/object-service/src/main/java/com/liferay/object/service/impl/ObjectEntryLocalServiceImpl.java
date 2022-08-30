@@ -1768,25 +1768,13 @@ public class ObjectEntryLocalServiceImpl
 			ObjectDefinition objectDefinition =
 				dynamicObjectDefinitionTable.getObjectDefinition();
 
-			List<ObjectRelationship> objectRelationships =
-				_objectRelationshipPersistence.findByODI1_N(
-					objectDefinition.getObjectDefinitionId(),
-					GetterUtil.getString(
-						objectFieldSettingsValues.get(
-							"objectRelationshipName")));
-
-			ObjectRelationship objectRelationship = null;
-
-			if (objectRelationships.size() == 1) {
-				objectRelationship = objectRelationships.get(0);
-			}
-			else if (objectRelationships.size() > 1) {
-				for (ObjectRelationship item : objectRelationships) {
-					if (!item.getReverse()) {
-						objectRelationship = item;
-					}
-				}
-			}
+			ObjectRelationship objectRelationship =
+				ObjectRelationshipUtil.getObjectRelationship(
+					_objectRelationshipPersistence.findByODI1_N(
+						objectDefinition.getObjectDefinitionId(),
+						GetterUtil.getString(
+							objectFieldSettingsValues.get(
+								"objectRelationshipName"))));
 
 			ObjectDefinition relatedObjectDefinition =
 				_objectDefinitionPersistence.findByPrimaryKey(

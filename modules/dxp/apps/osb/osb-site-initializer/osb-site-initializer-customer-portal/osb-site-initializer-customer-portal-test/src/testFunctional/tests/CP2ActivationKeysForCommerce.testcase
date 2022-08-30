@@ -62,7 +62,7 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
+			CP2ActivationKeys.assertDropdownSelection(option = "7.2");
 		}
 
 		task ("Assert Access to Commerce Activation Key Page") {
@@ -104,7 +104,7 @@ definition {
 			task ("Assert that project has DXP ${account}") {
 				CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-				CP2ActivationKeys.assertDropDownSelection(option = "${account}");
+				CP2ActivationKeys.assertDropdownSelection(option = "${account}");
 			}
 
 			task ("Assert access to Commerce Activation Key Page") {
@@ -134,7 +134,7 @@ definition {
 			task ("Assert that project has DXP ${account}") {
 				CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-				CP2ActivationKeys.assertDropDownSelection(option = "${account}");
+				CP2ActivationKeys.assertDropdownSelection(option = "${account}");
 			}
 
 			task ("Assert access to Commerce Activation Key Page") {
@@ -178,7 +178,7 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
+			CP2ActivationKeys.assertDropdownSelection(option = "7.2");
 		}
 
 		task ("Assert Access Commerce Activation Key Page") {
@@ -197,7 +197,7 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-			CP2ActivationKeys.assertDropDownSelection(option = "7.1");
+			CP2ActivationKeys.assertDropdownSelection(option = "7.1");
 		}
 
 		task ("Assert Access Commerce Activation Key Page") {
@@ -213,7 +213,7 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-			CP2ActivationKeys.assertDropDownSelection(option = "7.0");
+			CP2ActivationKeys.assertDropdownSelection(option = "7.0");
 		}
 
 		task ("Assert Access Commerce Activation Key Page") {
@@ -241,7 +241,7 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
+			CP2ActivationKeys.assertDropdownSelection(option = "7.2");
 		}
 
 		task ("Assert Access to Commerce Activation Key Page") {
@@ -263,7 +263,7 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-			CP2ActivationKeys.assertDropDownSelection(option = "7.1");
+			CP2ActivationKeys.assertDropdownSelection(option = "7.1");
 		}
 
 		task ("Assert Access to Commerce Activation Key Page") {
@@ -287,7 +287,7 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-			CP2ActivationKeys.assertDropDownSelection(option = "7.0");
+			CP2ActivationKeys.assertDropdownSelection(option = "7.0");
 		}
 
 		task ("Assert Access to Commerce Activation Key Page") {
@@ -314,7 +314,7 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
+			CP2ActivationKeys.assertDropdownSelection(option = "7.2");
 		}
 
 		task ("Assert Access to Commerce Activation Key Page") {
@@ -347,7 +347,7 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-			CP2ActivationKeys.assertDropDownSelection(option = "7.2");
+			CP2ActivationKeys.assertDropdownSelection(option = "7.2");
 		}
 
 		task ("Assert Access to Commerce Activation Key Page") {

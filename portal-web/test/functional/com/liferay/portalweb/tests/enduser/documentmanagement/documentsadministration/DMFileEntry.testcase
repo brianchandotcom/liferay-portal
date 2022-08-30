@@ -2002,13 +2002,16 @@ definition {
 
 		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "3000");
 
-		Notifications.gotoNotifications();
-
-		Notifications.navigateToContent(contentBody = "Document_5.txt");
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.publishExpiredDocument(
 			disableExpirationDate = "true",
 			dmDocumentTitle = "Document_5.txt");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Approved",

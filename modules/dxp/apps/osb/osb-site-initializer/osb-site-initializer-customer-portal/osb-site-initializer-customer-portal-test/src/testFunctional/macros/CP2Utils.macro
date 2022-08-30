@@ -1,0 +1,15 @@
+definition {
+
+	macro closeModal {
+		Click(locator1 = "CP2Utils#CLOSE_BUTTON");
+	}
+
+	macro openActionMenu {
+		Click(
+			key_text = "${openUser}",
+			locator1 = "Icon#SPECIFIC_ELLIPSIS");
+
+		MenuItem.click(menuItem = "${menuItem}");
+	}
+
+}

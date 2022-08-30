@@ -13,12 +13,14 @@
 			"scope": 4
 		},
 		{
-			"actionIds": [],
+			"actionIds": [
+			],
 			"roleName": "User",
 			"scope": 4
 		},
 		{
-			"actionIds": [],
+			"actionIds": [
+			],
 			"roleName": "Site Member",
 			"scope": 4
 		}

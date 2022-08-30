@@ -196,6 +196,8 @@ public class VarPoshiElement extends PoshiElement {
 				}
 			}
 
+			value = value.replace("\\\"", "\"");
+
 			value = StringEscapeUtils.unescapeXml(value);
 
 			addAttribute("value", value);

@@ -182,6 +182,8 @@ public class ExecutePoshiElement extends PoshiElement {
 
 					value = getDoubleQuotedContent(value);
 
+					value = value.replace("\\\"", "\"");
+
 					value = StringEscapeUtils.unescapeXml(value);
 
 					add(

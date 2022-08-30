@@ -168,7 +168,7 @@ definition {
 				key_portletName = "${portletName}",
 				locator1 = "Portlet#ICON_PLUS_SIGN");
 
-			Click(
+			Click.javaScriptClick(
 				key_portletName = "${portletName}",
 				locator1 = "Portlet#ICON_PLUS_SIGN");
 		}

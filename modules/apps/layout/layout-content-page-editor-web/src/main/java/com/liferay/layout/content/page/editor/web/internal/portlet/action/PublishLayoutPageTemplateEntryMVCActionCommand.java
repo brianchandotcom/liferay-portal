@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -124,17 +125,23 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 			_fragmentEntryLinkManager, draftLayout.getGroupId(),
 			draftLayout.getPlid());
 
+		_layoutCopyHelper.copyLayout(draftLayout, layout);
+
 		draftLayout = _layoutLocalService.fetchLayout(draftLayout.getPlid());
 
+		UnicodeProperties typeSettingsUnicodeProperties =
+			draftLayout.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.put("published", Boolean.TRUE.toString());
+
 		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
+		draftLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		draftLayout = _layoutLocalService.updateLayout(draftLayout);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByPlid(draftLayout.getClassPK());
-
-		_layoutCopyHelper.copyLayout(draftLayout, layout);
 
 		_layoutPageTemplateEntryService.updateStatus(
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),

@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -64,10 +65,15 @@ public class VerifyEmailAddressMVCResourceCommand
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
+		long ctCollectionId = ParamUtil.getLong(
+			resourceRequest, "ctCollectionId");
 
-		if (ctCollection == null) {
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
+
+		if ((ctCollection == null) &&
+			(ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(

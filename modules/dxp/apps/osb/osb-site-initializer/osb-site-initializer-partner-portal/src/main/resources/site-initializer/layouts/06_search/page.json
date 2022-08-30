@@ -1,12 +1,12 @@
 {
+	"friendlyURL": "/search",
 	"hidden": true,
 	"name_i18n": {
 		"en_US": "Search"
 	},
 	"permissions": [
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Guest",
 			"scope": 2
 		},

@@ -1,12 +1,12 @@
 {
+	"friendlyURL": "/sales",
 	"hidden": false,
 	"name_i18n": {
 		"en_US": "Sales"
 	},
 	"permissions": [
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Guest",
 			"scope": 4
 		},

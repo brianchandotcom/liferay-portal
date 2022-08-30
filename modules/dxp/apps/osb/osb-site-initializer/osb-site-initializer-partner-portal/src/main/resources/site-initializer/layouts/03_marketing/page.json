@@ -1,12 +1,12 @@
 {
+	"friendlyURL": "/marketing",
 	"hidden": false,
 	"name_i18n": {
 		"en_US": "Marketing"
 	},
 	"permissions": [
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Guest",
 			"scope": 4
 		},

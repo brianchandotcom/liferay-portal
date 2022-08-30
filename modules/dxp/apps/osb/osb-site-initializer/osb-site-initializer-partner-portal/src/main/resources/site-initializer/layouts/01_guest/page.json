@@ -1,4 +1,5 @@
 {
+	"friendlyURL": "/guest",
 	"hidden": true,
 	"name_i18n": {
 		"en_US": "Guest"
@@ -12,14 +13,12 @@
 			"scope": 4
 		},
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "User",
 			"scope": 4
 		},
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Site Member",
 			"scope": 4
 		}

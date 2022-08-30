@@ -1,12 +1,12 @@
 {
+	"friendlyURL": "/enablement",
 	"hidden": false,
 	"name_i18n": {
 		"en_US": "Enablement"
 	},
 	"permissions": [
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Guest",
 			"scope": 4
 		},

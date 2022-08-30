@@ -199,4 +199,42 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-11664 | Automation ID: LRAC-11846 | Test Summary: Disable email report after enabling"
+	@priority = "3"
+	test CanDisableEmailReportAfterEnabling {
+		task ("Go to AC > Go to Settings > Go to Properties > Open the new property") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACNavigation.openItem(itemName = "${assignedPropertyName}");
+		}
+
+		task ("Click the widget next to email reports and then enable it") {
+			ACEmailReport.accessEmailReportSettings();
+
+			ACEmailReport.enableEmailReportToggle();
+
+			Button.clickSave();
+		}
+
+		task ("See in the property that the email report has the status of enabled and the success alert appears") {
+			ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
+			
+			Alert.viewSuccessMessageText(successMessage = "Changes to email reports saved.");
+		}
+
+		task ("Click the widget next to email reports and then disable it") {
+			ACEmailReport.disableEmailReport();
+		}
+
+		task ("See in the property that the email report has the status of disabled and the success alert appears") {
+			ACUtils.viewGenericText(textValueList = "Email Reports: Disabled");
+			
+			Alert.viewSuccessMessageText(successMessage = "Changes to email reports saved.");
+		}
+	}
+
 }

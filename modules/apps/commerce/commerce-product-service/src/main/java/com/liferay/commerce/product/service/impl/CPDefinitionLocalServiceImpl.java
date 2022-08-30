@@ -1032,6 +1032,13 @@ public class CPDefinitionLocalServiceImpl
 
 		for (CPDisplayLayout cpDisplayLayout : cpDisplayLayouts) {
 			_cpDisplayLayoutPersistence.remove(cpDisplayLayout);
+
+			Indexer<CPDisplayLayout> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(CPDisplayLayout.class);
+
+			indexer.reindex(
+				CPDisplayLayout.class.getName(),
+				cpDisplayLayout.getCPDisplayLayoutId());
 		}
 
 		// Commerce product version contributors

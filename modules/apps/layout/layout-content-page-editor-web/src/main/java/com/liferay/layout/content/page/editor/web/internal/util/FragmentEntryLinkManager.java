@@ -318,6 +318,15 @@ public class FragmentEntryLinkManager {
 					return FragmentConstants.getTypeLabel(fragmentEntryType);
 				}
 			).put(
+				"groupId",
+				() -> {
+					if (fragmentEntry != null) {
+						return fragmentEntry.getGroupId();
+					}
+
+					return null;
+				}
+			).put(
 				"icon",
 				() -> {
 					if (fragmentEntry != null) {

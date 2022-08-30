@@ -17,9 +17,9 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Create a new Customer Portal Site") {
+		/*task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
-		}
+		}*/
 	}
 
 	tearDown {
@@ -30,4 +30,33 @@ definition {
 		PortalInstances.tearDownCP();
 	}
 
+    @description = "LPS-149703 - Verify if user can select the Key Type when generating a new key"
+    @priority = "4"
+    test IfKeyTypeCanBeSelected {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example Solutions account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "Test Account Solutions");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+            CP2ActivationKeys.generateNewKey();
+		}
+
+        task ("Then the user can select the Key Type") {
+            CP2ActivationKeys.selectKeyType(key_option = "Production (Virtual Cluster)");
+        }
+    }
 }

@@ -35,7 +35,7 @@ definition {
 			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}/comments/batch?createStrategy=${createStrategy} \
 			-u test@liferay.com:test \
 			-H Content-Type: application/json \
-            -d ${body}
+			-d ${body}
 		''';
 
 		var curl = JSONCurlUtil.post("${curl}");
@@ -43,44 +43,18 @@ definition {
 		return "${curl}";
 	}
 
-	macro _curlBlogPostingChildComments {
-		Variables.assertDefined(parameterList = "${commentId}");
-
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/comments/${commentId}/comments \
-			-u test@liferay.com:test \
-			-H Content-Type: application/json
-		''';
-
-		return "${curl}";
-	}
-
-	macro _curlBlogPostingChildCommentsByExternalReferenceCode {
-		Variables.assertDefined(parameterList = "${blogPostingChildCommentErc},${blogPostingCommentErc}");
-
-		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByName(
-			groupName = "Guest",
-			site = "true");
-
-		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/comments/by-external-reference-code/${blogPostingCommentErc}/comments/by-external-reference-code/${blogPostingChildCommentErc} \
-			-u test@liferay.com:test \
-			-H accept: application/json
-		''';
-
-		return "${curl}";
-	}
-
 	macro _curlBlogPostingComments {
-		Variables.assertDefined(parameterList = "${blogPostingId}");
-
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (isSet(commentId)) {
+			var api = "comments/${commentId}/comments";
+		}
+		else {
+			var api = "blog-postings/${blogPostingId}/comments";
+		}
+
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}/comments \
+			${portalURL}/o/headless-delivery/v1.0/${api} \
 			-u test@liferay.com:test \
 			-H Content-Type: application/json
 		''';
@@ -89,15 +63,22 @@ definition {
 	}
 
 	macro _curlBlogPostingCommentsByExternalReferenceCode {
-		Variables.assertDefined(parameterList = "${blogPostingErc},${blogPostingCommentErc}");
+		Variables.assertDefined(parameterList = "${blogPostingCommentErc}");
 
 		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");
 
+		if (isSet(blogPostingChildCommentErc)) {
+			var api = "comments/by-external-reference-code/${blogPostingCommentErc}/comments/by-external-reference-code/${blogPostingChildCommentErc}";
+		}
+		else {
+			var api = "blog-postings/by-external-reference-code/${blogPostingErc}/comments/by-external-reference-code/${blogPostingCommentErc}";
+		}
+
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings/by-external-reference-code/${blogPostingErc}/comments/by-external-reference-code/${blogPostingCommentErc} \
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/${api} \
 			-u test@liferay.com:test \
 			-H accept: application/json
 		''';
@@ -121,7 +102,7 @@ definition {
 		}
 
 		if (isSet(commentId)) {
-			var curl = CommentAPI._curlBlogPostingChildComments(commentId = "${commentId}");
+			var curl = CommentAPI._curlBlogPostingComments(commentId = "${commentId}");
 		}
 
 		var body = '''
@@ -142,35 +123,23 @@ definition {
 	macro getFieldValueOfBlogPostingComments {
 		Variables.assertDefined(parameterList = "${fieldName}");
 
-		if (!(isSet(responseToParse)) && isSet(blogPostingId)) {
-			var curl = CommentAPI._curlBlogPostingComments(blogPostingId = "${blogPostingId}");
+		if (!(isSet(responseToParse))) {
+			if (isSet(blogPostingCommentErc)) {
+				var curl = CommentAPI._curlBlogPostingCommentsByExternalReferenceCode(
+					blogPostingChildCommentErc = "${blogPostingChildCommentErc}",
+					blogPostingCommentErc = "${blogPostingCommentErc}",
+					blogPostingErc = "${blogPostingErc}");
+			}
+			else {
+				var curl = CommentAPI._curlBlogPostingComments(
+					blogPostingId = "${blogPostingId}",
+					commentId = "${commentId}");
+			}
 
-			var response = JSONCurlUtil.get("${curl}");
+			var responseToParse = JSONCurlUtil.get("${curl}");
 		}
 
-		if (isSet(commentId)) {
-			var curl = CommentAPI._curlBlogPostingChildComments(commentId = "${commentId}");
-
-			var response = JSONCurlUtil.get("${curl}");
-		}
-
-		if (isSet(blogPostingErc) && isSet(blogPostingCommentErc)) {
-			var curl = CommentAPI._curlBlogPostingCommentsByExternalReferenceCode(
-				blogPostingCommentErc = "${blogPostingCommentErc}",
-				blogPostingErc = "${blogPostingErc}");
-
-			var response = JSONCurlUtil.get("${curl}");
-		}
-
-		if (isSet(blogPostingChildCommentErc) && isSet(blogPostingCommentErc)) {
-			var curl = CommentAPI._curlBlogPostingChildCommentsByExternalReferenceCode(
-				blogPostingChildCommentErc = "${blogPostingChildCommentErc}",
-				blogPostingCommentErc = "${blogPostingCommentErc}");
-
-			var response = JSONCurlUtil.get("${curl}");
-		}
-
-		var fieldValue = JSONUtil.getWithJSONPath("${response}", "$..${fieldName}");
+		var fieldValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..${fieldName}");
 
 		return "${fieldValue}";
 	}

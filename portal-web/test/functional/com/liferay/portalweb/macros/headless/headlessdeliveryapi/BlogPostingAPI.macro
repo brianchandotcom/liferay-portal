@@ -441,4 +441,14 @@ definition {
 		return "${numberOfBlogPostingsCreated}";
 	}
 
+	macro setUpGlobalIdOfCreatedBlogPosting {
+		var blogPostingId = BlogPostingAPI.getIdOfCreatedBlogPosting(
+			articleBody = "${articleBody}",
+			headline = "${headline}");
+
+		static var staticBlogPostingId = "${blogPostingId}";
+
+		return "${staticBlogPostingId}";
+	}
+
 }

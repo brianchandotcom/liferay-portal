@@ -31,7 +31,7 @@ definition {
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
-		AssertElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB");
+		AssertElementPresent(locator1 = "PublicationsChanges#MESSAGE_NO_CHANGES");
 	}
 
 	macro viewOutOfDatePublications {

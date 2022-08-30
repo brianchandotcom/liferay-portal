@@ -74,7 +74,7 @@ definition {
 
 		property portal.release = "false";
 
-		var specialCharacters = "&quot;\&quot;";
+		var specialCharacters = "\"\\"";
 		var userEmailAddress = "userea@liferay.com";
 		var userFirstName = "userfn";
 		var userLastName = "userln";

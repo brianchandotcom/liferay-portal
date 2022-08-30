@@ -16,7 +16,7 @@ import ClayForm from '@clayui/form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import React from 'react';
 import {useForm} from 'react-hook-form';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useOutletContext} from 'react-router-dom';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
@@ -25,15 +25,16 @@ import yupSchema from '../../../schema/yup';
 
 const ChangeUserPassword: React.FC = () => {
 	const navigate = useNavigate();
-
+	const {userAccount} = useOutletContext<any>();
 	const {
 		formState: {errors},
 		handleSubmit,
 		register,
-	} = useForm({resolver: yupResolver(yupSchema.password)});
-
+	} = useForm({
+		defaultValues: userAccount,
+		resolver: yupResolver(yupSchema.password),
+	});
 	const _onSubmit = () => alert('successful send');
-
 	const inputProps = {
 		errors,
 		register,
@@ -43,15 +44,21 @@ const ChangeUserPassword: React.FC = () => {
 	return (
 		<Container className="change-user-password">
 			<ClayForm>
-				<div>
-					<Form.Input
-						{...inputProps}
-						label={i18n.translate('new-password')}
-						name="password"
-						placeholder="Password"
-						type="password"
-					/>
-				</div>
+				<Form.Input
+					{...inputProps}
+					label={i18n.translate('current-password')}
+					name="currentpassword"
+					placeholder={i18n.translate('current-password')}
+					type="password"
+				/>
+
+				<Form.Input
+					{...inputProps}
+					label={i18n.translate('new-password')}
+					name="password"
+					placeholder={i18n.translate('password')}
+					type="password"
+				/>
 
 				<Form.Input
 					{...inputProps}
@@ -62,7 +69,7 @@ const ChangeUserPassword: React.FC = () => {
 
 						return false;
 					}}
-					placeholder="Confirm Password"
+					placeholder={i18n.translate('confirm-password')}
 					type="password"
 				/>
 			</ClayForm>

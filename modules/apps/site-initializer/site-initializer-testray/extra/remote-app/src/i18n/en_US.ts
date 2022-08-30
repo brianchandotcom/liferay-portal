@@ -97,6 +97,7 @@ export default {
 	'current': 'Current',
 	'current-case-types': 'Current Case Types',
 	'current-main-components': 'Current Main Components',
+	'current-password': 'Current Password',
 	'current-priorities': 'Current Priorities',
 	'current-requirements': 'Current Requirements',
 	'current-subcomponents': 'Current Sub Components',

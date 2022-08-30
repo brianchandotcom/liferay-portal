@@ -825,9 +825,34 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteAllTimers {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteAllTimers";
 
-		// TODO CanDeleteAllTimers pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+			actionName = "Liferay Timer",
+			actionsTemplateValue = "Timer Template",
+			durationValue = "1",
+			newSection = "New Timer",
+			newTimer = "true",
+			scaleTypeOption = "Minute",
+			sectionOptionList = "1,2,3");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.deleteBySidebarCard(
+			propertyValue = "Duration: 11 minute",
+			sidebarCardName = "Timers");
+
+		ProcessBuilderKaleoDesignerReact.viewTimerNotPresent(propertyValue = "Duration: 11 minute");
+
+		ProcessBuilderKaleoDesignerReact.viewTimerNotPresent(propertyValue = "Duration: 12 minute");
+
+		ProcessBuilderKaleoDesignerReact.viewTimerNotPresent(propertyValue = "Duration: 13 minute");
 	}
 
 	@description = "Verify that the user can delete Nodes of Condition"

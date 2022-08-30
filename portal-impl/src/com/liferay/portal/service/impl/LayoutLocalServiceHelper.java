@@ -70,6 +70,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -255,6 +256,24 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			layoutUuid, layoutSetPrototype.getGroupId(), true);
 
 		if (layout != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isDraftLayout(long classNameId, long classPK, String type) {
+		if (!Objects.equals(type, LayoutConstants.TYPE_ASSET_DISPLAY) &&
+			!Objects.equals(type, LayoutConstants.TYPE_COLLECTION) &&
+			!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
+
+			return false;
+		}
+
+		if ((classPK > 0) &&
+			(classNameId == PortalUtil.getClassNameId(
+				Layout.class.getName()))) {
+
 			return true;
 		}
 

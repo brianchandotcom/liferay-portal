@@ -56,7 +56,7 @@ definition {
 			ACNavigation.openItem(itemName = "${assignedPropertyName}");
 		}
 
-		task ("Enable and configure email report frequency") {
+		task ("Configure Email Report then cancel") {
 			ACEmailReport.accessEmailReportSettings();
 
 			ACEmailReport.enableEmailReportToggle();
@@ -66,7 +66,7 @@ definition {
 			ACNavigation.clickCancelButton();
 		}
 
-		task ("Check that email report has been enabled") {
+		task ("Check that email report has been disabled") {
 			ACUtils.viewGenericText(textValueList = "Email Reports: Disabled");
 		}
 	}
@@ -86,7 +86,7 @@ definition {
 			ACNavigation.openItem(itemName = "${assignedPropertyName}");
 		}
 
-		task ("Enable and configure email report frequency") {
+		task ("Access email report") {
 			ACEmailReport.accessEmailReportSettings();
 
 			task ("Check that the Email Reports does not allow edit when toggle is disabled") {

@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>EMAIL_REPORT_FREQUENCY_DISABLED</td>
-	<td>//select[(@class='form-control select-root' and 'disabled')] </td>
+	<td>//select[(@class='form-control select-root' and @disabled)] </td>
 	<td></td>
 </tr>
 </tbody>

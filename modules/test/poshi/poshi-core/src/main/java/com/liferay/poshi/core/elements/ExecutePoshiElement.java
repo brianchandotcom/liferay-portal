@@ -73,7 +73,7 @@ public class ExecutePoshiElement extends PoshiElement {
 			poshiScript);
 		String fileExtension = getFileExtension();
 
-		validateParentheticalContent(poshiScriptParentheticalContent);
+		validatePoshiScriptParameterSyntax(poshiScriptParentheticalContent);
 
 		if (fileExtension.equals("function") &&
 			poshiScript.startsWith("selenium.")) {
@@ -266,7 +266,7 @@ public class ExecutePoshiElement extends PoshiElement {
 		return returnPoshiElement.createPoshiScriptSnippet(poshiScriptSnippet);
 	}
 
-	public void validateParentheticalContent(String parentheticalContent)
+	public void validatePoshiScriptParameterSyntax(String parentheticalContent)
 		throws PoshiScriptParserException {
 
 		Stack<Character> stack = new Stack<>();

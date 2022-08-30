@@ -3146,12 +3146,31 @@ definition {
 	}
 
 	@description = "Verify that the user can see a tooltip with 'Enter the comma separated resource actions (e.g. ADD, DELETE, UPDATE).' at Resource Actions "
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanViewResourceActionsTooltip {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewResourceActionsTooltip";
 
-		// TODO CanViewResourceActionsTooltip pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+			assignmentType = "Resource Actions",
+			resourceActionsText = "Test");
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Assignments",
+			propertyValue = "Resource Actions:Test");
+
+		ProcessBuilderKaleoDesignerReact.viewToolTip(tooltipMessage = "Enter the comma separated resource actions (e.g. ADD, DELETE, UPDATE).");
+
+		/*ProcessBuilderKaleoDesignerReact.viewToolTipOverNameOnAssignments(
+			label = "Resource Actions",
+			tooltipOverName = "");*/
 	}
 
 	@description = "Verify that a Success alert appears when the user restore a definition version (Example: Success:Restored to Revision 'X')"

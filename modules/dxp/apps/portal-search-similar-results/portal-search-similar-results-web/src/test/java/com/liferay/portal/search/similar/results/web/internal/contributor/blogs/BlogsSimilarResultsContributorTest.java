@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
@@ -56,7 +57,8 @@ public class BlogsSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		_blogsSimilarResultsContributor.setHttpHelper(setUpHttpHelper());
+		ReflectionTestUtil.setFieldValue(
+			_blogsSimilarResultsContributor, "_httpHelper", setUpHttpHelper());
 
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
@@ -88,9 +90,12 @@ public class BlogsSimilarResultsContributorTest
 			Mockito.anyLong(), Mockito.anyString()
 		);
 
-		_blogsSimilarResultsContributor.setBlogsEntryLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_blogsSimilarResultsContributor, "_blogsEntryLocalService",
 			_blogsEntryLocalService);
-		_blogsSimilarResultsContributor.setUIDFactory(setUpUIDFactory("uid"));
+		ReflectionTestUtil.setFieldValue(
+			_blogsSimilarResultsContributor, "_uidFactory",
+			setUpUIDFactory("uid"));
 
 		CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();
 

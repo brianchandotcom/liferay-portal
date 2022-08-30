@@ -19,6 +19,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
@@ -58,7 +59,8 @@ public class MessageBoardsSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		_messageBoardsSimilarResultsContributor.setHttpHelper(
+		ReflectionTestUtil.setFieldValue(
+			_messageBoardsSimilarResultsContributor, "_httpHelper",
 			setUpHttpHelper());
 
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
@@ -82,9 +84,11 @@ public class MessageBoardsSimilarResultsContributorTest
 
 	@Test
 	public void testResolveCriteria() {
-		_messageBoardsSimilarResultsContributor.setAssetEntryLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_messageBoardsSimilarResultsContributor, "_assetEntryLocalService",
 			assetEntryLocalService);
-		_messageBoardsSimilarResultsContributor.setMbMessageLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_messageBoardsSimilarResultsContributor, "_mbMessageLocalService",
 			_mbMessageLocalService);
 
 		CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();
@@ -123,7 +127,8 @@ public class MessageBoardsSimilarResultsContributorTest
 		Assert.assertEquals(
 			"assetEntryClassName_PORTLET_1234", criteria.getUID());
 
-		_messageBoardsSimilarResultsContributor.setMbCategoryLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_messageBoardsSimilarResultsContributor, "_mbCategoryLocalService",
 			_mbCategoryLocalService);
 
 		criteriaBuilderImpl = new CriteriaBuilderImpl();

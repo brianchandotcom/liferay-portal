@@ -16,6 +16,7 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.docum
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelperImpl;
@@ -96,7 +97,8 @@ public class DocumentLibrarySimilarResultsContributorTest {
 			documentLibrarySimilarResultsContributor =
 				new DocumentLibrarySimilarResultsContributor();
 
-		documentLibrarySimilarResultsContributor.setHttpHelper(
+		ReflectionTestUtil.setFieldValue(
+			documentLibrarySimilarResultsContributor, "_httpHelper",
 			new HttpHelperImpl());
 
 		return documentLibrarySimilarResultsContributor;

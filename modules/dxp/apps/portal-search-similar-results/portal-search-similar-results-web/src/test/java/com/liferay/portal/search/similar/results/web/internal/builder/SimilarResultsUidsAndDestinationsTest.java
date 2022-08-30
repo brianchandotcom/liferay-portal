@@ -31,6 +31,7 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.model.uid.UIDFactory;
@@ -726,92 +727,143 @@ public class SimilarResultsUidsAndDestinationsTest {
 	private SimilarResultsContributor
 		_createAssetPublisherSimilarResultsContributor() {
 
-		return new AssetPublisherSimilarResultsContributor() {
-			{
-				setAssetEntryLocalService(_assetEntryLocalService);
-				setHttpHelper(_httpHelperImpl);
-				setUIDFactory(_uidFactory);
-			}
-		};
+		AssetPublisherSimilarResultsContributor
+			assetPublisherSimilarResultsContributor =
+				new AssetPublisherSimilarResultsContributor();
+
+		ReflectionTestUtil.setFieldValue(
+			assetPublisherSimilarResultsContributor, "_assetEntryLocalService",
+			_assetEntryLocalService);
+		ReflectionTestUtil.setFieldValue(
+			assetPublisherSimilarResultsContributor, "_httpHelper",
+			_httpHelperImpl);
+		ReflectionTestUtil.setFieldValue(
+			assetPublisherSimilarResultsContributor, "_uidFactory",
+			_uidFactory);
+
+		return assetPublisherSimilarResultsContributor;
 	}
 
 	private SimilarResultsContributor _createBlogsSimilarResultsContributor() {
-		return new BlogsSimilarResultsContributor() {
-			{
-				setBlogsEntryLocalService(_blogsEntryLocalService);
-				setHttpHelper(_httpHelperImpl);
-				setUIDFactory(_uidFactory);
-			}
-		};
+		BlogsSimilarResultsContributor blogsSimilarResultsContributor =
+			new BlogsSimilarResultsContributor();
+
+		ReflectionTestUtil.setFieldValue(
+			blogsSimilarResultsContributor, "_blogsEntryLocalService",
+			_blogsEntryLocalService);
+		ReflectionTestUtil.setFieldValue(
+			blogsSimilarResultsContributor, "_httpHelper", _httpHelperImpl);
+		ReflectionTestUtil.setFieldValue(
+			blogsSimilarResultsContributor, "_uidFactory", _uidFactory);
+
+		return blogsSimilarResultsContributor;
 	}
 
 	private SimilarResultsContributor
 		_createClassNameClassPKSimilarResultsContributor() {
 
-		return new ClassNameClassPKSimilarResultsContributor() {
-			{
-				setHttpHelper(_httpHelperImpl);
-			}
-		};
+		ClassNameClassPKSimilarResultsContributor
+			classNameClassPKSimilarResultsContributor =
+				new ClassNameClassPKSimilarResultsContributor();
+
+		ReflectionTestUtil.setFieldValue(
+			classNameClassPKSimilarResultsContributor, "_httpHelper",
+			_httpHelperImpl);
+
+		return classNameClassPKSimilarResultsContributor;
 	}
 
 	private SimilarResultsContributor
 		_createClassNameIdClassPKSimilarResultsContributor() {
 
-		return new ClassNameIdClassPKSimilarResultsContributor() {
-			{
-				setAssetEntryLocalService(_assetEntryLocalService);
-				setHttpHelper(_httpHelperImpl);
-			}
-		};
+		ClassNameIdClassPKSimilarResultsContributor
+			classNameIdClassPKSimilarResultsContributor =
+				new ClassNameIdClassPKSimilarResultsContributor();
+
+		ReflectionTestUtil.setFieldValue(
+			classNameIdClassPKSimilarResultsContributor,
+			"_assetEntryLocalService", _assetEntryLocalService);
+		ReflectionTestUtil.setFieldValue(
+			classNameIdClassPKSimilarResultsContributor, "_httpHelper",
+			_httpHelperImpl);
+
+		return classNameIdClassPKSimilarResultsContributor;
 	}
 
 	private SimilarResultsContributor
 		_createClassUUIDSimilarResultsContributor() {
 
-		return new ClassUUIDSimilarResultsContributor() {
-			{
-				setAssetEntryLocalService(_assetEntryLocalService);
-				setHttpHelper(_httpHelperImpl);
-			}
-		};
+		ClassUUIDSimilarResultsContributor classUUIDSimilarResultsContributor =
+			new ClassUUIDSimilarResultsContributor();
+
+		ReflectionTestUtil.setFieldValue(
+			classUUIDSimilarResultsContributor, "_assetEntryLocalService",
+			_assetEntryLocalService);
+		ReflectionTestUtil.setFieldValue(
+			classUUIDSimilarResultsContributor, "_httpHelper", _httpHelperImpl);
+
+		return classUUIDSimilarResultsContributor;
 	}
 
 	private SimilarResultsContributor
 		_createDocumentLibrarySimilarResultsContributor() {
 
-		return new DocumentLibrarySimilarResultsContributor() {
-			{
-				setAssetEntryLocalService(_assetEntryLocalService);
-				setDLFileEntryLocalService(_dlFileEntryLocalService);
-				setDLFolderLocalService(_dlFolderLocalService);
-				setHttpHelper(_httpHelperImpl);
-			}
-		};
+		DocumentLibrarySimilarResultsContributor
+			documentLibrarySimilarResultsContributor =
+				new DocumentLibrarySimilarResultsContributor();
+
+		ReflectionTestUtil.setFieldValue(
+			documentLibrarySimilarResultsContributor, "_assetEntryLocalService",
+			_assetEntryLocalService);
+		ReflectionTestUtil.setFieldValue(
+			documentLibrarySimilarResultsContributor,
+			"_dlFileEntryLocalService", _dlFileEntryLocalService);
+		ReflectionTestUtil.setFieldValue(
+			documentLibrarySimilarResultsContributor, "_dlFolderLocalService",
+			_dlFolderLocalService);
+		ReflectionTestUtil.setFieldValue(
+			documentLibrarySimilarResultsContributor, "_httpHelper",
+			_httpHelperImpl);
+
+		return documentLibrarySimilarResultsContributor;
 	}
 
 	private SimilarResultsContributor
 		_createEntryIdSimilarResultsContributor() {
 
-		return new EntryIdSimilarResultsContributor() {
-			{
-				setAssetEntryLocalService(_assetEntryLocalService);
-				setHttpHelper(_httpHelperImpl);
-			}
-		};
+		EntryIdSimilarResultsContributor entryIdSimilarResultsContributor =
+			new EntryIdSimilarResultsContributor();
+
+		ReflectionTestUtil.setFieldValue(
+			entryIdSimilarResultsContributor, "_assetEntryLocalService",
+			_assetEntryLocalService);
+		ReflectionTestUtil.setFieldValue(
+			entryIdSimilarResultsContributor, "_httpHelper", _httpHelperImpl);
+
+		return entryIdSimilarResultsContributor;
 	}
 
 	private SimilarResultsContributor
 		_createMessageBoardsSimilarResultsContributor() {
 
-		return new MessageBoardsSimilarResultsContributor() {
-			{
-				setAssetEntryLocalService(_assetEntryLocalService);
-				setMbCategoryLocalService(_mbCategoryLocalService);
-				setMbMessageLocalService(_mbMessageLocalService);
-				setHttpHelper(_httpHelperImpl);
-			}
-		};
+		MessageBoardsSimilarResultsContributor
+			messageBoardsSimilarResultsContributor =
+				new MessageBoardsSimilarResultsContributor();
+
+		ReflectionTestUtil.setFieldValue(
+			messageBoardsSimilarResultsContributor, "_assetEntryLocalService",
+			_assetEntryLocalService);
+		ReflectionTestUtil.setFieldValue(
+			messageBoardsSimilarResultsContributor, "_mbCategoryLocalService",
+			_mbCategoryLocalService);
+		ReflectionTestUtil.setFieldValue(
+			messageBoardsSimilarResultsContributor, "_mbMessageLocalService",
+			_mbMessageLocalService);
+		ReflectionTestUtil.setFieldValue(
+			messageBoardsSimilarResultsContributor, "_httpHelper",
+			_httpHelperImpl);
+
+		return messageBoardsSimilarResultsContributor;
 	}
 
 	private SimilarResultsContributorsRegistry
@@ -837,32 +889,49 @@ public class SimilarResultsUidsAndDestinationsTest {
 					}
 				};
 
-		return new SimilarResultsContributorsRegistryImpl() {
-			{
-				setSimilarResultsContributorsHolder(
-					similarResultsContributorsHolderImpl);
-			}
-		};
+		SimilarResultsContributorsRegistryImpl
+			similarResultsContributorsRegistryImpl =
+				new SimilarResultsContributorsRegistryImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			similarResultsContributorsRegistryImpl,
+			"_similarResultsContributorsHolder",
+			similarResultsContributorsHolderImpl);
+
+		return similarResultsContributorsRegistryImpl;
 	}
 
 	private SimilarResultsContributor _createUIDSimilarResultsContributor() {
-		return new UIDSimilarResultsContributor() {
-			{
-				setHttpHelper(_httpHelperImpl);
-			}
-		};
+		UIDSimilarResultsContributor uidSimilarResultsContributor =
+			new UIDSimilarResultsContributor();
+
+		ReflectionTestUtil.setFieldValue(
+			uidSimilarResultsContributor, "_httpHelper", _httpHelperImpl);
+
+		return uidSimilarResultsContributor;
 	}
 
 	private SimilarResultsContributor _createWikiSimilarResultsContributor() {
-		return new WikiDisplaySimilarResultsContributor() {
-			{
-				setAssetEntryLocalService(_assetEntryLocalService);
-				setHttpHelper(_httpHelperImpl);
-				setUIDFactory(_uidFactory);
-				setWikiNodeLocalService(_wikiNodeLocalService);
-				setWikiPageLocalService(_wikiPageLocalService);
-			}
-		};
+		WikiDisplaySimilarResultsContributor
+			wikiDisplaySimilarResultsContributor =
+				new WikiDisplaySimilarResultsContributor();
+
+		ReflectionTestUtil.setFieldValue(
+			wikiDisplaySimilarResultsContributor, "_assetEntryLocalService",
+			_assetEntryLocalService);
+		ReflectionTestUtil.setFieldValue(
+			wikiDisplaySimilarResultsContributor, "_httpHelper",
+			_httpHelperImpl);
+		ReflectionTestUtil.setFieldValue(
+			wikiDisplaySimilarResultsContributor, "_uidFactory", _uidFactory);
+		ReflectionTestUtil.setFieldValue(
+			wikiDisplaySimilarResultsContributor, "_wikiNodeLocalService",
+			_wikiNodeLocalService);
+		ReflectionTestUtil.setFieldValue(
+			wikiDisplaySimilarResultsContributor, "_wikiPageLocalService",
+			_wikiPageLocalService);
+
+		return wikiDisplaySimilarResultsContributor;
 	}
 
 	private Criteria _resolveCriteria(SimilarResultsRoute similarResultsRoute) {

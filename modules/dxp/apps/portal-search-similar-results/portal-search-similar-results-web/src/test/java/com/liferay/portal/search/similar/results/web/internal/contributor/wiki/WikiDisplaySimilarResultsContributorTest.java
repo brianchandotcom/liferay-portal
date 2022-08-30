@@ -15,6 +15,7 @@
 package com.liferay.portal.search.similar.results.web.internal.contributor.wiki;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
@@ -56,7 +57,9 @@ public class WikiDisplaySimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		_wikiDisplaySimilarResultsContributor.setHttpHelper(setUpHttpHelper());
+		ReflectionTestUtil.setFieldValue(
+			_wikiDisplaySimilarResultsContributor, "_httpHelper",
+			setUpHttpHelper());
 
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
@@ -86,13 +89,17 @@ public class WikiDisplaySimilarResultsContributorTest
 
 	@Test
 	public void testResolveCriteria() {
-		_wikiDisplaySimilarResultsContributor.setAssetEntryLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_wikiDisplaySimilarResultsContributor, "_assetEntryLocalService",
 			assetEntryLocalService);
-		_wikiDisplaySimilarResultsContributor.setUIDFactory(
+		ReflectionTestUtil.setFieldValue(
+			_wikiDisplaySimilarResultsContributor, "_uidFactory",
 			setUpUIDFactory("uid"));
-		_wikiDisplaySimilarResultsContributor.setWikiNodeLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_wikiDisplaySimilarResultsContributor, "_wikiNodeLocalService",
 			wikiNodeLocalService);
-		_wikiDisplaySimilarResultsContributor.setWikiPageLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_wikiDisplaySimilarResultsContributor, "_wikiPageLocalService",
 			wikiPageLocalService);
 
 		CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();

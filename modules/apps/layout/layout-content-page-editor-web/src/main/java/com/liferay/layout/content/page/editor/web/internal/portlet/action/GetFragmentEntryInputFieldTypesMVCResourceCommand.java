@@ -61,7 +61,9 @@ public class GetFragmentEntryInputFieldTypesMVCResourceCommand
 			resourceRequest, "fragmentEntryKey");
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(
-			fragmentEntryKey, themeDisplay.getScopeGroupId());
+			fragmentEntryKey,
+			ParamUtil.getLong(
+				resourceRequest, "groupId", themeDisplay.getScopeGroupId()));
 
 		if ((fragmentEntry == null) ||
 			Validator.isNull(fragmentEntry.getTypeOptions())) {

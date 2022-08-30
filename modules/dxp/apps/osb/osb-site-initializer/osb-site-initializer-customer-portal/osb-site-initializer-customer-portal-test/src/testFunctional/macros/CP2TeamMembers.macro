@@ -72,32 +72,6 @@ definition {
 		CP2NavigationMenu.goToTeamMembers();
 	}
 
-	macro viewSupportSeatsAvailable {
-		AssertElementPresent(
-			key_number = "${available}",
-			locator1 = "CP2TeamMembers#SUPPORT_SEATS");
-	}
-
-	macro viewTableValue {
-		AssertElementPresent(
-			locator1 = "CP2TeamMembers#TABLE",
-			value = "${name}");
-
-		AssertElementPresent(
-			locator1 = "CP2TeamMembers#TABLE",
-			value = "${email}");
-
-		AssertElementPresent(locator1 = "CP2TeamMembers#ICON_CHECK");
-
-		AssertElementPresent(
-			locator1 = "CP2TeamMembers#TABLE",
-			value = "${role}");
-
-		AssertElementPresent(
-			key_status = "${status}",
-			locator1 = "CustomerPortalSite#STATUS_CARD");
-	}
-
 	macro viewTeamMembersPage {
 		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
 	}

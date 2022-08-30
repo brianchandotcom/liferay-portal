@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.MathUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -78,14 +79,23 @@ public abstract class BaseJournalArticleVersionConstraintResolver
 			ctArticle.getGroupId(), ctArticle.getArticleId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new ArticleVersionComparator());
 
+		List<JournalArticle> sourceArticles = new ArrayList<>();
+
 		for (JournalArticle article : articles) {
 			if (article.getCtCollectionId() == ctArticle.getCtCollectionId()) {
-				latestVersion = MathUtil.format(latestVersion + 0.1, 1, 1);
-
-				article.setVersion(latestVersion);
-
-				journalArticleLocalService.updateJournalArticle(article);
+				sourceArticles.add(article);
 			}
+		}
+
+		double currentVersion = MathUtil.format(
+			latestVersion + (0.1 * sourceArticles.size()), 1, 1);
+
+		for (JournalArticle article : sourceArticles) {
+			article.setVersion(currentVersion);
+
+			journalArticleLocalService.updateJournalArticle(article);
+
+			currentVersion = MathUtil.format(currentVersion - 0.1, 1, 1);
 		}
 	}
 

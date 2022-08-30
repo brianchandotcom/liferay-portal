@@ -21,6 +21,7 @@ import com.liferay.commerce.context.BaseCommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,6 +37,8 @@ public class TestCustomCommerceContext extends BaseCommerceContext {
 		long commerceAccountId, CommerceAccountHelper commerceAccountHelper,
 		CommerceAccountLocalService commerceAccountLocalService,
 		CommerceAccountService commerceAccountService,
+		CommerceChannelAccountEntryRelLocalService
+			commerceChannelAccountEntryRelLocalService,
 		CommerceChannelLocalService commerceChannelLocalService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceOrderService commerceOrderService,
@@ -44,9 +47,9 @@ public class TestCustomCommerceContext extends BaseCommerceContext {
 		super(
 			companyId, commerceChannelGroupId, orderId, commerceAccountId,
 			commerceAccountHelper, commerceAccountLocalService,
-			commerceAccountService, commerceChannelLocalService,
-			commerceCurrencyLocalService, commerceOrderService,
-			configurationProvider);
+			commerceAccountService, commerceChannelAccountEntryRelLocalService,
+			commerceChannelLocalService, commerceCurrencyLocalService,
+			commerceOrderService, configurationProvider);
 
 		_companyId = companyId;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;

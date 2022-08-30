@@ -188,7 +188,7 @@ public class FragmentCollectionContributorTrackerImpl
 			_fragmentCompositions = fragmentCompositions;
 		}
 
-		return new HashMap<>(fragmentCompositions);
+		return fragmentCompositions;
 	}
 
 	private Map<String, FragmentComposition> _getFragmentCompositions(
@@ -223,7 +223,7 @@ public class FragmentCollectionContributorTrackerImpl
 			_fragmentEntries = fragmentEntries;
 		}
 
-		return new HashMap<>(fragmentEntries);
+		return fragmentEntries;
 	}
 
 	private Map<String, FragmentEntry> _getFragmentEntries(

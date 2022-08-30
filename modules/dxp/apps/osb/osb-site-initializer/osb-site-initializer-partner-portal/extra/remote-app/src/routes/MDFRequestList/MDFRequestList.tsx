@@ -10,20 +10,55 @@
  */
 
 import ClayButton from '@clayui/button';
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {useMemo, useState} from 'react';
 
 import {MDFColumnKey} from '../../common/enums/mdfColumnKey';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useGetMDFListingColumns from '../../common/services/liferay/object/mdf-listing/useGetMDFListingColumns';
+import useGetMDFRequests from '../../common/services/liferay/object/mdf-requests/useGetMDFRequests';
 import liferayNavigate from '../../common/utils/liferayNavigate';
 import Table from './components/Table';
-import useGetMDFRequestListItems from './hooks/useGetMDFRequestListItems';
+import getMDFActivityPeriod from './utils/getMDFActivityPeriod';
+import getMDFBudgetInfos from './utils/getMDFBudgetInfos';
+import getMDFDates from './utils/getMDFDates';
 
 type MDFRequestListItem = {
 	[key in MDFColumnKey]?: string;
 };
 
 const MDFRequestList = () => {
-	const {data: listItems} = useGetMDFRequestListItems();
+	const [pageSize, setPageSize] = useState<number>(5);
+	const [page, setPage] = useState<number>(1);
+
+	const {data, isValidating} = useGetMDFRequests({page, pageSize});
+	// eslint-disable-next-line no-console
+	console.log(
+		'🚀 ~ file: MDFRequestList.tsx ~ line 35 ~ MDFRequestList ~ isValidating',
+		isValidating
+	);
+
+	const listItems = useMemo(
+		() =>
+			data?.items.map((item) => {
+				return {
+					[MDFColumnKey.ID]: `Request-${item.id}`,
+					...getMDFActivityPeriod(
+						item.minDateActivity,
+						item.maxDateActivity
+					),
+					[MDFColumnKey.PARTNER]:
+						item.r_accountToMDFRequests_accountEntry?.name,
+					...getMDFDates(item.dateCreated, item.dateModified),
+					...getMDFBudgetInfos(
+						item.totalCostOfExpense,
+						item.totalMDFRequestAmount
+					),
+				};
+			}),
+		[data?.items]
+	);
+
 	const {data: listColumns} = useGetMDFListingColumns();
 
 	return (
@@ -44,13 +79,21 @@ const MDFRequestList = () => {
 				</ClayButton>
 			</div>
 
-			{listItems && listColumns && (
+			{data && listItems && listColumns && (
 				<div className="mt-3">
 					<Table<MDFRequestListItem>
 						borderless
 						columns={listColumns}
 						responsive
 						rows={listItems}
+					/>
+
+					<ClayPaginationBarWithBasicItems
+						activeDelta={pageSize}
+						activePage={page}
+						onDeltaChange={setPageSize}
+						onPageChange={setPage}
+						totalItems={data.totalCount}
 					/>
 				</div>
 			)}

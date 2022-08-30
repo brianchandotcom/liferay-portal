@@ -142,7 +142,7 @@ definition {
 	macro getFieldValueOfBlogPostingComments {
 		Variables.assertDefined(parameterList = "${fieldName}");
 
-		if (!(isSet(responseToParse)) && (isSet(blogPostingId))) {
+		if (!(isSet(responseToParse)) && isSet(blogPostingId)) {
 			var curl = CommentAPI._curlBlogPostingComments(blogPostingId = "${blogPostingId}");
 
 			var response = JSONCurlUtil.get("${curl}");

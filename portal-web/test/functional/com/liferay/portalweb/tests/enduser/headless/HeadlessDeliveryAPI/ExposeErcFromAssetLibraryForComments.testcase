@@ -221,8 +221,8 @@ definition {
 				var blogPostingId = BlogPostingAPI.getBlogPostings();
 
 				var blogPostingErc = CommentAPI.getFieldValueOfBlogPostingComments(
-					response = "${blogPostingId}",
-					fieldName = "externalReferenceCode");
+					fieldName = "externalReferenceCode",
+					response = "${blogPostingId}");
 			}
 
 			var commentText = CommentAPI.getFieldValueOfBlogPostingComments(
@@ -256,8 +256,8 @@ definition {
 				var getBlogPostings = BlogPostingAPI.getBlogPostings();
 
 				var blogPostingErc = CommentAPI.getFieldValueOfBlogPostingComments(
-				response = "${getBlogPostings}",
-				fieldName = "externalReferenceCode");
+					fieldName = "externalReferenceCode",
+					response = "${getBlogPostings}");
 			}
 
 			var commentId = JSONUtil.getWithJSONPath("${response}", "$.id");

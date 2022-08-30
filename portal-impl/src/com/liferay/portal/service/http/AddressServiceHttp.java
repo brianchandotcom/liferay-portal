@@ -53,7 +53,7 @@ public class AddressServiceHttp {
 	public static com.liferay.portal.kernel.model.Address addAddress(
 			HttpPrincipal httpPrincipal, String className, long classPK,
 			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, long typeId,
+			String zip, long regionId, long countryId, long listTypeId,
 			boolean mailing, boolean primary,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -65,7 +65,7 @@ public class AddressServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, className, classPK, street1, street2, street3, city,
-				zip, regionId, countryId, typeId, mailing, primary,
+				zip, regionId, countryId, listTypeId, mailing, primary,
 				serviceContext);
 
 			Object returnObj = null;
@@ -217,7 +217,7 @@ public class AddressServiceHttp {
 	public static com.liferay.portal.kernel.model.Address updateAddress(
 			HttpPrincipal httpPrincipal, long addressId, String street1,
 			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long typeId, boolean mailing,
+			long regionId, long countryId, long listTypeId, boolean mailing,
 			boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -228,7 +228,7 @@ public class AddressServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, addressId, street1, street2, street3, city, zip,
-				regionId, countryId, typeId, mailing, primary);
+				regionId, countryId, listTypeId, mailing, primary);
 
 			Object returnObj = null;
 

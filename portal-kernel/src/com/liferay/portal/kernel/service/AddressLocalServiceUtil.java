@@ -63,14 +63,15 @@ public class AddressLocalServiceUtil {
 			String externalReferenceCode, long userId, String className,
 			long classPK, String name, String description, String street1,
 			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long typeId, boolean mailing,
+			long regionId, long countryId, long listTypeId, boolean mailing,
 			boolean primary, String phoneNumber, ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addAddress(
 			externalReferenceCode, userId, className, classPK, name,
 			description, street1, street2, street3, city, zip, regionId,
-			countryId, typeId, mailing, primary, phoneNumber, serviceContext);
+			countryId, listTypeId, mailing, primary, phoneNumber,
+			serviceContext);
 	}
 
 	public static Address copyAddress(
@@ -412,18 +413,18 @@ public class AddressLocalServiceUtil {
 	}
 
 	public static List<Address> getTypeAddresses(
-		long companyId, String className, long classPK, long[] typeIds) {
+		long companyId, String className, long classPK, long[] listTypeIds) {
 
 		return getService().getTypeAddresses(
-			companyId, className, classPK, typeIds);
+			companyId, className, classPK, listTypeIds);
 	}
 
 	public static List<Address> getTypeAddresses(
-		long companyId, String className, long classPK, long[] typeIds,
+		long companyId, String className, long classPK, long[] listTypeIds,
 		int start, int end, OrderByComparator<Address> orderByComparator) {
 
 		return getService().getTypeAddresses(
-			companyId, className, classPK, typeIds, start, end,
+			companyId, className, classPK, listTypeIds, start, end,
 			orderByComparator);
 	}
 
@@ -454,25 +455,25 @@ public class AddressLocalServiceUtil {
 
 	public static Address updateAddress(
 			long addressId, String street1, String street2, String street3,
-			String city, String zip, long regionId, long countryId, long typeId,
-			boolean mailing, boolean primary)
+			String city, String zip, long regionId, long countryId,
+			long listTypeId, boolean mailing, boolean primary)
 		throws PortalException {
 
 		return getService().updateAddress(
 			addressId, street1, street2, street3, city, zip, regionId,
-			countryId, typeId, mailing, primary);
+			countryId, listTypeId, mailing, primary);
 	}
 
 	public static Address updateAddress(
 			long addressId, String name, String description, String street1,
 			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long typeId, boolean mailing,
+			long regionId, long countryId, long listTypeId, boolean mailing,
 			boolean primary, String phoneNumber)
 		throws PortalException {
 
 		return getService().updateAddress(
 			addressId, name, description, street1, street2, street3, city, zip,
-			regionId, countryId, typeId, mailing, primary, phoneNumber);
+			regionId, countryId, listTypeId, mailing, primary, phoneNumber);
 	}
 
 	public static AddressLocalService getService() {

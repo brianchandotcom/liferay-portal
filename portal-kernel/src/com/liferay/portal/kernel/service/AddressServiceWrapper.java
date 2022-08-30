@@ -37,13 +37,13 @@ public class AddressServiceWrapper
 			java.lang.String className, long classPK, java.lang.String street1,
 			java.lang.String street2, java.lang.String street3,
 			java.lang.String city, java.lang.String zip, long regionId,
-			long countryId, long typeId, boolean mailing, boolean primary,
+			long countryId, long listTypeId, boolean mailing, boolean primary,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _addressService.addAddress(
 			className, classPK, street1, street2, street3, city, zip, regionId,
-			countryId, typeId, mailing, primary, serviceContext);
+			countryId, listTypeId, mailing, primary, serviceContext);
 	}
 
 	@Override
@@ -82,13 +82,13 @@ public class AddressServiceWrapper
 	public com.liferay.portal.kernel.model.Address updateAddress(
 			long addressId, java.lang.String street1, java.lang.String street2,
 			java.lang.String street3, java.lang.String city,
-			java.lang.String zip, long regionId, long countryId, long typeId,
-			boolean mailing, boolean primary)
+			java.lang.String zip, long regionId, long countryId,
+			long listTypeId, boolean mailing, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _addressService.updateAddress(
 			addressId, street1, street2, street3, city, zip, regionId,
-			countryId, typeId, mailing, primary);
+			countryId, listTypeId, mailing, primary);
 	}
 
 	@Override

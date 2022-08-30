@@ -85,7 +85,7 @@ public interface AddressLocalService
 			String externalReferenceCode, long userId, String className,
 			long classPK, String name, String description, String street1,
 			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long typeId, boolean mailing,
+			long regionId, long countryId, long listTypeId, boolean mailing,
 			boolean primary, String phoneNumber, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -357,11 +357,11 @@ public interface AddressLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Address> getTypeAddresses(
-		long companyId, String className, long classPK, long[] typeIds);
+		long companyId, String className, long classPK, long[] listTypeIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Address> getTypeAddresses(
-		long companyId, String className, long classPK, long[] typeIds,
+		long companyId, String className, long classPK, long[] listTypeIds,
 		int start, int end, OrderByComparator<Address> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -385,15 +385,15 @@ public interface AddressLocalService
 
 	public Address updateAddress(
 			long addressId, String street1, String street2, String street3,
-			String city, String zip, long regionId, long countryId, long typeId,
-			boolean mailing, boolean primary)
+			String city, String zip, long regionId, long countryId,
+			long listTypeId, boolean mailing, boolean primary)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public Address updateAddress(
 			long addressId, String name, String description, String street1,
 			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long typeId, boolean mailing,
+			long regionId, long countryId, long listTypeId, boolean mailing,
 			boolean primary, String phoneNumber)
 		throws PortalException;
 

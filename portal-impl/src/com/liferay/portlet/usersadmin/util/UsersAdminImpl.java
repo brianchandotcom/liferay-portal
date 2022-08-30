@@ -505,8 +505,8 @@ public class UsersAdminImpl implements UsersAdmin {
 
 			long regionId = ParamUtil.getLong(
 				actionRequest, "addressRegionId" + addressesIndex);
-			long typeId = ParamUtil.getLong(
-				actionRequest, "addressTypeId" + addressesIndex);
+			long listTypeId = ParamUtil.getLong(
+				actionRequest, "addressListTypeId" + addressesIndex);
 			boolean mailing = ParamUtil.getBoolean(
 				actionRequest, "addressMailing" + addressesIndex);
 
@@ -522,8 +522,8 @@ public class UsersAdminImpl implements UsersAdmin {
 			Address address = AddressLocalServiceUtil.createAddress(addressId);
 
 			address.setCountryId(countryId);
+			address.setListTypeId(listTypeId);
 			address.setRegionId(regionId);
-			address.setTypeId(typeId);
 			address.setCity(city);
 			address.setMailing(mailing);
 			address.setPrimary(primary);
@@ -1248,14 +1248,14 @@ public class UsersAdminImpl implements UsersAdmin {
 			String zip = address.getZip();
 			long regionId = address.getRegionId();
 			long countryId = address.getCountryId();
-			long typeId = address.getTypeId();
+			long listTypeId = address.getListTypeId();
 			boolean mailing = address.isMailing();
 			boolean primary = address.isPrimary();
 
 			if (addressId <= 0) {
 				address = AddressServiceUtil.addAddress(
 					className, classPK, street1, street2, street3, city, zip,
-					regionId, countryId, typeId, mailing, primary,
+					regionId, countryId, listTypeId, mailing, primary,
 					new ServiceContext());
 
 				addressId = address.getAddressId();
@@ -1263,7 +1263,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			else {
 				AddressServiceUtil.updateAddress(
 					addressId, street1, street2, street3, city, zip, regionId,
-					countryId, typeId, mailing, primary);
+					countryId, listTypeId, mailing, primary);
 			}
 
 			addressIds.add(addressId);

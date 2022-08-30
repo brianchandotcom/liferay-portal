@@ -53,7 +53,7 @@ public interface AddressService extends BaseService {
 	public Address addAddress(
 			String className, long classPK, String street1, String street2,
 			String street3, String city, String zip, long regionId,
-			long countryId, long typeId, boolean mailing, boolean primary,
+			long countryId, long listTypeId, boolean mailing, boolean primary,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -75,8 +75,8 @@ public interface AddressService extends BaseService {
 
 	public Address updateAddress(
 			long addressId, String street1, String street2, String street3,
-			String city, String zip, long regionId, long countryId, long typeId,
-			boolean mailing, boolean primary)
+			String city, String zip, long regionId, long countryId,
+			long listTypeId, boolean mailing, boolean primary)
 		throws PortalException;
 
 }

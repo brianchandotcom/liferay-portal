@@ -41,13 +41,13 @@ public class AddressServiceUtil {
 	public static Address addAddress(
 			String className, long classPK, String street1, String street2,
 			String street3, String city, String zip, long regionId,
-			long countryId, long typeId, boolean mailing, boolean primary,
+			long countryId, long listTypeId, boolean mailing, boolean primary,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addAddress(
 			className, classPK, street1, street2, street3, city, zip, regionId,
-			countryId, typeId, mailing, primary, serviceContext);
+			countryId, listTypeId, mailing, primary, serviceContext);
 	}
 
 	public static void deleteAddress(long addressId) throws PortalException {
@@ -75,13 +75,13 @@ public class AddressServiceUtil {
 
 	public static Address updateAddress(
 			long addressId, String street1, String street2, String street3,
-			String city, String zip, long regionId, long countryId, long typeId,
-			boolean mailing, boolean primary)
+			String city, String zip, long regionId, long countryId,
+			long listTypeId, boolean mailing, boolean primary)
 		throws PortalException {
 
 		return getService().updateAddress(
 			addressId, street1, street2, street3, city, zip, regionId,
-			countryId, typeId, mailing, primary);
+			countryId, listTypeId, mailing, primary);
 	}
 
 	public static AddressService getService() {

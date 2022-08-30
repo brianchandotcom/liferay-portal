@@ -34,7 +34,7 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 	public Address addAddress(
 			String className, long classPK, String street1, String street2,
 			String street3, String city, String zip, long regionId,
-			long countryId, long typeId, boolean mailing, boolean primary,
+			long countryId, long listTypeId, boolean mailing, boolean primary,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -43,8 +43,8 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 
 		return addressLocalService.addAddress(
 			null, getUserId(), className, classPK, null, null, street1, street2,
-			street3, city, zip, regionId, countryId, typeId, mailing, primary,
-			null, serviceContext);
+			street3, city, zip, regionId, countryId, listTypeId, mailing,
+			primary, null, serviceContext);
 	}
 
 	@Override
@@ -85,8 +85,8 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 	@Override
 	public Address updateAddress(
 			long addressId, String street1, String street2, String street3,
-			String city, String zip, long regionId, long countryId, long typeId,
-			boolean mailing, boolean primary)
+			String city, String zip, long regionId, long countryId,
+			long listTypeId, boolean mailing, boolean primary)
 		throws PortalException {
 
 		Address address = addressPersistence.findByPrimaryKey(addressId);
@@ -97,7 +97,7 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 
 		return addressLocalService.updateAddress(
 			addressId, street1, street2, street3, city, zip, regionId,
-			countryId, typeId, mailing, primary);
+			countryId, listTypeId, mailing, primary);
 	}
 
 }

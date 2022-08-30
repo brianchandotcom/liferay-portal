@@ -24,14 +24,14 @@ const getIntlNumberFormat = () =>
 
 const getBooleanValue = (value) => (value ? 'Yes' : 'No');
 
-const BudgetBreakdownTable = ({mdfRequestActivity}) => {
+const BudgetBreakdownTable = ({mdfRequestActivityId}) => {
 	const [budgets, setBudgets] = useState();
 
 	useEffect(() => {
 		const getActivityToBudgets = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
 			const response = await fetch(
-				`/o/c/activities/${mdfRequestActivity.id}/activityToBudgets`,
+				`/o/c/activities/${mdfRequestActivityId}/activityToBudgets`,
 				{
 					headers: {
 						'accept': 'application/json',
@@ -41,22 +41,31 @@ const BudgetBreakdownTable = ({mdfRequestActivity}) => {
 			);
 
 			if (response.ok) {
-				const budgetsResponse = await response.json();
+				setBudgets(await response.json());
 
-				setBudgets(budgetsResponse);
+				return;
 			}
+
+			Liferay.Util.openToast({
+				message: 'An unexpected error occured.',
+				type: 'danger',
+			});
 		};
 		getActivityToBudgets();
-	}, [mdfRequestActivity.id]);
+	}, [mdfRequestActivityId]);
 
 	return (
-		<Table
-			items={budgets?.items.map((budget) => ({
-				title: budget.expense.name,
-				value: getIntlNumberFormat().format(budget.cost),
-			}))}
-			title="Budget Breakdown"
-		/>
+		<div>
+			{budgets && (
+				<Table
+					items={budgets.items.map((budget) => ({
+						title: budget.expense.name,
+						value: getIntlNumberFormat().format(budget.cost),
+					}))}
+					title="Budget Breakdown"
+				/>
+			)}
+		</div>
 	);
 };
 
@@ -166,14 +175,14 @@ const getMiscellaneousMarketingField = (mdfRequestActivity) => [
 	},
 ];
 
-const CampaignActivityTable = ({mdfRequestActivity}) => {
-	const TypeActivityExternalReferenceCode = {
-		CONTENT_MARKETING: 'PRMTACT-003',
-		DIGITAL_MARKETING: 'PRMTACT-002',
-		EVENT: 'PRMTACT-001',
-		MISCELLANEOUS_MARKETING: 'PRMTACT-004',
-	};
+const TypeActivityExternalReferenceCode = {
+	CONTENT_MARKETING: 'PRMTACT-003',
+	DIGITAL_MARKETING: 'PRMTACT-002',
+	EVENT: 'PRMTACT-001',
+	MISCELLANEOUS_MARKETING: 'PRMTACT-004',
+};
 
+const CampaignActivityTable = ({mdfRequestActivity}) => {
 	const fieldsByTypeActivity = {
 		[TypeActivityExternalReferenceCode.DIGITAL_MARKETING]: getDigitalMarketFields(
 			mdfRequestActivity
@@ -250,7 +259,7 @@ const Table = ({items, title}) => (
 		</ClayTable.Head>
 
 		<ClayTable.Body>
-			{items?.map((item, index) => (
+			{items.map((item, index) => (
 				<ClayTable.Row key={index}>
 					<ClayTable.Cell className="border-0 w-50">
 						<p className="text-neutral-10">{item.title}</p>
@@ -295,8 +304,8 @@ const Panel = ({children, mdfRequestActivity}) => (
 		displayTitle={
 			<ClayPanel.Title className="py-2 text-dark">
 				<RangeDate
-					endDate={new Date(mdfRequestActivity.endDate)}
-					startDate={new Date(mdfRequestActivity.startDate)}
+					endDate={mdfRequestActivity.endDate}
+					startDate={mdfRequestActivity.startDate}
 				/>
 
 				<h4 className="mb-1">{mdfRequestActivity.name}</h4>
@@ -326,10 +335,15 @@ export default function () {
 			);
 
 			if (response.ok) {
-				const mdfRequestToActivity = await response.json();
+				setActivities(await response.json());
 
-				setActivities(mdfRequestToActivity);
+				return;
 			}
+
+			Liferay.Util.openToast({
+				message: 'An unexpected error occured.',
+				type: 'danger',
+			});
 		};
 
 		getActivities();
@@ -337,22 +351,18 @@ export default function () {
 
 	return (
 		<div>
-			{activities?.items.map((mdfRequestActivity) => (
-				<>
-					<Panel mdfRequestActivity={mdfRequestActivity}>
-						<CampaignActivityTable
-							mdfRequestActivity={mdfRequestActivity}
-						/>
+			{activities?.items.map((mdfRequestActivity, index) => (
+				<Panel key={index} mdfRequestActivity={mdfRequestActivity}>
+					<CampaignActivityTable
+						mdfRequestActivity={mdfRequestActivity}
+					/>
 
-						<BudgetBreakdownTable
-							mdfRequestActivity={mdfRequestActivity}
-						/>
+					<BudgetBreakdownTable
+						mdfRequestActivityId={mdfRequestActivity.id}
+					/>
 
-						<LeadListTable
-							mdfRequestActivity={mdfRequestActivity}
-						/>
-					</Panel>
-				</>
+					<LeadListTable mdfRequestActivity={mdfRequestActivity} />
+				</Panel>
 			))}
 		</div>
 	);

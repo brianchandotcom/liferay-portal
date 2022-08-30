@@ -30,7 +30,7 @@ definition {
 		PortalInstances.tearDownCP();
 	}
 
-    @description = "LPS-149703 - Verify if user can select the Key Type when generating a new key"
+    @description = "LPS-149703 - Verify if user can select the Key Type when generating a new key."
     @priority = "4"
     test IfKeyTypeCanBeSelected {
 		property portal.upstream = "quarantine";
@@ -57,6 +57,36 @@ definition {
 
         task ("Then the user can select the Key Type") {
             CP2ActivationKeys.selectKeyType(key_option = "Production (Virtual Cluster)");
+        }
+    }
+
+	@description = "LPS-149702 - Verify if user can select the Version when generating a new key."
+    @priority = "4"
+    test IfProductVersionCanBeSelected {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example Solutions account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "Test Account Solutions");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+            CP2ActivationKeys.generateNewKey();
+		}
+
+        task ("Then the user can select the Product Version") {
+            CP2ActivationKeys.selectProductVersion(key_option = "7.3");
         }
     }
 }

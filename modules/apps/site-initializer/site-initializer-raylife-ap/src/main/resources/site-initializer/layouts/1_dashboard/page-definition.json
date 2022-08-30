@@ -319,7 +319,7 @@
 																								"widgetConfig": {
 																									"properties": "route=whats-new-modal"
 																								},
-																								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_RAYLIFEAGENTPORTAL001"
+																								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
 																							}
 																						},
 																						"type": "Widget"
@@ -596,7 +596,7 @@
 																										"widgetConfig": {
 																											"properties": "route=product-performance"
 																										},
-																										"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_RAYLIFEAGENTPORTAL001"
+																										"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
 																									}
 																								},
 																								"type": "Widget"
@@ -732,7 +732,7 @@
 																								"widgetConfig": {
 																									"properties": "route=recent-applications"
 																								},
-																								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_RAYLIFEAGENTPORTAL001"
+																								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
 																							}
 																						},
 																						"type": "Widget"

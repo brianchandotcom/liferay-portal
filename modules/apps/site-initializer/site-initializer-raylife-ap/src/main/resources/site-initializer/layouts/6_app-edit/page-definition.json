@@ -77,7 +77,7 @@
 												"widgetConfig": {
 													"properties": "route=new-application"
 												},
-												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_RAYLIFEAGENTPORTAL001"
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
 											}
 										},
 										"type": "Widget"

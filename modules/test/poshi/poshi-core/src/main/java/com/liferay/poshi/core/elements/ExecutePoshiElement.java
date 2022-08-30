@@ -298,7 +298,7 @@ public class ExecutePoshiElement extends PoshiElement {
 					continue;
 				}
 
-				if (c == ' ') {
+				if (Character.isWhitespace(c)) {
 					continue;
 				}
 

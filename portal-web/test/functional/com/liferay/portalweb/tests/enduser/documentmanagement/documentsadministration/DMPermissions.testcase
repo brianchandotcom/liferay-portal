@@ -392,6 +392,10 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
 		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
 
 		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(

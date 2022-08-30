@@ -86,7 +86,7 @@ interface IProps {
 	description?: string;
 	downloadURL?: string;
 	fetchSharingButtonURL?: string;
-	handleError?: Function;
+	handleError?: () => void;
 	preview?: IPreview;
 	title: string;
 }

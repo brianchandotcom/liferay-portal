@@ -12,24 +12,21 @@
  * details.
  */
 
-declare const PreviewActionsDescriptionSection: ({
-	description,
-	downloadURL,
-	fetchSharingButtonURL,
-	handleError,
-	preview,
-	title,
-}: IProps) => JSX.Element;
-interface IPreview {
-	imageURL: string;
-	url: string;
+declare const Categorization: ({
+	tags,
+	vocabularies,
+}: IProps) => JSX.Element | null;
+export interface Vocabulary {
+	categories: string[];
+	groupName: string;
+	isPublic: boolean;
+	vocabularyName: string;
+}
+interface Vocabularies {
+	[id: string]: Vocabulary;
 }
 interface IProps {
-	description?: string;
-	downloadURL?: string;
-	fetchSharingButtonURL?: string;
-	handleError?: () => void;
-	preview?: IPreview;
-	title: string;
+	tags: string[];
+	vocabularies: Vocabularies;
 }
-export default PreviewActionsDescriptionSection;
+export default Categorization;

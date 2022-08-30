@@ -22,17 +22,12 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
 import Sidebar from '../Sidebar';
-import CollapsibleSection from './CollapsibleSection';
+import Categorization from './Categorization';
 import DetailsContent from './DetailsContent';
-import ItemVocabularies from './ItemVocabularies';
 import ManageCollaborators from './ManageCollaborators';
 import PreviewActionsDescriptionSection from './PreviewActionsDescriptionSection';
 import Subscribe from './Subscribe';
 import formatDate from './utils/formatDate';
-import {
-	getCategoriesCountFromVocabularies,
-	groupVocabulariesBy,
-} from './utils/taxonomiesUtils';
 
 const SidebarPanelInfoViewCollapsable = ({
 	classPK,
@@ -58,23 +53,6 @@ const SidebarPanelInfoViewCollapsable = ({
 	const [error, setError] = useState(false);
 
 	const stickerColor = parseInt(user.userId, 10) % 10;
-
-	const [publicVocabularies, internalVocabularies] = groupVocabulariesBy({
-		array: Object.values(vocabularies),
-		key: 'isPublic',
-		value: true,
-	});
-
-	const internalCategoriesCount = getCategoriesCountFromVocabularies(
-		internalVocabularies
-	);
-
-	const publicCategoriesCount = getCategoriesCountFromVocabularies(
-		publicVocabularies
-	);
-
-	const showTaxonomies =
-		!!internalCategoriesCount || !!publicCategoriesCount || !!tags?.length;
 
 	const handleError = useCallback(() => {
 		setError(true);
@@ -172,52 +150,10 @@ const SidebarPanelInfoViewCollapsable = ({
 					/>
 
 					<ClayPanel.Group className="panel-group-flush panel-group-sm">
-						{showTaxonomies && (
-							<CollapsibleSection
-								expanded={true}
-								title={Liferay.Language.get('categorization')}
-							>
-								{!!publicCategoriesCount && (
-									<ItemVocabularies
-										title={Liferay.Language.get(
-											'public-categories'
-										)}
-										vocabularies={publicVocabularies}
-									/>
-								)}
-
-								{!!internalCategoriesCount && (
-									<ItemVocabularies
-										cssClassNames="c-mt-4"
-										title={Liferay.Language.get(
-											'internal-categories'
-										)}
-										vocabularies={internalVocabularies}
-									/>
-								)}
-
-								{!!tags.length && (
-									<div className="c-mb-4 sidebar-dl sidebar-section">
-										<h5 className="c-mb-1 font-weight-semi-bold">
-											{Liferay.Language.get('tags')}
-										</h5>
-
-										<p>
-											{tags.map((tag) => (
-												<ClayLabel
-													className="c-mb-2 c-mr-2"
-													displayType="secondary"
-													key={tag}
-													large
-												>
-													{tag}
-												</ClayLabel>
-											))}
-										</p>
-									</div>
-								)}
-							</CollapsibleSection>
-						)}
+						<Categorization
+							tags={tags}
+							vocabularies={vocabularies}
+						/>
 
 						<DetailsContent
 							classPK={classPK}

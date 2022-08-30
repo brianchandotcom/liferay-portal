@@ -94,10 +94,7 @@ function getFrontendTokenComponent(frontendToken) {
 		return ColorFrontendToken;
 	}
 
-	if (
-		Liferay.FeatureFlags['LPS-143206'] &&
-		frontendToken.editorType === 'Length'
-	) {
+	if (frontendToken.editorType === 'Length') {
 		return LengthFrontendToken;
 	}
 

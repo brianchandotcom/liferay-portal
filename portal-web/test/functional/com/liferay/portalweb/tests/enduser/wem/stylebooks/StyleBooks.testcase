@@ -494,8 +494,6 @@ definition {
 	@description = "This is a test for LPS-142050. In style books, selecting Custom in units could insert any type of character."
 	@priority = "3"
 	test ConfigureCustomUnit {
-		property custom.properties = "feature.flag.LPS-143206=true";
-
 		task ("Given a site designer has a style book") {
 			JSONStylebooks.addStyleBookEntry(
 				groupName = "Test Site Name",

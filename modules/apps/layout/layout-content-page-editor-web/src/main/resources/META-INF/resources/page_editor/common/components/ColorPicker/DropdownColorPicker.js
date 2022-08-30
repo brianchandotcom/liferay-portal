@@ -131,14 +131,7 @@ export function DropdownColorPicker({
 			{showSelector ? (
 				<ClayButton
 					aria-label={label}
-					className={classNames(
-						'align-items-center border-0 d-flex page-editor__dropdown-color-picker__selector w-100',
-						{
-							'font-weight-normal':
-								Liferay.FeatureFlags['LPS-143206'],
-							'text-body': Liferay.FeatureFlags['LPS-143206'],
-						}
-					)}
+					className="align-items-center border-0 d-flex font-weight-normal page-editor__dropdown-color-picker__selector text-body w-100"
 					displayType="secondary"
 					onClick={() => onSetActive((active) => !active)}
 					ref={triggerElementRef}

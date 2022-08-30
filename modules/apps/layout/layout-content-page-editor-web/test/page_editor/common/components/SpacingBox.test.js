@@ -222,14 +222,6 @@ describe('SpacingBox', () => {
 	});
 
 	describe('LenghtInput inside SpacingBox', () => {
-		beforeEach(() => {
-			Liferay.FeatureFlags['LPS-143206'] = true;
-		});
-
-		afterEach(() => {
-			delete Liferay.FeatureFlags['LPS-143206'];
-		});
-
 		it('does not render the input when user does not have update permission', () => {
 			render(<SpacingBoxTest canSetCustomValue={false} />);
 

@@ -20,9 +20,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
 
@@ -33,7 +31,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -146,13 +143,6 @@ public class CommonStylesUtil {
 						validValuesJSONArrayIterator.next();
 
 					String label = validValueJSONObject.getString("label");
-
-					if (!GetterUtil.getBoolean(
-							PropsUtil.get("feature.flag.LPS-143206")) &&
-						Objects.equals(label, "inherited")) {
-
-						label = "default";
-					}
 
 					validValueJSONObject.put(
 						"label", LanguageUtil.get(resourceBundle, label));

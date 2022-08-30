@@ -83,7 +83,7 @@ export function SelectField({
 							: []
 					}
 				/>
-			) : field.icon && Liferay.FeatureFlags['LPS-143206'] ? (
+			) : field.icon ? (
 				<AdvancedSelectField
 					canDetachTokenValues={canDetachTokenValues}
 					disabled={disabled}

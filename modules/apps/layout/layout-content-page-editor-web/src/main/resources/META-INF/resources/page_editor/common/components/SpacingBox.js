@@ -101,16 +101,13 @@ export default function SpacingBox({
 		let nextType = currentType;
 
 		if (nextPosition === currentPosition) {
-
 			// Move to the outer type.
 			// We try to update the type so we can move to the outer circle,
 			// or stay in position if it is not possible.
 
 			const currentTypeIndex = SPACING_TYPES.indexOf(currentType);
 			nextType = SPACING_TYPES[Math.max(0, currentTypeIndex - 1)];
-		}
-		else if (nextPosition === REVERSED_POSITION[currentPosition]) {
-
+		} else if (nextPosition === REVERSED_POSITION[currentPosition]) {
 			// Move to the inner type.
 			// We try to update the type so we can move to the inner circle,
 			// and keep currentPosition if it succeeds.
@@ -245,9 +242,7 @@ function SpacingSelectorButton({
 			<div ref={itemListRef}>
 				<ClayDropDown.ItemList aria-labelledby={triggerId}>
 					<ClayDropDown.Group header={field?.label}>
-						{Liferay.FeatureFlags['LPS-143206'] &&
-						active &&
-						canSetCustomValue ? (
+						{active && canSetCustomValue ? (
 							<LengthField
 								className="mb-3 mt-2 px-3"
 								field={field}

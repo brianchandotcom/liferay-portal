@@ -2034,9 +2034,7 @@ definition {
 		Click(locator1 = "Icon#SIDEBAR_HEADER_ACTION_VERTICAL_ELLIPSIS_BUTTON");
 
 		if (isSet(menuItem)) {
-			Click(
-				key_menuItem = "${menuItem}",
-				locator1 = "DocumentsAndMedia#SIDEBAR_MENU_ITEM");
+			MenuItem.clickNoError(menuItem = "${menuItem}");
 		}
 	}
 

@@ -192,6 +192,7 @@ async function checkUnmappedInputChild(
 		const allowedFieldTypes = await FormService.getFragmentEntryInputFieldTypes(
 			{
 				fragmentEntryKey: fragmentEntryLink.fragmentEntryKey,
+				groupId: fragmentEntryLink.groupId,
 			}
 		);
 

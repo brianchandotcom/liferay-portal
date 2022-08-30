@@ -45,6 +45,7 @@ export default {
 	 */
 	getFragmentEntryInputFieldTypes({
 		fragmentEntryKey,
+		groupId,
 		onNetworkStatus = () => {},
 	}) {
 		return serviceFetch(
@@ -52,6 +53,7 @@ export default {
 			{
 				body: {
 					fragmentEntryKey,
+					groupId: groupId || null,
 				},
 			},
 			onNetworkStatus

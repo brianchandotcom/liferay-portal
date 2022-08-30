@@ -154,7 +154,7 @@ export function FormInputGeneralPanel({item}) {
 		key: [CACHE_KEYS.formFields, classNameId, classTypeId],
 	});
 
-	const {fragmentEntryKey} = fragmentEntryLinkRef.current;
+	const {fragmentEntryKey, groupId} = fragmentEntryLinkRef.current;
 
 	const fragmentName = useSelectorCallback(
 		(state) => {
@@ -171,7 +171,10 @@ export function FormInputGeneralPanel({item}) {
 
 	const allowedInputTypes = useCache({
 		fetcher: () =>
-			FormService.getFragmentEntryInputFieldTypes({fragmentEntryKey}),
+			FormService.getFragmentEntryInputFieldTypes({
+				fragmentEntryKey,
+				groupId,
+			}),
 		key: [CACHE_KEYS.allowedInputTypes, fragmentEntryKey],
 	});
 

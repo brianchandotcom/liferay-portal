@@ -31,12 +31,7 @@ const MDFRequestList = () => {
 	const [pageSize, setPageSize] = useState<number>(5);
 	const [page, setPage] = useState<number>(1);
 
-	const {data, isValidating} = useGetMDFRequests({page, pageSize});
-	// eslint-disable-next-line no-console
-	console.log(
-		'🚀 ~ file: MDFRequestList.tsx ~ line 35 ~ MDFRequestList ~ isValidating',
-		isValidating
-	);
+	const {data} = useGetMDFRequests({page, pageSize});
 
 	const listItems = useMemo(
 		() =>

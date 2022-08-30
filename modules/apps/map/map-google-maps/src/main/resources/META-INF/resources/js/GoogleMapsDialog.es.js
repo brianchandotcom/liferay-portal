@@ -12,22 +12,18 @@
  * details.
  */
 
-import State, {Config} from 'metal-state';
-
 /**
  * GoogleMapsDialog
  * @review
  */
-class GoogleMapsDialog extends State {
+export default class GoogleMapsDialog {
 
 	/**
 	 * Creates a new map dialog using Google Map's API
 	 * @param  {Array} args List of arguments to be passed to State
 	 * @review
 	 */
-	constructor(...args) {
-		super(...args);
-
+	constructor() {
 		this._dialog = new google.maps.InfoWindow();
 	}
 
@@ -43,22 +39,3 @@ class GoogleMapsDialog extends State {
 		this._dialog.open(this.map, cfg.marker);
 	}
 }
-
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-GoogleMapsDialog.STATE = {
-
-	/**
-	 * Map used for creating the dialog content
-	 * @review
-	 * @type {Object}
-	 */
-	map: Config.object(),
-};
-
-export default GoogleMapsDialog;
-export {GoogleMapsDialog};

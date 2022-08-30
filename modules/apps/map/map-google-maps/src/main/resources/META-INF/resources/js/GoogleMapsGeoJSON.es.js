@@ -25,8 +25,10 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 	 * @param  {Array} args List of arguments to be passed to State
 	 * @review
 	 */
-	constructor(...args) {
-		super(...args);
+	constructor(args) {
+		super(args);
+
+		this.map = args.map;
 
 		this.eventHandlers = [];
 

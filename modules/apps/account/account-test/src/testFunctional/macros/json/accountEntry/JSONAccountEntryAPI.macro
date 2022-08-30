@@ -25,6 +25,30 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _addAccountEntryOrganization {
+		Variables.assertDefined(parameterList = "${accountEntryId},${organizationId}");
+
+		if (!(isSet(creatorEmailAddress))) {
+			var creatorEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(creatorPassword))) {
+			var creatorPassword = "test";
+		}
+
+		var companyId = JSONCompany.getCompanyId();
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/account.accountentryorganizationrel/add-account-entry-organization-rel \
+				-u ${creatorEmailAddress}:${creatorPassword} \
+				-d accountEntryId=${accountEntryId} \
+				-d organizationId=${organizationId} 
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "Delete all account entries"
 	macro _deleteAllAccountEntries {
 		if (!(isSet(creatorEmailAddress))) {

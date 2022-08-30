@@ -306,11 +306,8 @@ public class ExecutePoshiElement extends PoshiElement {
 					new PoshiScriptParserException(
 						"Missing comma in execute method", this);
 
-				int errorLineNumber =
-					poshiScriptParserException.getErrorLineNumber();
-
 				poshiScriptParserException.setErrorLineNumber(
-					errorLineNumber +
+					poshiScriptParserException.getErrorLineNumber() +
 						StringUtil.count(parentheticalContent, "\n", i));
 
 				throw poshiScriptParserException;

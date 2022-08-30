@@ -116,14 +116,10 @@ public class WikiPageTitleSearcher extends BaseSearcher {
 		return Collections.emptyMap();
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
-		_wikiNodeService = wikiNodeService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageTitleSearcher.class);
 
+	@Reference
 	private WikiNodeService _wikiNodeService;
 
 }

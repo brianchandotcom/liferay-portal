@@ -353,32 +353,6 @@ public class WikiPageIndexer
 		_reindexAttachments(wikiPage);
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiEngineRenderer(
-		WikiEngineRenderer wikiEngineRenderer) {
-
-		_wikiEngineRenderer = wikiEngineRenderer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
-
-		_wikiNodeLocalService = wikiNodeLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
-		_wikiNodeService = wikiNodeService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
 	@Reference
 	protected UIDFactory uidFactory;
 
@@ -495,9 +469,16 @@ public class WikiPageIndexer
 	@Reference
 	private TrashHelper _trashHelper;
 
+	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
+
+	@Reference
 	private WikiNodeLocalService _wikiNodeLocalService;
+
+	@Reference
 	private WikiNodeService _wikiNodeService;
+
+	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
 
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")

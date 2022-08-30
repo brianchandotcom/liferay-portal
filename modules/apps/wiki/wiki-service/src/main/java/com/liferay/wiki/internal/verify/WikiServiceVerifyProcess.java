@@ -50,11 +50,6 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 		updateStagedPortletNames();
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	protected void updateStagedPortletNames() throws PortalException {
 		ActionableDynamicQuery groupActionableDynamicQuery =
 			_groupLocalService.getActionableDynamicQuery();
@@ -99,6 +94,7 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 		groupActionableDynamicQuery.performActions();
 	}
 
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference(

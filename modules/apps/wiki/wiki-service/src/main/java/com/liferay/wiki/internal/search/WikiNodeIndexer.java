@@ -137,13 +137,6 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 			isCommitImmediately());
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
-
-		_wikiNodeLocalService = wikiNodeLocalService;
-	}
-
 	@Reference
 	protected UIDFactory uidFactory;
 
@@ -193,6 +186,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 	@Reference
 	private TrashHelper _trashHelper;
 
+	@Reference
 	private WikiNodeLocalService _wikiNodeLocalService;
 
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")

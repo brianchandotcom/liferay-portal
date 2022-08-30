@@ -203,25 +203,6 @@ public class WikiExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
-
-		_wikiNodeLocalService = wikiNodeLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
 	private void _exportNode(
 			PortletDataContext portletDataContext, Group group, String nodeName)
 		throws PortletDataException {
@@ -253,6 +234,7 @@ public class WikiExportImportPortletPreferencesProcessor
 	@Reference
 	private ExportImportHelper _exportImportHelper;
 
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference(target = "(name=PortletDisplayTemplateExporter)")
@@ -268,7 +250,10 @@ public class WikiExportImportPortletPreferencesProcessor
 	private WikiCommentsAndRatingsExporterImporterCapability
 		_wikiCommentsAndRatingsExporterImporterCapability;
 
+	@Reference
 	private WikiNodeLocalService _wikiNodeLocalService;
+
+	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
 
 	@Reference(target = "(javax.portlet.name=" + WikiPortletKeys.WIKI + ")")

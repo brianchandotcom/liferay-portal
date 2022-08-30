@@ -48,13 +48,7 @@ public class WikiNodePermissionUpdateHandler
 		_wikiNodeLocalService.updateWikiNode(wikiNode);
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
-
-		_wikiNodeLocalService = wikiNodeLocalService;
-	}
-
+	@Reference
 	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

@@ -178,13 +178,6 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
 	private ActionableDynamicQuery _getPageActionableDynamicQuery(
 		PortletDataContext portletDataContext, long nodeId, String portletId) {
 
@@ -218,6 +211,7 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 	@Reference(target = "(name=ReferencedStagedModelImporter)")
 	private Capability _capability;
 
+	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
 
 }

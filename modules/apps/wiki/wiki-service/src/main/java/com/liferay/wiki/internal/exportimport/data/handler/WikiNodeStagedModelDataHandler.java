@@ -204,13 +204,6 @@ public class WikiNodeStagedModelDataHandler
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
-
-		_wikiNodeLocalService = wikiNodeLocalService;
-	}
-
 	private String _getNodeName(
 			PortletDataContext portletDataContext, WikiNode node, String name,
 			int count)
@@ -233,6 +226,7 @@ public class WikiNodeStagedModelDataHandler
 	@Reference
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
+	@Reference
 	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

@@ -47,6 +47,7 @@ export default function TabItem({displayStyle, item}) {
 		if (item.data.portletId) {
 			dispatch(
 				toggleWidgetHighlighted({
+					groupId: item.data.groupId,
 					highlighted: !item.highlighted,
 					portletId: item.data.portletId,
 				})
@@ -56,6 +57,7 @@ export default function TabItem({displayStyle, item}) {
 			dispatch(
 				toggleFragmentHighlighted({
 					fragmentEntryKey: item.itemId,
+					groupId: item.data.groupId,
 					highlighted: !item.highlighted,
 				})
 			);

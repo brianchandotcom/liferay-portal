@@ -16,6 +16,7 @@ import toggleFragmentHighlightedAction from '../actions/toggleFragmentHighlighte
 
 export default function toggleFragmentHighlighted({
 	fragmentEntryKey,
+	groupId = '0',
 	highlighted,
 	initiallyHighlighted,
 }) {
@@ -23,6 +24,7 @@ export default function toggleFragmentHighlighted({
 		dispatch(
 			toggleFragmentHighlightedAction({
 				fragmentEntryKey,
+				groupId,
 				highlighted,
 				highlightedFragments: [],
 				initiallyHighlighted,

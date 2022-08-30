@@ -123,7 +123,8 @@ public class EditAccountEntryAddressMVCActionCommand
 			actionRequest, "addressRegionId");
 		long addressCountryId = ParamUtil.getLong(
 			actionRequest, "addressCountryId");
-		long addressTypeId = ParamUtil.getLong(actionRequest, "addressTypeId");
+		long addressListTypeId = ParamUtil.getLong(
+			actionRequest, "addressListTypeId");
 		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -135,8 +136,8 @@ public class EditAccountEntryAddressMVCActionCommand
 		return _addressLocalService.addAddress(
 			null, themeDisplay.getUserId(), AccountEntry.class.getName(),
 			accountEntryId, name, description, street1, street2, street3, city,
-			zip, addressRegionId, addressCountryId, addressTypeId, false, false,
-			phoneNumber, serviceContext);
+			zip, addressRegionId, addressCountryId, addressListTypeId, false,
+			false, phoneNumber, serviceContext);
 	}
 
 	private void _checkPermission(ActionRequest actionRequest)
@@ -168,13 +169,14 @@ public class EditAccountEntryAddressMVCActionCommand
 			actionRequest, "addressRegionId");
 		long addressCountryId = ParamUtil.getLong(
 			actionRequest, "addressCountryId");
-		long addressTypeId = ParamUtil.getLong(actionRequest, "addressTypeId");
+		long addressListTypeId = ParamUtil.getLong(
+			actionRequest, "addressListTypeId");
 		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
 
 		_addressLocalService.updateAddress(
 			accountEntryAddressId, name, description, street1, street2, street3,
-			city, zip, addressRegionId, addressCountryId, addressTypeId, false,
-			false, phoneNumber);
+			city, zip, addressRegionId, addressCountryId, addressListTypeId,
+			false, false, phoneNumber);
 	}
 
 	@Reference(

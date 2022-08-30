@@ -20,6 +20,7 @@ import getCN from 'classnames';
 import {PropTypes} from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {ASSET_CATEGORY_ID} from '../../utils/constants';
 import {DEFAULT_SXP_ELEMENT_ICON} from '../../utils/data';
 import {INPUT_TYPES} from '../../utils/inputTypes';
 import {
@@ -180,19 +181,6 @@ function SXPElement({
 						value={uiConfigurationValues[config.name]}
 					/>
 				);
-			case INPUT_TYPES.CATEGORY_SELECTOR:
-				return (
-					<CategorySelectorInput
-						disabled={disabled}
-						id={inputId}
-						label={config.label}
-						multiple={typeOptions.format === 'array'}
-						name={inputName}
-						setFieldTouched={setFieldTouched}
-						setFieldValue={setFieldValue}
-						value={uiConfigurationValues[config.name]}
-					/>
-				);
 			case INPUT_TYPES.JSON:
 				return (
 					<JSONInput
@@ -207,6 +195,21 @@ function SXPElement({
 					/>
 				);
 			case INPUT_TYPES.MULTISELECT:
+				if (config.name === `${ASSET_CATEGORY_ID}s`) {
+					return (
+						<CategorySelectorInput
+							disabled={disabled}
+							id={inputId}
+							label={config.label}
+							multiple={true}
+							name={inputName}
+							setFieldTouched={setFieldTouched}
+							setFieldValue={setFieldValue}
+							value={uiConfigurationValues[config.name]}
+						/>
+					);
+				}
+
 				return (
 					<MultiSelectInput
 						disabled={disabled}
@@ -219,6 +222,21 @@ function SXPElement({
 					/>
 				);
 			case INPUT_TYPES.NUMBER:
+				if (config.name === ASSET_CATEGORY_ID) {
+					return (
+						<CategorySelectorInput
+							disabled={disabled}
+							id={inputId}
+							label={config.label}
+							multiple={false}
+							name={inputName}
+							setFieldTouched={setFieldTouched}
+							setFieldValue={setFieldValue}
+							value={uiConfigurationValues[config.name]}
+						/>
+					);
+				}
+
 				return (
 					<NumberInput
 						configKey={config.name}

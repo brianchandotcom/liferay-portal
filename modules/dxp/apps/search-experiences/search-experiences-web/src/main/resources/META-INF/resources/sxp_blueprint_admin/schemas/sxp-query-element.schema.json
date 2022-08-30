@@ -157,7 +157,6 @@
 				},
 				"type": {
 					"enum": [
-						"categorySelector",
 						"date",
 						"fieldMapping",
 						"fieldMappingList",

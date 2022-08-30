@@ -28,7 +28,7 @@ import {FETCH_URLS} from './index';
  * @param {object} properties Properties to check within each object of array
  * @returns {boolean}
  */
-const doArraysMatch = (arr1, arr2, properties = ['id']) => {
+const doArraysMatch = (arr1, arr2, properties = ['value']) => {
 	const doItemsMatch = arr1.every((item1) =>
 		arr2.some((item2) =>
 			properties.every((property) => item1[property] === item2[property])
@@ -253,7 +253,7 @@ function CategorySelectorModal({
 	value,
 }) {
 	const [currentSite, setCurrentSite] = useState({id: ''});
-	const [selected, setSelected] = useState(value);
+	const [selected, setSelected] = useState(multiple ? value : []);
 
 	const _handleChangeCurrentSite = (event) => {
 		const currentSiteIndex = tree.findIndex(
@@ -282,22 +282,23 @@ function CategorySelectorModal({
 			if (_isItemSelected(item)) {
 				setSelected(
 					selected.filter(
-						(selectedItem) => selectedItem.id !== item.id
+						(selectedItem) => selectedItem.value !== item.id
 					)
 				);
 			}
 			else {
-				setSelected([...selected, {id: item.id, name: item.name}]);
+				setSelected([...selected, {label: item.name, value: item.id}]);
 			}
 		}
 		else {
-			onChangeValue([{id: item.id, name: item.name}]);
+			onChangeValue({label: item.name, value: item.id});
 
 			onClose();
 		}
 	};
 
-	const _isItemSelected = ({id}) => selected.some((item) => item.id === id);
+	const _isItemSelected = ({id}) =>
+		selected.some((item) => item.value === id);
 
 	return (
 		<ClayModal

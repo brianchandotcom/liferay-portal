@@ -98,9 +98,7 @@ function CategorySelectorInput({
 }) {
 	const [categoryTree, setCategoryTree] = useState([]);
 
-	const [inputValue, setInputValue] = useState(
-		multiple ? '' : value[0]?.name || ''
-	);
+	const [inputValue, setInputValue] = useState(multiple ? '' : value || '');
 	const [matchingCategories, setMatchingCategories] = useState([]);
 	const [
 		autocompleteDropdownActive,
@@ -148,8 +146,8 @@ function CategorySelectorInput({
 						description: `${getSiteName(groupId, categoryTree)} - ${
 							path.split(' > ')?.[0]
 						}`, // First word in path is vocabulary name
-						id: categoryId,
-						name,
+						label: name,
+						value: categoryId,
 					});
 				});
 			})
@@ -200,8 +198,8 @@ function CategorySelectorInput({
 								JSON.stringify(siteId), // Site ID is a number
 								categoryTree
 							)} - ${parentTaxonomyVocabulary.name}`,
-							id,
-							name,
+							label: name,
+							value: id,
 						},
 						...categories,
 					]);
@@ -216,11 +214,13 @@ function CategorySelectorInput({
 	};
 
 	const _handleFieldValueChange = (newFieldValue) => {
-		setFieldValue(name, newFieldValue);
-
 		if (!multiple) {
-			setInputValue(newFieldValue[0]?.name);
+			setFieldValue(name, toNumber(newFieldValue.value));
+			setInputValue(newFieldValue.label);
 			setMatchingCategories([]);
+		}
+		else {
+			setFieldValue(name, newFieldValue);
 		}
 	};
 
@@ -246,22 +246,22 @@ function CategorySelectorInput({
 		if (newValue.trim()) {
 			handleSetMatchingCategoriesDebounced(newValue.trim(), categoryTree);
 
+			const newValueNumber = toNumber(newValue);
+
 			setFieldValue(
 				name,
-				typeof toNumber(newValue) === 'number'
-					? [{id: newValue.trim(), name: newValue.trim()}]
-					: []
+				typeof newValueNumber === 'number' ? newValueNumber : ''
 			);
 		}
 		else {
 			setMatchingCategories([]);
-			setFieldValue(name, []);
+			setFieldValue(name, '');
 		}
 	};
 
 	const _handleSingleItemChange = (item) => {
-		setFieldValue(name, [{id: item.id, name: item.name}]);
-		setInputValue(item.name);
+		setFieldValue(name, toNumber(item.value));
+		setInputValue(item.label);
 		setMatchingCategories([]);
 		setAutocompleteDropdownActive(false);
 	};
@@ -284,9 +284,9 @@ function CategorySelectorInput({
 	const _handleMultiItemsChange = (items) => {
 		const uniqueArray = [];
 
-		removeDuplicates(items, 'id').map(({id, name}) => {
-			if (typeof toNumber(id) === 'number') {
-				if (name === id) {
+		removeDuplicates(items, 'value').map(({label, value}) => {
+			if (typeof toNumber(value) === 'number') {
+				if (value === label) {
 
 					// Case: ID is manually input as a number but does not have
 					// a proper name. Attempt to search for a proper name from
@@ -295,17 +295,22 @@ function CategorySelectorInput({
 
 					const uniqueItem =
 						items.find(
-							(item) => id === item.id && item.name !== id
-						) || matchingCategories.find((item) => item.id === id);
+							(item) =>
+								value === item.value && value !== item.label
+						) ||
+						matchingCategories.find((item) => item.value === value);
 
-					uniqueArray.push({id, name: uniqueItem?.name || name});
+					uniqueArray.push({
+						label: uniqueItem?.label || label,
+						value,
+					});
 				}
 				else {
 
 					// Case: ID was chosen through selector or autocomplete list
 					// and already has a proper name.
 
-					uniqueArray.push({id, name});
+					uniqueArray.push({label, value});
 				}
 			}
 			else {
@@ -317,12 +322,12 @@ function CategorySelectorInput({
 				if (
 					!!matchingCategories[0] &&
 					!uniqueArray.some(
-						(item) => matchingCategories[0].id === item.id
+						(item) => matchingCategories[0].value === item.value
 					)
 				) {
 					uniqueArray.push({
-						id: matchingCategories[0].id,
-						name: matchingCategories[0].name,
+						label: matchingCategories[0].label,
+						value: matchingCategories[0].value,
 					});
 				}
 			}
@@ -397,7 +402,6 @@ function CategorySelectorInput({
 						disabled={disabled}
 						id={id}
 						items={value || []}
-						locator={{label: 'name', value: 'id'}}
 						menuRenderer={CategoryMenu}
 						onBlur={_handleMultiInputValueBlur}
 						onChange={_handleMultiInputValueChange}
@@ -428,7 +432,7 @@ function CategorySelectorInput({
 							onSetActive={setAutocompleteDropdownActive}
 						>
 							<CategoryMenu
-								locator={{label: 'name', value: 'id'}}
+								locator={{label: 'label', value: 'value'}}
 								onItemClick={_handleSingleItemChange}
 								sourceItems={matchingCategories}
 							/>

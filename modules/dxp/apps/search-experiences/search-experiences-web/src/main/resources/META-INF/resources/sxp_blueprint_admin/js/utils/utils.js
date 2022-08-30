@@ -339,14 +339,6 @@ export function getConfigurationEntry({sxpElement, uiConfigurationValues}) {
 						initialConfigValue.map((item) => item.value)
 					);
 				}
-				else if (config.type === INPUT_TYPES.CATEGORY_SELECTOR) {
-					configValue =
-						config.typeOptions?.format === 'array'
-							? JSON.stringify(
-									initialConfigValue.map((item) => item.id)
-							  )
-							: initialConfigValue[0]?.id || '';
-				}
 				else if (config.type === INPUT_TYPES.FIELD_MAPPING) {
 					const {
 						boost,
@@ -459,8 +451,6 @@ export function getConfigurationEntry({sxpElement, uiConfigurationValues}) {
 				const key =
 					typeof configValue === 'number' ||
 					config.type === INPUT_TYPES.ITEM_SELECTOR ||
-					(config.type === INPUT_TYPES.CATEGORY_SELECTOR &&
-						config.typeOptions?.format === 'array') ||
 					config.type === INPUT_TYPES.FIELD_MAPPING_LIST ||
 					config.type === INPUT_TYPES.JSON ||
 					config.type === INPUT_TYPES.MULTISELECT
@@ -539,10 +529,6 @@ export function getDefaultValue(item) {
 		case INPUT_TYPES.ITEM_SELECTOR:
 			return Array.isArray(itemValue)
 				? itemValue.filter((item) => item.label && item.value)
-				: [];
-		case INPUT_TYPES.CATEGORY_SELECTOR:
-			return Array.isArray(itemValue)
-				? itemValue.filter((item) => item.name && item.id)
 				: [];
 		case INPUT_TYPES.JSON:
 			return typeof itemValue === 'object'

@@ -58,12 +58,14 @@ public class ObjectRelationshipResourceImpl
 			String objectRelationshipName, Pagination pagination)
 		throws Exception {
 
+		ObjectRelationship objectRelationship = _getObjectRelationship(
+			objectRelationshipName);
+
 		ObjectDefinition currentObjectDefinition = _getCurrentObjectDefinition(
-			objectEntryId, objectRelationshipName, _uriInfo);
+			objectEntryId, objectRelationship, _uriInfo);
 
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
-			_getObjectRelationshipByName(objectRelationshipName),
-			currentObjectDefinition);
+			currentObjectDefinition, objectRelationship);
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerTracker.getObjectEntryManager(
@@ -83,7 +85,8 @@ public class ObjectRelationshipResourceImpl
 	}
 
 	private ObjectDefinition _getCurrentObjectDefinition(
-			long objectEntryId, String objectRelationshipName, UriInfo uriInfo)
+			long objectEntryId, ObjectRelationship objectRelationship,
+			UriInfo uriInfo)
 		throws Exception {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
@@ -93,9 +96,6 @@ public class ObjectRelationshipResourceImpl
 			return _objectDefinitionLocalService.getObjectDefinition(
 				objectEntry.getObjectDefinitionId());
 		}
-
-		ObjectRelationship objectRelationship = _getObjectRelationshipByName(
-			objectRelationshipName);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -130,7 +130,7 @@ public class ObjectRelationshipResourceImpl
 			uriInfo, null);
 	}
 
-	private ObjectRelationship _getObjectRelationshipByName(
+	private ObjectRelationship _getObjectRelationship(
 			String objectRelationshipName)
 		throws Exception {
 
@@ -154,8 +154,8 @@ public class ObjectRelationshipResourceImpl
 	}
 
 	private ObjectDefinition _getRelatedObjectDefinition(
-			ObjectRelationship objectRelationship,
-			ObjectDefinition objectDefinition)
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship)
 		throws Exception {
 
 		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();

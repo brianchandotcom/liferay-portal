@@ -16,6 +16,7 @@ import {render} from '@liferay/frontend-js-react-web';
 
 import SidebarPanel from '../components/SidebarPanel';
 import SidebarPanelInfoView from '../components/SidebarPanelInfoView/SidebarPanelInfoView';
+import SidebarPanelInfoViewCollapsable from '../components/SidebarPanelInfoView/SidebarPanelInfoViewCollapsable';
 import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
 
 const deselectAllRows = (portletNamespace) => {
@@ -74,7 +75,9 @@ const actions = {
 	showInfo({fetchURL, portletNamespace, rowId}) {
 		selectRow(portletNamespace, rowId);
 		showSidebar({
-			View: SidebarPanelInfoView,
+			View: Liferay.FeatureFlags['LPS-161013']
+				? SidebarPanelInfoView
+				: SidebarPanelInfoViewCollapsable,
 			fetchURL,
 			portletNamespace,
 		});

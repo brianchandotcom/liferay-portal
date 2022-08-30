@@ -17,20 +17,24 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
-import ClayTabs from '@clayui/tabs';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
 import Sidebar from '../Sidebar';
+import CollapsibleSection from './CollapsibleSection';
 import DetailsContent from './DetailsContent';
+import ItemVocabularies from './ItemVocabularies';
 import ManageCollaborators from './ManageCollaborators';
+import PreviewActionsDescriptionSection from './PreviewActionsDescriptionSection';
 import Subscribe from './Subscribe';
-import VersionsContent from './VersionsContent';
 import formatDate from './utils/formatDate';
+import {
+	getCategoriesCountFromVocabularies,
+	groupVocabulariesBy,
+} from './utils/taxonomiesUtils';
 
-const SidebarPanelInfoView = ({
-	allVersions = [],
+const SidebarPanelInfoViewCollapsable = ({
 	classPK,
 	createDate,
 	description,
@@ -51,13 +55,26 @@ const SidebarPanelInfoView = ({
 	viewURLs = [],
 	vocabularies = {},
 }) => {
-	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
-
-	const showTabs = allVersions && allVersions.length;
-
 	const [error, setError] = useState(false);
 
 	const stickerColor = parseInt(user.userId, 10) % 10;
+
+	const [publicVocabularies, internalVocabularies] = groupVocabulariesBy({
+		array: Object.values(vocabularies),
+		key: 'isPublic',
+		value: true,
+	});
+
+	const internalCategoriesCount = getCategoriesCountFromVocabularies(
+		internalVocabularies
+	);
+
+	const publicCategoriesCount = getCategoriesCountFromVocabularies(
+		publicVocabularies
+	);
+
+	const showTaxonomies =
+		!!internalCategoriesCount || !!publicCategoriesCount || !!tags?.length;
 
 	const handleError = useCallback(() => {
 		setError(true);
@@ -145,64 +162,79 @@ const SidebarPanelInfoView = ({
 						)}
 					</div>
 
-					<ClayPanel.Group className="panel-group-flush panel-group-sm">
-						{!!showTabs && (
-							<ClayTabs modern>
-								<ClayTabs.Item
-									active={activeTabKeyValue === 0}
-									innerProps={{
-										'aria-controls': 'details',
-									}}
-									onClick={() => setActiveTabKeyValue(0)}
-								>
-									{Liferay.Language.get('details')}
-								</ClayTabs.Item>
+					<PreviewActionsDescriptionSection
+						description={description}
+						downloadURL={downloadURL}
+						fetchSharingButtonURL={fetchSharingButtonURL}
+						handleError={handleError}
+						preview={preview}
+						title={title}
+					/>
 
-								<ClayTabs.Item
-									active={activeTabKeyValue === 1}
-									innerProps={{
-										'aria-controls': 'versions',
-									}}
-									onClick={() => setActiveTabKeyValue(1)}
-								>
-									{Liferay.Language.get('versions')}
-								</ClayTabs.Item>
-							</ClayTabs>
+					<ClayPanel.Group className="panel-group-flush panel-group-sm">
+						{showTaxonomies && (
+							<CollapsibleSection
+								expanded={true}
+								title={Liferay.Language.get('categorization')}
+							>
+								{!!publicCategoriesCount && (
+									<ItemVocabularies
+										title={Liferay.Language.get(
+											'public-categories'
+										)}
+										vocabularies={publicVocabularies}
+									/>
+								)}
+
+								{!!internalCategoriesCount && (
+									<ItemVocabularies
+										cssClassNames="c-mt-4"
+										title={Liferay.Language.get(
+											'internal-categories'
+										)}
+										vocabularies={internalVocabularies}
+									/>
+								)}
+
+								{!!tags.length && (
+									<div className="c-mb-4 sidebar-dl sidebar-section">
+										<h5 className="c-mb-1 font-weight-semi-bold">
+											{Liferay.Language.get('tags')}
+										</h5>
+
+										<p>
+											{tags.map((tag) => (
+												<ClayLabel
+													className="c-mb-2 c-mr-2"
+													displayType="secondary"
+													key={tag}
+													large
+												>
+													{tag}
+												</ClayLabel>
+											))}
+										</p>
+									</div>
+								)}
+							</CollapsibleSection>
 						)}
 
-						<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
-							<ClayTabs.TabPane
-								aria-labelledby="tab-1"
-								className="mt-4"
-							>
-								<DetailsContent
-									classPK={classPK}
-									createDate={createDate}
-									description={description}
-									downloadURL={downloadURL}
-									fetchSharingButtonURL={
-										fetchSharingButtonURL
-									}
-									formatDate={formatDate}
-									languageTag={languageTag}
-									modifiedDate={modifiedDate}
-									preview={preview}
-									specificFields={specificFields}
-									tags={tags}
-									title={title}
-									viewURLs={viewURLs}
-									vocabularies={vocabularies}
-								/>
-							</ClayTabs.TabPane>
-
-							<ClayTabs.TabPane aria-labelledby="tab-2">
-								<VersionsContent
-									allVersions={allVersions}
-									formatDate={formatDate}
-									languageTag={languageTag}
-								/>
-							</ClayTabs.TabPane>
-						</ClayTabs.Content>
+						<DetailsContent
+							classPK={classPK}
+							createDate={createDate}
+							description={description}
+							downloadURL={downloadURL}
+							fetchSharingButtonURL={fetchSharingButtonURL}
+							formatDate={formatDate}
+							languageTag={languageTag}
+							modifiedDate={modifiedDate}
+							preview={preview}
+							specificFields={specificFields}
+							tags={tags}
+							title={title}
+							viewURLs={viewURLs}
+							vocabularies={vocabularies}
+						/>
 					</ClayPanel.Group>
 				</div>
 			</Sidebar.Body>
@@ -210,15 +242,14 @@ const SidebarPanelInfoView = ({
 	);
 };
 
-SidebarPanelInfoView.defaultProps = {
+SidebarPanelInfoViewCollapsable.defaultProps = {
 	description: '',
 	languageTag: 'en-US',
 	propTypes: [],
 	vocabularies: {},
 };
 
-SidebarPanelInfoView.propTypes = {
-	allVersions: PropTypes.array.isRequired,
+SidebarPanelInfoViewCollapsable.propTypes = {
 	classPK: PropTypes.string.isRequired,
 	createDate: PropTypes.string.isRequired,
 	description: PropTypes.string,
@@ -236,4 +267,4 @@ SidebarPanelInfoView.propTypes = {
 	vocabularies: PropTypes.object,
 };
 
-export default SidebarPanelInfoView;
+export default SidebarPanelInfoViewCollapsable;

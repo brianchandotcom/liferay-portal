@@ -308,7 +308,7 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 				}
 			}
 		}
-		else {
+		else if (!draft) {
 
 			// Layout cannot become a child of a layout that is not sortable
 			// because it is linked to a layout set prototype

@@ -21,10 +21,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.math.BigDecimal;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,6 +57,37 @@ public class AddressModelListener extends BaseModelListener<Address> {
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
+		}
+	}
+
+	@Override
+	public void onBeforeRemove(Address address) throws ModelListenerException {
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderLocalService.getCommerceOrdersByBillingAddress(
+				address.getAddressId());
+
+		for (CommerceOrder commerceOrder : commerceOrders) {
+			if (!commerceOrder.isDraft() && !commerceOrder.isOpen()) {
+				throw new ModelListenerException(
+					ResourceBundleUtil.getString(
+						_getResourceBundle(),
+						"address-can-not-be-deleted-it-is-tied-to-existing-" +
+							"orders"));
+			}
+		}
+
+		commerceOrders =
+			_commerceOrderLocalService.getCommerceOrdersByShippingAddress(
+				address.getAddressId());
+
+		for (CommerceOrder commerceOrder : commerceOrders) {
+			if (!commerceOrder.isDraft() && !commerceOrder.isOpen()) {
+				throw new ModelListenerException(
+					ResourceBundleUtil.getString(
+						_getResourceBundle(),
+						"address-can-not-be-deleted-it-is-tied-to-existing-" +
+							"orders"));
+			}
 		}
 	}
 
@@ -91,6 +125,11 @@ public class AddressModelListener extends BaseModelListener<Address> {
 				shippingOptionName, commerceOrder.getSubtotal(),
 				commerceOrder.getTotal(), null);
 		}
+	}
+
+	private ResourceBundle _getResourceBundle() {
+		return ResourceBundleUtil.getBundle(
+			LocaleThreadLocal.getThemeDisplayLocale(), getClass());
 	}
 
 	@Reference

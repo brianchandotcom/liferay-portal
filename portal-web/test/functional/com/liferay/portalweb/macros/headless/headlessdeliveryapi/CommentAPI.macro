@@ -66,7 +66,7 @@ definition {
 		Variables.assertDefined(parameterList = "${blogPostingCommentErc}");
 
 		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByName(
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
 

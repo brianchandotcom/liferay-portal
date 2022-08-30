@@ -74,10 +74,12 @@ public class BaseDLEditFileEntryDisplayContext
 	}
 
 	@Override
-	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
+	public DDMFormValues getDDMFormValues(
+			DDMStructure ddmStructure, long fileVersionId)
 		throws PortalException {
 
-		return parentDisplayContext.getDDMFormValues(ddmStructure);
+		return parentDisplayContext.getDDMFormValues(
+			ddmStructure, fileVersionId);
 	}
 
 	@Override
@@ -157,13 +159,6 @@ public class BaseDLEditFileEntryDisplayContext
 	@Override
 	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
 		return parentDisplayContext.isCheckoutDocumentButtonVisible();
-	}
-
-	@Override
-	public boolean isDDMFormValuesEdited(DDMStructure ddmStructure)
-		throws PortalException {
-
-		return parentDisplayContext.isDDMFormValuesEdited(ddmStructure);
 	}
 
 	@Override

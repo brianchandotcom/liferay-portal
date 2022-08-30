@@ -25,7 +25,8 @@ import java.util.Locale;
  */
 public interface DLEditFileEntryDisplayContext extends DLDisplayContext {
 
-	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
+	public DDMFormValues getDDMFormValues(
+			DDMStructure ddmStructure, long fileVersionId)
 		throws PortalException;
 
 	public DDMFormValues getDDMFormValues(long classPK) throws PortalException;
@@ -61,9 +62,6 @@ public interface DLEditFileEntryDisplayContext extends DLDisplayContext {
 	public boolean isCheckoutDocumentButtonDisabled() throws PortalException;
 
 	public boolean isCheckoutDocumentButtonVisible() throws PortalException;
-
-	public boolean isDDMFormValuesEdited(DDMStructure ddmStructure)
-		throws PortalException;
 
 	public boolean isDDMStructureVisible(DDMStructure ddmStructure)
 		throws PortalException;

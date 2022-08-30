@@ -16,22 +16,25 @@ package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.document.library.display.context.DLFilePicker;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
 import com.liferay.document.library.web.internal.display.context.helper.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.internal.display.context.helper.FileVersionDisplayContextHelper;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
-import com.liferay.document.library.web.internal.util.DDMFormValuesUtil;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.form.renderer.constants.DDMFormRendererConstants;
+import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -52,8 +56,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.RepositoryUtil;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,27 +75,46 @@ public class DefaultDLEditFileEntryDisplayContext
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
 		DLFileEntryType dlFileEntryType, DLValidator dlValidator,
-		StorageEngine storageEngine) {
+		StorageEngine storageEngine, DDMBeanTranslator ddmBeanTranslator,
+		DDMFormValuesFactory ddmFormValuesFactory) {
 
 		this(
 			httpServletRequest, dlFileEntryType, dlValidator, null,
-			storageEngine);
+			storageEngine, ddmBeanTranslator, ddmFormValuesFactory);
 	}
 
 	public DefaultDLEditFileEntryDisplayContext(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, DLValidator dlValidator,
-		FileEntry fileEntry, StorageEngine storageEngine) {
+		FileEntry fileEntry, StorageEngine storageEngine,
+		DDMBeanTranslator ddmBeanTranslator,
+		DDMFormValuesFactory ddmFormValuesFactory) {
 
 		this(
 			httpServletRequest, (DLFileEntryType)null, dlValidator, fileEntry,
-			storageEngine);
+			storageEngine, ddmBeanTranslator, ddmFormValuesFactory);
 	}
 
 	@Override
-	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure) {
-		return DDMFormValuesUtil.getDDMFormValuesHttpServletRequest(
-			ddmStructure, _httpServletRequest);
+	public DDMFormValues getDDMFormValues(
+			DDMStructure ddmStructure, long fileVersionId)
+		throws PortalException {
+
+		if (_isDDMFormValuesEdited(ddmStructure)) {
+			HttpServletRequest httpServletRequest =
+				_getDDMStructureHttpServletRequest(
+					_httpServletRequest, ddmStructure.getStructureId());
+
+			return _ddmFormValuesFactory.create(
+				httpServletRequest,
+				_ddmBeanTranslator.translate(ddmStructure.getDDMForm()));
+		}
+
+		DLFileEntryMetadata fileEntryMetadata =
+			DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+				ddmStructure.getStructureId(), fileVersionId);
+
+		return getDDMFormValues(fileEntryMetadata.getDDMStorageId());
 	}
 
 	@Override
@@ -222,33 +247,6 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	@Override
-	public boolean isDDMFormValuesEdited(DDMStructure ddmStructure) {
-		Enumeration<String> enumeration =
-			_httpServletRequest.getParameterNames();
-
-		String namespace =
-			String.valueOf(ddmStructure.getStructureId()) +
-				StringPool.UNDERLINE;
-
-		while (enumeration.hasMoreElements()) {
-			String parameterName = enumeration.nextElement();
-
-			if (StringUtil.startsWith(
-					parameterName,
-					namespace +
-						DDMFormRendererConstants.DDM_FORM_FIELD_NAME_PREFIX) &&
-				StringUtil.endsWith(parameterName, "_edited") &&
-				GetterUtil.getBoolean(
-					_httpServletRequest.getParameter(parameterName))) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isDDMStructureVisible(DDMStructure ddmStructure) {
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
@@ -360,13 +358,16 @@ public class DefaultDLEditFileEntryDisplayContext
 	private DefaultDLEditFileEntryDisplayContext(
 		HttpServletRequest httpServletRequest, DLFileEntryType dlFileEntryType,
 		DLValidator dlValidator, FileEntry fileEntry,
-		StorageEngine storageEngine) {
+		StorageEngine storageEngine, DDMBeanTranslator ddmBeanTranslator,
+		DDMFormValuesFactory ddmFormValuesFactory) {
 
 		try {
 			_httpServletRequest = httpServletRequest;
 			_dlValidator = dlValidator;
 			_fileEntry = fileEntry;
 			_storageEngine = storageEngine;
+			_ddmBeanTranslator = ddmBeanTranslator;
+			_ddmFormValuesFactory = ddmFormValuesFactory;
 
 			_dlRequestHelper = new DLRequestHelper(httpServletRequest);
 
@@ -406,6 +407,30 @@ public class DefaultDLEditFileEntryDisplayContext
 		}
 	}
 
+	private HttpServletRequest _getDDMStructureHttpServletRequest(
+		HttpServletRequest httpServletRequest, long structureId) {
+
+		DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(
+			httpServletRequest, new HashMap<>());
+
+		String namespace = String.valueOf(structureId) + StringPool.UNDERLINE;
+
+		Map<String, String[]> parameterMap =
+			httpServletRequest.getParameterMap();
+
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+			String parameterName = entry.getKey();
+
+			if (StringUtil.startsWith(parameterName, namespace)) {
+				dynamicServletRequest.setParameterValues(
+					parameterName.substring(namespace.length()),
+					entry.getValue());
+			}
+		}
+
+		return dynamicServletRequest;
+	}
+
 	private String _getMimeType() {
 		if (_fileVersion == null) {
 			return null;
@@ -437,9 +462,37 @@ public class DefaultDLEditFileEntryDisplayContext
 		}
 	}
 
+	private boolean _isDDMFormValuesEdited(DDMStructure ddmStructure) {
+		Enumeration<String> enumeration =
+			_httpServletRequest.getParameterNames();
+
+		String namespace =
+			String.valueOf(ddmStructure.getStructureId()) +
+				StringPool.UNDERLINE;
+
+		while (enumeration.hasMoreElements()) {
+			String parameterName = enumeration.nextElement();
+
+			if (StringUtil.startsWith(
+					parameterName,
+					namespace +
+						DDMFormRendererConstants.DDM_FORM_FIELD_NAME_PREFIX) &&
+				StringUtil.endsWith(parameterName, "_edited") &&
+				GetterUtil.getBoolean(
+					_httpServletRequest.getParameter(parameterName))) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static final UUID _UUID = UUID.fromString(
 		"63326141-02F6-42B5-AE38-ABC73FA72BB5");
 
+	private final DDMBeanTranslator _ddmBeanTranslator;
+	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DLFileEntryType _dlFileEntryType;
 	private final DLRequestHelper _dlRequestHelper;
 	private final DLValidator _dlValidator;

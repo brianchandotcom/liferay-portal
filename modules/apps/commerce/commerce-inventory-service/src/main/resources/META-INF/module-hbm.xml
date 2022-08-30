@@ -7,6 +7,7 @@
 	<import class="com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem" />
 	<import class="com.liferay.commerce.inventory.model.CommerceInventoryWarehouse" />
 	<import class="com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem" />
+	<import class="com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel" />
 	<class dynamic-update="true" name="com.liferay.commerce.inventory.model.impl.CommerceInventoryAuditImpl" table="CIAudit">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CIAuditId" name="commerceInventoryAuditId" type="long">
 			<generator class="assigned" />
@@ -96,5 +97,19 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="reservedQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseRelImpl" table="CIWarehouseRel">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CIWarehouseRelId" name="commerceInventoryWarehouseRelId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CIWarehouseId" name="commerceInventoryWarehouseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

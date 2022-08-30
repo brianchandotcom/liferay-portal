@@ -58,12 +58,12 @@ MicroblogsDisplayContext microblogsDisplayContext = new MicroblogsDisplayContext
 		);
 	});
 
-	var microblogsContainer = A.one(
+	const microblogsContainer = A.one(
 		'#p_p_id<portlet:namespace /> .microblogs-container'
 	);
 
-	var showComments = function (microblogsEntryId) {
-		var uri =
+	const showComments = function (microblogsEntryId) {
+		let uri =
 			'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/microblogs/view_comments.jsp" /></portlet:renderURL>';
 
 		uri =
@@ -72,11 +72,11 @@ MicroblogsDisplayContext microblogsDisplayContext = new MicroblogsDisplayContext
 				uri
 			) || uri;
 
-		var commentsContainer = A.one(
+		const commentsContainer = A.one(
 			'#<portlet:namespace />commentsContainer' + microblogsEntryId
 		);
 
-		var commentsContainerContent = commentsContainer.one(
+		const commentsContainerContent = commentsContainer.one(
 			'.comments-container-content'
 		);
 
@@ -93,7 +93,7 @@ MicroblogsDisplayContext microblogsDisplayContext = new MicroblogsDisplayContext
 			commentsContainer.io.start();
 		}
 
-		var microblogsEntry = microblogsContainer.one(
+		const microblogsEntry = microblogsContainer.one(
 			'#<portlet:namespace />microblogsEntry' + microblogsEntryId
 		);
 
@@ -117,19 +117,19 @@ MicroblogsDisplayContext microblogsDisplayContext = new MicroblogsDisplayContext
 		function (event) {
 			event.preventDefault();
 
-			var uri = event.currentTarget.getAttribute('href');
+			const uri = event.currentTarget.getAttribute('href');
 
-			var microblogsEntryId = event.currentTarget.getAttribute(
+			const microblogsEntryId = event.currentTarget.getAttribute(
 				'data-microblogsEntryId'
 			);
 
-			var microblogsEntry = A.one(
+			const microblogsEntry = A.one(
 				'#<portlet:namespace />microblogsEntry' + microblogsEntryId
 			);
 
-			var editContainer = microblogsEntry.one('.edit-container');
+			const editContainer = microblogsEntry.one('.edit-container');
 
-			var editForm = editContainer.one(
+			const editForm = editContainer.one(
 				'#<portlet:namespace />fm' + microblogsEntryId
 			);
 
@@ -148,7 +148,7 @@ MicroblogsDisplayContext microblogsDisplayContext = new MicroblogsDisplayContext
 				editForm.toggle();
 			}
 
-			var content = microblogsEntry.one('.content');
+			const content = microblogsEntry.one('.content');
 
 			content.toggle();
 		},
@@ -170,7 +170,7 @@ MicroblogsDisplayContext microblogsDisplayContext = new MicroblogsDisplayContext
 								method: 'POST',
 							}
 						).then(function () {
-							var updateContainer = A.one(
+							const updateContainer = A.one(
 								'#p_p_id<portlet:namespace /> .portlet-body'
 							);
 

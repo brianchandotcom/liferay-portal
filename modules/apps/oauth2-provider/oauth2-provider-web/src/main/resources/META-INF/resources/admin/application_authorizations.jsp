@@ -132,7 +132,7 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-revoke-the-authorization") %>',
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
-					var form = document.<portlet:namespace />fm;
+					const form = document.<portlet:namespace />fm;
 
 					Liferay.Util.postForm(form, {
 						data: {

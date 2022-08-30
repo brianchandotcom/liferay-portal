@@ -21,9 +21,10 @@ const getIntlNumberFormat = () =>
 		currency: 'USD',
 		style: 'currency',
 	});
-const getBooleanValue = (value) => (value === 'true' ? 'Yes' : 'No');
 
-const BudgetTable = ({mdfRequestActivity}) => {
+const getBooleanValue = (value) => (value ? 'Yes' : 'No');
+
+const BudgetBreakdownTable = ({mdfRequestActivity}) => {
 	const [budgets, setBudgets] = useState();
 
 	useEffect(() => {
@@ -59,7 +60,7 @@ const BudgetTable = ({mdfRequestActivity}) => {
 	);
 };
 
-const LeadTable = ({mdfRequestActivity}) => (
+const LeadListTable = ({mdfRequestActivity}) => (
 	<Table
 		items={[
 			{
@@ -158,14 +159,14 @@ const getEventFields = (mdfRequestActivity) => [
 	},
 ];
 
-const getMiscellaneousMarketing = (mdfRequestActivity) => [
+const getMiscellaneousMarketingField = (mdfRequestActivity) => [
 	{
 		title: 'Marketing activity',
 		value: mdfRequestActivity.marketingActivity,
 	},
 ];
 
-const CampaignTable = ({mdfRequestActivity}) => {
+const CampaignActivityTable = ({mdfRequestActivity}) => {
 	const TypeActivityExternalReferenceCode = {
 		CONTENT_MARKETING: 'PRMTACT-003',
 		DIGITAL_MARKETING: 'PRMTACT-002',
@@ -183,7 +184,7 @@ const CampaignTable = ({mdfRequestActivity}) => {
 		[TypeActivityExternalReferenceCode.EVENT]: getEventFields(
 			mdfRequestActivity
 		),
-		[TypeActivityExternalReferenceCode.MISCELLANEOUS_MARKETING]: getMiscellaneousMarketing(
+		[TypeActivityExternalReferenceCode.MISCELLANEOUS_MARKETING]: getMiscellaneousMarketingField(
 			mdfRequestActivity
 		),
 	};
@@ -206,31 +207,25 @@ const CampaignTable = ({mdfRequestActivity}) => {
 					value:
 						mdfRequestActivity.r_tacticToActivities_c_tactic.name,
 				},
-				...(mdfRequestActivity.r_typeActivityToActivities_c_typeActivity &&
+				...fieldsByTypeActivity[
 					mdfRequestActivity.r_typeActivityToActivities_c_typeActivity
-						.externalReferenceCode &&
-					fieldsByTypeActivity[
-						mdfRequestActivity
-							.r_typeActivityToActivities_c_typeActivity
-							.externalReferenceCode
-					]),
+						.externalReferenceCode
+				],
 				{
 					title: 'Start Date',
-					value:
-						mdfRequestActivity.startDate &&
-						new Date(
-							mdfRequestActivity.startDate
-						).toLocaleDateString(
-							Liferay.ThemeDisplay.getBCP47LanguageId()
-						),
+					value: new Date(
+						mdfRequestActivity.startDate
+					).toLocaleDateString(
+						Liferay.ThemeDisplay.getBCP47LanguageId()
+					),
 				},
 				{
 					title: 'End Date',
-					value:
-						mdfRequestActivity.endDate &&
-						new Date(mdfRequestActivity.endDate).toLocaleDateString(
-							Liferay.ThemeDisplay.getBCP47LanguageId()
-						),
+					value: new Date(
+						mdfRequestActivity.endDate
+					).toLocaleDateString(
+						Liferay.ThemeDisplay.getBCP47LanguageId()
+					),
 				},
 			]}
 			title="Campaign Activity"
@@ -300,19 +295,11 @@ const Panel = ({children, mdfRequestActivity}) => (
 		displayTitle={
 			<ClayPanel.Title className="py-2 text-dark">
 				<RangeDate
-					endDate={
-						mdfRequestActivity.endDate &&
-						new Date(mdfRequestActivity.endDate)
-					}
-					startDate={
-						mdfRequestActivity.startDate &&
-						new Date(mdfRequestActivity.startDate)
-					}
+					endDate={new Date(mdfRequestActivity.endDate)}
+					startDate={new Date(mdfRequestActivity.startDate)}
 				/>
 
-				<div>
-					<h5 className="mb-1">{mdfRequestActivity.name}</h5>
-				</div>
+				<h4 className="mb-1">{mdfRequestActivity.name}</h4>
 			</ClayPanel.Title>
 		}
 		showCollapseIcon
@@ -353,13 +340,17 @@ export default function () {
 			{activities?.items.map((mdfRequestActivity) => (
 				<>
 					<Panel mdfRequestActivity={mdfRequestActivity}>
-						<CampaignTable
+						<CampaignActivityTable
 							mdfRequestActivity={mdfRequestActivity}
 						/>
 
-						<BudgetTable mdfRequestActivity={mdfRequestActivity} />
+						<BudgetBreakdownTable
+							mdfRequestActivity={mdfRequestActivity}
+						/>
 
-						<LeadTable mdfRequestActivity={mdfRequestActivity} />
+						<LeadListTable
+							mdfRequestActivity={mdfRequestActivity}
+						/>
 					</Panel>
 				</>
 			))}

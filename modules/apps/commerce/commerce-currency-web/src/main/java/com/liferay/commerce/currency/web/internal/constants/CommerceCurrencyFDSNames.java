@@ -12,25 +12,16 @@
  * details.
  */
 
-package com.liferay.commerce.product.constants;
+package com.liferay.commerce.currency.web.internal.constants;
+
+import com.liferay.account.constants.AccountPortletKeys;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceChannelAccountEntryRelConstants {
+public class CommerceCurrencyFDSNames {
 
-	public static final int TYPE_BILLING_ADDRESS = 2;
-
-	public static final int TYPE_CURRENCY = 6;
-
-	public static final int TYPE_DELIVERY_TERM = 0;
-
-	public static final int TYPE_DISCOUNT = 5;
-
-	public static final int TYPE_PAYMENT_TERM = 1;
-
-	public static final int TYPE_PRICE_LIST = 4;
-
-	public static final int TYPE_SHIPPING_ADDRESS = 3;
+	public static final String ACCOUNT_ENTRY_CURRENCIES =
+		AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN + "-accountEntryCurrencies";
 
 }

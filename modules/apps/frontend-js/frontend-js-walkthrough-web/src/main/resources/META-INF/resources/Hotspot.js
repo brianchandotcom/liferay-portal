@@ -36,6 +36,7 @@ export const Hotspot = forwardRef(({onHotspotClick, trigger}, ref) => {
 
 	return (
 		<div
+			aria-label={Liferay.Language.get('start-the-walkthrough')}
 			className="lfr-walkthrough-hotspot"
 			onClick={onHotspotClick}
 			ref={ref}

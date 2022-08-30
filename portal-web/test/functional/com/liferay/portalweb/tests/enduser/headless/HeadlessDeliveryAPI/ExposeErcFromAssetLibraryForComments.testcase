@@ -17,8 +17,6 @@ definition {
 
 	tearDown {
 		BlogPostingAPI.deleteAllBlogPostings();
-
-		echo("ok");
 	}
 
 	@disable-webdriver = "true"
@@ -38,7 +36,7 @@ definition {
 		task ("When create a child comment with a custom external reference code") {
 			var commentId = JSONUtil.getWithJSONPath("${response}", "$.id");
 
-			var response2 = CommentAPI.createCommentInBlogPosting(
+			CommentAPI.createCommentInBlogPosting(
 				commentId = "${commentId}",
 				commentText = "ChildComment",
 				externalReferenceCode = "ERC_ChildComment");
@@ -106,13 +104,13 @@ definition {
 		task ("When with POST request I create a comment with a custom external reference code with a value of the internal id of the previously created comment") {
 			var commentId = JSONUtil.getWithJSONPath("${response}", "$.id");
 
-			var response2 = CommentAPI.createCommentInBlogPosting(
+			CommentAPI.createCommentInBlogPosting(
 				blogPostingId = "${blogPostingId}",
 				commentText = "CommentTwo",
 				externalReferenceCode = "${commentId}");
 		}
 
-		task ("Then another comment with the same external reference code is being created") {
+		task ("Then a new comment is created") {
 			var commentsTotalCount = CommentAPI.getFieldValueOfBlogPostingComments(
 				blogPostingId = "${blogPostingId}",
 				fieldName = "totalCount");
@@ -192,8 +190,8 @@ definition {
 
 		task ("When I make a GET request by external reference code of the child comment") {
 			var commentText = CommentAPI.getFieldValueOfBlogPostingComments(
-				blogPostingChildCommentERC = "ERC_ChildComment",
-				blogPostingCommentERC = "ercComment",
+				blogPostingChildCommentErc = "ERC_ChildComment",
+				blogPostingCommentErc = "ercComment",
 				fieldName = "text");
 		}
 
@@ -220,14 +218,16 @@ definition {
 
 		task ("When I make a GET request by external reference code") {
 			task ("Get Blog Posting ID") {
-				var getBlogPostings = BlogPostingAPI.getBlogPostings();
+				var blogPostingId = BlogPostingAPI.getBlogPostings();
 
-				var blogPostingERC = JSONUtil.getWithJSONPath("${getBlogPostings}", "$..externalReferenceCode");
+				var blogPostingErc = CommentAPI.getFieldValueOfBlogPostingComments(
+					response = "${blogPostingId}",
+					fieldName = "externalReferenceCode");
 			}
 
 			var commentText = CommentAPI.getFieldValueOfBlogPostingComments(
-				blogPostingCommentERC = "ercComment",
-				blogPostingERC = "${blogPostingERC}",
+				blogPostingCommentErc = "ercComment",
+				blogPostingErc = "${blogPostingErc}",
 				fieldName = "text");
 		}
 
@@ -255,14 +255,16 @@ definition {
 			task ("Get Blog Posting ID") {
 				var getBlogPostings = BlogPostingAPI.getBlogPostings();
 
-				var blogPostingERC = JSONUtil.getWithJSONPath("${getBlogPostings}", "$..externalReferenceCode");
+				var blogPostingErc = CommentAPI.getFieldValueOfBlogPostingComments(
+				response = "${getBlogPostings}",
+				fieldName = "externalReferenceCode");
 			}
 
 			var commentId = JSONUtil.getWithJSONPath("${response}", "$.id");
 
 			var commentText = CommentAPI.getFieldValueOfBlogPostingComments(
-				blogPostingCommentERC = "${commentId}",
-				blogPostingERC = "${blogPostingERC}",
+				blogPostingCommentErc = "${commentId}",
+				blogPostingErc = "${blogPostingErc}",
 				fieldName = "status");
 		}
 

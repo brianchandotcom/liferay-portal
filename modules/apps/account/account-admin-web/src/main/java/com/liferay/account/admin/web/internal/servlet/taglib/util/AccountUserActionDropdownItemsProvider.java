@@ -17,9 +17,8 @@ package com.liferay.account.admin.web.internal.servlet.taglib.util;
 import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountUserPermission;
 import com.liferay.account.constants.AccountActionKeys;
-import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.account.validator.AccountEntryEmailValidator;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -27,13 +26,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -65,21 +62,11 @@ public class AccountUserActionDropdownItemsProvider {
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		return DropdownItemListBuilder.add(
 			() -> {
-				AccountEntryEmailValidator accountEntryEmailValidator =
-					_accountEntryDisplay.getAccountEntryEmailValidator();
-
-				if (Objects.equals(
+				if (AccountUserPermission.hasEditUserPermission(
+						_permissionChecker,
 						PortalUtil.getPortletId(_httpServletRequest),
-						AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT) &&
-					(UserPermissionUtil.contains(
-						_permissionChecker, _accountUserDisplay.getUserId(),
-						ActionKeys.UPDATE) ||
-					 (accountEntryEmailValidator.isValidDomainStrict(
-						 _accountUserDisplay.getEmailAddress()) &&
-					  AccountEntryPermission.contains(
-						  _permissionChecker,
-						  _accountEntryDisplay.getAccountEntryId(),
-						  ActionKeys.MANAGE_USERS)))) {
+						_accountEntryDisplay.getAccountEntry(),
+						_accountUserDisplay.getUser())) {
 
 					return true;
 				}

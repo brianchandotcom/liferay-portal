@@ -75,7 +75,7 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 				</portlet:renderURL>
 
 				<%
-				if (!portletName.equals(AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT) || !UserPermissionUtil.contains(permissionChecker, accountUser.getUserId(), ActionKeys.UPDATE)) {
+				if (!AccountUserPermission.hasEditUserPermission(permissionChecker, portletName, accountEntryDisplay.getAccountEntry(), accountUser.getUser())) {
 					rowURL = null;
 				}
 				%>

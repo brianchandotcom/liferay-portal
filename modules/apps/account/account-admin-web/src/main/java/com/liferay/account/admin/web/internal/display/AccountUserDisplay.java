@@ -154,6 +154,10 @@ public class AccountUserDisplay {
 		return _statusLabelStyle;
 	}
 
+	public User getUser() {
+		return _user;
+	}
+
 	public long getUserId() {
 		return _userId;
 	}
@@ -237,6 +241,8 @@ public class AccountUserDisplay {
 	}
 
 	private AccountUserDisplay(User user) {
+		_user = user;
+
 		_accountEntryNamesStyle = _getAccountEntryNamesStyle(user.getUserId());
 		_companyId = user.getCompanyId();
 		_emailAddress = user.getEmailAddress();
@@ -307,6 +313,7 @@ public class AccountUserDisplay {
 	private final int _status;
 	private final String _statusLabel;
 	private final String _statusLabelStyle;
+	private final User _user;
 	private final long _userId;
 
 }

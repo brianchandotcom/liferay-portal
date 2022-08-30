@@ -534,16 +534,6 @@ public class AssetCategoriesDisplayContext {
 		return ParamUtil.getString(_renderRequest, "itemSelectorEventName");
 	}
 
-	public String getLinkURL() throws Exception {
-		AssetCategoriesCompanyConfiguration
-			assetCategoriesCompanyConfiguration =
-				ConfigurationProviderUtil.getCompanyConfiguration(
-					AssetCategoriesCompanyConfiguration.class,
-					_themeDisplay.getCompanyId());
-
-		return assetCategoriesCompanyConfiguration.linkToDocumentationURL();
-	}
-
 	public int getMaximumNumberOfCategoriesPerVocabulary() throws Exception {
 		AssetCategoriesCompanyConfiguration
 			assetCategoriesCompanyConfiguration =

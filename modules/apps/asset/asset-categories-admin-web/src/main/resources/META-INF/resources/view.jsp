@@ -268,26 +268,10 @@
 					</div>
 
 					<p class="mb-5 text-secondary">
-						<span class="mr-2">
-							<liferay-ui:message arguments="<%= assetCategoriesDisplayContext.getMaximumNumberOfCategoriesPerVocabulary() %>" key="the-maximum-number-of-categories-per-vocabulary-is-x" />
-						</span>
-
-						<%
-						String linkURL = assetCategoriesDisplayContext.getLinkURL();
-						%>
-
-						<c:if test="<%= Validator.isNotNull(linkURL) %>">
-
-							<%
-							StringBundler sb = new StringBundler(3);
-
-							sb.append("<a href=\"");
-							sb.append(linkURL);
-							sb.append("\" target=\"_blank\">");
-							%>
-
-							<liferay-ui:message arguments='<%= new String[] {sb.toString(), "</a>"} %>' key="x-learn-how-x-to-tailor-categories-to-your-needs" />
-						</c:if>
+						<liferay-learn:message
+							key="general"
+							resource="asset-taglib"
+						/>
 					</p>
 
 					<c:if test="<%= assetCategoriesDisplayContext.isAssetCategoriesLimitExceeded() %>">

@@ -18,19 +18,27 @@ import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceCon
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityComparator;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
+import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.util.AccountEntryAllowedTypesUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,6 +51,8 @@ public class BaseCommerceContextHttp implements CommerceContext {
 	public BaseCommerceContextHttp(
 		HttpServletRequest httpServletRequest,
 		CommerceAccountHelper commerceAccountHelper,
+		CommerceChannelAccountEntryRelLocalService
+			commerceChannelAccountEntryRelLocalService,
 		CommerceChannelLocalService commerceChannelLocalService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceOrderHttpHelper commerceOrderHttpHelper,
@@ -50,6 +60,8 @@ public class BaseCommerceContextHttp implements CommerceContext {
 
 		_httpServletRequest = httpServletRequest;
 		_commerceAccountHelper = commerceAccountHelper;
+		_commerceChannelAccountEntryRelLocalService =
+			commerceChannelAccountEntryRelLocalService;
 		_commerceChannelLocalService = commerceChannelLocalService;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_commerceOrderHttpHelper = commerceOrderHttpHelper;
@@ -143,9 +155,36 @@ public class BaseCommerceContextHttp implements CommerceContext {
 			return _commerceCurrency;
 		}
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
-				_portal.getScopeGroupId(_httpServletRequest));
+		long commerceChannelId = 0;
+
+		CommerceChannel commerceChannel = _fetchCommerceChannel();
+
+		if (commerceChannel != null) {
+			commerceChannelId = commerceChannel.getCommerceChannelId();
+		}
+
+		CommerceAccount commerceAccount = getCommerceAccount();
+
+		if (commerceAccount != null) {
+			CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+				_commerceChannelAccountEntryRelLocalService.
+					fetchCommerceChannelAccountEntryRel(
+						commerceAccount.getCommerceAccountId(),
+						commerceChannelId,
+						CommerceChannelAccountEntryRelConstants.TYPE_CURRENCY);
+
+			if (commerceChannelAccountEntryRel != null) {
+				CommerceCurrency commerceCurrency =
+					_commerceCurrencyLocalService.getCommerceCurrency(
+						commerceChannelAccountEntryRel.getClassPK());
+
+				if (commerceCurrency.isActive()) {
+					_commerceCurrency = commerceCurrency;
+
+					return _commerceCurrency;
+				}
+			}
+		}
 
 		if (commerceChannel == null) {
 			_commerceCurrency =
@@ -153,10 +192,9 @@ public class BaseCommerceContextHttp implements CommerceContext {
 					_portal.getCompanyId(_httpServletRequest));
 		}
 		else {
-			_commerceCurrency =
-				_commerceCurrencyLocalService.getCommerceCurrency(
-					_portal.getCompanyId(_httpServletRequest),
-					commerceChannel.getCommerceCurrencyCode());
+			_commerceCurrency = _getCommerceCurrency(
+				_portal.getCompanyId(_httpServletRequest),
+				commerceChannel.getCommerceCurrencyCode());
 		}
 
 		return _commerceCurrency;
@@ -184,6 +222,46 @@ public class BaseCommerceContextHttp implements CommerceContext {
 			_portal.getScopeGroupId(_httpServletRequest));
 	}
 
+	private CommerceCurrency _getCommerceCurrency(
+		long companyId, String currencyCode) {
+
+		CommerceCurrency commerceCurrency = null;
+
+		try {
+			commerceCurrency =
+				_commerceCurrencyLocalService.getCommerceCurrency(
+					companyId, currencyCode);
+		}
+		catch (NoSuchCurrencyException noSuchCurrencyException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchCurrencyException);
+			}
+		}
+
+		if ((commerceCurrency != null) && commerceCurrency.isActive()) {
+			return commerceCurrency;
+		}
+
+		commerceCurrency =
+			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
+				companyId);
+
+		if (commerceCurrency != null) {
+			return commerceCurrency;
+		}
+
+		List<CommerceCurrency> commerceCurrencies =
+			_commerceCurrencyLocalService.getCommerceCurrencies(
+				companyId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new CommerceCurrencyPriorityComparator(true));
+
+		if (!commerceCurrencies.isEmpty()) {
+			commerceCurrency = commerceCurrencies.get(0);
+		}
+
+		return commerceCurrency;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCommerceContextHttp.class);
 
@@ -193,6 +271,8 @@ public class BaseCommerceContextHttp implements CommerceContext {
 	private CommerceAccountGroupServiceConfiguration
 		_commerceAccountGroupServiceConfiguration;
 	private final CommerceAccountHelper _commerceAccountHelper;
+	private final CommerceChannelAccountEntryRelLocalService
+		_commerceChannelAccountEntryRelLocalService;
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private CommerceCurrency _commerceCurrency;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;

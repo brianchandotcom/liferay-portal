@@ -20,18 +20,26 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityComparator;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.AccountEntryAllowedTypesUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+
+import java.util.List;
 
 /**
  * @author Marco Leo
@@ -44,6 +52,8 @@ public class BaseCommerceContext implements CommerceContext {
 		long commerceAccountId, CommerceAccountHelper commerceAccountHelper,
 		CommerceAccountLocalService commerceAccountLocalService,
 		CommerceAccountService commerceAccountService,
+		CommerceChannelAccountEntryRelLocalService
+			commerceChannelAccountEntryRelLocalService,
 		CommerceChannelLocalService commerceChannelLocalService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceOrderService commerceOrderService,
@@ -56,6 +66,8 @@ public class BaseCommerceContext implements CommerceContext {
 		_commerceAccountHelper = commerceAccountHelper;
 		_commerceAccountLocalService = commerceAccountLocalService;
 		_commerceAccountService = commerceAccountService;
+		_commerceChannelAccountEntryRelLocalService =
+			commerceChannelAccountEntryRelLocalService;
 		_commerceChannelLocalService = commerceChannelLocalService;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_commerceOrderService = commerceOrderService;
@@ -151,7 +163,30 @@ public class BaseCommerceContext implements CommerceContext {
 			_commerceChannelLocalService.getCommerceChannelByGroupId(
 				_commerceChannelGroupId);
 
-		_commerceCurrency = _commerceCurrencyLocalService.getCommerceCurrency(
+		CommerceAccount commerceAccount = getCommerceAccount();
+
+		if (commerceAccount != null) {
+			CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+				_commerceChannelAccountEntryRelLocalService.
+					fetchCommerceChannelAccountEntryRel(
+						commerceAccount.getCommerceAccountId(),
+						commerceChannel.getCommerceChannelId(),
+						CommerceChannelAccountEntryRelConstants.TYPE_CURRENCY);
+
+			if (commerceChannelAccountEntryRel != null) {
+				CommerceCurrency commerceCurrency =
+					_commerceCurrencyLocalService.getCommerceCurrency(
+						commerceChannelAccountEntryRel.getClassPK());
+
+				if (commerceCurrency.isActive()) {
+					_commerceCurrency = commerceCurrency;
+
+					return _commerceCurrency;
+				}
+			}
+		}
+
+		_commerceCurrency = _getCommerceCurrency(
 			_companyId, commerceChannel.getCommerceCurrencyCode());
 
 		return _commerceCurrency;
@@ -173,6 +208,46 @@ public class BaseCommerceContext implements CommerceContext {
 		return _commerceAccountGroupServiceConfiguration.commerceSiteType();
 	}
 
+	private CommerceCurrency _getCommerceCurrency(
+		long companyId, String currencyCode) {
+
+		CommerceCurrency commerceCurrency = null;
+
+		try {
+			commerceCurrency =
+				_commerceCurrencyLocalService.getCommerceCurrency(
+					companyId, currencyCode);
+		}
+		catch (NoSuchCurrencyException noSuchCurrencyException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchCurrencyException);
+			}
+		}
+
+		if ((commerceCurrency != null) && commerceCurrency.isActive()) {
+			return commerceCurrency;
+		}
+
+		commerceCurrency =
+			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
+				companyId);
+
+		if (commerceCurrency != null) {
+			return commerceCurrency;
+		}
+
+		List<CommerceCurrency> commerceCurrencies =
+			_commerceCurrencyLocalService.getCommerceCurrencies(
+				companyId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new CommerceCurrencyPriorityComparator(true));
+
+		if (!commerceCurrencies.isEmpty()) {
+			commerceCurrency = commerceCurrencies.get(0);
+		}
+
+		return commerceCurrency;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCommerceContext.class);
 
@@ -185,6 +260,8 @@ public class BaseCommerceContext implements CommerceContext {
 	private final long _commerceAccountId;
 	private final CommerceAccountLocalService _commerceAccountLocalService;
 	private final CommerceAccountService _commerceAccountService;
+	private final CommerceChannelAccountEntryRelLocalService
+		_commerceChannelAccountEntryRelLocalService;
 	private final long _commerceChannelGroupId;
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private CommerceCurrency _commerceCurrency;

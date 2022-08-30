@@ -107,12 +107,8 @@ public class ExportUsersPortletConfigurationIcon
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.users.admin.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -123,5 +119,8 @@ public class ExportUsersPortletConfigurationIcon
 
 	@Reference
 	private PortalPermission _portalPermission;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.users.admin.web)")
+	private ServletContext _servletContext;
 
 }

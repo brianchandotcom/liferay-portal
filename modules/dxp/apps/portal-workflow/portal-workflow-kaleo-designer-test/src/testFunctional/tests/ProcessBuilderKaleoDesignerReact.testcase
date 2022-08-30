@@ -1255,12 +1255,52 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Action fields"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditActionFields {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditActionFields";
 
-		// TODO CanEditActionFields pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
+			actionsTemplateValue = "Action Template",
+			description = "Liferay Actions Description",
+			executionTypeOption = "On Entry",
+			name = "Liferay Actions",
+			priorityValue = "2",
+			singleAction = "true");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Actions",
+			propertyValue = "Liferay Actions");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
+			actionsTemplateValue = "Action Template Edited",
+			description = "Liferay Actions Description Edited",
+			executionTypeOption = "On Exit",
+			name = "Liferay Actions Edited",
+			priorityValue = "10",
+			singleAction = "true");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Actions",
+			propertyValue = "Liferay Actions Edited");
+
+		ProcessBuilderKaleoDesignerReact.viewActionsInfo(
+			actionsTemplateValue = "Action Template Edited",
+			description = "Liferay Actions Description Edited",
+			executionTypeOption = "On Exit",
+			name = "Liferay Actions Edited",
+			priorityValue = "10");
 	}
 
 	@description = "LPS-139388 - Verify that the user can edit the node description"

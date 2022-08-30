@@ -1005,12 +1005,6 @@ definition {
 				groupName = "${siteName}",
 				title = "WC Title ${count}");
 
-			JSONWiki.addWikiPage(
-				groupName = "${siteName}",
-				wikiNodeName = "Main",
-				wikiPageContent = "Wiki Page Content",
-				wikiPageName = "Wiki Page Title ${count}");
-
 			var count = ${count} + 1;
 		}
 
@@ -1025,7 +1019,7 @@ definition {
 
 		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
 
-		for (var assetTitle : list "WC Title,DM Document Title,Blogs Entry Title,Wiki Page Title") {
+		for (var assetTitle : list "WC Title,DM Document Title,Blogs Entry Title") {
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "${assetTitle} 0");
 
 			for (var count : list "1,2,3") {

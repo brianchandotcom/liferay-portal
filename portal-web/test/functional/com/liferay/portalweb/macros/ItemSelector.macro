@@ -567,8 +567,7 @@ definition {
 
 		if (isSet(invalidFileValidation)) {
 			AssertTextEquals(
-				key_alertMessage = "${invalidFileValidation}",
-				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
 				value1 = "${invalidFileValidation}");
 
 			AssertElementNotPresent(

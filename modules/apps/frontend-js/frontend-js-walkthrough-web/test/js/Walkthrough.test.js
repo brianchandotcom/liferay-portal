@@ -25,6 +25,7 @@ import {
 	INVALID_NODE_SELECTOR_MOCK,
 	MULTI_PAGES_MOCK,
 	PAGE_MOCK,
+	PAGE_WITH_PREVIOUS_MOCK,
 } from './__fixtures__/walkthroughMock';
 
 function setupDocument() {
@@ -99,10 +100,10 @@ describe('Walkthrough', () => {
 		cleanUp();
 	});
 
-	xit(`when clicking on Previous, it navigates to the given url of 'previous'`, () => {
+	it(`when clicking on Previous, it navigates to the given URL of 'previous'`, () => {
 		const cleanUp = setupDocument();
 
-		const {getByLabelText} = renderWalkthrough(MULTI_PAGES_MOCK);
+		const {getByLabelText} = renderWalkthrough(PAGE_WITH_PREVIOUS_MOCK);
 
 		const hotspot = getByLabelText('start-the-walkthrough');
 
@@ -110,12 +111,11 @@ describe('Walkthrough', () => {
 
 		userEvents.click(screen.getByText('ok'));
 
-		// Change the location to '/home-2' and then make the Walkthrough render on this new page :/
-		// I consider this inviable. Maybe we should force the step 2 to be on the current page but IDK
-		// yet how to do it
+		userEvents.click(screen.getByText('previous'));
 
-		// userEvents.click(screen.getByText('previous'));
-		// expect(navigate).toBeCalledWith(MULTI_PAGES_MOCK.steps[1].previous);
+		expect(navigate).toBeCalledWith(
+			PAGE_WITH_PREVIOUS_MOCK.steps[1].previous
+		);
 
 		cleanUp();
 	});

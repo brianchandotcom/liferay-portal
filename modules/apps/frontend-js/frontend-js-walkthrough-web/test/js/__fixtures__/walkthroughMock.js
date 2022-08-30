@@ -42,6 +42,30 @@ export const PAGE_MOCK = {
 	],
 };
 
+export const PAGE_WITH_PREVIOUS_MOCK = {
+	pages: {
+		'/home': ['step-1', 'step-2'],
+	},
+	steps: [
+		{
+			content: '<span>Content 1</span><br/><code>Hello1</code>',
+			darkbg: true,
+			id: 'step-1',
+			nodeToHighlight: '.logo',
+			title: 'Title 1',
+		},
+		{
+			content: '<span>Content 2</span><br/><code>Hello2</code>',
+			darkbg: true,
+			id: 'step-2',
+			nodeToHighlight: '#footer',
+			positioning: 'top',
+			previous: '/fiona',
+			title: 'Title 2',
+		},
+	],
+};
+
 export const INVALID_NODE_SELECTOR_MOCK = {
 	pages: {
 		'/home': ['step-1', 'step-2'],

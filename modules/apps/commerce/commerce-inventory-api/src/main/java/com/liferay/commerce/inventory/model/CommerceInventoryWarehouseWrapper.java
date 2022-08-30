@@ -228,6 +228,11 @@ public class CommerceInventoryWarehouseWrapper
 		return model.getActive();
 	}
 
+	@Override
+	public String[] getAvailableLanguageIds() {
+		return model.getAvailableLanguageIds();
+	}
+
 	/**
 	 * Returns the city of this commerce inventory warehouse.
 	 *
@@ -295,6 +300,11 @@ public class CommerceInventoryWarehouseWrapper
 		return model.getCreateDate();
 	}
 
+	@Override
+	public String getDefaultLanguageId() {
+		return model.getDefaultLanguageId();
+	}
+
 	/**
 	 * Returns the description of this commerce inventory warehouse.
 	 *
@@ -303,6 +313,72 @@ public class CommerceInventoryWarehouseWrapper
 	@Override
 	public String getDescription() {
 		return model.getDescription();
+	}
+
+	/**
+	 * Returns the localized description of this commerce inventory warehouse in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized description of this commerce inventory warehouse
+	 */
+	@Override
+	public String getDescription(java.util.Locale locale) {
+		return model.getDescription(locale);
+	}
+
+	/**
+	 * Returns the localized description of this commerce inventory warehouse in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized description of this commerce inventory warehouse. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getDescription(java.util.Locale locale, boolean useDefault) {
+		return model.getDescription(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized description of this commerce inventory warehouse in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized description of this commerce inventory warehouse
+	 */
+	@Override
+	public String getDescription(String languageId) {
+		return model.getDescription(languageId);
+	}
+
+	/**
+	 * Returns the localized description of this commerce inventory warehouse in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized description of this commerce inventory warehouse
+	 */
+	@Override
+	public String getDescription(String languageId, boolean useDefault) {
+		return model.getDescription(languageId, useDefault);
+	}
+
+	@Override
+	public String getDescriptionCurrentLanguageId() {
+		return model.getDescriptionCurrentLanguageId();
+	}
+
+	@Override
+	public String getDescriptionCurrentValue() {
+		return model.getDescriptionCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized descriptions of this commerce inventory warehouse.
+	 *
+	 * @return the locales and localized descriptions of this commerce inventory warehouse
+	 */
+	@Override
+	public Map<java.util.Locale, String> getDescriptionMap() {
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -363,6 +439,72 @@ public class CommerceInventoryWarehouseWrapper
 	@Override
 	public String getName() {
 		return model.getName();
+	}
+
+	/**
+	 * Returns the localized name of this commerce inventory warehouse in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized name of this commerce inventory warehouse
+	 */
+	@Override
+	public String getName(java.util.Locale locale) {
+		return model.getName(locale);
+	}
+
+	/**
+	 * Returns the localized name of this commerce inventory warehouse in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized name of this commerce inventory warehouse. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getName(java.util.Locale locale, boolean useDefault) {
+		return model.getName(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized name of this commerce inventory warehouse in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized name of this commerce inventory warehouse
+	 */
+	@Override
+	public String getName(String languageId) {
+		return model.getName(languageId);
+	}
+
+	/**
+	 * Returns the localized name of this commerce inventory warehouse in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized name of this commerce inventory warehouse
+	 */
+	@Override
+	public String getName(String languageId, boolean useDefault) {
+		return model.getName(languageId, useDefault);
+	}
+
+	@Override
+	public String getNameCurrentLanguageId() {
+		return model.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public String getNameCurrentValue() {
+		return model.getNameCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized names of this commerce inventory warehouse.
+	 *
+	 * @return the locales and localized names of this commerce inventory warehouse
+	 */
+	@Override
+	public Map<java.util.Locale, String> getNameMap() {
+		return model.getNameMap();
 	}
 
 	/**
@@ -485,6 +627,21 @@ public class CommerceInventoryWarehouseWrapper
 		model.persist();
 	}
 
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.kernel.exception.LocaleException {
+
+		model.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(
+			java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.kernel.exception.LocaleException {
+
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	/**
 	 * Sets whether this commerce inventory warehouse is active.
 	 *
@@ -568,6 +725,63 @@ public class CommerceInventoryWarehouseWrapper
 	}
 
 	/**
+	 * Sets the localized description of this commerce inventory warehouse in the language.
+	 *
+	 * @param description the localized description of this commerce inventory warehouse
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setDescription(String description, java.util.Locale locale) {
+		model.setDescription(description, locale);
+	}
+
+	/**
+	 * Sets the localized description of this commerce inventory warehouse in the language, and sets the default locale.
+	 *
+	 * @param description the localized description of this commerce inventory warehouse
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setDescription(
+		String description, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+
+		model.setDescription(description, locale, defaultLocale);
+	}
+
+	@Override
+	public void setDescriptionCurrentLanguageId(String languageId) {
+		model.setDescriptionCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized descriptions of this commerce inventory warehouse from the map of locales and localized descriptions.
+	 *
+	 * @param descriptionMap the locales and localized descriptions of this commerce inventory warehouse
+	 */
+	@Override
+	public void setDescriptionMap(
+		Map<java.util.Locale, String> descriptionMap) {
+
+		model.setDescriptionMap(descriptionMap);
+	}
+
+	/**
+	 * Sets the localized descriptions of this commerce inventory warehouse from the map of locales and localized descriptions, and sets the default locale.
+	 *
+	 * @param descriptionMap the locales and localized descriptions of this commerce inventory warehouse
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setDescriptionMap(
+		Map<java.util.Locale, String> descriptionMap,
+		java.util.Locale defaultLocale) {
+
+		model.setDescriptionMap(descriptionMap, defaultLocale);
+	}
+
+	/**
 	 * Sets the external reference code of this commerce inventory warehouse.
 	 *
 	 * @param externalReferenceCode the external reference code of this commerce inventory warehouse
@@ -625,6 +839,59 @@ public class CommerceInventoryWarehouseWrapper
 	@Override
 	public void setName(String name) {
 		model.setName(name);
+	}
+
+	/**
+	 * Sets the localized name of this commerce inventory warehouse in the language.
+	 *
+	 * @param name the localized name of this commerce inventory warehouse
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setName(String name, java.util.Locale locale) {
+		model.setName(name, locale);
+	}
+
+	/**
+	 * Sets the localized name of this commerce inventory warehouse in the language, and sets the default locale.
+	 *
+	 * @param name the localized name of this commerce inventory warehouse
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setName(
+		String name, java.util.Locale locale, java.util.Locale defaultLocale) {
+
+		model.setName(name, locale, defaultLocale);
+	}
+
+	@Override
+	public void setNameCurrentLanguageId(String languageId) {
+		model.setNameCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized names of this commerce inventory warehouse from the map of locales and localized names.
+	 *
+	 * @param nameMap the locales and localized names of this commerce inventory warehouse
+	 */
+	@Override
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
+		model.setNameMap(nameMap);
+	}
+
+	/**
+	 * Sets the localized names of this commerce inventory warehouse from the map of locales and localized names, and sets the default locale.
+	 *
+	 * @param nameMap the locales and localized names of this commerce inventory warehouse
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setNameMap(
+		Map<java.util.Locale, String> nameMap, java.util.Locale defaultLocale) {
+
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**

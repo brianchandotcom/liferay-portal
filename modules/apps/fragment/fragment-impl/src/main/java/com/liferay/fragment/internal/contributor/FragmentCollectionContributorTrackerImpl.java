@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
@@ -321,10 +320,9 @@ public class FragmentCollectionContributorTrackerImpl
 				FragmentCollectionContributorRegistration.class,
 				new FragmentCollectionContributorRegistration() {
 				},
-				HashMapDictionaryBuilder.<String, Object>put(
+				MapUtil.singletonDictionary(
 					"fragment.collection.key",
-					serviceReference.getProperty("fragment.collection.key")
-				).build());
+					serviceReference.getProperty("fragment.collection.key")));
 
 			return fragmentCollectionContributor;
 		}

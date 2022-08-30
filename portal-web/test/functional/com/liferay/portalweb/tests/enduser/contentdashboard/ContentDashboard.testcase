@@ -2185,7 +2185,7 @@ definition {
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#DISPLAY_PAGE_TITLE",
-				value1 = "Blogs Entry Content");
+				value1 = "Blogs Entry Title");
 		}
 	}
 

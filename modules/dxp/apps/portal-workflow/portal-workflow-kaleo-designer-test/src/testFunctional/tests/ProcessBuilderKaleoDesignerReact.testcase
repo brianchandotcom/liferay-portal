@@ -337,12 +337,30 @@ definition {
 	}
 
 	@description = "Verify that the user is able to add a Script to define the Action"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAddScriptToDefineAction {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddScriptToDefineAction";
 
-		// TODO CanAddScriptToDefineAction pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
+			actionsTemplateValue = "Action Script Template",
+			name = "Liferay Actions",
+			singleAction = "true");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Actions",
+			propertyValue = "Liferay Actions");
+
+		ProcessBuilderKaleoDesignerReact.viewActionsInfo(actionsTemplateValue = "Action Script Template");
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Start"
@@ -813,7 +831,6 @@ definition {
 	}
 
 	@description = "Verify that the user can delete all actions with the trash icon at the top right corner"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteAllActionsAtOnce {
 
@@ -822,7 +839,6 @@ definition {
 	}
 
 	@description = "Verify that the user can delete all Timers at once"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteAllTimers {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteAllTimers";

@@ -19,6 +19,57 @@ definition {
 		}
 	}
 
+	@description = "This test assert the account manager can view account organizations."
+	@priority = "4"
+	test AccountManagersCanViewOrganizations {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given add 2 organizations to an account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "AM Account",
+				accountEntryType = "Business");
+
+			for (var orgNum : list "1,2") {
+				JSONOrganization.addOrganization(organizationName = "Account Org${orgNum}");
+
+				JSONAccountEntry.addAccountEntryOrganization(
+					accountEntryName = "AM Account",
+					organizationName = "Account Org${orgNum}");
+			}
+		}
+
+		task ("When an account manager is added to the account") {
+			AccountConfiguration.addAccountManager(
+				accountName = "AM Account",
+				orgName = "AM Organization",
+				orgRoleTitle = "Account Manager",
+				userEmailAddress = "useramea@liferay.com",
+				userFirstName = "useramfn",
+				userLastName = "useramln",
+				userScreenName = "useramsn");
+
+			User.logoutPG();
+
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "useramea@liferay.com");
+		}
+
+		task ("Then the user should be able to see the organizations listed in that account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AM Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+
+			LexiconEntry.viewEntryName(rowEntry = "AM Organization");
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Org1");
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Org2");
+		}
+	}
+
 	@description = "This test assert the account manager can view account users."
 	@priority = "4"
 	test AccountManagersCanViewUsers {

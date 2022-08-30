@@ -15,6 +15,7 @@
 package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.exception.AccountGroupNameException;
 import com.liferay.account.exception.DuplicateAccountGroupExternalReferenceCodeException;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupRel;
@@ -23,6 +24,7 @@ import com.liferay.account.service.persistence.AccountGroupRelPersistence;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -44,6 +46,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -83,7 +86,16 @@ public class AccountGroupLocalServiceImpl
 
 		accountGroup.setDefaultAccountGroup(false);
 		accountGroup.setDescription(description);
+
+		int nameMaxLength = ModelHintsUtil.getMaxLength(
+			AccountGroup.class.getName(), "name");
+
+		name = StringUtil.shorten(name, nameMaxLength);
+
+		_validateName(name);
+
 		accountGroup.setName(name);
+
 		accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 
 		_resourceLocalService.addResources(
@@ -248,6 +260,8 @@ public class AccountGroupLocalServiceImpl
 		AccountGroup accountGroup = accountGroupPersistence.fetchByPrimaryKey(
 			accountGroupId);
 
+		_validateName(name);
+
 		accountGroup.setDescription(description);
 		accountGroup.setName(name);
 
@@ -374,6 +388,12 @@ public class AccountGroupLocalServiceImpl
 
 		if (accountGroup.getAccountGroupId() != accountGroupId) {
 			throw new DuplicateAccountGroupExternalReferenceCodeException();
+		}
+	}
+
+	private void _validateName(String name) throws PortalException {
+		if (Validator.isNull(name)) {
+			throw new AccountGroupNameException("Name is null");
 		}
 	}
 

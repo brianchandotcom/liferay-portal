@@ -223,6 +223,7 @@
 		<exception>AccountEntryName</exception>
 		<exception>AccountEntryType</exception>
 		<exception>AccountEntryUserRelEmailAddress</exception>
+		<exception>AccountGroupName</exception>
 		<exception>DefaultAccountGroup</exception>
 		<exception>DuplicateAccountEntryExternalReferenceCode</exception>
 		<exception>DuplicateAccountEntryId</exception>

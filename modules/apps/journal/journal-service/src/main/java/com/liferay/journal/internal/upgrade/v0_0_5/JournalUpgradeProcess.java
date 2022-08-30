@@ -69,8 +69,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Gergely Mathe
@@ -488,15 +486,21 @@ public class JournalUpgradeProcess extends UpgradeProcess {
 		return defaultLanguageId;
 	}
 
-	private Map<String, String> _getInvalidDDMFormFieldNamesMap(
-		String content) {
+	private Map<String, String> _getInvalidDDMFormFieldNamesMap(String content)
+		throws Exception {
 
 		Map<String, String> invalidDDMFormFieldNamesMap = new HashMap<>();
 
-		Matcher matcher = _nameAttributePattern.matcher(content);
+		Document document = SAXReaderUtil.read(content);
 
-		while (matcher.find()) {
-			String oldFieldName = matcher.group(1);
+		Element rootElement = document.getRootElement();
+
+		List<Element> dynamicElementElements = rootElement.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			String oldFieldName = GetterUtil.getString(
+				dynamicElementElement.attributeValue("name"));
 
 			String newFieldName = oldFieldName.replaceAll(
 				_INVALID_FIELD_NAME_CHARS_REGEX, StringPool.BLANK);
@@ -575,7 +579,7 @@ public class JournalUpgradeProcess extends UpgradeProcess {
 		return XMLUtil.formatXML(document);
 	}
 
-	private String _transformFieldNames(String content) {
+	private String _transformFieldNames(String content) throws Exception {
 		Map<String, String> invalidDDMFormFieldNamesMap =
 			_getInvalidDDMFormFieldNamesMap(content);
 
@@ -693,8 +697,6 @@ public class JournalUpgradeProcess extends UpgradeProcess {
 
 	private static final DateFormat _dateFormat =
 		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
-	private static final Pattern _nameAttributePattern = Pattern.compile(
-		"name=\"([^\"]+)\"");
 
 	static {
 		try {

@@ -178,7 +178,10 @@ public class CommerceChannelLocalServiceImpl
 		resourceLocalService.deleteResource(
 			commerceChannel, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		Group group = fetchCommerceChannelGroup(
+		Group group = _groupLocalService.fetchGroup(
+			commerceChannel.getCompanyId(),
+			classNameLocalService.getClassNameId(
+				CommerceChannel.class.getName()),
 			commerceChannel.getCommerceChannelId());
 
 		if (group != null) {

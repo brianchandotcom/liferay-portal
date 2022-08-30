@@ -44,291 +44,18 @@ import {
 } from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
-const CollaboratorRow = ({
-	handleSelect,
-	readOnly,
-	roles,
-	selectedItems,
-	spritemap,
-	updatedRoles,
-	user,
-}) => {
-	const [active, setActive] = useState(false);
-
-	let activeRole = roles[0];
-	let changed = false;
-	let className = '';
-
-	if (user.new) {
-		activeRole = selectedItems[user.userId.toString()];
-		className = 'table-add';
-	}
-	else if (
-		Object.prototype.hasOwnProperty.call(
-			updatedRoles,
-			user.userId.toString()
-		)
-	) {
-		changed = true;
-
-		activeRole = updatedRoles[user.userId.toString()];
-
-		if (updatedRoles[user.userId.toString()].value === -1) {
-			className = 'table-delete';
-		}
-		else if (
-			updatedRoles[user.userId.toString()].value !== user.roleValue
-		) {
-			className = 'table-active';
-		}
-	}
-	else {
-		for (let i = 0; i < roles.length; i++) {
-			if (roles[i].value === user.roleValue) {
-				activeRole = roles[i];
-
-				break;
-			}
-		}
-	}
-
-	const dropdownItems = [];
-
-	for (let i = 0; i < roles.length; i++) {
-		dropdownItems.push({
-			className:
-				activeRole.value !== roles[i].value &&
-				user.roleValue === roles[i].value
-					? 'font-italic'
-					: '',
-			description: roles[i].shortDescription,
-			label: roles[i].label,
-			onClick: () => {
-				setActive(false);
-				handleSelect(roles[i]);
-			},
-			symbolLeft: activeRole.value === roles[i].value ? 'check' : '',
-		});
-	}
-
-	dropdownItems.push(
-		{
-			type: 'divider',
-		},
-		{
-			label: Liferay.Language.get('remove'),
-			onClick: () => {
-				setActive(false);
-				handleSelect({
-					label: Liferay.Language.get('remove'),
-					value: -1,
-				});
-			},
-			symbolLeft: activeRole.value === -1 ? 'check' : '',
-		}
-	);
-
-	let title = null;
-
-	if (user.isOwner) {
-		title = Liferay.Language.get(
-			'owners-can-view,-edit,-publish,-and-invite-other-users'
-		);
-	}
-	else if (activeRole.longDescription) {
-		title = activeRole.longDescription;
-	}
-
-	let label = activeRole.label;
-
-	if (user.isOwner) {
-		label = Liferay.Language.get('owner');
-	}
-	else if (user.new) {
-		label = Liferay.Language.get('add') + ' (' + label + ')';
-	}
-	else if (
-		changed &&
-		Object.prototype.hasOwnProperty.call(user, 'roleValue')
-	) {
-		label = label + ' (' + user.roleLabel + ')';
-	}
-
-	return (
-		<ClayTable.Row className={className} key={user.userId}>
-			<ClayTable.Cell>
-				<ClaySticker
-					className={`sticker-user-icon ${
-						user.portraitURL
-							? ''
-							: 'user-icon-color-' + (user.userId % 10)
-					}`}
-					size="lg"
-				>
-					{user.portraitURL ? (
-						<div className="sticker-overlay">
-							<img
-								className="sticker-img"
-								src={user.portraitURL}
-							/>
-						</div>
-					) : (
-						<ClayIcon symbol="user" />
-					)}
-				</ClaySticker>
-			</ClayTable.Cell>
-
-			<ClayTable.Cell className="table-cell-expand">
-				{user.isCurrentUser
-					? user.fullName + ' (' + Liferay.Language.get('you') + ')'
-					: user.fullName}
-			</ClayTable.Cell>
-
-			<ClayTable.Cell className="table-cell-expand">
-				{user.emailAddress}
-			</ClayTable.Cell>
-
-			<ClayTable.Cell className="table-column-text-end">
-				{readOnly ? (
-					<div
-						className="role-read-only"
-						data-tooltip-align="top"
-						title={title}
-					>
-						{label}
-
-						<ClayIcon
-							spritemap={spritemap}
-							symbol="exclamation-circle"
-						/>
-					</div>
-				) : (
-					<ClayDropDown
-						active={active}
-						alignmentPosition={Align.BottomLeft}
-						hasLeftSymbols={true}
-						menuWidth="sm"
-						onActiveChange={setActive}
-						spritemap={spritemap}
-						trigger={
-							<ClayButton
-								borderless
-								data-tooltip-align="top"
-								disabled={user.isCurrent || user.isOwner}
-								displayType="secondary"
-								small
-								title={title}
-							>
-								{label}
-
-								<span className="inline-item inline-item-after">
-									<ClayIcon
-										spritemap={spritemap}
-										symbol="caret-bottom"
-									/>
-								</span>
-							</ClayButton>
-						}
-					>
-						<ClayDropDown.ItemList>
-							<ClayDropDown.Group>
-								{dropdownItems.map((item, i) => {
-									if (item.type === 'divider') {
-										return <ClayDropDown.Divider />;
-									}
-
-									return (
-										<ClayDropDown.Item
-											className={item.className}
-											key={i}
-											onClick={item.onClick}
-											symbolLeft={item.symbolLeft}
-										>
-											<strong>{item.label}</strong>
-
-											<div>{item.description}</div>
-										</ClayDropDown.Item>
-									);
-								})}
-							</ClayDropDown.Group>
-						</ClayDropDown.ItemList>
-					</ClayDropDown>
-				)}
-			</ClayTable.Cell>
-		</ClayTable.Row>
-	);
-};
-
-const SharingAutocomplete = ({onItemClick = () => {}, sourceItems}) => {
-	return (
-		<ClayDropDown.ItemList>
-			{sourceItems
-				.sort((a, b) => {
-					if (a.emailAddress < b.emailAddress) {
-						return -1;
-					}
-
-					return 1;
-				})
-				.map((item) => {
-					return (
-						<ClayDropDown.Item
-							data-tooltip-align="top"
-							disabled={item.isOwner}
-							key={item.userId}
-							onClick={() => onItemClick(item)}
-							title={
-								item.isOwner
-									? Liferay.Language.get(
-											'cannot-update-permissions-for-an-owner'
-									  )
-									: ''
-							}
-						>
-							<div className="autofit-row autofit-row-center">
-								<div className="autofit-col mr-3">
-									<ClaySticker
-										className={`sticker-user-icon ${
-											item.portraitURL
-												? ''
-												: 'user-icon-color-' +
-												  (item.userId % 10)
-										}`}
-										size="lg"
-									>
-										{item.portraitURL ? (
-											<div className="sticker-overlay">
-												<img
-													className="sticker-img"
-													src={item.portraitURL}
-												/>
-											</div>
-										) : (
-											<ClayIcon symbol="user" />
-										)}
-									</ClaySticker>
-								</div>
-
-								<div className="autofit-col">
-									<strong>{item.fullName}</strong>
-
-									<span>{item.emailAddress}</span>
-								</div>
-							</div>
-						</ClayDropDown.Item>
-					);
-				})}
-		</ClayDropDown.ItemList>
-	);
-};
+import CollaboratorRow from './components/manage-collaborators-modal/CollaboratorRow';
+import SharingAutocomplete from './components/manage-collaborators-modal/SharingAutocomplete';
 
 const ManageCollaborators = ({
 	autocompleteUserURL,
 	getCollaboratorsURL,
 	inviteUsersURL,
+	isPublicationTemplate,
 	namespace,
 	readOnly,
 	roles,
+	setCollaboratorData,
 	setShowModal,
 	showModal,
 	spritemap,
@@ -510,8 +237,6 @@ const ManageCollaborators = ({
 		]
 	);
 
-	const multiSelectFilter = useCallback(() => true, []);
-
 	const {observer, onClose} = useModal({
 		onClose: () => setShowModal(false),
 	});
@@ -629,31 +354,46 @@ const ManageCollaborators = ({
 			userIds.push(updatedRolesKeys[i]);
 		}
 
-		const formData = objectToFormData({
-			[`${namespace}publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(
-				','
-			),
-			[`${namespace}roleValues`]: roleValues.join(','),
-			[`${namespace}userIds`]: userIds.join(','),
-		});
-
-		fetch(inviteUsersURL, {
-			body: formData,
-			method: 'POST',
-		})
-			.then((response) => response.json())
-			.then(({errorMessage, successMessage}) => {
-				if (errorMessage) {
-					showNotification(errorMessage, true);
-
-					return;
-				}
-
-				showNotification(successMessage);
-			})
-			.catch((error) => {
-				showNotification(error.message, true);
+		if (isPublicationTemplate) {
+			setCollaboratorData({
+				[`publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(
+					','
+				),
+				[`roleValues`]: roleValues.join(','),
+				[`userIds`]: userIds.join(','),
 			});
+
+			showNotification(
+				'Selected Users have been associated with the template'
+			);
+		}
+		else {
+			const formData = {
+				[`${namespace}publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(
+					','
+				),
+				[`${namespace}roleValues`]: roleValues.join(','),
+				[`${namespace}userIds`]: userIds.join(','),
+			};
+
+			fetch(inviteUsersURL, {
+				body: objectToFormData(formData),
+				method: 'POST',
+			})
+				.then((response) => response.json())
+				.then(({errorMessage, successMessage}) => {
+					if (errorMessage) {
+						showNotification(errorMessage, true);
+
+						return;
+					}
+
+					showNotification(successMessage);
+				})
+				.catch((error) => {
+					showNotification(error.message, true);
+				});
+		}
 	};
 
 	const updateRole = (role, user) => {
@@ -834,7 +574,6 @@ const ManageCollaborators = ({
 						<ClayInput.Group>
 							<ClayInput.GroupItem>
 								<ClayMultiSelect
-									filter={multiSelectFilter}
 									inputName={`${namespace}userEmailAddress`}
 									items={[]}
 									menuRenderer={SharingAutocomplete}

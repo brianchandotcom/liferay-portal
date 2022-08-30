@@ -54,36 +54,38 @@ public class WikiSimilarResultsContributor
 	}
 
 	@Override
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		super.setAssetEntryLocalService(assetEntryLocalService);
+	protected AssetEntryLocalService getAssetEntryLocalService() {
+		return _assetEntryLocalService;
 	}
 
 	@Override
-	@Reference(unbind = "-")
-	protected void setUIDFactory(UIDFactory uidFactory) {
-		super.setUIDFactory(uidFactory);
+	protected UIDFactory getUidFactory() {
+		return _uidFactory;
 	}
 
 	@Override
-	@Reference(unbind = "-")
-	protected void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
-
-		super.setWikiNodeLocalService(wikiNodeLocalService);
+	protected WikiNodeLocalService getWikiNodeLocalService() {
+		return _wikiNodeLocalService;
 	}
 
 	@Override
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		super.setWikiPageLocalService(wikiPageLocalService);
+	protected WikiPageLocalService getWikiPageLocalService() {
+		return _wikiPageLocalService;
 	}
 
 	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
 	private HttpHelper _httpHelper;
+
+	@Reference
+	private UIDFactory _uidFactory;
+
+	@Reference
+	private WikiNodeLocalService _wikiNodeLocalService;
+
+	@Reference
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

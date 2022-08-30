@@ -43,6 +43,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -251,6 +252,8 @@ public class FragmentCollectionContributorTrackerImpl
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
+	private final Map<FragmentCollectionContributor, ServiceRegistration<?>>
+		_serviceRegistrations = new HashMap<>();
 	private ServiceTrackerMap<String, FragmentCollectionContributor>
 		_serviceTrackerMap;
 
@@ -295,13 +298,16 @@ public class FragmentCollectionContributorTrackerImpl
 				}
 			}
 
-			_bundleContext.registerService(
-				FragmentCollectionContributorRegistration.class,
-				new FragmentCollectionContributorRegistration() {
-				},
-				MapUtil.singletonDictionary(
-					"fragment.collection.key",
-					serviceReference.getProperty("fragment.collection.key")));
+			_serviceRegistrations.put(
+				fragmentCollectionContributor,
+				_bundleContext.registerService(
+					FragmentCollectionContributorRegistration.class,
+					new FragmentCollectionContributorRegistration() {
+					},
+					MapUtil.singletonDictionary(
+						"fragment.collection.key",
+						serviceReference.getProperty(
+							"fragment.collection.key"))));
 
 			return fragmentCollectionContributor;
 		}
@@ -316,6 +322,11 @@ public class FragmentCollectionContributorTrackerImpl
 		public void removedService(
 			ServiceReference<FragmentCollectionContributor> serviceReference,
 			FragmentCollectionContributor fragmentCollectionContributor) {
+
+			ServiceRegistration<?> serviceRegistration =
+				_serviceRegistrations.remove(fragmentCollectionContributor);
+
+			serviceRegistration.unregister();
 
 			for (FragmentComposition fragmentComposition :
 					fragmentCollectionContributor.getFragmentCompositions()) {

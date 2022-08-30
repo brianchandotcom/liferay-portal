@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -75,10 +76,15 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortalException {
 
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
+		long ctCollectionId = ParamUtil.getLong(
+			resourceRequest, "ctCollectionId");
 
-		if (ctCollection == null) {
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
+
+		if ((ctCollection == null) &&
+			(ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				_jsonFactory.createJSONArray());
@@ -91,7 +97,11 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		User owner = _userLocalService.fetchUser(ctCollection.getUserId());
+		User owner = null;
+
+		if (ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			owner = _userLocalService.fetchUser(ctCollection.getUserId());
+		}
 
 		if (owner != null) {
 			String portraitURL = StringPool.BLANK;
@@ -117,10 +127,14 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 				));
 		}
 
-		Group group = _groupLocalService.fetchGroup(
-			ctCollection.getCompanyId(),
-			_portal.getClassNameId(CTCollection.class),
-			ctCollection.getCtCollectionId());
+		Group group = null;
+
+		if (ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			group = _groupLocalService.fetchGroup(
+				ctCollection.getCompanyId(),
+				_portal.getClassNameId(CTCollection.class),
+				ctCollection.getCtCollectionId());
+		}
 
 		if (group == null) {
 			JSONPortletResponseUtil.writeJSON(
@@ -180,7 +194,7 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 			User user = userMap.get(userGroupRole.getUserId());
 
 			if ((role == null) || (user == null) ||
-				(user.getUserId() == ctCollection.getUserId())) {
+				(user.getUserId() == owner.getUserId())) {
 
 				continue;
 			}

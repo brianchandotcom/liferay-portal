@@ -15,12 +15,9 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionTemplateLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -32,40 +29,31 @@ import org.osgi.service.component.annotations.Reference;
  * @author Máté Thurzó
  */
 @Component(
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
-		"mvc.command.name=/change_tracking/add_ct_collection",
-		"mvc.command.name=/change_tracking/edit_ct_collection",
-		"mvc.command.name=/change_tracking/undo_ct_collection"
+		"mvc.command.name=/change_tracking/edit_template"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
+public class EditTemplateMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		long ctCollectionId = ParamUtil.getLong(
-			renderRequest, "ctCollectionId");
+		long ctCollectionTemplateId = ParamUtil.getLong(
+			renderRequest, "ctCollectionTemplateId");
 
-		renderRequest.setAttribute(
-			"ctCollection",
-			_ctCollectionLocalService.fetchCTCollection(ctCollectionId));
+		if (ctCollectionTemplateId > 0) {
+			renderRequest.setAttribute(
+				"ctCollection",
+				_ctCollectionTemplateLocalService.fetchCTCollectionTemplate(
+					ctCollectionTemplateId));
+		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		renderRequest.setAttribute(
-			"ctCollectionTemplates",
-			_ctCollectionTemplateLocalService.getCTCollectionTemplates(
-				themeDisplay.getCompanyId(), 0, 9));
-
-		return "/publications/edit_ct_collection.jsp";
+		return "/publications/edit_template.jsp";
 	}
-
-	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private CTCollectionTemplateLocalService _ctCollectionTemplateLocalService;

@@ -261,12 +261,6 @@ public class FragmentCollectionContributorTrackerImpl
 		implements ServiceTrackerCustomizer
 			<FragmentCollectionContributor, FragmentCollectionContributor> {
 
-		public FragmentCollectionContributorTrackerServiceTrackerCustomizer(
-			BundleContext bundleContext) {
-
-			_bundleContext = bundleContext;
-		}
-
 		@Override
 		public FragmentCollectionContributor addingService(
 			ServiceReference<FragmentCollectionContributor> serviceReference) {
@@ -346,6 +340,12 @@ public class FragmentCollectionContributorTrackerImpl
 			}
 
 			_bundleContext.ungetService(serviceReference);
+		}
+
+		private FragmentCollectionContributorTrackerServiceTrackerCustomizer(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
 		}
 
 		private final BundleContext _bundleContext;

@@ -27,11 +27,21 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -100,20 +110,19 @@ public class TalendDispatchTaskExecutorTest {
 
 	@Test
 	public void testExecuteLiferayOutputBlog() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		User user = _getGroupAdminUser(group.getGroupId());
+
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
 				null, TestPropsValues.getUserId(), "talend",
 				UnicodePropertiesBuilder.put(
-					"liferayUser", "test@liferay.com"
+					"liferayUser", user.getEmailAddress()
 				).put(
-					"liferayUserPassword", "test"
+					"liferayUserPassword", user.getPasswordUnencrypted()
 				).put(
-					"siteId",
-					() -> {
-						Group testGroup = GroupTestUtil.addGroup();
-
-						return String.valueOf(testGroup.getGroupId());
-					}
+					"siteId", group.getGroupId()
 				).build(),
 				"TalendDispatchTrigger", false);
 
@@ -144,6 +153,26 @@ public class TalendDispatchTaskExecutorTest {
 		Assert.assertEquals(
 			DispatchTaskStatus.SUCCESSFUL,
 			DispatchTaskStatus.valueOf(dispatchLog.getStatus()));
+	}
+
+	private User _getGroupAdminUser(long groupId) throws Exception {
+		User user = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext());
+
+		UserLocalServiceUtil.updateEmailAddressVerified(user.getUserId(), true);
+
+		Role role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
+
+		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+			new long[] {user.getUserId()}, groupId, role.getRoleId());
+
+		return user;
 	}
 
 	private void _simulateSchedulerEvent(long dispatchTriggerId)

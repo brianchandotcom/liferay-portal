@@ -296,7 +296,10 @@ public class BreadcrumbUtil {
 
 			breadcrumbEntry.setTitle(
 				group.getDescriptiveName(themeDisplay.getLocale()));
-			breadcrumbEntry.setURL(layoutSetFriendlyURL);
+
+			if (group.isActive()) {
+				breadcrumbEntry.setURL(layoutSetFriendlyURL);
+			}
 
 			breadcrumbEntries.add(breadcrumbEntry);
 		}

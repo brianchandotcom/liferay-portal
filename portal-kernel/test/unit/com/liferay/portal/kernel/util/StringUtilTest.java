@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 import org.junit.Assert;
@@ -162,6 +163,23 @@ public class StringUtilTest {
 		Assert.assertFalse(StringUtil.equalsIgnoreCase("Hello \n World", ""));
 		Assert.assertFalse(StringUtil.equalsIgnoreCase("Hello \n World", null));
 		Assert.assertFalse(StringUtil.equalsIgnoreCase("!", "A"));
+	}
+
+	@Test
+	public void testGetTitleCase() {
+		Assert.assertTrue(
+			Objects.equals(
+				StringUtil.getTitleCase("this is a title test", false, ""),
+				"This Is a Title Test"));
+		Assert.assertTrue(
+			Objects.equals(
+				StringUtil.getTitleCase(
+					"this is a dxp title test", false, "DXP"),
+				"This Is a DXP Title Test"));
+		Assert.assertTrue(
+			Objects.equals(
+				StringUtil.getTitleCase("this is a title-test", true, ""),
+				"This Is a Title-test"));
 	}
 
 	@Test

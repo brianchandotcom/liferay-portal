@@ -71,7 +71,7 @@ renderResponse.setTitle(HtmlUtil.escape(selCompany.getWebId()));
 		<liferay-frontend:edit-form-footer>
 			<clay:button
 				cssClass="d-flex"
-				label="add"
+				label="save"
 				type="submit"
 			/>
 

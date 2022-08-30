@@ -103,10 +103,10 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 				preparedStatement2.setString(14, "ObjectEntry");
 				preparedStatement2.setString(
 					15, ObjectFieldConstants.DB_TYPE_STRING);
-				preparedStatement2.setNull(16, 0);
+				preparedStatement2.setString(16, null);
 				preparedStatement2.setBoolean(17, false);
 				preparedStatement2.setBoolean(18, false);
-				preparedStatement2.setNull(19, 0);
+				preparedStatement2.setString(19, null);
 
 				Locale defaultLocale = LocaleUtil.fromLanguageId(
 					UpgradeProcessUtil.getDefaultLanguageId(companyId));
@@ -126,7 +126,7 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 						"Label"));
 
 				preparedStatement2.setString(21, "externalReferenceCode");
-				preparedStatement2.setNull(22, 0);
+				preparedStatement2.setString(22, null);
 				preparedStatement2.setBoolean(23, false);
 				preparedStatement2.setBoolean(24, false);
 				preparedStatement2.setBoolean(25, true);

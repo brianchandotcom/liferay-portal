@@ -281,7 +281,8 @@ public class ViewChangesDisplayContext {
 			ParamUtil.getString(_renderRequest, "changeTypes")
 		).put(
 			"collaboratorsData",
-			_publicationsDisplayContext.getCollaboratorsReactData(_ctCollection)
+			_publicationsDisplayContext.getCollaboratorsReactData(
+				_ctCollection.getCtCollectionId())
 		).put(
 			"columnFromURL", ParamUtil.getString(_renderRequest, "column")
 		).put(

@@ -863,7 +863,7 @@ definition {
 			key_linkResultTitle = "Similar Results Blog 2",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
-		ControlMenu.viewHeaderTitle(headerTitle = "Blogs Display Page");
+		ControlMenu.viewHeaderTitle(headerTitle = "Similar Results Blog 2");
 	}
 
 	@priority = "4"

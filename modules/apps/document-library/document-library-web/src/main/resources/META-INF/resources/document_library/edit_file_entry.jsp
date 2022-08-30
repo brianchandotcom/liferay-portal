@@ -678,10 +678,8 @@ renderResponse.setTitle(headerTitle);
 
 	function <portlet:namespace />changeFileEntryType() {
 		Liferay.Util.openConfirmModal({
-			message: Liferay.Language.get(
-				'changing-the-document-type-will-cause-data-loss'
-			),
-
+			message:
+				'<liferay-ui:message key="changing-the-document-type-will-cause-data-loss" />',
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
 					Liferay.Util.setFormValues(form, {

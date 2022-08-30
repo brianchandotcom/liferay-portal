@@ -354,16 +354,6 @@ public class ObjectLayoutLocalServiceTest {
 						"than 12"));
 		}
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition.getObjectDefinitionId());
-
-		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
-			_objectDefinitionLocalService);
-
-		_objectDefinition.setEnableComments(false);
-
-		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
-
 		try {
 			ObjectLayoutTab objectLayoutTab =
 				_objectLayoutTabPersistence.create(0);
@@ -388,26 +378,16 @@ public class ObjectLayoutLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectLayoutBoxCategorizationTypeException
-					objectLayoutBoxCategorizationTypeException) {
+		catch (ObjectLayoutBoxCommentsTypeException
+					objectLayoutBoxCommentsTypeException) {
 
 			Assert.assertEquals(
 				"Comments layout box must be enabled to be used",
-				objectLayoutBoxCategorizationTypeException.getMessage());
+				objectLayoutBoxCommentsTypeException.getMessage());
 		}
 
-		_deleteObjectFields();
-
-		_objectLayoutLocalService.deleteObjectLayout(
-			objectLayout.getObjectLayoutId());
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition.getObjectDefinitionId());
-
-		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
-			_objectDefinitionLocalService);
-
 		_objectDefinition.setStorageType(RandomTestUtil.randomString());
+		_objectDefinition.setEnableComments(true);
 
 		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
 
@@ -449,6 +429,10 @@ public class ObjectLayoutLocalServiceTest {
 
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService);
+
+		_objectDefinition.setEnableComments(true);
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
 
 		try {
 			ObjectLayoutTab objectLayoutTab =

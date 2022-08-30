@@ -293,15 +293,9 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			return false;
 		}
 
-		if ((layout.fetchDraftLayout() != null) ||
-			(!layout.isDraft() && _isLayoutPublished(layout))) {
-
-			return false;
-		}
-
 		String mode = ParamUtil.getString(httpServletRequest, "p_l_mode");
 
-		if (Objects.equals(mode, Constants.EDIT)) {
+		if (Objects.equals(mode, Constants.EDIT) || !layout.isDraftLayout()) {
 			return false;
 		}
 

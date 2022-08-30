@@ -41,8 +41,51 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro configurationTeardown {
-		PageAudit.goToGooglePageSpeedInsightsSystemSettingConfiguration();
+	macro tearDownInstanceSettingsConfigurations {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed Insights",
+			configurationScope = "Virtual Instance Scope");
+
+		PageAudit.resetDefaultValues();
+
+		Click(
+			key_configurationName = "Google PageSpeed Insights",
+			key_configurationScope = "Site Scope",
+			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+
+		PageAudit.resetDefaultValues();
+	}
+
+	macro tearDownSystemSettingsConfigurations {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed Insights",
+			configurationScope = "System Scope");
+
+		PageAudit.resetDefaultValues();
+
+		Click(
+			key_configurationName = "Google PageSpeed Insights",
+			key_configurationScope = "Virtual Instance Scope",
+			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+
+		PageAudit.resetDefaultValues();
+		
+		Click(
+			key_configurationName = "Google PageSpeed Insights",
+			key_configurationScope = "Site Scope",
+			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 
 		PageAudit.resetDefaultValues();
 	}
@@ -302,6 +345,8 @@ definition {
 		PageAudit.goToGooglePageSpeedInsightsSystemSettingConfiguration();
 
 		PageAudit.setAPISettings(key_apiKey = "${apiKey}");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro setPreferredStrategy {

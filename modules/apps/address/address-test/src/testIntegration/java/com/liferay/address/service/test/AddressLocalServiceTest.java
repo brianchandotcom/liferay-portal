@@ -188,7 +188,7 @@ public class AddressLocalServiceTest {
 		_addressLocalService.updateAddress(
 			address.getAddressId(), name, description, street1, null, null,
 			city, zip, region.getRegionId(), country.getCountryId(),
-			address.getTypeId(), address.isMailing(), address.isPrimary(),
+			address.getListTypeId(), address.isMailing(), address.isPrimary(),
 			address.getPhoneNumber());
 
 		List<Address> expectedAddresses = Arrays.asList(address);
@@ -219,11 +219,11 @@ public class AddressLocalServiceTest {
 		_assertSearchAddress(
 			Arrays.asList(businessAddress), null,
 			_getLinkedHashMap(
-				"typeIds", new long[] {businessType.getListTypeId()}));
+				"listTypeIds", new long[] {businessType.getListTypeId()}));
 		_assertSearchAddress(
 			Arrays.asList(businessAddress, personalAddress), null,
 			_getLinkedHashMap(
-				"typeIds",
+				"listTypeIds",
 				new long[] {
 					businessType.getListTypeId(), personalType.getListTypeId()
 				}));
@@ -248,8 +248,8 @@ public class AddressLocalServiceTest {
 			address.getAddressId(), address.getName(), address.getDescription(),
 			address.getStreet1(), address.getStreet2(), address.getStreet3(),
 			address.getCity(), address.getZip(), address.getRegionId(),
-			address.getCountryId(), address.getTypeId(), address.isMailing(),
-			address.isPrimary(), phoneNumber);
+			address.getCountryId(), address.getListTypeId(),
+			address.isMailing(), address.isPrimary(), phoneNumber);
 
 		List<Phone> phones = _phoneLocalService.getPhones(
 			address.getCompanyId(), Address.class.getName(),
@@ -264,23 +264,24 @@ public class AddressLocalServiceTest {
 		return _addAddress(RandomTestUtil.randomString(), -1, phoneNumber);
 	}
 
-	private Address _addAddress(String name, long typeId, String phoneNumber)
+	private Address _addAddress(
+			String name, long listTypeId, String phoneNumber)
 		throws Exception {
 
 		User user = TestPropsValues.getUser();
 
-		if (typeId < 0) {
+		if (listTypeId < 0) {
 			ListType listType = _listTypeLocalService.getListType(
 				"personal", ListTypeConstants.CONTACT_ADDRESS);
 
-			typeId = listType.getListTypeId();
+			listTypeId = listType.getListTypeId();
 		}
 
 		return _addressLocalService.addAddress(
 			null, user.getUserId(), Contact.class.getName(),
 			user.getContactId(), name, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), null, null,
-			RandomTestUtil.randomString(), null, 0, 0, typeId, false, false,
+			RandomTestUtil.randomString(), null, 0, 0, listTypeId, false, false,
 			phoneNumber, ServiceContextTestUtil.getServiceContext());
 	}
 

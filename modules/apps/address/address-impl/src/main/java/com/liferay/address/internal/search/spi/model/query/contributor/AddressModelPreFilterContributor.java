@@ -56,7 +56,7 @@ public class AddressModelPreFilterContributor
 		SearchContext searchContext) {
 
 		_filterByClass(booleanFilter, searchContext);
-		_filterByTypeId(booleanFilter, searchContext);
+		_filterByListTypeId(booleanFilter, searchContext);
 	}
 
 	private void _filterByClass(
@@ -81,7 +81,7 @@ public class AddressModelPreFilterContributor
 		}
 	}
 
-	private void _filterByTypeId(
+	private void _filterByListTypeId(
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		LinkedHashMap<String, Object> params =
@@ -91,19 +91,20 @@ public class AddressModelPreFilterContributor
 			return;
 		}
 
-		long[] typeIds = (long[])params.getOrDefault("typeIds", new long[0]);
+		long[] listTypeIds = (long[])params.getOrDefault(
+			"listTypeIds", new long[0]);
 		String[] typeNames = (String[])params.get("typeNames");
 
 		if (ArrayUtil.isNotEmpty(typeNames)) {
-			typeIds = ArrayUtil.unique(
+			listTypeIds = ArrayUtil.unique(
 				ArrayUtil.append(
-					typeIds, _getTypeIds(searchContext, typeNames)));
+					listTypeIds, _getTypeIds(searchContext, typeNames)));
 		}
 
-		if (ArrayUtil.isNotEmpty(typeIds)) {
-			TermsFilter termsFilter = new TermsFilter("typeId");
+		if (ArrayUtil.isNotEmpty(listTypeIds)) {
+			TermsFilter termsFilter = new TermsFilter("listTypeId");
 
-			termsFilter.addValues(ArrayUtil.toStringArray(typeIds));
+			termsFilter.addValues(ArrayUtil.toStringArray(listTypeIds));
 
 			booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
 		}

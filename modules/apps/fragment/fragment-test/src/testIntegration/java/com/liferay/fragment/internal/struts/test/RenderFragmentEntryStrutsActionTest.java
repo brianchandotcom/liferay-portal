@@ -16,6 +16,7 @@ package com.liferay.fragment.internal.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -173,6 +174,14 @@ public class RenderFragmentEntryStrutsActionTest {
 		elements = bodyElement.getElementsByTag("script");
 
 		elements.remove();
+
+		Elements fragmentElements =
+			bodyElement.getElementsByAttributeValueContaining(
+				"id", "fragment-");
+
+		for (Element fragmentElement : fragmentElements) {
+			fragmentElement.attr("id", StringPool.BLANK);
+		}
 
 		return _removeSpacingCharactersBetweenTags(bodyElement);
 	}

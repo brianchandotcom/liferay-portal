@@ -73,6 +73,10 @@ import javax.portlet.ActionResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -246,10 +250,12 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 				fragmentEntryLinksJSONObject.getJSONObject(fragmentEntryLinkId);
 
 			Assert.assertEquals(
-				_fragmentRendererController.render(
-					defaultFragmentRendererContext, httpServletRequest,
-					httpServletResponse),
-				fragmentEntryLinkJSONObject.getString("content"));
+				_removeUniqueId(
+					_fragmentRendererController.render(
+						defaultFragmentRendererContext, httpServletRequest,
+						httpServletResponse)),
+				_removeUniqueId(
+					fragmentEntryLinkJSONObject.getString("content")));
 		}
 	}
 
@@ -318,6 +324,18 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return mockLiferayPortletActionRequest;
+	}
+
+	private String _removeUniqueId(String content) {
+		Document document = Jsoup.parseBodyFragment(content);
+
+		Element bodyElement = document.body();
+
+		Element element = bodyElement.firstElementSibling();
+
+		element.attr("id", StringPool.BLANK);
+
+		return element.outerHtml();
 	}
 
 	private void _testAddFragmentEntryLinks(

@@ -649,7 +649,9 @@ definition {
 		task ("Open Page Audit tab and Assert reload button id not present") {
 			PageAudit.openPageAuditSidebar();
 
-			AssertElementNotPresent(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON");
+			AssertElementNotPresent(
+				key_title = "Relaunch",
+				locator1 = "Button#ANY_TITLE");
 		}
 	}
 
@@ -826,7 +828,11 @@ definition {
 				badgeValue = "12",
 				locator1 = "PageAudit#BADGE_NUMBER");
 
+			PageAudit.assertFailingElementCount(expectedLabels = "10");
+
 			Button.click(button = "View More");
+
+			PageAudit.assertFailingElementCount(expectedLabels = "12");
 		}
 	}
 
@@ -865,7 +871,9 @@ definition {
 				key_breadcrumbName = "Site Settings",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
 
-			MenuBar.viewActive(menuBar = "Google PageSpeed Insights");
+			AssertVisible(
+				key_menuBar = "Google PageSpeed Insights",
+				locator1 = "MenuBar#ACTIVE_NAV_LINK");
 		}
 	}
 
@@ -1121,7 +1129,9 @@ definition {
 		}
 
 		task ("Check that language has no cache data") {
-			AssertVisible(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
+			AssertVisible(
+				key_title = "Relaunch",
+				locator1 = "Button#ANY_TITLE");
 		}
 	}
 
@@ -1256,7 +1266,9 @@ definition {
 				locator1 = "PageAudit#HELP_TEXT",
 				value1 = "Launch a page audit to check issues that impact on your page's accessibility and SEO.");
 
-			AssertVisible(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
+			AssertVisible(
+				key_title = "Relaunch",
+				locator1 = "Button#ANY_TITLE");
 		}
 	}
 

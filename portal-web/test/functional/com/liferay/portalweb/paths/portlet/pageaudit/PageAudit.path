@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BUTTON_LAUNCH_ANY</td>
+	<td>//button[@title='Relaunch' or @title='Launch Page Audit']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CACHE_ALERT</td>
 	<td>//div[@role="alert"] //div[@class='autofit-section' and not(*)]</td>
 	<td></td>
@@ -111,11 +116,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LAUNCH_PAGE_AUDIT_BUTTON</td>
-	<td>//*[contains(@class, 'btn-secondary') and contains (text(), 'Launch')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LOCALE_BUTTON</td>
 	<td>//div[contains(@class,'sidebar-body')] //button[*[name()='svg'][contains(@class,'lexicon-icon')]]</td>
 	<td></td>
@@ -163,11 +163,6 @@
 <tr>
 	<td>PROGRESS_BAR</td>
 	<td>//*[contains(@class, 'progress-bar')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RELAUNCH_PAGE_AUDIT_BUTTON</td>
-	<td>//*[contains(@class, 'lexicon-icon-reload')]</td>
 	<td></td>
 </tr>
 <tr>

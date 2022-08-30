@@ -1294,12 +1294,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#PageAuditContentPage";
 
-		task ("Add Content Page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Content Page",
-				type = "content");
-
+		task ("Navigate to content page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 		}
 
@@ -1309,14 +1304,6 @@ definition {
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
 				value1 = "Check issues that impact on your page's accessibility and SEO.");
-		}
-
-		task ("Go to Google PageSpeed throught the button in panel") {
-			PageAudit.connectToGooglePageAudit();
-
-			AssertTextPresent(
-				locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
-				value1 = "Google PageSpeed Insights");
 		}
 	}
 
@@ -1360,14 +1347,6 @@ definition {
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
 				value1 = "Check issues that impact on your page's accessibility and SEO.");
 		}
-
-		task ("Go to Google PageSpeed throught the button in panel") {
-			PageAudit.connectToGooglePageAudit();
-
-			AssertTextPresent(
-				locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
-				value1 = "Google PageSpeed Insights");
-		}
 	}
 
 	@description = "LPS-119068: When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a widget page, the issue icon for displaying the page audit panel shows"
@@ -1390,14 +1369,6 @@ definition {
 			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
 				value1 = "Check issues that impact on your page's accessibility and SEO.");
-		}
-
-		task ("Go to Google PageSpeed throught the button in panel") {
-			PageAudit.connectToGooglePageAudit();
-
-			AssertTextPresent(
-				locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
-				value1 = "Google PageSpeed Insights");
 		}
 	}
 

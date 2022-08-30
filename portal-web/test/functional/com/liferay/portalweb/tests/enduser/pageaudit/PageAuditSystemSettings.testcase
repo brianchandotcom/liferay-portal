@@ -57,7 +57,9 @@ definition {
 		task ("Open Page Audit panel and assert the progress bar") {
 			PageAudit.openPageAuditSidebar();
 
-			ClickNoError(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
+			ClickNoError(
+				key_title = "Relaunch",
+				locator1 = "Button#ANY_TITLE");
 
 			AssertVisible(locator1 = "PageAudit#PROGRESS_BAR");
 		}

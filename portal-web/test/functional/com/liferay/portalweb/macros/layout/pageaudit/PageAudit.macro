@@ -263,8 +263,24 @@ definition {
 	}
 
 	macro openPageAuditSidebar {
-		if ((IsElementNotPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON")) && (IsElementNotPresent(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON"))) {
+		if (IsNotVisible(locator1 = "PageAudit#SIDEBAR")) {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
+	}
+
+	macro assertFailingElementCount {
+		var javaScriptCountElement = '''
+		
+		return document.querySelectorAll('.failing-element').length.toString();
+
+		''';
+
+		var count = selenium.getEval("${javaScriptCountElement}");
+
+		return "${count}";
+
+		if ("${count}" != "${expectedLabels}") {
+			fail("Labels number is not correct");
 		}
 	}
 
@@ -279,12 +295,9 @@ definition {
 	macro runPageAudit {
 		PageAudit.openPageAuditSidebar();
 
-		if (IsElementNotPresent(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON")) {
-			Click(locator1 = "PageAudit#RELAUNCH_PAGE_AUDIT_BUTTON");
-		}
-		else {
-			ClickNoError(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
-		}
+		ClickNoError(locator1 = "PageAudit#BUTTON_LAUNCH_ANY");
+
+		Pause(locator1 = "3000");
 
 		WaitForElementPresent(locator1 = "PageAudit#ALERT_BOX");
 	}

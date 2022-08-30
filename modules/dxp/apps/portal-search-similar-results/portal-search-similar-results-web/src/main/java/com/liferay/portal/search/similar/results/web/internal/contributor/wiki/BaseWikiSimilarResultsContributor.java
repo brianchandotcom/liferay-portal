@@ -49,7 +49,9 @@ public abstract class BaseWikiSimilarResultsContributor
 
 		String nodeName = (String)criteriaHelper.getRouteParameter("nodeName");
 
-		WikiNode wikiNode = _wikiNodeLocalService.fetchNode(groupId, nodeName);
+		WikiNodeLocalService wikiNodeLocalService = getWikiNodeLocalService();
+
+		WikiNode wikiNode = wikiNodeLocalService.fetchNode(groupId, nodeName);
 
 		if (wikiNode == null) {
 			return;
@@ -57,24 +59,31 @@ public abstract class BaseWikiSimilarResultsContributor
 
 		String title = (String)criteriaHelper.getRouteParameter("title");
 
-		WikiPage wikiPage = _wikiPageLocalService.fetchPage(
+		WikiPageLocalService wikiPageLocalService = getWikiPageLocalService();
+
+		WikiPage wikiPage = wikiPageLocalService.fetchPage(
 			wikiNode.getNodeId(), title, 1.0);
 
 		if (wikiPage == null) {
 			return;
 		}
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+		AssetEntryLocalService assetEntryLocalService =
+			getAssetEntryLocalService();
+
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
 			groupId, wikiPage.getUuid());
 
 		if (assetEntry == null) {
 			return;
 		}
 
+		UIDFactory uidFactory = getUidFactory();
+
 		criteriaBuilder.type(
 			assetEntry.getClassName()
 		).uid(
-			_uidFactory.getUID(wikiPage)
+			uidFactory.getUID(wikiPage)
 		);
 	}
 
@@ -105,31 +114,12 @@ public abstract class BaseWikiSimilarResultsContributor
 		}
 	}
 
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
+	protected abstract AssetEntryLocalService getAssetEntryLocalService();
 
-		_assetEntryLocalService = assetEntryLocalService;
-	}
+	protected abstract UIDFactory getUidFactory();
 
-	protected void setUIDFactory(UIDFactory uidFactory) {
-		_uidFactory = uidFactory;
-	}
+	protected abstract WikiNodeLocalService getWikiNodeLocalService();
 
-	protected void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
-
-		_wikiNodeLocalService = wikiNodeLocalService;
-	}
-
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
-	private AssetEntryLocalService _assetEntryLocalService;
-	private UIDFactory _uidFactory;
-	private WikiNodeLocalService _wikiNodeLocalService;
-	private WikiPageLocalService _wikiPageLocalService;
+	protected abstract WikiPageLocalService getWikiPageLocalService();
 
 }

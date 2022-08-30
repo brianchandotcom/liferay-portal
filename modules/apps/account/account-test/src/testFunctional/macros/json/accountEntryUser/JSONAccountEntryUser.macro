@@ -24,4 +24,15 @@ definition {
 			userScreenName = "${userScreenName}");
 	}
 
+	macro addExistUsertoAccount {
+		Variables.assertDefined(parameterList = "${accountEntryName},${userEmailAddress}");
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
+		var userId = JSONUserSetter.setUserId(userEmailAddress = "${userEmailAddress}");
+
+		JSONAccountEntryUserAPI._addExistUsertoAccount(
+			accountEntryId = "${accountEntryId}",
+			userId = "${userId}");
+	}
+
 }

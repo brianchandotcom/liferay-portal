@@ -26,4 +26,28 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _addExistUsertoAccount {
+		Variables.assertDefined(parameterList = "${accountEntryId},${userId}");
+
+		if (!(isSet(creatorEmailAddress))) {
+			var creatorEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(creatorPassword))) {
+			var creatorPassword = "test";
+		}
+
+		var companyId = JSONCompany.getCompanyId();
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/account.accountentryuserrel/add-account-entry-user-rels \
+				-u ${creatorEmailAddress}:${creatorPassword} \
+				-d accountEntryId=${accountEntryId} \
+				-d accountUserIds=${userId} 
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 }

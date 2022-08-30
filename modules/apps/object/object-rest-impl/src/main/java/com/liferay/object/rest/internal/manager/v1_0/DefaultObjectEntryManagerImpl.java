@@ -52,6 +52,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -62,6 +64,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
@@ -126,14 +129,14 @@ public class DefaultObjectEntryManagerImpl
 			String scopeKey)
 		throws Exception {
 
+		long groupId = getGroupId(objectDefinition, scopeKey);
+
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
 			_objectEntryService.addObjectEntry(
-				getGroupId(objectDefinition, scopeKey),
-				objectDefinition.getObjectDefinitionId(),
+				groupId, objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
-					objectDefinition.getObjectDefinitionId(),
-					objectEntry.getProperties(),
+					groupId, objectDefinition, 0L, objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
 				_createServiceContext(
 					objectEntry.getProperties(),
@@ -175,14 +178,15 @@ public class DefaultObjectEntryManagerImpl
 
 		serviceContext.setCompanyId(companyId);
 
+		long groupId = getGroupId(objectDefinition, scopeKey);
+
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
 			_objectEntryService.addOrUpdateObjectEntry(
-				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
+				externalReferenceCode, groupId,
 				objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
-					objectDefinition.getObjectDefinitionId(),
-					objectEntry.getProperties(),
+					groupId, objectDefinition, 0L, objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
 				serviceContext));
 	}
@@ -566,7 +570,8 @@ public class DefaultObjectEntryManagerImpl
 			_objectEntryService.updateObjectEntry(
 				objectEntryId,
 				_toObjectValues(
-					serviceBuilderObjectEntry.getObjectDefinitionId(),
+					serviceBuilderObjectEntry.getGroupId(), objectDefinition,
+					serviceBuilderObjectEntry.getObjectEntryId(),
 					objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
 				_createServiceContext(
@@ -888,11 +893,13 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private Map<String, Serializable> _toObjectValues(
-		long objectDefinitionId, Map<String, Object> properties,
-		Locale locale) {
+			long groupId, ObjectDefinition objectDefinition, long objectEntryId,
+			Map<String, Object> properties, Locale locale)
+		throws Exception {
 
 		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(objectDefinitionId);
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId());
 
 		Map<String, Serializable> values = new HashMap<>();
 
@@ -902,6 +909,22 @@ public class DefaultObjectEntryManagerImpl
 			Object object = properties.get(name);
 
 			if ((object == null) && !objectField.isRequired()) {
+				continue;
+			}
+
+			if (Objects.equals(
+					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
+					objectField.getBusinessType())) {
+
+				values.put(
+					name,
+					SanitizerUtil.sanitize(
+						objectField.getCompanyId(), groupId,
+						objectField.getUserId(),
+						objectDefinition.getClassName(), objectEntryId,
+						ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+						String.valueOf(object), null));
+
 				continue;
 			}
 

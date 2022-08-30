@@ -21,4 +21,13 @@ definition {
 	macro disableEmailReportToggle {
 		Uncheck.uncheckToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 	}
+
+	macro disableEmailReport {
+		ACEmailReport.accessEmailReportSettings();
+
+		ACEmailReport.disableEmailReportToggle();
+
+		Button.clickSave();
+	}
+
 }

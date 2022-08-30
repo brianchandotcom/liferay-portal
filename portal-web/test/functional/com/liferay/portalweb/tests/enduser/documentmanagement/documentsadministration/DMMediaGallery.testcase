@@ -204,7 +204,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 
-		MGPortlet.viewShowAllPG();
+		MGPortlet.viewFolderItemsPG(mgFolderName = "DM Folder Name");
 
 		ApplicationDisplayTemplates.selectPortletADT(templateName = "Media Gallery Test ADT");
 

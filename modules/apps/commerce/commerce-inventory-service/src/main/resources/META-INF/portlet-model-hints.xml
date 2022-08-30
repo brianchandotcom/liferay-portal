@@ -54,8 +54,8 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" />
-		<field name="description" type="String" />
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String" />
 		<field name="active" type="boolean" />
 		<field name="street1" type="String" />
 		<field name="street2" type="String" />
@@ -82,5 +82,17 @@
 		<field name="sku" type="String" />
 		<field name="quantity" type="int" />
 		<field name="reservedQuantity" type="int" />
+	</model>
+	<model name="com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel">
+		<field name="mvccVersion" type="long" />
+		<field name="commerceInventoryWarehouseRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="commerceInventoryWarehouseId" type="long" />
 	</model>
 </model-hints>

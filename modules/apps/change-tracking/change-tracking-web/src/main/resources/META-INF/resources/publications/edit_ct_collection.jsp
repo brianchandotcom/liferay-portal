@@ -21,6 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 CTCollection ctCollection = (CTCollection)request.getAttribute("ctCollection");
 
+List<CTCollectionTemplate> ctCollectionTemplates = (List<CTCollectionTemplate>)request.getAttribute("ctCollectionTemplates");
+
 String actionName = "/change_tracking/edit_ct_collection";
 long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
 String description = StringPool.BLANK;
@@ -28,6 +30,7 @@ String name = StringPool.BLANK;
 String saveButtonLabel = "create";
 
 boolean revert = ParamUtil.getBoolean(request, "revert");
+boolean showTemplates = false;
 
 if (revert) {
 	actionName = "/change_tracking/undo_ct_collection";
@@ -46,6 +49,7 @@ else if (ctCollection != null) {
 	renderResponse.setTitle(StringBundler.concat(LanguageUtil.format(resourceBundle, "edit-x", new Object[] {ctCollection.getName()})));
 }
 else {
+	showTemplates = true;
 	renderResponse.setTitle(LanguageUtil.get(request, "create-new-publication"));
 }
 
@@ -75,6 +79,23 @@ portletDisplay.setShowBackIcon(true);
 					<h3 class="sheet-subtitle">
 						<liferay-ui:message key="publication-with-reverted-changes" />
 					</h3>
+			</c:if>
+
+			<c:if test="<%= showTemplates %>">
+				<aui:select label="template" name="publicationTemplate">
+					<aui:option label="no-template-selected" value="" />
+
+					<%
+					for (CTCollectionTemplate ctCollectionTemplate : ctCollectionTemplates) {
+					%>
+
+						<aui:option label="<%= ctCollectionTemplate.getName() %>" value="<%= ctCollectionTemplate.getCtCollectionTemplateId() %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
 			</c:if>
 
 				<aui:input label="name" name="name" placeholder="publication-name-placeholder" value="<%= name %>">

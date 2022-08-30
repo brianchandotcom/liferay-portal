@@ -128,8 +128,8 @@ definition {
 			value1 = "There are no media files in this folder.");
 	}
 
-	macro viewShowAllPG {
-		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+	macro viewFolderItemsPG {
+		LexiconEntry.openEntryMenu(rowEntry = "${mgFolderName}");
 
 		for (var menuItem : list "Permissions,Multiple Media,Add Shortcut,Access from Desktop") {
 			MenuItem.viewPresent(menuItem = "${menuItem}");

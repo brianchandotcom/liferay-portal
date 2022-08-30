@@ -92,8 +92,7 @@ definition {
 	@description = "Verify that is able to add a past and range validation using the response date as parameter"
 	@priority = "5"
 	test CanAddPastValidationUsingResponseDate {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		var displayDateYear = DateUtil.getCurrentYear();
 
@@ -115,6 +114,8 @@ definition {
 		Form.gotoAdvancedTab();
 
 		FormFields.enableSwitch(fieldName = "Validation");
+
+		ScrollBy(value1 = "0, 2000");
 
 		FormFields.setValidationAcceptedDate(acceptedDateOption = "Past Dates");
 

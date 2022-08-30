@@ -33,15 +33,15 @@ public class CommerceAddressTypeUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_setAddressType(
+		_setAddressListType(
 			_getListTypeId(
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING),
 			14000);
-		_setAddressType(
+		_setAddressListType(
 			_getListTypeId(
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING),
 			14002);
-		_setAddressType(
+		_setAddressListType(
 			_getListTypeId(
 				AccountListTypeConstants.
 					ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING),
@@ -60,13 +60,13 @@ public class CommerceAddressTypeUpgradeProcess extends UpgradeProcess {
 		return listType.getListTypeId();
 	}
 
-	private void _setAddressType(long newTypeId, long oldTypeId)
+	private void _setAddressListType(long newListTypeId, long oldListTypeId)
 		throws Exception {
 
 		runSQL(
 			StringBundler.concat(
-				"update Address set typeId = ", newTypeId, " where typeId = ",
-				oldTypeId));
+				"update Address set listTypeId = ", newListTypeId,
+				" where listTypeId = ", oldListTypeId));
 	}
 
 	private final ListTypeLocalService _listTypeLocalService;

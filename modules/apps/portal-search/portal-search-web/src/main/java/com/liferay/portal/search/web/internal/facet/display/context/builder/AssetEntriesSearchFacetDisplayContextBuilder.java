@@ -14,6 +14,10 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context.builder;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -35,6 +39,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -63,6 +68,8 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 	}
 
 	public AssetEntriesSearchFacetDisplayContext build() {
+		setTypeNames(getTypeNames());
+
 		List<AssetEntriesSearchFacetTermDisplayContext> termDisplayContexts =
 			buildTermDisplayContexts();
 
@@ -255,6 +262,38 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 		}
 
 		return _parameterValues.get(0);
+	}
+
+	protected Map<String, String> getTypeNames() {
+		Map<String, String> assetTypesTypeNames = new HashMap<>();
+
+		for (String className : _classNames) {
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(className);
+
+			String typeName = className;
+
+			if (assetRendererFactory != null) {
+				typeName = assetRendererFactory.getTypeName(
+					_themeDisplay.getLocale());
+			}
+			else if (className.startsWith(
+						ObjectDefinition.class.getName() + "#")) {
+
+				String[] parts = StringUtil.split(className, "#");
+
+				ObjectDefinition objectDefinition =
+					ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+						Long.valueOf(parts[1]));
+
+				typeName = objectDefinition.getLabel(_themeDisplay.getLocale());
+			}
+
+			assetTypesTypeNames.put(className, typeName);
+		}
+
+		return assetTypesTypeNames;
 	}
 
 	private String[] _classNames;

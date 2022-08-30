@@ -31,6 +31,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			JSONUser.tearDownNonAdminUsers();
+
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
@@ -221,6 +223,8 @@ definition {
 				locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
 
 			MenuItem.viewNotVisible(menuItem = "Preview Draft");
+
+			JSONRole.deleteRole(roleTitle = "Roles Siterole Name");
 		}
 	}
 

@@ -103,6 +103,12 @@ definition {
 		}
 	}
 
+	macro assertButtonIsVisible {
+		var key_text = "${text}";
+
+		AssertVisible(locator1 = "CustomerPortalSite#BUTTON");
+	}
+
 	macro assertPageTitle {
 		AssertElementPresent(
 			key_title = "${title}",
@@ -353,10 +359,6 @@ definition {
 		}
 	}
 
-	macro waitToLiferayPage {
-        WaitForElementPresent(locator1 = "CustomerPortalSite#LIFERAY_SITE");
-    }
-
 	macro openAccountsAdminForCP {
 		Accounts.openAccountsAdmin();
 
@@ -367,11 +369,6 @@ definition {
 		Accounts.goToEntryMenuItem(
 			menuItem = "Assign Roles",
 			rowEntry = "Test Test");
-	}
-
-	macro assertButtonIsVisible {
-		var key_text = "${text}";
-		AssertVisible(locator1 = "CustomerPortalSite#BUTTON");
 	}
 
 	macro replaceCertificateAndPrivateKey {
@@ -739,6 +736,10 @@ definition {
 		WaitForVisible(
 			key_userFirstName = "${userFirstName}",
 			locator1 = "CustomerPortalSite#WELCOME_PAGE_USER_NAME");
+	}
+
+	macro waitToLiferayPage {
+		WaitForElementPresent(locator1 = "CustomerPortalSite#LIFERAY_SITE");
 	}
 
 }

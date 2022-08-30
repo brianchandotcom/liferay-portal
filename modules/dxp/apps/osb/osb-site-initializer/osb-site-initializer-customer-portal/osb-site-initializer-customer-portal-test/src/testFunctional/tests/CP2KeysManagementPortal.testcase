@@ -15,7 +15,7 @@ definition {
 	var testUserFirstName = "Test";
 	var testProduct = "Portal";
 
-    setUp {
+	setUp {
 		task ("Set up instance and sign in") {
 			TestCase.setUpPortalInstance();
 
@@ -38,7 +38,7 @@ definition {
 	}
 
 	tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		CustomerPortal.customerPortalApisTearDown();
 
@@ -49,13 +49,13 @@ definition {
 		}
 	}
 
-    @description = "LPS-150784 - Verify if the 'Activated' tab displays the number of keys for it"
+	@description = "LPS-150784 - Verify if the 'Activated' tab displays the number of keys for it"
 	@ignore = "true"
-    @priority = "4"
-    test VerifyTheActivatedTabDisplaysTheNumberOfKeys {
+	@priority = "4"
+	test VerifyTheActivatedTabDisplaysTheNumberOfKeys {
 		property portal.upstream = "quarantine";
 
-		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
+		// Reason: Need refactor for cases with diferents Keys distribution at the fields.
 
 		var keyStatus = "Activated";
 
@@ -88,15 +88,15 @@ definition {
 				licenseTab = "${keyStatus}",
 				numberOfLicenses = "${keyCount}");
 		}
-    }
+	}
 
 	@description = "LPS-160211 - Verify if the 'All' tab displays the number of keys for it"
 	@ignore = "true"
-    @priority = "4"
-    test VerifyTheAllTabDisplaysTheNumberOfKeys {
+	@priority = "4"
+	test VerifyTheAllTabDisplaysTheNumberOfKeys {
 		property portal.upstream = "quarantine";
 
-		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
+		// Reason: Need refactor for cases with diferents Keys distribution at the fields.
 
 		var keyStatus = "All";
 
@@ -129,17 +129,44 @@ definition {
 				licenseTab = "${keyStatus}",
 				numberOfLicenses = "${keyCount}");
 		}
-    }
+	}
 
-	@description = "LPS-150785 - Verify if the 'Not Activated' tab displays the number of keys for it"
+	@description = "LPS-150787 - Verify that by default pagination option is 'Show 5 Items'"
 	@ignore = "true"
-    @priority = "4"
-    test VerifyTheNotActivatedTabDisplaysTheNumberOfKeys {
+	@priority = "4"
+	test VerifyTheDefaultPaginationOption {
 		property portal.upstream = "quarantine";
 
-		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
 
-		var keyStatus = "Not Activated";
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("When I click at the All tab") {
+			CP2ActivationKeys.goToKeyTab(licenseTab = "All");
+		}
+
+		task ("Then I should be able to see the pagination button with the text 'Show 5 Items' by default") {
+			CustomerPortal.assertButtonIsVisible(text = "Show 5 Items");
+		}
+	}
+
+	@description = "LPS-150793 - Verify if the date from Expiration Date has a format like this (Month, Day, Year)"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyTheExpirationDateFormat {
+		property portal.upstream = "quarantine";
+
+		// Reason: Need refactor for cases with diferents Keys distribution at the fields.
+
+		var keyStatus = "All";
 
 		task ("Given I go to the test account") {
 			CustomerPortal.search(searchItem = "${testAccount}");
@@ -157,28 +184,25 @@ definition {
 			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
 		}
 
-		task ("And I click at the Not Activated tab") {
-			CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+		task ("And I generate full start and end date for the license") {
+			CP2DataUtil.generateStaticFullStartAndEndDate();
 		}
 
-		task ("When I count the numbers of rows") {
-			var keyCount = CP2ActivationKeys.countTableRows();
+		task ("Then I assert the the date is correct") {
+			CP2ActivationKeys.assertTextAtTable(
+				lineColunm = "5",
+				linePosition = "1",
+				text = "${staticFullEndDate}");
 		}
-
-		task ("Then I assert that the amount of rows is equals to the number at the tab") {
-			CP2ActivationKeys.assertLicenseQuantity(
-				licenseTab = "${keyStatus}",
-				numberOfLicenses = "${keyCount}");
-		}
-    }
+	}
 
 	@description = "LPS-150786 - Verify if the 'Expired' tab displays the number of keys for it"
 	@ignore = "true"
-    @priority = "4"
-    test VerifyTheExpiredTabDisplaysTheNumberOfKeys {
+	@priority = "4"
+	test VerifyTheExpiredTabDisplaysTheNumberOfKeys {
 		property portal.upstream = "quarantine";
 
-		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
+		// Reason: Need refactor for cases with diferents Keys distribution at the fields.
 
 		var keyStatus = "Expired";
 
@@ -211,13 +235,17 @@ definition {
 				licenseTab = "${keyStatus}",
 				numberOfLicenses = "${keyCount}");
 		}
-    }
+	}
 
-	@description = "LPS-150787 - Verify that by default pagination option is 'Show 5 Items'"
+	@description = "LPS-150794 - Verify that when you hover the mouse over 'DNE' a tooltip appears with a message 'This key does not expire'"
 	@ignore = "true"
-    @priority = "4"
-	test VerifyTheDefaultPaginationOption {
-		property portal.upstream = "quarantine";		
+	@priority = "3"
+	test VerifyTheMessageWhenMouseOverDNE {
+		property portal.upstream = "quarantine";
+
+		// Reason: Need refactor for cases with diferents Keys distribution at the fields.
+
+		var keyStatus = "All";
 
 		task ("Given I go to the test account") {
 			CustomerPortal.search(searchItem = "${testAccount}");
@@ -231,12 +259,96 @@ definition {
 			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
-		task ("When I click at the All tab") {
-			CP2ActivationKeys.goToKeyTab(licenseTab = "All");
+		task ("And I select the pagination quantity to 50 items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
 		}
 
-		task ("Then I should be able to see the pagination button with the text 'Show 5 Items' by default") {
-			CustomerPortal.assertButtonIsVisible(text = "Show 5 Items");
+		task ("When I put the mouse over the Enviroment Name of a key at the table") {
+			CP2ActivationKeys.putMouseOverElementAtTable(text = "DNE");
+		}
+
+		task ("Then I should see a tooltip with the 'This key does not expire' text") {
+			CP2ActivationKeys.assertTooltipIsVisible(text = "This key does not expire");
+		}
+	}
+
+	@description = "LPS-150790 - Verify if when you hover the mouse over any cell 'Environment name' it shows a tooltip with the name of the environment and its description"
+	@ignore = "true"
+	@priority = "3"
+	test VerifyTheMouserOverWorksInAnyCellEnvironmentName {
+		property portal.upstream = "quarantine";
+
+		// Reason: Need refactor for cases with diferents Keys distribution at the fields.
+
+		var keyStatus = "All";
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("And I select the pagination quantity to 50 items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		}
+
+		task ("When I put the mouse over the Enviroment Name of a key at the table") {
+			CP2ActivationKeys.putMouseOverElementAtTable(text = "Redacted");
+		}
+
+		task ("Then I should see a tooltip with the Environment Name and Description") {
+			CP2ActivationKeys.assertTooltipIsVisible(text = "Test Entitlement Name");
+		}
+
+		task ("Then I should see a tooltip with the Environment Description") {
+			CP2ActivationKeys.assertTooltipIsVisible(text = "Test Entitlement Description");
+		}
+	}
+
+	@description = "LPS-150785 - Verify if the 'Not Activated' tab displays the number of keys for it"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyTheNotActivatedTabDisplaysTheNumberOfKeys {
+		property portal.upstream = "quarantine";
+
+		// Reason: Need refactor for cases with diferents Keys distribution at the fields.
+
+		var keyStatus = "Not Activated";
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("And I select the pagination quantity to 50 items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		}
+
+		task ("And I click at the Not Activated tab") {
+			CP2ActivationKeys.goToKeyTab(licenseTab = "${keyStatus}");
+		}
+
+		task ("When I count the numbers of rows") {
+			var keyCount = CP2ActivationKeys.countTableRows();
+		}
+
+		task ("Then I assert that the amount of rows is equals to the number at the tab") {
+			CP2ActivationKeys.assertLicenseQuantity(
+				licenseTab = "${keyStatus}",
+				numberOfLicenses = "${keyCount}");
 		}
 	}
 
@@ -244,7 +356,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test VerifyTheOptionsOfTheDropdownList {
-		property portal.upstream = "quarantine";		
+		property portal.upstream = "quarantine";
 
 		task ("Given I go to the test account") {
 			CustomerPortal.search(searchItem = "${testAccount}");
@@ -295,166 +407,13 @@ definition {
 		}
 	}
 
-	@description = "LPS-150790 - Verify if when you hover the mouse over any cell 'Environment name' it shows a tooltip with the name of the environment and its description"
-	@ignore = "true"
-	@priority = "3"
-	test VerifyTheMouserOverWorksInAnyCellEnvironmentName {
-		property portal.upstream = "quarantine";
-
-		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
-
-		var keyStatus = "All";
-
-		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
-
-			CustomerPortal.enterOnProject(title = "${testAccount}");
-		}
-
-		task ("And I click on Portal product") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
-		}
-
-		task ("And I select the pagination quantity to 50 items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
-		}
-
-		task ("When I put the mouse over the Enviroment Name of a key at the table"){
-			CP2ActivationKeys.putMouseOverElementAtTable(text = "Redacted");
-		}
-
-		task ("Then I should see a tooltip with the Environment Name and Description") {
-			CP2ActivationKeys.assertTooltipIsVisible(text = "Test Entitlement Name");
-		}
-
-		task ("Then I should see a tooltip with the Environment Description") {
-			CP2ActivationKeys.assertTooltipIsVisible(text = "Test Entitlement Description");
-		}
-
-	}
-
-	@description = "LPS-150793 - Verify if the date from Expiration Date has a format like this (Month, Day, Year)"
-	@ignore = "true"
-	@priority = "4"
-	test VerifyTheExpirationDateFormat {
-		property portal.upstream = "quarantine";
-
-		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
-
-		var keyStatus = "All";
-
-		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
-
-			CustomerPortal.enterOnProject(title = "${testAccount}");
-		}
-
-		task ("And I click on Portal product") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
-		}
-
-		task ("And I select the pagination quantity to 50 items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
-		}
-
-		task ("And I generate full start and end date for the license") {
-			CP2DataUtil.generateStaticFullStartAndEndDate();
-		}
-
-		task ("Then I assert the the date is correct") {
-			CP2ActivationKeys.assertTextAtTable(
-				linePosition = "1",
-				lineColunm = "5",
-				text = "${staticFullEndDate}");
-		}
-	}
-
-	@description = "LPS-150794 - Verify that when you hover the mouse over 'DNE' a tooltip appears with a message 'This key does not expire'"
-	@ignore = "true"
-	@priority = "3"
-	test VerifyTheMessageWhenMouseOverDNE {
-		property portal.upstream = "quarantine";
-
-		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
-
-		var keyStatus = "All";
-
-		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
-
-			CustomerPortal.enterOnProject(title = "${testAccount}");
-		}
-
-		task ("And I click on Portal product") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
-		}
-
-		task ("And I select the pagination quantity to 50 items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
-		}
-
-		task ("When I put the mouse over the Enviroment Name of a key at the table"){
-			CP2ActivationKeys.putMouseOverElementAtTable(text = "DNE");
-		}
-
-		task ("Then I should see a tooltip with the 'This key does not expire' text") {
-			CP2ActivationKeys.assertTooltipIsVisible(text = "This key does not expire");
-		}
-
-	}
-
-	@description = "LPS-150791 - Verify that for virtual keys the subtext is 'Cluster Nodes (Keys)'"
-	@ignore = "true"
-	@priority = "4"
-	test VerifyTheSubTextForVirtualKeys {
-		property portal.upstream = "quarantine";
-
-		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
-
-		var keyStatus = "All";
-
-		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
-
-			CustomerPortal.enterOnProject(title = "${testAccount}");
-		}
-
-		task ("And I click on Portal product") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
-		}
-
-		task ("And I select the pagination quantity to 50 items per page") {
-			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
-		}
-
-		task ("Then I assert that virtual clusters description has 'Cluster Nodes (Keys)' text") {
-			CP2ActivationKeys.assertTextAtTable(
-				linePosition = "3",
-				lineColunm = "3",
-				text = "Virtual Cluster");
-
-			CP2ActivationKeys.assertTextAtTable(
-				linePosition = "3",
-				lineColunm = "3",
-				text = "1 Cluster Nodes (Keys)");
-		}
-	}
-
 	@description = "LPS-150792 - Verify that for local keys the subtext is 'On-Premise'"
 	@ignore = "true"
 	@priority = "4"
 	test VerifyTheSubTextForLocalKeys {
 		property portal.upstream = "quarantine";
 
-		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
+		// Reason: Need refactor for cases with diferents Keys distribution at the fields.
 
 		var keyStatus = "All";
 
@@ -476,14 +435,53 @@ definition {
 
 		task ("Then I assert that local keys has key type as 'On-Premise'") {
 			CP2ActivationKeys.assertTextAtTable(
-				linePosition = "2",
 				lineColunm = "3",
+				linePosition = "2",
 				text = "On-Premise");
-			
+
 			CP2ActivationKeys.assertTextAtTable(
-				linePosition = "2",
 				lineColunm = "3",
+				linePosition = "2",
 				text = "${testAccount}");
+		}
+	}
+
+	@description = "LPS-150791 - Verify that for virtual keys the subtext is 'Cluster Nodes (Keys)'"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyTheSubTextForVirtualKeys {
+		property portal.upstream = "quarantine";
+
+		// Reason: Need refactor for cases with diferents Keys distribution at the fields.
+
+		var keyStatus = "All";
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+		task ("And I click on Portal product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
+		}
+
+		task ("And I select the pagination quantity to 50 items per page") {
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		}
+
+		task ("Then I assert that virtual clusters description has 'Cluster Nodes (Keys)' text") {
+			CP2ActivationKeys.assertTextAtTable(
+				lineColunm = "3",
+				linePosition = "3",
+				text = "Virtual Cluster");
+
+			CP2ActivationKeys.assertTextAtTable(
+				lineColunm = "3",
+				linePosition = "3",
+				text = "1 Cluster Nodes (Keys)");
 		}
 	}
 
@@ -493,7 +491,7 @@ definition {
 	test VerifyTheSuccessMessageWhenDownloadTheKey {
 		property portal.upstream = "quarantine";
 
-		//Reason: Need refactor for cases with diferents Keys distribution at the fields.
+		// Reason: Need refactor for cases with diferents Keys distribution at the fields.
 
 		var keyStatus = "All";
 
@@ -511,11 +509,11 @@ definition {
 
 		task ("And I get the formated name for the activation key file") {
 			var expectedDownloadedFileName = CP2ActivationKeys.formatLicenseFileName(
+				fileType = "xml",
+				licenseName = "${testAccount}",
 				licenseType = "activation-key",
 				product = "${testProduct}",
-				version = "6.2",
-				licenseName = "${testAccount}",
-				fileType = "xml");
+				version = "6.2");
 		}
 
 		task ("When I click on the download button at the Activation Keys Table") {

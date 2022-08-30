@@ -1,5 +1,13 @@
 definition {
 
+	macro _formatCamelCase {
+		var camelCase = StringUtil.replace("${camelCase}", " ", "");
+
+		var camelCase = StringUtil.lowerCaseFirstLetter("${camelCase}");
+
+		return "${camelCase}";
+	}
+
 	macro assertDropdownItemIsDisabled {
 		var key_dropdownItem = "${dropdownItem}";
 
@@ -32,10 +40,65 @@ definition {
 		}
 	}
 
+	macro assertLicenseQuantity {
+		var key_licenseTab = CP2ActivationKeys._formatCamelCase(camelCase = "${licenseTab}");
+		var key_numberOfLicenses = "${numberOfLicenses}";
+
+		AssertElementPresent(locator1 = "CP2ActivationKeys#LICENSE_TAB_BUTTON_NUMBER");
+	}
+
+	macro assertTextAtTable {
+		var key_linePosition = "${linePosition}";
+		var key_colunmPosition = "${lineColunm}";
+		var key_text = "${text}";
+
+		AssertTextEquals(
+			locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_POSITION",
+			value1 = "${text}");
+	}
+
+	macro assertTooltipIsVisible {
+		var key_text = "${text}";
+
+		AssertVisible(locator1 = "CP2ActivationKeys#TOOLTIPS_TEXT");
+	}
+
+	macro clickAtDownloadButton {
+		var key_entitlementName = "${entitlementName}";
+
+		Click(locator1 = "CP2ActivationKeys#TABLES_DOWNLOAD_BUTTON");
+
+		DownloadTempFile();
+	}
+
 	macro clickAtDropdownItem {
 		var key_dropdownItem = "${dropdownItem}";
 
 		Click(locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
+	}
+
+	macro countTableRows {
+		var key_rowCount = "1";
+		var rowCount = "0";
+		var hasPagesToCount = "true";
+
+		while (("${hasPagesToCount}" == "true")) {
+			while ((IsElementPresent(locator1 = "CP2ActivationKeys#KEYS_TABLE_ROWS")) && (maxIterations = "51")) {
+				var key_rowCount = ${key_rowCount} + 1;
+				var rowCount = ${rowCount} + 1;
+			}
+
+			if ((IsElementPresent(locator1 = "CP2ActivationKeys#KEYS_TABLE_ROWS")) && (IsElementNotPresent(locator1 = "CP2ActivationKeys#DISABLED_NEXT_PAGE_BUTTON"))) {
+				var key_rowCount = "1";
+
+				CP2ActivationKeys.goToNextTablePage();
+			}
+			else {
+				var hasPagesToCount = "false";
+			}
+		}
+
+		return "${rowCount}";
 	}
 
 	macro exportAllKeyDetails {
@@ -52,11 +115,6 @@ definition {
 		CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${fileName}");
 	}
 
-    macro assertLicenseQuantity {
-		var key_licenseTab = CP2ActivationKeys._formatCamelCase(camelCase = "${licenseTab}");
-        var key_numberOfLicenses = "${numberOfLicenses}"; 
-        AssertElementPresent(locator1 = "CP2ActivationKeys#LICENSE_TAB_BUTTON_NUMBER");
-    }
 	macro filterKeyTable {
 		var key_filterOption = "${filterOption}";
 
@@ -115,6 +173,24 @@ definition {
 		return "${downloadedFileName}";
 	}
 
+	macro goToKeyTab {
+		var key_licenseTab = CP2ActivationKeys._formatCamelCase(camelCase = "${licenseTab}");
+
+		Click(locator1 = "CP2ActivationKeys#LICENSE_TAB_BUTTON");
+	}
+
+	macro goToNextTablePage {
+		ScrollWebElementIntoView(locator1 = "CP2ActivationKeys#NEXT_PAGE_BUTTON");
+
+		Click(locator1 = "CP2ActivationKeys#NEXT_PAGE_BUTTON");
+	}
+
+	macro putMouseOverElementAtTable {
+		var key_text = "${text}";
+
+		MouseOver(locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_TEXT");
+	}
+
 	macro selectKeyCheckboxByEnvironmentName {
 		var key_environmentName = "${environmentName}";
 
@@ -126,18 +202,6 @@ definition {
 		var key_date = "${date}";
 
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX_BY_EXPIRATION_DATE");
-	}
-
-
-	macro goToKeyTab {
-		var key_licenseTab = CP2ActivationKeys._formatCamelCase(camelCase = "${licenseTab}");
-		Click(locator1 = "CP2ActivationKeys#LICENSE_TAB_BUTTON");
-	}
-
-	macro _formatCamelCase {
-		var camelCase = StringUtil.replace("${camelCase}", " ", "");
-        var camelCase = StringUtil.lowerCaseFirstLetter("${camelCase}");
-		return "${camelCase}";
 	}
 
 	macro selectPaginationQuantity {
@@ -154,58 +218,4 @@ definition {
 		}
 	}
 
-	macro countTableRows {
-		var key_rowCount = "1";
-		var rowCount = "0";
-		var hasPagesToCount = "true";
-
-		while ("${hasPagesToCount}" == "true") {
-			while (IsElementPresent(locator1 = "CP2ActivationKeys#KEYS_TABLE_ROWS") && (maxIterations = "51")) {
-				var key_rowCount = MathUtil.sum("${key_rowCount}", "1");
-				var rowCount = MathUtil.sum("${rowCount}", "1");
-			}
-
-			if (IsElementPresent(locator1 = "CP2ActivationKeys#KEYS_TABLE_ROWS") && IsElementNotPresent(locator1 = "CP2ActivationKeys#DISABLED_NEXT_PAGE_BUTTON")) {
-				var key_rowCount = "1";
-
-				CP2ActivationKeys.goToNextTablePage();
-			}
-			else {
-				var hasPagesToCount = "false";
-			}
-		}
-
-		return "${rowCount}";
-	}
-
-	macro goToNextTablePage() {
-		ScrollWebElementIntoView(locator1 = "CP2ActivationKeys#NEXT_PAGE_BUTTON");
-
-		Click(locator1 = "CP2ActivationKeys#NEXT_PAGE_BUTTON");
-	}
-
-	macro putMouseOverElementAtTable {
-		var key_text = "${text}";
-		MouseOver(locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_TEXT");
-	}
-
-	macro assertTooltipIsVisible {
-		var key_text= "${text}";
-		AssertVisible(locator1 = "CP2ActivationKeys#TOOLTIPS_TEXT");
-	}
-
-	macro assertTextAtTable {
-		var key_linePosition = "${linePosition}";
-		var key_colunmPosition = "${lineColunm}";
-		var key_text = "${text}";
-		AssertTextEquals(
-			locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_POSITION",
-			value1 = "${text}");
-	}
-
-	macro clickAtDownloadButton {
-		var key_entitlementName = "${entitlementName}";
-		Click(locator1 = "CP2ActivationKeys#TABLES_DOWNLOAD_BUTTON");
-		DownloadTempFile();
-	}
 }

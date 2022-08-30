@@ -73,10 +73,6 @@ public class AccountEntryDisplay {
 		return _accountEntry;
 	}
 
-	public AccountEntryEmailValidator getAccountEntryEmailValidator() {
-		return _accountEntryEmailValidator;
-	}
-
 	public long getAccountEntryId() {
 		return _accountEntryId;
 	}

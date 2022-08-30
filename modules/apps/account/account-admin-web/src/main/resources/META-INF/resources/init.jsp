@@ -69,6 +69,7 @@ page import="com.liferay.account.admin.web.internal.security.permission.resource
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountGroupPermission" %><%@
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountPermission" %><%@
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountRolePermission" %><%@
+page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountUserPermission" %><%@
 page import="com.liferay.account.admin.web.internal.servlet.taglib.util.AccountUserActionDropdownItemsProvider" %><%@
 page import="com.liferay.account.constants.AccountActionKeys" %><%@
 page import="com.liferay.account.constants.AccountConstants" %><%@

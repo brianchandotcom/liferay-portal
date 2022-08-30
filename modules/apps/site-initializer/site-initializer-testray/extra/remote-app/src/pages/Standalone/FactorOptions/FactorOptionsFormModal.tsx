@@ -114,7 +114,6 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 					label,
 					value,
 				}))}
-				required={false}
 				value={factorCategoryId}
 			/>
 		</Modal>

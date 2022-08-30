@@ -80,7 +80,7 @@ public class AddressModelListener extends BaseModelListener<Address> {
 		attributesBuilder.add("street1");
 		attributesBuilder.add("street2");
 		attributesBuilder.add("street3");
-		attributesBuilder.add("typeId");
+		attributesBuilder.add("listTypeId");
 		attributesBuilder.add("zip");
 
 		return attributesBuilder.getAttributes();

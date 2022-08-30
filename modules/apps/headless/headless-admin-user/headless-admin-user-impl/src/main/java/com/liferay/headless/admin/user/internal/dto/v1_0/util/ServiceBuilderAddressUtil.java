@@ -47,12 +47,12 @@ public class ServiceBuilderAddressUtil {
 			GetterUtil.getLong(postalAddress.getId()));
 
 		address.setCountryId(countryId);
+		address.setListTypeId(
+			ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
+				"other", postalAddress.getAddressType(), type));
 		address.setRegionId(
 			ServiceBuilderRegionUtil.getServiceBuilderRegionId(
 				postalAddress.getAddressRegion(), countryId));
-		address.setTypeId(
-			ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
-				"other", postalAddress.getAddressType(), type));
 		address.setCity(city);
 		address.setMailing(true);
 		address.setPrimary(GetterUtil.getBoolean(postalAddress.getPrimary()));

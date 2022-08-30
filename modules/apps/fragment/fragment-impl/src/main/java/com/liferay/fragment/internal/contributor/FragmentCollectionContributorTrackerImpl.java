@@ -161,45 +161,6 @@ public class FragmentCollectionContributorTrackerImpl
 	@Reference
 	protected FragmentEntryValidator fragmentEntryValidator;
 
-	private Map<String, FragmentComposition> _getFragmentCompositions(
-		FragmentCollectionContributor fragmentCollectionContributor) {
-
-		Map<String, FragmentComposition> fragmentCompositions = new HashMap<>();
-
-		for (FragmentComposition fragmentComposition :
-				fragmentCollectionContributor.getFragmentCompositions()) {
-
-			fragmentCompositions.put(
-				fragmentComposition.getFragmentCompositionKey(),
-				fragmentComposition);
-		}
-
-		return fragmentCompositions;
-	}
-
-	private Map<String, FragmentEntry> _getFragmentEntries(
-		FragmentCollectionContributor fragmentCollectionContributor) {
-
-		Map<String, FragmentEntry> fragmentEntries = new HashMap<>();
-
-		for (int type : _SUPPORTED_FRAGMENT_TYPES) {
-			for (FragmentEntry fragmentEntry :
-					fragmentCollectionContributor.getFragmentEntries(type)) {
-
-				if (!_validateFragmentEntry(fragmentEntry)) {
-					continue;
-				}
-
-				fragmentEntries.put(
-					fragmentEntry.getFragmentEntryKey(), fragmentEntry);
-
-				_updateFragmentEntryLinks(fragmentEntry);
-			}
-		}
-
-		return fragmentEntries;
-	}
-
 	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
@@ -310,11 +271,29 @@ public class FragmentCollectionContributorTrackerImpl
 			FragmentCollectionContributor fragmentCollectionContributor =
 				_bundleContext.getService(serviceReference);
 
-			_fragmentCompositions.putAll(
-				_getFragmentCompositions(fragmentCollectionContributor));
+			for (FragmentComposition fragmentComposition :
+					fragmentCollectionContributor.getFragmentCompositions()) {
 
-			_fragmentEntries.putAll(
-				_getFragmentEntries(fragmentCollectionContributor));
+				_fragmentCompositions.put(
+					fragmentComposition.getFragmentCompositionKey(),
+					fragmentComposition);
+			}
+
+			for (int type : _SUPPORTED_FRAGMENT_TYPES) {
+				for (FragmentEntry fragmentEntry :
+						fragmentCollectionContributor.getFragmentEntries(
+							type)) {
+
+					if (!_validateFragmentEntry(fragmentEntry)) {
+						continue;
+					}
+
+					_fragmentEntries.put(
+						fragmentEntry.getFragmentEntryKey(), fragmentEntry);
+
+					_updateFragmentEntryLinks(fragmentEntry);
+				}
+			}
 
 			_bundleContext.registerService(
 				FragmentCollectionContributorRegistration.class,

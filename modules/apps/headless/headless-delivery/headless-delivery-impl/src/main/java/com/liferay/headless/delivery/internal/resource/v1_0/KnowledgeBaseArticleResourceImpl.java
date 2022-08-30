@@ -156,6 +156,13 @@ public class KnowledgeBaseArticleResourceImpl
 					"postKnowledgeBaseArticleKnowledgeBaseArticle",
 					KBConstants.RESOURCE_NAME_ADMIN, kbArticle.getGroupId())
 			).put(
+				"createBatch",
+				addAction(
+					KBActionKeys.ADD_KB_ARTICLE,
+					"postKnowledgeBaseFolderKnowledgeBaseArticleBatch",
+					KBConstants.RESOURCE_NAME_ADMIN,
+					parentKnowledgeBaseArticleId)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW,
@@ -262,6 +269,18 @@ public class KnowledgeBaseArticleResourceImpl
 					KBActionKeys.ADD_KB_ARTICLE, "postSiteKnowledgeBaseArticle",
 					KBConstants.RESOURCE_NAME_ADMIN, siteId)
 			).put(
+				"createBatch",
+				addAction(
+					KBActionKeys.ADD_KB_ARTICLE,
+					"postSiteKnowledgeBaseArticleBatch",
+					KBConstants.RESOURCE_NAME_ADMIN, siteId)
+			).put(
+				"deleteBatch",
+				addAction(
+					KBActionKeys.DELETE_KB_ARTICLES,
+					"deleteKnowledgeBaseArticleBatch",
+					KBConstants.RESOURCE_NAME_ADMIN, null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getSiteKnowledgeBaseArticlesPage",
@@ -278,6 +297,12 @@ public class KnowledgeBaseArticleResourceImpl
 					ActionKeys.SUBSCRIBE,
 					"putSiteKnowledgeBaseArticleUnsubscribe",
 					KBConstants.RESOURCE_NAME_ADMIN, siteId)
+			).put(
+				"updateBatch",
+				addAction(
+					KBActionKeys.UPDATE_KB_ARTICLES_PRIORITIES,
+					"putKnowledgeBaseArticleBatch",
+					KBConstants.RESOURCE_NAME_ADMIN, null)
 			).build(),
 			booleanQuery -> {
 				if (!GetterUtil.getBoolean(flatten)) {

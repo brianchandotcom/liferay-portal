@@ -168,6 +168,16 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 					ActionKeys.ADD_ENTRY, "postSiteBlogPosting",
 					BlogsConstants.RESOURCE_NAME, siteId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_ENTRY, "postSiteBlogPostingBatch",
+					BlogsConstants.RESOURCE_NAME, siteId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteBlogPostingBatch",
+					BlogsConstants.RESOURCE_NAME, null)
+			).put(
 				"subscribe",
 				addAction(
 					ActionKeys.SUBSCRIBE, "putSiteBlogPostingSubscribe",
@@ -177,6 +187,11 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 				addAction(
 					ActionKeys.SUBSCRIBE, "putSiteBlogPostingUnsubscribe",
 					BlogsConstants.RESOURCE_NAME, siteId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putBlogPostingBatch",
+					BlogsConstants.RESOURCE_NAME, null)
 			).build(),
 			booleanQuery -> {
 			},

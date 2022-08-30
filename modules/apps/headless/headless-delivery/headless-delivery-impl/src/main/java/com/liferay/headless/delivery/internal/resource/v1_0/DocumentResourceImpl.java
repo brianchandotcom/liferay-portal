@@ -182,10 +182,25 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 					ActionKeys.ADD_DOCUMENT, "postAssetLibraryDocument",
 					DLConstants.RESOURCE_NAME, assetLibraryId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_DOCUMENT, "postAssetLibraryDocumentBatch",
+					DLConstants.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteDocumentBatch",
+					DLConstants.RESOURCE_NAME, null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getAssetLibraryDocumentsPage",
 					DLConstants.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putDocumentBatch",
+					DLConstants.RESOURCE_NAME, null)
 			).build(),
 			_createDocumentsPageBooleanQueryUnsafeConsumer(
 				assetLibraryId, flatten),
@@ -292,10 +307,25 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 					ActionKeys.ADD_DOCUMENT, "postSiteDocument",
 					DLConstants.RESOURCE_NAME, siteId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_DOCUMENT, "postSiteDocumentBatch",
+					DLConstants.RESOURCE_NAME, siteId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteDocumentBatch",
+					DLConstants.RESOURCE_NAME, null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getSiteDocumentsPage",
 					DLConstants.RESOURCE_NAME, siteId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putDocumentBatch",
+					DLConstants.RESOURCE_NAME, null)
 			).build(),
 			_createDocumentsPageBooleanQueryUnsafeConsumer(siteId, flatten),
 			search, aggregation, filter, pagination, sorts);

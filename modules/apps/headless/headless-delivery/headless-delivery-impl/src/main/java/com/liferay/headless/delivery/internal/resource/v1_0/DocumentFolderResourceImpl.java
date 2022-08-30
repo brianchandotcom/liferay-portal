@@ -155,10 +155,25 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 					ActionKeys.ADD_FOLDER, "postSiteDocumentFolder",
 					DLConstants.RESOURCE_NAME, siteId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_FOLDER, "postSiteDocumentFolderBatch",
+					DLConstants.RESOURCE_NAME, siteId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteDocumentFolderBatch",
+					DLConstants.RESOURCE_NAME, null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getSiteDocumentFoldersPage",
 					DLConstants.RESOURCE_NAME, siteId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putDocumentFolderBatch",
+					DLConstants.RESOURCE_NAME, null)
 			).build(),
 			documentFolderId, siteId, flatten, search, aggregation, filter,
 			pagination, sorts);

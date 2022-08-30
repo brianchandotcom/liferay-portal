@@ -133,6 +133,10 @@ public class WikiPageResourceImpl extends BaseWikiPageResourceImpl {
 				"add-page",
 				addAction(ActionKeys.ADD_PAGE, wikiNode, "postWikiNodeWikiPage")
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_PAGE, wikiNode, "postWikiNodeWikiPageBatch")
+			).put(
 				"get",
 				addAction(ActionKeys.VIEW, wikiNode, "getWikiNodeWikiPagesPage")
 			).build(),
@@ -376,6 +380,11 @@ public class WikiPageResourceImpl extends BaseWikiPageResourceImpl {
 						"deleteWikiPage", wikiPage.getUserId(),
 						WikiPage.class.getName(), wikiPage.getGroupId())
 				).put(
+					"deleteBatch",
+					addAction(
+						ActionKeys.DELETE, "deleteWikiPageBatch",
+						WikiPage.class.getName(), null)
+				).put(
 					"get",
 					addAction(
 						ActionKeys.VIEW, wikiPage.getResourcePrimKey(),
@@ -399,6 +408,11 @@ public class WikiPageResourceImpl extends BaseWikiPageResourceImpl {
 						ActionKeys.SUBSCRIBE, wikiPage.getResourcePrimKey(),
 						"putWikiPageUnsubscribe", wikiPage.getUserId(),
 						WikiPage.class.getName(), wikiPage.getGroupId())
+				).put(
+					"updateBatch",
+					addAction(
+						ActionKeys.UPDATE, "putWikiPageBatch",
+						WikiPage.class.getName(), null)
 				).build(),
 				_dtoConverterRegistry, wikiPage.getResourcePrimKey(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,

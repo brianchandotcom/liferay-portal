@@ -98,6 +98,21 @@ public class WikiNodeResourceImpl extends BaseWikiNodeResourceImpl {
 				addAction(
 					ActionKeys.ADD_NODE, "postSiteWikiNode",
 					WikiConstants.RESOURCE_NAME, siteId)
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_NODE, "postSiteWikiNodeBatch",
+					WikiConstants.RESOURCE_NAME, siteId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteWikiNodeBatch",
+					WikiConstants.RESOURCE_NAME, null)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putWikiNodeBatch",
+					WikiConstants.RESOURCE_NAME, null)
 			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =

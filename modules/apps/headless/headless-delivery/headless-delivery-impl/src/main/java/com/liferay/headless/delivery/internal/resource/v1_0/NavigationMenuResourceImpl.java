@@ -52,7 +52,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -96,12 +95,29 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		Long siteId, Pagination pagination) {
 
 		return Page.of(
-			Collections.singletonMap(
+			HashMapBuilder.put(
 				"create",
 				addAction(
 					SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU,
 					"postSiteNavigationMenu",
-					SiteNavigationConstants.RESOURCE_NAME, siteId)),
+					SiteNavigationConstants.RESOURCE_NAME, siteId)
+			).put(
+				"createBatch",
+				addAction(
+					SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU,
+					"postSiteNavigationMenuBatch",
+					SiteNavigationConstants.RESOURCE_NAME, siteId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteNavigationMenuBatch",
+					SiteNavigationConstants.RESOURCE_NAME, null)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putNavigationMenuBatch",
+					SiteNavigationConstants.RESOURCE_NAME, null)
+			).build(),
 			transform(
 				_siteNavigationMenuService.getSiteNavigationMenus(
 					siteId, pagination.getStartPosition(),

@@ -219,10 +219,26 @@ public class StructuredContentResourceImpl
 					ActionKeys.ADD_ARTICLE, "postAssetLibraryStructuredContent",
 					JournalConstants.RESOURCE_NAME, assetLibraryId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_ARTICLE,
+					"postAssetLibraryStructuredContentBatch",
+					JournalConstants.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteStructuredContentBatch",
+					JournalConstants.RESOURCE_NAME, null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getAssetLibraryStructuredContentsPage",
 					JournalConstants.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putStructuredContentBatch",
+					JournalConstants.RESOURCE_NAME, null)
 			).build(),
 			_createStructuredContentsPageBooleanQueryUnsafeConsumer(flatten),
 			assetLibraryId, search, aggregation, filter, pagination, sorts);
@@ -334,10 +350,25 @@ public class StructuredContentResourceImpl
 					ActionKeys.ADD_ARTICLE, "postSiteStructuredContent",
 					JournalConstants.RESOURCE_NAME, siteId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_ARTICLE, "postSiteStructuredContentBatch",
+					JournalConstants.RESOURCE_NAME, siteId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteStructuredContentBatch",
+					JournalConstants.RESOURCE_NAME, null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getSiteStructuredContentsPage",
 					JournalConstants.RESOURCE_NAME, siteId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putStructuredContentBatch",
+					JournalConstants.RESOURCE_NAME, null)
 			).build(),
 			_createStructuredContentsPageBooleanQueryUnsafeConsumer(flatten),
 			siteId, search, aggregation, filter, pagination, sorts);

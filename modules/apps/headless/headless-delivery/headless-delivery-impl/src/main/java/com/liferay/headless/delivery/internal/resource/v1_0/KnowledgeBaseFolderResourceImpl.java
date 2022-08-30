@@ -137,10 +137,26 @@ public class KnowledgeBaseFolderResourceImpl
 					KBActionKeys.ADD_KB_FOLDER, "postSiteKnowledgeBaseFolder",
 					KBConstants.RESOURCE_NAME_ADMIN, siteId)
 			).put(
+				"createBatch",
+				addAction(
+					KBActionKeys.ADD_KB_FOLDER,
+					"postSiteKnowledgeBaseFolderBatch",
+					KBConstants.RESOURCE_NAME_ADMIN, siteId)
+			).put(
+				"deleteBatch",
+				addAction(
+					KBActionKeys.DELETE, "deleteKnowledgeBaseFolderBatch",
+					KBConstants.RESOURCE_NAME_ADMIN, null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getSiteKnowledgeBaseFoldersPage",
 					KBConstants.RESOURCE_NAME_ADMIN, siteId)
+			).put(
+				"updateBatch",
+				addAction(
+					KBActionKeys.UPDATE, "putKnowledgeBaseFolderBatch",
+					KBConstants.RESOURCE_NAME_ADMIN, null)
 			).build(),
 			transform(
 				_kbFolderService.getKBFolders(

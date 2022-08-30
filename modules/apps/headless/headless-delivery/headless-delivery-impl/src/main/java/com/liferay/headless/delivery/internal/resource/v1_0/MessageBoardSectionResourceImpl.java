@@ -157,10 +157,25 @@ public class MessageBoardSectionResourceImpl
 					ActionKeys.ADD_CATEGORY, "postSiteMessageBoardSection",
 					MBConstants.RESOURCE_NAME, siteId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_CATEGORY, "postSiteMessageBoardSectionBatch",
+					MBConstants.RESOURCE_NAME, siteId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteMessageBoardSectionBatch",
+					MBConstants.RESOURCE_NAME, null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getSiteMessageBoardSectionsPage",
 					MBConstants.RESOURCE_NAME, siteId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putMessageBoardSectionBatch",
+					MBConstants.RESOURCE_NAME, null)
 			).build(),
 			booleanQuery -> {
 				if (!GetterUtil.getBoolean(flatten)) {

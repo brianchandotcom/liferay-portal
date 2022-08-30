@@ -343,10 +343,25 @@ public class MessageBoardThreadResourceImpl
 					ActionKeys.ADD_MESSAGE, "postSiteMessageBoardThread",
 					MBConstants.RESOURCE_NAME, siteId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_MESSAGE, "postSiteMessageBoardThreadBatch",
+					MBConstants.RESOURCE_NAME, siteId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteMessageBoardThreadBatch",
+					MBConstants.RESOURCE_NAME, null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getSiteMessageBoardThreadsPage",
 					MBConstants.RESOURCE_NAME, siteId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putMessageBoardThreadBatch",
+					MBConstants.RESOURCE_NAME, null)
 			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =

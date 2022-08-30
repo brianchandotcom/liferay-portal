@@ -57,7 +57,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -171,6 +170,12 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 					"postBlogPostingComment", blogsEntry.getUserId(),
 					BlogsEntry.class.getName(), blogsEntry.getGroupId())
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_DISCUSSION, blogPostingId,
+					"postBlogPostingCommentBatch", blogsEntry.getUserId(),
+					BlogsEntry.class.getName(), blogsEntry.getGroupId())
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, blogPostingId,
@@ -207,8 +212,18 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		throws Exception {
 
 		return _getComments(
-			Collections.emptyMap(), parentCommentId, search, aggregation,
-			filter, pagination, sorts);
+			HashMapBuilder.put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteCommentBatch",
+					Comment.class.getName(), null)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putCommentBatch",
+					Comment.class.getName(), null)
+			).build(),
+			parentCommentId, search, aggregation, filter, pagination, sorts);
 	}
 
 	@Override
@@ -233,6 +248,12 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 				addAction(
 					ActionKeys.ADD_DISCUSSION, documentId,
 					"postDocumentComment", dlFileEntry.getUserId(),
+					DLFileEntry.class.getName(), dlFileEntry.getGroupId())
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_DISCUSSION, documentId,
+					"postDocumentCommentBatch", dlFileEntry.getUserId(),
 					DLFileEntry.class.getName(), dlFileEntry.getGroupId())
 			).put(
 				"get",
@@ -362,6 +383,13 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 					ActionKeys.ADD_DISCUSSION, structuredContentId,
 					"postStructuredContentComment", journalArticle.getUserId(),
 					JournalArticle.class.getName(), journalArticle.getGroupId())
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_DISCUSSION, structuredContentId,
+					"postStructuredContentCommentBatch",
+					journalArticle.getUserId(), JournalArticle.class.getName(),
+					journalArticle.getGroupId())
 			).put(
 				"get",
 				addAction(

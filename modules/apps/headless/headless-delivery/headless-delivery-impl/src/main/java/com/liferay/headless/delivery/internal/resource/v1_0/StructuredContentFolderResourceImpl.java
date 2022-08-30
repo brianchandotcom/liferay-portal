@@ -174,10 +174,25 @@ public class StructuredContentFolderResourceImpl
 					ActionKeys.UPDATE, "postSiteStructuredContentFolder",
 					JournalConstants.RESOURCE_NAME, siteId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.UPDATE, "postSiteStructuredContentFolderBatch",
+					JournalConstants.RESOURCE_NAME, siteId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteStructuredContentFolderBatch",
+					JournalConstants.RESOURCE_NAME, null)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getSiteStructuredContentFoldersPage",
 					JournalConstants.RESOURCE_NAME, siteId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putStructuredContentFolderBatch",
+					JournalConstants.RESOURCE_NAME, null)
 			).build(),
 			parentStructuredContentFolderId, siteId, search, aggregation,
 			filter, pagination, sorts);

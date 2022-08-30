@@ -19,6 +19,64 @@ definition {
 		}
 	}
 
+	@description = "This test assert the account manager can view account users."
+	@priority = "4"
+	test AccountManagersCanViewUsers {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given an account with a company user assigned") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "AM Account",
+				accountEntryType = "Business");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "AM Account",
+				userEmailAddress = "userfn1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "AM Account",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("When an account manager is added to the account") {
+			AccountConfiguration.addAccountManager(
+				accountName = "AM Account",
+				orgName = "AM Organization",
+				orgRoleTitle = "Account Manager",
+				userEmailAddress = "useramea@liferay.com",
+				userFirstName = "useramfn",
+				userLastName = "useramln",
+				userScreenName = "useramsn");
+
+			User.logoutPG();
+
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "useramea@liferay.com");
+		}
+
+		task ("Then the user should be able to see the user listed in that account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AM Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+			LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+
+			LexiconEntry.viewEntryName(rowEntry = "userfn1 userln1");
+		}
+	}
+
 	@description = "This is a use case for LPS-142654. This asserts user with Add Account Role permissions for an account can add account roles."
 	@priority = "4"
 	test CanAddAccountRolesWithPermissions {

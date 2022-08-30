@@ -59,6 +59,8 @@ definition {
 		else {
 			JSONUser.tearDownNonAdminUsers();
 
+			JSONRole.deleteRole(roleTitle = "Roles Siterole Name");
+
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}

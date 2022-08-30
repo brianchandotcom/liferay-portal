@@ -257,15 +257,15 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 			).build());
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"alpha", new Date(date + (Time.HOUR * 1))
+				"alpha", new Date(date + (Time.DAY * 1))
 			).build());
 
 		_assertKeywords("[ 2020 TO 2022 ]", 0);
 		_assertKeywords("[ 2021 TO 2021 ]", 0);
 		_assertKeywords("[2020 TO 2022]", 0);
 		_assertKeywords("[2021 TO 2021]", 0);
-		_assertKeywords("[20210922183413 TO 20210922183415]", 1);
-		_assertKeywords("[20210922183413 TO 20210923183415]", 2);
+		_assertKeywords("[20210921000000 TO 20210922000000]", 1);
+		_assertKeywords("[20210921000000 TO 20210923000000]", 2);
 		_assertKeywords("09", 0);
 		_assertKeywords("1632335654272", 0);
 		_assertKeywords("18", 0);
@@ -273,7 +273,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 		_assertKeywords("2021-09", 0);
 		_assertKeywords("2021-09-22", 0);
 		_assertKeywords("2021-09-22 18:34:14.272", 0);
-		_assertKeywords("20210922183414", 1);
+		_assertKeywords("20210922000000", 1);
 	}
 
 	@Test

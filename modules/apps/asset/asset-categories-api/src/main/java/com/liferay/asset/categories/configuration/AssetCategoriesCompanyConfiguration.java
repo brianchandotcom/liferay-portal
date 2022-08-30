@@ -35,13 +35,6 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface AssetCategoriesCompanyConfiguration {
 
 	@Meta.AD(
-		deflt = "https://learn.liferay.com/dxp/7.x/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html",
-		description = "link-to-documentation-url-description",
-		name = "link-to-documentation-url", required = false
-	)
-	public String linkToDocumentationURL();
-
-	@Meta.AD(
 		deflt = "150",
 		description = "maximum-number-of-categories-per-vocabulary-description",
 		name = "maximum-number-of-categories-per-vocabulary", required = false

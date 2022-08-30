@@ -76,10 +76,6 @@ definition {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
 		}
 
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
@@ -162,10 +158,6 @@ definition {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
 		}
 
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
@@ -200,10 +192,6 @@ definition {
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -244,10 +232,6 @@ definition {
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -334,10 +318,6 @@ definition {
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -1235,10 +1215,6 @@ definition {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
 		}
 
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
@@ -1318,10 +1294,6 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#PageAuditContentPage";
 
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
 		task ("Add Content Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1353,10 +1325,6 @@ definition {
 	test PageAuditDisplayPage {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#PageAuditDisplayPage";
-
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
 
 		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -1407,10 +1375,6 @@ definition {
 	test PageAuditWidgetPage {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#PageAuditWidgetPage";
-
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
 
 		task ("Add Widget Page") {
 			JSONLayout.addPublicLayout(

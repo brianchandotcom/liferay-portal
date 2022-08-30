@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		JSONUser.tearDownNonAdminUsers();
+        PageAudit.tearDownInstanceSettingsConfigurations();
 
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
@@ -67,20 +67,6 @@ definition {
 				failingCheckName = "Invalid Canonical URL",
 				locator1 = "PageAudit#FAILING_CHECK_NAME");
 		}
-
-		task ("Reset configurations to default") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "Site Scope");
-
-			PageAudit.resetDefaultValues();
-		}
 	}
 
 
@@ -117,20 +103,6 @@ definition {
 				locator1 = "PageAudit#PREFERRED_STRATEGY_OPTION_SELECTED",
 				value1 = "Mobile");
 		}
-
-		task ("Reset configurations to default") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "Site Scope");
-
-			PageAudit.resetDefaultValues();
-		}
 	}
 
     @description = "LPS-128383: Given the preferred strategy dropdown in the Site Scope section
@@ -163,20 +135,6 @@ definition {
 			AssertElementPresent(
 				failingCheckName = "Illegible Font Sizes",
 				locator1 = "PageAudit#FAILING_CHECK_NAME");
-		}
-
-		task ("Reset configurations to default") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "Site Scope");
-
-			PageAudit.resetDefaultValues();
 		}
 	}
 
@@ -217,20 +175,6 @@ definition {
 				failingCheckName = "Illegible Font Sizes",
 				locator1 = "PageAudit#FAILING_CHECK_NAME");
 		}
-
-		task ("Reset configurations to default") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "Site Scope");
-
-			PageAudit.resetDefaultValues();
-		}
 	}
 
     @description = "LPS-128383: Given the Google PageSpeed settings tab in the Site Scope section
@@ -260,20 +204,6 @@ definition {
 			AssertNotChecked.assertNotCheckedNotVisible(
 				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		task ("Reset Instance Settings to default") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "Site Scope");
-
-			PageAudit.resetDefaultValues();
 		}
 	}
 
@@ -316,20 +246,6 @@ definition {
 				key_configurationScope = "Site Scope",
 				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 		}
-
-		task ("Reset Instance Settings to default") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "Virtual Instance Scope");
-
-			PageAudit.resetDefaultValues();
-		}
 	}
 
 	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
@@ -348,20 +264,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-
-		task ("Reset Instance Settings to default") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "Virtual Instance Scope");
-
-			PageAudit.resetDefaultValues();
 		}
 	}
 

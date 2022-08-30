@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		JSONUser.tearDownNonAdminUsers();
+        PageAudit.tearDownSystemSettingsConfigurations();
 
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
@@ -48,10 +48,6 @@ definition {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
 		}
 
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
 		task ("Set Google PageSpeed API") {
 			PageAudit.setAPIViaSystemSettings();
 		}
@@ -65,10 +61,6 @@ definition {
 
 			AssertVisible(locator1 = "PageAudit#PROGRESS_BAR");
 		}
-
-		task ("Reset Google PageSpeed API to default at System Settings") {
-			PageAudit.configurationTeardown();
-		}
 	}
 
     @description = "LPS-134760: Given the Page Audit panel
@@ -78,14 +70,8 @@ definition {
 	test CheckErrorDetailsDisplayedInvalidApiKey {
 		property test.name.skip.portal.instance = "PageAudit#CheckErrorDetailsDisplayedInvalidApiKey";
 
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
 		task ("Set Google PageSpeed API") {
 			PageAudit.setAPIViaSystemSettings(apiKey = "invalidAPI");
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("Open Page Audit panel and assert 'Show details' link") {
@@ -102,10 +88,6 @@ definition {
 			AssertVisible(
 				errorMessage = "API key not valid. Please pass a valid API key.",
 				locator1 = "PageAudit#ERROR_WARNING_MESSAGE");
-		}
-
-		task ("Reset Google PageSpeed API to default at System Settings") {
-			PageAudit.configurationTeardown();
 		}
 	}
 
@@ -140,10 +122,6 @@ definition {
 				failingCheckName = "Invalid Canonical URL",
 				locator1 = "PageAudit#FAILING_CHECK_NAME");
 		}
-
-		task ("Reset configurations to default") {
-			PageAudit.configurationTeardown();
-		}
 	}
 
 	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
@@ -176,10 +154,6 @@ definition {
 			AssertElementPresent(
 				failingCheckName = "Invalid Canonical URL",
 				locator1 = "PageAudit#FAILING_CHECK_NAME");
-		}
-
-		task ("Reset configurations to default") {
-			PageAudit.configurationTeardown();
 		}
 	}
 
@@ -214,10 +188,6 @@ definition {
 				failingCheckName = "Illegible Font Sizes",
 				locator1 = "PageAudit#FAILING_CHECK_NAME");
 		}
-
-		task ("Reset configurations to default") {
-			PageAudit.configurationTeardown();
-		}
 	}
 
     @description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the content pages doesn't show"
@@ -228,13 +198,6 @@ definition {
 
 		task ("Disable Google PageSpeed") {
 			PageAudit.disableGooglePageSpeed();
-		}
-
-		task ("Add Content Page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Content Page",
-				type = "content");
 		}
 
 		task ("Go to the Content Page and assert the Page Audit panel is not shown") {
@@ -322,10 +285,6 @@ definition {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test-no-issues");
 		}
 
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
 		task ("Set Google PageSpeed API") {
 			PageAudit.setAPIViaSystemSettings();
 		}
@@ -340,10 +299,6 @@ definition {
 			AssertTextPresent(
 				locator1 = "PageAudit#NO_ISSUES_MESSAGE",
 				value1 = "Your page has no issues.");
-		}
-
-		task ("Reset Google PageSpeed API to default at System Settings") {
-			PageAudit.configurationTeardown();
 		}
 	}
 
@@ -384,10 +339,6 @@ definition {
 				failingCheckName = "Illegible Font Sizes",
 				locator1 = "PageAudit#FAILING_CHECK_NAME");
 		}
-
-		task ("Reset configurations to default") {
-			PageAudit.configurationTeardown();
-		}
 	}
 
     @description = "LPS-125851: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
@@ -414,27 +365,6 @@ definition {
 				locator1 = "ListGroupItem#ITEM_TEXT");
 
 			AssertElementNotPresent(
-				key_configurationName = "Google PageSpeed Insights",
-				key_configurationScope = "Site Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-		}
-
-		task ("Enable Google PageSpeed settings tab in the System Scope section") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
-		task ("Navigate to Site Settings and check if tab is visible") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ProductMenu.gotoPortlet(
-				category = "Configuration",
-				portlet = "Site Settings");
-
-			Click(
-				key_itemName = "Pages",
-				locator1 = "ListGroupItem#ITEM_TEXT");
-
-			AssertElementPresent(
 				key_configurationName = "Google PageSpeed Insights",
 				key_configurationScope = "Site Scope",
 				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
@@ -469,27 +399,6 @@ definition {
 				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
-
-		task ("Disable Google PageSpeed settings tab in the System Scope section") {
-			PageAudit.enableGooglePageSpeed(settingsScope = "Site Scope");
-		}
-
-		task ("Navigate to Site Settings and check if tab is not visible") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ProductMenu.gotoPortlet(
-				category = "Configuration",
-				portlet = "Site Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "Site Scope");
-
-			AssertChecked.assertCheckedNotVisible(
-				checkboxName = "Enable",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
 	}
 
 	@description = "LPS-125851: Given the Google PageSpeed settings tab in the System Scope section
@@ -510,17 +419,6 @@ definition {
 				key_configurationScope = "Site Scope",
 				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 		}
-
-		task ("Enable Google PageSpeed settings tab in the System Scope section") {
-			PageAudit.enableGooglePageSpeed(settingsScope = "System Scope");
-		}
-
-		task ("Check if Google PageSpeed Insights tab is visible in the 'VIRTUAL INSTANCE SCOPE' section") {
-			AssertElementPresent(
-				key_configurationName = "Google PageSpeed Insights",
-				key_configurationScope = "Site Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-		}
 	}
 
 	@description = "LPS-125851: Given the Google PageSpeed settings tab in the System Scope section
@@ -537,17 +435,6 @@ definition {
 
 		task ("Check if Google PageSpeed Insights tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section") {
 			AssertElementNotPresent(
-				key_configurationName = "Google PageSpeed Insights",
-				key_configurationScope = "Virtual Instance Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-		}
-
-		task ("Enable Google PageSpeed settings tab in the System Scope section") {
-			PageAudit.enableGooglePageSpeed(settingsScope = "System Scope");
-		}
-
-		task ("Check if Google PageSpeed Insights tab is visible in the 'VIRTUAL INSTANCE SCOPE' section") {
-			AssertElementPresent(
 				key_configurationName = "Google PageSpeed Insights",
 				key_configurationScope = "Virtual Instance Scope",
 				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
@@ -588,10 +475,6 @@ definition {
 				key_configurationScope = "Site Scope",
 				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 		}
-
-		task ("Enable Google PageSpeed settings tab in the System Scope section") {
-			PageAudit.enableGooglePageSpeed(settingsScope = "System Scope");
-		}
 	}
 
 	@description = "LPS-125851: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
@@ -608,23 +491,6 @@ definition {
 
 		task ("Check if Google PageSpeed Insights tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section") {
 			AssertElementNotPresent(
-				key_configurationName = "Google PageSpeed Insights",
-				key_configurationScope = "Site Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-		}
-
-		task ("Enable Google PageSpeed settings tab again") {
-			Click.javaScriptClick(
-				checkboxName = "Enable",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
-			Click(locator1 = "Button#UPDATE");
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Check if Google PageSpeed Insights tab is visible in the 'VIRTUAL INSTANCE SCOPE' section") {
-			AssertElementPresent(
 				key_configurationName = "Google PageSpeed Insights",
 				key_configurationScope = "Site Scope",
 				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");

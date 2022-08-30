@@ -27,8 +27,6 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		JSONUser.tearDownNonAdminUsers();
-
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
 		if ("${testPortalInstance}" == "true") {
@@ -423,10 +421,6 @@ definition {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
 		}
 
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
@@ -457,10 +451,6 @@ definition {
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -507,10 +497,6 @@ definition {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
 		}
 
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
@@ -545,10 +531,6 @@ definition {
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -587,10 +569,6 @@ definition {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
 		}
 
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
@@ -625,10 +603,6 @@ definition {
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -732,10 +706,6 @@ definition {
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -870,10 +840,6 @@ definition {
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
-		}
-
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
 		}
 
 		task ("Set Google PageSpeed API") {
@@ -1030,10 +996,6 @@ definition {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
 		}
 
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
 		task ("Set Google PageSpeed API") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
@@ -1169,10 +1131,6 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#PageAuditBackButton";
 
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
-
 		task ("Add Content Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1212,10 +1170,6 @@ definition {
 	test PageAuditCancelButton {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PageAudit#PageAuditCancelButton";
-
-		task ("Enable Google PageSpeed") {
-			PageAudit.enableGooglePageSpeed();
-		}
 
 		task ("Add Content Page") {
 			JSONLayout.addPublicLayout(

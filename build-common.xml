@@ -773,9 +773,8 @@ information.
 					<available file="${project.dir}/tools/${build.binaries.gradle.file}" />
 				</not>
 				<then>
-					<mirrors-get
+					<get
 						dest="${project.dir}/tools/${build.binaries.gradle.file}"
-						skipChecksum="true"
 						src="${build.binaries.gradle.url}"
 					/>
 				</then>

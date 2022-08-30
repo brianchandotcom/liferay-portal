@@ -324,10 +324,14 @@ public class FragmentCollectionContributorTrackerImpl
 					fragmentComposition.getFragmentCompositionKey());
 			}
 
-			for (FragmentEntry fragmentEntry :
-					fragmentCollectionContributor.getFragmentEntries()) {
+			for (int type : _SUPPORTED_FRAGMENT_TYPES) {
+				for (FragmentEntry fragmentEntry :
+						fragmentCollectionContributor.getFragmentEntries(
+							type)) {
 
-				_fragmentEntries.remove(fragmentEntry.getFragmentEntryKey());
+					_fragmentEntries.remove(
+						fragmentEntry.getFragmentEntryKey());
+				}
 			}
 
 			_bundleContext.ungetService(serviceReference);

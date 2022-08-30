@@ -26,6 +26,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ROLE_OPTIONS</td>
+	<td>//option[contains(text(), '${key_option}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DROPDOWN</td>
+	<td>//select[contains(@class, 'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_MORE_MEMBERS</td>
 	<td>//button[contains(@class, 'cp-btn-add-members')]</td>
 	<td></td>

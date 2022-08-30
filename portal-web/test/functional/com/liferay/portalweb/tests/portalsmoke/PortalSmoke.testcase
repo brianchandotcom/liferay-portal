@@ -94,6 +94,12 @@ definition {
 		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "wait-for-server-shutdown -Dapp.server.port.number=8080");
 	}
 
 	@priority = "3"

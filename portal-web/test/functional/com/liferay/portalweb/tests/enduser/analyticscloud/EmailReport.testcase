@@ -71,6 +71,68 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-11664 | Automation ID: LRAC-11841 | Test Summary: Can change email report frequency to daily, weekly or monthly"
+	@priority = "3"
+	test CanChangeEmailReportFrequency {
+		var frequencyList = "Daily,Weekly,Monthly";
+
+		task ("Go to AC > Go to Settings > Go to Properties > Open the new property") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACNavigation.openItem(itemName = "${assignedPropertyName}");
+		}
+
+		task ("Click on the email report widget and enable it and then save the report to: daily, weekly and monthly") {
+			for (var frequencyOption : list "${frequencyList}") {
+				ACEmailReport.enableEmailReport(frequency = "${frequencyOption}");
+
+				ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
+
+				Alert.viewSuccessMessageText(successMessage = "Changes to email reports saved.");
+
+				ACEmailReport.disableEmailReport();
+			}
+		}
+	}
+
+	@description = "Story: LRAC-11664 | Automation ID: LRAC-11846 | Test Summary: Disable email report after enabling"
+	@priority = "3"
+	test CanDisableEmailReportAfterEnabling {
+		task ("Go to AC > Go to Settings > Go to Properties > Open the new property") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACNavigation.openItem(itemName = "${assignedPropertyName}");
+		}
+
+		task ("Enable the email report") {
+			ACEmailReport.enableEmailReport(frequency = "Daily");
+		}
+
+		task ("See in the property that the email report has the status of enabled and the success alert appears") {
+			ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
+
+			Alert.viewSuccessMessageText(successMessage = "Changes to email reports saved.");
+		}
+
+		task ("Click the widget next to email reports and then disable it") {
+			ACEmailReport.disableEmailReport();
+		}
+
+		task ("See in the property that the email report has the status of disabled and the success alert appears") {
+			ACUtils.viewGenericText(textValueList = "Email Reports: Disabled");
+
+			Alert.viewSuccessMessageText(successMessage = "Changes to email reports saved.");
+		}
+	}
+
 	@description = "Story: LRAC-11664 | Automation ID: LRAC-11845 | Test Summary: Check email report edit disabled"
 	@priority = "3"
 	test CheckEmailReportEditDisabled {
@@ -143,6 +205,98 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-11664 | Automation ID: LRAC-11847 | Test Summary: Check that change the email report settings on one account will not affect the other accounts"
+	@priority = "4"
+	test CheckEmailReportSettingsDifferentUsers {
+		task ("Go to AC > Go to Settings > Go to Properties > Open the new property") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACNavigation.openItem(itemName = "${assignedPropertyName}");
+		}
+
+		task ("Enable email reports with the daily option and then see in the property that the email report has the status of enabled") {
+			ACEmailReport.enableEmailReport(frequency = "Daily");
+
+			ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
+		}
+
+		task ("Login AC with a different user then go to Settings > Go to Properties > Open the new property") {
+			ACWorkspace.signOut();
+
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACNavigation.openItem(itemName = "${assignedPropertyName}");
+		}
+
+		task ("See that the changes made in another account did not affect the actual account") {
+			ACUtils.viewGenericText(textValueList = "Email Reports: Disabled");
+		}
+
+		task ("Enable the email reports with the monthly option and then see in the property that the email report has the status of enabled") {
+			ACEmailReport.enableEmailReport(frequency = "Monthly");
+
+			ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
+		}
+
+		task ("Login with the Test Test account and then go to Settings > Go to Properties > Open the new property") {
+			ACWorkspace.signOut();
+
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACNavigation.openItem(itemName = "${assignedPropertyName}");
+		}
+
+		task ("Click on the email reports widget and see if the frequency is still Daily") {
+			ACEmailReport.accessEmailReportSettings();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Select#SELECT",
+				value1 = "Daily");
+		}
+
+		task ("Disable email reports and then see in the property that the email report has the status of disabled") {
+			ACEmailReport.disableEmailReportToggle();
+
+			Button.clickSave();
+
+			ACUtils.viewGenericText(textValueList = "Email Reports: Disabled");
+		}
+
+		task ("Login with Corbin then go to Settings > Go to Properties > Open the new property") {
+			ACWorkspace.signOut();
+
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACNavigation.openItem(itemName = "${assignedPropertyName}");
+		}
+
+		task ("Observe that the change made to another account did not affect the current account") {
+			ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
+
+			ACEmailReport.accessEmailReportSettings();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Select#SELECT",
+				value1 = "Monthly");
+		}
+	}
+
 	@description = "Story: LRAC-11663 | Automation ID: LRAC-11836 | Test Summary: Check that the Email Reports widget does not appear on the property settings page when the property is not synced with any site"
 	@priority = "2"
 	test CheckEmailReportWidgetDisabledWhenPropertyNotSyncedWithSite {
@@ -168,72 +322,6 @@ definition {
 			AssertVisible(
 				key_text = "",
 				locator1 = "Button#ANY_DISABLED");
-		}
-	}
-
-	@description = "Story: LRAC-11664 | Automation ID: LRAC-11841 | Test Summary: Can change email report frequency to daily, weekly or monthly"
-	@priority = "3"
-	test CanChangeEmailReportFrequency {
-		frequencyList = "Daily,Weekly,Monthly";
-
-		task ("Go to AC > Go to Settings > Go to Properties > Open the new property") {
-			ACUtils.launchAC();
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-
-			ACNavigation.openItem(itemName = "${assignedPropertyName}");
-		}
-
-		task ("Click on the email report widget and enable it and then save the report to: daily, weekly and monthly") {
-			for (var frequencyOption : list "${frequencyList}") {
-				ACEmailReport.enableEmailReport(frequency = "${frequencyOption}");
-
-				ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
-
-				Alert.viewSuccessMessageText(successMessage = "Changes to email reports saved.");
-
-				ACEmailReport.disableEmailReport();
-			}
-		}
-	}
-
-	@description = "Story: LRAC-11664 | Automation ID: LRAC-11846 | Test Summary: Disable email report after enabling"
-	@priority = "3"
-	test CanDisableEmailReportAfterEnabling {
-		task ("Go to AC > Go to Settings > Go to Properties > Open the new property") {
-			ACUtils.launchAC();
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-
-			ACNavigation.openItem(itemName = "${assignedPropertyName}");
-		}
-
-		task ("Click the widget next to email reports and then enable it") {
-			ACEmailReport.accessEmailReportSettings();
-
-			ACEmailReport.enableEmailReportToggle();
-
-			Button.clickSave();
-		}
-
-		task ("See in the property that the email report has the status of enabled and the success alert appears") {
-			ACUtils.viewGenericText(textValueList = "Email Reports: Enabled");
-			
-			Alert.viewSuccessMessageText(successMessage = "Changes to email reports saved.");
-		}
-
-		task ("Click the widget next to email reports and then disable it") {
-			ACEmailReport.disableEmailReport();
-		}
-
-		task ("See in the property that the email report has the status of disabled and the success alert appears") {
-			ACUtils.viewGenericText(textValueList = "Email Reports: Disabled");
-			
-			Alert.viewSuccessMessageText(successMessage = "Changes to email reports saved.");
 		}
 	}
 

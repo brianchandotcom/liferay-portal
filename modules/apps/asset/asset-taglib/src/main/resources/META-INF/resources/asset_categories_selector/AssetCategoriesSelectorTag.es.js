@@ -48,7 +48,7 @@ AssetCategoriesSelectorTag.propTypes = {
 	id: PropTypes.string,
 	initialVocabularies: PropTypes.array,
 	inputName: PropTypes.string,
-	learnHowURL: PropTypes.string,
+	learnHowLink: PropTypes.object,
 	portletURL: PropTypes.string,
 };
 
@@ -67,7 +67,7 @@ export default function (props) {
 	return (
 		<>
 			{props.learnHowLink && (
-				<ClayLink href={props.learnHowLink.url}>
+				<ClayLink href={props.learnHowLink.url} target="_blank">
 					{props.learnHowLink.message}
 				</ClayLink>
 			)}

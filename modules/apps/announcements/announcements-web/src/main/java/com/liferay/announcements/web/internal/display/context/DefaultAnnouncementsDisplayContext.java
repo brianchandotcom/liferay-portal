@@ -41,13 +41,20 @@ import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.SegmentsEntryRetriever;
+import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
+import com.liferay.segments.context.RequestContextMapper;
+import com.liferay.segments.model.SegmentsEntryRole;
+import com.liferay.segments.service.SegmentsEntryRoleLocalServiceUtil;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -55,6 +62,7 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.portlet.PortletPreferences;
@@ -74,13 +82,19 @@ public class DefaultAnnouncementsDisplayContext
 	public DefaultAnnouncementsDisplayContext(
 		AnnouncementsRequestHelper announcementsRequestHelper,
 		HttpServletRequest httpServletRequest, String portletName,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		RequestContextMapper requestContextMapper,
+		SegmentsEntryRetriever segmentsEntryRetriever,
+		SegmentsConfigurationProvider segmentsConfigurationProvider) {
 
 		_announcementsRequestHelper = announcementsRequestHelper;
 		_httpServletRequest = httpServletRequest;
 		_portletName = portletName;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_requestContextMapper = requestContextMapper;
+		_segmentsEntryRetriever = segmentsEntryRetriever;
+		_segmentsConfigurationProvider = segmentsConfigurationProvider;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -131,8 +145,8 @@ public class DefaultAnnouncementsDisplayContext
 			}
 		}
 		else {
-			_announcementScopes = AnnouncementsUtil.getAnnouncementScopes(
-				_announcementsRequestHelper.getUser());
+			_announcementScopes =
+				_combinedSegmentsEntryRoleAndAnnouncementScopes();
 		}
 
 		_announcementScopes.put(0L, new long[] {0});
@@ -419,6 +433,45 @@ public class DefaultAnnouncementsDisplayContext
 		return false;
 	}
 
+	private LinkedHashMap<Long, long[]>
+			_combinedSegmentsEntryRoleAndAnnouncementScopes()
+		throws PortalException {
+
+		LinkedHashMap<Long, long[]> announcementScopes =
+			AnnouncementsUtil.getAnnouncementScopes(
+				_announcementsRequestHelper.getUser());
+
+		if (!_segmentsConfigurationProvider.isRoleSegmentationEnabled(
+				_announcementsRequestHelper.getCompanyId())) {
+
+			return announcementScopes;
+		}
+
+		long roleClassNameId = PortalUtil.getClassNameId(Role.class.getName());
+
+		Set<Long> roleIds = SetUtil.fromArray(
+			announcementScopes.get(roleClassNameId));
+
+		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
+			_announcementsRequestHelper.getScopeGroupId(),
+			_themeDisplay.getUserId(),
+			_requestContextMapper.map(_httpServletRequest), new long[0]);
+
+		for (long segmentsEntryId : segmentsEntryIds) {
+			List<SegmentsEntryRole> segmentsEntryRoles =
+				SegmentsEntryRoleLocalServiceUtil.getSegmentsEntryRoles(
+					segmentsEntryId);
+
+			for (SegmentsEntryRole segmentsEntryRole : segmentsEntryRoles) {
+				roleIds.add(segmentsEntryRole.getRoleId());
+			}
+		}
+
+		announcementScopes.put(roleClassNameId, ArrayUtil.toLongArray(roleIds));
+
+		return announcementScopes;
+	}
+
 	private int _getFlag() {
 		if (_flag != null) {
 			return _flag;
@@ -490,7 +543,10 @@ public class DefaultAnnouncementsDisplayContext
 	private PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final RequestContextMapper _requestContextMapper;
 	private SearchContainer<AnnouncementsEntry> _searchContainer;
+	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
+	private final SegmentsEntryRetriever _segmentsEntryRetriever;
 	private final ThemeDisplay _themeDisplay;
 
 }

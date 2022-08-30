@@ -95,7 +95,7 @@ page import="java.util.List" %>
 <%
 AnnouncementsRequestHelper announcementsRequestHelper = new AnnouncementsRequestHelper(request);
 
-AnnouncementsDisplayContext announcementsDisplayContext = new DefaultAnnouncementsDisplayContext(announcementsRequestHelper, request, portletName, renderRequest, renderResponse);
+AnnouncementsDisplayContext announcementsDisplayContext = (DefaultAnnouncementsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <%@ include file="/init-ext.jsp" %>

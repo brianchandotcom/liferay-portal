@@ -171,14 +171,8 @@ public class FragmentCollectionContributorTrackerImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, FragmentCollectionContributor.class, null,
-			(serviceReference, emitter) -> {
-				FragmentCollectionContributor fragmentCollectionContributor =
-					bundleContext.getService(serviceReference);
-
-				emitter.emit(
-					fragmentCollectionContributor.getFragmentCollectionKey());
-			},
+			bundleContext, FragmentCollectionContributor.class,
+			"fragment.collection.key",
 			new FragmentCollectionContributorTrackerServiceTrackerCustomizer(
 				bundleContext));
 	}

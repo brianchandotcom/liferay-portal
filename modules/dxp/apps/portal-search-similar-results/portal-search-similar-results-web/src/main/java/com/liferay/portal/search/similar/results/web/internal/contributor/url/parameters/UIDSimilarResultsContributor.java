@@ -55,11 +55,6 @@ public class UIDSimilarResultsContributor implements SimilarResultsContributor {
 		criteriaBuilder.uid((String)criteriaHelper.getRouteParameter(UID));
 	}
 
-	@Reference(unbind = "-")
-	public void setHttpHelper(HttpHelper httpHelper) {
-		_httpHelper = httpHelper;
-	}
-
 	@Override
 	public void writeDestination(
 		DestinationBuilder destinationBuilder,
@@ -70,6 +65,7 @@ public class UIDSimilarResultsContributor implements SimilarResultsContributor {
 
 	protected static final String UID = "uid";
 
+	@Reference
 	private HttpHelper _httpHelper;
 
 }

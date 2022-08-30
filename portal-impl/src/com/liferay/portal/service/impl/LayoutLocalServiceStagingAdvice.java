@@ -172,15 +172,17 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 		String friendlyURL = layoutFriendlyURLMap.get(
 			LocaleUtil.getSiteDefault());
 
+		Layout layout = LayoutUtil.findByG_P_L(
+			groupId, privateLayout, layoutId);
+
 		layoutLocalServiceHelper.validate(
 			groupId, privateLayout, layoutId, parentLayoutId, name, type,
+			layoutLocalServiceHelper.isDraftLayout(
+				layout.getClassNameId(), layout.getClassPK(), type),
 			hidden, layoutFriendlyURLMap, serviceContext);
 
 		layoutLocalServiceHelper.validateParentLayoutId(
 			groupId, privateLayout, layoutId, parentLayoutId);
-
-		Layout layout = LayoutUtil.findByG_P_L(
-			groupId, privateLayout, layoutId);
 
 		if (LayoutStagingUtil.isBranchingLayout(layout)) {
 			layout = getProxiedLayout(layout);

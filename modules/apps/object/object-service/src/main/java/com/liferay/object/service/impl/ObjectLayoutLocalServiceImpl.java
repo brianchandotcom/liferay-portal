@@ -14,7 +14,6 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectLayoutBoxConstants;
 import com.liferay.object.exception.DefaultObjectLayoutException;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
@@ -564,6 +563,9 @@ public class ObjectLayoutLocalServiceImpl
 		int countObjectLayoutBoxCategorizationType = 0;
 		int countObjectLayoutBoxCommentsType = 0;
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
+
 		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
 			List<ObjectLayoutBox> objectLayoutBoxes =
 				objectLayoutTab.getObjectLayoutBoxes();
@@ -576,16 +578,16 @@ public class ObjectLayoutLocalServiceImpl
 
 				if (StringUtil.equals(
 						objectLayoutBox.getType(),
+						ObjectLayoutBoxConstants.TYPE_REGULAR)) {
+
+					continue;
+				}
+
+				if (StringUtil.equals(
+						objectLayoutBox.getType(),
 						ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)) {
 
-					ObjectDefinition objectDefinition =
-						_objectDefinitionPersistence.fetchByPrimaryKey(
-							objectDefinitionId);
-
-					if (!StringUtil.equals(
-							objectDefinition.getStorageType(),
-							ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
-
+					if (!objectDefinition.isDefaultStorageType()) {
 						throw new ObjectLayoutBoxCategorizationTypeException(
 							"Categorization layout box only can be used in " +
 								"object definitions with default storage type");
@@ -617,19 +619,12 @@ public class ObjectLayoutLocalServiceImpl
 						throw new UnsupportedOperationException("Invalid type");
 					}
 
-					ObjectDefinition objectDefinition =
-						_objectDefinitionPersistence.fetchByPrimaryKey(
-							objectDefinitionId);
-
 					if (!objectDefinition.isEnableComments()) {
-						throw new ObjectLayoutBoxCategorizationTypeException(
+						throw new ObjectLayoutBoxCommentsTypeException(
 							"Comments layout box must be enabled to be used");
 					}
 
-					if (!StringUtil.equals(
-							objectDefinition.getStorageType(),
-							ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
-
+					if (!objectDefinition.isDefaultStorageType()) {
 						throw new ObjectLayoutBoxCommentsTypeException(
 							"Comments layout box only can be used in object " +
 								"definitions with default storage type");

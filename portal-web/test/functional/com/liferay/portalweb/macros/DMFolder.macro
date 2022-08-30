@@ -273,7 +273,9 @@ definition {
 	}
 
 	macro editPGViaMG {
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${mgFolderName}");
 
 		PortletEntry.inputName(name = "${mgFolderNameEdit}");
 

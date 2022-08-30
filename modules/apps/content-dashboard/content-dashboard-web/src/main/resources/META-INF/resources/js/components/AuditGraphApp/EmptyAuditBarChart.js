@@ -13,7 +13,7 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
-import {sub} from 'frontend-js-web';
+import ClayLink from '@clayui/link';
 import React from 'react';
 import {
 	BarChart,
@@ -25,19 +25,11 @@ import {
 
 import {BAR_CHART} from '../../utils/constants';
 
-export default function EmptyAuditBarChart({learnHowURL}) {
-	const description = learnHowURL && (
-		<div
-			dangerouslySetInnerHTML={{
-				__html: sub(
-					Liferay.Language.get(
-						'x-learn-how-x-to-tailor-categories-to-your-needs'
-					),
-					`<a href=${learnHowURL} target="_blank">`,
-					'</a>'
-				),
-			}}
-		/>
+export default function EmptyAuditBarChart({learnHowLink}) {
+	const description = learnHowLink && (
+		<ClayLink href={learnHowLink.url} target="_blank">
+			{learnHowLink.message}
+		</ClayLink>
 	);
 
 	return (

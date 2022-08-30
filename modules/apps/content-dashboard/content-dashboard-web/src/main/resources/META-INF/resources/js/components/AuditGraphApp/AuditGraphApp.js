@@ -20,7 +20,7 @@ import EmptyAuditBarChart from './EmptyAuditBarChart';
 
 export default function ({context, props}) {
 	const {languageDirection, namespace} = context;
-	const {learnHowURL, vocabularies} = props;
+	const {learnHowLink, vocabularies} = props;
 
 	const hasBarsCategoryFilters = new URLSearchParams(
 		window.location.href
@@ -47,6 +47,6 @@ export default function ({context, props}) {
 			/>
 		</>
 	) : (
-		<EmptyAuditBarChart learnHowURL={learnHowURL} />
+		<EmptyAuditBarChart learnHowLink={learnHowLink} />
 	);
 }

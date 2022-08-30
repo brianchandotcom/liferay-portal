@@ -14,7 +14,6 @@
 
 package com.liferay.content.dashboard.web.internal.display.context;
 
-import com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
@@ -30,13 +29,14 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
+import com.liferay.learn.LearnMessage;
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -454,20 +454,20 @@ public class ContentDashboardAdminDisplayContext {
 
 	private Map<String, Object> _getProps() {
 		return HashMapBuilder.<String, Object>put(
-			"learnHowURL",
+			"learnHowLink",
 			() -> {
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)_liferayPortletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				AssetCategoriesCompanyConfiguration
-					assetCategoriesCompanyConfiguration =
-						ConfigurationProviderUtil.getCompanyConfiguration(
-							AssetCategoriesCompanyConfiguration.class,
-							themeDisplay.getCompanyId());
+				LearnMessage learnMessage = LearnMessageUtil.getLearnMessage(
+					"general", themeDisplay.getLanguageId(), "asset-taglib");
 
-				return assetCategoriesCompanyConfiguration.
-					linkToDocumentationURL();
+				return JSONUtil.put(
+					"message", learnMessage.getMessage()
+				).put(
+					"url", learnMessage.getURL()
+				);
 			}
 		).put(
 			"vocabularies", _assetVocabularyMetric.toJSONArray()

@@ -27,12 +27,17 @@ describe('EmptyAuditBarChart', () => {
 
 	it('renders empty bar chart if there is no content labeled with categories', () => {
 		const {getByText} = render(
-			<EmptyAuditBarChart learnHowURL={LEARN_HOW_URL} />
+			<EmptyAuditBarChart
+				learnHowLink={{
+					message: 'Learn how to tailor categories to your needs.',
+					url: LEARN_HOW_URL,
+				}}
+			/>
 		);
 
 		expect(getByText('there-is-no-data')).toBeInTheDocument();
 		expect(
-			getByText('x-learn-how-x-to-tailor-categories-to-your-needs')
+			getByText('Learn how to tailor categories to your needs.')
 		).toBeInTheDocument();
 	});
 });

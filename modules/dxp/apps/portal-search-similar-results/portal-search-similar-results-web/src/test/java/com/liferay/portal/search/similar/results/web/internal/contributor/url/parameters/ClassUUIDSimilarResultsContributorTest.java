@@ -15,6 +15,7 @@
 package com.liferay.portal.search.similar.results.web.internal.contributor.url.parameters;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
@@ -54,7 +55,9 @@ public class ClassUUIDSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		_classUUIDSimilarResultsContributor.setHttpHelper(setUpHttpHelper());
+		ReflectionTestUtil.setFieldValue(
+			_classUUIDSimilarResultsContributor, "_httpHelper",
+			setUpHttpHelper());
 
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
@@ -75,7 +78,8 @@ public class ClassUUIDSimilarResultsContributorTest
 
 	@Test
 	public void testResolveCriteria() {
-		_classUUIDSimilarResultsContributor.setAssetEntryLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_classUUIDSimilarResultsContributor, "_assetEntryLocalService",
 			assetEntryLocalService);
 
 		CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();

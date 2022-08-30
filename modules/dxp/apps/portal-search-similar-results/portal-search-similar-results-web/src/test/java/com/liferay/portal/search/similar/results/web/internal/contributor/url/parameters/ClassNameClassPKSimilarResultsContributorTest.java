@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.similar.results.web.internal.contributor.url.parameters;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
@@ -50,7 +51,8 @@ public class ClassNameClassPKSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		_classNameClassPKSimilarResultsContributor.setHttpHelper(
+		ReflectionTestUtil.setFieldValue(
+			_classNameClassPKSimilarResultsContributor, "_httpHelper",
 			setUpHttpHelper());
 
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();

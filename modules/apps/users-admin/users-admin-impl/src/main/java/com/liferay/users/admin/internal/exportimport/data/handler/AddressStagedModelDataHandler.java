@@ -112,15 +112,16 @@ public class AddressStagedModelDataHandler
 				null, null, address.getStreet1(), address.getStreet2(),
 				address.getStreet3(), address.getCity(), address.getZip(),
 				address.getRegionId(), address.getCountryId(),
-				address.getTypeId(), address.isMailing(), address.isPrimary(),
-				null, serviceContext);
+				address.getListTypeId(), address.isMailing(),
+				address.isPrimary(), null, serviceContext);
 		}
 		else {
 			importedAddress = _addressLocalService.updateAddress(
 				existingAddress.getAddressId(), address.getStreet1(),
 				address.getStreet2(), address.getStreet3(), address.getCity(),
 				address.getZip(), address.getRegionId(), address.getCountryId(),
-				address.getTypeId(), address.isMailing(), address.isPrimary());
+				address.getListTypeId(), address.isMailing(),
+				address.isPrimary());
 		}
 
 		portletDataContext.importClassedModel(address, importedAddress);

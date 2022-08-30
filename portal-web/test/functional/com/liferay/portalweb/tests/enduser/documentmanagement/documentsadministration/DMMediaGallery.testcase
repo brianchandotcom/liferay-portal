@@ -350,7 +350,7 @@ definition {
 		DMFolder.editPGViaMG(
 			mgFolderDescription = "DM Folder Description Edit",
 			mgFolderDescriptionEdit = "DM Folder Description Edit",
-			mgFolderName = "DM Folder Name Edit",
+			mgFolderName = "DM Folder Name",
 			mgFolderNameEdit = "DM Folder Name Edit");
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");

@@ -2821,12 +2821,38 @@ definition {
 	}
 
 	@description = "Verify that the user can set the Priority for the Action"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSetActionsPriority {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSetActionsPriority";
 
-		// TODO CanSetActionsPriority pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
+			actionsTemplateValue = "Action Template",
+			description = "Liferay Actions Description",
+			executionTypeOption = "On Entry",
+			name = "Liferay Actions",
+			priorityValue = "10",
+			singleAction = "true");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Actions",
+			propertyValue = "Liferay Actions");
+
+		ProcessBuilderKaleoDesignerReact.viewActionsInfo(
+			actionsTemplateValue = "Action Template",
+			description = "Liferay Actions Description",
+			executionTypeOption = "On Entry",
+			name = "Liferay Actions",
+			priorityValue = "10");
 	}
 
 	@description = "Verify that the user can set transition Default"

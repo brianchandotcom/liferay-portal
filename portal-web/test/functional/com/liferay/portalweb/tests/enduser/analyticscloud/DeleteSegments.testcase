@@ -518,11 +518,9 @@ definition {
 		}
 
 		task ("View that there's no user in the preview") {
-			ACSegments.previewSegmentMembership();
-
-			AssertTextEquals(
-				locator1 = "ACSegments#NO_MEMBER_TITLE",
-				value1 = "There are no Individuals found.");
+			AssertVisible(
+				key_text = "",
+				locator1 = "Button#ANY_DISABLED");
 		}
 	}
 

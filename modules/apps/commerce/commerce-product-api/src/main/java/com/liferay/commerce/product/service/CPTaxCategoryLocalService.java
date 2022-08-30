@@ -88,16 +88,6 @@ public interface CPTaxCategoryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CPTaxCategory addCPTaxCategory(CPTaxCategory cpTaxCategory);
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addCPTaxCategory(String, Map, Map, ServiceContext)}
-	 */
-	@Deprecated
-	public CPTaxCategory addCPTaxCategory(
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	public CPTaxCategory addCPTaxCategory(
 			String externalReferenceCode, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
@@ -375,16 +365,6 @@ public interface CPTaxCategoryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public CPTaxCategory updateCPTaxCategory(CPTaxCategory cpTaxCategory);
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #updateCPTaxCategory(String, long, Map, Map)}
-	 */
-	@Deprecated
-	public CPTaxCategory updateCPTaxCategory(
-			long cpTaxCategoryId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap)
-		throws PortalException;
 
 	public CPTaxCategory updateCPTaxCategory(
 			String externalReferenceCode, long cpTaxCategoryId,

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Product API
 Bundle-SymbolicName: com.liferay.commerce.product.api
-Bundle-Version: 53.1.0
+Bundle-Version: 54.0.0
 Export-Package:\
 	com.liferay.commerce.product.availability,\
 	com.liferay.commerce.product.catalog,\

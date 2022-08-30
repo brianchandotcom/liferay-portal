@@ -194,33 +194,6 @@ public class CPDefinitionOptionRelServiceWrapper
 		return _cpDefinitionOptionRelService.getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @param companyId
-	 * @param groupId
-	 * @param cpDefinitionId
-	 * @param keywords
-	 * @param start
-	 * @param end
-	 * @param sort
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #searchCPDefinitionOptionRels(long, long, long, String, int,
-	 int, Sort[])}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult
-		<CPDefinitionOptionRel> searchCPDefinitionOptionRels(
-				long companyId, long groupId, long cpDefinitionId,
-				String keywords, int start, int end,
-				com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpDefinitionOptionRelService.searchCPDefinitionOptionRels(
-			companyId, groupId, cpDefinitionId, keywords, start, end, sort);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CPDefinitionOptionRel> searchCPDefinitionOptionRels(

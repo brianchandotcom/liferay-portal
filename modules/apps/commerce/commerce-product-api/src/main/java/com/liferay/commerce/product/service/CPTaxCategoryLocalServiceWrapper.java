@@ -55,22 +55,6 @@ public class CPTaxCategoryLocalServiceWrapper
 		return _cpTaxCategoryLocalService.addCPTaxCategory(cpTaxCategory);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addCPTaxCategory(String, Map, Map, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public CPTaxCategory addCPTaxCategory(
-			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpTaxCategoryLocalService.addCPTaxCategory(
-			nameMap, descriptionMap, serviceContext);
-	}
-
 	@Override
 	public CPTaxCategory addCPTaxCategory(
 			String externalReferenceCode,
@@ -477,22 +461,6 @@ public class CPTaxCategoryLocalServiceWrapper
 	@Override
 	public CPTaxCategory updateCPTaxCategory(CPTaxCategory cpTaxCategory) {
 		return _cpTaxCategoryLocalService.updateCPTaxCategory(cpTaxCategory);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #updateCPTaxCategory(String, long, Map, Map)}
-	 */
-	@Deprecated
-	@Override
-	public CPTaxCategory updateCPTaxCategory(
-			long cpTaxCategoryId,
-			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpTaxCategoryLocalService.updateCPTaxCategory(
-			cpTaxCategoryId, nameMap, descriptionMap);
 	}
 
 	@Override

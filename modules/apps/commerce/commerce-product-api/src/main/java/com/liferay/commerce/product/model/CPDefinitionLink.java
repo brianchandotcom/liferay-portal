@@ -62,18 +62,6 @@ public interface CPDefinitionLink
 
 	public CPDefinition getCPDefinition();
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public CPDefinition getCPDefinition1();
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public CPDefinition getCPDefinition2();
-
 	public CProduct getCProduct();
 
 }

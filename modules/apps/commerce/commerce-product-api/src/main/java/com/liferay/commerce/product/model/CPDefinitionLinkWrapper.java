@@ -171,24 +171,6 @@ public class CPDefinitionLinkWrapper
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public CPDefinition getCPDefinition1() {
-		return model.getCPDefinition1();
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public CPDefinition getCPDefinition2() {
-		return model.getCPDefinition2();
-	}
-
-	/**
 	 * Returns the cp definition ID of this cp definition link.
 	 *
 	 * @return the cp definition ID of this cp definition link

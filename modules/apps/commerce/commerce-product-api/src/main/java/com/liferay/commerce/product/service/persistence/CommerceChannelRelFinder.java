@@ -28,10 +28,6 @@ public interface CommerceChannelRelFinder {
 	public int countByC_C(
 		String className, long classPK, String name, boolean inlineSQLHelper);
 
-	public int countByC_C(
-		String className, long classPK, String classPKField, String name,
-		boolean inlineSQLHelper);
-
 	public java.util.List<com.liferay.commerce.product.model.CommerceChannelRel>
 		findByC_C(
 			String className, long classPK, String name, int start, int end);
@@ -40,10 +36,5 @@ public interface CommerceChannelRelFinder {
 		findByC_C(
 			String className, long classPK, String name, int start, int end,
 			boolean inlineSQLHelper);
-
-	public java.util.List<com.liferay.commerce.product.model.CommerceChannelRel>
-		findByC_C(
-			String className, long classPK, String classPKField, String name,
-			int start, int end, boolean inlineSQLHelper);
 
 }

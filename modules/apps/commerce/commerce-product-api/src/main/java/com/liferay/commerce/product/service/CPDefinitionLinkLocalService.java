@@ -87,15 +87,6 @@ public interface CPDefinitionLinkLocalService
 	public CPDefinitionLink addCPDefinitionLink(
 		CPDefinitionLink cpDefinitionLink);
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public CPDefinitionLink addCPDefinitionLink(
-			long cpDefinitionId1, long cpDefinitionId2, double priority,
-			String type, ServiceContext serviceContext)
-		throws PortalException;
-
 	public CPDefinitionLink addCPDefinitionLinkByCProductId(
 			long cpDefinitionId, long cProductId, double priority, String type,
 			ServiceContext serviceContext)
@@ -146,13 +137,6 @@ public interface CPDefinitionLinkLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public CPDefinitionLink deleteCPDefinitionLink(long CPDefinitionLinkId)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public void deleteCPDefinitionLinks(long cpDefinitionId)
 		throws PortalException;
 
 	public void deleteCPDefinitionLinksByCPDefinitionId(long cpDefinitionId)
@@ -402,15 +386,6 @@ public interface CPDefinitionLinkLocalService
 
 	public void updateCPDefinitionLinkCProductIds(
 			long cpDefinitionId, long[] cProductIds, String type,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public void updateCPDefinitionLinks(
-			long cpDefinitionId1, long[] cpDefinitionIds2, String type,
 			ServiceContext serviceContext)
 		throws PortalException;
 

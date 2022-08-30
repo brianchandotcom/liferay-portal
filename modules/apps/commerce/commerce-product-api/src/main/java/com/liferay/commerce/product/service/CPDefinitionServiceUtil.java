@@ -304,16 +304,6 @@ public class CPDefinitionServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getLayoutUuid(long cpDefinitionId)
-		throws PortalException {
-
-		return getService().getLayoutUuid(cpDefinitionId);
-	}
-
-	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
@@ -420,19 +410,6 @@ public class CPDefinitionServiceUtil {
 			cpDefinitionId, enable);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static void updateCPDisplayLayout(
-			long cpDefinitionId, String layoutUuid,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		getService().updateCPDisplayLayout(
-			cpDefinitionId, layoutUuid, serviceContext);
-	}
-
 	public static CPDefinition updateExternalReferenceCode(
 			String externalReferenceCode, long cpDefinitionId)
 		throws PortalException {
@@ -482,25 +459,6 @@ public class CPDefinitionServiceUtil {
 			deliverySubscriptionLength, deliverySubscriptionType,
 			deliverySubscriptionTypeSettingsUnicodeProperties,
 			deliveryMaxSubscriptionCycles);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static CPDefinition updateSubscriptionInfo(
-			long cpDefinitionId, boolean subscriptionEnabled,
-			int subscriptionLength, String subscriptionType,
-			com.liferay.portal.kernel.util.UnicodeProperties
-				subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().updateSubscriptionInfo(
-			cpDefinitionId, subscriptionEnabled, subscriptionLength,
-			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
-			maxSubscriptionCycles, serviceContext);
 	}
 
 	public static CPDefinition updateTaxCategoryInfo(

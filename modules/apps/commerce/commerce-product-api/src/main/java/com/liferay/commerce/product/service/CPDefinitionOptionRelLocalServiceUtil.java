@@ -532,32 +532,6 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 		return getService().search(searchContext);
 	}
 
-	/**
-	 * @param companyId
-	 * @param groupId
-	 * @param cpDefinitionId
-	 * @param keywords
-	 * @param start
-	 * @param end
-	 * @param sort
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #searchCPDefinitionOptionRels(long, long, long, String, int,
-	 int, Sort[])}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<CPDefinitionOptionRel> searchCPDefinitionOptionRels(
-				long companyId, long groupId, long cpDefinitionId,
-				String keywords, int start, int end,
-				com.liferay.portal.kernel.search.Sort sort)
-			throws PortalException {
-
-		return getService().searchCPDefinitionOptionRels(
-			companyId, groupId, cpDefinitionId, keywords, start, end, sort);
-	}
-
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CPDefinitionOptionRel> searchCPDefinitionOptionRels(
 				long companyId, long groupId, long cpDefinitionId,

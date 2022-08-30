@@ -89,29 +89,10 @@ public interface CommerceChannelRelService extends BaseService {
 			OrderByComparator<CommerceChannelRel> orderByComparator)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceChannelRel> getCommerceChannelRels(
-			String className, long classPK, int start, int end,
-			OrderByComparator<CommerceChannelRel> orderByComparator)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceChannelRel> getCommerceChannelRels(
 			String className, long classPK, String name, int start, int end)
 		throws PortalException;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceChannelRel> getCommerceChannelRels(
-		String className, long classPK, String classPKField, String name,
-		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceChannelRelsCount(long commerceChannelId)
@@ -125,14 +106,6 @@ public interface CommerceChannelRelService extends BaseService {
 	public int getCommerceChannelRelsCount(
 			String className, long classPK, String name)
 		throws PortalException;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceChannelRelsCount(
-		String className, long classPK, String classPKField, String name);
 
 	/**
 	 * Returns the OSGi service identifier.

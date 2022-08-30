@@ -422,28 +422,6 @@ public interface CPDefinitionOptionValueRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);
 
-	/**
-	 * @param companyId
-	 * @param groupId
-	 * @param cpDefinitionOptionRelId
-	 * @param keywords
-	 * @param start
-	 * @param end
-	 * @param sort
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #searchCPDefinitionOptionValueRels(long, long, long, String,
-	 int, int, Sort[])}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CPDefinitionOptionValueRel>
-			searchCPDefinitionOptionValueRels(
-				long companyId, long groupId, long cpDefinitionOptionRelId,
-				String keywords, int start, int end, Sort sort)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDefinitionOptionValueRel>
 			searchCPDefinitionOptionValueRels(
@@ -471,52 +449,12 @@ public interface CPDefinitionOptionValueRelLocalService
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel);
 
-	/**
-	 * @param cpDefinitionOptionValueRelId
-	 * @param nameMap
-	 * @param priority
-	 * @param key
-	 * @param cpInstanceId
-	 * @param quantity
-	 * @param price
-	 * @param serviceContext
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 #updateCPDefinitionOptionValueRel(long, Map, double, String,
-	 long, int, boolean, BigDecimal, ServiceContext)}
-	 */
-	@Deprecated
-	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
-			double priority, String key, long cpInstanceId, int quantity,
-			BigDecimal price, ServiceContext serviceContext)
-		throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
 			double priority, String key, long cpInstanceId, int quantity,
 			boolean preselected, BigDecimal price,
 			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @param cpDefinitionOptionValueRelId
-	 * @param nameMap
-	 * @param priority
-	 * @param key
-	 * @param serviceContext
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 #updateCPDefinitionOptionValueRel(long, Map, double, String,
-	 long, int, boolean, BigDecimal, ServiceContext)}
-	 */
-	@Deprecated
-	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
-			double priority, String key, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPDefinitionOptionValueRel

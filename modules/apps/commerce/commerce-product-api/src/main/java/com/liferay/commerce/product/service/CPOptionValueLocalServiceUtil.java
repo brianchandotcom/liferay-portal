@@ -434,30 +434,6 @@ public class CPOptionValueLocalServiceUtil {
 		return getService().search(searchContext);
 	}
 
-	/**
-	 * @param companyId
-	 * @param groupId
-	 * @param cpOptionId
-	 * @param keywords
-	 * @param start
-	 * @param end
-	 * @param sort
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #searchCPOptionValues(long, long, String, int, int, Sort[])}
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<CPOptionValue> searchCPOptionValues(
-				long companyId, long groupId, long cpOptionId, String keywords,
-				int start, int end, com.liferay.portal.kernel.search.Sort sort)
-			throws PortalException {
-
-		return getService().searchCPOptionValues(
-			companyId, groupId, cpOptionId, keywords, start, end, sort);
-	}
-
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CPOptionValue> searchCPOptionValues(
 				long companyId, long cpOptionId, String keywords, int start,

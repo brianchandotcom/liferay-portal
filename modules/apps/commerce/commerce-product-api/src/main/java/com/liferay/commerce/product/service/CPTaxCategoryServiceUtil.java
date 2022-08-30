@@ -40,22 +40,6 @@ public class CPTaxCategoryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPTaxCategoryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addCPTaxCategory(String, Map, Map, ServiceContext)}
-	 */
-	@Deprecated
-	public static CPTaxCategory addCPTaxCategory(
-			Map<java.util.Locale, String> nameMap,
-			Map<java.util.Locale, String> descriptionMap,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addCPTaxCategory(
-			nameMap, descriptionMap, serviceContext);
-	}
-
 	public static CPTaxCategory addCPTaxCategory(
 			String externalReferenceCode, Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap,
@@ -121,20 +105,6 @@ public class CPTaxCategoryServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #updateCPTaxCategory(String, long, Map, Map)}
-	 */
-	@Deprecated
-	public static CPTaxCategory updateCPTaxCategory(
-			long cpTaxCategoryId, Map<java.util.Locale, String> nameMap,
-			Map<java.util.Locale, String> descriptionMap)
-		throws PortalException {
-
-		return getService().updateCPTaxCategory(
-			cpTaxCategoryId, nameMap, descriptionMap);
 	}
 
 	public static CPTaxCategory updateCPTaxCategory(

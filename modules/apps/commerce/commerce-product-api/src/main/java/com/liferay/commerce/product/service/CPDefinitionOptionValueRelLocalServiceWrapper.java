@@ -598,35 +598,6 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 		return _cpDefinitionOptionValueRelLocalService.search(searchContext);
 	}
 
-	/**
-	 * @param companyId
-	 * @param groupId
-	 * @param cpDefinitionOptionRelId
-	 * @param keywords
-	 * @param start
-	 * @param end
-	 * @param sort
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #searchCPDefinitionOptionValueRels(long, long, long, String,
-	 int, int, Sort[])}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult
-		<CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
-				long companyId, long groupId, long cpDefinitionOptionRelId,
-				String keywords, int start, int end,
-				com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpDefinitionOptionValueRelLocalService.
-			searchCPDefinitionOptionValueRels(
-				companyId, groupId, cpDefinitionOptionRelId, keywords, start,
-				end, sort);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
@@ -670,37 +641,6 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 			updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
 	}
 
-	/**
-	 * @param cpDefinitionOptionValueRelId
-	 * @param nameMap
-	 * @param priority
-	 * @param key
-	 * @param cpInstanceId
-	 * @param quantity
-	 * @param price
-	 * @param serviceContext
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 #updateCPDefinitionOptionValueRel(long, Map, double, String,
-	 long, int, boolean, BigDecimal, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-			long cpDefinitionOptionValueRelId,
-			java.util.Map<java.util.Locale, String> nameMap, double priority,
-			String key, long cpInstanceId, int quantity,
-			java.math.BigDecimal price,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpDefinitionOptionValueRelLocalService.
-			updateCPDefinitionOptionValueRel(
-				cpDefinitionOptionValueRelId, nameMap, priority, key,
-				cpInstanceId, quantity, price, serviceContext);
-	}
-
 	@Override
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 			long cpDefinitionOptionValueRelId,
@@ -714,33 +654,6 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 			updateCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRelId, nameMap, priority, key,
 				cpInstanceId, quantity, preselected, price, serviceContext);
-	}
-
-	/**
-	 * @param cpDefinitionOptionValueRelId
-	 * @param nameMap
-	 * @param priority
-	 * @param key
-	 * @param serviceContext
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 #updateCPDefinitionOptionValueRel(long, Map, double, String,
-	 long, int, boolean, BigDecimal, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-			long cpDefinitionOptionValueRelId,
-			java.util.Map<java.util.Locale, String> nameMap, double priority,
-			String key,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpDefinitionOptionValueRelLocalService.
-			updateCPDefinitionOptionValueRel(
-				cpDefinitionOptionValueRelId, nameMap, priority, key,
-				serviceContext);
 	}
 
 	@Override

@@ -58,21 +58,6 @@ public class CPDefinitionLinkLocalServiceWrapper
 			cpDefinitionLink);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public CPDefinitionLink addCPDefinitionLink(
-			long cpDefinitionId1, long cpDefinitionId2, double priority,
-			String type,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpDefinitionLinkLocalService.addCPDefinitionLink(
-			cpDefinitionId1, cpDefinitionId2, priority, type, serviceContext);
-	}
-
 	@Override
 	public CPDefinitionLink addCPDefinitionLinkByCProductId(
 			long cpDefinitionId, long cProductId, double priority, String type,
@@ -144,17 +129,6 @@ public class CPDefinitionLinkLocalServiceWrapper
 
 		return _cpDefinitionLinkLocalService.deleteCPDefinitionLink(
 			CPDefinitionLinkId);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public void deleteCPDefinitionLinks(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_cpDefinitionLinkLocalService.deleteCPDefinitionLinks(cpDefinitionId);
 	}
 
 	@Override
@@ -550,20 +524,6 @@ public class CPDefinitionLinkLocalServiceWrapper
 
 		_cpDefinitionLinkLocalService.updateCPDefinitionLinkCProductIds(
 			cpDefinitionId, cProductIds, type, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public void updateCPDefinitionLinks(
-			long cpDefinitionId1, long[] cpDefinitionIds2, String type,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_cpDefinitionLinkLocalService.updateCPDefinitionLinks(
-			cpDefinitionId1, cpDefinitionIds2, type, serviceContext);
 	}
 
 	@Override

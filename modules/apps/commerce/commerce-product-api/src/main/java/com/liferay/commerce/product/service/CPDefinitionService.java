@@ -225,13 +225,6 @@ public interface CPDefinitionService extends BaseService {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String getLayoutUuid(long cpDefinitionId) throws PortalException;
-
-	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
@@ -292,15 +285,6 @@ public interface CPDefinitionService extends BaseService {
 			long cpDefinitionId, boolean enable)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public void updateCPDisplayLayout(
-			long cpDefinitionId, String layoutUuid,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	public CPDefinition updateExternalReferenceCode(
 			String externalReferenceCode, long cpDefinitionId)
 		throws PortalException;
@@ -325,17 +309,6 @@ public interface CPDefinitionService extends BaseService {
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
 			long deliveryMaxSubscriptionCycles)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public CPDefinition updateSubscriptionInfo(
-			long cpDefinitionId, boolean subscriptionEnabled,
-			int subscriptionLength, String subscriptionType,
-			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPDefinition updateTaxCategoryInfo(

@@ -219,6 +219,13 @@ definition {
 		return "${externalReferenceCodeValue}";
 	}
 
+	macro getRemoteAppEntryId {
+		var companyId = JSONCompany.getCompanyId();
+		var externalReferenceCodeValue = RemoteApps.getExternalReferenceCodeValue();
+
+		return "${companyId}_${externalReferenceCodeValue}";
+	}
+
 	macro getRemoteAppEntryName {
 		WaitForSPARefresh();
 

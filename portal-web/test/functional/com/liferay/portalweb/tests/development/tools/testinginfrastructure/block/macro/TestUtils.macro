@@ -93,6 +93,30 @@ return element.textContent;
 		return "${textContent}";
 	}
 
+	macro getScreenHeight {
+		WaitForSPARefresh();
+
+		var javascript = '''
+return	screen.height.toString();
+		''';
+
+		var screenHeight = selenium.getEval("${javascript}");
+
+		return "${screenHeight}";
+	}
+
+	macro getScreenWidth {
+		WaitForSPARefresh();
+
+		var javascript = '''
+return	screen.width.toString();
+		''';
+
+		var screenWidth = selenium.getEval("${javascript}");
+
+		return "${screenWidth}";
+	}
+
 	macro hardRefresh {
 		var mac = OSDetector.isApple();
 
@@ -134,6 +158,13 @@ return element.textContent;
 		else {
 			TestUtils.fail(message = "FAILED: actual '${actual}' is greater than or equals to expected '${expected}'");
 		}
+	}
+
+	macro maximizeWindow {
+		var screenWidth = TestUtils.getScreenWidth();
+		var screenHeight = TestUtils.getScreenHeight();
+
+		SetWindowSize(value1 = "${screenWidth},${screenHeight}");
 	}
 
 	macro pass {

@@ -18,6 +18,44 @@ import SidebarPanel from '../components/SidebarPanel';
 import SidebarPanelInfoView from '../components/SidebarPanelInfoView/SidebarPanelInfoView';
 import SidebarPanelInfoViewCollapsable from '../components/SidebarPanelInfoView/SidebarPanelInfoViewCollapsable';
 import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
+import {OPEN_PANEL_VALUE} from '../utils/constants';
+
+const handlePanelStateFromSession = async () => {
+	const _panelState = await Liferay.Util.Session.get(
+		'com.liferay.content.dashboard.web_panelState'
+	);
+
+	if (_panelState !== OPEN_PANEL_VALUE) {
+		return;
+	}
+
+	const {fetchURL, portletNamespace, rowId} = await Liferay.Util.Session.get(
+		'com.liferay.content.dashboard.web_panelCurrentItemInfo'
+	);
+
+	showSidebar({
+		View: SidebarPanelInfoView,
+		fetchURL,
+		portletNamespace,
+	});
+
+	selectRow(portletNamespace, rowId);
+};
+
+const handleSessionOnSidebarOpen = ({fetchURL, portletNamespace, rowId}) => {
+	Liferay.Util.Session.set(
+		'com.liferay.content.dashboard.web_panelState',
+		OPEN_PANEL_VALUE
+	);
+	Liferay.Util.Session.set(
+		'com.liferay.content.dashboard.web_panelCurrentItemInfo',
+		{
+			fetchURL,
+			portletNamespace,
+			rowId,
+		}
+	);
+};
 
 const deselectAllRows = (portletNamespace) => {
 	const activeRows = document.querySelectorAll(
@@ -36,6 +74,11 @@ const selectRow = (portletNamespace, rowId) => {
 	deselectAllRows(portletNamespace);
 
 	const currentRow = getRow(portletNamespace, rowId);
+
+	if (!currentRow) {
+		return;
+	}
+
 	currentRow.classList.add('active');
 };
 
@@ -74,6 +117,9 @@ const showSidebar = ({View, fetchURL, portletNamespace}) => {
 const actions = {
 	showInfo({fetchURL, portletNamespace, rowId}) {
 		selectRow(portletNamespace, rowId);
+
+		handleSessionOnSidebarOpen({fetchURL, portletNamespace, rowId});
+
 		showSidebar({
 			View: Liferay.FeatureFlags['LPS-161013']
 				? SidebarPanelInfoView
@@ -97,6 +143,8 @@ export default function propsTransformer({
 	portletNamespace,
 	...otherProps
 }) {
+	handlePanelStateFromSession();
+
 	return {
 		...otherProps,
 		items: items.map((item) => {

@@ -18,6 +18,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useImperativeHandle, useReducer, useRef} from 'react';
 
+import {CLOSE_PANEL_VALUE} from '../utils/constants';
 import Sidebar from './Sidebar';
 
 const initialState = {
@@ -27,9 +28,23 @@ const initialState = {
 	open: true,
 };
 
+const handleSessionOnSidebarClose = () => {
+	Liferay.Util.Session.set(
+		'com.liferay.content.dashboard.web_panelState',
+		CLOSE_PANEL_VALUE
+	);
+
+	Liferay.Util.Session.set(
+		'com.liferay.content.dashboard.web_panelCurrentItemInfo',
+		null
+	);
+};
+
 const dataReducer = (state, action) => {
 	switch (action.type) {
 		case 'CLOSE_SIDEBAR':
+			handleSessionOnSidebarClose();
+
 			return {
 				...state,
 				isOpen: false,

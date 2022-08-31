@@ -12,50 +12,24 @@ definition {
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
-			layoutName = "2B Account Page");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Guest",
-			layoutName = "2B Account Page",
-			layoutTemplate = "1 Column");
+			layoutName = "Account Page");
 
 		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
 			groupName = "Guest",
-			layoutName = "2B Account Page",
+			layoutName = "Account Page",
 			widgetName = "Account Management");
 
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account Name",
-			accountEntryType = "Business");
-
-		JSONAccountEntryUser.addAccountEntryUser(
-			accountEntryName = "Account Name",
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Account Name");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		Accounts.addAssigneeToRoleViaRolesTab(
-			accountRoleTitle = "Account Administrator",
-			assigneeName = "userfn");
-
-		AccountUsers.openAccountUsersAdmin();
-
-		AccountUsers.setUserPassword(
-			accountUser = "userfn",
-			accountUserPassword = "test");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "2B Account Page");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 	}
 
 	tearDown {

@@ -16,6 +16,7 @@ package com.liferay.account.service.test;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryDomainsException;
+import com.liferay.account.exception.AccountEntryNameException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.retriever.AccountUserRetriever;
@@ -144,6 +145,49 @@ public class AccountEntryLocalServiceTest {
 		_accountEntryLocalService.deleteAccountEntry(accountEntry);
 
 		Assert.assertNull(accountEntry.getAccountEntryGroup());
+	}
+
+	@Test
+	public void testAccountEntryName() throws Exception {
+		try {
+			_accountEntryLocalService.addAccountEntry(
+				TestPropsValues.getUserId(),
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, "",
+				RandomTestUtil.randomString(), null, null, null, null,
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			String message = exception.getMessage();
+
+			Assert.assertTrue(message.contains("Name is null"));
+
+			Assert.assertTrue(exception instanceof AccountEntryNameException);
+		}
+
+		AccountEntry accountEntry = _addAccountEntry();
+
+		accountEntry.setName("");
+
+		try {
+			_accountEntryLocalService.updateAccountEntry(
+				accountEntry.getAccountEntryId(),
+				accountEntry.getParentAccountEntryId(), "", null, false, null,
+				null, null, null, accountEntry.getStatus(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			String message = exception.getMessage();
+
+			Assert.assertTrue(message.contains("Name is null"));
+
+			Assert.assertTrue(exception instanceof AccountEntryNameException);
+		}
 	}
 
 	@Test

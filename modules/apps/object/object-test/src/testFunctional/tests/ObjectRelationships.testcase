@@ -136,6 +136,30 @@ definition {
 		CreateObject.assertEntrySelectedOnRelationshipField(entry = "userfn");
 	}
 
+	@description = "LPS-146754 - Verify that it's possible to create a Many-to-Many relationship between a Custom Object and Native Object"
+	@priority = "5"
+	test CanCreateManyToManyRelationshipWithNativeObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 290",
+			objectName = "CustomObject290",
+			pluralLabelName = "Custom Objects 290");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "User");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "Relationship",
+			object = "Custom Object 290",
+			type = "Many to Many");
+
+		AssertElementPresent(
+			key_label = "Relationship",
+			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
+	}
+
 	@description = "LPS-145393 - Verify it is possible to create a Relationship One-to-Many from a Native Object to a Custom Object"
 	@priority = "5"
 	test CanCreateOneToManyForNativeObject {

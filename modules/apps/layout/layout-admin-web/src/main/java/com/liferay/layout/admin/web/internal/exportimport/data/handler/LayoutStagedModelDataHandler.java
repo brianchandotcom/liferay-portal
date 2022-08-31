@@ -823,6 +823,9 @@ public class LayoutStagedModelDataHandler
 				}
 			}
 		}
+		else {
+			importedLayout.setMasterLayoutPlid(0);
+		}
 
 		long parentPlid = layout.getParentPlid();
 		long parentLayoutId = layout.getParentLayoutId();

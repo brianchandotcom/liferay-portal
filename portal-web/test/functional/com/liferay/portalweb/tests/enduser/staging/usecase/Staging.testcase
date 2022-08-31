@@ -2064,7 +2064,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = '''Special Char aŐb''');
 
-		WebContent.viewFriendlyURLCP(friendlyURL = '''special-char-a%C5%90b''');
+		WebContent.viewFriendlyURLCP(friendlyURL = '''special-char-aŐb''');
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 

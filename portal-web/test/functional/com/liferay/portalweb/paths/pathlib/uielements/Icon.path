@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>ANY_ITEM_SELECTOR</td>
-	<td>//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div//button[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
+	<td>//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div//button[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]] | //div[label[normalize-space()='${key_fieldLabel}']]/following-sibling::button[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]] | //div[label[normalize-space()='${key_fieldLabel}']]/following-sibling::div//button[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
 	<td></td>
 </tr>
 <tr>

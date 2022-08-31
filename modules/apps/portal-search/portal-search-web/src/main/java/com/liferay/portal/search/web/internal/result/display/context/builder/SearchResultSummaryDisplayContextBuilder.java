@@ -403,8 +403,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 			assetRenderer);
 		_buildLocaleReminder(searchResultSummaryDisplayContext, summary);
 		_buildModelResource(searchResultSummaryDisplayContext, className);
-		_buildModifiedByUserPortrait(
-			searchResultSummaryDisplayContext, assetEntry, className);
+		_buildModifiedByUserPortrait(searchResultSummaryDisplayContext);
 		_buildModifiedDateString(searchResultSummaryDisplayContext);
 		_buildModifiedUserName(searchResultSummaryDisplayContext);
 		_buildViewURL(className, classPK, searchResultSummaryDisplayContext);
@@ -851,34 +850,19 @@ public class SearchResultSummaryDisplayContextBuilder {
 	}
 
 	private void _buildModifiedByUserPortrait(
-		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
-		AssetEntry assetEntry, String className) {
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
-		AssetEntry childAssetEntry = _assetEntryLocalService.fetchEntry(
-			className, _getEntryClassPK());
+		String statusByUserId = _getFieldValueString("statusByUserId");
 
-		if (childAssetEntry != null) {
-			assetEntry = childAssetEntry;
-		}
+		if (statusByUserId != null) {
+			long userId = GetterUtil.getLong(statusByUserId);
 
-		if (assetEntry != null) {
-			long assetEntryUserId = getAssetEntryUserId(assetEntry);
+			searchResultSummaryDisplayContext.
+				setModifiedByUserPortraitURLString(
+					_getPortraitURLString(userId));
 
-			searchResultSummaryDisplayContext.setAssetEntryUserId(
-				assetEntryUserId);
-
-			String portraitURLString = _getPortraitURLString(assetEntryUserId);
-
-			if (portraitURLString != null) {
-				searchResultSummaryDisplayContext.
-					setModifiedByUserPortraitURLString(portraitURLString);
-				searchResultSummaryDisplayContext.
-					setModifiedByUserPortraitVisible(true);
-
-				searchResultSummaryDisplayContext.setUserPortraitURLString(
-					portraitURLString);
-				searchResultSummaryDisplayContext.setUserPortraitVisible(true);
-			}
+			searchResultSummaryDisplayContext.setModifiedByUserPortraitVisible(
+				true);
 		}
 	}
 
@@ -904,7 +888,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 
 		String statusByUserId = _getFieldValueString("statusByUserId");
 
-		if (!Validator.isBlank(statusByUserId)) {
+		if (statusByUserId != null) {
 			long userId = GetterUtil.getLong(statusByUserId);
 
 			User user = _userLocalService.fetchUser(userId);

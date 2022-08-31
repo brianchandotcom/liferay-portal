@@ -273,6 +273,37 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Entry B");
 	}
 
+	@description = "LPS-146754 - Verify that it's not possible for a Custom Object to create a Many-to-Many relationship with itself"
+	@priority = "4"
+	test CannotCreateManytoManyRelationshipWithItself {
+		task ("Create Custom Object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 290",
+				objectName = "CustomObject290",
+				pluralLabelName = "Custom Objects 290");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 290");
+		}
+
+		task ("Go to Relationships tab and click to create a Many-to-Many relationship") {
+			ObjectAdmin.gotoRelationshipsTab();
+
+			LexiconEntry.gotoAdd();
+
+			ObjectField.selectType(fieldType = "Many to Many");
+		}
+
+		task ("Assert that the Custom Object created is not present") {
+			Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
+
+			AssertElementNotPresent(
+				key_columnOption = "Custom Objects 290",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+		}
+	}
+
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Label blank"
 	@priority = "4"
 	test CannotLeaveRelationshipLabelBlank {

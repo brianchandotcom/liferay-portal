@@ -112,7 +112,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Assert if a mobile failure is not shown") {
@@ -145,7 +145,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Assert if a mobile failure is not shown") {
@@ -178,7 +178,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Assert if mobile failure are shown") {
@@ -199,7 +199,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#PageAuditContentPageDisabled";
 
 		task ("Disable Google PageSpeed") {
-			PageAudit.disableGooglePageSpeed();
+			PageAudit.disableGooglePageSpeedViaSystemSettings();
 		}
 
 		task ("Go to the Content Page and assert the Page Audit panel is not shown") {
@@ -216,7 +216,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#PageAuditDisplayPageDisabled";
 
 		task ("Disable Google PageSpeed") {
-			PageAudit.disableGooglePageSpeed();
+			PageAudit.disableGooglePageSpeedViaSystemSettings();
 		}
 
 		task ("Create a default Display Page Template") {
@@ -258,7 +258,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#PageAuditWidgetPageDisabled";
 
 		task ("Disable Google PageSpeed") {
-			PageAudit.disableGooglePageSpeed();
+			PageAudit.disableGooglePageSpeedViaSystemSettings();
 		}
 
 		task ("Add Widget Page") {
@@ -294,7 +294,7 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 		task ("Open Page Audit panel and assert there are no issues") {
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			AssertElementPresent(locator1 = "PageAudit#IMAGE_SUCCESS");
 
@@ -329,7 +329,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Assert if mobile failures are checked") {
@@ -352,7 +352,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsVirtualInstanceThenNotVisibleAtTabSiteSettings";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
-			PageAudit.disableGooglePageSpeed();
+			PageAudit.disableGooglePageSpeedViaSystemSettings();
 		}
 
 		task ("Navigate to Site Settings and check if tab is not visible") {
@@ -382,7 +382,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsSiteScopeThenUncheckedAtTabSiteSettings";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
-			PageAudit.disableGooglePageSpeed(settingsScope = "Site Scope");
+			PageAudit.disableGooglePageSpeedViaSystemSettings(settingsScope = "Site Scope");
 		}
 
 		task ("Navigate to Site Settings and check if tab is not visible") {
@@ -412,7 +412,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsSystemScopeThenNotVisibleAtSiteScope";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
-			PageAudit.disableGooglePageSpeed(settingsScope = "System Scope");
+			PageAudit.disableGooglePageSpeedViaSystemSettings(settingsScope = "System Scope");
 		}
 
 		task ("Check if Google PageSpeed Insights tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section") {
@@ -432,7 +432,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsSystemScopeThenNotVisibleAtVirtualInstance";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
-			PageAudit.disableGooglePageSpeed(settingsScope = "System Scope");
+			PageAudit.disableGooglePageSpeedViaSystemSettings(settingsScope = "System Scope");
 		}
 
 		task ("Check if Google PageSpeed Insights tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section") {
@@ -452,7 +452,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsSystemScopeThenNotVisibleAtInstanceSettings";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section in System Settings") {
-			PageAudit.disableGooglePageSpeed(settingsScope = "System Scope");
+			PageAudit.disableGooglePageSpeedViaSystemSettings(settingsScope = "System Scope");
 		}
 
 		task ("Go to Instance Settings") {
@@ -488,7 +488,7 @@ definition {
 		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsVirtualInstanceThenVisibleAtSiteScope";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
-			PageAudit.disableGooglePageSpeed(settingsScope = "Virtual Instance Scope");
+			PageAudit.disableGooglePageSpeedViaSystemSettings(settingsScope = "Virtual Instance Scope");
 		}
 
 		task ("Check if Google PageSpeed Insights tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section") {

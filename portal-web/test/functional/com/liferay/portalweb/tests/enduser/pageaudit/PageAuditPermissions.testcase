@@ -85,7 +85,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			PageAudit.goToDetailView(failingCheckName = "Invalid Canonical URL");
 
@@ -129,7 +129,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Open detailed view and check text") {
@@ -167,7 +167,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			PageAudit.goToDetailView(failingCheckName = "Invalid Hreflang");
 
@@ -203,7 +203,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			PageAudit.goToDetailView(failingCheckName = "Link Texts");
 
@@ -243,7 +243,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			PageAudit.goToDetailView(failingCheckName = "Missing Meta Description");
 
@@ -291,7 +291,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Open detailed view and check text") {
@@ -329,7 +329,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			PageAudit.goToDetailView(failingCheckName = "Missing <title> Element");
 
@@ -1224,7 +1224,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			PageAudit.goToDetailView(failingCheckName = "Page Blocked from Indexing");
 
@@ -1272,7 +1272,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Open detailed view and check text") {

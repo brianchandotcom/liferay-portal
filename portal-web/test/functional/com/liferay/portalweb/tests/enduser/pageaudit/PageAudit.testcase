@@ -54,7 +54,7 @@ definition {
 		task ("Run Page Audit") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Check if proper failures are displayed at Accessibility section") {
@@ -87,7 +87,7 @@ definition {
 		}
 
 		task ("Configure canonical URL") {
-			PageAudit.configurationSEOCanonicalURL();
+			PageAudit.configureLocalizedURL();
 		}
 
 		task ("Add a translation for that page") {
@@ -140,7 +140,7 @@ definition {
 		}
 
 		task ("Configure canonical URL") {
-			PageAudit.configurationSEOCanonicalURL();
+			PageAudit.configureLocalizedURL();
 		}
 
 		task ("Open Page Audit panel and change locale/language") {
@@ -204,7 +204,7 @@ definition {
 		}
 
 		task ("Configure canonical URL") {
-			PageAudit.configurationSEOCanonicalURL();
+			PageAudit.configureLocalizedURL();
 		}
 
 		task ("Go to display page") {
@@ -246,7 +246,7 @@ definition {
 		}
 
 		task ("Configure canonical URL") {
-			PageAudit.configurationSEOCanonicalURL();
+			PageAudit.configureLocalizedURL();
 		}
 
 		task ("Open Page Audit panel and change locale/language") {
@@ -286,7 +286,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Navigate to second page") {
@@ -430,7 +430,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			PageAudit.goToDetailView(failingCheckName = "Illegible Font Sizes");
 
@@ -462,7 +462,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			PageAudit.goToDetailView(failingCheckName = "Incorrect Image Aspect Ratios");
 
@@ -506,7 +506,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			PageAudit.goToDetailView(failingCheckName = "Not All Links Are Crawlable");
 
@@ -542,7 +542,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			PageAudit.goToDetailView(failingCheckName = "Low Contrast Ratio");
 
@@ -578,7 +578,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			PageAudit.goToDetailView(failingCheckName = "Missing Img ALT Attributes");
 
@@ -614,7 +614,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			PageAudit.goToDetailView(failingCheckName = "Missing Input ALT Attributes");
 
@@ -719,7 +719,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			PageAudit.goToDetailView(failingCheckName = "Small Tap Targets");
 
@@ -751,7 +751,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Assert if a mobile failure is not shown") {
@@ -783,7 +783,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Assert if mobile failure are shown") {
@@ -818,7 +818,7 @@ definition {
 		task ("Run Page Audit") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Check the number of failures and view more fails") {
@@ -904,7 +904,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Navigate to second page") {
@@ -945,7 +945,7 @@ definition {
 		task ("Run Page Audit") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Check that data is retrieved") {
@@ -977,7 +977,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Assert if mobile failure are shown") {
@@ -1013,7 +1013,7 @@ definition {
 		task ("Open Page Audit panel and navigate to the second level of an issue") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 
 			PageAudit.goToDetailView(failingCheckName = "Low Contrast Ratio");
 
@@ -1105,7 +1105,7 @@ definition {
 		task ("Run Page Audit for first language") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Navigate to second page") {
@@ -1293,7 +1293,7 @@ definition {
 		task ("Run Page Audit") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Check if proper failures are displayed at Accessibility section") {

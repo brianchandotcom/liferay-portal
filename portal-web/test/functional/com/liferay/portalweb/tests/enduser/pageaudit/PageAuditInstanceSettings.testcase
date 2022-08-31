@@ -55,7 +55,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Assert if a mobile failure is not shown") {
@@ -98,9 +98,9 @@ definition {
 			AssertTextEquals(
 				locator1 = "PageAudit#API_FIELD",
 				value1 = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
-
+			
 			AssertTextEquals(
-				locator1 = "PageAudit#PREFERRED_STRATEGY_OPTION_SELECTED",
+				locator1 = "Dropdown#SELECTED_VALUE",
 				value1 = "Mobile");
 		}
 	}
@@ -124,7 +124,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Assert if a mobile failure is not shown") {
@@ -163,7 +163,7 @@ definition {
 		task ("Open Page Audit panel and run it") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			PageAudit.runPageAudit(pageName = "Content Page");
+			PageAudit.runPageAudit();
 		}
 
 		task ("Assert if mobile failures are checked") {

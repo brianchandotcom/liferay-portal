@@ -18,7 +18,7 @@ definition {
 			locator1 = "Translation#DROPDOWN_MENU_ITEM");
 	}
 
-	macro configurationSEOCanonicalURL {
+	macro configureLocalizedURL {
 		PortalSettings.openInstanceSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
@@ -96,7 +96,7 @@ definition {
 			locator1 = "Button#ANY");
 	}
 
-	macro disableGooglePageSpeed {
+	macro disableGooglePageSpeedViaSystemSettings {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -115,25 +115,7 @@ definition {
 				configurationScope = "${settingsScope}");
 		}
 
-		if (IsChecked(checkboxName = "Enable", locator1 = "Checkbox#ANY_CHECKBOX")) {
-			Click.javaScriptClick(
-				checkboxName = "Enable",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
-			AssertNotChecked.assertNotCheckedNotVisible(
-				checkboxName = "Enable",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		if (IsElementPresent(locator1 = "Button#SAVE")) {
-			Click(locator1 = "Button#SAVE");
-		}
-
-		if (IsElementPresent(locator1 = "Button#UPDATE")) {
-			Click(locator1 = "Button#UPDATE");
-		}
-
-		Alert.viewSuccessMessage();
+		PageAudit.disableGooglePageSpeedSettings();
 	}
 
 	macro disableGooglePageSpeedViaInstanceSettings {
@@ -155,25 +137,7 @@ definition {
 				configurationScope = "${scope}");
 		}
 
-		if (IsChecked(checkboxName = "Enable", locator1 = "Checkbox#ANY_CHECKBOX")) {
-			Click.javaScriptClick(
-				checkboxName = "Enable",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
-			AssertNotChecked.assertNotCheckedNotVisible(
-				checkboxName = "Enable",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		if (IsElementPresent(locator1 = "Button#SAVE")) {
-			Click(locator1 = "Button#SAVE");
-		}
-
-		if (IsElementPresent(locator1 = "Button#UPDATE")) {
-			Click(locator1 = "Button#UPDATE");
-		}
-
-		Alert.viewSuccessMessage();
+		PageAudit.disableGooglePageSpeedSettings();
 	}
 
 	macro disableGooglePageSpeedViaSiteSettings {
@@ -186,52 +150,16 @@ definition {
 			configurationName = "Google PageSpeed Insights",
 			configurationScope = "Site Scope");
 
+		PageAudit.disableGooglePageSpeedSettings();
+	}
+
+	macro disableGooglePageSpeedSettings {
 		if (IsChecked(checkboxName = "Enable", locator1 = "Checkbox#ANY_CHECKBOX")) {
 			Click.javaScriptClick(
 				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
 			AssertNotChecked.assertNotCheckedNotVisible(
-				checkboxName = "Enable",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		if (IsElementPresent(locator1 = "Button#SAVE")) {
-			Click(locator1 = "Button#SAVE");
-		}
-
-		if (IsElementPresent(locator1 = "Button#UPDATE")) {
-			Click(locator1 = "Button#UPDATE");
-		}
-
-		Alert.viewSuccessMessage();
-	}
-
-	macro enableGooglePageSpeed {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		if (!(isSet(settingsScope))) {
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "Virtual Instance Scope");
-		}
-		else {
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "${settingsScope}");
-		}
-
-		if (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Enable", locator1 = "Checkbox#ANY_CHECKBOX")) {
-			Click.javaScriptClick(
-				checkboxName = "Enable",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
-			AssertChecked.assertCheckedNotVisible(
 				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
@@ -248,18 +176,6 @@ definition {
 
 	macro goToDetailView {
 		Click(locator1 = "PageAudit#FAILING_CHECK_NAME");
-	}
-
-	macro goToGooglePageSpeedInsightsSystemSettingConfiguration {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Google PageSpeed Insights",
-			configurationScope = "Site Scope");
 	}
 
 	macro openPageAuditSidebar {
@@ -285,7 +201,7 @@ definition {
 	}
 
 	macro resetDefaultValues {
-		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+		if (IsVisible(locator1 = "Button#UPDATE")) {
 			Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
 
 			MenuItem.clickNoError(menuItem = "Reset Default Values");
@@ -296,8 +212,6 @@ definition {
 		PageAudit.openPageAuditSidebar();
 
 		ClickNoError(locator1 = "PageAudit#BUTTON_LAUNCH_ANY");
-
-		Pause(locator1 = "3000");
 
 		WaitForElementPresent(locator1 = "PageAudit#ALERT_BOX");
 	}
@@ -351,11 +265,21 @@ definition {
 			configurationName = "Google PageSpeed Insights",
 			configurationScope = "Site Scope");
 
-		PageAudit.setAPISettings(key_apiKey = "${apiKey}");
+		PageAudit.setAPISettings(
+			key_apiKey = "${apiKey}",
+			preferredStrategy = "${preferredStrategy}");
 	}
 
 	macro setAPIViaSystemSettings {
-		PageAudit.goToGooglePageSpeedInsightsSystemSettingConfiguration();
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed Insights",
+			configurationScope = "Site Scope");
 
 		PageAudit.setAPISettings(key_apiKey = "${apiKey}");
 
@@ -363,11 +287,9 @@ definition {
 	}
 
 	macro setPreferredStrategy {
-		Click(locator1 = "PageAudit#PREFERRED_STRATEGY_DROPDOWN");
+		Click(locator1 = "Dropdown#TRIGGER");
 
-		Click(
-			locator1 = "PageAudit#PREFERRED_STRATEGY_OPTION",
-			strategy = "${key_preferredStrategy}");
+		DropdownMenuItem.click(menuItem = "${key_preferredStrategy}");
 	}
 
 	macro setSEOcanonicalURL {

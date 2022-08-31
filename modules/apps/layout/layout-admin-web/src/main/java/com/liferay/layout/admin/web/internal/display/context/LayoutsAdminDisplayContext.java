@@ -529,14 +529,6 @@ public class LayoutsAdminDisplayContext {
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153457"))) {
-			return String.valueOf(
-				_itemSelector.getItemSelectorURL(
-					RequestBackedPortletURLFactoryUtil.create(
-						httpServletRequest),
-					getSelectFaviconEventName(), itemSelectorCriterion));
-		}
-
 		CETItemSelectorCriterion cetItemSelectorCriterion =
 			new CETItemSelectorCriterion();
 

@@ -118,7 +118,7 @@ public class SearchBarPortletDisplayContextFactory {
 			isAvailableEverythingSearchScope());
 		searchBarPortletDisplayContext.setCurrentSiteSearchScopeParameterString(
 			SearchScope.THIS_SITE.getParameterString());
-		searchBarPortletDisplayContext.setDestination(destination);
+		searchBarPortletDisplayContext.setDestinationFriendlyURL(destination);
 		searchBarPortletDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId(
 				searchBarPortletInstanceConfiguration, themeDisplay));

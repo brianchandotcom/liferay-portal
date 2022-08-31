@@ -173,6 +173,10 @@ function CategorySelectorInput({
 		300
 	);
 
+	const _handleBlur = () => {
+		setFieldTouched(name);
+	};
+
 	const _handleFetchCategoryFromID = (
 		categories = [],
 		currentInputValue,
@@ -213,9 +217,7 @@ function CategorySelectorInput({
 
 	const _handleFieldValueChange = (newFieldValue) => {
 		if (!multiple) {
-			setFieldValue(name, toNumber(newFieldValue.value));
-			setInputValue(newFieldValue.label);
-			setMatchingCategories([]);
+			_handleSingleItemChange(newFieldValue);
 		}
 		else {
 			setFieldValue(name, newFieldValue);
@@ -229,11 +231,11 @@ function CategorySelectorInput({
 	const _handleKeyDown = (event) => {
 		if (event.key === 'Enter') {
 			event.preventDefault();
-		}
-	};
 
-	const _handleSingleInputValueBlur = () => {
-		setFieldTouched(name);
+			if (!multiple && !!matchingCategories[0]) {
+				_handleSingleItemChange(matchingCategories[0]);
+			}
+		}
 	};
 
 	const _handleSingleInputValueChange = (event) => {
@@ -261,11 +263,6 @@ function CategorySelectorInput({
 		setFieldValue(name, toNumber(item.value));
 		setInputValue(item.label);
 		setMatchingCategories([]);
-		setAutocompleteDropdownActive(false);
-	};
-
-	const _handleMultiInputValueBlur = () => {
-		setFieldTouched(name);
 	};
 
 	const _handleMultiInputValueChange = (newValue) => {
@@ -401,7 +398,7 @@ function CategorySelectorInput({
 						id={id}
 						items={value || []}
 						menuRenderer={CategoryMenu}
-						onBlur={_handleMultiInputValueBlur}
+						onBlur={_handleBlur}
 						onChange={_handleMultiInputValueChange}
 						onItemsChange={_handleMultiItemsChange}
 						onKeyDown={_handleKeyDown}
@@ -414,7 +411,7 @@ function CategorySelectorInput({
 							aria-label={label}
 							disabled={disabled}
 							id={id}
-							onBlur={_handleSingleInputValueBlur}
+							onBlur={_handleBlur}
 							onChange={_handleSingleInputValueChange}
 							onFocus={_handleFocus}
 							onKeyDown={_handleKeyDown}

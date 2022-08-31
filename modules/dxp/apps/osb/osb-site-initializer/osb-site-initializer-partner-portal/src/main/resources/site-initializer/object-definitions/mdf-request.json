@@ -125,6 +125,18 @@
 			"name": "totalMDFRequestAmount",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Request Status"
+			},
+			"name": "mdfRequestStatus",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

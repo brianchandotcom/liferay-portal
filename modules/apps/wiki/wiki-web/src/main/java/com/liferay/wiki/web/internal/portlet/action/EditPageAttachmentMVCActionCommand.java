@@ -100,13 +100,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 
-	@Reference(unbind = "-")
-	public void setWikiAttachmentsHelper(
-		WikiAttachmentsHelper wikiAttachmentsHelper) {
-
-		_wikiAttachmentsHelper = wikiAttachmentsHelper;
-	}
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -437,6 +430,7 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 	@Reference(target = "(upload.response.handler=multiple)")
 	private UploadResponseHandler _uploadResponseHandler;
 
+	@Reference
 	private WikiAttachmentsHelper _wikiAttachmentsHelper;
 
 	@Reference

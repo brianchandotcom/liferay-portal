@@ -96,11 +96,6 @@ public class GetPageAttachmentStrutsAction implements StrutsAction {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiPageService(WikiPageService wikiPageService) {
-		_wikiPageService = wikiPageService;
-	}
-
 	private void _getFile(
 			long nodeId, String title, String fileName, int status,
 			HttpServletRequest httpServletRequest,
@@ -137,6 +132,7 @@ public class GetPageAttachmentStrutsAction implements StrutsAction {
 	@Reference
 	private TrashHelper _trashHelper;
 
+	@Reference
 	private WikiPageService _wikiPageService;
 
 }

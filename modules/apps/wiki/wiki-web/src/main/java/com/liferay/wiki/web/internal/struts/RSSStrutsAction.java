@@ -72,11 +72,6 @@ public class RSSStrutsAction implements StrutsAction {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiPageService(WikiPageService wikiPageService) {
-		_wikiPageService = wikiPageService;
-	}
-
 	private byte[] _getRSS(HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -141,6 +136,7 @@ public class RSSStrutsAction implements StrutsAction {
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private WikiPageService _wikiPageService;
 
 }

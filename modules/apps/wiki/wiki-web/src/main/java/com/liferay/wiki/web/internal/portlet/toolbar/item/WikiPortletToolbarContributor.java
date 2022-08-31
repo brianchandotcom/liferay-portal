@@ -93,11 +93,6 @@ public class WikiPortletToolbarContributor
 		return menuItems;
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
-		_wikiNodeService = wikiNodeService;
-	}
-
 	private void _addPortletTitleMenuItem(
 			List<MenuItem> menuItems, WikiNode node, ThemeDisplay themeDisplay,
 			PortletRequest portletRequest)
@@ -205,6 +200,7 @@ public class WikiPortletToolbarContributor
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
 	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
 
+	@Reference
 	private WikiNodeService _wikiNodeService;
 
 }

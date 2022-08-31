@@ -644,6 +644,41 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "There can only be one default object view");
 	}
 
+	@description = "LPS-135394 - Verify it is not possible to save a View set as default when there are no columns selected"
+	@priority = "4"
+	test CannotSaveNoColumnsView {
+		task ("Create Custom Object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 147765",
+				objectName = "CustomObject147765",
+				pluralLabelName = "Custom Objects 147765");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 147765");
+		}
+
+		task ("Go to Custom Views and add a custom view") {
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+		}
+
+		task ("Click to edit it and set it as default") {
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.markViewAsDefault();
+		}
+
+		task ("Try to save and assert the error message") {
+			Button.clickSave();
+
+			SelectFrame(locator1 = "Message#ERROR");
+
+			Alert.viewErrorMessage(errorMessage = "Default view must have at least one column.");
+		}
+	}
+
 	@description = "LPS-144472 - Verify it is possible to prioritize columns to Default Sort"
 	@priority = "4"
 	test CanPrioritizeColumns {

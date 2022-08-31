@@ -31,6 +31,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddArticleAsDraft {
+		property portal.acceptance = "true";
+
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title",

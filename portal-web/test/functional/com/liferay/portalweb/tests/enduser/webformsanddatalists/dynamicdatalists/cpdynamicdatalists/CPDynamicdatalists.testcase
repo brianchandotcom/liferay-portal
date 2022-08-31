@@ -858,11 +858,10 @@ definition {
 
 		MenuItem.click(menuItem = "View");
 
-		AssertTextEquals(
-			key_fieldLabel = "Decimal",
-			key_fieldName = "Decimal",
-			locator1 = "FormFields#TEXT_FIELD",
-			value1 = "11.18");
+		AssertElementPresent(
+			key_ddlRecordFieldData = "11.18",
+			key_fieldFieldLabel = "Decimal",
+			locator1 = "DDLRecord#DECIMAL_VALUE");
 	}
 
 	@priority = "4"

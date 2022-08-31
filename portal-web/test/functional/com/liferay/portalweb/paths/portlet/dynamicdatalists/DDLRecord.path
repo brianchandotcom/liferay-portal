@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DECIMAL_VALUE</td>
+	<td>//div[contains(@class,'field-wrapper-content')]//*[contains(.,'${key_fieldFieldLabel}')]/..//input[contains(@value,'${key_ddlRecordFieldData}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

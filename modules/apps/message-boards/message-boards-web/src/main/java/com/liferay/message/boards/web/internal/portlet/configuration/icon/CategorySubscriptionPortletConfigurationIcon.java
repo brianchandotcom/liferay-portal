@@ -149,13 +149,6 @@ public class CategorySubscriptionPortletConfigurationIcon
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
 	private boolean _isSubscribed(
 		PortletRequest portletRequest, MBCategory category) {
 
@@ -182,6 +175,7 @@ public class CategorySubscriptionPortletConfigurationIcon
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }

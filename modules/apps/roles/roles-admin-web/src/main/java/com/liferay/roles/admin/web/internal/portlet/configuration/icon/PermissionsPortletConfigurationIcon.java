@@ -138,11 +138,6 @@ public class PermissionsPortletConfigurationIcon
 		return true;
 	}
 
-	@Reference(unbind = "-")
-	protected void setRoleService(RoleService roleService) {
-		_roleService = roleService;
-	}
-
 	private long _getRoleId(PortletRequest portletRequest) {
 		return ParamUtil.getLong(
 			_portal.getHttpServletRequest(portletRequest), "roleId");
@@ -160,6 +155,7 @@ public class PermissionsPortletConfigurationIcon
 	@Reference
 	private RolePermission _rolePermission;
 
+	@Reference
 	private RoleService _roleService;
 
 }

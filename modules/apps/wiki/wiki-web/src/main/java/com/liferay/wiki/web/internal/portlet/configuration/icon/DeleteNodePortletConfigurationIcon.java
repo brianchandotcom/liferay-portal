@@ -154,11 +154,6 @@ public class DeleteNodePortletConfigurationIcon
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
-		_wikiNodeService = wikiNodeService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteNodePortletConfigurationIcon.class);
 
@@ -174,6 +169,7 @@ public class DeleteNodePortletConfigurationIcon
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
 	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
 
+	@Reference
 	private WikiNodeService _wikiNodeService;
 
 }

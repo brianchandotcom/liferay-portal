@@ -170,13 +170,6 @@ public class PortletPermissionsPortletConfigurationIcon
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
 	private String _generatePermissionURL(PortletRequest portletRequest)
 		throws PortalException, WindowStateException {
 
@@ -222,6 +215,7 @@ public class PortletPermissionsPortletConfigurationIcon
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private PortletLocalService _portletLocalService;
 
 }

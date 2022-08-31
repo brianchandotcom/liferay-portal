@@ -114,16 +114,10 @@ public class FieldSetsPortletConfigurationIcon
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
 	@Reference
 	private Language _language;
 
+	@Reference
 	private PortletLocalService _portletLocalService;
 
 }

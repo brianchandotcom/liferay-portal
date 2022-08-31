@@ -60,13 +60,7 @@ public class MVCPortletConfigurationIconLocator
 		return ParamUtil.getString(portletRequest, "mvcPath");
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
+	@Reference
 	private PortletLocalService _portletLocalService;
 
 }

@@ -109,13 +109,6 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPasswordPolicyLocalService(
-		PasswordPolicyLocalService passwordPolicyLocalService) {
-
-		_passwordPolicyLocalService = passwordPolicyLocalService;
-	}
-
 	private long _getPasswordPolicyId(PortletRequest portletRequest) {
 		return ParamUtil.getLong(
 			_portal.getHttpServletRequest(portletRequest), "passwordPolicyId");
@@ -124,6 +117,7 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 	@Reference
 	private Language _language;
 
+	@Reference
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
 
 	@Reference

@@ -150,13 +150,6 @@ public class ThreadSubscriptionPortletConfigurationIcon
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
 	private boolean _isSubscribed(
 		PortletRequest portletRequest, long threadId) {
 
@@ -182,6 +175,7 @@ public class ThreadSubscriptionPortletConfigurationIcon
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }

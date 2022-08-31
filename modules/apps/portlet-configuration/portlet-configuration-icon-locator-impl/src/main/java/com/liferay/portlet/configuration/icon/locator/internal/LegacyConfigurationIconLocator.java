@@ -71,13 +71,7 @@ public class LegacyConfigurationIconLocator
 		return StringPool.BLANK;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
+	@Reference
 	private PortletLocalService _portletLocalService;
 
 }

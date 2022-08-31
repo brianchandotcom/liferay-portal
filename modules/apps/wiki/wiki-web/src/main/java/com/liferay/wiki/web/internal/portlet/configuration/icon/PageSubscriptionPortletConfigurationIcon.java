@@ -161,13 +161,6 @@ public class PageSubscriptionPortletConfigurationIcon
 			WikiNode.class.getName(), page.getNodeId());
 	}
 
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageSubscriptionPortletConfigurationIcon.class);
 
@@ -177,6 +170,7 @@ public class PageSubscriptionPortletConfigurationIcon
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")

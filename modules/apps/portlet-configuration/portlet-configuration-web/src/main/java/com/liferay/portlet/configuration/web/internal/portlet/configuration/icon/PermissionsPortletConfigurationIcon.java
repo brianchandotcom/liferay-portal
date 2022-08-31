@@ -164,13 +164,6 @@ public class PermissionsPortletConfigurationIcon
 		return true;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
 	private static final boolean _STAGING_LIVE_GROUP_LOCKING_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.STAGING_LIVE_GROUP_LOCKING_ENABLED));
@@ -181,6 +174,7 @@ public class PermissionsPortletConfigurationIcon
 	@Reference
 	private Language _language;
 
+	@Reference
 	private PortletLocalService _portletLocalService;
 
 	@Reference

@@ -60,13 +60,7 @@ public class StrutsPortletConfigurationIconLocator
 		return ParamUtil.getString(portletRequest, "struts_action");
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
+	@Reference
 	private PortletLocalService _portletLocalService;
 
 }

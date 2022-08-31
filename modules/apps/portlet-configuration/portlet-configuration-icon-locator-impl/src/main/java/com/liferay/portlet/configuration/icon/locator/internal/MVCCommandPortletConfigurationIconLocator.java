@@ -57,13 +57,7 @@ public class MVCCommandPortletConfigurationIconLocator
 		return ParamUtil.getString(portletRequest, "mvcRenderCommandName");
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
+	@Reference
 	private PortletLocalService _portletLocalService;
 
 }

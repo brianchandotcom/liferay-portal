@@ -153,19 +153,13 @@ public class ThreadPermissionsPortletConfigurationIcon
 		return true;
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ThreadPermissionsPortletConfigurationIcon.class);
 
 	@Reference
 	private Language _language;
 
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference(

@@ -85,6 +85,117 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-147788. View default behavior of custom unit on styles tab of content page."
+	@priority = "4"
+	test DetachLinkedNonColorToken {
+		task ("Given a page designer has a Heading fragment on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the page designer changes the Font Size style of Heading") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+
+			PageEditor.configureFragment(fontSize = "Font Size Large");
+		}
+
+		task ("Then the page designer could detach the linked font size") {
+			PageEditor.detachToken(fieldLabel = "Font Size");
+
+			AssertTextEquals(
+				key_text = "Font Size",
+				locator1 = "TextInput#ANY",
+				value1 = "1.125");
+
+			AssertTextEquals(
+				key_fieldLabel = "Font Size",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL",
+				value1 = "REM");
+		}
+
+		task ("When the page designer selects custom unit for Font Size of Heading") {
+			PageEditor.configureFragment(
+				fieldLabel = "Font Size",
+				unit = "CUSTOM");
+		}
+
+		task ("Then the page designer see the previous value restored in Font Size after click outside field") {
+			AssertTextEquals(
+				key_text = "Font Size",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			AssertTextEquals(
+				key_text = "Font Size",
+				locator1 = "TextInput#ANY",
+				value1 = "1.125");
+
+			AssertTextEquals(
+				key_fieldLabel = "Font Size",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL",
+				value1 = "REM");
+		}
+
+		task ("When the page designer changes the Border Radius style of Heading") {
+			Select(
+				key_text = "corner-radius",
+				locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON",
+				value1 = "Border Radius Large");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Then the page designer could detach the linked border radius") {
+			PageEditor.detachToken(fieldLabel = "Border Radius");
+
+			AssertTextEquals(
+				key_text = "Border Radius",
+				locator1 = "TextInput#ANY",
+				value1 = "0.375");
+
+			AssertTextEquals(
+				key_fieldLabel = "Border Radius",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL",
+				value1 = "REM");
+		}
+
+		task ("When the page designer selects custom unit for Border Radius of Heading") {
+			PageEditor.configureFragment(
+				fieldLabel = "Border Radius",
+				unit = "CUSTOM");
+		}
+
+		task ("Then the page designer see the previous value restored in Border Radius after click outside field") {
+			AssertTextEquals(
+				key_text = "Border Radius",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			AssertTextEquals(
+				key_text = "Border Radius",
+				locator1 = "TextInput#ANY",
+				value1 = "0.375");
+
+			AssertTextEquals(
+				key_fieldLabel = "Border Radius",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL",
+				value1 = "REM");
+		}
+	}
+
 	@description = "This is a test for LPS-136279. View the styles of color selectors."
 	@priority = "4"
 	test ViewStylesOfColorInputs {

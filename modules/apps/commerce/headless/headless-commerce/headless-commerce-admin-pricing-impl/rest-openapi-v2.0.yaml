@@ -301,10 +301,10 @@ components:
                     example: 30324
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
             required:
                 - accountId
-                - discountId
             type: object
         DiscountAccountGroup:
             properties:
@@ -339,10 +339,10 @@ components:
                     example: 30324
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
             required:
                 - accountGroupId
-                - discountId
             type: object
         DiscountCategory:
             properties:
@@ -377,10 +377,10 @@ components:
                     example: 30324
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
             required:
                 - categoryId
-                - discountId
             type: object
         DiscountChannel:
             properties:
@@ -415,10 +415,10 @@ components:
                     example: 30324
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
             required:
                 - channelId
-                - discountId
             type: object
         DiscountOrderType:
             properties:
@@ -436,6 +436,7 @@ components:
                     example: 30130
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
                 discountOrderTypeId:
                     example: 30643
@@ -461,7 +462,6 @@ components:
                     type: integer
             required:
                 - orderTypeId
-                - discountId
             type: object
         DiscountProduct:
             properties:
@@ -479,6 +479,7 @@ components:
                     example: 30324
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
                 discountProductId:
                     example: 30643
@@ -498,7 +499,6 @@ components:
                     minimum: 0
                     type: integer
             required:
-                - discountId
                 - productId
             type: object
         DiscountProductGroup:
@@ -517,6 +517,7 @@ components:
                     example: 30324
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
                 discountProductGroupId:
                     example: 30643
@@ -536,7 +537,6 @@ components:
                     minimum: 0
                     type: integer
             required:
-                - discountId
                 - productGroupId
             type: object
         DiscountRule:
@@ -587,6 +587,7 @@ components:
                     example: 30324
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
                 discountSkuId:
                     example: 30643
@@ -619,7 +620,6 @@ components:
                     minimum: 0
                     type: integer
             required:
-                - discountId
                 - skuId
             type: object
         Error:

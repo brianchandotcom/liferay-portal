@@ -14,31 +14,49 @@
 
 package com.liferay.portal.search.internal.facet.category;
 
-import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.FacetFactory;
 import com.liferay.portal.search.facet.category.CategoryFacetFactory;
 import com.liferay.portal.search.internal.facet.FacetImpl;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Bryan Engler
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration",
 	immediate = true, service = {CategoryFacetFactory.class, FacetFactory.class}
 )
 public class CategoryFacetFactoryImpl implements CategoryFacetFactory {
 
 	@Override
 	public String getFacetClassName() {
-		return Field.ASSET_CATEGORY_IDS;
+		return _categoryFacetFieldConfiguration.categoryFacetField();
 	}
 
 	@Override
 	public Facet newInstance(SearchContext searchContext) {
-		return new FacetImpl(Field.ASSET_CATEGORY_IDS, searchContext);
+		return new FacetImpl(
+			_categoryFacetFieldConfiguration.categoryFacetField(),
+			searchContext);
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> map) {
+		_categoryFacetFieldConfiguration = ConfigurableUtil.createConfigurable(
+			CategoryFacetFieldConfiguration.class, map);
+	}
+
+	private volatile CategoryFacetFieldConfiguration
+		_categoryFacetFieldConfiguration;
 
 }

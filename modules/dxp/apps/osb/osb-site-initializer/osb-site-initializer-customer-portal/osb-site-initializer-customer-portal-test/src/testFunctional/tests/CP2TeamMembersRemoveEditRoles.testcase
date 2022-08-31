@@ -62,7 +62,7 @@ definition {
 			CP2TeamMembers.teamMembersFlow();
 		}
 
-		task ("Open the action menu and click the Edit option") {
+		task ("Open the action menu and click the Remove option") {
 			CP2Utils.openActionMenu(
 				menuItem = "Remove",
 				openUser = "Test Test");
@@ -79,55 +79,30 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-150003 | Test Summary: Verify if after the user clicks on Remove in the actions menu, a modal opens with a confirmation message"
-	@priority = "4"
-	test CanViewAConfirmationMessage {
-		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
-
-			CustomerPortal.accountTableProject(title = "Test Account DXP");
-
-			Accounts.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Account Administrator",
-				accountUserName = "Test Test");
-		}
-
-		task ("Go to CP2.0 and login to okta") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			CustomerPortal.loginOktaToUpdateCP();
-
-			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
-
-			Refresh();
-		}
-
-		task ("Get into the project and go to Team Members page") {
-			CP2TeamMembers.teamMembersFlow();
-		}
-
-		task ("Open the action menu and click the Edit option") {
-			CP2Utils.openActionMenu(
-				menuItem = "Remove",
-				openUser = "Test Test");
-
-			AssertElementPresent(
-				locator1 = "CP2Utils#MODAL",
-				value = "Are you sure you want to remove this team member from the project?");
-		}
-
-		task ("Close the confirmation modal") {
-			CP2Utils.closeModal();
-		}
-
-		task ("Delete the entries and objects created") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-002");
-		}
-	}
-
 	@description = "Automation ID: LPS-150013 | Test Summary: Verify that after the user clicks Edit a Cancel button is available"
 	@priority = "5"
 	test CanViewCancelButton {
+		task ("Adding a user to the project") {
+			JSONUser.addUser(
+				userEmailAddress = "test.user@liferay.com",
+				userFirstName = "Test",
+				userLastName = "User",
+				userScreenName = "Testing");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test.user@liferay.com");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account DXP");
+
+			Accounts.assignUsers(
+				accountName = "Test Account DXP",
+				assigneeName = "Test User");
+		}
+
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -155,17 +130,23 @@ definition {
 		task ("Open the action menu and click the Edit option") {
 			CP2Utils.openActionMenu(
 				menuItem = "Edit",
-				openUser = "Test Test");
+				openUser = "Test User");
 		}
 
 		task ("Click the Cancel button and affirm that you have remained on the Team Members page") {
+			CP2Utils.changeRole(role = "User");
+
 			Button.click(button = "Cancel");
 
-			CP2TeamMembers.viewTeamMembersPage();
+			CP2Utils.assertNotChangeRole(role = "Administrator");
 		}
 
 		task ("Delete the entries and objects created") {
 			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-002");
+		}
+
+		task ("Delete user created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "test.user@liferay.com");
 		}
 	}
 
@@ -173,12 +154,16 @@ definition {
 	@priority = "5"
 	test CanViewIfTheUserIsRemoved {
 		task ("Adding a user to the project") {
-			JSONUser.addUserWithRole(
-				roleTitle = "Power User",
+			JSONUser.addUser(
 				userEmailAddress = "test.user@liferay.com",
 				userFirstName = "Test",
 				userLastName = "User",
-				userScreenName = "Test");
+				userScreenName = "Testing");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test.user@liferay.com");
 
 			Accounts.openAccountsAdmin();
 
@@ -218,6 +203,10 @@ definition {
 				menuItem = "Remove",
 				openUser = "Test User");
 
+			AssertElementPresent(
+				locator1 = "CP2Utils#MODAL",
+				value = "Are you sure you want to remove this team member from the project?");
+
 			Button.click(button = "Remove");
 		}
 
@@ -237,6 +226,27 @@ definition {
 	@description = "Automation ID: LPS-150012 | Test Summary: Verify that after the user clicks Edit a Save button is available"
 	@priority
 	test CanViewSaveButton {
+		task ("Adding a user to the project") {
+			JSONUser.addUser(
+				userEmailAddress = "test.user@liferay.com",
+				userFirstName = "Test",
+				userLastName = "User",
+				userScreenName = "Testing");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test.user@liferay.com");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account DXP");
+
+			Accounts.assignUsers(
+				accountName = "Test Account DXP",
+				assigneeName = "Test User");
+		}
+
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -264,57 +274,25 @@ definition {
 		task ("Open the action menu and click the Edit option") {
 			CP2Utils.openActionMenu(
 				menuItem = "Edit",
-				openUser = "Test Test");
+				openUser = "Test User");
 		}
 
 		task ("Change the guest user role and save") {
+			CP2Utils.changeRole(role = "User");
+
 			Button.click(button = "Save");
 		}
 
-		task ("Delete the entries and objects created") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-002");
-		}
-	}
-
-	@description = "Automation ID: LPS-150007 | Test Summary: Verify if by clicking Edit the user can change a function already selected among the available functions in the drop-down"
-	@priority = "4"
-	test ChangeAnAlreadySelectedRole {
-		task ("Change the user role in the project") {
-			Accounts.openAccountsAdmin();
-
-			CustomerPortal.accountTableProject(title = "Test Account DXP");
-
-			Accounts.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Account Administrator",
-				accountUserName = "Test Test");
-		}
-
-		task ("Go to CP2.0 and login to okta") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
-
-			CustomerPortal.loginOktaToUpdateCP();
-
-			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
-
-			Refresh();
-		}
-
-		task ("Get into the project and go to Team Members page") {
-			CP2TeamMembers.teamMembersFlow();
-		}
-
-		task ("Open the action menu and click the Edit option") {
-			CP2Utils.openActionMenu(
-				menuItem = "Edit",
-				openUser = "Test Test");
-		}
-
-		task ("Click on the drop-down and make sure the role are enabled") {
-			CP2TeamMembers.assertDropDownOptionsEnabled();
+		task ("Assert that the role really has changed") {
+			CP2Utils.assertChangeRole(role = "User");
 		}
 
 		task ("Delete the entries and objects created") {
 			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-002");
+		}
+
+		task ("Delete user created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "test.user@liferay.com");
 		}
 	}
 

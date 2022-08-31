@@ -28,6 +28,7 @@ page import="com.liferay.portal.search.web.internal.category.facet.portlet.Categ
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetTermDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 
 <portlet:defineObjects />
 
@@ -72,6 +73,8 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 				collapsible="<%= true %>"
 				label="advanced-configuration"
 			>
+				<aui:input label="vocabulary-ids" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS) %>" value="<%= StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds()) %>" />
+
 				<aui:input label="category-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME) %>" value="<%= categoryFacetPortletPreferences.getParameterName() %>" />
 
 				<aui:input label="max-terms" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS) %>" value="<%= categoryFacetPortletPreferences.getMaxTerms() %>" />

@@ -29,7 +29,6 @@ import com.liferay.journal.exception.ArticleContentException;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -49,6 +48,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XMLUtil;
 
 import java.io.Serializable;
 
@@ -106,7 +106,7 @@ public class JournalConverterImpl implements JournalConverter {
 		try {
 			String content = XMLUtil.stripInvalidChars(document.asXML());
 
-			return XMLUtil.formatXML(content);
+			return com.liferay.petra.xml.XMLUtil.formatXML(content);
 		}
 		catch (Exception exception) {
 			throw new ArticleContentException(

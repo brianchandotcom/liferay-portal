@@ -18,23 +18,35 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
-import com.liferay.content.dashboard.web.internal.dao.search.ContentDashboardItemSearchContainerFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
+import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
+import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardSearchContextBuilder;
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.searcher.SearchRequest;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 
 import java.io.ByteArrayOutputStream;
@@ -99,8 +111,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 		_addWorkbookHeaders(workbookBuilder);
 
-		_addWorkbookRows(
-			resourceRequest, resourceResponse, locale, workbookBuilder);
+		_addWorkbookRows(resourceRequest, locale, workbookBuilder);
 
 		LocalDate localDate = LocalDate.now();
 
@@ -227,28 +238,86 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 	}
 
 	private void _addWorkbookRows(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-			Locale locale, WorkbookBuilder workbookBuilder)
-		throws Exception {
+		ResourceRequest resourceRequest, Locale locale,
+		WorkbookBuilder workbookBuilder) {
 
-		ContentDashboardItemSearchContainerFactory
-			contentDashboardItemSearchContainerFactory =
-				ContentDashboardItemSearchContainerFactory.getInstance(
-					_assetCategoryLocalService, _assetVocabularyLocalService,
-					_contentDashboardItemFactoryTracker,
-					_contentDashboardSearchRequestBuilderFactory,
-					_infoSearchClassMapperTracker, _portal, resourceRequest,
-					resourceResponse, _searcher);
+		int indexSearchLimit = GetterUtil.getInteger(
+			_props.get(PropsKeys.INDEX_SEARCH_LIMIT));
+		int start = 0;
 
-		SearchContainer<ContentDashboardItem<?>> searchContainer =
-			contentDashboardItemSearchContainerFactory.createWithAllResults();
+		while (true) {
+			SearchResponse searchResponse = _getSearchResponse(
+				start + indexSearchLimit, resourceRequest, start);
 
-		for (ContentDashboardItem<?> contentDashboardItem :
-				searchContainer.getResults()) {
+			List<Document> documents = searchResponse.getDocuments71();
 
-			workbookBuilder.row();
+			if (ListUtil.isEmpty(documents)) {
+				break;
+			}
 
-			_addWorkbookCell(locale, workbookBuilder, contentDashboardItem);
+			for (Document document : documents) {
+				ContentDashboardItem<?> contentDashboardItem =
+					_toContentDashboardItem(document);
+
+				if (contentDashboardItem != null) {
+					workbookBuilder.row();
+
+					_addWorkbookCell(
+						locale, workbookBuilder, contentDashboardItem);
+				}
+			}
+
+			if (documents.size() < indexSearchLimit) {
+				break;
+			}
+
+			start = start + indexSearchLimit;
+		}
+	}
+
+	private SearchResponse _getSearchResponse(
+		int end, ResourceRequest resourceRequest, int start) {
+
+		SearchContext searchContext = new ContentDashboardSearchContextBuilder(
+			_portal.getHttpServletRequest(resourceRequest),
+			_assetCategoryLocalService, _assetVocabularyLocalService
+		).withEnd(
+			end
+		).withStart(
+			start
+		).build();
+
+		searchContext.setSorts(
+			new Sort(Field.CREATE_DATE, Sort.LONG_TYPE, false),
+			new Sort(Field.CLASS_NAME_ID, Sort.LONG_TYPE, false),
+			new Sort(Field.CLASS_PK, Sort.LONG_TYPE, false));
+
+		SearchRequest searchRequest =
+			_contentDashboardSearchRequestBuilderFactory.builder(
+				searchContext
+			).build();
+
+		return _searcher.search(searchRequest);
+	}
+
+	private ContentDashboardItem<?> _toContentDashboardItem(Document document) {
+		ContentDashboardItemFactory<?> contentDashboardItemFactory =
+			_contentDashboardItemFactoryTracker.getContentDashboardItemFactory(
+				_infoSearchClassMapperTracker.getClassName(
+					document.get(Field.ENTRY_CLASS_NAME)));
+
+		if (contentDashboardItemFactory == null) {
+			return null;
+		}
+
+		try {
+			return contentDashboardItemFactory.create(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return null;
 		}
 	}
 
@@ -286,6 +355,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		return String.valueOf(value);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		GetContentDashboardItemsXlsMVCResourceCommand.class);
+
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -308,6 +380,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Props _props;
 
 	@Reference
 	private Searcher _searcher;

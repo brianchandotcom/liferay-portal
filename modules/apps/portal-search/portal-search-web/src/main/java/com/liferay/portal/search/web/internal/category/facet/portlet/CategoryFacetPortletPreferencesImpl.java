@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.category.facet.portlet;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.web.internal.helper.PortletPreferencesHelper;
 
 import java.util.Optional;
@@ -58,6 +59,14 @@ public class CategoryFacetPortletPreferencesImpl
 		return _portletPreferencesHelper.getString(
 			CategoryFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
 			"category");
+	}
+
+	@Override
+	public String[] getVocabularyIds() {
+		String vocabularyIds = _portletPreferencesHelper.getString(
+			CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS, null);
+
+		return StringUtil.split(vocabularyIds);
 	}
 
 	@Override

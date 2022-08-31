@@ -1605,6 +1605,10 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#REVISION_HISTORY_VERSION");
 	}
 
+	macro viewRoleIDDisabled {
+		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_ID_FIELD_DISABLED");
+	}
+
 	macro viewRoleNamePresentInSidebar {
 		AssertVisible(
 			key_roleName = "${roleName}",

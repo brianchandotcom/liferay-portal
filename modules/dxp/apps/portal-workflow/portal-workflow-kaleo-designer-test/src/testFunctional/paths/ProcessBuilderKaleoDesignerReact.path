@@ -372,6 +372,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ROLE_ID_FIELD_DISABLED</td>
+	<td>//input[contains(@id,'role-id') and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATIONS_TYPE_DROPDOWN</td>
 	<td>//label[contains(., 'Notification Types')]</td>
 	<td></td>

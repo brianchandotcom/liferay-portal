@@ -29,7 +29,7 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
 String dateString = dateFormat.format(new Date())
 
 File extraRemoteAppDir = new File(projectDir, "extra/remote-app/")
-File fragmentsSrcDir = new File(projectDir, "src/main/resources/site-initializer/fragments/group")
+File fragmentsSrcDir = new File(projectDir, "src/main/resources/site-initializer/fragments/group/src/")
 
 String webContextPath = ""
 

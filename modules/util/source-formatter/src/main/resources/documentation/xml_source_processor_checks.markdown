@@ -32,6 +32,7 @@ XMLServiceFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-preven
 [XMLServiceFinderNameCheck](check/xml_service_finder_name_check.markdown#xmlservicefindernamecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that the `finder name` in `service.xml`. |
 XMLServiceReferenceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks for unused references in `service.xml` file. |
 XMLSourcechecksFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `sourcechecks.xml` file. |
+XMLSpringExtenderServiceCheck | [Performance](performance_checks.markdown#performance-checks) | Finds cases where Spring extender service is used as a dependency injection. |
 XMLSpringFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `*-spring.xml` file. |
 XMLStrutsConfigFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `struts-config.xml` file. |
 XMLStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consistency in code style. |

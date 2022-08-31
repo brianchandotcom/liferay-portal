@@ -34,9 +34,9 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
-import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.base.CPInstanceLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
+import com.liferay.commerce.product.service.persistence.CProductPersistence;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -506,7 +506,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public CPInstance fetchCProductInstance(
 		long cProductId, String cpInstanceUuid) {
 
-		CProduct cProduct = _cProductLocalService.fetchCProduct(cProductId);
+		CProduct cProduct = _cProductPersistence.fetchByPrimaryKey(cProductId);
 
 		if (cProduct == null) {
 			return null;
@@ -604,7 +604,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long cProductId, String cpInstanceUuid)
 		throws PortalException {
 
-		CProduct cProduct = _cProductLocalService.getCProduct(cProductId);
+		CProduct cProduct = _cProductPersistence.findByPrimaryKey(cProductId);
 
 		return cpInstancePersistence.findByC_C(
 			cProduct.getPublishedCPDefinitionId(), cpInstanceUuid);
@@ -1689,8 +1689,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	private CPInstanceOptionValueRelPersistence
 		_cpInstanceOptionValueRelPersistence;
 
-	@BeanReference(type = CProductLocalService.class)
-	private CProductLocalService _cProductLocalService;
+	@BeanReference(type = CProductPersistence.class)
+	private CProductPersistence _cProductPersistence;
 
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;

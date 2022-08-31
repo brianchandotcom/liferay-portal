@@ -459,15 +459,6 @@ definition {
 	@description = "This is a use case for LPS-106815. The Organization Role permission settings of widgets will be exported and imported with master page template."
 	@priority = "4"
 	test ExportImportMastersPageTemplateWithOrganizationRolePermissionSettingsOfWidgets {
-		property osgi.modules.includes = "account";
-		property test.name.skip.portal.instance = "MastersPageTemplatesExportImport#ExportImportMastersPageTemplateWithOrganizationRolePermissionSettingsOfWidgets";
-
-		task ("Restart the server") {
-			Portlet.shutdownServer();
-
-			Portlet.startServer(deleteLiferayHome = "false");
-		}
-
 		task ("Add a organization and organization site") {
 			JSONOrganization.addOrganization(
 				organizationName = "Organization Name 1",

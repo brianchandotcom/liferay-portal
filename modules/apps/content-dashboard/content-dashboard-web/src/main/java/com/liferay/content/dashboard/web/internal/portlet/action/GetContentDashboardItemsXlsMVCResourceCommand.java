@@ -97,6 +97,100 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		WorkbookBuilder workbookBuilder = new WorkbookBuilder(
 			locale, _language.get(locale, "content-dashboard-data"));
 
+		_addWorkbookHeaders(workbookBuilder);
+
+		_addWorkbookRows(
+			resourceRequest, resourceResponse, locale, workbookBuilder);
+
+		LocalDate localDate = LocalDate.now();
+
+		PortletResponseUtil.sendFile(
+			resourceRequest, resourceResponse,
+			"ContentDashboardItemsData" +
+				localDate.format(DateTimeFormatter.ofPattern("MM_dd_yyyy")) +
+					".xls",
+			workbookBuilder.build(), ContentTypes.APPLICATION_VND_MS_EXCEL);
+	}
+
+	private void _addWorkbookCell(
+		Locale locale, WorkbookBuilder workbookBuilder,
+		ContentDashboardItem<?> contentDashboardItem) {
+
+		workbookBuilder.cell(
+			contentDashboardItem.getTitle(locale)
+		).cell(
+			contentDashboardItem.getUserName()
+		).cell(
+			contentDashboardItem.getTypeLabel(locale)
+		).cell(
+			Optional.ofNullable(
+				contentDashboardItem.getContentDashboardItemSubtype()
+			).map(
+				contentDashboardItemSubtype ->
+					contentDashboardItemSubtype.getLabel(locale)
+			).orElse(
+				StringPool.BLANK
+			)
+		).cell(
+			contentDashboardItem.getScopeName(locale)
+		).cell(
+			() -> {
+				List<ContentDashboardItem.Version> latestVersions =
+					contentDashboardItem.getLatestVersions(locale);
+
+				ContentDashboardItem.Version version = latestVersions.get(0);
+
+				return version.getLabel();
+			}
+		).cell(
+			StringUtils.joinWith(
+				StringPool.COMMA_AND_SPACE,
+				ListUtil.toList(
+					contentDashboardItem.getAssetCategories(),
+					assetCategory -> assetCategory.getTitle(locale)))
+		).cell(
+			ListUtil.toString(
+				contentDashboardItem.getAssetTags(), AssetTag.NAME_ACCESSOR,
+				StringPool.COMMA_AND_SPACE)
+		).cell(
+			_toString(contentDashboardItem.getModifiedDate())
+		).cell(
+			contentDashboardItem.getDescription(locale)
+		);
+
+		Map<String, Object> specificInformation =
+			contentDashboardItem.getSpecificInformation(locale);
+
+		workbookBuilder.cell(_toString(specificInformation, "extension"));
+
+		if (contentDashboardItem.getClipboard() != null) {
+			ContentDashboardItem.Clipboard clipboard =
+				contentDashboardItem.getClipboard();
+
+			workbookBuilder.cell(_toString(clipboard.getName()));
+		}
+
+		workbookBuilder.cell(
+			_toString(specificInformation, "size")
+		).cell(
+			_toString(specificInformation, "display-date")
+		).cell(
+			_toString(contentDashboardItem.getCreateDate())
+		);
+
+		List<Locale> locales = contentDashboardItem.getAvailableLocales();
+
+		Stream<Locale> stream = locales.stream();
+
+		workbookBuilder.cell(
+			stream.map(
+				LocaleUtil::toLanguageId
+			).collect(
+				Collectors.joining(StringPool.COMMA)
+			));
+	}
+
+	private void _addWorkbookHeaders(WorkbookBuilder workbookBuilder) {
 		workbookBuilder.localizedCell(
 			"title"
 		).localizedCell(
@@ -130,6 +224,12 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		).localizedCell(
 			"languages-translated-into"
 		);
+	}
+
+	private void _addWorkbookRows(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			Locale locale, WorkbookBuilder workbookBuilder)
+		throws Exception {
 
 		ContentDashboardItemSearchContainerFactory
 			contentDashboardItemSearchContainerFactory =
@@ -148,89 +248,8 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 			workbookBuilder.row();
 
-			workbookBuilder.cell(
-				contentDashboardItem.getTitle(locale)
-			).cell(
-				contentDashboardItem.getUserName()
-			).cell(
-				contentDashboardItem.getTypeLabel(locale)
-			).cell(
-				Optional.ofNullable(
-					contentDashboardItem.getContentDashboardItemSubtype()
-				).map(
-					contentDashboardItemSubtype ->
-						contentDashboardItemSubtype.getLabel(locale)
-				).orElse(
-					StringPool.BLANK
-				)
-			).cell(
-				contentDashboardItem.getScopeName(locale)
-			).cell(
-				() -> {
-					List<ContentDashboardItem.Version> latestVersions =
-						contentDashboardItem.getLatestVersions(locale);
-
-					ContentDashboardItem.Version version = latestVersions.get(
-						0);
-
-					return version.getLabel();
-				}
-			).cell(
-				StringUtils.joinWith(
-					StringPool.COMMA_AND_SPACE,
-					ListUtil.toList(
-						contentDashboardItem.getAssetCategories(),
-						assetCategory -> assetCategory.getTitle(locale)))
-			).cell(
-				ListUtil.toString(
-					contentDashboardItem.getAssetTags(), AssetTag.NAME_ACCESSOR,
-					StringPool.COMMA_AND_SPACE)
-			).cell(
-				_toString(contentDashboardItem.getModifiedDate())
-			).cell(
-				contentDashboardItem.getDescription(locale)
-			);
-
-			Map<String, Object> specificInformation =
-				contentDashboardItem.getSpecificInformation(locale);
-
-			workbookBuilder.cell(_toString(specificInformation, "extension"));
-
-			if (contentDashboardItem.getClipboard() != null) {
-				ContentDashboardItem.Clipboard clipboard =
-					contentDashboardItem.getClipboard();
-
-				workbookBuilder.cell(_toString(clipboard.getName()));
-			}
-
-			workbookBuilder.cell(
-				_toString(specificInformation, "size")
-			).cell(
-				_toString(specificInformation, "display-date")
-			).cell(
-				_toString(contentDashboardItem.getCreateDate())
-			);
-
-			List<Locale> locales = contentDashboardItem.getAvailableLocales();
-
-			Stream<Locale> stream = locales.stream();
-
-			workbookBuilder.cell(
-				stream.map(
-					LocaleUtil::toLanguageId
-				).collect(
-					Collectors.joining(StringPool.COMMA)
-				));
+			_addWorkbookCell(locale, workbookBuilder, contentDashboardItem);
 		}
-
-		LocalDate localDate = LocalDate.now();
-
-		PortletResponseUtil.sendFile(
-			resourceRequest, resourceResponse,
-			"ContentDashboardItemsData" +
-				localDate.format(DateTimeFormatter.ofPattern("MM_dd_yyyy")) +
-					".xls",
-			workbookBuilder.build(), ContentTypes.APPLICATION_VND_MS_EXCEL);
 	}
 
 	private String _toString(Date date) {

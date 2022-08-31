@@ -16,8 +16,6 @@ package com.liferay.portal.search.web.internal.facet.display.context;
 
 import java.io.Serializable;
 
-import java.util.Locale;
-
 /**
  * @author Lino Alves
  */
@@ -36,12 +34,16 @@ public class AssetCategoriesSearchFacetTermDisplayContext
 		return _frequency;
 	}
 
-	public Locale getLocale() {
-		return _locale;
+	public String getParentCategoryId() {
+		return _parentCategoryId;
 	}
 
 	public int getPopularity() {
 		return _popularity;
+	}
+
+	public String getVocabularyName() {
+		return _vocabularyName;
 	}
 
 	public boolean isFrequencyVisible() {
@@ -68,8 +70,8 @@ public class AssetCategoriesSearchFacetTermDisplayContext
 		_frequencyVisible = frequencyVisible;
 	}
 
-	public void setLocale(Locale locale) {
-		_locale = locale;
+	public void setParentCategoryId(String parentCategoryId) {
+		_parentCategoryId = parentCategoryId;
 	}
 
 	public void setPopularity(int popularity) {
@@ -80,12 +82,17 @@ public class AssetCategoriesSearchFacetTermDisplayContext
 		_selected = selected;
 	}
 
+	public void setVocabularyName(String vocabularyName) {
+		_vocabularyName = vocabularyName;
+	}
+
 	private long _assetCategoryId;
 	private String _displayName;
 	private int _frequency;
 	private boolean _frequencyVisible;
-	private Locale _locale;
+	private String _parentCategoryId;
 	private int _popularity;
 	private boolean _selected;
+	private String _vocabularyName;
 
 }

@@ -23,6 +23,8 @@ import com.liferay.portal.util.PropsValues;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.stream.XMLInputFactory;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.apache.xerces.parsers.SAXParser;
 
@@ -79,6 +81,24 @@ public class SecureXMLFactoryProviderImpl implements SecureXMLFactoryProvider {
 		}
 
 		return documentBuilderFactory;
+	}
+
+	@Override
+	public TransformerFactory newTransformerFactory()
+		throws TransformerFactoryConfigurationError {
+
+		TransformerFactory transformerFactory =
+			TransformerFactory.newInstance();
+
+		if (!PropsValues.XML_SECURITY_ENABLED) {
+			return transformerFactory;
+		}
+
+		transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+		transformerFactory.setAttribute(
+			XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+
+		return transformerFactory;
 	}
 
 	@Override

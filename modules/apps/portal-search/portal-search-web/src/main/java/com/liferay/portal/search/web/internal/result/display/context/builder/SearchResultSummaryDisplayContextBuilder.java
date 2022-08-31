@@ -846,12 +846,17 @@ public class SearchResultSummaryDisplayContextBuilder {
 		if (statusByUserId != null) {
 			long userId = GetterUtil.getLong(statusByUserId);
 
-			searchResultSummaryDisplayContext.
-				setModifiedByUserPortraitURLString(
-					_getPortraitURLString(userId));
+			String modifiedByUserPortraitURLString = _getPortraitURLString(
+				userId);
 
-			searchResultSummaryDisplayContext.setModifiedByUserPortraitVisible(
-				true);
+			if (modifiedByUserPortraitURLString != null) {
+				searchResultSummaryDisplayContext.
+					setModifiedByUserPortraitURLString(
+						modifiedByUserPortraitURLString);
+
+				searchResultSummaryDisplayContext.
+					setModifiedByUserPortraitVisible(true);
+			}
 		}
 	}
 
@@ -882,11 +887,13 @@ public class SearchResultSummaryDisplayContextBuilder {
 
 			User user = _userLocalService.fetchUser(userId);
 
-			searchResultSummaryDisplayContext.setModifiedByUserName(
-				user.getScreenName());
+			if (user != null) {
+				searchResultSummaryDisplayContext.setModifiedByUserName(
+					user.getScreenName());
 
-			searchResultSummaryDisplayContext.setModifiedByUserNameVisible(
-				true);
+				searchResultSummaryDisplayContext.setModifiedByUserNameVisible(
+					true);
+			}
 		}
 	}
 

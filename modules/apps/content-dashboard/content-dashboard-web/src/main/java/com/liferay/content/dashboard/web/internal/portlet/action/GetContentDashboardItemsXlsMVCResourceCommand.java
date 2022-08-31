@@ -14,7 +14,7 @@
 
 package com.liferay.content.dashboard.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.model.AssetTagModel;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
@@ -182,11 +182,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 						contentDashboardItem.getAssetCategories(),
 						assetCategory -> assetCategory.getTitle(locale)))
 			).cell(
-				StringUtils.joinWith(
-					", ",
-					ListUtil.toList(
-						contentDashboardItem.getAssetTags(),
-						AssetTagModel::getName))
+				ListUtil.toString(
+					contentDashboardItem.getAssetTags(), AssetTag.NAME_ACCESSOR,
+					StringPool.COMMA_AND_SPACE)
 			).cell(
 				_toString(contentDashboardItem.getModifiedDate())
 			).cell(

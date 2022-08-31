@@ -22,6 +22,7 @@ import {
 	ARROW_UP_KEYCODE,
 	BACKSPACE_KEYCODE,
 	D_KEYCODE,
+	PERIOID_KEYCODE,
 	S_KEYCODE,
 	Z_KEYCODE,
 } from '../config/constants/keycodes';
@@ -188,7 +189,9 @@ export default function ShortcutManager() {
 				!isEditingEditableField(),
 
 			isKeyCombination: (event) =>
-				ctrlOrMeta(event) && event.shiftKey && event.key === '.',
+				ctrlOrMeta(event) &&
+				event.shiftKey &&
+				event.keyCode === PERIOID_KEYCODE,
 		},
 		move: {
 			action: move,

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.remote.soap.extender.test;
 
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
+
 import java.net.URL;
 
 import javax.xml.transform.Transformer;
@@ -32,7 +34,8 @@ import javax.xml.ws.handler.MessageContext;
 public class SampleHandler implements LogicalHandler<LogicalMessageContext> {
 
 	public SampleHandler() {
-		_transformerFactory = TransformerFactory.newInstance();
+		_transformerFactory =
+			SecureXMLFactoryProviderUtil.newTransformerFactory();
 
 		_url = SampleHandler.class.getResource("dependencies/template.xsl");
 	}

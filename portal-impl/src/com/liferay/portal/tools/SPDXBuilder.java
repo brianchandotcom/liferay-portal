@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.Dom4jUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -118,7 +119,7 @@ public class SPDXBuilder {
 				_toCSV(document));
 
 			TransformerFactory transformerFactory =
-				TransformerFactory.newInstance();
+				SecureXMLFactoryProviderUtil.newTransformerFactory();
 
 			Transformer transformer = transformerFactory.newTransformer(
 				new StreamSource(

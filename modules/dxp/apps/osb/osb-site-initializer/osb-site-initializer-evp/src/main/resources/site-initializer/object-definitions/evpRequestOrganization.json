@@ -1,0 +1,266 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldId": 0,
+	"actions": {
+		"delete": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"publish": {
+		},
+		"update": {
+		}
+	},
+	"active": false,
+	"label": {
+		"en_US": "EVPRequestOrganization"
+	},
+	"name": "EVPRequestOrganization",
+	"objectActions": [
+	],
+	"objectFields": [
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Create Date"
+			},
+			"name": "createDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Author"
+			},
+			"name": "creator",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "description"
+			},
+			"name": "description",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "ID"
+			},
+			"name": "id",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Long"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Modified Date"
+			},
+			"name": "modifiedDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "nonprofitType"
+			},
+			"name": "nonprofitType",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Integer"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "organizationId"
+			},
+			"name": "organizationId",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "shared"
+			},
+			"name": "shared",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Status"
+			},
+			"name": "status",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "subsidiaryGroupId"
+			},
+			"name": "subsidiaryGroupId",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "taxIdentificationNumber"
+			},
+			"name": "taxIdentificationNumber",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "verified"
+			},
+			"name": "verified",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Boolean"
+		}
+	],
+	"objectLayouts": [
+	],
+	"objectViews": [
+	],
+	"panelCategoryKey": "",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "EVPRequestOrganizations"
+	},
+	"portlet": false,
+	"scope": "company",
+	"status": {
+		"code": 2,
+		"label": "draft",
+		"label_i18n": "Draft"
+	},
+	"system": false
+}

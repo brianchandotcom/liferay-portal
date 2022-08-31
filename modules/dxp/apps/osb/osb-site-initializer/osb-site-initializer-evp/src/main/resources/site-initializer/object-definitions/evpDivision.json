@@ -1,0 +1,206 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldId": 0,
+	"actions": {
+		"delete": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"update": {
+		}
+	},
+	"active": true,
+	"label": {
+		"en_US": "EVPDivision"
+	},
+	"name": "EVPDivision",
+	"objectActions": [
+	],
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "abbreviation"
+			},
+			"name": "abbreviation",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Create Date"
+			},
+			"name": "createDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Author"
+			},
+			"name": "creator",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "ID"
+			},
+			"name": "id",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Long"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Modified Date"
+			},
+			"name": "modifiedDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "organizationId"
+			},
+			"name": "organizationId",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "parentEVPDivisionId"
+			},
+			"name": "parentEVPDivisionId",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Status"
+			},
+			"name": "status",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "type_"
+			},
+			"name": "type",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Integer"
+		}
+	],
+	"objectLayouts": [
+	],
+	"objectViews": [
+	],
+	"panelCategoryKey": "control_panel.users",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "EVPDivisions"
+	},
+	"portlet": false,
+	"scope": "company",
+	"status": {
+		"code": 0,
+		"label": "approved",
+		"label_i18n": "Approved"
+	},
+	"system": false
+}

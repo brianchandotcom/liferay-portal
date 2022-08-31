@@ -1,0 +1,250 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldId": 0,
+	"actions": {
+		"delete": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"update": {
+		}
+	},
+	"active": true,
+	"label": {
+		"en_US": "EVPGrantTransaction"
+	},
+	"name": "EVPGrantTransaction",
+	"objectActions": [
+	],
+	"objectFields": [
+		{
+			"DBType": "Double",
+			"businessType": "Decimal",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "amount"
+			},
+			"name": "amount",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Double"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Create Date"
+			},
+			"name": "createDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Author"
+			},
+			"name": "creator",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "currencyCode"
+			},
+			"name": "currencyCode",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "date_"
+			},
+			"name": "date",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "evpGrantRequestId"
+			},
+			"name": "evpGrantRequestId",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "fileEntryId"
+			},
+			"name": "fileEntryId",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "grantType"
+			},
+			"name": "grantType",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Integer"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "ID"
+			},
+			"name": "id",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Long"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Modified Date"
+			},
+			"name": "modifiedDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Status"
+			},
+			"name": "status",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		}
+	],
+	"objectLayouts": [
+		{
+			"defaultObjectLayout": false,
+			"name": {
+				"en_US": "layout"
+			},
+			"objectLayoutTabs": [
+			]
+		}
+	],
+	"objectViews": [
+	],
+	"panelCategoryKey": "",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "EVPGrantTransactions"
+	},
+	"portlet": false,
+	"scope": "company",
+	"status": {
+		"code": 0,
+		"label": "approved",
+		"label_i18n": "Approved"
+	},
+	"system": false
+}

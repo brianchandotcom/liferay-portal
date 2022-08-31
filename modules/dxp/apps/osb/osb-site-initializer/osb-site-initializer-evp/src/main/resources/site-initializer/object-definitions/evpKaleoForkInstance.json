@@ -1,0 +1,186 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldId": 0,
+	"actions": {
+		"delete": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"publish": {
+		},
+		"update": {
+		}
+	},
+	"active": false,
+	"label": {
+		"en_US": "EVPKaleoForkInstance"
+	},
+	"name": "EVPKaleoForkInstance",
+	"objectActions": [
+	],
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "classNameId"
+			},
+			"name": "classNameId",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "classPK"
+			},
+			"name": "classPK",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Create Date"
+			},
+			"name": "createDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Author"
+			},
+			"name": "creator",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "ID"
+			},
+			"name": "id",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Long"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Modified Date"
+			},
+			"name": "modifiedDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Status"
+			},
+			"name": "status",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "type_"
+			},
+			"name": "type",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Integer"
+		}
+	],
+	"objectLayouts": [
+	],
+	"objectViews": [
+	],
+	"panelCategoryKey": "",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "EVPKaleoForkInstances"
+	},
+	"portlet": false,
+	"scope": "company",
+	"status": {
+		"code": 2,
+		"label": "draft",
+		"label_i18n": "Draft"
+	},
+	"system": false
+}

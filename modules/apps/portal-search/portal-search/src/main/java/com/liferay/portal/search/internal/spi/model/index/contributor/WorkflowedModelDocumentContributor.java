@@ -40,6 +40,8 @@ public class WorkflowedModelDocumentContributor
 		WorkflowedModel workflowedModel = (WorkflowedModel)baseModel;
 
 		document.addKeyword(Field.STATUS, workflowedModel.getStatus());
+		document.addKeyword(
+			"statusByUserId", workflowedModel.getStatusByUserId());
 	}
 
 }

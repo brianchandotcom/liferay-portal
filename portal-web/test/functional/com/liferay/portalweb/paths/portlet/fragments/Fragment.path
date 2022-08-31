@@ -340,6 +340,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_AUTHOR_PROFILE_IMAGE</td>
+	<td>//img[contains(@data-lfr-editable-id,'${fragmentId}') and contains(@src,'${key_authorProfileImage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_BACKGROUND_IMAGE</td>
 	<td>xpath=(//div[contains(@style,'background-image')])[${index}][contains(@style,'${image}')]</td>
 	<td></td>

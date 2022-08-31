@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("DiscountAccountGroup")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"accountGroupId", "discountId"})
+@Schema(requiredProperties = {"accountGroupId"})
 @XmlRootElement(name = "DiscountAccountGroup")
 public class DiscountAccountGroup implements Serializable {
 
@@ -271,8 +271,7 @@ public class DiscountAccountGroup implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long discountId;
 
 	@Override

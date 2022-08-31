@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("DiscountSku")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"discountId", "skuId"})
+@Schema(requiredProperties = {"skuId"})
 @XmlRootElement(name = "DiscountSku")
 public class DiscountSku implements Serializable {
 
@@ -149,8 +149,7 @@ public class DiscountSku implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long discountId;
 
 	@DecimalMin("0")

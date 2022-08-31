@@ -187,7 +187,7 @@ public abstract class BaseDiscountSkuResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/by-externalReferenceCode/{externalReferenceCode}/discount-skus' -d $'{"discountExternalReferenceCode": ___, "discountId": ___, "productId": ___, "productName": ___, "skuExternalReferenceCode": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/by-externalReferenceCode/{externalReferenceCode}/discount-skus' -d $'{"discountExternalReferenceCode": ___, "productId": ___, "productName": ___, "skuExternalReferenceCode": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -276,7 +276,7 @@ public abstract class BaseDiscountSkuResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/discount-skus' -d $'{"discountExternalReferenceCode": ___, "discountId": ___, "productId": ___, "productName": ___, "skuExternalReferenceCode": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/discount-skus' -d $'{"discountExternalReferenceCode": ___, "productId": ___, "productName": ___, "skuExternalReferenceCode": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

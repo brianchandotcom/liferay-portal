@@ -194,7 +194,7 @@ public abstract class BaseDiscountOrderTypeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/by-externalReferenceCode/{externalReferenceCode}/discount-order-types' -d $'{"discountExternalReferenceCode": ___, "discountId": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "priority": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/by-externalReferenceCode/{externalReferenceCode}/discount-order-types' -d $'{"discountExternalReferenceCode": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "priority": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -288,7 +288,7 @@ public abstract class BaseDiscountOrderTypeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/discount-order-types' -d $'{"discountExternalReferenceCode": ___, "discountId": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "priority": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discounts/{id}/discount-order-types' -d $'{"discountExternalReferenceCode": ___, "orderTypeExternalReferenceCode": ___, "orderTypeId": ___, "priority": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

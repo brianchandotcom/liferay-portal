@@ -50,7 +50,7 @@ public class SearchBarPortletDestinationUtil {
 		ThemeDisplay themeDisplay) {
 
 		Optional<String> optional =
-			searchBarPortletPreferences.getDestination();
+			searchBarPortletPreferences.getDestinationOptional();
 
 		if (!optional.isPresent() ||
 			isSameDestination(

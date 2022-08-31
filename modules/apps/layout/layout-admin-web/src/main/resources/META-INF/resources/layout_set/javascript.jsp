@@ -33,11 +33,9 @@ UnicodeProperties layoutSetTypeSettings = selLayoutSet.getSettingsProperties();
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
 %>
 
-<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153457")) %>'>
-	<clay:sheet-section>
-		<react:component
-			module="js/layout/look_and_feel/GlobalJSCETsConfiguration"
-			props="<%= layoutLookAndFeelDisplayContext.getGlobalJSCETsConfigurationProps(LayoutSet.class.getName(), selLayoutSet.getLayoutSetId()) %>"
-		/>
-	</clay:sheet-section>
-</c:if>
+<clay:sheet-section>
+	<react:component
+		module="js/layout/look_and_feel/GlobalJSCETsConfiguration"
+		props="<%= layoutLookAndFeelDisplayContext.getGlobalJSCETsConfigurationProps(LayoutSet.class.getName(), selLayoutSet.getLayoutSetId()) %>"
+	/>
+</clay:sheet-section>

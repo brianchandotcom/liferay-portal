@@ -37,11 +37,13 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 	<div class="mt-5">
 		<liferay-util:include page="/look_and_feel_theme_css.jsp" servletContext="<%= application %>" />
 	</div>
-
-	<clay:sheet-section>
-		<react:component
-			module="js/layout/look_and_feel/GlobalCSSCETsConfiguration"
-			props="<%= layoutLookAndFeelDisplayContext.getGlobalCSSCETsConfigurationProps(LayoutSet.class.getName(), selLayoutSet.getLayoutSetId()) %>"
-		/>
-	</clay:sheet-section>
 </c:if>
+
+<clay:sheet-section
+	cssClass="mt-5"
+>
+	<react:component
+		module="js/layout/look_and_feel/GlobalCSSCETsConfiguration"
+		props="<%= layoutLookAndFeelDisplayContext.getGlobalCSSCETsConfigurationProps(LayoutSet.class.getName(), selLayoutSet.getLayoutSetId()) %>"
+	/>
+</clay:sheet-section>

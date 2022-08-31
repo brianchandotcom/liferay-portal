@@ -484,8 +484,8 @@ public class DefaultObjectEntryManagerImpl
 
 		if (objectDefinition.isSystem()) {
 			return _getSystemObjectRelatedObjectEntries(
-				objectDefinition, objectEntryId, objectRelatedModelsProvider,
-				dtoConverterContext, objectRelationship, pagination);
+				dtoConverterContext, objectDefinition, objectEntryId,
+				objectRelationship, objectRelatedModelsProvider, pagination);
 		}
 
 		com.liferay.object.model.ObjectEntry objectEntry =
@@ -543,8 +543,7 @@ public class DefaultObjectEntryManagerImpl
 						objectEntry.getPrimaryKey(),
 						pagination.getStartPosition(),
 						pagination.getEndPosition()),
-				relatedModel -> _getSystemObjectDTO(
-					relatedModel, objectEntry)));
+				baseModel -> _toDTO(baseModel, objectEntry)));
 	}
 
 	@Override
@@ -650,7 +649,7 @@ public class DefaultObjectEntryManagerImpl
 			objectRelationship.getObjectDefinitionId2());
 	}
 
-	private Object _getSystemObjectDTO(
+	private Object _toDTO(
 			BaseModel<?> baseModel,
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
@@ -661,7 +660,8 @@ public class DefaultObjectEntryManagerImpl
 					baseModel.getModelClassName());
 
 		if (dtoConverter == null) {
-			throw new InternalServerErrorException("No DTO converter found");
+			throw new InternalServerErrorException(
+				"No DTO converter found for " + baseModel.getModelClassName());
 		}
 
 		User user = _userLocalService.getUser(objectEntry.getUserId());
@@ -675,26 +675,27 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private Page<ObjectEntry> _getSystemObjectRelatedObjectEntries(
+			DTOConverterContext dtoConverterContext,					
 			ObjectDefinition objectDefinition, long objectEntryId,
+			ObjectRelationship objectRelationship,
 			ObjectRelatedModelsProvider objectRelatedModelsProvider,
-			DTOConverterContext dtoConverterContext,
-			ObjectRelationship objectRelationship, Pagination pagination)
+			Pagination pagination)
 		throws Exception {
+
+		long groupId = GroupThreadLocal.getGroupId();
 
 		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
 			_systemObjectDefinitionMetadataTracker.
 				getSystemObjectDefinitionMetadata(objectDefinition.getName());
 
-		AssetEntry entry = _assetEntryLocalService.getEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			systemObjectDefinitionMetadata.getModelClassName(), objectEntryId);
-
-		long groupId = GroupThreadLocal.getGroupId();
 
 		if (Objects.equals(
 				systemObjectDefinitionMetadata.getScope(),
 				ObjectDefinitionConstants.SCOPE_SITE)) {
 
-			groupId = entry.getGroupId();
+			groupId = assetEntry.getGroupId();
 		}
 
 		return Page.of(
@@ -703,7 +704,7 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext,
 				objectRelatedModelsProvider.getRelatedModels(
 					groupId, objectRelationship.getObjectRelationshipId(),
-					entry.getClassPK(), pagination.getStartPosition(),
+					assetEntry.getClassPK(), pagination.getStartPosition(),
 					pagination.getEndPosition())));
 	}
 

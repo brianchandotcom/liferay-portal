@@ -575,12 +575,24 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign the task node to a specific User"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAssignTaskNodeToSpecificUser {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignTaskNodeToSpecificUser";
 
-		// TODO CanAssignTaskNodeToSpecificUser pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "0,0");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+			assignmentType = "User",
+			inputFieldId = "search",
+			userScreenName = "Test");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "User: Test");
 	}
 
 	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the Cancel button"
@@ -868,7 +880,9 @@ definition {
 			modalMessage = "Are you sure you want to delete all actions and their settings?",
 			sidebarPropertyName = "Actions");
 
-		AssertElementPresent(key_propertyName = "Actions", locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_NEW_BUTTON");
+		AssertElementPresent(
+			key_propertyName = "Actions",
+			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_NEW_BUTTON");
 	}
 
 	@description = "Verify that the user can delete all Timers at once"
@@ -1953,8 +1967,8 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.deleteAssignment();		
-		
+		ProcessBuilderKaleoDesignerReact.deleteAssignment();
+
 		ProcessBuilderKaleoDesignerReact.viewPropertyPresentOnSideBar(
 			propertyName = "Assignment",
 			propertyValue = "Asset Creator");

@@ -133,6 +133,16 @@ definition {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_CLOSE_MODAL");
 	}
 
+	macro deleteAssignment {
+		Click(locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_ASSIGNMENTS_VALUE");
+
+		AssertElementPresent(
+			key_text = "trash",
+			locator1 = "Icon#ANY_DISABLED");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+	}
+
 	macro deleteByIconTrashSidebar {
 		Click(
 			key_propertyValue = "${propertyValue}",
@@ -610,16 +620,6 @@ definition {
 
 			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 		}
-	}
-
-	macro deleteAssignment {
-		Click(locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_ASSIGNMENTS_VALUE");
-
-		AssertElementPresent(
-			key_text = "trash",
-			locator1 = "Icon#ANY_DISABLED");
-
-		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 	}
 
 	macro viewAndFillNotification {

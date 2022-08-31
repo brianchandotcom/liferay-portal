@@ -46,6 +46,8 @@ const passwordStructure = {
 
 const yupSchema = {
 	build: yup.object({
+		caseIds: yup.array().of(yup.number()),
+		categories: yup.mixed(),
 		description: yup.string(),
 		gitHash: yup.string(),
 		id: yup.string(),
@@ -68,9 +70,13 @@ const yupSchema = {
 		stepsType: yup.string(),
 	}),
 	caseResult: yup.object({
+		buildId: yup.number(),
+		caseId: yup.number(),
 		commentMBMessage: yup.string(),
 		dueStatus: yup.string().required(),
 		issues: yup.string(),
+		runId: yup.number(),
+		startDate: yup.string(),
 		userId: yup.number(),
 	}),
 	caseType: yup.object({
@@ -81,6 +87,14 @@ const yupSchema = {
 		name: yup.string().required(),
 		projectId: yup.string(),
 		teamId: yup.string(),
+	}),
+	factor: yup.object({
+		factorCategoryId: yup.string().required(),
+		factorOptionId: yup.string().required(),
+		id: yup.string(),
+		name: yup.string().required(),
+		routineId: yup.number(),
+		runId: yup.number(),
 	}),
 	factorCategory: yup.object({
 		id: yup.string(),
@@ -118,6 +132,13 @@ const yupSchema = {
 		autoanalyze: yup.boolean().required(),
 		id: yup.number(),
 		name: yup.string().required(),
+	}),
+	run: yup.object({
+		buildId: yup.number(),
+		description: yup.string(),
+		environmentHash: yup.string(),
+		name: yup.string().required(),
+		number: yup.number().required(),
 	}),
 	suite: yup.object({
 		autoanalyze: yup.boolean(),

@@ -36,7 +36,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 	const MANAGE_DROPDOWN = useSidebarActions();
 
 	const loggedUserName = myUserAccount
-		? `${myUserAccount?.givenName} ${myUserAccount?.alternateName}`
+		? `${myUserAccount?.givenName} ${myUserAccount?.familyName}`
 		: Liferay.ThemeDisplay.getUserName();
 
 	return (

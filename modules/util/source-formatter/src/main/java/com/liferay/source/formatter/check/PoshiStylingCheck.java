@@ -20,10 +20,12 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,6 +55,8 @@ public class PoshiStylingCheck extends BaseFileCheck {
 		content = content.replaceAll(
 			"\\!\\(contains\\(\"\\$\\{(.+?)\\}\", \"\\{\\1\\}\"\\)\\)",
 			"isSet($1)");
+
+		content = _removeMultipleSpacesInTaskDefinitions(fileName, content);
 
 		return _formatComments(content);
 	}
@@ -141,6 +145,59 @@ public class PoshiStylingCheck extends BaseFileCheck {
 		}
 
 		if (sb.length() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
+	}
+
+	private String _removeMultipleSpacesInTaskDefinitions(
+		String fileName, String content) {
+
+		if (!fileName.endsWith("testcase") && !fileName.endsWith("macro")) {
+			return content;
+		}
+
+		String[] lines = StringUtil.splitLines(content);
+
+		StringBundler sb = new StringBundler();
+
+		for (String line : lines) {
+			String trimmedLine = StringUtil.trim(line);
+
+			if (!trimmedLine.startsWith("task (")) {
+				sb.append(line);
+				sb.append(StringPool.NEW_LINE);
+
+				continue;
+			}
+
+			List<String> parameters = JavaSourceUtil.getParameterList(
+				trimmedLine);
+
+			if (parameters.size() != 1) {
+				sb.append(line);
+				sb.append(StringPool.NEW_LINE);
+
+				continue;
+			}
+
+			String parameter = parameters.get(0);
+
+			String newParameter = parameter.replaceAll(" +", " ");
+
+			if (StringUtil.equals(parameter, newParameter)) {
+				sb.append(line);
+			}
+			else {
+				sb.append(
+					StringUtil.replaceFirst(line, parameter, newParameter));
+			}
+
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (!content.endsWith(StringPool.NEW_LINE) && (sb.index() > 1)) {
 			sb.setIndex(sb.index() - 1);
 		}
 

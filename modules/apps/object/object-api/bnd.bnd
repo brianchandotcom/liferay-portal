@@ -9,6 +9,7 @@ Export-Package:\
 	com.liferay.object.constants,\
 	com.liferay.object.deployer,\
 	com.liferay.object.exception,\
+	com.liferay.object.field.builder,\
 	com.liferay.object.field.business.type,\
 	com.liferay.object.field.filter.parser,\
 	com.liferay.object.field.render,\

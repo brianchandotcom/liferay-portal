@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.util;
+package com.liferay.object.field.builder;
 
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
@@ -28,35 +28,35 @@ import java.util.Map;
 public class ObjectFieldBuilder {
 
 	public ObjectField build() {
-		return _objectField;
+		return objectField;
 	}
 
 	public ObjectFieldBuilder businessType(String businessType) {
-		_objectField.setBusinessType(businessType);
+		objectField.setBusinessType(businessType);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder dbColumnName(String dbColumnName) {
-		_objectField.setDBColumnName(dbColumnName);
+		objectField.setDBColumnName(dbColumnName);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder dbTableName(String dbTableName) {
-		_objectField.setDBTableName(dbTableName);
+		objectField.setDBTableName(dbTableName);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder dbType(String dbType) {
-		_objectField.setDBType(dbType);
+		objectField.setDBType(dbType);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder defaultValue(String defaultValue) {
-		_objectField.setDefaultValue(defaultValue);
+		objectField.setDefaultValue(defaultValue);
 
 		return this;
 	}
@@ -64,55 +64,55 @@ public class ObjectFieldBuilder {
 	public ObjectFieldBuilder externalReferenceCode(
 		String externalReferenceCode) {
 
-		_objectField.setExternalReferenceCode(externalReferenceCode);
+		objectField.setExternalReferenceCode(externalReferenceCode);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder indexed(boolean indexed) {
-		_objectField.setIndexed(indexed);
+		objectField.setIndexed(indexed);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder indexedAsKeyword(boolean indexedAsKeyword) {
-		_objectField.setIndexedAsKeyword(indexedAsKeyword);
+		objectField.setIndexedAsKeyword(indexedAsKeyword);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder indexedLanguageId(String indexedLanguageId) {
-		_objectField.setIndexedLanguageId(indexedLanguageId);
+		objectField.setIndexedLanguageId(indexedLanguageId);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder labelMap(Map<Locale, String> labelMap) {
-		_objectField.setLabelMap(labelMap);
+		objectField.setLabelMap(labelMap);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder listTypeDefinitionId(long listTypeDefinitionId) {
-		_objectField.setListTypeDefinitionId(listTypeDefinitionId);
+		objectField.setListTypeDefinitionId(listTypeDefinitionId);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder name(String name) {
-		_objectField.setName(name);
+		objectField.setName(name);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder objectDefinitionId(long objectDefinitionId) {
-		_objectField.setObjectDefinitionId(objectDefinitionId);
+		objectField.setObjectDefinitionId(objectDefinitionId);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder objectFieldId(long objectFieldId) {
-		_objectField.setObjectFieldId(objectFieldId);
+		objectField.setObjectFieldId(objectFieldId);
 
 		return this;
 	}
@@ -120,7 +120,7 @@ public class ObjectFieldBuilder {
 	public ObjectFieldBuilder objectFieldSettings(
 		List<ObjectFieldSetting> objectFieldSettings) {
 
-		_objectField.setObjectFieldSettings(objectFieldSettings);
+		objectField.setObjectFieldSettings(objectFieldSettings);
 
 		return this;
 	}
@@ -132,30 +132,30 @@ public class ObjectFieldBuilder {
 	}
 
 	public ObjectFieldBuilder required(boolean required) {
-		_objectField.setRequired(required);
+		objectField.setRequired(required);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder state(boolean state) {
-		_objectField.setState(state);
+		objectField.setState(state);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder system(boolean system) {
-		_objectField.setSystem(system);
+		objectField.setSystem(system);
 
 		return this;
 	}
 
 	public ObjectFieldBuilder userId(long userId) {
-		_objectField.setUserId(userId);
+		objectField.setUserId(userId);
 
 		return this;
 	}
 
-	private final ObjectField _objectField =
+	protected final ObjectField objectField =
 		ObjectFieldLocalServiceUtil.createObjectField(0);
 
 }

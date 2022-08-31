@@ -210,18 +210,18 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	private void _validateDDMFormFieldNames(List<DDMFormField> ddmFormFields)
 		throws DDMFormValidationException {
 
-		Set<String> duplicatedFieldNames = new HashSet<>();
+		Set<String> duplicatedDDMFieldNames = new HashSet<>();
 
-		Set<String> ddmFormFieldNamesCount = new HashSet<>();
+		Set<String> ddmFormFieldNames = new HashSet<>();
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			if (!ddmFormFieldNamesCount.add(ddmFormField.getName())) {
-				duplicatedFieldNames.add(ddmFormField.getName());
+			if (!ddmFormFieldNames.add(ddmFormField.getName())) {
+				duplicatedDDMFieldNames.add(ddmFormField.getName());
 			}
 		}
 
-		if (SetUtil.isNotEmpty(duplicatedFieldNames)) {
-			throw new MustNotDuplicateFieldName(duplicatedFieldNames);
+		if (SetUtil.isNotEmpty(duplicatedDDMFieldNames)) {
+			throw new MustNotDuplicateFieldName(duplicatedDDMFieldNames);
 		}
 	}
 

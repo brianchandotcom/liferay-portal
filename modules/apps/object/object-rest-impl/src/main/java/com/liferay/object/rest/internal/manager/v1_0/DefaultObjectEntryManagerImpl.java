@@ -475,7 +475,7 @@ public class DefaultObjectEntryManagerImpl
 				objectRelationshipName);
 
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
-			objectRelationship, objectDefinition);
+			objectDefinition, objectRelationship);
 
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
@@ -524,7 +524,7 @@ public class DefaultObjectEntryManagerImpl
 				objectRelationshipName);
 
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
-			objectRelationship, objectDefinition);
+			objectDefinition, objectRelationship);
 
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
@@ -635,8 +635,8 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private ObjectDefinition _getRelatedObjectDefinition(
-			ObjectRelationship objectRelationship,
-			ObjectDefinition objectDefinition)
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship)
 		throws Exception {
 
 		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();

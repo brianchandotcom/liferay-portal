@@ -28,7 +28,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -274,42 +276,72 @@ public class ExecutePoshiElement extends PoshiElement {
 		boolean expectedComma = false;
 
 		for (int i = 0; i < parentheticalContent.length(); i++) {
-			char c = parentheticalContent.charAt(i);
+			Character c1 = parentheticalContent.charAt(i);
 
-			if (!stack.isEmpty() && (c == '\"') &&
-				(parentheticalContent.charAt(i - 1) != '\\')) {
+			Character c2 = null;
 
-				stack.pop();
+			Character c3 = null;
 
-				expectedComma = true;
-
-				continue;
+			if ((i + 2) < parentheticalContent.length()) {
+				c2 = parentheticalContent.charAt(i + 1);
+				c3 = parentheticalContent.charAt(i + 2);
 			}
 
-			if (c == '\"') {
-				stack.push(c);
+			if (!stack.isEmpty()) {
+				Character topCodeBoundary = stack.peek();
+
+				if ((c1 == _codeBoundariesMap.get(topCodeBoundary)) &&
+					(parentheticalContent.charAt(i - 1) != '\\') &&
+					((c1 != '\'') ||
+					 _isMultilineVariableBoundary(c1, c2, c3))) {
+
+					stack.pop();
+
+					if (stack.isEmpty()) {
+						expectedComma = true;
+					}
+
+					continue;
+				}
+
+				if ((topCodeBoundary == '\"') || (topCodeBoundary == '\'')) {
+					continue;
+				}
+			}
+
+			if (_codeBoundariesMap.containsKey(c1)) {
+				if (_isMultilineVariableBoundary(c1, c2, c3)) {
+					stack.push(c1);
+
+					continue;
+				}
+
+				stack.push(c1);
 
 				continue;
 			}
 
 			if (expectedComma) {
-				if (c == ',') {
+				if (c1 == ',') {
 					expectedComma = false;
 
 					continue;
 				}
 
-				if (Character.isWhitespace(c)) {
+				if (Character.isWhitespace(c1)) {
 					continue;
 				}
 
 				PoshiScriptParserException poshiScriptParserException =
 					new PoshiScriptParserException(
-						"Missing comma in execute method", this);
+						"Missing comma in Poshi file call", this);
+
+				int additionalLines = Math.max(
+					StringUtil.count(parentheticalContent, "\n", i) - 1, 0);
 
 				poshiScriptParserException.setErrorLineNumber(
 					poshiScriptParserException.getErrorLineNumber() +
-						StringUtil.count(parentheticalContent, "\n", i));
+						additionalLines);
 
 				throw poshiScriptParserException;
 			}
@@ -467,11 +499,33 @@ public class ExecutePoshiElement extends PoshiElement {
 		return false;
 	}
 
+	private boolean _isMultilineVariableBoundary(
+		Character c1, Character c2, Character c3) {
+
+		if ((c1 != null) && (c2 != null) && (c3 != null) && (c1 == '\'') &&
+			(c2 == '\'') && (c3 == '\'')) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final String _ELEMENT_NAME = "execute";
 
 	private static final String _UTILITY_INVOCATION_REGEX =
 		"(echo|fail|takeScreenshot)\\(.*?\\)";
 
+	private static final Map<Character, Character> _codeBoundariesMap =
+		new HashMap<Character, Character>() {
+			{
+				put('(', ')');
+				put('[', ']');
+				put('\"', '\"');
+				put('\'', '\'');
+				put('{', '}');
+			}
+		};
 	private static final Pattern _executeParameterPattern = Pattern.compile(
 		"^[\\s]*(\\w*\\s*=\\s*\"[ \\t\\S]*?\"|\\w*\\s*=\\s*'''.*?'''|" +
 			"\\w*\\s=\\s*[\\w\\.]*\\(.*?\\))[\\s]*$",

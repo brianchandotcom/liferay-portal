@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -138,7 +139,13 @@ public class EditAccountEntryMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
-		String[] domains = ParamUtil.getStringValues(actionRequest, "domains");
+
+		String[] domains = accountEntry.getDomainsArray();
+
+		if (_isAllowUpdateDomains(actionRequest, accountEntry.getType())) {
+			domains = ParamUtil.getStringValues(actionRequest, "domains");
+		}
+
 		String emailAddress = ParamUtil.getString(
 			actionRequest, "emailAddress");
 		String taxIdNumber = ParamUtil.getString(actionRequest, "taxIdNumber");
@@ -191,9 +198,7 @@ public class EditAccountEntryMVCActionCommand
 			actionRequest, "type",
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
 
-		if (Objects.equals(
-				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, type)) {
-
+		if (_isAllowUpdateDomains(actionRequest, type)) {
 			domains = ParamUtil.getStringValues(actionRequest, "domains");
 		}
 
@@ -232,6 +237,21 @@ public class EditAccountEntryMVCActionCommand
 		return WorkflowConstants.STATUS_INACTIVE;
 	}
 
+	private boolean _isAllowUpdateDomains(
+		ActionRequest actionRequest, String type) {
+
+		if (Objects.equals(
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, type) &&
+			Objects.equals(
+				AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+				_portal.getPortletId(actionRequest))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditAccountEntryMVCActionCommand.class);
 
@@ -243,5 +263,8 @@ public class EditAccountEntryMVCActionCommand
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

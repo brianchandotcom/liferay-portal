@@ -51,7 +51,9 @@ const BudgetBreakdownTable = ({mdfRequestActivityId}) => {
 				type: 'danger',
 			});
 		};
-		getActivityToBudgets();
+		if (mdfRequestActivityId) {
+			getActivityToBudgets();
+		}
 	}, [mdfRequestActivityId]);
 
 	return (
@@ -308,7 +310,9 @@ const Panel = ({children, mdfRequestActivity}) => (
 					startDate={mdfRequestActivity.startDate}
 				/>
 
-				<h4 className="mb-1">{mdfRequestActivity.name}</h4>
+				<h4 className="mb-1">
+					{mdfRequestActivity.name} ({mdfRequestActivity.id})
+				</h4>
 			</ClayPanel.Title>
 		}
 		showCollapseIcon
@@ -339,14 +343,15 @@ export default function () {
 
 				return;
 			}
-
 			Liferay.Util.openToast({
 				message: 'An unexpected error occured.',
 				type: 'danger',
 			});
 		};
 
-		getActivities();
+		if (mdfRequestId) {
+			getActivities();
+		}
 	}, []);
 
 	return (

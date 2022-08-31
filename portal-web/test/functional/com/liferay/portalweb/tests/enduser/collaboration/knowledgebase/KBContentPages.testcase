@@ -1,0 +1,213 @@
+@component-name = "portal-knowledge-base"
+definition {
+
+	property custom.properties = "feature.flag.LPS-125653=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Knowledge Base";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name",
+			type = "content");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PagesAdmin.tearDownCP();
+
+			KBArticle.tearDownCP();
+		}
+	}
+
+	@description = "This test ensures that the mapped author name field with KB article can be displayed on the content page."
+	@priority = "5"
+	test CanMapAuthorNameToHeadingFragment {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Test Site Name",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Heading",
+			id = "element-text");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "Knowledge Base Article Title",
+			navItem = "Knowledge Base Articles");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Author Name");
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.publish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Test Test");
+	}
+
+	@description = "This test ensures that the mapped author profile image field with KB article can be displayed on the content page."
+	@priority = "5"
+	test CanMapAuthorProfileToImageFragment {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Test Site Name",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		MyAccount.openMyAccountAdmin();
+
+		User.changeProfileImage(imageName = "marketplace_icon.png");
+
+		PortletEntry.save();
+
+		var userPortrait = selenium.getAttribute("//img[contains(@id,'avatar') and contains(@src,'image')]@src");
+
+		var userPortrait = StringUtil.extractLast("${userPortrait}", "image/");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Image");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Image",
+			id = "image-square");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "Knowledge Base Article Title",
+			navItem = "Knowledge Base Articles");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Author Profile Image");
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.publish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		AssertVisible(
+			fragmentId = "image-square",
+			key_authorProfileImage = "${userPortrait}",
+			locator1 = "Fragment#FRAGMENT_AUTHOR_PROFILE_IMAGE");
+	}
+
+	@description = "This test ensures that the mapped content field with KB article can be displayed on the content page."
+	@priority = "5"
+	test CanMapContentToHeadingFragment {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Test Site Name",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Heading",
+			id = "element-text");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "Knowledge Base Article Title",
+			navItem = "Knowledge Base Articles");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Content");
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.publish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Knowledge Base Article Content");
+	}
+
+	@description = "This test ensures that the mapped title field with KB article can be displayed on the content page."
+	@priority = "5"
+	test CanMapTitleToHeadingFragment {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Test Site Name",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Heading",
+			id = "element-text");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "Knowledge Base Article Title",
+			navItem = "Knowledge Base Articles");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Title");
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.publish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Knowledge Base Article Title");
+	}
+
+}

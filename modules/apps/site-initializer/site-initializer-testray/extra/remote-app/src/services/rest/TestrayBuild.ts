@@ -12,6 +12,7 @@
  * details.
  */
 
+import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/BuildFormRun';
 import yupSchema from '../../schema/yup';
 import {TEST_STATUS} from '../../util/constants';
 import Rest from './Rest';
@@ -22,12 +23,6 @@ import {testrayRunRest} from './TestrayRun';
 import type {TestrayBuild} from './types';
 
 type Build = typeof yupSchema.build.__outputType & {projectId: number};
-
-type RowItem = {
-	factorCategory: string;
-	factorCategoryId: string;
-	value: number;
-};
 
 class TestrayBuildRest extends Rest<Build, TestrayBuild> {
 	constructor() {
@@ -71,30 +66,28 @@ class TestrayBuildRest extends Rest<Build, TestrayBuild> {
 		let runIndex = 1;
 
 		for (const run of runs) {
-			const factorOptions = Object.values(run) as RowItem[];
+			const factorOptions = Object.values(run) as CategoryOptions[];
 
-			const factorCategories = factorOptions.map(
-				({factorCategory}) => factorCategory
+			const factorOptionsList = factorOptions.map(
+				({factorOption}) => factorOption
 			);
 
 			const testrayRun = await testrayRunRest.create({
 				buildId: build.id,
 				description: undefined,
 				environmentHash: undefined,
-				name: factorCategories.join(' | '),
+				name: factorOptionsList.join(' | '),
 				number: runIndex,
 			});
 
 			for (const factorOption of factorOptions) {
 				await testrayFactorRest.create({
-					factorCategoryId: factorOption.factorCategoryId,
-					factorOptionId: (factorOption.value as unknown) as string,
+					factorCategoryId: (factorOption.factorCategoryId as unknown) as string,
+					factorOptionId: (factorOption.factorOptionId as unknown) as string,
 					name: '',
 					routineId: undefined,
 					runId: testrayRun.id,
 				});
-
-				factorOption.value;
 			}
 
 			await testrayCaseResultRest.createBatch(

@@ -36,14 +36,19 @@ import BuildSelectOptionsModal from '../BuildSelectOptionsModal';
 
 export type BuildFormType = typeof yupSchema.build.__outputType;
 
+export type CategoryOptions = {
+	factorCategory: string;
+	factorCategoryId: number;
+	factorOption: string;
+	factorOptionId: number;
+};
+
+type Category = {
+	[key: number]: CategoryOptions;
+};
+
 type BuildFormRunProps = {
-	categories: {
-		[key: number]: {
-			factorCategory: string;
-			factorCategoryId: string;
-			value: string;
-		};
-	}[];
+	categories: Category[];
 	control: Control<BuildFormType>;
 	register: UseFormRegister<BuildFormType>;
 };
@@ -84,6 +89,23 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({
 				.then(setFactorOptionsList);
 		}
 	}, [factorItems]);
+
+	useEffect(() => {
+		if (factorItems.length) {
+			const runItem: Category = {};
+
+			factorItems.forEach((factorItem, index) => {
+				runItem[index] = {
+					factorCategory: factorItem.factorCategory?.name as string,
+					factorCategoryId: factorItem.factorCategory?.id as number,
+					factorOption: factorItem.factorOption?.name as string,
+					factorOptionId: factorItem.factorOption?.id as number,
+				};
+			});
+
+			update(0, runItem);
+		}
+	}, [update, factorItems]);
 
 	return (
 		<>
@@ -140,7 +162,9 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({
 												factorOptions.find(
 													({id}: any) =>
 														String(id) ===
-														categoryOptions?.value
+														String(
+															categoryOptions?.factorOptionId
+														)
 												) || {};
 
 											return (
@@ -193,7 +217,7 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({
 																.factorCategory
 																?.name
 														}
-														name={`categories.${index}.${factorIndex}.value`}
+														name={`categories.${index}.${factorIndex}.factorOptionId`}
 														options={factorOptions.map(
 															({
 																id,

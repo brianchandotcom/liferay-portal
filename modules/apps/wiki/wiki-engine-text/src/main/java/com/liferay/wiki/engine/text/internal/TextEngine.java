@@ -77,14 +77,7 @@ public class TextEngine extends BaseWikiEngine {
 		return null;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.text)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.wiki.engine.text)")
 	private ServletContext _servletContext;
 
 }

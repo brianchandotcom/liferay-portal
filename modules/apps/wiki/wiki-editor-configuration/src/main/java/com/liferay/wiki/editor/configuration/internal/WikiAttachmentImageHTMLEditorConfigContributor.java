@@ -93,18 +93,15 @@ public class WikiAttachmentImageHTMLEditorConfigContributor
 		return _wikiFileUploadConfiguration;
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
 	protected void setWikiFileUploadConfiguration(
 		WikiFileUploadConfiguration wikiFileUploadConfiguration) {
 
 		_wikiFileUploadConfiguration = wikiFileUploadConfiguration;
 	}
 
+	@Reference
 	private ItemSelector _itemSelector;
+
 	private volatile WikiFileUploadConfiguration _wikiFileUploadConfiguration;
 
 }

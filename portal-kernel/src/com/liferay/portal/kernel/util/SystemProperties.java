@@ -269,22 +269,21 @@ public class SystemProperties {
 				break;
 			}
 
-			sb.append(value.substring(0, startIndex));
-
 			String placeholderKey = value.substring(
 				startIndex + StringPool.DOLLAR_AND_OPEN_CURLY_BRACE.length(),
 				endIndex);
 
 			if (StringPool.BLANK.equals(placeholderKey)) {
-				sb.append(value.substring(startIndex, endIndex + 1));
+				sb.append(value.substring(0, endIndex + 1));
 			}
 			else {
 				String placeholderValue = get(placeholderKey);
 
 				if (placeholderValue == null) {
-					sb.append(value.substring(startIndex, endIndex + 1));
+					sb.append(value.substring(0, endIndex + 1));
 				}
 				else {
+					sb.append(value.substring(0, startIndex));
 					sb.append(placeholderValue);
 				}
 			}

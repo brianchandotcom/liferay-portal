@@ -44,7 +44,8 @@ public class DynamicObjectDefinitionTable
 	extends BaseTable<DynamicObjectDefinitionTable> {
 
 	/**
-	 * @see com.liferay.portal.kernel.upgrade.UpgradeProcess#AlterTableAddColumn
+	 * @see com.liferay.portal.dao.db.BaseDB#alterTableAddColumn(
+	 *      java.sql.Connection, String, String, String)
 	 */
 	public static String getAlterTableAddColumnSQL(
 		String tableName, String columnName, String type) {
@@ -61,7 +62,8 @@ public class DynamicObjectDefinitionTable
 	}
 
 	/**
-	 * @see com.liferay.portal.kernel.upgrade.UpgradeProcess#AlterTableDropColumn
+	 * @see com.liferay.portal.dao.db.BaseDB#alterTableDropColumn(
+	 *      java.sql.Connection, String, String)
 	 */
 	public static String getAlterTableDropColumnSQL(
 		String tableName, String columnName) {

@@ -15,6 +15,7 @@
 package com.liferay.object.admin.rest.internal.dto.v1_0.util;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
@@ -22,8 +23,11 @@ import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
+
+import java.util.Objects;
 
 /**
  * @author Gabriel Albuquerque
@@ -49,6 +53,14 @@ public class ObjectFieldUtil {
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectFieldSettingLocalService objectFieldSettingLocalService,
 		ObjectFilterLocalService objectFilterLocalService) {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149625")) &&
+			Objects.equals(
+				objectField.getBusinessTypeAsString(),
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		com.liferay.object.model.ObjectField serviceBuilderObjectField =
 			objectFieldLocalService.createObjectField(0L);

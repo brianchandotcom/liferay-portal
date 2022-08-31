@@ -377,7 +377,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		if (IsElementNotPresent(key_card = "${orgName}", locator1 = "Card#CARD")) {
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		}
 
 		AssertTextEquals(
 			locator1 = "Card#CARD_TITLE",
@@ -452,7 +454,9 @@ definition {
 			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_ASSET_LIBRARY");
 		}
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		if (IsElementNotPresent(key_card = "${userFirstName}", locator1 = "Card#CARD")) {
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		}
 
 		if (isSet(userMiddleName)) {
 			LexiconCard.checkCardCheckbox(card = "${userFirstName} ${userMiddleName} ${userLastName}");

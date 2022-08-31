@@ -24,9 +24,11 @@ import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
@@ -66,7 +68,15 @@ public class CETFactoryImpl implements CETFactory {
 			new IFrameCETImplFactoryImpl()
 		).put(
 			ClientExtensionEntryConstants.TYPE_THEME_CSS,
-			new ThemeCSSCETImplFactoryImpl()
+			() -> {
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-153457"))) {
+
+					return new ThemeCSSCETImplFactoryImpl();
+				}
+
+				return null;
+			}
 		).put(
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
 			new ThemeFaviconCETImplFactoryImpl()

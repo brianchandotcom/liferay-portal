@@ -577,6 +577,20 @@ definition {
 			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 		}
 
+		if ("${assignmentType}" == "Scripted Assignment") {
+			Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_ADD_SOURCE_CODE");
+
+			Click(locator1 = "ProcessBuilderKaleoDesignerReact#GROOVY_SOURCE_EDITOR");
+
+			Type.typeCodeMirrorEditorNoError(
+				locator1 = "ProcessBuilderKaleoDesignerReact#GROOVY_SOURCE_EDITOR",
+				value1 = "${groovyScript}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ProcessBuilderKaleoDesignerReact#GROOVY_SOURCE_EDITOR",
+				value1 = "${groovyScript}");
+		}
+
 		if ("${assignmentType}" == "Role Type") {
 			Type(
 				locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_TYPE_FIELD",

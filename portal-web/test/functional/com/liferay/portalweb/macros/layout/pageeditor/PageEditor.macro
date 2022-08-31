@@ -1327,6 +1327,15 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if (isSet(fontSize)) {
+			Select(
+				key_text = "font-size",
+				locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON",
+				value1 = "${fontSize}");
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(headingLevel)) {
 			Select(
 				key_fieldLabel = "Heading Level",

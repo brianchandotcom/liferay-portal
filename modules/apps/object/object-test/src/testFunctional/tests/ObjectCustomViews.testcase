@@ -473,6 +473,102 @@ definition {
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
 	}
 
+	@description = "LPS-144957 - Verify that it's possible to delete the filter"
+	@priority = "4"
+	test CanDeleteFilter {
+		task ("Create Custom Object and Custom Field via API and go to it") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 156801",
+				objectName = "CustomObject156801",
+				pluralLabelName = "Custom Objects 156801");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject156801");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156801");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 156801");
+		}
+
+		task ("Create Custom View and go to it") {
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+		}
+
+		task ("Mark Custom View as default and go to View Builder") {
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field");
+		}
+
+		task ("Go to Filters tab and add filters") {
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.addNewFilterViaUI(filterBy = "Create Date");
+
+			ObjectCustomViews.addNewFilterViaUI(filterBy = "Modified Date");
+
+			ObjectCustomViews.addNewFilterViaUI(
+				filterBy = "Status",
+				filterType = "Includes",
+				filterValue = "Approved");
+
+			Button.clickSave();
+		}
+
+		task ("Assert that the filter option is on Custom Object") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156801");
+
+			AssertElementPresent(
+				key_buttonName = "Filter",
+				locator1 = "ObjectCustomViews#DROPDOWN_BUTTON_ON_OBJECT_VIEW");
+		}
+
+		task ("Delete filters created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 156801");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToFiltersTab();
+
+			for (var filters : list "Create Date,Modified Date,Status") {
+				ObjectCustomViews.assertPresentEntriesOnFilters(filterBy = "${filters}");
+
+				Click(
+					key_cardName = "Filters",
+					locator1 = "ObjectCustomViews#SELECT_DROPDOWN_ON_LABEL");
+
+				DropdownMenuItem.click(menuItem = "Delete");
+			}
+
+			Button.clickSave();
+		}
+
+		task ("Assert that the filter option isn't on Custom Object") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156801");
+
+			AssertElementNotPresent(
+				key_buttonName = "Filter",
+				locator1 = "ObjectCustomViews#DROPDOWN_BUTTON_ON_OBJECT_VIEW");
+		}
+	}
+
 	@description = "LPS-144472 - Verify it is possible the user to delete the pre-order column"
 	@priority = "4"
 	test CanDeletePreOrderColumn {

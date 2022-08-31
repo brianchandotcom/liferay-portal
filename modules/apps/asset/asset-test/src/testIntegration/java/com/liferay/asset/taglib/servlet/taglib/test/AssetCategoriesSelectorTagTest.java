@@ -39,6 +39,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.Locale;
+
 import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
@@ -225,7 +227,12 @@ public class AssetCategoriesSelectorTagTest {
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(_group.getCompanyId()));
-		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
+		themeDisplay.setLocale(locale);
+
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 

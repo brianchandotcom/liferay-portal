@@ -95,7 +95,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		Locale locale = themeDisplay.getLocale();
 
 		WorkbookBuilder workbookBuilder = new WorkbookBuilder(
-			locale, "Content Dashboard Data");
+			locale, _language.get(locale, "content-dashboard-data"));
 
 		workbookBuilder.localizedCell(
 			"title"

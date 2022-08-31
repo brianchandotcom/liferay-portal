@@ -15,7 +15,7 @@
 import ClayModal, {useModal} from '@clayui/modal';
 import React from 'react';
 
-const KEY_LABEL = Liferay.Browser.isMac() ? '⌘' : 'Ctrl';
+const KEY_LABEL = Liferay.Browser?.isMac() ? '⌘' : 'Ctrl';
 
 export default function ShortcutModal({onCloseModal}) {
 	const {observer} = useModal({onClose: () => onCloseModal()});

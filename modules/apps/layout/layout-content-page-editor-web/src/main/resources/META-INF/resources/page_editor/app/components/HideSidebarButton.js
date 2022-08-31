@@ -24,7 +24,7 @@ export default function HideSidebarButton() {
 	const sidebarHidden = useSelector((state) => state.sidebar.hidden);
 
 	const buttonTitle = useMemo(() => {
-		const keyLabel = Liferay.Browser.isMac() ? '⌘' : 'Ctrl';
+		const keyLabel = Liferay.Browser?.isMac() ? '⌘' : 'Ctrl';
 
 		return getOpenMenuTooltip(keyLabel);
 	}, []);

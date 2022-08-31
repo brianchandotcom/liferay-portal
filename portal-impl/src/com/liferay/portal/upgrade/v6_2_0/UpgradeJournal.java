@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -374,7 +373,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 				dynamicElementElement, defaultLocale.toString());
 		}
 
-		return XMLUtil.formatXML(document);
+		return document.formattedString(StringPool.DOUBLE_SPACE);
 	}
 
 	protected Locale getDefaultLocale(long companyId) throws Exception {

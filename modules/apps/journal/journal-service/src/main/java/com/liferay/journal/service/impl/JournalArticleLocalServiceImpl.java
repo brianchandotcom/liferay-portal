@@ -107,7 +107,6 @@ import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -7675,10 +7674,13 @@ public class JournalArticleLocalServiceImpl
 
 			format(user, groupId, article, document.getRootElement());
 
-			content = XMLUtil.formatXML(document);
+			content = document.formattedString(StringPool.DOUBLE_SPACE);
 		}
 		catch (DocumentException documentException) {
 			_log.error(documentException);
+		}
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 
 		return content;

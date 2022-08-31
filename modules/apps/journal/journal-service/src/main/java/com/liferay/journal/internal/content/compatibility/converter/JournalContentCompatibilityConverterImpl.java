@@ -20,7 +20,6 @@ import com.liferay.journal.content.compatibility.converter.JournalContentCompati
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -57,9 +56,9 @@ public class JournalContentCompatibilityConverterImpl
 	@Override
 	public String convert(String content) {
 		try {
-			Document document = SAXReaderUtil.read(content);
+			Document document = _convert(SAXReaderUtil.read(content));
 
-			return XMLUtil.formatXML(_convert(document));
+			return document.formattedString(StringPool.DOUBLE_SPACE);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

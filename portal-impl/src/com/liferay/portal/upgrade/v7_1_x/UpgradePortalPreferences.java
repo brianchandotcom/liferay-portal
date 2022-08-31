@@ -15,7 +15,7 @@
 package com.liferay.portal.upgrade.v7_1_x;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.xml.XMLUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -68,7 +68,7 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 			}
 		}
 
-		return XMLUtil.formatXML(document);
+		return document.formattedString(StringPool.DOUBLE_SPACE);
 	}
 
 	@Override

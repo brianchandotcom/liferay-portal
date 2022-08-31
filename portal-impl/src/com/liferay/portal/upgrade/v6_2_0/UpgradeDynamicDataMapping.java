@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
@@ -218,7 +217,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			updateXSDDynamicElement(dynamicElementElement, structureKey);
 		}
 
-		return XMLUtil.formatXML(document);
+		return document.formattedString(StringPool.DOUBLE_SPACE);
 	}
 
 	protected void updateXSDDynamicElement(

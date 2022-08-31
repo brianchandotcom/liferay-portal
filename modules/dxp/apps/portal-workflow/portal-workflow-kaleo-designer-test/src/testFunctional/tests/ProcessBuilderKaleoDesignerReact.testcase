@@ -1943,12 +1943,21 @@ definition {
 	}
 
 	@description = "Verify that the user can't delete a Assignment through trash icon"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanNotDeleteAssignmentByTrashIcon {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotDeleteAssignmentByTrashIcon";
 
-		// TODO CanNotDeleteAssignmentByTrashIcon pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
+
+		ProcessBuilderKaleoDesignerReact.deleteAssignment();		
+		
+		ProcessBuilderKaleoDesignerReact.viewPropertyPresentOnSideBar(
+			propertyName = "Assignment",
+			propertyValue = "Asset Creator");
 	}
 
 	@description = "Verify that is not possible to have multiple Start nodes"

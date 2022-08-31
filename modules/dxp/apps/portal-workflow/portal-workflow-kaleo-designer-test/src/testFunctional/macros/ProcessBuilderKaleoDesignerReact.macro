@@ -612,6 +612,16 @@ definition {
 		}
 	}
 
+	macro deleteAssignment {
+		Click(locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_ASSIGNMENTS_VALUE");
+
+		AssertElementPresent(
+			key_text = "trash",
+			locator1 = "Icon#ANY_DISABLED");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+	}
+
 	macro viewAndFillNotification {
 		if (isSet(newNotification)) {
 			Click(

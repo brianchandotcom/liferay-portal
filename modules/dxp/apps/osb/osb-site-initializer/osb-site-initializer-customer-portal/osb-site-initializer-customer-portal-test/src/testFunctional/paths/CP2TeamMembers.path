@@ -11,13 +11,28 @@
 
 <tbody>
 <tr>
+	<td>ACCOUNT_USER_NAME</td>
+	<td>//td[contains(@class, 'lfr-email-address-column') and contains(text(), '${email}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MORE_MEMBERS</td>
+	<td>//button[contains(@class, 'cp-btn-add-members')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DROPDOWN</td>
+	<td>//select[contains(@class, 'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMAIL_FIELD</td>
 	<td>//input[contains(@name, 'invites[${key_fieldNumber}]')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ROLE_SELECT</td>
-	<td>//select[contains(@name, 'invites[${key_rowNumber}]')]</td>
+	<td>INVITE_BUTTON</td>
+	<td>//button[contains(@class,'invite-button')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -31,13 +46,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DROPDOWN</td>
-	<td>//select[contains(@class, 'form-control')]</td>
+	<td>ROLE_SELECT</td>
+	<td>//select[contains(@name, 'invites[${key_rowNumber}]')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_MORE_MEMBERS</td>
-	<td>//button[contains(@class, 'cp-btn-add-members')]</td>
+	<td>SELECT_PARTNER</td>
+	<td>//div[contains(@class, 'checkbox')]//span[contains(text(), 'Partner')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -48,21 +63,6 @@
 <tr>
 	<td>SEND_INVITATIONS_DISABLED</td>
 	<td>//button[contains(text(), 'Send Invitation')][@disabled]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_PARTNER</td>
-	<td>//div[contains(@class, 'checkbox')]//span[contains(text(), 'Partner')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INVITE_BUTTON</td>
-	<td>//button[contains(@class,'invite-button')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACCOUNT_USER_NAME</td>
-	<td>//td[contains(@class, 'lfr-email-address-column') and contains(text(), '${email}')]</td>
 	<td></td>
 </tr>
 <tr>

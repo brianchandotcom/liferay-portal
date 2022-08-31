@@ -233,6 +233,15 @@ AUI.add(
 
 						instance._positionMenu();
 					}
+
+					const toggler = instance.get('toggler');
+
+					if (!event.newVal) {
+						toggler.setAttribute('aria-expanded', false);
+					}
+					else {
+						toggler.setAttribute('aria-expanded', true);
+					}
 				},
 
 				_positionMenu() {

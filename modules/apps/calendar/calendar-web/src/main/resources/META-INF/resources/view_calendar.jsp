@@ -103,7 +103,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 							</div>
 
 							<c:if test="<%= userCalendarResource != null %>">
-								<span aria-controls="<portlet:namespace />calendarsMenu" aria-label="<liferay-ui:message key="manage-calendars" />" class="calendar-list-item-arrow calendar-resource-arrow" data-calendarResourceId="<%= userCalendarResource.getCalendarResourceId() %>" role="button" tabindex="0"><clay:icon symbol="caret-bottom" /></span>
+								<span aria-controls="<portlet:namespace />calendarsMenu" aria-expanded="false" aria-label="<liferay-ui:message arguments='<%= LanguageUtil.get(request, "my-calendars") %>' key="manage-calendar-x" />" class="calendar-list-item-arrow calendar-resource-arrow" data-calendarResourceId="<%= userCalendarResource.getCalendarResourceId() %>" role="button" tabindex="0"><clay:icon symbol="caret-bottom" /></span>
 							</c:if>
 						</c:if>
 
@@ -119,7 +119,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 							</div>
 
 							<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, groupCalendarResource, CalendarActionKeys.ADD_CALENDAR) %>">
-								<span class="calendar-list-item-arrow calendar-resource-arrow" data-calendarResourceId="<%= groupCalendarResource.getCalendarResourceId() %>" tabindex="0"><clay:icon symbol="caret-bottom" /></span>
+								<span aria-expanded="false" aria-label="<liferay-ui:message arguments="<%= HtmlUtil.escape(groupCalendarResource.getName(locale)) %>" key="manage-calendar-x" />" class="calendar-list-item-arrow calendar-resource-arrow" data-calendarResourceId="<%= groupCalendarResource.getCalendarResourceId() %>" role="button" tabindex="0"><clay:icon symbol="caret-bottom" /></span>
 							</c:if>
 
 							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />siteCalendarList"></div>

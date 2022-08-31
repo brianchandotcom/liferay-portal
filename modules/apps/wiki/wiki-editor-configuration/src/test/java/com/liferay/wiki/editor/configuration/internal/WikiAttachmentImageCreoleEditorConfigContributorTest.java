@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -101,7 +102,8 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 			wikiAttachmentImageCreoleEditorConfigContributor =
 				new WikiAttachmentImageCreoleEditorConfigContributor();
 
-		wikiAttachmentImageCreoleEditorConfigContributor.setItemSelector(
+		ReflectionTestUtil.setFieldValue(
+			wikiAttachmentImageCreoleEditorConfigContributor, "_itemSelector",
 			_itemSelector);
 
 		wikiAttachmentImageCreoleEditorConfigContributor.
@@ -161,8 +163,10 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 			wikiAttachmentImageCreoleEditorConfigContributor =
 				new WikiAttachmentImageCreoleEditorConfigContributor();
 
-		wikiAttachmentImageCreoleEditorConfigContributor.setItemSelector(
+		ReflectionTestUtil.setFieldValue(
+			wikiAttachmentImageCreoleEditorConfigContributor, "_itemSelector",
 			_itemSelector);
+
 		wikiAttachmentImageCreoleEditorConfigContributor.
 			setWikiFileUploadConfiguration(
 				new WikiFileUploadConfiguration() {
@@ -214,7 +218,8 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 			wikiAttachmentImageCreoleEditorConfigContributor =
 				new WikiAttachmentImageCreoleEditorConfigContributor();
 
-		wikiAttachmentImageCreoleEditorConfigContributor.setItemSelector(
+		ReflectionTestUtil.setFieldValue(
+			wikiAttachmentImageCreoleEditorConfigContributor, "_itemSelector",
 			_itemSelector);
 
 		wikiAttachmentImageCreoleEditorConfigContributor.
@@ -247,7 +252,8 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 			wikiAttachmentImageCreoleEditorConfigContributor =
 				new WikiAttachmentImageCreoleEditorConfigContributor();
 
-		wikiAttachmentImageCreoleEditorConfigContributor.setItemSelector(
+		ReflectionTestUtil.setFieldValue(
+			wikiAttachmentImageCreoleEditorConfigContributor, "_itemSelector",
 			_itemSelector);
 
 		wikiAttachmentImageCreoleEditorConfigContributor.

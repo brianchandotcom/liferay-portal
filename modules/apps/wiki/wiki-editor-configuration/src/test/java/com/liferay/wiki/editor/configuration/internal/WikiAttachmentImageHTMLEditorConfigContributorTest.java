@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -102,7 +103,8 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest {
 			wikiAttachmentImageHTMLEditorConfigContributor =
 				new WikiAttachmentImageHTMLEditorConfigContributor();
 
-		wikiAttachmentImageHTMLEditorConfigContributor.setItemSelector(
+		ReflectionTestUtil.setFieldValue(
+			wikiAttachmentImageHTMLEditorConfigContributor, "_itemSelector",
 			_itemSelector);
 
 		wikiAttachmentImageHTMLEditorConfigContributor.populateConfigJSONObject(
@@ -162,8 +164,10 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest {
 			wikiAttachmentImageHTMLEditorConfigContributor =
 				new WikiAttachmentImageHTMLEditorConfigContributor();
 
-		wikiAttachmentImageHTMLEditorConfigContributor.setItemSelector(
+		ReflectionTestUtil.setFieldValue(
+			wikiAttachmentImageHTMLEditorConfigContributor, "_itemSelector",
 			_itemSelector);
+
 		wikiAttachmentImageHTMLEditorConfigContributor.
 			setWikiFileUploadConfiguration(
 				new WikiFileUploadConfiguration() {
@@ -214,7 +218,8 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest {
 			wikiAttachmentImageHTMLEditorConfigContributor =
 				new WikiAttachmentImageHTMLEditorConfigContributor();
 
-		wikiAttachmentImageHTMLEditorConfigContributor.setItemSelector(
+		ReflectionTestUtil.setFieldValue(
+			wikiAttachmentImageHTMLEditorConfigContributor, "_itemSelector",
 			_itemSelector);
 
 		wikiAttachmentImageHTMLEditorConfigContributor.populateConfigJSONObject(
@@ -246,7 +251,8 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest {
 			wikiAttachmentImageHTMLEditorConfigContributor =
 				new WikiAttachmentImageHTMLEditorConfigContributor();
 
-		wikiAttachmentImageHTMLEditorConfigContributor.setItemSelector(
+		ReflectionTestUtil.setFieldValue(
+			wikiAttachmentImageHTMLEditorConfigContributor, "_itemSelector",
 			_itemSelector);
 
 		wikiAttachmentImageHTMLEditorConfigContributor.populateConfigJSONObject(

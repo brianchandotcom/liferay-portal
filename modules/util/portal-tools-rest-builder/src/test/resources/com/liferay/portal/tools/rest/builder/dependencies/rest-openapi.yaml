@@ -142,6 +142,22 @@ paths:
                                 $ref: "#/components/schemas/Folder"
                     description:
                         "OK"
+    /testBoolean:
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: boolean
+                    application/xml:
+                        schema:
+                            type: boolean
+                required: true
+            responses:
+                "200":
+                    description:
+                        "OK"
+            tags: ["TestBoolean"]
     /tests/{testId}:
         get:
             parameters:

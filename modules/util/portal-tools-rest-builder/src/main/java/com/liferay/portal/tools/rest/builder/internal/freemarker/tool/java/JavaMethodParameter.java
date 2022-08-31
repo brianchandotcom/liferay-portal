@@ -14,13 +14,21 @@
 
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java;
 
+import com.liferay.portal.kernel.util.Validator;
+
 /**
  * @author Peter Shin
  */
 public class JavaMethodParameter {
 
 	public JavaMethodParameter(String parameterName, String parameterType) {
-		_parameterName = parameterName;
+		if (!Validator.isVariableName(parameterName)) {
+			_parameterName = parameterName + "Value";
+		}
+		else {
+			_parameterName = parameterName;
+		}
+
 		_parameterType = parameterType;
 	}
 

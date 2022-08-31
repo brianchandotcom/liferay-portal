@@ -57,6 +57,8 @@ public class RESTBuilderTest {
 
 		Assert.assertTrue(applicationFile.exists());
 
+		_assertBooleanParameterName(filesPath);
+
 		_assertResourceFilesExist(filesPath, "Document");
 		_assertResourceFilesExist(filesPath, "Folder");
 		_assertResourceFilesExist(filesPath, "Test");
@@ -80,6 +82,20 @@ public class RESTBuilderTest {
 		FileUtils.deleteDirectory(sampleImplDir);
 
 		Assert.assertFalse(sampleImplDir.exists());
+	}
+
+	private void _assertBooleanParameterName(String filesPath)
+		throws Exception {
+
+		File queryJavaFile = new File(
+			filesPath.concat(
+				"/sample-impl/src/main/java/com/example/sample/internal" +
+					"/resource/v1_0_0/BaseTestBooleanResourceImpl.java"));
+
+		String text = new String(
+			Files.readAllBytes(queryJavaFile.toPath()), StandardCharsets.UTF_8);
+
+		Assert.assertTrue(text.contains("Boolean booleanValue"));
 	}
 
 	private void _assertDTOFile(String filesPath, String resourceName) {

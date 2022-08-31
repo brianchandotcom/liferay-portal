@@ -22,9 +22,11 @@ import FormService from '../services/FormService';
 import {CACHE_KEYS, getCacheItem, getCacheKey} from './cache';
 import {getDescendantIds} from './getDescendantIds';
 import {FORM_ERROR_TYPES} from './getFormErrorDescription';
+import getLayoutDataItemUniqueClassName from './getLayoutDataItemUniqueClassName';
 import hasRequiredInputChild from './hasRequiredInputChild';
 import hasVisibleSubmitChild from './hasVisibleSubmitChild';
 import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
+import isVisible from './isVisible';
 
 export default function useCheckFormsValidity() {
 	const globalContext = useGlobalContext();
@@ -40,7 +42,13 @@ export default function useCheckFormsValidity() {
 			selectedViewportSize,
 		} = stateRef.current;
 
-		const forms = getFormItems(layoutData);
+		const forms = getFormItems(layoutData).filter((form) => {
+			const formElement = document.querySelector(
+				`.${getLayoutDataItemUniqueClassName(form.itemId)}`
+			);
+
+			return isVisible(formElement, globalContext);
+		});
 
 		if (!forms.length) {
 			return Promise.resolve(true);

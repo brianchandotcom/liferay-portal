@@ -110,23 +110,13 @@ public class DeleteOrganizationsAndUsersMVCActionCommand
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setOrganizationService(
-		OrganizationService organizationService) {
-
-		_organizationService = organizationService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserService(UserService userService) {
-		_userService = userService;
-	}
-
+	@Reference
 	private OrganizationService _organizationService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private UserService _userService;
 
 }

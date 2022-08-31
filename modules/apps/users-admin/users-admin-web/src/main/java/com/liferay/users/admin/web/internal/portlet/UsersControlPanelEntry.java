@@ -94,25 +94,13 @@ public class UsersControlPanelEntry extends BaseControlPanelEntry {
 			permissionChecker, group, portlet);
 	}
 
-	@Reference(unbind = "-")
-	protected void setOrganizationLocalService(
-		OrganizationLocalService organizationLocalService) {
-
-		_organizationLocalService = organizationLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserGroupRoleLocalService(
-		UserGroupRoleLocalService userGroupRoleLocalService) {
-
-		_userGroupRoleLocalService = userGroupRoleLocalService;
-	}
-
+	@Reference
 	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
 	private OrganizationPermission _organizationPermission;
 
+	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

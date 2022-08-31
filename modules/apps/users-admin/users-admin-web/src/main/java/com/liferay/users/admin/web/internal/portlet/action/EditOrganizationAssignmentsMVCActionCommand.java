@@ -85,11 +85,6 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserService(UserService userService) {
-		_userService = userService;
-	}
-
 	private void _updateOrganizationUsers(ActionRequest actionRequest)
 		throws Exception {
 
@@ -134,6 +129,7 @@ public class EditOrganizationAssignmentsMVCActionCommand
 	@Reference
 	private OrganizationService _organizationService;
 
+	@Reference
 	private UserService _userService;
 
 }

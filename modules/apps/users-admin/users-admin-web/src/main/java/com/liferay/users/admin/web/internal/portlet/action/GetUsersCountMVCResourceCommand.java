@@ -66,11 +66,6 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private int _getOrganizationUsersCount(
 			long companyId, long[] organizationIds, int status)
 		throws Exception {
@@ -132,6 +127,7 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

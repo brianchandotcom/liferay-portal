@@ -101,11 +101,6 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private String _getUserCSV(User user) {
 		StringBundler sb = new StringBundler(
 			PropsValues.USERS_EXPORT_CSV_FIELDS.length * 2);
@@ -284,6 +279,7 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 	@Reference
 	private PortalPermission _portalPermission;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

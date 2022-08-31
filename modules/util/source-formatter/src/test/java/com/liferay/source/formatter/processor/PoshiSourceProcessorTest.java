@@ -38,4 +38,9 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new Integer[] {6, 10});
 	}
 
+	@Test
+	public void testMultipleSpacesInTaskDefinitions() throws Exception {
+		test("MultipleSpacesInTaskDefinitions.testmacro");
+	}
+
 }

@@ -87,7 +87,7 @@ definition {
 				menuItem = "View Display Page",
 				rowEntry = "Category Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -276,7 +276,7 @@ definition {
 				menuItem = "View Display Page",
 				rowEntry = "Grand Subcategory Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name 2");
+			ControlMenu.viewHeaderTitle(headerTitle = "Grand Subcategory Name");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -523,7 +523,7 @@ definition {
 				menuItem = "View Display Page",
 				rowEntry = "Subcategory Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Subcategory Name");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "button",
@@ -631,7 +631,7 @@ definition {
 				menuItem = "View Display Page",
 				rowEntry = "Category Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 
 			var n = "1";
 
@@ -732,7 +732,7 @@ definition {
 				menuItem = "View Display Page",
 				rowEntry = "Category Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",

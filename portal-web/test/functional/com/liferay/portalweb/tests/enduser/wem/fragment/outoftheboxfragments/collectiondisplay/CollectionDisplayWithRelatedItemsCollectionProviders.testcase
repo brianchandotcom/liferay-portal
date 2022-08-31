@@ -871,7 +871,7 @@ definition {
 				menuItem = "View Display Page",
 				rowEntry = "Category Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 		}
 
 		task ("View the title of web content is shown in the first module") {
@@ -1593,7 +1593,7 @@ definition {
 				menuItem = "View Display Page",
 				rowEntry = "Category Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 
 			AssertVisible(
 				key_colPosition = "1",
@@ -1707,7 +1707,7 @@ definition {
 				menuItem = "View Display Page",
 				rowEntry = "Category Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 
 			AssertVisible(
 				key_entryContent = "[normalize-space()='Web Content Title']",
@@ -1826,7 +1826,7 @@ definition {
 				menuItem = "View Display Page",
 				rowEntry = "Category Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 
 			AssertTextEquals(
 				key_colPosition = "1",
@@ -1952,7 +1952,7 @@ definition {
 				menuItem = "View Display Page",
 				rowEntry = "Category Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 
 			AssertVisible(
 				key_entryContent = "[normalize-space()='DM Text Title']",
@@ -2096,7 +2096,7 @@ definition {
 				menuItem = "View Display Page",
 				rowEntry = "Category Name");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
 
 			AssertVisible(
 				key_entryContent = "[normalize-space()='WC Text Title']",

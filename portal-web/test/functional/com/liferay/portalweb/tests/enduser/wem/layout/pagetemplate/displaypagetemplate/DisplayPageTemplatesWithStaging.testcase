@@ -207,7 +207,7 @@ definition {
 					menuItem = "View Display Page",
 					rowEntry = "Category Name ${n}");
 
-				ControlMenu.viewHeaderTitle(headerTitle = "Category DPT");
+				ControlMenu.viewHeaderTitle(headerTitle = "Category Name ${n}");
 
 				AssertVisible(
 					key_tab = "Staging",
@@ -240,7 +240,7 @@ definition {
 					menuItem = "View Display Page",
 					rowEntry = "Category Name ${n}");
 
-				ControlMenu.viewHeaderTitle(headerTitle = "Category DPT");
+				ControlMenu.viewHeaderTitle(headerTitle = "Category Name ${n}");
 
 				AssertVisible(
 					key_tab = "Live",
@@ -312,7 +312,7 @@ definition {
 				menuItem = "View Display Page",
 				rowEntry = "Category Name 3");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Category DPT");
+			ControlMenu.viewHeaderTitle(headerTitle = "Category Name 3");
 
 			AssertVisible(
 				key_tab = "Staging",
@@ -349,7 +349,7 @@ definition {
 				menuItem = "View Display Page",
 				rowEntry = "Category Name 3");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Category DPT");
+			ControlMenu.viewHeaderTitle(headerTitle = "Category Name 3");
 
 			AssertVisible(
 				key_tab = "Live",

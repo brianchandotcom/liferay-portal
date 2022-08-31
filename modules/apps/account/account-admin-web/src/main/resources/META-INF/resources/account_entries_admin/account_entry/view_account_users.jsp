@@ -68,15 +68,14 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 				keyProperty="userId"
 				modelVar="accountUser"
 			>
-				<portlet:renderURL var="rowURL">
-					<portlet:param name="p_u_i_d" value="<%= String.valueOf(accountUser.getUserId()) %>" />
-					<portlet:param name="mvcPath" value="/account_users_admin/edit_account_user.jsp" />
-					<portlet:param name="backURL" value="<%= currentURL %>" />
-				</portlet:renderURL>
 
 				<%
-				if (!AccountUserPermission.hasEditUserPermission(permissionChecker, portletName, accountEntryDisplay.getAccountEntry(), accountUser.getUser())) {
-					rowURL = null;
+				String rowURL = null;
+
+				AccountUserActionDropdownItemsProvider accountUserActionDropdownItemsProvider = new AccountUserActionDropdownItemsProvider(accountEntryDisplay, accountUser, permissionChecker, renderRequest, renderResponse);
+
+				if (AccountUserPermission.hasEditUserPermission(permissionChecker, portletName, accountEntryDisplay.getAccountEntry(), accountUser.getUser())) {
+					rowURL = accountUserActionDropdownItemsProvider.getEditAccountUserURL();
 				}
 				%>
 
@@ -107,10 +106,6 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 					name="account-roles"
 					value="<%= accountUser.getAccountRoleNamesString(accountEntryDisplay.getAccountEntryId(), locale) %>"
 				/>
-
-				<%
-				AccountUserActionDropdownItemsProvider accountUserActionDropdownItemsProvider = new AccountUserActionDropdownItemsProvider(accountEntryDisplay, accountUser, permissionChecker, renderRequest, renderResponse);
-				%>
 
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions

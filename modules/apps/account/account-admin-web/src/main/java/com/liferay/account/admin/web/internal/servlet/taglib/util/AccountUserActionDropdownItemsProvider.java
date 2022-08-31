@@ -74,16 +74,7 @@ public class AccountUserActionDropdownItemsProvider {
 				return false;
 			},
 			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.createRenderURL(
-						_renderResponse
-					).setMVCPath(
-						"/account_users_admin/edit_account_user.jsp"
-					).setBackURL(
-						_themeDisplay.getURLCurrent()
-					).setParameter(
-						"p_u_i_d", _accountUserDisplay.getUserId()
-					).buildString());
+				dropdownItem.setHref(getEditAccountUserURL());
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "edit"));
 			}
@@ -156,6 +147,20 @@ public class AccountUserActionDropdownItemsProvider {
 					LanguageUtil.get(_httpServletRequest, "remove"));
 			}
 		).build();
+	}
+
+	public String getEditAccountUserURL() {
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/account_admin/edit_account_user"
+		).setBackURL(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"accountEntryId", _accountEntryDisplay.getAccountEntryId()
+		).setParameter(
+			"accountUserId", _accountUserDisplay.getUserId()
+		).buildString();
 	}
 
 	private final AccountEntryDisplay _accountEntryDisplay;

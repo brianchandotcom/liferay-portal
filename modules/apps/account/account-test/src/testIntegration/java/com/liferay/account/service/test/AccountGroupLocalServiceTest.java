@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.test;
 
+import com.liferay.account.exception.AccountGroupNameException;
 import com.liferay.account.exception.DefaultAccountGroupException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
@@ -66,6 +67,39 @@ public class AccountGroupLocalServiceTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
+	}
+
+	@Test
+	public void testAccountGroupName() throws Exception {
+		try {
+			_accountGroupLocalService.addAccountGroup(
+				TestPropsValues.getUserId(), null, "");
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			String message = exception.getMessage();
+
+			Assert.assertTrue(message.contains("Name is null"));
+
+			Assert.assertTrue(exception instanceof AccountGroupNameException);
+		}
+
+		AccountGroup accountGroup = _addAccountGroup();
+
+		try {
+			_accountGroupLocalService.updateAccountGroup(
+				accountGroup.getUserId(), null, "");
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			String message = exception.getMessage();
+
+			Assert.assertTrue(message.contains("Name is null"));
+
+			Assert.assertTrue(exception instanceof AccountGroupNameException);
+		}
 	}
 
 	@Test

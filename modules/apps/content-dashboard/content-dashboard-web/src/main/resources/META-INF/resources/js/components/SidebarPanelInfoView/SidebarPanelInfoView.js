@@ -53,7 +53,7 @@ const SidebarPanelInfoView = ({
 }) => {
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
 
-	const showTabs = allVersions && allVersions.length;
+	const showTabs = !!(allVersions && allVersions.length);
 
 	const [error, setError] = useState(false);
 
@@ -146,7 +146,7 @@ const SidebarPanelInfoView = ({
 					</div>
 
 					<ClayPanel.Group className="panel-group-flush panel-group-sm">
-						{!!showTabs && (
+						{showTabs && (
 							<ClayTabs modern>
 								<ClayTabs.Item
 									active={activeTabKeyValue === 0}

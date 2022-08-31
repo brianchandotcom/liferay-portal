@@ -41,10 +41,10 @@ IFrameCET iFrameCET = editClientExtensionEntryDisplayContext.getCET();
 	</c:otherwise>
 </c:choose>
 
+<aui:input label="friendly-url-mapping" name="friendlyURLMapping" type="text" value="<%= iFrameCET.getFriendlyURLMapping() %>" />
+
 <clay:select
 	label="widget-category-name"
 	name="portletCategoryName"
 	options="<%= editClientExtensionEntryDisplayContext.getPortletCategoryNameSelectOptions(iFrameCET.getPortletCategoryName()) %>"
 />
-
-<aui:input label="friendly-url-mapping" name="friendlyURLMapping" type="text" value="<%= iFrameCET.getFriendlyURLMapping() %>" />

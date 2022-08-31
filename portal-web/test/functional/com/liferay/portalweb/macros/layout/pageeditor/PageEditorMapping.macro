@@ -94,6 +94,12 @@ definition {
 				key_card = "${entryTitle}",
 				locator1 = "Card#CARD_TITLE");
 		}
+		else if ("${navItem}" == "Knowledge Base Articles") {
+			AssertClick.assertPartialTextClickAt(
+				key_listEntry = "${entryTitle}",
+				locator1 = "LexiconList#LIST_ENTRY",
+				value1 = "${entryTitle}");
+		}
 		else {
 			Click(
 				key_card = "${entryTitle}",

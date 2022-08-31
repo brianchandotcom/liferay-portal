@@ -491,15 +491,25 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.object.model.ObjectEntry objectEntry =
 			_objectEntryService.getObjectEntry(objectEntryId);
 
-		return _getObjectEntries(
-			objectEntryId, objectEntry.getUserId(),
-			objectDefinition.getObjectDefinitionId(), objectEntry.getGroupId(),
-			dtoConverterContext,
-			objectRelatedModelsProvider.getRelatedModels(
-				objectEntry.getGroupId(),
-				objectRelationship.getObjectRelationshipId(),
-				objectEntry.getPrimaryKey(), pagination.getStartPosition(),
-				pagination.getEndPosition()));
+		return Page.of(
+			HashMapBuilder.put(
+				"get",
+				ActionUtil.addAction(
+					ActionKeys.VIEW, ObjectEntryResourceImpl.class,
+					objectEntryId,
+					"getCurrentObjectEntriesObjectRelationshipNamePage", null,
+					objectEntry.getUserId(),
+					_getObjectEntryPermissionName(
+						objectDefinition.getObjectDefinitionId()),
+					objectEntry.getGroupId(), dtoConverterContext.getUriInfo())
+			).build(),
+			_toObjectEntries(
+				dtoConverterContext,
+				objectRelatedModelsProvider.getRelatedModels(
+					objectEntry.getGroupId(),
+					objectRelationship.getObjectRelationshipId(),
+					objectEntry.getPrimaryKey(), pagination.getStartPosition(),
+					pagination.getEndPosition())));
 	}
 
 	@Override
@@ -598,25 +608,6 @@ public class DefaultObjectEntryManagerImpl
 		return serviceContext;
 	}
 
-	private Page<ObjectEntry> _getObjectEntries(
-			long objectEntryId, long userId, long objectDefinitionId,
-			long groupId, DTOConverterContext dtoConverterContext,
-			List<com.liferay.object.model.ObjectEntry> objectEntries)
-		throws Exception {
-
-		return Page.of(
-			HashMapBuilder.put(
-				"get",
-				ActionUtil.addAction(
-					ActionKeys.VIEW, ObjectEntryResourceImpl.class,
-					objectEntryId,
-					"getCurrentObjectEntriesObjectRelationshipNamePage", null,
-					userId, _getObjectEntryPermissionName(objectDefinitionId),
-					groupId, dtoConverterContext.getUriInfo())
-			).build(),
-			_toObjectEntries(dtoConverterContext, objectEntries));
-	}
-
 	private String _getObjectEntriesPermissionName(long objectDefinitionId) {
 		return ObjectConstants.RESOURCE_NAME + "#" + objectDefinitionId;
 	}
@@ -706,14 +697,14 @@ public class DefaultObjectEntryManagerImpl
 			groupId = entry.getGroupId();
 		}
 
-		return _getObjectEntries(
-			objectEntryId, entry.getUserId(),
-			objectDefinition.getObjectDefinitionId(), entry.getGroupId(),
-			dtoConverterContext,
-			objectRelatedModelsProvider.getRelatedModels(
-				groupId, objectRelationship.getObjectRelationshipId(),
-				entry.getClassPK(), pagination.getStartPosition(),
-				pagination.getEndPosition()));
+		return Page.of(
+			Collections.emptyMap(),
+			_toObjectEntries(
+				dtoConverterContext,
+				objectRelatedModelsProvider.getRelatedModels(
+					groupId, objectRelationship.getObjectRelationshipId(),
+					entry.getClassPK(), pagination.getStartPosition(),
+					pagination.getEndPosition())));
 	}
 
 	private boolean _hasRelatedObjectEntries(

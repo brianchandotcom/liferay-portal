@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.internal.search.spi.model.index.contributor;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -48,6 +50,15 @@ public class CommerceOrderModelDocumentContributor
 			document.addNumberSortable(
 				Field.ENTRY_CLASS_PK, commerceOrder.getCommerceOrderId());
 			document.addKeyword(Field.STATUS, commerceOrder.getStatus());
+
+			AccountEntry accountEntry =
+				_accountEntryLocalService.fetchAccountEntry(
+					commerceOrder.getCommerceAccountId());
+
+			if (accountEntry != null) {
+				document.addKeyword("accountName", accountEntry.getName());
+			}
+
 			document.addKeyword(
 				"advanceStatus", commerceOrder.getAdvanceStatus());
 			document.addKeyword(
@@ -90,6 +101,9 @@ public class CommerceOrderModelDocumentContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderModelDocumentContributor.class);
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

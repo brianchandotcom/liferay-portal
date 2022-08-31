@@ -54,6 +54,8 @@ public class CommerceOrderKeywordQueryContributor
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "accountName", false);
+		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "purchaseOrderNumber", false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "externalReferenceCode", false);
@@ -64,6 +66,9 @@ public class CommerceOrderKeywordQueryContributor
 
 				booleanQuery.add(
 					_getTrailingWildcardQuery(Field.ENTRY_CLASS_PK, keywords),
+					BooleanClauseOccur.SHOULD);
+				booleanQuery.add(
+					_getTrailingWildcardQuery("accountName", keywords),
 					BooleanClauseOccur.SHOULD);
 			}
 			catch (ParseException parseException) {

@@ -104,7 +104,7 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 					id="clientExtensionOptionTools"
 					markupView="lexicon"
 					persistState="<%= true %>"
-					title="tools"
+					title="additional-resources"
 				>
 					<aui:field-wrapper cssClass="form-group">
 						<aui:input label="source-code-url" name="sourceCodeURL" type="text" value="<%= editClientExtensionEntryDisplayContext.getSourceCodeURL() %>" />

@@ -161,6 +161,14 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 				commerceInventoryWarehouseId);
 	}
 
+	@Override
+	public void deleteCommerceInventoryReplenishmentItems(
+		long companyId, String sku) {
+
+		_commerceInventoryReplenishmentItemLocalService.
+			deleteCommerceInventoryReplenishmentItems(companyId, sku);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

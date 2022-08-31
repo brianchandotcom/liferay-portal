@@ -57,6 +57,13 @@ public class CommerceInventoryReplenishmentItemServiceUtil {
 			commerceInventoryReplenishmentItemId);
 	}
 
+	public static void deleteCommerceInventoryReplenishmentItems(
+			long companyId, String sku)
+		throws PortalException {
+
+		getService().deleteCommerceInventoryReplenishmentItems(companyId, sku);
+	}
+
 	public static CommerceInventoryReplenishmentItem
 			fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
 				String externalReferenceCode, long companyId)

@@ -135,6 +135,43 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 		}
 	}
 
+	public static void deleteCommerceInventoryReplenishmentItems(
+			HttpPrincipal httpPrincipal, long companyId, String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceInventoryReplenishmentItemServiceUtil.class,
+				"deleteCommerceInventoryReplenishmentItems",
+				_deleteCommerceInventoryReplenishmentItemsParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, sku);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static
 		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
 				fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
@@ -146,7 +183,7 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceInventoryReplenishmentItemServiceUtil.class,
 				"fetchCommerceInventoryReplenishmentItemByExternalReferenceCode",
-				_fetchCommerceInventoryReplenishmentItemByExternalReferenceCodeParameterTypes2);
+				_fetchCommerceInventoryReplenishmentItemByExternalReferenceCodeParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, companyId);
@@ -191,7 +228,7 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceInventoryReplenishmentItemServiceUtil.class,
 				"getCommerceInventoryReplenishmentItem",
-				_getCommerceInventoryReplenishmentItemParameterTypes3);
+				_getCommerceInventoryReplenishmentItemParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceInventoryReplenishmentItemId);
@@ -237,7 +274,7 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceInventoryReplenishmentItemServiceUtil.class,
 				"getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseId",
-				_getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseIdParameterTypes4);
+				_getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseIdParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceInventoryWarehouseId, start, end);
@@ -284,7 +321,7 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceInventoryReplenishmentItemServiceUtil.class,
 				"getCommerceInventoryReplenishmentItemsByCompanyIdAndSku",
-				_getCommerceInventoryReplenishmentItemsByCompanyIdAndSkuParameterTypes5);
+				_getCommerceInventoryReplenishmentItemsByCompanyIdAndSkuParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, sku, start, end);
@@ -328,7 +365,7 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceInventoryReplenishmentItemServiceUtil.class,
 				"getCommerceInventoryReplenishmentItemsCount",
-				_getCommerceInventoryReplenishmentItemsCountParameterTypes6);
+				_getCommerceInventoryReplenishmentItemsCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceInventoryWarehouseId, sku);
@@ -370,7 +407,7 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceInventoryReplenishmentItemServiceUtil.class,
 				"getCommerceInventoryReplenishmentItemsCountByCommerceInventoryWarehouseId",
-				_getCommerceInventoryReplenishmentItemsCountByCommerceInventoryWarehouseIdParameterTypes7);
+				_getCommerceInventoryReplenishmentItemsCountByCommerceInventoryWarehouseIdParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceInventoryWarehouseId);
@@ -412,7 +449,7 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceInventoryReplenishmentItemServiceUtil.class,
 				"getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku",
-				_getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSkuParameterTypes8);
+				_getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSkuParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, sku);
@@ -458,7 +495,7 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceInventoryReplenishmentItemServiceUtil.class,
 				"updateCommerceInventoryReplenishmentItem",
-				_updateCommerceInventoryReplenishmentItemParameterTypes9);
+				_updateCommerceInventoryReplenishmentItemParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode,
@@ -507,31 +544,35 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 			long.class
 		};
 	private static final Class<?>[]
-		_fetchCommerceInventoryReplenishmentItemByExternalReferenceCodeParameterTypes2 =
+		_deleteCommerceInventoryReplenishmentItemsParameterTypes2 =
+			new Class[] {long.class, String.class};
+	private static final Class<?>[]
+		_fetchCommerceInventoryReplenishmentItemByExternalReferenceCodeParameterTypes3 =
 			new Class[] {String.class, long.class};
 	private static final Class<?>[]
-		_getCommerceInventoryReplenishmentItemParameterTypes3 = new Class[] {
+		_getCommerceInventoryReplenishmentItemParameterTypes4 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseIdParameterTypes4 =
+		_getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseIdParameterTypes5 =
 			new Class[] {long.class, int.class, int.class};
 	private static final Class<?>[]
-		_getCommerceInventoryReplenishmentItemsByCompanyIdAndSkuParameterTypes5 =
+		_getCommerceInventoryReplenishmentItemsByCompanyIdAndSkuParameterTypes6 =
 			new Class[] {long.class, String.class, int.class, int.class};
 	private static final Class<?>[]
-		_getCommerceInventoryReplenishmentItemsCountParameterTypes6 =
+		_getCommerceInventoryReplenishmentItemsCountParameterTypes7 =
 			new Class[] {long.class, String.class};
 	private static final Class<?>[]
-		_getCommerceInventoryReplenishmentItemsCountByCommerceInventoryWarehouseIdParameterTypes7 =
+		_getCommerceInventoryReplenishmentItemsCountByCommerceInventoryWarehouseIdParameterTypes8 =
 			new Class[] {long.class};
 	private static final Class<?>[]
-		_getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSkuParameterTypes8 =
+		_getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSkuParameterTypes9 =
 			new Class[] {long.class, String.class};
 	private static final Class<?>[]
-		_updateCommerceInventoryReplenishmentItemParameterTypes9 = new Class[] {
-			String.class, long.class, java.util.Date.class, int.class,
-			long.class
-		};
+		_updateCommerceInventoryReplenishmentItemParameterTypes10 =
+			new Class[] {
+				String.class, long.class, java.util.Date.class, int.class,
+				long.class
+			};
 
 }

@@ -462,6 +462,9 @@ public class PropsValues {
 	public static final int COUNTER_INCREMENT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.COUNTER_INCREMENT));
 
+	public static int CT_SQL_TRANSFORMER_CACHE_SIZE = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.CT_SQL_TRANSFORMER_CACHE_SIZE));
+
 	public static final String CUSTOM_SQL_FUNCTION_ISNOTNULL = PropsUtil.get(
 		PropsKeys.CUSTOM_SQL_FUNCTION_ISNOTNULL);
 

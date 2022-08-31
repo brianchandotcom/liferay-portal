@@ -30,10 +30,9 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -197,9 +196,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 	public void activate(BundleContext bundleContext) throws Exception {
 		_bundleContext = bundleContext;
 
-		_sqlCache = new LRUMap<>(
-			GetterUtil.getInteger(
-				SystemProperties.get("ct.sql.transformer.cache.size"), 10000));
+		_sqlCache = new LRUMap<>(PropsValues.CT_SQL_TRANSFORMER_CACHE_SIZE);
 
 		_loadCache();
 

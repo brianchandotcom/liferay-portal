@@ -72,7 +72,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -395,8 +394,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 			searchResultSummaryDisplayContext, assetRenderer, summary);
 		_buildCreationDateString(searchResultSummaryDisplayContext);
 		_buildCreatorUserName(searchResultSummaryDisplayContext);
-		_buildCreatorUserPortraitURLString(
-			searchResultSummaryDisplayContext, assetRenderer);
+		_buildCreatorUserPortraitURLString(searchResultSummaryDisplayContext);
 		_buildDocumentForm(searchResultSummaryDisplayContext);
 		_buildImage(
 			searchResultSummaryDisplayContext, assetRendererFactory,
@@ -409,14 +407,6 @@ public class SearchResultSummaryDisplayContextBuilder {
 		_buildViewURL(className, classPK, searchResultSummaryDisplayContext);
 
 		return searchResultSummaryDisplayContext;
-	}
-
-	protected long getAssetEntryUserId(AssetEntry assetEntry) {
-		if (Objects.equals(assetEntry.getClassName(), User.class.getName())) {
-			return assetEntry.getClassPK();
-		}
-
-		return assetEntry.getUserId();
 	}
 
 	protected AssetRenderer<?> getAssetRenderer(
@@ -584,25 +574,24 @@ public class SearchResultSummaryDisplayContextBuilder {
 	}
 
 	private void _buildCreatorUserPortraitURLString(
-		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
-		AssetRenderer<?> assetRenderer) {
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
-		Group group = _groupLocalService.fetchGroup(assetRenderer.getGroupId());
+		String articleIdString = _getFieldValueString(Field.USER_ID);
 
-		if (group != null) {
-			String articleIdString = _getFieldValueString(Field.USER_ID);
+		long userId = GetterUtil.getLong(articleIdString);
 
-			long userId = GetterUtil.getLong(articleIdString);
+		String creatorByPortraitUrlString = _getPortraitURLString(userId);
 
-			String creatorByPortraitUrlString = _getPortraitURLString(userId);
+		if (creatorByPortraitUrlString != null) {
+			searchResultSummaryDisplayContext.setCreatedByUserPortraitURLString(
+				creatorByPortraitUrlString);
+			searchResultSummaryDisplayContext.setCreatedByUserPortraitVisible(
+				true);
 
-			if (creatorByPortraitUrlString != null) {
-				searchResultSummaryDisplayContext.
-					setCreatedByUserPortraitURLString(
-						creatorByPortraitUrlString);
-				searchResultSummaryDisplayContext.
-					setCreatedByUserPortraitVisible(true);
-			}
+			searchResultSummaryDisplayContext.setUserPortraitURLString(
+				creatorByPortraitUrlString);
+
+			searchResultSummaryDisplayContext.setUserPortraitVisible(true);
 		}
 	}
 

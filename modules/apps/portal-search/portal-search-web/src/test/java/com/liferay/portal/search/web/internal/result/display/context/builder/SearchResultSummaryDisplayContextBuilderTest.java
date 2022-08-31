@@ -233,7 +233,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_assertTagsVisible(entryClassPK, searchResultSummaryDisplayContext);
 
-		_assertUserPortraitVisible(userId, searchResultSummaryDisplayContext);
+		_assertUserPortraitVisible(searchResultSummaryDisplayContext);
 	}
 
 	@Test
@@ -289,7 +289,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_assertTagsVisible(rootEntryClassPK, searchResultSummaryDisplayContext);
 
-		_assertUserPortraitVisible(userId, searchResultSummaryDisplayContext);
+		_assertUserPortraitVisible(searchResultSummaryDisplayContext);
 	}
 
 	protected SearchResultSummaryDisplayContext build(Document document)
@@ -411,14 +411,10 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	}
 
 	private void _assertUserPortraitVisible(
-		long userId,
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
 		Assert.assertTrue(
 			searchResultSummaryDisplayContext.isUserPortraitVisible());
-
-		Assert.assertEquals(
-			userId, searchResultSummaryDisplayContext.getAssetEntryUserId());
 	}
 
 	private AssetEntry _createAssetEntry(long userId) {

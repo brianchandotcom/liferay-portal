@@ -71,11 +71,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FAILING_CHECK_NAME_QUANTITY</td>
-	<td>//span[contains(@class, 'text-secondary') and contains(@class, 'w-100') and contains(@class, 'c-inner') and contains (text(), '${failingCheckName}')] //*[contains(@class,'badge-item')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FAILING_CHECK_TITLE</td>
 	<td>//span[contains(@class, 'font-weight-semi-bold')]</td>
 	<td></td>
@@ -143,21 +138,6 @@
 <tr>
 	<td>PANEL_TITLE</td>
 	<td>//div[contains(@class, 'panel-title')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREFERRED_STRATEGY_DROPDOWN</td>
-	<td>//*[contains(.,'Preferred Strategy')] //div[contains(@class, 'form-builder-select-field')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREFERRED_STRATEGY_OPTION</td>
-	<td>//button[@label='${strategy}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREFERRED_STRATEGY_OPTION_SELECTED</td>
-	<td>//*[contains(.,'Preferred Strategy')] //div[contains(@class, 'form-builder-select-field')] //div[@class='option-selected']</td>
 	<td></td>
 </tr>
 <tr>

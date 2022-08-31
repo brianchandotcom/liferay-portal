@@ -43,6 +43,8 @@ long cpInstanceId = cpInstanceCommercePriceEntryDisplayContext.getCPInstanceId()
 		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
+					"cpDefinitionId", String.valueOf(cpInstance.getCPDefinitionId())
+				).put(
 					"cpInstanceId", String.valueOf(cpInstanceId)
 				).build()
 			%>'

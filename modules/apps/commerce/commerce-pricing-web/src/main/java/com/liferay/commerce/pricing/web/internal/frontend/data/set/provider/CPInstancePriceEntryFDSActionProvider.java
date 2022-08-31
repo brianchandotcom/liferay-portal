@@ -21,7 +21,6 @@ import com.liferay.commerce.pricing.web.internal.constants.CommercePricingFDSNam
 import com.liferay.commerce.pricing.web.internal.model.InstancePriceEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -70,6 +69,11 @@ public class CPInstancePriceEntryFDSActionProvider
 
 		InstancePriceEntry instancePriceEntry = (InstancePriceEntry)model;
 
+		long cpDefinitionId = ParamUtil.getLong(
+			httpServletRequest, "cpDefinitionId");
+		long cpInstanceId = ParamUtil.getLong(
+			httpServletRequest, "cpInstanceId");
+
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.getCommercePriceEntry(
 				instancePriceEntry.getPriceEntryId());
@@ -84,7 +88,8 @@ public class CPInstancePriceEntryFDSActionProvider
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getInstancePriceEntryEditURL(
-						commercePriceEntry, httpServletRequest));
+						commercePriceEntry, cpDefinitionId, cpInstanceId,
+						httpServletRequest));
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, "edit"));
 				dropdownItem.setTarget("sidePanel");
@@ -96,7 +101,8 @@ public class CPInstancePriceEntryFDSActionProvider
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getInstancePriceEntryDeleteURL(
-						commercePriceEntry, httpServletRequest));
+						commercePriceEntry, cpDefinitionId, cpInstanceId,
+						httpServletRequest));
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, "delete"));
 			}
@@ -104,11 +110,9 @@ public class CPInstancePriceEntryFDSActionProvider
 	}
 
 	private PortletURL _getInstancePriceEntryDeleteURL(
-			CommercePriceEntry commercePriceEntry,
-			HttpServletRequest httpServletRequest)
+			CommercePriceEntry commercePriceEntry, long cpDefinitionId,
+			long cpInstanceId, HttpServletRequest httpServletRequest)
 		throws PortalException {
-
-		CPInstance cpInstance = commercePriceEntry.getCPInstance();
 
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
@@ -125,18 +129,16 @@ public class CPInstancePriceEntryFDSActionProvider
 		).setParameter(
 			"commercePriceEntryId", commercePriceEntry.getCommercePriceEntryId()
 		).setParameter(
-			"cpDefinitionId", cpInstance.getCPDefinitionId()
+			"cpDefinitionId", cpDefinitionId
 		).setParameter(
-			"cpInstanceId", cpInstance.getCPInstanceId()
+			"cpInstanceId", cpInstanceId
 		).buildPortletURL();
 	}
 
 	private PortletURL _getInstancePriceEntryEditURL(
-			CommercePriceEntry commercePriceEntry,
-			HttpServletRequest httpServletRequest)
+			CommercePriceEntry commercePriceEntry, long cpDefinitionId,
+			long cpInstanceId, HttpServletRequest httpServletRequest)
 		throws PortalException {
-
-		CPInstance cpInstance = commercePriceEntry.getCPInstance();
 
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
@@ -149,9 +151,9 @@ public class CPInstancePriceEntryFDSActionProvider
 		).setParameter(
 			"commercePriceEntryId", commercePriceEntry.getCommercePriceEntryId()
 		).setParameter(
-			"cpDefinitionId", cpInstance.getCPDefinitionId()
+			"cpDefinitionId", cpDefinitionId
 		).setParameter(
-			"cpInstanceId", cpInstance.getCPInstanceId()
+			"cpInstanceId", cpInstanceId
 		).buildPortletURL();
 
 		try {

@@ -3262,10 +3262,17 @@ definition {
 		}
 
 		if (isSet(locale)) {
-			Navigator.ensureLocaleURL(locale = "es");
-		}
+			Navigator.ensureLocaleURL(locale = "${locale}");
 
-		DMDocument.expandInfo();
+			WaitForPageLoad();
+
+			Click.clickNoMouseOver(
+				key_text = "${localizedButton}",
+				locator1 = "Button#ANY");
+		}
+		else {
+			DMDocument.expandInfo();
+		}
 
 		if (isSet(booleanValue)) {
 			if ("${booleanValue}" == "checked") {

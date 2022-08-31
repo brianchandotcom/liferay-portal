@@ -12,6 +12,10 @@
  * details.
  */
 
-export default function normalizeDropdownItems(items) {
-	return items.map(({icon, ...props}) => ({...props, symbolLeft: icon}));
+import KBDropdownPropsTransformer from '../KBDropdownPropsTransformer';
+
+export default function normalizeDropdownItems(items = []) {
+	return KBDropdownPropsTransformer({
+		items: items.map(({icon, ...props}) => ({...props, symbolLeft: icon})),
+	}).items;
 }

@@ -48,7 +48,10 @@ public class XMLSpringExtenderServiceCheck extends BaseFileCheck {
 			return content;
 		}
 
-		if (fileName.endsWith("/module-spring.xml")) {
+		if (fileName.endsWith(
+				"-service/src/main/resources/META-INF/spring/module-spring." +
+					"xml")) {
+
 			addMessage(
 				fileName,
 				"Do not use Spring extender service as a dependency " +

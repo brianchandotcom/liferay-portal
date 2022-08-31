@@ -13,7 +13,20 @@ definition {
 			}
 		''';
 
-		var curl = JSONCurlUtil.post("${curl}", "$.id");
+		var curl = JSONCurlUtil.post("${curl}");
+
+		return "${curl}";
+	}
+
+	macro _curlTaxonomyCategory {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories/by-external-reference-code/${externalReferenceCode} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+			-H accept: application/json \
+		''';
 
 		return "${curl}";
 	}
@@ -41,18 +54,79 @@ definition {
 			var externalReferenceCode = "";
 		}
 
-		var taxonomyCategoryId = TaxonomyCategoryAPI._createTaxonomyCategory(
+		var response = TaxonomyCategoryAPI._createTaxonomyCategory(
 			externalReferenceCode = "${externalReferenceCode}",
 			name = "${name}",
 			taxonomyVocabularyId = "${taxonomyVocabularyId}");
 
-		return "${taxonomyCategoryId}";
+		return "${response}";
+	}
+
+	macro deleteTaxonomyCategoryByErc {
+		Variables.assertDefined(parameterList = "${externalReferenceCode},${taxonomyVocabularyId}");
+
+		var curl = TaxonomyCategoryAPI._curlTaxonomyCategory(
+			externalReferenceCode = "${externalReferenceCode}",
+			taxonomyVocabularyId = "${taxonomyVocabularyId}");
+
+		var response = JSONCurlUtil.delete("${curl}");
+
+		return "${response}";
+	}
+
+	macro getElementOfCreatedCategory {
+		Variables.assertDefined(parameterList = "${responseToParse},${element}");
+
+		var elementValue = JSONUtil.getWithJSONPath("${responseToParse}", "${element}");
+
+		return "${elementValue}";
 	}
 
 	macro getTaxonomyCategory {
 		var getTaxonomyCategoryDetails = TaxonomyCategoryAPI._getTaxonomyCategory(taxonomyCategoryId = "${taxonomyCategoryId}");
 
 		return "${getTaxonomyCategoryDetails}";
+	}
+
+	macro getTaxonomyCategoryByErc {
+		Variables.assertDefined(parameterList = "${externalReferenceCode},${taxonomyVocabularyId}");
+
+		var curl = TaxonomyCategoryAPI._curlTaxonomyCategory(
+			externalReferenceCode = "${externalReferenceCode}",
+			taxonomyVocabularyId = "${taxonomyVocabularyId}");
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
+	}
+
+	macro setUpGlobalResponse {
+		var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+		var response = TaxonomyVocabularyAPI.createTaxonomyVocabulary(
+			assetLibraryId = "${assetLibraryId}",
+			name = "Vocabulary Name");
+
+		static var responseOfCreated = "${response}";
+
+		return "${responseOfCreated}";
+	}
+
+	macro updateTaxonomyCategoryByErc {
+		Variables.assertDefined(parameterList = "${externalReferenceCode},${taxonomyVocabularyId},${name}");
+
+		var curl = TaxonomyCategoryAPI._curlTaxonomyCategory(
+			externalReferenceCode = "${externalReferenceCode}",
+			taxonomyVocabularyId = "${taxonomyVocabularyId}");
+		var body = '''-d {
+				"name": "${name}"
+			}''';
+
+		var curl = StringUtil.add("${curl}", "${body}", " ");
+
+		var response = JSONCurlUtil.put("${curl}");
+
+		return "${response}";
 	}
 
 }

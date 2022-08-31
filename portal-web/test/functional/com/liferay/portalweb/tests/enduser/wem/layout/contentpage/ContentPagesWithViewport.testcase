@@ -497,11 +497,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
-			AssertNotVisible(
-				fragmentName = "heading",
-				id = "element-text",
-				index = "1",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
+			PageEditor.viewFragmentNotVisible(fragmentName = "Heading");
 
 			SelectFrame(value1 = "relative=top");
 		}
@@ -513,7 +509,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
-			PageEditor.viewFragmentNotPresent(fragmentName = "Heading");
+			PageEditor.viewFragmentNotVisible(fragmentName = "Heading");
 
 			SelectFrame(value1 = "relative=top");
 		}

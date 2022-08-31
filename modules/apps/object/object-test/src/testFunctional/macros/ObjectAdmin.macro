@@ -724,7 +724,7 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_ADD_COLUMNS");
+		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 
 		Type(
 			locator1 = "ObjectAdmin#PLACEHOLDER_DELETE_RELATIONSHIP",

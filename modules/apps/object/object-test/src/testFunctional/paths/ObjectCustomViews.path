@@ -167,7 +167,7 @@
 	</tr>
 	<tr>
 		<td>BUILDER_SEARCH_RESULT_COLUMN_LABEL</td>
-		<td>//p[contains(@class,'list-group-text') and contains(text(),'${key_columnLabel}')]</td>
+		<td>//p[contains(@class,'list-group-text') and contains(.,'${key_columnLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -176,8 +176,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>EDIT_COLUMNS_ON_DEFAULT_SORT</td>
-		<td>//h3[(@class='lfr-objects__card-title') and text()='Default Sort']//../..//div[contains(@class,'dropdown')]</td>
+		<td>SELECT_DROPDOWN_ON_LABEL</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='${key_cardName}']//../..//div[contains(@class,'dropdown')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -211,8 +211,38 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>VIEW_MODAL_ADD_COLUMNS</td>
+		<td>VIEW_MODAL_CONTENT</td>
 		<td>//div[contains(@class,'modal-content')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>FILTERS_TAB</td>
+		<td>//button[contains(text(),'Filters')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>FILTER_BY_ON_NEW_FILTER</td>
+		<td>//div[@class='custom-select__content form-control']//span[contains(text(),'Choose an Option')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ADD_BUTTON_FILTERS</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='Filters']/../..//button[contains(@class,'nav-btn nav-btn-monospaced btn btn-monospaced btn-primary')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_FILTER_GENERIC</td>
+		<td>//label[contains(.,'${key_filterLabel}')]//..//input[@placeholder='Choose an Option']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>DROPDOWN_BUTTON_ON_OBJECT_VIEW</td>
+		<td>//span[contains(@class, 'navbar-text-truncate') and contains(.,'${key_buttonName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SIDEBAR_ELLIPSIS_ON_CUSTOM_VIEW</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='Filters']//..//..//li[contains(@class,'custom-view-builder-item') and contains(.,'${key_filterName}')]//button[contains(@class,'dropdown-toggle btn btn-monospaced btn-unstyled')]</td>
 		<td></td>
 	</tr>
 </tbody>

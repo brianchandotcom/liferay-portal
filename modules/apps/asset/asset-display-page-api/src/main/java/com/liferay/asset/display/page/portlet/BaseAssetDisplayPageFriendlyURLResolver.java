@@ -25,6 +25,7 @@ import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemIdentifier;
@@ -174,6 +175,14 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			titleOptional.orElseGet(
 				() -> layoutDisplayPageObjectProvider.getTitle(locale)),
 			httpServletRequest);
+
+		String infoItemName = _getInfoItemName(
+			assetEntry, infoItemFieldValues, locale);
+
+		if (infoItemName != null) {
+			httpServletRequest.setAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_NAME, infoItemName);
+		}
 
 		return portal.getLayoutActualURL(layout, mainPath) +
 			layoutQueryStringComposite.getQueryString();
@@ -334,6 +343,31 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		infoItemIdentifier.setVersion(version);
 
 		return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+	}
+
+	private String _getInfoItemName(
+		AssetEntry assetEntry, InfoItemFieldValues infoItemFieldValues,
+		Locale locale) {
+
+		if (assetEntry != null) {
+			return assetEntry.getTitle(locale);
+		}
+
+		InfoFieldValue<Object> titleInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("title");
+
+		if (titleInfoFieldValue != null) {
+			return String.valueOf(titleInfoFieldValue.getValue(locale));
+		}
+
+		InfoFieldValue<Object> nameInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("name");
+
+		if (nameInfoFieldValue != null) {
+			return String.valueOf(nameInfoFieldValue.getValue(locale));
+		}
+
+		return null;
 	}
 
 	private LayoutDisplayPageObjectProvider<?>

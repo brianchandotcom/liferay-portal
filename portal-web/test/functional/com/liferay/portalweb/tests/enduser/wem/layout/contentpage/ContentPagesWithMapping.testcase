@@ -405,6 +405,78 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-123118. The page creator can map a fragment to web content template with portlet request model."
+	@priority = "4"
+	test MapFragmentToTemplateWithPortletRequestModel {
+		property custom.properties = "configuration.override.com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration_restrictedVariables=[&quot;httpUtilUnsafe&quot;,&quot;staticFieldGetter&quot;,&quot;staticUtil&quot;,&quot;utilLocator&quot;,&quot;serviceLocator&quot;,]${line.separator}configuration.override.com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration_restrictedClasses=[&quot;org.glassfish.*&quot;,&quot;org.jboss.*&quot;,&quot;org.springframework.*&quot;,&quot;org.wildfly.*&quot;,&quot;weblogic.*&quot;,]";
+
+		task ("Given a page creator has a web content template with portlet request model") {
+			task ("Add a web content template for Basic Web Content structure") {
+				WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
+
+				var templateScript = '''
+<#assign portletRequestModel = objectUtil("com.liferay.portal.kernel.portlet.PortletRequestModel", request.getAttribute("javax.portlet.request"), request.getAttribute("javax.portlet.response")) />
+''';
+
+				WebContentTemplates.addCP(
+					structureName = "Basic Web Content",
+					templateDescription = "WC Template Description",
+					templateName = "WC Template Name",
+					templateScript = "${templateScript}");
+			}
+
+			task ("Add a web content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Add a Paragraph fragment to content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Content Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Paragraph");
+			}
+		}
+
+		task ("When the page creator maps the Paragraph fragment to web content template") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Paragraph",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "WC Template Name");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Then the page creator should not see an error at edit mode") {
+			AssertTextNotPresent(value1 = "An error occurred while processing the template.");
+		}
+
+		task ("When the page creator accesses published content page at view mode") {
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page creator should not see an error at view mode") {
+			AssertTextNotPresent(value1 = "An error occurred while processing the template.");
+		}
+	}
+
 	@description = "This is a test for LPS-120094. Map manual URL to Image fragment."
 	@priority = "5"
 	test MapManualURLToImageFragment {

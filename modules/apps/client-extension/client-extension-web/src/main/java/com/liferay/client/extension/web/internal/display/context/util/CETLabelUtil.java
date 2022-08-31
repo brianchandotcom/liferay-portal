@@ -14,42 +14,69 @@
 
 package com.liferay.client.extension.web.internal.display.context.util;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.CamelCaseUtil;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author Iván Zaera Avellón
  */
 public class CETLabelUtil {
 
-	public static String getAddLabel(
-		HttpServletRequest httpServletRequest, String type) {
-
-		return _getLabel(httpServletRequest, "add-", type);
+	public static String getAddLabel(Locale locale, String type) {
+		return LanguageUtil.format(
+			locale, "add-x", _getCETTypeLanguageKey(type));
 	}
 
-	public static String getNewLabel(
-		HttpServletRequest httpServletRequest, String type) {
-
-		return _getLabel(httpServletRequest, "new-", type);
+	public static String getNewLabel(Locale locale, String type) {
+		return LanguageUtil.format(
+			locale, "new-x", _getCETTypeLanguageKey(type));
 	}
 
-	public static String getTypeNameLabel(
-		HttpServletRequest httpServletRequest, String type) {
-
-		return _getLabel(httpServletRequest, StringPool.BLANK, type);
+	public static String getTypeNameLabel(Locale locale, String type) {
+		return LanguageUtil.get(locale, _getCETTypeLanguageKey(type));
 	}
 
-	private static String _getLabel(
-		HttpServletRequest httpServletRequest, String prefix, String type) {
+	private static String _getCETTypeLanguageKey(String type) {
+		if (Objects.equals(
+				type, ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
 
-		return LanguageUtil.get(
-			httpServletRequest,
-			prefix + CamelCaseUtil.fromCamelCase(type, CharPool.DASH));
+			return "custom-element";
+		}
+		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)) {
+
+			return "css";
+		}
+		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
+
+			return "js";
+		}
+		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_IFRAME)) {
+
+			return "iframe";
+		}
+		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_THEME_CSS)) {
+
+			return "theme-css";
+		}
+		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_THEME_FAVICON)) {
+
+			return "theme-favicon";
+		}
+		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_THEME_JS)) {
+
+			return "theme-js";
+		}
+
+		return type;
 	}
 
 }

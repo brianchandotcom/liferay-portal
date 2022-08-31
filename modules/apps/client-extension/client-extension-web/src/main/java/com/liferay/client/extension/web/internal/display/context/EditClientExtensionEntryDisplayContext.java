@@ -85,14 +85,14 @@ public class EditClientExtensionEntryDisplayContext {
 	}
 
 	public String getTitle() {
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
 		if (_clientExtensionEntry == null) {
 			return LanguageUtil.get(
 				_getHttpServletRequest(),
 				CETLabelUtil.getNewLabel(
-					_getHttpServletRequest(), _cet.getType()));
+					themeDisplay.getLocale(), _cet.getType()));
 		}
-
-		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		return _cet.getName(themeDisplay.getLocale());
 	}
@@ -103,9 +103,11 @@ public class EditClientExtensionEntryDisplayContext {
 	}
 
 	public String getTypeLabel() {
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
 		return LanguageUtil.get(
 			_getHttpServletRequest(),
-			CETLabelUtil.getTypeNameLabel(_getHttpServletRequest(), getType()));
+			CETLabelUtil.getTypeNameLabel(themeDisplay.getLocale(), getType()));
 	}
 
 	public boolean isPropertiesVisible() {

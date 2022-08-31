@@ -58,7 +58,7 @@ public class ClientExtensionAdminDisplayContext {
 						).buildPortletURL());
 					dropdownItem.setLabel(
 						CETLabelUtil.getAddLabel(
-							_getHttpServletRequest(), type));
+							_renderRequest.getLocale(), type));
 				});
 		}
 

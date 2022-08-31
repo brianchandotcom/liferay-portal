@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Activate;
@@ -54,11 +53,7 @@ public class EntityFieldConfigurationFieldOptionsProvider
 
 	@Override
 	public List<Option> getOptions() {
-		return Optional.of(
-			_options
-		).orElse(
-			Collections.emptyList()
-		);
+		return _options;
 	}
 
 	@Activate
@@ -67,22 +62,24 @@ public class EntityFieldConfigurationFieldOptionsProvider
 		Map<String, EntityField> entityFieldsMap =
 			_entityModel.getEntityFieldsMap();
 
-		_options = new ArrayList<>();
+		List<Option> options = new ArrayList<>();
 
 		for (EntityField entityField : entityFieldsMap.values()) {
 			if (Objects.equals(
 					entityField.getType(), EntityField.Type.STRING)) {
 
-				_options.add(_toOption(entityField.getName()));
+				options.add(_toOption(entityField.getName()));
 			}
 		}
 
-		Collections.sort(_options, Comparator.comparing(Option::getValue));
+		Collections.sort(options, Comparator.comparing(Option::getValue));
+
+		_options = options;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_options = null;
+		_options = Collections.emptyList();
 	}
 
 	private Option _toOption(String value) {

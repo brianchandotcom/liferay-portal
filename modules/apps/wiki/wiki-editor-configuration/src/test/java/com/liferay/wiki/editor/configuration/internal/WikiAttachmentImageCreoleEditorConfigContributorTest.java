@@ -67,6 +67,13 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 	public void setUp() {
 		_inputEditorTaglibAttributes.put(
 			"liferay-ui:input-editor:name", "testEditor");
+
+		_wikiAttachmentImageCreoleEditorConfigContributor =
+			new WikiAttachmentImageCreoleEditorConfigContributor();
+
+		ReflectionTestUtil.setFieldValue(
+			_wikiAttachmentImageCreoleEditorConfigContributor, "_itemSelector",
+			_itemSelector);
 	}
 
 	@Test
@@ -98,15 +105,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toString());
 
-		WikiAttachmentImageCreoleEditorConfigContributor
-			wikiAttachmentImageCreoleEditorConfigContributor =
-				new WikiAttachmentImageCreoleEditorConfigContributor();
-
-		ReflectionTestUtil.setFieldValue(
-			wikiAttachmentImageCreoleEditorConfigContributor, "_itemSelector",
-			_itemSelector);
-
-		wikiAttachmentImageCreoleEditorConfigContributor.
+		_wikiAttachmentImageCreoleEditorConfigContributor.
 			populateConfigJSONObject(
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
@@ -159,15 +158,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 
 		JSONObject jsonObject = getJSONObjectWithDefaultItemSelectorURL();
 
-		WikiAttachmentImageCreoleEditorConfigContributor
-			wikiAttachmentImageCreoleEditorConfigContributor =
-				new WikiAttachmentImageCreoleEditorConfigContributor();
-
-		ReflectionTestUtil.setFieldValue(
-			wikiAttachmentImageCreoleEditorConfigContributor, "_itemSelector",
-			_itemSelector);
-
-		wikiAttachmentImageCreoleEditorConfigContributor.
+		_wikiAttachmentImageCreoleEditorConfigContributor.
 			setWikiFileUploadConfiguration(
 				new WikiFileUploadConfiguration() {
 
@@ -183,7 +174,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 
 				});
 
-		wikiAttachmentImageCreoleEditorConfigContributor.
+		_wikiAttachmentImageCreoleEditorConfigContributor.
 			populateConfigJSONObject(
 				jsonObject, _inputEditorTaglibAttributes, new ThemeDisplay(),
 				requestBackedPortletURLFactory);
@@ -214,15 +205,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toString());
 
-		WikiAttachmentImageCreoleEditorConfigContributor
-			wikiAttachmentImageCreoleEditorConfigContributor =
-				new WikiAttachmentImageCreoleEditorConfigContributor();
-
-		ReflectionTestUtil.setFieldValue(
-			wikiAttachmentImageCreoleEditorConfigContributor, "_itemSelector",
-			_itemSelector);
-
-		wikiAttachmentImageCreoleEditorConfigContributor.
+		_wikiAttachmentImageCreoleEditorConfigContributor.
 			populateConfigJSONObject(
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
@@ -248,15 +231,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toString());
 
-		WikiAttachmentImageCreoleEditorConfigContributor
-			wikiAttachmentImageCreoleEditorConfigContributor =
-				new WikiAttachmentImageCreoleEditorConfigContributor();
-
-		ReflectionTestUtil.setFieldValue(
-			wikiAttachmentImageCreoleEditorConfigContributor, "_itemSelector",
-			_itemSelector);
-
-		wikiAttachmentImageCreoleEditorConfigContributor.
+		_wikiAttachmentImageCreoleEditorConfigContributor.
 			populateConfigJSONObject(
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
@@ -296,5 +271,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 	private final Map<String, Object> _inputEditorTaglibAttributes =
 		new HashMap<>();
 	private final ItemSelector _itemSelector = Mockito.mock(ItemSelector.class);
+	private WikiAttachmentImageCreoleEditorConfigContributor
+		_wikiAttachmentImageCreoleEditorConfigContributor;
 
 }

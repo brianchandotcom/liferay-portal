@@ -15,14 +15,18 @@
 package com.liferay.portal.search.web.internal.facet.display.context.builder;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetTermDisplayContext;
@@ -31,10 +35,13 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -53,7 +60,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 	}
 
 	public AssetCategoriesSearchFacetDisplayContext build() {
-		_buckets = _collectBuckets(_facet.getFacetCollector());
+		_buckets = _collectBuckets(_facet);
 
 		AssetCategoriesSearchFacetDisplayContext
 			assetCategoriesSearchFacetDisplayContext =
@@ -72,8 +79,22 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			getParameterValueStrings());
 		assetCategoriesSearchFacetDisplayContext.setRenderNothing(
 			isRenderNothing());
+
+		List<AssetCategoriesSearchFacetTermDisplayContext> termDisplayContexts =
+			buildTermDisplayContexts();
+
 		assetCategoriesSearchFacetDisplayContext.setTermDisplayContexts(
-			buildTermDisplayContexts());
+			termDisplayContexts);
+
+		Map<String, List<AssetCategoriesSearchFacetTermDisplayContext>>
+			termDisplayContextsMap = buildTermDisplayContextsMap(
+				termDisplayContexts);
+
+		assetCategoriesSearchFacetDisplayContext.setTermDisplayContextsMap(
+			termDisplayContextsMap);
+
+		assetCategoriesSearchFacetDisplayContext.setVocabularyNames(
+			_sortVocabularyNames(termDisplayContextsMap.keySet()));
 
 		return assetCategoriesSearchFacetDisplayContext;
 	}
@@ -92,6 +113,12 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		AssetCategoryPermissionChecker assetCategoryPermissionChecker) {
 
 		_assetCategoryPermissionChecker = assetCategoryPermissionChecker;
+	}
+
+	public void setAssetVocabularyLocalService(
+		AssetVocabularyLocalService assetVocabularyLocalService) {
+
+		_assetVocabularyLocalService = assetVocabularyLocalService;
 	}
 
 	public void setDisplayStyle(String displayStyle) {
@@ -155,7 +182,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 	protected AssetCategoriesSearchFacetTermDisplayContext
 		buildTermDisplayContext(
 			AssetCategory assetCategory, int frequency, boolean selected,
-			int popularity) {
+			int popularity, String vocabularyName) {
 
 		AssetCategoriesSearchFacetTermDisplayContext
 			assetCategoriesSearchFacetTermDisplayContext =
@@ -170,6 +197,12 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		assetCategoriesSearchFacetTermDisplayContext.setSelected(selected);
 		assetCategoriesSearchFacetTermDisplayContext.setDisplayName(
 			assetCategory.getTitle(_locale));
+
+		assetCategoriesSearchFacetTermDisplayContext.setVocabularyName(
+			vocabularyName);
+
+		assetCategoriesSearchFacetTermDisplayContext.setParentCategoryId(
+			String.valueOf(assetCategory.getParentCategoryId()));
 
 		return assetCategoriesSearchFacetTermDisplayContext;
 	}
@@ -242,13 +275,50 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 
 			AssetCategory assetCategory = (AssetCategory)tuple.getObject(0);
 
+			AssetVocabulary assetVocabulary =
+				_assetVocabularyLocalService.fetchAssetVocabulary(
+					assetCategory.getVocabularyId());
+
+			String vocabularyName = assetVocabulary.getTitle(_locale);
+
 			assetCategoriesSearchFacetTermDisplayContexts.add(
 				buildTermDisplayContext(
 					assetCategory, frequency,
-					isSelected(assetCategory.getCategoryId()), popularity));
+					isSelected(assetCategory.getCategoryId()), popularity,
+					vocabularyName));
 		}
 
 		return assetCategoriesSearchFacetTermDisplayContexts;
+	}
+
+	protected Map<String, List<AssetCategoriesSearchFacetTermDisplayContext>>
+		buildTermDisplayContextsMap(
+			List<AssetCategoriesSearchFacetTermDisplayContext>
+				termDisplayContexts) {
+
+		Map<String, List<AssetCategoriesSearchFacetTermDisplayContext>>
+			assetCategoriesSearchFacetTermDisplayContextMap = new HashMap<>();
+
+		for (AssetCategoriesSearchFacetTermDisplayContext termDisplayContext :
+				termDisplayContexts) {
+
+			List<AssetCategoriesSearchFacetTermDisplayContext>
+				vocabularyTermDisplayContexts =
+					assetCategoriesSearchFacetTermDisplayContextMap.get(
+						termDisplayContext.getVocabularyName());
+
+			if (vocabularyTermDisplayContexts == null) {
+				vocabularyTermDisplayContexts = new ArrayList<>();
+			}
+
+			vocabularyTermDisplayContexts.add(termDisplayContext);
+
+			assetCategoriesSearchFacetTermDisplayContextMap.put(
+				termDisplayContext.getVocabularyName(),
+				vocabularyTermDisplayContexts);
+		}
+
+		return assetCategoriesSearchFacetTermDisplayContextMap;
 	}
 
 	protected List<AssetCategoriesSearchFacetTermDisplayContext>
@@ -317,13 +387,29 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		return false;
 	}
 
-	private List<Tuple> _collectBuckets(FacetCollector facetCollector) {
+	private List<Tuple> _collectBuckets(Facet facet) {
+		FacetCollector facetCollector = facet.getFacetCollector();
+
 		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
 
 		List<Tuple> buckets = new ArrayList<>(termCollectors.size());
 
 		for (TermCollector termCollector : termCollectors) {
-			long assetCategoryId = GetterUtil.getLong(termCollector.getTerm());
+			long assetCategoryId = 0;
+
+			String fieldName = facet.getFieldName();
+
+			if ((fieldName != null) &&
+				fieldName.equals("assetVocabularyCategoryIds")) {
+
+				String[] parts = StringUtil.split(
+					termCollector.getTerm(), StringPool.DASH);
+
+				assetCategoryId = GetterUtil.getLong(parts[1]);
+			}
+			else {
+				assetCategoryId = GetterUtil.getLong(termCollector.getTerm());
+			}
 
 			if (assetCategoryId > 0) {
 				AssetCategory assetCategory = _fetchAssetCategory(
@@ -370,7 +456,8 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		return Optional.ofNullable(
 			_fetchAssetCategory(assetCategoryId)
 		).map(
-			assetCategory -> buildTermDisplayContext(assetCategory, 0, true, 1)
+			assetCategory -> buildTermDisplayContext(
+				assetCategory, 0, true, 1, null)
 		);
 	}
 
@@ -404,8 +491,18 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		);
 	}
 
+	private List<String> _sortVocabularyNames(Set<String> vocabularyNamesSet) {
+		List<String> vocabularyNames = ListUtil.fromCollection(
+			vocabularyNamesSet);
+
+		Collections.sort(vocabularyNames);
+
+		return vocabularyNames;
+	}
+
 	private AssetCategoryLocalService _assetCategoryLocalService;
 	private AssetCategoryPermissionChecker _assetCategoryPermissionChecker;
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 	private List<Tuple> _buckets;
 	private String _displayStyle;
 	private long _excludedGroupId;

@@ -16,6 +16,7 @@ package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -356,6 +357,8 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 			setAssetCategoryLocalService(_assetCategoryLocalService);
 		assetCategoriesSearchFacetDisplayContextBuilder.
 			setAssetCategoryPermissionChecker(_assetCategoryPermissionChecker);
+		assetCategoriesSearchFacetDisplayContextBuilder.
+			setAssetVocabularyLocalService(_assetVocabularyLocalService);
 		assetCategoriesSearchFacetDisplayContextBuilder.setDisplayStyle(
 			"cloud");
 		assetCategoriesSearchFacetDisplayContextBuilder.setFacet(_facet);
@@ -526,6 +529,8 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 	private final AssetCategoryPermissionChecker
 		_assetCategoryPermissionChecker = Mockito.mock(
 			AssetCategoryPermissionChecker.class);
+	private final AssetVocabularyLocalService _assetVocabularyLocalService =
+		Mockito.mock(AssetVocabularyLocalService.class);
 	private long _excludedGroupId;
 	private final Facet _facet = Mockito.mock(Facet.class);
 	private final FacetCollector _facetCollector = Mockito.mock(

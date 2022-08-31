@@ -37,6 +37,7 @@ jest.mock('frontend-js-web', () => ({
 	}),
 
 	openToast: jest.fn(),
+	sub: jest.fn(),
 }));
 
 const _getSidebarComponent = (props) => {
@@ -52,6 +53,10 @@ describe('SidebarPanelInfoView', () => {
 		jest.clearAllMocks();
 	});
 
+	beforeEach(() => {
+		Liferay.FeatureFlags['LPS-161013'] = true;
+	});
+
 	it('renders', () => {
 		const {asFragment} = render(_getSidebarComponent(mockedProps));
 
@@ -59,7 +64,7 @@ describe('SidebarPanelInfoView', () => {
 	});
 
 	it('renders sidebar panel with proper info for a basic web content', () => {
-		const {container, getByText} = render(
+		const {container, getByText, getByTitle} = render(
 			_getSidebarComponent(mockedProps)
 		);
 
@@ -80,7 +85,7 @@ describe('SidebarPanelInfoView', () => {
 		expect(getByText('38070')).toBeInTheDocument();
 
 		expect(getByText('categorization')).toBeInTheDocument();
-		expect(getByText('details')).toBeInTheDocument();
+		expect(getByTitle('details')).toBeInTheDocument();
 	});
 
 	it('renders sidebar panel with proper dates for a basic web content', () => {

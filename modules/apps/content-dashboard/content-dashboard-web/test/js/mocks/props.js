@@ -13,20 +13,43 @@
  */
 
 export const mockedProps = {
-	allVersions: [],
+	allVersions: [
+		{
+			changeLog: '',
+			createDate: 'Tue Aug 30 06:58:03 GMT 2022',
+			statusLabel: 'Approved',
+			statusStyle: 'success',
+			userName: 'Test Test',
+			version: '1.1',
+		},
+		{
+			changeLog: '',
+			createDate: 'Tue Aug 30 06:56:16 GMT 2022',
+			statusLabel: 'Approved',
+			statusStyle: 'success',
+			userName: 'Test Test',
+			version: '1.0',
+		},
+	],
 	classPK: '38070',
 	createDate: '2020-07-27T10:50:55.19',
 	languageTag: 'en',
 	latestVersions: [
 		{
+			changeLog: '',
+			createDate: 'Tue Aug 30 06:58:03 GMT 2022',
 			statusLabel: 'Approved',
 			statusStyle: 'success',
-			version: 1.6,
+			userName: 'Test Test',
+			version: '1.6',
 		},
 		{
+			changeLog: '',
+			createDate: 'Tue Aug 30 06:58:03 GMT 2022',
 			statusLabel: 'Draft',
 			statusStyle: 'secondary',
-			version: 1.7,
+			userName: 'Test Test',
+			version: '1.7',
 		},
 	],
 	modifiedDate: '2020-07-27T10:56:56.027',
@@ -359,15 +382,26 @@ export const mockedContentWithPreview = {
 		url: 'mocked/vuew/url/',
 	},
 	specificFields: {
-		extension: {
+		'extension': {
 			title: 'Extension',
 			type: 'string',
 			value: 'jpg',
 		},
-		size: {
+		'latest-version-url': {
+			title: 'Latest Version URL',
+			type: 'URL',
+			value: 'http://localhost:8080/documents/d/guest/tree-png',
+		},
+		'size': {
 			title: 'Size',
 			type: 'string',
 			value: '200 KB',
+		},
+		'web-dav-url': {
+			title: 'WebDAV URL',
+			type: 'URL',
+			value:
+				'http://localhost:8080/webdav/guest/document_library/tree.png',
 		},
 	},
 	subType: 'Basic Document',
@@ -386,15 +420,26 @@ export const mockedContentWithPreviewWithoutLink = {
 		imageURL: 'mocked/preview/url/demo.jpg',
 	},
 	specificFields: {
-		extension: {
+		'extension': {
 			title: 'Extension',
 			type: 'string',
-			value: 'zip',
+			value: 'jpg',
 		},
-		size: {
+		'latest-version-url': {
+			title: 'Latest Version URL',
+			type: 'URL',
+			value: 'http://localhost:8080/documents/d/guest/tree-png',
+		},
+		'size': {
 			title: 'Size',
 			type: 'string',
 			value: '200 KB',
+		},
+		'web-dav-url': {
+			title: 'WebDAV URL',
+			type: 'URL',
+			value:
+				'http://localhost:8080/webdav/guest/document_library/tree.png',
 		},
 	},
 	subType: 'Basic Document',

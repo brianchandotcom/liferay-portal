@@ -68,9 +68,9 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 	private void _validateDDMFormFieldNames(DDMFormLayout ddmFormLayout)
 		throws DDMFormLayoutValidationException {
 
-		Set<String> duplicatedFieldNames = new HashSet<>();
+		Set<String> duplicatedDDMFormFieldNames = new HashSet<>();
 
-		Set<String> ddmFormFieldNamesCount = new HashSet<>();
+		Set<String> ddmFormFieldNames = new HashSet<>();
 
 		for (DDMFormLayoutPage ddmFormLayoutPage :
 				ddmFormLayout.getDDMFormLayoutPages()) {
@@ -84,16 +84,16 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 					for (String ddmFormFieldName :
 							ddmFormLayoutColumn.getDDMFormFieldNames()) {
 
-						if (!ddmFormFieldNamesCount.add(ddmFormFieldName)) {
-							duplicatedFieldNames.add(ddmFormFieldName);
+						if (!ddmFormFieldNames.add(ddmFormFieldName)) {
+							duplicatedDDMFormFieldNames.add(ddmFormFieldName);
 						}
 					}
 				}
 			}
 		}
 
-		if (SetUtil.isNotEmpty(duplicatedFieldNames)) {
-			throw new MustNotDuplicateFieldName(duplicatedFieldNames);
+		if (SetUtil.isNotEmpty(duplicatedDDMFormFieldNames)) {
+			throw new MustNotDuplicateFieldName(duplicatedDDMFormFieldNames);
 		}
 	}
 

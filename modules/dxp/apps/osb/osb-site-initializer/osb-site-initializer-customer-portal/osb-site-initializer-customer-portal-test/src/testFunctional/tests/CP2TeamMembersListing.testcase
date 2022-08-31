@@ -95,12 +95,16 @@ definition {
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
 
 		task ("Adding a user to the project") {
-			JSONUser.addUserWithRole(
-				roleTitle = "Power User",
+			JSONUser.addUser(
 				userEmailAddress = "test.user@liferay.com",
 				userFirstName = "Test",
 				userLastName = "User",
-				userScreenName = "Test");
+				userScreenName = "Testing");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test.user@liferay.com");
 
 			Accounts.openAccountsAdmin();
 

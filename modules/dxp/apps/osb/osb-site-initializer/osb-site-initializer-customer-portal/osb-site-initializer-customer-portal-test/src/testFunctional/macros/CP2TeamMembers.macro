@@ -72,8 +72,10 @@ definition {
 		CP2NavigationMenu.goToTeamMembers();
 	}
 
-	macro viewTeamMembersPage {
-		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
+	macro viewSupportSeatsAvailable {
+		AssertElementPresent(
+			key_number = "${available}",
+			locator1 = "CP2TeamMembers#SUPPORT_SEATS");
 	}
 
 	macro viewTableValue {
@@ -96,10 +98,8 @@ definition {
 			locator1 = "CustomerPortalSite#STATUS_CARD");
 	}
 
-	macro viewSupportSeatsAvailable {
-		AssertElementPresent(
-			key_number = "${available}",
-			locator1 = "CP2TeamMembers#SUPPORT_SEATS");
+	macro viewTeamMembersPage {
+		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
 	}
-	
+
 }

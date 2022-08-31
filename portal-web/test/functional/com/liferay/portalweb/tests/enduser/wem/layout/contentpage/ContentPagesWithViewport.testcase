@@ -502,7 +502,7 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
-		task ("Click restore default for Heading Example 2 and assert  is NOT shown") {
+		task ("Click restore default for Heading Example 2 and assert is NOT shown") {
 			PageEditor.restoreDefaultHidePropertyForFragment(
 				fragmentName = "Heading",
 				index = "2");
@@ -514,7 +514,7 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
-		task ("Click restore default for Heading Example 3 and assert  is shown") {
+		task ("Click restore default for Heading Example 3 and assert is shown") {
 			PageEditor.restoreDefaultHidePropertyForFragment(
 				fragmentName = "Heading",
 				index = "3");

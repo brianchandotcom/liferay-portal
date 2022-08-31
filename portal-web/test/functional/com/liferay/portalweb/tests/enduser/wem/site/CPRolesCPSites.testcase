@@ -228,7 +228,7 @@ definition {
 				value1 = "Child SiteName");
 		}
 
-		task ("View the user has site admin permissions in  parent site and child site") {
+		task ("View the user has site admin permissions in parent site and child site") {
 			Site.viewSiteAdminPermissionsCP(siteName = "Parent Site Name");
 
 			Site.viewSiteAdminPermissionsCP(siteName = "Child SiteName");

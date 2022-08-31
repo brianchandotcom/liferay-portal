@@ -973,7 +973,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,password-policies,trash");
 		}
 
-		task ("When the  Categories creator opens the dropdown menu of category") {
+		task ("When the Categories creator opens the dropdown menu of category") {
 			LexiconEntry.openEntryMenu(rowEntry = "Category Name");
 		}
 

@@ -461,7 +461,7 @@ definition {
 			AssertElementNotPresent(locator1 = "Button#PLUS");
 		}
 
-		task ("And the user cannot edit or delete  a catalog") {
+		task ("And the user cannot edit or delete a catalog") {
 			AssertElementNotPresent(locator1 = "CommerceEntry#DROPDOWN");
 
 			AssertElementNotPresent(locator1 = "Button#EDIT");

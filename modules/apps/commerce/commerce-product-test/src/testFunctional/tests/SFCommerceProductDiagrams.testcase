@@ -1143,7 +1143,7 @@ definition {
 			CommerceNavigator.searchCatalog(productName = "Diagram");
 		}
 
-		task ("Then Buyer A can see both Diagram Test 1 and 2,  and if Buyer A opens the Diagram Test 1 can see the two pins") {
+		task ("Then Buyer A can see both Diagram Test 1 and 2, and if Buyer A opens the Diagram Test 1 can see the two pins") {
 			CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "Diagram Test 1");
 
 			CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "Diagram Test 2");

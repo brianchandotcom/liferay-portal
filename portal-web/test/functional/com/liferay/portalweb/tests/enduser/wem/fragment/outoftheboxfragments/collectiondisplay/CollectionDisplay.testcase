@@ -2298,7 +2298,7 @@ definition {
 				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 			}
 
-			task ("Edit this  fragment with the following codes") {
+			task ("Edit this fragment with the following codes") {
 				FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
 				FragmentsAdminNavigator.gotoEntryEllipsisItem(

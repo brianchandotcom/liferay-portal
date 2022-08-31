@@ -612,7 +612,7 @@ definition {
 			Click(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
 		}
 
-		task ("Check that there is not any  Translated/Unstraslated label") {
+		task ("Check that there is not any Translated/Unstraslated label") {
 			AssertTextEquals(
 				locator1 = "ContentPerformance#LANGUAGE_LABEL",
 				value1 = "Default");

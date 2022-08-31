@@ -320,7 +320,7 @@ definition {
 				value1 = "Showing 1 to 10 of 100");
 		}
 
-		task ("And Then the Filters Summary boxes will be displayed  accordingly to it") {
+		task ("And Then the Filters Summary boxes will be displayed accordingly to it") {
 			AssertElementPresent(
 				key_filter = "Status: Approved, Draft",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");

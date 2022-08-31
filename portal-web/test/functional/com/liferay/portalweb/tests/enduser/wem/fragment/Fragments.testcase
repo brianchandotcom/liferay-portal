@@ -48,7 +48,7 @@ definition {
 	@description = "This is a test for LPS-76817. Can namespace the CSS of a Web Fragment to avoid affecting the rest of the page."
 	@priority = "3"
 	test CanCheckTheNamespaceOfCSSInFragments {
-		task ("Edit this  fragment with the following codes") {
+		task ("Edit this fragment with the following codes") {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
 			FragmentsAdminNavigator.gotoEntryEllipsisItem(

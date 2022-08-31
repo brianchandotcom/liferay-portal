@@ -311,7 +311,7 @@ definition {
 				tagName = "tagname");
 		}
 
-		task ("When the  Tags creator opens the dropdown menu of new tag") {
+		task ("When the Tags creator opens the dropdown menu of new tag") {
 			Tag.openTagsAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.openEntryMenu(rowEntry = "tagname");

@@ -50,7 +50,7 @@ definition {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 		}
 
-		task ("Assert the Liferay Site Initializer Welcome  Page") {
+		task ("Assert the Liferay Site Initializer Welcome Page") {
 			AssertElementPresent(locator1 = "Home#DEFAULT_LOGO");
 		}
 	}
@@ -76,7 +76,7 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Liferay Welcome Site");
 		}
 
-		task ("Assert the Liferay Site Initializer Welcome  Page") {
+		task ("Assert the Liferay Site Initializer Welcome Page") {
 			AssertElementPresent(locator1 = "Home#DEFAULT_LOGO");
 		}
 

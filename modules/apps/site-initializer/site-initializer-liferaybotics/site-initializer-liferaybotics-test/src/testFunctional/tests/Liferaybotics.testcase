@@ -63,7 +63,7 @@ definition {
 			ApplicationsMenu.gotoSite(site = "${testSiteName}");
 		}
 
-		task ("Go to  Dashboard Page on Liferaybotics Site") {
+		task ("Go to Dashboard Page on Liferaybotics Site") {
 			Click(
 				labelOption = "Dashboard",
 				locator1 = "Liferaybotics#MENU_LABEL_NAME");
@@ -86,7 +86,7 @@ definition {
 			ApplicationsMenu.gotoSite(site = "${testSiteName}");
 		}
 
-		task ("Go to  Home Page on Liferaybotics Site") {
+		task ("Go to Home Page on Liferaybotics Site") {
 			Click(
 				labelOption = "Home",
 				locator1 = "Liferaybotics#MENU_LABEL_NAME");
@@ -107,7 +107,7 @@ definition {
 			ApplicationsMenu.gotoSite(site = "${testSiteName}");
 		}
 
-		task ("Go to  Dashboard Page on Liferaybotics Site") {
+		task ("Go to Dashboard Page on Liferaybotics Site") {
 			Click(
 				labelOption = "Dashboard",
 				locator1 = "Liferaybotics#MENU_LABEL_NAME");
@@ -170,7 +170,7 @@ definition {
 			ApplicationsMenu.gotoSite(site = "${testSiteName}");
 		}
 
-		task ("Go to  Dashboard Page on Liferaybotics Site") {
+		task ("Go to Dashboard Page on Liferaybotics Site") {
 			Click(
 				labelOption = "Dashboard",
 				locator1 = "Liferaybotics#MENU_LABEL_NAME");

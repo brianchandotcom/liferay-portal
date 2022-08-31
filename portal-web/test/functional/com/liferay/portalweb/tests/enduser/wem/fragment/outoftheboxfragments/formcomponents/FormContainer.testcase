@@ -803,7 +803,7 @@ definition {
 	test SubmitFormContainerWithTranslatedSuccessText {
 		property test.name.skip.portal.instance = "FormContainer#SubmitFormContainerWithTranslatedSuccessText";
 
-		task ("Given a page designer has a mapped Form Container  and Language Selector on content page") {
+		task ("Given a page designer has a mapped Form Container and Language Selector on content page") {
 			task ("Add Form Container and Language Selector to content page") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",

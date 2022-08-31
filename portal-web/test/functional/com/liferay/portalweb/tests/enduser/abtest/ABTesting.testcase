@@ -86,7 +86,7 @@ definition {
 			ABTest.runTest();
 		}
 
-		task ("Go to  edit the content page.") {
+		task ("Go to edit the content page.") {
 			ContentPages.gotoPageEditor();
 		}
 
@@ -1502,7 +1502,7 @@ definition {
 			ABTest.createVariant(variantName = "Variant name");
 		}
 
-		task ("Go to  edit the content page.") {
+		task ("Go to edit the content page.") {
 			ContentPages.gotoPageEditor();
 		}
 
@@ -1558,7 +1558,7 @@ definition {
 			ABTest.createVariant(variantName = "Variant name");
 		}
 
-		task ("Go to  edit the content page.") {
+		task ("Go to edit the content page.") {
 			ContentPages.gotoPageEditor();
 		}
 
@@ -1623,11 +1623,11 @@ definition {
 				testTitle = "AB test title");
 		}
 
-		task ("Select the  first button as click element") {
+		task ("Select the first button as click element") {
 			ABTest.selectElementID();
 		}
 
-		task ("Select the  second button as click element") {
+		task ("Select the second button as click element") {
 			Click(
 				key_value = "Change Clickable Element",
 				locator1 = "ABTest#SECONDARY_BUTTON");
@@ -1696,7 +1696,7 @@ definition {
 			ABTest.terminateTest();
 		}
 
-		task ("Go to  edit the content page.") {
+		task ("Go to edit the content page.") {
 			ContentPages.gotoPageEditor();
 		}
 
@@ -1752,7 +1752,7 @@ definition {
 			ABTest.createVariant(variantName = "Variant name");
 		}
 
-		task ("Go to  edit the content page.") {
+		task ("Go to edit the content page.") {
 			ContentPages.gotoPageEditor();
 		}
 
@@ -2397,7 +2397,7 @@ definition {
 			ABTest.runTest();
 		}
 
-		task ("Go to  edit the content page.") {
+		task ("Go to edit the content page.") {
 			ContentPages.gotoPageEditor();
 		}
 
@@ -2457,7 +2457,7 @@ definition {
 			ABTest.createVariant(variantName = "Variant name");
 		}
 
-		task ("Go to  edit the content page.") {
+		task ("Go to edit the content page.") {
 			ContentPages.gotoPageEditor();
 		}
 
@@ -2561,7 +2561,7 @@ definition {
 			var idbutton = ABTest.takeElementID(key_index = "2");
 		}
 
-		task ("Select the  first button as click element") {
+		task ("Select the first button as click element") {
 			ABTest.selectElementID();
 		}
 
@@ -3067,7 +3067,7 @@ definition {
 			var idbutton2 = ABTest.takeElementID(key_index = "2");
 		}
 
-		task ("Select the  first button as click element") {
+		task ("Select the first button as click element") {
 			ABTest.selectElementID();
 		}
 

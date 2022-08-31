@@ -60,33 +60,63 @@ jest.mock('frontend-js-web', () => ({
 
 const USER_ID = 42;
 
+/**
+ * List of tuples containing as the first member
+ * a layoutRelativeURL and the other one, if it
+ * should render or not considering the given path `/home`
+ */
+const POSSIBLE_LAYOUT_RELATIVE_URLS_HOME = [
+	['/undefined', false],
+	['/es/web/home/undefined', false],
+	['/es/web/home?redirectURL=/es/web/guest/home/abc', true],
+	['/home', true],
+	['/es/home', true],
+	['/es/web/guest/home', true],
+	['/home/abc/home', true],
+	['/es/home/abc/home', true],
+	['/es/web/guest/home/abc/home', true],
+];
+
+/**
+ * List of strings containg a composed layoutRelativeURLs to be matched with
+ * `/home/abc`
+ */
+const POSSIBLE_LAYOUT_RELATIVE_URLS_HOME_ABC = [
+	'/home/abc',
+	'/es/home/abc',
+	'/es/web/guest/home/abc',
+];
+
 describe('Walkthrough', () => {
 	window.themeDisplay = {
 		getLayoutRelativeURL: jest.fn(() => '/home'),
 		getUserId: jest.fn(() => USER_ID),
 	};
 
-	afterEach(() => {
-		cleanup();
-	});
+	let cleanUpDocument;
 
 	beforeEach(() => {
-		jest.restoreAllMocks();
+		cleanUpDocument = setupDocument();
+	});
+
+	afterEach(() => {
+		cleanUpDocument();
+		cleanup();
+		window.themeDisplay.getLayoutRelativeURL = jest.fn(() => '/home');
 	});
 
 	it('renders', () => {
-		const cleanUp = setupDocument();
+		const {container, getByLabelText} = renderWalkthrough(PAGE_MOCK);
 
-		const {container} = renderWalkthrough(PAGE_MOCK);
+		const errorSpy = jest.spyOn(console, 'error').mockImplementation();
 
 		expect(container).toBeInTheDocument();
+		expect(getByLabelText('start-the-walkthrough')).toBeInTheDocument();
 
-		cleanUp();
+		expect(errorSpy).not.toHaveBeenCalled();
 	});
 
 	it(`when clicking on Next, it navigates to the given URL of 'next'`, () => {
-		const cleanUp = setupDocument();
-
 		const {getByLabelText} = renderWalkthrough(MULTI_PAGES_MOCK);
 
 		const hotspot = getByLabelText('start-the-walkthrough');
@@ -96,13 +126,9 @@ describe('Walkthrough', () => {
 		userEvents.click(screen.getByText('ok'));
 
 		expect(navigate).toBeCalledWith(MULTI_PAGES_MOCK.steps[0].next);
-
-		cleanUp();
 	});
 
 	it(`when clicking on Previous, it navigates to the given URL of 'previous'`, () => {
-		const cleanUp = setupDocument();
-
 		const {getByLabelText} = renderWalkthrough(PAGE_WITH_PREVIOUS_MOCK);
 
 		const hotspot = getByLabelText('start-the-walkthrough');
@@ -116,13 +142,9 @@ describe('Walkthrough', () => {
 		expect(navigate).toBeCalledWith(
 			PAGE_WITH_PREVIOUS_MOCK.steps[1].previous
 		);
-
-		cleanUp();
 	});
 
 	it(`when clicking on Next, without passing 'next', it shows the next Walkthrough without navigating`, () => {
-		const cleanUp = setupDocument();
-
 		const {getByLabelText} = renderWalkthrough(PAGE_MOCK);
 
 		const hotspot = getByLabelText('start-the-walkthrough');
@@ -134,13 +156,9 @@ describe('Walkthrough', () => {
 		userEvents.click(okButton);
 
 		expect(screen.queryByText('Hello2')).toBeInTheDocument();
-
-		cleanUp();
 	});
 
 	it(`when clicking on Previous, without passing 'previous', it shows the previous Walkthrough without navigating`, () => {
-		const cleanUp = setupDocument();
-
 		const {getByLabelText} = renderWalkthrough(PAGE_MOCK);
 
 		const hotspot = getByLabelText('start-the-walkthrough');
@@ -156,26 +174,18 @@ describe('Walkthrough', () => {
 		userEvents.click(screen.getByText('previous'));
 
 		expect(screen.queryByText('Hello1')).toBeInTheDocument();
-
-		cleanUp();
 	});
 
 	it('throws an error when the provided selector is not defined', () => {
-		const cleanUp = setupDocument();
-
 		const errorSpy = jest.spyOn(console, 'error').mockImplementation();
 
 		renderWalkthrough(INVALID_NODE_SELECTOR_MOCK);
 
 		expect(errorSpy).toHaveBeenCalled();
 		expect(errorSpy).toHaveBeenCalledTimes(1);
-
-		cleanUp();
 	});
 
 	it(`when 'darkbg' is set to false adds a 'lfr-walkthrough-element-shadow' to the nodeToHighlight'`, () => {
-		const cleanUp = setupDocument();
-
 		const {getByLabelText} = renderWalkthrough(BOX_SHADOW_ELEMENT_MOCK);
 
 		const hotspot = getByLabelText('start-the-walkthrough');
@@ -189,45 +199,50 @@ describe('Walkthrough', () => {
 		expect(elementToBeHighlighted).toHaveClass(
 			'lfr-walkthrough-element-shadow'
 		);
-
-		cleanUp();
 	});
 
-	it(`given the following layoutRelativeURLs and the value of '/home' the component needs to be rendered`, () => {
-		const POSSIBLE_LAYOUT_RELATIVE_URLS = [
-			'/undefined',
-			'/es/web/home/undefined',
-			'/es/web/home?redirectURL=/es/web/guest/home/abc',
-			'/home',
-			'/es/home',
-			'/es/web/guest/home',
-			'/home/abc',
-			'/es/home/abc',
-			'/es/web/guest/home/abc',
-			'/home/abc/home',
-			'/es/home/abc/home',
-			'/es/web/guest/home/abc/home',
-		];
-
-		POSSIBLE_LAYOUT_RELATIVE_URLS.forEach((url) => {
-			const errorSpy = jest.spyOn(console, 'error').mockImplementation();
-
+	it.each(POSSIBLE_LAYOUT_RELATIVE_URLS_HOME)(
+		`given the following layoutRelativeURL: '%s' and the value of '/home' the component needs to be rendered`,
+		(url, shouldRender) => {
 			window.themeDisplay.getLayoutRelativeURL = jest.fn(() => url);
 
 			const cleanUp = setupDocument();
 
-			const {container} = renderWalkthrough(PAGE_MOCK);
+			const {getByLabelText, queryByLabelText} = renderWalkthrough(
+				PAGE_MOCK
+			);
 
-			expect(errorSpy).not.toHaveBeenCalled();
-			expect(container).toBeInTheDocument();
+			if (shouldRender) {
+				expect(
+					getByLabelText('start-the-walkthrough')
+				).toBeInTheDocument();
+			}
+			else {
+				expect(
+					queryByLabelText('start-the-walkthrough')
+				).not.toBeInTheDocument();
+			}
 
 			cleanUp();
-		});
-	});
+		}
+	);
+
+	it.each(POSSIBLE_LAYOUT_RELATIVE_URLS_HOME_ABC)(
+		`given the following layoutRelativeURL: '%s' and the value of '/home/abc' the component needs to be rendered`,
+		(url) => {
+			window.themeDisplay.getLayoutRelativeURL = jest.fn(() => url);
+
+			const cleanUp = setupDocument();
+
+			const {getByLabelText} = renderWalkthrough(PAGE_MOCK);
+
+			expect(getByLabelText('start-the-walkthrough')).toBeInTheDocument();
+
+			cleanUp();
+		}
+	);
 
 	it('persists the current step of a determined page on localStorage', () => {
-		const cleanUp = setupDocument();
-
 		const {getByLabelText} = renderWalkthrough(PAGE_MOCK);
 
 		const hotspot = getByLabelText('start-the-walkthrough');
@@ -245,7 +260,5 @@ describe('Walkthrough', () => {
 		expect(
 			localStorage.getItem(`${USER_ID}-walkthrough-current-step`)
 		).toBe('1');
-
-		cleanUp();
 	});
 });

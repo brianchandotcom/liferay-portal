@@ -22,6 +22,7 @@ export const DOM_STRUCTURE_FOR_PLACING_STEPS = `
 export const PAGE_MOCK = {
 	pages: {
 		'/home': ['step-1', 'step-2'],
+		'/home/abc': ['step-1'],
 	},
 	steps: [
 		{

@@ -84,15 +84,6 @@ public class ContentDashboardItemSearchContainerFactory {
 			searchContainer.getStart());
 	}
 
-	public SearchContainer<ContentDashboardItem<?>> createWithAllResults()
-		throws PortletException {
-
-		SearchContainer<ContentDashboardItem<?>> searchContainer =
-			_getContentDashboardItemSearchContainer();
-
-		return _create(-1, searchContainer, -1);
-	}
-
 	private ContentDashboardItemSearchContainerFactory(
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetVocabularyLocalService assetVocabularyLocalService,

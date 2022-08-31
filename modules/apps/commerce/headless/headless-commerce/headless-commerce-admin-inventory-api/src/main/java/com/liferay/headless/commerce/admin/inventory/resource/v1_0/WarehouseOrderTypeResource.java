@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.inventory.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse;
+import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseOrderType;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -53,38 +53,41 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface WarehouseResource {
+public interface WarehouseOrderTypeResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<Warehouse> getWarehousesPage(
-			Filter filter, Pagination pagination, Sort[] sorts)
+	public void deleteWarehouseOrderType(Long warehouseOrderTypeId)
 		throws Exception;
 
-	public Warehouse postWarehouse(Warehouse warehouse) throws Exception;
-
-	public Response postWarehouseBatch(String callbackURL, Object object)
+	public Response deleteWarehouseOrderTypeBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteWarehouseByExternalReferenceCode(
-			String externalReferenceCode)
+	public Page<WarehouseOrderType>
+			getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
+				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public Warehouse getWarehouseByExternalReferenceCode(
-			String externalReferenceCode)
+	public WarehouseOrderType
+			postWarehouseByExternalReferenceCodeWarehouseOrderType(
+				String externalReferenceCode,
+				WarehouseOrderType warehouseOrderType)
 		throws Exception;
 
-	public Response patchWarehouseByExternalReferenceCode(
-			String externalReferenceCode, Warehouse warehouse)
+	public Page<WarehouseOrderType> getWarehouseIdWarehouseOrderTypesPage(
+			Long id, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
-	public void deleteWarehouseId(Long id) throws Exception;
+	public WarehouseOrderType postWarehouseIdWarehouseOrderType(
+			Long id, WarehouseOrderType warehouseOrderType)
+		throws Exception;
 
-	public Warehouse getWarehouseId(Long id) throws Exception;
-
-	public Response patchWarehouseId(Long id, Warehouse warehouse)
+	public Response postWarehouseIdWarehouseOrderTypeBatch(
+			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -148,7 +151,7 @@ public interface WarehouseResource {
 	@ProviderType
 	public interface Builder {
 
-		public WarehouseResource build();
+		public WarehouseOrderTypeResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

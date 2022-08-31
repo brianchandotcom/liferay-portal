@@ -60,7 +60,7 @@ String[] types = GetterUtil.getStringValues(request.getAttribute(AccountWebKeys.
 
 			<liferay-ui:error embed="<%= false %>" key="<%= DuplicateAccountEntryExternalReferenceCodeException.class.getName() %>" message="the-given-external-reference-code-belongs-to-another-account" />
 
-			<aui:input label="external-reference-code" name="externalReferenceCode" type="text" value="<%= accountEntryDisplay.getExternalReferenceCode() %>" />
+			<aui:input bean="<%= accountEntryDisplay.getAccountEntry() %>" label="external-reference-code" model="<%= AccountEntry.class %>" name="externalReferenceCode" />
 
 			<c:if test="<%= accountEntryDisplay.getAccountEntryId() > 0 %>">
 				<aui:input cssClass="disabled" label="account-id" name="accountEntryId" readonly="true" type="text" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />

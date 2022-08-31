@@ -287,11 +287,17 @@ function CategorySelectorModal({
 				);
 			}
 			else {
-				setSelected([...selected, {label: item.name, value: item.id}]);
+				setSelected([
+					...selected,
+					{label: `${item.name} (ID: ${item.id})`, value: item.id},
+				]);
 			}
 		}
 		else {
-			onChangeValue({label: item.name, value: item.id});
+			onChangeValue({
+				label: `${item.name} (ID: ${item.id})`,
+				value: item.id,
+			});
 
 			onClose();
 		}

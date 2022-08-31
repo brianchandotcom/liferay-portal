@@ -57,9 +57,7 @@ function CategoryMenu({locator, onItemClick = () => {}, sourceItems}) {
 				>
 					<div className="autofit-col">
 						<span className="list-group-text">
-							{`${item[locator.label]} (ID: ${
-								item[locator.value]
-							})`}
+							{item[locator.label]}
 						</span>
 
 						{item.description && (
@@ -146,7 +144,7 @@ function CategorySelectorInput({
 						description: `${getSiteName(groupId, categoryTree)} - ${
 							path.split(' > ')?.[0]
 						}`, // First word in path is vocabulary name
-						label: name,
+						label: `${name} (ID: ${categoryId})`,
 						value: categoryId,
 					});
 				});
@@ -198,7 +196,7 @@ function CategorySelectorInput({
 								JSON.stringify(siteId), // Site ID is a number
 								categoryTree
 							)} - ${parentTaxonomyVocabulary.name}`,
-							label: name,
+							label: `${name} (ID: ${id})`,
 							value: id,
 						},
 						...categories,

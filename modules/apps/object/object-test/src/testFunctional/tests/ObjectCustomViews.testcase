@@ -279,6 +279,113 @@ definition {
 			sortingLabel = "Ascending");
 	}
 
+	@description = "LPS-144957 - Verify that it's possible to create the filter"
+	@priority = "4"
+	test CanCreateFilter {
+		task ("Create Custom Object, Custom Field and publish it via API") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 156807",
+				objectName = "CustomObject156807",
+				pluralLabelName = "Custom Objects 156807");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject156807");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156807");
+		}
+
+		task ("Go to Custom Object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 156807");
+		}
+
+		task ("Create Custom View and go to it") {
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+		}
+
+		task ("Mark as default and add columns for Custom View") {
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field,Status");
+		}
+
+		task ("Go to Filters tab and add new Filter") {
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.addNewFilterViaUI(
+				filterBy = "Status",
+				filterType = "Includes",
+				filterValue = "Approved");
+
+			ObjectCustomViews.assertPresentEntriesOnFilters(
+				filterBy = "Status",
+				filterValue = "Approved");
+
+			Button.clickSave();
+		}
+
+		task ("Define workflow to Custom Object") {
+			ObjectAdmin.openWorkflowProcessBuilderConfiguration();
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Custom Object 156807");
+		}
+
+		task ("Create entry (approved) via API") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject156807",
+				value = "Entry Approved");
+		}
+
+		task ("Assert that is not possible to view the entry yet (because filter only Approved)") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156807");
+
+			AssertElementNotPresent(
+				key_status = "Approved",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		}
+
+		task ("Define the entry as approved") {
+			Navigator.openURL();
+
+			ObjectAdmin.openMyWorkflowTasks();
+
+			Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+			Workflow.confirmWorkflowAction();
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+
+			Workflow.confirmWorkflowAction();
+		}
+
+		task ("Go to Custom Object entries and assert that the filter was been applied") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156807");
+
+			ObjectPortlet.viewEntry(entry = "Entry Approved");
+
+			AssertElementPresent(
+				key_status = "Approved",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		}
+	}
+
 	@description = "LPS-135394 - Verify it is possible to create a View"
 	@priority = "5"
 	test CanCreateView {

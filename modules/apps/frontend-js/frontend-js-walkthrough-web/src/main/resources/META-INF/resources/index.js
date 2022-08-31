@@ -16,6 +16,7 @@ import {render} from '@liferay/frontend-js-react-web';
 import React from 'react';
 
 import Walkthrough from './Walkthrough';
+import {LOCAL_STORAGE_KEYS} from './localStorageKeys';
 
 const DEFAULT_CONTAINER_ID = 'walkthroughContainer';
 
@@ -40,7 +41,11 @@ const getDefaultContainer = () => {
 };
 
 function Root(props) {
-	return <Walkthrough {...DEFAULT_PROPS} {...props} />;
+	if (!localStorage.getItem(LOCAL_STORAGE_KEYS.SKIPPABLE)) {
+		return <Walkthrough {...DEFAULT_PROPS} {...props} />;
+	}
+
+	return null;
 }
 
 export default function main(props = {}) {

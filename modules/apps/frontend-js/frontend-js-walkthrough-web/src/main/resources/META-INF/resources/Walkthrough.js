@@ -26,6 +26,7 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Hotspot} from './Hotspot';
 import {Overlay} from './Overlay';
 import {doAlign} from './doAlign';
+import {LOCAL_STORAGE_KEYS} from './localStorageKeys';
 import {useLocalStorage} from './useLocalStorage';
 import {useObserveRect} from './useObserveRect';
 
@@ -188,7 +189,7 @@ const Step = ({
 	const hotspotRef = useRef(null);
 
 	const [popoverVisible, setPopoverVisible] = useLocalStorage(
-		`${themeDisplay.getUserId()}-walkthrough-popover-visible`,
+		LOCAL_STORAGE_KEYS.POPOVER_VISIBILITY,
 		false
 	);
 
@@ -205,6 +206,8 @@ const Step = ({
 	const [currentAlignment, setCurrentAlignment] = useState(
 		defaultPositioning
 	);
+
+	const [checkboxValue, setCheckboxValue] = useState(false);
 
 	const memoizedTrigger = useMemo(() => {
 		const currentNode = steps[currentStep].nodeToHighlight;
@@ -421,9 +424,18 @@ const Step = ({
 							{skippable && (
 								<ClayLayout.ContentCol expand>
 									<ClayCheckbox
+										checked={checkboxValue}
 										label={Liferay.Language.get(
 											'do-not-show-me-this-again'
 										)}
+										onChange={() => {
+											setCheckboxValue(!checkboxValue);
+
+											localStorage.setItem(
+												LOCAL_STORAGE_KEYS.SKIPPABLE,
+												!checkboxValue
+											);
+										}}
 									/>
 								</ClayLayout.ContentCol>
 							)}
@@ -498,9 +510,8 @@ const Walkthrough = ({
 	const [
 		currentStepIndex,
 		setCurrentStepIndex,
-	] = useLocalStorage(
-		`${themeDisplay.getUserId()}-walkthrough-current-step`,
-		() => (!steps.length ? null : 0)
+	] = useLocalStorage(LOCAL_STORAGE_KEYS.CURRENT_STEP, () =>
+		!steps.length ? null : 0
 	);
 
 	if (currentStepIndex === null) {

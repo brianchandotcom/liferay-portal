@@ -11,18 +11,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+export default function isVisible(element, globalContext) {
+	const computedStyle = globalContext.window.getComputedStyle(element);
+	const {parentElement} = element;
 
-import getLayoutDataItemUniqueClassName from './getLayoutDataItemUniqueClassName';
-import isVisible from './isVisible';
-
-export default function hasVisibleSubmitChild(itemId, globalContext) {
-	const element = document.querySelector(
-		`.${getLayoutDataItemUniqueClassName(itemId)}`
+	return (
+		computedStyle.display !== 'none' &&
+		computedStyle.visibility !== 'collapse' &&
+		computedStyle.visibility !== 'hidden' &&
+		!element.hasAttribute('hidden') &&
+		!element.hasAttribute('aria-hidden') &&
+		(!parentElement ||
+			parentElement.classList.contains('page-editor__form-children') ||
+			isVisible(parentElement, globalContext))
 	);
-
-	return Array.from(
-		element.querySelectorAll(
-			'input[type=submit], button[type=submit], button:not([type])'
-		)
-	).some((buttonElement) => isVisible(buttonElement, globalContext));
 }

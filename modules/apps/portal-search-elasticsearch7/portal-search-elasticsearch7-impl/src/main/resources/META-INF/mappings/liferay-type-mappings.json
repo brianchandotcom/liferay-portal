@@ -1231,6 +1231,10 @@
 				"term_vector": "with_positions_offsets",
 				"type": "text"
 			},
+			"assetVocabularyCategoryIds": {
+				"store": true,
+				"type": "keyword"
+			},
 			"assetVocabularyId": {
 				"store": true,
 				"type": "keyword"

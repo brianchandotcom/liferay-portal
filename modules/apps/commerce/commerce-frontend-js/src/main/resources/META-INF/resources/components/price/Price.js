@@ -87,7 +87,7 @@ function Price({
 			{hasPromo && (
 				<>
 					<span className="price-label">
-						{Liferay.Language.get('sale-price')}
+						{Liferay.Language.get('promotion-price')}
 					</span>
 					<span
 						className={classnames(

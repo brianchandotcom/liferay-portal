@@ -54,7 +54,7 @@ public class PlacedCommerceOrderItemTableFDSView extends BaseTableFDSView {
 		).add(
 			"price", "list-price"
 		).add(
-			"promoPrice", "sale-price"
+			"promoPrice", "promotion-price"
 		).add(
 			"discount", "discount"
 		).add(

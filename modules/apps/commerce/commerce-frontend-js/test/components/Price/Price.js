@@ -119,7 +119,7 @@ describe('Price', () => {
 				'list-price'
 			);
 			expect(window.Liferay.Language.get).toHaveBeenCalledWith(
-				'sale-price'
+				'promotion-price'
 			);
 
 			const [listPrice, salePrice] = Array.from(values);
@@ -250,7 +250,7 @@ describe('Price', () => {
 				'list-price'
 			);
 			expect(window.Liferay.Language.get).toHaveBeenCalledWith(
-				'sale-price'
+				'promotion-price'
 			);
 			expect(window.Liferay.Language.get).toHaveBeenCalledWith(
 				'discount'

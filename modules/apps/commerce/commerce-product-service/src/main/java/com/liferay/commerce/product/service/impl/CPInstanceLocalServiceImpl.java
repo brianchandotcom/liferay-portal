@@ -605,6 +605,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
+	public int getCPInstancesCount(String cpInstanceUuid) {
+		return cpInstancePersistence.countByCPInstanceUuid(cpInstanceUuid);
+	}
+
+	@Override
 	public CPInstance getCProductInstance(
 			long cProductId, String cpInstanceUuid)
 		throws PortalException {

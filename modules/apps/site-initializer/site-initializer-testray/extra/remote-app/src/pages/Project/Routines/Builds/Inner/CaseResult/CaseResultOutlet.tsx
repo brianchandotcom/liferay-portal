@@ -18,7 +18,7 @@ import {Outlet, useLocation, useParams} from 'react-router-dom';
 import {useFetch} from '../../../../../../hooks/useFetch';
 import useHeader from '../../../../../../hooks/useHeader';
 import i18n from '../../../../../../i18n';
-import {transformDataCaseResults} from '../../../../../../services/rest';
+import {testrayCaseResultRest} from '../../../../../../services/rest';
 import useCaseResultActions from './useCaseResultActions';
 
 const CaseResultOutlet = () => {
@@ -30,8 +30,8 @@ const CaseResultOutlet = () => {
 		data: caseResult,
 		mutate: mutateCaseResult,
 	} = useFetch(
-		`/caseresults/${caseResultId}?nestedFields=case.caseType,commentMBMessage,component,build.productVersion,build.routine,run,user&nestedFieldsDepth=3`,
-		(response) => transformDataCaseResults(response)
+		testrayCaseResultRest.getResource(caseResultId as string),
+		(response) => testrayCaseResultRest.transformData(response)
 	);
 
 	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${caseResultId}`;

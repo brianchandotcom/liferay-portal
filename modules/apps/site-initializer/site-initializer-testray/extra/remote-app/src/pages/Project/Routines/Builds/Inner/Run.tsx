@@ -18,7 +18,7 @@ import Container from '../../../../../components/Layout/Container';
 import ListViewRest from '../../../../../components/ListView';
 import i18n from '../../../../../i18n';
 import {filters} from '../../../../../schema/filter';
-import {getRunTransformData} from '../../../../../services/rest';
+import {testrayRunRest} from '../../../../../services/rest';
 import {searchUtil} from '../../../../../util/search';
 
 const Runs = () => {
@@ -61,7 +61,9 @@ const Runs = () => {
 						},
 					],
 				}}
-				transformData={getRunTransformData}
+				transformData={(response) =>
+					testrayRunRest.transformDataFromList(response)
+				}
 				variables={{
 					filter: searchUtil.eq('buildId', buildId as string),
 				}}

@@ -20,10 +20,7 @@ import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalComponent} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
-import {
-	createFactorCategory,
-	updateFactorCategory,
-} from '../../../services/rest';
+import {testrayFactorCategoryRest} from '../../../services/rest';
 
 type FactorCategoryForm = typeof yupSchema.factorCategory.__outputType;
 
@@ -41,8 +38,8 @@ const FactorCategoryFormModal: React.FC<FormModalComponent> = ({
 
 	const _onSubmit = (form: FactorCategoryForm) =>
 		onSubmit(form, {
-			create: createFactorCategory,
-			update: updateFactorCategory,
+			create: (...params) => testrayFactorCategoryRest.create(...params),
+			update: (...params) => testrayFactorCategoryRest.update(...params),
 		})
 			.then(onSave)
 			.catch(onError);

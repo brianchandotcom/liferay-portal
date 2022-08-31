@@ -19,11 +19,7 @@ import ListView from '../../../components/ListView';
 import StatusBadge from '../../../components/StatusBadge';
 import QATable from '../../../components/Table/QATable';
 import i18n from '../../../i18n';
-import {
-	TestrayCase,
-	caseResultResource,
-	getCaseResultTransformData,
-} from '../../../services/rest';
+import {TestrayCase, testrayCaseResultRest} from '../../../services/rest';
 import {getStatusLabel} from '../../../util/constants';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
@@ -96,7 +92,7 @@ const Case = () => {
 						title: i18n.translate('test-history'),
 						visible: true,
 					}}
-					resource={caseResultResource}
+					resource={testrayCaseResultRest.resource}
 					tableProps={{
 						actions,
 						columns: [
@@ -158,7 +154,9 @@ const Case = () => {
 						navigateTo: ({build, id}) =>
 							`/project/${projectId}/routines/${build?.routine?.id}/build/${build?.id}/case-result/${id}`,
 					}}
-					transformData={getCaseResultTransformData}
+					transformData={(response) =>
+						testrayCaseResultRest.transformDataFromList(response)
+					}
 					variables={{
 						filter: searchUtil.eq('caseId', caseId as string),
 					}}

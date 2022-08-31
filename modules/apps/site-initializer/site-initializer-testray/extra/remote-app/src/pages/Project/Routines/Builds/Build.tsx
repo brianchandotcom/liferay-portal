@@ -27,7 +27,7 @@ import {filters} from '../../../../schema/filter';
 import {
 	TestrayCaseResult,
 	caseResultResource,
-	getCaseResultTransformData,
+	testrayCaseResultRest,
 } from '../../../../services/rest';
 import {getStatusLabel} from '../../../../util/constants';
 import {searchUtil} from '../../../../util/search';
@@ -78,7 +78,10 @@ const Build = () => {
 						},
 						{
 							key: 'run',
-							render: () => '01',
+							render: (_, caseResult: TestrayCaseResult) =>
+								caseResult.run?.number
+									?.toString()
+									.padStart(2, '0'),
 							value: i18n.translate('run'),
 						},
 						{
@@ -145,7 +148,9 @@ const Build = () => {
 					],
 					navigateTo: ({id}) => `case-result/${id}`,
 				}}
-				transformData={getCaseResultTransformData}
+				transformData={(response) =>
+					testrayCaseResultRest.transformDataFromList(response)
+				}
 				variables={{
 					filter: searchUtil.eq('buildId', buildId as string),
 				}}

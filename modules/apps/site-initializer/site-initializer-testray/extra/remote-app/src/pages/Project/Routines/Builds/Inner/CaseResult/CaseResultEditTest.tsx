@@ -27,8 +27,7 @@ import yupSchema from '../../../../../../schema/yup';
 import {Liferay} from '../../../../../../services/liferay';
 import {
 	TestrayCaseResult,
-	createCaseResult,
-	updateCaseResult,
+	testrayCaseResultRest,
 } from '../../../../../../services/rest';
 import {TEST_STATUS} from '../../../../../../util/constants';
 
@@ -87,8 +86,8 @@ const CaseResultEditTest = () => {
 				userId: Liferay.ThemeDisplay.getUserId(),
 			},
 			{
-				create: createCaseResult,
-				update: updateCaseResult,
+				create: (...params) => testrayCaseResultRest.create(...params),
+				update: (...params) => testrayCaseResultRest.update(...params),
 			}
 		)
 			.then(mutateCaseResult)

@@ -22,10 +22,7 @@ import StatusBadge from '../../components/StatusBadge';
 import QATable from '../../components/Table/QATable';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
-import {
-	caseResultsResource,
-	getCaseResultTransformData,
-} from '../../services/rest';
+import {caseResultsResource, testrayCaseResultRest} from '../../services/rest';
 import {getStatusLabel} from '../../util/constants';
 import {subtask} from '../../util/mock';
 
@@ -179,7 +176,9 @@ const Subtasks = () => {
 						navigateTo: ({build, id}) =>
 							`/project/routines/${build?.routine?.id}/build/${build?.id}/case-result/${id}`,
 					}}
-					transformData={getCaseResultTransformData}
+					transformData={(response) =>
+						testrayCaseResultRest.transformDataFromList(response)
+					}
 				/>
 			</Container>
 		</>

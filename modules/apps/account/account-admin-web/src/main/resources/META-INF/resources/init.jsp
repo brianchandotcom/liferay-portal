@@ -50,6 +50,7 @@ page import="com.liferay.account.admin.web.internal.display.AccountUserDisplay" 
 page import="com.liferay.account.admin.web.internal.display.AddressDisplay" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.AccountEntryAccountGroupManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.AccountUsersAdminManagementToolbarDisplayContext" %><%@
+page import="com.liferay.account.admin.web.internal.display.context.EditAccountEntryAccountUserDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.SelectAccountEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.SelectAccountEntryAddressManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.SelectAccountEntryManagementToolbarDisplayContext" %><%@

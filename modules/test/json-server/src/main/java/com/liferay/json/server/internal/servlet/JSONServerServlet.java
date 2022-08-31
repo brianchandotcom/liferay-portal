@@ -426,7 +426,15 @@ public class JSONServerServlet extends HttpServlet {
 					id = GetterUtil.getLongStrict(parts.get(2));
 				}
 				catch (IllegalArgumentException illegalArgumentException) {
-					modelName = path.substring(applicationName.length() + 2);
+					if (httpServletRequest.getQueryString() == null) {
+						modelName = path.substring(
+							applicationName.length() + 2);
+					}
+					else {
+						modelName =
+							path.substring(applicationName.length() + 2) + "?" +
+							httpServletRequest.getQueryString();
+					}
 				}
 			}
 

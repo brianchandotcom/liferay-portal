@@ -42,6 +42,7 @@ const SidebarPanelInfoCollapsibleSection = ({
 			}
 			displayType="unstyled"
 			showCollapseIcon={true}
+			title={title}
 		>
 			<ClayPanel.Body>{children}</ClayPanel.Body>
 		</ClayPanel>

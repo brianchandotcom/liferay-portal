@@ -395,14 +395,18 @@ public class SearchResultSummaryDisplayContextBuilder {
 			searchResultSummaryDisplayContext, assetRenderer, summary);
 		_buildCreationDateString(searchResultSummaryDisplayContext);
 		_buildCreatorUserName(searchResultSummaryDisplayContext);
+		_buildCreatorUserPortraitURLString(
+			searchResultSummaryDisplayContext, assetRenderer);
 		_buildDocumentForm(searchResultSummaryDisplayContext);
 		_buildImage(
 			searchResultSummaryDisplayContext, assetRendererFactory,
 			assetRenderer);
 		_buildLocaleReminder(searchResultSummaryDisplayContext, summary);
 		_buildModelResource(searchResultSummaryDisplayContext, className);
-		_buildUserPortrait(
+		_buildModifiedByUserPortrait(
 			searchResultSummaryDisplayContext, assetEntry, className);
+		_buildModifiedDateString(searchResultSummaryDisplayContext);
+		_buildModifiedUserName(searchResultSummaryDisplayContext);
 		_buildViewURL(className, classPK, searchResultSummaryDisplayContext);
 
 		return searchResultSummaryDisplayContext;
@@ -577,6 +581,29 @@ public class SearchResultSummaryDisplayContextBuilder {
 			searchResultSummaryDisplayContext.setCreatorUserName(
 				creatorUserName);
 			searchResultSummaryDisplayContext.setCreatorVisible(true);
+		}
+	}
+
+	private void _buildCreatorUserPortraitURLString(
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
+		AssetRenderer<?> assetRenderer) {
+
+		Group group = _groupLocalService.fetchGroup(assetRenderer.getGroupId());
+
+		if (group != null) {
+			String articleIdString = _getFieldValueString(Field.USER_ID);
+
+			long userId = GetterUtil.getLong(articleIdString);
+
+			String creatorByPortraitUrlString = _getPortraitURLString(userId);
+
+			if (creatorByPortraitUrlString != null) {
+				searchResultSummaryDisplayContext.
+					setCreatedByUserPortraitURLString(
+						creatorByPortraitUrlString);
+				searchResultSummaryDisplayContext.
+					setCreatedByUserPortraitVisible(true);
+			}
 		}
 	}
 
@@ -823,16 +850,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 		}
 	}
 
-	private SearchResultSummaryDisplayContext _buildTemporarilyUnavailable() {
-		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
-			new SearchResultSummaryDisplayContext();
-
-		searchResultSummaryDisplayContext.setTemporarilyUnavailable(true);
-
-		return searchResultSummaryDisplayContext;
-	}
-
-	private void _buildUserPortrait(
+	private void _buildModifiedByUserPortrait(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
 		AssetEntry assetEntry, String className) {
 
@@ -852,11 +870,60 @@ public class SearchResultSummaryDisplayContextBuilder {
 			String portraitURLString = _getPortraitURLString(assetEntryUserId);
 
 			if (portraitURLString != null) {
+				searchResultSummaryDisplayContext.
+					setModifiedByUserPortraitURLString(portraitURLString);
+				searchResultSummaryDisplayContext.
+					setModifiedByUserPortraitVisible(true);
+
 				searchResultSummaryDisplayContext.setUserPortraitURLString(
 					portraitURLString);
 				searchResultSummaryDisplayContext.setUserPortraitVisible(true);
 			}
 		}
+	}
+
+	private void _buildModifiedDateString(
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
+
+		Optional<String> dateStringOptional = SearchStringUtil.maybe(
+			_getFieldValueString(Field.MODIFIED_DATE));
+
+		Optional<Date> dateOptional = dateStringOptional.map(
+			this::_parseDateStringFieldValue);
+
+		dateOptional.ifPresent(
+			date -> {
+				searchResultSummaryDisplayContext.setModifiedDateString(
+					_formatCreationDate(date));
+				searchResultSummaryDisplayContext.setModifiedDateVisible(true);
+			});
+	}
+
+	private void _buildModifiedUserName(
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
+
+		String statusByUserId = _getFieldValueString("statusByUserId");
+
+		if (!Validator.isBlank(statusByUserId)) {
+			long userId = GetterUtil.getLong(statusByUserId);
+
+			User user = _userLocalService.fetchUser(userId);
+
+			searchResultSummaryDisplayContext.setModifiedByUserName(
+				user.getScreenName());
+
+			searchResultSummaryDisplayContext.setModifiedByUserNameVisible(
+				true);
+		}
+	}
+
+	private SearchResultSummaryDisplayContext _buildTemporarilyUnavailable() {
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
+			new SearchResultSummaryDisplayContext();
+
+		searchResultSummaryDisplayContext.setTemporarilyUnavailable(true);
+
+		return searchResultSummaryDisplayContext;
 	}
 
 	private void _buildViewURL(

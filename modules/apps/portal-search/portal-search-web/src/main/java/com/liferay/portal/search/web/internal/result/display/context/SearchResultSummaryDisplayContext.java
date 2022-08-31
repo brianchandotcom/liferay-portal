@@ -62,7 +62,7 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 	}
 
 	public List<SearchResultFieldDisplayContext>
-	getDocumentFormFieldDisplayContexts() {
+		getDocumentFormFieldDisplayContexts() {
 
 		return _documentFormFieldDisplayContexts;
 	}

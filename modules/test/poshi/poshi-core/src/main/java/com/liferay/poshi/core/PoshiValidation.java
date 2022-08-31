@@ -1516,7 +1516,8 @@ public class PoshiValidation {
 
 		List<String> methodParameterValues =
 			PoshiScriptParserUtil.getMethodParameterValues(
-				seleniumGetterMethodMatcher.group("methodParameters"));
+				seleniumGetterMethodMatcher.group("methodParameters"),
+				poshiElement);
 
 		if (methodParameterValues.size() != seleniumParameterCount) {
 			_exceptions.add(

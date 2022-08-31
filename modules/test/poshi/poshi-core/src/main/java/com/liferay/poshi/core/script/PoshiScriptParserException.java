@@ -80,30 +80,34 @@ public class PoshiScriptParserException extends PoshiElementException {
 		}
 	}
 
-	public PoshiScriptParserException(String msg) {
-		super(msg);
+	public PoshiScriptParserException(
+		String msg, int errorLineNumber, String errorSnippet, URL filePathURL) {
+
+		super(msg, errorLineNumber, errorSnippet, filePathURL);
 
 		_poshiScriptParserExceptions.add(this);
 	}
 
 	public PoshiScriptParserException(String msg, PoshiNode<?, ?> poshiNode) {
-		this(msg);
+		super(
+			msg, poshiNode.getPoshiScriptLineNumber(), getFilePath(poshiNode),
+			poshiNode);
 
-		setErrorLineNumber(poshiNode.getPoshiScriptLineNumber());
-
-		URL filePathURL = poshiNode.getFilePathURL();
-
-		setFilePath(filePathURL.getPath());
-
-		setPoshiNode(poshiNode);
+		_poshiScriptParserExceptions.add(this);
 	}
 
 	public PoshiScriptParserException(
 		String msg, String poshiScript, PoshiNode<?, ?> parentPoshiNode) {
 
-		this(msg);
+		super(
+			msg, _getErrorLineNumber(poshiScript, parentPoshiNode),
+			getFilePath(parentPoshiNode), parentPoshiNode);
 
-		setPoshiNode(parentPoshiNode);
+		_poshiScriptParserExceptions.add(this);
+	}
+
+	private static int _getErrorLineNumber(
+		String poshiScript, PoshiNode<?, ?> parentPoshiNode) {
 
 		String parentPoshiScript = parentPoshiNode.getPoshiScript();
 
@@ -120,13 +124,8 @@ public class PoshiScriptParserException extends PoshiElementException {
 
 		int index = parentPoshiScript.indexOf(poshiScript.trim());
 
-		setErrorLineNumber(
-			startingLineNumber +
-				StringUtil.count(parentPoshiScript, "\n", index));
-
-		URL filePathURL = parentPoshiNode.getFilePathURL();
-
-		setFilePath(filePathURL.getPath());
+		return startingLineNumber +
+			StringUtil.count(parentPoshiScript, "\n", index);
 	}
 
 	private static final Set<PoshiScriptParserException>

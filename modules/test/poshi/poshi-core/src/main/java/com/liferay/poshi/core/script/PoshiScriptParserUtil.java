@@ -14,6 +14,10 @@
 
 package com.liferay.poshi.core.script;
 
+import com.liferay.poshi.core.elements.PoshiNode;
+
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,19 +31,8 @@ import java.util.regex.Pattern;
  */
 public class PoshiScriptParserUtil {
 
-	public static List<String> getMethodParameterValues(String content) {
-		try {
-			return getMethodParameterValues(content, null);
-		}
-		catch (PoshiScriptParserException poshiScriptParserException) {
-			poshiScriptParserException.printStackTrace();
-
-			return new ArrayList<>();
-		}
-	}
-
 	public static List<String> getMethodParameterValues(
-			String content, Pattern pattern)
+			String content, Pattern pattern, PoshiNode poshiNode)
 		throws PoshiScriptParserException {
 
 		List<String> methodParameterValues = new ArrayList<>();
@@ -81,7 +74,7 @@ public class PoshiScriptParserUtil {
 
 			if (!matcher.matches()) {
 				throw new PoshiScriptParserException(
-					"Invalid Poshi Script parameter syntax");
+					"Invalid Poshi Script parameter syntax", poshiNode);
 			}
 		}
 
@@ -90,17 +83,30 @@ public class PoshiScriptParserUtil {
 		return methodParameterValues;
 	}
 
+	public static List<String> getMethodParameterValues(
+		String content, PoshiNode poshiNode) {
+
+		try {
+			return getMethodParameterValues(content, null, poshiNode);
+		}
+		catch (PoshiScriptParserException poshiScriptParserException) {
+			poshiScriptParserException.printStackTrace();
+
+			return new ArrayList<>();
+		}
+	}
+
 	public static boolean isBalancedPoshiScript(String poshiScript) {
 		try {
-			return isBalancedPoshiScript(poshiScript, false);
+			return isBalancedPoshiScript(poshiScript, null, false);
 		}
-		catch (Exception exception) {
+		catch (UnbalancedCodeException unbalancedCodeException) {
 			return false;
 		}
 	}
 
 	public static boolean isBalancedPoshiScript(
-			String poshiScript, boolean throwException)
+			String poshiScript, URL filePathURL, boolean throwException)
 		throws UnbalancedCodeException {
 
 		poshiScript = _fixPoshiScript(poshiScript);
@@ -137,7 +143,8 @@ public class PoshiScriptParserUtil {
 			if (_codeBoundariesMap.containsValue(c)) {
 				if (throwException) {
 					throw new UnbalancedCodeException(
-						"Unexpected closing boundary", i, poshiScript);
+						"Unexpected closing boundary", i, poshiScript,
+						filePathURL);
 				}
 
 				return false;
@@ -148,7 +155,8 @@ public class PoshiScriptParserUtil {
 
 		if (!balanced && throwException) {
 			throw new UnbalancedCodeException(
-				"Unmatched opening boundary", stack.peek(), poshiScript);
+				"Unmatched opening boundary", stack.peek(), poshiScript,
+				filePathURL);
 		}
 
 		return balanced;

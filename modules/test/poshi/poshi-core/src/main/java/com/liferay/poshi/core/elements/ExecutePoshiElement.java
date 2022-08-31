@@ -82,7 +82,7 @@ public class ExecutePoshiElement extends PoshiElement {
 
 			List<String> methodParameterValues =
 				PoshiScriptParserUtil.getMethodParameterValues(
-					poshiScriptParentheticalContent);
+					poshiScriptParentheticalContent, this);
 
 			for (int i = 0; i < methodParameterValues.size(); i++) {
 				String methodParameterValue = methodParameterValues.get(i);
@@ -147,7 +147,7 @@ public class ExecutePoshiElement extends PoshiElement {
 
 			for (String methodParameterValue :
 					PoshiScriptParserUtil.getMethodParameterValues(
-						poshiScriptParentheticalContent)) {
+						poshiScriptParentheticalContent, this)) {
 
 				add(PoshiNodeFactory.newPoshiNode(this, methodParameterValue));
 			}
@@ -157,8 +157,8 @@ public class ExecutePoshiElement extends PoshiElement {
 
 		for (String methodParameterValue :
 				PoshiScriptParserUtil.getMethodParameterValues(
-					poshiScriptParentheticalContent,
-					_executeParameterPattern)) {
+					poshiScriptParentheticalContent, _executeParameterPattern,
+					this)) {
 
 			methodParameterValue = methodParameterValue.trim();
 

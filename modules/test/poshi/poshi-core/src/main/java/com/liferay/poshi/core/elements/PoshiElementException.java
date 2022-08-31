@@ -25,6 +25,10 @@ import java.net.URL;
 public class PoshiElementException extends Exception {
 
 	public static PoshiElement getRootPoshiElement(PoshiNode<?, ?> poshiNode) {
+		if (poshiNode == null) {
+			System.out.println("poshi node is null");
+		}
+
 		if (Validator.isNotNull(poshiNode.getParent())) {
 			PoshiElement parentPoshiElement =
 				(PoshiElement)poshiNode.getParent();
@@ -51,20 +55,31 @@ public class PoshiElementException extends Exception {
 		this(join(messageParts), poshiNode);
 	}
 
-	public PoshiElementException(String msg) {
-		super(msg);
+	public PoshiElementException(
+		String msg, int errorLineNumber, String filePath,
+		PoshiNode<?, ?> poshiNode) {
+
+		this(msg);
+
+		setErrorLineNumber(errorLineNumber);
+		setFilePath(filePath);
+		setPoshiNode(poshiNode);
+	}
+
+	public PoshiElementException(
+		String msg, int errorLineNumber, String errorSnippet, URL filePathURL) {
+
+		this(msg);
+
+		setErrorLineNumber(errorLineNumber);
+		setErrorSnippet(errorSnippet);
+		setFilePath(filePathURL.getPath());
 	}
 
 	public PoshiElementException(String msg, PoshiNode<?, ?> poshiNode) {
-		this(msg);
-
-		setErrorLineNumber(poshiNode.getPoshiScriptLineNumber());
-
-		URL filePathURL = poshiNode.getFilePathURL();
-
-		setFilePath(filePathURL.getPath());
-
-		setPoshiNode(poshiNode);
+		this(
+			msg, poshiNode.getPoshiScriptLineNumber(), getFilePath(poshiNode),
+			poshiNode);
 	}
 
 	public int getErrorLineNumber() {
@@ -72,6 +87,10 @@ public class PoshiElementException extends Exception {
 	}
 
 	public String getErrorSnippet() {
+		if ((_errorSnippet == null) && !_errorSnippet.isEmpty()) {
+			return _errorSnippet;
+		}
+
 		PoshiElement rootPoshiElement = getRootPoshiElement(getPoshiNode());
 
 		int errorLineNumber = getErrorLineNumber();
@@ -138,8 +157,11 @@ public class PoshiElementException extends Exception {
 		sb.append(getFilePath());
 		sb.append(":");
 		sb.append(getErrorLineNumber());
-		sb.append("\n");
-		sb.append(getErrorSnippet());
+
+		if (getPoshiNode() != null) {
+			sb.append("\n");
+			sb.append(getErrorSnippet());
+		}
 
 		return sb.toString();
 	}
@@ -152,6 +174,10 @@ public class PoshiElementException extends Exception {
 		_errorLineNumber = errorLineNumber;
 	}
 
+	public void setErrorSnippet(String errorSnippet) {
+		_errorSnippet = errorSnippet;
+	}
+
 	public void setFilePath(String filePath) {
 		_filePath = filePath;
 	}
@@ -160,11 +186,22 @@ public class PoshiElementException extends Exception {
 		_poshiNode = poshiNode;
 	}
 
+	protected static String getFilePath(PoshiNode<?, ?> poshiNode) {
+		URL filePathURL = poshiNode.getFilePathURL();
+
+		return filePathURL.getPath();
+	}
+
+	private PoshiElementException(String msg) {
+		super(msg);
+	}
+
 	private static final int _ERROR_SNIPPET_POSTFIX_SIZE = 7;
 
 	private static final int _ERROR_SNIPPET_PREFIX_SIZE = 7;
 
 	private int _errorLineNumber;
+	private String _errorSnippet = "";
 	private String _filePath = "Unknown file";
 	private PoshiNode<?, ?> _poshiNode;
 

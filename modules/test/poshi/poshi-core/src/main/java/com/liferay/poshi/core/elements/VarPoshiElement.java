@@ -446,7 +446,8 @@ public class VarPoshiElement extends PoshiElement {
 		parametersString = parametersString.trim();
 
 		List<String> methodParameterValues =
-			PoshiScriptParserUtil.getMethodParameterValues(parametersString);
+			PoshiScriptParserUtil.getMethodParameterValues(
+				parametersString, this);
 
 		for (String methodParameterValue : methodParameterValues) {
 			methodParameterValue = methodParameterValue.trim();

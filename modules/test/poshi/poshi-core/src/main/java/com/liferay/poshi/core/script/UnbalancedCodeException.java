@@ -14,33 +14,34 @@
 
 package com.liferay.poshi.core.script;
 
+import java.net.URL;
+
 /**
  * @author Kenji Heigel
  */
 public class UnbalancedCodeException extends PoshiScriptParserException {
 
-	public UnbalancedCodeException(String msg, int index, String code) {
-		super(msg);
+	public UnbalancedCodeException(
+		String msg, int index, String code, URL filePathURL) {
 
-		_processLine(index, code);
+		super(
+			msg, _getErrorLineNumber(index, code),
+			_getErrorSnippet(index, code), filePathURL);
 	}
 
-	@Override
-	public String getErrorSnippet() {
-		return _errorSnippet;
+	private static int _getErrorLineNumber(int index, String code) {
+		int lineNumber = 1;
+
+		for (int i = 0; i < index; i++) {
+			if (code.charAt(i) == '\n') {
+				lineNumber++;
+			}
+		}
+
+		return lineNumber;
 	}
 
-	public void setErrorSnippet(String errorSnippet) {
-		_errorSnippet = errorSnippet;
-	}
-
-	private String _getLine(int lineNumber, String code) {
-		String[] lines = code.split("\n");
-
-		return lines[lineNumber - 1].replace("\t", "    ");
-	}
-
-	private void _processLine(int index, String code) {
+	private static String _getErrorSnippet(int index, String code) {
 		int lineNumber = 1;
 
 		int newLineIndex = -1;
@@ -52,8 +53,6 @@ public class UnbalancedCodeException extends PoshiScriptParserException {
 				newLineIndex = i;
 			}
 		}
-
-		setErrorLineNumber(lineNumber);
 
 		int column = 1;
 
@@ -78,9 +77,13 @@ public class UnbalancedCodeException extends PoshiScriptParserException {
 
 		sb.append("^");
 
-		setErrorSnippet(sb.toString());
+		return sb.toString();
 	}
 
-	private String _errorSnippet = "";
+	private static String _getLine(int lineNumber, String code) {
+		String[] lines = code.split("\n");
+
+		return lines[lineNumber - 1].replace("\t", "    ");
+	}
 
 }

@@ -14,12 +14,12 @@
 
 package com.liferay.headless.commerce.admin.inventory.client.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.Warehouse;
+import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.WarehouseOrderType;
 import com.liferay.headless.commerce.admin.inventory.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.inventory.client.pagination.Page;
 import com.liferay.headless.commerce.admin.inventory.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.inventory.client.problem.Problem;
-import com.liferay.headless.commerce.admin.inventory.client.serdes.v1_0.WarehouseSerDes;
+import com.liferay.headless.commerce.admin.inventory.client.serdes.v1_0.WarehouseOrderTypeSerDes;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -34,74 +34,75 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface WarehouseResource {
+public interface WarehouseOrderTypeResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Page<Warehouse> getWarehousesPage(
-			String filterString, Pagination pagination, String sortString)
+	public void deleteWarehouseOrderType(Long warehouseOrderTypeId)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getWarehousesPageHttpResponse(
-			String filterString, Pagination pagination, String sortString)
+	public HttpInvoker.HttpResponse deleteWarehouseOrderTypeHttpResponse(
+			Long warehouseOrderTypeId)
 		throws Exception;
 
-	public Warehouse postWarehouse(Warehouse warehouse) throws Exception;
-
-	public HttpInvoker.HttpResponse postWarehouseHttpResponse(
-			Warehouse warehouse)
+	public void deleteWarehouseOrderTypeBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void postWarehouseBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postWarehouseBatchHttpResponse(
+	public HttpInvoker.HttpResponse deleteWarehouseOrderTypeBatchHttpResponse(
 			String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteWarehouseByExternalReferenceCode(
-			String externalReferenceCode)
+	public Page<WarehouseOrderType>
+			getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
+				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteWarehouseByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode)
+			getWarehouseByExternalReferenceCodeWarehouseOrderTypesPageHttpResponse(
+				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public Warehouse getWarehouseByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getWarehouseByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode)
-		throws Exception;
-
-	public void patchWarehouseByExternalReferenceCode(
-			String externalReferenceCode, Warehouse warehouse)
+	public WarehouseOrderType
+			postWarehouseByExternalReferenceCodeWarehouseOrderType(
+				String externalReferenceCode,
+				WarehouseOrderType warehouseOrderType)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			patchWarehouseByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode, Warehouse warehouse)
+			postWarehouseByExternalReferenceCodeWarehouseOrderTypeHttpResponse(
+				String externalReferenceCode,
+				WarehouseOrderType warehouseOrderType)
 		throws Exception;
 
-	public void deleteWarehouseId(Long id) throws Exception;
-
-	public HttpInvoker.HttpResponse deleteWarehouseIdHttpResponse(Long id)
+	public Page<WarehouseOrderType> getWarehouseIdWarehouseOrderTypesPage(
+			Long id, String search, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
-	public Warehouse getWarehouseId(Long id) throws Exception;
-
-	public HttpInvoker.HttpResponse getWarehouseIdHttpResponse(Long id)
+	public HttpInvoker.HttpResponse
+			getWarehouseIdWarehouseOrderTypesPageHttpResponse(
+				Long id, String search, String filterString,
+				Pagination pagination, String sortString)
 		throws Exception;
 
-	public void patchWarehouseId(Long id, Warehouse warehouse) throws Exception;
+	public WarehouseOrderType postWarehouseIdWarehouseOrderType(
+			Long id, WarehouseOrderType warehouseOrderType)
+		throws Exception;
 
-	public HttpInvoker.HttpResponse patchWarehouseIdHttpResponse(
-			Long id, Warehouse warehouse)
+	public HttpInvoker.HttpResponse
+			postWarehouseIdWarehouseOrderTypeHttpResponse(
+				Long id, WarehouseOrderType warehouseOrderType)
+		throws Exception;
+
+	public void postWarehouseIdWarehouseOrderTypeBatch(
+			Long id, String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postWarehouseIdWarehouseOrderTypeBatchHttpResponse(
+				Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public static class Builder {
@@ -113,8 +114,8 @@ public interface WarehouseResource {
 			return this;
 		}
 
-		public WarehouseResource build() {
-			return new WarehouseResourceImpl(this);
+		public WarehouseOrderTypeResource build() {
+			return new WarehouseOrderTypeResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -180,15 +181,14 @@ public interface WarehouseResource {
 
 	}
 
-	public static class WarehouseResourceImpl implements WarehouseResource {
+	public static class WarehouseOrderTypeResourceImpl
+		implements WarehouseOrderTypeResource {
 
-		public Page<Warehouse> getWarehousesPage(
-				String filterString, Pagination pagination, String sortString)
+		public void deleteWarehouseOrderType(Long warehouseOrderTypeId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getWarehousesPageHttpResponse(
-					filterString, pagination, sortString);
+				deleteWarehouseOrderTypeHttpResponse(warehouseOrderTypeId);
 
 			String content = httpResponse.getContent();
 
@@ -216,7 +216,7 @@ public interface WarehouseResource {
 			}
 
 			try {
-				return Page.of(content, WarehouseSerDes::toDTO);
+				return;
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -227,8 +227,170 @@ public interface WarehouseResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getWarehousesPageHttpResponse(
-				String filterString, Pagination pagination, String sortString)
+		public HttpInvoker.HttpResponse deleteWarehouseOrderTypeHttpResponse(
+				Long warehouseOrderTypeId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-commerce-admin-inventory/v1.0/warehouse-order-types/{warehouseOrderTypeId}");
+
+			httpInvoker.path("warehouseOrderTypeId", warehouseOrderTypeId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void deleteWarehouseOrderTypeBatch(
+				String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				deleteWarehouseOrderTypeBatchHttpResponse(callbackURL, object);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				deleteWarehouseOrderTypeBatchHttpResponse(
+					String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-commerce-admin-inventory/v1.0/warehouse-order-types/batch");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<WarehouseOrderType>
+				getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage(
+					String externalReferenceCode, Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getWarehouseByExternalReferenceCodeWarehouseOrderTypesPageHttpResponse(
+					externalReferenceCode, pagination);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, WarehouseOrderTypeSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getWarehouseByExternalReferenceCodeWarehouseOrderTypesPageHttpResponse(
+					String externalReferenceCode, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -252,10 +414,6 @@ public interface WarehouseResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			if (filterString != null) {
-				httpInvoker.parameter("filter", filterString);
-			}
-
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
@@ -263,14 +421,12 @@ public interface WarehouseResource {
 					"pageSize", String.valueOf(pagination.getPageSize()));
 			}
 
-			if (sortString != null) {
-				httpInvoker.parameter("sort", sortString);
-			}
-
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-inventory/v1.0/warehouses");
+						"/o/headless-commerce-admin-inventory/v1.0/warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouse-order-types");
+
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -278,9 +434,15 @@ public interface WarehouseResource {
 			return httpInvoker.invoke();
 		}
 
-		public Warehouse postWarehouse(Warehouse warehouse) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = postWarehouseHttpResponse(
-				warehouse);
+		public WarehouseOrderType
+				postWarehouseByExternalReferenceCodeWarehouseOrderType(
+					String externalReferenceCode,
+					WarehouseOrderType warehouseOrderType)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postWarehouseByExternalReferenceCodeWarehouseOrderTypeHttpResponse(
+					externalReferenceCode, warehouseOrderType);
 
 			String content = httpResponse.getContent();
 
@@ -308,7 +470,7 @@ public interface WarehouseResource {
 			}
 
 			try {
-				return WarehouseSerDes.toDTO(content);
+				return WarehouseOrderTypeSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -319,13 +481,15 @@ public interface WarehouseResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postWarehouseHttpResponse(
-				Warehouse warehouse)
+		public HttpInvoker.HttpResponse
+				postWarehouseByExternalReferenceCodeWarehouseOrderTypeHttpResponse(
+					String externalReferenceCode,
+					WarehouseOrderType warehouseOrderType)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(warehouse.toString(), "application/json");
+			httpInvoker.body(warehouseOrderType.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -349,7 +513,9 @@ public interface WarehouseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-inventory/v1.0/warehouses");
+						"/o/headless-commerce-admin-inventory/v1.0/warehouses/by-externalReferenceCode/{externalReferenceCode}/warehouse-order-types");
+
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -357,11 +523,204 @@ public interface WarehouseResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postWarehouseBatch(String callbackURL, Object object)
+		public Page<WarehouseOrderType> getWarehouseIdWarehouseOrderTypesPage(
+				Long id, String search, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postWarehouseBatchHttpResponse(callbackURL, object);
+				getWarehouseIdWarehouseOrderTypesPageHttpResponse(
+					id, search, filterString, pagination, sortString);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, WarehouseOrderTypeSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getWarehouseIdWarehouseOrderTypesPageHttpResponse(
+					Long id, String search, String filterString,
+					Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-commerce-admin-inventory/v1.0/warehouses/{id}/warehouse-order-types");
+
+			httpInvoker.path("id", id);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public WarehouseOrderType postWarehouseIdWarehouseOrderType(
+				Long id, WarehouseOrderType warehouseOrderType)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postWarehouseIdWarehouseOrderTypeHttpResponse(
+					id, warehouseOrderType);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return WarehouseOrderTypeSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postWarehouseIdWarehouseOrderTypeHttpResponse(
+					Long id, WarehouseOrderType warehouseOrderType)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(warehouseOrderType.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/headless-commerce-admin-inventory/v1.0/warehouses/{id}/warehouse-order-types");
+
+			httpInvoker.path("id", id);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void postWarehouseIdWarehouseOrderTypeBatch(
+				Long id, String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postWarehouseIdWarehouseOrderTypeBatchHttpResponse(
+					id, callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -389,8 +748,9 @@ public interface WarehouseResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postWarehouseBatchHttpResponse(
-				String callbackURL, Object object)
+		public HttpInvoker.HttpResponse
+				postWarehouseIdWarehouseOrderTypeBatchHttpResponse(
+					Long id, String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -424,326 +784,7 @@ public interface WarehouseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-inventory/v1.0/warehouses/batch");
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void deleteWarehouseByExternalReferenceCode(
-				String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteWarehouseByExternalReferenceCodeHttpResponse(
-					externalReferenceCode);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				deleteWarehouseByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-inventory/v1.0/warehouses/by-externalReferenceCode/{externalReferenceCode}");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public Warehouse getWarehouseByExternalReferenceCode(
-				String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getWarehouseByExternalReferenceCodeHttpResponse(
-					externalReferenceCode);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return WarehouseSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getWarehouseByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-inventory/v1.0/warehouses/by-externalReferenceCode/{externalReferenceCode}");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void patchWarehouseByExternalReferenceCode(
-				String externalReferenceCode, Warehouse warehouse)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				patchWarehouseByExternalReferenceCodeHttpResponse(
-					externalReferenceCode, warehouse);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				patchWarehouseByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode, Warehouse warehouse)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(warehouse.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-inventory/v1.0/warehouses/by-externalReferenceCode/{externalReferenceCode}");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void deleteWarehouseId(Long id) throws Exception {
-			HttpInvoker.HttpResponse httpResponse =
-				deleteWarehouseIdHttpResponse(id);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse deleteWarehouseIdHttpResponse(Long id)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-inventory/v1.0/warehouses/{id}");
+						"/o/headless-commerce-admin-inventory/v1.0/warehouses/warehouse-order-types/batch");
 
 			httpInvoker.path("id", id);
 
@@ -753,162 +794,12 @@ public interface WarehouseResource {
 			return httpInvoker.invoke();
 		}
 
-		public Warehouse getWarehouseId(Long id) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = getWarehouseIdHttpResponse(
-				id);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return WarehouseSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse getWarehouseIdHttpResponse(Long id)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-inventory/v1.0/warehouses/{id}");
-
-			httpInvoker.path("id", id);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void patchWarehouseId(Long id, Warehouse warehouse)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				patchWarehouseIdHttpResponse(id, warehouse);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse patchWarehouseIdHttpResponse(
-				Long id, Warehouse warehouse)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(warehouse.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-inventory/v1.0/warehouses/{id}");
-
-			httpInvoker.path("id", id);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		private WarehouseResourceImpl(Builder builder) {
+		private WarehouseOrderTypeResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			WarehouseResource.class.getName());
+			WarehouseOrderTypeResource.class.getName());
 
 		private Builder _builder;
 

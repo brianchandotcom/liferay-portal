@@ -104,11 +104,7 @@ public class WarehouseSerDes {
 
 			sb.append("\"description\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(warehouse.getDescription()));
-
-			sb.append("\"");
+			sb.append(_toJSON(warehouse.getDescription()));
 		}
 
 		if (warehouse.getGroupId() != null) {
@@ -168,11 +164,7 @@ public class WarehouseSerDes {
 
 			sb.append("\"name\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(warehouse.getName()));
-
-			sb.append("\"");
+			sb.append(_toJSON(warehouse.getName()));
 		}
 
 		if (warehouse.getPrimary() != null) {
@@ -419,7 +411,9 @@ public class WarehouseSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
-					warehouse.setDescription((String)jsonParserFieldValue);
+					warehouse.setDescription(
+						(Map)WarehouseSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "groupId")) {
@@ -453,7 +447,9 @@ public class WarehouseSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					warehouse.setName((String)jsonParserFieldValue);
+					warehouse.setName(
+						(Map)WarehouseSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "primary")) {

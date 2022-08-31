@@ -754,6 +754,117 @@ definition {
 		ObjectCustomViews.assertObjectView(viewLabel = "Custom View 151589 (Copy)");
 	}
 
+	@description = "LPS-144957 - Verify that it's possible to edit the filter"
+	@priority = "4"
+	test CanEditFilter {
+		task ("Create Custom Object and Custom Field via API and go to it") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 156800",
+				objectName = "CustomObject156800",
+				pluralLabelName = "Custom Objects 156800");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject156800");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156800");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 156800");
+		}
+
+		task ("Create an Entry (via API)") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject156800",
+				value = "Entry Test");
+		}
+
+		task ("Create Custom View and go to it") {
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+		}
+
+		task ("Mark Custom View as default and go to View Builder") {
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field,Status");
+		}
+
+		task ("Go to Filters tab and add new Filter and assert it") {
+			ObjectCustomViews.goToFiltersTab();
+
+			ObjectCustomViews.addNewFilterViaUI(
+				filterBy = "Status",
+				filterType = "Includes",
+				filterValue = "Pending");
+
+			Button.clickSave();
+		}
+
+		task ("Assert that the entry is not present on Custom Object entries (because your status is approved)") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156800");
+
+			ObjectPortlet.assertEntryNotPresent(entry = "Entry Test");
+		}
+
+		task ("Go back to Custom Views > Filters tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 156800");
+
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+			ObjectCustomViews.goToFiltersTab();
+		}
+
+		task ("Edit Filter, click on approved (add), click on draft (remove)") {
+			Click(
+				key_filterName = "Status",
+				locator1 = "ObjectCustomViews#SIDEBAR_ELLIPSIS_ON_CUSTOM_VIEW");
+
+			DropdownMenuItem.click(menuItem = "Edit");
+
+			Click(
+				key_filterLabel = "Value",
+				locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");
+
+			for (var filterValueList : list "Approved,Pending") {
+				Click.clickAtNotVisible(
+					key_columnOption = "${filterValueList}",
+					locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+			}
+
+			ObjectCustomViews.clickSaveOnModal();
+		}
+
+		task ("Assert Filter edited and save") {
+			ObjectCustomViews.assertPresentEntriesOnFilters(
+				filterBy = "Status",
+				filterValue = "Approved");
+
+			Button.clickSave();
+		}
+
+		task ("Assert that the entry is present on Custom Object entries") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156800");
+
+			ObjectPortlet.viewEntry(entry = "Entry Test");
+		}
+	}
+
 	@description = "LPS-144472 - Verify it is not is possible to create a Default Sort when there isn't column"
 	@priority = "4"
 	test CannotCreateDefaultSortWhenNoColumn {

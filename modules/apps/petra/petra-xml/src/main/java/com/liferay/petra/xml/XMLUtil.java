@@ -29,15 +29,6 @@ import org.dom4j.DocumentException;
  */
 public class XMLUtil {
 
-	public static String formatXML(Document document) {
-		try {
-			return document.formattedString(StringPool.DOUBLE_SPACE);
-		}
-		catch (IOException ioException) {
-			throw new SystemException(ioException);
-		}
-	}
-
 	public static String formatXML(String xml) {
 
 		// If the closing token of a CDATA container is found inside the CDATA

@@ -12,33 +12,51 @@
  * details.
  */
 
-import {APIResponse, TestrayRun} from './types';
+import yupSchema from '../../schema/yup';
+import Rest from './Rest';
+import {TestrayRun} from './types';
 
-const getRunTransformData = (
-	response: APIResponse<TestrayRun>
-): APIResponse<TestrayRun> => {
-	return {
-		...response,
-		items: response?.items?.map((run) => {
-			const environmentValues = run.name.split('|');
+type RunForm = typeof yupSchema.run.__outputType;
 
-			const [
-				applicationServer,
-				browser,
-				database,
-				javaJDK,
-				operatingSystem,
-			] = environmentValues;
+class TestrayRunRest extends Rest<RunForm, TestrayRun> {
+	constructor() {
+		super({
+			adapter: ({
+				buildId: r_buildToRuns_c_buildId,
+				description,
+				environmentHash,
+				name,
+				number,
+			}) => ({
+				description,
+				environmentHash,
+				name,
+				number,
+				r_buildToRuns_c_buildId,
+			}),
+			transformData: (run) => {
+				const environmentValues = run.name.split('|');
 
-			return {
-				...run,
-				applicationServer,
-				browser,
-				database,
-				javaJDK,
-				operatingSystem,
-			};
-		}),
-	};
-};
-export {getRunTransformData};
+				const [
+					applicationServer,
+					browser,
+					database,
+					javaJDK,
+					operatingSystem,
+				] = environmentValues;
+
+				return {
+					...run,
+					applicationServer,
+					browser,
+					database,
+					javaJDK,
+					operatingSystem,
+				};
+			},
+			uri: 'runs',
+		});
+	}
+}
+
+export const testrayRunRest = new TestrayRunRest();

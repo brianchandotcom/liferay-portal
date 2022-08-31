@@ -27,12 +27,13 @@ interface RestContructor<YupModel = any, ObjectModel = any> {
 }
 
 class Rest<YupModel = any, ObjectModel = any> {
+	private batchMinimumThreshold = 10;
 	protected adapter: Adapter = (data) => data;
-	public transformData: TransformData = (data) => data;
-	public nestedFields: string = '';
-	public uri: string;
-	public resource: string = '';
 	public fetcher = fetcher;
+	public nestedFields: string = '';
+	public resource: string = '';
+	public transformData: TransformData = (data) => data;
+	public uri: string;
 
 	constructor({
 		adapter,
@@ -60,6 +61,17 @@ class Rest<YupModel = any, ObjectModel = any> {
 		await this.beforeCreate(data);
 
 		return fetcher.post(`/${this.uri}`, this.adapter(data));
+	}
+
+	public async createBatch(data: YupModel[]): Promise<void> {
+		if (data.length >= this.batchMinimumThreshold) {
+			return fetcher.post(
+				`/${this.uri}/batch`,
+				data.map((item) => this.adapter(item))
+			);
+		}
+
+		await Promise.allSettled(data.map((item) => this.create(item)));
 	}
 
 	public getResource(id: number | string) {

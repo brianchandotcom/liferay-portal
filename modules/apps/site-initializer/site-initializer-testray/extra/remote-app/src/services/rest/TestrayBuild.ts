@@ -13,11 +13,21 @@
  */
 
 import yupSchema from '../../schema/yup';
+import {TEST_STATUS} from '../../util/constants';
 import Rest from './Rest';
+import {testrayCaseResultRest} from './TestrayCaseResult';
+import {testrayFactorRest} from './TestrayFactor';
+import {testrayRunRest} from './TestrayRun';
 
 import type {TestrayBuild} from './types';
 
 type Build = typeof yupSchema.build.__outputType & {projectId: number};
+
+type RowItem = {
+	factorCategory: string;
+	factorCategoryId: string;
+	value: number;
+};
 
 class TestrayBuildRest extends Rest<Build, TestrayBuild> {
 	constructor() {
@@ -50,6 +60,60 @@ class TestrayBuildRest extends Rest<Build, TestrayBuild> {
 			}),
 			uri: 'builds',
 		});
+	}
+
+	public async create(data: Build): Promise<TestrayBuild> {
+		const build = await super.create(data);
+
+		const caseIds = data.caseIds || [];
+		const runs = data.categories || [];
+
+		let runIndex = 1;
+
+		for (const run of runs) {
+			const factorOptions = Object.values(run) as RowItem[];
+
+			const factorCategories = factorOptions.map(
+				({factorCategory}) => factorCategory
+			);
+
+			const testrayRun = await testrayRunRest.create({
+				buildId: build.id,
+				description: undefined,
+				environmentHash: undefined,
+				name: factorCategories.join(' | '),
+				number: runIndex,
+			});
+
+			for (const factorOption of factorOptions) {
+				await testrayFactorRest.create({
+					factorCategoryId: factorOption.factorCategoryId,
+					factorOptionId: (factorOption.value as unknown) as string,
+					name: '',
+					routineId: undefined,
+					runId: testrayRun.id,
+				});
+
+				factorOption.value;
+			}
+
+			await testrayCaseResultRest.createBatch(
+				caseIds.map((caseId) => ({
+					buildId: build.id,
+					caseId,
+					commentMBMessage: undefined,
+					dueStatus: TEST_STATUS.Untested.toString(),
+					issues: undefined,
+					runId: testrayRun.id,
+					startDate: undefined,
+					userId: 0,
+				}))
+			);
+
+			runIndex++;
+		}
+
+		return build as TestrayBuild;
 	}
 }
 

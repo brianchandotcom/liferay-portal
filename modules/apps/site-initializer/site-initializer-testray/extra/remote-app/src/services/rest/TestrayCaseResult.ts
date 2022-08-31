@@ -12,16 +12,125 @@
  * details.
  */
 
-import CaseResult from '../../pages/Project/Routines/Builds/Inner/CaseResult';
 import yupSchema from '../../schema/yup';
-import fetcher from '../fetcher';
 import {Liferay} from '../liferay';
-import {APIResponse, TestrayCaseResult} from './types';
+import Rest from './Rest';
+import {TestrayCaseResult} from './types';
 
-type CaseResult = typeof yupSchema.caseResult.__outputType;
+type CaseResultForm = typeof yupSchema.caseResult.__outputType;
 
-const getCaseResults =
-	'/caseresults?nestedFields=case,component.team,build.productVersion,build.routine,run,user&nestedFieldsDepth=3';
+class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
+	constructor() {
+		super({
+			adapter: ({
+				buildId: r_buildToCaseResult_c_buildId,
+				caseId: r_caseToCaseResult_c_caseId,
+				commentMBMessage,
+				dueStatus,
+				issues,
+				runId: r_runToCaseResult_c_runId,
+				startDate,
+				userId: r_userToCaseResults_userId = Liferay.ThemeDisplay.getUserId(),
+			}) => ({
+				commentMBMessage,
+				dueStatus,
+				issues,
+				r_buildToCaseResult_c_buildId,
+				r_caseToCaseResult_c_caseId,
+				r_runToCaseResult_c_runId,
+				r_userToCaseResults_userId,
+				startDate,
+			}),
+			transformData: (caseResult) =>
+				({
+					...caseResult,
+					assignedUserId: caseResult?.assignedUserId,
+					attachments: caseResult?.attachments,
+					build: caseResult?.r_buildToCaseResult_c_build
+						? {
+								...caseResult?.r_buildToCaseResult_c_build,
+								gitHash:
+									caseResult.r_buildToCaseResult_c_build
+										.gitHash,
+								id: caseResult.r_buildToCaseResult_c_build.id,
+								productVersion:
+									caseResult.r_buildToCaseResult_c_build
+										?.r_productVersionToBuilds_c_productVersion,
+								routine:
+									caseResult.r_buildToCaseResult_c_build
+										?.r_routineToBuilds_c_routine,
+						  }
+						: null,
+					case: caseResult?.r_caseToCaseResult_c_case
+						? {
+								...caseResult?.r_caseToCaseResult_c_case,
+								caseNumber:
+									caseResult?.r_caseToCaseResult_c_case
+										?.caseNumber,
+								caseType: caseResult?.r_caseToCaseResult_c_case
+									?.caseType
+									? {
+											name:
+												caseResult
+													.r_caseToCaseResult_c_case
+													.caseType?.name,
+									  }
+									: null,
+								component:
+									caseResult?.r_caseToCaseResult_c_case
+										?.r_componentToCases_c_component,
+								id: caseResult?.r_caseToCaseResult_c_case?.id,
+								name:
+									caseResult?.r_caseToCaseResult_c_case.name,
+								priority:
+									caseResult.r_caseToCaseResult_c_case
+										.priority,
+						  }
+						: null,
+					commentMBMessageId: caseResult?.commentMBMessageId,
+					component: caseResult?.r_componentToCaseResult_c_component
+						? {
+								...caseResult.r_componentToCaseResult_c_component,
+								team:
+									caseResult
+										.r_componentToCaseResult_c_component
+										.r_teamToComponents_c_team,
+						  }
+						: null,
+					dateCreated: caseResult?.dateCreated,
+					dateModified: caseResult?.dateModified,
+					dueStatus: caseResult?.dueStatus,
+					errors: caseResult?.errors,
+					id: caseResult?.id,
+					run: caseResult?.r_runToCaseResult_c_run
+						? {
+								...caseResult?.r_runToCaseResult_c_run,
+								build:
+									caseResult?.r_runToCaseResult_c_run?.build,
+						  }
+						: null,
+					startDate: caseResult?.startDate,
+					user: caseResult?.r_userToCaseResults_user
+						? {
+								...caseResult?.r_userToCaseResults_user,
+								additionalName:
+									caseResult?.r_userToCaseResults_user
+										?.additionalName,
+								emailAddress:
+									caseResult?.r_userToCaseResults_user
+										?.emailAddress,
+								givenName:
+									caseResult?.r_userToCaseResults_user
+										?.givenName,
+								id: caseResult?.r_userToCaseResults_user?.uuid,
+						  }
+						: null,
+					warnings: caseResult?.warnings,
+				} as any),
+			uri: 'caseresults',
+		});
+	}
+}
 
 const caseResultResource =
 	'/caseresults?nestedFields=case,component.team,build.productVersion,build.routine,run,user&nestedFieldsDepth=3';
@@ -31,112 +140,6 @@ const nestedFieldsParam =
 
 const caseResultsResource = `/caseresults?${nestedFieldsParam}`;
 
-const getCaseResultsQuery = (caseResultId: number | string | undefined) => {
-	const url = `/caseresults/${caseResultId}`;
+export const testrayCaseResultRest = new TestrayCaseResultRest();
 
-	return url;
-};
-
-const transformDataCaseResults = (caseResult: TestrayCaseResult) => {
-	return {
-		...caseResult,
-		assignedUserId: caseResult?.assignedUserId,
-		attachments: caseResult?.attachments,
-		build: caseResult?.r_buildToCaseResult_c_build
-			? {
-					...caseResult?.r_buildToCaseResult_c_build,
-					gitHash: caseResult.r_buildToCaseResult_c_build.gitHash,
-					id: caseResult.r_buildToCaseResult_c_build.id,
-					productVersion:
-						caseResult.r_buildToCaseResult_c_build
-							?.r_productVersionToBuilds_c_productVersion,
-					routine:
-						caseResult.r_buildToCaseResult_c_build
-							?.r_routineToBuilds_c_routine,
-			  }
-			: null,
-		case: caseResult?.r_caseToCaseResult_c_case
-			? {
-					...caseResult?.r_caseToCaseResult_c_case,
-					caseNumber:
-						caseResult?.r_caseToCaseResult_c_case?.caseNumber,
-					caseType: caseResult?.r_caseToCaseResult_c_case?.caseType
-						? {
-								name:
-									caseResult.r_caseToCaseResult_c_case
-										.caseType?.name,
-						  }
-						: null,
-					component:
-						caseResult?.r_caseToCaseResult_c_case
-							?.r_componentToCases_c_component,
-					id: caseResult?.r_caseToCaseResult_c_case?.id,
-					name: caseResult?.r_caseToCaseResult_c_case.name,
-					priority: caseResult.r_caseToCaseResult_c_case.priority,
-			  }
-			: null,
-		commentMBMessageId: caseResult?.commentMBMessageId,
-		component: caseResult?.r_componentToCaseResult_c_component
-			? {
-					...caseResult.r_componentToCaseResult_c_component,
-					team:
-						caseResult.r_componentToCaseResult_c_component
-							.r_teamToComponents_c_team,
-			  }
-			: null,
-		dateCreated: caseResult?.dateCreated,
-		dateModified: caseResult?.dateModified,
-		dueStatus: caseResult?.dueStatus,
-		errors: caseResult?.errors,
-		id: caseResult?.id,
-		run: caseResult?.r_runToCaseResult_c_run
-			? {
-					...caseResult?.r_runToCaseResult_c_run,
-					build: caseResult?.r_runToCaseResult_c_run?.build,
-			  }
-			: null,
-		startDate: caseResult?.startDate,
-		user: caseResult?.r_userToCaseResults_user
-			? {
-					...caseResult?.r_userToCaseResults_user,
-					additionalName:
-						caseResult?.r_userToCaseResults_user?.additionalName,
-					emailAddress:
-						caseResult?.r_userToCaseResults_user?.emailAddress,
-					givenName: caseResult?.r_userToCaseResults_user?.givenName,
-					id: caseResult?.r_userToCaseResults_user?.uuid,
-			  }
-			: null,
-		warnings: caseResult?.warnings,
-	};
-};
-
-const adapter = ({...form}: CaseResult) => ({
-	...form,
-	closedDate: new Date(),
-	r_userToCaseResults_userId: Liferay.ThemeDisplay.getUserId(),
-});
-
-const createCaseResult = (caseResult: CaseResult) =>
-	fetcher.post('/caseresults', adapter(caseResult));
-
-const updateCaseResult = (id: number, caseResult: CaseResult) =>
-	fetcher.put(`/caseresults/${id}`, adapter(caseResult));
-
-const getCaseResultTransformData = (
-	response: APIResponse<TestrayCaseResult>
-) => ({
-	...response,
-	items: response?.items?.map(transformDataCaseResults),
-});
-
-export {
-	caseResultResource,
-	caseResultsResource,
-	createCaseResult,
-	getCaseResults,
-	getCaseResultsQuery,
-	getCaseResultTransformData,
-	updateCaseResult,
-	transformDataCaseResults,
-};
+export {caseResultResource, caseResultsResource};

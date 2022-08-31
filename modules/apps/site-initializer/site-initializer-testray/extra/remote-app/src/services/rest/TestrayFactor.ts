@@ -12,12 +12,28 @@
  * details.
  */
 
+import yupSchema from '../../schema/yup';
 import Rest from './Rest';
 import {TestrayFactor} from './types';
 
-class TestrayFactorRest extends Rest<any, TestrayFactor> {
+type TestrayFactorType = Omit<typeof yupSchema.factor.__outputType, 'id'>;
+
+class TestrayFactorRest extends Rest<TestrayFactorType, TestrayFactor> {
 	constructor() {
 		super({
+			adapter: ({
+				factorCategoryId: r_factorCategoryToFactors_c_factorCategoryId,
+				factorOptionId: r_factorOptionToFactors_c_factorOptionId,
+				name,
+				routineId: r_routineToFactors_c_routineId,
+				runId: r_runToFactors_c_runId,
+			}) => ({
+				name,
+				r_factorCategoryToFactors_c_factorCategoryId,
+				r_factorOptionToFactors_c_factorOptionId,
+				r_routineToFactors_c_routineId,
+				r_runToFactors_c_runId,
+			}),
 			nestedFields: 'factorOption,factorCategory',
 			transformData: ({
 				r_factorCategoryToFactors_c_factorCategory: factorCategory,

@@ -16,10 +16,18 @@ package com.liferay.commerce.internal.model.listener;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.exception.CommerceAccountOrdersException;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,6 +38,29 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(enabled = false, immediate = true, service = ModelListener.class)
 public class AccountEntryModelListener extends BaseModelListener<AccountEntry> {
+
+	@Override
+	public void onAfterUpdate(
+			AccountEntry originalAccountEntry, AccountEntry accountEntry)
+		throws ModelListenerException {
+
+		try {
+			List<CommerceOrder> commerceOrders =
+				_commerceOrderLocalService.getCommerceOrdersByCommerceAccountId(
+					accountEntry.getAccountEntryId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			Indexer<CommerceOrder> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(CommerceOrder.class);
+
+			for (CommerceOrder commerceOrder : commerceOrders) {
+				indexer.reindex(commerceOrder);
+			}
+		}
+		catch (SearchException searchException) {
+			throw new ModelListenerException(searchException);
+		}
+	}
 
 	@Override
 	public void onBeforeRemove(AccountEntry accountEntry) {

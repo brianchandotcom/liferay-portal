@@ -69,11 +69,7 @@ public class EntityFieldConfigurationFieldOptionsProvider
 
 		_options = new ArrayList<>();
 
-		for (Map.Entry<String, EntityField> entry :
-				entityFieldsMap.entrySet()) {
-
-			EntityField entityField = entry.getValue();
-
+		for (EntityField entityField : entityFieldsMap.values()) {
 			if (Objects.equals(
 					entityField.getType(), EntityField.Type.STRING)) {
 

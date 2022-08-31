@@ -213,9 +213,18 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteScope {
+		property test.name.skip.portal.instance = "PageAudit#UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteScope";
 
-		// TODO LPS-128383 - Not possible to automate now LPS-135167
+		task ("Uncheck PageSpeed at Instance Settings") {
+			PageAudit.disableGooglePageSpeedViaInstanceSettings();
+		}
 
+		task ("Then the 'Google PageSpeed Insights' tab won't be visible in the 'SITE SCOPE' section") {
+			AssertElementNotPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Site Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
 	}
 
 	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section

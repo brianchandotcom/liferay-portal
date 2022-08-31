@@ -62,11 +62,6 @@ public class FieldSetsPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		Portlet portlet = _portletLocalService.getPortletById(
-			portletDisplay.getId());
-
 		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				portletRequest,
@@ -82,7 +77,16 @@ public class FieldSetsPortletConfigurationIcon
 		).setParameter(
 			"refererPortletName", KaleoFormsPortletKeys.KALEO_FORMS_ADMIN
 		).setParameter(
-			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet)
+			"refererWebDAVToken",
+			() -> {
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
+
+				Portlet portlet = _portletLocalService.getPortletById(
+					portletDisplay.getId());
+
+				return WebDAVUtil.getStorageToken(portlet);
+			}
 		).setParameter(
 			"showAncestorScopes", true
 		).setParameter(

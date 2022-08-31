@@ -64,11 +64,6 @@ public class DDMStructuresPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		Portlet portlet = _portletLocalService.getPortletById(
-			portletDisplay.getId());
-
 		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				portletRequest,
@@ -84,7 +79,16 @@ public class DDMStructuresPortletConfigurationIcon
 		).setParameter(
 			"refererPortletName", DDLPortletKeys.DYNAMIC_DATA_LISTS
 		).setParameter(
-			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet)
+			"refererWebDAVToken",
+			() -> {
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
+
+				Portlet portlet = _portletLocalService.getPortletById(
+					portletDisplay.getId());
+
+				return WebDAVUtil.getStorageToken(portlet);
+			}
 		).setParameter(
 			"showAncestorScopes", true
 		).buildString();

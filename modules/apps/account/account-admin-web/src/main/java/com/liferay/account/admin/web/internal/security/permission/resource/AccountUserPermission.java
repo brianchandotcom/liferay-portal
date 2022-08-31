@@ -19,6 +19,7 @@ import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.validator.AccountEntryEmailValidator;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
@@ -29,6 +30,18 @@ import java.util.Objects;
  * @author Drew Brokke
  */
 public class AccountUserPermission {
+
+	public static void checkEditUserPermission(
+			PermissionChecker permissionChecker, String portletId,
+			AccountEntry accountEntry, User accountUser)
+		throws PrincipalException {
+
+		if (!hasEditUserPermission(
+				permissionChecker, portletId, accountEntry, accountUser)) {
+
+			throw new PrincipalException();
+		}
+	}
 
 	public static boolean hasEditUserPermission(
 		PermissionChecker permissionChecker, String portletId,

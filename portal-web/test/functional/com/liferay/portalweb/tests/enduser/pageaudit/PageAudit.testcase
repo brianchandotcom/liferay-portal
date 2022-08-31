@@ -262,7 +262,6 @@ definition {
 		}
 	}
 
-
 	@description = "LPS-130621 Given the page audit panel
 	When the panel is showing cached data
 	Then there's an alert informing about the date and the hour when it was last updated"
@@ -1215,7 +1214,7 @@ definition {
 		}
 	}
 
-    @description = "LPS-128385: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
+	@description = "LPS-128385: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
 	When the Enable Google PageSpeed Insights check is unchecked
 	Then the Page Audit icon won't be visible from the view mode of the pages in the site"
 	@priority = "3"

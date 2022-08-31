@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        PageAudit.tearDownSystemSettingsConfigurations();
+		PageAudit.tearDownSystemSettingsConfigurations();
 
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
@@ -65,7 +65,7 @@ definition {
 		}
 	}
 
-    @description = "LPS-134760: Given the Page Audit panel
+	@description = "LPS-134760: Given the Page Audit panel
 	When the API key is set but it is not valid
 	Then the Page Speed API will show a "Show details" link, that will display the info details of the error, provided by the API."
 	@priority = "3"
@@ -192,7 +192,7 @@ definition {
 		}
 	}
 
-    @description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the content pages doesn't show"
+	@description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the content pages doesn't show"
 	@priority = "3"
 	test PageAuditContentPageDisabled {
 		property portal.acceptance = "true";
@@ -274,7 +274,7 @@ definition {
 		}
 	}
 
-    @description = "LPS-132232: Given the Page Audit Panel
+	@description = "LPS-132232: Given the Page Audit Panel
 	When the user opens it and there are no failing elements retrieved for any of the checks
 	Then a message "Your page has no issues" and the matching image show, the two sections SEO and Accessibility show and they are collapsed by default"
 	@priority = "3"
@@ -343,37 +343,7 @@ definition {
 		}
 	}
 
-    @description = "LPS-125851: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
-	When the Enable Google PageSpeed Insights check is unchecked
-	Then the 'Google PageSpeed Insights' tab isn't visible in the Site settings of any of the sites of the current Instance."
-	@priority = "3"
-	test UncheckedSystemSettingsVirtualInstanceThenNotVisibleAtTabSiteSettings {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsVirtualInstanceThenNotVisibleAtTabSiteSettings";
-
-		task ("Disable Google PageSpeed settings tab in the System Scope section") {
-			PageAudit.disableGooglePageSpeedViaSystemSettings();
-		}
-
-		task ("Navigate to Site Settings and check if tab is not visible") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ProductMenu.gotoPortlet(
-				category = "Configuration",
-				portlet = "Site Settings");
-
-			Click(
-				key_itemName = "Pages",
-				locator1 = "ListGroupItem#ITEM_TEXT");
-
-			AssertElementNotPresent(
-				key_configurationName = "Google PageSpeed Insights",
-				key_configurationScope = "Site Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-		}
-	}
-
-    @description = "LPS-125851: Given the Google PageSpeed settings tab in the 'SITE SCOPE' section
+	@description = "LPS-125851: Given the Google PageSpeed settings tab in the 'SITE SCOPE' section
 	When the Enable Google PageSpeed Insights check is unchecked
 	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"
 	@priority = "3"
@@ -400,6 +370,42 @@ definition {
 			AssertNotChecked.assertNotCheckedNotVisible(
 				checkboxName = "Enable",
 				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+	}
+
+	@description = "LPS-128383: Given the PageSpeed Insights settings in the System Settings
+	When Google PageSpeed Insights is not enabled (unchecked)
+	Then the tab Google PageSpeed Insights is not visible from Instance settings"
+	@priority = "4"
+	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtInstanceSettings {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsSystemScopeThenNotVisibleAtInstanceSettings";
+
+		task ("Disable Google PageSpeed settings tab in the System Scope section in System Settings") {
+			PageAudit.disableGooglePageSpeedViaSystemSettings(settingsScope = "System Scope");
+		}
+
+		task ("Go to Instance Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			Click(
+				key_itemName = "Pages",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+
+		task ("Check if PageSpeed tabs are not visible in Instance Settings") {
+			AssertElementNotPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+
+			AssertElementNotPresent(
+				key_configurationName = "Google PageSpeed Insights",
+				key_configurationScope = "Site Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 		}
 	}
 
@@ -443,34 +449,28 @@ definition {
 		}
 	}
 
-	@description = "LPS-128383: Given the PageSpeed Insights settings in the System Settings
-	When Google PageSpeed Insights is not enabled (unchecked)
-	Then the tab Google PageSpeed Insights is not visible from Instance settings"
-	@priority = "4"
-	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtInstanceSettings {
+	@description = "LPS-125851: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the 'Google PageSpeed Insights' tab isn't visible in the Site settings of any of the sites of the current Instance."
+	@priority = "3"
+	test UncheckedSystemSettingsVirtualInstanceThenNotVisibleAtTabSiteSettings {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsSystemScopeThenNotVisibleAtInstanceSettings";
+		property test.name.skip.portal.instance = "PageAudit#UncheckedSystemSettingsVirtualInstanceThenNotVisibleAtTabSiteSettings";
 
-		task ("Disable Google PageSpeed settings tab in the System Scope section in System Settings") {
-			PageAudit.disableGooglePageSpeedViaSystemSettings(settingsScope = "System Scope");
+		task ("Disable Google PageSpeed settings tab in the System Scope section") {
+			PageAudit.disableGooglePageSpeedViaSystemSettings();
 		}
 
-		task ("Go to Instance Settings") {
-			ApplicationsMenu.gotoPortlet(
+		task ("Navigate to Site Settings and check if tab is not visible") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ProductMenu.gotoPortlet(
 				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
+				portlet = "Site Settings");
 
 			Click(
 				key_itemName = "Pages",
 				locator1 = "ListGroupItem#ITEM_TEXT");
-		}
-
-		task ("Check if PageSpeed tabs are not visible in Instance Settings") {
-			AssertElementNotPresent(
-				key_configurationName = "Google PageSpeed Insights",
-				key_configurationScope = "Virtual Instance Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 
 			AssertElementNotPresent(
 				key_configurationName = "Google PageSpeed Insights",

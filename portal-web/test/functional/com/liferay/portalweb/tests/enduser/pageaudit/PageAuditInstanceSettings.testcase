@@ -27,7 +27,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        PageAudit.tearDownInstanceSettingsConfigurations();
+		PageAudit.tearDownInstanceSettingsConfigurations();
 
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
@@ -35,7 +35,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 	}
-    
+
 	@description = "LPS-128383: Given the preferred strategy dropdown in the Site Scope section
 	When the value is void ('Choose an option')
 	Then the call is made for Google Page Speed default value - desktop"
@@ -69,7 +69,6 @@ definition {
 		}
 	}
 
-
 	@description = "LPS-128383: Given any value in the Instance settings Site scope section
 	Then all sites shows the same value (also void fields)"
 	@priority = "5"
@@ -98,14 +97,14 @@ definition {
 			AssertTextEquals(
 				locator1 = "PageAudit#API_FIELD",
 				value1 = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
-			
+
 			AssertTextEquals(
 				locator1 = "Dropdown#SELECTED_VALUE",
 				value1 = "Mobile");
 		}
 	}
 
-    @description = "LPS-128383: Given the preferred strategy dropdown in the Site Scope section
+	@description = "LPS-128383: Given the preferred strategy dropdown in the Site Scope section
 	When the value is Mobile
 	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
 	@priority = "4"
@@ -138,7 +137,7 @@ definition {
 		}
 	}
 
-    @description = "LPS-128383: Given any value in the Instance settings Site scope section
+	@description = "LPS-128383: Given any value in the Instance settings Site scope section
 	When the same value has been overwritten in any of the sites
 	Then the value in the site prevails over any changes in the Instance settings"
 	@priority = "5"
@@ -177,7 +176,7 @@ definition {
 		}
 	}
 
-    @description = "LPS-128383: Given the Google PageSpeed settings tab in the Site Scope section
+	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Site Scope section
 	When the Enable Google PageSpeed Insights check is unchecked
 	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"
 	@priority = "3"

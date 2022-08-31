@@ -1,5 +1,21 @@
 definition {
 
+	macro assertFailingElementCount {
+		var javaScriptCountElement = '''
+		
+		return document.querySelectorAll('.failing-element').length.toString();
+
+		''';
+
+		var count = selenium.getEval("${javaScriptCountElement}");
+
+		return "${count}";
+
+		if ("${count}" != "${expectedLabels}") {
+			fail("Labels number is not correct");
+		}
+	}
+
 	macro backToPageBackButton {
 		Click(locator1 = "Icon#BACK");
 	}
@@ -41,81 +57,31 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro tearDownInstanceSettingsConfigurations {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Google PageSpeed Insights",
-			configurationScope = "Virtual Instance Scope");
-
-		PageAudit.resetDefaultValues();
-
-		Click(
-			key_configurationName = "Google PageSpeed Insights",
-			key_configurationScope = "Site Scope",
-			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-
-		PageAudit.resetDefaultValues();
-	}
-
-	macro tearDownSystemSettingsConfigurations {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Google PageSpeed Insights",
-			configurationScope = "System Scope");
-
-		PageAudit.resetDefaultValues();
-
-		Click(
-			key_configurationName = "Google PageSpeed Insights",
-			key_configurationScope = "Virtual Instance Scope",
-			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-
-		PageAudit.resetDefaultValues();
-		
-		Click(
-			key_configurationName = "Google PageSpeed Insights",
-			key_configurationScope = "Site Scope",
-			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-
-		PageAudit.resetDefaultValues();
-	}
-
 	macro connectToGooglePageAudit {
 		ClickNoError(
 			key_text = "Configure",
 			locator1 = "Button#ANY");
 	}
 
-	macro disableGooglePageSpeedViaSystemSettings {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+	macro disableGooglePageSpeedSettings {
+		if (IsChecked(checkboxName = "Enable", locator1 = "Checkbox#ANY_CHECKBOX")) {
+			Click.javaScriptClick(
+				checkboxName = "Enable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 
-		if (!(isSet(settingsScope))) {
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "Virtual Instance Scope");
-		}
-		else {
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Pages",
-				configurationName = "Google PageSpeed Insights",
-				configurationScope = "${settingsScope}");
+			AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "Enable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		PageAudit.disableGooglePageSpeedSettings();
+		if (IsElementPresent(locator1 = "Button#SAVE")) {
+			Click(locator1 = "Button#SAVE");
+		}
+		else if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Click(locator1 = "Button#UPDATE");
+		}
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro disableGooglePageSpeedViaInstanceSettings {
@@ -153,25 +119,26 @@ definition {
 		PageAudit.disableGooglePageSpeedSettings();
 	}
 
-	macro disableGooglePageSpeedSettings {
-		if (IsChecked(checkboxName = "Enable", locator1 = "Checkbox#ANY_CHECKBOX")) {
-			Click.javaScriptClick(
-				checkboxName = "Enable",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+	macro disableGooglePageSpeedViaSystemSettings {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
 
-			AssertNotChecked.assertNotCheckedNotVisible(
-				checkboxName = "Enable",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+		if (!(isSet(settingsScope))) {
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "Virtual Instance Scope");
+		}
+		else {
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Google PageSpeed Insights",
+				configurationScope = "${settingsScope}");
 		}
 
-		if (IsElementPresent(locator1 = "Button#SAVE")) {
-			Click(locator1 = "Button#SAVE");
-		}
-		else if (IsElementPresent(locator1 = "Button#UPDATE")) {
-			Click(locator1 = "Button#UPDATE");
-		}
-
-		Alert.viewSuccessMessage();
+		PageAudit.disableGooglePageSpeedSettings();
 	}
 
 	macro goToDetailView {
@@ -181,22 +148,6 @@ definition {
 	macro openPageAuditSidebar {
 		if (IsNotVisible(locator1 = "PageAudit#SIDEBAR")) {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-		}
-	}
-
-	macro assertFailingElementCount {
-		var javaScriptCountElement = '''
-		
-		return document.querySelectorAll('.failing-element').length.toString();
-
-		''';
-
-		var count = selenium.getEval("${javaScriptCountElement}");
-
-		return "${count}";
-
-		if ("${count}" != "${expectedLabels}") {
-			fail("Labels number is not correct");
 		}
 	}
 
@@ -322,6 +273,55 @@ definition {
 			value1 = "${url}");
 
 		PortletEntry.save();
+	}
+
+	macro tearDownInstanceSettingsConfigurations {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed Insights",
+			configurationScope = "Virtual Instance Scope");
+
+		PageAudit.resetDefaultValues();
+
+		Click(
+			key_configurationName = "Google PageSpeed Insights",
+			key_configurationScope = "Site Scope",
+			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+
+		PageAudit.resetDefaultValues();
+	}
+
+	macro tearDownSystemSettingsConfigurations {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed Insights",
+			configurationScope = "System Scope");
+
+		PageAudit.resetDefaultValues();
+
+		Click(
+			key_configurationName = "Google PageSpeed Insights",
+			key_configurationScope = "Virtual Instance Scope",
+			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+
+		PageAudit.resetDefaultValues();
+
+		Click(
+			key_configurationName = "Google PageSpeed Insights",
+			key_configurationScope = "Site Scope",
+			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+
+		PageAudit.resetDefaultValues();
 	}
 
 }

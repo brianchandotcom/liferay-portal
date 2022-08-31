@@ -773,10 +773,22 @@ information.
 					<available file="${project.dir}/tools/${build.binaries.gradle.file}" />
 				</not>
 				<then>
-					<get
-						dest="${project.dir}/tools/${build.binaries.gradle.file}"
-						src="${build.binaries.gradle.url}"
-					/>
+					<if>
+						<isset property="env.JENKINS_HOME" />
+						<then>
+							<mirrors-get
+								dest="${project.dir}/tools/${build.binaries.gradle.file}"
+								skipChecksum="true"
+								src="${build.binaries.gradle.url}"
+							/>
+						</then>
+						<else>
+							<get
+								dest="${project.dir}/tools/${build.binaries.gradle.file}"
+								src="${build.binaries.gradle.url}"
+							/>
+						</else>
+					</if>
 				</then>
 			</if>
 

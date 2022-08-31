@@ -14,13 +14,12 @@
 
 package com.liferay.client.extension.web.internal.frontend.data.set.model;
 
-import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.web.internal.display.context.util.CETLabelUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * @author Bruno Basto
@@ -47,45 +46,7 @@ public class CETFDSEntry {
 	}
 
 	public String getType() {
-		String type = _cet.getType();
-
-		if (Objects.equals(
-				type, ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
-
-			return LanguageUtil.get(_locale, "custom-element");
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)) {
-
-			return LanguageUtil.get(_locale, "global-css");
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_GLOBAL_JS)) {
-
-			return LanguageUtil.get(_locale, "global-js");
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_IFRAME)) {
-
-			return LanguageUtil.get(_locale, "iframe");
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_THEME_CSS)) {
-
-			return LanguageUtil.get(_locale, "theme-css");
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_THEME_FAVICON)) {
-
-			return LanguageUtil.get(_locale, "theme-favicon");
-		}
-		else if (Objects.equals(
-					type, ClientExtensionEntryConstants.TYPE_THEME_JS)) {
-
-			return LanguageUtil.get(_locale, "theme-js");
-		}
-
-		return type;
+		return CETLabelUtil.getTypeNameLabel(_locale, _cet.getType());
 	}
 
 	public boolean isReadOnly() {

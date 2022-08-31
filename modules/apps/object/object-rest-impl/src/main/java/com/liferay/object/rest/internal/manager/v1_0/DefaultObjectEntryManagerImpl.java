@@ -649,33 +649,8 @@ public class DefaultObjectEntryManagerImpl
 			objectRelationship.getObjectDefinitionId2());
 	}
 
-	private Object _toDTO(
-			BaseModel<?> baseModel,
-			com.liferay.object.model.ObjectEntry objectEntry)
-		throws Exception {
-
-		DTOConverter<BaseModel<?>, ?> dtoConverter =
-			(DTOConverter<BaseModel<?>, ?>)
-				_dtoConverterRegistry.getDTOConverter(
-					baseModel.getModelClassName());
-
-		if (dtoConverter == null) {
-			throw new InternalServerErrorException(
-				"No DTO converter found for " + baseModel.getModelClassName());
-		}
-
-		User user = _userLocalService.getUser(objectEntry.getUserId());
-
-		DefaultDTOConverterContext defaultDTOConverterContext =
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), _dtoConverterRegistry,
-				baseModel.getPrimaryKeyObj(), user.getLocale(), null, user);
-
-		return dtoConverter.toDTO(defaultDTOConverterContext, baseModel);
-	}
-
 	private Page<ObjectEntry> _getSystemObjectRelatedObjectEntries(
-			DTOConverterContext dtoConverterContext,					
+			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId,
 			ObjectRelationship objectRelationship,
 			ObjectRelatedModelsProvider objectRelatedModelsProvider,
@@ -793,6 +768,31 @@ public class DefaultObjectEntryManagerImpl
 					parseException2);
 			}
 		}
+	}
+
+	private Object _toDTO(
+			BaseModel<?> baseModel,
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws Exception {
+
+		DTOConverter<BaseModel<?>, ?> dtoConverter =
+			(DTOConverter<BaseModel<?>, ?>)
+				_dtoConverterRegistry.getDTOConverter(
+					baseModel.getModelClassName());
+
+		if (dtoConverter == null) {
+			throw new InternalServerErrorException(
+				"No DTO converter found for " + baseModel.getModelClassName());
+		}
+
+		User user = _userLocalService.getUser(objectEntry.getUserId());
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), _dtoConverterRegistry,
+				baseModel.getPrimaryKeyObj(), user.getLocale(), null, user);
+
+		return dtoConverter.toDTO(defaultDTOConverterContext, baseModel);
 	}
 
 	private List<ObjectEntry> _toObjectEntries(

@@ -177,7 +177,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 				}
 			).cell(
 				StringUtils.joinWith(
-					", ",
+					StringPool.COMMA_AND_SPACE,
 					ListUtil.toList(
 						contentDashboardItem.getAssetCategories(),
 						assetCategory -> assetCategory.getTitle(locale)))

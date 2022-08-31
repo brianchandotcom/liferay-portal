@@ -75,6 +75,10 @@ public interface WarehouseItemResource {
 			String externalReferenceCode, WarehouseItem warehouseItem)
 		throws Exception;
 
+	public Page<WarehouseItem> getWarehouseItemsUpdatedPage(
+			Date end, Date start, Pagination pagination)
+		throws Exception;
+
 	public Response deleteWarehouseItem(Long id) throws Exception;
 
 	public Response deleteWarehouseItemBatch(
@@ -87,24 +91,24 @@ public interface WarehouseItemResource {
 		throws Exception;
 
 	public Page<WarehouseItem>
-			getWarehousByExternalReferenceCodeWarehouseItemsPage(
+			getWarehouseByExternalReferenceCodeWarehouseItemsPage(
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public WarehouseItem postWarehousByExternalReferenceCodeWarehouseItem(
+	public WarehouseItem postWarehouseByExternalReferenceCodeWarehouseItem(
 			String externalReferenceCode, WarehouseItem warehouseItem)
 		throws Exception;
 
-	public Page<WarehouseItem> getWarehousIdWarehouseItemsPage(
+	public Page<WarehouseItem> getWarehouseIdWarehouseItemsPage(
 			Long id, Pagination pagination)
 		throws Exception;
 
-	public WarehouseItem postWarehousIdWarehouseItem(
+	public WarehouseItem postWarehouseIdWarehouseItem(
 			Long id, WarehouseItem warehouseItem)
 		throws Exception;
 
-	public Page<WarehouseItem> getWarehouseItemsUpdatedPage(
-			Date end, Date start, Pagination pagination)
+	public Response postWarehouseIdWarehouseItemBatch(
+			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

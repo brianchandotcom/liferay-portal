@@ -16,8 +16,12 @@ package com.liferay.headless.commerce.admin.inventory.internal.graphql.servlet.v
 
 import com.liferay.headless.commerce.admin.inventory.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.commerce.admin.inventory.internal.graphql.query.v1_0.Query;
+import com.liferay.headless.commerce.admin.inventory.resource.v1_0.ChannelResource;
+import com.liferay.headless.commerce.admin.inventory.resource.v1_0.OrderTypeResource;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.ReplenishmentItemResource;
+import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseChannelResource;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseItemResource;
+import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseOrderTypeResource;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -44,15 +48,27 @@ public class ServletDataImpl implements ServletData {
 			_replenishmentItemResourceComponentServiceObjects);
 		Mutation.setWarehouseResourceComponentServiceObjects(
 			_warehouseResourceComponentServiceObjects);
+		Mutation.setWarehouseChannelResourceComponentServiceObjects(
+			_warehouseChannelResourceComponentServiceObjects);
 		Mutation.setWarehouseItemResourceComponentServiceObjects(
 			_warehouseItemResourceComponentServiceObjects);
+		Mutation.setWarehouseOrderTypeResourceComponentServiceObjects(
+			_warehouseOrderTypeResourceComponentServiceObjects);
 
+		Query.setChannelResourceComponentServiceObjects(
+			_channelResourceComponentServiceObjects);
+		Query.setOrderTypeResourceComponentServiceObjects(
+			_orderTypeResourceComponentServiceObjects);
 		Query.setReplenishmentItemResourceComponentServiceObjects(
 			_replenishmentItemResourceComponentServiceObjects);
 		Query.setWarehouseResourceComponentServiceObjects(
 			_warehouseResourceComponentServiceObjects);
+		Query.setWarehouseChannelResourceComponentServiceObjects(
+			_warehouseChannelResourceComponentServiceObjects);
 		Query.setWarehouseItemResourceComponentServiceObjects(
 			_warehouseItemResourceComponentServiceObjects);
+		Query.setWarehouseOrderTypeResourceComponentServiceObjects(
+			_warehouseOrderTypeResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -79,7 +95,23 @@ public class ServletDataImpl implements ServletData {
 		_warehouseResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<WarehouseChannelResource>
+		_warehouseChannelResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<WarehouseItemResource>
 		_warehouseItemResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<WarehouseOrderTypeResource>
+		_warehouseOrderTypeResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ChannelResource>
+		_channelResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<OrderTypeResource>
+		_orderTypeResourceComponentServiceObjects;
 
 }

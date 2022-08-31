@@ -89,6 +89,8 @@ export default {
 	'confirm-password': 'Confirm Password',
 	'create': 'Create',
 	'create-date': 'Create Date',
+	'create-environment-factors-if-you-want-to-generate-runs':
+		'Create environment factors if you want to generate runs.',
 	'create-x': 'Create {0}',
 	'created': 'Created',
 	'created-by': 'Created By',

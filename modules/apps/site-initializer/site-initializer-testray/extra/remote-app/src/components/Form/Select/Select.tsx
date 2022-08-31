@@ -26,14 +26,17 @@ type InputSelectProps = {
 	name: string;
 	options: {label: string; value: string | number}[];
 	register?: any;
+	registerOptions?: any;
 	required?: boolean;
 	type?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const InputSelect: React.FC<InputSelectProps> = ({
 	className,
+	registerOptions,
 	defaultOption = true,
 	errors = {},
+	defaultValue,
 	label,
 	name,
 	register = () => {},
@@ -50,15 +53,20 @@ const InputSelect: React.FC<InputSelectProps> = ({
 		>
 			<select
 				className={classNames('form-control rounded-xs', className)}
+				defaultValue={defaultValue}
 				id={id}
 				name={name}
 				{...otherProps}
-				{...register(name, {required})}
+				{...register(name, {required, ...registerOptions})}
 			>
 				{defaultOption && <option value=""></option>}
 
 				{options.map(({label, value}, index) => (
-					<option key={index} value={value}>
+					<option
+						key={index}
+						selected={value === defaultValue}
+						value={value}
+					>
 						{label}
 					</option>
 				))}

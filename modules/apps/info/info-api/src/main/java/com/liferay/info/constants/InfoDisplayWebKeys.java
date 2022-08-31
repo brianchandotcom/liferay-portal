@@ -32,6 +32,8 @@ public class InfoDisplayWebKeys {
 	public static final String INFO_ITEM_FIELD_VALUES_PROVIDER =
 		"INFO_FIELD_VALUES_PROVIDER";
 
+	public static final String INFO_ITEM_NAME = "INFO_ITEM_NAME";
+
 	public static final String INFO_ITEM_RENDERER_TRACKER =
 		"INFO_ITEM_RENDERER_TRACKER";
 

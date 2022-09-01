@@ -10,6 +10,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
 
 	tearDown {
@@ -20,6 +22,65 @@ definition {
 		}
 		else {
 			PageTemplatesAdminGlobalSite.tearDownCP();
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-143456. The site designer could reset failure count and reenable propagation when merge fail count reaches the configured threshold."
+	@priority = "4"
+	test ResetFailureCountAndReenablePropagation {
+		task ("Given a site designer has a widget page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Set");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Set",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Approved",
+				layoutPageTemplateType = "Widget Page Template");
+		}
+
+		task ("When the site desiger increases the merge fail count to reach the configured threshold") {
+			var layoutPrototypeId = JSONLayoutpagetemplate.getLayoutPrototypeId(
+				groupName = "Test Site Name",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateType = "Widget Page Template");
+
+			var script = '''
+	import com.liferay.portal.kernel.model.LayoutPrototype;
+	import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
+	import com.liferay.sites.kernel.util.SitesUtil;
+
+	LayoutPrototype layoutPrototype = LayoutPrototypeLocalServiceUtil.getLayoutPrototype(${layoutPrototypeId});
+	SitesUtil.setMergeFailCount(layoutPrototype, 4);
+			''';
+
+			ServerAdministration.openServerAdmin();
+
+			ServerAdministration.executeScript(
+				language = "Groovy",
+				script = "${script}");
+		}
+
+		task ("Then the site designer could reset the failure count and reenable propagation") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Set");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Configure",
+				pageTemplateName = "Page Template Name");
+
+			AssertTextPresent(value1 = "The propagation of changes from the Page Template has been disabled temporarily after 4 errors. Click Reset to reset the failure count and re-enable propagation.");
+
+			Button.click(button = "Reset");
+
+			Alert.viewSuccessMessage();
+
+			AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException: processAction method not implemented");
 		}
 	}
 

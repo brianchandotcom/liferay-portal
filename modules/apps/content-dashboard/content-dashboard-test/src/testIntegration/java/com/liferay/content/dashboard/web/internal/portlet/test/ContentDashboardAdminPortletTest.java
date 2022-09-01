@@ -38,6 +38,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.constants.LanguageConstants;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -1388,7 +1389,7 @@ public class ContentDashboardAdminPortletTest {
 		List<Object> results = searchContainer.getResults();
 
 		List<Object> versions = ReflectionTestUtil.invoke(
-			results.get(0), "getVersions", new Class<?>[] {Locale.class},
+			results.get(0), "getLatestVersions", new Class<?>[] {Locale.class},
 			LocaleUtil.US);
 
 		Assert.assertEquals(versions.toString(), 2, versions.size());
@@ -1725,6 +1726,7 @@ public class ContentDashboardAdminPortletTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
+		themeDisplay.setLanguageId(_language.getLanguageId(locale));
 		themeDisplay.setLocale(locale);
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
@@ -1771,6 +1773,9 @@ public class ContentDashboardAdminPortletTest {
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
+	private Language _language;
 
 	@Inject(
 		filter = "component.name=com.liferay.content.dashboard.web.internal.portlet.ContentDashboardAdminPortlet"

@@ -43,7 +43,7 @@ jest.mock(
 const FRAGMENT_ENTRY_LINK_ID = '1';
 
 const getFragmentEntryLink = ({
-	content = '<lfr-editable id="editable-id" class="page-editor__editable" type="text">Default content</lfr-editable>',
+	content = '<lfr-editable id="editable-id" class="page-editor__editable" type="img">Default content</lfr-editable>',
 	editableValues = {
 		[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
 			'editable-id': {},
@@ -228,5 +228,20 @@ describe('FragmentContent', () => {
 				'.page-editor__fragment-content--portlet-topper-hidden'
 			)
 		).toBeInTheDocument();
+	});
+
+	it('has the data-tooltip-floating attribute if the fragment is of type text', async () => {
+		const fragmentEntryLink = getFragmentEntryLink({
+			content:
+				'<lfr-editable class="page-editor__editable" id="editable-id" type="text">Default content</lfr-editable>',
+		});
+
+		await act(async () => {
+			renderFragmentContent({fragmentEntryLink});
+		});
+
+		const editableContent = document.body.querySelector('#editable-id');
+
+		expect(editableContent.dataset.tooltipFloating).toBe('true');
 	});
 });

@@ -176,12 +176,12 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 					_userLocalService.fetchUser(
 						workflowLog.getPreviousUserId()));
 				previousRole = _toRole(workflowLog.getPreviousRoleId());
-				previousState = workflowLog.getPreviousStateName();
-				previousStateLabel = workflowLog.getPreviousStateLabel(
+				previousState = workflowLog.getPreviousWorkflowNodeName();
+				previousStateLabel = workflowLog.getPreviousWorkflowNodeLabel(
 					contextAcceptLanguage.getPreferredLocale());
 				role = _toRole(workflowLog.getRoleId());
-				state = workflowLog.getStateName();
-				stateLabel = workflowLog.getStateLabel(
+				state = workflowLog.getCurrentWorkflowNodeName();
+				stateLabel = workflowLog.getCurrentWorkflowNodeLabel(
 					contextAcceptLanguage.getPreferredLocale());
 				type = _toWorkflowLogType(
 					KaleoLogUtil.convert(workflowLog.getType()));

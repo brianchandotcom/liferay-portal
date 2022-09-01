@@ -134,6 +134,9 @@ public interface LiferaySelenium {
 	public void assertSelectedLabel(String selectLocator, String pattern)
 		throws Exception;
 
+	public void assertTable(String locator, String tableString)
+		throws Exception;
+
 	public void assertText(String locator, String pattern) throws Exception;
 
 	public void assertTextCaseInsensitive(String locator, String pattern)

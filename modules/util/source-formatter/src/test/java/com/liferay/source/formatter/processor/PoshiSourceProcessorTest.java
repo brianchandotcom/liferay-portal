@@ -27,6 +27,11 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testMultipleSpacesInTaskDefinitions() throws Exception {
+		test("MultipleSpacesInTaskDefinitions.testmacro");
+	}
+
+	@Test
 	public void testPoshiPauseUsage() throws Exception {
 		test(
 			"PoshiPauseUsage.testmacro",
@@ -36,11 +41,6 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"'Pause'"
 			},
 			new Integer[] {6, 10});
-	}
-
-	@Test
-	public void testMultipleSpacesInTaskDefinitions() throws Exception {
-		test("MultipleSpacesInTaskDefinitions.testmacro");
 	}
 
 }

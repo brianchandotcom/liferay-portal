@@ -158,7 +158,7 @@ public class PoshiStylingCheck extends BaseFileCheck {
 
 		String[] lines = content.split("\n");
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(lines.length * 2);
 
 		for (String line : lines) {
 			String trimmedLine = StringUtil.trim(line);

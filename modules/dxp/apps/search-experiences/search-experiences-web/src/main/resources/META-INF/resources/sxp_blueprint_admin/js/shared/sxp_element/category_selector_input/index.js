@@ -96,7 +96,9 @@ function CategorySelectorInput({
 }) {
 	const [categoryTree, setCategoryTree] = useState([]);
 
-	const [inputValue, setInputValue] = useState(multiple ? '' : value || '');
+	const [inputValue, setInputValue] = useState(
+		multiple ? '' : value.label || value.toString() || ''
+	);
 	const [matchingCategories, setMatchingCategories] = useState([]);
 	const [
 		autocompleteDropdownActive,
@@ -260,7 +262,7 @@ function CategorySelectorInput({
 	};
 
 	const _handleSingleItemChange = (item) => {
-		setFieldValue(name, toNumber(item.value));
+		setFieldValue(name, {label: item.label, value: item.value});
 		setInputValue(item.label);
 		setMatchingCategories([]);
 	};

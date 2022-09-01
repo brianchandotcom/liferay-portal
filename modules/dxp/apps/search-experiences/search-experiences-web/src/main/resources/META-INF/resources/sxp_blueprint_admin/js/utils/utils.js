@@ -428,16 +428,20 @@ export function getConfigurationEntry({sxpElement, uiConfigurationValues}) {
 					);
 				}
 				else if (config.type === INPUT_TYPES.NUMBER) {
+					const initialValue = initialConfigValue.value
+						? toNumber(initialConfigValue.value)
+						: initialConfigValue;
+
 					configValue =
 						typeof config.typeOptions?.unitSuffix === 'string'
-							? typeof initialConfigValue === 'string'
-								? initialConfigValue.concat(
+							? typeof initialValue === 'string'
+								? initialValue.concat(
 										config.typeOptions?.unitSuffix
 								  )
-								: JSON.stringify(initialConfigValue).concat(
+								: JSON.stringify(initialValue).concat(
 										config.typeOptions?.unitSuffix
 								  )
-							: initialConfigValue;
+							: initialValue;
 				}
 				else if (config.type === INPUT_TYPES.SLIDER) {
 					configValue = initialConfigValue;

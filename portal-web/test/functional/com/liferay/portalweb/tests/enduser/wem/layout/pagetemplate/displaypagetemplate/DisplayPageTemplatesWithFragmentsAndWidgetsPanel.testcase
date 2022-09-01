@@ -30,8 +30,78 @@ definition {
 
 	@description = "This is a test for LPS-130964. The Fragments and Widgets panel should persist interaction states on display page template."
 	@priority = "4"
-	test PersistInteractionStates {
+	test PersistInteractionStatesForRelease {
 		property custom.properties = "feature.flag.LPS-153452=true";
+		property portal.upstream = "false";
+
+		task ("Given a display page template creator accesses to the Fragments and Widgets panel") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+		}
+
+		task ("When the display page template makes interactions with the Fragments and Widgets panel") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
+				Panel.collapsePanel(panel = "${sectionName}");
+			}
+
+			Panel.expandPanel(panel = "Content Display");
+
+			Navigator.gotoNavTab(navTab = "Widgets");
+
+			for (var sectionName : list "Highlighted,Accounts") {
+				Panel.collapsePanel(panel = "${sectionName}");
+			}
+
+			Panel.expandPanel(panel = "Content Management");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the Fragments and Widgets panel persists the interaction states") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			AssertElementPresent(
+				key_tab = "Widgets",
+				locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+			for (var sectionName : list "Highlighted,Accounts") {
+				AssertElementPresent(
+					key_panel = "${sectionName}",
+					locator1 = "Panel#PANEL_COLLAPSED");
+			}
+
+			AssertElementPresent(
+				key_panel = "Content Management",
+				locator1 = "Panel#PANEL_EXPANDED");
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+
+			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
+				AssertElementPresent(
+					key_panel = "${sectionName}",
+					locator1 = "Panel#PANEL_COLLAPSED");
+			}
+
+			AssertElementPresent(
+				key_panel = "Content Display",
+				locator1 = "Panel#PANEL_EXPANDED");
+		}
+	}
+
+	@description = "This is a test for LPS-130964. The Fragments and Widgets panel should persist interaction states on display page template."
+	@priority = "4"
+	test PersistInteractionStatesForUpstream {
+		property custom.properties = "feature.flag.LPS-153452=true";
+		property portal.release = "false";
 
 		task ("Given a display page template creator accesses to the Fragments and Widgets panel") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(

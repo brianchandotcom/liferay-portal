@@ -119,8 +119,94 @@ definition {
 
 	@description = "This is a test for LPS-130964. The Fragments and Widgets panel should persist interaction states on content page."
 	@priority = "4"
-	test PersistInteractionStates {
+	test PersistInteractionStatesForRelease {
 		property custom.properties = "feature.flag.LPS-153452=true";
+		property portal.upstream = "false";
+
+		task ("Given a page creator accesses to the Fragments and Widgets panel") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Fragment Set Name");
+
+			var htmlSnippet = '''
+<div class="fragment-example">
+	Fragment Example
+</div>		''';
+
+			JSONFragment.addSection(
+				collectionName = "Fragment Set Name",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Fragment Name");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("When the page creator makes interactions with the Fragments and Widgets panel") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
+				Panel.collapsePanel(panel = "${sectionName}");
+			}
+
+			for (var sectionName : list "Navigation Bars,Fragment Set Name") {
+				Panel.expandPanel(panel = "${sectionName}");
+			}
+
+			Navigator.gotoNavTab(navTab = "Widgets");
+
+			for (var sectionName : list "Highlighted,Accounts") {
+				Panel.collapsePanel(panel = "${sectionName}");
+			}
+
+			Panel.expandPanel(panel = "Content Management");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the Fragments and Widgets panel persists the interaction states") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertElementPresent(
+				key_tab = "Widgets",
+				locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+			for (var sectionName : list "Highlighted,Accounts") {
+				AssertElementPresent(
+					key_panel = "${sectionName}",
+					locator1 = "Panel#PANEL_COLLAPSED");
+			}
+
+			AssertElementPresent(
+				key_panel = "Content Management",
+				locator1 = "Panel#PANEL_EXPANDED");
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+
+			for (var sectionName : list "Layout Elements,Basic Components,Cookie Banner") {
+				AssertElementPresent(
+					key_panel = "${sectionName}",
+					locator1 = "Panel#PANEL_COLLAPSED");
+			}
+
+			for (var sectionName : list "Navigation Bars,Fragment Set Name") {
+				AssertElementPresent(
+					key_panel = "${sectionName}",
+					locator1 = "Panel#PANEL_EXPANDED");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-130964. The Fragments and Widgets panel should persist interaction states on content page."
+	@priority = "4"
+	test PersistInteractionStatesForUpstream {
+		property custom.properties = "feature.flag.LPS-153452=true";
+		property portal.release = "false";
 
 		task ("Given a page creator accesses to the Fragments and Widgets panel") {
 			JSONFragment.addFragmentCollection(

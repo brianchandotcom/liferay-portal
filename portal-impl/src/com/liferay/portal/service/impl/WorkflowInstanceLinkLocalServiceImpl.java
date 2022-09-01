@@ -158,11 +158,12 @@ public class WorkflowInstanceLinkLocalServiceImpl
 			WorkflowInstanceManagerUtil.getWorkflowInstance(
 				companyId, workflowInstanceLink.getWorkflowInstanceId());
 
-		List<WorkflowNode> currentNodes = workflowInstance.getCurrentNodes();
+		List<WorkflowNode> currentWorkflowNodes =
+			workflowInstance.getCurrentWorkflowNodes();
 
-		if (ListUtil.isNotEmpty(currentNodes)) {
+		if (ListUtil.isNotEmpty(currentWorkflowNodes)) {
 			DefaultWorkflowNode defaultWorkflowNode =
-				(DefaultWorkflowNode)currentNodes.get(0);
+				(DefaultWorkflowNode)currentWorkflowNodes.get(0);
 
 			return defaultWorkflowNode.getLabel(LocaleUtil.getDefault());
 		}

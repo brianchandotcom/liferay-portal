@@ -116,7 +116,7 @@ public class WorkflowInstanceViewDisplayContextTest {
 			).build());
 		defaultWorkflowNode2.setName("syntaxReview");
 
-		defaultWorkflowInstance.setCurrentNodes(
+		defaultWorkflowInstance.setCurrentWorkflowNodes(
 			Arrays.asList(defaultWorkflowNode1, defaultWorkflowNode2));
 
 		Assert.assertEquals(
@@ -143,7 +143,7 @@ public class WorkflowInstanceViewDisplayContextTest {
 			_workflowInstanceViewDisplayContext.getStatus(
 				defaultWorkflowInstance));
 
-		defaultWorkflowInstance.setCurrentNodes(
+		defaultWorkflowInstance.setCurrentWorkflowNodes(
 			Arrays.asList(defaultWorkflowNode1));
 
 		Assert.assertEquals(

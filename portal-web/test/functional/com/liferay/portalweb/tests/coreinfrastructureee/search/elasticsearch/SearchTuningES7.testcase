@@ -56,6 +56,8 @@ definition {
 
 	@priority = "3"
 	test AssertCannotAddDuplicateQueriesAndAliases {
+		property app.server.types = "tomcat,websphere";
+
 		SearchTuning.openResultRankingsAdmin();
 
 		SearchTuning.addResultRanking(searchQuery = "Article");
@@ -259,6 +261,8 @@ definition {
 
 	@priority = "4"
 	test AssertResultRankingsWithSynonyms {
+		property app.server.types = "jboss,tomcat,wildfly";
+
 		for (var webContentTitle : list "Article 1,Article 2,Journal 1,Journal 2") {
 			JSONWebcontent.addWebContent(
 				content = "",
@@ -524,6 +528,8 @@ definition {
 
 	@priority = "5"
 	test EnableAndDisableResultRankings {
+		property app.server.types = "tomcat,weblogic,websphere";
+
 		var content = "Article Article Article Article";
 
 		for (var count : list "1,2,3,4") {
@@ -882,6 +888,8 @@ definition {
 
 	@priority = "4"
 	test ReorderAddedResultsFromOtherSites {
+		property app.server.types = "jboss,tomcat,weblogic,wildfly";
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",

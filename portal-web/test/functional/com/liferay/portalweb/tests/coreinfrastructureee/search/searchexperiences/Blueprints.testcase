@@ -795,6 +795,8 @@ definition {
 	}
 
 	test BoostCustomLiferayObjectType {
+		property app.server.types = "jboss,tomcat,weblogic,wildfly";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 501",
 			objectName = "CustomObject501",

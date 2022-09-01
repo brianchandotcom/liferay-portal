@@ -284,20 +284,20 @@ public class BreadcrumbUtil {
 		}
 
 		if ((layoutsPageCount > 0) && !_isGuestGroup(group)) {
-			String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
-				layoutSet, themeDisplay);
-
-			if (themeDisplay.isAddSessionIdToURL()) {
-				layoutSetFriendlyURL = PortalUtil.getURLWithSessionId(
-					layoutSetFriendlyURL, themeDisplay.getSessionId());
-			}
-
 			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 			breadcrumbEntry.setTitle(
 				group.getDescriptiveName(themeDisplay.getLocale()));
 
 			if (group.isActive()) {
+				String layoutSetFriendlyURL =
+					PortalUtil.getLayoutSetFriendlyURL(layoutSet, themeDisplay);
+
+				if (themeDisplay.isAddSessionIdToURL()) {
+					layoutSetFriendlyURL = PortalUtil.getURLWithSessionId(
+						layoutSetFriendlyURL, themeDisplay.getSessionId());
+				}
+				
 				breadcrumbEntry.setURL(layoutSetFriendlyURL);
 			}
 

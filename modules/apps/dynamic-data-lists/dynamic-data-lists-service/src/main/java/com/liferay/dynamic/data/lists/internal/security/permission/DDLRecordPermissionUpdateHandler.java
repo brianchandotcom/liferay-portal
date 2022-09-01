@@ -48,13 +48,7 @@ public class DDLRecordPermissionUpdateHandler
 		_ddlRecordLocalService.updateDDLRecord(ddlRecord);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordLocalService(
-		DDLRecordLocalService ddlRecordLocalService) {
-
-		_ddlRecordLocalService = ddlRecordLocalService;
-	}
-
+	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
 
 }

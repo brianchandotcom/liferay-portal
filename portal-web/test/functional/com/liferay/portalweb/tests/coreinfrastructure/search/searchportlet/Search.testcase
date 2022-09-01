@@ -1473,6 +1473,8 @@ definition {
 
 	@priority = "4"
 	test SearchCompanyScopedObject {
+		property search.environment.suite.exclude = "true";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 500",
 			objectName = "CustomObject500",

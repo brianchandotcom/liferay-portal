@@ -3841,6 +3841,8 @@ definition {
 
 	@description = "This is a use case for LPS-147066."
 	test ViewLinksToLiferayDocumentation {
+		property search.environment.suite.exclude = "true";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");

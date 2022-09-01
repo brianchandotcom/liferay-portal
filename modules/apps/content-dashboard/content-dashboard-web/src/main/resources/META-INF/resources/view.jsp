@@ -290,6 +290,19 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
+							additionalProps='<%=
+								HashMapBuilder.<String, Object>put(
+									"currentRowId", rowId
+								).put(
+									"namespace", liferayPortletResponse.getNamespace()
+								).put(
+									"panelState", contentDashboardAdminDisplayContext.getPanelState()
+								).put(
+									"selectedItemFetchURL", contentDashboardAdminDisplayContext.getSelectedItemFetchURL(contentDashboardItem)
+								).put(
+									"selectedItemRowId", contentDashboardAdminDisplayContext.getSelectedItemRowId()
+								).build()
+							%>'
 							dropdownItems="<%= contentDashboardAdminDisplayContext.getDropdownItems(contentDashboardItem) %>"
 							propsTransformer="js/transformers/ActionsComponentPropsTransformer"
 						/>

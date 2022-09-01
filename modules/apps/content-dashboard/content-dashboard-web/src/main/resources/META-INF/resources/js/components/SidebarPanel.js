@@ -35,8 +35,8 @@ const handleSessionOnSidebarClose = () => {
 	);
 
 	Liferay.Util.Session.set(
-		'com.liferay.content.dashboard.web_panelCurrentItemInfo',
-		null
+		'com.liferay.content.dashboard.web_selectedItemRowId',
+		''
 	);
 };
 

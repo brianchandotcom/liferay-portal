@@ -35,6 +35,7 @@ import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -71,6 +73,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.ActionURL;
+import javax.portlet.ResourceURL;
 import javax.portlet.WindowStateException;
 
 /**
@@ -359,6 +362,12 @@ public class ContentDashboardAdminDisplayContext {
 		return sb.toString();
 	}
 
+	public String getPanelState() {
+		return SessionClicks.get(
+			_portal.getHttpServletRequest(_liferayPortletRequest),
+			"com.liferay.content.dashboard.web_panelState", "closed");
+	}
+
 	public long getScopeId() {
 		if (_scopeId > 0) {
 			return _scopeId;
@@ -387,6 +396,34 @@ public class ContentDashboardAdminDisplayContext {
 
 	public SearchContainer<ContentDashboardItem<?>> getSearchContainer() {
 		return _searchContainer;
+	}
+
+	public String getSelectedItemFetchURL(
+		ContentDashboardItem contentDashboardItem) {
+
+		ResourceURL resourceURL = _liferayPortletResponse.createResourceURL();
+
+		resourceURL.setParameter(
+			"backURL", _portal.getCurrentURL(_liferayPortletRequest));
+
+		InfoItemReference infoItemReference =
+			contentDashboardItem.getInfoItemReference();
+
+		resourceURL.setParameter("className", infoItemReference.getClassName());
+		resourceURL.setParameter(
+			"classPK", String.valueOf(infoItemReference.getClassPK()));
+
+		resourceURL.setResourceID(
+			"/content_dashboard/get_content_dashboard_item_info");
+
+		return resourceURL.toString();
+	}
+
+	public String getSelectedItemRowId() {
+		return SessionClicks.get(
+			_portal.getHttpServletRequest(_liferayPortletRequest),
+			"com.liferay.content.dashboard.web_selectedItemRowId",
+			StringPool.BLANK);
 	}
 
 	public Integer getStatus() {

@@ -20,40 +20,48 @@ import SidebarPanelInfoViewCollapsable from '../components/SidebarPanelInfoView/
 import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
 import {OPEN_PANEL_VALUE} from '../utils/constants';
 
-const handlePanelStateFromSession = async () => {
-	const _panelState = await Liferay.Util.Session.get(
-		'com.liferay.content.dashboard.web_panelState'
-	);
-
-	if (_panelState !== OPEN_PANEL_VALUE) {
+const handlePanelStateFromSession = ({
+	currentRowId,
+	namespace,
+	panelState,
+	selectedItemFetchURL,
+	selectedItemRowId,
+}) => {
+	if (
+		!selectedItemRowId ||
+		panelState !== OPEN_PANEL_VALUE ||
+		selectedItemRowId !== currentRowId
+	) {
 		return;
 	}
 
-	const {fetchURL, portletNamespace, rowId} = await Liferay.Util.Session.get(
-		'com.liferay.content.dashboard.web_panelCurrentItemInfo'
-	);
+	const allRequestValuesArePositive = [
+		selectedItemFetchURL,
+		namespace,
+		selectedItemRowId,
+	].every(Boolean);
+
+	if (!allRequestValuesArePositive) {
+		return;
+	}
 
 	showSidebar({
 		View: SidebarPanelInfoView,
-		fetchURL,
-		portletNamespace,
+		fetchURL: selectedItemFetchURL,
+		portletNamespace: namespace,
 	});
 
-	selectRow(portletNamespace, rowId);
+	selectRow(namespace, selectedItemRowId);
 };
 
-const handleSessionOnSidebarOpen = ({fetchURL, portletNamespace, rowId}) => {
+const handleSessionOnSidebarOpen = ({rowId}) => {
 	Liferay.Util.Session.set(
 		'com.liferay.content.dashboard.web_panelState',
 		OPEN_PANEL_VALUE
 	);
 	Liferay.Util.Session.set(
-		'com.liferay.content.dashboard.web_panelCurrentItemInfo',
-		{
-			fetchURL,
-			portletNamespace,
-			rowId,
-		}
+		'com.liferay.content.dashboard.web_selectedItemRowId',
+		rowId
 	);
 };
 
@@ -139,11 +147,12 @@ const actions = {
 };
 
 export default function propsTransformer({
+	additionalProps,
 	items,
 	portletNamespace,
 	...otherProps
 }) {
-	handlePanelStateFromSession();
+	handlePanelStateFromSession(additionalProps);
 
 	return {
 		...otherProps,

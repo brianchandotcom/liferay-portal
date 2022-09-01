@@ -52,6 +52,8 @@
 	"cluster-size": "Cluster Size",
 	"commerce": "Commerce",
 	"confirm": "Confirm",
+	"confirm-deactivate-keys": "Confirm Deactivate Keys",
+	"confirm-deactivation-terms": "Confirm Deactivation Terms",
 	"confirm-the-final-group-id-used-to-create-the-customer-s-analytics-cloud-environments": "Confirma the final Group ID used to create the customer&apos;s Analytics Cloud environments.",
 	"contact-the-support-team": "contact the Support team.",
 	"copied-to-clipboard": "copied to clipboard",
@@ -118,6 +120,7 @@
 	"hide": "Hide",
 	"host-name": "Host Name",
 	"hungary": "Hungary",
+	"i-certify-that-the-instance-s-activated-with-the-selected-activation-keys-has-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-keys": "I certify that the instances activated with the selected activation keys has have been shut down and that there is no liferay software installed deployed used or executed that is activated with the selected activation keys.",
 	"in-progress": "In Progress",
 	"incident-management-contacts-email-address": "Incident Management Contact's Email Address",
 	"incident-management-contacts-first-and-last-name": "Incident Management Contact's First and Last Name",
@@ -204,6 +207,7 @@
 	"please-enter-here-the-workspace-s-group-id": "Please enter here the workspace&apos;s Group ID.",
 	"please-enter-your-email-address": "Please enter your email address.",
 	"please-insert-a-valid-e-mail": "Please insert a valid e-mail.",
+	"please-make-sure-the-correct-workspace-group-id-is-saved-in-raysource": "Please make sure the correct Workspace Group ID is saved in RaySource.",
 	"please-note-that-the-friendly-url-cannot-be-changed-once-added": "Please note that the friendly URL cannot be changed once added.",
 	"portal": "Portal",
 	"portugal": "Portugal",
@@ -351,9 +355,5 @@
 	"your-experience-cloud-environments-are-ready": "Your Experience Cloud Environments are ready.",
 	"your-experience-cloud-project-is-being-set-up-and-will-be-available-soon": "Your Experience Cloud Project is being set up and will be available soon.",
 	"your-liferay-experience-cloud-workspace-will-be-provisioned-in-1-2-business-days-an-email-will-be-sent-once-your-workspace-is-ready": "Your Liferay Experience Cloud Workspace will be provisioned in 1-2 business days and will be sent once your workspace is ready",
-	"your-request-completed-successfully": "Your request completed successfully.",
-	"please-make-sure-the-correct-workspace-group-id-is-saved-in-raysource": "Please make sure the correct Workspace Group ID is saved in RaySource.",
-	"confirm-deactivation-terms": "Confirm Deactivation Terms",
-	"i-certify-that-the-instance-s-activated-with-the-selected-activation-keys-has-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-keys": "I certify that the instances activated with the selected activation keys has have been shut down and that there is no liferay software installed deployed used or executed that is activated with the selected activation keys.",
-	"confirm-deactivate-keys": "Confirm Deactivate Keys"
+	"your-request-completed-successfully": "Your request completed successfully."
 }

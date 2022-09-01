@@ -19,8 +19,12 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -95,7 +99,22 @@ public class KBArticleLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getURLTitle(Locale locale) {
-		return _kbArticle.getUrlTitle();
+		try {
+			if (_kbArticle.getKbFolderId() ==
+					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+				return _kbArticle.getUrlTitle();
+			}
+
+			KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(
+				_kbArticle.getKbFolderId());
+
+			return String.format(
+				"%s/%s", kbFolder.getUrlTitle(), _kbArticle.getUrlTitle());
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
 	}
 
 	private AssetEntry _getAssetEntry(KBArticle kbArticle)

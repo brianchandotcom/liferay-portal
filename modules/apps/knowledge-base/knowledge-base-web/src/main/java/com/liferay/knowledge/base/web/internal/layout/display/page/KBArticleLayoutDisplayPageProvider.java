@@ -15,12 +15,17 @@
 package com.liferay.knowledge.base.web.internal.layout.display.page;
 
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,9 +67,12 @@ public class KBArticleLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
 		try {
+			List<String> parts = StringUtil.split(urlTitle, CharPool.SLASH);
+
 			KBArticle kbArticle =
 				_kbArticleLocalService.fetchKBArticleByUrlTitle(
-					groupId, 0, urlTitle);
+					groupId, _getKBFolderId(groupId, parts),
+					parts.get(parts.size() - 1));
 
 			if (kbArticle == null) {
 				return null;
@@ -81,6 +89,21 @@ public class KBArticleLayoutDisplayPageProvider
 	public String getURLSeparator() {
 		return FriendlyURLResolverConstants.
 			URL_SEPARATOR_KNOWLEDGE_BASE_ARTICLE;
+	}
+
+	private long _getKBFolderId(long groupId, List<String> urlTitleParts) {
+		if (urlTitleParts.size() == 1) {
+			return KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
+		KBArticle kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
+			groupId, urlTitleParts.get(0), urlTitleParts.get(1));
+
+		if (kbArticle != null) {
+			return kbArticle.getKbFolderId();
+		}
+
+		return KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 
 	@Reference

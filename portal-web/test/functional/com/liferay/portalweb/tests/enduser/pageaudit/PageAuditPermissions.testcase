@@ -52,6 +52,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		TestUtils.hardRefresh();
+
 		JSONUser.tearDownNonAdminUsers();
 
 		JSONRole.deleteRole(roleTitle = "Page Audit Test Role");

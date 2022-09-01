@@ -27,6 +27,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		TestUtils.hardRefresh();
+
 		PageAudit.tearDownSystemSettingsConfigurations();
 
 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");

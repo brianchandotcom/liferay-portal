@@ -152,6 +152,11 @@
 		<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[contains(@class,'form-text') and contains(text(),'${key_viewCountCharacters}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>MARK_AS_STATE_TOGGLE</td>
+		<td>//input[@name="state"]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

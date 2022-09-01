@@ -130,6 +130,16 @@ definition {
 			Select(
 				locator1 = "ObjectAdmin#OBJECT_FIELDS_PICKLIST",
 				value1 = "${fieldPicklist}");
+
+			if ("${maskAsState}" == "true") {
+				Check.checkToggleSwitch(locator1 = "ObjectField#MARK_AS_STATE_TOGGLE");
+			}
+
+			Click(locator1 = "ObjectAdmin#DROPDOWN_DEFAULT_VALUE");
+
+			Click(
+				key_dropdownItem = "${itemName}",
+				locator1 = "ObjectAdmin#SELECT_DROPDOWN_ITEM_DEFAULT_VALUE");
 		}
 
 		Button.clickSave();
@@ -932,6 +942,10 @@ definition {
 		Navigator.gotoNavItem(navItem = "Define Permissions");
 
 		ObjectAdmin.searchInDefinePermissions(search = "Custom Objects");
+	}
+
+	macro goToStateManagerTab {
+		Click(locator1 = "ObjectAdmin#OBJECT_STATE_MANAGER_TAB");
 	}
 
 	macro goToValidationsTab {

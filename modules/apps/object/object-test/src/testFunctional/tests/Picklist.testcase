@@ -73,6 +73,81 @@ definition {
 		Picklist.assertPicklistNotPresent(picklistName = "Update Picklist Test");
 	}
 
+	@description = "LPS-152677 - Verify that it's possible to create an object with a state added to the picklist"
+	@priority = "4"
+	test CanCreateObjectWithState {
+		task ("Add a Custom Picklist and Item (via API)") {
+			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "PicklistItemTest",
+				itemName = "Picklist Item Test",
+				picklistName = "Picklist Test");
+		}
+
+		task ("Add a Custom Object and Custom Picklist (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161898",
+				objectName = "CustomObject161898",
+				pluralLabelName = "Custom Objects 161898");
+		}
+
+		task ("Go to Custom Object and create a Custom Picklist Field (check mask as state)") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161898");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Field Picklist",
+				fieldPicklist = "Picklist Test",
+				fieldType = "Picklist",
+				itemName = "Picklist Item Test",
+				maskAsState = "true");
+
+			Refresh();
+		}
+
+		task ("Assert that Custom Picklist Field is present and publish") {
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Field Picklist",
+				fieldType = "Picklist");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161898");
+		}
+
+		task ("Go to State Manager tab and assert Picklist") {
+			ObjectAdmin.goToStateManagerTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Field Picklist");
+
+			AssertElementPresent(
+				key_stateName = "Picklist Item Test",
+				locator1 = "ObjectAdmin#VIEW_STATE_NAME");
+		}
+
+		task ("Verify it's possible to add an entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject161898");
+
+			LexiconEntry.gotoAdd();
+
+			FormFields.viewRequiredAsterisk();
+
+			AssertElementPresent(
+				key_selectField = "Picklist Item Test",
+				locator1 = "Picklist#SELECT_FIELD_RELATIONSHIP_OBJECT");
+
+			Button.clickSave();
+		}
+
+		task ("Assert that entry was added") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject161898");
+
+			ObjectPortlet.viewEntry(entry = "Picklist Item Test");
+		}
+	}
+
 	@description = "LPS-136595 - Verify it is possible to create a Picklist"
 	@priority = "5"
 	test CanCreatePicklist {

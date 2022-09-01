@@ -129,6 +129,100 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-151781. When a new user subscribes a web content folder, the Granted email should show the article diffs."
+	@priority = "4"
+	test ViewGrantedEmailNotificationWithArticleDiffs {
+		task ("Given a user has subscribed a folder with Granted Email enabled") {
+			task ("Add a folder") {
+				JSONWebcontent.addFolder(
+					folderName = "WC Folder Name",
+					groupName = "Test Site Name");
+			}
+
+			task ("Add a web content under folder") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					folderName = "WC Folder Name",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Add Single Approver as default workflow on folder") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				WebContentFolder.configureWorkflowCP(
+					folderName = "WC Folder Name",
+					workflowDefinition = "Single Approver",
+					workflowRestriction = "Default Workflow");
+			}
+
+			task ("Enable Granted Email with Article diffs") {
+				LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
+
+				SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+				WebContentAdmin.configureEmailNotifications(
+					enabled = "true",
+					fieldName = "Granted",
+					navTab = "Web Content Granted Email",
+					notificationsBody = "Article diff is [$ARTICLE_DIFFS$]");
+			}
+
+			task ("Subscribe the folder as new user") {
+				User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				WebContentFolder.gotoCP(
+					folderName = "WC Folder Name",
+					webContentTitle = "WC Folder Name");
+
+				WebContent.subscribeToCurrentFolderCP();
+			}
+
+			task ("Sign in as Test Test") {
+				User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+			}
+
+			task ("Edit the web content") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				WebContentFolder.gotoCP(
+					folderName = "WC Folder Name",
+					webContentTitle = "WC Folder Name");
+
+				WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+				WebContent.addCP(webContentContent = "Where does it come from?");
+
+				PortletEntry.submitForPublication();
+			}
+		}
+
+		task ("When the web content creator approves the changes on workflow tasks") {
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Web Content Title",
+				workflowAssetType = "Web Content Article",
+				workflowTask = "Review");
+
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Web Content Title",
+				workflowAssetType = "Web Content Article",
+				workflowTask = "Review");
+		}
+
+		task ("Then the web content creator could view the article diffs on granted email notification") {
+			MockMock.viewFormattedHTMLTextDIFF(
+				asset = "Web Content: Article Approval Granted",
+				newContent = "Where does it come from?",
+				oldContent = "Web Content Content",
+				recipient = "Test Test",
+				sender = "Joe Bloggs");
+		}
+	}
+
 	@description = "When a new user subscribes a web content they should receive an email notification when the web content is moved to a new folder."
 	@priority = "4"
 	test ViewMoveWebContentEmailNotification {

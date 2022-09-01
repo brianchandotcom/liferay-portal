@@ -34,4 +34,10 @@ public interface DataRemovalConfiguration {
 	)
 	public boolean removeExpiredJournalArticles();
 
+	@Meta.AD(
+		deflt = "false", name = "remove-published-ctscontent-data",
+		required = false
+	)
+	public boolean removePublishedCTSContentData();
+
 }

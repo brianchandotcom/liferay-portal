@@ -196,11 +196,6 @@ public class DLFileEntryActivityInterpreter
 			permissionChecker, activity.getClassPK(), actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
 	private String _getFolderLink(
 		FileEntry fileEntry, ServiceContext serviceContext) {
 
@@ -212,6 +207,7 @@ public class DLFileEntryActivityInterpreter
 
 	private static final String[] _CLASS_NAMES = {DLFileEntry.class.getName()};
 
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference(

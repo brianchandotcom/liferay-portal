@@ -89,7 +89,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
-		
+
 		task ("Adding a user to the project") {
 			JSONUser.addUser(
 				userEmailAddress = "test.user@liferay.com",

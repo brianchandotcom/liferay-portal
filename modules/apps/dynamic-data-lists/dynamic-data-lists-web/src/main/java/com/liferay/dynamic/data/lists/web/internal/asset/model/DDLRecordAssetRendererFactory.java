@@ -166,28 +166,7 @@ public class DDLRecordAssetRendererFactory
 			permissionChecker, record.getRecordSetId(), actionId);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.lists.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLRecordLocalService(
-		DDLRecordLocalService ddlRecordLocalService) {
-
-		_ddlRecordLocalService = ddlRecordLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLRecordVersionLocalService(
-		DDLRecordVersionLocalService ddlRecordVersionLocalService) {
-
-		_ddlRecordVersionLocalService = ddlRecordVersionLocalService;
-	}
-
+	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
 
 	@Reference(
@@ -196,11 +175,15 @@ public class DDLRecordAssetRendererFactory
 	private ModelResourcePermission<DDLRecordSet>
 		_ddlRecordSetModelResourcePermission;
 
+	@Reference
 	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.lists.web)"
+	)
 	private ServletContext _servletContext;
 
 }

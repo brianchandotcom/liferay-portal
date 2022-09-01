@@ -2617,14 +2617,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void findDownstreamBuilds() {
-		List<String> foundDownstreamBuildURLs = new ArrayList<>(
-			findDownstreamBuildsInConsoleText());
-
-		addDownstreamBuilds(foundDownstreamBuildURLs.toArray(new String[0]));
-	}
-
-	protected List<String> findDownstreamBuildsInConsoleText() {
-		return Collections.emptyList();
 	}
 
 	protected Pattern getArchiveBuildURLPattern() {
@@ -3764,8 +3756,6 @@ public abstract class BaseBuild implements Build {
 	protected static final String URL_BASE_TEMP_MAP =
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/";
 
-	protected static final Pattern downstreamBuildURLPattern = Pattern.compile(
-		"[\\'\\\"][^/]*(/(?<axisName>.*))?[\\'\\\"] started at (?<url>.+)\\.");
 	protected static final Pattern invocationURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/",

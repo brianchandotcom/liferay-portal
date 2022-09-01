@@ -367,8 +367,7 @@ public class BatchBuild extends BaseBuild {
 
 	@Override
 	protected void findDownstreamBuilds() {
-		List<String> foundDownstreamBuildURLs = new ArrayList<>(
-			findDownstreamBuildsInConsoleText());
+		List<String> downstreamBuildURLs = new ArrayList<>();
 
 		JSONObject buildJSONObject = getBuildJSONObject("runs[number,url]");
 
@@ -385,18 +384,16 @@ public class BatchBuild extends BaseBuild {
 
 					String url = runJSONObject.getString("url");
 
-					if (hasBuildURL(url) ||
-						foundDownstreamBuildURLs.contains(url)) {
-
+					if (hasBuildURL(url) || downstreamBuildURLs.contains(url)) {
 						continue;
 					}
 
-					foundDownstreamBuildURLs.add(url);
+					downstreamBuildURLs.add(url);
 				}
 			}
 		}
 
-		addDownstreamBuilds(foundDownstreamBuildURLs.toArray(new String[0]));
+		addDownstreamBuilds(downstreamBuildURLs.toArray(new String[0]));
 	}
 
 	protected AxisBuild getAxisBuild(String axisVariable) {

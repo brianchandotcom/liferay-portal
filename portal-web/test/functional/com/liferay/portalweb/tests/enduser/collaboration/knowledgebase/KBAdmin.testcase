@@ -181,4 +181,34 @@ definition {
 			kbPriority = "1.0");
 	}
 
+	@description = "This test ensures that a child article is displayed in the KB page tree after expanding the parent article."	
+	@priority = "4"
+	test CanViewChildArticleThroughPageTreePanel {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbChildArticleContent = "Child Article Content",
+			kbChildArticleTitle = "Child Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBArticle.viewArticleThroughPageTreePanel(kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewArticleThroughPageTreePanel(kbChildArticleTitle = "Child Article Title");
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Child Article Content",
+			kbChildArticleTitle = "Child Article Title",
+			pageTreePanel = "true");
+	}
+
 }

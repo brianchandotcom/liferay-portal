@@ -161,6 +161,31 @@ definition {
 		return "${layoutPageTemplateEntryId}";
 	}
 
+	@summary = "Get the layoutPrototypeId from a layoutPageTemplateEntry"
+	macro _getLayoutPrototypeId {
+		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateEntryName},${type}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d type=${type} \
+			  -d "start=-1" \
+			  -d "end=-1" \
+			  -d -orderByComparator=
+		''';
+
+		var layoutPrototypeId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${layoutPageTemplateEntryName}')]['layoutPrototypeId']");
+
+		if ("${layoutPrototypeId}" == "") {
+			fail("FAIL. Cannot find layoutPageTemplateEntry.");
+		}
+
+		return "${layoutPrototypeId}";
+	}
+
 	@summary = "Get the masterLayoutPlid from a masterLayoutEntry by using groupId and masterLayoutEntryName"
 	macro _getMasterLayoutPlidByName {
 		Variables.assertDefined(parameterList = "${groupId},${masterLayoutEntryName}");

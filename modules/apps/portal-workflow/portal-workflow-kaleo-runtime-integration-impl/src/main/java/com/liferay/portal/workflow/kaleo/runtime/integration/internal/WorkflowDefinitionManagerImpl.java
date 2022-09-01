@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.runtime.integration.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.workflow.NoSuchWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
@@ -272,6 +274,9 @@ public class WorkflowDefinitionManagerImpl
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
+		}
+		catch (NoSuchModelException noSuchModelException) {
+			throw new NoSuchWorkflowDefinitionException(noSuchModelException);
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);

@@ -156,7 +156,7 @@ definition {
 	}
 
 	macro resetDefaultValues {
-		if (IsVisible(locator1 = "Button#UPDATE")) {
+		if (IsElementPresent(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS")) {
 			Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
 
 			MenuItem.clickNoError(menuItem = "Reset Default Values");
@@ -166,9 +166,11 @@ definition {
 	macro runPageAudit {
 		PageAudit.openPageAuditSidebar();
 
-		ClickNoError(locator1 = "PageAudit#BUTTON_LAUNCH_ANY");
+		Click.javaScriptClick(locator1 = "PageAudit#BUTTON_LAUNCH_ANY");
 
-		WaitForElementPresent(locator1 = "PageAudit#ALERT_BOX");
+		while (IsNotVisible(locator1 = "PageAudit#ALERT_BOX")) {
+			WaitForElementPresent(locator1 = "PageAudit#ALERT_BOX");
+		}
 	}
 
 	macro setAPISettings {
@@ -207,7 +209,9 @@ definition {
 			configurationName = "Google PageSpeed Insights",
 			configurationScope = "Site Scope");
 
-		PageAudit.setAPISettings(key_apiKey = "${apiKey}");
+		PageAudit.setAPISettings(
+			key_apiKey = "${apiKey}",
+			preferredStrategy = "${preferredStrategy}");
 	}
 
 	macro setAPIViaSiteSettings {
@@ -236,9 +240,9 @@ definition {
 			configurationName = "Google PageSpeed Insights",
 			configurationScope = "Site Scope");
 
-		PageAudit.setAPISettings(key_apiKey = "${apiKey}");
-
-		Alert.viewSuccessMessage();
+		PageAudit.setAPISettings(
+			key_apiKey = "${apiKey}",
+			preferredStrategy = "${preferredStrategy}");
 	}
 
 	macro setPreferredStrategy {

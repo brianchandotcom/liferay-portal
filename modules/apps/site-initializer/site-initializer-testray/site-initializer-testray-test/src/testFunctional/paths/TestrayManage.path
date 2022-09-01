@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_NAME</td>
-	<td>//td[text()='${key_value}']</td>
+	<td>//td[contains(text(),'${key_value}')]</td>
 	<td></td>
 </tr>
 <tr>

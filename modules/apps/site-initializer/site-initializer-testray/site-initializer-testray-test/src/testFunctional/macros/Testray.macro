@@ -57,7 +57,9 @@ definition {
 	}
 
 	macro changePaginationInModal {
-		Click(locator1 = "Testray#ITEMS_PER_PAGE_BUTTON_ON_MODAL");
+		Click(
+			key_numberItems = "${numberItems}",
+			locator1 = "Testray#ITEMS_PER_PAGE_BUTTON_MODAL");
 
 		Click(
 			key_value = "${valuePagination}",

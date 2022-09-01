@@ -83,6 +83,9 @@ public class KBAdminNavigationDisplayContext {
 			renderResponse);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_kbDropdownItemsProvider = new KBDropdownItemsProvider(
+			_liferayPortletRequest, _liferayPortletResponse);
 	}
 
 	public List<NavigationItem> getInfoPanelNavigationItems() {
@@ -330,6 +333,9 @@ public class KBAdminNavigationDisplayContext {
 	private JSONArray _getChildrenJSONArray() throws PortalException {
 		return JSONUtil.put(
 			JSONUtil.put(
+				"actions",
+				_kbDropdownItemsProvider.getKBFolderDropdownItems(null)
+			).put(
 				"children",
 				_getChildrenJSONArray(
 					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID)
@@ -371,7 +377,7 @@ public class KBAdminNavigationDisplayContext {
 
 				jsonObject.put(
 					"actions",
-					kbDropdownItemsProvider.getKBFolderDropdownItems(kbFolder)
+					_kbDropdownItemsProvider.getKBFolderDropdownItems(kbFolder)
 				).put(
 					"children", _getChildrenJSONArray(kbFolder.getKbFolderId())
 				).put(
@@ -450,6 +456,7 @@ public class KBAdminNavigationDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final KBArticleURLHelper _kbArticleURLHelper;
+	private final KBDropdownItemsProvider _kbDropdownItemsProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;

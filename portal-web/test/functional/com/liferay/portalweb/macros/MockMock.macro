@@ -235,6 +235,27 @@ definition {
 		MockMock._gotoMail();
 	}
 
+	macro viewFormattedHTMLTextDIFF {
+		MockMock._gotoMail();
+
+		MockMock._viewMailFromInbox(
+			asset = "${asset}",
+			recipient = "${recipient}",
+			sender = "${sender}");
+
+		MockMock._gotoMailMessage(asset = "${asset}");
+
+		AssertTextEquals(
+			changeType = "added",
+			locator1 = "MockMock#MOCKMOCK_HTML_BODY_FORMATTED_FIELD_DIFF",
+			value1 = "${newContent}");
+
+		AssertTextEquals(
+			changeType = "removed",
+			locator1 = "MockMock#MOCKMOCK_HTML_BODY_FORMATTED_FIELD_DIFF",
+			value1 = "${oldContent}");
+	}
+
 	macro viewMail {
 		MockMock._gotoMail();
 

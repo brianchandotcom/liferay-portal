@@ -42,8 +42,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portlet.ActionRequestFactory;
 import com.liferay.portlet.ActionResponseFactory;
-import com.liferay.portlet.internal.ActionRequestImpl;
-import com.liferay.portlet.internal.ActionResponseImpl;
 import com.liferay.portlet.internal.MutableRenderParametersImpl;
 import com.liferay.portlet.test.MockLiferayPortletContext;
 
@@ -767,14 +765,13 @@ public class PortalImplUnitTest {
 			(MutableRenderParametersImpl)actionResponse.getRenderParameters();
 
 		Assert.assertEquals(
-			mutableRenderParametersImpl.getValues("redirect")[0].toString(),
+			mutableRenderParametersImpl.getValues("redirect")[0],
 			params.get("redirect")[0]);
 		Assert.assertEquals(
-			mutableRenderParametersImpl.getValues("p_u_i_d")[0].toString(),
+			mutableRenderParametersImpl.getValues("p_u_i_d")[0],
 			params.get("p_u_i_d")[0]);
 		Assert.assertEquals(
-			mutableRenderParametersImpl.getValues("passwordReset")[0].
-				toString(),
+			mutableRenderParametersImpl.getValues("passwordReset")[0],
 			params.get("passwordReset")[0]);
 		Assert.assertNull(mutableRenderParametersImpl.getValues("password1"));
 		Assert.assertNull(mutableRenderParametersImpl.getValues("password2"));
@@ -804,7 +801,7 @@ public class PortalImplUnitTest {
 
 		portlet.setPortletApp(new PortletAppImpl("test_servlet_context"));
 
-		return (ActionRequestImpl)ActionRequestFactory.create(
+		return ActionRequestFactory.create(
 			httpServletRequest, portlet,
 			ProxyFactory.newDummyInstance(InvokerPortlet.class),
 			new MockLiferayPortletContext("/path"), WindowState.NORMAL,
@@ -880,7 +877,7 @@ public class PortalImplUnitTest {
 			portletMode
 		).toString();
 
-		return (ActionResponseImpl)ActionResponseFactory.create(
+		return ActionResponseFactory.create(
 			_createActionRequest(portletMode), httpServletResponse,
 			new UserImpl(), new LayoutImpl());
 	}

@@ -76,24 +76,19 @@ public class DLVideoExternalShortcutPortalInstanceLifecycleListener
 		field.set(null, ddmStructureManager);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntryMetadata)",
-		unbind = "-"
-	)
-	protected void setDDMStructurePermissionSupport(
-		DDMStructurePermissionSupport ddmStructurePermissionSupport) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureVersionLocalService(
-		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
-	}
-
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntryMetadata)"
+	)
+	private DDMStructurePermissionSupport _ddmStructurePermissionSupport;
+
+	@Reference
+	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
 	@Reference
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;

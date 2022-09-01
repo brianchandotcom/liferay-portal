@@ -370,7 +370,7 @@
 </tr>
 <tr>
 	<td>SPECIFIC_ELLIPSIS</td>
-	<td>//*[contains(@class, 'text-truncate') and contains(text(), '${key_text}')]//..//..//..//*[contains(.,'')]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//p[contains(text(), '${key_text}')]/ancestor::td/following-sibling::td//button</td>
 	<td></td>
 </tr>
 <tr>

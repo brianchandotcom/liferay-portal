@@ -152,7 +152,7 @@ public class PoshiStylingCheck extends BaseFileCheck {
 	private String _removeMultipleSpacesInTaskDefinitions(
 		String fileName, String content) {
 
-		if (!fileName.endsWith("testcase") && !fileName.endsWith("macro")) {
+		if (!fileName.endsWith("macro") && !fileName.endsWith("testcase")) {
 			return content;
 		}
 

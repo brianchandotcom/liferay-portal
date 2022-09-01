@@ -452,6 +452,7 @@ public class KBDropdownItemsProvider {
 					).setParameter(
 						"kbTemplateId", kbTemplate.getKbTemplateId()
 					).buildRenderURL());
+				dropdownItem.setIcon("view");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),
@@ -470,6 +471,7 @@ public class KBDropdownItemsProvider {
 					).setParameter(
 						"kbTemplateId", kbTemplate.getKbTemplateId()
 					).buildRenderURL());
+				dropdownItem.setIcon("pencil");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),
@@ -487,6 +489,7 @@ public class KBDropdownItemsProvider {
 						String.valueOf(kbTemplate.getKbTemplateId()),
 						LiferayWindowState.POP_UP.toString(), null,
 						_liferayPortletRequest.getHttpServletRequest()));
+				dropdownItem.setIcon("password-policies");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),
@@ -507,6 +510,7 @@ public class KBDropdownItemsProvider {
 					).setParameter(
 						"kbTemplateId", kbTemplate.getKbTemplateId()
 					).buildString());
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),

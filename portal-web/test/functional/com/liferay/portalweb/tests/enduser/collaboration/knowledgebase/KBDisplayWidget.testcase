@@ -711,7 +711,7 @@ definition {
 	}
 
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test JavascriptIsEscapedFromArticleTitle {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

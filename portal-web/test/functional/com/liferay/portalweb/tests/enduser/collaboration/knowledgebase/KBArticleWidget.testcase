@@ -37,7 +37,7 @@ definition {
 	}
 
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test DeleteKBArticleViaKBArticle {
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",

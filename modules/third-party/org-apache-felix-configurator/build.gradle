@@ -14,6 +14,7 @@ patch {
 	}
 
 	fileNames "org/apache/felix/configurator/impl/WorkerQueue.java"
+	fileNames "org/apache/felix/configurator/impl/model/ConfigList.java"
 	fileNames "org/apache/felix/configurator/impl/model/State.java"
 
 	originalLibModuleName = "org.apache.felix.configurator"

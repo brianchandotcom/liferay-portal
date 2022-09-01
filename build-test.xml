@@ -14066,7 +14066,9 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 				<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
 
-module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.profile.names}</echo>
+module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.profile.names}
+
+mail.send.blacklist=</echo>
 
 				<delete failonerror="false" file="${app.server.classes.portal.dir}/system-ext.properties" />
 			</then>

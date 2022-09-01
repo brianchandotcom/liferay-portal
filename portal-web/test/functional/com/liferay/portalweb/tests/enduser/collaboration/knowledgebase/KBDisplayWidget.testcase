@@ -527,11 +527,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		var kbAricleFriendlyURL = selenium.getAttribute("//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'Knowledge Base Article2 Title')]@href");
+		var kbArticleFriendlyURL = selenium.getAttribute("//div[@class='kbarticle-navigation']/ul/li/a[contains(.,'Knowledge Base Article2 Title')]@href");
 
 		Navigator.gotoPage(pageName = "Home");
 
-		Navigator.openSpecificURL(url = "${kbAricleFriendlyURL}");
+		Navigator.openSpecificURL(url = "${kbArticleFriendlyURL}");
 
 		KBArticle.viewViaKBDisplayPG(
 			kbArticleContent = "Knowledge Base Article2 Content",

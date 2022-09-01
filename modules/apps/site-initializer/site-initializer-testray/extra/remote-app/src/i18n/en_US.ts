@@ -298,6 +298,7 @@ export default {
 	'total-estimated-time': 'Total Estimated Time',
 	'total-test-cases': 'Total test cases',
 	'type': 'Type',
+	'type-is-a-required-field': 'Type is a required field',
 	'unassign-myself': 'Unassign Myself',
 	'unassigned': 'Unassigned',
 	'untested': 'Untested',

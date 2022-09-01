@@ -75,13 +75,15 @@ definition {
 			kbFolderDescription = "KB Folder Description",
 			kbFolderName = "KB Folder");
 
-		KBFolder.gotoCP(kbFolderName = "KB Folder");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article 2 Content",
 			kbArticleTitle = "Knowledge Base Article 2 Title");
 
@@ -106,9 +108,8 @@ definition {
 	test SearchKBArticleViaSearchPortlet {
 		property portal.acceptance = "true";
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 

@@ -47,29 +47,34 @@ definition {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		for (var articleCount : list "1,2,3") {
-			KBArticle.addCP(
+			JSONKnowledgeBase.addkBArticle(
+				groupName = "Guest",
 				kbArticleContent = "Knowledge Base Article Parent Content ${articleCount}",
 				kbArticleTitle = "Knowledge Base Article Parent Title ${articleCount}");
 		}
 
 		for (var articleCount : list "1,2,3") {
-			KBArticle.addChildArticleViaKBAdmin(
+			JSONKnowledgeBase.addkBChildArticle(
+				groupName = "Guest",
 				kbArticleTitle = "Knowledge Base Article Parent Title 1",
 				kbChildArticleContent = "Knowledge Base Article Parent Content 1 Child ${articleCount}",
 				kbChildArticleTitle = "Knowledge Base Article Parent Title 1 Child ${articleCount}");
 		}
 
-		KBArticle.addChildArticleViaKBAdmin(
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
 			kbArticleTitle = "Knowledge Base Article Parent Title 2",
 			kbChildArticleContent = "Knowledge Base Article Parent Content 2 Child 1",
 			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 1");
 
-		KBArticle.addChildArticleViaKBAdmin(
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
 			kbArticleTitle = "Knowledge Base Article Parent Title 2",
 			kbChildArticleContent = "Knowledge Base Article Parent Content 2 Child 2",
 			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 2");
 
-		KBArticle.addChildArticleViaKBAdmin(
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
 			kbArticleTitle = "Knowledge Base Article Parent Title 3",
 			kbChildArticleContent = "Knowledge Base Article Parent Content 3 Child 1",
 			kbChildArticleTitle = "Knowledge Base Article Parent Title 3 Child 1");
@@ -290,6 +295,16 @@ definition {
 	test ViewKBArticleNoHierarchyInFolder {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Test Content",
+			kbArticleTitle = "Article 1 Title");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Test Content",
+			kbArticleTitle = "Article 2 Title");
+
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder 1 Description",
 			kbFolderName = "Folder 1");
@@ -297,14 +312,6 @@ definition {
 		KBFolder.addCP(
 			kbFolderDescription = "KB Folder 2 Description",
 			kbFolderName = "Folder 2");
-
-		KBArticle.addCP(
-			kbArticleContent = "Test Content",
-			kbArticleTitle = "Article 1 Title");
-
-		KBArticle.addCP(
-			kbArticleContent = "Test Content",
-			kbArticleTitle = "Article 2 Title");
 
 		KBArticle.moveArticleCP(
 			kbArticleCurrentParent = "Home",
@@ -416,13 +423,14 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test ViewKBArticlesWithTheSamePriorityViaNavigationLinks {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
 		for (var kbCount : list "1,2,3") {
-			KBArticle.addCP(
+			JSONKnowledgeBase.addkBArticle(
+				groupName = "Guest",
 				kbArticleContent = "Knowledge Base Article Parent Content ${kbCount}",
 				kbArticleTitle = "Knowledge Base Article Parent Title ${kbCount}");
 		}
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		for (var kbCount : list "1,2,3") {
 			KBArticle.viewKBArticlePriorityCP(
@@ -522,13 +530,15 @@ definition {
 			kbFolderDescription = "KB Folder 1",
 			kbFolderName = "KB Folder 1");
 
-		KBFolder.gotoCP(kbFolderName = "KB Folder 1");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder 1",
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content 1",
 			kbArticleTitle = "Knowledge Base Article Title 1");
 
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder 1",
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content 2",
 			kbArticleTitle = "Knowledge Base Article Title 2");
 
@@ -540,13 +550,15 @@ definition {
 			kbFolderDescription = "KB Folder 2",
 			kbFolderName = "KB Folder 2");
 
-		KBFolder.gotoCP(kbFolderName = "KB Folder 2");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder 2",
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content 1",
 			kbArticleTitle = "Knowledge Base Article Title 1");
 
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder 2",
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content 2",
 			kbArticleTitle = "Knowledge Base Article Title 2");
 
@@ -578,18 +590,20 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test ViewUnchangedKBArticlePriorityAfterEdit {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Parent Content 1",
 			kbArticleTitle = "Knowledge Base Article Parent Title 1");
 
 		for (var kbCount : list "1,2,3") {
-			KBArticle.addChildArticleViaKBAdmin(
+			JSONKnowledgeBase.addkBChildArticle(
+				groupName = "Guest",
 				kbArticleTitle = "Knowledge Base Article Parent Title 1",
 				kbChildArticleContent = "Knowledge Base Article Parent Content 1 Child ${kbCount}",
 				kbChildArticleTitle = "Knowledge Base Article Parent Title 1 Child ${kbCount}");
 		}
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 

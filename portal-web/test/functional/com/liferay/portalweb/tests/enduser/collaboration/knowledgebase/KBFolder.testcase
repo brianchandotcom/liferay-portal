@@ -126,17 +126,15 @@ definition {
 			kbFolderDescription = "KB Folder 2010 Description",
 			kbFolderName = "KB Folder 2010 Name");
 
-		KBFolder.gotoCP(kbFolderName = "KB Folder 2017 Name");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder 2017 Name",
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base 2017 Article Content",
 			kbArticleTitle = "Knowledge Base 2017 Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBFolder.gotoCP(kbFolderName = "KB Folder 2010 Name");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder 2010 Name",
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base 2010 Article Content",
 			kbArticleTitle = "Knowledge Base 2010 Article Title");
 

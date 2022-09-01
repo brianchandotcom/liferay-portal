@@ -66,13 +66,15 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanAddMultipleSuggestions {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article1 Content",
+			kbArticleTitle = "Knowledge Base Article1 Title");
 
-		for (var articleCount : list "1,2") {
-			KBArticle.addCP(
-				kbArticleContent = "Knowledge Base Article${articleCount} Content",
-				kbArticleTitle = "Knowledge Base Article${articleCount} Title");
-		}
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article2 Content",
+			kbArticleTitle = "Knowledge Base Article2 Title");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
@@ -511,11 +513,12 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanViewArticleViaUserDefinedFriendlyURL {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
 			kbArticleContent = "Knowledge Base Article2 Content",
@@ -736,9 +739,8 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test ViewNoDuplicateKBSuggestionAfterRefresh {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 

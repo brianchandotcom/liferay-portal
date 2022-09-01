@@ -103,9 +103,8 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
 			kbArticleContent = "KB Article Content",
 			kbArticleTitle = "KB Article Title");
 

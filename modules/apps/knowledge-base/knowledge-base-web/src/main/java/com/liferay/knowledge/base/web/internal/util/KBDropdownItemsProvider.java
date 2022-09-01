@@ -331,6 +331,7 @@ public class KBDropdownItemsProvider {
 							return kbFolder.getKbFolderId();
 						}
 					).buildPortletURL());
+				dropdownItem.setIcon("import");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),
@@ -372,6 +373,7 @@ public class KBDropdownItemsProvider {
 					).setRedirect(
 						_currentURL
 					).buildActionURL());
+				dropdownItem.setIcon("bell-on");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),
@@ -388,6 +390,7 @@ public class KBDropdownItemsProvider {
 					).setRedirect(
 						_currentURL
 					).buildActionURL());
+				dropdownItem.setIcon("bell-off");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),

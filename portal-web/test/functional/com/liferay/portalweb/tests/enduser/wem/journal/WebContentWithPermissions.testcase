@@ -436,6 +436,107 @@ definition {
 		AssertTextNotPresent(value1 = "WC WebContent Content");
 	}
 
+	@description = "This is a test for LPS-145308. The site administrator could add a web content with image based on structure from parent site."
+	@priority = "4"
+	test AddWebContentWithImageBasedOnStructureFromParentSite {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given a web content creator has web content structure with image field on parent site") {
+			task ("Add a child site") {
+				JSONGroup.addChildGroup(
+					groupName = "Child Site Name",
+					parentGroupName = "Test Site Name");
+			}
+
+			task ("Add a widget page to child site") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name");
+			}
+
+			task ("Add a new user") {
+				JSONUser.addUser(
+					userEmailAddress = "userea@liferay.com",
+					userFirstName = "userfn",
+					userLastName = "userln",
+					userScreenName = "usersn");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "userea@liferay.com");
+			}
+
+			task ("Assign the user to child site") {
+				JSONUser.addUserToSite(
+					groupName = "Child Site Name",
+					parentGroupName = "Test Site Name",
+					userEmailAddress = "userea@liferay.com");
+			}
+
+			task ("Assign the Site Administrator to new user") {
+				JSONRole.assignSiteRoleToUser(
+					groupName = "Child Site Name",
+					parentGroupName = "Test Site Name",
+					roleTitle = "Site Administrator",
+					userEmailAddress = "userea@liferay.com");
+			}
+
+			task ("Add a web content structure with image field on parent site") {
+				WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
+
+				WebContentStructures.addCP(structureName = "WC Structure Name");
+
+				DataEngine.addField(
+					fieldFieldLabel = "Image",
+					fieldName = "Image");
+
+				WebContentStructures.saveCP();
+			}
+
+			task ("Edit the default values of new structure") {
+				WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
+
+				WebContent.addWithStructureCP(description = "New description for structure name");
+
+				PortletEntry.save();
+			}
+
+			task ("Grant view permission to User") {
+				LexiconEntry.gotoEntryMenuItem(
+					menuItem = "Permissions",
+					rowEntry = "WC Structure Name");
+
+				PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+					addOrRemoveViewPermission = "Add",
+					permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+					roleTitle = "user");
+			}
+		}
+
+		task ("When the new user adds a web content on child site based on structure from parent site") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "child-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		}
+
+		task ("Then the new user can upload a picture on image field") {
+			WebContent.addWithStructureCP(
+				navTab = "Web Content Images",
+				structureName = "WC Structure Name",
+				webContentImage = "Document_2.jpeg",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+
+			WebContent.viewWithStructureCP(
+				webContentImage = "Document_2.jpeg",
+				webContentTitle = "Web Content Title");
+		}
+	}
+
 	@description = "A new user with web content administration role can edit a web content."
 	@priority = "4"
 	test EditWebContentAsUserWithPermissions {

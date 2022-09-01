@@ -22,8 +22,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Adolfo Pérez
  */
 @ExtendedObjectClassDefinition(
-	category = "pages", generateUI = false,
-	scope = ExtendedObjectClassDefinition.Scope.GROUP, strictScope = true
+	category = "pages", scope = ExtendedObjectClassDefinition.Scope.GROUP,
+	strictScope = true
 )
 @Meta.OCD(
 	description = "redirect-pattern-configuration-description",

@@ -94,8 +94,7 @@ public class PortalImplUnitTest {
 
 		Enumeration<String> enumeration = _createEnumerationParams();
 
-		ActionRequest actionRequest = _createActionRequestMock(
-			params, enumeration);
+		ActionRequest actionRequest = _createActionRequest(params, enumeration);
 
 		MockedStatic<PortalUtil> portalUtilMockedStatic = Mockito.mockStatic(
 			PortalUtil.class);
@@ -121,8 +120,7 @@ public class PortalImplUnitTest {
 
 		Enumeration<String> enumeration = _createEnumerationParams();
 
-		ActionRequest actionRequestMock = _createActionRequestMock(
-			params, enumeration);
+		ActionRequest actionRequest = _createActionRequest(params, enumeration);
 
 		MockedStatic<PortalUtil> portalUtilMockedStatic = Mockito.mockStatic(
 			PortalUtil.class);
@@ -130,7 +128,7 @@ public class PortalImplUnitTest {
 		ActionResponse actionResponse = _createActionResponse(
 			portalUtilMockedStatic);
 
-		_portalImpl.copyRequestParameters(actionRequestMock, actionResponse);
+		_portalImpl.copyRequestParameters(actionRequest, actionResponse);
 
 		portalUtilMockedStatic.close();
 
@@ -786,29 +784,7 @@ public class PortalImplUnitTest {
 		Assert.assertEquals(host, _portalImpl.getHost(mockHttpServletRequest));
 	}
 
-	private ActionRequest _createActionRequest(PortletMode portletMode) {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		HttpServletRequest httpServletRequest = new DynamicServletRequest(
-			mockHttpServletRequest, new HashMap<>());
-
-		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
-
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		Portlet portlet = new PortletImpl(100L, "test_portlet");
-
-		portlet.setPortletApp(new PortletAppImpl("test_servlet_context"));
-
-		return ActionRequestFactory.create(
-			httpServletRequest, portlet,
-			ProxyFactory.newDummyInstance(InvokerPortlet.class),
-			new MockLiferayPortletContext("/path"), WindowState.NORMAL,
-			portletMode, new MockPortletPreferences(), 4000L);
-	}
-
-	private ActionRequest _createActionRequestMock(
+	private ActionRequest _createActionRequest(
 		Map<String, String[]> params, Enumeration<String> enumeration) {
 
 		ActionRequest actionRequestMock = Mockito.mock(ActionRequest.class);
@@ -845,6 +821,28 @@ public class PortalImplUnitTest {
 		);
 
 		return actionRequestMock;
+	}
+
+	private ActionRequest _createActionRequest(PortletMode portletMode) {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		HttpServletRequest httpServletRequest = new DynamicServletRequest(
+			mockHttpServletRequest, new HashMap<>());
+
+		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
+
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		Portlet portlet = new PortletImpl(100L, "test_portlet");
+
+		portlet.setPortletApp(new PortletAppImpl("test_servlet_context"));
+
+		return ActionRequestFactory.create(
+			httpServletRequest, portlet,
+			ProxyFactory.newDummyInstance(InvokerPortlet.class),
+			new MockLiferayPortletContext("/path"), WindowState.NORMAL,
+			portletMode, new MockPortletPreferences(), 4000L);
 	}
 
 	private ActionResponse _createActionResponse(

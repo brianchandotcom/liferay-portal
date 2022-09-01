@@ -76,16 +76,19 @@ public class KBAdminNavigationDisplayContext {
 
 		_kbArticleURLHelper = new KBArticleURLHelper(
 			renderRequest, renderResponse);
+
 		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
 			(PortletRequest)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST));
+
 		_liferayPortletResponse = LiferayPortletUtil.getLiferayPortletResponse(
 			renderResponse);
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		_kbDropdownItemsProvider = new KBDropdownItemsProvider(
 			_liferayPortletRequest, _liferayPortletResponse);
+
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<NavigationItem> getInfoPanelNavigationItems() {
@@ -364,10 +367,6 @@ public class KBAdminNavigationDisplayContext {
 
 		JSONArray childrenJSONArray = JSONFactoryUtil.createJSONArray();
 
-		KBDropdownItemsProvider kbDropdownItemsProvider =
-			new KBDropdownItemsProvider(
-				_liferayPortletRequest, _liferayPortletResponse);
-
 		List<Object> kbObjects = KBFolderServiceUtil.getKBFoldersAndKBArticles(
 			_themeDisplay.getScopeGroupId(), parentFolderId,
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -445,7 +444,8 @@ public class KBAdminNavigationDisplayContext {
 			navigationItemsJSONArray.put(
 				JSONUtil.put(
 					"actions",
-					_kbDropdownItemsProvider.getKBTemplateDropdownItems(kbTemplate)
+					_kbDropdownItemsProvider.getKBTemplateDropdownItems(
+						kbTemplate)
 				).put(
 					"href",
 					PortletURLBuilder.createRenderURL(

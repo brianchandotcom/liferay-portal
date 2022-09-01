@@ -439,7 +439,8 @@ public class KBDropdownItemsProvider {
 		).build();
 	}
 
-	public List<DropdownItem> getKBTemplateDropdownItems(KBTemplate kbTemplate) {
+	public List<DropdownItem> getKBTemplateDropdownItems(
+		KBTemplate kbTemplate) {
 
 		return DropdownItemListBuilder.add(
 			() -> _hasViewPermission(kbTemplate),

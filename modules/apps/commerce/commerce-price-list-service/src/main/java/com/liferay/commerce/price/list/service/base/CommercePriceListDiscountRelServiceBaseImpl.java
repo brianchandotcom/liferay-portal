@@ -18,7 +18,7 @@ import com.liferay.commerce.price.list.model.CommercePriceListDiscountRel;
 import com.liferay.commerce.price.list.service.CommercePriceListDiscountRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListDiscountRelServiceUtil;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListDiscountRelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce price list discount rel remote service.
@@ -46,117 +48,33 @@ import javax.sql.DataSource;
  */
 public abstract class CommercePriceListDiscountRelServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommercePriceListDiscountRelService, IdentifiableOSGiService {
+	implements AopService, CommercePriceListDiscountRelService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommercePriceListDiscountRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePriceListDiscountRelServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce price list discount rel local service.
-	 *
-	 * @return the commerce price list discount rel local service
-	 */
-	public com.liferay.commerce.price.list.service.
-		CommercePriceListDiscountRelLocalService
-			getCommercePriceListDiscountRelLocalService() {
-
-		return commercePriceListDiscountRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce price list discount rel local service.
-	 *
-	 * @param commercePriceListDiscountRelLocalService the commerce price list discount rel local service
-	 */
-	public void setCommercePriceListDiscountRelLocalService(
-		com.liferay.commerce.price.list.service.
-			CommercePriceListDiscountRelLocalService
-				commercePriceListDiscountRelLocalService) {
-
-		this.commercePriceListDiscountRelLocalService =
-			commercePriceListDiscountRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce price list discount rel remote service.
-	 *
-	 * @return the commerce price list discount rel remote service
-	 */
-	public CommercePriceListDiscountRelService
-		getCommercePriceListDiscountRelService() {
-
-		return commercePriceListDiscountRelService;
-	}
-
-	/**
-	 * Sets the commerce price list discount rel remote service.
-	 *
-	 * @param commercePriceListDiscountRelService the commerce price list discount rel remote service
-	 */
-	public void setCommercePriceListDiscountRelService(
-		CommercePriceListDiscountRelService
-			commercePriceListDiscountRelService) {
-
-		this.commercePriceListDiscountRelService =
-			commercePriceListDiscountRelService;
-	}
-
-	/**
-	 * Returns the commerce price list discount rel persistence.
-	 *
-	 * @return the commerce price list discount rel persistence
-	 */
-	public CommercePriceListDiscountRelPersistence
-		getCommercePriceListDiscountRelPersistence() {
-
-		return commercePriceListDiscountRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce price list discount rel persistence.
-	 *
-	 * @param commercePriceListDiscountRelPersistence the commerce price list discount rel persistence
-	 */
-	public void setCommercePriceListDiscountRelPersistence(
-		CommercePriceListDiscountRelPersistence
-			commercePriceListDiscountRelPersistence) {
-
-		this.commercePriceListDiscountRelPersistence =
-			commercePriceListDiscountRelPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commercePriceListDiscountRelService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommercePriceListDiscountRelService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commercePriceListDiscountRelService =
+			(CommercePriceListDiscountRelService)aopProxy;
+
+		_setServiceUtilService(commercePriceListDiscountRelService);
 	}
 
 	/**
@@ -220,24 +138,19 @@ public abstract class CommercePriceListDiscountRelServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.price.list.service.CommercePriceListDiscountRelLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.price.list.service.
 		CommercePriceListDiscountRelLocalService
 			commercePriceListDiscountRelLocalService;
 
-	@BeanReference(type = CommercePriceListDiscountRelService.class)
 	protected CommercePriceListDiscountRelService
 		commercePriceListDiscountRelService;
 
-	@BeanReference(type = CommercePriceListDiscountRelPersistence.class)
+	@Reference
 	protected CommercePriceListDiscountRelPersistence
 		commercePriceListDiscountRelPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

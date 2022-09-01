@@ -16,7 +16,9 @@ package com.liferay.commerce.price.list.service.persistence.impl;
 
 import com.liferay.commerce.price.list.model.CommercePriceListChannelRel;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListChannelRelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.commerce.price.list.service.persistence.impl.constants.CommercePersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  * @generated
  */
-public class CommercePriceListChannelRelFinderBaseImpl
+public abstract class CommercePriceListChannelRelFinderBaseImpl
 	extends BasePersistenceImpl<CommercePriceListChannelRel> {
 
 	public CommercePriceListChannelRelFinderBaseImpl() {
@@ -45,34 +51,36 @@ public class CommercePriceListChannelRelFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getCommercePriceListChannelRelPersistence().getBadColumnNames();
+		return commercePriceListChannelRelPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the commerce price list channel rel persistence.
-	 *
-	 * @return the commerce price list channel rel persistence
-	 */
-	public CommercePriceListChannelRelPersistence
-		getCommercePriceListChannelRelPersistence() {
-
-		return commercePriceListChannelRelPersistence;
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
 	}
 
-	/**
-	 * Sets the commerce price list channel rel persistence.
-	 *
-	 * @param commercePriceListChannelRelPersistence the commerce price list channel rel persistence
-	 */
-	public void setCommercePriceListChannelRelPersistence(
-		CommercePriceListChannelRelPersistence
-			commercePriceListChannelRelPersistence) {
-
-		this.commercePriceListChannelRelPersistence =
-			commercePriceListChannelRelPersistence;
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = CommercePriceListChannelRelPersistence.class)
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected CommercePriceListChannelRelPersistence
 		commercePriceListChannelRelPersistence;
 

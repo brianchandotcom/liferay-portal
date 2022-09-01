@@ -18,7 +18,7 @@ import com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel;
 import com.liferay.commerce.price.list.service.CommercePriceListOrderTypeRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListOrderTypeRelServiceUtil;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListOrderTypeRelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce price list order type rel remote service.
@@ -46,117 +48,33 @@ import javax.sql.DataSource;
  */
 public abstract class CommercePriceListOrderTypeRelServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommercePriceListOrderTypeRelService, IdentifiableOSGiService {
+	implements AopService, CommercePriceListOrderTypeRelService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommercePriceListOrderTypeRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePriceListOrderTypeRelServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce price list order type rel local service.
-	 *
-	 * @return the commerce price list order type rel local service
-	 */
-	public com.liferay.commerce.price.list.service.
-		CommercePriceListOrderTypeRelLocalService
-			getCommercePriceListOrderTypeRelLocalService() {
-
-		return commercePriceListOrderTypeRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce price list order type rel local service.
-	 *
-	 * @param commercePriceListOrderTypeRelLocalService the commerce price list order type rel local service
-	 */
-	public void setCommercePriceListOrderTypeRelLocalService(
-		com.liferay.commerce.price.list.service.
-			CommercePriceListOrderTypeRelLocalService
-				commercePriceListOrderTypeRelLocalService) {
-
-		this.commercePriceListOrderTypeRelLocalService =
-			commercePriceListOrderTypeRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce price list order type rel remote service.
-	 *
-	 * @return the commerce price list order type rel remote service
-	 */
-	public CommercePriceListOrderTypeRelService
-		getCommercePriceListOrderTypeRelService() {
-
-		return commercePriceListOrderTypeRelService;
-	}
-
-	/**
-	 * Sets the commerce price list order type rel remote service.
-	 *
-	 * @param commercePriceListOrderTypeRelService the commerce price list order type rel remote service
-	 */
-	public void setCommercePriceListOrderTypeRelService(
-		CommercePriceListOrderTypeRelService
-			commercePriceListOrderTypeRelService) {
-
-		this.commercePriceListOrderTypeRelService =
-			commercePriceListOrderTypeRelService;
-	}
-
-	/**
-	 * Returns the commerce price list order type rel persistence.
-	 *
-	 * @return the commerce price list order type rel persistence
-	 */
-	public CommercePriceListOrderTypeRelPersistence
-		getCommercePriceListOrderTypeRelPersistence() {
-
-		return commercePriceListOrderTypeRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce price list order type rel persistence.
-	 *
-	 * @param commercePriceListOrderTypeRelPersistence the commerce price list order type rel persistence
-	 */
-	public void setCommercePriceListOrderTypeRelPersistence(
-		CommercePriceListOrderTypeRelPersistence
-			commercePriceListOrderTypeRelPersistence) {
-
-		this.commercePriceListOrderTypeRelPersistence =
-			commercePriceListOrderTypeRelPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commercePriceListOrderTypeRelService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommercePriceListOrderTypeRelService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commercePriceListOrderTypeRelService =
+			(CommercePriceListOrderTypeRelService)aopProxy;
+
+		_setServiceUtilService(commercePriceListOrderTypeRelService);
 	}
 
 	/**
@@ -220,24 +138,19 @@ public abstract class CommercePriceListOrderTypeRelServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.price.list.service.CommercePriceListOrderTypeRelLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.price.list.service.
 		CommercePriceListOrderTypeRelLocalService
 			commercePriceListOrderTypeRelLocalService;
 
-	@BeanReference(type = CommercePriceListOrderTypeRelService.class)
 	protected CommercePriceListOrderTypeRelService
 		commercePriceListOrderTypeRelService;
 
-	@BeanReference(type = CommercePriceListOrderTypeRelPersistence.class)
+	@Reference
 	protected CommercePriceListOrderTypeRelPersistence
 		commercePriceListOrderTypeRelPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

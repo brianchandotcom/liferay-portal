@@ -19,7 +19,7 @@ import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.price.list.service.CommercePriceListServiceUtil;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -28,11 +28,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce price list remote service.
@@ -47,126 +49,30 @@ import javax.sql.DataSource;
  */
 public abstract class CommercePriceListServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommercePriceListService, IdentifiableOSGiService {
+	implements AopService, CommercePriceListService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommercePriceListService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePriceListServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce price list local service.
-	 *
-	 * @return the commerce price list local service
-	 */
-	public com.liferay.commerce.price.list.service.CommercePriceListLocalService
-		getCommercePriceListLocalService() {
-
-		return commercePriceListLocalService;
-	}
-
-	/**
-	 * Sets the commerce price list local service.
-	 *
-	 * @param commercePriceListLocalService the commerce price list local service
-	 */
-	public void setCommercePriceListLocalService(
-		com.liferay.commerce.price.list.service.CommercePriceListLocalService
-			commercePriceListLocalService) {
-
-		this.commercePriceListLocalService = commercePriceListLocalService;
-	}
-
-	/**
-	 * Returns the commerce price list remote service.
-	 *
-	 * @return the commerce price list remote service
-	 */
-	public CommercePriceListService getCommercePriceListService() {
-		return commercePriceListService;
-	}
-
-	/**
-	 * Sets the commerce price list remote service.
-	 *
-	 * @param commercePriceListService the commerce price list remote service
-	 */
-	public void setCommercePriceListService(
-		CommercePriceListService commercePriceListService) {
-
-		this.commercePriceListService = commercePriceListService;
-	}
-
-	/**
-	 * Returns the commerce price list persistence.
-	 *
-	 * @return the commerce price list persistence
-	 */
-	public CommercePriceListPersistence getCommercePriceListPersistence() {
-		return commercePriceListPersistence;
-	}
-
-	/**
-	 * Sets the commerce price list persistence.
-	 *
-	 * @param commercePriceListPersistence the commerce price list persistence
-	 */
-	public void setCommercePriceListPersistence(
-		CommercePriceListPersistence commercePriceListPersistence) {
-
-		this.commercePriceListPersistence = commercePriceListPersistence;
-	}
-
-	/**
-	 * Returns the commerce price list finder.
-	 *
-	 * @return the commerce price list finder
-	 */
-	public CommercePriceListFinder getCommercePriceListFinder() {
-		return commercePriceListFinder;
-	}
-
-	/**
-	 * Sets the commerce price list finder.
-	 *
-	 * @param commercePriceListFinder the commerce price list finder
-	 */
-	public void setCommercePriceListFinder(
-		CommercePriceListFinder commercePriceListFinder) {
-
-		this.commercePriceListFinder = commercePriceListFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commercePriceListService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommercePriceListService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commercePriceListService = (CommercePriceListService)aopProxy;
+
+		_setServiceUtilService(commercePriceListService);
 	}
 
 	/**
@@ -228,25 +134,20 @@ public abstract class CommercePriceListServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.price.list.service.CommercePriceListLocalService.class
-	)
+	@Reference
 	protected
 		com.liferay.commerce.price.list.service.CommercePriceListLocalService
 			commercePriceListLocalService;
 
-	@BeanReference(type = CommercePriceListService.class)
 	protected CommercePriceListService commercePriceListService;
 
-	@BeanReference(type = CommercePriceListPersistence.class)
+	@Reference
 	protected CommercePriceListPersistence commercePriceListPersistence;
 
-	@BeanReference(type = CommercePriceListFinder.class)
+	@Reference
 	protected CommercePriceListFinder commercePriceListFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

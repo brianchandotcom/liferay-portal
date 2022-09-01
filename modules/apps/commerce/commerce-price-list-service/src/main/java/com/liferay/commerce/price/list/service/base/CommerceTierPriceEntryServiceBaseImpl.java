@@ -18,7 +18,7 @@ import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryServiceUtil;
 import com.liferay.commerce.price.list.service.persistence.CommerceTierPriceEntryPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce tier price entry remote service.
@@ -46,113 +48,31 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceTierPriceEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceTierPriceEntryService, IdentifiableOSGiService {
+	implements AopService, CommerceTierPriceEntryService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceTierPriceEntryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceTierPriceEntryServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce tier price entry local service.
-	 *
-	 * @return the commerce tier price entry local service
-	 */
-	public
-		com.liferay.commerce.price.list.service.
-			CommerceTierPriceEntryLocalService
-				getCommerceTierPriceEntryLocalService() {
-
-		return commerceTierPriceEntryLocalService;
-	}
-
-	/**
-	 * Sets the commerce tier price entry local service.
-	 *
-	 * @param commerceTierPriceEntryLocalService the commerce tier price entry local service
-	 */
-	public void setCommerceTierPriceEntryLocalService(
-		com.liferay.commerce.price.list.service.
-			CommerceTierPriceEntryLocalService
-				commerceTierPriceEntryLocalService) {
-
-		this.commerceTierPriceEntryLocalService =
-			commerceTierPriceEntryLocalService;
-	}
-
-	/**
-	 * Returns the commerce tier price entry remote service.
-	 *
-	 * @return the commerce tier price entry remote service
-	 */
-	public CommerceTierPriceEntryService getCommerceTierPriceEntryService() {
-		return commerceTierPriceEntryService;
-	}
-
-	/**
-	 * Sets the commerce tier price entry remote service.
-	 *
-	 * @param commerceTierPriceEntryService the commerce tier price entry remote service
-	 */
-	public void setCommerceTierPriceEntryService(
-		CommerceTierPriceEntryService commerceTierPriceEntryService) {
-
-		this.commerceTierPriceEntryService = commerceTierPriceEntryService;
-	}
-
-	/**
-	 * Returns the commerce tier price entry persistence.
-	 *
-	 * @return the commerce tier price entry persistence
-	 */
-	public CommerceTierPriceEntryPersistence
-		getCommerceTierPriceEntryPersistence() {
-
-		return commerceTierPriceEntryPersistence;
-	}
-
-	/**
-	 * Sets the commerce tier price entry persistence.
-	 *
-	 * @param commerceTierPriceEntryPersistence the commerce tier price entry persistence
-	 */
-	public void setCommerceTierPriceEntryPersistence(
-		CommerceTierPriceEntryPersistence commerceTierPriceEntryPersistence) {
-
-		this.commerceTierPriceEntryPersistence =
-			commerceTierPriceEntryPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceTierPriceEntryService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceTierPriceEntryService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceTierPriceEntryService = (CommerceTierPriceEntryService)aopProxy;
+
+		_setServiceUtilService(commerceTierPriceEntryService);
 	}
 
 	/**
@@ -215,24 +135,19 @@ public abstract class CommerceTierPriceEntryServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService.class
-	)
+	@Reference
 	protected
 		com.liferay.commerce.price.list.service.
 			CommerceTierPriceEntryLocalService
 				commerceTierPriceEntryLocalService;
 
-	@BeanReference(type = CommerceTierPriceEntryService.class)
 	protected CommerceTierPriceEntryService commerceTierPriceEntryService;
 
-	@BeanReference(type = CommerceTierPriceEntryPersistence.class)
+	@Reference
 	protected CommerceTierPriceEntryPersistence
 		commerceTierPriceEntryPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

@@ -19,7 +19,7 @@ import com.liferay.commerce.price.list.service.CommercePriceListAccountRelServic
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelServiceUtil;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListAccountRelFinder;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListAccountRelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -28,11 +28,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce price list account rel remote service.
@@ -47,139 +49,33 @@ import javax.sql.DataSource;
  */
 public abstract class CommercePriceListAccountRelServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommercePriceListAccountRelService, IdentifiableOSGiService {
+	implements AopService, CommercePriceListAccountRelService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommercePriceListAccountRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePriceListAccountRelServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce price list account rel local service.
-	 *
-	 * @return the commerce price list account rel local service
-	 */
-	public com.liferay.commerce.price.list.service.
-		CommercePriceListAccountRelLocalService
-			getCommercePriceListAccountRelLocalService() {
-
-		return commercePriceListAccountRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce price list account rel local service.
-	 *
-	 * @param commercePriceListAccountRelLocalService the commerce price list account rel local service
-	 */
-	public void setCommercePriceListAccountRelLocalService(
-		com.liferay.commerce.price.list.service.
-			CommercePriceListAccountRelLocalService
-				commercePriceListAccountRelLocalService) {
-
-		this.commercePriceListAccountRelLocalService =
-			commercePriceListAccountRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce price list account rel remote service.
-	 *
-	 * @return the commerce price list account rel remote service
-	 */
-	public CommercePriceListAccountRelService
-		getCommercePriceListAccountRelService() {
-
-		return commercePriceListAccountRelService;
-	}
-
-	/**
-	 * Sets the commerce price list account rel remote service.
-	 *
-	 * @param commercePriceListAccountRelService the commerce price list account rel remote service
-	 */
-	public void setCommercePriceListAccountRelService(
-		CommercePriceListAccountRelService commercePriceListAccountRelService) {
-
-		this.commercePriceListAccountRelService =
-			commercePriceListAccountRelService;
-	}
-
-	/**
-	 * Returns the commerce price list account rel persistence.
-	 *
-	 * @return the commerce price list account rel persistence
-	 */
-	public CommercePriceListAccountRelPersistence
-		getCommercePriceListAccountRelPersistence() {
-
-		return commercePriceListAccountRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce price list account rel persistence.
-	 *
-	 * @param commercePriceListAccountRelPersistence the commerce price list account rel persistence
-	 */
-	public void setCommercePriceListAccountRelPersistence(
-		CommercePriceListAccountRelPersistence
-			commercePriceListAccountRelPersistence) {
-
-		this.commercePriceListAccountRelPersistence =
-			commercePriceListAccountRelPersistence;
-	}
-
-	/**
-	 * Returns the commerce price list account rel finder.
-	 *
-	 * @return the commerce price list account rel finder
-	 */
-	public CommercePriceListAccountRelFinder
-		getCommercePriceListAccountRelFinder() {
-
-		return commercePriceListAccountRelFinder;
-	}
-
-	/**
-	 * Sets the commerce price list account rel finder.
-	 *
-	 * @param commercePriceListAccountRelFinder the commerce price list account rel finder
-	 */
-	public void setCommercePriceListAccountRelFinder(
-		CommercePriceListAccountRelFinder commercePriceListAccountRelFinder) {
-
-		this.commercePriceListAccountRelFinder =
-			commercePriceListAccountRelFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commercePriceListAccountRelService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommercePriceListAccountRelService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commercePriceListAccountRelService =
+			(CommercePriceListAccountRelService)aopProxy;
+
+		_setServiceUtilService(commercePriceListAccountRelService);
 	}
 
 	/**
@@ -242,28 +138,23 @@ public abstract class CommercePriceListAccountRelServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.price.list.service.CommercePriceListAccountRelLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.price.list.service.
 		CommercePriceListAccountRelLocalService
 			commercePriceListAccountRelLocalService;
 
-	@BeanReference(type = CommercePriceListAccountRelService.class)
 	protected CommercePriceListAccountRelService
 		commercePriceListAccountRelService;
 
-	@BeanReference(type = CommercePriceListAccountRelPersistence.class)
+	@Reference
 	protected CommercePriceListAccountRelPersistence
 		commercePriceListAccountRelPersistence;
 
-	@BeanReference(type = CommercePriceListAccountRelFinder.class)
+	@Reference
 	protected CommercePriceListAccountRelFinder
 		commercePriceListAccountRelFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

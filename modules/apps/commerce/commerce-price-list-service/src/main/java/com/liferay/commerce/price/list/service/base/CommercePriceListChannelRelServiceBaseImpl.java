@@ -19,7 +19,7 @@ import com.liferay.commerce.price.list.service.CommercePriceListChannelRelServic
 import com.liferay.commerce.price.list.service.CommercePriceListChannelRelServiceUtil;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListChannelRelFinder;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListChannelRelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -28,11 +28,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce price list channel rel remote service.
@@ -47,139 +49,33 @@ import javax.sql.DataSource;
  */
 public abstract class CommercePriceListChannelRelServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommercePriceListChannelRelService, IdentifiableOSGiService {
+	implements AopService, CommercePriceListChannelRelService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommercePriceListChannelRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePriceListChannelRelServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce price list channel rel local service.
-	 *
-	 * @return the commerce price list channel rel local service
-	 */
-	public com.liferay.commerce.price.list.service.
-		CommercePriceListChannelRelLocalService
-			getCommercePriceListChannelRelLocalService() {
-
-		return commercePriceListChannelRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce price list channel rel local service.
-	 *
-	 * @param commercePriceListChannelRelLocalService the commerce price list channel rel local service
-	 */
-	public void setCommercePriceListChannelRelLocalService(
-		com.liferay.commerce.price.list.service.
-			CommercePriceListChannelRelLocalService
-				commercePriceListChannelRelLocalService) {
-
-		this.commercePriceListChannelRelLocalService =
-			commercePriceListChannelRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce price list channel rel remote service.
-	 *
-	 * @return the commerce price list channel rel remote service
-	 */
-	public CommercePriceListChannelRelService
-		getCommercePriceListChannelRelService() {
-
-		return commercePriceListChannelRelService;
-	}
-
-	/**
-	 * Sets the commerce price list channel rel remote service.
-	 *
-	 * @param commercePriceListChannelRelService the commerce price list channel rel remote service
-	 */
-	public void setCommercePriceListChannelRelService(
-		CommercePriceListChannelRelService commercePriceListChannelRelService) {
-
-		this.commercePriceListChannelRelService =
-			commercePriceListChannelRelService;
-	}
-
-	/**
-	 * Returns the commerce price list channel rel persistence.
-	 *
-	 * @return the commerce price list channel rel persistence
-	 */
-	public CommercePriceListChannelRelPersistence
-		getCommercePriceListChannelRelPersistence() {
-
-		return commercePriceListChannelRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce price list channel rel persistence.
-	 *
-	 * @param commercePriceListChannelRelPersistence the commerce price list channel rel persistence
-	 */
-	public void setCommercePriceListChannelRelPersistence(
-		CommercePriceListChannelRelPersistence
-			commercePriceListChannelRelPersistence) {
-
-		this.commercePriceListChannelRelPersistence =
-			commercePriceListChannelRelPersistence;
-	}
-
-	/**
-	 * Returns the commerce price list channel rel finder.
-	 *
-	 * @return the commerce price list channel rel finder
-	 */
-	public CommercePriceListChannelRelFinder
-		getCommercePriceListChannelRelFinder() {
-
-		return commercePriceListChannelRelFinder;
-	}
-
-	/**
-	 * Sets the commerce price list channel rel finder.
-	 *
-	 * @param commercePriceListChannelRelFinder the commerce price list channel rel finder
-	 */
-	public void setCommercePriceListChannelRelFinder(
-		CommercePriceListChannelRelFinder commercePriceListChannelRelFinder) {
-
-		this.commercePriceListChannelRelFinder =
-			commercePriceListChannelRelFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commercePriceListChannelRelService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommercePriceListChannelRelService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commercePriceListChannelRelService =
+			(CommercePriceListChannelRelService)aopProxy;
+
+		_setServiceUtilService(commercePriceListChannelRelService);
 	}
 
 	/**
@@ -242,28 +138,23 @@ public abstract class CommercePriceListChannelRelServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.price.list.service.CommercePriceListChannelRelLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.price.list.service.
 		CommercePriceListChannelRelLocalService
 			commercePriceListChannelRelLocalService;
 
-	@BeanReference(type = CommercePriceListChannelRelService.class)
 	protected CommercePriceListChannelRelService
 		commercePriceListChannelRelService;
 
-	@BeanReference(type = CommercePriceListChannelRelPersistence.class)
+	@Reference
 	protected CommercePriceListChannelRelPersistence
 		commercePriceListChannelRelPersistence;
 
-	@BeanReference(type = CommercePriceListChannelRelFinder.class)
+	@Reference
 	protected CommercePriceListChannelRelFinder
 		commercePriceListChannelRelFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

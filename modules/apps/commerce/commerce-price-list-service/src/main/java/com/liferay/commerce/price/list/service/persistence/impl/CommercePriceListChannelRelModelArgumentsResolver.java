@@ -24,12 +24,21 @@ import com.liferay.portal.kernel.model.BaseModel;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * The arguments resolver class for retrieving value from CommercePriceListChannelRel.
  *
  * @author Alessio Antonio Rendina
  * @generated
  */
+@Component(
+	immediate = true,
+	service = {
+		CommercePriceListChannelRelModelArgumentsResolver.class,
+		ArgumentsResolver.class
+	}
+)
 public class CommercePriceListChannelRelModelArgumentsResolver
 	implements ArgumentsResolver {
 

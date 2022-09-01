@@ -25,6 +25,7 @@ import com.liferay.content.dashboard.web.internal.search.request.ContentDashboar
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -70,7 +71,6 @@ import java.util.stream.Stream;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -152,11 +152,11 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 				return version.getLabel();
 			}
 		).cell(
-			StringUtils.joinWith(
-				StringPool.COMMA_AND_SPACE,
+			StringUtil.merge(
 				ListUtil.toList(
 					contentDashboardItem.getAssetCategories(),
-					assetCategory -> assetCategory.getTitle(locale)))
+					assetCategory -> assetCategory.getTitle(locale)),
+				StringPool.COMMA_AND_SPACE)
 		).cell(
 			ListUtil.toString(
 				contentDashboardItem.getAssetTags(), AssetTag.NAME_ACCESSOR,

@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -314,7 +315,13 @@ public class UpstreamFailureUtil {
 	private static List<String> _getUpstreamJobFailures(
 		String type, TopLevelBuild topLevelBuild) {
 
+		if (_upstreamFailures.containsKey(type)) {
+			return _upstreamFailures.get(type);
+		}
+
 		List<String> upstreamFailures = new ArrayList<>();
+
+		_upstreamFailures.put(type, upstreamFailures);
 
 		TopLevelBuildReport topLevelBuildReport =
 			getUpstreamTopLevelBuildReport(topLevelBuild);
@@ -481,6 +488,8 @@ public class UpstreamFailureUtil {
 	}
 
 	private static boolean _upstreamComparisonAvailable = true;
+	private static final Map<String, List<String>> _upstreamFailures =
+		new HashMap<>();
 	private static String _upstreamJobFailuresSHA;
 	private static TestrayBuild _upstreamTestrayBuild;
 	private static TestrayRoutine _upstreamTestrayRoutine;

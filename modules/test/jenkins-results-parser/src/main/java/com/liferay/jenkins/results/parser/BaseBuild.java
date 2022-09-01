@@ -1860,7 +1860,17 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean isUniqueFailure() {
-		return !UpstreamFailureUtil.isBuildFailingInUpstreamJob(this);
+		if (_uniqueFailure != null) {
+			return _uniqueFailure;
+		}
+
+		if (!Objects.equals(getStatus(), "completed")) {
+			return !UpstreamFailureUtil.isBuildFailingInUpstreamJob(this);
+		}
+
+		_uniqueFailure = !UpstreamFailureUtil.isBuildFailingInUpstreamJob(this);
+
+		return _uniqueFailure;
 	}
 
 	@Override
@@ -4291,5 +4301,6 @@ public abstract class BaseBuild implements Build {
 	private Map<String, TestClassResult> _testClassResults;
 	private List<URL> _testrayAttachmentURLs;
 	private List<URL> _testrayS3AttachmentURLs;
+	private Boolean _uniqueFailure;
 
 }

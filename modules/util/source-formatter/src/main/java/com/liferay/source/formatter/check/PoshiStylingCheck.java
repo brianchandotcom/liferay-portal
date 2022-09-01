@@ -156,7 +156,7 @@ public class PoshiStylingCheck extends BaseFileCheck {
 			return content;
 		}
 
-		String[] lines = StringUtil.splitLines(content);
+		String[] lines = content.split("\n");
 
 		StringBundler sb = new StringBundler();
 

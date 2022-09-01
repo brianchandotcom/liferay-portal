@@ -3682,6 +3682,76 @@ definition {
 		}
 	}
 
+	@description = "LPS-155386: Add Filtering by Pending Status to the Content Dashboard"
+	@priority = "4"
+	test FilterByStatusPendingBlog {
+		property portal.acceptance = "true";
+
+		task ("Given a pending Blog") {
+			task ("Configure Blogs Entry workflow to Single Approver") {
+				Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
+
+				Workflow.configureWorkflow(
+					workflowDefinition = "Single Approver",
+					workflowResourceValue = "Blogs Entry");
+			}
+
+			task ("Create a Blog Entry") {
+				JSONBlog.addEntry(
+					entryContent = "Blogs Entry Content",
+					entryTitle = "Blogs Entry Title",
+					groupName = "Test Site Name");
+			}
+		}
+
+		task ("When user filters by 'Pending' status") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByStatusDraft(filterOption = "Pending");
+		}
+
+		task ("Then the asset is filtered") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Blogs Entry Title");
+		}
+	}
+
+	@description = "LPS-155386: Add Filtering by Pending Status to the Content Dashboard"
+	@priority = "4"
+	test FilterByStatusPendingWebContent {
+		property portal.acceptance = "true";
+
+		task ("Given a pending Web Content") {
+			task ("Configure Web Content Article workflow to Single Approver") {
+				Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
+
+				Workflow.configureWorkflow(
+					workflowDefinition = "Single Approver",
+					workflowResourceValue = "Web Content Article");
+			}
+
+			task ("Create a Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+		}
+
+		task ("When user filters by 'Pending' status") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByStatusDraft(filterOption = "Pending");
+		}
+
+		task ("Then the asset is filtered") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Web Content Title");
+		}
+	}
+
 	@description = "Validate if the user can filter by Status: Scheduled. And for LPS-86164 - Assert whether selecting time ends in JS error."
 	@priority = "5"
 	test FilterByStatusScheduled {

@@ -180,6 +180,12 @@ definition {
 		if ("${item}" == "Edit Tags") {
 			Click(locator1 = "Icon#EDIT_TAGS");
 		}
+
+		if ("${item}" == "dropdownMenu") {
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+			MenuItem.click(menuItem = "${menuItem}");
+		}
 	}
 
 	macro gotoMetadataSets {

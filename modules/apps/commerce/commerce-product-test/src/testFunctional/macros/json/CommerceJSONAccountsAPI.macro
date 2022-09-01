@@ -29,6 +29,30 @@ definition {
 		}
 	}
 
+	macro _getAccountAddressIdByAddressName {
+		Variables.assertDefined(parameterList = "${addressName}");
+
+		if (isSet(accountEntryName) && !(isSet(accountEntryId))) {
+			var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
+		}
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountEntryId}/accountAddresses \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var accountAddressId = JSONCurlUtil.get("${curl}", "$.items.[?(@['name']=='${addressName}')].['id']]");
+
+		return "${accountAddressId}";
+	}
+
 	macro _getCommerceAccountEmail {
 		var baseURL = "${baseURL}";
 

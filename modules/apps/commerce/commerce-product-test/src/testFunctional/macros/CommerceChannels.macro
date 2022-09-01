@@ -151,6 +151,25 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 	}
 
+	macro addShippingOptions {
+		for (var shippingOption : list "${shippingOptions}") {
+			if ("${shippingMethod}" == "Flat Rate") {
+				var shippingOptionName = StringUtil.extractFirst("${shippingOption}", ":");
+				var shippingOptionAmount = StringUtil.extractLast("${shippingOption}", ":");
+			}
+			else if ("${shippingMethod}" == "Variable Rate") {
+				var shippingOptionName = "${shippingOption}";
+			}
+
+			var shippingOptionKey = CommerceUtilities.convertStringToKey(string = "${shippingOptionName}");
+
+			CommerceChannels.addShippingOption(
+				amount = "${shippingOptionAmount}",
+				key = "${shippingOptionKey}",
+				name = "${shippingOptionName}");
+		}
+	}
+
 	macro assertDefaultAccountShippingOption {
 		AssertElementPresent(
 			key_columnNumber = "1",

@@ -268,6 +268,10 @@
 					</div>
 
 					<p class="mb-5 text-secondary">
+						<span class="mr-2">
+							<liferay-ui:message arguments="<%= assetCategoriesDisplayContext.getMaximumNumberOfCategoriesPerVocabulary() %>" key="the-maximum-number-of-categories-per-vocabulary-is-x" />
+						</span>
+
 						<liferay-learn:message
 							key="general"
 							resource="asset-taglib"

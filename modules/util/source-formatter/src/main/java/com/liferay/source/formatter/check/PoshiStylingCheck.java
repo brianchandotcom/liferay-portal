@@ -182,7 +182,7 @@ public class PoshiStylingCheck extends BaseFileCheck {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		if (!content.endsWith(StringPool.NEW_LINE) && (sb.index() > 1)) {
+		if (sb.index() > 1) {
 			sb.setIndex(sb.index() - 1);
 		}
 

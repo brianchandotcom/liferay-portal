@@ -28,6 +28,20 @@ const ITEM_TYPES_SYMBOL = {
 	folder: 'folder',
 };
 
+const ActionsDropdown = (actions) =>
+	actions?.length && (
+		<ClayDropDownWithItems
+			items={normalizeDropdownItems(actions)}
+			trigger={
+				<ClayButtonWithIcon
+					displayType="unstyled"
+					small
+					symbol="ellipsis-v"
+				/>
+			}
+		/>
+	);
+
 export default function NavigationPanel({items, selectedItemId}) {
 	const handleClickItem = (event, item) => {
 		if (event.defaultPrevented) {
@@ -50,6 +64,7 @@ export default function NavigationPanel({items, selectedItemId}) {
 			{(item) => {
 				return (
 					<ClayTreeView.Item
+						actions={ActionsDropdown(item.actions)}
 						onClick={(event) => {
 							handleClickItem(event, item);
 						}}
@@ -69,22 +84,7 @@ export default function NavigationPanel({items, selectedItemId}) {
 							{(item) => {
 								return (
 									<ClayTreeView.Item
-										actions={
-											item?.actions?.length && (
-												<ClayDropDownWithItems
-													items={normalizeDropdownItems(
-														item.actions
-													)}
-													trigger={
-														<ClayButtonWithIcon
-															displayType="unstyled"
-															small
-															symbol="ellipsis-v"
-														/>
-													}
-												/>
-											)
-										}
+										actions={ActionsDropdown(item.actions)}
 										onClick={(event) => {
 											handleClickItem(event, item);
 										}}

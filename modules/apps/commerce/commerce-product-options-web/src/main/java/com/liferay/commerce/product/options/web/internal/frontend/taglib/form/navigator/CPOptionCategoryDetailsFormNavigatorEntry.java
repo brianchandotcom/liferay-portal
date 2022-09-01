@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,6 +57,11 @@ public class CPOptionCategoryDetailsFormNavigatorEntry
 	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "details");
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return null;
 	}
 
 	@Override

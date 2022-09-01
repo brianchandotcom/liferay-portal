@@ -66,6 +66,11 @@ public class CPDefinitionVirtualSettingDetailsBaseInfoFormNavigatorEntry
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _cpDefinitionVirtualSettingServletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

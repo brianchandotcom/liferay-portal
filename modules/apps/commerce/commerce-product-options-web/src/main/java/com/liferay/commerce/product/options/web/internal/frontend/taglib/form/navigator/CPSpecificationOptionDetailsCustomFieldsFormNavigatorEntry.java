@@ -26,6 +26,8 @@ import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -59,6 +61,11 @@ public class CPSpecificationOptionDetailsCustomFieldsFormNavigatorEntry
 	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "custom-fields");
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return null;
 	}
 
 	@Override

@@ -46,77 +46,77 @@ definition {
 	@description = "This test asserts that a newly created site will have default account type settings even after changing settings on original site."
 	@priority = "5"
 	test AllowedAccountTypeIsSiteWide {
-		task ("Log in as Super User to give permissions for account adding to Account Administrator User") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+		task ("Given that the allowed account type is set to Person") {
+			Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Person");
+		}
 
+		task ("and a non admin user has permissions to add an account entry") {
 			Accounts.setAddAccountEntryPermissions(
 				roleTitle = "Reg Role Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Only allow for Person accounts to be created or visible") {
-			Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Person");
+		task ("and there is a Business account and a Person account the non admin user is a member of") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Business Account",
+				accountEntryType = "Business");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Business Account",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Person Account",
+				accountEntryType = "Person");
+
+			Accounts.openAccountsAdmin();
+
+			Accounts.gotoEdit(accountName = "Person Account");
+
+			Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn");
 		}
 
-		task ("Create a Person account as the Account Administrator user") {
+		task ("When a new site with an Account Management widget is created") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Another Account Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Another Account Page",
+				widgetName = "Account Management");
+		}
+
+		task ("Then the non admin user can see both Business and Person account in the new site, but not in the old site") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Navigator.gotoPage(pageName = "2B Account Page");
+			Navigator.gotoPage(pageName = "Account Page");
 
-			Accounts.addPersonAccount(accountName = "Person Account");
-		}
+			LexiconEntry.viewNoEntry(rowEntry = "Business Account");
 
-		task ("Assert that the Account Administrator can only see the Person account and not the Business account made in the setup") {
-			Navigator.gotoPage(pageName = "2B Account Page");
+			LexiconEntry.viewEntryName(rowEntry = "Person Account");
 
-			LexiconEntry.viewNoEntry(rowEntry = "Account Name");
+			Navigator.gotoSitePage(
+				pageName = "Another Account Page",
+				siteName = "Site Name");
+
+			LexiconEntry.viewEntryName(rowEntry = "Business Account");
 
 			LexiconEntry.viewEntryName(rowEntry = "Person Account");
 		}
 
-		task ("Log back in as Super User to create a new site and add a new page with the Account Management Widget") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
-
-			Site.addBlankCP(siteName = "Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.addPage(
-				pageName = "2B New Site",
-				sitePageType = "Widget Page");
+		task ("and non admin user has the option to add both Business and Person account") {
+			Accounts.addBusinessAccount(accountName = "Business Account 2");
 
 			Navigator.gotoSitePage(
-				pageName = "2B New Site",
+				pageName = "Another Account Page",
 				siteName = "Site Name");
 
-			Portlet.addPG(portletName = "Account Management");
-		}
-
-		task ("As the Account Administrator, go to new site and assert that both account types are now visible due to default allowed account type settings") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
-			Navigator.gotoSitePage(
-				pageName = "2B New Site",
-				siteName = "Site Name");
-
-			LexiconEntry.viewEntryName(rowEntry = "Account Name");
-
-			LexiconEntry.viewEntryName(rowEntry = "Person Account");
+			Accounts.addPersonAccount(accountName = "Person Account 2");
 		}
 	}
 
@@ -125,26 +125,22 @@ definition {
 	test CanOnlyAddBusinessAccountsWhenAllowedAccountTypeIsBusiness {
 		property portal.acceptance = "true";
 
-		task ("Add account entry permission to Account Admin") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-
+		task ("Given a non admin user has permissions to add an account entry") {
 			Accounts.setAddAccountEntryPermissions(
 				roleTitle = "Reg Role Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Set allowed account type to business") {
+		task ("When Allowed Account Type is set to Business") {
 			Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Business");
 		}
 
-		task ("Assert Account Admin can only add business accounts") {
+		task ("Then a non admin user can only add a Business account, not a Person account") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Navigator.gotoPage(pageName = "2B Account Page");
+			Navigator.gotoPage(pageName = "Account Page");
 
 			LexiconEntry.gotoAdd();
 
@@ -161,7 +157,7 @@ definition {
 
 			Button.clickSave();
 
-			Navigator.gotoPage(pageName = "2B Account Page");
+			Navigator.gotoPage(pageName = "Account Page");
 
 			LexiconEntry.viewEntryName(rowEntry = "Business Account Only");
 		}
@@ -172,26 +168,22 @@ definition {
 	test CanOnlyAddPersonAccountsWhenAllowedAccountTypeIsPerson {
 		property portal.acceptance = "true";
 
-		task ("Add account entry permission to Account Admin") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-
+		task ("Given a non admin user has permissions to add an account entry") {
 			Accounts.setAddAccountEntryPermissions(
 				roleTitle = "Reg Role Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Set allowed account type to person") {
+		task ("When Allowed Account Type is set to Business") {
 			Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Person");
 		}
 
-		task ("Assert Account Admin can only add person accounts") {
+		task ("Then a non admin user can only add a Business account, not a Person account") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Navigator.gotoPage(pageName = "2B Account Page");
+			Navigator.gotoPage(pageName = "Account Page");
 
 			LexiconEntry.gotoAdd();
 
@@ -208,7 +200,7 @@ definition {
 
 			Button.clickSave();
 
-			Navigator.gotoPage(pageName = "2B Account Page");
+			Navigator.gotoPage(pageName = "Account Page");
 
 			LexiconEntry.viewEntryName(rowEntry = "Person Account Only");
 		}
@@ -217,12 +209,16 @@ definition {
 	@description = "This test sets the Allowed Account Type to only Business and assert that only Business Accounts display in Account Management Widget."
 	@priority = "4"
 	test CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness {
-		property test.name.skip.portal.instance = "2BAccount#CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness";
+		property test.name.skip.portal.instance = "AccountManagementWidget#CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness";
 
-		task ("Login as Super User to create a Person type account and assign Account Admin to it") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
+		task ("Given there is a Business account and a Person account the non admin user is a member of") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Business Account",
+				accountEntryType = "Business");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Business Account",
+				userEmailAddress = "userea@liferay.com");
 
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Person Account",
@@ -235,15 +231,7 @@ definition {
 			Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn");
 		}
 
-		task ("View that all accounts are listed") {
-			Accounts.openAccountsAdmin();
-
-			for (var accounts : list "Account Name,Person Account") {
-				LexiconEntry.viewEntryName(rowEntry = "${accounts}");
-			}
-		}
-
-		task ("Change account type settings to only allow the viewing of Business Type accounts") {
+		task ("When the allowed account type is set to Business") {
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 			ApplicationsMenu.gotoSite(site = "${siteName}");
@@ -251,20 +239,16 @@ definition {
 			Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Business");
 		}
 
-		task ("Log back in as Account Administrator and assert that only the Business account is listed and the Person account is not") {
+		task ("Then only the Business Account displays on the Account Management widget") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Navigator.gotoPage(pageName = "2B Account Page");
+			Navigator.gotoPage(pageName = "Account Page");
 
-			AssertElementPresent(
-				key_rowEntry = "Account Name",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+			LexiconEntry.viewNoEntry(rowEntry = "Person Account");
 
-			AssertElementNotPresent(
-				key_rowEntry = "Person Account",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+			LexiconEntry.viewEntryName(rowEntry = "Business Account");
 		}
 	}
 
@@ -327,39 +311,39 @@ definition {
 	test CanSetActiveAccount {
 		property portal.acceptance = "true";
 
-		task ("Sign in as Super User to give permissions to add accounts to the Account Administrator user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+		task ("Given a user who is a member of two Business Accounts") {
+			for (var accountNum : list "1,2") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Account Name ${accountNum}",
+					accountEntryType = "Business");
 
-			Accounts.setAddAccountEntryPermissions(
-				roleTitle = "Reg Role Name",
-				userEmailAddress = "userea@liferay.com");
+				JSONAccountEntryUser.addExistUsertoAccount(
+					accountEntryName = "Account Name ${accountNum}",
+					userEmailAddress = "userea@liferay.com");
+			}
 		}
 
-		task ("Sign in as Account Administrator and create a new account") {
+		task ("When a user views the Account Management widget") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Navigator.gotoPage(pageName = "2B Account Page");
-
-			Accounts.addBusinessAccount(
-				accountDescription = "New Active Account Selection",
-				accountName = "New Selection for Test");
+			Navigator.gotoPage(pageName = "Account Page");
 		}
 
-		task ("Select new account to be main active account, denoted by a checkmark, and assert that previous account is no longer selected") {
-			Navigator.gotoPage(pageName = "2B Account Page");
+		task ("Then a user can set an Active account") {
+			Navigator.gotoPage(pageName = "Account Page");
 
 			Accounts.goToEntryMenuItem(
 				menuItem = "Select Account",
-				rowEntry = "New Selection for Test");
+				rowEntry = "Account Name 2");
+		}
 
-			Accounts.viewSelectedAccount(entryName = "New Selection for Test");
+		task ("and user can distinguish which one is set to Active via Account Management widget") {
+			Accounts.viewSelectedAccount(entryName = "Account Name 2");
 
 			AssertElementNotPresent(
-				key_entryName = "Account Name",
+				key_entryName = "Account Name 1",
 				locator1 = "Account#SELECT_ACCOUNT_ENTRY_CHECKMARK");
 		}
 	}

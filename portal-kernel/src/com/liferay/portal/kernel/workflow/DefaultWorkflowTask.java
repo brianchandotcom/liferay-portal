@@ -31,7 +31,7 @@ import java.util.Map;
  * @author Marcellus Tavares
  */
 public class DefaultWorkflowTask
-	extends BaseDefaultWorkflowNode implements Serializable, WorkflowTask {
+	extends BaseWorkflowNode implements Serializable, WorkflowTask {
 
 	@Override
 	public long getAssigneeUserId() {

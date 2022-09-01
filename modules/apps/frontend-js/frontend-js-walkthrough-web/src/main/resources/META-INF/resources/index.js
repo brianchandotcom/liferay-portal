@@ -20,14 +20,6 @@ import {LOCAL_STORAGE_KEYS} from './localStorageKeys';
 
 const DEFAULT_CONTAINER_ID = 'walkthroughContainer';
 
-const DEFAULT_PROPS = {
-	closeOnClickOutside: false,
-	closeable: true,
-	pages: {},
-	skippable: true,
-	steps: [],
-};
-
 const getDefaultContainer = () => {
 	let container = document.getElementById(DEFAULT_CONTAINER_ID);
 
@@ -42,7 +34,7 @@ const getDefaultContainer = () => {
 
 function Root(props) {
 	if (!localStorage.getItem(LOCAL_STORAGE_KEYS.SKIPPABLE)) {
-		return <Walkthrough {...DEFAULT_PROPS} {...props} />;
+		return <Walkthrough {...props} />;
 	}
 
 	return null;

@@ -70,6 +70,8 @@ definition {
 			value1 = "${caseName}");
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 	}
 
 	macro createNewOption {
@@ -134,7 +136,7 @@ definition {
 		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 	}
 
-	macro deleteProject {
+	macro deleteCasesTypes {
 		MouseOver(
 			key_value = "${valueName}",
 			locator1 = "TestrayManage#OPTIONS_NAME");
@@ -142,6 +144,28 @@ definition {
 		Click(locator1 = "TestrayDropdown#DROPDOWN_ITEM");
 
 		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this item?");
+
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+	}
+
+	macro deleteAllCasesTypes {
+		TestrayLayout.clickManageOnSidebar();
+
+		TestrayManage.selectOptionsManage(itemValue = "Case Types");
+
+		while (IsElementPresent(key_projectName = "Case_", locator1 = "Testray#PROJECT_NAME")) {
+			TestrayContextMenu.clickContextMenuProjects(name = "Case_");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+
+			Alert.viewSuccessMessage();
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+		}
 	}
 
 	macro editCategoryOption {
@@ -176,6 +200,8 @@ definition {
 			value1 = "${valueType}");
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 	}
 
 	macro editNewOptionName {

@@ -20,12 +20,10 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.IOException;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -178,8 +176,7 @@ public class PoshiStylingCheck extends BaseFileCheck {
 				sb.append(line);
 			}
 			else {
-				sb.append(
-					StringUtil.replaceFirst(line, trimmedLine, newLine));
+				sb.append(StringUtil.replaceFirst(line, trimmedLine, newLine));
 			}
 
 			sb.append(StringPool.NEW_LINE);

@@ -39,6 +39,13 @@ jest.mock(
 	})
 );
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((key, args) =>
+		args.reduce((key, arg) => key.replace('x', arg), key)
+	),
+}));
+
 const SpacingBoxTest = ({onChange = () => {}, value = {}}) => (
 	<StyleBookContextProvider>
 		<SpacingBox
@@ -132,16 +139,13 @@ const SpacingBoxTest = ({onChange = () => {}, value = {}}) => (
 
 describe('SpacingBox', () => {
 	let _getComputedStyle;
-	let _liferayUtilSub;
 
 	beforeEach(() => {
 		_getComputedStyle = window.getComputedStyle;
-		_liferayUtilSub = window.Liferay.Util.sub;
 	});
 
 	afterEach(() => {
 		window.getComputedStyle = _getComputedStyle;
-		window.Liferay.Util.sub = _liferayUtilSub;
 	});
 
 	it('renders given spacing values from StyleBook', async () => {
@@ -169,9 +173,6 @@ describe('SpacingBox', () => {
 	});
 
 	it('can be used to update spacing', () => {
-		window.Liferay.Util.sub = (key, args) =>
-			args.reduce((key, arg) => key.replace('x', arg), key);
-
 		const onChange = jest.fn();
 		render(<SpacingBoxTest onChange={onChange} />);
 

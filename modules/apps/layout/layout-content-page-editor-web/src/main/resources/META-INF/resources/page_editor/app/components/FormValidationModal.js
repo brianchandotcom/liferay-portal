@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import {default as ClayButton} from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -73,7 +74,7 @@ export function FormValidationModal({onCloseModal, onPublish}) {
 							className="mb-0"
 							collapsable
 							defaultExpanded
-							displayTitle={Liferay.Util.sub(
+							displayTitle={sub(
 								Liferay.Language.get('x-form'),
 								typeLabel
 							)}

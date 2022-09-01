@@ -158,6 +158,13 @@ jest.mock(
 	() => jest.fn()
 );
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((key, args) =>
+		args.reduce((key, arg) => key.replace('x', arg), key)
+	),
+}));
+
 describe('CommonStyles', () => {
 	afterEach(() => {
 		updateItemConfig.mockClear();
@@ -170,10 +177,6 @@ describe('CommonStyles', () => {
 	});
 
 	it('allows changing common styles for a given viewport', async () => {
-		Liferay.Util.sub.mockImplementation((key, args) =>
-			args.reduce((key, arg) => key.replace('x', arg), key)
-		);
-
 		const {getByLabelText} = renderComponent({
 			state: {selectedViewportSize: 'tablet'},
 		});

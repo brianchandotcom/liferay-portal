@@ -55,6 +55,11 @@ jest.mock(
 	() => jest.fn()
 );
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((langKey, args) => [langKey, args].join('-')),
+}));
+
 const DEFAULT_ITEM_CONFIG = {
 	collection: {
 		classNameId: '22101',
@@ -80,10 +85,6 @@ const renderComponent = ({
 	layoutData = {},
 	selectedViewportSize = 'desktop',
 } = {}) => {
-	Liferay.Util.sub.mockImplementation((langKey, args) =>
-		[langKey, args].join('-')
-	);
-
 	return render(
 		<StoreAPIContextProvider
 			dispatch={() => {}}

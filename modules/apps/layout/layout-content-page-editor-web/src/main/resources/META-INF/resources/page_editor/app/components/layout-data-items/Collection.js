@@ -15,6 +15,7 @@
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import {COLUMN_SIZE_MODULE_PER_ROW_SIZES} from '../../config/constants/columnSizes';
@@ -95,7 +96,7 @@ const EmptyCollectionGridMessage = () => (
 const EditModeMaxItemsAlert = () => (
 	<div className="alert alert-fluid alert-info">
 		<div className="container-fluid">
-			{Liferay.Util.sub(
+			{sub(
 				Liferay.Language.get(
 					'in-edit-mode,-the-number-of-elements-displayed-is-limited-to-x-due-to-performance'
 				),

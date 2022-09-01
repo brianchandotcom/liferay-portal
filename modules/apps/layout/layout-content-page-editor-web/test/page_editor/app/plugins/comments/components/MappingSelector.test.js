@@ -131,6 +131,11 @@ jest.mock(
 	})
 );
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((langKey, args) => [langKey, args].join('-')),
+}));
+
 function renderMappingSelector({
 	mappedItem = {},
 	mappingFields = defaultMappingFields,
@@ -177,10 +182,6 @@ function renderMappingSelector({
 }
 
 describe('MappingSelector', () => {
-	Liferay.Util.sub.mockImplementation((langKey, args) =>
-		[langKey, args].join('-')
-	);
-
 	it('renders correct selects in content pages', async () => {
 		renderMappingSelector({});
 

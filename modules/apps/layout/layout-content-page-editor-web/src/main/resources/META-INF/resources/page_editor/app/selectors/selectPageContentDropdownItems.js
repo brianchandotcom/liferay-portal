@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openModal} from 'frontend-js-web';
+import {openModal, sub} from 'frontend-js-web';
 
 import {selectPageContents} from './selectPageContents';
 
@@ -41,7 +41,7 @@ export function selectPageContentDropdownItems(classPK, label = '') {
 			dropdownItems.push({
 				href: editURL,
 				label: label
-					? Liferay.Util.sub(Liferay.Language.get('edit-x'), label)
+					? sub(Liferay.Language.get('edit-x'), label)
 					: Liferay.Language.get('edit'),
 				symbolLeft: 'pencil',
 			});
@@ -86,15 +86,12 @@ export function selectPageContentDropdownItems(classPK, label = '') {
 
 			dropdownItems.push({
 				label: label
-					? Liferay.Util.sub(
-							Liferay.Language.get('edit-x-permissions'),
-							label
-					  )
+					? sub(Liferay.Language.get('edit-x-permissions'), label)
 					: Liferay.Language.get('permissions'),
 				onClick: () =>
 					openModal({
 						title: label
-							? Liferay.Util.sub(
+							? sub(
 									Liferay.Language.get('edit-x-permissions'),
 									label
 							  )
@@ -112,18 +109,12 @@ export function selectPageContentDropdownItems(classPK, label = '') {
 
 			dropdownItems.push({
 				label: label
-					? Liferay.Util.sub(
-							Liferay.Language.get('view-x-usages'),
-							label
-					  )
+					? sub(Liferay.Language.get('view-x-usages'), label)
 					: Liferay.Language.get('view-usages'),
 				onClick: () =>
 					openModal({
 						title: label
-							? Liferay.Util.sub(
-									Liferay.Language.get('view-x-usages'),
-									label
-							  )
+							? sub(Liferay.Language.get('view-x-usages'), label)
 							: Liferay.Language.get('view-usages'),
 						url: viewUsagesURL,
 					}),

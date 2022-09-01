@@ -39,6 +39,11 @@ jest.mock(
 	}
 );
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((langKey, args) => langKey.replace('x', args)),
+}));
+
 const DEFAULT_WIDGETS = [
 	{
 		categories: [],
@@ -587,10 +592,6 @@ describe('FragmentsSidebar', () => {
 	});
 
 	describe('Button to switch the display style', () => {
-		Liferay.Util.sub.mockImplementation((langKey, args) =>
-			langKey.replace('x', args)
-		);
-
 		it('shows the card view when the display style is list', () => {
 			const {getByTitle} = renderComponent();
 

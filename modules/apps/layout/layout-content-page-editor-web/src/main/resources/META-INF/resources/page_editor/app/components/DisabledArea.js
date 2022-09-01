@@ -14,7 +14,12 @@
 
 import ClayPopover from '@clayui/popover';
 import {ReactPortal, useEventListener} from '@liferay/frontend-js-react-web';
-import {ALIGN_POSITIONS, align, suggestAlignBestRegion} from 'frontend-js-web';
+import {
+	ALIGN_POSITIONS,
+	align,
+	sub,
+	suggestAlignBestRegion,
+} from 'frontend-js-web';
 import React, {useCallback, useLayoutEffect, useRef, useState} from 'react';
 
 import {useSelectItem} from '../contexts/ControlsContext';
@@ -172,7 +177,7 @@ const DisabledArea = () => {
 				>
 					<div
 						dangerouslySetInnerHTML={{
-							__html: Liferay.Util.sub(
+							__html: sub(
 								Liferay.Language.get(
 									'this-area-is-defined-by-the-theme.-you-can-change-the-theme-settings-by-clicking-x-in-the-x-panel-on-the-sidebar'
 								),

@@ -21,6 +21,11 @@ import LayoutReports from '../../../src/main/resources/META-INF/resources/js/com
 import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 import {layoutReportsIssues, pageURLs, selectedIssue} from '../mocks';
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((langKey, arg) => langKey.replace('x', arg)),
+}));
+
 const getLayoutReportsComponent = ({
 	error = null,
 	layoutReportsIssues = null,

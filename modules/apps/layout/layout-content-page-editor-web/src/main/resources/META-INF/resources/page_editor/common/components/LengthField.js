@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
@@ -235,7 +236,7 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 						<ClayButton
 							aria-expanded={active}
 							aria-haspopup="true"
-							aria-label={Liferay.Util.sub(
+							aria-label={sub(
 								Liferay.Language.get('select-a-unit'),
 								nextUnit
 							)}

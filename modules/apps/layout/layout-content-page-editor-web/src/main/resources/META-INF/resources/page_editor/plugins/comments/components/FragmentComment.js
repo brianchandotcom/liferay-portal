@@ -17,7 +17,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {openToast} from 'frontend-js-web';
+import {openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -154,7 +154,7 @@ export default function FragmentComment({
 						})}
 						data-title={
 							showModifiedDateTooltip &&
-							Liferay.Util.sub(
+							sub(
 								Liferay.Language.get('edited-x'),
 								modifiedDateDescription
 							)

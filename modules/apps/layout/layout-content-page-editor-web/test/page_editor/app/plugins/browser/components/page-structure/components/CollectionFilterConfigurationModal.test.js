@@ -30,6 +30,11 @@ jest.mock(
 	})
 );
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((langKey, ...args) => [langKey, ...args].join('-')),
+}));
+
 const fakeObserver = {
 	dispatch: () => {},
 	mutation: [true, true],
@@ -68,10 +73,6 @@ const COLLECTION_KEY = 'COLLECTION_KEY';
 const handleConfigurationChanged = jest.fn();
 
 const renderComponent = () => {
-	Liferay.Util.sub.mockImplementation((langKey, ...args) =>
-		[langKey, ...args].join('-')
-	);
-
 	const result = render(
 		<StoreContextProvider
 			initialState={{

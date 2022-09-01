@@ -19,6 +19,7 @@ import {
 	useEventListener,
 	useIsMounted,
 } from '@liferay/frontend-js-react-web';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {UNDO_TYPES} from './constants/undoTypes';
@@ -158,7 +159,7 @@ const History = ({actions = [], type, onHistoryItemClick}) => {
 			}}
 			symbolRight={isSelectedAction(index) ? 'check' : ''}
 		>
-			{Liferay.Util.sub(Liferay.Language.get('update-x'), action.label)}
+			{sub(Liferay.Language.get('update-x'), action.label)}
 		</ClayDropDown.Item>
 	));
 };

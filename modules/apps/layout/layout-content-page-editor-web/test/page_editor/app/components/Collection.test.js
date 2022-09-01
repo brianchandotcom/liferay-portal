@@ -47,13 +47,16 @@ jest.mock(
 	})
 );
 
-function renderCollection(itemConfig = {}) {
-	Liferay.Util.sub.mockImplementation((langKey, args) => {
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((langKey, args) => {
 		const nextArgs = Array.isArray(args) ? args : [args];
 
 		return [langKey, ...nextArgs].join('-');
-	});
+	}),
+}));
 
+function renderCollection(itemConfig = {}) {
 	const state = {
 		permissions: {
 			UPDATE: true,

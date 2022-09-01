@@ -83,11 +83,12 @@ function renderUndoHistory() {
 	);
 }
 
-describe('UndoHistory', () => {
-	Liferay.Util.sub.mockImplementation((key, args) =>
-		key.replace('-x', ` ${args}`)
-	);
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	sub: jest.fn((key, args) => key.replace('-x', ` ${args}`)),
+}));
 
+describe('UndoHistory', () => {
 	it('shows all redo and undo history items in the list', () => {
 		const {getByText} = renderUndoHistory();
 

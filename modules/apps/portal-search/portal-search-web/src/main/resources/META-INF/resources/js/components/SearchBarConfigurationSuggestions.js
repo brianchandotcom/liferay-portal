@@ -19,7 +19,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import getCN from 'classnames';
-import {fetch} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import FieldList from './FieldList';
@@ -413,7 +413,7 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 					{value.size < 0 && touched.size && (
 						<div className="form-feedback-group">
 							<div className="form-feedback-item">
-								{Liferay.Util.sub(
+								{sub(
 									Liferay.Language.get(
 										'please-enter-a-value-greater-than-or-equal-to-x'
 									),

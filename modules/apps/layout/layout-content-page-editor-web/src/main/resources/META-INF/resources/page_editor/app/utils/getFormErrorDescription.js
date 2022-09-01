@@ -12,6 +12,8 @@
  * details.
  */
 
+import {sub} from 'frontend-js-web';
+
 export const FORM_ERROR_TYPES = {
 	deletedFragment: 'deletedFragment',
 	hiddenFields: 'hiddenFields',
@@ -25,7 +27,7 @@ export function getFormErrorDescription({name = null, type}) {
 	switch (type) {
 		case FORM_ERROR_TYPES.deletedFragment:
 			return {
-				message: Liferay.Util.sub(
+				message: sub(
 					Liferay.Language.get(
 						'the-deleted-fragment-was-marked-as-required'
 					),
@@ -35,7 +37,7 @@ export function getFormErrorDescription({name = null, type}) {
 
 		case FORM_ERROR_TYPES.hiddenFields:
 			return {
-				message: Liferay.Util.sub(
+				message: sub(
 					Liferay.Language.get(
 						'x-form-contains-one-or-more-hidden-fragments-mapped-to-required-fields'
 					),
@@ -56,7 +58,7 @@ export function getFormErrorDescription({name = null, type}) {
 
 		case FORM_ERROR_TYPES.missingFields:
 			return {
-				message: Liferay.Util.sub(
+				message: sub(
 					Liferay.Language.get(
 						'x-form-has-one-or-more-required-fields-not-mapped-from-the-form'
 					),
@@ -70,7 +72,7 @@ export function getFormErrorDescription({name = null, type}) {
 
 		case FORM_ERROR_TYPES.missingFragments:
 			return {
-				message: Liferay.Util.sub(
+				message: sub(
 					Liferay.Language.get(
 						'x-form-has-some-fragments-not-mapped-to-object-fields'
 					),
@@ -84,7 +86,7 @@ export function getFormErrorDescription({name = null, type}) {
 
 		case FORM_ERROR_TYPES.missingSubmit:
 			return {
-				message: Liferay.Util.sub(
+				message: sub(
 					Liferay.Language.get(
 						'x-form-has-a-hidden-or-missing-submit-button'
 					),

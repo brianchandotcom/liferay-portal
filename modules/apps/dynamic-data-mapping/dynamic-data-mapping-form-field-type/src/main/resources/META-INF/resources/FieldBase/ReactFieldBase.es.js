@@ -26,6 +26,7 @@ import {
 	useForm,
 	useFormState,
 } from 'data-engine-js-components-web';
+import {sub} from 'frontend-js-web';
 import moment from 'moment/min/moment-with-locales';
 import React, {useMemo, useState} from 'react';
 
@@ -272,7 +273,7 @@ export function FieldBase({
 				<div className="lfr-ddm-form-field-repeatable-toolbar">
 					{repeatedIndex > 0 && (
 						<ClayButton
-							aria-label={Liferay.Util.sub(
+							aria-label={sub(
 								Liferay.Language.get('remove-duplicate-field'),
 								label ? label : type
 							)}
@@ -293,7 +294,7 @@ export function FieldBase({
 					)}
 
 					<ClayButton
-						aria-label={Liferay.Util.sub(
+						aria-label={sub(
 							Liferay.Language.get('add-duplicate-field'),
 							label ? label : type
 						)}

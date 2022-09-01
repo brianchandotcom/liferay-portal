@@ -252,60 +252,6 @@ definition {
 		}
 	}
 
-	@description = "This test sets the Allowed Account Type to only Person and assert that only Person Accounts display in Account Management Widget."
-	@priority = "4"
-	test CanOnlyViewPersonAccountsWhenAllowedAccountTypeIsPerson {
-		property test.name.skip.portal.instance = "2BAccount#CanOnlyViewPersonAccountsWhenAllowedAccountTypeIsPerson";
-
-		task ("Login as Super User to create a Person type account and assign Account Admin to it") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test test");
-
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Person Account",
-				accountEntryType = "Person");
-
-			Accounts.openAccountsAdmin();
-
-			Accounts.gotoEdit(accountName = "Person Account");
-
-			Accounts.assignExistingUserToPersonAccount(accountUserName = "userfn");
-		}
-
-		task ("View that all accounts are listed") {
-			Accounts.openAccountsAdmin();
-
-			for (var accounts : list "Account Name,Person Account") {
-				LexiconEntry.viewEntryName(rowEntry = "${accounts}");
-			}
-		}
-
-		task ("Change account type settings to only allow the viewing of Person Type accounts") {
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-			ApplicationsMenu.gotoSite(site = "${siteName}");
-
-			Accounts.setAllowedAccountTypeInSiteSettings(allowedType = "Person");
-		}
-
-		task ("Log back in as Account Administrator and assert that the Business account is not visible and only Person Account is listed") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
-			Navigator.gotoPage(pageName = "2B Account Page");
-
-			AssertElementNotPresent(
-				key_rowEntry = "Account Name",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-
-			AssertElementPresent(
-				key_rowEntry = "Person Account",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-		}
-	}
-
 	@description = "This test asserts that a user can select an account from the list as the active account. Backend tests are covering functionality for account selection."
 	@priority = "4"
 	test CanSetActiveAccount {

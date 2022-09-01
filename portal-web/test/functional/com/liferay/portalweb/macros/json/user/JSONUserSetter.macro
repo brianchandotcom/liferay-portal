@@ -9,6 +9,7 @@ definition {
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
 			site = "${site}");
 
 		return "${groupId}";

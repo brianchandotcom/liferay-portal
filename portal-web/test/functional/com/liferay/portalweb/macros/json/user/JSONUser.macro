@@ -143,7 +143,9 @@ definition {
 	macro addUserToSite {
 		Variables.assertDefined(parameterList = "${groupName},${userEmailAddress}");
 
-		var groupId = JSONUserSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONUserSetter.setGroupId(
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}");
 		var userId = JSONUserSetter.setUserId(userEmailAddress = "${userEmailAddress}");
 
 		JSONUserAPI._addUserToSite(

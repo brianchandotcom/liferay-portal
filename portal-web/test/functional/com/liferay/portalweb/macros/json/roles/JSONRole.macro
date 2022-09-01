@@ -70,7 +70,9 @@ definition {
 	macro assignSiteRoleToUser {
 		Variables.assertDefined(parameterList = "${groupName},${roleTitle},${userEmailAddress}");
 
-		var groupId = JSONUserSetter.setGroupId(groupName = "${groupName}");
+		var groupId = JSONUserSetter.setGroupId(
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}");
 		var roleId = JSONRoleSetter.setRoleId(name = "${roleTitle}");
 		var userId = JSONRoleSetter.setUserId(userEmailAddress = "${userEmailAddress}");
 

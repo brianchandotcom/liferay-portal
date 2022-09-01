@@ -75,7 +75,7 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 						<liferay-ui:icon
 							message="reset-values"
 							method="post"
-							onClick="<%= liferayPortletResponse.getNamespace() + "handleResetValues" %>"
+							onClick='<%= liferayPortletResponse.getNamespace() + "handleResetValues" %>'
 							url="javascript:void(0);"
 						/>
 					</c:if>

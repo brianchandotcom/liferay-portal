@@ -131,7 +131,7 @@ const BudgetBreakdownSection = ({
 
 			<div className="my-3">
 				<BudgetResumeCard
-					leftContent="Total MDF Requested Amount"
+					leftContent="Total cost"
 					rightContent={getIntlNumberFormat().format(budgetsAmount)}
 				/>
 

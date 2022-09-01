@@ -95,6 +95,20 @@ const activitiesSchema = object({
 							return false;
 						}
 					)
+					.test(
+						'end-date-different-year',
+						'The end date cannot be the year different the year of start date',
+						(endDate, testContext) => {
+							if (endDate && testContext.parent.startDate) {
+								return (
+									testContext.parent.startDate.getFullYear() ===
+									endDate.getFullYear()
+								);
+							}
+
+							return false;
+						}
+					)
 					.required('Required'),
 				gatedLandingPage: string().when('typeActivity', {
 					is: (typeActivity: TypeActivity) =>

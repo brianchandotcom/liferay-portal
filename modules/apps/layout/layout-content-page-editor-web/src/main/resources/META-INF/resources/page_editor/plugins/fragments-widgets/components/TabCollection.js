@@ -59,7 +59,7 @@ export default function TabCollection({
 				))}
 
 			<ul
-				className={`list-unstyled page-editor__fragments-widgets__tab-collection-${displayStyle} w-100`}
+				className={`list-unstyled page-editor__fragments-widgets__tab-collection-${displayStyle} pb-2 w-100`}
 			>
 				{collection.children.map((item) => (
 					<React.Fragment key={item.itemId}>

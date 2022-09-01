@@ -178,10 +178,6 @@ definition {
 			locator1 = "Modal#HEADER",
 			value1 = "Terms of Use");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Modal#BODY",
-			value1 = "Use of Liferay Commerce apps is not covered by Liferay Support");
-
 		Click(locator1 = "Button#DONE");
 
 		AssertElementNotPresent(locator1 = "Modal#MODAL");

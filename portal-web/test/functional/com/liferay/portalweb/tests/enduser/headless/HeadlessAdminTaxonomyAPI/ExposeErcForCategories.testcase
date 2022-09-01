@@ -8,7 +8,9 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		JSONDepot.addDepot(depotName = "Test Depot Name");
+		task ("Given an asset library is created") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+		}
 
 		TaxonomyCategoryAPI.setUpGlobalResponse();
 	}
@@ -28,7 +30,7 @@ definition {
 	test CanDeleteCategoryByErc {
 		property portal.acceptance = "true";
 
-		task ("Given a TaxonomyCategory with custom external reference code") {
+		task ("And Given a TaxonomyCategory with custom external reference code") {
 			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
 				element = "$.id",
 				responseToParse = "${responseOfCreated}");
@@ -43,7 +45,7 @@ definition {
 				responseToParse = "${responseOfCategory}");
 		}
 
-		task ("When using a GET request deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode with custom erc") {
+		task ("When using a DELETE request deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode with custom erc") {
 			TaxonomyCategoryAPI.deleteTaxonomyCategoryByErc(
 				externalReferenceCode = "erc",
 				taxonomyVocabularyId = "${taxonomyVocabularyId}");
@@ -66,7 +68,7 @@ definition {
 	test CanRecieveCorrectCategoryIdByErc {
 		property portal.acceptance = "true";
 
-		task ("Given a TaxonomyCategory with custom external reference code") {
+		task ("And Given a TaxonomyCategory with custom external reference code") {
 			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
 				element = "$.id",
 				responseToParse = "${responseOfCreated}");
@@ -99,7 +101,7 @@ definition {
 	test CanRecieveCorrectErcValueInCategory {
 		property portal.acceptance = "true";
 
-		task ("Given a TaxonomyCategory with custom external reference code") {
+		task ("And Given a TaxonomyCategory with custom external reference code") {
 			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
 				element = "$.id",
 				responseToParse = "${responseOfCreated}");
@@ -131,7 +133,7 @@ definition {
 	test CanRecieveErrorMessageByNotExistErcInCategory {
 		property portal.acceptance = "true";
 
-		task ("Given a TaxonomyCategory with custom external reference code") {
+		task ("And Given a TaxonomyCategory with custom external reference code") {
 			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
 				element = "$.id",
 				responseToParse = "${responseOfCreated}");
@@ -164,7 +166,7 @@ definition {
 	test CanUpdateCategoryByErc {
 		property portal.acceptance = "true";
 
-		task ("Given a TaxonomyCategory with custom external reference code") {
+		task ("And Given a TaxonomyCategory with custom external reference code") {
 			var taxonomyVocabularyId = TaxonomyVocabularyAPI.getElementOfCreatedVocabulary(
 				element = "$.id",
 				responseToParse = "${responseOfCreated}");

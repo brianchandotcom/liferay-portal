@@ -11,50 +11,24 @@
 
 import ClayButton from '@clayui/button';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {useMemo, useState} from 'react';
 
 import {MDFColumnKey} from '../../common/enums/mdfColumnKey';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
-import useGetMDFListingColumns from '../../common/services/liferay/object/mdf-listing/useGetMDFListingColumns';
-import useGetMDFRequests from '../../common/services/liferay/object/mdf-requests/useGetMDFRequests';
 import liferayNavigate from '../../common/utils/liferayNavigate';
 import Table from './components/Table';
-import getMDFActivityPeriod from './utils/getMDFActivityPeriod';
-import getMDFBudgetInfos from './utils/getMDFBudgetInfos';
-import getMDFDates from './utils/getMDFDates';
+import useGetMDFRequestListData from './hooks/useGetMDFRequestListData';
+import usePagination from './hooks/usePagination';
 
 type MDFRequestListItem = {
 	[key in MDFColumnKey]?: string;
 };
 
 const MDFRequestList = () => {
-	const [pageSize, setPageSize] = useState<number>(5);
-	const [page, setPage] = useState<number>(1);
-
-	const {data} = useGetMDFRequests({page, pageSize});
-
-	const listItems = useMemo(
-		() =>
-			data?.items.map((item) => {
-				return {
-					[MDFColumnKey.ID]: `Request-${item.id}`,
-					...getMDFActivityPeriod(
-						item.minDateActivity,
-						item.maxDateActivity
-					),
-					[MDFColumnKey.PARTNER]:
-						item.r_accountToMDFRequests_accountEntry?.name,
-					...getMDFDates(item.dateCreated, item.dateModified),
-					...getMDFBudgetInfos(
-						item.totalCostOfExpense,
-						item.totalMDFRequestAmount
-					),
-				};
-			}),
-		[data?.items]
+	const pagination = usePagination();
+	const {data} = useGetMDFRequestListData(
+		pagination.activePage,
+		pagination.activeDelta
 	);
-
-	const {data: listColumns} = useGetMDFListingColumns();
 
 	return (
 		<div className="border-0 pb-3 pt-5 px-6 sheet">
@@ -62,32 +36,31 @@ const MDFRequestList = () => {
 
 			<div className="bg-neutral-1 d-flex justify-content-end p-3 rounded">
 				<ClayButton
-					onClick={() => {
-						liferayNavigate(PRMPageRoute.CREATE_MDF_REQUEST);
-					}}
+					onClick={() =>
+						liferayNavigate(PRMPageRoute.CREATE_MDF_REQUEST)
+					}
 				>
 					New Request
 				</ClayButton>
 			</div>
 
-			{data && listItems && listColumns && (
-				<div className="mt-3">
-					<Table<MDFRequestListItem>
-						borderless
-						columns={listColumns}
-						responsive
-						rows={listItems}
-					/>
+			{data.listItems?.items &&
+				data.listItems?.totalCount &&
+				data.listColumns && (
+					<div className="mt-3">
+						<Table<MDFRequestListItem>
+							borderless
+							columns={data.listColumns}
+							responsive
+							rows={data.listItems.items}
+						/>
 
-					<ClayPaginationBarWithBasicItems
-						activeDelta={pageSize}
-						activePage={page}
-						onDeltaChange={setPageSize}
-						onPageChange={setPage}
-						totalItems={data.totalCount}
-					/>
-				</div>
-			)}
+						<ClayPaginationBarWithBasicItems
+							{...pagination}
+							totalItems={data.listItems.totalCount}
+						/>
+					</div>
+				)}
 		</div>
 	);
 };

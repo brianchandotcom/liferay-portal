@@ -17,12 +17,7 @@ import {LiferayAPIs} from '../../common/enums/apis';
 import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';
 
-interface IProps {
-	page: number;
-	pageSize: number;
-}
-
-export default function useGetMDFRequests({page, pageSize}: IProps) {
+export default function useGetMDFRequests(page: number, pageSize: number) {
 	return useSWR(
 		[
 			`/o/${LiferayAPIs.OBJECT}/mdfrequests?nestedFields=accountEntry&page=${page}&pageSize=${pageSize}`,

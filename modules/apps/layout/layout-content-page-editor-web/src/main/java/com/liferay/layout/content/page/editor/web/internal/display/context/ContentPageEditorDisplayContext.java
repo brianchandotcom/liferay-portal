@@ -1307,6 +1307,13 @@ public class ContentPageEditorDisplayContext {
 				});
 
 		for (FragmentCollection fragmentCollection : fragmentCollections) {
+			if (!includeSystem &&
+				(fragmentCollection.getGroupId() !=
+					themeDisplay.getScopeGroupId())) {
+
+				continue;
+			}
+
 			List<FragmentEntry> fragmentEntries =
 				FragmentEntryServiceUtil.getFragmentEntriesByStatus(
 					fragmentCollection.getGroupId(),
@@ -1324,13 +1331,6 @@ public class ContentPageEditorDisplayContext {
 						WorkflowConstants.STATUS_APPROVED)));
 
 			if (!includeEmpty && ListUtil.isEmpty(fragmentEntryMapsList)) {
-				continue;
-			}
-
-			if (!includeSystem &&
-				(fragmentCollection.getGroupId() !=
-					themeDisplay.getScopeGroupId())) {
-
 				continue;
 			}
 

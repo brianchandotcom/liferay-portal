@@ -35,10 +35,10 @@ definition {
 		}
 	}
 
-    @description = "Automation ID: LPS-149758 | Test Summary: Verify if team members with the role Partner Managers can invite users"
-    @priority = "5"
-    test CanViewPartnerManagerInviteUsers {
-        task ("Change the user role in the project") {
+	@description = "Automation ID: LPS-149758 | Test Summary: Verify if team members with the role Partner Managers can invite users"
+	@priority = "5"
+	test CanViewPartnerManagerInviteUsers {
+		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Test Account Analytics Cloud");
@@ -60,29 +60,29 @@ definition {
 			Refresh();
 		}
 
-        task ("Get into the project") {
+		task ("Get into the project") {
 			CustomerPortal.enterOnProject(
-                status = "Expired",
-                title = "Test Account Analytics Cloud");
+				status = "Expired",
+				title = "Test Account Analytics Cloud");
 		}
 
-        task ("Go to the Team Members page and click on the Invite button") {
-            CP2NavigationMenu.goToTeamMembers();
+		task ("Go to the Team Members page and click on the Invite button") {
+			CP2NavigationMenu.goToTeamMembers();
 
-            CP2TeamMembers.clickInviteMembers();
-        }
+			CP2TeamMembers.clickInviteMembers();
+		}
 
-        task ("Assert the 'Invite Your Team Members' modal") {
-            AssertElementPresent(
-                key_title = "Invite your team members",
-                locator1 = "CP2TeamMembers#MODAL_TM");
-        } 
-    }
+		task ("Assert the 'Invite Your Team Members' modal") {
+			AssertElementPresent(
+				key_title = "Invite your team members",
+				locator1 = "CP2TeamMembers#MODAL_TM");
+		}
+	}
 
-    @description = "Automation ID: LPS-149761 | Test Summary: Verify if team members with the role Partner Managers can remove team members"
-    @priority = "5"
-    test RemovingTeamMembers {
-        task ("Adding a user to the project") {
+	@description = "Automation ID: LPS-149761 | Test Summary: Verify if team members with the role Partner Managers can remove team members"
+	@priority = "5"
+	test RemovingTeamMembers {
+		task ("Adding a user to the project") {
 			JSONUser.addUser(
 				userEmailAddress = "test.user@liferay.com",
 				userFirstName = "Test",
@@ -125,23 +125,23 @@ definition {
 			Refresh();
 		}
 
-        task ("Get into the project") {
+		task ("Get into the project") {
 			CustomerPortal.enterOnProject(
-                status = "Expired",
-                title = "Test Account Analytics Cloud");
+				status = "Expired",
+				title = "Test Account Analytics Cloud");
 		}
 
 		task ("Go to the team members page and remove a guest user") {
-            CP2NavigationMenu.goToTeamMembers();
+			CP2NavigationMenu.goToTeamMembers();
 
-            CP2Utils.openActionMenu(
+			CP2Utils.openActionMenu(
 				menuItem = "Remove",
 				openUser = "Test User");
 
 			Button.click(button = "Remove");
 
 			Alert.viewSuccessMessage();
-        }
+		}
 
 		task ("Assert that the user has indeed been removed") {
 			CP2TeamMembers.assertInvitedUserIsNotVisible(
@@ -152,5 +152,6 @@ definition {
 		task ("Delete user created") {
 			JSONUser.deleteUserByEmailAddress(userEmailAddress = "test.user@liferay.com");
 		}
-    }
+	}
+
 }

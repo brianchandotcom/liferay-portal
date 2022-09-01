@@ -30,10 +30,17 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
+import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
+import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.base.CPInstanceLocalServiceBaseImpl;
+import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -55,6 +62,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -122,7 +130,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		// Commerce product instance
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
@@ -147,9 +155,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		CPInstance cpInstance = cpInstancePersistence.create(cpInstanceId);
 
-		if (cpDefinitionLocalService.isVersionable(cpDefinitionId)) {
+		if (_cpDefinitionLocalService.isVersionable(cpDefinitionId)) {
 			CPDefinition newCPDefinition =
-				cpDefinitionLocalService.copyCPDefinition(cpDefinitionId);
+				_cpDefinitionLocalService.copyCPDefinition(cpDefinitionId);
 
 			cpDefinitionId = newCPDefinition.getCPDefinitionId();
 		}
@@ -216,7 +224,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		if ((cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds != null) &&
 			!cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds.isEmpty()) {
 
-			cpInstanceOptionValueRelLocalService.
+			_cpInstanceOptionValueRelLocalService.
 				updateCPInstanceOptionValueRels(
 					groupId, user.getCompanyId(), user.getUserId(),
 					cpInstanceId,
@@ -229,7 +237,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			return cpInstance;
 		}
 
-		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
 
 		if (cpDefinition.isIgnoreSKUCombinations()) {
@@ -238,7 +246,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				serviceContext);
 		}
 		else {
-			if (!cpInstanceOptionValueRelLocalService.
+			if (!_cpInstanceOptionValueRelLocalService.
 					hasCPInstanceOptionValueRel(cpInstanceId)) {
 
 				cpInstance = cpInstanceLocalService.updateStatus(
@@ -307,7 +315,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstanceLocalService.addCPInstance(
 			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
 			manufacturerPartNumber, purchasable,
-			cpDefinitionOptionRelLocalService.
+			_cpDefinitionOptionRelLocalService.
 				getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 					cpDefinitionId, json),
 			width, height, depth, weight, price, promoPrice, cost, published,
@@ -326,7 +334,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long cpDefinitionId, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
 
 		boolean neverExpire = false;
@@ -398,7 +406,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 			CPDefinition cpDefinition =
-				cpDefinitionLocalService.getCPDefinition(
+				_cpDefinitionLocalService.getCPDefinition(
 					cpInstance.getCPDefinitionId());
 
 			if (cpDefinition.isIgnoreSKUCombinations()) {
@@ -424,11 +432,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public CPInstance deleteCPInstance(CPInstance cpInstance)
 		throws PortalException {
 
-		if (cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalService.isVersionable(
 				cpInstance.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalService.copyCPDefinition(
 					cpInstance.getCPDefinitionId());
 
 			cpInstance = cpInstancePersistence.findByC_C(
@@ -440,10 +448,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		cpInstancePersistence.remove(cpInstance);
 
-		cpInstanceOptionValueRelPersistence.removeByCPInstanceId(
+		_cpInstanceOptionValueRelPersistence.removeByCPInstanceId(
 			cpInstance.getCPInstanceId());
 
-		cpDefinitionOptionValueRelLocalService.
+		_cpDefinitionOptionValueRelLocalService.
 			resetCPInstanceCPDefinitionOptionValueRels(
 				cpInstance.getCPInstanceUuid());
 
@@ -498,7 +506,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public CPInstance fetchCProductInstance(
 		long cProductId, String cpInstanceUuid) {
 
-		CProduct cProduct = cProductLocalService.fetchCProduct(cProductId);
+		CProduct cProduct = _cProductLocalService.fetchCProduct(cProductId);
 
 		if (cProduct == null) {
 			return null;
@@ -596,7 +604,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long cProductId, String cpInstanceUuid)
 		throws PortalException {
 
-		CProduct cProduct = cProductLocalService.getCProduct(cProductId);
+		CProduct cProduct = _cProductLocalService.getCProduct(cProductId);
 
 		return cpInstancePersistence.findByC_C(
 			cProduct.getPublishedCPDefinitionId(), cpInstanceUuid);
@@ -652,7 +660,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
 
 		for (CPInstance curCPInstance : cpInstances) {
-			if (cpInstanceOptionValueRelLocalService.
+			if (_cpInstanceOptionValueRelLocalService.
 					matchesCPDefinitionOptionRels(
 						cpDefinitionId, curCPInstance.getCPInstanceId())) {
 
@@ -776,13 +784,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		_validateReplacementCPInstance(
 			cpInstance, replacementCPInstanceUuid, replacementCProductId);
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		if (cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalService.isVersionable(
 				cpInstance.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalService.copyCPDefinition(
 					cpInstance.getCPDefinitionId());
 
 			cpInstance = cpInstancePersistence.findByC_C(
@@ -844,7 +852,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			return cpInstance;
 		}
 
-		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpInstance.getCPDefinitionId());
 
 		if (cpDefinition.isIgnoreSKUCombinations()) {
@@ -852,7 +860,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				cpDefinition.getCPDefinitionId(), cpInstanceId, serviceContext);
 		}
 		else {
-			if (!cpInstanceOptionValueRelLocalService.
+			if (!_cpInstanceOptionValueRelLocalService.
 					hasCPInstanceOptionValueRel(cpInstanceId)) {
 
 				cpInstance = cpInstanceLocalService.updateStatus(
@@ -894,11 +902,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
-		if (cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalService.isVersionable(
 				cpInstance.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalService.copyCPDefinition(
 					cpInstance.getCPDefinitionId());
 
 			cpInstance = cpInstancePersistence.findByC_C(
@@ -922,11 +930,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
-		if (cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalService.isVersionable(
 				cpInstance.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalService.copyCPDefinition(
 					cpInstance.getCPDefinitionId());
 
 			cpInstance = cpInstancePersistence.findByC_C(
@@ -947,7 +955,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public CPInstance updateStatus(long userId, long cpInstanceId, int status)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 		Date date = new Date();
 
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
@@ -956,7 +964,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		if (!cpDefinition.isIgnoreSKUCombinations() &&
-			!cpInstanceOptionValueRelLocalService.hasCPInstanceOptionValueRel(
+			!_cpInstanceOptionValueRelLocalService.hasCPInstanceOptionValueRel(
 				cpInstance.getCPInstanceId())) {
 
 			status = WorkflowConstants.STATUS_INACTIVE;
@@ -984,7 +992,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		if ((cpInstance.getStatus() == WorkflowConstants.STATUS_APPROVED) &&
 			(status != WorkflowConstants.STATUS_APPROVED)) {
 
-			cpDefinitionOptionValueRelLocalService.
+			_cpDefinitionOptionValueRelLocalService.
 				resetCPInstanceCPDefinitionOptionValueRels(
 					cpInstance.getCPInstanceUuid());
 		}
@@ -1013,11 +1021,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
-		if (cpDefinitionLocalService.isVersionable(
+		if (_cpDefinitionLocalService.isVersionable(
 				cpInstance.getCPDefinitionId())) {
 
 			CPDefinition newCPDefinition =
-				cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalService.copyCPDefinition(
 					cpInstance.getCPDefinitionId());
 
 			cpInstance = cpInstancePersistence.findByC_C(
@@ -1072,7 +1080,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, String unspsc, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		Calendar displayDateCalendar = CalendarFactoryUtil.getCalendar(
 			displayDate.getTime(), user.getTimeZone());
@@ -1406,11 +1414,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
 
 		List<CPInstanceOptionValueRel> cpInstanceCPInstanceOptionValueRels =
-			cpInstanceOptionValueRelLocalService.
+			_cpInstanceOptionValueRelLocalService.
 				getCPInstanceCPInstanceOptionValueRels(cpInstanceId);
 
 		for (CPInstance curCPInstance : cpInstances) {
-			if (!cpInstanceOptionValueRelLocalService.
+			if (!_cpInstanceOptionValueRelLocalService.
 					matchesCPInstanceOptionValueRels(
 						curCPInstance.getCPInstanceId(),
 						cpInstanceCPInstanceOptionValueRels)) {
@@ -1435,7 +1443,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
 
 		for (CPInstance curCPInstance : cpInstances) {
-			if (!cpInstanceOptionValueRelLocalService.
+			if (!_cpInstanceOptionValueRelLocalService.
 					matchesCPInstanceOptionValueRels(
 						curCPInstance.getCPInstanceId(),
 						cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds)) {
@@ -1472,7 +1480,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		throws NoSuchSkuContributorCPDefinitionOptionRelException {
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
 				cpDefinitionId, true);
 
 		if (cpDefinitionOptionRels.isEmpty()) {
@@ -1510,7 +1518,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		for (CPInstance cpInstance : cpInstances) {
 			if (cpInstance.isInactive() ||
-				!cpInstanceOptionValueRelLocalService.
+				!_cpInstanceOptionValueRelLocalService.
 					hasCPInstanceCPDefinitionOptionRel(
 						cpDefinitionOptionRelId,
 						cpInstance.getCPInstanceId())) {
@@ -1535,7 +1543,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		for (CPInstance cpInstance : cpInstances) {
 			if (cpInstance.isInactive() ||
-				!cpInstanceOptionValueRelLocalService.
+				!_cpInstanceOptionValueRelLocalService.
 					hasCPInstanceCPDefinitionOptionValueRel(
 						cpDefinitionOptionValueRelId,
 						cpInstance.getCPInstanceId())) {
@@ -1561,7 +1569,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
 
 		for (CPInstance curCPInstance : cpInstances) {
-			if (cpInstanceOptionValueRelLocalService.
+			if (_cpInstanceOptionValueRelLocalService.
 					hasCPInstanceOptionValueRel(
 						curCPInstance.getCPInstanceId())) {
 
@@ -1662,8 +1670,33 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPInstanceLocalServiceImpl.class);
 
+	@BeanReference(type = CPDefinitionLocalService.class)
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@BeanReference(type = CPDefinitionOptionRelLocalService.class)
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
+
+	@BeanReference(type = CPDefinitionOptionValueRelLocalService.class)
+	private CPDefinitionOptionValueRelLocalService
+		_cpDefinitionOptionValueRelLocalService;
+
+	@BeanReference(type = CPInstanceOptionValueRelLocalService.class)
+	private CPInstanceOptionValueRelLocalService
+		_cpInstanceOptionValueRelLocalService;
+
+	@BeanReference(type = CPInstanceOptionValueRelPersistence.class)
+	private CPInstanceOptionValueRelPersistence
+		_cpInstanceOptionValueRelPersistence;
+
+	@BeanReference(type = CProductLocalService.class)
+	private CProductLocalService _cProductLocalService;
+
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 	@ServiceReference(type = WorkflowInstanceLinkLocalService.class)
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;

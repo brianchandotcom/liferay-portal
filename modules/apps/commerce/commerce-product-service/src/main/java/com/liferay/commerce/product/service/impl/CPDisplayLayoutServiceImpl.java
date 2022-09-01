@@ -19,7 +19,10 @@ import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.base.CPDisplayLayoutServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -128,14 +131,14 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 
 		if (className.equals(CPDefinition.class.getName())) {
 			CPDefinition cpDefinition =
-				cpDefinitionLocalService.fetchCPDefinition(classPK);
+				_cpDefinitionLocalService.fetchCPDefinition(classPK);
 
 			if (cpDefinition == null) {
 				throw new NoSuchCPDefinitionException();
 			}
 
 			CommerceCatalog commerceCatalog =
-				commerceCatalogLocalService.fetchCommerceCatalogByGroupId(
+				_commerceCatalogLocalService.fetchCommerceCatalogByGroupId(
 					cpDefinition.getGroupId());
 
 			_commerceCatalogModelResourcePermission.check(
@@ -167,6 +170,12 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 				CPDisplayLayoutServiceImpl.class,
 				"_commerceCatalogModelResourcePermission",
 				CommerceCatalog.class);
+
+	@BeanReference(type = CommerceCatalogLocalService.class)
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
+	@BeanReference(type = CPDefinitionLocalService.class)
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@ServiceReference(type = LayoutLocalService.class)
 	private LayoutLocalService _layoutLocalService;

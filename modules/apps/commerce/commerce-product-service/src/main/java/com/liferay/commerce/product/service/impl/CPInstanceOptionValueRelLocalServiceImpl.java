@@ -17,10 +17,14 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.service.base.CPInstanceOptionValueRelLocalServiceBaseImpl;
+import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
@@ -62,7 +66,7 @@ public class CPInstanceOptionValueRelLocalServiceImpl
 		cpInstanceOptionValueRel.setCompanyId(companyId);
 		cpInstanceOptionValueRel.setUserId(userId);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		cpInstanceOptionValueRel.setUserName(user.getFullName());
 
@@ -164,7 +168,7 @@ public class CPInstanceOptionValueRelLocalServiceImpl
 		long cpDefinitionId, long cpInstanceId) {
 
 		List<CPDefinitionOptionRel> cpDefinitionCPDefinitionOptionRels =
-			cpDefinitionOptionRelPersistence.findByC_SC(cpDefinitionId, true);
+			_cpDefinitionOptionRelPersistence.findByC_SC(cpDefinitionId, true);
 
 		List<CPInstanceOptionValueRel> cpInstanceCPInstanceOptionValueRels =
 			cpInstanceOptionValueRelLocalService.
@@ -304,5 +308,11 @@ public class CPInstanceOptionValueRelLocalServiceImpl
 			}
 		}
 	}
+
+	@BeanReference(type = CPDefinitionOptionRelPersistence.class)
+	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

@@ -20,8 +20,10 @@ import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.exception.CPOptionKeyException;
 import com.liferay.commerce.product.exception.CPOptionSKUContributorException;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.commerce.product.service.base.CPOptionLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -40,7 +42,9 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -76,7 +80,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		validateDDMFormFieldTypeName(ddmFormFieldTypeName, skuContributor);
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
@@ -107,7 +111,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		// Resources
 
-		resourceLocalService.addModelResources(cpOption, serviceContext);
+		_resourceLocalService.addModelResources(cpOption, serviceContext);
 
 		return cpOption;
 	}
@@ -152,12 +156,12 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		// Commerce product option values
 
-		cpOptionValueLocalService.deleteCPOptionValues(
+		_cpOptionValueLocalService.deleteCPOptionValues(
 			cpOption.getCPOptionId());
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			cpOption, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		// Expando
@@ -424,10 +428,19 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 	@ServiceReference(type = ConfigurationProvider.class)
 	private ConfigurationProvider _configurationProvider;
 
+	@BeanReference(type = CPOptionValueLocalService.class)
+	private CPOptionValueLocalService _cpOptionValueLocalService;
+
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
 
 	@ServiceReference(type = FriendlyURLNormalizer.class)
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
+
+	@ServiceReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

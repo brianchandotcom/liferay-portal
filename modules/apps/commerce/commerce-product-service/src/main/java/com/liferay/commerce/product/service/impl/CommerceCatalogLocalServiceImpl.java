@@ -18,8 +18,10 @@ import com.liferay.commerce.product.constants.CommerceCatalogConstants;
 import com.liferay.commerce.product.exception.CommerceCatalogProductsException;
 import com.liferay.commerce.product.exception.CommerceCatalogSystemException;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.base.CommerceCatalogLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -39,9 +41,12 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -67,7 +72,7 @@ public class CommerceCatalogLocalServiceImpl
 			boolean system, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
@@ -101,7 +106,8 @@ public class CommerceCatalogLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(commerceCatalog, serviceContext);
+		_resourceLocalService.addModelResources(
+			commerceCatalog, serviceContext);
 
 		return commerceCatalog;
 	}
@@ -159,7 +165,7 @@ public class CommerceCatalogLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			commerceCatalog, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		return commerceCatalog;
@@ -204,7 +210,7 @@ public class CommerceCatalogLocalServiceImpl
 		Group group = _groupLocalService.fetchGroup(groupId);
 
 		if ((group != null) &&
-			(group.getClassNameId() == classNameLocalService.getClassNameId(
+			(group.getClassNameId() == _classNameLocalService.getClassNameId(
 				CommerceCatalog.class))) {
 
 			return fetchCommerceCatalog(group.getClassPK());
@@ -226,14 +232,14 @@ public class CommerceCatalogLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			commerceCatalog, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		// Group
 
 		Group group = _groupLocalService.fetchGroup(
 			commerceCatalog.getCompanyId(),
-			classNameLocalService.getClassNameId(
+			_classNameLocalService.getClassNameId(
 				CommerceCatalog.class.getName()),
 			commerceCatalog.getCommerceCatalogId());
 
@@ -253,7 +259,7 @@ public class CommerceCatalogLocalServiceImpl
 
 		Group group = _groupLocalService.fetchGroup(
 			commerceCatalog.getCompanyId(),
-			classNameLocalService.getClassNameId(
+			_classNameLocalService.getClassNameId(
 				CommerceCatalog.class.getName()),
 			commerceCatalogId);
 
@@ -426,8 +432,9 @@ public class CommerceCatalogLocalServiceImpl
 			throw new CommerceCatalogSystemException();
 		}
 
-		int cpDefinitionsCount = cpDefinitionLocalService.getCPDefinitionsCount(
-			commerceCatalog.getGroupId(), WorkflowConstants.STATUS_ANY);
+		int cpDefinitionsCount =
+			_cpDefinitionLocalService.getCPDefinitionsCount(
+				commerceCatalog.getGroupId(), WorkflowConstants.STATUS_ANY);
 
 		if (cpDefinitionsCount > 0) {
 			throw new CommerceCatalogProductsException();
@@ -438,10 +445,22 @@ public class CommerceCatalogLocalServiceImpl
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID
 	};
 
+	@ServiceReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
 	@ServiceReference(type = CompanyLocalService.class)
 	private CompanyLocalService _companyLocalService;
 
+	@BeanReference(type = CPDefinitionLocalService.class)
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
 	@ServiceReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
+
+	@ServiceReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

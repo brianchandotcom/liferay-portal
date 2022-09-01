@@ -17,15 +17,19 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.exception.CPTaxCategoryNameException;
 import com.liferay.commerce.product.exception.DuplicateCPTaxCategoryException;
 import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.base.CPTaxCategoryLocalServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 import java.util.Locale;
@@ -43,7 +47,7 @@ public class CPTaxCategoryLocalServiceImpl
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(serviceContext.getUserId());
 
 		validate(user.getCompanyId(), 0, externalReferenceCode, nameMap);
 
@@ -84,7 +88,7 @@ public class CPTaxCategoryLocalServiceImpl
 
 		// Commerce product definitions
 
-		cpDefinitionLocalService.updateCPDefinitionsByCPTaxCategoryId(
+		_cpDefinitionLocalService.updateCPDefinitionsByCPTaxCategoryId(
 			cpTaxCategory.getCPTaxCategoryId());
 
 		return cpTaxCategory;
@@ -179,5 +183,11 @@ public class CPTaxCategoryLocalServiceImpl
 			throw new CPTaxCategoryNameException();
 		}
 	}
+
+	@BeanReference(type = CPDefinitionLocalService.class)
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

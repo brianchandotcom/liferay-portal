@@ -18,16 +18,22 @@ import com.liferay.commerce.product.exception.DuplicateCProductException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.base.CProductLocalServiceBaseImpl;
+import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 /**
  * @author Ethan Bustad
@@ -41,7 +47,7 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
@@ -68,12 +74,12 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 
 		// Commerce product definitions
 
-		cpDefinitionLocalService.deleteCPDefinitions(
+		_cpDefinitionLocalService.deleteCPDefinitions(
 			cProduct.getCProductId(), WorkflowConstants.STATUS_ANY);
 
 		// Commerce product definition links
 
-		cpDefinitionLinkLocalService.deleteCPDefinitionLinksByCProductId(
+		_cpDefinitionLinkLocalService.deleteCPDefinitionLinksByCProductId(
 			cProduct.getCProductId());
 
 		// Commerce product
@@ -185,5 +191,17 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 					"code " + externalReferenceCode);
 		}
 	}
+
+	@BeanReference(type = CPInstancePersistence.class)
+	protected CPInstancePersistence cpInstancePersistence;
+
+	@BeanReference(type = CPDefinitionLinkLocalService.class)
+	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
+
+	@BeanReference(type = CPDefinitionLocalService.class)
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

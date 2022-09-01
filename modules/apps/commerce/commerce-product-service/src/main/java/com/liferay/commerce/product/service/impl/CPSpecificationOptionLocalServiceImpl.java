@@ -21,9 +21,11 @@ import com.liferay.commerce.product.exception.DuplicateCPSpecificationOptionKeyE
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPSpecificationOption;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.base.CPSpecificationOptionLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,7 +46,9 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
@@ -79,7 +83,7 @@ public class CPSpecificationOptionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		key = StringUtil.replace(key, CharPool.UNDERLINE, CharPool.DASH);
 
@@ -107,7 +111,7 @@ public class CPSpecificationOptionLocalServiceImpl
 
 		// Resources
 
-		resourceLocalService.addModelResources(
+		_resourceLocalService.addModelResources(
 			cpSpecificationOption, serviceContext);
 
 		return cpSpecificationOption;
@@ -126,13 +130,13 @@ public class CPSpecificationOptionLocalServiceImpl
 
 		// Commerce product definition specification option values
 
-		cpDefinitionSpecificationOptionValueLocalService.
+		_cpDefinitionSpecificationOptionValueLocalService.
 			deleteCPSpecificationOptionDefinitionValues(
 				cpSpecificationOption.getCPSpecificationOptionId());
 
 		// Resources
 
-		resourceLocalService.deleteResource(
+		_resourceLocalService.deleteResource(
 			cpSpecificationOption, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		// Expando
@@ -408,7 +412,7 @@ public class CPSpecificationOptionLocalServiceImpl
 			CPDefinition.class);
 
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			cpDefinitionSpecificationOptionValueLocalService.
+			_cpDefinitionSpecificationOptionValueLocalService.
 				getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
@@ -452,10 +456,22 @@ public class CPSpecificationOptionLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPSpecificationOptionLocalServiceImpl.class);
 
+	@BeanReference(
+		type = CPDefinitionSpecificationOptionValueLocalService.class
+	)
+	private CPDefinitionSpecificationOptionValueLocalService
+		_cpDefinitionSpecificationOptionValueLocalService;
+
 	@ServiceReference(type = ExpandoRowLocalService.class)
 	private ExpandoRowLocalService _expandoRowLocalService;
 
 	@ServiceReference(type = FriendlyURLNormalizer.class)
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
+
+	@ServiceReference(type = ResourceLocalService.class)
+	private ResourceLocalService _resourceLocalService;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

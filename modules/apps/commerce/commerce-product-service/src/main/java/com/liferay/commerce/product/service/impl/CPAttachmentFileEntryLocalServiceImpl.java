@@ -23,6 +23,7 @@ import com.liferay.commerce.product.exception.DuplicateCPAttachmentFileEntryExce
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryTable;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.base.CPAttachmentFileEntryLocalServiceBaseImpl;
 import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -36,6 +37,7 @@ import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -62,7 +64,9 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -110,7 +114,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		// Commerce product attachment file entry
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		FileEntry fileEntry = null;
 
@@ -154,12 +158,12 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			cpAttachmentFileEntryPersistence.create(cpAttachmentFileEntryId);
 
-		if ((classNameId == classNameLocalService.getClassNameId(
+		if ((classNameId == _classNameLocalService.getClassNameId(
 				CPDefinition.class)) &&
-			cpDefinitionLocalService.isVersionable(classPK)) {
+			_cpDefinitionLocalService.isVersionable(classPK)) {
 
 			CPDefinition newCPDefinition =
-				cpDefinitionLocalService.copyCPDefinition(classPK);
+				_cpDefinitionLocalService.copyCPDefinition(classPK);
 
 			classPK = newCPDefinition.getCPDefinitionId();
 		}
@@ -305,7 +309,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			cpAttachmentFileEntryPersistence.findByC_C(
-				classNameLocalService.getClassNameId(className), classPK);
+				_classNameLocalService.getClassNameId(className), classPK);
 
 		for (CPAttachmentFileEntry cpAttachmentFileEntry :
 				cpAttachmentFileEntries) {
@@ -322,16 +326,16 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			CPAttachmentFileEntry cpAttachmentFileEntry)
 		throws PortalException {
 
-		long cpDefinitionClassNameId = classNameLocalService.getClassNameId(
+		long cpDefinitionClassNameId = _classNameLocalService.getClassNameId(
 			CPDefinition.class);
 
 		if ((cpAttachmentFileEntry.getClassNameId() ==
 				cpDefinitionClassNameId) &&
-			cpDefinitionLocalService.isVersionable(
+			_cpDefinitionLocalService.isVersionable(
 				cpAttachmentFileEntry.getClassPK())) {
 
 			CPDefinition newCPDefinition =
-				cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalService.copyCPDefinition(
 					cpAttachmentFileEntry.getClassPK());
 
 			if (cpAttachmentFileEntry.isCDNEnabled()) {
@@ -470,7 +474,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries = new ArrayList<>();
 
-		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
 
 		long cpDefinitionClassNameId = _portal.getClassNameId(
@@ -604,22 +608,22 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			double priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			cpAttachmentFileEntryPersistence.findByPrimaryKey(
 				cpAttachmentFileEntryId);
 
-		long cpDefinitionClassNameId = classNameLocalService.getClassNameId(
+		long cpDefinitionClassNameId = _classNameLocalService.getClassNameId(
 			CPDefinition.class);
 
 		if ((cpAttachmentFileEntry.getClassNameId() ==
 				cpDefinitionClassNameId) &&
-			cpDefinitionLocalService.isVersionable(
+			_cpDefinitionLocalService.isVersionable(
 				cpAttachmentFileEntry.getClassPK())) {
 
 			CPDefinition newCPDefinition =
-				cpDefinitionLocalService.copyCPDefinition(
+				_cpDefinitionLocalService.copyCPDefinition(
 					cpAttachmentFileEntry.getClassPK());
 
 			if (cdnEnabled) {
@@ -716,7 +720,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 		Date now = new Date();
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
@@ -806,7 +810,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	protected void reindex(long classNameId, long classPK)
 		throws PortalException {
 
-		ClassName className = classNameLocalService.getClassName(classNameId);
+		ClassName className = _classNameLocalService.getClassName(classNameId);
 
 		String classNameValue = className.getValue();
 
@@ -967,6 +971,12 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPAttachmentFileEntryLocalServiceImpl.class);
 
+	@ServiceReference(type = ClassNameLocalService.class)
+	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = CPDefinitionLocalService.class)
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
 	@ServiceReference(type = CustomSQL.class)
 	private CustomSQL _customSQL;
 
@@ -984,5 +994,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 	@ServiceReference(type = Portal.class)
 	private Portal _portal;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

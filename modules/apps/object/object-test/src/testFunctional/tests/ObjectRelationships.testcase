@@ -186,6 +186,76 @@ definition {
 			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
 	}
 
+	@description = "LPS-151676 - Verify that it's possible to delete a relationship between a Custom Object entry and Native Object entry (One-to-Many)"
+	@priority = "4"
+	test CanDeleteOneToManyRelationship {
+		task ("Create Custom Object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 289",
+				objectName = "CustomObject289",
+				pluralLabelName = "Custom Objects 289");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject289");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "User");
+
+			CreateObject.selectTitleField(fieldLabel = "First Name");
+
+			CreateObject.saveObject();
+		}
+
+		task ("Add a relationship between a Custom Object and Native Object") {
+			Navigator.openURL();
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "User",
+				objectName_2 = "CustomObject289",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject289");
+		}
+
+		task ("Go to Custom Object and a relationship between a Custom Object entry and Native Object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject289");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.selectRelationshipFieldEntry(
+				entry = "",
+				newEntry = "userfn");
+		}
+
+		task ("Delete a relationship between a Custom Object entry and Native Object entry") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "User");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			ObjectAdmin.deleteRelationshipViaUI(
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship");
+
+			ObjectAdmin.assertObjectRelationshipNotPresent(relationshipLabel = "Relationship");
+		}
+	}
+
 	@description = "LPS-147906 - Verify it is possible to do a nested relation in a One-to-Many relationship"
 	@priority = "4"
 	test CanDoNestedRelation {

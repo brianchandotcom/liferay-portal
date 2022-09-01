@@ -15,7 +15,9 @@
 import {PagesVisitor} from './visitors.es';
 
 export function checkValidFieldNameCharacter(character) {
-	return /[A-Za-z0-9_]/g.test(character);
+	return /[一-龠]+|[ぁ-ゔ]+|[ァ-ヴー]+|[A-Za-z0-9_]+|[々〆〤ヶ]+|[ا-ي]+|[贼-阿]/g.test(
+		character
+	);
 }
 
 export function normalizeFieldName(fieldName) {

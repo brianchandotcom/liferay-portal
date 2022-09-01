@@ -57,7 +57,7 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 						</portlet:actionURL>
 
 						<aui:script>
-							function handleResetValues(event) {
+							function <portlet:namespace />handleResetValues(event) {
 								event.preventDefault();
 
 								Liferay.Util.openConfirmModal({
@@ -75,7 +75,7 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 						<liferay-ui:icon
 							message="reset-values"
 							method="post"
-							onClick="handleResetValues"
+							onClick="<%= liferayPortletResponse.getNamespace() + "handleResetValues" %>"
 							url="javascript:void(0);"
 						/>
 					</c:if>

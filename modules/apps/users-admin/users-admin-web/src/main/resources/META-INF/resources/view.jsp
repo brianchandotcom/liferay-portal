@@ -121,7 +121,7 @@ else {
 		);
 	}
 
-	function doDeleteUsers(cmd) {
+	function <portlet:namespace />doDeleteUsers(cmd) {
 		var form = document.<portlet:namespace />fm;
 
 		Liferay.Util.postForm(form, {
@@ -145,7 +145,7 @@ else {
 					'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-selected-users") %>',
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {
-						doDeleteUsers(cmd);
+						<portlet:namespace />doDeleteUsers(cmd);
 					}
 				},
 			});
@@ -156,13 +156,13 @@ else {
 					'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-permanently-delete-the-selected-users") %>',
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {
-						doDeleteUsers(cmd);
+						<portlet:namespace />doDeleteUsers(cmd);
 					}
 				},
 			});
 		}
 		else if (cmd === '<%= Constants.RESTORE %>') {
-			doDeleteUsers(cmd);
+			<portlet:namespace />doDeleteUsers(cmd);
 		}
 	}
 

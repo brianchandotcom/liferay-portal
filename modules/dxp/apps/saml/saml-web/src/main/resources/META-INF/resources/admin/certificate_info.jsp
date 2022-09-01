@@ -74,13 +74,13 @@ String introKey = StringPool.BLANK;
 				<aui:button href="<%= downloadCertificateURL %>" value="download-certificate" />
 
 				<c:if test="<%= certificateUsage == LocalEntityManager.CertificateUsage.ENCRYPTION %>">
-					<aui:button onClick="handleDeleteCertificatePrompt" type="submit" value="delete-certificate" />
+					<aui:button onClick="<%= liferayPortletResponse.getNamespace() + "handleDeleteCertificatePrompt" %>" type="submit" value="delete-certificate" />
 				</c:if>
 			</aui:button-row>
 		</aui:form>
 
 		<aui:script>
-			function handleDeleteCertificatePrompt(event) {
+			function <portlet:namespace />handleDeleteCertificatePrompt(event) {
 				Liferay.Util.openConfirmModal({
 					message: '<%= deleteCertificatePrompt %>',
 					onConfirm: (isConfirmed) => {
@@ -115,10 +115,10 @@ String introKey = StringPool.BLANK;
 				<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "showCertificateDialog('" + replaceCertificateURL + "');" %>' value="replace-certificate" />
 
 				<c:if test="<%= certificateUsage == LocalEntityManager.CertificateUsage.ENCRYPTION %>">
-					<aui:button onClick="handleDeleteCertificatePrompt" type="submit" value="delete-certificate" />
+					<aui:button onClick="<%= liferayPortletResponse.getNamespace() + "handleDeleteCertificatePrompt" %>" type="submit" value="delete-certificate" />
 
 					<aui:script>
-						function handleDeleteCertificatePrompt(event) {
+						function <portlet:namespace />handleDeleteCertificatePrompt(event) {
 							Liferay.Util.openConfirmModal({
 								message: '<%= deleteCertificatePrompt %>',
 								onConfirm: (isConfirmed) => {

@@ -68,18 +68,14 @@ public class CMISAtomPubRepositoryDefiner extends BaseCMISRepositoryDefiner {
 		return _portalCapabilityLocator;
 	}
 
-	@Reference(
-		target = "(repository.target.class.name=" + CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_CLASS_NAME + ")",
-		unbind = "-"
-	)
-	protected void setRepositoryFactory(RepositoryFactory repositoryFactory) {
-		_repositoryFactory = repositoryFactory;
-	}
-
 	@Reference
 	private PortalCapabilityLocator _portalCapabilityLocator;
 
 	private final RepositoryConfiguration _repositoryConfiguration;
+
+	@Reference(
+		target = "(repository.target.class.name=" + CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_CLASS_NAME + ")"
+	)
 	private RepositoryFactory _repositoryFactory;
 
 }

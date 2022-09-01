@@ -236,5 +236,12 @@
 		"resourceName": "com.liferay.commerce.product",
 		"roleName": "User",
 		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.product.model.CommerceChannel",
+		"roleName": "Guest",
+		"scope": "1"
 	}
 ]

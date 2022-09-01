@@ -30,8 +30,8 @@ export async function getProductQuotes() {
 	const channelId = channel?.data?.items[0]?.id;
 
 	const {data} = await axios.get(
-		`${headlessAPI}/channels/${channelId}/products?nestedFields=skus,catalog&page=1&pageSize=50`
+		`${headlessAPI}/channels/${channelId}/products`
 	);
 
-	return LiferayAdapt.adaptToProductQuote(data.items);
+	return LiferayAdapt.adaptToProductQuote(channelId, data.items);
 }

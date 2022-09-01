@@ -13,8 +13,12 @@
  */
 
 import '../../../types';
+
 import {allowedProductQuote} from '../../../routes/get-a-quote/utils/webContents';
 import {toSlug} from '../../utils';
+import {axios} from './api';
+
+const headlessAPI = 'o/headless-commerce-delivery-catalog/v1.0';
 
 const _formatCommerceProductPrice = (price) => parseInt(price, 10);
 
@@ -160,34 +164,36 @@ const adaptToFormApplicationRequest = (form, status) => ({
 	zip: form?.basics?.businessInformation?.business?.location?.zip,
 });
 
-/**
- * @param {{
- * 	  description: {
- *      en_US: string
- *    }
- *    name: {
- *      en_US: string
- *    }
- *    skus: {
- *      price: number
- *      promoPrice: number
- *    }[]
- * }[]}  data Array of products
- * @returns {ProductQuote[]} Array of business types
- */
-const adaptToProductQuote = (data = []) =>
-	data.map(({description, name, productId, skus}) => ({
-		description,
-		id: productId,
-		period: `($${_formatCommerceProductPrice(
-			skus[0].price.promoPrice
-		)}-${_formatCommerceProductPrice(skus[0].price.price)}/mo)`,
-		template: {
-			allowed: allowedProductQuote(name),
-			name: toSlug(name),
-		},
-		title: name,
-	}));
+async function getSkuPrice(channelId, productId) {
+	const sku = await axios.get(
+		`${headlessAPI}/channels/${channelId}/products/${productId}/skus`
+	);
+
+	return sku.data.items[0].price;
+}
+
+const adaptToProductQuote = async (channelId, items = []) => {
+	const productsList = [];
+
+	for (const item of items) {
+		const {description, name, productId} = item;
+		const {price, promoPrice} = await getSkuPrice(channelId, productId);
+		productsList.push({
+			description,
+			id: productId,
+			period: `($${_formatCommerceProductPrice(
+				promoPrice
+			)}-${_formatCommerceProductPrice(price)}/mo)`,
+			template: {
+				allowed: allowedProductQuote(name),
+				name: toSlug(name),
+			},
+			title: name,
+		});
+	}
+
+	return productsList;
+};
 
 export const LiferayAdapt = {
 	adaptToFormApplicationRequest,

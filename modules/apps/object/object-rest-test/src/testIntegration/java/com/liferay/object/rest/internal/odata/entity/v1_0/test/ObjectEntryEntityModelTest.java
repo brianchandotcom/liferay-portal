@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -42,20 +41,14 @@ import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -71,22 +64,6 @@ public class ObjectEntryEntityModelTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-158821", "true"
-			).build());
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-158821", "false"
-			).build());
-	}
 
 	@Test
 	public void testGetEntityFieldsMap() throws PortalException {
@@ -121,16 +98,11 @@ public class ObjectEntryEntityModelTest {
 			).build(),
 			_createObjectField(ObjectFieldConstants.DB_TYPE_STRING));
 
-		_expectedEntityFieldsMap.putAll(
-			Stream.of(
-				customObjectFields
-			).flatMap(
-				List::stream
-			).map(
-				ObjectEntryEntityModelTest::_toExpectedEntityField
-			).collect(
-				Collectors.toMap(EntityField::getName, Function.identity())
-			));
+		for (ObjectField customObjectField : customObjectFields) {
+			EntityField entityField = _toExpectedEntityField(customObjectField);
+
+			_expectedEntityFieldsMap.put(entityField.getName(), entityField);
+		}
 
 		ObjectEntryEntityModel objectEntryEntityModel =
 			new ObjectEntryEntityModel(
@@ -142,34 +114,6 @@ public class ObjectEntryEntityModelTest {
 		_assertEquals(
 			_expectedEntityFieldsMap,
 			objectEntryEntityModel.getEntityFieldsMap());
-	}
-
-	private static EntityField _toExpectedEntityField(ObjectField objectField) {
-		if (Objects.equals(
-				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
-				objectField.getBusinessType())) {
-
-			return new StringEntityField(
-				objectField.getName(), locale -> objectField.getName());
-		}
-
-		if (Objects.equals(
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
-				objectField.getRelationshipType())) {
-
-			String objectFieldName = objectField.getName();
-
-			return new IdEntityField(
-				objectFieldName.substring(
-					objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1),
-				locale -> objectFieldName, String::valueOf);
-		}
-
-		return new EntityField(
-			objectField.getName(),
-			_objectFieldDBTypeEntityFieldTypeMap.get(objectField.getDBType()),
-			locale -> objectField.getName(), locale -> objectField.getName(),
-			String::valueOf);
 	}
 
 	private void _assertEquals(
@@ -202,6 +146,34 @@ public class ObjectEntryEntityModelTest {
 		).name(
 			StringUtil.lowerCaseFirstLetter(dbType) + "ObjectFieldName"
 		).build();
+	}
+
+	private EntityField _toExpectedEntityField(ObjectField objectField) {
+		if (Objects.equals(
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+				objectField.getBusinessType())) {
+
+			return new StringEntityField(
+				objectField.getName(), locale -> objectField.getName());
+		}
+
+		if (Objects.equals(
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
+				objectField.getRelationshipType())) {
+
+			String objectFieldName = objectField.getName();
+
+			return new IdEntityField(
+				objectFieldName.substring(
+					objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1),
+				locale -> objectFieldName, String::valueOf);
+		}
+
+		return new EntityField(
+			objectField.getName(),
+			_objectFieldDBTypeEntityFieldTypeMap.get(objectField.getDBType()),
+			locale -> objectField.getName(), locale -> objectField.getName(),
+			String::valueOf);
 	}
 
 	private static final Map<String, EntityField> _expectedEntityFieldsMap =

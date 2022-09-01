@@ -38,6 +38,10 @@ definition {
 	@description = "Automation ID: LPS-149758 | Test Summary: Verify if team members with the role Partner Managers can invite users"
 	@priority = "5"
 	test CanViewPartnerManagerInviteUsers {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
+
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -82,6 +86,10 @@ definition {
 	@description = "Automation ID: LPS-149761 | Test Summary: Verify if team members with the role Partner Managers can remove team members"
 	@priority = "5"
 	test RemovingTeamMembers {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
+		
 		task ("Adding a user to the project") {
 			JSONUser.addUser(
 				userEmailAddress = "test.user@liferay.com",

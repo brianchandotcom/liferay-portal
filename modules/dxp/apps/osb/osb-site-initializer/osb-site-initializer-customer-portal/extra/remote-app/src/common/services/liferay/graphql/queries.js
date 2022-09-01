@@ -403,6 +403,7 @@ export const getKoroneikiAccounts = gql`
 			) {
 				items {
 					accountKey
+					acWorkspaceGroupId
 					code
 					dxpVersion
 					liferayContactEmailAddress

@@ -351,5 +351,6 @@
 	"your-experience-cloud-environments-are-ready": "Your Experience Cloud Environments are ready.",
 	"your-experience-cloud-project-is-being-set-up-and-will-be-available-soon": "Your Experience Cloud Project is being set up and will be available soon.",
 	"your-liferay-experience-cloud-workspace-will-be-provisioned-in-1-2-business-days-an-email-will-be-sent-once-your-workspace-is-ready": "Your Liferay Experience Cloud Workspace will be provisioned in 1-2 business days and will be sent once your workspace is ready",
-	"your-request-completed-successfully": "Your request completed successfully."
+	"your-request-completed-successfully": "Your request completed successfully.",
+	"please-make-sure-the-correct-workspace-group-id-is-saved-in-raysource": "Please make sure the correct Workspace Group ID is saved in RaySource."
 }

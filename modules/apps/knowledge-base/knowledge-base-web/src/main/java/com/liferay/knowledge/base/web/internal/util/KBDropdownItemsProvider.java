@@ -85,6 +85,7 @@ public class KBDropdownItemsProvider {
 					).setParameter(
 						"resourcePrimKey", kbArticle.getResourcePrimKey()
 					).buildRenderURL());
+				dropdownItem.setIcon("pencil");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),
@@ -105,6 +106,7 @@ public class KBDropdownItemsProvider {
 					).setParameter(
 						"parentResourcePrimKey", kbArticle.getResourcePrimKey()
 					).buildRenderURL());
+				dropdownItem.setIcon("document-text");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),
@@ -123,6 +125,7 @@ public class KBDropdownItemsProvider {
 					).setParameter(
 						"resourcePrimKey", kbArticle.getResourcePrimKey()
 					).buildActionURL());
+				dropdownItem.setIcon("bell-off");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),
@@ -141,6 +144,7 @@ public class KBDropdownItemsProvider {
 					).setParameter(
 						"resourcePrimKey", kbArticle.getResourcePrimKey()
 					).buildActionURL());
+				dropdownItem.setIcon("bell-on");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),
@@ -167,6 +171,7 @@ public class KBDropdownItemsProvider {
 					).setParameter(
 						"resourcePrimKey", kbArticle.getResourcePrimKey()
 					).buildRenderURL());
+				dropdownItem.setIcon("move-folder");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),
@@ -184,6 +189,7 @@ public class KBDropdownItemsProvider {
 						String.valueOf(kbArticle.getResourcePrimKey()),
 						LiferayWindowState.POP_UP.toString(), null,
 						_liferayPortletRequest.getHttpServletRequest()));
+				dropdownItem.setIcon("password-policies");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),
@@ -204,6 +210,7 @@ public class KBDropdownItemsProvider {
 					).setParameter(
 						"resourcePrimKey", kbArticle.getResourcePrimKey()
 					).buildString());
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_liferayPortletRequest.getHttpServletRequest(),

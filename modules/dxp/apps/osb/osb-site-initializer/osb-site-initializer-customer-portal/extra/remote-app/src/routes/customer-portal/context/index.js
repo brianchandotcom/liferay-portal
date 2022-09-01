@@ -148,6 +148,7 @@ const AppContextProvider = ({children}) => {
 
 		const getProject = async (externalReferenceCode, accountBrief) => {
 			const {data: projects} = await client.query({
+				fetchPolicy: 'network-only',
 				query: getKoroneikiAccounts,
 				variables: {
 					filter: `accountKey eq '${externalReferenceCode}'`,
@@ -253,8 +254,7 @@ const AppContextProvider = ({children}) => {
 							accountBrief =
 								dataAccount?.accountByExternalReferenceCode;
 						}
-					}
-					else {
+					} else {
 						accountBrief = user.accountBriefs?.find(
 							(accountBrief) =>
 								accountBrief.externalReferenceCode ===

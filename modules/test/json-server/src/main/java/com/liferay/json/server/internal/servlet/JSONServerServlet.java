@@ -394,7 +394,7 @@ public class JSONServerServlet extends HttpServlet {
 
 		private Request(HttpServletRequest httpServletRequest)
 			throws IOException {
-			
+
 			String path;
 
 			if (httpServletRequest.getQueryString() == null) {
@@ -403,7 +403,7 @@ public class JSONServerServlet extends HttpServlet {
 			else {
 				path =
 					httpServletRequest.getPathInfo() + "?" +
-					httpServletRequest.getQueryString();
+						httpServletRequest.getQueryString();
 			}
 
 			List<String> parts = StringUtil.split(path, '/');
@@ -435,8 +435,7 @@ public class JSONServerServlet extends HttpServlet {
 					id = GetterUtil.getLongStrict(parts.get(2));
 				}
 				catch (IllegalArgumentException illegalArgumentException) {
-						modelName = path.substring(
-							applicationName.length() + 2);
+					modelName = path.substring(applicationName.length() + 2);
 				}
 			}
 

@@ -223,6 +223,91 @@ definition {
 			picklistItemName = "Picklist Item Name Test");
 	}
 
+	@description = "LPS-152677 - Verify that it's possible to edit an object with a state added to the picklist"
+	@priority = "4"
+	test CanEditObjectWithState {
+		task ("Add a Custom Picklist and Items (via API)") {
+			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
+
+			for (var number : list "1,2") {
+				Picklist.addPicklistItemViaAPI(
+					itemKey = "PicklistItemTest${number}",
+					itemName = "Picklist Item Test ${number}",
+					picklistName = "Picklist Test");
+			}
+		}
+
+		task ("Add a Custom Object and Custom Picklist (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161902",
+				objectName = "CustomObject161902",
+				pluralLabelName = "Custom Objects 161902");
+		}
+
+		task ("Go to Custom Object and create a Custom Picklist Field (check mask as state)") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161902");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Field Picklist",
+				fieldPicklist = "Picklist Test",
+				fieldType = "Picklist",
+				itemName = "Picklist Item Test 1",
+				maskAsState = "true");
+
+			Refresh();
+		}
+
+		task ("Publish the Custom Object and assert that is possible to edit state") {
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161902");
+
+			ObjectAdmin.goToFieldsDetails(label = "Field Picklist");
+
+			Click(locator1 = "ObjectAdmin#DROPDOWN_DEFAULT_VALUE");
+
+			Click(
+				key_dropdownItem = "Picklist Item Test 2",
+				locator1 = "ObjectAdmin#SELECT_DROPDOWN_ITEM_DEFAULT_VALUE");
+
+			Button.clickSave();
+		}
+
+		task ("Go to State Manager tab and assert Picklist") {
+			ObjectAdmin.goToStateManagerTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Field Picklist");
+
+			for (var number : list "1,2") {
+				AssertElementPresent(
+					key_stateName = "Picklist Item Test ${number}",
+					locator1 = "ObjectAdmin#VIEW_STATE_NAME");
+			}
+		}
+
+		task ("Verify it's possible to add an entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject161902");
+
+			LexiconEntry.gotoAdd();
+
+			FormFields.viewRequiredAsterisk();
+
+			AssertElementPresent(
+				key_selectField = "Picklist Item Test 2",
+				locator1 = "Picklist#SELECT_FIELD_RELATIONSHIP_OBJECT");
+
+			Button.clickSave();
+		}
+
+		task ("Assert that entry was added") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject161902");
+
+			ObjectPortlet.viewEntry(entry = "Picklist Item Test 2");
+		}
+	}
+
 	@description = "LPS-136595 - Verify it is not possible to add special characters for the Key field for a Picklist item"
 	@priority = "3"
 	test CannotAddSpecialCharacterForPicklistItemKeyField {

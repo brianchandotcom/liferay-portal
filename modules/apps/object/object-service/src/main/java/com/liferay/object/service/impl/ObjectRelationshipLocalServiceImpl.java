@@ -112,11 +112,19 @@ public class ObjectRelationshipLocalServiceImpl
 				_objectDefinitionPersistence.findByPrimaryKey(
 					objectRelationship.getObjectDefinitionId1());
 
+			Map<String, String> pkObjectFieldDBColumnNames =
+				ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
+					objectDefinition1, objectDefinition2,
+					objectRelationship.isReverse());
+
 			runSQL(
 				StringBundler.concat(
 					"insert into ", objectRelationship.getDBTableName(), " (",
-					objectDefinition1.getPKObjectFieldDBColumnName(), " , ",
-					objectDefinition2.getPKObjectFieldDBColumnName(),
+					pkObjectFieldDBColumnNames.get(
+						"pkObjectFieldDBColumnName1"),
+					" , ",
+					pkObjectFieldDBColumnNames.get(
+						"pkObjectFieldDBColumnName2"),
 					") values (", primaryKey1, ", ", primaryKey2, ")"));
 
 			return;
@@ -251,13 +259,21 @@ public class ObjectRelationshipLocalServiceImpl
 				_objectDefinitionPersistence.findByPrimaryKey(
 					objectRelationship.getObjectDefinitionId2());
 
+			Map<String, String> pkObjectFieldDBColumnNames =
+				ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
+					objectDefinition1, objectDefinition2,
+					objectRelationship.isReverse());
+
 			runSQL(
 				StringBundler.concat(
 					"delete from ", objectRelationship.getDBTableName(),
-					" where ", objectDefinition1.getPKObjectFieldDBColumnName(),
+					" where ",
+					pkObjectFieldDBColumnNames.get(
+						"pkObjectFieldDBColumnName1"),
 					" = ", primaryKey1, " and ",
-					objectDefinition2.getPKObjectFieldDBColumnName(), " = ",
-					primaryKey2));
+					pkObjectFieldDBColumnNames.get(
+						"pkObjectFieldDBColumnName2"),
+					" = ", primaryKey2));
 		}
 	}
 

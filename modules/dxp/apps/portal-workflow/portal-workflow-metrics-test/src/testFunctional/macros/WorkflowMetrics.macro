@@ -1271,8 +1271,12 @@ definition {
 			configurationScope = "System Scope");
 
 		Type(
+			locator1 = "SystemSettings#CHECK_SLA_JOB_INTERVAL",
+			value1 = "${slaJobInterval}");
+
+		Type(
 			locator1 = "SystemSettings#SLA_DEFINITIONS_JOB_INTERVAL",
-			value1 = "${jobInterval}");
+			value1 = "${definitionsJobInterval}");
 
 		Button.click(button = "Save");
 

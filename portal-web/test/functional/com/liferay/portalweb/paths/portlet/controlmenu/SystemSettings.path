@@ -105,6 +105,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECK_SLA_JOB_INTERVAL</td>
+	<td>//input[contains(@id, 'checkSLAJobInterval')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

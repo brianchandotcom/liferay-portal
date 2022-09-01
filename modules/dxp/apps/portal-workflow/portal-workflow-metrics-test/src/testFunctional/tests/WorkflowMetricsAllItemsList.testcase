@@ -945,6 +945,10 @@ definition {
 	@description = "LPS-92043 - Verify that the Due Date displays the next SLA in line when a SLA didn't start counting"
 	@priority = "3"
 	test DisplayNextSLAInLineWhenSLANotStarted {
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -1053,6 +1057,10 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, the Due Date by SLA will provide a summary for the total number of entries for each group next to the section title"
 	@priority = "3"
 	test DueDateBySlaProvidesSummaryForTotalNumberOfEntries {
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -1115,6 +1123,10 @@ definition {
 	@priority = "4"
 	test DueDateHasIconSlaNameDueDateAndResolutionStatus {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -1583,6 +1595,10 @@ definition {
 	@description = "LPS-92053 - Verify that an item is considered overdue if it has at least one SLA overdue, regardless if it is resolved or open"
 	@priority = "4"
 	test ItemIsConsideredOverdueWhenItHasOneSlaOverdue {
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
+
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_NO_SLA_MESSAGE");
@@ -1775,6 +1791,10 @@ definition {
 	@description = "LPS-92053 - Verify that the item modal places an icon before the modal title referring to the SLA status: Overdue"
 	@priority = "3"
 	test ItemModalPlacesIconReferringToSlaStatusOverdue {
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -2122,6 +2142,10 @@ definition {
 	test PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
@@ -2304,6 +2328,10 @@ definition {
 	@priority = "3"
 	test ReorderEntriesClickingDueDateColumn {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

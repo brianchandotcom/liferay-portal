@@ -962,6 +962,10 @@ definition {
 	test FilterAllItemsList {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
@@ -1506,6 +1510,10 @@ definition {
 		var key_testSlaDefinitionName = "SLA Name";
 		var key_testSlaDefinitionStart = "Process Begins";
 
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Workflow",
@@ -1800,6 +1808,10 @@ definition {
 	@priority = "5"
 	test UpdateandDeleteSLA {
 		property portal.acceptance = "true";
+
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
 
 		Navigator.openURL();
 
@@ -2767,6 +2779,10 @@ definition {
 		var key_testSlaDefinitionEnd = "Process Ends: Approved";
 		var key_testSlaDefinitionName = "SLA Name";
 		var key_testSlaDefinitionStart = "Enters Task: Review";
+
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

@@ -30,7 +30,9 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#BlockedSLACanBeFixed";
 
-		WorkflowMetrics.setSLADefinitionsJobInterval(jobInterval = "1");
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -170,6 +172,10 @@ definition {
 	@description = "LPS-89014 - Verify that deleting a SLA will not be reflected in all completed instances"
 	@priority = "4"
 	test DeletingSLANotReflectCompletedInstances {
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -236,6 +242,10 @@ definition {
 	test DeletingSLAReflectInProgressInstances {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
+
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
@@ -292,7 +302,9 @@ definition {
 	test ErrorAlertIsDisplayedAgainWhenClosed {
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#ErrorAlertIsDisplayedAgainWhenClosed";
 
-		WorkflowMetrics.setSLADefinitionsJobInterval(jobInterval = "1");
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -350,7 +362,9 @@ definition {
 	test ErrorMessagesAreDisplayedAndClickableWhenSLABlocked {
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#ErrorMessagesAreDisplayedAndClickableWhenSLABlocked";
 
-		WorkflowMetrics.setSLADefinitionsJobInterval(jobInterval = "1");
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -806,7 +820,9 @@ definition {
 	test SLAListIsGroupedWhenSLABlocked {
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#SLAListIsGroupedWhenSLABlocked";
 
-		WorkflowMetrics.setSLADefinitionsJobInterval(jobInterval = "1");
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -1186,6 +1202,10 @@ definition {
 	@description = "LPS-89416 - Verify that updating a SLA will not be reflected in completed instances"
 	@priority = "4"
 	test UpdatingSLANotReflectCompletedInstances {
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -1270,6 +1290,10 @@ definition {
 	@description = "LPS-89416 - Verify that updating a SLA will recalculate time for all instances In Progress"
 	@priority = "5"
 	test UpdatingSLARecalculateTimeInProgressInstances {
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
+
 		Workflow.openWorkflowProcessBuilderConfiguration();
 
 		Workflow.configureWorkflow(

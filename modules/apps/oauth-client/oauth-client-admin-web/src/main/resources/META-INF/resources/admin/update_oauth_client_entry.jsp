@@ -54,9 +54,15 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientEntryInfoJSONException)errorException).getMessage()) %>" key="oauth-client-invalid-info-json-x" />
 				</liferay-ui:error>
 
+				<liferay-ui:error exception="<%= OAuthClientEntryOIDCUserInfoMapperJSONException.class %>">
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientEntryOIDCUserInfoMapperJSONException)errorException).getMessage()) %>" key="oauth-client-invalid-oidc-user-info-mapper-json-x" />
+				</liferay-ui:error>
+
 				<liferay-ui:error exception="<%= OAuthClientEntryTokenRequestParametersJSONException.class %>">
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientEntryTokenRequestParametersJSONException)errorException).getMessage()) %>" key="oauth-client-invalid-token-request-parameters-json-x" />
 				</liferay-ui:error>
+
+				<h3 class="sheet-subtitle"><liferay-ui:message key="oauth-client-configurations" /></h3>
 
 				<aui:input helpMessage="oauth-client-as-well-known-uri-help" label="oauth-client-as-well-known-uri" name="authServerWellKnownURI" type="text" />
 
@@ -115,6 +121,64 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 							"custom_request_parameters", JSONUtil.put("example_key", JSONUtil.put(""))
 						).put(
 							"resource", JSONUtil.put("")
+						)
+					%>'
+				/>
+
+				<h3 class="sheet-subtitle"><liferay-ui:message key="oauth-client-oidc-specific-configurations" /></h3>
+
+				<aui:input
+					helpMessage="oauth-client-oidc-user-info-mapper-json-help"
+					label="oauth-client-oidc-user-info-mapper-json"
+					name="oidcUserInfoMapperJSON"
+					style="min-height: 400px;"
+					type="textarea"
+					value='<%=
+						JSONUtil.put(
+							"address",
+							JSONUtil.put(
+								"addressType", ""
+							).put(
+								"city", "address->locality"
+							).put(
+								"country", "address->country"
+							).put(
+								"region", "address->region"
+							).put(
+								"street", "address->street_address"
+							).put(
+								"zip", "address->postal_code"
+							)
+						).put(
+							"contact", JSONUtil.put("birthdate", "birthdate")
+						).put(
+							"phone",
+							JSONUtil.put(
+								"phone", "phone_number"
+							).put(
+								"phoneType", ""
+							)
+						).put(
+							"user",
+							JSONUtil.put(
+								"emailAddress", "email"
+							).put(
+								"firstName", "given_name"
+							).put(
+								"gender", "gender"
+							).put(
+								"jobTitle", ""
+							).put(
+								"languageId", "locale"
+							).put(
+								"lastName", "family_name"
+							).put(
+								"middleName", "middle_name"
+							).put(
+								"roles", ""
+							).put(
+								"screenName", ""
+							)
 						)
 					%>'
 				/>
@@ -187,6 +251,26 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 			'<portlet:namespace />tokenRequestParametersJSON'
 		).value = tokenRequestParametersJSON;
 
+		var oidcUserInfoMapperJSON = document.getElementById(
+			'<portlet:namespace />oidcUserInfoMapperJSON'
+		).value;
+
+		try {
+			oidcUserInfoMapperJSON = JSON.stringify(
+				JSON.parse(oidcUserInfoMapperJSON),
+				null,
+				0
+			);
+		}
+		catch (e) {
+			alert('Ill-formatted Default Token Request Parameters JSON');
+			return;
+		}
+
+		document.getElementById(
+			'<portlet:namespace />oidcUserInfoMapperJSON'
+		).value = oidcUserInfoMapperJSON;
+
 		submitForm(
 			document.getElementById('<portlet:namespace />oauth-client-entry-fm')
 		);
@@ -213,6 +297,16 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 		tokenRequestParametersJSON.value = JSON.stringify(
 			JSON.parse(tokenRequestParametersJSON.value),
+			null,
+			4
+		);
+
+		var oidcUserInfoMapperJSON = document.getElementById(
+			'<portlet:namespace />oidcUserInfoMapperJSON'
+		);
+
+		oidcUserInfoMapperJSON.value = JSON.stringify(
+			JSON.parse(oidcUserInfoMapperJSON.value),
 			null,
 			4
 		);

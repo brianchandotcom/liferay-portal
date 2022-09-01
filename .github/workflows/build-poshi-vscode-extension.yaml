@@ -66,3 +66,5 @@ jobs:
 name: Build Poshi VSCode Extension
 on:
     workflow_dispatch:
+permissions:
+    contents: read

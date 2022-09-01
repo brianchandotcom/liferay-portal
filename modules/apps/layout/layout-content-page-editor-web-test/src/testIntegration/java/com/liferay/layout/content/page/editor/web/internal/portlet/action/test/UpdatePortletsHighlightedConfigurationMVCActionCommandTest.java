@@ -119,6 +119,75 @@ public class UpdatePortletsHighlightedConfigurationMVCActionCommandTest {
 		}
 	}
 
+	@Test
+	public void testUpdatePortletsHighlightedConfigurationAssertPreferencesByUser()
+		throws Exception {
+
+		try {
+			User user1 = UserTestUtil.addGroupAdminUser(_group);
+
+			ServiceContextThreadLocal.pushServiceContext(
+				ServiceContextTestUtil.getServiceContext(
+					_group, user1.getUserId()));
+
+			String[] defaultHighlightedPortletIds =
+				_getDefaultHighlightedPortletIds();
+
+			_assertUpdateHighlightedPortlet(
+				ArrayUtil.subset(
+					defaultHighlightedPortletIds, 1,
+					defaultHighlightedPortletIds.length),
+				defaultHighlightedPortletIds[0], false, user1);
+
+			User user2 = UserTestUtil.addGroupAdminUser(_group);
+
+			ServiceContextThreadLocal.pushServiceContext(
+				ServiceContextTestUtil.getServiceContext(
+					_group, user2.getUserId()));
+
+			_assertUpdateHighlightedPortlet(
+				ArrayUtil.append(
+					defaultHighlightedPortletIds,
+					LayoutContentPageEditorWebPortletKeys.
+						LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET),
+				LayoutContentPageEditorWebPortletKeys.
+					LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET,
+				true, user2);
+
+			_assertUpdateHighlightedPortlet(
+				defaultHighlightedPortletIds,
+				LayoutContentPageEditorWebPortletKeys.
+					LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET,
+				false, user2);
+
+			ServiceContextThreadLocal.pushServiceContext(
+				ServiceContextTestUtil.getServiceContext(
+					_group, user1.getUserId()));
+
+			_assertUpdateHighlightedPortlet(
+				ArrayUtil.append(
+					ArrayUtil.subset(
+						defaultHighlightedPortletIds, 1,
+						defaultHighlightedPortletIds.length),
+					LayoutContentPageEditorWebPortletKeys.
+						LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET),
+				LayoutContentPageEditorWebPortletKeys.
+					LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET,
+				true, user1);
+
+			_assertUpdateHighlightedPortlet(
+				ArrayUtil.subset(
+					defaultHighlightedPortletIds, 1,
+					defaultHighlightedPortletIds.length),
+				LayoutContentPageEditorWebPortletKeys.
+					LAYOUT_CONTENT_PAGE_EDITOR_WEB_TEST_PORTLET,
+				false, user1);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
 	private void _assertUpdateHighlightedPortlet(
 			String[] expectedHighlightedPortletIds, String portletId,
 			boolean highlighted, User user)

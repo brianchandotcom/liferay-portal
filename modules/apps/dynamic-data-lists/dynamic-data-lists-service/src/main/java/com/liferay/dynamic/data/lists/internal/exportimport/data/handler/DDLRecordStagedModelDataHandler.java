@@ -39,7 +39,6 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Map;
@@ -167,7 +166,7 @@ public class DDLRecordStagedModelDataHandler
 			PortletDataContext portletDataContext, DDLRecord record)
 		throws PortletDataException {
 
-		int status = WorkflowConstants.STATUS_ANY;
+		int status;
 
 		try {
 			status = record.getStatus();

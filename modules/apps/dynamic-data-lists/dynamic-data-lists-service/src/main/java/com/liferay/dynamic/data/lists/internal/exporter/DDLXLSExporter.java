@@ -178,7 +178,7 @@ public class DDLXLSExporter extends BaseDDLExporter {
 
 		int cellIndex = 0;
 
-		Cell cell = null;
+		Cell cell;
 
 		for (Map.Entry<String, DDMFormField> entry : ddmFormFields.entrySet()) {
 			cell = row.createCell(cellIndex++, CellType.STRING);
@@ -224,7 +224,7 @@ public class DDLXLSExporter extends BaseDDLExporter {
 
 		int cellIndex = 0;
 
-		Cell cell = null;
+		Cell cell;
 
 		Locale locale = getLocale();
 

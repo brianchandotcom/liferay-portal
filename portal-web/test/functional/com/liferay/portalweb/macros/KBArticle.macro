@@ -930,6 +930,12 @@ definition {
 			value1 = "Select");
 	}
 
+	macro openPageTreePanel {
+		if ("${section}" == "Folders and Articles") {
+			Click(locator1 = "KnowledgeBase#PAGE_TREE_FOLDERS_AND_ARTICLES");
+		}
+	}
+
 	macro openToAddKBArticle {
 
 		// You can use this navigation when you need to access the configuration quickly without checking the UI.
@@ -1155,6 +1161,21 @@ definition {
 			AssertTextNotPresent(
 				locator1 = "KnowledgeBaseArticle#TITLE",
 				value1 = "xml");
+		}
+	}
+
+	macro viewArticleThroughPageTreePanel {
+		if (isSet(kbChildArticleTitle)) {
+			Click(locator1 = "KnowledgeBase#PAGE_TREE_CHEVRON_ICON_RIGHT");
+
+			AssertVisible(
+				key_itemName = "${kbChildArticleTitle}",
+				locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
+		}
+		else {
+			AssertVisible(
+				key_itemName = "${kbArticleTitle}",
+				locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
 		}
 	}
 

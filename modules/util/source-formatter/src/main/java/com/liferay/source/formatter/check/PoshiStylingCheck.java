@@ -170,7 +170,7 @@ public class PoshiStylingCheck extends BaseFileCheck {
 				continue;
 			}
 
-			String newLine = trimmedLine.replaceAll(" +", " ");
+			String newLine = trimmedLine.replaceAll(" {2,}", " ");
 
 			if (StringUtil.equals(trimmedLine, newLine)) {
 				sb.append(line);

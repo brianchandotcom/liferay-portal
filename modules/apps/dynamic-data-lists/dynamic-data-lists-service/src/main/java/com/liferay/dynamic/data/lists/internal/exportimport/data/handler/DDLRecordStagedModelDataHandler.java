@@ -162,40 +162,6 @@ public class DDLRecordStagedModelDataHandler
 		return _ddlRecordStagedModelRepository;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetLocalService(
-		DDLRecordSetLocalService ddlRecordSetLocalService) {
-
-		_ddlRecordSetLocalService = ddlRecordSetLocalService;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)",
-		unbind = "-"
-	)
-	protected void setDDLRecordStagedModelRepository(
-		DDLRecordStagedModelRepository ddlRecordStagedModelRepository) {
-
-		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues)",
-		unbind = "-"
-	)
-	protected void setDDMFormValuesExportImportContentProcessor(
-		ExportImportContentProcessor<DDMFormValues>
-			ddmFormValuesExportImportContentProcessor) {
-
-		_ddmFormValuesExportImportContentProcessor =
-			ddmFormValuesExportImportContentProcessor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStorageEngine(StorageEngine storageEngine) {
-		_storageEngine = storageEngine;
-	}
-
 	@Override
 	protected void validateExport(
 			PortletDataContext portletDataContext, DDLRecord record)
@@ -285,8 +251,17 @@ public class DDLRecordStagedModelDataHandler
 		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
 
+	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)"
+	)
 	private DDLRecordStagedModelRepository _ddlRecordStagedModelRepository;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues)"
+	)
 	private ExportImportContentProcessor<DDMFormValues>
 		_ddmFormValuesExportImportContentProcessor;
 
@@ -296,6 +271,7 @@ public class DDLRecordStagedModelDataHandler
 	@Reference(target = "(ddm.form.values.serializer.type=json)")
 	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
 
+	@Reference
 	private StorageEngine _storageEngine;
 
 }

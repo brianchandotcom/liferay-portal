@@ -89,18 +89,6 @@ public class RepositorySearchQueryBuilderImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRepositorySearchQueryTermBuilder(
-		RepositorySearchQueryTermBuilder repositorySearchQueryTermBuilder) {
-
-		_repositorySearchQueryTermBuilder = repositorySearchQueryTermBuilder;
-	}
-
 	private void _addContext(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
@@ -274,7 +262,10 @@ public class RepositorySearchQueryBuilderImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		RepositorySearchQueryBuilderImpl.class);
 
+	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
 	private RepositorySearchQueryTermBuilder _repositorySearchQueryTermBuilder;
 
 }

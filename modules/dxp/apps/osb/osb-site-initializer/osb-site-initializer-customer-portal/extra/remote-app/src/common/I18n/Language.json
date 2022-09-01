@@ -317,7 +317,7 @@
 	"tokyo-japan": "Tokyo, Japan",
 	"type": "Type",
 	"uk": "UK",
-	"unable-to-download-key-please-try-again": "Unable to download key, please try again.",
+	"unable-to-export-keys-please-try-again": "Unable to export keys, please try again.",
 	"united-arab-emirates": "United Arab Emirates",
 	"unlimited-enterprise-wide": "Unlimited Enterprise-Wide",
 	"user": "User",
@@ -352,5 +352,8 @@
 	"your-experience-cloud-project-is-being-set-up-and-will-be-available-soon": "Your Experience Cloud Project is being set up and will be available soon.",
 	"your-liferay-experience-cloud-workspace-will-be-provisioned-in-1-2-business-days-an-email-will-be-sent-once-your-workspace-is-ready": "Your Liferay Experience Cloud Workspace will be provisioned in 1-2 business days and will be sent once your workspace is ready",
 	"your-request-completed-successfully": "Your request completed successfully.",
-	"please-make-sure-the-correct-workspace-group-id-is-saved-in-raysource": "Please make sure the correct Workspace Group ID is saved in RaySource."
+	"please-make-sure-the-correct-workspace-group-id-is-saved-in-raysource": "Please make sure the correct Workspace Group ID is saved in RaySource.",
+	"confirm-deactivation-terms": "Confirm Deactivation Terms",
+	"i-certify-that-the-instance-s-activated-with-the-selected-activation-keys-has-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-keys": "I certify that the instances activated with the selected activation keys has have been shut down and that there is no liferay software installed deployed used or executed that is activated with the selected activation keys.",
+	"confirm-deactivate-keys": "Confirm Deactivate Keys"
 }

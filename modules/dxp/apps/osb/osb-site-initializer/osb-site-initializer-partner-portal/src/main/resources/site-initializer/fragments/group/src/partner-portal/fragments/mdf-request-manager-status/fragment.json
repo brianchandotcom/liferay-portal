@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "Status",
+	"name": "MDF Request Manager Status",
 	"type": "component"
 }

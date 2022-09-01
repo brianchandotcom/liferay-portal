@@ -88,6 +88,7 @@
 								"definition": {
 									"fragmentStyle": {
 										"borderWidth": "0",
+										"paddingBottom": "2",
 										"textAlign": ""
 									},
 									"indexed": true,
@@ -231,6 +232,7 @@
 																}
 															],
 															"fragmentStyle": {
+																"paddingRight": "1",
 																"textAlign": "",
 																"textColor": "colorNeutral7"
 															},
@@ -264,6 +266,7 @@
 																}
 															],
 															"fragmentStyle": {
+																"paddingRight": "1",
 																"textAlign": "",
 																"textColor": "colorNeutral7"
 															},
@@ -306,6 +309,7 @@
 																}
 															],
 															"fragmentStyle": {
+																"paddingRight": "1",
 																"textAlign": "",
 																"textColor": "colorNeutral7"
 															},
@@ -339,6 +343,109 @@
 																}
 															],
 															"fragmentStyle": {
+																"textAlign": "",
+																"textColor": "colorNeutral7"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"marginTop": "2",
+														"textAlign": ""
+													},
+													"indexed": true,
+													"layout": {
+														"borderWidth": 0,
+														"contentDisplay": "FlexRow",
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "text-paragraph"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Status",
+																				"ca_ES": "Status",
+																				"de_DE": "Status",
+																				"en_US": "Status",
+																				"es_ES": "Status",
+																				"fi_FI": "Status",
+																				"fr_FR": "Status",
+																				"hu_HU": "Status",
+																				"ja_JP": "Status",
+																				"nl_NL": "Status",
+																				"pt_BR": "Status",
+																				"sv_SE": "Status",
+																				"zh_CN": "Status"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"paddingRight": "1",
+																"textAlign": "",
+																"textColor": "colorNeutral7"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "text-paragraph"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "ObjectField_mdfRequestStatus",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"paddingRight": "1",
 																"textAlign": "",
 																"textColor": "colorNeutral7"
 															},
@@ -399,6 +506,19 @@
 							}
 						],
 						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "mdf-request-manager-status"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
 					},
 					{
 						"definition": {
@@ -619,19 +739,6 @@
 																"textAlign": "",
 																"textColor": "colorNeutral9"
 															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "mdf-details-date-period"
-															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -1424,7 +1531,9 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"backgroundColor": "colorNeutral0"
+														"backgroundColor": "colorNeutral0",
+														"borderWidth": "0",
+														"textAlign": ""
 													},
 													"indexed": true,
 													"layout": {

@@ -10,6 +10,7 @@
  * distribution rights of the Software.
  */
 
+const managerButtons = fragmentElement.querySelector('.manager-buttons');
 const currentPath = Liferay.currentURL.split('/');
 const mdfRequestId = +currentPath[currentPath.length - 1];
 
@@ -28,6 +29,41 @@ const handleFetch = (status) => {
 			'x-csrf-token': Liferay.authToken,
 		},
 		method: 'PATCH',
+	}).then(() => {
+		window.location.reload();
+	});
+};
+
+const ROLE_TYPES = [
+	'Channel Account Manager',
+	'Channel Finance Manager',
+	'Channel General Manager',
+	'Channel Global Marketing Manager',
+	'Channel Regional Marketing Manager',
+];
+
+const getUserRole = () => {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	fetch(`/o/headless-admin-user/v1.0/my-user-account`, {
+		headers: {
+			'accept': 'application/json',
+			'content-type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'GET',
+	}).then((response) => {
+		if (response.ok) {
+			const result = response.json();
+
+			const hasRoleBriefs = result?.roleBriefs?.reduce((_, role) => {
+				return ROLE_TYPES.includes(role.name) ? true : false;
+			});
+
+			if (hasRoleBriefs) {
+				managerButtons.classList.toggle('d-none');
+				managerButtons.classList.toggle('d-flex');
+			}
+		}
 	});
 };
 
@@ -36,7 +72,7 @@ atualizationStatusApproved.onclick = () =>
 		message: 'Do you want to update the status?',
 		onConfirm: (isConfirmed) => {
 			if (isConfirmed) {
-				handleFetch('approved');
+				handleFetch('Approved');
 			}
 		},
 	});
@@ -46,7 +82,7 @@ atualizationStatusRequest.onclick = () =>
 		message: 'Do you want to update the status?',
 		onConfirm: (isConfirmed) => {
 			if (isConfirmed) {
-				handleFetch('request');
+				handleFetch('Request more info');
 			}
 		},
 	});
@@ -56,7 +92,8 @@ atualizationStatusReject.onclick = () =>
 		message: 'Do you want to update the status?',
 		onConfirm: (isConfirmed) => {
 			if (isConfirmed) {
-				handleFetch('reject');
+				handleFetch('Reject');
 			}
 		},
 	});
+getUserRole();

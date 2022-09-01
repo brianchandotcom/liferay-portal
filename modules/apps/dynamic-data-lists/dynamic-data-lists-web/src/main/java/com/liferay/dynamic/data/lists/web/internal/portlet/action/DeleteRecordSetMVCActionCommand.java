@@ -52,13 +52,6 @@ public class DeleteRecordSetMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetService(
-		DDLRecordSetService ddlRecordSetService) {
-
-		_ddlRecordSetService = ddlRecordSetService;
-	}
-
 	private long[] _getRecordSetIds(ActionRequest actionRequest) {
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 
@@ -70,6 +63,7 @@ public class DeleteRecordSetMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "recordSetIds"), 0L);
 	}
 
+	@Reference
 	private DDLRecordSetService _ddlRecordSetService;
 
 }

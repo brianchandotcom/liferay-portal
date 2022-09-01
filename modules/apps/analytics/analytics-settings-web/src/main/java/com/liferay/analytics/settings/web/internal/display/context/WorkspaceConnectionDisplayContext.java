@@ -33,13 +33,6 @@ public class WorkspaceConnectionDisplayContext extends BaseDisplayContext {
 		super(httpServletRequest, httpServletResponse);
 
 		_analyticsConfiguration = analyticsConfiguration;
-
-		if (!isConnected()) {
-			setWizardMode(true);
-		}
-		else {
-			setWizardMode(false);
-		}
 	}
 
 	public String getLiferayAnalyticsURL() {

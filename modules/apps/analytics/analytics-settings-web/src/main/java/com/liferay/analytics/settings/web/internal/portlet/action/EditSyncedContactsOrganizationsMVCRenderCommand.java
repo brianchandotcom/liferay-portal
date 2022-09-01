@@ -33,7 +33,7 @@ public class EditSyncedContactsOrganizationsMVCRenderCommand
 	extends BaseAnalyticsMVCRenderCommand {
 
 	@Override
-	protected String getDefaultJspPath() {
+	protected String getJspPath() {
 		return "/edit_synced_contacts_organizations.jsp";
 	}
 

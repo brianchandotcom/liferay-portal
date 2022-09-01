@@ -33,7 +33,6 @@ import java.util.Dictionary;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -136,11 +135,6 @@ public class EditSyncedContactsMVCActionCommand
 		_notifyAnalyticsCloud(
 			actionRequest, syncAllContacts, syncedOrganizationIds,
 			syncedUserGroupIds);
-	}
-
-	@Override
-	protected void updateWizardMode(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
 	}
 
 	private void _notifyAnalyticsCloud(

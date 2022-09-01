@@ -38,7 +38,6 @@ page import="com.liferay.analytics.settings.web.internal.display.context.Organiz
 page import="com.liferay.analytics.settings.web.internal.display.context.OrganizationManagementToolbarDisplayContext" %><%@
 page import="com.liferay.analytics.settings.web.internal.display.context.UserGroupDisplayContext" %><%@
 page import="com.liferay.analytics.settings.web.internal.display.context.UserGroupManagementToolbarDisplayContext" %><%@
-page import="com.liferay.analytics.settings.web.internal.display.context.WorkspaceConnectionDisplayContext" %><%@
 page import="com.liferay.analytics.settings.web.internal.search.ChannelSearch" %><%@
 page import="com.liferay.analytics.settings.web.internal.user.AnalyticsUsersManager" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
@@ -69,17 +68,3 @@ page import="java.util.Set" %>
 <liferay-util:html-top>
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
-
-<aui:script>
-	function <portlet:namespace />resetPageToWizardMode() {
-		var wizardModeElement = document.querySelector('.wizard-mode');
-
-		if (wizardModeElement) {
-			wizardModeElement.parentElement.className = 'col-sm-12';
-			wizardModeElement.parentElement.previousElementSibling.style.display =
-				'none';
-		}
-	}
-
-	<portlet:namespace />resetPageToWizardMode();
-</aui:script>

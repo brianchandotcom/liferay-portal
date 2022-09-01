@@ -15,7 +15,6 @@
 package com.liferay.analytics.settings.web.internal.portlet.action;
 
 import com.liferay.analytics.settings.web.internal.util.AnalyticsSettingsUtil;
-import com.liferay.analytics.settings.web.internal.util.WizardModeUtil;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -41,7 +40,6 @@ import java.util.Iterator;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -99,22 +97,6 @@ public class EditWorkspaceConnectionMVCActionCommand
 		}
 
 		_connect(actionRequest, configurationProperties, upgrade);
-	}
-
-	@Override
-	protected void updateWizardMode(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		if (Objects.equals(cmd, "disconnect")) {
-			WizardModeUtil.setNextConfigurationScreenKey(
-				actionRequest, "0-analytics-cloud-connection");
-		}
-		else {
-			WizardModeUtil.setNextConfigurationScreenKey(
-				actionRequest, "1-synced-sites");
-		}
 	}
 
 	private void _connect(

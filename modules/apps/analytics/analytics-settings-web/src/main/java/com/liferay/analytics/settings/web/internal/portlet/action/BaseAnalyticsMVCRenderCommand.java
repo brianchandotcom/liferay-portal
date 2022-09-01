@@ -23,9 +23,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
@@ -50,7 +48,7 @@ public abstract class BaseAnalyticsMVCRenderCommand
 		throws PortletException {
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(getDefaultJspPath());
+			servletContext.getRequestDispatcher(getJspPath());
 
 		try {
 			_setHttpServletRequestAttributes(
@@ -62,26 +60,17 @@ public abstract class BaseAnalyticsMVCRenderCommand
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to include JSP " + getDefaultJspPath(), exception);
+				_log.warn("Unable to include JSP " + getJspPath(), exception);
 			}
 
 			throw new PortletException(
-				"Unable to include JSP " + getDefaultJspPath(), exception);
+				"Unable to include JSP " + getJspPath(), exception);
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
 
-	protected abstract String getDefaultJspPath();
-
-	protected String getJspPath() {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LRAC-10757"))) {
-			return "/LRAC-10757" + getDefaultJspPath();
-		}
-
-		return getDefaultJspPath();
-	}
+	protected abstract String getJspPath();
 
 	@Reference
 	protected AnalyticsUsersManager analyticsUsersManager;

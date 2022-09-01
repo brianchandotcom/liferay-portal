@@ -14,11 +14,8 @@
 
 package com.liferay.analytics.settings.web.internal.display.context;
 
-import com.liferay.analytics.settings.web.internal.util.WizardModeUtil;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Riccardo Ferrari
@@ -31,21 +28,9 @@ public abstract class BaseDisplayContext implements DisplayContext {
 
 		this.httpServletRequest = httpServletRequest;
 		this.httpServletResponse = httpServletResponse;
-
-		_httpSession = httpServletRequest.getSession();
-	}
-
-	public boolean isWizardMode() {
-		return WizardModeUtil.isWizardMode(_httpSession);
-	}
-
-	protected void setWizardMode(boolean wizardMode) {
-		WizardModeUtil.setWizardMode(_httpSession, wizardMode);
 	}
 
 	protected final HttpServletRequest httpServletRequest;
 	protected final HttpServletResponse httpServletResponse;
-
-	private final HttpSession _httpSession;
 
 }

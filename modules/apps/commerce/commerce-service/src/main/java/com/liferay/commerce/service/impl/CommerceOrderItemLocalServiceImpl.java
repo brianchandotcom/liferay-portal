@@ -1613,8 +1613,17 @@ public class CommerceOrderItemLocalServiceImpl
 		BigDecimal discountAmount, BigDecimal discountAmountWithTaxAmount,
 		CommerceOrderItem commerceOrderItem) {
 
+		if (discountAmount == null) {
+			discountAmount = BigDecimal.ZERO;
+		}
+
 		int discountAmountCompareTo = discountAmount.compareTo(
 			commerceOrderItem.getDiscountAmount());
+
+		if (discountAmountWithTaxAmount == null) {
+			discountAmountWithTaxAmount = BigDecimal.ZERO;
+		}
+
 		int discountAmountWithTaxAmountCompareTo =
 			discountAmountWithTaxAmount.compareTo(
 				commerceOrderItem.getDiscountWithTaxAmount());
@@ -1630,6 +1639,10 @@ public class CommerceOrderItemLocalServiceImpl
 
 	private boolean _isDiscountChanged(
 		BigDecimal discountAmount, CommerceOrderItem commerceOrderItem) {
+
+		if (discountAmount == null) {
+			discountAmount = BigDecimal.ZERO;
+		}
 
 		int discountAmountCompareTo = discountAmount.compareTo(
 			commerceOrderItem.getDiscountAmount());
@@ -1647,18 +1660,47 @@ public class CommerceOrderItemLocalServiceImpl
 		BigDecimal unitPrice, BigDecimal unitPriceWithTaxAmount,
 		CommerceOrderItem commerceOrderItem) {
 
+		if (finalPrice == null) {
+			finalPrice = BigDecimal.ZERO;
+		}
+
 		int finalPriceCompareTo = finalPrice.compareTo(
 			commerceOrderItem.getFinalPrice());
+
+		if (promoPrice == null) {
+			promoPrice = BigDecimal.ZERO;
+		}
+
 		int promoPriceCompareTo = promoPrice.compareTo(
 			commerceOrderItem.getPromoPrice());
+
+		if (unitPrice == null) {
+			unitPrice = BigDecimal.ZERO;
+		}
+
 		int unitPriceCompareTo = unitPrice.compareTo(
 			commerceOrderItem.getUnitPrice());
+
+		if (finalPriceWithTaxAmount == null) {
+			finalPriceWithTaxAmount = BigDecimal.ZERO;
+		}
+
 		int finalPriceWithTaxAmountCompareTo =
 			finalPriceWithTaxAmount.compareTo(
 				commerceOrderItem.getFinalPriceWithTaxAmount());
+
+		if (promoPriceWithTaxAmount == null) {
+			promoPriceWithTaxAmount = BigDecimal.ZERO;
+		}
+
 		int promoPriceWithTaxAmountCompareTo =
 			promoPriceWithTaxAmount.compareTo(
 				commerceOrderItem.getPromoPriceWithTaxAmount());
+
+		if (unitPriceWithTaxAmount == null) {
+			unitPriceWithTaxAmount = BigDecimal.ZERO;
+		}
+
 		int unitPriceWithTaxAmountCompareTo = unitPriceWithTaxAmount.compareTo(
 			commerceOrderItem.getUnitPriceWithTaxAmount());
 
@@ -1678,10 +1720,24 @@ public class CommerceOrderItemLocalServiceImpl
 		BigDecimal finalPrice, BigDecimal promoPrice, BigDecimal unitPrice,
 		CommerceOrderItem commerceOrderItem) {
 
+		if (finalPrice == null) {
+			finalPrice = BigDecimal.ZERO;
+		}
+
 		int finalPriceCompareTo = finalPrice.compareTo(
 			commerceOrderItem.getFinalPrice());
+
+		if (promoPrice == null) {
+			promoPrice = BigDecimal.ZERO;
+		}
+
 		int promoPriceCompareTo = promoPrice.compareTo(
 			commerceOrderItem.getPromoPrice());
+
+		if (unitPrice == null) {
+			unitPrice = BigDecimal.ZERO;
+		}
+
 		int unitPriceCompareTo = unitPrice.compareTo(
 			commerceOrderItem.getUnitPrice());
 

@@ -811,8 +811,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
 			assignmentType = "Scripted Assignment",
-			groovyScript = "groovyScript = "if(type == 'behaviorClarification') {invalidFields = true} else {invalidFields = false}");");
-		
+			groovyScript = "groovyScript = &quot;if(type == 'behaviorClarification') {invalidFields = true} else {invalidFields = false}&quot;);");
 	}
 
 	@description = "Verify that the user is able to define the Resource Action"

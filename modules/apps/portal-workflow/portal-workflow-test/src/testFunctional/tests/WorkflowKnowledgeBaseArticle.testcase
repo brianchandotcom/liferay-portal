@@ -233,12 +233,62 @@ definition {
 	}
 
 	@description = "Verify that the user can Approve a Basic Child Article when the Parent Article is Pending"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanApproveBasicChildArticleWhenParentPending {
+		Navigator.openURL();
 
-		// TODO LRQA-69932 CanApproveBasicChildArticleWhenParentPending	pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Knowledge Base");
 
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbWorkflowAction = "Submit for Publication");
+
+		WorkflowKnowledgeBaseArticle.addChildArticle(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbChildArticleContent = "Knowledge Base Child Article Content",
+			kbChildArticleTitle = "Knowledge Base Child Article Title",
+			submitForPublication = "true");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Knowledge Base Article Title",
+			workflowAssetType = "Knowledge Base Article",
+			workflowTask = "Review");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Knowledge Base Child Article Title",
+			workflowAssetType = "Knowledge Base Article",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Knowledge Base");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		AssertElementPresent(
+			key_kbArticleStatus = "Pending",
+			key_kbArticleTitle = "Knowledge Base Article Title",
+			locator1 = "WorkflowKnowledgeBaseArticle#ARTICLE_TABLE_ARTICLE_STATUS");
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Knowledge Base Child Article Content",
+			kbChildArticleTitle = "Knowledge Base Child Article Title");
+
+		AssertElementPresent(
+			key_kbArticleStatus = "Pending",
+			key_kbArticleTitle = "Knowledge Base Child Article Title",
+			locator1 = "WorkflowKnowledgeBaseArticle#ARTICLE_TABLE_ARTICLE_STATUS");
 	}
 
 	@description = "Verify that when the user Edit an approved Basic Article it's status comes to Pending"

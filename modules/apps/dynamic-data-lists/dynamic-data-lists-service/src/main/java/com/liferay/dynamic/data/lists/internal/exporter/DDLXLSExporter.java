@@ -151,46 +151,6 @@ public class DDLXLSExporter extends BaseDDLExporter {
 		return _ddmFormFieldValueRendererRegistry;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordLocalService(
-		DDLRecordLocalService ddlRecordLocalService) {
-
-		_ddlRecordLocalService = ddlRecordLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetService(
-		DDLRecordSetService ddlRecordSetService) {
-
-		_ddlRecordSetService = ddlRecordSetService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetVersionService(
-		DDLRecordSetVersionService ddlRecordSetVersionService) {
-
-		_ddlRecordSetVersionService = ddlRecordSetVersionService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypeServicesTracker(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
-
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldValueRendererRegistry(
-		DDMFormFieldValueRendererRegistry ddmFormFieldValueRendererRegistry) {
-
-		_ddmFormFieldValueRendererRegistry = ddmFormFieldValueRendererRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStorageEngine(StorageEngine storageEngine) {
-		_storageEngine = storageEngine;
-	}
-
 	private CellStyle _createCellStyle(
 		Workbook workbook, boolean bold, String fontName,
 		short heightInPoints) {
@@ -295,10 +255,19 @@ public class DDLXLSExporter extends BaseDDLExporter {
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLXLSExporter.class);
 
+	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
+
+	@Reference
 	private DDLRecordSetService _ddlRecordSetService;
+
+	@Reference
 	private DDLRecordSetVersionService _ddlRecordSetVersionService;
+
+	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
+	@Reference
 	private DDMFormFieldValueRendererRegistry
 		_ddmFormFieldValueRendererRegistry;
 
@@ -308,6 +277,7 @@ public class DDLXLSExporter extends BaseDDLExporter {
 	@Reference
 	private Language _language;
 
+	@Reference
 	private StorageEngine _storageEngine;
 
 }

@@ -473,8 +473,9 @@ create table DLFolder (
 
 create table EmailAddress (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	emailAddressId LONG not null primary key,
+	emailAddressId LONG not null,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -484,7 +485,8 @@ create table EmailAddress (
 	classPK LONG,
 	address VARCHAR(254) null,
 	listTypeId LONG,
-	primary_ BOOLEAN
+	primary_ BOOLEAN,
+	primary key (emailAddressId, ctCollectionId)
 );
 
 create table ExpandoColumn (

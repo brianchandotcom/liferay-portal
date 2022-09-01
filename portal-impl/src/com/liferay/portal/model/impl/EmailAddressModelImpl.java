@@ -75,13 +75,13 @@ public class EmailAddressModelImpl
 	public static final String TABLE_NAME = "EmailAddress";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"emailAddressId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"address", Types.VARCHAR}, {"listTypeId", Types.BIGINT},
-		{"primary_", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"emailAddressId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"address", Types.VARCHAR},
+		{"listTypeId", Types.BIGINT}, {"primary_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -89,6 +89,7 @@ public class EmailAddressModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("emailAddressId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -104,7 +105,7 @@ public class EmailAddressModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table EmailAddress (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,emailAddressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(254) null,listTypeId LONG,primary_ BOOLEAN)";
+		"create table EmailAddress (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,emailAddressId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(254) null,listTypeId LONG,primary_ BOOLEAN,primary key (emailAddressId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table EmailAddress";
 
@@ -286,6 +287,11 @@ public class EmailAddressModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<EmailAddress, Long>)EmailAddress::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", EmailAddress::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<EmailAddress, Long>)EmailAddress::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", EmailAddress::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<EmailAddress, String>)EmailAddress::setUuid);
@@ -355,6 +361,21 @@ public class EmailAddressModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -721,6 +742,7 @@ public class EmailAddressModelImpl
 		EmailAddressImpl emailAddressImpl = new EmailAddressImpl();
 
 		emailAddressImpl.setMvccVersion(getMvccVersion());
+		emailAddressImpl.setCtCollectionId(getCtCollectionId());
 		emailAddressImpl.setUuid(getUuid());
 		emailAddressImpl.setEmailAddressId(getEmailAddressId());
 		emailAddressImpl.setCompanyId(getCompanyId());
@@ -745,6 +767,8 @@ public class EmailAddressModelImpl
 
 		emailAddressImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		emailAddressImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		emailAddressImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		emailAddressImpl.setEmailAddressId(
 			this.<Long>getColumnOriginalValue("emailAddressId"));
@@ -845,6 +869,8 @@ public class EmailAddressModelImpl
 			new EmailAddressCacheModel();
 
 		emailAddressCacheModel.mvccVersion = getMvccVersion();
+
+		emailAddressCacheModel.ctCollectionId = getCtCollectionId();
 
 		emailAddressCacheModel.uuid = getUuid();
 
@@ -964,6 +990,7 @@ public class EmailAddressModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _emailAddressId;
 	private long _companyId;
@@ -1008,6 +1035,7 @@ public class EmailAddressModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("emailAddressId", _emailAddressId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1046,29 +1074,31 @@ public class EmailAddressModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("emailAddressId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("emailAddressId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("classNameId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("classPK", 512L);
+		columnBitmasks.put("classNameId", 512L);
 
-		columnBitmasks.put("address", 1024L);
+		columnBitmasks.put("classPK", 1024L);
 
-		columnBitmasks.put("listTypeId", 2048L);
+		columnBitmasks.put("address", 2048L);
 
-		columnBitmasks.put("primary_", 4096L);
+		columnBitmasks.put("listTypeId", 4096L);
+
+		columnBitmasks.put("primary_", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchEmailAddressException;
 import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +32,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
+public interface EmailAddressPersistence
+	extends BasePersistence<EmailAddress>, CTPersistence<EmailAddress> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

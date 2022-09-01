@@ -19,10 +19,8 @@ import {Button, ButtonDropDown} from '../../../../../common/components';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {
 	getAccountSubscriptionGroups,
-	getAnalyticsCloudWorkspace,
 	getCommerceOrderItems,
 	updateAccountSubscriptionGroups,
-	updateAnalyticsCloudWorkspace,
 } from '../../../../../common/services/liferay/graphql/queries';
 import getActivationStatusDateRange from '../../../../../common/utils/getActivationStatusDateRange';
 import AnalyticsCloudModal from '../../../components/AnalyticsCloudModal';
@@ -45,7 +43,6 @@ const ActivationStatusAnalyticsCloud = ({
 }) => {
 	const [, dispatch] = useCustomerPortal();
 	const {client, liferayWebDAV} = useAppPropertiesContext();
-	const [groupIdValue, setGroupIdValue] = useState('');
 	const [activationStatusDate, setActivationStatusDate] = useState('');
 	const [isVisible, setIsVisible] = useState(false);
 	const [visible, setVisible] = useState(false);
@@ -191,32 +188,6 @@ const ActivationStatusAnalyticsCloud = ({
 		fetchCommerceOrderItems();
 	}, [client, project]);
 
-	const updateAnalyticsCloudWorkspaceId = async () => {
-		const {data} = await client.query({
-			query: getAnalyticsCloudWorkspace,
-			variables: {
-				filter: `accountKey eq '${project.accountKey}'`,
-				scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
-			},
-		});
-
-		const analyticsCloudWorkspace =
-			data.c?.analyticsCloudWorkspaces?.items[0];
-
-		if (analyticsCloudWorkspace) {
-			await client.mutate({
-				mutation: updateAnalyticsCloudWorkspace,
-				variables: {
-					analyticsCloudWorkspace: {
-						workspaceGroupId: groupIdValue,
-					},
-					analyticsCloudWorkspaceId:
-						analyticsCloudWorkspace.analyticsCloudWorkspaceId,
-				},
-			});
-		}
-	};
-
 	const updateGroupId = async () => {
 		await Promise.all([
 			await client.mutate({
@@ -230,7 +201,6 @@ const ActivationStatusAnalyticsCloud = ({
 						subscriptionGroupAnalyticsCloud?.accountSubscriptionGroupId,
 				},
 			}),
-			await updateAnalyticsCloudWorkspaceId(),
 		]);
 
 		setSubscriptionGroupActivationStatus(STATUS_TAG_TYPE_NAMES.active);
@@ -261,11 +231,10 @@ const ActivationStatusAnalyticsCloud = ({
 			/>
 			{visible && (
 				<AnalyticsCloudStatusModal
-					groupIdValue={groupIdValue}
+					groupIdValue={project?.acWorkspaceGroupId}
 					observer={observerStatusModal}
 					onClose={onCloseStatusModal}
 					project={project}
-					setGroupIdValue={setGroupIdValue}
 					updateCardStatus={updateGroupId}
 				/>
 			)}

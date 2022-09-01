@@ -9,35 +9,16 @@
  * distribution rights of the Software.
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import classNames from 'classnames';
-import {useState} from 'react';
 import i18n from '../../../../../common/I18n';
-import {Badge, Button} from '../../../../../common/components';
-import {isLowercaseAndNumbers} from '../../../../../common/utils/validations.form';
+import {Button} from '../../../../../common/components';
 
 const AnalyticsCloudStatusModal = ({
 	groupIdValue,
 	observer,
 	onClose,
-	setGroupIdValue,
 	updateCardStatus,
 }) => {
-	const [hasError, setHasError] = useState();
-
-	const handleOnConfirm = () => {
-		const errorMessageGroupId = isLowercaseAndNumbers(groupIdValue);
-
-		if (errorMessageGroupId) {
-			setHasError(errorMessageGroupId);
-
-			return;
-		}
-
-		updateCardStatus();
-	};
-
 	return (
 		<>
 			<ClayModal center observer={observer}>
@@ -65,39 +46,9 @@ const AnalyticsCloudStatusModal = ({
 
 					<p className="mb-2 ml-4 mt-4">
 						{i18n.translate(
-							'confirm-the-final-group-id-used-to-create-the-customer-s-analytics-cloud-environments'
+							'please-make-sure-the-correct-workspace-group-id-is-saved-in-raysource'
 						)}
 					</p>
-
-					<div className="mx-2">
-						<ClayForm.Group
-							className={classNames('w-100', {
-								'has-error': hasError,
-							})}
-						>
-							<label>
-								<ClayInput
-									onChange={({target}) =>
-										setGroupIdValue(target.value)
-									}
-									placeholder="Group ID"
-									value={groupIdValue}
-								/>
-							</label>
-
-							{hasError ? (
-								<Badge>
-									<span className="pl-1">{hasError}</span>
-								</Badge>
-							) : (
-								<p className="ml-3 pl-3 pr-2 text-neutral-7 text-paragraph-sm">
-									{i18n.translate(
-										'please-enter-here-the-workspace-s-group-id'
-									)}
-								</p>
-							)}
-						</ClayForm.Group>
-					</div>
 
 					<div className="d-flex my-4 px-4">
 						<Button
@@ -110,7 +61,7 @@ const AnalyticsCloudStatusModal = ({
 						<Button
 							disabled={!groupIdValue}
 							displayType="primary ml-3 mt-2"
-							onClick={handleOnConfirm}
+							onClick={() => updateCardStatus()}
 						>
 							{i18n.translate('confirm')}
 						</Button>

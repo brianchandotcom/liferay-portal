@@ -47,13 +47,12 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Content Pages,Fragments";
 
-		task ("Add a fragment with fragmentElementId and fragmentEntryLinkNamespace freemarker variables") {
+		task ("Add a fragment with fragmentElementId freemarker variable") {
 			var newLine = '''
 ''';
 			var htmlSnippet = '''
 <div class="gf-1">
 	<h1>${fragmentElementId}</h1>
-	<h1>${fragmentEntryLinkNamespace}</h1>
 </div>
 			''';
 
@@ -77,25 +76,13 @@ definition {
 				fragmentName = "Fragment Name");
 		}
 
-		task ("Get the fragmentEntryLinkNamespace") {
-			var fragmentEntryLinkNamespace = selenium.getText("xpath=(//div[@class='gf-1']/h1)[2]");
+		task ("View the id of wrapping div equals the fragmentElementId") {
+			var fragmentElementId = selenium.getText("//div[@class='gf-1']/h1");
 
-			TestUtils.assertNotEquals(
-				actual = "${fragmentEntryLinkNamespace}",
-				expected = "");
-		}
-
-		task ("View the id of wrapping div equals fragment-fragmentEntryId-fragmentEntryLinkNamespace equals the fragmentElementId") {
 			AssertAttributeValue(
 				attribute1 = "id",
 				locator1 = "//div[@class='gf-1']/parent::div",
-				value1 = "fragment-${fragmentEntryId}-${fragmentEntryLinkNamespace}");
-
-			var fragmentElementId = selenium.getText("xpath=(//div[@class='gf-1']/h1)[1]");
-
-			TestUtils.assertEquals(
-				actual = "${fragmentElementId}",
-				expected = "fragment-${fragmentEntryId}-${fragmentEntryLinkNamespace}");
+				value1 = "${fragmentElementId}");
 		}
 	}
 

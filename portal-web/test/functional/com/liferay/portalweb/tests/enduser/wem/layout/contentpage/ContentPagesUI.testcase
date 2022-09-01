@@ -473,4 +473,19 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153650. The portal version info should be shown on the Home page."
+	@priority = "4"
+	test ViewPortalVersionInfoOnHomePage {
+		var portalVersionInfo = selenium.getText("//div[contains(@id,'fragment-')][.//*[contains(@class,'paragraph')]]//*[contains(@data-lfr-editable-id,'element-text')]");
+
+		var match = StringUtil.matches("${portalVersionInfo}", "Liferay Digital Experience Platform \d+\.\d+\.\d+ Update \d+ \(\w+ \/ Build \d+ \/ \w+ \d+, \d+\)");
+
+		if ("${match}" == "true") {
+			echo("The portal version info ${portalVersionInfo} is shown on the Home page");
+		}
+		else {
+			fail("The portal version info ${portalVersionInfo} is missing on the Home page");
+		}
+	}
+
 }

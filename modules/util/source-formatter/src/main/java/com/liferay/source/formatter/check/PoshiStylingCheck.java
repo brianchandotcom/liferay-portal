@@ -172,26 +172,14 @@ public class PoshiStylingCheck extends BaseFileCheck {
 				continue;
 			}
 
-			List<String> parameters = JavaSourceUtil.getParameterList(
-				trimmedLine);
+			String newLine = trimmedLine.replaceAll(" +", " ");
 
-			if (parameters.size() != 1) {
-				sb.append(line);
-				sb.append(StringPool.NEW_LINE);
-
-				continue;
-			}
-
-			String parameter = parameters.get(0);
-
-			String newParameter = parameter.replaceAll(" +", " ");
-
-			if (StringUtil.equals(parameter, newParameter)) {
+			if (StringUtil.equals(trimmedLine, newLine)) {
 				sb.append(line);
 			}
 			else {
 				sb.append(
-					StringUtil.replaceFirst(line, parameter, newParameter));
+					StringUtil.replaceFirst(line, trimmedLine, newLine));
 			}
 
 			sb.append(StringPool.NEW_LINE);

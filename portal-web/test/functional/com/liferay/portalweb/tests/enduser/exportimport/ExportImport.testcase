@@ -157,6 +157,27 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-161743. Verify that it's not possible to import the lar file which contains missing references to classNames."
+	@priority = "3"
+	test CannotImportLARContainsMissingReferencesToClassname {
+		task ("Given: Add a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("When: Try importing the LAR which contains missing references to classNames") {
+			LAR.importSiteCP(
+				cannotImport = "true",
+				importValidationMissingItem = "model.resource.my-custom-class-name",
+				larFileName = "wrong-classname-reference.lar",
+				siteName = "Site Name",
+				uploadFrom = "dependencies");
+		}
+
+		task ("Then: Verify that the import process is failed without error on the console") {
+			AssertConsoleTextNotPresent(value1 = "ExportImportRuntimeException");
+		}
+	}
+
 	@description = "This is a use case for LRQA-73362. Verify if custom fields can be added and deleted through importing their LAR file."
 	@priority = "4"
 	test CustomFieldDeletionViaImporting {

@@ -54,7 +54,8 @@ public class OAuthClientEntryServiceHttp {
 			addOAuthClientEntry(
 				HttpPrincipal httpPrincipal, long userId,
 				String authRequestParametersJSON, String authServerWellKnownURI,
-				String infoJSON, String tokenRequestParametersJSON)
+				String infoJSON, String oidcUserInfoMapperJSON,
+				String tokenRequestParametersJSON)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -64,7 +65,8 @@ public class OAuthClientEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, authRequestParametersJSON,
-				authServerWellKnownURI, infoJSON, tokenRequestParametersJSON);
+				authServerWellKnownURI, infoJSON, oidcUserInfoMapperJSON,
+				tokenRequestParametersJSON);
 
 			Object returnObj = null;
 
@@ -419,7 +421,8 @@ public class OAuthClientEntryServiceHttp {
 			updateOAuthClientEntry(
 				HttpPrincipal httpPrincipal, long oAuthClientEntryId,
 				String authRequestParametersJSON, String authServerWellKnownURI,
-				String infoJSON, String tokenRequestParametersJSON)
+				String infoJSON, String oidcUserInfoMapperJSON,
+				String tokenRequestParametersJSON)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -429,7 +432,8 @@ public class OAuthClientEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, oAuthClientEntryId, authRequestParametersJSON,
-				authServerWellKnownURI, infoJSON, tokenRequestParametersJSON);
+				authServerWellKnownURI, infoJSON, oidcUserInfoMapperJSON,
+				tokenRequestParametersJSON);
 
 			Object returnObj = null;
 
@@ -465,7 +469,8 @@ public class OAuthClientEntryServiceHttp {
 
 	private static final Class<?>[] _addOAuthClientEntryParameterTypes0 =
 		new Class[] {
-			long.class, String.class, String.class, String.class, String.class
+			long.class, String.class, String.class, String.class, String.class,
+			String.class
 		};
 	private static final Class<?>[] _deleteOAuthClientEntryParameterTypes1 =
 		new Class[] {long.class};
@@ -488,7 +493,8 @@ public class OAuthClientEntryServiceHttp {
 		new Class[] {long.class, int.class, int.class};
 	private static final Class<?>[] _updateOAuthClientEntryParameterTypes9 =
 		new Class[] {
-			long.class, String.class, String.class, String.class, String.class
+			long.class, String.class, String.class, String.class, String.class,
+			String.class
 		};
 
 }

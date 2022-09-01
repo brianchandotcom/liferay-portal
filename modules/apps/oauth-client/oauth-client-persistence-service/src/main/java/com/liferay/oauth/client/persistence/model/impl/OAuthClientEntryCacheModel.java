@@ -78,7 +78,7 @@ public class OAuthClientEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -102,6 +102,8 @@ public class OAuthClientEntryCacheModel
 		sb.append(clientId);
 		sb.append(", infoJSON=");
 		sb.append(infoJSON);
+		sb.append(", oidcUserInfoMapperJSON=");
+		sb.append(oidcUserInfoMapperJSON);
 		sb.append(", tokenRequestParametersJSON=");
 		sb.append(tokenRequestParametersJSON);
 		sb.append("}");
@@ -169,6 +171,14 @@ public class OAuthClientEntryCacheModel
 			oAuthClientEntryImpl.setInfoJSON(infoJSON);
 		}
 
+		if (oidcUserInfoMapperJSON == null) {
+			oAuthClientEntryImpl.setOIDCUserInfoMapperJSON("");
+		}
+		else {
+			oAuthClientEntryImpl.setOIDCUserInfoMapperJSON(
+				oidcUserInfoMapperJSON);
+		}
+
 		if (tokenRequestParametersJSON == null) {
 			oAuthClientEntryImpl.setTokenRequestParametersJSON("");
 		}
@@ -200,6 +210,7 @@ public class OAuthClientEntryCacheModel
 		authServerWellKnownURI = objectInput.readUTF();
 		clientId = objectInput.readUTF();
 		infoJSON = (String)objectInput.readObject();
+		oidcUserInfoMapperJSON = objectInput.readUTF();
 		tokenRequestParametersJSON = objectInput.readUTF();
 	}
 
@@ -251,6 +262,13 @@ public class OAuthClientEntryCacheModel
 			objectOutput.writeObject(infoJSON);
 		}
 
+		if (oidcUserInfoMapperJSON == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(oidcUserInfoMapperJSON);
+		}
+
 		if (tokenRequestParametersJSON == null) {
 			objectOutput.writeUTF("");
 		}
@@ -270,6 +288,7 @@ public class OAuthClientEntryCacheModel
 	public String authServerWellKnownURI;
 	public String clientId;
 	public String infoJSON;
+	public String oidcUserInfoMapperJSON;
 	public String tokenRequestParametersJSON;
 
 }

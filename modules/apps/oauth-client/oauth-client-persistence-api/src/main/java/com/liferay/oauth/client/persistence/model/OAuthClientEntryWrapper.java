@@ -54,6 +54,7 @@ public class OAuthClientEntryWrapper
 		attributes.put("authServerWellKnownURI", getAuthServerWellKnownURI());
 		attributes.put("clientId", getClientId());
 		attributes.put("infoJSON", getInfoJSON());
+		attributes.put("oidcUserInfoMapperJSON", getOIDCUserInfoMapperJSON());
 		attributes.put(
 			"tokenRequestParametersJSON", getTokenRequestParametersJSON());
 
@@ -128,6 +129,13 @@ public class OAuthClientEntryWrapper
 
 		if (infoJSON != null) {
 			setInfoJSON(infoJSON);
+		}
+
+		String oidcUserInfoMapperJSON = (String)attributes.get(
+			"oidcUserInfoMapperJSON");
+
+		if (oidcUserInfoMapperJSON != null) {
+			setOIDCUserInfoMapperJSON(oidcUserInfoMapperJSON);
 		}
 
 		String tokenRequestParametersJSON = (String)attributes.get(
@@ -231,6 +239,16 @@ public class OAuthClientEntryWrapper
 	@Override
 	public long getOAuthClientEntryId() {
 		return model.getOAuthClientEntryId();
+	}
+
+	/**
+	 * Returns the oidc user info mapper json of this o auth client entry.
+	 *
+	 * @return the oidc user info mapper json of this o auth client entry
+	 */
+	@Override
+	public String getOIDCUserInfoMapperJSON() {
+		return model.getOIDCUserInfoMapperJSON();
 	}
 
 	/**
@@ -376,6 +394,16 @@ public class OAuthClientEntryWrapper
 	@Override
 	public void setOAuthClientEntryId(long oAuthClientEntryId) {
 		model.setOAuthClientEntryId(oAuthClientEntryId);
+	}
+
+	/**
+	 * Sets the oidc user info mapper json of this o auth client entry.
+	 *
+	 * @param oidcUserInfoMapperJSON the oidc user info mapper json of this o auth client entry
+	 */
+	@Override
+	public void setOIDCUserInfoMapperJSON(String oidcUserInfoMapperJSON) {
+		model.setOIDCUserInfoMapperJSON(oidcUserInfoMapperJSON);
 	}
 
 	/**

@@ -69,21 +69,6 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 		updatePortletPreferences(actionRequest, recordSet);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetService(
-		DDLRecordSetService ddlRecordSetService) {
-
-		this.ddlRecordSetService = ddlRecordSetService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWorkflowDefinitionLinkLocalService(
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
-
-		this.workflowDefinitionLinkLocalService =
-			workflowDefinitionLinkLocalService;
-	}
-
 	protected void updatePortletPreferences(
 			ActionRequest actionRequest, DDLRecordSet recordSet)
 		throws Exception {
@@ -123,7 +108,10 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 			workflowDefinition);
 	}
 
+	@Reference
 	protected DDLRecordSetService ddlRecordSetService;
+
+	@Reference
 	protected WorkflowDefinitionLinkLocalService
 		workflowDefinitionLinkLocalService;
 

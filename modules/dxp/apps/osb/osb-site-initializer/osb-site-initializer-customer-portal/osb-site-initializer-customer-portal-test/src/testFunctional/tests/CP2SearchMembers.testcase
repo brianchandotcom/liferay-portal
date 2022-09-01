@@ -38,6 +38,9 @@ definition {
 	@description = "Automation ID: LPS-150835 | Test Summary: Verify if no results are found show an error message"
 	@priority = "4"
 	test VerifyTheErrorMessageWhenNoResultsAreFound {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
 		task ("Go to CP2.0") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 		}
@@ -76,6 +79,9 @@ definition {
 	@description = "Automation ID: LPS-150834 | Test Summary: Verify if in the text box search it filters by email"
 	@priority = "4"
 	test VerifyTheSearchFiltersByEmail {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
 		task ("Adding a user to the project") {
 			JSONUser.addUser(
 				userEmailAddress = "test.user@liferay.com",
@@ -139,6 +145,9 @@ definition {
 	@description = "Automation ID: LPS-150832 | Test Summary: Verify if the text box search filters by first and last name"
 	@priority = "5"
 	test VerifyTheSearchFiltersByFirstAndLastName {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
 		task ("Adding a user to the project") {
 			JSONUser.addUser(
 				userEmailAddress = "test.user@liferay.com",

@@ -186,6 +186,30 @@ definition {
 			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
 	}
 
+	@description = "LPS-151676 - Verify that it's possible to create a One-to-Many relationship between a Custom Object and Native Object"
+	@priority = "5"
+	test CanCreateOneToManyRelationshipWithNativeObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 290",
+			objectName = "CustomObject290",
+			pluralLabelName = "Custom Objects 290");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "User");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "Relationship",
+			object = "Custom Object 290",
+			type = "One to Many");
+
+		AssertElementPresent(
+			key_label = "Relationship",
+			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
+	}
+
 	@description = "LPS-151676 - Verify that it's possible to delete a relationship between a Custom Object entry and Native Object entry (One-to-Many)"
 	@priority = "4"
 	test CanDeleteOneToManyRelationship {

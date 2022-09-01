@@ -139,7 +139,9 @@ export default withRouter(
 		);
 
 		const [getRankedThreads] = useManualQuery(getRankedThreadsQuery);
-		const [getSectionThreads] = useManualQuery(getSectionThreadsQuery);
+		const [getSectionThreads] = useManualQuery(getSectionThreadsQuery, {
+			useCache: false,
+		});
 		const [getThreads] = useManualQuery(getThreadsQuery);
 
 		useEffect(() => {
@@ -282,8 +284,7 @@ export default withRouter(
 					filter += `${
 						(section && section.id && ' and ') || ''
 					}keywords/any(x:x eq '${keywords}')`;
-				}
-				else if (creatorId) {
+				} else if (creatorId) {
 					const operand = filter ? 'and' : '';
 
 					filter += `${operand} creator/id eq ${creatorId}`;
@@ -334,23 +335,19 @@ export default withRouter(
 					siteKey,
 					'dateModified:desc'
 				);
-			}
-			else if (filter === 'week') {
+			} else if (filter === 'week') {
 				const date = new Date();
 				date.setDate(date.getDate() - 7);
 
 				fn = getRankedThreadsCallback(date, page, pageSize, section);
-			}
-			else if (filter === 'month') {
+			} else if (filter === 'month') {
 				const date = new Date();
 				date.setDate(date.getDate() - 31);
 
 				fn = getRankedThreadsCallback(date, page, pageSize, section);
-			}
-			else if (filter === 'most-voted') {
+			} else if (filter === 'most-voted') {
 				fn = getRankedThreadsCallback(null, page, pageSize, section);
-			}
-			else {
+			} else {
 				fn = getThreadsCallback(
 					creatorId,
 					currentTag,
@@ -403,8 +400,7 @@ export default withRouter(
 			}
 			if (search) {
 				url += `?search=${search}&`;
-			}
-			else {
+			} else {
 				url += '?';
 			}
 
@@ -437,15 +433,13 @@ export default withRouter(
 						setSection(data.messageBoardSections.items[0]);
 						setSectionQuery(getSectionBySectionTitleQuery);
 						setSectionQueryVariables(variables);
-					}
-					else {
+					} else {
 						setSection(null);
 						setError({message: 'Loading Topics', title: 'Error'});
 						setLoading(false);
 					}
 				});
-			}
-			else if (sectionTitle === ALL_SECTIONS_ID) {
+			} else if (sectionTitle === ALL_SECTIONS_ID) {
 				const variables = {siteKey: context.siteKey};
 				getSections({
 					variables,
@@ -493,8 +487,7 @@ export default withRouter(
 							: '#'
 					}/questions/${sectionTitle}/new`
 				);
-			}
-			else {
+			} else {
 				historyPushParser(`/questions/${sectionTitle}/new`);
 			}
 

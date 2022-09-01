@@ -38,7 +38,45 @@ definition {
     @description = "Automation ID: LPS-149758 | Test Summary: Verify if team members with the role Partner Managers can invite users"
     @priority = "5"
     test CanViewPartnerManagerInviteUsers {
-        // TODO LPS-149758 CanViewPartnerManagerInviteUsers pending implementation
+        task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account Analytics Cloud");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Partner Manager",
+				accountUserName = "Test Test");
+		}
+
+		task ("Go to CP2.0") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		}
+
+		task ("Login in Okta") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
+
+			Refresh();
+		}
+
+        task ("Get into the project") {
+			CustomerPortal.enterOnProject(
+                status = "Expired",
+                title = "Test Account Analytics Cloud");
+		}
+
+        task ("Go to the Team Members page and click on the Invite button") {
+            CP2NavigationMenu.goToTeamMembers();
+
+            CP2TeamMembers.clickInviteMembers();
+        }
+
+        task ("Assert the 'Invite Your Team Members' modal") {
+            AssertElementPresent(
+                key_title = "Invite your team members",
+                locator1 = "CP2TeamMembers#MODAL_TM");
+        } 
     }
 
     @description = "Automation ID: LPS-149761 | Test Summary: Verify if team members with the role Partner Managers can remove team members"

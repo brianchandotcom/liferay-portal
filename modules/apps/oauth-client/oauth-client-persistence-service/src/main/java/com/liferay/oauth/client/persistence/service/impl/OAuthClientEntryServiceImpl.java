@@ -49,6 +49,18 @@ public class OAuthClientEntryServiceImpl
 			String tokenRequestParametersJSON)
 		throws PortalException {
 
+		return oAuthClientEntryService.addOAuthClientEntry(
+			userId, authRequestParametersJSON, authServerWellKnownURI, infoJSON,
+			null, tokenRequestParametersJSON);
+	}
+
+	@Override
+	public OAuthClientEntry addOAuthClientEntry(
+			long userId, String authRequestParametersJSON,
+			String authServerWellKnownURI, String infoJSON,
+			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
+		throws PortalException {
+
 		ModelResourcePermissionUtil.check(
 			_oAuthClientEntryModelResourcePermission, getPermissionChecker(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, 0,
@@ -56,7 +68,7 @@ public class OAuthClientEntryServiceImpl
 
 		return oAuthClientEntryLocalService.addOAuthClientEntry(
 			userId, authRequestParametersJSON, authServerWellKnownURI, infoJSON,
-			tokenRequestParametersJSON);
+			oidcUserInfoMapperJSON, tokenRequestParametersJSON);
 	}
 
 	@Override
@@ -157,12 +169,25 @@ public class OAuthClientEntryServiceImpl
 			String tokenRequestParametersJSON)
 		throws PortalException {
 
+		return oAuthClientEntryService.updateOAuthClientEntry(
+			oAuthClientEntryId, authRequestParametersJSON,
+			authServerWellKnownURI, infoJSON, null, tokenRequestParametersJSON);
+	}
+
+	@Override
+	public OAuthClientEntry updateOAuthClientEntry(
+			long oAuthClientEntryId, String authRequestParametersJSON,
+			String authServerWellKnownURI, String infoJSON,
+			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
+		throws PortalException {
+
 		_oAuthClientEntryModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientEntryId, ActionKeys.UPDATE);
 
 		return oAuthClientEntryLocalService.updateOAuthClientEntry(
 			oAuthClientEntryId, authRequestParametersJSON,
-			authServerWellKnownURI, infoJSON, tokenRequestParametersJSON);
+			authServerWellKnownURI, infoJSON, oidcUserInfoMapperJSON,
+			tokenRequestParametersJSON);
 	}
 
 	@Reference(

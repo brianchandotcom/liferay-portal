@@ -444,6 +444,9 @@ public class KBAdminNavigationDisplayContext {
 		for (KBTemplate kbTemplate : kbTemplates) {
 			navigationItemsJSONArray.put(
 				JSONUtil.put(
+					"actions",
+					_kbDropdownItemsProvider.getKBTemplateDropdownItems(kbTemplate)
+				).put(
 					"href",
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse

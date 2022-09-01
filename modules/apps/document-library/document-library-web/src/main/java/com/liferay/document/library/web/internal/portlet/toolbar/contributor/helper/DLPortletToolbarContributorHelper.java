@@ -132,14 +132,10 @@ public class DLPortletToolbarContributorHelper {
 		return true;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLPortletToolbarContributorHelper.class);
 
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 }

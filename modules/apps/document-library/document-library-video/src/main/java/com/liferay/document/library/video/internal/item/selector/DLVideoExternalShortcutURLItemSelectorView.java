@@ -77,14 +77,6 @@ public class DLVideoExternalShortcutURLItemSelectorView
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.video)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
@@ -93,6 +85,9 @@ public class DLVideoExternalShortcutURLItemSelectorView
 	@Reference
 	private Language _language;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.video)"
+	)
 	private ServletContext _servletContext;
 
 }

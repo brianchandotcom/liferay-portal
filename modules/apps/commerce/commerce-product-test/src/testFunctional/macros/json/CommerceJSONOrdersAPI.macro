@@ -1,15 +1,56 @@
 definition {
 
 	macro _addCommerceOrder {
+		Variables.assertDefined(parameterList = "${accountEntryName},${orderStatus},${paymentStatus}");
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
 		var baseURL = "${baseURL}";
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var paymentMethod = StringUtil.lowerCase("${paymentMethod}");
+		if (!(isSet(billingAddressName))) {
+			var billingAddressId = "0";
+		}
+		else {
+			var billingAddressId = CommerceJSONAccountsAPI._getAccountAddressIdByAddressName(
+				accountEntryId = "${accountEntryId}",
+				addressName = "${billingAddressName}");
+		}
+
 		var commerceChannelIds = CommerceJSONChannelsAPI._getCommerceChannelIds();
-		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
+		var orderItemsList = "";
+
+		if (isSet(orderItems)) {
+			for (var orderItem : list "${orderItems}") {
+				var itemSku = StringUtil.extractFirst("${orderItem}", ":");
+				var itemQuantity = StringUtil.extractLast("${orderItem}", ":");
+				var itemSkuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${itemSku}");
+
+				if ("${orderItemsList}" != "") {
+					var comma = ",";
+				}
+				else {
+					var comma = "";
+				}
+
+				var orderItemsList = '''
+						${orderItemsList}${comma}
+						{
+							"quantity": "${itemQuantity}",
+      						"skuId": "${itemSkuId}"
+						}
+				''';
+			}
+		}
+
+		if (!(isSet(paymentMethod))) {
+			var paymentMethod = "";
+		}
+		else {
+			var paymentMethod = CommerceUtilities.convertStringToKey(string = "${paymentMethod}");
+		}
 
 		if (!(isSet(paymentStatus))) {
 			var paymentStatus = "1";
@@ -17,6 +58,37 @@ definition {
 
 		if (!(isSet(orderStatus))) {
 			var orderStatus = "2";
+		}
+
+		if (!(isSet(shippingAddressName))) {
+			var shippingAddressId = "0";
+		}
+		else {
+			var shippingAddressId = CommerceJSONAccountsAPI._getAccountAddressIdByAddressName(
+				accountEntryId = "${accountEntryId}",
+				addressName = "${shippingAddressName}");
+		}
+
+		if (isSet(shippingOption)) {
+			if (!(isSet(shippingMethod))) {
+				if (("${shippingOption}" == "Standard Delivery") || ("${shippingOption}" == "Expedited Delivery")) {
+					var shippingMethod = "fixed";
+				}
+			}
+			else {
+				if ("${shippingMethod}" == "Flat Rate") {
+					var shippingMethod = "fixed";
+				}
+				else if ("${shippingMethod}" == "Variable Rate") {
+					var shippingMethod = "by-weight";
+				}
+			}
+
+			var shippingOption = CommerceUtilities.convertStringToKey(string = "${shippingOption}");
+		}
+		else {
+			var shippingMethod = "";
+			var shippingOption = "";
 		}
 
 		echo("Account id: ${accountEntryId}");
@@ -30,11 +102,16 @@ definition {
   			-H 'Content-Type: application/json' \
   			-d '{
 				  	"accountId": "${accountEntryId}",
+					"billingAddressId": ${billingAddressId},
             		"channelId": "${commerceChannelIds}",
             		"currencyCode": "USD",
             		"paymentStatus": "${paymentStatus}",
 					"paymentMethod": "${paymentMethod}",
-					"orderStatus": ${orderStatus}
+					"orderItems": [${orderItemsList}],
+					"orderStatus": ${orderStatus},
+					"shippingAddressId": ${shippingAddressId},
+					"shippingMethod": "${shippingMethod}",
+					"shippingOption": "${shippingOption}"
 				}'
 		''';
 

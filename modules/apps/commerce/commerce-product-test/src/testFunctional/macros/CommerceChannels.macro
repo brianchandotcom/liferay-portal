@@ -106,7 +106,7 @@ definition {
 	}
 
 	macro addShippingOption {
-		Variables.assertDefined(parameterList = "${name},${key}");
+		Variables.assertDefined(parameterList = "${name}");
 
 		Click(locator1 = "Button#PLUS");
 
@@ -135,10 +135,12 @@ definition {
 				value1 = "${priority}");
 		}
 
-		Type(
-			key_fieldLabel = "Key",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${key}");
+		if (isSet(key)) {
+			Type(
+				key_fieldLabel = "Key",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${key}");
+		}
 
 		Button.clickSave();
 
@@ -501,6 +503,10 @@ definition {
 				value1 = "${description}");
 		}
 
+		if (isSet(trackingURL)) {
+			CommerceChannels.addShippingMethodTrackingURL(trackingURL = "${trackingURL}");
+		}
+
 		if (isSet(priority)) {
 			Type(
 				locator1 = "CommerceEntry#PRIORITY_FIELD",
@@ -518,6 +524,34 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+
+		if ("${active}" == "true") {
+			if (isSet(shippingOptions)) {
+				CommerceEntry.gotoMenuTab(menuTab = "Shipping Options");
+
+				CommerceChannels.addShippingOptions(
+					shippingMethod = "${shippingMethod}",
+					shippingOptions = "${shippingOptions}");
+			}
+
+			if (isSet(configureShippingOption) && ("${configureShippingOption}" == "true")) {
+				CommerceEntry.gotoMenuTab(menuTab = "Shipping Option Settings");
+
+				for (var shippingOption : list "${shippingOptions}") {
+					CommerceEntry.addShippingOptionSettingsVariableRate(
+						country = "${shippingOptionSettingsCountry}",
+						fixedPrice = "${shippingOptionSettingsFixedPrice}",
+						priceUnitWeight = "${shippingOptionSettingsPriceUnitWeight}",
+						region = "${shippingOptionSettingsRegion}",
+						shippingOption = "${shippingOption}",
+						subtotal = "${shippingOptionSettingsSubtotal}",
+						warehouse = "${shippingOptionSettingsWarehouse}",
+						weightFrom = "${shippingOptionSettingsWeightFrom}",
+						weightTo = "${shippingOptionSettingsWeightTo}",
+						zip = "${shippingOptionSettingsZip}");
+				}
+			}
+		}
 
 		Click(locator1 = "Icon#CLOSE");
 

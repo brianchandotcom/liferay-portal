@@ -82,6 +82,75 @@ definition {
     @description = "Automation ID: LPS-149761 | Test Summary: Verify if team members with the role Partner Managers can remove team members"
     @priority = "5"
     test RemovingTeamMembers {
-        // TODO LPS-149761 RemovingTeamMembers pending implementation
+        task ("Adding a user to the project") {
+			JSONUser.addUser(
+				userEmailAddress = "test.user@liferay.com",
+				userFirstName = "Test",
+				userLastName = "User",
+				userScreenName = "Testing");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test.user@liferay.com");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account Analytics Cloud");
+
+			Accounts.assignUsers(
+				accountName = "Test Account Analytics Cloud",
+				assigneeName = "Test User");
+		}
+
+		task ("Change the user role in the project") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account Analytics Cloud");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Partner Manager",
+				accountUserName = "Test Test");
+		}
+
+		task ("Go to CP2.0") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		}
+
+		task ("Login in Okta") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
+
+			Refresh();
+		}
+
+        task ("Get into the project") {
+			CustomerPortal.enterOnProject(
+                status = "Expired",
+                title = "Test Account Analytics Cloud");
+		}
+
+		task ("Go to the team members page and remove a guest user") {
+            CP2NavigationMenu.goToTeamMembers();
+
+            CP2Utils.openActionMenu(
+				menuItem = "Remove",
+				openUser = "Test User");
+
+			Button.click(button = "Remove");
+
+			Alert.viewSuccessMessage();
+        }
+
+		task ("Assert that the user has indeed been removed") {
+			CP2TeamMembers.assertInvitedUserIsNotVisible(
+				name = "Test User",
+				status = "Invited");
+		}
+
+		task ("Delete user created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "test.user@liferay.com");
+		}
     }
 }

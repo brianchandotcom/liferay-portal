@@ -149,6 +149,10 @@ definition {
 		if (IsNotVisible(locator1 = "PageAudit#SIDEBAR")) {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
+
+		while (IsNotVisible(locator1 = "PageAudit#SIDEBAR")) {
+			WaitForElementPresent(locator1 = "PageAudit#SIDEBAR");
+		}
 	}
 
 	macro resetDefaultValues {

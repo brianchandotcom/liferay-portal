@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -68,15 +69,7 @@ public class CETFactoryImpl implements CETFactory {
 			new IFrameCETImplFactoryImpl()
 		).put(
 			ClientExtensionEntryConstants.TYPE_THEME_CSS,
-			() -> {
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-153457"))) {
-
-					return new ThemeCSSCETImplFactoryImpl();
-				}
-
-				return null;
-			}
+			 new ThemeCSSCETImplFactoryImpl()
 		).put(
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
 			new ThemeFaviconCETImplFactoryImpl()
@@ -167,7 +160,11 @@ public class CETFactoryImpl implements CETFactory {
 
 		CETImplFactory cetImplFactory = _cetImplFactories.get(type);
 
-		if (cetImplFactory != null) {
+		if ((cetImplFactory != null) &&
+			(!Objects.equals(
+				type, ClientExtensionEntryConstants.TYPE_THEME_CSS) ||
+			 GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153457")))) {
+
 			return cetImplFactory;
 		}
 

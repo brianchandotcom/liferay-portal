@@ -394,7 +394,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 			searchResultSummaryDisplayContext, assetRenderer, summary);
 		_buildCreationDateString(searchResultSummaryDisplayContext);
 		_buildCreatorUserName(searchResultSummaryDisplayContext);
-		_buildCreatorUserPortraitURLString(searchResultSummaryDisplayContext);
+		_buildCreatorUserPortrait(searchResultSummaryDisplayContext);
 		_buildDocumentForm(searchResultSummaryDisplayContext);
 		_buildImage(
 			searchResultSummaryDisplayContext, assetRendererFactory,
@@ -403,7 +403,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 		_buildModelResource(searchResultSummaryDisplayContext, className);
 		_buildModifiedByUserPortrait(searchResultSummaryDisplayContext);
 		_buildModifiedDateString(searchResultSummaryDisplayContext);
-		_buildModifiedUserName(searchResultSummaryDisplayContext);
+		_buildModifiedByUserName(searchResultSummaryDisplayContext);
 		_buildViewURL(className, classPK, searchResultSummaryDisplayContext);
 
 		return searchResultSummaryDisplayContext;
@@ -573,7 +573,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 		}
 	}
 
-	private void _buildCreatorUserPortraitURLString(
+	private void _buildCreatorUserPortrait(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
 		String articleIdString = _getFieldValueString(Field.USER_ID);
@@ -838,6 +838,26 @@ public class SearchResultSummaryDisplayContextBuilder {
 		}
 	}
 
+	private void _buildModifiedByUserName(
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
+
+		String statusByUserId = _getFieldValueString("statusByUserId");
+
+		if (statusByUserId != null) {
+			long userId = GetterUtil.getLong(statusByUserId);
+
+			User user = _userLocalService.fetchUser(userId);
+
+			if (user != null) {
+				searchResultSummaryDisplayContext.setModifiedByUserName(
+					user.getScreenName());
+
+				searchResultSummaryDisplayContext.setModifiedByUserNameVisible(
+					true);
+			}
+		}
+	}
+
 	private void _buildModifiedByUserPortrait(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
@@ -875,26 +895,6 @@ public class SearchResultSummaryDisplayContextBuilder {
 					_formatCreationDate(date));
 				searchResultSummaryDisplayContext.setModifiedDateVisible(true);
 			});
-	}
-
-	private void _buildModifiedUserName(
-		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
-
-		String statusByUserId = _getFieldValueString("statusByUserId");
-
-		if (statusByUserId != null) {
-			long userId = GetterUtil.getLong(statusByUserId);
-
-			User user = _userLocalService.fetchUser(userId);
-
-			if (user != null) {
-				searchResultSummaryDisplayContext.setModifiedByUserName(
-					user.getScreenName());
-
-				searchResultSummaryDisplayContext.setModifiedByUserNameVisible(
-					true);
-			}
-		}
 	}
 
 	private SearchResultSummaryDisplayContext _buildTemporarilyUnavailable() {

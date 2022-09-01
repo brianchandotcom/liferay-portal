@@ -93,6 +93,11 @@ public class SearchResultsPortletDisplayTemplateHandler
 		templateVariableGroup.empty();
 
 		templateVariableGroup.addVariable(
+			"created-by-user-portrait-url",
+			SearchResultSummaryDisplayContext.class,
+			PortletDisplayTemplateConstants.ENTRY,
+			"getCreatedByUserPortraitURLString()");
+		templateVariableGroup.addVariable(
 			"document-content", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getContent()");
 		templateVariableGroup.addVariable(
@@ -103,12 +108,24 @@ public class SearchResultsPortletDisplayTemplateHandler
 			SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getCreatorUserName()");
 		templateVariableGroup.addVariable(
+			"document-modified-by-user-name",
+			SearchResultSummaryDisplayContext.class,
+			PortletDisplayTemplateConstants.ENTRY, "getModifiedByUserName()");
+		templateVariableGroup.addVariable(
+			"document-modified-date", SearchResultSummaryDisplayContext.class,
+			PortletDisplayTemplateConstants.ENTRY, "getModifiedDateString()");
+		templateVariableGroup.addVariable(
 			"document-title", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getHighlightedTitle()");
 		templateVariableGroup.addCollectionVariable(
 			"documents", List.class, PortletDisplayTemplateConstants.ENTRIES,
 			"document", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getHighlightedTitle()");
+		templateVariableGroup.addVariable(
+			"modified-by-user-portrait-url",
+			SearchResultSummaryDisplayContext.class,
+			PortletDisplayTemplateConstants.ENTRY,
+			"getModifiedByUserPortraitURLString()");
 		templateVariableGroup.addVariable(
 			"search-container", SearchContainer.class, "searchContainer");
 		templateVariableGroup.addVariable(

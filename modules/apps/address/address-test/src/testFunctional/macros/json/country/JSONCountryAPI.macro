@@ -1,0 +1,28 @@
+definition {
+
+	macro _addAccountEntry {
+		Variables.assertDefined(parameterList = "${countryName},${countryNumber},${threeLetterISOCode},${twoLetterISOCode}");
+
+		var companyId = JSONCompany.getCompanyId();
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/country/add-country \
+				-u ${creatorEmailAddress}:${creatorPassword} \
+				-d a2=${twoLetterISOCode} \
+				-d a3=${threeLetterISOCode} \
+				-d active=${countryStatus} \
+				-d billingAllowed=${billingAllowed} \
+				-d idd='' \
+				-d name=${countryName} \
+				-d number=${countryNumber} \
+				-d position=${countryPosition} \
+				-d shippingAllowed=${shippingAllowed} \
+				-d subjectToVAT=${subjectToVAT} \
+				-d zipRequired=false
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

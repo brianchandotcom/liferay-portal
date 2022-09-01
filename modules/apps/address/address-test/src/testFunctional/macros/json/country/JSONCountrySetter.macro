@@ -1,0 +1,18 @@
+definition {
+
+	macro setStatus {
+		if (!(isSet(countryStatus))) {
+			var countryStatus = "true";
+		}
+
+		if ("${countryStatus}" == "active") {
+			var countryStatus = "true";
+		}
+		else if ("${countryStatus}" == "inactive") {
+			var countryStatus = "false";
+		}
+
+		return "${countryStatus}";
+	}
+
+}

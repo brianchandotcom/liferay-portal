@@ -1,0 +1,30 @@
+definition {
+
+	macro addCountry {
+		Variables.assertDefined(parameterList = "${countryName},${countryNumber},${threeLetterISOCode},${twoLetterISOCode}");
+
+		if (!(isSet(creatorEmailAddress))) {
+			var creatorEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(creatorPassword))) {
+			var creatorPassword = "test";
+		}
+
+		var countryStatus = JSONCountrySetter.setStatus(countryStatus = "${countryStatus}");
+
+		JSONCountryAPI._addAccountEntry(
+			billingAllowed = "${billingAllowed}",
+			countryName = "${countryName}",
+			countryNumber = "${countryNumber}",
+			countryPosition = "${countryPosition}",
+			countryStatus = "${countryStatus}",
+			creatorEmailAddress = "${creatorEmailAddress}",
+			creatorPassword = "${creatorPassword}",
+			shippingAllowed = "${shippingAllowed}",
+			subjectToVAT = "${subjectToVAT}",
+			threeLetterISOCode = "${threeLetterISOCode}",
+			twoLetterISOCode = "${twoLetterISOCode}");
+	}
+
+}

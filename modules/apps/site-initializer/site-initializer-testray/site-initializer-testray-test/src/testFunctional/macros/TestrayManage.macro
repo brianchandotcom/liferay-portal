@@ -88,7 +88,7 @@ definition {
 		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 	}
 
-	macro deleteCategory {
+	macro deleteAllCategories {
 		TestrayLayout.clickManageOnSidebar();
 
 		TestrayManage.selectOptionsManage(itemValue = "Categories");
@@ -128,7 +128,7 @@ definition {
 		MenuItem.clickNoError(menuItem = "Delete");
 	}
 
-	macro deleteSpecificCategory {
+	macro deleteCategory {
 		TestrayLayout.clickManageOnSidebar();
 
 		TestrayManage.selectOptionsManage(itemValue = "${selectCategories}");

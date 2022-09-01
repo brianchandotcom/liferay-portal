@@ -20,7 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		TestrayManage.deleteCategory();
+		TestrayManage.deleteAllCategories();
 
 		Testray.tearDownCP();
 
@@ -142,7 +142,7 @@ definition {
 		task ("Add a category, Delete it, and check if the category has been deleted") {
 			TestrayManage.addNewCategory(category = "Environments_4 Category");
 
-			TestrayManage.deleteSpecificCategory(
+			TestrayManage.deleteCategory(
 				nameCategory = "Environments_4 Category",
 				selectCategories = "Categories");
 

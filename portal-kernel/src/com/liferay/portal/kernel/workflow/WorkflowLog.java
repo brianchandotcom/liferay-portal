@@ -41,19 +41,19 @@ public interface WorkflowLog extends WorkflowModel {
 
 	public Date getCreateDate();
 
+	public String getCurrentWorkflowNodeLabel(Locale locale);
+
+	public String getCurrentWorkflowNodeName();
+
 	public long getPreviousRoleId();
-
-	public String getPreviousStateLabel(Locale locale);
-
-	public String getPreviousStateName();
 
 	public long getPreviousUserId();
 
+	public String getPreviousWorkflowNodeLabel(Locale locale);
+
+	public String getPreviousWorkflowNodeName();
+
 	public long getRoleId();
-
-	public String getStateLabel(Locale locale);
-
-	public String getStateName();
 
 	public int getType();
 

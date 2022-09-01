@@ -442,12 +442,14 @@ definition {
 	@priority = "3"
 	test CanOrderCountryByPriority {
 		task ("Given a country is added with a priority higher than 0.0") {
-			CountriesManagement.openCountriesManagementPortlet();
-
-			CountriesManagement.addCountry(
+			JSONCountry.addCountry(
+				billingAllowed = "false",
 				countryName = "ZZ Test",
 				countryNumber = "01",
 				countryPosition = "5.0",
+				countryStatus = "active",
+				shippingAllowed = "false",
+				subjectToVAT = "false",
 				threeLetterISOCode = "ZZZ",
 				twoLetterISOCode = "ZZ");
 		}

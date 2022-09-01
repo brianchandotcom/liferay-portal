@@ -112,6 +112,8 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "user2@liferay.com");
 
+		Refresh();
+
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",

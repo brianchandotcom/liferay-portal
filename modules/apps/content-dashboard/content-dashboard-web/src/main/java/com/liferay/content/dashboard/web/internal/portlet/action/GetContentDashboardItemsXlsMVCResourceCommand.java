@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -45,7 +44,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 
@@ -278,25 +276,21 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 	private SearchResponse _getSearchResponse(
 		int end, ResourceRequest resourceRequest, int start) {
 
-		SearchContext searchContext = new ContentDashboardSearchContextBuilder(
-			_portal.getHttpServletRequest(resourceRequest),
-			_assetCategoryLocalService, _assetVocabularyLocalService
-		).withEnd(
-			end
-		).withSort(
-			new Sort(Field.CREATE_DATE, Sort.LONG_TYPE, false),
-			new Sort(Field.CLASS_NAME_ID, Sort.LONG_TYPE, false),
-			new Sort(Field.CLASS_PK, Sort.LONG_TYPE, false)
-		).withStart(
-			start
-		).build();
-
-		SearchRequest searchRequest =
+		return _searcher.search(
 			_contentDashboardSearchRequestBuilderFactory.builder(
-				searchContext
-			).build();
-
-		return _searcher.search(searchRequest);
+				new ContentDashboardSearchContextBuilder(
+					_portal.getHttpServletRequest(resourceRequest),
+					_assetCategoryLocalService, _assetVocabularyLocalService
+				).withEnd(
+					end
+				).withSort(
+					new Sort(Field.CREATE_DATE, Sort.LONG_TYPE, false),
+					new Sort(Field.CLASS_NAME_ID, Sort.LONG_TYPE, false),
+					new Sort(Field.CLASS_PK, Sort.LONG_TYPE, false)
+				).withStart(
+					start
+				).build()
+			).build());
 	}
 
 	private ContentDashboardItem<?> _toContentDashboardItem(Document document) {

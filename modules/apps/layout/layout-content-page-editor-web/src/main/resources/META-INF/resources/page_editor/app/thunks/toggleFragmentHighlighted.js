@@ -24,6 +24,7 @@ export default function toggleFragmentHighlighted({
 	return (dispatch) => {
 		return FragmentService.toggleFragmentHighlighted({
 			fragmentEntryKey,
+			groupId,
 			highlighted,
 			onNetworkStatus: dispatch,
 		}).then(({highlightedFragments}) => {

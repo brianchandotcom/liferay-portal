@@ -38,10 +38,12 @@ definition {
 	@description = "Automation ID: LPS-148483 | Test Summary: Verify if when the user choose the ERC-003 and clicks on the Analytics Cloud product the url follow the respective page"
 	@priority = "5"
 	test IfAnalyticsCloudUrlFollowsRespectivePage {
+		var baseURL = PropsUtil.get("portal.url");
+
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/group/customer-portal-site/project/#/ERC-003/activation/analytics-cloud");
+			Navigator.openSpecificURL(url = "${baseURL}/group/customer-portal-site/project/#/ERC-003/activation/analytics-cloud");
 		}
 
 		task ("Assert that the URL displays the page of the Analytics Cloud product") {
@@ -54,10 +56,12 @@ definition {
 	@description = "Automation ID: LPS-148477 | Test Summary: Verify if when the user choose the ERC-004 and clicks on the Commerce product the url follow the respective page"
 	@priority = "5"
 	test IfCommerceUrlFollowsRespectivePage {
+		var baseURL = PropsUtil.get("portal.url");
+
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/group/customer-portal-site/project/#/ERC-004/activation/commerce");
+			Navigator.openSpecificURL(url = "${baseURL}/group/customer-portal-site/project/#/ERC-004/activation/commerce");
 		}
 
 		task ("Assert that the URL displays the page of the Commerce product") {
@@ -70,10 +74,12 @@ definition {
 	@description = "Automation ID: LPS-148479 | Test Summary: Verify if when the user choose the ERC-001 and clicks on the DXP Cloud product the url follow the respective page"
 	@priority = "5"
 	test IfDXPCloudUrlFollowsRespectivePage {
+		var baseURL = PropsUtil.get("portal.url");
+
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/group/customer-portal-site/project/#/ERC-001/activation/lxc-sm");
+			Navigator.openSpecificURL(url = "${baseURL}/group/customer-portal-site/project/#/ERC-001/activation/lxc-sm");
 		}
 
 		task ("Assert that the URL displays the page of the LXC-SM product") {
@@ -86,10 +92,12 @@ definition {
 	@description = "Automation ID: LPS-148478 | Test Summary: Verify if when the user choose the ERC-007 and clicks on the DXP product the url follow the respective page"
 	@priority = "5"
 	test IfDXPUrlFollowsRespectivePage {
+		var baseURL = PropsUtil.get("portal.url");
+
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/group/customer-portal-site/project/#/ERC-002/activation/dxp");
+			Navigator.openSpecificURL(url = "${baseURL}/group/customer-portal-site/project/#/ERC-002/activation/dxp");
 		}
 
 		task ("Assert that the URL displays the page of the DXP product") {
@@ -102,10 +110,12 @@ definition {
 	@description = "Automation ID: LPS-148481 | Test Summary: Verify if when the user choose the Riyad Bank - Corporate Website and clicks on the Enterprise Search product the url follow the respective page"
 	@priority = "5"
 	test IfEnterpriseUrlFollowsRespectivePage {
+		var baseURL = PropsUtil.get("portal.url");
+
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/group/customer-portal-site/project/#/ERC-005/activation/enterprise-search");
+			Navigator.openSpecificURL(url = "${baseURL}/group/customer-portal-site/project/#/ERC-005/activation/enterprise-search");
 		}
 
 		task ("Assert that the URL displays the page of the Enterprise Search product") {
@@ -122,10 +132,12 @@ definition {
 
 		// Reason: Partnership page not yet implemented
 
+		var baseURL = PropsUtil.get("portal.url");
+
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/group/customer-portal-site/project/#/ERC-007/activation/partnership");
+			Navigator.openSpecificURL(url = "${baseURL}/group/customer-portal-site/project/#/ERC-007/activation/partnership");
 		}
 
 		task ("Assert that the URL displays the page of the Partnership product") {
@@ -138,10 +150,12 @@ definition {
 	@description = "Automation ID: LPS-148482 | Test Summary: Verify if when the user choose the ERC-005 and clicks on the Portal product the url follow the respective page"
 	@priority = "5"
 	test IfPortalUrlFollowsRespectivePage {
+		var baseURL = PropsUtil.get("portal.url");
+
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/group/customer-portal-site/project/#/ERC-006/activation/portal");
+			Navigator.openSpecificURL(url = "${baseURL}/group/customer-portal-site/project/#/ERC-006/activation/portal");
 		}
 
 		task ("Assert that the URL displays the page of the Portal product") {
@@ -154,10 +168,12 @@ definition {
 	@description = "Automation ID: LPS-148484 | Test Summary: Verify if when the user go back to the Project Listing the URLs get back to normal"
 	@priority = "4"
 	test IfProjectListingURLStillTheSame {
+		var baseURL = PropsUtil.get("portal.url");
+
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/group/customer-portal-site/project/#/ERC-008/activation/lxc-sm");
+			Navigator.openSpecificURL(url = "${baseURL}/group/customer-portal-site/project/#/ERC-008/activation/lxc-sm");
 		}
 
 		task ("Assert that the URL displays the page of the DXP product") {

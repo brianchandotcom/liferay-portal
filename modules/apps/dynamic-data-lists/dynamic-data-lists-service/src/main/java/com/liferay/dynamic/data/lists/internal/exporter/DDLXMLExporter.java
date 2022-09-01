@@ -137,46 +137,6 @@ public class DDLXMLExporter extends BaseDDLExporter {
 		return _ddmFormFieldValueRendererRegistry;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordLocalService(
-		DDLRecordLocalService ddlRecordLocalService) {
-
-		_ddlRecordLocalService = ddlRecordLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetService(
-		DDLRecordSetService ddlRecordSetService) {
-
-		_ddlRecordSetService = ddlRecordSetService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetVersionService(
-		DDLRecordSetVersionService ddlRecordSetVersionService) {
-
-		_ddlRecordSetVersionService = ddlRecordSetVersionService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypeServicesTracker(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
-
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldValueRendererRegistry(
-		DDMFormFieldValueRendererRegistry ddmFormFieldValueRendererRegistry) {
-
-		_ddmFormFieldValueRendererRegistry = ddmFormFieldValueRendererRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStorageEngine(StorageEngine storageEngine) {
-		_storageEngine = storageEngine;
-	}
-
 	private void _addFieldElement(
 		DDMFormFieldRenderedValue ddmFormFieldRenderedValue, Element element,
 		Map.Entry<String, DDMFormField> entry) {
@@ -214,10 +174,19 @@ public class DDLXMLExporter extends BaseDDLExporter {
 		valueElement.addText(String.valueOf(value));
 	}
 
+	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
+
+	@Reference
 	private DDLRecordSetService _ddlRecordSetService;
+
+	@Reference
 	private DDLRecordSetVersionService _ddlRecordSetVersionService;
+
+	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
+	@Reference
 	private DDMFormFieldValueRendererRegistry
 		_ddmFormFieldValueRendererRegistry;
 
@@ -227,6 +196,7 @@ public class DDLXMLExporter extends BaseDDLExporter {
 	@Reference
 	private Language _language;
 
+	@Reference
 	private StorageEngine _storageEngine;
 
 }

@@ -49,7 +49,9 @@ definition {
 	}
 
 	macro changePagination {
-		Click(locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
+		Click(
+			key_numberItems = "${numberItems}",
+			locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
 
 		Click(
 			key_value = "${valuePagination}",
@@ -57,17 +59,19 @@ definition {
 	}
 
 	macro changePaginationInModal {
-		Click(locator1 = "Testray#ITEMS_PER_PAGE_BUTTON_ON_MODAL");
+		Click(
+			key_numberItems = "${numberItems}",
+			locator1 = "Testray#ITEMS_PER_PAGE_BUTTON_MODAL");
 
 		Click(
 			key_value = "${valuePagination}",
 			locator1 = "Testray#ITEMS_PER_PAGE_SELECT");
 	}
 
-	macro clickOnModalNumber {
+	macro clickOnPageNumberModal {
 		Click(
 			key_pageDirection = "${pageNumber}",
-			locator1 = "Testray#NUMBER_MODAL_BUTTON");
+			locator1 = "Testray#NUMBER_PAGE_BUTTON_MODAL");
 	}
 
 	macro clickOnPageNumber {

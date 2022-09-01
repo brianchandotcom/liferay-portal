@@ -11,18 +11,13 @@
 
 <tbody>
 <tr>
+	<td>ITEMS_PER_PAGE_BUTTON_MODAL</td>
+	<td>//div[contains(@class, 'modal-title') and contains(., '')]//ancestor::div//div[contains(@class, 'pagination')]//button[contains(@class, 'dropdown') and contains(.,'${key_numberItems}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ITEMS_PER_PAGE_BUTTON</td>
-	<td>xpath=(//div[contains(@class, 'pagination')]//button[contains(@class, 'dropdown') and contains(.,'')])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ITEMS_PER_PAGE_BUTTON_2</td>
-	<td>xpath=(//div[contains(@class, 'pagination')]//button[contains(@class, 'dropdown') and contains(.,'')])[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ITEMS_PER_PAGE_BUTTON_ON_MODAL</td>
-	<td>xpath=(//div[contains(@class, 'pagination')]//button[contains(@class, 'dropdown') and contains(.,'')])[1]</td>
+	<td>//h5[contains(., '')]//ancestor::div//div[contains(@class, 'pagination')]//button[contains(@class, 'dropdown') and contains(.,'${key_numberItems}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -48,6 +43,11 @@
 <tr>
 	<td>NUMBER_PAGE_BUTTON</td>
 	<td>//button[contains(@class, 'page-link') and contains(text(), "${key_pageNumber}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NUMBER_PAGE_BUTTON_MODAL</td>
+	<td>//div[contains(@class, 'modal-content')]//li[contains(@class, 'page-item') and contains(., '${key_pageDirection}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -118,11 +118,6 @@
 <tr>
 	<td>ELEMENT_REMOTE</td>
 	<td>//div[(@class='dnd-tbody')]//div[contains(@class, 'dnd-td')and contains(., '${key_value}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NUMBER_MODAL_BUTTON</td>
-	<td>//div[contains(@class, 'modal-content')]//li[contains(@class, 'page-item') and contains(., '${key_pageDirection}')]</td>
 	<td></td>
 </tr>
 <tr>

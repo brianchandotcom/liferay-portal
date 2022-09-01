@@ -13,6 +13,8 @@ definition {
 		User.firstLoginPG();
 
 		Testray.createTestraySite(siteName = "Testray 2");
+
+		Refresh();
 	}
 
 	tearDown {
@@ -30,7 +32,7 @@ definition {
 	@description = "This is a test for LPS-157327 - Verify if As an Administrator I should be able to add and delete a Factor Option"
 	@priority = "5"
 	test AdminCanAddAndDeleteFactorOption {
-		task ("Go to Categories on Manage Sidebar and Add Category") {
+		task ("Go to Categories on Manage Sidebar and Add Factor Category") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			TestrayLayout.clickManageOnSidebar();
@@ -40,24 +42,28 @@ definition {
 			TestrayManage.addNewCategory(category = "Environments_2 Factor Category");
 		}
 
-		task ("Go to Options on Manage Sidebar and Add New Option") {
+		task ("Go to Options on Manage Sidebar, Add Factor Option, change pagination and assert the Factor option has been created") {
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Options");
 
 			TestrayManage.createNewOption(
-				categorie = "Environments_2 Factor Category",
-				key_value = "Environments_2 Factor Option");
+				category = "Environments_2 Factor Category",
+				option = "Environments_2 Factor Option");
+
+			Testray.changePaginationInModal(
+				numberItems = "20",
+				valuePagination = "150");
+
+			Testray.clickOnPageNumberModal(pageNumber = "2");
+
+			TestrayManage.assertName(name = "Environments_2 Factor Option");
 		}
 
-		task ("Delete Option, Go to Options and state if deleted") {
+		task ("Delete Factor Option and assert it deleted") {
 			TestrayManage.deleteOption(nameOptions = "Environments_2 Factor Option");
 
-			TestrayManage.deleteCategory();
-
 			TestrayManage.assertOptionNotPresent(key_title = "Environments_2 Factor Option");
-
-			TestrayManage.assertNameNotPresent(name = "Environments_2 Factor Category");
 		}
 	}
 
@@ -92,18 +98,24 @@ definition {
 			TestrayManage.addNewCategory(category = "Environments_2 Category");
 		}
 
-		task ("Go to Options on Manage Sidebar, Add Options and assert the new option has been created") {
+		task ("Go to Options on Manage Sidebar, Add Options") {
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Options");
 
 			TestrayManage.createNewOption(
-				categorie = "Environments_2 Category",
-				key_value = "Environments_2 Option");
+				category = "Environments_2 Category",
+				option = "Environments_2 Option");
+		}
+
+		task ("Change pagination and assert the new option has been created") {
+			Testray.changePaginationInModal(
+				numberItems = "20",
+				valuePagination = "150");
+
+			Testray.clickOnPageNumberModal(pageNumber = "2");
 
 			TestrayManage.assertName(name = "Environments_2 Option");
-
-			TestrayManage.assertName(name = "Environments_2 Category");
 		}
 	}
 
@@ -130,7 +142,9 @@ definition {
 		task ("Add a category, Delete it, and check if the category has been deleted") {
 			TestrayManage.addNewCategory(category = "Environments_4 Category");
 
-			TestrayManage.deleteCategory();
+			TestrayManage.deleteSpecificCategory(
+				selectCategories = "Categories",
+				nameCategory = "Environments_4 Category");
 
 			TestrayManage.assertNameNotPresent(name = "Environments_4 Category");
 		}
@@ -177,18 +191,26 @@ definition {
 			TestrayManage.selectOptionsManage(itemValue = "Options");
 
 			TestrayManage.createNewOption(
-				categorie = "Environments_8 Category A",
-				key_value = "Environments_8 Option");
+				category = "Environments_8 Category A",
+				option = "Environments_8 Option");
 		}
 
-		task ("Check if you can edit the Option by changing the Category") {
-			TestrayManage.editNewOptionName(
-				categorie = "Environments_8 Category B",
-				key_value = "Environments_8 Option");
+		task ("Change pagination and edit new Option by changing the Category") {
+			Testray.changePaginationInModal(
+				numberItems = "20",
+				valuePagination = "150");
 
+			Testray.clickOnPageNumberModal(pageNumber = "2");
+
+			TestrayManage.editNewOptionName(
+				category = "Environments_8 Category B",
+				option = "Environments_8 Option");
+		}
+
+		task ("Change the pagination and confirm that the option has been changed with a new category") {
 			TestrayManage.assertNameCategoryInOptions(category = "Environments_8 Category B");
 
-			TestrayManage.assertCategorieNotPresent(key_title = "Environments_8 Category A");
+			TestrayManage.assertCategoryNotPresent(key_title = "Environments_8 Category A");
 
 			TestrayManage.assertName(name = "Environments_8 Option");
 		}
@@ -207,22 +229,28 @@ definition {
 			TestrayManage.addNewCategory(category = "Environments_7 Category");
 		}
 
-		task ("Create the new Options and then edit and state if the name has changed") {
+		task ("Go to Categories on Manage Sidebar and Create the new Options") {
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Options");
 
 			TestrayManage.createNewOption(
-				categorie = "Environments_7 Category",
-				key_value = "Environments_7 Option");
+				category = "Environments_7 Category",
+				option = "Environments_7 Option");
+		}
+
+		task ("Change the pagination and then edit and state if the name has Edited") {
+			Testray.changePaginationInModal(
+				numberItems = "20",
+				valuePagination = "150");
+
+			Testray.clickOnPageNumberModal(pageNumber = "2");
 
 			TestrayManage.editNewOptionName(
-				categorie = "Environments_7 Category",
-				key_value = "Environments_7 Option Edited");
+				category = "Environments_7 Category",
+				option = "Environments_7 Option Edited");
 
 			TestrayManage.assertName(name = "Environments_7 Option Edited");
-
-			TestrayManage.assertName(name = "Environments_7 Category");
 		}
 	}
 

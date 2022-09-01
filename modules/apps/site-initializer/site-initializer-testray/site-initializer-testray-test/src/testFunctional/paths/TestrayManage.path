@@ -66,7 +66,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_CATEGORIES_IN_OPTIONS</td>
+	<td>SELECT_CATEGORY_IN_OPTIONS</td>
 	<td>//select[contains(@id, 'Category')]</td>
 	<td></td>
 </tr>

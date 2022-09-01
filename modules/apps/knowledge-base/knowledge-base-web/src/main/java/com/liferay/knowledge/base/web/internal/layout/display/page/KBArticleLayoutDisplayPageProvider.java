@@ -1,0 +1,89 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.knowledge.base.web.internal.layout.display.page;
+
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Adolfo Pérez
+ */
+@Component(immediate = true, service = LayoutDisplayPageProvider.class)
+public class KBArticleLayoutDisplayPageProvider
+	implements LayoutDisplayPageProvider<KBArticle> {
+
+	@Override
+	public String getClassName() {
+		return KBArticle.class.getName();
+	}
+
+	@Override
+	public LayoutDisplayPageObjectProvider<KBArticle>
+		getLayoutDisplayPageObjectProvider(
+			InfoItemReference infoItemReference) {
+
+		try {
+			KBArticle kbArticle = _kbArticleLocalService.fetchKBArticle(
+				infoItemReference.getClassPK());
+
+			if ((kbArticle == null) || kbArticle.isDraft()) {
+				return null;
+			}
+
+			return new KBArticleLayoutDisplayPageObjectProvider(kbArticle);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	@Override
+	public LayoutDisplayPageObjectProvider<KBArticle>
+		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
+
+		try {
+			KBArticle kbArticle =
+				_kbArticleLocalService.fetchKBArticleByUrlTitle(
+					groupId, 0, urlTitle);
+
+			if (kbArticle == null) {
+				return null;
+			}
+
+			return new KBArticleLayoutDisplayPageObjectProvider(kbArticle);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	@Override
+	public String getURLSeparator() {
+		return FriendlyURLResolverConstants.
+			URL_SEPARATOR_KNOWLEDGE_BASE_ARTICLE;
+	}
+
+	@Reference
+	private KBArticleLocalService _kbArticleLocalService;
+
+}

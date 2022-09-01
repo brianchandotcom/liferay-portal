@@ -29,6 +29,8 @@ public class FriendlyURLResolverConstants {
 
 	public static final String URL_SEPARATOR_JOURNAL_ARTICLE = "/w/";
 
+	public static final String URL_SEPARATOR_KNOWLEDGE_BASE_ARTICLE = "/k/";
+
 	public static final String URL_SEPARATOR_OBJECT_ENTRY = "/l/";
 
 	public static final String URL_SEPARATOR_PORTAL_RESERVED =

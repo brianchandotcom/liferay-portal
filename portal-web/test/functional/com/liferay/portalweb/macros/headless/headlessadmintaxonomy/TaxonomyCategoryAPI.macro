@@ -18,7 +18,9 @@ definition {
 		return "${curl}";
 	}
 
-	macro _curlTaxonomyCategory {
+	macro _curlTaxonomyCategoryByErc {
+		Variables.assertDefined(parameterList = "${externalReferenceCode},${taxonomyVocabularyId}");
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -63,9 +65,7 @@ definition {
 	}
 
 	macro deleteTaxonomyCategoryByErc {
-		Variables.assertDefined(parameterList = "${externalReferenceCode},${taxonomyVocabularyId}");
-
-		var curl = TaxonomyCategoryAPI._curlTaxonomyCategory(
+		var curl = TaxonomyCategoryAPI._curlTaxonomyCategoryByErc(
 			externalReferenceCode = "${externalReferenceCode}",
 			taxonomyVocabularyId = "${taxonomyVocabularyId}");
 
@@ -89,9 +89,7 @@ definition {
 	}
 
 	macro getTaxonomyCategoryByErc {
-		Variables.assertDefined(parameterList = "${externalReferenceCode},${taxonomyVocabularyId}");
-
-		var curl = TaxonomyCategoryAPI._curlTaxonomyCategory(
+		var curl = TaxonomyCategoryAPI._curlTaxonomyCategoryByErc(
 			externalReferenceCode = "${externalReferenceCode}",
 			taxonomyVocabularyId = "${taxonomyVocabularyId}");
 
@@ -113,14 +111,10 @@ definition {
 	}
 
 	macro updateTaxonomyCategoryByErc {
-		Variables.assertDefined(parameterList = "${externalReferenceCode},${taxonomyVocabularyId},${name}");
-
-		var curl = TaxonomyCategoryAPI._curlTaxonomyCategory(
+		var curl = TaxonomyCategoryAPI._curlTaxonomyCategoryByErc(
 			externalReferenceCode = "${externalReferenceCode}",
 			taxonomyVocabularyId = "${taxonomyVocabularyId}");
-		var body = '''-d {
-				"name": "${name}"
-			}''';
+		var body = '''-d {"name": "${name}"}''';
 
 		var curl = StringUtil.add("${curl}", "${body}", " ");
 

@@ -35,6 +35,7 @@ page import="com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMe
 page import="com.liferay.oauth.client.persistence.exception.OAuthClientEntryAuthRequestParametersJSONException" %><%@
 page import="com.liferay.oauth.client.persistence.exception.OAuthClientEntryAuthServerWellKnownURIException" %><%@
 page import="com.liferay.oauth.client.persistence.exception.OAuthClientEntryInfoJSONException" %><%@
+page import="com.liferay.oauth.client.persistence.exception.OAuthClientEntryOIDCUserInfoMapperJSONException" %><%@
 page import="com.liferay.oauth.client.persistence.exception.OAuthClientEntryTokenRequestParametersJSONException" %><%@
 page import="com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata" %><%@
 page import="com.liferay.oauth.client.persistence.model.OAuthClientEntry" %><%@

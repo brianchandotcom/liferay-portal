@@ -84,13 +84,7 @@ public class DDLDisplayAddPortletProvider
 			"recordSetId", String.valueOf(record.getRecordSetId()));
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
 }

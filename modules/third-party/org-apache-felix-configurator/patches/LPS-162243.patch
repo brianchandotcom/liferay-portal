@@ -1,0 +1,19 @@
+diff --git a/org/apache/felix/configurator/impl/model/ConfigList.java b/org/apache/felix/configurator/impl/model/ConfigList.java
+index 8d43696947a0..f5465e5e1075 100644
+--- a/org/apache/felix/configurator/impl/model/ConfigList.java
++++ b/org/apache/felix/configurator/impl/model/ConfigList.java
+@@ -93,7 +93,7 @@ public class ConfigList implements Serializable, Iterable<Config> {
+      * @param value New value.
+      */
+     public void setHasChanges(final boolean value) {
+-        this.hasChanges = hasChanges;
++        this.hasChanges = value;
+     }
+ 
+     /**
+@@ -194,3 +194,4 @@ public class ConfigList implements Serializable, Iterable<Config> {
+                 + hasChanges + ", lastInstalled=" + lastInstalled + "]";
+     }
+ }
++/* @generated */
+\ No newline at end of file

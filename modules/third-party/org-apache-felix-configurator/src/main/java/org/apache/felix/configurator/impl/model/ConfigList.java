@@ -93,7 +93,7 @@ public class ConfigList implements Serializable, Iterable<Config> {
      * @param value New value.
      */
     public void setHasChanges(final boolean value) {
-        this.hasChanges = hasChanges;
+        this.hasChanges = value;
     }
 
     /**
@@ -194,3 +194,4 @@ public class ConfigList implements Serializable, Iterable<Config> {
                 + hasChanges + ", lastInstalled=" + lastInstalled + "]";
     }
 }
+/* @generated */

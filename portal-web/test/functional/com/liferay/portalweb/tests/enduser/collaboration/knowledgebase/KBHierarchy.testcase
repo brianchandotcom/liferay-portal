@@ -530,6 +530,10 @@ definition {
 			kbFolderDescription = "KB Folder 1",
 			kbFolderName = "KB Folder 1");
 
+		Refresh();
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
 		JSONKnowledgeBase.addkBArticle(
 			folderName = "KB Folder 1",
 			groupName = "Guest",
@@ -541,8 +545,6 @@ definition {
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content 2",
 			kbArticleTitle = "Knowledge Base Article Title 2");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.gotoCP(kbFolderName = "KB Root Folder");
 

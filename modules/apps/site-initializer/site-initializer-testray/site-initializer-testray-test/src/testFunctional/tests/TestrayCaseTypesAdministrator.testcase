@@ -34,11 +34,11 @@ definition {
 	test AdminCanAddCaseTypes {
 		task ("Go to Case Types on Manage Sidebar and change pagination") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
-		
+
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Case Types");
-		
+
 			Testray.changePaginationInModal(
 				numberItems = "20",
 				valuePagination = "150");
@@ -56,11 +56,11 @@ definition {
 	test AdminCanDeleteCaseTypes {
 		task ("Go to Case Types on Manage Sidebar and change pagination") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
-		
+
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Case Types");
-		
+
 			Testray.changePaginationInModal(
 				numberItems = "20",
 				valuePagination = "150");
@@ -80,11 +80,11 @@ definition {
 	test AdminCanEditCaseTypes {
 		task ("Go to Case Types on Manage Sidebar and change pagination") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
-		
+
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Case Types");
-		
+
 			Testray.changePaginationInModal(
 				numberItems = "20",
 				valuePagination = "150");
@@ -92,7 +92,7 @@ definition {
 
 		task ("Create a new Case Type, Edit Case Type and asserts that it has been edited") {
 			TestrayManage.createNewCaseTypes(caseName = "Case_Type");
-		
+
 			TestrayManage.editNewName(
 				valueName = "Case_Type",
 				valueType = "Case_Type_Edited");

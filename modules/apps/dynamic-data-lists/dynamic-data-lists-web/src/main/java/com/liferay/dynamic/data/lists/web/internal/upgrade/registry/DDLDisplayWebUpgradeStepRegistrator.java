@@ -41,21 +41,10 @@ public class DDLDisplayWebUpgradeStepRegistrator
 				_resourcePermissionLocalService));
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletPreferencesLocalService(
-		PortletPreferencesLocalService portletPreferencesLocalService) {
-
-		_portletPreferencesLocalService = portletPreferencesLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourcePermissionLocalService(
-		ResourcePermissionLocalService resourcePermissionLocalService) {
-
-		_resourcePermissionLocalService = resourcePermissionLocalService;
-	}
-
+	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

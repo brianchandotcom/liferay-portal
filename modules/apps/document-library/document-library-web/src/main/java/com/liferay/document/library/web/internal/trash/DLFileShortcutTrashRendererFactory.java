@@ -43,13 +43,7 @@ public class DLFileShortcutTrashRendererFactory
 		return new DLFileShortcutTrashRenderer(dlFileShortcut, _trashHelper);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLFileShortcutLocalService(
-		DLFileShortcutLocalService dlFileShortcutLocalService) {
-
-		_dlFileShortcutLocalService = dlFileShortcutLocalService;
-	}
-
+	@Reference
 	private DLFileShortcutLocalService _dlFileShortcutLocalService;
 
 	@Reference

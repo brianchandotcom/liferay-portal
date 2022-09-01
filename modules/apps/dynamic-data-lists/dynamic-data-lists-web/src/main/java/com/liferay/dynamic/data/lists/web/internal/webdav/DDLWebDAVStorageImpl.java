@@ -103,25 +103,6 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			_portal.getClassNameId(DDLRecordSet.class));
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMWebDav(DDMWebDAV ddmWebDAV) {
-		_ddmWebDAV = ddmWebDAV;
-	}
-
 	private List<Resource> _getFolders(WebDAVRequest webDAVRequest)
 		throws Exception {
 
@@ -174,8 +155,13 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		return resources;
 	}
 
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
 	private DDMWebDAV _ddmWebDAV;
 
 	@Reference

@@ -14,8 +14,12 @@
 
 package com.liferay.portal.scripting.groovy.internal;
 
+import com.liferay.portal.kernel.io.Deserializer;
+import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import groovy.lang.GroovyRuntimeException;
 
 import java.util.Collections;
 import java.util.Map;
@@ -41,6 +45,25 @@ public class GroovyScriptingExecutorTest {
 		_execute(
 			Collections.singletonMap("variable", "string"),
 			Collections.emptySet(), "binding-input");
+	}
+
+	@Test
+	public void testGroovyRuntimeExceptionSerialization() throws Exception {
+		try {
+			_execute(
+				Collections.emptyMap(), Collections.emptySet(),
+				"missing-method-exception");
+
+			Assert.fail("Should throw GroovyRuntimeException");
+		}
+		catch (GroovyRuntimeException groovyRuntimeException) {
+			Assert.assertEquals(
+				"No signature of method: static Test.missingMethod() is " +
+					"applicable for argument types: () values: []",
+				groovyRuntimeException.getMessage());
+
+			_checkExceptionSerialization(groovyRuntimeException);
+		}
 	}
 
 	@Test
@@ -71,6 +94,18 @@ public class GroovyScriptingExecutorTest {
 		}
 		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
+	}
+
+	private void _checkExceptionSerialization(Exception exception)
+		throws Exception {
+
+		Serializer serializer = new Serializer();
+
+		serializer.writeObject(exception);
+
+		Deserializer deserializer = new Deserializer(serializer.toByteBuffer());
+
+		deserializer.readObject();
 	}
 
 	private Map<String, Object> _execute(

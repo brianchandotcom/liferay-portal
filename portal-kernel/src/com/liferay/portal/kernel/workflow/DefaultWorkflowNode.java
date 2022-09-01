@@ -17,5 +17,5 @@ package com.liferay.portal.kernel.workflow;
 /**
  * @author Feliphe Marinho
  */
-public class DefaultWorkflowNode extends BaseDefaultWorkflowNode {
+public class DefaultWorkflowNode extends BaseWorkflowNode {
 }

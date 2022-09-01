@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * @author Feliphe Marinho
  */
-public abstract class BaseDefaultWorkflowNode implements WorkflowNode {
+public abstract class BaseWorkflowNode implements WorkflowNode {
 
 	@Override
 	public String getLabel(Locale locale) {

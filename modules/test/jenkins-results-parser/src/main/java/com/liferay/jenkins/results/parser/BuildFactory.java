@@ -27,6 +27,12 @@ import java.util.regex.Matcher;
 public class BuildFactory {
 
 	public static Build newBuild(String url, Build parentBuild) {
+		return newBuild(url, parentBuild, null);
+	}
+
+	public static Build newBuild(
+		String url, Build parentBuild, String axisName) {
+
 		url = JenkinsResultsParserUtil.getLocalURL(url);
 
 		Matcher matcher = _buildURLMultiPattern.find(url);
@@ -38,10 +44,21 @@ public class BuildFactory {
 
 		String axisVariable = matcher.group("axisVariable");
 
-		if (axisVariable != null) {
-			String jobVariant = null;
+		String jobVariant = null;
 
-			if (parentBuild != null) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(axisName)) {
+			if (axisName.contains("/")) {
+				jobVariant = axisName.substring(0, axisName.lastIndexOf("/"));
+			}
+			else {
+				jobVariant = axisName;
+			}
+		}
+
+		if (axisVariable != null) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
+				(parentBuild != null)) {
+
 				jobVariant = parentBuild.getJobVariant();
 			}
 
@@ -72,8 +89,6 @@ public class BuildFactory {
 		}
 
 		if (jobName.contains("-downstream")) {
-			String jobVariant = null;
-
 			String queryString = matcher.group("queryString");
 
 			if ((queryString != null) && queryString.contains("JOB_VARIANT")) {

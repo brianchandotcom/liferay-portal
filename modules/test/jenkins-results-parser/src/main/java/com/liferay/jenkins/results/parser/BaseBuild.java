@@ -59,13 +59,15 @@ import org.json.JSONObject;
  */
 public abstract class BaseBuild implements Build {
 
-	@Override
-	public void addDownstreamBuilds(String... urls) {
+	public void addDownstreamBuilds(Map<String, String> urlAxisNameMap) {
 		final Build thisBuild = this;
 
-		List<Callable<Build>> callables = new ArrayList<>(urls.length);
+		List<Callable<Build>> callables = new ArrayList<>(
+			urlAxisNameMap.size());
 
-		for (String url : urls) {
+		for (Map.Entry<String, String> urlEntry : urlAxisNameMap.entrySet()) {
+			String url = urlEntry.getKey();
+
 			try {
 				url = JenkinsResultsParserUtil.getLocalURL(
 					JenkinsResultsParserUtil.decode(url));
@@ -76,6 +78,7 @@ public abstract class BaseBuild implements Build {
 			}
 
 			if (!hasBuildURL(url)) {
+				final String axisName = urlEntry.getValue();
 				final String buildURL = url;
 
 				Callable<Build> callable = new Callable<Build>() {
@@ -83,7 +86,8 @@ public abstract class BaseBuild implements Build {
 					@Override
 					public Build call() {
 						try {
-							return BuildFactory.newBuild(buildURL, thisBuild);
+							return BuildFactory.newBuild(
+								buildURL, thisBuild, axisName);
 						}
 						catch (RuntimeException runtimeException) {
 							if (!isFromArchive()) {
@@ -107,6 +111,17 @@ public abstract class BaseBuild implements Build {
 			callables, true, getExecutorService());
 
 		downstreamBuilds.addAll(parallelExecutor.execute());
+	}
+
+	@Override
+	public void addDownstreamBuilds(String... urls) {
+		Map<String, String> urlAxisNameMap = new HashMap<>();
+
+		for (String url : urls) {
+			urlAxisNameMap.put(url, null);
+		}
+
+		addDownstreamBuilds(urlAxisNameMap);
 	}
 
 	public abstract void addTimelineData(BaseBuild.TimelineData timelineData);

@@ -104,6 +104,49 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommandTest {
 		}
 	}
 
+	@Test
+	public void testUpdateFragmentsHighlightedConfigurationAssertOwnerByUser()
+		throws Exception {
+
+		try {
+			User user1 = UserTestUtil.addGroupAdminUser(_group);
+
+			ServiceContextThreadLocal.pushServiceContext(
+				ServiceContextTestUtil.getServiceContext(
+					_group, user1.getUserId()));
+
+			_assertUpdateHighlightedFragment(
+				new String[] {"BASIC_COMPONENT-heading"},
+				"BASIC_COMPONENT-heading", true, user1);
+
+			User user2 = UserTestUtil.addGroupAdminUser(_group);
+
+			ServiceContextThreadLocal.pushServiceContext(
+				ServiceContextTestUtil.getServiceContext(
+					_group, user2.getUserId()));
+
+			_assertUpdateHighlightedFragment(
+				new String[] {"BASIC_COMPONENT-html"}, "BASIC_COMPONENT-html",
+				true, user2);
+
+			_assertUpdateHighlightedFragment(
+				new String[0], "BASIC_COMPONENT-html", false, user2);
+
+			ServiceContextThreadLocal.pushServiceContext(
+				ServiceContextTestUtil.getServiceContext(
+					_group, user1.getUserId()));
+
+			_assertUpdateHighlightedFragment(
+				new String[] {
+					"BASIC_COMPONENT-heading", "BASIC_COMPONENT-html"
+				},
+				"BASIC_COMPONENT-html", true, user1);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
 	private void _assertUpdateHighlightedFragment(
 			String[] expectedHighlightedFragmentEntryKeys,
 			String fragmentEntryKey, boolean highlighted, User user)

@@ -58,11 +58,7 @@ public class RevertRecordMVCActionCommand extends BaseMVCActionCommand {
 		_ddlRecordService.revertRecord(recordId, version, serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordService(DDLRecordService ddlRecordService) {
-		_ddlRecordService = ddlRecordService;
-	}
-
+	@Reference
 	private DDLRecordService _ddlRecordService;
 
 }

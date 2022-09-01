@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BODY_FIELD_ID</td>
+	<td>//div[contains(@id,'cke')][contains(@id,'${bodyFieldId}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_FIELD_SOURCE_ON</td>
 	<td>//div[contains(@class,'cke_contents')]/div[contains(@class,'CodeMirror cm-s-default')]</td>
 	<td></td>

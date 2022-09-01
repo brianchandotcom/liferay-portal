@@ -1,0 +1,61 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+    @description = "Automation ID: LPS-150832 | Test Summary: Verify if the text box search filters by first name"
+    @priority = "5"
+    test VerifyTheSearchFiltersByFirstName {
+        // TODO LPS-150832 VerifyTheSearchFiltersByFirstName pending implementation
+    }
+
+    @description = "Automation ID: LPS-150833 | Test Summary: Verify if in the text box search it filters by last name"
+    @priority = "4"
+    test VerifyTheSearchFiltersByLastName {
+        // TODO LPS-150833 VerifyTheSearchFiltersByLastName pending implementation
+    }
+
+    @description = "Automation ID: LPS-150834 | Test Summary: Verify if in the text box search it filters by email"
+    @priority = "4"
+    test VerifyTheSearchFiltersByEmail {
+        // TODO LPS-150834 VerifyTheSearchFiltersByEmail pending implementation
+    }
+
+    @description = "Automation ID: LPS-150835 | Test Summary: Verify if no results are found show an error message"
+    @priority = "4"
+    test VerifyTheErrorMessageWhenNoResultsAreFound {
+        // TODO LPS-150835 VerifyTheErrorMessageWhenNoResultsAreFound pending implementation
+    }
+}

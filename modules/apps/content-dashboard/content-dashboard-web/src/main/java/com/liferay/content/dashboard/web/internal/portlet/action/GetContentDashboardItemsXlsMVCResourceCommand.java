@@ -283,14 +283,13 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			_assetCategoryLocalService, _assetVocabularyLocalService
 		).withEnd(
 			end
+		).withSort(
+			new Sort(Field.CREATE_DATE, Sort.LONG_TYPE, false),
+			new Sort(Field.CLASS_NAME_ID, Sort.LONG_TYPE, false),
+			new Sort(Field.CLASS_PK, Sort.LONG_TYPE, false)
 		).withStart(
 			start
 		).build();
-
-		searchContext.setSorts(
-			new Sort(Field.CREATE_DATE, Sort.LONG_TYPE, false),
-			new Sort(Field.CLASS_NAME_ID, Sort.LONG_TYPE, false),
-			new Sort(Field.CLASS_PK, Sort.LONG_TYPE, false));
 
 		SearchRequest searchRequest =
 			_contentDashboardSearchRequestBuilderFactory.builder(

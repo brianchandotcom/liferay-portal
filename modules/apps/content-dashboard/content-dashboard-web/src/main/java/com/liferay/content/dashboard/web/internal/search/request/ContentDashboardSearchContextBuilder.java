@@ -176,7 +176,7 @@ public class ContentDashboardSearchContextBuilder {
 		searchContext.setIncludeInternalAssetCategories(true);
 		searchContext.setIncludeStagingGroups(Boolean.FALSE);
 
-		if (_sort != null) {
+		if (ArrayUtil.isNotEmpty(_sort)) {
 			searchContext.setSorts(_sort);
 		}
 
@@ -193,7 +193,7 @@ public class ContentDashboardSearchContextBuilder {
 		return this;
 	}
 
-	public ContentDashboardSearchContextBuilder withSort(Sort sort) {
+	public ContentDashboardSearchContextBuilder withSort(Sort... sort) {
 		_sort = sort;
 
 		return this;
@@ -365,7 +365,7 @@ public class ContentDashboardSearchContextBuilder {
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private Integer _end;
 	private final HttpServletRequest _httpServletRequest;
-	private Sort _sort;
+	private Sort[] _sort;
 	private Integer _start;
 
 	private static class AssetCategoryIds {

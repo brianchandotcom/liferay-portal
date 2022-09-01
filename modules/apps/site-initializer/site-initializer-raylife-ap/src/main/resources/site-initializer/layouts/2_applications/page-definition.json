@@ -115,6 +115,13 @@
 											},
 											"fragmentFields": [
 												{
+													"id": "tab-title-${i+1}",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
 													"id": "tab-title-2",
 													"value": {
 														"fragmentLink": {
@@ -474,11 +481,10 @@
 																							{
 																								"definition": {
 																									"fragment": {
-																										"key": "fake-content"
+																										"key": "applications-new-submissions"
 																									},
 																									"fragmentConfig": {
-																										"fakeContentId": "fake content",
-																										"height": "257px"
+																										"textColor": ""
 																									},
 																									"fragmentFields": [
 																									],

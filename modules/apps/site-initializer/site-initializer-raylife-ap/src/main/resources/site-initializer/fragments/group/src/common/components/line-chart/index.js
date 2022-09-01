@@ -23,6 +23,7 @@ const LineChart = ({
 	axispaddingleft = 0.1,
 	axispaddingright = 0.5,
 	chartData,
+	hasPersonalizedTooltip = false,
 	height = 150,
 	patternColor = ['#4BC286'],
 	pointRadius = 1.5,
@@ -71,7 +72,11 @@ const LineChart = ({
 
 								const value = data[0].value.toFixed(1);
 
-								return `<div class="line-chart-tooltip w-100 bg-neutral-0 d-flex font-weight-bold rounded-sm p-2"><span class="d-flex font-weight-normal mr-2 w-100">${title}</span> $${value}</div>`;
+								const formatedValue = hasPersonalizedTooltip
+									? value
+									: `$${value}`;
+
+								return `<div class="line-chart-tooltip w-100 bg-neutral-0 d-flex font-weight-bold rounded-sm p-2"><span class="d-flex font-weight-normal mr-2 w-100">${title}</span> ${formatedValue}</div>`;
 							},
 						}}
 					/>

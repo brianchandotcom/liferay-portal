@@ -395,15 +395,12 @@ public class JSONServerServlet extends HttpServlet {
 		private Request(HttpServletRequest httpServletRequest)
 			throws IOException {
 
-			String path;
+			String path = httpServletRequest.getPathInfo();
 
-			if (httpServletRequest.getQueryString() == null) {
-				path = httpServletRequest.getPathInfo();
-			}
-			else {
-				path =
-					httpServletRequest.getPathInfo() + "?" +
-						httpServletRequest.getQueryString();
+			String queryString = httpServletRequest.getQueryString();
+
+			if ((queryString != null) && !queryString.isEmpty()) {
+				path = StringBundler.concat(path, "?", queryString);
 			}
 
 			List<String> parts = StringUtil.split(path, '/');

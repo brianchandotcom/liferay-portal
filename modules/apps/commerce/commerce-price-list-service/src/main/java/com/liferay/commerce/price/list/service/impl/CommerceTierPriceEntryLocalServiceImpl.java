@@ -31,7 +31,7 @@ import com.liferay.commerce.price.list.util.comparator.CommerceTierPriceEntryMin
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -77,10 +76,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alessio Antonio Rendina
  * @author Zoltán Takács
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.price.list.model.CommerceTierPriceEntry",
+	service = AopService.class
+)
 public class CommerceTierPriceEntryLocalServiceImpl
 	extends CommerceTierPriceEntryLocalServiceBaseImpl {
 
@@ -1045,16 +1052,16 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceTierPriceEntryLocalServiceImpl.class);
 
-	@BeanReference(type = CommercePriceEntryLocalService.class)
+	@Reference
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
 
-	@BeanReference(type = CommercePriceEntryPersistence.class)
+	@Reference
 	private CommercePriceEntryPersistence _commercePriceEntryPersistence;
 
-	@ServiceReference(type = ExpandoRowLocalService.class)
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

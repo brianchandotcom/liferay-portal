@@ -52,7 +52,7 @@ import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -96,7 +96,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -109,11 +108,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.LongStream;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  * @author Zoltán Takács
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.price.list.model.CommercePriceList",
+	service = AopService.class
+)
 public class CommercePriceListLocalServiceImpl
 	extends CommercePriceListLocalServiceBaseImpl {
 
@@ -320,15 +329,6 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		_portalCache =
-			(PortalCache<String, CommercePriceList>)_multiVMPool.getPortalCache(
-				"PRICE_LISTS", false, true);
-	}
-
-	@Override
 	public void checkCommercePriceLists() throws PortalException {
 		checkCommercePriceListsByDisplayDate();
 		checkCommercePriceListsByExpirationDate();
@@ -377,13 +377,6 @@ public class CommercePriceListLocalServiceImpl
 			commercePriceListLocalService.forceDeleteCommercePriceList(
 				commercePriceList);
 		}
-	}
-
-	@Override
-	public void destroy() {
-		super.destroy();
-
-		_multiVMPool.removePortalCache(_portalCache.getPortalCacheName());
 	}
 
 	@Override
@@ -1377,6 +1370,13 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceListPersistence.update(commercePriceList);
 	}
 
+	@Activate
+	protected void activate() {
+		_portalCache =
+			(PortalCache<String, CommercePriceList>)_multiVMPool.getPortalCache(
+				"PRICE_LISTS", false, true);
+	}
+
 	protected SearchContext buildSearchContext(
 		long companyId, long groupId, long commerceAccountId,
 		long[] commerceAccountGroupIds) {
@@ -1508,6 +1508,11 @@ public class CommercePriceListLocalServiceImpl
 					new HashMap<String, Serializable>());
 			}
 		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_multiVMPool.removePortalCache(_portalCache.getPortalCacheName());
 	}
 
 	protected void doReindex(long commercePriceListId) throws PortalException {
@@ -1868,60 +1873,58 @@ public class CommercePriceListLocalServiceImpl
 	private static final CommercePriceList _dummyCommercePriceList =
 		ProxyFactory.newDummyInstance(CommercePriceList.class);
 
-	@ServiceReference(type = CommerceChannelAccountEntryRelLocalService.class)
+	@Reference
 	private CommerceChannelAccountEntryRelLocalService
 		_commerceChannelAccountEntryRelLocalService;
 
-	@ServiceReference(type = CommerceCurrencyLocalService.class)
+	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
-	@BeanReference(type = CommercePriceEntryLocalService.class)
+	@Reference
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
 
-	@BeanReference(type = CommercePriceEntryPersistence.class)
+	@Reference
 	private CommercePriceEntryPersistence _commercePriceEntryPersistence;
 
-	@BeanReference(type = CommercePriceListAccountRelLocalService.class)
+	@Reference
 	private CommercePriceListAccountRelLocalService
 		_commercePriceListAccountRelLocalService;
 
-	@BeanReference(type = CommercePriceListChannelRelLocalService.class)
+	@Reference
 	private CommercePriceListChannelRelLocalService
 		_commercePriceListChannelRelLocalService;
 
-	@BeanReference(
-		type = CommercePriceListCommerceAccountGroupRelLocalService.class
-	)
+	@Reference
 	private CommercePriceListCommerceAccountGroupRelLocalService
 		_commercePriceListCommerceAccountGroupRelLocalService;
 
-	@BeanReference(type = CommercePriceListDiscountRelLocalService.class)
+	@Reference
 	private CommercePriceListDiscountRelLocalService
 		_commercePriceListDiscountRelLocalService;
 
-	@BeanReference(type = CommercePriceListOrderTypeRelLocalService.class)
+	@Reference
 	private CommercePriceListOrderTypeRelLocalService
 		_commercePriceListOrderTypeRelLocalService;
 
-	@ServiceReference(type = CommercePriceModifierLocalService.class)
+	@Reference
 	private CommercePriceModifierLocalService
 		_commercePriceModifierLocalService;
 
-	@ServiceReference(type = ExpandoRowLocalService.class)
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
-	@ServiceReference(type = MultiVMPool.class)
+	@Reference
 	private MultiVMPool _multiVMPool;
 
 	private PortalCache<String, CommercePriceList> _portalCache;
 
-	@ServiceReference(type = ResourceLocalService.class)
+	@Reference
 	private ResourceLocalService _resourceLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
-	@ServiceReference(type = WorkflowInstanceLinkLocalService.class)
+	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

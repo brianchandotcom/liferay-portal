@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MOCKMOCK_HTML_BODY_FORMATTED_FIELD_DIFF</td>
+	<td>//div[@name='bodyHTML_Formatted']//div[@class='well']//span[contains(@changeid,'${changeType}-diff')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOCKMOCK_NO_EMAIL_IN_QUEUE</td>
 	<td>//h2[contains(.,'No emails in queue')]</td>
 	<td></td>

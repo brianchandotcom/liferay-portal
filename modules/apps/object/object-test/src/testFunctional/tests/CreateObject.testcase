@@ -4888,12 +4888,67 @@ definition {
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a Picklist type is displayed on the Relationship field when adding an entry"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewObjectEntryTitlePicklistOnRelationshipField {
+		task ("Create Picklist and Picklist Item (via API)") {
+			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
 
-		// TODO LPS-141617 CanViewObjectEntryTitlePicklistOnRelationshipField pending implementation
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "ItemTest",
+				itemName = "Picklist Item",
+				picklistName = "Custom Picklist");
+		}
 
+		task ("Create Custom Object (via API) and go to fields tab") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 141617",
+				objectName = "CustomObject141617",
+				pluralLabelName = "Custom Objects 141617");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 141617");
+
+			ObjectAdmin.goToFieldsTab();
+		}
+
+		task ("Create Picklist Field (via UI), relationship with itself (via API) and publish") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Field Picklist",
+				fieldPicklist = "Custom Picklist",
+				fieldType = "Picklist");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject141617",
+				objectName_2 = "CustomObject141617",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141617");
+		}
+
+		task ("Define title field with Custom Picklist Field") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 141617");
+
+			CreateObject.selectTitleField(fieldLabel = "Field Picklist");
+
+			CreateObject.saveObject();
+		}
+
+		task ("Add picklist entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject141617");
+
+			ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Picklist Item");
+		}
+
+		task ("Assert that it's possible to see Picklist Item") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject141617");
+
+			CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "Picklist Item");
+		}
 	}
 
 	@description = "LPS-139803 - Verify if the Object Entry Title is displayed when selecting to preview an object entry on a Page Template"

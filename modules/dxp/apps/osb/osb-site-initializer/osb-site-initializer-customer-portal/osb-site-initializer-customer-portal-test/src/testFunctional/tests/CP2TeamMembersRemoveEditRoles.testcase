@@ -38,6 +38,9 @@ definition {
 	@description = "Automation ID: LPS-150004 | Test Summary: Verify if the user clicks the Cancel button he stays on the Team Members page"
 	@priority = "4"
 	test AfterCancellingTheActionHeStaysOnTheSamePage {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -82,6 +85,9 @@ definition {
 	@description = "Automation ID: LPS-150013 | Test Summary: Verify that after the user clicks Edit a Cancel button is available"
 	@priority = "5"
 	test CanViewCancelButton {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
 		task ("Adding a user to the project") {
 			JSONUser.addUser(
 				userEmailAddress = "test.user@liferay.com",
@@ -153,6 +159,9 @@ definition {
 	@description = "Automation ID: LPS-150005 | Test Summary: Verify that if the user clicks the Remove confirmation button the staff member is indeed removed"
 	@priority = "5"
 	test CanViewIfTheUserIsRemoved {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
 		task ("Adding a user to the project") {
 			JSONUser.addUser(
 				userEmailAddress = "test.user@liferay.com",
@@ -226,6 +235,9 @@ definition {
 	@description = "Automation ID: LPS-150012 | Test Summary: Verify that after the user clicks Edit a Save button is available"
 	@priority
 	test CanViewSaveButton {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
 		task ("Adding a user to the project") {
 			JSONUser.addUser(
 				userEmailAddress = "test.user@liferay.com",

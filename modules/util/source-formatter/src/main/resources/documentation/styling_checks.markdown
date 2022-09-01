@@ -123,6 +123,7 @@ OperatorOrderCheck | .java | Verifies that when an operator has a literal string
 PlusStatementCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Performs several checks to statements where `+` is used for concatenation. |
 PoshiStylingCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Applies rules to enforce consistency in code style. |
 PoshiVariableNameCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Checks variable names for correct use of `camelCase`. |
+PoshiWhitespaceCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Finds missing and unnecessary whitespace. |
 PropertiesCommentsCheck | .eslintignore, .prettierignore or .properties | Validates comments in `.properties` files. |
 PropertiesDefinitionKeysCheck | .eslintignore, .prettierignore or .properties | Sorts definition keys in `liferay-plugin-package.properties` file. |
 PropertiesDependenciesFileCheck | .eslintignore, .prettierignore or .properties | Sorts the properties in `dependencies.properties` file. |

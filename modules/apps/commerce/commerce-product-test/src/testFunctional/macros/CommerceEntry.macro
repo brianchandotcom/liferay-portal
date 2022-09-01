@@ -523,7 +523,25 @@ definition {
 		}
 	}
 
-	macro AddShippingOptionSettingsVariableRate {
+	macro addShippingOptionSettingsVariableRate {
+		Variables.assertDefined(parameterList = "${shippingOption}");
+
+		if (!(isSet(fixedPrice))) {
+			var fixedPrice = "1";
+		}
+
+		if (!(isSet(priceUnitWeight))) {
+			var priceUnitWeight = "1";
+		}
+
+		if (!(isSet(weightFrom))) {
+			var weightFrom = "0";
+		}
+
+		if (!(isSet(weightTo))) {
+			var weightTo = "100";
+		}
+
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -531,54 +549,72 @@ definition {
 		Select(
 			key_fieldLabel = "Shipping Option",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${key_shippingOption}");
+			value1 = "${shippingOption}");
 
-		Select(
-			key_fieldLabel = "Warehouse",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${key_warehouse}");
+		if (isSet(warehouse)) {
+			Select(
+				key_fieldLabel = "Warehouse",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${warehouse}");
+		}
 
-		Select(
-			key_fieldLabel = "Country",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${key_country}");
+		if (isSet(country)) {
+			Select(
+				key_fieldLabel = "Country",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${country}");
+		}
 
-		Select(
-			key_fieldLabel = "Region",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${key_region}");
+		if (isSet(region)) {
+			Select(
+				key_fieldLabel = "Region",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${region}");
+		}
 
-		Type(
-			key_fieldLabel = "Zip",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${key_zip}");
+		if (isSet(zip)) {
+			Type(
+				key_fieldLabel = "Zip",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${zip}");
+		}
 
 		Type(
 			key_fieldLabel = "Weight From",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${key_weightFrom}");
+			value1 = "${weightFrom}");
 
 		Type(
 			key_fieldLabel = "Weight To",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${key_weightTo}");
+			value1 = "${weightTo}");
 
 		Type(
 			key_fieldLabel = "Fixed Price",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${key_fixedPrice}");
+			value1 = "${fixedPrice}");
 
 		Type(
 			key_fieldLabel = "Price per Unit of Weight",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${key_priceUnitWeight}");
+			value1 = "${priceUnitWeight}");
 
-		Type(
-			key_fieldLabel = "Subtotal Percentage Price",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${key_subtotal}");
+		if (isSet(subtotal)) {
+			Type(
+				key_fieldLabel = "Subtotal Percentage Price",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${subtotal}");
+		}
 
 		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 	}
 
 	macro AddShippingOptionVariableRate {

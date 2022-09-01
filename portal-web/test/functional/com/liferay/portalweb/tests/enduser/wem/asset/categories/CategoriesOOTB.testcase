@@ -1051,53 +1051,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-134466 When removes the default link within Instance Settings/Asserts/Categorization, the message 'Learn how' won't show in Content Dashboard"
-	@priority = "3"
-	test CheckLearnHowLinkNotDisplayedContentDashboard {
-		task ("Remove default link to Documentation") {
-			Category.removeLinkToDocumentationURL();
-		}
-
-		task ("Assert if Learn How is not displayed") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-
-			AssertElementNotPresent(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
-		}
-	}
-
-	@description = "LPS-134466 When removes the default link within Instance Settings/Asserts/Categorization, the message 'Learn how' won't show in Vocabularies Management"
-	@priority = "3"
-	test CheckLearnHowLinkNotDisplayedVocabularies {
-		task ("Remove default link to Documentation") {
-			Category.removeLinkToDocumentationURL();
-		}
-
-		task ("Assert if Learn How is not displayed") {
-			Category.openCategoriesAdmin(siteURLKey = "global");
-
-			AssertElementNotPresent(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
-		}
-	}
-
-	@description = "LPS-134466 When removes the default link within Instance Settings/Asserts/Categorization, the message 'Learn how' won't show in web content editor"
-	@priority = "3"
-	test CheckLearnHowLinkNotDisplayedWCEditor {
-		task ("Remove default link to Documentation") {
-			Category.removeLinkToDocumentationURL();
-		}
-
-		task ("Assert if Learn How is not displayed") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			AssertElementNotPresent(locator1 = "Categories#VOCABULARY_LINK_DOCUMENTATION");
-		}
-	}
-
 	@description = "LPS-134875 Public categories are shown in facets and result in a public context."
 	@priority = "4"
 	test CheckPublicCategoriesInFacets {
@@ -1263,29 +1216,6 @@ definition {
 				categoryName = "Category Name Edit",
 				groupName = "Global",
 				vocabularyName = "Topic");
-		}
-	}
-
-	@description = "LPS-134466 When Instance Settings > Assets > Categorization, with a Link to Documentation URL"
-	@priority = "4"
-	test VerifyLinkToDocumentationAtInstanceSystem {
-		task ("Go to Instance Settings > Assets > Categorization") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Assets",
-				configurationName = "Categorization",
-				configurationScope = "Virtual Instance Scope");
-		}
-
-		task ("Assert URL to Documentation") {
-			AssertTextEquals(
-				key_text = "linkToDocumentation",
-				locator1 = "TextArea#ANY",
-				value1 = "https://learn.liferay.com/dxp/7.x/en/content-authoring-and-management/tags-and-categories/defining-categories-and-vocabularies-for-content.html");
 		}
 	}
 

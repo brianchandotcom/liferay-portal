@@ -388,32 +388,6 @@ definition {
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/categories_admin/");
 	}
 
-	macro removeLinkToDocumentationURL {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Assets",
-			configurationName = "Categorization",
-			configurationScope = "Virtual Instance Scope");
-
-		Type(
-			key_text = "linkToDocumentation",
-			locator1 = "TextArea#ANY",
-			value1 = " ");
-
-		if (IsElementPresent(key_text = "Save", locator1 = "Button#ANY")) {
-			Button.clickSave();
-		}
-		else {
-			Button.clickUpdate();
-		}
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro searchCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 

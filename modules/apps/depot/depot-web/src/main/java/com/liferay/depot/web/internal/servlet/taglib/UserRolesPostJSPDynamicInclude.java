@@ -43,6 +43,11 @@ import org.osgi.service.component.annotations.Reference;
 public class UserRolesPostJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -86,14 +91,6 @@ public class UserRolesPostJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.depot.web)", unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserRolesPostJSPDynamicInclude.class);
 
@@ -102,5 +99,8 @@ public class UserRolesPostJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.depot.web)")
+	private ServletContext _servletContext;
 
 }

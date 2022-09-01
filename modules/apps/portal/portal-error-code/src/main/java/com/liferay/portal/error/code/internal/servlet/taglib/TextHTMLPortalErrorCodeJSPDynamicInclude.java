@@ -40,6 +40,11 @@ public class TextHTMLPortalErrorCodeJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -77,15 +82,6 @@ public class TextHTMLPortalErrorCodeJSPDynamicInclude
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.error.code)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final String _CHARSET = "; charset=UTF-8";
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -93,5 +89,8 @@ public class TextHTMLPortalErrorCodeJSPDynamicInclude
 
 	private String _contentType;
 	private String _key;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.portal.error.code)")
+	private ServletContext _servletContext;
 
 }

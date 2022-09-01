@@ -38,6 +38,11 @@ public class DDMFormAnalyticsTopHeadJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -67,20 +72,16 @@ public class DDMFormAnalyticsTopHeadJSPDynamicInclude
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.mapping.form.analytics)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final String _TMPL_CONTENT = StringUtil.read(
 		DDMFormAnalyticsTopHeadJSPDynamicInclude.class,
 		"/META-INF/resources/form_analytics.tmpl");
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormAnalyticsTopHeadJSPDynamicInclude.class);
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.mapping.form.analytics)"
+	)
+	private ServletContext _servletContext;
 
 }

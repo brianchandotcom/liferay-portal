@@ -45,6 +45,11 @@ public class FacebookConnectNavigationPreJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -108,18 +113,14 @@ public class FacebookConnectNavigationPreJSPDynamicInclude
 		_facebookConnect = facebookConnect;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.login.authentication.facebook.connect.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FacebookConnectNavigationPreJSPDynamicInclude.class);
 
 	private FacebookConnect _facebookConnect;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.login.authentication.facebook.connect.web)"
+	)
+	private ServletContext _servletContext;
 
 }

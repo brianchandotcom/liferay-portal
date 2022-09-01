@@ -38,6 +38,11 @@ public class DLAudioFFMPEGEditConfigurationJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -70,19 +75,15 @@ public class DLAudioFFMPEGEditConfigurationJSPDynamicInclude
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.audio)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLAudioFFMPEGEditConfigurationJSPDynamicInclude.class);
 
 	@Reference
 	private DLAudioFFMPEGAudioConverter _dlAudioFFMPEGAudioConverter;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.audio)"
+	)
+	private ServletContext _servletContext;
 
 }

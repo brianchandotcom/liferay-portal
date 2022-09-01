@@ -44,6 +44,11 @@ public class SegmentsExperimentAnalyticsTopHeadJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -88,15 +93,6 @@ public class SegmentsExperimentAnalyticsTopHeadJSPDynamicInclude
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.segments.experiment.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private String _getSegmentsExperienceKey(long segmentsExperienceId) {
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
@@ -114,5 +110,10 @@ public class SegmentsExperimentAnalyticsTopHeadJSPDynamicInclude
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.segments.experiment.web)"
+	)
+	private ServletContext _servletContext;
 
 }

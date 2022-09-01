@@ -38,6 +38,11 @@ public class DefaultCommercePaymentMethodsJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -67,19 +72,15 @@ public class DefaultCommercePaymentMethodsJSPDynamicInclude
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.payment.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultCommercePaymentMethodsJSPDynamicInclude.class);
 
 	@Reference
 	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.payment.web)"
+	)
+	private ServletContext _servletContext;
 
 }

@@ -46,6 +46,11 @@ public class StagingBarControlMenuJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -97,15 +102,6 @@ public class StagingBarControlMenuJSPDynamicInclude
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.staging.bar.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private boolean _isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -134,5 +130,8 @@ public class StagingBarControlMenuJSPDynamicInclude
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagingBarControlMenuJSPDynamicInclude.class);
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.staging.bar.web)")
+	private ServletContext _servletContext;
 
 }

@@ -47,6 +47,11 @@ public class DefaultCommerceDiscountsJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -91,15 +96,6 @@ public class DefaultCommerceDiscountsJSPDynamicInclude
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.pricing.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultCommerceDiscountsJSPDynamicInclude.class);
 
@@ -127,5 +123,10 @@ public class DefaultCommerceDiscountsJSPDynamicInclude
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.pricing.web)"
+	)
+	private ServletContext _servletContext;
 
 }

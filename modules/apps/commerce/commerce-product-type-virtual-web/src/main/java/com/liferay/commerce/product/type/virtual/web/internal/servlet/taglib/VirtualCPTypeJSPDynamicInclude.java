@@ -38,6 +38,11 @@ import org.osgi.service.component.annotations.Reference;
 public class VirtualCPTypeJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -66,20 +71,16 @@ public class VirtualCPTypeJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		VirtualCPTypeJSPDynamicInclude.class);
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)"
+	)
+	private ServletContext _servletContext;
 
 	@Reference
 	private VirtualCPTypeHelper _virtualCPTypeHelper;

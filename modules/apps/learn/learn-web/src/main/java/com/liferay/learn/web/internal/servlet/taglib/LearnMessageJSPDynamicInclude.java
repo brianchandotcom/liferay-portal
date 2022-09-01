@@ -31,6 +31,11 @@ import org.osgi.service.component.annotations.Reference;
 public class LearnMessageJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
 			"/html/portal/setup_wizard.jsp#help_link");
@@ -46,15 +51,10 @@ public class LearnMessageJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.learn.web)", unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		LearnMessageJSPDynamicInclude.class);
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.learn.web)")
+	private ServletContext _servletContext;
 
 }

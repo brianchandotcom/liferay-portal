@@ -50,6 +50,11 @@ public class OpenIdConnectNavigationPreJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -101,15 +106,6 @@ public class OpenIdConnectNavigationPreJSPDynamicInclude
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.login.authentication.openid.connect.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdConnectNavigationPreJSPDynamicInclude.class);
 
@@ -121,5 +117,10 @@ public class OpenIdConnectNavigationPreJSPDynamicInclude
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.login.authentication.openid.connect.web)"
+	)
+	private ServletContext _servletContext;
 
 }

@@ -39,6 +39,11 @@ public class GoogleNavigationPreJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -71,19 +76,15 @@ public class GoogleNavigationPreJSPDynamicInclude
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.google.login.authentication.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		GoogleNavigationPreJSPDynamicInclude.class);
 
 	@Reference
 	private GoogleAuthorization _googleAuthorization;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.google.login.authentication.web)"
+	)
+	private ServletContext _servletContext;
 
 }

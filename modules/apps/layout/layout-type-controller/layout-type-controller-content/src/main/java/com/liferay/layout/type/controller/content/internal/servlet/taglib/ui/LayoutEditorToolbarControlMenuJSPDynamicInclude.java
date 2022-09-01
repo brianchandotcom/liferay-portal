@@ -49,6 +49,11 @@ public class LayoutEditorToolbarControlMenuJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -119,15 +124,6 @@ public class LayoutEditorToolbarControlMenuJSPDynamicInclude
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.content)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private boolean _isConversionLayout(Layout layout) throws PortalException {
 		Layout publishedLayout = _layoutLocalService.getLayout(
 			layout.getClassPK());
@@ -150,5 +146,10 @@ public class LayoutEditorToolbarControlMenuJSPDynamicInclude
 
 	@Reference
 	private LayoutContentModelResourcePermission _modelResourcePermission;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.content)"
+	)
+	private ServletContext _servletContext;
 
 }

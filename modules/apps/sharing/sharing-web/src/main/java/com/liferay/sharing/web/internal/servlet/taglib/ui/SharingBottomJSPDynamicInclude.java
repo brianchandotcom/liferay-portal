@@ -40,6 +40,11 @@ import org.osgi.service.component.annotations.Reference;
 public class SharingBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -77,16 +82,11 @@ public class SharingBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.sharing.web)", unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SharingBottomJSPDynamicInclude.class);
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.sharing.web)")
+	private ServletContext _servletContext;
 
 	@Reference
 	private SharingConfigurationFactory _sharingConfigurationFactory;

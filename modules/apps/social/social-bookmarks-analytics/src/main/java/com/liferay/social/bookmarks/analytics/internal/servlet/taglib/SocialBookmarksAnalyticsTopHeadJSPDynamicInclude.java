@@ -32,6 +32,11 @@ public class SocialBookmarksAnalyticsTopHeadJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
 			"/html/common/themes/top_head.jsp#post");
@@ -47,16 +52,12 @@ public class SocialBookmarksAnalyticsTopHeadJSPDynamicInclude
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.social.bookmarks.analytics)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SocialBookmarksAnalyticsTopHeadJSPDynamicInclude.class);
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.social.bookmarks.analytics)"
+	)
+	private ServletContext _servletContext;
 
 }

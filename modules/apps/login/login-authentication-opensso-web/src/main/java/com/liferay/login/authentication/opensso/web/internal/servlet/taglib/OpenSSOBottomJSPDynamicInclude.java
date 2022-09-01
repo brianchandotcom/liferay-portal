@@ -49,6 +49,11 @@ import org.osgi.service.component.annotations.Reference;
 public class OpenSSOBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -109,15 +114,6 @@ public class OpenSSOBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.login.authentication.opensso.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final String[] _ERRORS = {
 		ContactNameException.class.getSimpleName(),
 		PrincipalException.MustBeAuthenticated.class.getSimpleName(),
@@ -136,5 +132,10 @@ public class OpenSSOBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.login.authentication.opensso.web)"
+	)
+	private ServletContext _servletContext;
 
 }

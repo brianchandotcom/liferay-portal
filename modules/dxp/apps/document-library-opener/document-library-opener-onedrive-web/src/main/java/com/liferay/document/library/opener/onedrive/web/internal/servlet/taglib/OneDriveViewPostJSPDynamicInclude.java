@@ -31,6 +31,11 @@ import org.osgi.service.component.annotations.Reference;
 public class OneDriveViewPostJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
 			"com.liferay.document.library.web#/document_library/view.jsp#post");
@@ -46,16 +51,12 @@ public class OneDriveViewPostJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.opener.onedrive.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		OneDriveViewPostJSPDynamicInclude.class);
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.opener.onedrive.web)"
+	)
+	private ServletContext _servletContext;
 
 }

@@ -54,6 +54,11 @@ import org.osgi.service.component.annotations.Reference;
 public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
@@ -115,15 +120,6 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 	@Override
 	protected Log getLog() {
 		return _log;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.analytics.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
 	}
 
 	private String _getLiferayAnalyticsChannelId(
@@ -245,5 +241,8 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.analytics.web)")
+	private ServletContext _servletContext;
 
 }

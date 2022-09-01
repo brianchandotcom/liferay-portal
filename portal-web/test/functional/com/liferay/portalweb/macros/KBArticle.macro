@@ -1210,7 +1210,14 @@ definition {
 	}
 
 	macro viewChildArticleCP {
-		KBArticle._gotoChildArticle(kbChildArticleTitle = "${kbChildArticleTitle}");
+		if (isSet(pageTreePanel)) {
+			Click(
+				key_itemName = "${kbChildArticleTitle}",
+				locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
+		}
+		else {
+			KBArticle._gotoChildArticle(kbChildArticleTitle = "${kbChildArticleTitle}");
+		}
 
 		AssertTextEquals(
 			locator1 = "KnowledgeBaseArticle#TITLE",

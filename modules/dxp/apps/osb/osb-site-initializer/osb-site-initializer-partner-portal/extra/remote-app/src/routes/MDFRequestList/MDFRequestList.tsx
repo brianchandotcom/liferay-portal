@@ -60,11 +60,7 @@ const MDFRequestList = () => {
 		<div className="border-0 pb-3 pt-5 px-6 sheet">
 			<h1>MDF Requests</h1>
 
-			<div className="bg-neutral-1 p-3 rounded">
-				<ClayButton className="mr-1" displayType="secondary">
-					Export MDF Report
-				</ClayButton>
-
+			<div className="bg-neutral-1 d-flex justify-content-end p-3 rounded">
 				<ClayButton
 					onClick={() => {
 						liferayNavigate(PRMPageRoute.CREATE_MDF_REQUEST);

@@ -34,12 +34,21 @@ definition {
 
 		if ("${addOrRemoveViewPermission}" == "Add") {
 			for (var permissionDefinitionKey : list "${permissionsKeyList}") {
-				Check(locator1 = "Permissions#${permissionDefinitionKey}");
+				if (IsElementPresent(locator1 = "Permissions#${permissionDefinitionKey}_INDETERMINATE")) {
+					Click.clickNoWaitForVisible(locator1 = "Permissions#${permissionDefinitionKey}_INDETERMINATE");
+				}
+
+				Check.checkNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
 			}
 		}
 		else if ("${addOrRemoveViewPermission}" == "Remove") {
 			for (var permissionDefinitionKey : list "${permissionsKeyList}") {
-				Uncheck(locator1 = "Permissions#${permissionDefinitionKey}");
+				if (IsElementPresent(locator1 = "Permissions#${permissionDefinitionKey}_INDETERMINATE")) {
+					Click.clickNoWaitForVisible(locator1 = "Permissions#${permissionDefinitionKey}_INDETERMINATE");
+				}
+				else {
+					Uncheck.uncheckNotVisible(locator1 = "Permissions#${permissionDefinitionKey}");
+				}
 			}
 		}
 

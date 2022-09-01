@@ -307,7 +307,7 @@ public class KaleoWorkflowModelConverterImpl
 		defaultWorkflowLog.setAuditUserId(kaleoLog.getUserId());
 		defaultWorkflowLog.setComment(kaleoLog.getComment());
 		defaultWorkflowLog.setCreateDate(kaleoLog.getCreateDate());
-		defaultWorkflowLog.setPreviousState(
+		defaultWorkflowLog.setPreviousWorkflowNode(
 			_getState(kaleoLog.getPreviousKaleoNodeId()));
 
 		long previousAssigneeClassPK = kaleoLog.getPreviousAssigneeClassPK();
@@ -338,7 +338,8 @@ public class KaleoWorkflowModelConverterImpl
 			}
 		}
 
-		defaultWorkflowLog.setState(_getState(kaleoLog.getKaleoClassPK()));
+		defaultWorkflowLog.setCurrentWorkflowNode(
+			_getState(kaleoLog.getKaleoClassPK()));
 		defaultWorkflowLog.setType(KaleoLogUtil.convert(kaleoLog.getType()));
 		defaultWorkflowLog.setWorkflowLogId(kaleoLog.getKaleoLogId());
 		defaultWorkflowLog.setWorkflowTaskId(

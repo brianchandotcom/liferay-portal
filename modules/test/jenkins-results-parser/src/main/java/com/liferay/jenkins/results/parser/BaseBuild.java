@@ -2695,6 +2695,14 @@ public abstract class BaseBuild implements Build {
 
 			sb.append("Build \"");
 			sb.append(jobName);
+
+			if (this instanceof DownstreamBuild) {
+				DownstreamBuild downstreamBuild = (DownstreamBuild)this;
+
+				sb.append("/");
+				sb.append(downstreamBuild.getAxisName());
+			}
+
 			sb.append("\"");
 
 			if (status.equals("completed")) {
@@ -3742,7 +3750,7 @@ public abstract class BaseBuild implements Build {
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/";
 
 	protected static final Pattern downstreamBuildURLPattern = Pattern.compile(
-		"[\\'\\\"].*[\\'\\\"] started at (?<url>.+)\\.");
+		"[\\'\\\"][^/]*(/(?<axisName>.*))?[\\'\\\"] started at (?<url>.+)\\.");
 	protected static final Pattern invocationURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/",

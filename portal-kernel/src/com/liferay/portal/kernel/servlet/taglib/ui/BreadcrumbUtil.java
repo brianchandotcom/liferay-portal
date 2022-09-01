@@ -297,8 +297,11 @@ public class BreadcrumbUtil {
 					layoutSetFriendlyURL = PortalUtil.getURLWithSessionId(
 						layoutSetFriendlyURL, themeDisplay.getSessionId());
 				}
-				
+
 				breadcrumbEntry.setURL(layoutSetFriendlyURL);
+			}
+			else {
+				breadcrumbEntry.setBrowsable(false);
 			}
 
 			breadcrumbEntries.add(breadcrumbEntry);

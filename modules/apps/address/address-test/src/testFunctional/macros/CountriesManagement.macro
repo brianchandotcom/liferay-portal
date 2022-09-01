@@ -117,11 +117,6 @@ definition {
 				key_toggleSwitchLabel = "Active",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
-		else if ("${countryStatus}" == "Active") {
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Active",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
 
 		Button.clickSave();
 

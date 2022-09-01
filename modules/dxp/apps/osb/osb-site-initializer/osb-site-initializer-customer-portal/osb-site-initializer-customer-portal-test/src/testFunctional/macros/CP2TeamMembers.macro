@@ -69,6 +69,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro searchCP {
+		Type(
+			locator1 = "CP2TeamMembers#SEARCH_TM",
+			value1 = "${search}");
+	}
+
 	macro teamMembersFlow {
 		CustomerPortal.enterOnProject(title = "Test Account DXP");
 

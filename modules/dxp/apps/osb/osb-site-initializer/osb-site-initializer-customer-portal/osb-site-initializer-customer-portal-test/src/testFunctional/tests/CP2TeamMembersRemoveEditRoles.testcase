@@ -41,6 +41,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
+
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
@@ -88,6 +89,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
+
 		task ("Adding a user to the project") {
 			JSONUser.addUser(
 				userEmailAddress = "test.user@liferay.com",
@@ -162,6 +164,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
+
 		task ("Adding a user to the project") {
 			JSONUser.addUser(
 				userEmailAddress = "test.user@liferay.com",
@@ -238,6 +241,7 @@ definition {
 		property portal.upstream = "quarantine";
 
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
+
 		task ("Adding a user to the project") {
 			JSONUser.addUser(
 				userEmailAddress = "test.user@liferay.com",

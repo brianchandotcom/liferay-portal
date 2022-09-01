@@ -258,7 +258,7 @@ public class KaleoWorkflowModelConverterImpl
 			new DefaultWorkflowInstance();
 
 		defaultWorkflowInstance.setActive(kaleoInstance.isActive());
-		defaultWorkflowInstance.setCurrentNodes(
+		defaultWorkflowInstance.setCurrentWorkflowNodes(
 			Stream.of(
 				_kaleoInstanceTokenLocalService.getKaleoInstanceTokens(
 					kaleoInstance.getKaleoInstanceId())

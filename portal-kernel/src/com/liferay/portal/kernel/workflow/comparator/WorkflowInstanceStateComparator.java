@@ -42,17 +42,17 @@ public class WorkflowInstanceStateComparator
 		WorkflowInstance workflowInstance1,
 		WorkflowInstance workflowInstance2) {
 
-		List<String> currentNodeNames1 = ListUtil.toList(
-			workflowInstance1.getCurrentNodes(), WorkflowNode::getName);
+		List<String> currentWorkflowNodeNames1 = ListUtil.toList(
+			workflowInstance1.getCurrentWorkflowNodes(), WorkflowNode::getName);
 
-		String currentNodeName1 = currentNodeNames1.get(0);
+		String currentWorkflowNodeName1 = currentWorkflowNodeNames1.get(0);
 
 		List<String> currentNodeNames2 = ListUtil.toList(
-			workflowInstance2.getCurrentNodes(), WorkflowNode::getName);
+			workflowInstance2.getCurrentWorkflowNodes(), WorkflowNode::getName);
 
 		String currentNodeName2 = currentNodeNames2.get(0);
 
-		int value = currentNodeName1.compareTo(currentNodeName2);
+		int value = currentWorkflowNodeName1.compareTo(currentNodeName2);
 
 		if (value == 0) {
 			Long workflowInstanceId1 =

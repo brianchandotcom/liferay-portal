@@ -66,7 +66,7 @@ public abstract class BaseWorkflowInstanceDisplayContext {
 
 	public String getStatus(WorkflowInstance workflowInstance) {
 		return Stream.of(
-			workflowInstance.getCurrentNodes()
+			workflowInstance.getCurrentWorkflowNodes()
 		).flatMap(
 			List::stream
 		).map(

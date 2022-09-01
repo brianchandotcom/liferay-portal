@@ -168,7 +168,7 @@ public class WorkflowInstanceResourceImpl
 			{
 				completed = workflowInstance.isComplete();
 				currentNodeNames = Stream.of(
-					workflowInstance.getCurrentNodes()
+					workflowInstance.getCurrentWorkflowNodes()
 				).flatMap(
 					List::stream
 				).map(

@@ -1262,6 +1262,10 @@
 			<description name="Checks variable names for correct use of `camelCase`." />
 			<property name="enabled" value="false" />
 		</check>
+		<check name="PoshiWhitespaceCheck">
+			<category name="Styling" />
+			<description name="Finds missing and unnecessary whitespace." />
+		</check>
 	</source-processor>
 	<source-processor name="PropertiesSourceProcessor">
 		<check name="PropertiesArchivedModulesCheck">

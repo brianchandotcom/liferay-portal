@@ -54,8 +54,6 @@ public class PoshiStylingCheck extends BaseFileCheck {
 			"\\!\\(contains\\(\"\\$\\{(.+?)\\}\", \"\\{\\1\\}\"\\)\\)",
 			"isSet($1)");
 
-		content = _removeMultipleSpacesInTaskDefinitions(fileName, content);
-
 		return _formatComments(content);
 	}
 
@@ -143,46 +141,6 @@ public class PoshiStylingCheck extends BaseFileCheck {
 		}
 
 		if (sb.length() > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		return sb.toString();
-	}
-
-	private String _removeMultipleSpacesInTaskDefinitions(
-		String fileName, String content) {
-
-		if (!fileName.endsWith("macro") && !fileName.endsWith("testcase")) {
-			return content;
-		}
-
-		String[] lines = content.split("\n");
-
-		StringBundler sb = new StringBundler(lines.length * 2);
-
-		for (String line : lines) {
-			String trimmedLine = StringUtil.trim(line);
-
-			if (!trimmedLine.startsWith("task (")) {
-				sb.append(line);
-				sb.append(StringPool.NEW_LINE);
-
-				continue;
-			}
-
-			String newLine = trimmedLine.replaceAll(" {2,}", " ");
-
-			if (StringUtil.equals(trimmedLine, newLine)) {
-				sb.append(line);
-			}
-			else {
-				sb.append(StringUtil.replaceFirst(line, trimmedLine, newLine));
-			}
-
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		if (sb.index() > 1) {
 			sb.setIndex(sb.index() - 1);
 		}
 

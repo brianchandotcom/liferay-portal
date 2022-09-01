@@ -68,16 +68,16 @@ definition {
 			locator1 = "Testray#ITEMS_PER_PAGE_SELECT");
 	}
 
-	macro clickOnPageNumberModal {
-		Click(
-			key_pageDirection = "${pageNumber}",
-			locator1 = "Testray#NUMBER_PAGE_BUTTON_MODAL");
-	}
-
 	macro clickOnPageNumber {
 		Click(
 			key_pageNumber = "${pageNumber}",
 			locator1 = "Testray#NUMBER_PAGE_BUTTON");
+	}
+
+	macro clickOnPageNumberModal {
+		Click(
+			key_pageDirection = "${pageNumber}",
+			locator1 = "Testray#NUMBER_PAGE_BUTTON_MODAL");
 	}
 
 	macro createProjectTestray {

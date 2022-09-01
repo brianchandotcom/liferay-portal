@@ -1,5 +1,31 @@
 definition {
 
+	macro addNewCategory {
+		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${category}");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+	}
+
+	macro addProjectManageBar {
+		TestrayLayout.clickManageOnSidebar();
+
+		SelectFrame(locator1 = "TestrayManage#OPTIONS_MODAL");
+
+		TestrayManage.selectOptionsManage(key_itemvalue = "${itemValue}");
+
+		Testray.createProjectTestray(
+			description = "${description}",
+			key_name = "${name}");
+
+		Click(locator1 = "TestrayManage#CLOSE_MODAL");
+	}
+
 	macro assertCategoryNotPresent {
 		TestrayManage.assertNameNotPresent(name = "${key_title}");
 	}
@@ -62,32 +88,6 @@ definition {
 		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 	}
 
-	macro addNewCategory {
-		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
-
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${category}");
-
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
-
-		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
-	}
-
-	macro addProjectManageBar {
-		TestrayLayout.clickManageOnSidebar();
-
-		SelectFrame(locator1 = "TestrayManage#OPTIONS_MODAL");
-
-		TestrayManage.selectOptionsManage(key_itemvalue = "${itemValue}");
-
-		Testray.createProjectTestray(
-			description = "${description}",
-			key_name = "${name}");
-
-		Click(locator1 = "TestrayManage#CLOSE_MODAL");
-	}
-
 	macro deleteCategory {
 		TestrayLayout.clickManageOnSidebar();
 
@@ -104,22 +104,6 @@ definition {
 
 			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
-	}
-
-	macro deleteSpecificCategory {
-		TestrayLayout.clickManageOnSidebar();
-
-		TestrayManage.selectOptionsManage(itemValue = "${selectCategories}");
-
-		TestrayContextMenu.clickContextMenuProjects(name = "${nameCategory}");
-
-		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-
-		AssertConfirm(value1 = "Are you sure you want to delete this item?");
-
-		Alert.viewSuccessMessage();
-
-		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 	}
 
 	macro deleteOption {
@@ -142,6 +126,22 @@ definition {
 		Click(locator1 = "TestrayDropdown#DROPDOWN_ITEM");
 
 		MenuItem.clickNoError(menuItem = "Delete");
+	}
+
+	macro deleteSpecificCategory {
+		TestrayLayout.clickManageOnSidebar();
+
+		TestrayManage.selectOptionsManage(itemValue = "${selectCategories}");
+
+		TestrayContextMenu.clickContextMenuProjects(name = "${nameCategory}");
+
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this item?");
+
+		Alert.viewSuccessMessage();
+
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 	}
 
 	macro editCategoryOption {

@@ -143,8 +143,8 @@ definition {
 			TestrayManage.addNewCategory(category = "Environments_4 Category");
 
 			TestrayManage.deleteSpecificCategory(
-				selectCategories = "Categories",
-				nameCategory = "Environments_4 Category");
+				nameCategory = "Environments_4 Category",
+				selectCategories = "Categories");
 
 			TestrayManage.assertNameNotPresent(name = "Environments_4 Category");
 		}

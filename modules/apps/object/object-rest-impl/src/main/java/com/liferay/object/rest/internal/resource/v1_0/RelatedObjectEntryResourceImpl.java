@@ -45,15 +45,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luis Miguel Barcos
  */
 @Component(
-	factory = "com.liferay.object.rest.internal.resource.v1_0.ObjectRelationshipResource",
+	factory = "com.liferay.object.rest.internal.resource.v1_0.RelatedObjectEntryResource",
 	property = {"api.version=v1.0", "osgi.jaxrs.resource=true"},
-	service = ObjectRelationshipResourceImpl.class
+	service = RelatedObjectEntryResourceImpl.class
 )
-public class ObjectRelationshipResourceImpl
-	extends BaseObjectRelationshipResourceImpl {
+public class RelatedObjectEntryResourceImpl
+	extends BaseRelatedObjectEntryResourceImpl {
 
 	@Override
-	public Page<Object> getObjectRelatedObjectsPage(
+	public Page<Object> getRelatedObjectEntriesPage(
 			String previousPath, Long objectEntryId,
 			String objectRelationshipName, Pagination pagination)
 		throws Exception {

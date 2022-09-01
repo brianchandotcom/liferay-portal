@@ -35,7 +35,7 @@ import javax.ws.rs.core.Context;
  * @author Luis Miguel Barcos
  */
 @Path("/v1.0")
-public class BaseObjectRelationshipResourceImpl {
+public class BaseRelatedObjectEntryResourceImpl {
 
 	@GET
 	@Parameters(
@@ -52,7 +52,7 @@ public class BaseObjectRelationshipResourceImpl {
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags({@Tag(name = "ObjectEntry")})
-	public Page<Object> getObjectRelatedObjectsPage(
+	public Page<Object> getRelatedObjectEntriesPage(
 			@NotNull @Parameter(hidden = true) @PathParam("previousPath") String
 				previousPath,
 			@NotNull @Parameter(hidden = true) @PathParam("objectEntryId") Long

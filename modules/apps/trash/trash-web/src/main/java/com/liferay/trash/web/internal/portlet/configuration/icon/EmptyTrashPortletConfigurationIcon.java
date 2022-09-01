@@ -63,11 +63,11 @@ public class EmptyTrashPortletConfigurationIcon
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.trash.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.trash.web)")
+	private ServletContext _servletContext;
 
 }

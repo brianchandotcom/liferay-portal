@@ -925,13 +925,11 @@ definition {
 			task ("Add a web content template for Basic Web Content structure") {
 				WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
 
-				var templateScript = '''<#assign portletRequestModel = objectUtil("com.liferay.portal.kernel.portlet.PortletRequestModel", request.getAttribute("javax.portlet.request"), request.getAttribute("javax.portlet.response")) />''';
-
 				WebContentTemplates.addCP(
 					structureName = "Basic Web Content",
 					templateDescription = "WC Template Description",
 					templateName = "WC Template Name",
-					templateScript = "${templateScript}");
+					templateScript = "<#assign portletRequestModel = objectUtil(&quot;com.liferay.portal.kernel.portlet.PortletRequestModel&quot;, request.getAttribute(&quot;javax.portlet.request&quot;), request.getAttribute(&quot;javax.portlet.response&quot;)) />");
 			}
 
 			task ("Add a web content") {

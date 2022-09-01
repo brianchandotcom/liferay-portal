@@ -312,6 +312,10 @@ public class KBAdminNavigationDisplayContext {
 		for (KBArticle kbArticle : kbArticles) {
 			childrenJSONArray.put(
 				JSONUtil.put(
+					"actions",
+					_kbDropdownItemsProvider.getKBArticleDropdownItems(
+						kbArticle)
+				).put(
 					"children", _getChildKBArticlesJSONArray(kbArticle)
 				).put(
 					"href",
@@ -403,6 +407,10 @@ public class KBAdminNavigationDisplayContext {
 				KBArticle kbArticle = (KBArticle)kbObject;
 
 				jsonObject.put(
+					"actions",
+					_kbDropdownItemsProvider.getKBArticleDropdownItems(
+						kbArticle)
+				).put(
 					"children", _getChildKBArticlesJSONArray(kbArticle)
 				).put(
 					"href",

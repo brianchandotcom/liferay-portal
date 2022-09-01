@@ -74,6 +74,7 @@ public class ObjectActionVariablesUtil {
 			variables.remove("values");
 		}
 
+		variables.put("creator", variables.get("userName"));
 		variables.put("currentUserId", payloadJSONObject.getLong("userId"));
 		variables.put("id", payloadJSONObject.getLong("classPK"));
 

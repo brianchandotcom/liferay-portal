@@ -345,6 +345,10 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			return _toString((Date)value);
 		}
 
+		if (value == null) {
+			return StringPool.BLANK;
+		}
+
 		return String.valueOf(value);
 	}
 

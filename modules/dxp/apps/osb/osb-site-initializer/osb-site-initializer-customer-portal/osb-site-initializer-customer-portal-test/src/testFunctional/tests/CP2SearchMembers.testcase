@@ -35,16 +35,83 @@ definition {
 		}
 	}
 
-    @description = "Automation ID: LPS-150832 | Test Summary: Verify if the text box search filters by first name"
+    @description = "Automation ID: LPS-150832 | Test Summary: Verify if the text box search filters by first and last name"
     @priority = "5"
-    test VerifyTheSearchFiltersByFirstName {
-        // TODO LPS-150832 VerifyTheSearchFiltersByFirstName pending implementation
-    }
+    test VerifyTheSearchFiltersByFirstAndLastName {
+        task ("Adding a user to the project") {
+			JSONUser.addUser(
+				userEmailAddress = "test.user@liferay.com",
+				userFirstName = "User",
+				userLastName = "2",
+				userScreenName = "Testing");
 
-    @description = "Automation ID: LPS-150833 | Test Summary: Verify if in the text box search it filters by last name"
-    @priority = "4"
-    test VerifyTheSearchFiltersByLastName {
-        // TODO LPS-150833 VerifyTheSearchFiltersByLastName pending implementation
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test.user@liferay.com");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account Portal");
+
+			Accounts.assignUsers(
+				accountName = "Test Account Portal",
+				assigneeName = "User 2");
+		}
+
+		task ("Go to CP2.0") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		}
+
+		task ("Login in Okta") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
+
+			Refresh();
+		}
+
+		task ("Get into the project") {
+			CustomerPortal.enterOnProject(
+                status = "Future",
+                title = "Test Account Portal");
+		}
+
+		task ("Go to the team members page") {
+            CP2NavigationMenu.goToTeamMembers();
+		}
+
+		task ("Search for the user's first name and affirm that the search worked") {
+			CP2TeamMembers.searchCP(search = "User");
+
+			KeyPress(
+				locator1 = "CP2TeamMembers#SEARCH_TM",
+				value1 = "\ENTER");
+
+			AssertElementPresent(
+				locator1 = "CP2TeamMembers#SEARCH_RESULT",
+				result = "1 result for User");
+		}
+
+		task ("When user clicks on cancel icon") {
+			Click(locator1 = "CP2TeamMembers#CLOSE_BUTTON");
+		}
+
+		task ("Search for the user's Last name and affirm that the search worked") {
+			CP2TeamMembers.searchCP(search = "2");
+
+			KeyPress(
+				locator1 = "CP2TeamMembers#SEARCH_TM",
+				value1 = "\ENTER");
+
+			AssertElementPresent(
+				locator1 = "CP2TeamMembers#SEARCH_RESULT",
+				result = "1 result for 2");
+		}
+
+		task ("Delete user created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "test.user@liferay.com");
+		}
     }
 
     @description = "Automation ID: LPS-150834 | Test Summary: Verify if in the text box search it filters by email"

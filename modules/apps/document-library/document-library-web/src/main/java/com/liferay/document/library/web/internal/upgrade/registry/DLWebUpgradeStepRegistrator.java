@@ -51,25 +51,13 @@ public class DLWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 		registry.register("1.0.1", "1.0.2", new UpgradePortletPreferences());
 	}
 
-	@Reference(unbind = "-")
-	public void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
-	}
-
+	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private SettingsFactory _settingsFactory;
 
 }

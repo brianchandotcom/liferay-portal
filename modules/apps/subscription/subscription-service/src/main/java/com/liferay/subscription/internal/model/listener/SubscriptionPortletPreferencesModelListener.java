@@ -52,16 +52,10 @@ public class SubscriptionPortletPreferencesModelListener
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SubscriptionPortletPreferencesModelListener.class);
 
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }

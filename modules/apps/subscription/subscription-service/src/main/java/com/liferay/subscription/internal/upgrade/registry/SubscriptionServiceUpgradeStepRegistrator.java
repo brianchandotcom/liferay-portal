@@ -44,8 +44,7 @@ public class SubscriptionServiceUpgradeStepRegistrator
 			"2.0.0", "2.1.0", new CTModelUpgradeProcess("Subscription"));
 	}
 
-	@Reference(unbind = "-")
-	protected void setLockManager(LockManager lockManager) {
-	}
+	@Reference
+	private LockManager _lockManager;
 
 }

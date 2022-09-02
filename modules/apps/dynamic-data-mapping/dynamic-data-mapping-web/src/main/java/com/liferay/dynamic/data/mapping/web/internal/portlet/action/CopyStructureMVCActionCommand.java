@@ -94,20 +94,6 @@ public class CopyStructureMVCActionCommand extends BaseDDMMVCActionCommand {
 		return portletURL.toString();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		_ddmStructureService = ddmStructureService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMTemplateService(
-		DDMTemplateService ddmTemplateService) {
-
-		_ddmTemplateService = ddmTemplateService;
-	}
-
 	private DDMStructure _copyStructure(ActionRequest actionRequest)
 		throws Exception {
 
@@ -159,7 +145,10 @@ public class CopyStructureMVCActionCommand extends BaseDDMMVCActionCommand {
 		}
 	}
 
+	@Reference
 	private DDMStructureService _ddmStructureService;
+
+	@Reference
 	private DDMTemplateService _ddmTemplateService;
 
 	@Reference

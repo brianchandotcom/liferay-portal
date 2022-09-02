@@ -69,9 +69,9 @@ const getActivePanelData = ({panelId, panels, sidebarPanels}) => {
 	return {panel, sidebarPanelId};
 };
 
-const MAX_SIDEBAR_WIDTH = 500;
-const MIN_SIZEBAR_WIDTH = 280;
-const SIDEBAR_WIDTH_RESIZE_STEP = 20;
+export const MAX_SIDEBAR_WIDTH = 500;
+export const MIN_SIZEBAR_WIDTH = 280;
+export const SIDEBAR_WIDTH_RESIZE_STEP = 20;
 
 export default function Sidebar() {
 	const dropClearRef = useDropClear();

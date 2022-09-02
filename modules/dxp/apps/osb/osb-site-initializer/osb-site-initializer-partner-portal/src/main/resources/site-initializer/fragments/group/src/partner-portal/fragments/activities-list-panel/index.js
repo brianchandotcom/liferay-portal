@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayPanel from '@clayui/panel';
 import ClayTable from '@clayui/table';
 import React, {useEffect, useState} from 'react';
@@ -51,6 +52,7 @@ const BudgetBreakdownTable = ({mdfRequestActivityId}) => {
 				type: 'danger',
 			});
 		};
+
 		if (mdfRequestActivityId) {
 			getActivityToBudgets();
 		}
@@ -329,7 +331,7 @@ export default function () {
 		const getActivities = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
 			const response = await fetch(
-				`/o/c/mdfrequests/${mdfRequestId}/mdfRequestToActivities/?nestedFields=typeActivity,tactic`,
+				`http://localhost:8080/o/c/mdfrequests/${mdfRequestId}/mdfRequestToActivities/?nestedFields=typeActivity,tactic`,
 				{
 					headers: {
 						'accept': 'application/json',
@@ -343,6 +345,7 @@ export default function () {
 
 				return;
 			}
+
 			Liferay.Util.openToast({
 				message: 'An unexpected error occured.',
 				type: 'danger',
@@ -356,19 +359,27 @@ export default function () {
 
 	return (
 		<div>
-			{activities?.items.map((mdfRequestActivity, index) => (
-				<Panel key={index} mdfRequestActivity={mdfRequestActivity}>
-					<CampaignActivityTable
-						mdfRequestActivity={mdfRequestActivity}
-					/>
+			{activities?.items.length === 0 ? (
+				<ClayAlert displayType="info" title="Info:">
+					No entries were found
+				</ClayAlert>
+			) : (
+				activities?.items.map((mdfRequestActivity, index) => (
+					<Panel key={index} mdfRequestActivity={mdfRequestActivity}>
+						<CampaignActivityTable
+							mdfRequestActivity={mdfRequestActivity}
+						/>
 
-					<BudgetBreakdownTable
-						mdfRequestActivityId={mdfRequestActivity.id}
-					/>
+						<BudgetBreakdownTable
+							mdfRequestActivityId={mdfRequestActivity.id}
+						/>
 
-					<LeadListTable mdfRequestActivity={mdfRequestActivity} />
-				</Panel>
-			))}
+						<LeadListTable
+							mdfRequestActivity={mdfRequestActivity}
+						/>
+					</Panel>
+				))
+			)}
 		</div>
 	);
 }

@@ -143,11 +143,7 @@ public class ModularTrashEntryServiceWrapper extends TrashEntryServiceWrapper {
 				className, classPK, overrideClassPK, name));
 	}
 
-	@Reference(unbind = "-")
-	protected void setTrashEntryService(TrashEntryService trashEntryService) {
-		_trashEntryService = trashEntryService;
-	}
-
+	@Reference
 	private TrashEntryService _trashEntryService;
 
 	private static class TrashEntryOrderByComparatorAdapter

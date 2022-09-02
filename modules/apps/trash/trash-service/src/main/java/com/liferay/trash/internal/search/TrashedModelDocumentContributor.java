@@ -134,14 +134,10 @@ public class TrashedModelDocumentContributor
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		TrashedModelDocumentContributor.class);
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

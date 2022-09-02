@@ -289,13 +289,7 @@ public class ModularTrashEntryLocalServiceWrapper
 			baseModelSearchResult.getLength());
 	}
 
-	@Reference(unbind = "-")
-	protected void setTrashEntryLocalService(
-		TrashEntryLocalService trashEntryLocalService) {
-
-		_trashEntryLocalService = trashEntryLocalService;
-	}
-
+	@Reference
 	private TrashEntryLocalService _trashEntryLocalService;
 
 	private static class TrashEntryOrderByComparatorAdapter

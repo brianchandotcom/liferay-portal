@@ -183,13 +183,7 @@ public class ModularTrashVersionLocalServiceWrapper
 					com.liferay.trash.model.TrashVersion.class, trashVersion)));
 	}
 
-	@Reference(unbind = "-")
-	protected void setTrashVersionLocalService(
-		TrashVersionLocalService trashVersionLocalService) {
-
-		_trashVersionLocalService = trashVersionLocalService;
-	}
-
+	@Reference
 	private TrashVersionLocalService _trashVersionLocalService;
 
 }

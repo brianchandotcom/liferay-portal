@@ -214,7 +214,7 @@ definition {
 		}
 
 		task ("Then the web content creator could view the article diffs on granted email notification") {
-			MockMock.viewFormattedHTMLTextDIFF(
+			MockMock.viewFormattedHTMLTextDiffs(
 				asset = "Web Content: Article Approval Granted",
 				newContent = "Where does it come from?",
 				oldContent = "Web Content Content",

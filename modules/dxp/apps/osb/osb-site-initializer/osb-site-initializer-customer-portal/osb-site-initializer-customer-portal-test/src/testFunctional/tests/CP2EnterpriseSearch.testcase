@@ -38,7 +38,23 @@ definition {
     @description = "Automation ID: LPS-146021 | Test Summary: Verify that by clicking on subscriptions the user can select from a drop-down list his LES subscriptions"
     @priority = "5"
     test SeeListOfLessSubscriptions {
-        // TODO LPS-146021 SeeListOfLessSubscriptions pending implementation
+        task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+
+			CustomerPortal.enterOnProject(title = "Test Account Enterprise Search");
+		}
+
+        task ("Go to the product activation page") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Enterprise Search");
+		}
+
+        task ("Assert the list of LES subscriptions") {
+            var options = "Non-Production,Production,Backup";
+
+            CP2Utils.assertDropdownList(optionList = "${options}");
+        }
     }
 
     @description = "Automation ID: LPS-146022 | Test Summary: Verify that once a subscription was selected, the next drop-down is populated a list of start and end dates"

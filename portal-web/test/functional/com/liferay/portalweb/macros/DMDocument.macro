@@ -2810,6 +2810,34 @@ definition {
 		}
 	}
 
+	macro validateGuestUserViewPermission {
+		var latestVersionURL = JSONDocument.getLatestVersionURL(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			groupName = "${groupName}");
+
+		var curl = '''${latestVersionURL} -I''';
+
+		var responseHeader = JSONCurlUtil.post("${curl}");
+
+		if (isSet(guestWithViewPermission)) {
+			if (contains("${responseHeader}", "200")) {
+				echo("A guest user can access this file..");
+			}
+			else {
+				fail("FAIL!");
+			}
+		}
+
+		if (isSet(guestWithoutViewPermission)) {
+			if (contains("${responseHeader}", "302")) {
+				echo("The guest user will be redirected to the login page when the user doesn't have view permissions.");
+			}
+			else {
+				fail("FAIL!");
+			}
+		}
+	}
+
 	macro viewActiveURL {
 		AssertVisible(
 			key_activeURL = "${activeURL}",

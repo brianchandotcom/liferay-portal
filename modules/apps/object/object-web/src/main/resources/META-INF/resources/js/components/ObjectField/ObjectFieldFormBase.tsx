@@ -21,7 +21,6 @@ import {
 	Input,
 	Select,
 	SingleSelect,
-	Toggle,
 	invalidateRequired,
 	stringIncludesQuery,
 	useForm,
@@ -37,30 +36,12 @@ import React, {
 
 import {normalizeFieldSettings} from '../../utils/fieldSettings';
 import {toCamelCase} from '../../utils/string';
+import {AttachmentFormBase} from './AttachmentFormBase';
 
 import './ObjectFieldFormBase.scss';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const REQUIRED_MSG = Liferay.Language.get('required');
-
-const attachmentSources = [
-	{
-		description: Liferay.Language.get(
-			'files-can-be-stored-in-an-object-entry-or-in-a-specific-folder-in-documents-and-media'
-		),
-		label: Liferay.Language.get('upload-directly-from-users-computer'),
-		value: 'userComputer',
-	},
-	{
-		description: Liferay.Language.get(
-			'users-can-upload-or-select-existing-files-from-documents-and-media'
-		),
-		label: Liferay.Language.get(
-			'upload-or-select-from-documents-and-media-item-selector'
-		),
-		value: 'documentsAndMedia',
-	},
-];
 
 const aggregationFunctions = [
 	{
@@ -286,7 +267,7 @@ export default function ObjectFieldFormBase({
 			/>
 
 			{values.businessType === 'Attachment' && (
-				<AttachmentSourceProperty
+				<AttachmentFormBase
 					disabled={disabled}
 					error={errors.fileSource}
 					objectFieldSettings={
@@ -905,96 +886,6 @@ function AggregationSourceProperty({
 	);
 }
 
-function AttachmentSourceProperty({
-	disabled,
-	error,
-	objectFieldSettings,
-	objectName,
-	setValues,
-}: IAttachmentSourcePropertyProps) {
-	const settings = normalizeFieldSettings(objectFieldSettings);
-
-	const attachmentSource = attachmentSources.find(
-		({value}) => value === settings.fileSource
-	);
-
-	const handleAttachmentSourceChange = ({value}: {value: string}) => {
-		const fileSource: ObjectFieldSetting = {name: 'fileSource', value};
-
-		const updatedSettings = objectFieldSettings.filter(
-			(setting) =>
-				setting.name !== 'fileSource' &&
-				setting.name !== 'showFilesInDocumentsAndMedia' &&
-				setting.name !== 'storageDLFolderPath'
-		);
-
-		updatedSettings.push(fileSource);
-
-		if (value === 'userComputer') {
-			updatedSettings.push({
-				name: 'showFilesInDocumentsAndMedia',
-				value: false,
-			});
-		}
-
-		setValues({objectFieldSettings: updatedSettings});
-	};
-
-	const toggleShowFiles = (value: boolean) => {
-		const updatedSettings = objectFieldSettings.filter(
-			(setting) =>
-				setting.name !== 'showFilesInDocumentsAndMedia' &&
-				setting.name !== 'storageDLFolderPath'
-		);
-
-		updatedSettings.push({
-			name: 'showFilesInDocumentsAndMedia',
-			value,
-		});
-
-		if (value) {
-			updatedSettings.push({
-				name: 'storageDLFolderPath',
-				value: `/${objectName}`,
-			});
-		}
-
-		setValues({objectFieldSettings: updatedSettings});
-	};
-
-	return (
-		<>
-			<SingleSelect
-				disabled={disabled}
-				error={error}
-				label={Liferay.Language.get('request-files')}
-				onChange={handleAttachmentSourceChange}
-				options={attachmentSources}
-				required
-				value={attachmentSource?.label}
-			/>
-
-			{settings.fileSource === 'userComputer' && (
-				<ClayForm.Group className="lfr-objects__object-field-form-base-container">
-					<Toggle
-						disabled={disabled}
-						label={Liferay.Language.get(
-							'show-files-in-documents-and-media'
-						)}
-						name="showFilesInDocumentsAndMedia"
-						onToggle={toggleShowFiles}
-						toggled={!!settings.showFilesInDocumentsAndMedia}
-						tooltip={Liferay.Language.get(
-							'when-activated-users-can-define-a-folder-within-documents-and-media-to-display-the-files-leave-it-unchecked-for-files-to-be-stored-individually-per-entry'
-						)}
-						tooltipAlign="top"
-					/>
-				</ClayForm.Group>
-			)}
-		</>
-	);
-}
-
 interface IAggregationSourcePropertyProps {
 	disabled?: boolean;
 	editingField?: boolean;
@@ -1003,14 +894,6 @@ interface IAggregationSourcePropertyProps {
 	objectFieldSettings: ObjectFieldSetting[];
 	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
 	onRelationshipChange?: (objectDefinitionId2: number) => void;
-	setValues: (values: Partial<ObjectField>) => void;
-}
-
-interface IAttachmentSourcePropertyProps {
-	disabled?: boolean;
-	error?: string;
-	objectFieldSettings: ObjectFieldSetting[];
-	objectName: string;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 interface IUseObjectFieldForm {

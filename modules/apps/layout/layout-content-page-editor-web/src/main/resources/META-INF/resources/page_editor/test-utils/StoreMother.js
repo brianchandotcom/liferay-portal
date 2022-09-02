@@ -35,6 +35,7 @@ const DEFAULT_STATE = {
 	permissions: {},
 	segmentsExperienceId: '0',
 	selectedViewportSize: 'desktop',
+	sidebar: {hidden: false, panelId: 'browser'},
 };
 
 const StoreMother = {

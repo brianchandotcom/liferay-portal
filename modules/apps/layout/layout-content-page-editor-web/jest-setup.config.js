@@ -71,7 +71,10 @@ jest.mock(
 			defaultSegmentsExperienceId: '0',
 			frontendTokens: {},
 			layoutType: 'content',
+			panels: [['browser']],
 			portletNamespace: 'page-editor-portlet-namespace',
+			selectedViewportSize: 'desktop',
+			sidebarPanels: {browser: {sidebarPanelId: 'browser'}},
 		},
 	})
 );

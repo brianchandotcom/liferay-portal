@@ -67,13 +67,7 @@ public class DeleteFormInstanceRecordMVCActionCommand
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormInstanceRecordService(
-		DDMFormInstanceRecordService ddmFormInstanceRecordService) {
-
-		_ddmFormInstanceRecordService = ddmFormInstanceRecordService;
-	}
-
+	@Reference
 	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;
 
 }

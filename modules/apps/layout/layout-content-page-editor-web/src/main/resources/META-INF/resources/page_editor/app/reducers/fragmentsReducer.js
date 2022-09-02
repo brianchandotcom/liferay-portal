@@ -16,8 +16,7 @@ import {
 	ADD_FRAGMENT_COMPOSITION,
 	TOGGLE_FRAGMENT_HIGHLIGHTED,
 } from '../actions/types';
-
-const HIGHLIGHTED_COLLECTION_ID = 'highlighted';
+import {HIGHLIGHTED_COLLECTION_ID} from '../config/constants/highlightedCollectionId';
 
 const DEFAULT_HIGHLIGHTED_COLLECTION = {
 	fragmentCollectionId: HIGHLIGHTED_COLLECTION_ID,

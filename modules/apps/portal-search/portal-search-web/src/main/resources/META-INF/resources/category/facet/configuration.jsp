@@ -93,8 +93,6 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 							module="js/components/SelectVocabularies"
 							props='<%=
 								HashMapBuilder.<String, Object>put(
-									"isDisplayInfoSelectedVocabulariesHidden", true
-								).put(
 									"namespace", liferayPortletResponse.getNamespace()
 								).put(
 									"vocabularyIds", StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds())

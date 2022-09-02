@@ -75,7 +75,7 @@ definition {
 
 	macro deleteEntryCloudEnvironments {
 		var key_status = "${entry}";
-		
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "${portlet}");

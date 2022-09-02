@@ -716,7 +716,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				String customMessage = messageMap.get(
 					String.valueOf(themeDisplay.getLocale()));
 
-				if (Validator.isNotNull(customMessage)) {
+				if (customMessage != null) {
 					message = customMessage;
 				}
 			}

@@ -12,9 +12,8 @@
  * details.
  */
 
-import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
-import {useModal} from '@clayui/modal';
 import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {openConfirmModal} from 'frontend-js-web';
@@ -39,7 +38,6 @@ import EditModeSelector from './EditModeSelector';
 import ExperimentsLabel from './ExperimentsLabel';
 import HideSidebarButton from './HideSidebarButton';
 import NetworkStatusBar from './NetworkStatusBar';
-import PreviewModal from './PreviewModal';
 import PublishButton from './PublishButton';
 import Translation from './Translation';
 import UnsafeHTML from './UnsafeHTML';
@@ -69,16 +67,6 @@ function ToolbarBody({className}) {
 		segmentsExperimentStatus,
 		selectedViewportSize,
 	} = store;
-
-	const [openPreviewModal, setOpenPreviewModal] = useState(false);
-
-	const {observer: observerPreviewModal} = useModal({
-		onClose: () => {
-			if (isMounted()) {
-				setOpenPreviewModal(false);
-			}
-		},
-	});
 
 	const loadingRef = useRef(() => {
 		Promise.all(
@@ -287,25 +275,9 @@ function ToolbarBody({className}) {
 
 				<li className="nav-item">
 					<ul className="navbar-nav">
-						{Liferay.FeatureFlags['LPS-153452'] ? (
-							<li className="nav-item">
-								<HideSidebarButton />
-							</li>
-						) : (
-							<li className="nav-item">
-								<ClayButtonWithIcon
-									className="btn btn-secondary"
-									displayType="secondary"
-									onClick={() => setOpenPreviewModal(true)}
-									small
-									symbol="view"
-									title={Liferay.Language.get('preview')}
-									type="button"
-								>
-									{Liferay.Language.get('preview')}
-								</ClayButtonWithIcon>
-							</li>
-						)}
+						<li className="nav-item">
+							<HideSidebarButton />
+						</li>
 
 						{config.layoutType === LAYOUT_TYPES.content && (
 							<li className="nav-item">
@@ -340,10 +312,6 @@ function ToolbarBody({className}) {
 					/>
 				</li>
 			</ul>
-
-			{!Liferay.FeatureFlags['LPS-153452'] && openPreviewModal && (
-				<PreviewModal observer={observerPreviewModal} />
-			)}
 		</ClayLayout.ContainerFluid>
 	);
 }

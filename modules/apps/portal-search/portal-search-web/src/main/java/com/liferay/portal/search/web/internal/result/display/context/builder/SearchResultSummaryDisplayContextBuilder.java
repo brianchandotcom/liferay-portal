@@ -580,7 +580,11 @@ public class SearchResultSummaryDisplayContextBuilder {
 
 		long userId = GetterUtil.getLong(articleIdString);
 
-		String creatorByPortraitUrlString = _getPortraitURLString(userId);
+		String creatorByPortraitUrlString = null;
+
+		if (userId != 0) {
+			creatorByPortraitUrlString = _getPortraitURLString(userId);
+		}
 
 		if (creatorByPortraitUrlString != null) {
 			searchResultSummaryDisplayContext.setCreatedByUserPortraitURLString(
@@ -843,7 +847,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 
 		String statusByUserId = _getFieldValueString("statusByUserId");
 
-		if (statusByUserId != null) {
+		if (!Validator.isBlank(statusByUserId)) {
 			long userId = GetterUtil.getLong(statusByUserId);
 
 			User user = _userLocalService.fetchUser(userId);
@@ -863,11 +867,14 @@ public class SearchResultSummaryDisplayContextBuilder {
 
 		String statusByUserId = _getFieldValueString("statusByUserId");
 
-		if (statusByUserId != null) {
+		if (!Validator.isBlank(statusByUserId)) {
 			long userId = GetterUtil.getLong(statusByUserId);
 
-			String modifiedByUserPortraitURLString = _getPortraitURLString(
-				userId);
+			String modifiedByUserPortraitURLString = null;
+
+			if (userId != 0) {
+				modifiedByUserPortraitURLString = _getPortraitURLString(userId);
+			}
 
 			if (modifiedByUserPortraitURLString != null) {
 				searchResultSummaryDisplayContext.

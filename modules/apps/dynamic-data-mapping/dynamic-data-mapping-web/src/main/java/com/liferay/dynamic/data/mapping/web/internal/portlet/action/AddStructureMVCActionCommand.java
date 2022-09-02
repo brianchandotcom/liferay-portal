@@ -61,18 +61,6 @@ public class AddStructureMVCActionCommand extends BaseDDMMVCActionCommand {
 		setRedirectAttribute(actionRequest, structure);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDM(DDM ddm) {
-		_ddm = ddm;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		_ddmStructureService = ddmStructureService;
-	}
-
 	private DDMStructure _addStructure(ActionRequest actionRequest)
 		throws Exception {
 
@@ -104,7 +92,10 @@ public class AddStructureMVCActionCommand extends BaseDDMMVCActionCommand {
 			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
 	}
 
+	@Reference
 	private DDM _ddm;
+
+	@Reference
 	private DDMStructureService _ddmStructureService;
 
 }

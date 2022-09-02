@@ -58,13 +58,7 @@ public class GetStructureMVCResourceCommand extends BaseMVCResourceCommand {
 			ContentTypes.APPLICATION_JSON);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		_ddmStructureService = ddmStructureService;
-	}
-
+	@Reference
 	private DDMStructureService _ddmStructureService;
 
 }

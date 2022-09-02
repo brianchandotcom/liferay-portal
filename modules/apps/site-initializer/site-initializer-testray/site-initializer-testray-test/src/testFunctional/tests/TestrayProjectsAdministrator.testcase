@@ -12,21 +12,21 @@ definition {
 
 		User.firstLoginPG();
 
-		// Testray.createTestraySite(siteName = "Testray 2");
+		Testray.createTestraySite(siteName = "Testray 2");
 
-		// Refresh();
+		Refresh();
 	}
 
 	tearDown {
-		// var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		Testray.deleteAllProjects();
 
-		// Testray.tearDownCP();
+		Testray.tearDownCP();
 
-		// if ("${testPortalInstance}" == "true") {
-		// 	PortalInstances.tearDownCP();
-		// }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
 	}
 
 	@description = "This is a test for LPS-160539. Verify if as an Administrator I am able to add a Project"

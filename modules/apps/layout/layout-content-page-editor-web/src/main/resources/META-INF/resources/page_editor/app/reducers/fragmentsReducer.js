@@ -63,32 +63,40 @@ export default function fragmentsReducer(fragments = [], action) {
 		case TOGGLE_FRAGMENT_HIGHLIGHTED: {
 			const {
 				fragmentEntryKey,
+				groupId,
 				highlighted,
 				highlightedFragments,
 			} = action;
 
-			const nextFragments = fragments.reduce(
-				(collections, collection) => {
-					if (
-						collection.fragmentCollectionId !==
-						HIGHLIGHTED_COLLECTION_ID
-					) {
-						collections.push({
-							...collection,
-							fragmentEntries: collection.fragmentEntries.map(
-								(fragment) =>
-									fragment.fragmentEntryKey ===
-									fragmentEntryKey
-										? {...fragment, highlighted}
-										: fragment
-							),
-						});
-					}
+			const nextFragments = [];
 
-					return collections;
-				},
-				[]
-			);
+			fragments.forEach((collection) => {
+				if (
+					collection.fragmentCollectionId ===
+					HIGHLIGHTED_COLLECTION_ID
+				) {
+					return;
+				}
+
+				nextFragments.push({
+					...collection,
+					fragmentEntries: collection.fragmentEntries.map(
+						(fragment) => {
+							const fragmentGroupId = fragment.groupId || '0';
+
+							if (
+								fragment.fragmentEntryKey !==
+									fragmentEntryKey ||
+								fragmentGroupId !== groupId
+							) {
+								return fragment;
+							}
+
+							return {...fragment, highlighted};
+						}
+					),
+				});
+			});
 
 			if (highlightedFragments.length) {
 				nextFragments.unshift({

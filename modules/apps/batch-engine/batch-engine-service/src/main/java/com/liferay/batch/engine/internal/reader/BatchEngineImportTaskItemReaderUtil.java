@@ -16,6 +16,7 @@ package com.liferay.batch.engine.internal.reader;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -123,6 +124,14 @@ public class BatchEngineImportTaskItemReaderUtil {
 		return targetFieldNameValueMap;
 	}
 
-	private static final ObjectMapper _objectMapper = new ObjectMapper();
+	private static final ObjectMapper _objectMapper = new ObjectMapper() {
+		{
+			SimpleModule simpleModule = new SimpleModule();
+
+			simpleModule.addDeserializer(Map.class, new MapStdDeserializer());
+
+			registerModule(simpleModule);
+		}
+	};
 
 }

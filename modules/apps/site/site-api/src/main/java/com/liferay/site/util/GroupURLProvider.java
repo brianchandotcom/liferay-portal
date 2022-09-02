@@ -154,18 +154,6 @@ public class GroupURLProvider {
 		return getGroupAdministrationURL(group, portletRequest);
 	}
 
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelCategoryRegistry(
-		PanelCategoryRegistry panelCategoryRegistry) {
-
-		_panelCategoryRegistry = panelCategoryRegistry;
-	}
-
 	private String _getDepotDashboardGroupURL(
 		Group group, PortletRequest portletRequest) {
 
@@ -213,7 +201,10 @@ public class GroupURLProvider {
 	@Reference
 	private GroupPermission _groupPermission;
 
+	@Reference
 	private PanelAppRegistry _panelAppRegistry;
+
+	@Reference
 	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	@Reference

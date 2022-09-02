@@ -75,11 +75,7 @@ public class SiteAssetRendererFactory extends BaseAssetRendererFactory<Group> {
 		return TYPE;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 }

@@ -63,20 +63,15 @@ public class SiteItemSelectorViewRendererImpl
 				sitesItemSelectorViewDisplayContext.getPortletResponse()));
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.item.selector.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	@Reference
 	private GroupURLProvider _groupURLProvider;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.site.item.selector.web)"
+	)
 	private ServletContext _servletContext;
 
 }

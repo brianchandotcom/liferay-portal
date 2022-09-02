@@ -146,30 +146,6 @@ public class MySitesPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setMembershipRequestLocalService(
-		MembershipRequestLocalService membershipRequestLocalService) {
-
-		_membershipRequestLocalService = membershipRequestLocalService;
-	}
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.site.my.sites.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserService(UserService userService) {
-		_userService = userService;
-	}
-
 	private long[] _filterAddUserIds(long groupId, long[] userIds)
 		throws Exception {
 
@@ -198,8 +174,18 @@ public class MySitesPortlet extends MVCPortlet {
 		return ArrayUtil.toArray(filteredUserIds.toArray(new Long[0]));
 	}
 
+	@Reference
 	private MembershipRequestLocalService _membershipRequestLocalService;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.site.my.sites.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
+	)
+	private Release _release;
+
+	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
 	private UserService _userService;
 
 }

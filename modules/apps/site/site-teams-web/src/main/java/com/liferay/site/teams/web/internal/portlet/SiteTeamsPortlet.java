@@ -218,23 +218,13 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setTeamService(TeamService teamService) {
-		_teamService = teamService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserGroupService(UserGroupService userGroupService) {
-		_userGroupService = userGroupService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserService(UserService userService) {
-		_userService = userService;
-	}
-
+	@Reference
 	private TeamService _teamService;
+
+	@Reference
 	private UserGroupService _userGroupService;
+
+	@Reference
 	private UserService _userService;
 
 }

@@ -167,11 +167,6 @@ public class RecentGroupManager {
 		return groups;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	private long _getLiveGroupId(long groupId) {
 		Group group = _groupLocalService.fetchGroup(groupId);
 
@@ -204,6 +199,7 @@ public class RecentGroupManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RecentGroupManager.class);
 
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference

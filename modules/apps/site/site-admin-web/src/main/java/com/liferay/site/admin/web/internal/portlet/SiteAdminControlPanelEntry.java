@@ -62,11 +62,7 @@ public class SiteAdminControlPanelEntry extends BaseControlPanelEntry {
 			permissionChecker, group, portlet);
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 }

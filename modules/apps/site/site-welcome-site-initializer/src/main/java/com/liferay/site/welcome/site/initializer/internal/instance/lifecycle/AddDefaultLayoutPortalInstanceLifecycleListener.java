@@ -92,28 +92,6 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 		}
 	}
 
-	@Reference(
-		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN + ")",
-		unbind = "-"
-	)
-	public void setPortlet(Portlet portlet) {
-	}
-
-	@Reference(
-		target = "(fragment.collection.key=BASIC_COMPONENT)", unbind = "-"
-	)
-	protected void setFragmentCollectionContributorRegistration(
-		FragmentCollectionContributorRegistration
-			fragmentCollectionContributorRegistration) {
-	}
-
-	@Reference(
-		target = ModuleServiceLifecycle.PORTLETS_INITIALIZED, unbind = "-"
-	)
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private User _getUser(long companyId) throws PortalException {
 		Role role = _roleLocalService.fetchRole(
 			companyId, RoleConstants.ADMINISTRATOR);
@@ -132,6 +110,10 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 		return adminUsers.get(0);
 	}
 
+	@Reference(target = "(fragment.collection.key=BASIC_COMPONENT)")
+	private FragmentCollectionContributorRegistration
+		_fragmentCollectionContributorRegistration;
+
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
@@ -145,6 +127,14 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference(
+		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN + ")"
+	)
+	private Portlet _portlet;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

@@ -197,23 +197,6 @@ public class TeamStagedModelDataHandler
 		return true;
 	}
 
-	@Reference(unbind = "-")
-	protected void setTeamLocalService(TeamLocalService teamLocalService) {
-		_teamLocalService = teamLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserGroupLocalService(
-		UserGroupLocalService userGroupLocalService) {
-
-		_userGroupLocalService = userGroupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private Team _fetchExistingTeam(String uuid, long groupId, String name) {
 		Team team = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
@@ -224,8 +207,13 @@ public class TeamStagedModelDataHandler
 		return _teamLocalService.fetchTeam(groupId, name);
 	}
 
+	@Reference
 	private TeamLocalService _teamLocalService;
+
+	@Reference
 	private UserGroupLocalService _userGroupLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

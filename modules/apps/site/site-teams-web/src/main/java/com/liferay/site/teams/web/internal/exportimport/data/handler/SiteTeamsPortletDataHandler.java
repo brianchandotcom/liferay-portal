@@ -146,14 +146,10 @@ public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {
 		actionableDynamicQuery.performCount();
 	}
 
-	@Reference(unbind = "-")
-	protected void setTeamLocalService(TeamLocalService teamLocalService) {
-		_teamLocalService = teamLocalService;
-	}
-
 	@Reference
 	private Staging _staging;
 
+	@Reference
 	private TeamLocalService _teamLocalService;
 
 }

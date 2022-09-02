@@ -208,19 +208,19 @@ function VocabularyTree({
 
 function SelectVocabularies({
 	namespace = '',
-	vocabularyIds = SELECT_OPTIONS.ALL.value,
+	initialSelectedVocabularyIds = SELECT_OPTIONS.ALL.value,
 	vocabularyIdsInputName = '',
 }) {
 	const initialSelectedIdsRef = useRef(
 		new Set(
-			vocabularyIds === SELECT_OPTIONS.ALL.value
+			initialSelectedVocabularyIds === SELECT_OPTIONS.ALL.value
 				? []
-				: convertToIDArray(vocabularyIds)
+				: convertToIDArray(initialSelectedVocabularyIds)
 		)
 	);
 
 	const [selection, setSelection] = useState(
-		vocabularyIds === SELECT_OPTIONS.ALL.value
+		initialSelectedVocabularyIds === SELECT_OPTIONS.ALL.value
 			? SELECT_OPTIONS.ALL.name
 			: SELECT_OPTIONS.SELECT.name
 	);

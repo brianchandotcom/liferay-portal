@@ -16,6 +16,7 @@ package com.liferay.item.selector.criteria.upload.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -28,6 +29,12 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 			@Override
 			public UploadItemSelectorCriterion build() {
+				if (_uploadItemSelectorCriterion.getMaxFileSize() <= 0) {
+					_uploadItemSelectorCriterion.setMaxFileSize(
+						UploadServletRequestConfigurationHelperUtil.
+							getMaxSize());
+				}
+
 				return _uploadItemSelectorCriterion;
 			}
 

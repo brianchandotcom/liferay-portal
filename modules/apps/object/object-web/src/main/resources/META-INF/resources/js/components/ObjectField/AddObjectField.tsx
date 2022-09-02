@@ -20,8 +20,8 @@ import {Observer} from '@clayui/modal/lib/types';
 import {API, Input} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {toCamelCase} from '../utils/string';
-import ObjectFieldFormBase, {useObjectFieldForm} from './ObjectFieldFormBase';
+import {toCamelCase} from '../../utils/string';
+import ObjectFieldFormBase, {useObjectFieldForm} from '../ObjectFieldFormBase';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
@@ -130,7 +130,7 @@ function ModalAddObjectField({
 	);
 }
 
-export default function ModalWithProvider({
+export default function AddObjectField({
 	apiURL,
 	objectDefinitionId,
 	objectFieldTypes,

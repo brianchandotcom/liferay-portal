@@ -12,9 +12,9 @@
  * details.
  */
 
-/// <reference types="react" />
+import React from 'react';
 
-export default function ModalWithProvider({
+export default function AddObjectField({
 	apiURL,
 	objectDefinitionId,
 	objectFieldTypes,

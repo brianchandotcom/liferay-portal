@@ -41,7 +41,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 
 <div id="<portlet:namespace />AddObjectField">
 	<react:component
-		module="js/components/ModalAddObjectField"
+		module="js/components/ObjectField/AddObjectField"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsFieldsDisplayContext.getAPIURL()

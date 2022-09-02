@@ -21,7 +21,7 @@ ObjectLayoutBox categorizationObjectLayoutBox = objectEntryDisplayContext.getObj
 <c:if test="<%= objectDefinition.isEnableCategorization() && (categorizationObjectLayoutBox != null) %>">
 
 	<%
-	long classPK = (objectEntry == null) ? 0 : GetterUtil.getLong(objectEntry.getExternalReferenceCode());
+	long classPK = (objectEntry == null) ? 0 : objectEntry.getId();
 	%>
 
 	<liferay-frontend:fieldset-group>

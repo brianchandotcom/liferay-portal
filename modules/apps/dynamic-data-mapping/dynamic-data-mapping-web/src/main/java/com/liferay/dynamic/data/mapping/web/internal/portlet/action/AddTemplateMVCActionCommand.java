@@ -83,13 +83,7 @@ public class AddTemplateMVCActionCommand extends BaseDDMMVCActionCommand {
 		return ParamUtil.getString(uploadPortletRequest, "scriptContent");
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMTemplateService(
-		DDMTemplateService ddmTemplateService) {
-
-		this.ddmTemplateService = ddmTemplateService;
-	}
-
+	@Reference
 	protected DDMTemplateService ddmTemplateService;
 
 	@Reference

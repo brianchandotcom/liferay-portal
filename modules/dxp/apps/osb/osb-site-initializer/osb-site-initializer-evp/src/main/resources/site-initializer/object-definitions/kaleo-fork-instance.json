@@ -15,7 +15,7 @@
 	},
 	"active": false,
 	"label": {
-		"en_US": "EVPKaleoForkInstance"
+		"en_US": "EVP Kaleo Fork Instanc"
 	},
 	"name": "EVPKaleoForkInstance",
 	"objectActions": [
@@ -29,7 +29,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "classNameId"
+				"en_US": "Class Name Id"
 			},
 			"name": "classNameId",
 			"objectFieldSettings": [
@@ -47,7 +47,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "classPK"
+				"en_US": "Class PK"
 			},
 			"name": "classPK",
 			"objectFieldSettings": [
@@ -155,7 +155,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "type_"
+				"en_US": "Type"
 			},
 			"name": "type",
 			"objectFieldSettings": [
@@ -173,7 +173,7 @@
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "EVPKaleoForkInstances"
+		"en_US": "EVP Kaleo Fork Instances"
 	},
 	"portlet": false,
 	"scope": "company",

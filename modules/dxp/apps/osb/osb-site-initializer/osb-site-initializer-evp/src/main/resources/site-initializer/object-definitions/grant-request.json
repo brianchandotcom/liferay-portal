@@ -15,9 +15,9 @@
 	},
 	"active": false,
 	"label": {
-		"en_US": "EVPServiceRequest"
+		"en_US": "EVP Grant Request"
 	},
-	"name": "EVPServiceRequest",
+	"name": "EVPGrantRequest",
 	"objectActions": [
 	],
 	"objectFields": [
@@ -29,7 +29,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "behalfOf"
+				"en_US": "BehalfOf"
 			},
 			"name": "behalfOf",
 			"objectFieldSettings": [
@@ -51,103 +51,9 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "behalfOfOther"
+				"en_US": "BehalfOf Other"
 			},
 			"name": "behalfOfOther",
-			"objectFieldSettings": [
-				{
-					"name": "showCounter",
-					"value": "false"
-				}
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "String"
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "confirmedEndDate"
-			},
-			"name": "confirmedEndDate",
-			"objectFieldSettings": [
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "Date"
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "confirmedStartDate"
-			},
-			"name": "confirmedStartDate",
-			"objectFieldSettings": [
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "Date"
-		},
-		{
-			"DBType": "Integer",
-			"businessType": "Integer",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "confirmedTotalHours"
-			},
-			"name": "confirmedTotalHours",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Integer"
-		},
-		{
-			"DBType": "Integer",
-			"businessType": "Integer",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "contactBenefit"
-			},
-			"name": "contactBenefit",
-			"objectFieldSettings": [
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "Integer"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "contactComments"
-			},
-			"name": "contactComments",
 			"objectFieldSettings": [
 				{
 					"name": "showCounter",
@@ -167,7 +73,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "contactEmailAddressId"
+				"en_US": "Contact Email Address Id"
 			},
 			"name": "contactEmailAddressId",
 			"objectFieldSettings": [
@@ -185,7 +91,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "contactPhoneId"
+				"en_US": "Contact PhoneId"
 			},
 			"name": "contactPhoneId",
 			"objectFieldSettings": [
@@ -203,7 +109,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "contactUserId"
+				"en_US": "Contact User Id"
 			},
 			"name": "contactUserId",
 			"objectFieldSettings": [
@@ -250,26 +156,22 @@
 			"type": "String"
 		},
 		{
-			"DBType": "String",
-			"businessType": "Text",
+			"DBType": "Date",
+			"businessType": "Date",
 			"defaultValue": "",
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
+			"indexedLanguageId": "",
 			"label": {
-				"en_US": "description"
+				"en_US": "Date Status"
 			},
-			"name": "description",
+			"name": "dateStatus",
 			"objectFieldSettings": [
-				{
-					"name": "showCounter",
-					"value": "false"
-				}
 			],
 			"required": false,
 			"state": false,
 			"system": false,
-			"type": "String"
+			"type": "Date"
 		},
 		{
 			"DBType": "String",
@@ -279,9 +181,9 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "employeeBenefit"
+				"en_US": "Description"
 			},
-			"name": "employeeBenefit",
+			"name": "description",
 			"objectFieldSettings": [
 				{
 					"name": "showCounter",
@@ -301,7 +203,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "employmentHoursPerWeek"
+				"en_US": "Employment Hours Per Week"
 			},
 			"name": "employmentHoursPerWeek",
 			"objectFieldSettings": [
@@ -319,7 +221,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "employmentType"
+				"en_US": "Employment Type"
 			},
 			"name": "employmentType",
 			"objectFieldSettings": [
@@ -337,7 +239,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "evpRequestOrganizationId"
+				"en_US": "Evp Request Organization Id"
 			},
 			"name": "evpRequestOrganizationId",
 			"objectFieldSettings": [
@@ -346,50 +248,6 @@
 			"state": false,
 			"system": false,
 			"type": "Long"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "feedbackDescription"
-			},
-			"name": "feedbackDescription",
-			"objectFieldSettings": [
-				{
-					"name": "showCounter",
-					"value": "false"
-				}
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "hash"
-			},
-			"name": "hash",
-			"objectFieldSettings": [
-				{
-					"name": "showCounter",
-					"value": "false"
-				}
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "String"
 		},
 		{
 			"DBType": "Long",
@@ -407,24 +265,6 @@
 			"required": false,
 			"state": false,
 			"system": true,
-			"type": "Long"
-		},
-		{
-			"DBType": "Long",
-			"businessType": "LongInteger",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "managerUserId"
-			},
-			"name": "managerUserId",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
 			"type": "Long"
 		},
 		{
@@ -453,33 +293,15 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "parentEVPServiceRequestId"
+				"en_US": "Parent EVP Grant Request Id"
 			},
-			"name": "parentEVPServiceRequestId",
+			"name": "parentEVPGrantRequestId",
 			"objectFieldSettings": [
 			],
 			"required": true,
 			"state": false,
 			"system": false,
 			"type": "Long"
-		},
-		{
-			"DBType": "Boolean",
-			"businessType": "Boolean",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "promoteTrip"
-			},
-			"name": "promoteTrip",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Boolean"
 		},
 		{
 			"DBType": "String",
@@ -489,7 +311,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "purpose"
+				"en_US": "Purpose"
 			},
 			"name": "purpose",
 			"objectFieldSettings": [
@@ -511,7 +333,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "purposeOther"
+				"en_US": "Purpose Other"
 			},
 			"name": "purposeOther",
 			"objectFieldSettings": [
@@ -526,82 +348,6 @@
 			"type": "String"
 		},
 		{
-			"DBType": "String",
-			"businessType": "Text",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "recipientBenefit"
-			},
-			"name": "recipientBenefit",
-			"objectFieldSettings": [
-				{
-					"name": "showCounter",
-					"value": "false"
-				}
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "String"
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "requestedEndDate"
-			},
-			"name": "requestedEndDate",
-			"objectFieldSettings": [
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "Date"
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "requestedStartDate"
-			},
-			"name": "requestedStartDate",
-			"objectFieldSettings": [
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "Date"
-		},
-		{
-			"DBType": "Integer",
-			"businessType": "Integer",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "requestedTotalHours"
-			},
-			"name": "requestedTotalHours",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Integer"
-		},
-		{
 			"DBType": "Long",
 			"businessType": "LongInteger",
 			"defaultValue": "",
@@ -609,7 +355,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "requestOrganizationAddressId"
+				"en_US": "Request Organization Address Id"
 			},
 			"name": "requestOrganizationAddressId",
 			"objectFieldSettings": [
@@ -627,7 +373,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "requestOrganizationWebsiteId"
+				"en_US": "Request Organization Website Id"
 			},
 			"name": "requestOrganizationWebsiteId",
 			"objectFieldSettings": [
@@ -636,24 +382,6 @@
 			"state": false,
 			"system": false,
 			"type": "Long"
-		},
-		{
-			"DBType": "Boolean",
-			"businessType": "Boolean",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "shareStory"
-			},
-			"name": "shareStory",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Boolean"
 		},
 		{
 			"DBType": "String",
@@ -681,7 +409,47 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "subsidiaryGroupId"
+				"en_US": "Status User Id"
+			},
+			"name": "statusUserId",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Status User Name"
+			},
+			"name": "statusUserName",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Subsidiary Group Id"
 			},
 			"name": "subsidiaryGroupId",
 			"objectFieldSettings": [
@@ -699,7 +467,7 @@
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "EVPServiceRequests"
+		"en_US": "EVP Grant Requests"
 	},
 	"portlet": false,
 	"scope": "company",

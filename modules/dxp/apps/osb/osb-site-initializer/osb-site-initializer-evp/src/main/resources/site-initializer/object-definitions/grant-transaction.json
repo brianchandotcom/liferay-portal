@@ -13,33 +13,29 @@
 	},
 	"active": true,
 	"label": {
-		"en_US": "EVPDivision"
+		"en_US": "EVP Grant Transaction"
 	},
-	"name": "EVPDivision",
+	"name": "EVPGrantTransaction",
 	"objectActions": [
 	],
 	"objectFields": [
 		{
-			"DBType": "String",
-			"businessType": "Text",
+			"DBType": "Double",
+			"businessType": "Decimal",
 			"defaultValue": "",
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
+			"indexedLanguageId": "",
 			"label": {
-				"en_US": "abbreviation"
+				"en_US": "Amount"
 			},
-			"name": "abbreviation",
+			"name": "amount",
 			"objectFieldSettings": [
-				{
-					"name": "showCounter",
-					"value": "false"
-				}
 			],
-			"required": false,
+			"required": true,
 			"state": false,
 			"system": false,
-			"type": "String"
+			"type": "Double"
 		},
 		{
 			"DBType": "Date",
@@ -78,6 +74,100 @@
 			"type": "String"
 		},
 		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Currency Code"
+			},
+			"name": "currencyCode",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Date"
+			},
+			"name": "date",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "EVP Grant Request Id"
+			},
+			"name": "evpGrantRequestId",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "File Entry Id"
+			},
+			"name": "fileEntryId",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"defaultValue": "",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Grant Type"
+			},
+			"name": "grantType",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "Integer"
+		},
+		{
 			"DBType": "Long",
 			"businessType": "LongInteger",
 			"defaultValue": "",
@@ -114,42 +204,6 @@
 			"type": "Date"
 		},
 		{
-			"DBType": "Long",
-			"businessType": "LongInteger",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "organizationId"
-			},
-			"name": "organizationId",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Long"
-		},
-		{
-			"DBType": "Long",
-			"businessType": "LongInteger",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "parentEVPDivisionId"
-			},
-			"name": "parentEVPDivisionId",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Long"
-		},
-		{
 			"DBType": "String",
 			"businessType": "Text",
 			"defaultValue": "",
@@ -166,34 +220,24 @@
 			"state": false,
 			"system": true,
 			"type": "String"
-		},
-		{
-			"DBType": "Integer",
-			"businessType": "Integer",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "type_"
-			},
-			"name": "type",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Integer"
 		}
 	],
 	"objectLayouts": [
+		{
+			"defaultObjectLayout": false,
+			"name": {
+				"en_US": "layout"
+			},
+			"objectLayoutTabs": [
+			]
+		}
 	],
 	"objectViews": [
 	],
-	"panelCategoryKey": "control_panel.users",
+	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "EVPDivisions"
+		"en_US": "EVP Grant Transactions"
 	},
 	"portlet": false,
 	"scope": "company",

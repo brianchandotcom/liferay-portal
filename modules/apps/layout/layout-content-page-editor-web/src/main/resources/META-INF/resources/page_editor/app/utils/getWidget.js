@@ -15,7 +15,7 @@
 export default function getWidget(widgets, portletId) {
 	let widget = null;
 
-	for (let i = 0; i < widgets.length; i++) {
+	for (let i = 0; i < widgets?.length; i++) {
 		const {categories = [], portlets = []} = widgets[i];
 		const categoryPortlet = portlets.find(
 			(portlet) => portlet.portletId === portletId

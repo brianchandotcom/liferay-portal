@@ -1045,6 +1045,80 @@ definition {
 			userPassword = "Invalid");
 	}
 
+	@description = "This test changes password through the API Explorer GUI."
+	@priority = "3"
+	test ChangeUserPasswordViaAPIExplorerAPI {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given a user logs in") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+		}
+
+		task ("When update the user's own password via the API Explorer GUI and back to Portal and refresh") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-user",
+				version = "v1.0");
+
+			var requestBody = '''
+				{
+					"currentPassword": "test",
+					"password": "test2"
+				}
+			''';
+			var value = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "userea1@liferay.com");
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "patchUserAccount",
+				parameter = "userAccountId",
+				requestBody = "${requestBody}",
+				service = "UserAccount",
+				value = "${value}");
+
+			AssertTextEquals(
+				locator1 = "OpenAPI#RESPONSE_CODE",
+				method = "patchUserAccount",
+				value1 = "200");
+
+			Masterclass.goBackUsingBrowserButton();
+
+			Navigator.openSpecificURL(url = "http://localhost:8080");
+		}
+
+		task ("Then user is not logged out and assert no NPE message") {
+			UserBar.gotoDropdown();
+
+			UserBar.viewFullName(userName = "USERFN1 USERLN1");
+
+			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException: null");
+		}
+
+		task ("When user logs out and logs in with new password") {
+			User.logoutAndLoginPG(
+				password = "test2",
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+		}
+
+		task ("Then the user logs in successfully") {
+			UserBar.gotoDropdown();
+
+			UserBar.viewFullName(userName = "userfn1 userln1");
+		}
+	}
+
 	@description = "This test changes password through the Password Reset link sent in email."
 	@priority = "5"
 	test ChangingPasswordIsSuccessfulViaPasswordResetLink {

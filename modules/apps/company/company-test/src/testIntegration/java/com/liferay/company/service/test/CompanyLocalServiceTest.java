@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
+import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
@@ -184,6 +185,8 @@ public class CompanyLocalServiceTest {
 		}
 
 		_serviceRegistrations.clear();
+
+		deleteClassName(_layoutFriendlyURLEntryHelper.getClassName(true));
 	}
 
 	@Test
@@ -1155,6 +1158,10 @@ public class CompanyLocalServiceTest {
 	private ClassNameLocalService _classNameLocalService;
 
 	private long _companyId;
+
+	@Inject
+	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
+
 	private MockServletContext _mockServletContext;
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new CopyOnWriteArrayList<>();

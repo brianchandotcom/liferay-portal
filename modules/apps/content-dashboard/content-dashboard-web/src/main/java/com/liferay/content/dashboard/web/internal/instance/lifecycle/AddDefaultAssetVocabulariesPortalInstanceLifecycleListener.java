@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -57,11 +58,12 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 			company, PropsValues.ASSET_VOCABULARY_DEFAULT,
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
+		Collection<String> classNames =
+			_contentDashboardItemFactoryTracker.getClassNames();
+
 		Set<Long> searchClassNameIds = new HashSet<>();
 
-		for (String className :
-				_contentDashboardItemFactoryTracker.getClassNames()) {
-
+		for (String className : classNames) {
 			searchClassNameIds.add(_portal.getClassNameId(className));
 		}
 

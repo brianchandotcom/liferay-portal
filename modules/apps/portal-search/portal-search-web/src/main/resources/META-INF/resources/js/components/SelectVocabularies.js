@@ -19,7 +19,7 @@ import {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {fetch} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 const CONFIGURATION = {
 	headers: new Headers({
@@ -33,7 +33,7 @@ const CONFIGURATION = {
 const SELECT_OPTIONS = {
 	ALL: {
 		name: 'all',
-		value: '-1', //  When 'vocabularyIds' is equal to this, 'All Vocabularies' has been selected.
+		value: '', //  When 'vocabularyIds' is equal to this, 'All Vocabularies' has been selected.
 	},
 	SELECT: {name: 'select'},
 };
@@ -122,9 +122,9 @@ function SiteRow({name, onSelect, vocabularies}) {
 }
 
 function VocabularyTree({
+	loading,
 	selectedKeys,
 	setSelectedKeys,
-	setVocabularyTree,
 	vocabularyTree,
 }) {
 	const _handleSelect = (list, add = true) => {
@@ -146,39 +146,7 @@ function VocabularyTree({
 		_handleSelect([{id}], !selectedKeys.has(id));
 	};
 
-	useEffect(() => {
-		if (!vocabularyTree) {
-			fetch('/o/headless-admin-user/v1.0/my-user-account', CONFIGURATION)
-				.then((response) => response.json())
-				.then(({siteBriefs}) => {
-					Promise.all(
-						siteBriefs.map((site) =>
-							fetch(
-								`/o/headless-admin-taxonomy/v1.0/sites/${site.id}/taxonomy-vocabularies`,
-								CONFIGURATION
-							).then((response) => response.json())
-						)
-					)
-						.then((response) => {
-							setVocabularyTree(
-								response.map((vocabularies, index) => ({
-									...siteBriefs[index],
-									children: (vocabularies?.items || []).map(
-										({id, name}) => ({
-											id,
-											name,
-										})
-									),
-								}))
-							);
-						})
-						.catch(() => setVocabularyTree([]));
-				})
-				.catch(() => setVocabularyTree([]));
-		}
-	}, []); //eslint-disable-line
-
-	if (!vocabularyTree) {
+	if (loading || vocabularyTree === null) {
 		return <ClayLoadingIndicator displayType="secondary" size="sm" />;
 	}
 
@@ -239,24 +207,94 @@ function VocabularyTree({
 }
 
 function SelectVocabularies({
-	isDisplayInfoSelectedVocabulariesHidden = true,
 	namespace = '',
 	vocabularyIds = SELECT_OPTIONS.ALL.value,
 	vocabularyIdsInputName = '',
 }) {
-	const [selection, setSelection] = useState(
-		vocabularyIds === SELECT_OPTIONS.ALL.value
-			? SELECT_OPTIONS.ALL.name
-			: SELECT_OPTIONS.SELECT.name
-	);
-	const [selectedKeys, setSelectedKeys] = useState(
+	const initialSelectedIdsRef = useRef(
 		new Set(
 			vocabularyIds === SELECT_OPTIONS.ALL.value
 				? []
 				: convertToIDArray(vocabularyIds)
 		)
 	);
+
+	const [selection, setSelection] = useState(
+		vocabularyIds === SELECT_OPTIONS.ALL.value
+			? SELECT_OPTIONS.ALL.name
+			: SELECT_OPTIONS.SELECT.name
+	);
+	const [selectedKeys, setSelectedKeys] = useState(
+		initialSelectedIdsRef.current
+	);
 	const [vocabularyTree, setVocabularyTree] = useState(null);
+	const [vocabularyTreeIds, setVocabularyTreeIds] = useState([]);
+	const [vocabularyTreeLoading, setVocabularyTreeLoading] = useState(false);
+
+	useEffect(() => {
+		if (selection === SELECT_OPTIONS.SELECT.name) {
+			_handleFetchVocabularyTree();
+		}
+	}, []); //eslint-disable-line
+
+	const _handleFetchVocabularyTree = () => {
+		setVocabularyTreeLoading(true);
+
+		fetch('/o/headless-admin-user/v1.0/my-user-account', CONFIGURATION)
+			.then((response) => response.json())
+			.then(({siteBriefs}) => {
+				Promise.all(
+					siteBriefs.map((site) =>
+						fetch(
+							`/o/headless-admin-taxonomy/v1.0/sites/${site.id}/taxonomy-vocabularies`,
+							CONFIGURATION
+						).then((response) => response.json())
+					)
+				)
+					.then((response) => {
+						const ids = [];
+
+						setVocabularyTree(
+							response.map((vocabularies, index) => ({
+								...siteBriefs[index],
+								children: (vocabularies?.items || []).map(
+									({id, name}) => {
+										ids.push(id); // Collect IDs for _isDisplayInfoSelectedVocabulariesHidden
+
+										return {
+											id,
+											name,
+										};
+									}
+								),
+							}))
+						);
+
+						setVocabularyTreeIds(ids);
+					})
+					.catch(() => setVocabularyTree([]));
+			})
+			.catch(() => setVocabularyTree([]))
+			.finally(() => setVocabularyTreeLoading(false));
+	};
+
+	const _handleSelectionChange = (value) => {
+		setSelection(value);
+
+		if (value === SELECT_OPTIONS.SELECT.name && !vocabularyTree) {
+			_handleFetchVocabularyTree();
+		}
+	};
+
+	const _isDisplayInfoSelectedVocabulariesHidden = () => {
+		initialSelectedIdsRef.current.forEach((id) => {
+			if (!vocabularyTreeIds.includes(id)) {
+				return true;
+			}
+		});
+
+		return false;
+	};
 
 	return (
 		<div className="select-vocabularies">
@@ -277,7 +315,7 @@ function SelectVocabularies({
 			/>
 
 			{selection === SELECT_OPTIONS.SELECT.name &&
-				isDisplayInfoSelectedVocabulariesHidden && (
+				_isDisplayInfoSelectedVocabulariesHidden() && (
 					<ClayAlert
 						displayType="info"
 						title={`${Liferay.Language.get('info')}:`}
@@ -288,7 +326,7 @@ function SelectVocabularies({
 					</ClayAlert>
 				)}
 
-			<ClayRadioGroup onChange={setSelection} value={selection}>
+			<ClayRadioGroup onChange={_handleSelectionChange} value={selection}>
 				<ClayRadio
 					label={Liferay.Language.get('all-vocabularies')}
 					value={SELECT_OPTIONS.ALL.name}
@@ -302,20 +340,18 @@ function SelectVocabularies({
 
 			{selection === SELECT_OPTIONS.SELECT.name && (
 				<VocabularyTree
+					loading={vocabularyTreeLoading}
 					selectedKeys={selectedKeys}
 					setSelectedKeys={setSelectedKeys}
-					setVocabularyTree={setVocabularyTree}
 					vocabularyTree={vocabularyTree}
 				/>
 			)}
 
-			{selection === SELECT_OPTIONS.ALL.name && (
-				<div className="text-3 text-secondary">
-					{Liferay.Language.get(
-						'select-vocabularies-configuration-description'
-					)}
-				</div>
-			)}
+			<div className="text-3 text-secondary">
+				{Liferay.Language.get(
+					'select-vocabularies-configuration-description'
+				)}
+			</div>
 		</div>
 	);
 }

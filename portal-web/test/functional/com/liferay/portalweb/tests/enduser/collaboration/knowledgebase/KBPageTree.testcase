@@ -1,0 +1,129 @@
+@component-name = "portal-knowledge-base"
+definition {
+
+	property custom.properties = "feature.flag.LPS-156421=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Knowledge Base";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			KBArticle.tearDownCP();
+
+			KBFolder.tearDownCP();
+		}
+	}
+
+	@description = "This test ensures that an article in the folder is displayed in the KB page tree when the folder is expanded."	
+	@priority = "5"
+	test CanViewArticleInFolderThroughPageTreePanel {
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder");
+
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBArticle.viewArticleThroughPageTreePanel(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbFolderName = "KB Folder");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			pageTreePanel = "true");
+	}
+
+	@description = "This test ensures that a subfolder is displayed in the KB page tree when the parent folder is expanded."	
+	@priority = "5"
+	test CanViewSubFolderThroughPageTreePanel {
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder");
+
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Child Folder",
+			parentFolderName = "KB Folder");
+
+		JSONKnowledgeBase.addkBArticle(
+			folderName = "KB Folder",
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBArticle.selectFolderThroughPageTreePanel(kbChildFolderName = "KB Child Folder");
+
+		KBArticle.viewDefaultCP();
+	}
+
+	@description = "This test ensures that the KB page tree is opened after opening sections, and it is collapsed after opening the product menu."	
+	@priority = "5"
+	test PageTreeIsCollapsedAfterOpeningProductMenu {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		AssertElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_CLOSED");
+
+		ProductMenuHelper.openProductMenu();
+
+		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+
+		KBArticle.openPageTreePanel(section = "Templates");
+
+		ProductMenuHelper.openProductMenu();
+
+		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+
+		KBArticle.openPageTreePanel(section = "Templates");
+
+		KBArticle.openPageTreePanel(section = "Templates");
+
+		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+
+		KBArticle.openPageTreePanel(section = "Suggestions");
+
+		ProductMenuHelper.openProductMenu();
+
+		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+
+		KBArticle.openPageTreePanel(section = "Suggestions");
+
+		KBArticle.openPageTreePanel(section = "Suggestions");
+
+		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+	}
+
+}

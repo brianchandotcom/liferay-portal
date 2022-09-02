@@ -53,6 +53,34 @@ definition {
 			pageTreePanel = "true");
 	}
 
+	@description = "This test ensures that a child article is displayed in the KB page tree after expanding the parent article."	
+	@priority = "4"
+	test CanViewChildArticleThroughPageTreePanel {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbChildArticleContent = "Child Article Content",
+			kbChildArticleTitle = "Child Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBArticle.viewArticleThroughPageTreePanel(kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewArticleThroughPageTreePanel(kbChildArticleTitle = "Child Article Title");
+
+		KBArticle.viewChildArticleCP(
+			kbChildArticleContent = "Child Article Content",
+			kbChildArticleTitle = "Child Article Title",
+			pageTreePanel = "true");
+	}
+
 	@description = "This test ensures that a subfolder is displayed in the KB page tree when the parent folder is expanded."	
 	@priority = "5"
 	test CanViewSubFolderThroughPageTreePanel {

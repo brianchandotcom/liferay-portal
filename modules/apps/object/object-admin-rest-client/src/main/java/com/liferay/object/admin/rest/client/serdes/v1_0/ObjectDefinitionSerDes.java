@@ -381,6 +381,20 @@ public class ObjectDefinitionSerDes {
 			sb.append(objectDefinition.getPortlet());
 		}
 
+		if (objectDefinition.getRestContextPath() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"restContextPath\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinition.getRestContextPath()));
+
+			sb.append("\"");
+		}
+
 		if (objectDefinition.getScope() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -654,6 +668,15 @@ public class ObjectDefinitionSerDes {
 			map.put("portlet", String.valueOf(objectDefinition.getPortlet()));
 		}
 
+		if (objectDefinition.getRestContextPath() == null) {
+			map.put("restContextPath", null);
+		}
+		else {
+			map.put(
+				"restContextPath",
+				String.valueOf(objectDefinition.getRestContextPath()));
+		}
+
 		if (objectDefinition.getScope() == null) {
 			map.put("scope", null);
 		}
@@ -884,6 +907,12 @@ public class ObjectDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "portlet")) {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setPortlet((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "restContextPath")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setRestContextPath(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "scope")) {

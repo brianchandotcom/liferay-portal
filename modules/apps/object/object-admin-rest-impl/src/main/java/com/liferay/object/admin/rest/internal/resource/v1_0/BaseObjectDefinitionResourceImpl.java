@@ -483,6 +483,11 @@ public abstract class BaseObjectDefinitionResourceImpl
 			existingObjectDefinition.setPortlet(objectDefinition.getPortlet());
 		}
 
+		if (objectDefinition.getRestContextPath() != null) {
+			existingObjectDefinition.setRestContextPath(
+				objectDefinition.getRestContextPath());
+		}
+
 		if (objectDefinition.getScope() != null) {
 			existingObjectDefinition.setScope(objectDefinition.getScope());
 		}

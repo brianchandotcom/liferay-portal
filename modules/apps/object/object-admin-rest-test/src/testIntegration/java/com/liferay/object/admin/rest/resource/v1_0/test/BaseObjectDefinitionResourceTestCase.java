@@ -191,6 +191,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		objectDefinition.setName(regex);
 		objectDefinition.setPanelAppOrder(regex);
 		objectDefinition.setPanelCategoryKey(regex);
+		objectDefinition.setRestContextPath(regex);
 		objectDefinition.setScope(regex);
 		objectDefinition.setStorageType(regex);
 		objectDefinition.setTitleObjectFieldName(regex);
@@ -205,6 +206,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		Assert.assertEquals(regex, objectDefinition.getName());
 		Assert.assertEquals(regex, objectDefinition.getPanelAppOrder());
 		Assert.assertEquals(regex, objectDefinition.getPanelCategoryKey());
+		Assert.assertEquals(regex, objectDefinition.getRestContextPath());
 		Assert.assertEquals(regex, objectDefinition.getScope());
 		Assert.assertEquals(regex, objectDefinition.getStorageType());
 		Assert.assertEquals(regex, objectDefinition.getTitleObjectFieldName());
@@ -1254,6 +1256,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("restContextPath", additionalAssertFieldName)) {
+				if (objectDefinition.getRestContextPath() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("scope", additionalAssertFieldName)) {
 				if (objectDefinition.getScope() == null) {
 					valid = false;
@@ -1647,6 +1657,17 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("restContextPath", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectDefinition1.getRestContextPath(),
+						objectDefinition2.getRestContextPath())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("scope", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						objectDefinition1.getScope(),
@@ -1983,6 +2004,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("restContextPath")) {
+			sb.append("'");
+			sb.append(String.valueOf(objectDefinition.getRestContextPath()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("scope")) {
 			sb.append("'");
 			sb.append(String.valueOf(objectDefinition.getScope()));
@@ -2080,6 +2109,8 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 					RandomTestUtil.randomString());
 				parameterRequired = RandomTestUtil.randomBoolean();
 				portlet = RandomTestUtil.randomBoolean();
+				restContextPath = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				scope = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				storageType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

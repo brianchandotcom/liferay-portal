@@ -68,9 +68,7 @@ export default function App({state}) {
 										<StyleBookContextProvider>
 											<Sidebar />
 
-											{Liferay.FeatureFlags[
-												'LPS-153452'
-											] && <ItemConfigurationSidebar />}
+											<ItemConfigurationSidebar />
 										</StyleBookContextProvider>
 									</GlobalContextProvider>
 								</FormValidationContextProvider>

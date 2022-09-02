@@ -12,95 +12,17 @@
  * details.
  */
 
-import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
-import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
-import {
-	useActiveItemId,
-	useActiveItemType,
-} from '../../../app/contexts/ControlsContext';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import {useId} from '../../../core/hooks/useId';
-import ContentsSidebar from '../../page-content/components/ContentsSidebar';
 import PageStructureSidebar from './page-structure/components/PageStructureSidebar';
-
-const TABS_IDS = {
-	pageContent: 1,
-	pageElements: 0,
-};
-
-const TABS = [
-	{
-		component: <PageStructureSidebar />,
-		label: Liferay.Language.get('page-elements'),
-	},
-	{
-		component: <ContentsSidebar />,
-		label: Liferay.Language.get('page-content'),
-	},
-];
-
 export default function BrowserSidebar({title}) {
-	const activeItemId = useActiveItemId();
-	const activeItemType = useActiveItemType();
-	const [activeTabId, setActiveTabId] = useState(TABS_IDS.pageElements);
-	const tabIdNamespace = useId();
-
-	const getTabId = (tabId) => `${tabIdNamespace}tab${tabId}`;
-	const getTabPanelId = (tabId) => `${tabIdNamespace}tabPanel${tabId}`;
-
-	useEffect(() => {
-		if (activeItemId && activeItemType !== ITEM_TYPES.editable) {
-			setActiveTabId(TABS_IDS.pageElements);
-		}
-	}, [activeItemType, activeItemId]);
-
 	return (
-		<div
-			className={classNames('page-editor__sidebar__browser', {
-				'first-tab--active': activeTabId === 0,
-			})}
-		>
+		<div className={classNames('page-editor__sidebar__browser')}>
 			<SidebarPanelHeader>{title}</SidebarPanelHeader>
 
-			{Liferay.FeatureFlags['LPS-153452'] ? (
-				<PageStructureSidebar />
-			) : (
-				<>
-					<ClayTabs className="page-editor__sidebar__browser__tabs">
-						{TABS.map((tab, index) => (
-							<ClayTabs.Item
-								active={activeTabId === index}
-								innerProps={{
-									'aria-controls': getTabPanelId(index),
-									'id': getTabId(index),
-								}}
-								key={index}
-								onClick={() => setActiveTabId(index)}
-							>
-								{tab.label}
-							</ClayTabs.Item>
-						))}
-					</ClayTabs>
-					<ClayTabs.Content
-						activeIndex={activeTabId}
-						className="page-editor__sidebar__browser__tab-content"
-						fade
-					>
-						{TABS.map((tab, index) => (
-							<ClayTabs.TabPane
-								aria-labelledby={getTabId(index)}
-								id={getTabPanelId(index)}
-								key={index}
-							>
-								{tab.component}
-							</ClayTabs.TabPane>
-						))}
-					</ClayTabs.Content>{' '}
-				</>
-			)}
+			<PageStructureSidebar />
 		</div>
 	);
 }

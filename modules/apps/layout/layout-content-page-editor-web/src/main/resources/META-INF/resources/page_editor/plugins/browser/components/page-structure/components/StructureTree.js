@@ -41,7 +41,6 @@ import {formIsMapped} from '../../../../../app/utils/formIsMapped';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import {getResponsiveConfig} from '../../../../../app/utils/getResponsiveConfig';
 import getSelectedField from '../../../../../app/utils/getSelectedField';
-import PageStructureSidebarSection from './PageStructureSidebarSection';
 import StructureTreeNode from './StructureTreeNode';
 
 const EDITABLE_LABEL = {
@@ -140,28 +139,24 @@ export default function PageStructureSidebar() {
 	);
 
 	return (
-		<PageStructureSidebarSection>
-			<div className="overflow-auto page-editor__page-structure__structure-tree pt-4">
-				{!nodes.length && (
-					<ClayAlert
-						displayType="info"
-						title={Liferay.Language.get('info')}
-					>
-						{Liferay.Language.get(
-							'there-is-no-content-on-this-page'
-						)}
-					</ClayAlert>
-				)}
+		<div className="overflow-auto page-editor__page-structure__structure-tree pt-4">
+			{!nodes.length && (
+				<ClayAlert
+					displayType="info"
+					title={Liferay.Language.get('info')}
+				>
+					{Liferay.Language.get('there-is-no-content-on-this-page')}
+				</ClayAlert>
+			)}
 
-				<DragAndDropContextProvider>
-					<Treeview
-						NodeComponent={StructureTreeNode}
-						nodes={nodes}
-						selectedNodeIds={[activeItemId]}
-					/>
-				</DragAndDropContextProvider>
-			</div>
-		</PageStructureSidebarSection>
+			<DragAndDropContextProvider>
+				<Treeview
+					NodeComponent={StructureTreeNode}
+					nodes={nodes}
+					selectedNodeIds={[activeItemId]}
+				/>
+			</DragAndDropContextProvider>
+		</div>
 	);
 }
 

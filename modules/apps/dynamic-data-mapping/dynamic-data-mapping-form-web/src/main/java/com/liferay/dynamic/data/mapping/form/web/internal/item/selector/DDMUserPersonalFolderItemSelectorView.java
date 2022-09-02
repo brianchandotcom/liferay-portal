@@ -102,35 +102,22 @@ public class DDMUserPersonalFolderItemSelectorView
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelectorReturnTypeResolverHandler(
-		ItemSelectorReturnTypeResolverHandler
-			itemSelectorReturnTypeResolverHandler) {
-
-		_itemSelectorReturnTypeResolverHandler =
-			itemSelectorReturnTypeResolverHandler;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.mapping.form.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
 				new FileEntryItemSelectorReturnType(),
 				new URLItemSelectorReturnType()));
 
+	@Reference
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
 
 	@Reference
 	private Language _language;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.mapping.form.web)"
+	)
 	private ServletContext _servletContext;
 
 }

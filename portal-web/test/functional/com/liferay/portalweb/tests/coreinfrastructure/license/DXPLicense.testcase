@@ -22,7 +22,7 @@ definition {
 	@priority = "3"
 	test DeleteLiferayDXPLicense {
 		property commerce.enabled = "false";
-		property test.name.skip.portal.instance = "CommerceLicense#DeleteLiferayDXPLicense";
+		property test.name.skip.portal.instance = "DXPLicense#DeleteLiferayDXPLicense";
 
 		SignIn.signInTestSetup();
 

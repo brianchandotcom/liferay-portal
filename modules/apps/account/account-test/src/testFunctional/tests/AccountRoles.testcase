@@ -138,7 +138,7 @@ definition {
 	test AccountManagersCanViewUsers {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		task ("Given an account with a company user assigned") {
+		task ("Given an account with an account user assigned") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "AM Account",
 				accountEntryType = "Business");
@@ -149,19 +149,17 @@ definition {
 				userFirstName = "userfn1",
 				userLastName = "userln1",
 				userScreenName = "usersn1");
-
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONAccountEntryUser.addExistUsertoAccount(
-				accountEntryName = "AM Account",
-				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("When an account manager is added to the account") {
+		task ("And a company user is added") {
+			JSONUser.addUser(
+				userEmailAddress = "usereano@liferay.com",
+				userFirstName = "userfnno",
+				userLastName = "userlnno",
+				userScreenName = "usersnno");
+		}
+
+		task ("And add user useramsn as Account Manager") {
 			AccountConfiguration.addAccountManager(
 				accountName = "AM Account",
 				orgName = "AM Organization",
@@ -170,24 +168,34 @@ definition {
 				userFirstName = "useramfn",
 				userLastName = "useramln",
 				userScreenName = "useramsn");
+		}
 
+		task ("When the account manager navigates into the User tab of AM Account") {
 			User.logoutPG();
 
 			User.loginUserPG(
 				password = "test",
 				userEmailAddress = "useramea@liferay.com");
-		}
 
-		task ("Then the user should be able to see the user listed in that account") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "AM Account");
 
 			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+		}
 
-			LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+		task ("Then the account manager should be able to see the user listed in that account") {
+			Navigator.viewActivatedNavTab(navTab = "Users");
+
+			LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
+
+			AssertTextNotPresent(value1 = "There are no users associated with this account.");
 
 			LexiconEntry.viewEntryName(rowEntry = "userfn1 userln1");
+
+			LexiconEntry.viewEntryMenu(rowEntry = "userfn1 userln1");
+
+			AssertElementPresent(locator1 = "Icon#PLUS");
 		}
 	}
 

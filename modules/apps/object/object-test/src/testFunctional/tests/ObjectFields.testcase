@@ -310,6 +310,31 @@ definition {
 		}
 	}
 
+	@description = "LPS-161887 - Verify that it's not possible to create an Object without adding a field."
+	@priority = "5"
+	test CannotCreateEmptyObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.publishObjectViaUI();
+
+		AssertTextPresent(
+			locator1 = "Message#ALERT_DISMISSIBLE",
+			value1 = "At least one custom field must be added.");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.assertObjectStatus(
+			label = "Custom Object",
+			status = "Draft");
+	}
+
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' the user is not allowed to type any value outside the informed range on the help text"
 	@priority = "4"
 	test CannotTypeValueOutsideRange {

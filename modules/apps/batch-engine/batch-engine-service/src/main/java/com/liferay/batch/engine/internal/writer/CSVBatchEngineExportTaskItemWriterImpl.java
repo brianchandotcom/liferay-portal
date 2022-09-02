@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.internal.writer;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -99,6 +100,21 @@ public class CSVBatchEngineExportTaskItemWriterImpl
 		for (Object value : values) {
 			if (value instanceof Date) {
 				value = dateFormat.format((Date)value);
+			}
+
+			if (value instanceof Map) {
+				Map<String, Object> map = (Map<String, Object>)value;
+
+				StringBundler sb = new StringBundler();
+
+				for (Map.Entry<String, Object> entry : map.entrySet()) {
+					sb.append(entry.getKey());
+					sb.append(StringPool.COLON);
+					sb.append(entry.getValue());
+					sb.append(StringPool.RETURN_NEW_LINE);
+				}
+
+				value = sb.toString();
 			}
 
 			_csvPrinter.print(value);

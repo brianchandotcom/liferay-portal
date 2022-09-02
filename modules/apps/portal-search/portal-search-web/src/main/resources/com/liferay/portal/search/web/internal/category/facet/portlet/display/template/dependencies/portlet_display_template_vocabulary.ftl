@@ -128,14 +128,12 @@
 		<#if assetCategoriesSearchFacetDisplayContext.getVocabularyNames()?has_content>
 			<ul class="treeview treeview-light treeview-nested treeview-vocabulary-display" role="tree">
 				<#list assetCategoriesSearchFacetDisplayContext.getVocabularyNames() as vocabularyName>
-					<#assign termDisplayContexts = assetCategoriesSearchFacetDisplayContext.getTermDisplayContexts(vocabularyName) />
-
 					<@treeview_item
 						cssClassTreeItem="tree-item-vocabulary"
-						frequency=termDisplayContexts?size
 						id=vocabularyName + vocabularyName?index
+						isFrequencyVisible=false
 						name=htmlUtil.escape(vocabularyName)
-						termDisplayContexts=termDisplayContexts
+						termDisplayContexts=assetCategoriesSearchFacetDisplayContext.getTermDisplayContexts(vocabularyName)
 					/>
 				</#list>
 			</ul>

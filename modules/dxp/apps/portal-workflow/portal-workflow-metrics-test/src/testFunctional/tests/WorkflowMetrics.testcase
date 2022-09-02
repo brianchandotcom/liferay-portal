@@ -960,6 +960,8 @@ definition {
 	@description = "LRQA-53660 Automate LPS-87571 [Reports] Filter the list of items for a certain process"
 	@priority = "5"
 	test FilterAllItemsList {
+		property test.name.skip.portal.instance = "WorkflowMetrics#FilterAllItemsList";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
@@ -1808,6 +1810,7 @@ definition {
 	@priority = "5"
 	test UpdateandDeleteSLA {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetrics#UpdateandDeleteSLA";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = "1",

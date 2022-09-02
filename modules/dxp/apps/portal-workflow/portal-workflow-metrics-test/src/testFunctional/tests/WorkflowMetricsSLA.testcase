@@ -172,6 +172,8 @@ definition {
 	@description = "LPS-89014 - Verify that deleting a SLA will not be reflected in all completed instances"
 	@priority = "4"
 	test DeletingSLANotReflectCompletedInstances {
+		property test.name.skip.portal.instance = "WorkflowMetricsSLA#DeletingSLANotReflectCompletedInstances";
+
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = "1",
 			slaJobInterval = "1");
@@ -240,6 +242,8 @@ definition {
 	@description = "LPS-89014 - Verify that deleting a SLA will be reflected in all instances In Progress"
 	@priority = "5"
 	test DeletingSLAReflectInProgressInstances {
+		property test.name.skip.portal.instance = "WorkflowMetricsSLA#DeletingSLAReflectInProgressInstances";
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
@@ -1202,6 +1206,8 @@ definition {
 	@description = "LPS-89416 - Verify that updating a SLA will not be reflected in completed instances"
 	@priority = "4"
 	test UpdatingSLANotReflectCompletedInstances {
+		property test.name.skip.portal.instance = "WorkflowMetricsSLA#UpdatingSLANotReflectCompletedInstances";
+
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = "1",
 			slaJobInterval = "1");
@@ -1290,6 +1296,8 @@ definition {
 	@description = "LPS-89416 - Verify that updating a SLA will recalculate time for all instances In Progress"
 	@priority = "5"
 	test UpdatingSLARecalculateTimeInProgressInstances {
+		property test.name.skip.portal.instance = "WorkflowMetricsSLA#UpdatingSLARecalculateTimeInProgressInstances";
+
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = "1",
 			slaJobInterval = "1");

@@ -731,6 +731,8 @@ definition {
 	@description = "LPS-97669 - Verify that the sum of items Overdue and On time of 'Workload by Assignee' page are never bigger than the Total items"
 	@priority = "3"
 	test SumOfOverdueAndOnTimeAreNeverBiggerThanTotalItems {
+		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#SumOfOverdueAndOnTimeAreNeverBiggerThanTotalItems";
+
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = "1",
 			slaJobInterval = "1");

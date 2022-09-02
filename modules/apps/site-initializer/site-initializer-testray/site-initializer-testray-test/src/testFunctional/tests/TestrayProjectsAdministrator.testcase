@@ -12,21 +12,21 @@ definition {
 
 		User.firstLoginPG();
 
-		Testray.createTestraySite(siteName = "Testray 2");
+		// Testray.createTestraySite(siteName = "Testray 2");
 
-		Refresh();
+		// Refresh();
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		// var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Testray.deleteProject();
+		Testray.deleteAllProjects();
 
-		Testray.tearDownCP();
+		// Testray.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
+		// if ("${testPortalInstance}" == "true") {
+		// 	PortalInstances.tearDownCP();
+		// }
 	}
 
 	@description = "This is a test for LPS-160539. Verify if as an Administrator I am able to add a Project"
@@ -40,10 +40,12 @@ definition {
 				key_name = "Projects_1 Project");
 		}
 
-		task ("Check if the project was created") {
-			Testray.assertProjectName(key_name = "Projects_1 Project");
+		task ("Change pagination and Assert it the project was created") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
 
-			Testray.assertProjectDescription(value = "Projects_1 Project Description");
+			Testray.assertProjectName(key_name = "Projects_1 Project");
 		}
 	}
 
@@ -58,8 +60,8 @@ definition {
 				key_name = "Projects_2 Project");
 		}
 
-		task ("Delete the project and make sure it is deleted") {
-			Testray.deleteProject();
+		task ("Delete the project and assert has been deleted") {
+			Testray.deleteProject(nameProject = "Projects_2 Project");
 
 			Testray.assertProjectNotPresent(key_name = "Projects_2 Project");
 		}
@@ -68,15 +70,19 @@ definition {
 	@description = "This is a test for LPS-160537. Verify if as an Administrator I am able to edit a Project name and description"
 	@priority = "5"
 	test AdminCanEditProject {
-		task ("Go to Testray and Create Project") {
+		task ("Go to Testray, Create Project and change pagination") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
 				description = "Projects_3 Description",
 				key_name = "Projects_3 Project");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
 		}
 
-		task ("Edit Project name and description") {
+		task ("Edit Project name and description and change pagination") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_3 Project");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
@@ -84,9 +90,13 @@ definition {
 			Testray.editProjectTestray(
 				description = "Projects_3 Project Description Edited",
 				name = "Projects_3 Project Edited");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
 		}
 
-		task ("Check if the name and description has been edited") {
+		task ("Go to Home Page and Assert it the name and description has been edited") {
 			TestrayLayout.clickResultsOnSidebar();
 
 			Testray.assertProjectName(key_name = "Projects_3 Project Edited");
@@ -115,7 +125,11 @@ definition {
 				key_name = "Projects_4 Project");
 		}
 
-		task ("stating that I see the project") {
+		task ("Change pagination, go to project and Assert project title") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
 			TestrayLayout.clickResultsOnSidebar();
 
 			Testray.goToProjectPage(projectName = "Projects_4 Project");
@@ -127,22 +141,24 @@ definition {
 	@description = "This is a test for LPS-160898. Verify if as an Administrator I should be able to delete a project that contains routines without associated builds"
 	@priority = "5"
 	test CanDeleteProjectsThatContainRoutinesWithoutAssociatedBuilds {
-		task ("Create project and create Routine") {
+		task ("Create project, change pagination and create Routine") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
 				description = "Projects_4 Description",
 				key_name = "Projects_4 Project");
 
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
 			Testray.goToProjectPage(projectName = "Projects_4 Project");
 
-			TestrayRoutines.createRoutine(key_value = "Projects_4 Routine");
+			TestrayRoutines.createRoutine(key_name = "Projects_4 Routine");
 		}
 
-		task ("Go to home screen, Delete the project and make sure it is deleted") {
-			TestrayLayout.clickResultsOnSidebar();
-
-			Testray.deleteProject();
+		task ("Delete the project and assert it was deleted") {
+			Testray.deleteProject(nameProject = "Projects_4 Project");
 
 			Testray.assertProjectNotPresent(key_name = "Projects_4 Project");
 		}

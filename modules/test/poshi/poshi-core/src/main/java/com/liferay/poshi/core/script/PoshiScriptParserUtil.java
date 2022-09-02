@@ -15,6 +15,7 @@
 package com.liferay.poshi.core.script;
 
 import com.liferay.poshi.core.elements.PoshiNode;
+import com.liferay.poshi.core.util.StringUtil;
 
 import java.net.URL;
 
@@ -41,41 +42,115 @@ public class PoshiScriptParserUtil {
 			return methodParameterValues;
 		}
 
+		boolean expectedComma = false;
+
 		StringBuilder sb = new StringBuilder();
 
 		String methodParameterValue = sb.toString();
 
-		for (char c : content.toCharArray()) {
-			if ((c == ',') && isBalancedPoshiScript(methodParameterValue)) {
-				if (pattern != null) {
-					Matcher matcher = pattern.matcher(methodParameterValue);
+		Stack<Character> stack = new Stack<>();
 
-					if (!matcher.matches()) {
-						sb.append(c);
+		for (int i = 0; i < content.length(); i++) {
+			Character c1 = content.charAt(i);
 
-						continue;
-					}
-				}
+			Character c2 = null;
+
+			Character c3 = null;
+
+			if ((i + 2) < content.length()) {
+				c2 = content.charAt(i + 1);
+				c3 = content.charAt(i + 2);
+			}
+
+			if ((c1 == ',') && expectedComma &&
+				_patternIsNullOrMatches(pattern, methodParameterValue)) {
 
 				methodParameterValues.add(methodParameterValue);
 
 				sb.setLength(0);
+			}
+			else {
+				sb.append(c1);
+
+				methodParameterValue = sb.toString();
+			}
+
+			if (c1 == '`') {
+				continue;
+			}
+
+			if (!stack.isEmpty()) {
+				Character topCodeBoundary = stack.peek();
+
+				if (_isMultilineVariableBoundary(c1, c2, c3)) {
+					c1 = '`';
+				}
+
+				if ((c1 == _codeBoundariesMap.get(topCodeBoundary)) &&
+					(content.charAt(i - 1) != '\\')) {
+
+					stack.pop();
+
+					if (stack.isEmpty()) {
+						expectedComma = true;
+					}
+
+					continue;
+				}
+
+				if ((topCodeBoundary == '\"') || (topCodeBoundary == '\'') ||
+					(topCodeBoundary == '`')) {
+
+					continue;
+				}
+			}
+
+			if (_codeBoundariesMap.containsKey(c1)) {
+				if (_isMultilineVariableBoundary(c1, c2, c3)) {
+					c1 = '`';
+
+					sb.append(c2);
+					sb.append(c3);
+
+					methodParameterValue = sb.toString();
+
+					i = i + 2;
+				}
+
+				stack.push(c1);
 
 				continue;
 			}
 
-			sb.append(c);
+			if (expectedComma) {
+				if (c1 == ',') {
+					expectedComma = false;
 
-			methodParameterValue = sb.toString();
+					continue;
+				}
+
+				if (Character.isWhitespace(c1)) {
+					continue;
+				}
+
+				PoshiScriptParserException poshiScriptParserException =
+					new PoshiScriptParserException(
+						"Missing comma in Poshi file call", poshiNode);
+
+				int additionalLines = Math.max(
+					StringUtil.count(content, "\n", i) - 1, 0);
+
+				poshiScriptParserException.setErrorLineNumber(
+					poshiScriptParserException.getErrorLineNumber() +
+						additionalLines);
+
+				throw poshiScriptParserException;
+			}
 		}
 
-		if (pattern != null) {
-			Matcher matcher = pattern.matcher(methodParameterValue);
-
-			if (!matcher.matches()) {
-				throw new PoshiScriptParserException(
-					"Invalid Poshi Script parameter syntax", poshiNode);
-			}
+		if (!_patternIsNullOrMatches(pattern, methodParameterValue)) {
+			throw new PoshiScriptParserException(
+				"Invalid Poshi Script parameter syntax", poshiNode);
 		}
 
 		methodParameterValues.add(methodParameterValue);
@@ -115,6 +190,10 @@ public class PoshiScriptParserUtil {
 
 		for (int i = 0; i < poshiScript.length(); i++) {
 			char c = poshiScript.charAt(i);
+
+			if (c == '`') {
+				continue;
+			}
 
 			if (!stack.isEmpty()) {
 				int topIndex = stack.peek();
@@ -179,6 +258,30 @@ public class PoshiScriptParserUtil {
 		return poshiScript.trim();
 	}
 
+	private static boolean _isMultilineVariableBoundary(
+		Character c1, Character c2, Character c3) {
+
+		if ((c1 != null) && (c2 != null) && (c3 != null) && (c1 == '\'') &&
+			(c2 == '\'') && (c3 == '\'')) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _patternIsNullOrMatches(
+		Pattern pattern, String input) {
+
+		if ((pattern == null) || (input == null)) {
+			return true;
+		}
+
+		Matcher matcher = pattern.matcher(input);
+
+		return matcher.matches();
+	}
+
 	private static final Map<Character, Character> _codeBoundariesMap =
 		new HashMap<Character, Character>() {
 			{
@@ -186,6 +289,7 @@ public class PoshiScriptParserUtil {
 				put('[', ']');
 				put('\"', '\"');
 				put('\'', '\'');
+				put('`', '`');
 				put('{', '}');
 			}
 		};

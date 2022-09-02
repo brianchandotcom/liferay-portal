@@ -1354,12 +1354,12 @@ public class ContentPageEditorDisplayContext {
 			Map<String, Map<String, Object>> highlightedFragmentMaps =
 				new TreeMap<>();
 
-			for (Map<String, Object> fragmentCollection :
+			for (Map<String, Object> fragmentCollectionMap :
 					allFragmentCollectionMapsList) {
 
 				List<Map<String, Object>> fragmentEntryMapsList =
 					(List<Map<String, Object>>)
-						fragmentCollection.computeIfAbsent(
+						fragmentCollectionMap.computeIfAbsent(
 							"fragmentEntries", key -> new LinkedList<>());
 
 				for (Map<String, Object> fragmentEntryMap :

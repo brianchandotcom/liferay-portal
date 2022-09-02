@@ -26,6 +26,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -64,6 +65,24 @@ public class BaseRelatedObjectEntryResourceImpl {
 		throws Exception {
 
 		return null;
+	}
+
+	@Path(
+		"/{previousPath: [a-zA-Z0-9-]+}/{objectEntryId: \\d+}/{objectRelationshipName: [a-zA-Z0-9-]+}/{relatedObjectEntryId}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@PUT
+	public void putObjectRelationshipMappingTableValues(
+			@NotNull @Parameter(hidden = true) @PathParam("previousPath") String
+				previousPath,
+			@NotNull @Parameter(hidden = true) @PathParam("objectEntryId") Long
+				objectEntryId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("objectRelationshipName")
+			String objectRelationshipName,
+			@PathParam("relatedObjectEntryId") Long relatedObjectEntryId,
+			@Context Pagination pagination)
+		throws Exception {
 	}
 
 }

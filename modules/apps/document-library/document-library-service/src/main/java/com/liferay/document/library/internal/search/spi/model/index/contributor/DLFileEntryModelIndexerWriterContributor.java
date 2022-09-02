@@ -84,7 +84,9 @@ public class DLFileEntryModelIndexerWriterContributor
 			throw new SystemException(portalException);
 		}
 
-		if (!dlFileVersion.isApproved() && !dlFileEntry.isInTrash()) {
+		if (!dlFileVersion.isApproved() && !dlFileEntry.isInTrash() &&
+			!dlFileVersion.isExpired()) {
+
 			return IndexerWriterMode.SKIP;
 		}
 

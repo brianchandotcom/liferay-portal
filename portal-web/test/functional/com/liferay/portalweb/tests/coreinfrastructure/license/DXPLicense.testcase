@@ -58,4 +58,87 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
 	}
 
+	@priority = "4"
+	test TermsOfUseNotShownToNonAdminUser {
+		property custom.properties = "enterprise.product.notification.enabled=true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "DXPLicense#TermsOfUseNotShownToNonAdminUser";
+
+		SelectFrame(value1 = "relative=top");
+
+		Click(locator1 = "Button#DONE");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Guest",
+			roleTitle = "Site Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		AssertElementNotPresent(locator1 = "Modal#MODAL");
+	}
+
+	@priority = "4"
+	test TermsOfUseShownToNewAdmin {
+		property custom.properties = "enterprise.product.notification.enabled=true";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "DXPLicense#TermsOfUseShownToNewAdmin";
+
+		SelectFrame(value1 = "relative=top");
+
+		Click(locator1 = "Button#DONE");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Terms of Use");
+
+		Click(locator1 = "Button#DONE");
+
+		AssertElementNotPresent(locator1 = "Modal#MODAL");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		AssertElementNotPresent(locator1 = "Modal#MODAL");
+	}
+
 }

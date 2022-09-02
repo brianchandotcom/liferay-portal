@@ -117,6 +117,9 @@ export default function ObjectFieldFormBase({
 	>('');
 	const [pickLists, setPickLists] = useState<PickList[]>([]);
 	const [pickListItems, setPickListItems] = useState<PickListItem[]>([]);
+	const [oneToManyRelationship, setOneToManyRelationship] = useState<
+		TObjectRelationship
+	>();
 
 	useEffect(() => {
 		const {businessType, defaultValue, objectFieldSettings} = values;
@@ -225,6 +228,33 @@ export default function ObjectFieldFormBase({
 		});
 	};
 
+	useEffect(() => {
+		if (values.relationshipType === 'oneToMany' && values.relationshipId) {
+			const makeFetch = async () => {
+				const relationshipData = await API.getRelationship<
+					TObjectRelationship
+				>(values.relationshipId!);
+
+				if (relationshipData.id) {
+					setOneToManyRelationship(relationshipData);
+				}
+			};
+
+			makeFetch();
+		}
+	}, [values.relationshipId, values.relationshipType]);
+
+	const getMandatoryToggleState = () => {
+		if (
+			oneToManyRelationship &&
+			oneToManyRelationship.deletionType !== 'disassociate'
+		) {
+			return false;
+		}
+
+		return disabled || values.state;
+	};
+
 	return (
 		<>
 			<Input
@@ -305,7 +335,7 @@ export default function ObjectFieldFormBase({
 			<ClayForm.Group className="lfr-objects__object-field-form-base-form-group-toggles">
 				{values.businessType !== 'Aggregation' && (
 					<ClayToggle
-						disabled={disabled || values.state}
+						disabled={getMandatoryToggleState()}
 						label={Liferay.Language.get('mandatory')}
 						name="required"
 						onToggle={(required) => setValues({required})}
@@ -1002,6 +1032,8 @@ interface IProps {
 }
 
 type TObjectRelationship = {
+	deletionType: string;
+	id: number;
 	label: LocalizedValue<string>;
 	name: string;
 	objectDefinitionId2: number;

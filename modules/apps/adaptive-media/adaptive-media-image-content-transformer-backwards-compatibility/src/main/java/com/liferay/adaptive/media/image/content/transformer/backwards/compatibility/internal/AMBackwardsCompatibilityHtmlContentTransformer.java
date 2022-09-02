@@ -202,6 +202,10 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 	private String _transform(String imgElementString, String src)
 		throws PortalException {
 
+		if (src.startsWith("data:image/") || !src.contains("/documents")) {
+			return imgElementString;
+		}
+
 		String replacement = imgElementString;
 
 		StringBuffer sb = null;

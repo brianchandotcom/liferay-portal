@@ -39,11 +39,11 @@ const SELECT_OPTIONS = {
  * Converts a stringified list of IDs into an array of numbers. This separates
  * values by commas, filters out empty values, and parses the string into a
  * number, if possible.
- * @param {string} stringOfIDs The list of IDs as a string
+ * @param {string} idsString The list of IDs as a string
  * @return {Array} Array of ID numbers
  */
-const convertToIDArray = (stringOfIDs) =>
-	stringOfIDs
+const convertToIDArray = (idsString) =>
+	idsString
 		.split(',')
 		.filter((id) => id !== '')
 		.map((id) => {

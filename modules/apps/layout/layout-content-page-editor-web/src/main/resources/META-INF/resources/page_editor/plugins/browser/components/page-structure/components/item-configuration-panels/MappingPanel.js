@@ -16,6 +16,7 @@ import React from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/editableFragmentEntryProcessor';
+import {EDITABLE_TYPE_DEFAULT_OPTIONS} from '../../../../../../app/config/constants/editableTypeDefaultOptions';
 import {EDITABLE_TYPES} from '../../../../../../app/config/constants/editableTypes';
 import {useCollectionConfig} from '../../../../../../app/contexts/CollectionItemContext';
 import {
@@ -27,6 +28,7 @@ import updateEditableValues from '../../../../../../app/thunks/updateEditableVal
 import isMapped from '../../../../../../app/utils/editable-value/isMapped';
 import MappingSelector from '../../../../../../common/components/MappingSelector';
 import {getEditableItemPropTypes} from '../../../../../../prop-types/index';
+import DateEditableFormatInput from './DateEditableFormatInput';
 
 export function MappingPanel({item}) {
 	const collectionConfig = useCollectionConfig();
@@ -89,6 +91,16 @@ export function MappingPanel({item}) {
 				mappedItem={editableValue}
 				onMappingSelect={updateEditableValue}
 			/>
+
+			{type === EDITABLE_TYPES['date-time'] &&
+				isMapped(editableValue) && (
+					<DateEditableFormatInput
+						editableId={editableId}
+						editableValueNamespace={item.editableValueNamespace}
+						editableValues={fragmentEntryLink.editableValues}
+						fragmentEntryLinkId={item.fragmentEntryLinkId}
+					/>
+				)}
 		</>
 	);
 }

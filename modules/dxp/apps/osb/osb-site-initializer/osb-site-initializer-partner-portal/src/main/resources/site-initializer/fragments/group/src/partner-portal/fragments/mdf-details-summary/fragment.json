@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "MDF Details Date Period",
+	"name": "MDF Details Summary",
 	"type": "component"
 }

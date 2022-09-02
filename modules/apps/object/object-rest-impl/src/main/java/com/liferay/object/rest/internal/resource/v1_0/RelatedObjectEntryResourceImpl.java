@@ -85,6 +85,28 @@ public class RelatedObjectEntryResourceImpl
 			pagination);
 	}
 
+	@Override
+	public void putObjectRelationshipMappingTableValues(
+			String previousPath, Long objectEntryId,
+			String objectRelationshipName, Long relatedObjectEntryId,
+			Pagination pagination)
+		throws Exception {
+
+		ObjectDefinition currentObjectDefinition = _getCurrentObjectDefinition(
+			objectEntryId, _getObjectRelationship(objectRelationshipName),
+			_uriInfo);
+
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerTracker.getObjectEntryManager(
+				currentObjectDefinition.getStorageType());
+
+		objectEntryManager.addObjectRelationshipMappingTableValues(
+			_getDefaultDTOConverterContext(
+				currentObjectDefinition, objectEntryId, _uriInfo),
+			currentObjectDefinition, objectRelationshipName, objectEntryId,
+			relatedObjectEntryId);
+	}
+
 	private ObjectDefinition _getCurrentObjectDefinition(
 			long objectEntryId, ObjectRelationship objectRelationship,
 			UriInfo uriInfo)

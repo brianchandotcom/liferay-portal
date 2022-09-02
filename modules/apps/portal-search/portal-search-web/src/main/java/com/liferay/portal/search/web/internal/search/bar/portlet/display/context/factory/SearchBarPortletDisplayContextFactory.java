@@ -86,15 +86,16 @@ public class SearchBarPortletDisplayContextFactory {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String destination = searchBarPortletPreferences.getDestinationString();
+		String destinationString =
+			searchBarPortletPreferences.getDestinationString();
 
-		if (Validator.isBlank(destination)) {
+		if (Validator.isBlank(destinationString)) {
 			searchBarPortletDisplayContext.setSearchURL(
 				_getURLCurrentPath(themeDisplay));
 		}
 		else {
 			String destinationURL = _getDestinationURL(
-				destination, themeDisplay);
+				destinationString, themeDisplay);
 
 			if (destinationURL == null) {
 				searchBarPortletDisplayContext.setDestinationUnreachable(true);
@@ -118,7 +119,8 @@ public class SearchBarPortletDisplayContextFactory {
 			isAvailableEverythingSearchScope());
 		searchBarPortletDisplayContext.setCurrentSiteSearchScopeParameterString(
 			SearchScope.THIS_SITE.getParameterString());
-		searchBarPortletDisplayContext.setDestinationFriendlyURL(destination);
+		searchBarPortletDisplayContext.setDestinationFriendlyURL(
+			destinationString);
 		searchBarPortletDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId(
 				searchBarPortletInstanceConfiguration, themeDisplay));
@@ -333,10 +335,10 @@ public class SearchBarPortletDisplayContextFactory {
 	}
 
 	private String _getDestinationURL(
-		String friendlyURL, ThemeDisplay themeDisplay) {
+		String destinationString, ThemeDisplay themeDisplay) {
 
 		Layout layout = fetchLayoutByFriendlyURL(
-			themeDisplay.getScopeGroupId(), _slashify(friendlyURL));
+			themeDisplay.getScopeGroupId(), _slashify(destinationString));
 
 		if (layout == null) {
 			return null;

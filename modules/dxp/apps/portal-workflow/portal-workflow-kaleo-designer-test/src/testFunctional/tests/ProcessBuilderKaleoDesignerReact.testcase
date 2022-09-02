@@ -4031,11 +4031,24 @@ definition {
 	}
 
 	@description = "Verify that the Single Approver Workflow comes with the Account role assigned"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SingleApproverComesWithAccountRole {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#SingleApproverComesWithAccountRole";
 
-		// TODO SingleApproverComesWithAccountRole pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "review");
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Assignments",
+			propertyValue = "Account Administrator");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			selectedRole = "Account",
+			positonOption = "2");
 
 	}
 

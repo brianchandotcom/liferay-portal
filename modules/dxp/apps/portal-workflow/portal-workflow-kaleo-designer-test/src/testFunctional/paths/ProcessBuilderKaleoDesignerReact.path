@@ -512,6 +512,11 @@
 	<td>//div[@class='panel']/../..//div[@class='panel-group panel-group-flush'][${key_sectionOption}]//label[contains(., 'Script')]/..//textarea</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ROLE_NAME_FIELD_ASSIGNMENTS_BY_POSITON</td>
+	<td>//div[@class='panel']/../../div[@class='panel-group panel-group-flush'][${key_positonOption}]//label[contains(., '${key_inputOption}') and not(contains(., '*'))]/..//input</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

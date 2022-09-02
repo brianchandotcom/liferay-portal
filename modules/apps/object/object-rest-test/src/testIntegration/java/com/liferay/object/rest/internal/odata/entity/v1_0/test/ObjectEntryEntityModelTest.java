@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -82,7 +81,7 @@ public class ObjectEntryEntityModelTest {
 			new ObjectFieldBuilder().businessType(
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT
 			).name(
-				"attachmentObjectFieldName"
+				RandomTestUtil.randomString()
 			).build(),
 			_createObjectField(ObjectFieldConstants.DB_TYPE_BIG_DECIMAL),
 			_createObjectField(ObjectFieldConstants.DB_TYPE_BOOLEAN),
@@ -94,7 +93,7 @@ public class ObjectEntryEntityModelTest {
 			new ObjectFieldBuilder().relationshipType(
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY
 			).name(
-				"oneToManyObjectFieldName"
+				RandomTestUtil.randomString()
 			).build(),
 			_createObjectField(ObjectFieldConstants.DB_TYPE_STRING));
 
@@ -144,7 +143,7 @@ public class ObjectEntryEntityModelTest {
 		return new ObjectFieldBuilder().dbType(
 			dbType
 		).name(
-			StringUtil.lowerCaseFirstLetter(dbType) + "ObjectFieldName"
+			RandomTestUtil.randomString()
 		).build();
 	}
 

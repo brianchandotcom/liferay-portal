@@ -84,6 +84,7 @@ export default function EditObjectField({
 
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
 		delete objectField.system;
+		delete objectField.relationshipId;
 
 		try {
 			await API.save(

@@ -979,7 +979,7 @@ definition {
 			ACTimeFilter.setLast24Hours();
 		}
 
-		task ("Navigate to AC Page > Overview > Displayed Assets") {
+		task ("Navigate to AC Page > Overview") {
 			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", "Combined");
 
 			var dataSourceName = StringUtil.trim("${dataSourceName}");
@@ -988,7 +988,7 @@ definition {
 		}
 
 		task ("Change all cards to last 30 days time filter") {
-			for (var cardName : list "Visitors Behavior,Views by Location,Views by Technology,Displayed Assets") {
+			for (var cardName : list "Visitors Behavior,Views by Location,Views by Technology") {
 				ACTimeFilter.clickTimeFilterButton(cardName = "${cardName}");
 
 				ACTimeFilter.setLast30Days();
@@ -1032,20 +1032,6 @@ definition {
 			SelectWindow(locator1 = "title=Pages — Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Documentation,Views by Technology");
-
-			Close.closeWindow();
-		}
-
-		task ("Check the empty state and documentation link of the displayed assets card") {
-			ACCards.viewCards(cardTitle = "Displayed Assets");
-
-			ACUtils.viewGenericText(textValueList = "There are no assets on the selected period.,Check back later to verify if data has been received from your data sources.");
-
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about display assets.");
-
-			SelectWindow(locator1 = "title=Pages — Liferay Learn");
-
-			ACUtils.viewGenericText(textValueList = "Documentation,Assets");
 
 			Close.closeWindow();
 		}

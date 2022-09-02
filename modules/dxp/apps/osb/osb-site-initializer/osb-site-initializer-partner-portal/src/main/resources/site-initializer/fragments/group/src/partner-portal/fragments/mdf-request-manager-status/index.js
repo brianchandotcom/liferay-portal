@@ -14,23 +14,43 @@ const managerButtons = fragmentElement.querySelector('.manager-buttons');
 const currentPath = Liferay.currentURL.split('/');
 const mdfRequestId = +currentPath[currentPath.length - 1];
 
-const atualizationStatusApproved = fragmentElement.querySelector(
-	'.st-approved'
+const updateStatusToApproved = fragmentElement.querySelector('.st-approved');
+const updateStatusToRequestMoreInfo = fragmentElement.querySelector(
+	'.st-request'
 );
-const atualizationStatusRequest = fragmentElement.querySelector('.st-request');
-const atualizationStatusReject = fragmentElement.querySelector('.st-reject');
+const updateStatusToReject = fragmentElement.querySelector('.st-reject');
+
+const getMDFRequestStatus = async () => {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const statusResponse = await fetch(`/o/c/mdfrequests/${mdfRequestId}`, {
+		headers: {
+			'accept': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+	});
+
+	if (statusResponse.ok) {
+		const data = await statusResponse.json();
+
+		fragmentElement.querySelector(
+			'#mdfStatus'
+		).innerHTML = `Status : ${data.requestStatus}`;
+	}
+};
+
 const handleFetch = (status) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	fetch(`/o/c/mdfrequests/${mdfRequestId}`, {
-		body: `{"mdfRequestStatus": "${status}"}`,
+		body: `{"requestStatus": "${status}"}`,
 		headers: {
-			'accept': 'application/json',
 			'content-type': 'application/json',
 			'x-csrf-token': Liferay.authToken,
 		},
 		method: 'PATCH',
 	}).then(() => {
-		window.location.reload();
+		fragmentElement.querySelector(
+			'#mdfStatus'
+		).innerHTML = `Status : ${status}`;
 	});
 };
 
@@ -42,58 +62,55 @@ const ROLE_TYPES = [
 	'Channel Regional Marketing Manager',
 ];
 
-const getUserRole = () => {
+const getUserRole = async () => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	fetch(`/o/headless-admin-user/v1.0/my-user-account`, {
-		headers: {
-			'accept': 'application/json',
-			'content-type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-		method: 'GET',
-	}).then((response) => {
-		if (response.ok) {
-			const result = response.json();
-
-			const hasRoleBriefs = result?.roleBriefs?.reduce((_, role) => {
-				return ROLE_TYPES.includes(role.name) ? true : false;
-			});
-
-			if (hasRoleBriefs) {
-				managerButtons.classList.toggle('d-none');
-				managerButtons.classList.toggle('d-flex');
-			}
+	const response = await fetch(
+		`/o/headless-admin-user/v1.0/my-user-account`,
+		{
+			headers: {
+				'content-type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
 		}
+	);
+
+	if (response.ok) {
+		const result = await response.json();
+		const hasAllowedRoleBriefs = result.roleBriefs?.some((roleBrief) =>
+			ROLE_TYPES.includes(roleBrief.name)
+		);
+
+		if (hasAllowedRoleBriefs) {
+			managerButtons.classList.toggle('d-none');
+			managerButtons.classList.toggle('d-flex');
+		}
+
+		return;
+	}
+
+	Liferay.Util.openToast({
+		message: 'An unexpected error occurred.',
+		type: 'danger',
 	});
 };
 
-atualizationStatusApproved.onclick = () =>
+updateStatusToApproved.onclick = () =>
 	Liferay.Util.openConfirmModal({
-		message: 'Do you want to update the status?',
-		onConfirm: (isConfirmed) => {
-			if (isConfirmed) {
-				handleFetch('Approved');
-			}
-		},
+		message: 'Do you want to Approve this MDF?',
+		onConfirm: () => handleFetch('Approved'),
 	});
 
-atualizationStatusRequest.onclick = () =>
+updateStatusToRequestMoreInfo.onclick = () =>
 	Liferay.Util.openConfirmModal({
-		message: 'Do you want to update the status?',
-		onConfirm: (isConfirmed) => {
-			if (isConfirmed) {
-				handleFetch('Request more info');
-			}
-		},
+		message: 'Do you want to Request more info for this MDF?',
+		onConfirm: () => handleFetch('Request more info'),
 	});
 
-atualizationStatusReject.onclick = () =>
+updateStatusToReject.onclick = () =>
 	Liferay.Util.openConfirmModal({
-		message: 'Do you want to update the status?',
-		onConfirm: (isConfirmed) => {
-			if (isConfirmed) {
-				handleFetch('Reject');
-			}
-		},
+		message: 'Do you want to Reject this MDF?',
+		onConfirm: () => handleFetch('Reject'),
 	});
+
+getMDFRequestStatus();
 getUserRole();

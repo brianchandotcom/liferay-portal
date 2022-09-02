@@ -220,6 +220,111 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Allowed Entry");
 	}
 
+	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Concat' to text fields"
+	@priority = "4"
+	test CanDefineExpressionConcat {
+		task ("Create Custom Object and some Custom Fields") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 156694",
+				objectName = "CustomObject156694",
+				pluralLabelName = "Custom Objects 156694");
+
+			for (var letters : list "A,B,C,D") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Custom Text ${letters}",
+					fieldName = "customText${letters}",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "CustomObject156694");
+			}
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156694");
+		}
+
+		task ("On Custom Object, go to validations tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 156694");
+
+			ObjectAdmin.goToValidationsTab();
+		}
+
+		task ("Add a Custom Validation using an expression 'concat'") {
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Expression Builder");
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.activeValidation();
+
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customTextA == concat(customTextB, customTextC, customTextD)");
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
+
+			Button.clickSave();
+		}
+
+		task ("Assert that Custom Validation with 'concat' is working") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156694");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Text A",
+				entry = "Liferay Experience Cloud");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Text B",
+				entry = "Cloud");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Text C",
+				entry = " Liferay");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Text D",
+				entry = " Experience");
+
+			Button.clickSave();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "This entry is not possible.");
+
+			Navigator.gotoBack();
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Text A",
+				entry = "Liferay Digital Experience");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Text B",
+				entry = "Liferay");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Text C",
+				entry = " Digital");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Text D",
+				entry = " Experience");
+
+			Button.clickSave();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156694");
+
+			ObjectPortlet.viewEntry(entry = "Liferay Digital Experience");
+
+			ObjectPortlet.assertEntryNotPresent(entry = "Liferay Experience Cloud");
+		}
+	}
+
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Contains' and 'Does Not Contains' to text fields and integer fields"
 	@priority = "4"
 	test CanDefineExpressionContainsAndDoesNotContain {

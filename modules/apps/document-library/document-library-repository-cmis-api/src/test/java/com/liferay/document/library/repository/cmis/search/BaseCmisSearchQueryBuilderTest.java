@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.DateFormatFactory;
@@ -421,14 +422,18 @@ public class BaseCmisSearchQueryBuilderTest {
 	protected RepositorySearchQueryBuilder
 		createRepositorySearchQueryBuilder() {
 
-		return new RepositorySearchQueryBuilderImpl() {
-			{
-				setDLAppService(Mockito.mock(DLAppService.class));
+		RepositorySearchQueryBuilderImpl repositorySearchQueryBuilderImpl =
+			new RepositorySearchQueryBuilderImpl();
 
-				setRepositorySearchQueryTermBuilder(
-					createRepositorySearchQueryTermBuilder());
-			}
-		};
+		ReflectionTestUtil.setFieldValue(
+			repositorySearchQueryBuilderImpl, "_dlAppService",
+			Mockito.mock(DLAppService.class));
+		ReflectionTestUtil.setFieldValue(
+			repositorySearchQueryBuilderImpl,
+			"_repositorySearchQueryTermBuilder",
+			createRepositorySearchQueryTermBuilder());
+
+		return repositorySearchQueryBuilderImpl;
 	}
 
 	protected RepositorySearchQueryTermBuilder

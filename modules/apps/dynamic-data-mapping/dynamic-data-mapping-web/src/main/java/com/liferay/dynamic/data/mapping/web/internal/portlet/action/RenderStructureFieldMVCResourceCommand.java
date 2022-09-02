@@ -87,13 +87,6 @@ public class RenderStructureFieldMVCResourceCommand
 		ServletResponseUtil.write(httpServletResponse, ddmFormFieldHTML);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldRendererRegistry(
-		DDMFormFieldRendererRegistry ddmFormFieldRendererRegistry) {
-
-		_ddmFormFieldRendererRegistry = ddmFormFieldRendererRegistry;
-	}
-
 	private DDMFormFieldRenderingContext _createDDMFormFieldRenderingContext(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
@@ -150,6 +143,7 @@ public class RenderStructureFieldMVCResourceCommand
 		return ddmFormFieldsMap.get(fieldName);
 	}
 
+	@Reference
 	private DDMFormFieldRendererRegistry _ddmFormFieldRendererRegistry;
 
 	@Reference(target = "(ddm.form.deserializer.type=json)")

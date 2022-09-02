@@ -15,6 +15,7 @@
 package com.liferay.item.selector.criteria.upload.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -22,6 +23,74 @@ import com.liferay.portal.kernel.util.Validator;
  * @author Ambrín Chaudhary
  */
 public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
+
+	public static Builder builder() {
+		return new Builder() {
+
+			@Override
+			public UploadItemSelectorCriterion build() {
+				return _uploadItemSelectorCriterion;
+			}
+
+			@Override
+			public Builder setDesiredItemSelectorReturnTypes(
+				ItemSelectorReturnType... desiredItemSelectorReturnTypes) {
+
+				_uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+					desiredItemSelectorReturnTypes);
+
+				return this;
+			}
+
+			@Override
+			public Builder setExtensions(String[] extensions) {
+				_uploadItemSelectorCriterion.setExtensions(extensions);
+
+				return this;
+			}
+
+			@Override
+			public Builder setMaxFileSize(long maxFileSize) {
+				_uploadItemSelectorCriterion.setMaxFileSize(maxFileSize);
+
+				return this;
+			}
+
+			@Override
+			public Builder setMimeTypeRestriction(String mimeTypeRestriction) {
+				_uploadItemSelectorCriterion._setMimeTypeRestriction(
+					mimeTypeRestriction);
+
+				return this;
+			}
+
+			@Override
+			public Builder setPortletId(String portletId) {
+				_uploadItemSelectorCriterion.setPortletId(portletId);
+
+				return this;
+			}
+
+			@Override
+			public Builder setRepositoryName(String repositoryName) {
+				_uploadItemSelectorCriterion.setRepositoryName(repositoryName);
+
+				return this;
+			}
+
+			@Override
+			public Builder setURL(String url) {
+				_uploadItemSelectorCriterion.setURL(url);
+
+				return this;
+			}
+
+			private final UploadItemSelectorCriterion
+				_uploadItemSelectorCriterion =
+					new UploadItemSelectorCriterion();
+
+		};
+	}
 
 	public UploadItemSelectorCriterion() {
 	}
@@ -104,6 +173,31 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	public void setURL(String url) {
 		_url = url;
+	}
+
+	public interface Builder {
+
+		public UploadItemSelectorCriterion build();
+
+		public Builder setDesiredItemSelectorReturnTypes(
+			ItemSelectorReturnType... desiredItemSelectorReturnTypes);
+
+		public Builder setExtensions(String[] extensions);
+
+		public Builder setMaxFileSize(long maxFileSize);
+
+		public Builder setMimeTypeRestriction(String mimeTypeRestriction);
+
+		public Builder setPortletId(String portletId);
+
+		public Builder setRepositoryName(String repositoryName);
+
+		public Builder setURL(String url);
+
+	}
+
+	private void _setMimeTypeRestriction(String mimeTypeRestriction) {
+		_mimeTypeRestriction = mimeTypeRestriction;
 	}
 
 	private String[] _extensions;

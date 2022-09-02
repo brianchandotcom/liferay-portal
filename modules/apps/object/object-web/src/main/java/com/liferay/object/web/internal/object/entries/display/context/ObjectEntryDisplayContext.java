@@ -440,7 +440,7 @@ public class ObjectEntryDisplayContext {
 		return user.isDefaultUser();
 	}
 
-	public boolean isDiscussionEnabled(ObjectDefinition objectDefinition) {
+	public boolean isEnableComments(ObjectDefinition objectDefinition) {
 		if (_readOnly) {
 			return false;
 		}

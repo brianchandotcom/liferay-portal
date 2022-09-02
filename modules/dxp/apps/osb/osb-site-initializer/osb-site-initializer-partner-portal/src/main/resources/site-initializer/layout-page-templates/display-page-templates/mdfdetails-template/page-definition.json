@@ -355,170 +355,30 @@
 											},
 											{
 												"definition": {
+													"fragment": {
+														"key": "mdf-request-manager-status"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
-														"borderWidth": "0",
-														"marginTop": "2",
+														"marginTop": "1",
+														"paddingTop": "2",
 														"textAlign": ""
 													},
-													"indexed": true,
-													"layout": {
-														"borderWidth": 0,
-														"contentDisplay": "FlexRow",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
+													"indexed": true
 												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Status",
-																				"ca_ES": "Status",
-																				"de_DE": "Status",
-																				"en_US": "Status",
-																				"es_ES": "Status",
-																				"fi_FI": "Status",
-																				"fr_FR": "Status",
-																				"hu_HU": "Status",
-																				"ja_JP": "Status",
-																				"nl_NL": "Status",
-																				"pt_BR": "Status",
-																				"sv_SE": "Status",
-																				"zh_CN": "Status"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"paddingRight": "1",
-																"textAlign": "",
-																"textColor": "colorNeutral7"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"mapping": {
-																				"fieldKey": "ObjectField_mdfRequestStatus",
-																				"itemReference": {
-																					"contextSource": "DisplayPageItem"
-																				}
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"paddingRight": "1",
-																"textAlign": "",
-																"textColor": "colorNeutral7"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
+												"type": "Fragment"
 											}
 										],
 										"type": "Section"
-									},
-									{
-										"definition": {
-											"fragment": {
-												"key": "DIALECT-dialect-button"
-											},
-											"fragmentConfig": {
-												"buttonSize": "",
-												"inverted": false,
-												"style": "primary",
-												"type": "solid",
-												"uppercase": false
-											},
-											"fragmentFields": [
-												{
-													"id": "link",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"ar_SA": "Edit",
-																"ca_ES": "Edit",
-																"de_DE": "Edit",
-																"en_US": "Edit",
-																"es_ES": "Edit",
-																"fi_FI": "Edit",
-																"fr_FR": "Edit",
-																"hu_HU": "Edit",
-																"ja_JP": "Edit",
-																"nl_NL": "Edit",
-																"pt_BR": "Edit",
-																"sv_SE": "Edit",
-																"zh_CN": "Edit"
-															}
-														}
-													}
-												}
-											],
-											"indexed": true
-										},
-										"type": "Fragment"
 									}
 								],
 								"type": "Section"
 							}
 						],
 						"type": "Section"
-					},
-					{
-						"definition": {
-							"fragment": {
-								"key": "mdf-request-manager-status"
-							},
-							"fragmentConfig": {
-							},
-							"fragmentFields": [
-							],
-							"indexed": true
-						},
-						"type": "Fragment"
 					},
 					{
 						"definition": {
@@ -613,686 +473,16 @@
 							},
 							{
 								"definition": {
-									"gutters": true,
-									"indexed": true,
-									"modulesPerRow": 5,
-									"numberOfColumns": 5,
-									"reverseOrder": false,
-									"rowViewports": [
-										{
-											"id": "landscapeMobile",
-											"rowViewportDefinition": {
-												"modulesPerRow": 1
-											}
-										},
-										{
-											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
-										},
-										{
-											"id": "tablet",
-											"rowViewportDefinition": {
-											}
-										}
+									"fragment": {
+										"key": "mdf-details-summary"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
 									],
-									"verticalAlignment": "middle"
+									"indexed": true
 								},
-								"pageElements": [
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 3
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"borderWidth": "0",
-														"textAlign": ""
-													},
-													"fragmentViewports": [
-														{
-															"fragmentViewportStyle": {
-																"marginBottom": "2"
-															},
-															"id": "landscapeMobile"
-														},
-														{
-															"fragmentViewportStyle": {
-																"marginBottom": "2",
-																"paddingBottom": "0"
-															},
-															"id": "portraitMobile"
-														}
-													],
-													"indexed": true,
-													"layout": {
-														"align": "Center",
-														"borderWidth": 0,
-														"contentDisplay": "FlexColumn",
-														"justify": "Center",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Funding Periods",
-																				"ca_ES": "Funding Periods",
-																				"de_DE": "Funding Periods",
-																				"en_US": "Funding Periods",
-																				"es_ES": "Funding Periods",
-																				"fi_FI": "Funding Periods",
-																				"fr_FR": "Funding Periods",
-																				"hu_HU": "Funding Periods",
-																				"ja_JP": "Funding Periods",
-																				"nl_NL": "Funding Periods",
-																				"pt_BR": "Funding Periods",
-																				"sv_SE": "Funding Periods",
-																				"zh_CN": "Funding Periods"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"textAlign": "",
-																"textColor": "colorNeutral9"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 2
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"borderWidth": "0",
-														"textAlign": ""
-													},
-													"fragmentViewports": [
-														{
-															"fragmentViewportStyle": {
-																"marginBottom": "2"
-															},
-															"id": "landscapeMobile"
-														},
-														{
-															"fragmentViewportStyle": {
-																"marginBottom": "2"
-															},
-															"id": "portraitMobile"
-														}
-													],
-													"indexed": true,
-													"layout": {
-														"align": "Center",
-														"borderWidth": 0,
-														"contentDisplay": "FlexColumn",
-														"justify": "Center",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Total Cost",
-																				"ca_ES": "Total Cost",
-																				"de_DE": "Total Cost",
-																				"en_US": "Total Cost",
-																				"es_ES": "Total Cost",
-																				"fi_FI": "Total Cost",
-																				"fr_FR": "Total Cost",
-																				"hu_HU": "Total Cost",
-																				"ja_JP": "Total Cost",
-																				"nl_NL": "Total Cost",
-																				"pt_BR": "Total Cost",
-																				"sv_SE": "Total Cost",
-																				"zh_CN": "Total Cost"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"textAlign": "",
-																"textColor": "colorNeutral9"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"mapping": {
-																				"fieldKey": "ObjectField_totalCostOfExpense",
-																				"itemReference": {
-																					"contextSource": "DisplayPageItem"
-																				}
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"fontWeight": "fontWeightBolder",
-																"textAlign": "",
-																"textColor": "colorNeutral9"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 2
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"borderWidth": "0",
-														"textAlign": ""
-													},
-													"fragmentViewports": [
-														{
-															"fragmentViewportStyle": {
-																"marginBottom": "2"
-															},
-															"id": "landscapeMobile"
-														},
-														{
-															"fragmentViewportStyle": {
-																"marginBottom": "2"
-															},
-															"id": "portraitMobile"
-														}
-													],
-													"indexed": true,
-													"layout": {
-														"align": "Center",
-														"borderWidth": 0,
-														"contentDisplay": "FlexColumn",
-														"justify": "Center",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Requested",
-																				"ca_ES": "Requested",
-																				"de_DE": "Requested",
-																				"en_US": "Requested",
-																				"es_ES": "Requested",
-																				"fi_FI": "Requested",
-																				"fr_FR": "Requested",
-																				"hu_HU": "Requested",
-																				"ja_JP": "Requested",
-																				"nl_NL": "Requested",
-																				"pt_BR": "Requested",
-																				"sv_SE": "Requested",
-																				"zh_CN": "Requested"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"textAlign": "",
-																"textColor": "colorNeutral9"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"mapping": {
-																				"fieldKey": "ObjectField_totalMDFRequestAmount",
-																				"itemReference": {
-																					"contextSource": "DisplayPageItem"
-																				}
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"fontWeight": "fontWeightBolder",
-																"textAlign": "",
-																"textColor": "colorNeutral9"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 2
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"borderWidth": "0",
-														"textAlign": ""
-													},
-													"fragmentViewports": [
-														{
-															"fragmentViewportStyle": {
-																"marginBottom": "2"
-															},
-															"id": "landscapeMobile"
-														},
-														{
-															"fragmentViewportStyle": {
-																"marginBottom": "2"
-															},
-															"id": "portraitMobile"
-														}
-													],
-													"indexed": true,
-													"layout": {
-														"align": "Center",
-														"borderWidth": 0,
-														"contentDisplay": "FlexColumn",
-														"justify": "Center",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Approved",
-																				"ca_ES": "Approved",
-																				"de_DE": "Approved",
-																				"en_US": "Approved",
-																				"es_ES": "Approved",
-																				"fi_FI": "Approved",
-																				"fr_FR": "Approved",
-																				"hu_HU": "Approved",
-																				"ja_JP": "Approved",
-																				"nl_NL": "Approved",
-																				"pt_BR": "Approved",
-																				"sv_SE": "Approved",
-																				"zh_CN": "Approved"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"textAlign": "",
-																"textColor": "colorNeutral9"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"fontWeight": "fontWeightBolder",
-																"textAlign": "",
-																"textColor": "colorNeutral9"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 3
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"borderWidth": "0",
-														"textAlign": ""
-													},
-													"indexed": true,
-													"layout": {
-														"align": "Center",
-														"borderWidth": 0,
-														"contentDisplay": "FlexColumn",
-														"justify": "Center",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Total Claim Amount",
-																				"ca_ES": "Total Claim Amount",
-																				"de_DE": "Total Claim Amount",
-																				"en_US": "Total Claim Amount",
-																				"es_ES": "Total Claim Amount",
-																				"fi_FI": "Total Claim Amount",
-																				"fr_FR": "Total Claim Amount",
-																				"hu_HU": "Total Claim Amount",
-																				"ja_JP": "Total Claim Amount",
-																				"nl_NL": "Total Claim Amount",
-																				"pt_BR": "Total Claim Amount",
-																				"sv_SE": "Total Claim Amount",
-																				"zh_CN": "Total Claim Amount"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"textAlign": "",
-																"textColor": "colorNeutral9"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "text-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"fontWeight": "fontWeightBolder",
-																"textAlign": "",
-																"textColor": "colorNeutral9"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									}
-								],
-								"type": "Row"
+								"type": "Fragment"
 							}
 						],
 						"type": "Section"
@@ -1840,7 +1030,7 @@
 																"key": "detail-view-table"
 															},
 															"fragmentConfig": {
-																"numberOfRows": 3
+																"numberOfRows": 2
 															},
 															"fragmentFields": [
 																{
@@ -1849,62 +1039,17 @@
 																		"fragmentLink": {
 																		},
 																		"text": {
-																			"value_i18n": {
-																				"en_US": "()"
+																			"mapping": {
+																				"fieldKey": "ObjectField_overallCampaign",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
 																			}
 																		}
 																	}
 																},
 																{
 																	"id": "rowTitle-2",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Provide a name and short description of the overall campaign",
-																				"ca_ES": "Provide a name and short description of the overall campaign",
-																				"de_DE": "Provide a name and short description of the overall campaign",
-																				"en_US": "Provide a name and short description of the overall campaign",
-																				"es_ES": "Provide a name and short description of the overall campaign",
-																				"fi_FI": "Provide a name and short description of the overall campaign",
-																				"fr_FR": "Provide a name and short description of the overall campaign",
-																				"hu_HU": "Provide a name and short description of the overall campaign",
-																				"ja_JP": "Provide a name and short description of the overall campaign",
-																				"nl_NL": "Provide a name and short description of the overall campaign",
-																				"pt_BR": "Provide a name and short description of the overall campaign",
-																				"sv_SE": "Provide a name and short description of the overall campaign",
-																				"zh_CN": "Provide a name and short description of the overall campaign"
-																			}
-																		}
-																	}
-																},
-																{
-																	"id": "rowTitle-1",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Business Plan ID",
-																				"ca_ES": "Business Plan ID",
-																				"de_DE": "Business Plan ID",
-																				"en_US": "Business Plan ID",
-																				"es_ES": "Business Plan ID",
-																				"fi_FI": "Business Plan ID",
-																				"fr_FR": "Business Plan ID",
-																				"hu_HU": "Business Plan ID",
-																				"ja_JP": "Business Plan ID",
-																				"nl_NL": "Business Plan ID",
-																				"pt_BR": "Business Plan ID",
-																				"sv_SE": "Business Plan ID",
-																				"zh_CN": "Business Plan ID"
-																			}
-																		}
-																	}
-																},
-																{
-																	"id": "rowTitle-3",
 																	"value": {
 																		"fragmentLink": {
 																		},
@@ -1923,6 +1068,30 @@
 																				"pt_BR": "Liferay business/sales goals",
 																				"sv_SE": "Liferay business/sales goals",
 																				"zh_CN": "Liferay business/sales goals"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "rowTitle-1",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Provide a name and short description of the overall campaign",
+																				"ca_ES": "Provide a name and short description of the overall campaign",
+																				"de_DE": "Provide a name and short description of the overall campaign",
+																				"en_US": "Provide a name and short description of the overall campaign",
+																				"es_ES": "Provide a name and short description of the overall campaign",
+																				"fi_FI": "Provide a name and short description of the overall campaign",
+																				"fr_FR": "Provide a name and short description of the overall campaign",
+																				"hu_HU": "Provide a name and short description of the overall campaign",
+																				"ja_JP": "Provide a name and short description of the overall campaign",
+																				"nl_NL": "Provide a name and short description of the overall campaign",
+																				"pt_BR": "Provide a name and short description of the overall campaign",
+																				"sv_SE": "Provide a name and short description of the overall campaign",
+																				"zh_CN": "Provide a name and short description of the overall campaign"
 																			}
 																		}
 																	}
@@ -1953,21 +1122,6 @@
 																},
 																{
 																	"id": "rowValue-2",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"mapping": {
-																				"fieldKey": "ObjectField_overallCampaign",
-																				"itemReference": {
-																					"contextSource": "DisplayPageItem"
-																				}
-																			}
-																		}
-																	}
-																},
-																{
-																	"id": "rowValue-3",
 																	"value": {
 																		"fragmentLink": {
 																		},

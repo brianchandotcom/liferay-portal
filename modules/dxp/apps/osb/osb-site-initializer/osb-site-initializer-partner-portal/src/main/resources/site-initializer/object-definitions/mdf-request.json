@@ -134,7 +134,7 @@
 			"label": {
 				"en_US": "MDF Request Status"
 			},
-			"name": "mdfRequestStatus",
+			"name": "requestStatus",
 			"required": false,
 			"type": "String"
 		}

@@ -316,33 +316,6 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 		return super.isSessionErrorException(throwable);
 	}
 
-	@Reference
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStaging(Staging staging) {
-		_staging = staging;
-	}
-
-	@Reference
-	protected void setStagingLocalService(
-		StagingLocalService stagingLocalService) {
-
-		_stagingLocalService = stagingLocalService;
-	}
-
-	protected void unsetGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = null;
-	}
-
-	protected void unsetStagingLocalService(
-		StagingLocalService stagingLocalService) {
-
-		_stagingLocalService = null;
-	}
-
 	private CTSettingsConfiguration _getCTSettingsConfiguration(
 		long companyId) {
 
@@ -367,12 +340,17 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 	private ConfigurationProvider _configurationProvider;
 
 	private volatile CTSettingsConfiguration _defaultCTSettingsConfiguration;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private Staging _staging;
+
+	@Reference
 	private StagingLocalService _stagingLocalService;
 
 }

@@ -85,13 +85,7 @@ public class DeleteLayoutSetBranchMVCActionCommand
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setLayoutSetBranchService(
-		LayoutSetBranchService layoutSetBranchService) {
-
-		_layoutSetBranchService = layoutSetBranchService;
-	}
-
+	@Reference
 	private LayoutSetBranchService _layoutSetBranchService;
 
 	@Reference

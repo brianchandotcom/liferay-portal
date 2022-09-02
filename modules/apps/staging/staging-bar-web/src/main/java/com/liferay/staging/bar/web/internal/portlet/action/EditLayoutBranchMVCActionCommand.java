@@ -90,13 +90,7 @@ public class EditLayoutBranchMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setLayoutBranchService(
-		LayoutBranchService layoutBranchService) {
-
-		_layoutBranchService = layoutBranchService;
-	}
-
+	@Reference
 	private LayoutBranchService _layoutBranchService;
 
 }

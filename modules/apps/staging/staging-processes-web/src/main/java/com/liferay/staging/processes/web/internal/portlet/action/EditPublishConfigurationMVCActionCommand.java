@@ -130,27 +130,6 @@ public class EditPublishConfigurationMVCActionCommand
 		}
 	}
 
-	@Reference
-	protected void setExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService
-			exportImportConfigurationLocalService) {
-
-		_exportImportConfigurationLocalService =
-			exportImportConfigurationLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExportImportConfigurationService(
-		ExportImportConfigurationService exportImportConfigurationService) {
-
-		_exportImportConfigurationService = exportImportConfigurationService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	protected void setLayoutIdMap(ActionRequest actionRequest) {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
@@ -167,18 +146,6 @@ public class EditPublishConfigurationMVCActionCommand
 				groupId, privateLayout,
 				SessionTreeJSClicks.getOpenNodes(
 					httpServletRequest, treeId + "SelectedNode")));
-	}
-
-	@Reference(unbind = "-")
-	protected void setTrashEntryService(TrashEntryService trashEntryService) {
-		_trashEntryService = trashEntryService;
-	}
-
-	protected void unsetExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService
-			exportImportConfigurationLocalService) {
-
-		_exportImportConfigurationLocalService = null;
 	}
 
 	private void _deleteExportImportConfiguration(
@@ -313,13 +280,17 @@ public class EditPublishConfigurationMVCActionCommand
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;
 
+	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
 	private ExportImportConfigurationService _exportImportConfigurationService;
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;
 
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -328,6 +299,7 @@ public class EditPublishConfigurationMVCActionCommand
 	@Reference
 	private Staging _staging;
 
+	@Reference
 	private TrashEntryService _trashEntryService;
 
 }

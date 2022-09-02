@@ -75,13 +75,7 @@ public class DeleteLayoutBranchMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setLayoutBranchService(
-		LayoutBranchService layoutBranchService) {
-
-		_layoutBranchService = layoutBranchService;
-	}
-
+	@Reference
 	private LayoutBranchService _layoutBranchService;
 
 	@Reference

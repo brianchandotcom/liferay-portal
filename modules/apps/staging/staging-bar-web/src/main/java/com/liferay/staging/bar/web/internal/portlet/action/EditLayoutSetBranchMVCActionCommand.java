@@ -97,21 +97,10 @@ public class EditLayoutSetBranchMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setLayoutSetBranchLocalService(
-		LayoutSetBranchLocalService layoutSetBranchLocalService) {
-
-		_layoutSetBranchLocalService = layoutSetBranchLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetBranchService(
-		LayoutSetBranchService layoutSetBranchService) {
-
-		_layoutSetBranchService = layoutSetBranchService;
-	}
-
+	@Reference
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+
+	@Reference
 	private LayoutSetBranchService _layoutSetBranchService;
 
 }

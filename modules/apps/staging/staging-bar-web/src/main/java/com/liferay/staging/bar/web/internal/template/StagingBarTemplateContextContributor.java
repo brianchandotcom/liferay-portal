@@ -106,21 +106,13 @@ public class StagingBarTemplateContextContributor
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setCustomizationSettingsControlMenuJSPDynamicInclude(
-		StagingBarControlMenuJSPDynamicInclude
-			stagingBarControlMenuJSPDynamicInclude) {
-
-		_stagingBarControlMenuJSPDynamicInclude =
-			stagingBarControlMenuJSPDynamicInclude;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagingBarTemplateContextContributor.class);
 
 	@Reference
 	private Language _language;
 
+	@Reference
 	private StagingBarControlMenuJSPDynamicInclude
 		_stagingBarControlMenuJSPDynamicInclude;
 

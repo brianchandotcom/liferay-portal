@@ -486,78 +486,6 @@ public class StagingBarPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference
-	protected void setLayoutRevisionLocalService(
-		LayoutRevisionLocalService layoutRevisionLocalService) {
-
-		_layoutRevisionLocalService = layoutRevisionLocalService;
-	}
-
-	@Reference
-	protected void setLayoutSetBranchLocalService(
-		LayoutSetBranchLocalService layoutSetBranchLocalService) {
-
-		_layoutSetBranchLocalService = layoutSetBranchLocalService;
-	}
-
-	@Reference
-	protected void setLayoutSetBranchService(
-		LayoutSetBranchService layoutSetBranchService) {
-
-		_layoutSetBranchService = layoutSetBranchService;
-	}
-
-	@Reference
-	protected void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-
-		_layoutSetLocalService = layoutSetLocalService;
-	}
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.staging.bar.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
-	protected void unsetLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = null;
-	}
-
-	protected void unsetLayoutRevisionLocalService(
-		LayoutRevisionLocalService layoutRevisionLocalService) {
-
-		_layoutRevisionLocalService = null;
-	}
-
-	protected void unsetLayoutSetBranchLocalService(
-		LayoutSetBranchLocalService layoutSetBranchLocalService) {
-
-		_layoutSetBranchLocalService = null;
-	}
-
-	protected void unsetLayoutSetBranchService(
-		LayoutSetBranchService layoutSetBranchService) {
-
-		_layoutSetBranchService = null;
-	}
-
-	protected void unsetLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-
-		_layoutSetLocalService = null;
-	}
-
 	private void _addLayoutRevisionSessionMessages(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -703,14 +631,28 @@ public class StagingBarPortlet extends MVCPortlet {
 	@Reference
 	private BeanProperties _beanProperties;
 
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private LayoutRevisionLocalService _layoutRevisionLocalService;
+
+	@Reference
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+
+	@Reference
 	private LayoutSetBranchService _layoutSetBranchService;
+
+	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.staging.bar.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
+	)
+	private Release _release;
 
 	@Reference
 	private Staging _staging;

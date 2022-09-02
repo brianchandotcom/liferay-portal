@@ -308,7 +308,7 @@ public class KaleoWorkflowModelConverterImpl
 		defaultWorkflowLog.setComment(kaleoLog.getComment());
 		defaultWorkflowLog.setCreateDate(kaleoLog.getCreateDate());
 		defaultWorkflowLog.setPreviousWorkflowNode(
-			_getState(kaleoLog.getPreviousKaleoNodeId()));
+			_getWorkflowNode(kaleoLog.getPreviousKaleoNodeId()));
 
 		long previousAssigneeClassPK = kaleoLog.getPreviousAssigneeClassPK();
 
@@ -339,7 +339,7 @@ public class KaleoWorkflowModelConverterImpl
 		}
 
 		defaultWorkflowLog.setCurrentWorkflowNode(
-			_getState(kaleoLog.getKaleoClassPK()));
+			_getWorkflowNode(kaleoLog.getKaleoClassPK()));
 		defaultWorkflowLog.setType(KaleoLogUtil.convert(kaleoLog.getType()));
 		defaultWorkflowLog.setWorkflowLogId(kaleoLog.getKaleoLogId());
 		defaultWorkflowLog.setWorkflowTaskId(
@@ -423,7 +423,7 @@ public class KaleoWorkflowModelConverterImpl
 		return versionParts[0];
 	}
 
-	private WorkflowNode _getState(long kaleoNodeId) {
+	private WorkflowNode _getWorkflowNode(long kaleoNodeId) {
 		if (kaleoNodeId == 0) {
 			return null;
 		}

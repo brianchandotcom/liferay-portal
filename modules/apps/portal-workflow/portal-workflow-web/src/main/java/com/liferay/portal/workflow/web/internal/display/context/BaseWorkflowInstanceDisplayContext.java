@@ -70,9 +70,9 @@ public abstract class BaseWorkflowInstanceDisplayContext {
 		).flatMap(
 			List::stream
 		).map(
-			currentNode -> {
+			currentWorkflowNode -> {
 				DefaultWorkflowNode defaultWorkflowNode =
-					(DefaultWorkflowNode)currentNode;
+					(DefaultWorkflowNode)currentWorkflowNode;
 
 				return defaultWorkflowNode.getLabel(
 					workflowInstanceRequestHelper.getLocale());

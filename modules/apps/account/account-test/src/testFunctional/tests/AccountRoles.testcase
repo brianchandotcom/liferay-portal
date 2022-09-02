@@ -82,9 +82,9 @@ definition {
 		}
 	}
 
-	@description = "This test assert the account manager can view account organizations."
+	@description = "This test assert the account manager can view account organizations by default."
 	@priority = "4"
-	test AccountManagersCanViewOrganizations {
+	test AccountManagersCanViewOrganizationsbyDefault {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Given add 2 organizations and assign one to an account") {

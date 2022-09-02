@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,25 +11,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+import React from 'react';
 
-<%
-AnalyticsSettingsDisplayContext analyticsSettingsDisplayContext = new AnalyticsSettingsDisplayContext(request, response);
-%>
+const App = () => {
+	return <div>Hello, world!</div>;
+};
 
-<div>
-	<react:component
-		module="js/index"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"connected", analyticsSettingsDisplayContext.isConnected()
-			).put(
-				"liferayAnalyticsURL", analyticsSettingsDisplayContext.getLiferayAnalyticsURL()
-			).put(
-				"token", analyticsSettingsDisplayContext.getToken()
-			).build()
-		%>'
-	/>
-</div>
+export default App;

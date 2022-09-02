@@ -11,26 +11,3 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-import React from 'react';
-
-import MultiStepNav from './components/MultiStepNav';
-
-const App = ({connected}) => (
-	<>
-		{!connected && (
-			<MultiStepNav
-				steps={[
-					{
-						description: Liferay.Language.get(
-							'use-the-token-genereted-in-your-analytics-cloud-to-connect-this-workspace'
-						),
-						title: Liferay.Language.get('connect-analytics-cloud'),
-					},
-				]}
-			/>
-		)}
-	</>
-);
-
-export default App;

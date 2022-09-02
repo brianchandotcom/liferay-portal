@@ -713,6 +713,77 @@ definition {
 		}
 	}
 
+	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Is Empty' to text fields"
+	@priority = "4"
+	test CanDefineExpressionIsEmpty {
+		property portal.upstream = "quarantine";
+
+		task ("Create Custom Object and Custom Field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 156695",
+				objectName = "CustomObject156695",
+				pluralLabelName = "Custom Objects 156695");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Text",
+				fieldName = "customText",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject156695");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156695");
+		}
+
+		task ("On Custom Object, go to validations tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 156695");
+
+			ObjectAdmin.goToValidationsTab();
+		}
+
+		task ("Add a Custom Validation using an expression 'is empty'") {
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Expression Builder");
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.activeValidation();
+
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "isEmpty(customText)");
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
+
+			Button.clickSave();
+		}
+
+		task ("Assert that Custom Validation with 'is empty' is working") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156695");
+
+			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Invalid entry");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "This entry is not possible.");
+
+			Navigator.gotoBack();
+
+			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "");
+
+			Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156695");
+
+			ObjectPortlet.viewEntry(entry = "");
+
+			ObjectPortlet.assertEntryNotPresent(entry = "Invalid entry");
+		}
+	}
+
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Is Equal To' and 'Is Not Equal To' text fields and integer fields"
 	@priority = "4"
 	test CanDefineExpressionIsEqualToAndIsNotEqualTo {

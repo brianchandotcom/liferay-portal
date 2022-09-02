@@ -172,7 +172,7 @@ public class NotificationQueueEntryLocalServiceImpl
 	}
 
 	@Override
-	public void sendNotificationQueueEntries() throws PortalException {
+	public void sendNotificationQueueEntries() {
 		List<NotificationQueueEntry> notificationQueueEntries = null;
 
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-159052"))) {
@@ -185,10 +185,10 @@ public class NotificationQueueEntryLocalServiceImpl
 				notificationQueueEntryPersistence.findBySent(false);
 		}
 
-		try {
-			for (NotificationQueueEntry notificationQueueEntry :
-					notificationQueueEntries) {
+		for (NotificationQueueEntry notificationQueueEntry :
+				notificationQueueEntries) {
 
+			try {
 				MailMessage mailMessage = new MailMessage(
 					new InternetAddress(
 						notificationQueueEntry.getFrom(),
@@ -213,16 +213,16 @@ public class NotificationQueueEntryLocalServiceImpl
 				notificationQueueEntryLocalService.updateSent(
 					notificationQueueEntry.getNotificationQueueEntryId(), true);
 			}
-		}
-		catch (PortalException portalException) {
-			throw portalException;
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
 
-			throw new PortalException(exception);
+				notificationQueueEntry.setStatus(
+					NotificationQueueEntryConstants.STATUS_FAILED);
+
+				notificationQueueEntry.persist();
+			}
 		}
 	}
 

@@ -57,13 +57,7 @@ public class RevertStructureMVCActionCommand extends BaseMVCActionCommand {
 			structureId, version, serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		_ddmStructureService = ddmStructureService;
-	}
-
+	@Reference
 	private DDMStructureService _ddmStructureService;
 
 }

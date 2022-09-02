@@ -17,6 +17,7 @@ import React, {useMemo, useState} from 'react';
 
 import {ReorderSetsModal} from '../../../app/components/ReorderSetsModal';
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
+import {HIGHLIGHTED_COLLECTION_ID} from '../../../app/config/constants/highlightedCollectionId';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {config} from '../../../app/config/index';
 import {useSelector} from '../../../app/contexts/StoreContext';
@@ -47,6 +48,10 @@ const collectionFilter = (collections, searchValue) => {
 
 	return collections
 		.reduce((acc, collection) => {
+			if (collection.collectionId === HIGHLIGHTED_COLLECTION_ID) {
+				return acc;
+			}
+
 			if (itemFilter(collection)) {
 				return [...acc, collection];
 			}

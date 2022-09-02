@@ -15,12 +15,13 @@
 import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/BuildFormRun';
 import yupSchema from '../../schema/yup';
 import {TEST_STATUS} from '../../util/constants';
+import {searchUtil} from '../../util/search';
 import Rest from './Rest';
 import {testrayCaseResultRest} from './TestrayCaseResult';
 import {testrayFactorRest} from './TestrayFactor';
 import {testrayRunRest} from './TestrayRun';
 
-import type {TestrayBuild} from './types';
+import type {TestrayBuild, TestrayCaseResult} from './types';
 
 type Build = typeof yupSchema.build.__outputType & {projectId: number};
 
@@ -107,6 +108,22 @@ class TestrayBuildRest extends Rest<Build, TestrayBuild> {
 		}
 
 		return build as TestrayBuild;
+	}
+
+	public async getCurrentCaseIds(buildId: string | number) {
+		const response = await this.fetcher(
+			`/caseresults?filter=${searchUtil.eq(
+				'buildId',
+				buildId
+			)}&pageSize=1000&fields=r_caseToCaseResult_c_caseId`
+		);
+
+		const caseIds: number[] =
+			response?.items.map(
+				(item: TestrayCaseResult) => item.r_caseToCaseResult_c_caseId
+			) || [];
+
+		return caseIds;
 	}
 }
 

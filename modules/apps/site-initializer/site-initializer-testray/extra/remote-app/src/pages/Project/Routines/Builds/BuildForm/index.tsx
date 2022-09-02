@@ -14,7 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
 
@@ -49,6 +49,17 @@ const BuildForm = () => {
 	const [caseIds, setCaseIds] = useState<number[]>([]);
 
 	const {projectId, routineId} = useParams();
+
+	const {buildId} = useParams();
+
+	useEffect(() => {
+		if (buildId) {
+			testrayBuildRest
+				.getCurrentCaseIds(buildId)
+				.then(setCaseIds)
+				.catch(console.error);
+		}
+	}, [buildId]);
 
 	const {data: productVersionsData, mutate} = useFetch<
 		APIResponse<TestrayProductVersion>

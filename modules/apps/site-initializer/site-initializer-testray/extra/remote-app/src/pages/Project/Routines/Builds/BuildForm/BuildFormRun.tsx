@@ -75,7 +75,7 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({
 		`${testrayFactorRest.resource}&filter=${searchUtil.eq(
 			'routineId',
 			routineId as string
-		)}`,
+		)}&pageSize=1000`,
 		(response) => testrayFactorRest.transformDataFromList(response)
 	);
 

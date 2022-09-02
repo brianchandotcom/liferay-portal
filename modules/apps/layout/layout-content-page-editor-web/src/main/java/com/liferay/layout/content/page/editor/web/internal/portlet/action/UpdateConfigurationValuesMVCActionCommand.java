@@ -183,6 +183,8 @@ public class UpdateConfigurationValuesMVCActionCommand
 	}
 
 	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
+		FragmentEntryProcessorConstants.
+			KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 		FragmentEntryProcessorConstants.KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 	};
 

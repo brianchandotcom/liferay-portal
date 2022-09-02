@@ -1042,6 +1042,21 @@ definition {
 			value1 = "${kbArticleAttachment}");
 	}
 
+	macro selectFolderThroughPageTreePanel {
+		if (isSet(kbChildFolderName)) {
+			Click(locator1 = "KnowledgeBase#PAGE_TREE_CHEVRON_ICON_RIGHT");
+
+			Click(
+				key_itemName = "${kbChildFolderName}",
+				locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
+		}
+		else {
+			Click(
+				key_itemName = "${kbFolderName}",
+				locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
+		}
+	}
+
 	macro selectParentArticleCP {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

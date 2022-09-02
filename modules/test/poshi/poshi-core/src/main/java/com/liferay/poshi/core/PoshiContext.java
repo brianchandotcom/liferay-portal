@@ -1553,8 +1553,8 @@ public class PoshiContext {
 
 				if (defaultCommandElement == null) {
 					throw new Exception(
-						"Default tag has a syntax error: " +
-							defaultClassCommandName);
+						"Default function does not exist: " +
+							rootElement.attributeValue("default"));
 				}
 
 				_commandElements.put(

@@ -293,9 +293,7 @@ public class ObjectEntryDisplayContext {
 		for (ObjectLayoutBox objectLayoutBox :
 				objectLayoutTab.getObjectLayoutBoxes()) {
 
-			if (StringUtil.equals(
-					objectLayoutBox.getType(), type)) {
-
+			if (StringUtil.equals(objectLayoutBox.getType(), type)) {
 				return objectLayoutBox;
 			}
 		}

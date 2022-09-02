@@ -3114,11 +3114,84 @@ definition {
 	}
 
 	@description = "Verify that the user can see the Assignments on Single Approver"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewDefaultSingleApproverAssignments {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewDefaultSingleApproverAssignments";
 
-		// TODO CanViewDefaultSingleApproverAssignments pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "review");
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Assignments",
+			propertyValue = "Account Administrator");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			selectedRole = "Account",
+			positonOption = "2");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			selectedRole = "Account",
+			positonOption = "3");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			selectedRole = "Asset Library",
+			positonOption = "4");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			selectedRole = "Asset Library",
+			positonOption = "5");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			selectedRole = "Asset Library",
+			positonOption = "6");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			selectedRole = "Organization",
+			positonOption = "7");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			selectedRole = "Organization",
+			positonOption = "8");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			selectedRole = "Organization",
+			positonOption = "9");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			selectedRole = "Regular",
+			positonOption = "10");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			selectedRole = "Regular",
+			positonOption = "11");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			selectedRole = "Site",
+			positonOption = "12");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			selectedRole = "Site",
+			positonOption = "13");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			selectedRole = "Site",
+			positonOption = "14");
 
 	}
 

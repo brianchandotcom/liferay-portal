@@ -1737,9 +1737,9 @@ app.server.type=@{app.server.type}]]></echo>
 
 								<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
 
-								<gradle-execute dir="${project.dir}/modules/apps/petra" task="deploy">
+								<gradle-execute dir="modules/apps" task="deploy">
 									<arg value="--parallel" />
-									<arg value="-Dportal.build=true" />
+									<arg value="-Dbuild.profile=portal-pre" />
 									<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
 								</gradle-execute>
 

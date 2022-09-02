@@ -113,6 +113,9 @@ components:
                     type: object
                 portlet:
                     type: boolean
+                restContextPath:
+                    readOnly: true
+                    type: string
                 scope:
                     type: string
                 status:

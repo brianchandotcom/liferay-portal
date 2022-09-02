@@ -48,6 +48,11 @@ export default function useApollo() {
 
 			const apolloClient = new ApolloClient({
 				cache,
+				defaultOptions: {
+					watchQuery: {
+						fetchPolicy: 'network-only',
+					},
+				},
 				link: link.concat(batchLink),
 			});
 

@@ -15,7 +15,7 @@
 	},
 	"active": false,
 	"label": {
-		"en_US": "EVPEmployee"
+		"en_US": "EVP Employee"
 	},
 	"name": "EVPEmployee",
 	"objectActions": [
@@ -65,7 +65,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "employeeUserId"
+				"en_US": "Employee User Id"
 			},
 			"name": "employeeUserId",
 			"objectFieldSettings": [
@@ -83,7 +83,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "employmentType"
+				"en_US": "Employment Type"
 			},
 			"name": "employmentType",
 			"objectFieldSettings": [
@@ -101,7 +101,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "hireDate"
+				"en_US": "Hire Date"
 			},
 			"name": "hireDate",
 			"objectFieldSettings": [
@@ -137,7 +137,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "managerUserId"
+				"en_US": "Manager User Id"
 			},
 			"name": "managerUserId",
 			"objectFieldSettings": [
@@ -191,7 +191,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "subsidiaryEVPDivisionId"
+				"en_US": "Subsidiary EVP Division Id"
 			},
 			"name": "subsidiaryEVPDivisionId",
 			"objectFieldSettings": [
@@ -209,7 +209,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "ultiproEmployeeId"
+				"en_US": "Ultipro Employee Id"
 			},
 			"name": "ultiproEmployeeId",
 			"objectFieldSettings": [
@@ -231,7 +231,7 @@
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "EVPEmployees"
+		"en_US": "EVP Employees"
 	},
 	"portlet": false,
 	"scope": "company",

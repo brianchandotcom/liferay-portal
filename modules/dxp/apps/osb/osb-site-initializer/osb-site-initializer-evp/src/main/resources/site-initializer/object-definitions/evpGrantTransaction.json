@@ -27,7 +27,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "amount"
+				"en_US": "Amount"
 			},
 			"name": "amount",
 			"objectFieldSettings": [
@@ -81,7 +81,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "currencyCode"
+				"en_US": "Currency Code"
 			},
 			"name": "currencyCode",
 			"objectFieldSettings": [
@@ -103,7 +103,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "date_"
+				"en_US": "Date"
 			},
 			"name": "date",
 			"objectFieldSettings": [
@@ -121,7 +121,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "evpGrantRequestId"
+				"en_US": "EVP Grant Request Id"
 			},
 			"name": "evpGrantRequestId",
 			"objectFieldSettings": [
@@ -139,7 +139,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "fileEntryId"
+				"en_US": "File Entry Id"
 			},
 			"name": "fileEntryId",
 			"objectFieldSettings": [
@@ -157,7 +157,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "grantType"
+				"en_US": "Grant Type"
 			},
 			"name": "grantType",
 			"objectFieldSettings": [
@@ -237,7 +237,7 @@
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "EVPGrantTransactions"
+		"en_US": "EVP Grant Transactions"
 	},
 	"portlet": false,
 	"scope": "company",

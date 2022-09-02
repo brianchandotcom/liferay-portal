@@ -15,7 +15,7 @@
 	},
 	"active": false,
 	"label": {
-		"en_US": "EVPRequestOrganization"
+		"en_US": "EVP Request Organization"
 	},
 	"name": "EVPRequestOrganization",
 	"objectActions": [
@@ -65,7 +65,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "description"
+				"en_US": "Description"
 			},
 			"name": "description",
 			"objectFieldSettings": [
@@ -123,7 +123,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "nonprofitType"
+				"en_US": "Nonprofit Type"
 			},
 			"name": "nonprofitType",
 			"objectFieldSettings": [
@@ -141,7 +141,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "organizationId"
+				"en_US": "Organization Id"
 			},
 			"name": "organizationId",
 			"objectFieldSettings": [
@@ -159,7 +159,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "shared"
+				"en_US": "Shared"
 			},
 			"name": "shared",
 			"objectFieldSettings": [
@@ -195,7 +195,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "subsidiaryGroupId"
+				"en_US": "Subsidiary Group Id"
 			},
 			"name": "subsidiaryGroupId",
 			"objectFieldSettings": [
@@ -213,7 +213,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "taxIdentificationNumber"
+				"en_US": "Tax Identification Number"
 			},
 			"name": "taxIdentificationNumber",
 			"objectFieldSettings": [
@@ -235,7 +235,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "verified"
+				"en_US": "Verified"
 			},
 			"name": "verified",
 			"objectFieldSettings": [
@@ -253,7 +253,7 @@
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "EVPRequestOrganizations"
+		"en_US": "EVP Request Organizations"
 	},
 	"portlet": false,
 	"scope": "company",

@@ -13,7 +13,7 @@
 	},
 	"active": true,
 	"label": {
-		"en_US": "EVPDivision"
+		"en_US": "EVP Division"
 	},
 	"name": "EVPDivision",
 	"objectActions": [
@@ -27,7 +27,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "abbreviation"
+				"en_US": "Abbreviation"
 			},
 			"name": "abbreviation",
 			"objectFieldSettings": [
@@ -121,7 +121,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "organizationId"
+				"en_US": "Organization Id"
 			},
 			"name": "organizationId",
 			"objectFieldSettings": [
@@ -139,7 +139,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "parentEVPDivisionId"
+				"en_US": "Parent EVP Division Id"
 			},
 			"name": "parentEVPDivisionId",
 			"objectFieldSettings": [
@@ -175,7 +175,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "type_"
+				"en_US": "Type"
 			},
 			"name": "type",
 			"objectFieldSettings": [
@@ -193,7 +193,7 @@
 	"panelCategoryKey": "control_panel.users",
 	"parameterRequired": false,
 	"pluralLabel": {
-		"en_US": "EVPDivisions"
+		"en_US": "EVP Divisions"
 	},
 	"portlet": false,
 	"scope": "company",

@@ -175,27 +175,6 @@ public class AddFormInstanceRecordMVCActionCommand
 		return ddmStructure.getDDMForm();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormInstanceRecordService(
-		DDMFormInstanceRecordService ddmFormInstanceRecordService) {
-
-		_ddmFormInstanceRecordService = ddmFormInstanceRecordService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormInstanceService(
-		DDMFormInstanceService ddmFormInstanceService) {
-
-		_ddmFormInstanceService = ddmFormInstanceService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesFactory(
-		DDMFormValuesFactory ddmFormValuesFactory) {
-
-		_ddmFormValuesFactory = ddmFormValuesFactory;
-	}
-
 	private void _updateFormInstanceRecord(
 			ActionRequest actionRequest, DDMFormInstance ddmFormInstance,
 			DDMFormValues ddmFormValues, long groupId,
@@ -274,13 +253,17 @@ public class AddFormInstanceRecordMVCActionCommand
 	private AddFormInstanceRecordMVCCommandHelper
 		_addFormInstanceMVCCommandHelper;
 
+	@Reference
 	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;
 
 	@Reference
 	private DDMFormInstanceRecordVersionLocalService
 		_ddmFormInstanceRecordVersionLocalService;
 
+	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
+
+	@Reference
 	private DDMFormValuesFactory _ddmFormValuesFactory;
 
 	@Reference

@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import {useModal} from '@clayui/modal';
 import {
 	API,
@@ -20,7 +20,6 @@ import {
 	Card,
 	Input,
 	InputLocalized,
-	Select,
 	SidePanelForm,
 	Toggle,
 	invalidateRequired,
@@ -28,7 +27,7 @@ import {
 	saveAndReload,
 } from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {createTextMaskInputElement} from 'text-mask-core';
 
 import {createAutoCorrectedNumberPipe} from '../../utils/createAutoCorrectedNumberPipe';
@@ -45,13 +44,12 @@ import ObjectFieldFormBase, {
 	ObjectFieldErrors,
 	useObjectFieldForm,
 } from '../ObjectFieldFormBase';
+import {SearchableContainer} from './SearchableContainer';
 
 import './EditObjectField.scss';
 
 const REQUIRED_MSG = Liferay.Language.get('required');
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-const languages = Liferay.Language.available;
-const languageLabels = Object.values(languages);
 
 export default function EditObjectField({
 	filterOperators,
@@ -650,100 +648,6 @@ export default function EditObjectField({
 	);
 }
 
-function SearchableContainer({
-	disabled,
-	isApproved,
-	objectField,
-	readOnly,
-	setValues,
-}: ISearchableProps) {
-	const isSearchableString =
-		objectField.indexed &&
-		(objectField.DBType === 'Clob' ||
-			objectField.DBType === 'String' ||
-			objectField.businessType === 'Attachment') &&
-		objectField.businessType !== 'Aggregation';
-
-	const selectedLanguageIndex = useMemo(() => {
-		const label =
-			objectField.indexedLanguageId &&
-			languages[objectField.indexedLanguageId];
-
-		return label ? languageLabels.indexOf(label) : undefined;
-	}, [objectField.indexedLanguageId]);
-
-	return (
-		<Card title={Liferay.Language.get('searchable')}>
-			<ClayForm.Group>
-				<ClayToggle
-					disabled={disabled}
-					label={Liferay.Language.get('searchable')}
-					name="indexed"
-					onToggle={(indexed) => setValues({indexed})}
-					toggled={objectField.indexed}
-				/>
-			</ClayForm.Group>
-
-			{isSearchableString && (
-				<ClayForm.Group>
-					<ClayRadioGroup
-						onChange={(selected: string | number) => {
-							const indexedAsKeyword = selected === 'true';
-							const indexedLanguageId = indexedAsKeyword
-								? null
-								: defaultLanguageId;
-
-							setValues({
-								indexedAsKeyword,
-								indexedLanguageId,
-							});
-						}}
-						value={new Boolean(
-							objectField.indexedAsKeyword
-						).toString()}
-					>
-						<ClayRadio
-							disabled={readOnly || isApproved}
-							label={Liferay.Language.get('keyword')}
-							value="true"
-						/>
-
-						<ClayRadio
-							disabled={readOnly || isApproved}
-							label={Liferay.Language.get('text')}
-							value="false"
-						/>
-					</ClayRadioGroup>
-				</ClayForm.Group>
-			)}
-
-			{isSearchableString && !objectField.indexedAsKeyword && (
-				<Select
-					disabled={disabled}
-					label={Liferay.Language.get('language')}
-					name="indexedLanguageId"
-					onChange={({target: {value}}) => {
-						const selectedLabel =
-							languageLabels[
-								value as keyof typeof languageLabels
-							];
-						const [indexedLanguageId] = Object.entries(
-							languages
-						).find(([, label]) => selectedLabel === label) as [
-							Locale,
-							string
-						];
-						setValues({indexedLanguageId});
-					}}
-					options={languageLabels}
-					required
-					value={selectedLanguageIndex}
-				/>
-			)}
-		</Card>
-	);
-}
-
 function MaxLengthProperties({
 	disabled,
 	errors,
@@ -948,13 +852,4 @@ interface IProps {
 	objectName: string;
 	readOnly: boolean;
 	workflowStatusJSONArray: LabelValueObject[];
-}
-
-interface ISearchableProps {
-	disabled?: boolean;
-	errors: ObjectFieldErrors;
-	isApproved: boolean;
-	objectField: Partial<ObjectField>;
-	readOnly: boolean;
-	setValues: (values: Partial<ObjectField>) => void;
 }

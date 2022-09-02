@@ -143,28 +143,32 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 			_ENFORCE_IMPLEMENTED_CLASS_NAMES_KEY, absolutePath);
 
 		outerLoop:
-		for (String implementedClassName : enforceImplementedClassNames) {
-			if (!implementedClassNames.contains(implementedClassName)) {
+		for (String enforceImplementedClassName :
+				enforceImplementedClassNames) {
+
+			if (!implementedClassNames.contains(enforceImplementedClassName)) {
 				continue;
 			}
 
 			for (String extendedClassName : extendedClassNames) {
 				if (extendedClassName.startsWith("Base") &&
-					!extendedClassName.endsWith(implementedClassName)) {
+					!extendedClassName.endsWith(enforceImplementedClassName)) {
 
 					continue outerLoop;
 				}
 			}
 
-			if (!className.endsWith(implementedClassName) &&
+			if (!className.endsWith(enforceImplementedClassName) &&
 				((implementedClassNames.size() == 1) ||
-				 implementedClassName.equals("ScreenNavigationCategory"))) {
+				 enforceImplementedClassName.equals(
+					 "ScreenNavigationCategory"))) {
 
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Name of class implementing '", implementedClassName,
-						"' should end with '", implementedClassName, "'"));
+						"Name of class implementing '",
+						enforceImplementedClassName, "' should end with '",
+						enforceImplementedClassName, "'"));
 
 				break;
 			}

@@ -380,8 +380,18 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 	private String _getItemSelectorURL() {
 		ItemSelectorCriterion itemSelectorCriterion =
-			new UploadItemSelectorCriterion(
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+			UploadItemSelectorCriterion.builder(
+			).setDesiredItemSelectorReturnTypes(
+				new FileEntryItemSelectorReturnType()
+			).setExtensions(
+				_layoutPageTemplateAdminWebConfiguration.thumbnailExtensions()
+			).setMaxFileSize(
+				UploadServletRequestConfigurationHelperUtil.getMaxSize()
+			).setPortletId(
+				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES
+			).setRepositoryName(
+				LanguageUtil.get(_themeDisplay.getLocale(), "page-template")
+			).setURL(
 				PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(
@@ -390,13 +400,8 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				).setParameter(
 					"layoutPageTemplateEntryId",
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-				).buildString(),
-				LanguageUtil.get(_themeDisplay.getLocale(), "page-template"),
-				UploadServletRequestConfigurationHelperUtil.getMaxSize(),
-				_layoutPageTemplateAdminWebConfiguration.thumbnailExtensions());
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType());
+				).buildString()
+			).build();
 
 		return String.valueOf(
 			_itemSelector.getItemSelectorURL(

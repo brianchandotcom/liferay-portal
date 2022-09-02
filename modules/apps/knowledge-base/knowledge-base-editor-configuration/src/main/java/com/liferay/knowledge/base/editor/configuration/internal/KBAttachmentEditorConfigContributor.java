@@ -152,25 +152,24 @@ public class KBAttachmentEditorConfigContributor
 		long resourcePrimKey, ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		ItemSelectorCriterion itemSelectorCriterion =
-			new UploadItemSelectorCriterion(
-				ItemSelectorCriterionConstants.MIME_TYPE_RESTRICTION_IMAGE,
-				null,
-				PortletURLBuilder.create(
-					requestBackedPortletURLFactory.createActionURL(
-						KBPortletKeys.KNOWLEDGE_BASE_ADMIN)
-				).setActionName(
-					"/knowledge_base/upload_kb_article_attachments"
-				).setParameter(
-					"resourcePrimKey", resourcePrimKey
-				).buildString(),
-				LanguageResources.getMessage(
-					themeDisplay.getLocale(), "article-attachments"));
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType());
-
-		return itemSelectorCriterion;
+		return UploadItemSelectorCriterion.builder(
+		).setDesiredItemSelectorReturnTypes(
+			new FileEntryItemSelectorReturnType()
+		).setMimeTypeRestriction(
+			ItemSelectorCriterionConstants.MIME_TYPE_RESTRICTION_IMAGE
+		).setRepositoryName(
+			LanguageResources.getMessage(
+				themeDisplay.getLocale(), "article-attachments")
+		).setURL(
+			PortletURLBuilder.create(
+				requestBackedPortletURLFactory.createActionURL(
+					KBPortletKeys.KNOWLEDGE_BASE_ADMIN)
+			).setActionName(
+				"/knowledge_base/upload_kb_article_attachments"
+			).setParameter(
+				"resourcePrimKey", resourcePrimKey
+			).buildString()
+		).build();
 	}
 
 	private ItemSelectorCriterion _getURLItemSelectorCriterion() {

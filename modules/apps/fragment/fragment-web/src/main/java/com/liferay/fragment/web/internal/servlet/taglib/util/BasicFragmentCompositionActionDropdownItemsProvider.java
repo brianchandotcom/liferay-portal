@@ -184,19 +184,24 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 
 	private String _getItemSelectorURL() {
 		ItemSelectorCriterion itemSelectorCriterion =
-			new UploadItemSelectorCriterion(
-				FragmentPortletKeys.FRAGMENT,
+			UploadItemSelectorCriterion.builder(
+			).setDesiredItemSelectorReturnTypes(
+				new FileEntryItemSelectorReturnType()
+			).setExtensions(
+				_fragmentPortletConfiguration.thumbnailExtensions()
+			).setMaxFileSize(
+				UploadServletRequestConfigurationHelperUtil.getMaxSize()
+			).setPortletId(
+				FragmentPortletKeys.FRAGMENT
+			).setRepositoryName(
+				LanguageUtil.get(_themeDisplay.getLocale(), "fragments")
+			).setURL(
 				PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(
 					"/fragment/upload_fragment_composition_preview"
-				).buildString(),
-				LanguageUtil.get(_themeDisplay.getLocale(), "fragments"),
-				UploadServletRequestConfigurationHelperUtil.getMaxSize(),
-				_fragmentPortletConfiguration.thumbnailExtensions());
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType());
+				).buildString()
+			).build();
 
 		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(

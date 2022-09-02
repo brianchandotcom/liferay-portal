@@ -133,26 +133,27 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		long wikiPageResourcePrimKey, ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		ItemSelectorCriterion itemSelectorCriterion =
-			new UploadItemSelectorCriterion(
-				ItemSelectorCriterionConstants.MIME_TYPE_RESTRICTION_IMAGE,
-				WikiPortletKeys.WIKI,
-				PortletURLBuilder.create(
-					requestBackedPortletURLFactory.createActionURL(
-						WikiPortletKeys.WIKI)
-				).setActionName(
-					"/wiki/upload_page_attachment"
-				).setParameter(
-					"mimeTypes", _getMimeTypes()
-				).setParameter(
-					"resourcePrimKey", wikiPageResourcePrimKey
-				).buildString(),
-				LanguageUtil.get(themeDisplay.getLocale(), "page-attachments"));
-
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType());
-
-		return itemSelectorCriterion;
+		return UploadItemSelectorCriterion.builder(
+		).setDesiredItemSelectorReturnTypes(
+			new FileEntryItemSelectorReturnType()
+		).setMimeTypeRestriction(
+			ItemSelectorCriterionConstants.MIME_TYPE_RESTRICTION_IMAGE
+		).setPortletId(
+			WikiPortletKeys.WIKI
+		).setRepositoryName(
+			LanguageUtil.get(themeDisplay.getLocale(), "page-attachments")
+		).setURL(
+			PortletURLBuilder.create(
+				requestBackedPortletURLFactory.createActionURL(
+					WikiPortletKeys.WIKI)
+			).setActionName(
+				"/wiki/upload_page_attachment"
+			).setParameter(
+				"mimeTypes", _getMimeTypes()
+			).setParameter(
+				"resourcePrimKey", wikiPageResourcePrimKey
+			).buildString()
+		).build();
 	}
 
 	protected ItemSelectorCriterion getURLItemSelectorCriterion() {

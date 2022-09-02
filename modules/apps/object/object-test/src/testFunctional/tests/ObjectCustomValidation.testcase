@@ -1088,6 +1088,111 @@ definition {
 		}
 	}
 
+	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Sum' to integer fields"
+	@priority = "4"
+	test CanDefineExpressionSum {
+		task ("Create Custom Object and some Custom Fields") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 156699",
+				objectName = "CustomObject156699",
+				pluralLabelName = "Custom Objects 156699");
+
+			for (var letters : list "A,B,C,D") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Integer",
+					fieldLabelName = "Custom Integer ${letters}",
+					fieldName = "customInteger${letters}",
+					fieldType = "Integer",
+					isRequired = "false",
+					objectName = "CustomObject156699");
+			}
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156699");
+		}
+
+		task ("On Custom Object, go to validations tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 156699");
+
+			ObjectAdmin.goToValidationsTab();
+		}
+
+		task ("Add a Custom Validation using an expression 'sum'") {
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Expression Builder");
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.activeValidation();
+
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customIntegerA >= sum(customIntegerB, customIntegerC, customIntegerD)");
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
+
+			Button.clickSave();
+		}
+
+		task ("Assert that Custom Validation with 'sum' is working") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156699");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Integer A",
+				entry = "10001");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Integer B",
+				entry = "3001");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Integer C",
+				entry = "4000");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Integer D",
+				entry = "5000");
+
+			Button.clickSave();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "This entry is not possible.");
+
+			Navigator.gotoBack();
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Integer A",
+				entry = "10002");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Integer B",
+				entry = "2002");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Integer C",
+				entry = "3000");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Integer D",
+				entry = "4000");
+
+			Button.clickSave();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject156699");
+
+			ObjectPortlet.viewEntry(entry = "10002");
+
+			ObjectPortlet.assertEntryNotPresent(entry = "10001");
+		}
+	}
+
 	@description = "LPS-144474 - Verify that, when adding validations using Groovy, the validation is not active by default"
 	@priority = "4"
 	test CannotActiveByDefaultWhenAddValidationsGroovy {

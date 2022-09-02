@@ -381,6 +381,13 @@ definition {
 			value1 = "${sortFieldName}");
 	}
 
+	macro typeCustomField {
+		Type.type(
+			key_customField = "${customField}",
+			locator1 = "ObjectPortlet#ENTRY_FIELD_GENERIC",
+			value1 = "${entry}");
+	}
+
 	macro updateBooleanEntry {
 		ObjectPortlet.viewEntryDetails(entry = "${entry}");
 

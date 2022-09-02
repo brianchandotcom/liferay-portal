@@ -1871,4 +1871,53 @@ definition {
 
 	}
 
+	macro addMultiplesActionsOnTimers {
+		Click(
+            key_buttonName = "${newSection}",
+            locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
+
+		if (isSet(sectionOptionList)) {
+            for (var sectionOption : list "${sectionOptionList}") {
+                if (isSet(actionName)) {
+                    Type(
+                        key_inputOption = "Name*",
+                        key_sectionOption = "${sectionOption}",
+                        locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
+                        value1 = "${actionName} ${sectionOption}");
+                }
+                if (isSet(actionDescription)) {
+                    Type(
+                        key_inputOption = "Description",
+                        key_sectionOption = "${sectionOption}",
+                        locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
+                        value1 = "${actionDescription} ${sectionOption}");
+                }
+                if (isSet(actionsTemplateValue)) {
+                    Type(
+                        key_sectionOption = "${sectionOption}",
+                        locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA_ACTIONS_BY_POSITION",
+                        value1 = "${actionsTemplateValue}");
+                }
+                if (isSet(priorityValue)) {
+                    Type(
+                        key_inputOption = "Priority",
+                        key_sectionOption = "${sectionOption}",
+                        locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
+                        value1 = "${priorityValue}");
+                }
+                if (isSet(newSection)) {
+                    Click(
+                        key_buttonName = "${newSection}",
+                        key_sectionOption = "${sectionOption}",
+                        locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC_BY_POSITION");
+                }
+            }
+        }
+	}
+
+	macro viewActionsInsideTimersPresent {
+		AssertElementPresent(
+			key_actionName = "${actionName}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ACTIONS_NAME_ON_TIMERS_FIELD");
+	}
 }

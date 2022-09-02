@@ -691,11 +691,49 @@ definition {
 	}
 
 	@description = "Verify that the user can add multiple Actions to Timers at task node"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanConfigureMultipleActionsAtTimers {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanConfigureMultipleActionsAtTimers";
 
-		// TODO CanConfigureMultipleActionsAtTimers pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+			actionName = "Liferay Timer 1",
+			actionsTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
+			durationValue = "2",
+			newTimer = "true",
+			scaleTypeOption = "Minute",
+			singleTimer = "true");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Timer",
+			propertyValue = "Duration: 2 minute");
+
+		ProcessBuilderKaleoDesignerReact.addMultiplesActionsOnTimers(
+			newSection = "New Action",
+			actionName = "Liferay Timer",
+			actionsTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
+			sectionOptionList = "4,5");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Timer",
+			propertyValue = "Duration: 2 minute");
+
+		ProcessBuilderKaleoDesignerReact.viewActionsInsideTimersPresent(actionName = "Liferay Timer 4");
+
+		ProcessBuilderKaleoDesignerReact.viewActionsInsideTimersPresent(actionName = "Liferay Timer 5");
 
 	}
 

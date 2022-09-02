@@ -31,9 +31,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public class KBViewPrpArticlesDisplayContext {
+public class ViewPrpKBArticlesDisplayContext {
 
-	public KBViewPrpArticlesDisplayContext(
+	public ViewPrpKBArticlesDisplayContext(
 			HttpServletRequest httpServletRequest, PortletURL iteratorURL)
 		throws PortalException {
 

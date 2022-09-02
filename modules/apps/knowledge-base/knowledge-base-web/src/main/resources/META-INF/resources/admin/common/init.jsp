@@ -18,7 +18,7 @@
 
 <%@ page import="com.liferay.document.library.configuration.DLConfiguration" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.EditKBArticleDisplayContext" %><%@
-page import="com.liferay.knowledge.base.web.internal.display.context.KBViewSuggestionDisplayContext" %>
+page import="com.liferay.knowledge.base.web.internal.display.context.ViewKBSuggestionDisplayContext" %>
 
 <%
 long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());

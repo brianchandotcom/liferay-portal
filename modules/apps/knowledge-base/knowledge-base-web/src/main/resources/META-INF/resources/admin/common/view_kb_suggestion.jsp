@@ -17,44 +17,44 @@
 <%@ include file="/admin/common/init.jsp" %>
 
 <%
-KBViewSuggestionDisplayContext kbViewSuggestionDisplayContext = new KBViewSuggestionDisplayContext(request, renderRequest, renderResponse, rootPortletId);
+ViewKBSuggestionDisplayContext viewKBSuggestionDisplayContext = new ViewKBSuggestionDisplayContext(request, renderRequest, renderResponse, rootPortletId);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(kbViewSuggestionDisplayContext.getRedirect());
+portletDisplay.setURLBack(viewKBSuggestionDisplayContext.getRedirect());
 
-renderResponse.setTitle(kbViewSuggestionDisplayContext.getKBCommentTitle());
+renderResponse.setTitle(viewKBSuggestionDisplayContext.getKBCommentTitle());
 %>
 
 <clay:container-fluid
-	cssClass="<%= kbViewSuggestionDisplayContext.getContainerCssClass() %>"
+	cssClass="<%= viewKBSuggestionDisplayContext.getContainerCssClass() %>"
 >
-	<div class="card panel" id="<portlet:namespace /><%= kbViewSuggestionDisplayContext.getKBCommentId() %>">
+	<div class="card panel" id="<portlet:namespace /><%= viewKBSuggestionDisplayContext.getKBCommentId() %>">
 		<div class="panel-heading">
 			<div class="card-body">
 				<div class="card-col-field">
 					<div class="list-group-card-icon">
 						<liferay-ui:user-portrait
-							userId="<%= kbViewSuggestionDisplayContext.getKBCommentUserId() %>"
+							userId="<%= viewKBSuggestionDisplayContext.getKBCommentUserId() %>"
 						/>
 					</div>
 				</div>
 
 				<div class="card-col-content card-col-gutters">
 					<h5 class="text-default">
-						<%= HtmlUtil.escape(kbViewSuggestionDisplayContext.getModifiedDateLabel()) %>
+						<%= HtmlUtil.escape(viewKBSuggestionDisplayContext.getModifiedDateLabel()) %>
 					</h5>
 
 					<h4>
-						<%= HtmlUtil.escape(kbViewSuggestionDisplayContext.getKBCommentTitle()) %>
+						<%= HtmlUtil.escape(viewKBSuggestionDisplayContext.getKBCommentTitle()) %>
 					</h4>
 
 					<h5>
 						<span class="kb-comment-status text-default">
-							<liferay-ui:message key="<%= kbViewSuggestionDisplayContext.getKBCommentStatusLabel() %>" />
+							<liferay-ui:message key="<%= viewKBSuggestionDisplayContext.getKBCommentStatusLabel() %>" />
 						</span>
 
-						<a href="<%= kbViewSuggestionDisplayContext.getKBArticleURL() %>">
-							<%= HtmlUtil.escape(kbViewSuggestionDisplayContext.getKBArticleTitle()) %>
+						<a href="<%= viewKBSuggestionDisplayContext.getKBArticleURL() %>">
+							<%= HtmlUtil.escape(viewKBSuggestionDisplayContext.getKBArticleTitle()) %>
 						</a>
 					</h5>
 				</div>
@@ -65,23 +65,23 @@ renderResponse.setTitle(kbViewSuggestionDisplayContext.getKBCommentTitle());
 
 		<div class="panel-body">
 			<div class="card-body text-default">
-				<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(kbViewSuggestionDisplayContext.getKBCommentContent())) %>
+				<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(viewKBSuggestionDisplayContext.getKBCommentContent())) %>
 			</div>
 		</div>
 	</div>
 
-	<c:if test="<%= kbViewSuggestionDisplayContext.isKBCommentActionsVisible() %>">
+	<c:if test="<%= viewKBSuggestionDisplayContext.isKBCommentActionsVisible() %>">
 		<aui:button-row>
-			<c:if test="<%= kbViewSuggestionDisplayContext.canTransitionToPreviousStatus() %>">
-				<aui:button href="<%= kbViewSuggestionDisplayContext.getPreviousStatusTransitionURL() %>" name="previousStatusButton" type="submit" value="<%= kbViewSuggestionDisplayContext.getPreviousStatusTransitionLabel() %>" />
+			<c:if test="<%= viewKBSuggestionDisplayContext.canTransitionToPreviousStatus() %>">
+				<aui:button href="<%= viewKBSuggestionDisplayContext.getPreviousStatusTransitionURL() %>" name="previousStatusButton" type="submit" value="<%= viewKBSuggestionDisplayContext.getPreviousStatusTransitionLabel() %>" />
 			</c:if>
 
-			<c:if test="<%= kbViewSuggestionDisplayContext.canTransitionToNextStatus() %>">
-				<aui:button href="<%= kbViewSuggestionDisplayContext.getNextStatusTransitionURL() %>" name="nextStatusButton" type="submit" value="<%= kbViewSuggestionDisplayContext.getNextStatusTransitionLabel() %>" />
+			<c:if test="<%= viewKBSuggestionDisplayContext.canTransitionToNextStatus() %>">
+				<aui:button href="<%= viewKBSuggestionDisplayContext.getNextStatusTransitionURL() %>" name="nextStatusButton" type="submit" value="<%= viewKBSuggestionDisplayContext.getNextStatusTransitionLabel() %>" />
 			</c:if>
 
-			<c:if test="<%= kbViewSuggestionDisplayContext.hasDeleteKBCommentPermission() %>">
-				<aui:button href="<%= kbViewSuggestionDisplayContext.getDeleteKBCommentURL() %>" name="deleteButton" value="<%= Constants.DELETE %>" />
+			<c:if test="<%= viewKBSuggestionDisplayContext.hasDeleteKBCommentPermission() %>">
+				<aui:button href="<%= viewKBSuggestionDisplayContext.getDeleteKBCommentURL() %>" name="deleteButton" value="<%= Constants.DELETE %>" />
 			</c:if>
 		</aui:button-row>
 	</c:if>

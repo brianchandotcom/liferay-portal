@@ -27,11 +27,11 @@
 </liferay-portlet:renderURL>
 
 <%
-KBViewPrpArticlesDisplayContext kbViewPrpArticlesDisplayContext = new KBViewPrpArticlesDisplayContext(request, iteratorURL);
+ViewPrpKBArticlesDisplayContext viewPrpKBArticlesDisplayContext = new ViewPrpKBArticlesDisplayContext(request, iteratorURL);
 %>
 
 <liferay-ui:search-container
-	searchContainer="<%= kbViewPrpArticlesDisplayContext.getSearchContainer() %>"
+	searchContainer="<%= viewPrpKBArticlesDisplayContext.getSearchContainer() %>"
 >
 	<liferay-ui:search-container-row
 		className="com.liferay.asset.kernel.model.AssetEntry"
@@ -104,25 +104,25 @@ KBViewPrpArticlesDisplayContext kbViewPrpArticlesDisplayContext = new KBViewPrpA
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<c:if test="<%= (kbViewPrpArticlesDisplayContext.getAssetCategoryId() > 0) || Validator.isNotNull(kbViewPrpArticlesDisplayContext.getAssetTagName()) %>">
+	<c:if test="<%= (viewPrpKBArticlesDisplayContext.getAssetCategoryId() > 0) || Validator.isNotNull(viewPrpKBArticlesDisplayContext.getAssetTagName()) %>">
 		<div class="alert alert-info">
 			<c:choose>
-				<c:when test="<%= kbViewPrpArticlesDisplayContext.getAssetCategoryId() > 0 %>">
+				<c:when test="<%= viewPrpKBArticlesDisplayContext.getAssetCategoryId() > 0 %>">
 
 					<%
-					AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(kbViewPrpArticlesDisplayContext.getAssetCategoryId());
+					AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(viewPrpKBArticlesDisplayContext.getAssetCategoryId());
 
 					AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
 					%>
 
 					<c:choose>
-						<c:when test="<%= Validator.isNotNull(kbViewPrpArticlesDisplayContext.getAssetTagName()) %>">
+						<c:when test="<%= Validator.isNotNull(viewPrpKBArticlesDisplayContext.getAssetTagName()) %>">
 							<c:choose>
 								<c:when test="<%= total > 0 %>">
-									<%= LanguageUtil.format(request, "articles-with-x-x-and-tag-x", new String[] {HtmlUtil.escape(assetVocabulary.getTitle(locale)), HtmlUtil.escape(assetCategory.getTitle(locale)), HtmlUtil.escape(kbViewPrpArticlesDisplayContext.getAssetTagName())}, false) %>
+									<%= LanguageUtil.format(request, "articles-with-x-x-and-tag-x", new String[] {HtmlUtil.escape(assetVocabulary.getTitle(locale)), HtmlUtil.escape(assetCategory.getTitle(locale)), HtmlUtil.escape(viewPrpKBArticlesDisplayContext.getAssetTagName())}, false) %>
 								</c:when>
 								<c:otherwise>
-									<%= LanguageUtil.format(request, "there-are-no-articles-with-x-x-and-tag-x", new String[] {HtmlUtil.escape(assetVocabulary.getTitle(locale)), HtmlUtil.escape(assetCategory.getTitle(locale)), HtmlUtil.escape(kbViewPrpArticlesDisplayContext.getAssetTagName())}, false) %>
+									<%= LanguageUtil.format(request, "there-are-no-articles-with-x-x-and-tag-x", new String[] {HtmlUtil.escape(assetVocabulary.getTitle(locale)), HtmlUtil.escape(assetCategory.getTitle(locale)), HtmlUtil.escape(viewPrpKBArticlesDisplayContext.getAssetTagName())}, false) %>
 								</c:otherwise>
 							</c:choose>
 						</c:when>
@@ -141,10 +141,10 @@ KBViewPrpArticlesDisplayContext kbViewPrpArticlesDisplayContext = new KBViewPrpA
 				<c:otherwise>
 					<c:choose>
 						<c:when test="<%= total > 0 %>">
-							<%= LanguageUtil.format(request, "articles-with-tag-x", HtmlUtil.escape(kbViewPrpArticlesDisplayContext.getAssetTagName()), false) %>
+							<%= LanguageUtil.format(request, "articles-with-tag-x", HtmlUtil.escape(viewPrpKBArticlesDisplayContext.getAssetTagName()), false) %>
 						</c:when>
 						<c:otherwise>
-							<%= LanguageUtil.format(request, "there-are-no-articles-with-tag-x", HtmlUtil.escape(kbViewPrpArticlesDisplayContext.getAssetTagName()), false) %>
+							<%= LanguageUtil.format(request, "there-are-no-articles-with-tag-x", HtmlUtil.escape(viewPrpKBArticlesDisplayContext.getAssetTagName()), false) %>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>

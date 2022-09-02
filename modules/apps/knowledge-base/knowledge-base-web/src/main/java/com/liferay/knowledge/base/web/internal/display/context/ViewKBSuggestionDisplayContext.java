@@ -47,9 +47,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Adolfo Pérez
  */
-public class KBViewSuggestionDisplayContext {
+public class ViewKBSuggestionDisplayContext {
 
-	public KBViewSuggestionDisplayContext(
+	public ViewKBSuggestionDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse, String rootPortletId) {
 

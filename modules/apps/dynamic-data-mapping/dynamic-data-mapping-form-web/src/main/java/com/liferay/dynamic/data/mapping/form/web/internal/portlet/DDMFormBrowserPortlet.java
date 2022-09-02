@@ -65,19 +65,13 @@ public class DDMFormBrowserPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference
-	protected void setDDMFormInstanceService(
-		DDMFormInstanceService ddmFormInstanceService) {
-
-		_ddmFormInstanceService = ddmFormInstanceService;
-	}
-
 	protected void unsetDDMFormInstanceService(
 		DDMFormInstanceService ddmFormInstanceService) {
 
 		_ddmFormInstanceService = null;
 	}
 
+	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
 
 }

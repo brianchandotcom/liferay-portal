@@ -1,0 +1,38 @@
+[
+	{
+		"menuItems": [
+			{
+				"friendlyURL": "/Home",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/Upcoming",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/Stories",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/About",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/FAQs",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/My EVP",
+				"privateLayout": false,
+				"type": "layout"
+			}
+		],
+		"name": "Header Navigation Menu",
+		"typeSite": 1
+	}
+]

@@ -1,0 +1,21 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "check-circle",
+					"label": "icon-name",
+					"name": "iconName",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"label": "icon-link",
+					"name": "iconLink",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

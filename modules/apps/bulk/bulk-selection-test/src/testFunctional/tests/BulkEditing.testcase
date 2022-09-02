@@ -295,6 +295,60 @@ definition {
 		}
 	}
 
+	@description = "This ensures that the files permissions can be edited via bulk editing."
+	@priority = "5"
+	test CanEditFilesPermissions {
+		property custom.properties = "feature.flag.LPS-87806=true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_2.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Document_1");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Remove",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
+			roleTitle = "Guest");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2");
+
+		DMNavigator.gotoItemViaManagementBar(
+			item = "dropdownMenu",
+			menuItem = "Permissions");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Add",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
+			roleTitle = "Guest");
+
+		User.logoutPG();
+
+		DMDocument.validateGuestUserViewPermission(
+			dmDocumentTitle = "Document_1",
+			groupName = "Guest",
+			guestWithViewPermission = "true");
+
+		DMDocument.validateGuestUserViewPermission(
+			dmDocumentTitle = "Document_2",
+			groupName = "Guest",
+			guestWithViewPermission = "true");
+	}
+
 	@description = "This test selects multiple documents and moves them into one folder."
 	@priority = "5"
 	test CanMoveDocumentsToFolder {
@@ -351,6 +405,86 @@ definition {
 
 			DMDocument.viewPG(dmDocumentTitle = "${key_dmDocumentTitle}");
 		}
+	}
+
+	@description = "This ensures that the permissions option in the bulk editing is disabled when editing file and folder simultaneously."
+	@priority = "4"
+	test CannotEditFileAndFolderPermissionsSimultaneously {
+		property custom.properties = "feature.flag.LPS-87806=true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,DM Folder Name");
+
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+		MenuItem.viewDisabled(menuItem = "Permissions");
+	}
+
+	@description = "This ensures that the files permissions can be removed via bulk editing."
+	@priority = "5"
+	test CanRemoveFilesPermissions {
+		property custom.properties = "feature.flag.LPS-87806=true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_2.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Document_1");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Remove",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
+			roleTitle = "Guest");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,Document_2");
+
+		DMNavigator.gotoItemViaManagementBar(
+			item = "dropdownMenu",
+			menuItem = "Permissions");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Remove",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
+			roleTitle = "Guest");
+
+		User.logoutPG();
+
+		DMDocument.validateGuestUserViewPermission(
+			dmDocumentTitle = "Document_1",
+			groupName = "Guest",
+			guestWithoutViewPermission = "true");
+
+		DMDocument.validateGuestUserViewPermission(
+			dmDocumentTitle = "Document_2",
+			groupName = "Guest",
+			guestWithoutViewPermission = "true");
 	}
 
 	@description = "This test covers LPS-89636. It saves tags without clicking Enter or adding a Comma."

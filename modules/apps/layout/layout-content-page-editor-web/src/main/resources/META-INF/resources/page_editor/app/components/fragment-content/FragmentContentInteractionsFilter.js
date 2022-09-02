@@ -20,6 +20,7 @@ import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
+import {TEXT_EDITABLE_TYPES} from '../../config/constants/textEditableTypes';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {config} from '../../config/index';
 import {useToControlsId} from '../../contexts/CollectionItemContext';
@@ -145,7 +146,7 @@ function FragmentContentInteractionsFilter({
 				if (isBeingEdited) {
 					editable.element.removeAttribute('title');
 				}
-				else {
+				else if (TEXT_EDITABLE_TYPES.has(editable.type)) {
 					editable.element.setAttribute(
 						'title',
 						Liferay.Language.get('edit-text')

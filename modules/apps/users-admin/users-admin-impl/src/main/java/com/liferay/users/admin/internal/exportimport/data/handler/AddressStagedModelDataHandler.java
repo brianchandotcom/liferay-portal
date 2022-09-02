@@ -127,19 +127,10 @@ public class AddressStagedModelDataHandler
 		portletDataContext.importClassedModel(address, importedAddress);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAddressLocalService(
-		AddressLocalService addressLocalService) {
-
-		_addressLocalService = addressLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
+	@Reference
 	private AddressLocalService _addressLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 }

@@ -225,65 +225,6 @@ public class OrganizationStagedModelDataHandler
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setAddressLocalService(
-		AddressLocalService addressLocalService) {
-
-		_addressLocalService = addressLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setEmailAddressLocalService(
-		EmailAddressLocalService emailAddressLocalService) {
-
-		_emailAddressLocalService = emailAddressLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setOrganizationLocalService(
-		OrganizationLocalService organizationLocalService) {
-
-		_organizationLocalService = organizationLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setOrgLaborLocalService(
-		OrgLaborLocalService orgLaborLocalService) {
-
-		_orgLaborLocalService = orgLaborLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPasswordPolicyLocalService(
-		PasswordPolicyLocalService passwordPolicyLocalService) {
-
-		_passwordPolicyLocalService = passwordPolicyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPasswordPolicyRelLocalService(
-		PasswordPolicyRelLocalService passwordPolicyRelLocalService) {
-
-		_passwordPolicyRelLocalService = passwordPolicyRelLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPhoneLocalService(PhoneLocalService phoneLocalService) {
-		_phoneLocalService = phoneLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWebsiteLocalService(
-		WebsiteLocalService websiteLocalService) {
-
-		_websiteLocalService = websiteLocalService;
-	}
-
 	private void _exportAddresses(
 			PortletDataContext portletDataContext, Organization organization)
 		throws Exception {
@@ -582,18 +523,34 @@ public class OrganizationStagedModelDataHandler
 			importedOrganization.getOrganizationId(), websites);
 	}
 
+	@Reference
 	private AddressLocalService _addressLocalService;
+
+	@Reference
 	private EmailAddressLocalService _emailAddressLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
 	private OrgLaborLocalService _orgLaborLocalService;
+
+	@Reference
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
+
+	@Reference
 	private PasswordPolicyRelLocalService _passwordPolicyRelLocalService;
+
+	@Reference
 	private PhoneLocalService _phoneLocalService;
 
 	@Reference
 	private UsersAdmin _usersAdmin;
 
+	@Reference
 	private WebsiteLocalService _websiteLocalService;
 
 }

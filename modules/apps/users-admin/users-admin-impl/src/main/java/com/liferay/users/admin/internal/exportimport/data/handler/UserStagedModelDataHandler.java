@@ -86,17 +86,10 @@ public class UserStagedModelDataHandler
 		PortletDataContext portletDataContext, User user) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

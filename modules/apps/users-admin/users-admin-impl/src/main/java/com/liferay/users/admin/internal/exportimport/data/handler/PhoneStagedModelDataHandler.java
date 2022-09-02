@@ -117,17 +117,10 @@ public class PhoneStagedModelDataHandler
 		portletDataContext.importClassedModel(phone, importedPhone);
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPhoneLocalService(PhoneLocalService phoneLocalService) {
-		_phoneLocalService = phoneLocalService;
-	}
-
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private PhoneLocalService _phoneLocalService;
 
 }

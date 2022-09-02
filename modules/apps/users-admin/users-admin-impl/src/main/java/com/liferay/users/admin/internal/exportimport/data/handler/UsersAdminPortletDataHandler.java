@@ -145,13 +145,7 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 		actionableDynamicQuery.performCount();
 	}
 
-	@Reference(unbind = "-")
-	protected void setOrganizationLocalService(
-		OrganizationLocalService organizationLocalService) {
-
-		_organizationLocalService = organizationLocalService;
-	}
-
+	@Reference
 	private OrganizationLocalService _organizationLocalService;
 
 }

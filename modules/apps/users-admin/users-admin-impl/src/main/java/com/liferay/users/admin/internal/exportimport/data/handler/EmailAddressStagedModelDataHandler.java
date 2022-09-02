@@ -122,19 +122,10 @@ public class EmailAddressStagedModelDataHandler
 			emailAddress, importedEmailAddress);
 	}
 
-	@Reference(unbind = "-")
-	protected void setEmailAddressLocalService(
-		EmailAddressLocalService emailAddressLocalService) {
-
-		_emailAddressLocalService = emailAddressLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
+	@Reference
 	private EmailAddressLocalService _emailAddressLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 }

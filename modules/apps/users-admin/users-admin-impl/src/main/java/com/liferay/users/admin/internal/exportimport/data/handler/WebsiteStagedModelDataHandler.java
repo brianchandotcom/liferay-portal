@@ -121,19 +121,10 @@ public class WebsiteStagedModelDataHandler
 		portletDataContext.importClassedModel(website, importedWebsite);
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWebsiteLocalService(
-		WebsiteLocalService websiteLocalService) {
-
-		_websiteLocalService = websiteLocalService;
-	}
-
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private WebsiteLocalService _websiteLocalService;
 
 }

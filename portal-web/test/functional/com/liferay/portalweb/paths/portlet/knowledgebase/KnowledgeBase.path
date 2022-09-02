@@ -279,6 +279,26 @@
 	<td>//li[contains(@class,'treeview-item')]//div[contains(@class,'component-text')][normalize-space(text())='${key_itemName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGE_TREE_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'knowledge-base-vertical-bar') and not(contains(@class,'expanded'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_PANEL_OPENED</td>
+	<td>//div[contains(@class,'knowledge-base-vertical-bar') and contains(@class,'expanded')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_SUGGESTIONS</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-message')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TREE_TEMPLATES</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-page-template')]]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

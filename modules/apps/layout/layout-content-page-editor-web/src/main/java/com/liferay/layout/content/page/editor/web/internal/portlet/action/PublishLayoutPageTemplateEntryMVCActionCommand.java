@@ -135,6 +135,7 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 		typeSettingsUnicodeProperties.put("published", Boolean.TRUE.toString());
 
 		draftLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+
 		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		draftLayout = _layoutLocalService.updateLayout(draftLayout);

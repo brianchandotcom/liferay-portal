@@ -86,6 +86,7 @@ interface ObjectField {
 	listTypeDefinitionId: number;
 	name: string;
 	objectFieldSettings?: ObjectFieldSetting[];
+	relationshipId?: number;
 	relationshipType?: unknown;
 	required: boolean;
 	state: boolean;

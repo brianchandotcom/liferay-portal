@@ -109,9 +109,9 @@ definition {
 		}
 
 		task ("Delete the entries and objects created") {
-			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
-
 			CP2DXPCloudSetup.clearAndDeleteDXPCloudEntries(status = "Active");
+
+			CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
 		}
 	}
 

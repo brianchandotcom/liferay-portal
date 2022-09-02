@@ -85,14 +85,6 @@ public class WorkflowTaskManagerProxyBean
 	}
 
 	@Override
-	public List<WorkflowTransition> getNextWorkflowTransitions(
-			long workflowTaskId)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public WorkflowTask getWorkflowTask(long workflowTaskId) {
 		throw new UnsupportedOperationException();
 	}

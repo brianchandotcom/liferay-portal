@@ -325,53 +325,6 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	}
 
 	@Override
-	public List<WorkflowTransition> getNextWorkflowTransitions(
-			long workflowTaskId)
-		throws WorkflowException {
-
-		try {
-			KaleoTaskInstanceToken kaleoTaskInstanceToken =
-				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
-					workflowTaskId);
-
-			if (kaleoTaskInstanceToken.isCompleted()) {
-				return Collections.emptyList();
-			}
-
-			KaleoTask kaleoTask = kaleoTaskInstanceToken.getKaleoTask();
-
-			KaleoNode kaleoNode = kaleoTask.getKaleoNode();
-
-			return Stream.of(
-				kaleoNode.getKaleoTransitions()
-			).flatMap(
-				List::stream
-			).map(
-				kaleoTransition -> {
-					DefaultWorkflowTransition defaultWorkflowTransition =
-						new DefaultWorkflowTransition();
-
-					defaultWorkflowTransition.setLabelMap(
-						kaleoTransition.getLabelMap());
-					defaultWorkflowTransition.setName(
-						kaleoTransition.getName());
-					defaultWorkflowTransition.setSourceNodeName(
-						kaleoTransition.getSourceKaleoNodeName());
-					defaultWorkflowTransition.setTargetNodeName(
-						kaleoTransition.getTargetKaleoNodeName());
-
-					return defaultWorkflowTransition;
-				}
-			).collect(
-				Collectors.toList()
-			);
-		}
-		catch (PortalException portalException) {
-			throw new WorkflowException(portalException);
-		}
-	}
-
-	@Override
 	public List<User> getNotifiableUsers(long workflowTaskId)
 		throws WorkflowException {
 

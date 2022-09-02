@@ -87,21 +87,21 @@ definition {
 	test AccountManagersCanViewOrganizations {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		task ("Given add 2 organizations to an account") {
+		task ("Given add 2 organizations and assign one to an account") {
+			JSONOrganization.addOrganization(organizationName = "Account Org1");
+
+			JSONOrganization.addOrganization(organizationName = "Company Org");
+
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "AM Account",
 				accountEntryType = "Business");
 
-			for (var orgNum : list "1,2") {
-				JSONOrganization.addOrganization(organizationName = "Account Org${orgNum}");
-
-				JSONAccountEntry.addAccountEntryOrganization(
-					accountEntryName = "AM Account",
-					organizationName = "Account Org${orgNum}");
-			}
+			JSONAccountEntry.addAccountEntryOrganization(
+				accountEntryName = "AM Account",
+				organizationName = "Account Org1");
 		}
 
-		task ("When an account manager is added to the account") {
+		task ("And add user useramsn as Account Manager") {
 			AccountConfiguration.addAccountManager(
 				accountName = "AM Account",
 				orgName = "AM Organization",
@@ -110,26 +110,38 @@ definition {
 				userFirstName = "useramfn",
 				userLastName = "useramln",
 				userScreenName = "useramsn");
+		}
 
+		task ("When the account manager navigates into the Organizations tab of AM Account") {
 			User.logoutPG();
 
 			User.loginUserPG(
 				password = "test",
 				userEmailAddress = "useramea@liferay.com");
-		}
 
-		task ("Then the user should be able to see the organizations listed in that account") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "AM Account");
 
 			Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+		}
 
-			LexiconEntry.viewEntryName(rowEntry = "AM Organization");
+		task ("Then the account manager should be able to see the organization listed in that account") {
+			Navigator.viewActivatedNavTab(navTab = "Organizations");
 
-			LexiconEntry.viewEntryName(rowEntry = "Account Org1");
+			LexiconEntry.viewNoEntry(rowEntry = "Company Org");
 
-			LexiconEntry.viewEntryName(rowEntry = "Account Org2");
+			AssertTextNotPresent(value1 = "There are no organizations associated with this account.");
+
+			AssertElementPresent(locator1 = "Icon#PLUS");
+
+			for (var orgName : list "AM Organization,Account Org1") {
+				LexiconEntry.viewEntryName(rowEntry = "${orgName}");
+
+				AssertElementPresent(
+					key_assigneeName = "${orgName}",
+					locator1 = "Icon#REMOVE_ASSIGNEE");
+			}
 		}
 	}
 

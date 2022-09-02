@@ -93,9 +93,9 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 							module="js/components/SelectVocabularies"
 							props='<%=
 								HashMapBuilder.<String, Object>put(
-									"namespace", liferayPortletResponse.getNamespace()
+									"initialSelectedVocabularyIds", StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds())
 								).put(
-									"vocabularyIds", StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds())
+									"namespace", liferayPortletResponse.getNamespace()
 								).put(
 									"vocabularyIdsInputName", PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS)
 								).build()

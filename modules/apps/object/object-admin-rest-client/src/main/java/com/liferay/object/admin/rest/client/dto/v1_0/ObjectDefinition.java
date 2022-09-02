@@ -505,6 +505,27 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected Boolean portlet;
 
+	public String getRestContextPath() {
+		return restContextPath;
+	}
+
+	public void setRestContextPath(String restContextPath) {
+		this.restContextPath = restContextPath;
+	}
+
+	public void setRestContextPath(
+		UnsafeSupplier<String, Exception> restContextPathUnsafeSupplier) {
+
+		try {
+			restContextPath = restContextPathUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String restContextPath;
+
 	public String getScope() {
 		return scope;
 	}

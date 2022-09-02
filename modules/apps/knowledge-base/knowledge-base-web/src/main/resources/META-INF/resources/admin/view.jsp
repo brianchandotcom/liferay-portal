@@ -326,6 +326,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 				</c:when>
 				<c:otherwise>
 					<liferay-frontend:empty-result-message
+						actionDropdownItems="<%= kbAdminManagementToolbarDisplayContext.getEmptyStateActionDropdownItems() %>"
 						animationType="<%= EmptyResultMessageKeys.AnimationType.EMPTY %>"
 						buttonCssClass="secondary"
 						title='<%= LanguageUtil.get(request, "knowledge-base-is-empty") %>'

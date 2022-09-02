@@ -31,11 +31,8 @@ const CONFIGURATION = {
 };
 
 const SELECT_OPTIONS = {
-	ALL: {
-		name: 'all',
-		value: '', //  When 'vocabularyIds' is equal to this, 'All Vocabularies' has been selected.
-	},
-	SELECT: {name: 'select'},
+	ALL: '', //  When 'vocabularyIds' is equal to this, 'All Vocabularies' has been selected.
+	SELECT: 'SELECT',
 };
 
 /**
@@ -208,21 +205,21 @@ function VocabularyTree({
 
 function SelectVocabularies({
 	namespace = '',
-	initialSelectedVocabularyIds = SELECT_OPTIONS.ALL.value,
+	initialSelectedVocabularyIds = SELECT_OPTIONS.ALL,
 	vocabularyIdsInputName = '',
 }) {
 	const initialSelectedIdsRef = useRef(
 		new Set(
-			initialSelectedVocabularyIds === SELECT_OPTIONS.ALL.value
+			initialSelectedVocabularyIds === SELECT_OPTIONS.ALL
 				? []
 				: convertToIDArray(initialSelectedVocabularyIds)
 		)
 	);
 
 	const [selection, setSelection] = useState(
-		initialSelectedVocabularyIds === SELECT_OPTIONS.ALL.value
-			? SELECT_OPTIONS.ALL.name
-			: SELECT_OPTIONS.SELECT.name
+		initialSelectedVocabularyIds === SELECT_OPTIONS.ALL
+			? SELECT_OPTIONS.ALL
+			: SELECT_OPTIONS.SELECT
 	);
 	const [selectedKeys, setSelectedKeys] = useState(
 		initialSelectedIdsRef.current
@@ -232,7 +229,7 @@ function SelectVocabularies({
 	const [vocabularyTreeLoading, setVocabularyTreeLoading] = useState(false);
 
 	useEffect(() => {
-		if (selection === SELECT_OPTIONS.SELECT.name) {
+		if (selection === SELECT_OPTIONS.SELECT) {
 			_handleFetchVocabularyTree();
 		}
 	}, []); //eslint-disable-line
@@ -281,7 +278,7 @@ function SelectVocabularies({
 	const _handleSelectionChange = (value) => {
 		setSelection(value);
 
-		if (value === SELECT_OPTIONS.SELECT.name && !vocabularyTree) {
+		if (value === SELECT_OPTIONS.SELECT && !vocabularyTree) {
 			_handleFetchVocabularyTree();
 		}
 	};
@@ -308,13 +305,13 @@ function SelectVocabularies({
 				name={`${namespace}${vocabularyIdsInputName}`}
 				readOnly
 				value={
-					selection === SELECT_OPTIONS.ALL.name
-						? SELECT_OPTIONS.ALL.value
+					selection === SELECT_OPTIONS.ALL
+						? SELECT_OPTIONS.ALL
 						: Array.from(selectedKeys).toString()
 				}
 			/>
 
-			{selection === SELECT_OPTIONS.SELECT.name &&
+			{selection === SELECT_OPTIONS.SELECT &&
 				_isDisplayInfoSelectedVocabulariesHidden() && (
 					<ClayAlert
 						displayType="info"
@@ -329,16 +326,16 @@ function SelectVocabularies({
 			<ClayRadioGroup onChange={_handleSelectionChange} value={selection}>
 				<ClayRadio
 					label={Liferay.Language.get('all-vocabularies')}
-					value={SELECT_OPTIONS.ALL.name}
+					value={SELECT_OPTIONS.ALL}
 				/>
 
 				<ClayRadio
 					label={Liferay.Language.get('select-vocabularies')}
-					value={SELECT_OPTIONS.SELECT.name}
+					value={SELECT_OPTIONS.SELECT}
 				/>
 			</ClayRadioGroup>
 
-			{selection === SELECT_OPTIONS.SELECT.name && (
+			{selection === SELECT_OPTIONS.SELECT && (
 				<VocabularyTree
 					loading={vocabularyTreeLoading}
 					selectedKeys={selectedKeys}

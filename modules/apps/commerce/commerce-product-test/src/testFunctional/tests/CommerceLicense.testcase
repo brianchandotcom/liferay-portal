@@ -4,7 +4,6 @@ definition {
 	property license.required = "true";
 	property portal.release = "true";
 	property portal.upstream = "false";
-	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Commerce";
 

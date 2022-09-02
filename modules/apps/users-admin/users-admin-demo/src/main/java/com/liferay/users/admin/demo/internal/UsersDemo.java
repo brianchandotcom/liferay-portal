@@ -112,25 +112,21 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 		_siteRoleDemoDataCreator.delete();
 	}
 
-	@Reference(
-		target = "(javax.portlet.name=" + JournalContentPortletKeys.JOURNAL_CONTENT + ")",
-		unbind = "-"
-	)
-	protected void setJournalContentPortlet(Portlet portlet) {
-	}
-
-	@Reference(
-		target = "(javax.portlet.name=" + JournalPortletKeys.JOURNAL + ")",
-		unbind = "-"
-	)
-	protected void setJournalPortlet(Portlet portlet) {
-	}
-
 	@Reference
 	private BasicUserDemoDataCreator _basicUserDemoDataCreator;
 
 	@Reference
 	private CompanyAdminUserDemoDataCreator _companyAdminUserDemoDataCreator;
+
+	@Reference(
+		target = "(javax.portlet.name=" + JournalContentPortletKeys.JOURNAL_CONTENT + ")"
+	)
+	private Portlet _journalContentPortlet;
+
+	@Reference(
+		target = "(javax.portlet.name=" + JournalPortletKeys.JOURNAL + ")"
+	)
+	private Portlet _journalPortlet;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

@@ -120,7 +120,6 @@ definition {
 	@description = "This is a test for LPS-130964. The Fragments and Widgets panel should persist interaction states on content page."
 	@priority = "4"
 	test PersistInteractionStatesForRelease {
-		property custom.properties = "feature.flag.LPS-153452=true";
 		property portal.upstream = "false";
 
 		task ("Given a page creator accesses to the Fragments and Widgets panel") {
@@ -205,7 +204,6 @@ definition {
 	@description = "This is a test for LPS-130964. The Fragments and Widgets panel should persist interaction states on content page."
 	@priority = "4"
 	test PersistInteractionStatesForUpstream {
-		property custom.properties = "feature.flag.LPS-153452=true";
 		property portal.release = "false";
 
 		task ("Given a page creator accesses to the Fragments and Widgets panel") {

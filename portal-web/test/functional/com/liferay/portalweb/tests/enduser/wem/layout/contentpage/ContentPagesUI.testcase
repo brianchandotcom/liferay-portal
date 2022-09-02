@@ -38,8 +38,6 @@ definition {
 	@description = "This is a test for LPS-146373. The page creator could access to Look and Feel settings via the configuration icon."
 	@priority = "4"
 	test AccessToLookAndFeelSettings {
-		property custom.properties = "feature.flag.LPS-153452=true";
-
 		task ("Given a page creator accesses to the Page Design Options panel") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -124,8 +122,6 @@ definition {
 	@description = "This is a test for LPS-146373. The page creator could close the left sidebar panel via the times icon."
 	@priority = "4"
 	test CloseLeftPageEditorSidebar {
-		property custom.properties = "feature.flag.LPS-153452=true";
-
 		task ("Given a page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -181,8 +177,6 @@ definition {
 	@description = "This is a test for LPS-146373. The page creator should be redirected to the previous page when clicking the back button in the page editor."
 	@priority = "4"
 	test RedirectToPreviousPageWhenClickBackInPageEditor {
-		property custom.properties = "feature.flag.LPS-153452=true";
-
 		task ("Given a page creator adds a content page via the Pages admin") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -232,8 +226,6 @@ definition {
 	@description = "This is a test for LPS-146373. The page creator could use a scroll bar for each section in the page editor."
 	@priority = "4"
 	test UseScrollBarInEachSection {
-		property custom.properties = "feature.flag.LPS-153452=true";
-
 		task ("Given a page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -457,8 +449,6 @@ definition {
 	@description = "This is a test for LPS-146373. The page creator could find Fragments and Widgets, Browser, Page Design Options, Page Content, and Comments on the left sidebar while fragment configuration on the right sidebar. Both page editor sidebars shouldn't overlay the page content."
 	@priority = "4"
 	test ViewPageEditorSidebars {
-		property custom.properties = "feature.flag.LPS-153452=true";
-
 		task ("When the page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -510,8 +500,6 @@ definition {
 	@description = "This is a test for LPS-146373. Both page editor sidebars should be closed when the product menu is open."
 	@priority = "4"
 	test ViewPageEditorSidebarsClosedWhenProductMenuOpen {
-		property custom.properties = "feature.flag.LPS-153452=true";
-
 		task ("Given a page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",

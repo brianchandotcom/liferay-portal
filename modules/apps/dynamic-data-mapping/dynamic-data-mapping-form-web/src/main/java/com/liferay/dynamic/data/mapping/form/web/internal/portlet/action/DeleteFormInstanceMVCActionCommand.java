@@ -66,25 +66,14 @@ public class DeleteFormInstanceMVCActionCommand
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormInstanceService(
-		DDMFormInstanceService ddmFormInstanceService) {
-
-		_ddmFormInstanceService = ddmFormInstanceService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		_ddmStructureService = ddmStructureService;
-	}
-
 	private void _deleteFormInstance(long formInstanceId) throws Exception {
 		_ddmFormInstanceService.deleteFormInstance(formInstanceId);
 	}
 
+	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
+
+	@Reference
 	private DDMStructureService _ddmStructureService;
 
 }

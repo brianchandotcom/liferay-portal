@@ -85,8 +85,36 @@ definition {
 		task ("Assert Page Profile") {
 			ACUtils.assertPageTitle(pageTitle = "AC Page - Site Name - ${dataSourceName}");
 
-			for (var cardTitle : list "Visitors Behavior,Audience,Views by Location,Views by Technology,Displayed Assets") {
+			for (var cardTitle : list "Visitors Behavior,Audience,Views by Location,Views by Technology") {
 				ACCards.viewCards(cardTitle = "${cardTitle}");
+			}
+		}
+
+		task ("View the time filter of Visitors Behavior is Last 24 Hours") {
+			ACTimeFilter.assertCurrentTimeFilterRange(
+				cardName = "Visitors Behavior",
+				timeFilterRange = "Last 24 hours");
+		}
+
+		for (var tabName : list "Path,Known Individuals") {
+			task ("Switch the tab") {
+				ACNavigation.switchTab(tabName = "${tabName}");
+			}
+
+			task ("Set the time filter to the last 30 days") {
+				ACTimeFilter.clickTimeFilterButton();
+
+				ACTimeFilter.setLast30Days();
+			}
+
+			task ("Switch to Overview tab") {
+				ACNavigation.switchTab(tabName = "Overview");
+			}
+
+			task ("View the time filter of Visitors Behavior is Last 24 Hours") {
+				ACTimeFilter.assertCurrentTimeFilterRange(
+					cardName = "Visitors Behavior",
+					timeFilterRange = "Last 24 hours");
 			}
 		}
 	}

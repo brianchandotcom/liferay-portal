@@ -1,0 +1,68 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+    @description = "Automation ID: LPS-146021 | Test Summary: Verify that by clicking on subscriptions the user can select from a drop-down list his LES subscriptions"
+    @priority = "5"
+    test SeeListOfLessSubscriptions {
+        // TODO LPS-146021 SeeListOfLessSubscriptions pending implementation
+    }
+
+    @description = "Automation ID: LPS-146022 | Test Summary: Verify that once a subscription was selected, the next drop-down is populated a list of start and end dates"
+    @priority = "5"
+    test CanViewListOfStartAndEndDatesActiveSubscriptionTerms {
+        // TODO LPS-146022 CanViewListOfStartAndEndDatesActiveSubscriptionTerms pending implementation
+    }
+
+    @description = "Automation ID: LPS-146023 | Test Summary: Verify that the active subscription terms with the list of dates, it looks like this (Dec 00, 2020 - Dec 00, 2021)"
+    @priority = "4"
+    test SetTheDateFormatOfTheActivationList {
+        // TODO LPS-146023 SetTheDateFormatOfTheActivationList pending implementation
+    }
+
+    @description = "Automation ID: LPS-146024 | Test Summary: Verify that after choosing a subscription the Download Key button is enabled"
+    @priority = "4"
+    test SelectingASubscriptionTheDownloadSearchButtonIsEnabled {
+        // TODO LPS-146024 SelectingASubscriptionTheDownloadSearchButtonIsEnabled pending implementation
+    }
+
+    @description = "Automation ID: LPS-146026 | Test Summary: Verify that after clicking the Download Key button the user download the appropriate Elasticsearch license"
+    @priority = "4"
+    test CanDownloadTheKeyWhenASubscriptionIsSelected {
+        // TODO LPS-146026 CanDownloadTheKeyWhenASubscriptionIsSelected pending implementation
+    }
+
+}

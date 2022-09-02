@@ -18,7 +18,7 @@ import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {normalizeFieldSettings} from '../../utils/fieldSettings';
-import {ObjectFieldErrors} from '../ObjectFieldFormBase';
+import {ObjectFieldErrors} from './ObjectFieldFormBase';
 
 export function AttachmentProperties({
 	errors,

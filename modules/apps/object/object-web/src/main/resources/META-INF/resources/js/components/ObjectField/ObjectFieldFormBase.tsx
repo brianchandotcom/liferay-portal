@@ -35,8 +35,8 @@ import React, {
 	useState,
 } from 'react';
 
-import {normalizeFieldSettings} from '../utils/fieldSettings';
-import {toCamelCase} from '../utils/string';
+import {normalizeFieldSettings} from '../../utils/fieldSettings';
+import {toCamelCase} from '../../utils/string';
 
 import './ObjectFieldFormBase.scss';
 

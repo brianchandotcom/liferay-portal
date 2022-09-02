@@ -20,7 +20,7 @@ import {createTextMaskInputElement} from 'text-mask-core';
 
 import {createAutoCorrectedNumberPipe} from '../../utils/createAutoCorrectedNumberPipe';
 import {normalizeFieldSettings} from '../../utils/fieldSettings';
-import {ObjectFieldErrors} from '../ObjectFieldFormBase';
+import {ObjectFieldErrors} from './ObjectFieldFormBase';
 
 export function MaxLengthProperties({
 	disabled,

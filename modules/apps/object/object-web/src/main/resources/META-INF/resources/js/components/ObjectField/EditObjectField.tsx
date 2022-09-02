@@ -32,9 +32,9 @@ import {
 	FilterValidation,
 	ModalAddFilter,
 } from '../ModalAddFilter';
-import ObjectFieldFormBase, {useObjectFieldForm} from '../ObjectFieldFormBase';
 import {AttachmentProperties} from './AttachmentProperties';
 import {MaxLengthProperties} from './MaxLengthProperties';
+import ObjectFieldFormBase, {useObjectFieldForm} from './ObjectFieldFormBase';
 import {SearchableContainer} from './SearchableContainer';
 
 import './EditObjectField.scss';

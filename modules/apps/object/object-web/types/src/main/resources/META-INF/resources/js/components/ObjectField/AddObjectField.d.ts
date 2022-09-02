@@ -12,7 +12,7 @@
  * details.
  */
 
-import React from 'react';
+/// <reference types="react" />
 
 export default function AddObjectField({
 	apiURL,

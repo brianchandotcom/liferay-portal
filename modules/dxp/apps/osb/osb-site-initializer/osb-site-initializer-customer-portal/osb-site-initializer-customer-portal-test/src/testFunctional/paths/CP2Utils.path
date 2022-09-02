@@ -30,6 +30,11 @@
 	<td>//select[contains(@class, 'form-control')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DROPDOWN_OPTIONS</td>
+	<td>//select/option[text()='${key_option}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

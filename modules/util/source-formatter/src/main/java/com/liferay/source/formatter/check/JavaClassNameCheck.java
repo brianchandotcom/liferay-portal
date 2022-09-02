@@ -111,6 +111,10 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, String className,
 		List<String> extendedClassNames) {
 
+		if (extendedClassNames.isEmpty()) {
+			return;
+		}
+
 		List<String> enforceExtendedClassNames = getAttributeValues(
 			_ENFORCE_EXTENDED_CLASS_NAMES_KEY, absolutePath);
 

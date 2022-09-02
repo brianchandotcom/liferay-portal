@@ -60,6 +60,8 @@ public abstract class BaseLayoutTypeControllerImpl
 			HttpServletResponse httpServletResponse, Layout layout)
 		throws Exception {
 
+		ServletContext servletContext = getServletContext();
+
 		RequestDispatcher requestDispatcher =
 			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
 				servletContext.getRequestDispatcher(getEditPage()));
@@ -86,6 +88,8 @@ public abstract class BaseLayoutTypeControllerImpl
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Layout layout)
 		throws Exception {
+
+		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher requestDispatcher =
 			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
@@ -176,11 +180,11 @@ public abstract class BaseLayoutTypeControllerImpl
 
 	protected abstract String getEditPage();
 
+	protected abstract ServletContext getServletContext();
+
 	protected abstract String getViewPage();
 
 	protected void removeAttributes(HttpServletRequest httpServletRequest) {
 	}
-
-	protected ServletContext servletContext;
 
 }

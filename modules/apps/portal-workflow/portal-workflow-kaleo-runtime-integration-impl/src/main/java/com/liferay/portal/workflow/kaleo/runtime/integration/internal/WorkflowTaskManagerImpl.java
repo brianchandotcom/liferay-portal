@@ -284,7 +284,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	public List<User> getAssignableUsers(long workflowTaskId)
 		throws WorkflowException {
 
-		return _getUsers(_TASK_ACTION_ASSIGN, workflowTaskId);
+		return _getUsers(_ACTION_TYPE_ASSIGN, workflowTaskId);
 	}
 
 	@Override
@@ -326,7 +326,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	public List<User> getNotifiableUsers(long workflowTaskId)
 		throws WorkflowException {
 
-		return _getUsers(_TASK_ACTION_VIEW_NOTIFICATION, workflowTaskId);
+		return _getUsers(_ACTION_TYPE_VIEW_NOTIFICATION, workflowTaskId);
 	}
 
 	@Override
@@ -861,7 +861,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			kaleoTaskAssignment, executionContext);
 	}
 
-	private List<User> _getUsers(String actionType, long workflowTaskId)
+	private List<User> _getUsers(int actionType, long workflowTaskId)
 		throws WorkflowException {
 
 		try {
@@ -870,7 +870,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					workflowTaskId);
 
 			if (kaleoTaskInstanceToken.isCompleted() &&
-				Objects.equals(actionType, _TASK_ACTION_ASSIGN)) {
+				(actionType == _ACTION_TYPE_ASSIGN)) {
 
 				return Collections.emptyList();
 			}
@@ -994,7 +994,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	}
 
 	private void _populateAllowedUsers(
-			String actionType, Set<User> allowedUsers, long assignedUserId,
+			int actionType, Set<User> allowedUsers, long assignedUserId,
 			KaleoTaskAssignment kaleoTaskAssignment,
 			KaleoTaskInstanceToken kaleoTaskInstanceToken)
 		throws PortalException {
@@ -1032,7 +1032,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					kaleoTaskInstanceToken.getGroupId(),
 					WorkflowConstants.STATUS_APPROVED, null);
 
-				if (Objects.equals(actionType, _TASK_ACTION_ASSIGN)) {
+				if (actionType == _ACTION_TYPE_ASSIGN) {
 					groupUsers = ListUtil.filter(
 						groupUsers, user -> user.getUserId() != assignedUserId);
 				}
@@ -1059,7 +1059,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					return null;
 				});
 
-			if (Objects.equals(actionType, _TASK_ACTION_ASSIGN)) {
+			if (actionType == _ACTION_TYPE_ASSIGN) {
 				userGroupRolesUsers = ListUtil.filter(
 					userGroupRolesUsers,
 					user ->
@@ -1090,7 +1090,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				Collectors.toList()
 			);
 
-			if (Objects.equals(actionType, _TASK_ACTION_ASSIGN)) {
+			if (actionType == _ACTION_TYPE_ASSIGN) {
 				ListUtil.filter(
 					userGroupGroupRolesUsers,
 					user ->
@@ -1109,7 +1109,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					kaleoTaskAssignment.getAssigneeClassPK(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
 
-			if (Objects.equals(actionType, _TASK_ACTION_ASSIGN)) {
+			if (actionType == _ACTION_TYPE_ASSIGN) {
 				inheritedRoleUsers = ListUtil.filter(
 					inheritedRoleUsers,
 					user ->
@@ -1147,10 +1147,9 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		return workflowTasks;
 	}
 
-	private static final String _TASK_ACTION_ASSIGN = "TASK_ACTION_ASSIGN";
+	private static final int _ACTION_TYPE_ASSIGN = 1;
 
-	private static final String _TASK_ACTION_VIEW_NOTIFICATION =
-		"TASK_ACTION_VIEW_NOTIFICATION";
+	private static final int _ACTION_TYPE_VIEW_NOTIFICATION = 2;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowTaskManagerImpl.class);

@@ -199,3 +199,9 @@ export async function updateRelationship({
 		others
 	);
 }
+
+export async function getRelationship<T>(relationshipId: number) {
+	return fetchJSON<T>(
+		`/o/object-admin/v1.0/object-relationships/${relationshipId}`
+	);
+}

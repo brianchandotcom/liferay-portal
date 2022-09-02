@@ -86,4 +86,5 @@ export declare function updateRelationship({
 	objectRelationshipId,
 	...others
 }: ObjectRelationship): Promise<void>;
+export declare function getRelationship<T>(relationshipId: number): Promise<T>;
 export {};

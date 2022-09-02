@@ -272,7 +272,7 @@ public class ObjectEntryDisplayContext {
 		}
 	}
 
-	public ObjectLayoutBox getObjectLayoutBoxByType(String objectLayoutBoxType)
+	public ObjectLayoutBox getObjectLayoutBox(String type)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition = getObjectDefinition();
@@ -294,7 +294,7 @@ public class ObjectEntryDisplayContext {
 				objectLayoutTab.getObjectLayoutBoxes()) {
 
 			if (StringUtil.equals(
-					objectLayoutBox.getType(), objectLayoutBoxType)) {
+					objectLayoutBox.getType(), type)) {
 
 				return objectLayoutBox;
 			}

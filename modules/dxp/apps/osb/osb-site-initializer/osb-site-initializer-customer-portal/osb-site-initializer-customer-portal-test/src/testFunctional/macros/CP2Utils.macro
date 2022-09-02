@@ -6,6 +6,14 @@ definition {
 			locator1 = "CP2Utils#ROLE");
 	}
 
+	macro assertDropdownList {
+		for (var options : list "${optionList}") {
+			var key_option = "${options}";
+
+			AssertVisible(locator1 = "CP2Utils#DROPDOWN_OPTIONS");
+		}
+	}
+
 	macro assertNotChangeRole {
 		AssertVisible(
 			key_role = "${role}",

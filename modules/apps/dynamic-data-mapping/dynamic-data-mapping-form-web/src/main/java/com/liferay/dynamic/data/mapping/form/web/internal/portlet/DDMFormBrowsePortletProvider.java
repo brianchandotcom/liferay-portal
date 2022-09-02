@@ -59,10 +59,8 @@ public class DDMFormBrowsePortletProvider
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER + ")",
-		unbind = "-"
+		target = "(javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER + ")"
 	)
-	protected void setPortlet(Portlet portlet) {
-	}
+	private Portlet _portlet;
 
 }

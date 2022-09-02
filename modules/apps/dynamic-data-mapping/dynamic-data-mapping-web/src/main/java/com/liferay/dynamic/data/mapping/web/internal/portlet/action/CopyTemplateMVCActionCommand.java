@@ -81,13 +81,6 @@ public class CopyTemplateMVCActionCommand extends BaseDDMMVCActionCommand {
 		return portletURL.toString();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMTemplateService(
-		DDMTemplateService ddmTemplateService) {
-
-		_ddmTemplateService = ddmTemplateService;
-	}
-
 	private DDMTemplate _copyTemplate(ActionRequest actionRequest)
 		throws Exception {
 
@@ -105,6 +98,7 @@ public class CopyTemplateMVCActionCommand extends BaseDDMMVCActionCommand {
 			templateId, nameMap, descriptionMap, serviceContext);
 	}
 
+	@Reference
 	private DDMTemplateService _ddmTemplateService;
 
 }

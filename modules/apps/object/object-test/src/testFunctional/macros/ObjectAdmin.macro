@@ -1,5 +1,11 @@
 definition {
 
+	macro addCategorizationOnLayoutTab {
+		Click(locator1 = "ObjectAdmin#DROPDOWN_CATEGORIZATION_OPTION");
+
+		DropdownMenuItem.click(menuItem = "Add Categorization");
+	}
+
 	macro addLayoutBlockViaUI {
 		Click(locator1 = "ObjectAdmin#ADD_BLOCK_BUTTON");
 
@@ -1056,6 +1062,18 @@ definition {
 			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
 
 		MenuItem.click(menuItem = "${kebabOption}");
+	}
+
+	macro viewCategorizationOnPublishedObject {
+		AssertElementPresent(locator1 = "ObjectAdmin#CATEGORIZATION_TITLE_INTO_OBJECT");
+
+		AssertElementPresent(locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_FIELD");
+
+		for (var vocabularyName : list "Topic,Audience,Stage") {
+			AssertElementPresent(
+				key_vocabularyName = "${vocabularyName}",
+				locator1 = "AssetCategorization#CATEGORIES_FIELD");
+		}
 	}
 
 	macro viewCustomObject {

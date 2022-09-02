@@ -86,6 +86,16 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>DROPDOWN_CATEGORIZATION_OPTION</td>
+		<td>//button[contains(@aria-controls,'clay-dropdown-menu-1')]//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>CATEGORIZATION_TITLE_INTO_OBJECT</td>
+		<td>//span[contains(@class,'legend') and contains(.,'Categorization')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ENTRY_BOOLEAN_CHECKBOX</td>
 		<td>//input[contains(@class,'custom-control-input')]</td>
 		<td></td>

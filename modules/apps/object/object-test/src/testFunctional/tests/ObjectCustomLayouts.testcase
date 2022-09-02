@@ -21,6 +21,67 @@ definition {
 		}
 	}
 
+	@description = "LPS-161884 - Verify that it's possible to create an object with a categorization section in the layout"
+	@priority = "3"
+	test CanCreateObjectWithCategorizationSection {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 200",
+			objectName = "CustomObject200",
+			pluralLabelName = "Custom Objects 200");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Date",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "Date",
+			isRequired = "false",
+			objectName = "CustomObject200");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Decimal",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "Decimal",
+			isRequired = "true",
+			objectName = "CustomObject200");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject200");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 200");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "2",
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		ObjectAdmin.addCategorizationOnLayoutTab();
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject200");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject200");
+
+		LexiconEntry.gotoAdd();
+
+		ObjectAdmin.viewCategorizationOnPublishedObject();
+	}
+
 	@description = "LPS-135397 - Verify that it is not possible to save another Layout as default"
 	@priority = "4"
 	test CannotSaveAnotherLayoutAsDefault {

@@ -1733,6 +1733,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-159631. Page opens in current page in default setting."
+	@priority = "4"
+	test ViewLinkToURLTypePageWithDefaultSetting {
+		task ("Given a page creator has a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+		}
+
+		task ("When adding a Link to URL type page with default setting") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.addPage(
+				pageName = "Test Link to URL Page Name",
+				pageTypeURL = "https://www.google.com",
+				sitePageType = "Link to URL");
+		}
+
+		task ("Then viewing the linked URL page opens in current page") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			AssertClick.assertPartialTextClickAt(
+				key_pageName = "Test Link to URL Page Name",
+				locator1 = "Home#PAGE",
+				value1 = "Test Link to URL Page Name");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
+
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			PagesFinder.goToPagesFinder();
+
+			Click(
+				key_pageName = "Test Link to URL Page Name",
+				locator1 = "PagesFinder#PAGE_NAME",
+				value1 = "${pageName}");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "Test Link to URL Page Name");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
+		}
+	}
+
 	@description = "This is a test for LPS-110108. Management Toolbar shows count of selected items and all visible items are selected after checking the Select All checkbox."
 	@priority = "5"
 	test ViewNumberOfSelectedPagesOnManagementToolbar {

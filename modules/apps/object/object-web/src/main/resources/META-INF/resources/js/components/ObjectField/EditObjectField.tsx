@@ -31,16 +31,20 @@ import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {createTextMaskInputElement} from 'text-mask-core';
 
-import {createAutoCorrectedNumberPipe} from '../utils/createAutoCorrectedNumberPipe';
+import {createAutoCorrectedNumberPipe} from '../../utils/createAutoCorrectedNumberPipe';
 import {
 	normalizeFieldSettings,
 	updateFieldSettings,
-} from '../utils/fieldSettings';
-import {FilterErrors, FilterValidation, ModalAddFilter} from './ModalAddFilter';
+} from '../../utils/fieldSettings';
+import {
+	FilterErrors,
+	FilterValidation,
+	ModalAddFilter,
+} from '../ModalAddFilter';
 import ObjectFieldFormBase, {
 	ObjectFieldErrors,
 	useObjectFieldForm,
-} from './ObjectFieldFormBase';
+} from '../ObjectFieldFormBase';
 
 import './EditObjectField.scss';
 

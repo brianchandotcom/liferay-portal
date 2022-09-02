@@ -10,5 +10,6 @@
  */
 
 export enum RequestStatus {
-	DRAFT = 'draft',
+	DRAFT = 'Draft',
+	PENDING = 'Pending Marketing Review',
 }

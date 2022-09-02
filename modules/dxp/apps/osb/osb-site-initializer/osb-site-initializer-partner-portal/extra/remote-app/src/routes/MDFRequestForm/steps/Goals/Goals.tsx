@@ -17,6 +17,7 @@ import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
+import {RequestStatus} from '../../../../common/enums/requestStatus';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
@@ -152,7 +153,13 @@ const Goals = ({
 					<Button
 						disabled={isSubmitting}
 						displayType={null}
-						onClick={() => onSaveAsDraft?.(values, formikHelpers)}
+						onClick={() =>
+							onSaveAsDraft?.(
+								values,
+								formikHelpers,
+								RequestStatus.DRAFT
+							)
+						}
 					>
 						Save as Draft
 					</Button>

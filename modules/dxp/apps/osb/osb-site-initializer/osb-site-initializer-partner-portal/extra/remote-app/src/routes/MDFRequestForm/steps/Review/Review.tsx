@@ -14,6 +14,7 @@ import {useFormikContext} from 'formik';
 import {useMemo} from 'react';
 
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
+import {RequestStatus} from '../../../../common/enums/requestStatus';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity';
 import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
@@ -117,7 +118,11 @@ const Review = ({
 								disabled={isSubmitting}
 								displayType={null}
 								onClick={() =>
-									onSaveAsDraft?.(values, formikHelpers)
+									onSaveAsDraft?.(
+										values,
+										formikHelpers,
+										RequestStatus.DRAFT
+									)
 								}
 							>
 								Save as Draft

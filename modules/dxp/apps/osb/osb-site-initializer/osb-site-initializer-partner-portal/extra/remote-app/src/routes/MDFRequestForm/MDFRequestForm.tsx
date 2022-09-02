@@ -33,7 +33,7 @@ const initialFormValues: MDFRequest = {
 	country: {},
 	liferayBusinessSalesGoals: [],
 	overallCampaign: '',
-	requestStatus: RequestStatus.DRAFT,
+	requestStatus: RequestStatus.PENDING,
 	targetAudienceRoles: [],
 	targetMarkets: [],
 };

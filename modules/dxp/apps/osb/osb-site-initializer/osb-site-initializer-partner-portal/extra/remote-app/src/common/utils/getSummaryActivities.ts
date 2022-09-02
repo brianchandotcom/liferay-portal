@@ -43,12 +43,12 @@ export default function getSummaryActivities(
 			{endDates: [] as Date[], startDates: [] as Date[]}
 		);
 
-		const maxDateActivity = datesActivities.startDates.reduce(
+		const minDateActivity = datesActivities.startDates.reduce(
 			(dateAccumulator, startDate) =>
 				dateAccumulator < startDate ? dateAccumulator : startDate
 		);
 
-		const minDateActivity = datesActivities.endDates.reduce(
+		const maxDateActivity = datesActivities.endDates.reduce(
 			(dateAccumulator, endDate) =>
 				dateAccumulator > endDate ? dateAccumulator : endDate
 		);

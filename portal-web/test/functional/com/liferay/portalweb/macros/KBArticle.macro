@@ -934,6 +934,14 @@ definition {
 		if ("${section}" == "Folders and Articles") {
 			Click(locator1 = "KnowledgeBase#PAGE_TREE_FOLDERS_AND_ARTICLES");
 		}
+
+		if ("${section}" == "Templates") {
+			Click(locator1 = "KnowledgeBase#PAGE_TREE_TEMPLATES");
+		}
+
+		if ("${section}" == "Suggestions") {
+			Click(locator1 = "KnowledgeBase#PAGE_TREE_SUGGESTIONS");
+		}
 	}
 
 	macro openToAddKBArticle {

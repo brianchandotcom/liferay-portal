@@ -27,22 +27,11 @@ export default function useProductMenuHandler() {
 	const sidebarHidden = useSelector((state) => state.sidebar.hidden);
 
 	useEffect(() => {
-		if (Liferay.FeatureFlags['LPS-153452']) {
-			hideProductMenuIfPresent({
-				onHide: () => {
-					dispatch(switchSidebarPanel({sidebarOpen: true}));
-				},
-			});
-		}
-		else {
-			const sideNavigation = Liferay.SideNavigation?.instance(
-				document.querySelector('.product-menu-toggle')
-			);
-
-			if (!sideNavigation?.visible()) {
+		hideProductMenuIfPresent({
+			onHide: () => {
 				dispatch(switchSidebarPanel({sidebarOpen: true}));
-			}
-		}
+			},
+		});
 	}, [dispatch]);
 
 	useEffect(() => {

@@ -52,23 +52,6 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 	transition: left ease $defaultTransitionDuration,
 		right ease $defaultTransitionDuration;
 
-	&.page-editor__sidebar-old {
-		left: unset;
-		right: 0;
-
-		.page-editor__sidebar__content {
-			left: unset;
-			right: $sidebarButtonWidth;
-
-			border-left: 1px solid $cadmin-secondary-l3;
-			border-right: none;
-
-			&:not(.page-editor__sidebar__content--open) {
-				transform: translateX(100%);
-			}
-		}
-	}
-
 	&__buttons {
 		background-color: $cadmin-gray-200;
 		display: flex;
@@ -226,18 +209,6 @@ html#{$cadmin-selector} .page-editor__wrapper {
 	);
 	/* stylelint-enable */
 	overflow: auto;
-
-	&.page-editor__wrapper-old {
-		margin-right: $sidebarButtonWidth;
-		padding-left: 0;
-
-		&.page-editor__wrapper--padded {
-			@include media-breakpoint-up(sm) {
-				margin-right: $sidebarButtonWidth + $defaultSidebarContentWidth;
-				padding-left: 0;
-			}
-		}
-	}
 
 	&--padded-start {
 		@include media-breakpoint-up(sm) {

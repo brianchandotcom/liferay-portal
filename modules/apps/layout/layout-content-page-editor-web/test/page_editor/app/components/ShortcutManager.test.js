@@ -41,12 +41,6 @@ describe('ShortcutManager', () => {
 				isMac: () => true,
 			},
 		};
-
-		Liferay.FeatureFlags['LPS-153452'] = true;
-	});
-
-	afterAll(() => {
-		Liferay.FeatureFlags['LPS-153452'] = false;
 	});
 
 	it('triggers hide sidebar action when pressing cmd + shift + .', () => {

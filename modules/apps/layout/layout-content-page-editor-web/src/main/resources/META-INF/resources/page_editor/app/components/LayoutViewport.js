@@ -120,12 +120,7 @@ export default function LayoutViewport() {
 					'cadmin': selectedViewportSize !== VIEWPORT_SIZES.desktop,
 					'page-editor__layout-viewport__resizing': resizing,
 					'page-editor__layout-viewport--with-item-configuration-open': itemConfigurationOpen,
-					'page-editor__layout-viewport--with-sidebar-old-open':
-						sidebarOpen && !Liferay.FeatureFlags['LPS-153452'],
 					'page-editor__layout-viewport--with-sidebar-open': sidebarOpen,
-					'page-editor__layout-viewport-old': !Liferay.FeatureFlags[
-						'LPS-153452'
-					],
 				}
 			)}
 		>

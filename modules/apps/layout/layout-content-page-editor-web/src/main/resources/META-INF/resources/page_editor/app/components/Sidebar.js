@@ -170,14 +170,6 @@ export default function Sidebar() {
 
 		wrapper.classList.add('page-editor__wrapper');
 
-		if (!Liferay.FeatureFlags['LPS-153452']) {
-			wrapper.classList.add('page-editor__wrapper-old');
-			wrapper.classList.toggle(
-				'page-editor__wrapper--padded',
-				sidebarOpen
-			);
-		}
-
 		wrapper.classList.toggle(
 			'page-editor__wrapper--padded-start',
 			sidebarOpen
@@ -187,6 +179,7 @@ export default function Sidebar() {
 			'page-editor__wrapper--sidebar--hidden',
 			sidebarHidden
 		);
+
 		wrapper.classList.toggle(
 			'page-editor__wrapper--padded-end',
 			itemConfigurationOpen
@@ -194,7 +187,6 @@ export default function Sidebar() {
 
 		return () => {
 			wrapper.classList.remove('page-editor__wrapper');
-			wrapper.classList.remove('page-editor__wrapper--padded');
 			wrapper.classList.remove('page-editor__wrapper--padded-start');
 			wrapper.classList.remove('page-editor__wrapper--padded-end');
 		};
@@ -355,12 +347,7 @@ export default function Sidebar() {
 		<ReactPortal className="cadmin">
 			<div
 				className={classNames(
-					'page-editor__sidebar page-editor__theme-adapter-forms',
-					{
-						'page-editor__sidebar-old': !Liferay.FeatureFlags[
-							'LPS-153452'
-						],
-					}
+					'page-editor__sidebar page-editor__theme-adapter-forms'
 				)}
 				ref={dropClearRef}
 				style={{'--sidebar-content-width': `${sidebarWidth}px`}}
@@ -446,9 +433,6 @@ export default function Sidebar() {
 							Liferay.Language.direction?.[
 								themeDisplay?.getLanguageId()
 							] === 'rtl',
-						[`page-editor__sidebar__content--panel-id-${sidebarPanelId}`]:
-							sidebarPanelId &&
-							!Liferay.FeatureFlags['LPS-153452'],
 					})}
 					id={sidebarContentId}
 					onClick={deselectItem}
@@ -495,26 +479,21 @@ export default function Sidebar() {
 						</ErrorBoundary>
 					)}
 
-					{Liferay.FeatureFlags['LPS-153452'] ? (
-						<div
-							aria-controls={sidebarContentId}
-							aria-label={Liferay.Language.get('resize-sidebar')}
-							aria-orientation="vertical"
-							aria-valuemax={MAX_SIDEBAR_WIDTH}
-							aria-valuemin={MIN_SIZEBAR_WIDTH}
-							aria-valuenow={sidebarWidth}
-							className={classNames(
-								'page-editor__sidebar__resizer',
-								{
-									'page-editor__sidebar__resizer--resizing': resizing,
-								}
-							)}
-							onKeyDown={handleSeparatorKeyDown}
-							ref={separatorRef}
-							role="separator"
-							tabIndex={0}
-						/>
-					) : null}
+					<div
+						aria-controls={sidebarContentId}
+						aria-label={Liferay.Language.get('resize-sidebar')}
+						aria-orientation="vertical"
+						aria-valuemax={MAX_SIDEBAR_WIDTH}
+						aria-valuemin={MIN_SIZEBAR_WIDTH}
+						aria-valuenow={sidebarWidth}
+						className={classNames('page-editor__sidebar__resizer', {
+							'page-editor__sidebar__resizer--resizing': resizing,
+						})}
+						onKeyDown={handleSeparatorKeyDown}
+						ref={separatorRef}
+						role="separator"
+						tabIndex={0}
+					/>
 				</div>
 			</div>
 		</ReactPortal>

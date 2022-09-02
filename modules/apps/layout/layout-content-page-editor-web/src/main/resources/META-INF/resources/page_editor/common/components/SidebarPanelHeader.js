@@ -31,17 +31,15 @@ export default function SidebarPanelHeader({children}) {
 		>
 			<h1 className="flex-grow-1 mb-0 mr-1 text-3">{children}</h1>
 
-			{Liferay.FeatureFlags['LPS-153452'] && (
-				<ClayButtonWithIcon
-					displayType="unstyled"
-					onClick={() => {
-						dispatch(switchSidebarPanel({sidebarOpen: false}));
-					}}
-					small
-					symbol="times"
-					title={Liferay.Language.get('close')}
-				/>
-			)}
+			<ClayButtonWithIcon
+				displayType="unstyled"
+				onClick={() => {
+					dispatch(switchSidebarPanel({sidebarOpen: false}));
+				}}
+				small
+				symbol="times"
+				title={Liferay.Language.get('close')}
+			/>
 		</div>
 	);
 }

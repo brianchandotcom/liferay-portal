@@ -133,23 +133,14 @@ export default function PageDesignOptionsSidebar() {
 				<span className="align-items-center d-flex justify-content-between">
 					{Liferay.Language.get('page-design-options')}
 
-					{Liferay.FeatureFlags['LPS-153452'] ? (
-						<ClayLink
-							displayType="secondary"
-							href={config.lookAndFeelURL}
-							monospaced
-							title={Liferay.Language.get('more')}
-						>
-							<ClayIcon symbol="cog" />
-						</ClayLink>
-					) : (
-						<ClayLink
-							className="font-weight-normal"
-							href={config.lookAndFeelURL}
-						>
-							{Liferay.Language.get('more')}
-						</ClayLink>
-					)}
+					<ClayLink
+						displayType="secondary"
+						href={config.lookAndFeelURL}
+						monospaced
+						title={Liferay.Language.get('more')}
+					>
+						<ClayIcon symbol="cog" />
+					</ClayLink>
 				</span>
 			</SidebarPanelHeader>
 

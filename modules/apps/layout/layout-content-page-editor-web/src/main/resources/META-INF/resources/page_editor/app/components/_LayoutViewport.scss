@@ -25,30 +25,6 @@ html#{$cadmin-selector} #{$selector} {
 			will-change: margin-left, margin-right;
 			z-index: 1;
 
-			&#{$selector}-old {
-				#{$selector}__label-width {
-					right: $sidebarButtonWidth;
-				}
-
-				&#{$selector}--with-sidebar {
-					margin-left: 0;
-					margin-right: $sidebarButtonWidth;
-				}
-
-				&#{$selector}--with-sidebar-open {
-					#{$selector}__label-width {
-						left: unset;
-						right: $sidebarButtonWidth + $defaultSidebarContentWidth;
-					}
-
-					@include media-breakpoint-up(sm) {
-						margin-left: 0;
-						margin-right: $sidebarButtonWidth +
-							$defaultSidebarContentWidth;
-					}
-				}
-			}
-
 			&#{$selector}--with-sidebar-open {
 				#{$selector}__label-width {
 					right: $defaultSidebarContentWidth;

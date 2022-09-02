@@ -235,7 +235,7 @@ definition {
 		MockMock._gotoMail();
 	}
 
-	macro viewFormattedHTMLTextDIFF {
+	macro viewFormattedHTMLTextDiffs {
 		MockMock._gotoMail();
 
 		MockMock._viewMailFromInbox(

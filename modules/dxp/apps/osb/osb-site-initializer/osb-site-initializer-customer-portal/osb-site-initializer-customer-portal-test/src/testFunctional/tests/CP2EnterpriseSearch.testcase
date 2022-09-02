@@ -35,38 +35,42 @@ definition {
 		}
 	}
 
-    @description = "Automation ID: LPS-146021 | Test Summary: Verify that by clicking on subscriptions the user can select from a drop-down list his LES subscriptions"
-    @priority = "5"
-    test SeeListOfLessSubscriptions {
-        task ("Go to CP2.0 and join a project") {
+	@description = "Automation ID: LPS-146026 | Test Summary: Verify that after clicking the Download Key button the user download the appropriate Elasticsearch license"
+	@priority = "4"
+	test CanDownloadTheKeyWhenASubscriptionIsSelected {
+
+		// TODO LPS-146026 CanDownloadTheKeyWhenASubscriptionIsSelected pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-146022 | Test Summary: Verify that once a subscription was selected, the next drop-down is populated a list of start and end dates"
+	@priority = "5"
+	test CanViewListOfStartAndEndDatesActiveSubscriptionTerms {
+
+		// TODO LPS-146022 CanViewListOfStartAndEndDatesActiveSubscriptionTerms pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-146021 | Test Summary: Verify that by clicking on subscriptions the user can select from a drop-down list his LES subscriptions"
+	@priority = "5"
+	test SeeListOfLessSubscriptions {
+		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
 			CustomerPortal.enterOnProject(title = "Test Account Enterprise Search");
 		}
 
-        task ("Go to the product activation page") {
+		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = "Enterprise Search");
 		}
 
-        task ("Assert the list of LES subscriptions") {
-            var options = "Non-Production,Production,Backup";
+		task ("Assert the list of LES subscriptions") {
+			var options = "Non-Production,Production,Backup";
 
-            CP2Utils.assertDropdownList(optionList = "${options}");
-        }
-    }
-
-    @description = "Automation ID: LPS-146022 | Test Summary: Verify that once a subscription was selected, the next drop-down is populated a list of start and end dates"
-    @priority = "5"
-    test CanViewListOfStartAndEndDatesActiveSubscriptionTerms {
-        // TODO LPS-146022 CanViewListOfStartAndEndDatesActiveSubscriptionTerms pending implementation
-    }
-
-    @description = "Automation ID: LPS-146026 | Test Summary: Verify that after clicking the Download Key button the user download the appropriate Elasticsearch license"
-    @priority = "4"
-    test CanDownloadTheKeyWhenASubscriptionIsSelected {
-        // TODO LPS-146026 CanDownloadTheKeyWhenASubscriptionIsSelected pending implementation
-    }
+			CP2Utils.assertDropdownList(optionList = "${options}");
+		}
+	}
 
 }

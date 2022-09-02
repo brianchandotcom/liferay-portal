@@ -15,11 +15,13 @@
 package com.liferay.portal.vulcan.internal.resource;
 
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.portal.vulcan.extension.OpenAPIEndpointsExtension;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
@@ -155,18 +157,20 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			openAPI.setServers(Collections.singletonList(server));
 		}
 
-		Map<String, PathItem> extendedEndpoints =
-			_openAPIEndpointsExtension.getExtendedEndpoints(uriInfo);
-
 		OpenAPI finalOpenAPI = openAPI;
 
-		if ((extendedEndpoints != null) && !extendedEndpoints.isEmpty()) {
-			extendedEndpoints.forEach(
-				(key, pathItem) -> {
-					Paths paths = finalOpenAPI.getPaths();
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153324"))) {
+			Map<String, PathItem> extendedEndpoints =
+				_openAPIEndpointsExtension.getExtendedEndpoints(uriInfo);
 
-					paths.addPathItem(key, pathItem);
-				});
+			if ((extendedEndpoints != null) && !extendedEndpoints.isEmpty()) {
+				extendedEndpoints.forEach(
+					(key, pathItem) -> {
+						Paths paths = finalOpenAPI.getPaths();
+
+						paths.addPathItem(key, pathItem);
+					});
+			}
 		}
 
 		if (StringUtil.equalsIgnoreCase("yaml", type)) {

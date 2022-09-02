@@ -14,11 +14,13 @@
 
 package com.liferay.object.util;
 
+import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -32,8 +34,8 @@ public class ObjectRelationshipUtil {
 			List<ObjectRelationship> objectRelationships)
 		throws PortalException {
 
-		if (objectRelationships.isEmpty()) {
-			return null;
+		if (ListUtil.isEmpty(objectRelationships)) {
+			throw new NoSuchObjectRelationshipException();
 		}
 
 		if (objectRelationships.size() == 1) {

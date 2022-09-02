@@ -191,6 +191,9 @@ public class ExportImportIndexedFieldsTest {
 			String.valueOf(setttingMap.get("targetGroupId"))
 		).put(
 			"setting_userId", String.valueOf(setttingMap.get("userId"))
+		).put(
+			"statusByUserId",
+			String.valueOf(exportImportConfiguration.getStatusByUserId())
 		).build();
 
 		_populateDates(exportImportConfiguration, map);

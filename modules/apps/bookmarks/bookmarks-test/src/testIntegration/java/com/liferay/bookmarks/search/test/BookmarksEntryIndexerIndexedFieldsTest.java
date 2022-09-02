@@ -207,6 +207,8 @@ public class BookmarksEntryIndexerIndexedFieldsTest {
 			"assetEntryId_sortable",
 			String.valueOf(_getAssetEntryId(bookmarksEntry))
 		).put(
+			"statusByUserId", String.valueOf(bookmarksEntry.getStatusByUserId())
+		).put(
 			"title_sortable", StringUtil.lowerCase(bookmarksEntry.getName())
 		).put(
 			"visible", "true"

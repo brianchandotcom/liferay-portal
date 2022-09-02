@@ -195,6 +195,8 @@ public class MBMessageIndexerIndexedFieldsTest {
 		).put(
 			"question", "false"
 		).put(
+			"statusByUserId", String.valueOf(mbMessage.getStatusByUserId())
+		).put(
 			"threadId", String.valueOf(mbMessage.getThreadId())
 		).put(
 			"urlSubject", mbMessage.getUrlSubject()

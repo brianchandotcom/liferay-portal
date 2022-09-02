@@ -151,6 +151,8 @@ public class MBCategoryIndexerIndexedFieldsTest {
 			Field.USER_ID, String.valueOf(mbCategory.getUserId())
 		).put(
 			Field.USER_NAME, StringUtil.lowerCase(mbCategory.getUserName())
+		).put(
+			"statusByUserId", String.valueOf(mbCategory.getStatusByUserId())
 		).build();
 
 		indexedFieldsFixture.populateUID(

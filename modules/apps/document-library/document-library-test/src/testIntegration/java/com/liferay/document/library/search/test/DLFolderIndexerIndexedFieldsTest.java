@@ -161,6 +161,7 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put(
 			"assetEntryId_sortable",
 			String.valueOf(_getAssetEntryId(dlFolder)));
+		map.put("statusByUserId", String.valueOf(dlFolder.getStatusByUserId()));
 		map.put("visible", "true");
 
 		populateDates(dlFolder, map);

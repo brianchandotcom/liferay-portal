@@ -188,6 +188,8 @@ public class LayoutIndexerIndexedFieldsTest {
 		).put(
 			"privateLayout", "false"
 		).put(
+			"statusByUserId", String.valueOf(layout.getStatusByUserId())
+		).put(
 			"title_ja_JP", layout.getName(LocaleUtil.JAPAN)
 		).build();
 

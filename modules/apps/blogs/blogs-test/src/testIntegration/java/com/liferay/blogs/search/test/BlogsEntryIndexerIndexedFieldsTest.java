@@ -187,6 +187,10 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		).put(
 			"localized_title", StringUtil.lowerCase(blogsEntry.getTitle())
 		).put(
+			"statusByUserId", String.valueOf(blogsEntry.getStatusByUserId())
+		).put(
+			"statusByUserId", String.valueOf(blogsEntry.getStatusByUserId())
+		).put(
 			"title_sortable", StringUtil.lowerCase(blogsEntry.getTitle())
 		).put(
 			"urlTitle", blogsEntry.getUrlTitle()

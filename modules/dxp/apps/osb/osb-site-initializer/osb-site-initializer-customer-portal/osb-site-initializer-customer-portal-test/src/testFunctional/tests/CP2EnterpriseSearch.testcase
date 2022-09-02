@@ -51,9 +51,9 @@ definition {
 
 	}
 
-	@description = "Automation ID: LPS-146021 | Test Summary: Verify that by clicking on subscriptions the user can select from a drop-down list his LES subscriptions"
+	@description = "Automation ID: LPS-146021 | Test Summary: Verify that by clicking on subscriptions the user can select from a drop-down list their LES subscriptions"
 	@priority = "5"
-	test SeeListOfLessSubscriptions {
+	test SeeListOfLESSSubscriptions {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 

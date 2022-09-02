@@ -89,35 +89,59 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 			javaClass.getImplementedClassNames();
 
 		if (implementedClassNames.isEmpty()) {
-			return javaTerm.getContent();
-		}
+			List<String> enforceExtendedClassNames = getAttributeValues(
+				_ENFORCE_EXTENDED_CLASS_NAMES_KEY, absolutePath);
 
-		List<String> enforceImplementedClassNames = getAttributeValues(
-			_ENFORCE_IMPLEMENTED_CLASS_NAMES_KEY, absolutePath);
+			List<String> extendedClassNames = javaClass.getExtendedClassNames();
 
-		outerLoop:
-		for (String implementedClassName : enforceImplementedClassNames) {
-			if (!implementedClassNames.contains(implementedClassName)) {
-				continue;
-			}
+			for (String enforceExtendedClassName : enforceExtendedClassNames) {
+				if (!extendedClassNames.contains(enforceExtendedClassName)) {
+					continue;
+				}
 
-			for (String extendedClassName : javaClass.getExtendedClassNames()) {
-				if (extendedClassName.startsWith("Base") &&
-					!extendedClassName.endsWith(implementedClassName)) {
+				if (!className.endsWith(enforceExtendedClassName)) {
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Name of class extending '",
+							enforceExtendedClassName, "' should end with '",
+							enforceExtendedClassName, "'"));
 
-					continue outerLoop;
+					break;
 				}
 			}
+		}
+		else {
+			List<String> enforceImplementedClassNames = getAttributeValues(
+				_ENFORCE_IMPLEMENTED_CLASS_NAMES_KEY, absolutePath);
 
-			if (!className.endsWith(implementedClassName) &&
-				((implementedClassNames.size() == 1) ||
-				 implementedClassName.equals("ScreenNavigationCategory"))) {
+			outerLoop:
+			for (String implementedClassName : enforceImplementedClassNames) {
+				if (!implementedClassNames.contains(implementedClassName)) {
+					continue;
+				}
 
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Name of class implementing '", implementedClassName,
-						"' should end with '", implementedClassName, "'"));
+				for (String extendedClassName :
+						javaClass.getExtendedClassNames()) {
+
+					if (extendedClassName.startsWith("Base") &&
+						!extendedClassName.endsWith(implementedClassName)) {
+
+						continue outerLoop;
+					}
+				}
+
+				if (!className.endsWith(implementedClassName) &&
+					((implementedClassNames.size() == 1) ||
+					 implementedClassName.equals("ScreenNavigationCategory"))) {
+
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Name of class implementing '",
+							implementedClassName, "' should end with '",
+							implementedClassName, "'"));
+				}
 			}
 		}
 
@@ -173,6 +197,9 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 					packageName, "'"));
 		}
 	}
+
+	private static final String _ENFORCE_EXTENDED_CLASS_NAMES_KEY =
+		"enforceExtendedClassNames";
 
 	private static final String _ENFORCE_IMPLEMENTED_CLASS_NAMES_KEY =
 		"enforceImplementedClassNames";

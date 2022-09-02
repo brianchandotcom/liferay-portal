@@ -799,6 +799,8 @@ definition {
 	@description = "Verify that the user is able to input a Groovy script to define the assignment"
 	@priority = "4"
 	test CanDefineAssignmentWithGroovyScript {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDefineAssignmentWithGroovyScript";
+
 		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
@@ -807,23 +809,10 @@ definition {
 			nodeLabel = "Task",
 			nodePosition = "-0,0");
 
-		ProcessBuilderKaleoDesignerReact.addConnector(
-			connectorIn = "task",
-			connectorLabel = "StartTaskConnector",
-			connectorOut = "start",
-			key_direction = "right");
-
-		ProcessBuilderKaleoDesignerReact.addConnector(
-			connectorIn = "end",
-			connectorLabel = "EndTaskConnector",
-			connectorOut = "task",
-			key_direction = "right");
-
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
-
 		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
 			assignmentType = "Scripted Assignment",
-			groovyScript = "if(type == 'behaviorClarification') {invalidFields = true} else {invalidFields = false}");
+			groovyScript = "groovyScript = "if(type == 'behaviorClarification') {invalidFields = true} else {invalidFields = false}");");
+		
 	}
 
 	@description = "Verify that the user is able to define the Resource Action"

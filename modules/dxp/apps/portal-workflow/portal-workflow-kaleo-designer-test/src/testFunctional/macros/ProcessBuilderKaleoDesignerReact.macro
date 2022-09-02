@@ -580,8 +580,6 @@ definition {
 		if ("${assignmentType}" == "Scripted Assignment") {
 			Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_ADD_SOURCE_CODE");
 
-			Click(locator1 = "ProcessBuilderKaleoDesignerReact#GROOVY_SOURCE_EDITOR");
-
 			Type.typeCodeMirrorEditorNoError(
 				locator1 = "ProcessBuilderKaleoDesignerReact#GROOVY_SOURCE_EDITOR",
 				value1 = "${groovyScript}");

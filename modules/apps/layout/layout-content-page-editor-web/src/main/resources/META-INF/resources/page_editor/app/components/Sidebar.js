@@ -214,7 +214,7 @@ export default function Sidebar() {
 			const cursorDelta = event.clientX - initialCursorPosition;
 
 			if (
-				Liferay.Language.direction[themeDisplay?.getLanguageId()] ===
+				Liferay.Language.direction?.[themeDisplay?.getLanguageId()] ===
 				'rtl'
 			) {
 				setSidebarWidth(
@@ -299,7 +299,8 @@ export default function Sidebar() {
 
 	const handleSeparatorKeyDown = (event) => {
 		if (
-			Liferay.Language.direction[themeDisplay?.getLanguageId()] === 'rtl'
+			Liferay.Language.direction?.[themeDisplay?.getLanguageId()] ===
+			'rtl'
 		) {
 			if (event.key === 'ArrowLeft') {
 				setSidebarWidth(
@@ -442,7 +443,7 @@ export default function Sidebar() {
 						'page-editor__sidebar__content': true,
 						'page-editor__sidebar__content--open': sidebarOpen,
 						'rtl':
-							Liferay.Language.direction[
+							Liferay.Language.direction?.[
 								themeDisplay?.getLanguageId()
 							] === 'rtl',
 						[`page-editor__sidebar__content--panel-id-${sidebarPanelId}`]:

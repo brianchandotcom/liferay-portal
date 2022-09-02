@@ -133,9 +133,9 @@ definition {
 		}
 	}
 
-	@description = "This test assert the account manager can view account users."
+	@description = "This test assert the account manager can view account users by default."
 	@priority = "4"
-	test AccountManagersCanViewUsers {
+	test AccountManagersCanViewUsersbyDefault {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Given an account with an account user assigned") {

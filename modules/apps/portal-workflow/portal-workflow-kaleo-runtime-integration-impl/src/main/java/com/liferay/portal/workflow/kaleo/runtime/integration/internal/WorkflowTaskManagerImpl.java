@@ -326,8 +326,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	public List<User> getNotifiableUsers(long workflowTaskId)
 		throws WorkflowException {
 
-		return _getUsers(
-			_TASK_ACTION_VIEW_NOTIFICATION, workflowTaskId);
+		return _getUsers(_TASK_ACTION_VIEW_NOTIFICATION, workflowTaskId);
 	}
 
 	@Override

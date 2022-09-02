@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.scripting.BaseScriptingExecutor;
 
 import groovy.lang.Binding;
+import groovy.lang.GroovyRuntimeException;
 import groovy.lang.GroovyShell;
 import groovy.lang.Script;
 
@@ -52,27 +53,39 @@ public class GroovyScriptingExecutor extends BaseScriptingExecutor {
 				"Constrained execution not supported for Groovy");
 		}
 
-		GroovyShell groovyShell = new GroovyShell(getClassLoader());
+		try {
+			GroovyShell groovyShell = new GroovyShell(getClassLoader());
 
-		Script compiledScript = groovyShell.parse(script);
+			Script compiledScript = groovyShell.parse(script);
 
-		Binding binding = new Binding(inputObjects);
+			Binding binding = new Binding(inputObjects);
 
-		compiledScript.setBinding(binding);
+			compiledScript.setBinding(binding);
 
-		compiledScript.run();
+			compiledScript.run();
 
-		if (outputNames == null) {
-			return null;
+			if (outputNames == null) {
+				return null;
+			}
+
+			Map<String, Object> outputObjects = new HashMap<>();
+
+			for (String outputName : outputNames) {
+				outputObjects.put(outputName, binding.getVariable(outputName));
+			}
+
+			return outputObjects;
 		}
+		catch (GroovyRuntimeException groovyRuntimeException1) {
+			GroovyRuntimeException groovyRuntimeException2 =
+				new GroovyRuntimeException(
+					groovyRuntimeException1.getMessage());
 
-		Map<String, Object> outputObjects = new HashMap<>();
+			groovyRuntimeException2.setStackTrace(
+				groovyRuntimeException1.getStackTrace());
 
-		for (String outputName : outputNames) {
-			outputObjects.put(outputName, binding.getVariable(outputName));
+			throw groovyRuntimeException2;
 		}
-
-		return outputObjects;
 	}
 
 	@Override

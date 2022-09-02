@@ -27,13 +27,9 @@ export default function TabCollection({
 	initialOpen,
 	isSearchResult,
 }) {
-	const [
-		open,
-		setOpen,
-	] = useSessionState(
+	const [open, setOpen] = useSessionState(
 		`${config.portletNamespace}_fragment-collection_${collection.collectionId}_open`,
-		initialOpen,
-		{persistEnabled: Liferay.FeatureFlags['LPS-153452']}
+		initialOpen
 	);
 
 	const handleOpen = (nextOpen) => {

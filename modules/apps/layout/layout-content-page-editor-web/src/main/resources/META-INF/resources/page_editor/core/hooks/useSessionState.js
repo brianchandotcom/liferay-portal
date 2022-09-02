@@ -16,24 +16,18 @@ import {useCallback, useState} from 'react';
 
 import isNullOrUndefined from '../../app/utils/isNullOrUndefined';
 
-export function useSessionState(
-	key,
-	defaultValue = undefined,
-	{persistEnabled = true} = {}
-) {
+export function useSessionState(key, defaultValue = undefined) {
 	const [state, setState] = useState(() => {
 		const persistedState = window.sessionStorage.getItem(key);
 
-		if (!isNullOrUndefined(persistedState)) {
-			try {
-				const deserializedValue = JSON.parse(persistedState);
+		try {
+			const deserializedValue = JSON.parse(persistedState);
 
-				if (!isNullOrUndefined(deserializedValue)) {
-					return deserializedValue;
-				}
+			if (!isNullOrUndefined(deserializedValue)) {
+				return deserializedValue;
 			}
-			catch (_error) {}
 		}
+		catch (_error) {}
 
 		return defaultValue;
 	});
@@ -42,19 +36,14 @@ export function useSessionState(
 		(nextState) => {
 			setState(nextState);
 
-			if (persistEnabled) {
-				if (isNullOrUndefined(nextState)) {
-					window.sessionStorage.removeItem(key);
-				}
-				else {
-					window.sessionStorage.setItem(
-						key,
-						JSON.stringify(nextState)
-					);
-				}
+			if (isNullOrUndefined(nextState)) {
+				window.sessionStorage.removeItem(key);
+			}
+			else {
+				window.sessionStorage.setItem(key, JSON.stringify(nextState));
 			}
 		},
-		[key, persistEnabled]
+		[key]
 	);
 
 	return [state, updateState];

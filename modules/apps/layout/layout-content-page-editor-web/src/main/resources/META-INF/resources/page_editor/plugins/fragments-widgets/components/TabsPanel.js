@@ -54,10 +54,7 @@ export default function TabsPanel({
 
 	const [scrollPosition, setScrollPosition] = useSessionState(
 		`${config.portletNamespace}_fragments-sidebar_${activeTabId}_scroll-position`,
-		0,
-		{
-			persistEnabled: Liferay.FeatureFlags['LPS-153452'],
-		}
+		0
 	);
 
 	const scrollPositionRef = useRef(scrollPosition);

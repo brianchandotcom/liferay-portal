@@ -59,7 +59,7 @@ definition {
 		task ("Open Page Audit panel and assert the progress bar") {
 			PageAudit.openPageAuditSidebar();
 
-			ClickNoError(
+			Click.javaScriptClick(
 				key_title = "Relaunch",
 				locator1 = "Button#ANY_TITLE");
 

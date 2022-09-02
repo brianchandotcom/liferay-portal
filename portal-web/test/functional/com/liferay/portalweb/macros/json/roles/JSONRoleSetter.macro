@@ -54,8 +54,11 @@ definition {
 		else if ("${roleType}" == "organization") {
 			var type = "3";
 		}
+		else if ("${roleType}" == "account") {
+			var type = "6";
+		}
 		else {
-			fail("Invalid 'roleType', '${roleType}' must be 'regular/site/organization'.");
+			fail("Invalid 'roleType', '${roleType}' must be 'regular/site/organization/account'.");
 		}
 
 		return "${type}";

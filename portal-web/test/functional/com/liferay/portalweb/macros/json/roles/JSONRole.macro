@@ -30,6 +30,21 @@ definition {
 			type = "${type}");
 	}
 
+	macro addSharedAccountRole {
+		Variables.assertDefined(parameterList = "${roleTitle}");
+
+		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = "${roleDescription}");
+		var name = JSONRoleSetter.setName(name = "${roleTitle}");
+		var titleMap = JSONRoleSetter.setTitleMap(title = "${roleKey}");
+		var type = JSONRoleSetter.setType(roleType = "account");
+
+		JSONRoleAPI._addAccountRole(
+			descriptionMap = "${descriptionMap}",
+			name = "${name}",
+			titleMap = "${titleMap}",
+			type = "${type}");
+	}
+
 	macro addSiteRole {
 		Variables.assertDefined(parameterList = "${roleTitle}");
 

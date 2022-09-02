@@ -85,7 +85,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		String assetTagName = ParamUtil.getString(portletRequest, "tag");
 
 		if ((assetCategoryId > 0) || Validator.isNotNull(assetTagName)) {
-			return "/search/view_prp_articles.jsp";
+			return "/search/view_prp_kb_articles.jsp";
 		}
 
 		return "/search/view.jsp";

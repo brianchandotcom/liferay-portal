@@ -107,15 +107,8 @@ public class SiteNavigationMenuStagedModelDataHandler
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.site.navigation.model.SiteNavigationMenu)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.site.navigation.model.SiteNavigationMenu)"
 	)
-	protected void setStagedModelRepository(
-		StagedModelRepository<SiteNavigationMenu> stagedModelRepository) {
-
-		_stagedModelRepository = stagedModelRepository;
-	}
-
 	private StagedModelRepository<SiteNavigationMenu> _stagedModelRepository;
 
 }

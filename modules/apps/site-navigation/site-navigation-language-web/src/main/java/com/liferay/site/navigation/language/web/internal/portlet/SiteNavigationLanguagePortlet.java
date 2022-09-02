@@ -70,20 +70,12 @@ public class SiteNavigationLanguagePortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletDisplayTemplate(
-		PortletDisplayTemplate portletDisplayTemplate) {
-
-		_portletDisplayTemplate = portletDisplayTemplate;
-	}
+	@Reference
+	private PortletDisplayTemplate _portletDisplayTemplate;
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.site.navigation.language.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))",
-		unbind = "-"
+		target = "(&(release.bundle.symbolic.name=com.liferay.site.navigation.language.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
 	)
-	protected void setRelease(Release release) {
-	}
-
-	private PortletDisplayTemplate _portletDisplayTemplate;
+	private Release _release;
 
 }

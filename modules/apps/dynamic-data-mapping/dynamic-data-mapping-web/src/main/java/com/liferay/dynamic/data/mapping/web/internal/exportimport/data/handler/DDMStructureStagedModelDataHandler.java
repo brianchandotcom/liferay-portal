@@ -465,32 +465,6 @@ public class DDMStructureStagedModelDataHandler
 		return new String[] {DEDataDefinitionFieldLink.class.getName()};
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureLayoutLocalService(
-		DDMStructureLayoutLocalService ddmStructureLayoutLocalService) {
-
-		_ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureVersionLocalService(
-		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
-
-		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	@Reference
 	protected DDMPermissionSupport ddmPermissionSupport;
 
@@ -846,8 +820,13 @@ public class DDMStructureStagedModelDataHandler
 	private DDMDataProviderInstanceLocalService
 		_ddmDataProviderInstanceLocalService;
 
+	@Reference
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
 	@Reference
@@ -866,6 +845,7 @@ public class DDMStructureStagedModelDataHandler
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

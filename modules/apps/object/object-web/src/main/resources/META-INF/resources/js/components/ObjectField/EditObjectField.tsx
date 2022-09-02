@@ -34,8 +34,9 @@ import {
 } from '../ModalAddFilter';
 import {AttachmentProperties} from './AttachmentProperties';
 import {MaxLengthProperties} from './MaxLengthProperties';
-import ObjectFieldFormBase, {useObjectFieldForm} from './ObjectFieldFormBase';
+import ObjectFieldFormBase from './ObjectFieldFormBase';
 import {SearchableContainer} from './SearchableContainer';
+import {useObjectFieldForm} from './useObjectFieldForm';
 
 import './EditObjectField.scss';
 

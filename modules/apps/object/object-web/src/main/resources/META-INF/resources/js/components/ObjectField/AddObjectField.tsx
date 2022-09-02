@@ -21,7 +21,8 @@ import {API, Input} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {toCamelCase} from '../../utils/string';
-import ObjectFieldFormBase, {useObjectFieldForm} from './ObjectFieldFormBase';
+import ObjectFieldFormBase from './ObjectFieldFormBase';
+import {useObjectFieldForm} from './useObjectFieldForm';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 

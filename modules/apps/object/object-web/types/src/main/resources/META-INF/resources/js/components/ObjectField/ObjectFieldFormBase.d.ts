@@ -13,7 +13,7 @@
  */
 
 import {FormError} from '@liferay/object-js-components-web';
-import React, {ChangeEventHandler, ReactNode} from 'react';
+import {ChangeEventHandler, ReactNode} from 'react';
 import './ObjectFieldFormBase.scss';
 export default function ObjectFieldFormBase({
 	children,
@@ -29,41 +29,6 @@ export default function ObjectFieldFormBase({
 	onRelationshipChange,
 	setValues,
 }: IProps): JSX.Element;
-export declare function useObjectFieldForm({
-	forbiddenChars,
-	forbiddenLastChars,
-	forbiddenNames,
-	initialValues,
-	onSubmit,
-}: IUseObjectFieldForm): {
-	errors: FormError<
-		ObjectField & {
-			function: unknown;
-			maxLength: unknown;
-			acceptedFileExtensions: unknown;
-			fileSource: unknown;
-			filters: unknown;
-			maximumFileSize: unknown;
-			objectFieldName: unknown;
-			objectRelationshipName: unknown;
-			showCounter: unknown;
-			showFilesInDocumentsAndMedia: unknown;
-			stateFlow: unknown;
-			storageDLFolderPath: unknown;
-		}
-	>;
-	handleChange: React.ChangeEventHandler<HTMLInputElement>;
-	handleSubmit: React.FormEventHandler<HTMLFormElement>;
-	setValues: (values: Partial<ObjectField>) => void;
-	values: Partial<ObjectField>;
-};
-interface IUseObjectFieldForm {
-	forbiddenChars?: string[];
-	forbiddenLastChars?: string[];
-	forbiddenNames?: string[];
-	initialValues: Partial<ObjectField>;
-	onSubmit: (field: ObjectField) => void;
-}
 interface IProps {
 	children?: ReactNode;
 	disabled?: boolean;

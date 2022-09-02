@@ -21,7 +21,7 @@ import {
 import {openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {useObjectFieldForm} from './ObjectField/ObjectFieldFormBase';
+import {useObjectFieldForm} from './ObjectField/useObjectFieldForm';
 import StateDefinition from './StateManager/StateDefinition';
 
 export default function EditObjectStateField({objectField, readOnly}: IProps) {

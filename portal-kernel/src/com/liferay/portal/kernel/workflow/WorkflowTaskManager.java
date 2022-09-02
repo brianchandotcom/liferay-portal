@@ -86,7 +86,7 @@ public interface WorkflowTaskManager {
 		throws WorkflowException;
 
 	public List<WorkflowTransition> getNextWorkflowTransitions(
-		long workflowTaskId)
+			long workflowTaskId)
 		throws WorkflowException;
 
 	public default List<User> getNotifiableUsers(long workflowTaskId)

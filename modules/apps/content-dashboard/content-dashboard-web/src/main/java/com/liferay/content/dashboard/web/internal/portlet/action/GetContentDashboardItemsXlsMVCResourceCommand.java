@@ -26,6 +26,7 @@ import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearc
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -43,8 +44,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 
@@ -77,13 +78,16 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Yurena Cabrera
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration",
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentDashboardPortletKeys.CONTENT_DASHBOARD_ADMIN,
@@ -93,6 +97,15 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class GetContentDashboardItemsXlsMVCResourceCommand
 	extends BaseMVCResourceCommand {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_defaultSearchResultPermissionFilterConfiguration =
+			ConfigurableUtil.createConfigurable(
+				DefaultSearchResultPermissionFilterConfiguration.class,
+				properties);
+	}
 
 	@Override
 	protected void doServeResource(
@@ -239,8 +252,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		ResourceRequest resourceRequest, Locale locale,
 		WorkbookBuilder workbookBuilder) {
 
-		int indexSearchLimit = GetterUtil.getInteger(
-			_props.get(PropsKeys.INDEX_SEARCH_LIMIT));
+		int indexSearchLimit =
+			_defaultSearchResultPermissionFilterConfiguration.
+				searchQueryResultWindowLimit();
 		int start = 0;
 
 		while (true) {
@@ -368,6 +382,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 	@Reference
 	private ContentDashboardSearchRequestBuilderFactory
 		_contentDashboardSearchRequestBuilderFactory;
+
+	private volatile DefaultSearchResultPermissionFilterConfiguration
+		_defaultSearchResultPermissionFilterConfiguration;
 
 	@Reference
 	private InfoSearchClassMapperTracker _infoSearchClassMapperTracker;

@@ -136,13 +136,15 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
+		mockHttpServletRequest.setParameter("scopeId", String.valueOf(groupId));
+
 		serviceContext.setRequest(mockHttpServletRequest);
 
 		try {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 			MockLiferayResourceRequest mockLiferayResourceRequest =
-				new MockLiferayResourceRequest();
+				new MockLiferayResourceRequest(mockHttpServletRequest);
 
 			mockLiferayResourceRequest.setAttribute(
 				WebKeys.THEME_DISPLAY, themeDisplay);

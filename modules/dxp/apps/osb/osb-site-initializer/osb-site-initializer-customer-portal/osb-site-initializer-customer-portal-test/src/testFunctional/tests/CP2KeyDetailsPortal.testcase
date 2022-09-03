@@ -1,0 +1,86 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+    @description = "Automation ID: LPS-150668 | Test Summary: Verify if when user clicks on the activation key, a pop-up shows up"
+    @priority = "5"
+    test CanViewThePopupOnTheActivationKey {
+        // TODO LPS-150668 CanViewThePopupOnTheActivationKey pending implementation
+    }
+
+    @description = "Automation ID: LPS-150669 | Test Summary: Verify if header Activation Key Details is present"
+    @priority = "3"
+    test CanViewHeaderActivationKeyDetails {
+        // TODO LPS-150669 CanViewHeaderActivationKeyDetails pending implementation
+    }
+
+    @description = "Automation ID: LPS-150670 | Test Summary: Verify if the elements of Environment group are present. (Product - Version - Environment Type - Subscription vs Complimentary)"
+    @priority = "5"
+    test CanViewElementsOfEnvironment {
+        // TODO LPS-150670 CanViewElementsOfEnvironment pending implementation
+    }
+
+    @description = "Automation ID: LPS-150672 | Test Summary: Verify if the elements of Server group are present. (Key Type: On Premise - Host Name - IP Address - MAC Address)"
+    @priority = "5"
+    test CanViewElementsOfServerGroup {
+        // TODO LPS-150672 CanViewElementsOfServerGroup pending implementation
+    }
+
+    @description = "Automation ID: LPS-150673 | Test Summary: Verify the elements of Status column. (Start Date - Expiration Date - Status)"
+    @priority = "5"
+    test CanViewElementsOfStatusColumn {
+        // TODO LPS-150673 CanViewElementsOfStatusColumn pending implementation
+    }
+
+    @description = "Automation ID: LPS-150675 | Test Summary: Verify the copy button next to the following elements. (Host Name - IP Address - MAC Address)"
+    @priority = "5"
+    test TheCopyButtonWorks {
+        // TODO LPS-150675 TheCopyButtonWorks pending implementation
+    }
+
+    @description = "Automation ID: LPS-150676 | Test Summary: Verify the success message after downloading the activation key"
+    @priority = "3"
+    test CanViewSuccessMessage {
+        // TODO LPS-150676 CanViewSuccessMessage pending implementation
+    }
+
+    @description = "Automation ID: LPS-150677 | Test Summary: Verify if the Close button works"
+    @priority = "4"
+    test TheCancelButtonWorks {
+        // TODO LPS-150677 TheCancelButtonWorks pending implementation
+    }
+
+}

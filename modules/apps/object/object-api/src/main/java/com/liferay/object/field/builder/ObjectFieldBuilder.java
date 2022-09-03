@@ -126,7 +126,7 @@ public class ObjectFieldBuilder {
 	}
 
 	public ObjectFieldBuilder relationshipType(String relationshipType) {
-		_objectField.setRelationshipType(relationshipType);
+		objectField.setRelationshipType(relationshipType);
 
 		return this;
 	}

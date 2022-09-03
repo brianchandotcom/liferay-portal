@@ -35,23 +35,37 @@ definition {
 		}
 	}
 
-    @description = "Automation ID: LPS-150668 | Test Summary: Verify if when user clicks on the activation key, a pop-up shows up"
-    @priority = "5"
-    test CanViewThePopupOnTheActivationKey {
-        // TODO LPS-150668 CanViewThePopupOnTheActivationKey pending implementation
-    }
-
-    @description = "Automation ID: LPS-150669 | Test Summary: Verify if header Activation Key Details is present"
-    @priority = "3"
-    test CanViewHeaderActivationKeyDetails {
-        // TODO LPS-150669 CanViewHeaderActivationKeyDetails pending implementation
-    }
-
     @description = "Automation ID: LPS-150670 | Test Summary: Verify if the elements of Environment group are present. (Product - Version - Environment Type - Subscription vs Complimentary)"
     @priority = "5"
     test CanViewElementsOfEnvironment {
-        // TODO LPS-150670 CanViewElementsOfEnvironment pending implementation
+        task ("Given a user signs in on OKTA to update Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+            ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+        task ("When a user selects a project and an individual key") {
+            CustomerPortal.enterOnProject(title = "NASA ICE");
+
+            CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+
+            CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
+        }
+
+        task ("Then the modal will show all elements of the Environment group") {
+            CP2ActivationKeys.assertKeyDetailsEnvironmentElements(
+				product = "Portal",
+				version = "6.2 EE",
+				environmentType = "Production",
+				subscriptionType = "Subscription",
+				instanceSize = "2");
+        }
     }
+
 
     @description = "Automation ID: LPS-150672 | Test Summary: Verify if the elements of Server group are present. (Key Type: On Premise - Host Name - IP Address - MAC Address)"
     @priority = "5"

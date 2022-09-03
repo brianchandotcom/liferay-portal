@@ -86,13 +86,19 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 		System.setProperty("user.name", "test");
 
 		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			serviceContext.setCreateDate(new Date(1630509375000L));
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
 			Date date = new Date(150000);
 
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 				"Site", TestPropsValues.getUserId(), _group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "fileName.pdf",
-				"application/pdf", new byte[0], date, date,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+				"application/pdf", new byte[0], date, date, serviceContext);
 
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 

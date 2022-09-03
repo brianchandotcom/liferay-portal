@@ -35,42 +35,41 @@ definition {
 		}
 	}
 
-    @description = "Automation ID: LPS-150670 | Test Summary: Verify if the elements of Environment group are present. (Product - Version - Environment Type - Subscription vs Complimentary)"
-    @priority = "5"
-    test CanViewElementsOfEnvironment {
-        task ("Given a user signs in on OKTA to update Customer Portal") {
+	@description = "Automation ID: LPS-150670 | Test Summary: Verify if the elements of Environment group are present. (Product - Version - Environment Type - Subscription vs Complimentary)"
+	@priority = "5"
+	test CanViewElementsOfEnvironment {
+		task ("Given a user signs in on OKTA to update Customer Portal") {
 			CustomerPortal.loginOktaToUpdateCP();
 
 			Navigator.openURL();
 
-            ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
-        task ("When a user selects a project and an individual key") {
-            CustomerPortal.enterOnProject(title = "NASA ICE");
+		task ("When a user selects a project and an individual key") {
+			CustomerPortal.enterOnProject(title = "NASA ICE");
 
-            CP2NavigationMenu.goToProductActivation();
+			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = "Portal");
 
-            CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
-        }
+			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
+		}
 
-        task ("Then the modal will show all elements of the Environment group") {
-            CP2ActivationKeys.assertKeyDetailsEnvironmentElements(
-				product = "Portal",
-				version = "6.2 EE",
+		task ("Then the modal will show all elements of the Environment group") {
+			CP2ActivationKeys.assertKeyDetailsEnvironmentElements(
 				environmentType = "Production",
+				instanceSize = "2",
+				product = "Portal",
 				subscriptionType = "Subscription",
-				instanceSize = "2");
-        }
-    }
+				version = "6.2 EE");
+		}
+	}
 
-
-    @description = "Automation ID: LPS-150672 | Test Summary: Verify if the elements of Server group are present. (Key Type: On Premise - Host Name - IP Address - MAC Address)"
-    @priority = "5"
-    test CanViewElementsOfServerGroup {
-        task ("Given a user signs in on OKTA to update Customer Portal") {
+	@description = "Automation ID: LPS-150672 | Test Summary: Verify if the elements of Server group are present. (Key Type: On Premise - Host Name - IP Address - MAC Address)"
+	@priority = "5"
+	test CanViewElementsOfServerGroup {
+		task ("Given a user signs in on OKTA to update Customer Portal") {
 			CustomerPortal.loginOktaToUpdateCP();
 
 			Navigator.openURL();
@@ -90,17 +89,17 @@ definition {
 
 		task ("Then the modal will show all elements of the Server group") {
 			CP2ActivationKeys.assertKeyDetailsServerElements(
-				keyType = "On-Premise",
 				hostName = "Redacted",
 				ipAddress = "Redacted",
+				keyType = "On-Premise",
 				macAddress = "Redacted");
 		}
-    }
+	}
 
-    @description = "Automation ID: LPS-150673 | Test Summary: Verify the elements of Status column. (Start Date - Expiration Date - Status)"
-    @priority = "5"
-    test CanViewElementsOfStatusColumn {
-        task ("Given a user signs in on OKTA to update Customer Portal") {
+	@description = "Automation ID: LPS-150673 | Test Summary: Verify the elements of Status column. (Start Date - Expiration Date - Status)"
+	@priority = "5"
+	test CanViewElementsOfStatusColumn {
+		task ("Given a user signs in on OKTA to update Customer Portal") {
 			CustomerPortal.loginOktaToUpdateCP();
 
 			Navigator.openURL();
@@ -120,16 +119,16 @@ definition {
 
 		task ("Then the modal will show all elements of the Activation Status group") {
 			CP2ActivationKeys.assertKeyDetailsStatusElements(
-				status = "Activated",
+				expirationDate = "Jun 7, 2023",
 				startDate = "Jun 7, 2022",
-				expirationDate = "Jun 7, 2023");
+				status = "Activated");
 		}
-    }
+	}
 
-    @description = "Automation ID: LPS-150676 | Test Summary: Verify the success message after downloading the activation key"
-    @priority = "5"
-    test CanViewSuccessMessage {
-        task ("Given a user signs in on OKTA to update Customer Portal") {
+	@description = "Automation ID: LPS-150676 | Test Summary: Verify the success message after downloading the activation key"
+	@priority = "5"
+	test CanViewSuccessMessage {
+		task ("Given a user signs in on OKTA to update Customer Portal") {
 			CustomerPortal.loginOktaToUpdateCP();
 
 			Navigator.openURL();
@@ -154,12 +153,12 @@ definition {
 				Alert.viewSuccessMessage();
 			}
 		}
-    }
+	}
 
-    @description = "Automation ID: LPS-150677 | Test Summary: Verify if the Close button works"
-    @priority = "4"
-    test TheCloseButtonWorks {
-        task ("Given a user signs in on OKTA to update Customer Portal") {
+	@description = "Automation ID: LPS-150677 | Test Summary: Verify if the Close button works"
+	@priority = "4"
+	test TheCloseButtonWorks {
+		task ("Given a user signs in on OKTA to update Customer Portal") {
 			CustomerPortal.loginOktaToUpdateCP();
 
 			Navigator.openURL();
@@ -184,6 +183,6 @@ definition {
 				key_environmentName = "Redacted",
 				locator1 = "CP2ActivationKeys#KEY_DETAILS_MODAL");
 		}
-    }
+	}
 
 }

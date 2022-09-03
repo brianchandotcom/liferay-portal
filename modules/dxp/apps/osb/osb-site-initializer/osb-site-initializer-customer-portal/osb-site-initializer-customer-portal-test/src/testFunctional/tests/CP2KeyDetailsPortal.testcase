@@ -70,7 +70,31 @@ definition {
     @description = "Automation ID: LPS-150672 | Test Summary: Verify if the elements of Server group are present. (Key Type: On Premise - Host Name - IP Address - MAC Address)"
     @priority = "5"
     test CanViewElementsOfServerGroup {
-        // TODO LPS-150672 CanViewElementsOfServerGroup pending implementation
+        task ("Given a user signs in on OKTA to update Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("When a user selects a project and an individual key") {
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+
+			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
+		}
+
+		task ("Then the modal will show all elements of the Server group") {
+			CP2ActivationKeys.assertKeyDetailsServerElements(
+				keyType = "On-Premise",
+				hostName = "Redacted",
+				ipAddress = "Redacted",
+				macAddress = "Redacted");
+		}
     }
 
     @description = "Automation ID: LPS-150673 | Test Summary: Verify the elements of Status column. (Start Date - Expiration Date - Status)"

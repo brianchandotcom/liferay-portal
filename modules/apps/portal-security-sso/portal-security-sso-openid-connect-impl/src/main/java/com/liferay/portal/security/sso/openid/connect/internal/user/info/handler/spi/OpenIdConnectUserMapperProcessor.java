@@ -22,7 +22,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 public interface OpenIdConnectUserMapperProcessor {
 
 	public long generateUser(
-			long companyId, ServiceContext serviceContext, String userInfoJSON,
+			long companyId, long[] propertyRoleIds,
+			ServiceContext serviceContext, String userInfoJSON,
 			String userInfoMapperJSON)
 		throws Exception;
 

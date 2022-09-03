@@ -40,8 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 public class OpenIdConnectUserInfoProcessor {
 
 	public long processUserInfo(
-			long companyId, ServiceContext serviceContext, String userInfoJSON,
-			String userInfoMapperJSON)
+			long companyId, String issuer, ServiceContext serviceContext,
+			String userInfoJSON, String userInfoMapperJSON)
 		throws PortalException {
 
 		long userId = 0;
@@ -58,8 +58,12 @@ public class OpenIdConnectUserInfoProcessor {
 				return userId;
 			}
 
+			// TODO: Remove propertyRoleIds from signature once LXC migrates to
+			//  use UserInfoMapper Configuration.
+
 			userId = _openIdConnectUserMapperProcessor.generateUser(
-				companyId, serviceContext, userInfoJSON, userInfoMapperJSON);
+				companyId, _getRoleIds(companyId, issuer), serviceContext,
+				userInfoJSON, userInfoMapperJSON);
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);

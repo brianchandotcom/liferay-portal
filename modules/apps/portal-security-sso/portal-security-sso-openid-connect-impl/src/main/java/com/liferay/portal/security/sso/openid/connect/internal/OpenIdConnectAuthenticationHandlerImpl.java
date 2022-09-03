@@ -147,6 +147,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 		long userId = _openIdConnectUserInfoProcessor.processUserInfo(
 			_portal.getCompanyId(httpServletRequest),
+			String.valueOf(oidcProviderMetadata.getIssuer()),
 			ServiceContextFactory.getInstance(httpServletRequest), userInfoJSON,
 			oAuthClientEntry.getOIDCUserInfoMapperJSON());
 

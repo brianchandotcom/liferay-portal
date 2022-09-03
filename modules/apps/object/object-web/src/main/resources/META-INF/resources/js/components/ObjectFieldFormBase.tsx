@@ -229,7 +229,11 @@ export default function ObjectFieldFormBase({
 	};
 
 	useEffect(() => {
-		if (values.relationshipType === 'oneToMany' && values.relationshipId) {
+		if (
+			Liferay.FeatureFlags['LPS-158962'] &&
+			values.relationshipType === 'oneToMany' &&
+			values.relationshipId
+		) {
 			const makeFetch = async () => {
 				const relationshipData = await API.getRelationship<
 					TObjectRelationship
@@ -246,6 +250,7 @@ export default function ObjectFieldFormBase({
 
 	const getMandatoryToggleState = () => {
 		if (
+			Liferay.FeatureFlags['LPS-158962'] &&
 			oneToManyRelationship &&
 			oneToManyRelationship.deletionType !== 'disassociate'
 		) {

@@ -127,9 +127,33 @@ definition {
     }
 
     @description = "Automation ID: LPS-150676 | Test Summary: Verify the success message after downloading the activation key"
-    @priority = "3"
+    @priority = "5"
     test CanViewSuccessMessage {
-        // TODO LPS-150676 CanViewSuccessMessage pending implementation
+        task ("Given a user signs in on OKTA to update Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("When a user selects a project and an individual key") {
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+
+			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
+		}
+
+		task ("Then clicking the copy icon for each value will save the value to the clipboard") {
+			for (var serverValue : list "HOST_NAME,IP_ADDRESS,MAC_ADDRESS") {
+				Click(locator1 = "CP2ActivationKeys#COPY_ICON_${serverValue}");
+
+				Alert.viewSuccessMessage();
+			}
+		}
     }
 
     @description = "Automation ID: LPS-150677 | Test Summary: Verify if the Close button works"

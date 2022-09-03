@@ -109,9 +109,7 @@ public class DefaultObjectEntryManagerImplTest {
 	public void setUp() throws Exception {
 		_objectDefinition1 = _createObjectDefinition(
 			Arrays.asList(
-				new TextObjectFieldBuilder().userId(
-					_user.getUserId()
-				).labelMap(
+				new TextObjectFieldBuilder().labelMap(
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString())
 				).objectFieldSettings(
@@ -143,9 +141,7 @@ public class DefaultObjectEntryManagerImplTest {
 							"fileSource", "documentsAndMedia"),
 						_createObjectFieldSetting("maximumFileSize", "100"))
 				).build(),
-				new PicklistObjectFieldBuilder().userId(
-					_user.getUserId()
-				).labelMap(
+				new PicklistObjectFieldBuilder().labelMap(
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString())
 				).listTypeDefinitionId(
@@ -155,9 +151,7 @@ public class DefaultObjectEntryManagerImplTest {
 				).name(
 					"picklistObjectFieldName"
 				).build(),
-				new RichTextObjectFieldBuilder().userId(
-					_user.getUserId()
-				).labelMap(
+				new RichTextObjectFieldBuilder().labelMap(
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString())
 				).objectFieldSettings(
@@ -165,9 +159,7 @@ public class DefaultObjectEntryManagerImplTest {
 				).name(
 					"richTextObjectFieldName"
 				).build(),
-				new TextObjectFieldBuilder().userId(
-					_user.getUserId()
-				).labelMap(
+				new TextObjectFieldBuilder().labelMap(
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString())
 				).objectFieldSettings(
@@ -393,16 +385,14 @@ public class DefaultObjectEntryManagerImplTest {
 			LocaleUtil.getDefault(), uriInfo, _user);
 	}
 
-	private ObjectEntry _testAddObjectEntry(ObjectEntry newObjectEntry)
+	private void _testAddObjectEntry(ObjectEntry newObjectEntry)
 		throws Exception {
 
-		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
-			_dtoConverterContext, _objectDefinition2, newObjectEntry,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		_assertEquals(newObjectEntry, objectEntry);
-
-		return objectEntry;
+		_assertEquals(
+			newObjectEntry,
+			_objectEntryManager.addObjectEntry(
+				_dtoConverterContext, _objectDefinition2, newObjectEntry,
+				ObjectDefinitionConstants.SCOPE_COMPANY));
 	}
 
 	private static DTOConverterContext _dtoConverterContext;

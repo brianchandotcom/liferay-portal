@@ -158,8 +158,32 @@ definition {
 
     @description = "Automation ID: LPS-150677 | Test Summary: Verify if the Close button works"
     @priority = "4"
-    test TheCancelButtonWorks {
-        // TODO LPS-150677 TheCancelButtonWorks pending implementation
+    test TheCloseButtonWorks {
+        task ("Given a user signs in on OKTA to update Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+		}
+
+		task ("When a user selects a project and clicks on a key") {
+			CustomerPortal.enterOnProject(title = "NASA ICE");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+
+			CP2ActivationKeys.viewActivationKeyDetails(key_environmentName = "Redacted");
+		}
+
+		task ("Then the user will have the option to close the pop up modal") {
+			Button.click(button = "Close");
+
+			AssertElementNotPresent(
+				key_environmentName = "Redacted",
+				locator1 = "CP2ActivationKeys#KEY_DETAILS_MODAL");
+		}
     }
 
 }

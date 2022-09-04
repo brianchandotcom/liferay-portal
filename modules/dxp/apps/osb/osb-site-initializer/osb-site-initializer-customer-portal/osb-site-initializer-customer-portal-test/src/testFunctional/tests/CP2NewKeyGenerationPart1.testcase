@@ -92,6 +92,48 @@ definition {
         }
     }
 
+	@description = "LPS-149707 - Verify a message with valid activation dates appears after a subscription is selected"
+    @priority = "3"
+    test IfMessageAppearsAfterSelectSubscription {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example Solutions account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "Test Account Solutions");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
+
+		task ("And when the user goes to generate a new key and selects a Key Type that does not have permanent licenses") {
+
+            CP2ActivationKeys.generateNewKey();
+
+			CP2ActivationKeys.selectKeyType(key_option = "Production (Virtual Cluster)");
+		}
+
+        task ("Then a message will appear after the user selects a subscription with the active dates") {
+		    var key_position = "1";
+			var activeDate = selenium.getText("CP2ActivationKeys#SUBSCRIPTION_LENGTH");
+
+			CP2ActivationKeys.selectSubscription(position = "${key_position}");
+
+			AssertTextEquals(
+				locator1 = "Message#INFO",
+				value1 = "Activation Keys will be valid ${activeDate}");
+        }
+    }
+
 	@description = "LPS-149706 - Verify if a subscription has 0 keys then the option is disabled."
     @priority = "5"
     test IfNoAvailableKeysAreDisplayedOnSubscriptions {
@@ -181,8 +223,8 @@ definition {
 
         task ("Then the subscription options will display a start and end date") {
             AssertTextEquals(
-				index = "1",
-				locator1 = "CP2ActivationKeys#SUBSCRIPTION_LENGTH_BY_INDEX",
+				ley_position = "1",
+				locator1 = "CP2ActivationKeys#SUBSCRIPTION_LENGTH",
 				value1 = "Aug 2, 2022 - Jul 3, 2023");
         }
     }

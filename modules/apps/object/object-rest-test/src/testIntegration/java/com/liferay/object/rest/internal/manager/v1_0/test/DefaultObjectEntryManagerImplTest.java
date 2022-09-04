@@ -36,6 +36,7 @@ import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -43,6 +44,8 @@ import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -52,20 +55,26 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlParserUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -100,8 +109,11 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_companyId = TestPropsValues.getCompanyId();
 		_group = GroupTestUtil.addGroup();
-
+		_simpleDTOConverterContext = new DefaultDTOConverterContext(
+			false, Collections.emptyMap(), _dtoConverterRegistry, null,
+			LocaleUtil.getDefault(), null, _user);
 		_user = TestPropsValues.getUser();
 	}
 
@@ -146,6 +158,8 @@ public class DefaultObjectEntryManagerImplTest {
 						RandomTestUtil.randomString())
 				).listTypeDefinitionId(
 					_listTypeDefinition.getListTypeDefinitionId()
+				).indexed(
+					true
 				).objectFieldSettings(
 					Collections.emptyList()
 				).name(
@@ -167,6 +181,14 @@ public class DefaultObjectEntryManagerImplTest {
 				).name(
 					"textObjectFieldName"
 				).build()));
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			_user.getUserId(), _objectDefinition1.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"oneToManyRelationshipName",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	@Test
@@ -185,7 +207,9 @@ public class DefaultObjectEntryManagerImplTest {
 							_objectDefinition1.getPKObjectFieldName(),
 						_getOneToManyRelationshipFieldValue()
 					).put(
-						"richTextObjectFieldName", "<strong>content</strong>"
+						"richTextObjectFieldName",
+						StringBundler.concat(
+							"<i>", RandomTestUtil.randomString(), "</i>")
 					).put(
 						"textObjectFieldName", RandomTestUtil.randomString()
 					).build();
@@ -193,61 +217,277 @@ public class DefaultObjectEntryManagerImplTest {
 			});
 	}
 
-	private void _assertEquals(
-			ObjectEntry objectEntry1, ObjectEntry objectEntry2)
+	@Test
+	public void testGetObjectEntries() throws Exception {
+		_testGetObjectEntries(Collections.emptyMap());
+
+		String oneToManyRelationshipFieldName =
+			"r_oneToManyRelationshipName_" +
+				_objectDefinition1.getPKObjectFieldName();
+
+		String picklistObjectFieldValue1 = _getPicklistObjectFieldValue();
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						oneToManyRelationshipFieldName,
+						_getOneToManyRelationshipFieldValue()
+					).put(
+						"picklistObjectFieldName", picklistObjectFieldValue1
+					).put(
+						"textObjectFieldName", "aaa"
+					).build();
+				}
+			});
+
+		String picklistObjectFieldValue2 = _getPicklistObjectFieldValue();
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						oneToManyRelationshipFieldName,
+						_getOneToManyRelationshipFieldValue()
+					).put(
+						"picklistObjectFieldName", picklistObjectFieldValue2
+					).put(
+						"textObjectFieldName", "aab"
+					).build();
+				}
+			});
+
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildInExpressionFilterString(
+					"picklistObjectFieldName", true, picklistObjectFieldValue1)
+			).build(),
+			objectEntry1);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildInExpressionFilterString("id", true, objectEntry1.getId())
+			).build(),
+			objectEntry1);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildInExpressionFilterString(
+					"picklistObjectFieldName", false, picklistObjectFieldValue1)
+			).build(),
+			objectEntry2);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildInExpressionFilterString(
+					oneToManyRelationshipFieldName.substring(
+						oneToManyRelationshipFieldName.lastIndexOf("_") + 1),
+					true,
+					MapUtil.getString(
+						objectEntry1.getProperties(),
+						oneToManyRelationshipFieldName))
+			).build(),
+			objectEntry1);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildInExpressionFilterString(
+					oneToManyRelationshipFieldName.substring(
+						oneToManyRelationshipFieldName.lastIndexOf("_") + 1),
+					false,
+					MapUtil.getString(
+						objectEntry1.getProperties(),
+						oneToManyRelationshipFieldName))
+			).build(),
+			objectEntry2);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildInExpressionFilterString(
+					"id", false, objectEntry1.getId())
+			).build(),
+			objectEntry2);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildLambdaExpressionFilterString(
+					"status", true, WorkflowConstants.STATUS_APPROVED)
+			).build(),
+			objectEntry1, objectEntry2);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildLambdaExpressionFilterString(
+					"status", false, WorkflowConstants.STATUS_APPROVED)
+			).build());
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"search", picklistObjectFieldValue1
+			).build(),
+			objectEntry1);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"search", picklistObjectFieldValue2
+			).build(),
+			objectEntry2);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "id:asc"
+			).build(),
+			objectEntry1, objectEntry2);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "id:desc"
+			).build(),
+			objectEntry2, objectEntry1);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "textObjectFieldName:asc"
+			).build(),
+			objectEntry1, objectEntry2);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "textObjectFieldName:desc"
+			).build(),
+			objectEntry2, objectEntry1);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "createDate:asc"
+			).build(),
+			objectEntry1, objectEntry2);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "createDate:desc"
+			).build(),
+			objectEntry2, objectEntry1);
+	}
+
+	private ObjectEntry _addObjectEntry(ObjectEntry objectEntry)
 		throws Exception {
 
-		Map<String, Object> objectEntry1Properties =
-			objectEntry1.getProperties();
-		Map<String, Object> objectEntry2Properties =
-			objectEntry2.getProperties();
+		return _objectEntryManager.addObjectEntry(
+			_dtoConverterContext, _objectDefinition2, objectEntry,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+	}
 
-		for (Map.Entry<String, Object> entry :
-				objectEntry1Properties.entrySet()) {
+	private void _assertEquals(
+			List<ObjectEntry> actualObjectEntries,
+			ObjectEntry... expectedObjectEntries)
+		throws Exception {
 
-			if (Objects.equals("attachmentObjectFieldName", entry.getKey())) {
-				FileEntry fileEntry = (FileEntry)objectEntry2Properties.get(
-					entry.getKey());
+		Assert.assertEquals(
+			actualObjectEntries.toString(), expectedObjectEntries.length,
+			actualObjectEntries.size());
 
-				Assert.assertEquals(entry.getValue(), fileEntry.getId());
-			}
-			else if (Objects.equals("picklistFieldName", entry.getKey())) {
-				ListEntry listEntry = (ListEntry)objectEntry2Properties.get(
-					entry.getKey());
+		for (int i = 0; i < expectedObjectEntries.length; i++) {
+			_assertEquals(actualObjectEntries.get(i), expectedObjectEntries[i]);
+		}
+	}
 
-				Assert.assertEquals(entry.getValue(), listEntry.getKey());
-			}
-			else if (Objects.equals(
-						entry.getKey(), "richTextObjectFieldName")) {
+	private void _assertEquals(
+			ObjectEntry actualObjectEntry, ObjectEntry expectedObjectEntry)
+		throws Exception {
+
+		Map<String, Object> actualObjectEntryProperties =
+			actualObjectEntry.getProperties();
+		Map<String, Object> expectedObjectEntryProperties =
+			expectedObjectEntry.getProperties();
+
+		for (Map.Entry<String, Object> expectedEntry :
+				expectedObjectEntryProperties.entrySet()) {
+
+			if (Objects.equals(
+					expectedEntry.getKey(), "attachmentObjectFieldName")) {
+
+				FileEntry fileEntry =
+					(FileEntry)actualObjectEntryProperties.get(
+						expectedEntry.getKey());
 
 				Assert.assertEquals(
-					"content",
-					String.valueOf(objectEntry2Properties.get(entry.getKey())));
+					expectedEntry.getValue(), fileEntry.getId());
 			}
 			else if (Objects.equals(
-						entry.getKey(),
+						expectedEntry.getKey(), "picklistFieldName")) {
+
+				ListEntry listEntry =
+					(ListEntry)actualObjectEntryProperties.get(
+						expectedEntry.getKey());
+
+				Assert.assertEquals(
+					expectedEntry.getValue(), listEntry.getKey());
+			}
+			else if (Objects.equals(
+						expectedEntry.getKey(), "richTextObjectFieldName")) {
+
+				Assert.assertEquals(
+					HtmlParserUtil.extractText(
+						String.valueOf(expectedEntry.getValue())),
+					String.valueOf(
+						actualObjectEntryProperties.get(
+							expectedEntry.getKey())));
+			}
+			else if (Objects.equals(
+						expectedEntry.getKey(),
 						"r_oneToManyRelationshipName_" +
 							_objectDefinition1.getPKObjectFieldName())) {
 
 				Assert.assertEquals(
-					entry.getValue(),
-					objectEntry2Properties.get(entry.getKey()));
+					expectedEntry.getValue(),
+					actualObjectEntryProperties.get(expectedEntry.getKey()));
 
 				_assertEquals(
+					(ObjectEntry)actualObjectEntryProperties.get(
+						StringUtil.replaceLast(
+							String.valueOf(expectedEntry.getKey()), "Id",
+							StringPool.BLANK)),
 					_getObjectEntry(
 						_objectDefinition1,
-						GetterUtil.getLong(entry.getValue())),
-					(ObjectEntry)objectEntry2Properties.get(
-						StringUtil.replaceLast(
-							String.valueOf(entry.getKey()), "Id",
-							StringPool.BLANK)));
+						GetterUtil.getLong(expectedEntry.getValue())));
 			}
-			else if (Objects.equals("textFieldName", entry.getKey())) {
+			else if (Objects.equals("textFieldName", expectedEntry.getKey())) {
 				Assert.assertEquals(
-					entry.getValue(),
-					objectEntry2Properties.get(entry.getKey()));
+					expectedEntry.getValue(),
+					actualObjectEntryProperties.get(expectedEntry.getKey()));
 			}
 		}
+	}
+
+	private String _buildInExpressionFilterString(
+		String fieldName, boolean includes, Object... values) {
+
+		List<String> valuesList = new ArrayList<>();
+
+		for (Object value : values) {
+			valuesList.add(StringUtil.quote(String.valueOf(value)));
+		}
+
+		String filterString = StringBundler.concat(
+			"(", fieldName, " in (",
+			StringUtil.merge(valuesList, StringPool.COMMA_AND_SPACE), "))");
+
+		if (includes) {
+			return filterString;
+		}
+
+		return StringBundler.concat("(not ", filterString, ")");
+	}
+
+	private String _buildLambdaExpressionFilterString(
+		String fieldName, boolean includes, int... values) {
+
+		List<String> valuesList = new ArrayList<>();
+
+		for (int value : values) {
+			valuesList.add(
+				StringBundler.concat(
+					"(x ", includes ? "eq " : "ne ", String.valueOf(value),
+					")"));
+		}
+
+		return StringBundler.concat(
+			"(", fieldName, "/any(x:",
+			StringUtil.merge(valuesList, includes ? " or " : " and "), "))");
 	}
 
 	private ObjectDefinition _createObjectDefinition(
@@ -303,26 +543,12 @@ public class DefaultObjectEntryManagerImplTest {
 		throws Exception {
 
 		return _objectEntryManager.getObjectEntry(
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), _dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			objectDefinition, objectEntryId);
+			_simpleDTOConverterContext, objectDefinition, objectEntryId);
 	}
 
 	private Long _getOneToManyRelationshipFieldValue() throws Exception {
-		_objectRelationshipLocalService.addObjectRelationship(
-			_user.getUserId(), _objectDefinition1.getObjectDefinitionId(),
-			_objectDefinition2.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"oneToManyRelationshipName",
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), _dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			_objectDefinition1,
+			_simpleDTOConverterContext, _objectDefinition1,
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
@@ -389,12 +615,41 @@ public class DefaultObjectEntryManagerImplTest {
 		throws Exception {
 
 		_assertEquals(
-			newObjectEntry,
 			_objectEntryManager.addObjectEntry(
 				_dtoConverterContext, _objectDefinition2, newObjectEntry,
-				ObjectDefinitionConstants.SCOPE_COMPANY));
+				ObjectDefinitionConstants.SCOPE_COMPANY),
+			newObjectEntry);
 	}
 
+	private void _testGetObjectEntries(
+			Map<String, String> context, ObjectEntry... expectedObjectEntries)
+		throws Exception {
+
+		Sort[] sorts = null;
+
+		if (context.containsKey("sort")) {
+			String[] sort = StringUtil.split(context.get("sort"), ":");
+
+			sorts = new Sort[] {
+				SortFactoryUtil.create(sort[0], Objects.equals(sort[1], "desc"))
+			};
+		}
+
+		Page<ObjectEntry> objectEntryPage =
+			_objectEntryManager.getObjectEntries(
+				_companyId, _objectDefinition2, null, null,
+				_dtoConverterContext, null,
+				_filterPredicateFactory.create(
+					context.get("filter"),
+					_objectDefinition2.getObjectDefinitionId()),
+				context.get("search"), sorts);
+
+		_assertEquals(
+			(List<ObjectEntry>)objectEntryPage.getItems(),
+			expectedObjectEntries);
+	}
+
+	private static long _companyId;
 	private static DTOConverterContext _dtoConverterContext;
 
 	@Inject
@@ -403,10 +658,14 @@ public class DefaultObjectEntryManagerImplTest {
 	@DeleteAfterTestRun
 	private static Group _group;
 
+	private static DTOConverterContext _simpleDTOConverterContext;
 	private static User _user;
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private FilterPredicateFactory _filterPredicateFactory;
 
 	private ListTypeDefinition _listTypeDefinition;
 

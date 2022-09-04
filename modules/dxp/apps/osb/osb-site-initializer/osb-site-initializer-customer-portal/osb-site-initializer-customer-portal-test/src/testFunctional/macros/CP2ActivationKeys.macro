@@ -115,6 +115,18 @@ definition {
 		CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${fileName}");
 	}
 
+	macro generateNewKey {
+		Click(
+			key_text = "Actions",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_action = "Generate New",
+			locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
+		
+		AssertElementPresent(locator1 = "CP2ActivationKeys#GENERATE_KEY_FORM");
+	}
+
 	macro filterKeyTable {
 		var key_filterOption = "${filterOption}";
 
@@ -204,6 +216,14 @@ definition {
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX_BY_EXPIRATION_DATE");
 	}
 
+	macro selectKeyType {
+		var key_label = "Key Type";
+
+		Select(
+			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
+			value1 = "${key_option}");
+	}
+
 	macro selectPaginationQuantity {
 		if (IsElementPresent(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON")) {
 			Click(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON");
@@ -216,6 +236,14 @@ definition {
 				key_quantity = "${quantity}",
 				locator1 = "CP2ActivationKeys#PAGINATION_BUTTON_ITEM");
 		}
+	}	
+
+	macro selectProductVersion {
+		var key_label = "Version";
+
+		Select(
+			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
+			value1 = "${key_option}");
 	}
 
 }

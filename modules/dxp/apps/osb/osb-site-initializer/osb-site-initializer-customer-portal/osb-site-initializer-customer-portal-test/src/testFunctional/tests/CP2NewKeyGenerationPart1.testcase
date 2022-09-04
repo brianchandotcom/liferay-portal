@@ -30,6 +30,38 @@ definition {
 		PortalInstances.tearDownCP();
 	}
 
+	@description = "LPS-149705 - Verify if the amount of available keys are shown on subscriptions."
+    @priority = "5"
+    test IfAvailableKeysAreDisplayedOnSubscriptions {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+            CP2ActivationKeys.generateNewKey();
+		}
+
+        task ("Then the subscription option will display remaining available key activations") {
+            AssertTextEquals.assertPartialText(
+				locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_AVAILABLE",
+				value1 = "Key activation available: 1 of");
+        }
+    }
+	
     @description = "LPS-149703 - Verify if user can select the Key Type when generating a new key."
     @priority = "4"
     test IfKeyTypeCanBeSelected {
@@ -61,7 +93,7 @@ definition {
     }
 
 	@description = "LPS-149702 - Verify if user can select the Version when generating a new key."
-    @priority = "4"
+    @priority = "5"
     test IfProductVersionCanBeSelected {
 		property portal.upstream = "quarantine";
 

@@ -115,6 +115,39 @@
 	<td>//tbody//*[contains(., '${key_entitlementName}')]/following-sibling::*//*[contains(@class, 'btn')]</td>
 	<td></td>
 </tr>
+
+<!--GENERATE_NEW_KEY-->
+
+<tr>
+	<td>GENERATE_KEY_FORM</td>
+	<td>//div[contains(@class, 'cp-generateKey')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KEY_COMPONENT_OPTION</td>
+	<td>//*[label[contains(.,'${key_label}')]]//*[@class='position-relative']/*[contains(@class, 'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIPTION_BY_INDEX</td>
+	<td>//div[contains(@class, 'cp-radio-card')][${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIPTION_KEY_AVAILABLE</td>
+	<td>//div[contains(@class, 'cp-radio-card')]//*[contains(@class, 'text-success') and not (contains(@class, 'text-danger'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIPTION_KEY_UNAVAILABLE</td>
+	<td>//div[contains(@class, 'cp-radio-card') and @disabled]//*[contains(@class,'text-danger')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIPTION_LENGTH_BY_INDEX</td>
+	<td>//div[contains(@class, 'cp-radio-card')][${index}]//label[contains(@class, 'cp-radio-card-label')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

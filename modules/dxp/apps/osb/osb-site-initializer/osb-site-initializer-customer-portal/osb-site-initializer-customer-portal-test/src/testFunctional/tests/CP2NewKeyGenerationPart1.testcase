@@ -62,6 +62,40 @@ definition {
         }
     }
 
+	@description = "LPS-149727 - Verify if 'Cancel' button brings user back to Product Actiation DXP Page."
+    @priority = "4"
+    test IfCancelButtonBringsToActivationDXPPage {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example Solutions account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "Test Account Solutions");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+            CP2ActivationKeys.generateNewKey();
+		}
+
+        task ("Then clicking 'Cancel' will redirect back to the Product Activation page") {
+            Button.click(button = "Cancel");
+
+			AssertElementPresent(
+				locator1 = "CP2ActivationKeys#ACTIVE_PRODUCT_TYPE",
+				key_productType = "DXP");
+        }
+    }
+
     @description = "LPS-149703 - Verify if user can select the Key Type when generating a new key."
     @priority = "4"
     test IfKeyTypeCanBeSelected {
@@ -263,7 +297,7 @@ definition {
         }
     }
 
-	@description = "LPS-149708 - Verify a message appears after selecting a subscription with a permanent license"
+	@description = "LPS-149715 - Verify the 'Next' button is disabled until required options are selected."
     @priority = "3"
     test NextButtonOnlyAvailableIfAllOptionsAreSelected {
 		property portal.upstream = "quarantine";

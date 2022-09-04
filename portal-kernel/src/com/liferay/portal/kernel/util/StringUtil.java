@@ -18,6 +18,8 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -3654,6 +3656,9 @@ public class StringUtil {
 				value = booleanValue.booleanValue();
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
 			}
 
 			newArray[i] = value;
@@ -3687,6 +3692,9 @@ public class StringUtil {
 				value = Double.parseDouble(array[i]);
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
 			}
 
 			newArray[i] = value;
@@ -3719,6 +3727,9 @@ public class StringUtil {
 				value = Float.parseFloat(array[i]);
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
 			}
 
 			newArray[i] = value;
@@ -3751,6 +3762,9 @@ public class StringUtil {
 				value = Integer.parseInt(array[i]);
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
 			}
 
 			newArray[i] = value;
@@ -3783,6 +3797,9 @@ public class StringUtil {
 				value = Long.parseLong(array[i]);
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
 			}
 
 			newArray[i] = value;
@@ -3815,6 +3832,9 @@ public class StringUtil {
 				value = Short.parseShort(array[i]);
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
 			}
 
 			newArray[i] = value;
@@ -4994,5 +5014,7 @@ public class StringUtil {
 		'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
 		'u', 'v', 'w', 'x', 'y', 'z'
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(StringUtil.class);
 
 }

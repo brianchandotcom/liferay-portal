@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -49,6 +52,10 @@ public class ServletInputStreamAdapter extends ServletInputStream {
 			return false;
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+
 			return true;
 		}
 	}
@@ -63,6 +70,10 @@ public class ServletInputStreamAdapter extends ServletInputStream {
 			return false;
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+
 			return false;
 		}
 	}
@@ -108,5 +119,8 @@ public class ServletInputStreamAdapter extends ServletInputStream {
 	}
 
 	protected InputStream inputStream;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServletInputStreamAdapter.class);
 
 }

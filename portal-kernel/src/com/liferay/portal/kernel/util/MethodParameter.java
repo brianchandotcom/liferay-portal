@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +107,9 @@ public class MethodParameter {
 				return Class.forName(className, true, contextClassLoader);
 			}
 			catch (ClassNotFoundException classNotFoundException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(classNotFoundException);
+				}
 			}
 		}
 
@@ -221,6 +226,9 @@ public class MethodParameter {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MethodParameter.class);
 
 	private final Class<?>[] _genericTypes;
 	private final String _name;

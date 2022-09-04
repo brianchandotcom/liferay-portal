@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.template;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -92,12 +94,19 @@ public abstract class BaseTemplateHandler implements TemplateHandler {
 				clazz.getClassLoader(), getTemplatesHelpPath(language));
 		}
 		catch (IOException ioException1) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException1);
+			}
+
 			try {
 				content = StringUtil.read(
 					PortalClassLoaderUtil.getClassLoader(),
 					getTemplatesHelpPath(language));
 			}
 			catch (IOException ioException2) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(ioException2);
+				}
 			}
 		}
 
@@ -118,5 +127,8 @@ public abstract class BaseTemplateHandler implements TemplateHandler {
 	protected String getTemplatesConfigPath() {
 		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseTemplateHandler.class);
 
 }

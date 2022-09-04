@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.math.BigDecimal;
 
@@ -308,6 +310,10 @@ public class GetterUtil {
 				return new BigDecimal(valueString.trim());
 			}
 			catch (NumberFormatException numberFormatException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(numberFormatException);
+				}
+
 				return defaultValue;
 			}
 		}
@@ -486,6 +492,9 @@ public class GetterUtil {
 			}
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 
 		return defaultValue;
@@ -524,6 +533,9 @@ public class GetterUtil {
 				return Double.parseDouble(value);
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
 			}
 		}
 		else {
@@ -539,6 +551,9 @@ public class GetterUtil {
 				}
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
 			}
 		}
 
@@ -562,6 +577,9 @@ public class GetterUtil {
 			return Float.parseFloat(value.trim());
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 
 		return defaultValue;
@@ -2113,5 +2131,7 @@ public class GetterUtil {
 
 		return (short)i;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(GetterUtil.class);
 
 }

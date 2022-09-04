@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.deploy.hot;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.ProxyFactory;
 
@@ -65,6 +67,9 @@ public abstract class BaseHotDeployListener implements HotDeployListener {
 			return clpServletContextName.toString();
 		}
 		catch (Exception exception2) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception2);
+			}
 		}
 
 		throw exception1;
@@ -87,5 +92,8 @@ public abstract class BaseHotDeployListener implements HotDeployListener {
 		return ProxyFactory.newInstance(
 			portletClassLoader, interfaceClasses, implClassName);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseHotDeployListener.class);
 
 }

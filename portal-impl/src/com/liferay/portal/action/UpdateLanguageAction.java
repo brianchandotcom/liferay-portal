@@ -103,6 +103,10 @@ public class UpdateLanguageAction implements Action {
 				getRedirect(httpServletRequest, themeDisplay, locale));
 		}
 		catch (IllegalArgumentException | NoSuchLayoutException exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			httpServletResponse.sendError(
 				HttpServletResponse.SC_BAD_REQUEST,
 				httpServletRequest.getRequestURI());

@@ -81,6 +81,9 @@ public class AntiTimeDriftDataSourceWrapper extends DataSourceWrapper {
 					Thread.sleep(delta);
 				}
 				catch (InterruptedException interruptedException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(interruptedException);
+					}
 				}
 			}
 			else {

@@ -909,6 +909,10 @@ public class WebServerServlet extends HttpServlet {
 			return;
 		}
 		catch (NoSuchFileEntryException | PrincipalException exception1) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception1);
+			}
+
 			try {
 				sendFile(
 					httpServletResponse, user, groupId, folderId, "index.htm");

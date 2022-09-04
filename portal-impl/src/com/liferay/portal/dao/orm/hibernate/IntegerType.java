@@ -14,6 +14,9 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.io.Serializable;
 
 import java.sql.PreparedStatement;
@@ -82,6 +85,9 @@ public class IntegerType implements Serializable, UserType {
 				resultSet, names[0], sharedSessionContractImplementor);
 		}
 		catch (SQLException sqlException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(sqlException);
+			}
 		}
 
 		if (value == null) {
@@ -118,5 +124,7 @@ public class IntegerType implements Serializable, UserType {
 	public int[] sqlTypes() {
 		return new int[] {StandardBasicTypes.INTEGER.sqlType()};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(IntegerType.class);
 
 }

@@ -229,6 +229,10 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			return HttpComponentsUtil.decodeURL(url);
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(illegalArgumentException);
+			}
+
 			return url;
 		}
 	}

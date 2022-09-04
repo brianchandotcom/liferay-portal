@@ -20,6 +20,8 @@ import com.liferay.counter.kernel.service.persistence.CounterFinder;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -77,6 +79,10 @@ public abstract class Pre7UpgradeProcess extends UpgradeProcess {
 				break;
 			}
 			catch (NoSuchFieldException noSuchFieldException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchFieldException);
+				}
+
 				clazz = clazz.getSuperclass();
 			}
 		}
@@ -114,6 +120,9 @@ public abstract class Pre7UpgradeProcess extends UpgradeProcess {
 
 		};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		Pre7UpgradeProcess.class);
 
 	private static class Pre7CounterFinderImpl implements CounterFinder {
 

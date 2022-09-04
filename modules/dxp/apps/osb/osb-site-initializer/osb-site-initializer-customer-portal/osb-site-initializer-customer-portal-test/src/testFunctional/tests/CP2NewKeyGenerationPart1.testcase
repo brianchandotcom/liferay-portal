@@ -262,4 +262,42 @@ definition {
 				value1 = "Aug 2, 2022 - Jul 3, 2023");
         }
     }
+
+	@description = "LPS-149708 - Verify a message appears after selecting a subscription with a permanent license"
+    @priority = "3"
+    test NextButtonOnlyAvailableIfAllOptionsAreSelected {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example Solutions account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "Test Account Solutions");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+            CP2ActivationKeys.generateNewKey();
+		}
+
+        task ("Then the 'Next' button will be disabled until after the user makes a subscription selection. All other required fields have a default option selected") {
+			AssertElementPresent(
+				locator1 = "Button#ANY_DISABLED",
+				key_text = "Next");
+			
+			CP2ActivationKeys.selectSubscription(position = "1");
+
+			AssertElementPresent(
+				locator1 = "Button#ANY_ENABLED",
+				key_text = "Next");
+        }
+    }
 }

@@ -10,12 +10,16 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {useEffect} from 'react';
 import {HashRouter, Route, Routes} from 'react-router-dom';
 import getKebabCase from '../../../../../common/utils/getKebabCase';
 import DeactivateKeysTable from '../../../containers/DeactivateKeysTable';
 import GenerateNewKey from '../../../containers/GenerateNewKey';
+import {useCustomerPortal} from '../../../context';
+import {actionTypes} from '../../../context/reducer';
 import Layout from '../../../layouts/BaseLayout';
 import {PRODUCT_TYPES} from '../../../utils/constants';
+import {getWebContents} from '../../../utils/getWebContents';
 import Commerce from '../ActivationKeys/Commerce';
 import EnterpriseSearch from '../ActivationKeys/EnterpriseSearch';
 import AnalyticsCloud from '../AnalyticsCloud';
@@ -28,122 +32,147 @@ import TeamMembers from '../TeamMembers';
 import ActivationOutlet from './Outlets/ActivationOutlet';
 import ProductOutlet from './Outlets/ProductOutlet';
 
-const ProjectRoutes = () => (
-	<HashRouter>
-		<Routes>
-			<Route element={<ClayLoadingIndicator />} index />
+const ProjectRoutes = () => {
+	const [{project, subscriptionGroups}, dispatch] = useCustomerPortal();
 
-			<Route element={<Layout />} path="/:accountKey">
-				<Route element={<Overview />} index />
+	useEffect(() => {
+		if (project && subscriptionGroups) {
+			dispatch({
+				payload: getWebContents(
+					project.dxpVersion,
+					project.slaCurrent,
+					subscriptionGroups
+				),
+				type: actionTypes.UPDATE_QUICK_LINKS,
+			});
+		}
+	}, [dispatch, project, subscriptionGroups]);
 
-				{Liferay.FeatureFlags['LPS-153478'] && (
-					<Route
-						element={
-							<ProductOutlet
-								product={PRODUCT_TYPES.liferayExperienceCloud}
-							/>
-						}
-					>
+	return (
+		<HashRouter>
+			<Routes>
+				<Route element={<ClayLoadingIndicator />} index />
+
+				<Route element={<Layout />} path="/:accountKey">
+					<Route element={<Overview />} index />
+
+					{Liferay.FeatureFlags['LPS-153478'] && (
 						<Route
-							element={<LiferayExperienceCloud />}
-							path={getKebabCase(
-								PRODUCT_TYPES.liferayExperienceCloud
-							)}
-						/>
-					</Route>
-				)}
+							element={
+								<ProductOutlet
+									product={
+										PRODUCT_TYPES.liferayExperienceCloud
+									}
+								/>
+							}
+						>
+							<Route
+								element={<LiferayExperienceCloud />}
+								path={getKebabCase(
+									PRODUCT_TYPES.liferayExperienceCloud
+								)}
+							/>
+						</Route>
+					)}
 
-				<Route element={<ActivationOutlet />} path="activation">
-					<Route
-						element={
-							<ProductOutlet product={PRODUCT_TYPES.dxpCloud} />
-						}
-						path={getKebabCase(PRODUCT_TYPES.dxpCloud)}
-					>
-						<Route element={<DXPCloud />} index />
-					</Route>
-
-					<Route
-						element={
-							<ProductOutlet product={PRODUCT_TYPES.portal} />
-						}
-						path={getKebabCase(PRODUCT_TYPES.portal)}
-					>
-						<Route element={<Portal />} index />
+					<Route element={<ActivationOutlet />} path="activation">
+						<Route
+							element={
+								<ProductOutlet
+									product={PRODUCT_TYPES.dxpCloud}
+								/>
+							}
+							path={getKebabCase(PRODUCT_TYPES.dxpCloud)}
+						>
+							<Route element={<DXPCloud />} index />
+						</Route>
 
 						<Route
 							element={
-								<GenerateNewKey
-									productGroupName={PRODUCT_TYPES.portal}
-								/>
+								<ProductOutlet product={PRODUCT_TYPES.portal} />
 							}
-							path="new"
-						/>
-					</Route>
+							path={getKebabCase(PRODUCT_TYPES.portal)}
+						>
+							<Route element={<Portal />} index />
 
-					<Route
-						element={<ProductOutlet product={PRODUCT_TYPES.dxp} />}
-						path={getKebabCase(PRODUCT_TYPES.dxp)}
-					>
-						<Route element={<DXP />} index />
+							<Route
+								element={
+									<GenerateNewKey
+										productGroupName={PRODUCT_TYPES.portal}
+									/>
+								}
+								path="new"
+							/>
+						</Route>
 
 						<Route
 							element={
-								<GenerateNewKey
-									productGroupName={PRODUCT_TYPES.dxp}
-								/>
+								<ProductOutlet product={PRODUCT_TYPES.dxp} />
 							}
-							path="new"
-						/>
+							path={getKebabCase(PRODUCT_TYPES.dxp)}
+						>
+							<Route element={<DXP />} index />
+
+							<Route
+								element={
+									<GenerateNewKey
+										productGroupName={PRODUCT_TYPES.dxp}
+									/>
+								}
+								path="new"
+							/>
+
+							<Route
+								element={
+									<DeactivateKeysTable
+										productName={PRODUCT_TYPES.dxp}
+									/>
+								}
+								path="deactivate"
+							/>
+						</Route>
 
 						<Route
 							element={
-								<DeactivateKeysTable
-									productName={PRODUCT_TYPES.dxp}
+								<ProductOutlet
+									product={PRODUCT_TYPES.analyticsCloud}
 								/>
 							}
-							path="deactivate"
-						/>
+							path={getKebabCase(PRODUCT_TYPES.analyticsCloud)}
+						>
+							<Route element={<AnalyticsCloud />} index />
+						</Route>
+
+						<Route
+							element={
+								<ProductOutlet
+									product={PRODUCT_TYPES.commerce}
+								/>
+							}
+							path={getKebabCase(PRODUCT_TYPES.commerce)}
+						>
+							<Route element={<Commerce />} index />
+						</Route>
+
+						<Route
+							element={
+								<ProductOutlet
+									product={PRODUCT_TYPES.enterpriseSearch}
+								/>
+							}
+							path={getKebabCase(PRODUCT_TYPES.enterpriseSearch)}
+						>
+							<Route element={<EnterpriseSearch />} index />
+						</Route>
 					</Route>
 
-					<Route
-						element={
-							<ProductOutlet
-								product={PRODUCT_TYPES.analyticsCloud}
-							/>
-						}
-						path={getKebabCase(PRODUCT_TYPES.analyticsCloud)}
-					>
-						<Route element={<AnalyticsCloud />} index />
-					</Route>
+					<Route element={<TeamMembers />} path="team-members" />
 
-					<Route
-						element={
-							<ProductOutlet product={PRODUCT_TYPES.commerce} />
-						}
-						path={getKebabCase(PRODUCT_TYPES.commerce)}
-					>
-						<Route element={<Commerce />} index />
-					</Route>
-
-					<Route
-						element={
-							<ProductOutlet
-								product={PRODUCT_TYPES.enterpriseSearch}
-							/>
-						}
-						path={getKebabCase(PRODUCT_TYPES.enterpriseSearch)}
-					>
-						<Route element={<EnterpriseSearch />} index />
-					</Route>
+					<Route element={<h3>Page not found</h3>} path="*" />
 				</Route>
-
-				<Route element={<TeamMembers />} path="team-members" />
-
-				<Route element={<h3>Page not found</h3>} path="*" />
-			</Route>
-		</Routes>
-	</HashRouter>
-);
+			</Routes>
+		</HashRouter>
+	);
+};
 
 export default ProjectRoutes;

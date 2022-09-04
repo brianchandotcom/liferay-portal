@@ -16,19 +16,17 @@ import i18n from '../../../../../../../common/I18n';
 import {useAppPropertiesContext} from '../../../../../../../common/contexts/AppPropertiesContext';
 import {getAccountSubscriptions} from '../../../../../../../common/services/liferay/graphql/queries';
 import {useCustomerPortal} from '../../../../../context';
-import {actionTypes} from '../../../../../context/reducer';
 import {
 	PRODUCT_TYPES,
 	SUBSCRIPTIONS_STATUS,
 } from '../../../../../utils/constants';
-import {getWebContents} from '../../../../../utils/getWebContents';
 import CardSubscription from './components/CardSubscriptions';
 import SubscriptionsFilterByStatus from './components/SubscriptionsFilterByStatus';
 import SubscriptionsNavbar from './components/SubscriptionsNavbar';
 import '../../app.scss';
 
 const SubscriptionsOverview = () => {
-	const [{project, subscriptionGroups}, dispatch] = useCustomerPortal();
+	const [{project, subscriptionGroups}] = useCustomerPortal();
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
 	const {client} = useAppPropertiesContext();
 
@@ -112,19 +110,6 @@ const SubscriptionsOverview = () => {
 			getAllSubscriptions(project.accountKey);
 		}
 	}, [client, project, subscriptionGroups]);
-
-	useEffect(() => {
-		if (project && subscriptionGroups) {
-			dispatch({
-				payload: getWebContents(
-					project.dxpVersion,
-					project.slaCurrent,
-					subscriptionGroups
-				),
-				type: actionTypes.UPDATE_QUICK_LINKS,
-			});
-		}
-	}, [dispatch, project, subscriptionGroups]);
 
 	const isPartnership =
 		selectedSubscriptionGroup === PRODUCT_TYPES.partnership ||

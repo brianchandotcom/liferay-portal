@@ -61,7 +61,7 @@ definition {
 				value1 = "Key activation available: 1 of");
         }
     }
-	
+
     @description = "LPS-149703 - Verify if user can select the Key Type when generating a new key."
     @priority = "4"
     test IfKeyTypeCanBeSelected {
@@ -89,6 +89,38 @@ definition {
 
         task ("Then the user can select the Key Type") {
             CP2ActivationKeys.selectKeyType(key_option = "Production (Virtual Cluster)");
+        }
+    }
+
+	@description = "LPS-149706 - Verify if a subscription has 0 keys then the option is disabled."
+    @priority = "5"
+    test IfNoAvailableKeysAreDisplayedOnSubscriptions {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+            CP2ActivationKeys.generateNewKey();
+		}
+
+        task ("Then a user can see that disabled subscriptions will have 0 keys available") {
+            AssertTextEquals.assertPartialText(
+				locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_DISABLED",
+				value1 = "Key activation available: 0 of");
         }
     }
 

@@ -80,7 +80,7 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 						getExportImportConfiguration(classPK));
 
 		exportImportConfigurationTrashRenderer.setServletContext(
-			servletContext);
+			_servletContext);
 
 		return exportImportConfigurationTrashRenderer;
 	}
@@ -91,14 +91,6 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 
 		_exportImportConfigurationLocalService.
 			restoreExportImportConfigurationFromTrash(userId, classPK);
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.exportimport.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
 	}
 
 	@Override
@@ -116,27 +108,17 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 			actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService
-			exportImportConfigurationLocalService) {
-
-		_exportImportConfigurationLocalService =
-			exportImportConfigurationLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	protected ServletContext servletContext;
-
+	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private GroupPermission _groupPermission;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.exportimport.web)")
+	private ServletContext _servletContext;
 
 }

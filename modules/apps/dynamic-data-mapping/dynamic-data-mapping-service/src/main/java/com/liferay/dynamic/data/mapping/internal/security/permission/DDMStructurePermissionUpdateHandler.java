@@ -48,13 +48,7 @@ public class DDMStructurePermissionUpdateHandler
 		_ddmStructureLocalService.updateDDMStructure(ddmStructure);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

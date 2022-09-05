@@ -236,6 +236,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBSCRIBED_TAG</td>
+	<td>//a[contains(@data-restore-title,'${key_subcribedTag}')]//button[contains(@title,'Subscribed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTIONS_SELECT_FILTER</td>
 	<td>//select[contains(@id,'questionsFilter')]</td>
 	<td></td>

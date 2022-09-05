@@ -11,7 +11,7 @@
 		"yo": "^4.3.0"
 	},
 	"devDependencies": {
-		"generator-liferay-fragments": "2.0.0-rc3"
+		"generator-liferay-fragments": "2.0.2"
 	},
 	"name": "@liferay/site-initializer-customer-portal-fragments",
 	"scripts": {

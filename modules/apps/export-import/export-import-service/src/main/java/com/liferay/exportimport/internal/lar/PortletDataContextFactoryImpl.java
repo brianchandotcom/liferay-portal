@@ -216,16 +216,6 @@ public class PortletDataContextFactoryImpl
 			startDate, endDate);
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLockManager(LockManager lockManager) {
-		_lockManager = lockManager;
-	}
-
 	private PortletDataContext _createPortletDataContext(
 		long companyId, long groupId) {
 
@@ -355,7 +345,10 @@ public class PortletDataContextFactoryImpl
 		}
 	}
 
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private LockManager _lockManager;
 
 }

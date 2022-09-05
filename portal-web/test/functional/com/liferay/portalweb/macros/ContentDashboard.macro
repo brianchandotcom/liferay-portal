@@ -312,43 +312,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro filterByStatusAny {
-		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
-			AssertClickNoError(
-				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
-				value1 = "Filter and Order");
-		}
-
-		var key_filterOption = "${filterOption}";
-
-		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
-	}
-
-	macro filterByStatusApproved {
-		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
-			AssertClickNoError(
-				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
-				value1 = "Filter and Order");
-		}
-
-		var key_filterOption = "${filterOption}";
-
-		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
-	}
-
-	macro filterByStatusDraft {
-		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
-			AssertClickNoError(
-				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
-				value1 = "Filter and Order");
-		}
-
-		var key_filterOption = "${filterOption}";
-
-		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
-	}
-
-	macro filterByStatusScheduled {
+	macro filterByStatus {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",

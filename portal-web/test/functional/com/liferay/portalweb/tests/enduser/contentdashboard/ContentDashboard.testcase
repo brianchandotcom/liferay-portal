@@ -3121,7 +3121,7 @@ definition {
 		}
 
 		task ("When the user selects the option Filter by Status and another filter") {
-			ContentDashboard.filterByStatusApproved(filterOption = "Approved");
+			ContentDashboard.filterByStatus(filterOption = "Approved");
 
 			ContentDashboard.filterByAuthorMe(filterOption = "Me");
 		}
@@ -3150,7 +3150,7 @@ definition {
 		}
 
 		task ("When the user selects the option Filter by Status: Approved") {
-			ContentDashboard.filterByStatusApproved(filterOption = "Approved");
+			ContentDashboard.filterByStatus(filterOption = "Approved");
 		}
 
 		task ("Then the list is filtered displaying only contents labeled as Approved, including Blogs") {
@@ -3178,7 +3178,7 @@ definition {
 		}
 
 		task ("When the user selects the option Filter by Status: Draft") {
-			ContentDashboard.filterByStatusDraft(filterOption = "Draft");
+			ContentDashboard.filterByStatus(filterOption = "Draft");
 		}
 
 		task ("Then the list is filtered displaying only contents labeled as Draft, including Blogs") {
@@ -3207,7 +3207,7 @@ definition {
 		}
 
 		task ("When the user selects the option Filter by Status: Scheduled'") {
-			ContentDashboard.filterByStatusScheduled(filterOption = "Scheduled");
+			ContentDashboard.filterByStatus(filterOption = "Scheduled");
 		}
 
 		task ("Then the list is filtered displaying only contents labeled as Scheduled, including Blogs") {
@@ -3762,7 +3762,7 @@ definition {
 		task ("Filter asset by Any status in Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByStatusAny(filterOption = "Any");
+			ContentDashboard.filterByStatus(filterOption = "Any");
 
 			ContentDashboard.searchValue(webContentTitle = "WC Title Approved");
 
@@ -3793,7 +3793,7 @@ definition {
 		task ("Filter asset by Aproved status in Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByStatusApproved(filterOption = "Approved");
+			ContentDashboard.filterByStatus(filterOption = "Approved");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -3817,7 +3817,7 @@ definition {
 		task ("Filter asset by Draft status in Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByStatusDraft(filterOption = "Draft");
+			ContentDashboard.filterByStatus(filterOption = "Draft");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -3850,7 +3850,7 @@ definition {
 		task ("When user filters by 'Pending' status") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByStatusDraft(filterOption = "Pending");
+			ContentDashboard.filterByStatus(filterOption = "Pending");
 		}
 
 		task ("Then the asset is filtered") {
@@ -3885,7 +3885,7 @@ definition {
 		task ("When user filters by 'Pending' status") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByStatusDraft(filterOption = "Pending");
+			ContentDashboard.filterByStatus(filterOption = "Pending");
 		}
 
 		task ("Then the asset is filtered") {
@@ -3936,7 +3936,7 @@ definition {
 		task ("Filter asset at Content Dashboard using status") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByStatusScheduled(filterOption = "Scheduled");
+			ContentDashboard.filterByStatus(filterOption = "Scheduled");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",

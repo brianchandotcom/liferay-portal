@@ -84,7 +84,24 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 	public void onAfterRemove(T baseModel) throws ModelListenerException {
 		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, null, baseModel);
+	}
 
+	@Override
+	public void onAfterUpdate(T originalBaseModel, T baseModel)
+		throws ModelListenerException {
+
+		_executeObjectActions(
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, originalBaseModel,
+			(T)baseModel.clone());
+	}
+
+	@Override
+	public void onBeforeCreate(T model) throws ModelListenerException {
+		_validateSystemObject(model);
+	}
+
+	@Override
+	public void onBeforeRemove(T baseModel) throws ModelListenerException {
 		try {
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
@@ -102,20 +119,6 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
 		}
-	}
-
-	@Override
-	public void onAfterUpdate(T originalBaseModel, T baseModel)
-		throws ModelListenerException {
-
-		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, originalBaseModel,
-			(T)baseModel.clone());
-	}
-
-	@Override
-	public void onBeforeCreate(T model) throws ModelListenerException {
-		_validateSystemObject(model);
 	}
 
 	@Override

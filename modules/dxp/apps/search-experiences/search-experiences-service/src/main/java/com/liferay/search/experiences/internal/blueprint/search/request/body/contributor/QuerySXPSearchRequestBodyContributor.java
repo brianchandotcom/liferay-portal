@@ -214,6 +214,8 @@ public class QuerySXPSearchRequestBodyContributor
 			clause.getParent()
 		).query(
 			_queryConverter.toQuery((JSONObject)clause.getQuery())
+		).rootClause(
+			true
 		).type(
 			clause.getType()
 		).value(

@@ -17,6 +17,8 @@ package com.liferay.ip.geocoder.internal;
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import com.maxmind.geoip.Location;
 import com.maxmind.geoip.LookupService;
@@ -33,8 +35,6 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import java.util.Map;
-
-import org.apache.log4j.Logger;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -55,31 +55,34 @@ import org.tukaani.xz.XZInputStream;
 )
 public class IPGeocoderImpl implements IPGeocoder {
 
-	@Activate
-	public void activate(Map<String, String> properties) {
-		_properties = properties;
-	}
-
-	@Deactivate
-	public void deactivate(Map<String, String> properties) {
-		_lookupService = null;
-
-		_properties = null;
-	}
-
 	@Override
 	public IPInfo getIPInfo(String ipAddress) {
 		LookupService lookupService = configure();
 
 		Location location = lookupService.getLocation(ipAddress);
 
-		return new IPInfo(ipAddress, location);
+		if (location == null) {
+			return new IPInfo(
+				null, null, null, ipAddress, 0, 0, null, null, null);
+		}
+
+		return new IPInfo(
+			location.city, location.countryCode, location.countryName,
+			ipAddress, location.latitude, location.longitude,
+			location.postalCode, location.region,
+			com.maxmind.geoip.regionName.regionNameByCode(
+				location.countryCode, location.region));
 	}
 
 	@Modified
 	public void modified(Map<String, String> properties) {
 		_lookupService = null;
 
+		_properties = properties;
+	}
+
+	@Activate
+	protected void activate(Map<String, String> properties) {
 		_properties = properties;
 	}
 
@@ -113,12 +116,19 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 			return lookupService;
 		}
-		catch (IOException ioe) {
-			_logger.error("Unable to activate Liferay IP Geocoder", ioe);
+		catch (IOException ioException) {
+			_log.error("Unable to activate Liferay IP Geocoder", ioException);
 
 			throw new RuntimeException(
-				"Unable to activate Liferay IP Geocoder", ioe);
+				"Unable to activate Liferay IP Geocoder", ioException);
 		}
+	}
+
+	@Deactivate
+	protected void deactivate(Map<String, String> properties) {
+		_lookupService = null;
+
+		_properties = null;
 	}
 
 	protected File getIPGeocoderFile(
@@ -132,8 +142,8 @@ public class IPGeocoderImpl implements IPGeocoder {
 		}
 
 		synchronized (this) {
-			if (_logger.isInfoEnabled()) {
-				_logger.info("Downloading " + fileURL);
+			if (_log.isInfoEnabled()) {
+				_log.info("Downloading " + fileURL);
 			}
 
 			URL url = new URL(fileURL);
@@ -166,7 +176,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 				parentFile.mkdirs();
 			}
 		}
-		catch (SecurityException se) {
+		catch (SecurityException securityException) {
 
 			// We may have the permission to write a specific file without
 			// having the permission to check if the parent file exists
@@ -190,10 +200,9 @@ public class IPGeocoderImpl implements IPGeocoder {
 		bufferedInputStream.close();
 	}
 
-	private static final Logger _logger = Logger.getLogger(
-		IPGeocoderImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(IPGeocoderImpl.class);
 
 	private volatile LookupService _lookupService;
-	private Map<String, String> _properties;
+	private volatile Map<String, String> _properties;
 
 }

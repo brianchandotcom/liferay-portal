@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.PortletAppImpl;
 import com.liferay.portal.model.impl.PortletImpl;
@@ -46,9 +46,17 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 import java.util.Date;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -109,12 +117,73 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 			ByteArrayOutputStream byteArrayOutputStream = _serveResource(
 				FileEntry.class.getName(), _group.getGroupId());
 
-			Assert.assertArrayEquals(
-				FileUtil.getBytes(getClass(), "dependencies/expected.xls"),
+			Class<?> clazz = getClass();
+
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			InputStream expectedInputStream = classLoader.getResourceAsStream(
+				"com/liferay/content/dashboard/web/internal/portlet/action" +
+					"/test/dependencies/expected.xls");
+
+			HSSFWorkbook expectedWorkbook = new HSSFWorkbook(
+				expectedInputStream);
+
+			InputStream actualInputStream = new ByteArrayInputStream(
 				byteArrayOutputStream.toByteArray());
+
+			HSSFWorkbook actualWorkbook = new HSSFWorkbook(actualInputStream);
+
+			_assertWorkbooks(actualWorkbook, expectedWorkbook);
 		}
 		finally {
+			ServiceContextThreadLocal.popServiceContext();
+
 			System.setProperty("user.name", originalUserName);
+		}
+	}
+
+	private void _assertWorkbooks(
+		Workbook actualWorkbook, Workbook expectedWorkbook) {
+
+		Assert.assertEquals(
+			expectedWorkbook.getNumberOfSheets(),
+			actualWorkbook.getNumberOfSheets());
+
+		Sheet actualWorkbookSheet = actualWorkbook.getSheetAt(0);
+		Sheet expectedWorkbookSheet = expectedWorkbook.getSheetAt(0);
+
+		Assert.assertEquals(
+			expectedWorkbookSheet.getLastRowNum(),
+			actualWorkbookSheet.getLastRowNum());
+
+		Row firstWorkbookRow = expectedWorkbookSheet.getRow(0);
+
+		short totalColumns = firstWorkbookRow.getLastCellNum();
+
+		for (int i = 0; i <= expectedWorkbookSheet.getLastRowNum(); i++) {
+			Row actualWorkbookRow = actualWorkbookSheet.getRow(i);
+			Row expectedWorkbookRow = expectedWorkbookSheet.getRow(i);
+
+			for (short j = 0; j < totalColumns; j++) {
+				Cell actualWorkbookCell = actualWorkbookRow.getCell(j);
+				Cell expectedWorkbookCell = expectedWorkbookRow.getCell(j);
+
+				String actualWorkbookCellValue = StringPool.BLANK;
+				String expectedWorkbookCellValue = StringPool.BLANK;
+
+				if (actualWorkbookCell != null) {
+					actualWorkbookCellValue =
+						actualWorkbookCell.getStringCellValue();
+				}
+
+				if (expectedWorkbookCell != null) {
+					expectedWorkbookCellValue =
+						expectedWorkbookCell.getStringCellValue();
+				}
+
+				Assert.assertEquals(
+					expectedWorkbookCellValue, actualWorkbookCellValue);
+			}
 		}
 	}
 

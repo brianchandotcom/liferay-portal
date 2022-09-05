@@ -135,20 +135,6 @@ public class LayoutsRemotePublisherMessageListener
 		return _destination;
 	}
 
-	@Reference(
-		target = "(destination.name=" + DestinationNames.LAYOUTS_REMOTE_PUBLISHER + ")",
-		unbind = "-"
-	)
-	protected void setDestination(Destination destination) {
-	}
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.exportimport.service)(release.schema.version=1.0.2))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsRemotePublisherMessageListener.class);
 
@@ -160,6 +146,16 @@ public class LayoutsRemotePublisherMessageListener
 	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference(
+		target = "(destination.name=" + DestinationNames.LAYOUTS_REMOTE_PUBLISHER + ")"
+	)
+	private Destination _layoutsDestination;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.exportimport.service)(release.schema.version=1.0.2))"
+	)
+	private Release _release;
 
 	@Reference
 	private Staging _staging;

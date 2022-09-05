@@ -159,7 +159,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		String restContextPath = restContextPathResolver.getRESTContextPath(
 			_getGroupId(ddmFormFieldRenderingContext, objectDefinition));
 
-		return apiURL + restContextPath;
+		return apiURL + _portal.getPathContext() + restContextPath;
 	}
 
 	private long _getGroupId(

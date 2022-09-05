@@ -19,6 +19,7 @@ type Filter = {
 };
 
 export const searchUtil = {
+	contains: (key: Key, value: Value) => `contains(${key}, '${value}')`,
 	eq: (key: Key, value: Value) => `${key} eq '${value}'`,
 	in: (key: Key, values: Value[]) => {
 		if (values) {

@@ -71,10 +71,6 @@ definition {
 			PRMNavigator.goToNavItem(navItem = "Home");
 		}
 
-		task ("Verify if page title is 'Home'") {
-			PRMUtils.assertPageTitle(pageTitle = "Home");
-		}
-
 		task ("Verify if the current active breadcrumb is 'Home'") {
 			PRMNavigator.assertActiveBreadcrumb(activeItem = "Home");
 		}

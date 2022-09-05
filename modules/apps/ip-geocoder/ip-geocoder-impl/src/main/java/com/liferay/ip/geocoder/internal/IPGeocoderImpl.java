@@ -77,7 +77,6 @@ public class IPGeocoderImpl implements IPGeocoder {
 	@Modified
 	public void modified(Map<String, String> properties) {
 		_lookupService = null;
-
 		_properties = properties;
 	}
 
@@ -127,7 +126,6 @@ public class IPGeocoderImpl implements IPGeocoder {
 	@Deactivate
 	protected void deactivate(Map<String, String> properties) {
 		_lookupService = null;
-
 		_properties = null;
 	}
 

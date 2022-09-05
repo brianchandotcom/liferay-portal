@@ -1083,11 +1083,6 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCPDefinitions(long cProductId, int status) {
-		cpDefinitionPersistence.removeByC_S(cProductId, status);
-	}
-
-	@Override
 	public CPDefinition fetchCPDefinitionByCProductExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 

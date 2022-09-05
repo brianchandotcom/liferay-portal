@@ -18,8 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectLayoutBoxConstants;
 import com.liferay.object.exception.DefaultObjectLayoutException;
-import com.liferay.object.exception.ObjectLayoutBoxCategorizationTypeException;
-import com.liferay.object.exception.ObjectLayoutBoxCommentsTypeException;
+import com.liferay.object.exception.ObjectLayoutBoxException;
 import com.liferay.object.exception.ObjectLayoutColumnSizeException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -189,12 +188,11 @@ public class ObjectLayoutLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectLayoutBoxCategorizationTypeException
-					objectLayoutBoxCategorizationTypeException) {
-
+		catch (ObjectLayoutBoxException objectLayoutBoxException) {
 			Assert.assertEquals(
-				"Categorization layout box must be enabled to be used",
-				objectLayoutBoxCategorizationTypeException.getMessage());
+				"The categorization layout box must be enabled on the object " +
+					"definition to be used",
+				objectLayoutBoxException.getMessage());
 		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
@@ -231,13 +229,11 @@ public class ObjectLayoutLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectLayoutBoxCategorizationTypeException
-					objectLayoutBoxCategorizationTypeException) {
-
+		catch (ObjectLayoutBoxException objectLayoutBoxException) {
 			Assert.assertEquals(
-				"Categorization layout box only can be used in object " +
+				"The categorization layout box only can be used in object " +
 					"definitions with default storage type",
-				objectLayoutBoxCategorizationTypeException.getMessage());
+				objectLayoutBoxException.getMessage());
 		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
@@ -272,12 +268,10 @@ public class ObjectLayoutLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectLayoutBoxCategorizationTypeException
-					objectLayoutBoxCategorizationTypeException) {
-
+		catch (ObjectLayoutBoxException objectLayoutBoxException) {
 			Assert.assertEquals(
-				"Categorization layout box must not have layout rows",
-				objectLayoutBoxCategorizationTypeException.getMessage());
+				"The categorization layout box must not have layout rows",
+				objectLayoutBoxException.getMessage());
 		}
 
 		try {
@@ -300,12 +294,10 @@ public class ObjectLayoutLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectLayoutBoxCategorizationTypeException
-					objectLayoutBoxCategorizationTypeException) {
-
+		catch (ObjectLayoutBoxException objectLayoutBoxException) {
 			Assert.assertEquals(
-				"Object layout box must have a type",
-				objectLayoutBoxCategorizationTypeException.getMessage());
+				"No value defined for type",
+				objectLayoutBoxException.getMessage());
 		}
 
 		try {
@@ -342,12 +334,10 @@ public class ObjectLayoutLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectLayoutBoxCategorizationTypeException
-					objectLayoutBoxCategorizationTypeException) {
-
+		catch (ObjectLayoutBoxException objectLayoutBoxException) {
 			Assert.assertEquals(
 				"There can only be one categorization layout box per layout",
-				objectLayoutBoxCategorizationTypeException.getMessage());
+				objectLayoutBoxException.getMessage());
 		}
 
 		try {
@@ -421,12 +411,11 @@ public class ObjectLayoutLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectLayoutBoxCommentsTypeException
-					objectLayoutBoxCommentsTypeException) {
-
+		catch (ObjectLayoutBoxException objectLayoutBoxException) {
 			Assert.assertEquals(
-				"Comments layout box must be enabled to be used",
-				objectLayoutBoxCommentsTypeException.getMessage());
+				"The comments layout box must be enabled on the object " +
+					"definition to be used",
+				objectLayoutBoxException.getMessage());
 		}
 
 		_objectDefinition.setEnableComments(true);
@@ -458,13 +447,11 @@ public class ObjectLayoutLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectLayoutBoxCommentsTypeException
-					objectLayoutBoxCommentsTypeException) {
-
+		catch (ObjectLayoutBoxException objectLayoutBoxException) {
 			Assert.assertEquals(
-				"Comments layout box only can be used in object definitions " +
-					"with default storage type",
-				objectLayoutBoxCommentsTypeException.getMessage());
+				"The comments layout box only can be used in object " +
+					"definitions with default storage type",
+				objectLayoutBoxException.getMessage());
 		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
@@ -503,12 +490,10 @@ public class ObjectLayoutLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectLayoutBoxCommentsTypeException
-					objectLayoutBoxCommentsTypeException) {
-
+		catch (ObjectLayoutBoxException objectLayoutBoxException) {
 			Assert.assertEquals(
-				"Comments layout box must not have layout rows",
-				objectLayoutBoxCommentsTypeException.getMessage());
+				"The comments layout box must not have layout rows",
+				objectLayoutBoxException.getMessage());
 		}
 
 		try {
@@ -545,12 +530,10 @@ public class ObjectLayoutLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectLayoutBoxCommentsTypeException
-					objectLayoutBoxCommentsTypeException) {
-
+		catch (ObjectLayoutBoxException objectLayoutBoxException) {
 			Assert.assertEquals(
 				"There can only be one comments layout box per layout",
-				objectLayoutBoxCommentsTypeException.getMessage());
+				objectLayoutBoxException.getMessage());
 		}
 
 		objectLayout = _addObjectLayout();

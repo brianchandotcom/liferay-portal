@@ -17,8 +17,7 @@ package com.liferay.object.service.impl;
 import com.liferay.object.constants.ObjectLayoutBoxConstants;
 import com.liferay.object.exception.DefaultObjectLayoutException;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
-import com.liferay.object.exception.ObjectLayoutBoxCategorizationTypeException;
-import com.liferay.object.exception.ObjectLayoutBoxCommentsTypeException;
+import com.liferay.object.exception.ObjectLayoutBoxException;
 import com.liferay.object.exception.ObjectLayoutColumnSizeException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -572,8 +571,7 @@ public class ObjectLayoutLocalServiceImpl
 
 			for (ObjectLayoutBox objectLayoutBox : objectLayoutBoxes) {
 				if (Validator.isNull(objectLayoutBox.getType())) {
-					throw new ObjectLayoutBoxCategorizationTypeException(
-						"Object layout box must have a type");
+					throw new ObjectLayoutBoxException.RequiredType();
 				}
 
 				if (StringUtil.equals(
@@ -591,31 +589,30 @@ public class ObjectLayoutLocalServiceImpl
 							PropsUtil.get("feature.flag.LPS-158672")) &&
 						!objectDefinition.isEnableCategorization()) {
 
-						throw new ObjectLayoutBoxCategorizationTypeException(
-							"Categorization layout box must be enabled to be " +
-								"used");
+						throw new ObjectLayoutBoxException.MustBeEnabled(
+							ObjectLayoutBoxConstants.TYPE_CATEGORIZATION);
 					}
 
 					if (!objectDefinition.isDefaultStorageType()) {
-						throw new ObjectLayoutBoxCategorizationTypeException(
-							"Categorization layout box only can be used in " +
-								"object definitions with default storage type");
+						throw new ObjectLayoutBoxException.
+							MustBeDefaultStorageType(
+								ObjectLayoutBoxConstants.TYPE_CATEGORIZATION);
 					}
 
 					countObjectLayoutBoxCategorizationType++;
 
 					if (countObjectLayoutBoxCategorizationType > 1) {
-						throw new ObjectLayoutBoxCategorizationTypeException(
-							"There can only be one categorization layout box " +
-								"per layout");
+						throw new ObjectLayoutBoxException.
+							MustOnlyContainOnePerLayout(
+								ObjectLayoutBoxConstants.TYPE_CATEGORIZATION);
 					}
 
 					if (ListUtil.isNotEmpty(
 							objectLayoutBox.getObjectLayoutRows())) {
 
-						throw new ObjectLayoutBoxCategorizationTypeException(
-							"Categorization layout box must not have layout " +
-								"rows");
+						throw new ObjectLayoutBoxException.
+							MustNotHaveObjectLayoutRows(
+								ObjectLayoutBoxConstants.TYPE_CATEGORIZATION);
 					}
 				}
 				else if (StringUtil.equals(
@@ -629,29 +626,30 @@ public class ObjectLayoutLocalServiceImpl
 					}
 
 					if (!objectDefinition.isEnableComments()) {
-						throw new ObjectLayoutBoxCommentsTypeException(
-							"Comments layout box must be enabled to be used");
+						throw new ObjectLayoutBoxException.MustBeEnabled(
+							ObjectLayoutBoxConstants.TYPE_COMMENTS);
 					}
 
 					if (!objectDefinition.isDefaultStorageType()) {
-						throw new ObjectLayoutBoxCommentsTypeException(
-							"Comments layout box only can be used in object " +
-								"definitions with default storage type");
+						throw new ObjectLayoutBoxException.
+							MustBeDefaultStorageType(
+								ObjectLayoutBoxConstants.TYPE_COMMENTS);
 					}
 
 					countObjectLayoutBoxCommentsType++;
 
 					if (countObjectLayoutBoxCommentsType > 1) {
-						throw new ObjectLayoutBoxCommentsTypeException(
-							"There can only be one comments layout box per " +
-								"layout");
+						throw new ObjectLayoutBoxException.
+							MustOnlyContainOnePerLayout(
+								ObjectLayoutBoxConstants.TYPE_COMMENTS);
 					}
 
 					if (ListUtil.isNotEmpty(
 							objectLayoutBox.getObjectLayoutRows())) {
 
-						throw new ObjectLayoutBoxCommentsTypeException(
-							"Comments layout box must not have layout rows");
+						throw new ObjectLayoutBoxException.
+							MustNotHaveObjectLayoutRows(
+								ObjectLayoutBoxConstants.TYPE_COMMENTS);
 					}
 				}
 			}

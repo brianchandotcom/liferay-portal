@@ -1812,14 +1812,6 @@ definition {
 			weightTo = "1",
 			zip = "0100");
 
-		Alert.viewSuccessMessage();
-
-		Click(locator1 = "Icon#CLOSE");
-
-		SelectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
 		Click(
 			key_text = "Standard",
 			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");

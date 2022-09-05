@@ -64,13 +64,15 @@ export default class Gallery extends React.Component {
 
 		updateGallery(formFields, namespace, viewCPAttachmentURL).then(
 			(selectedImage) => {
-				const selected =
-					this.state.images > 1
+				const selectedImageIndex =
+					this.state.images.length > 1
 						? this.state.images.findIndex(
-								({downloadUrl}) =>
-									downloadUrl === selectedImage[0].URL
+								({URL}) => URL === selectedImage[0].url
 						  )
 						: 0;
+
+				const selected =
+					selectedImageIndex >= 0 ? selectedImageIndex : 0;
 
 				this.setState({selected});
 			}

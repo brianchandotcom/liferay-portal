@@ -18,16 +18,15 @@ import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.content.util.CPMedia;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
@@ -35,7 +34,8 @@ import com.liferay.portal.template.react.renderer.ReactRenderer;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
+
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -82,55 +82,60 @@ public class ImageGalleryInfoItemRenderer
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			Map<String, Object> data = HashMapBuilder.<String, Object>put(
-				"images",
-				() -> {
-					List<CPMedia> images = _cpContentHelper.getImages(
-						cpDefinition.getCPDefinitionId(), themeDisplay);
-
-					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-					for (CPMedia cpMedia : images) {
-						jsonArray.put(
-							JSONUtil.put(
-								"thumbnailURL", cpMedia.getThumbnailURL()
-							).put(
-								"title", cpMedia.getTitle()
-							).put(
-								"URL", cpMedia.getURL()
-							));
-					}
-
-					return jsonArray;
-				}
-			).put(
-				"namespace", componentId
-			).put(
-				"portletId",
-				() -> {
-					PortletDisplay portletDisplay =
-						themeDisplay.getPortletDisplay();
-
-					return portletDisplay.getRootPortletId();
-				}
-			).put(
-				"viewCPAttachmentURL",
-				() -> PortletURLBuilder.create(
-					PortletProviderUtil.getPortletURL(
-						httpServletRequest, CPDefinition.class.getName(),
-						PortletProvider.Action.VIEW)
-				).setMVCRenderCommandName(
-					"/cp_content_web/view_cp_attachments"
-				).setParameter(
-					"cpDefinitionId", cpDefinition.getCPDefinitionId()
-				).build()
-			).build();
-
 			_reactRenderer.renderReact(
 				new ComponentDescriptor(
 					"commerce-frontend-js/components/gallery/Gallery",
 					componentId),
-				data, httpServletRequest, httpServletResponse.getWriter());
+				HashMapBuilder.<String, Object>put(
+					"images",
+					() -> {
+						List<CPMedia> images = _cpContentHelper.getImages(
+							cpDefinition.getCPDefinitionId(), themeDisplay);
+
+						JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+						for (CPMedia cpMedia : images) {
+							jsonArray.put(
+								JSONUtil.put(
+									"thumbnailURL", cpMedia.getThumbnailURL()
+								).put(
+									"title", cpMedia.getTitle()
+								).put(
+									"URL", cpMedia.getURL()
+								));
+						}
+
+						return jsonArray;
+					}
+				).put(
+					"namespace",
+					() -> {
+						PortletDisplay portletDisplay =
+							themeDisplay.getPortletDisplay();
+
+						return portletDisplay.getNamespace();
+					}
+				).put(
+					"portletId",
+					() -> {
+						PortletDisplay portletDisplay =
+							themeDisplay.getPortletDisplay();
+
+						return portletDisplay.getRootPortletId();
+					}
+				).put(
+					"viewCPAttachmentURL",
+					() -> ResourceURLBuilder.createResourceURL(
+						_portal.getLiferayPortletResponse(
+							(PortletResponse)httpServletRequest.getAttribute(
+								JavaConstants.JAVAX_PORTLET_RESPONSE))
+					).setParameter(
+						"cpDefinitionId", cpDefinition.getCPDefinitionId()
+					).setResourceID(
+						"/cp_content_web/view_cp_attachments"
+					).buildString()
+				).build(),
+				httpServletRequest, httpServletResponse.getWriter());
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

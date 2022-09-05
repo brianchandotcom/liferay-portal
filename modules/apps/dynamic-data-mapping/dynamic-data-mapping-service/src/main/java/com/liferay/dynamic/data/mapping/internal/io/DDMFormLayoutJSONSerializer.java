@@ -100,18 +100,6 @@ public class DDMFormLayoutJSONSerializer implements DDMFormLayoutSerializer {
 			"rules", DDMFormRuleJSONSerializer.serialize(ddmFormRules));
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypeServicesTracker(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
-
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
 	protected JSONObject toJSONObject(DDMFormLayoutColumn ddmFormLayoutColumn) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -222,7 +210,10 @@ public class DDMFormLayoutJSONSerializer implements DDMFormLayoutSerializer {
 		pageJSONObject.put("title", LocalizedValueUtil.toJSONObject(title));
 	}
 
+	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 }

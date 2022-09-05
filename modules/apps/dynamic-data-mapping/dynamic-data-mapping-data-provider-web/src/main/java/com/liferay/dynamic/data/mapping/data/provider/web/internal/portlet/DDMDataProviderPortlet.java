@@ -83,45 +83,22 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMDataProviderDisplayTracker(
-		DDMDataProviderDisplayTracker ddmDataProviderDisplayTracker) {
-
-		_ddmDataProviderDisplayTracker = ddmDataProviderDisplayTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMDataProviderInstanceService(
-		DDMDataProviderInstanceService ddmDataProviderInstanceService) {
-
-		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMDataProviderTracker(
-		DDMDataProviderTracker ddmDataProviderTracker) {
-
-		_ddmDataProviderTracker = ddmDataProviderTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormRenderer(DDMFormRenderer ddmFormRenderer) {
-		_ddmFormRenderer = ddmFormRenderer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
+	@Reference
 	private DDMDataProviderDisplayTracker _ddmDataProviderDisplayTracker;
+
+	@Reference
 	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
+
+	@Reference
 	private DDMDataProviderTracker _ddmDataProviderTracker;
+
+	@Reference
 	private DDMFormRenderer _ddmFormRenderer;
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

@@ -76,6 +76,7 @@ import org.apache.commons.io.input.BOMInputStream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -152,6 +153,16 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 	protected void activate(Map<String, Object> properties) {
 		_ddmDataProviderConfiguration = ConfigurableUtil.createConfigurable(
 			DDMDataProviderConfiguration.class, properties);
+
+		_portalCache =
+			(PortalCache<String, DDMDataProviderResponse>)
+				_multiVMPool.getPortalCache(
+					DDMRESTDataProvider.class.getName());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_multiVMPool.removePortalCache(DDMRESTDataProvider.class.getName());
 	}
 
 	private String _buildURL(
@@ -611,13 +622,6 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return StringPool.PERIOD.concat(path);
 	}
 
-	@Reference(unbind = "-")
-	private void _setMultiVMPool(MultiVMPool multiVMPool) {
-		_portalCache =
-			(PortalCache<String, DDMDataProviderResponse>)
-				multiVMPool.getPortalCache(DDMRESTDataProvider.class.getName());
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMRESTDataProvider.class);
 
@@ -641,6 +645,9 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 	@Reference
 	private JSONWebServiceClientFactory _jsonWebServiceClientFactory;
 
-	private PortalCache<String, DDMDataProviderResponse> _portalCache;
+	@Reference
+	private MultiVMPool _multiVMPool;
+
+	private volatile PortalCache<String, DDMDataProviderResponse> _portalCache;
 
 }

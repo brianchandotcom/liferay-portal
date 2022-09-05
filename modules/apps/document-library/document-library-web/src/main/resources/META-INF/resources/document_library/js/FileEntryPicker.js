@@ -22,10 +22,11 @@ import React, {useEffect, useState} from 'react';
 
 const FileNamePicker = ({
 	maxFileSize: initialMaxFileSize,
+	maxMimeTypeSize,
 	namespace,
 	validExtensions,
 }) => {
-	const maxFileSize = Number(initialMaxFileSize);
+	const [maxFileSize, setMaxFileSize] = useState(Number(initialMaxFileSize));
 	const inputId = `${namespace}file`;
 	const [inputValue, setInputValue] = useState('');
 	const [fileName, setFileName] = useState('');
@@ -36,7 +37,17 @@ const FileNamePicker = ({
 	}, [inputValue]);
 
 	const onInputChange = ({target}) => {
-		if (target.files[0].size > maxFileSize) {
+		const fileType = target.files[0]?.type;
+		const maxFileTypeSize = Number(maxMimeTypeSize[fileType]);
+		let maxSize = Number(initialMaxFileSize);
+
+		if (maxFileTypeSize && maxSize > maxFileTypeSize) {
+			maxSize = maxFileTypeSize;
+		}
+
+		setMaxFileSize(maxSize);
+
+		if (target.files[0]?.size > maxSize) {
 			setMaxFileSizeError(true);
 			setInputValue('');
 		}
@@ -108,6 +119,9 @@ const FileNamePicker = ({
 FileNamePicker.propTypes = {
 	maxFileSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 		.isRequired,
+	maxMimeTypeSize: PropTypes.objectOf(
+		PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+	).isRequired,
 	namespace: PropTypes.string.isRequired,
 	validExtensions: PropTypes.string.isRequired,
 };

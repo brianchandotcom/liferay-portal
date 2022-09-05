@@ -95,6 +95,12 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	@Override
+	public Map<String, Long> getAllMimeTypeSizeLimit() {
+		return _dlValidator.getMimeTypeSizeLimit(
+			_dlRequestHelper.getSiteGroupId());
+	}
+
+	@Override
 	public DDMFormValues getDDMFormValues(
 			DDMStructure ddmStructure, long fileVersionId)
 		throws PortalException {

@@ -101,11 +101,6 @@ public class SegmentsEntryRelIndexerMessageListener
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private void _reindex(SegmentsEntry segmentsEntry) {
 		Message message = new Message();
 
@@ -119,6 +114,9 @@ public class SegmentsEntryRelIndexerMessageListener
 
 	@Reference
 	private MessageBus _messageBus;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

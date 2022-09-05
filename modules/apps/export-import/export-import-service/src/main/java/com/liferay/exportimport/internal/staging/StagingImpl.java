@@ -3656,13 +3656,6 @@ public class StagingImpl implements Staging {
 			sourceLayout.getPlid(), targetLayoutPlid, portletId, parameterMap);
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
 	protected void setRecentLayoutBranchId(
 			long userId, long layoutSetBranchId, long plid, long layoutBranchId)
 		throws PortalException {
@@ -4041,6 +4034,7 @@ public class StagingImpl implements Staging {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference

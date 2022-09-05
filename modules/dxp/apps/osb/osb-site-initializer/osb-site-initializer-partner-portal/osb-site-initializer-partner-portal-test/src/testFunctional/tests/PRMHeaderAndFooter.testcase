@@ -8,8 +8,8 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Partner Portal";
 
-	var testSiteName = "Partner Portal Name";
-	var testSiteURL = "partner-portal-name";
+	var testSiteName = "Partner Portal";
+	var testSiteURL = "partner-portal";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -27,7 +27,9 @@ definition {
 		}
 
 		task ("Go to Partner Portal") {
-			ApplicationsMenu.gotoSite(site = "Partner Portal Name");
+			ApplicationsMenu.gotoSite(site = "Partner Portal");
+
+			Refresh();
 		}
 	}
 

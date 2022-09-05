@@ -1064,7 +1064,7 @@ definition {
 		MenuItem.click(menuItem = "${kebabOption}");
 	}
 
-	macro viewCategorizationOnPublishedObject {
+	macro viewCategorizationInObjectEntry {
 		AssertElementPresent(locator1 = "ObjectAdmin#CATEGORIZATION_TITLE_INTO_OBJECT");
 
 		AssertElementPresent(locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_FIELD");

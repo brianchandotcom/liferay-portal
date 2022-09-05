@@ -126,13 +126,6 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 			"/html/common/themes/top_js.jspf#resources");
 	}
 
-	@Reference(unbind = "-")
-	protected void setJSBundleConfigTracker(
-		JSBundleConfigTracker jsBundleConfigTracker) {
-
-		_jsBundleConfigTracker = jsBundleConfigTracker;
-	}
-
 	private String _getModuleMain(JSBundleConfigTracker.JSConfig jsConfig) {
 		try {
 			ServletContext servletContext = jsConfig.getServletContext();
@@ -193,6 +186,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSBundleConfigTopHeadDynamicInclude.class);
 
+	@Reference
 	private JSBundleConfigTracker _jsBundleConfigTracker;
 
 	@Reference

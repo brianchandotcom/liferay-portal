@@ -224,13 +224,6 @@ public class SPAHelper {
 			_navigationExceptionSelectors, (String)null, StringPool.BLANK);
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
 	private long _getCacheExpirationTime(SPAConfiguration spaConfiguration) {
 		long cacheExpirationTime = spaConfiguration.cacheExpirationTime();
 
@@ -310,7 +303,9 @@ public class SPAHelper {
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private PortletLocalService _portletLocalService;
+
 	private volatile SPAConfiguration _spaConfiguration;
 	private volatile JSONArray _spaExcludedPathsJSONArray;
 

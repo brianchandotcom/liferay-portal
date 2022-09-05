@@ -72,15 +72,9 @@ public class NPMJavaScriptAwarePortalWebResources
 		_lastModified.set(bundle.getLastModified());
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.js.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private final AtomicLong _lastModified = new AtomicLong();
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.frontend.js.web)")
 	private ServletContext _servletContext;
 
 }

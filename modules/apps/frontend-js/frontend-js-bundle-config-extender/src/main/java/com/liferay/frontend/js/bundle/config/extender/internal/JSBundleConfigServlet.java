@@ -128,17 +128,12 @@ public class JSBundleConfigServlet extends HttpServlet {
 		printWriter.close();
 	}
 
-	@Reference(unbind = "-")
-	protected void setJSBundleConfigTracker(
-		JSBundleConfigTracker jsBundleConfigTracker) {
-
-		_jsBundleConfigTracker = jsBundleConfigTracker;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSBundleConfigServlet.class);
 
 	private volatile ComponentContext _componentContext;
+
+	@Reference
 	private JSBundleConfigTracker _jsBundleConfigTracker;
 
 	@Reference

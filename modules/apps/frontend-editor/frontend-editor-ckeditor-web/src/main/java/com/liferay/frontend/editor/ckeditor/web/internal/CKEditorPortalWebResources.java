@@ -56,15 +56,11 @@ public class CKEditorPortalWebResources implements PortalWebResources {
 		_bundle = bundleContext.getBundle();
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.editor.ckeditor.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private Bundle _bundle;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.frontend.editor.ckeditor.web)"
+	)
 	private ServletContext _servletContext;
 
 }

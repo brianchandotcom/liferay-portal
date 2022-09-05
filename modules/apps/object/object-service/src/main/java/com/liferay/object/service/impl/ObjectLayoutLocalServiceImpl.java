@@ -17,8 +17,7 @@ package com.liferay.object.service.impl;
 import com.liferay.object.constants.ObjectLayoutBoxConstants;
 import com.liferay.object.exception.DefaultObjectLayoutException;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
-import com.liferay.object.exception.ObjectLayoutBoxCategorizationTypeException;
-import com.liferay.object.exception.ObjectLayoutBoxCommentsTypeException;
+import com.liferay.object.exception.ObjectLayoutBoxTypeException;
 import com.liferay.object.exception.ObjectLayoutColumnSizeException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -46,6 +45,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -572,7 +572,7 @@ public class ObjectLayoutLocalServiceImpl
 
 			for (ObjectLayoutBox objectLayoutBox : objectLayoutBoxes) {
 				if (Validator.isNull(objectLayoutBox.getType())) {
-					throw new ObjectLayoutBoxCategorizationTypeException(
+					throw new ObjectLayoutBoxTypeException.Categorization(
 						"Object layout box must have a type");
 				}
 
@@ -591,21 +591,23 @@ public class ObjectLayoutLocalServiceImpl
 							PropsUtil.get("feature.flag.LPS-158672")) &&
 						!objectDefinition.isEnableCategorization()) {
 
-						throw new ObjectLayoutBoxCategorizationTypeException(
+						throw new ObjectLayoutBoxTypeException.Categorization(
 							"Categorization layout box must be enabled to be " +
 								"used");
 					}
 
 					if (!objectDefinition.isDefaultStorageType()) {
-						throw new ObjectLayoutBoxCategorizationTypeException(
-							"Categorization layout box only can be used in " +
-								"object definitions with default storage type");
+						throw new ObjectLayoutBoxTypeException.Categorization(
+							StringBundler.concat(
+								"Categorization layout box only can be used ",
+								"in object definitions with default storage ",
+								"type"));
 					}
 
 					countObjectLayoutBoxCategorizationType++;
 
 					if (countObjectLayoutBoxCategorizationType > 1) {
-						throw new ObjectLayoutBoxCategorizationTypeException(
+						throw new ObjectLayoutBoxTypeException.Categorization(
 							"There can only be one categorization layout box " +
 								"per layout");
 					}
@@ -613,7 +615,7 @@ public class ObjectLayoutLocalServiceImpl
 					if (ListUtil.isNotEmpty(
 							objectLayoutBox.getObjectLayoutRows())) {
 
-						throw new ObjectLayoutBoxCategorizationTypeException(
+						throw new ObjectLayoutBoxTypeException.Categorization(
 							"Categorization layout box must not have layout " +
 								"rows");
 					}
@@ -629,12 +631,12 @@ public class ObjectLayoutLocalServiceImpl
 					}
 
 					if (!objectDefinition.isEnableComments()) {
-						throw new ObjectLayoutBoxCommentsTypeException(
+						throw new ObjectLayoutBoxTypeException.Comments(
 							"Comments layout box must be enabled to be used");
 					}
 
 					if (!objectDefinition.isDefaultStorageType()) {
-						throw new ObjectLayoutBoxCommentsTypeException(
+						throw new ObjectLayoutBoxTypeException.Comments(
 							"Comments layout box only can be used in object " +
 								"definitions with default storage type");
 					}
@@ -642,7 +644,7 @@ public class ObjectLayoutLocalServiceImpl
 					countObjectLayoutBoxCommentsType++;
 
 					if (countObjectLayoutBoxCommentsType > 1) {
-						throw new ObjectLayoutBoxCommentsTypeException(
+						throw new ObjectLayoutBoxTypeException.Comments(
 							"There can only be one comments layout box per " +
 								"layout");
 					}
@@ -650,7 +652,7 @@ public class ObjectLayoutLocalServiceImpl
 					if (ListUtil.isNotEmpty(
 							objectLayoutBox.getObjectLayoutRows())) {
 
-						throw new ObjectLayoutBoxCommentsTypeException(
+						throw new ObjectLayoutBoxTypeException.Comments(
 							"Comments layout box must not have layout rows");
 					}
 				}

@@ -115,18 +115,6 @@ definition {
 		CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = "${fileName}");
 	}
 
-	macro generateNewKey {
-		Click(
-			key_text = "Actions",
-			locator1 = "Button#ANY");
-
-		Click(
-			key_action = "Generate New",
-			locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
-		
-		AssertElementPresent(locator1 = "CP2ActivationKeys#GENERATE_KEY_FORM");
-	}
-
 	macro filterKeyTable {
 		var key_filterOption = "${filterOption}";
 
@@ -185,6 +173,18 @@ definition {
 		return "${downloadedFileName}";
 	}
 
+	macro generateNewKey {
+		Click(
+			key_text = "Actions",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_action = "Generate New",
+			locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
+
+		AssertElementPresent(locator1 = "CP2ActivationKeys#GENERATE_KEY_FORM");
+	}
+
 	macro goToKeyTab {
 		var key_licenseTab = CP2ActivationKeys._formatCamelCase(camelCase = "${licenseTab}");
 
@@ -236,7 +236,7 @@ definition {
 				key_quantity = "${quantity}",
 				locator1 = "CP2ActivationKeys#PAGINATION_BUTTON_ITEM");
 		}
-	}	
+	}
 
 	macro selectProductVersion {
 		var key_label = "Version";
@@ -248,8 +248,8 @@ definition {
 
 	macro selectSubscription {
 		Click(
-			locator1 = "CP2ActivationKeys#SUBSCRIPTION_CHOICE",
-			key_position = "${position}");
+			key_position = "${position}",
+			locator1 = "CP2ActivationKeys#SUBSCRIPTION_CHOICE");
 	}
 
 }

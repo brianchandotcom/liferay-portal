@@ -17,9 +17,9 @@ definition {
 			User.firstLoginPG();
 		}
 
-		/*task ("Create a new Customer Portal Site") {
+		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
-		}*/
+		}
 	}
 
 	tearDown {
@@ -31,8 +31,8 @@ definition {
 	}
 
 	@description = "LPS-149705 - Verify if the amount of available keys are shown on subscriptions."
-    @priority = "5"
-    test IfAvailableKeysAreDisplayedOnSubscriptions {
+	@priority = "5"
+	test IfAvailableKeysAreDisplayedOnSubscriptions {
 		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example FIFA account
@@ -52,19 +52,19 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-            CP2ActivationKeys.generateNewKey();
+			CP2ActivationKeys.generateNewKey();
 		}
 
-        task ("Then the subscription option will display remaining available key activations") {
-            AssertTextEquals.assertPartialText(
+		task ("Then the subscription option will display remaining available key activations") {
+			AssertTextEquals.assertPartialText(
 				locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_AVAILABLE",
 				value1 = "Key activation available: 1 of");
-        }
-    }
+		}
+	}
 
 	@description = "LPS-149727 - Verify if 'Cancel' button brings user back to Product Actiation DXP Page."
-    @priority = "4"
-    test IfCancelButtonBringsToActivationDXPPage {
+	@priority = "4"
+	test IfCancelButtonBringsToActivationDXPPage {
 		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example Solutions account
@@ -84,21 +84,21 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-            CP2ActivationKeys.generateNewKey();
+			CP2ActivationKeys.generateNewKey();
 		}
 
-        task ("Then clicking 'Cancel' will redirect back to the Product Activation page") {
-            Button.click(button = "Cancel");
+		task ("Then clicking 'Cancel' will redirect back to the Product Activation page") {
+			Button.click(button = "Cancel");
 
 			AssertElementPresent(
-				locator1 = "CP2ActivationKeys#ACTIVE_PRODUCT_TYPE",
-				key_productType = "DXP");
-        }
-    }
+				key_productType = "DXP",
+				locator1 = "CP2ActivationKeys#ACTIVE_PRODUCT_TYPE");
+		}
+	}
 
-    @description = "LPS-149703 - Verify if user can select the Key Type when generating a new key."
-    @priority = "4"
-    test IfKeyTypeCanBeSelected {
+	@description = "LPS-149703 - Verify if user can select the Key Type when generating a new key."
+	@priority = "4"
+	test IfKeyTypeCanBeSelected {
 		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example Solutions account
@@ -118,17 +118,17 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-            CP2ActivationKeys.generateNewKey();
+			CP2ActivationKeys.generateNewKey();
 		}
 
-        task ("Then the user can select the Key Type") {
-            CP2ActivationKeys.selectKeyType(key_option = "Production (Virtual Cluster)");
-        }
-    }
+		task ("Then the user can select the Key Type") {
+			CP2ActivationKeys.selectKeyType(key_option = "Production (Virtual Cluster)");
+		}
+	}
 
 	@description = "LPS-149707 - Verify a message with valid activation dates appears after a subscription is selected"
-    @priority = "3"
-    test IfMessageAppearsAfterSelectSubscription {
+	@priority = "3"
+	test IfMessageAppearsAfterSelectSubscription {
 		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example Solutions account
@@ -150,14 +150,13 @@ definition {
 		}
 
 		task ("And when the user goes to generate a new key and selects a Key Type that does not have permanent licenses") {
-
-            CP2ActivationKeys.generateNewKey();
+			CP2ActivationKeys.generateNewKey();
 
 			CP2ActivationKeys.selectKeyType(key_option = "Production (Virtual Cluster)");
 		}
 
-        task ("Then a message will appear after the user selects a subscription with the active dates") {
-		    var key_position = "1";
+		task ("Then a message will appear after the user selects a subscription with the active dates") {
+			var key_position = "1";
 			var activeDate = selenium.getText("CP2ActivationKeys#SUBSCRIPTION_LENGTH");
 
 			CP2ActivationKeys.selectSubscription(position = "${key_position}");
@@ -165,12 +164,12 @@ definition {
 			AssertTextEquals(
 				locator1 = "Message#INFO",
 				value1 = "Activation Keys will be valid ${activeDate}");
-        }
-    }
+		}
+	}
 
 	@description = "LPS-149708 - Verify a message appears after selecting a subscription with a permanent license"
-    @priority = "3"
-    test IfMessageAppearsOnSubscriptionsThatAllowPermanentLicenses {
+	@priority = "3"
+	test IfMessageAppearsOnSubscriptionsThatAllowPermanentLicenses {
 		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example Solutions account
@@ -190,21 +189,21 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-            CP2ActivationKeys.generateNewKey();
+			CP2ActivationKeys.generateNewKey();
 		}
 
-        task ("Then a message will appear after the user selects a subscription with a permanent license type") {
+		task ("Then a message will appear after the user selects a subscription with a permanent license type") {
 			CP2ActivationKeys.selectSubscription(position = "1");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#INFO",
 				value1 = "Activation Keys will be valid indefinitely");
-        }
-    }
+		}
+	}
 
 	@description = "LPS-149706 - Verify if a subscription has 0 keys then the option is disabled."
-    @priority = "5"
-    test IfNoAvailableKeysAreDisplayedOnSubscriptions {
+	@priority = "5"
+	test IfNoAvailableKeysAreDisplayedOnSubscriptions {
 		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example FIFA account
@@ -224,19 +223,19 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-            CP2ActivationKeys.generateNewKey();
+			CP2ActivationKeys.generateNewKey();
 		}
 
-        task ("Then a user can see that disabled subscriptions will have 0 keys available") {
-            AssertTextEquals.assertPartialText(
+		task ("Then a user can see that disabled subscriptions will have 0 keys available") {
+			AssertTextEquals.assertPartialText(
 				locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_DISABLED",
 				value1 = "Key activation available: 0 of");
-        }
-    }
+		}
+	}
 
 	@description = "LPS-149731 - Verify if product field is already enabled with the product the user selected in product activation."
-    @priority = "4"
-    test IfProductEnabledFromStart {
+	@priority = "4"
+	test IfProductEnabledFromStart {
 		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example FIFA account
@@ -256,19 +255,19 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-            CP2ActivationKeys.generateNewKey();
+			CP2ActivationKeys.generateNewKey();
 		}
 
-        task ("Then the product field will be filled in by default with the project selected - DXP") {
+		task ("Then the product field will be filled in by default with the project selected - DXP") {
 			AssertTextEquals(
 				locator1 = "CP2ActivationKeys#ENABLED_PRODUCT",
 				value1 = "DXP");
-        }
-    }
+		}
+	}
 
 	@description = "LPS-149702 - Verify if user can select the Version when generating a new key."
-    @priority = "5"
-    test IfProductVersionCanBeSelected {
+	@priority = "5"
+	test IfProductVersionCanBeSelected {
 		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example Solutions account
@@ -288,17 +287,17 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-            CP2ActivationKeys.generateNewKey();
+			CP2ActivationKeys.generateNewKey();
 		}
 
-        task ("Then the user can select the Product Version") {
-            CP2ActivationKeys.selectProductVersion(key_option = "7.3");
-        }
-    }
+		task ("Then the user can select the Product Version") {
+			CP2ActivationKeys.selectProductVersion(key_option = "7.3");
+		}
+	}
 
 	@description = "LPS-149704 - Verify if start and end dates are displayed on subscriptions."
-    @priority = "4"
-    test IfStartAndEndDateAreDisplayedOnSubscriptions {
+	@priority = "4"
+	test IfStartAndEndDateAreDisplayedOnSubscriptions {
 		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example Solutions account
@@ -318,20 +317,20 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-            CP2ActivationKeys.generateNewKey();
+			CP2ActivationKeys.generateNewKey();
 		}
 
-        task ("Then the subscription options will display a start and end date") {
-            AssertTextEquals(
-				ley_position = "1",
+		task ("Then the subscription options will display a start and end date") {
+			AssertTextEquals(
+				key_position = "1",
 				locator1 = "CP2ActivationKeys#SUBSCRIPTION_LENGTH",
 				value1 = "Aug 2, 2022 - Jul 3, 2023");
-        }
-    }
+		}
+	}
 
 	@description = "LPS-149715 - Verify the 'Next' button is disabled until required options are selected."
-    @priority = "3"
-    test NextButtonOnlyAvailableIfAllOptionsAreSelected {
+	@priority = "3"
+	test NextButtonOnlyAvailableIfAllOptionsAreSelected {
 		property portal.upstream = "quarantine";
 
 		// Needs refactor since it depends on example Solutions account
@@ -351,19 +350,20 @@ definition {
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-            CP2ActivationKeys.generateNewKey();
+			CP2ActivationKeys.generateNewKey();
 		}
 
-        task ("Then the 'Next' button will be disabled until after the user makes a subscription selection. All other required fields have a default option selected") {
+		task ("Then the 'Next' button will be disabled until after the user makes a subscription selection. All other required fields have a default option selected") {
 			AssertElementPresent(
-				locator1 = "Button#ANY_DISABLED",
-				key_text = "Next");
-			
+				key_text = "Next",
+				locator1 = "Button#ANY_DISABLED");
+
 			CP2ActivationKeys.selectSubscription(position = "1");
 
 			AssertElementPresent(
-				locator1 = "Button#ANY_ENABLED",
-				key_text = "Next");
-        }
-    }
+				key_text = "Next",
+				locator1 = "Button#ANY_ENABLED");
+		}
+	}
+
 }

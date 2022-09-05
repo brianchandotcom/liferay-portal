@@ -125,18 +125,6 @@ public class DDMFormValuesExportImportContentProcessor
 		long groupId, DDMFormValues ddmFormValues) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
 	private boolean _hasNotExportableStatus(
 		StagedModel stagedModel, int status) {
 
@@ -151,11 +139,13 @@ public class DDMFormValuesExportImportContentProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormValuesExportImportContentProcessor.class);
 
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	private class FileEntryExportDDMFormFieldValueTransformer

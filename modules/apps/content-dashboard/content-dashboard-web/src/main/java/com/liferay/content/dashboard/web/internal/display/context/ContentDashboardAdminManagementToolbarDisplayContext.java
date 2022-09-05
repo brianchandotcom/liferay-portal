@@ -819,8 +819,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			).putData(
 				"selectTagURL", String.valueOf(_getAssetTagSelectorURL())
 			).setActive(
-				!ListUtil.isEmpty(
-					_contentDashboardAdminDisplayContext.getAssetCategoryIds())
+				SetUtil.isNotEmpty(
+					_contentDashboardAdminDisplayContext.getAssetTagIds())
 			).setLabel(
 				_language.get(httpServletRequest, "tags") +
 					StringPool.TRIPLE_PERIOD

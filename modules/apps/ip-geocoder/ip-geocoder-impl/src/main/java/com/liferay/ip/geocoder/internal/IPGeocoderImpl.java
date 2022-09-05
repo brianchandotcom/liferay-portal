@@ -141,6 +141,10 @@ public class IPGeocoderImpl implements IPGeocoder {
 					"/liferay/geoip/GeoIPCity.dat";
 		}
 
+		if (_log.isInfoEnabled()) {
+			_log.info("File " + filePath);
+		}
+
 		try {
 			File ipGeocoderFile = _getIPGeocoderFile(
 				filePath, igGeocoderConfiguration.fileURL(), false);

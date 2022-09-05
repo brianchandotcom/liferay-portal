@@ -977,6 +977,20 @@ definition {
 		}
 	}
 
+	macro viewSubscribedTag {
+		if (isSet(subscribedTag)) {
+			AssertTextEquals(
+				key_subscribedTag = "${subscribedTag}",
+				locator1 = "Questions#SUBSCRIBED_TAG",
+				value1 = "${subscribedTag}");
+		}
+		else if (isSet(nosubscribedTag)) {
+			AssertTextEquals(
+				locator1 = "Questions#QUESTIONS_DEFAULT_SUBSCRIPTION_TOPICS",
+				value1 = "There are no results.");
+		}
+	}
+
 	macro viewSubscribedTopic {
 		if (isSet(subscribedTopic)) {
 			AssertTextEquals(

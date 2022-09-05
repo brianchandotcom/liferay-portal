@@ -17,6 +17,8 @@ import * as yup from 'yup';
 
 import i18n from '../i18n';
 
+const MINIMUM_CHARACTERS_PASSWORD = 8;
+
 const userSchema = yup.object({
 	alternateName: yup.string().required(),
 	emailAddress: yup.string().email().required(),
@@ -26,16 +28,20 @@ const userSchema = yup.object({
 
 const passwordStructure = {
 	currentPassword: yup.string(),
-
 	password: yup
 		.string()
 		.required(i18n.translate('this-field-is-required'))
-		.min(8, i18n.translate('minimum-8-characters'))
+		.min(
+			MINIMUM_CHARACTERS_PASSWORD,
+			i18n.sub(
+				'minimum-x-characters',
+				MINIMUM_CHARACTERS_PASSWORD.toString()
+			)
+		)
 		.matches(
 			/[a-zA-Z0-9]/,
 			i18n.translate('password-may-contain-letters-and-number')
 		),
-
 	rePassword: yup
 		.string()
 		.required(i18n.translate('this-field-is-required'))
@@ -46,25 +52,10 @@ const passwordStructure = {
 };
 
 const passwordRequiredStructure = {
+	...passwordStructure,
 	currentPassword: yup
 		.string()
 		.required(i18n.translate('this-field-is-required')),
-
-	password: yup
-		.string()
-		.required(i18n.translate('this-field-is-required'))
-		.min(8, i18n.translate('minimum-8-characters'))
-		.matches(
-			/[a-zA-Z0-9]/,
-			i18n.translate('password-may-contain-letters-and-number')
-		),
-	rePassword: yup
-		.string()
-		.required(i18n.translate('this-field-is-required'))
-		.oneOf(
-			[yup.ref('password'), null],
-			i18n.translate('passwords-do-not-match')
-		),
 };
 
 const yupSchema = {

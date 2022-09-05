@@ -25,7 +25,7 @@ import {AccountContext} from '../../../context/AccountContext';
 import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema from '../../../schema/yup';
-import {liferayUserAccountsRest} from '../../../services/rest';
+import {UserAccount, liferayUserAccountsRest} from '../../../services/rest';
 
 type UserPasswordDefault = {
 	alternateName?: string;
@@ -39,27 +39,30 @@ type UserPasswordDefault = {
 };
 
 const ChangeUserPassword: React.FC = () => {
-	const {userAccount} = useOutletContext<any>();
 	const {
 		mutatePassword,
-	}: {mutatePassword: KeyedMutator<any>} = useOutletContext();
+		userAccount,
+	}: {
+		mutatePassword: KeyedMutator<any>;
+		userAccount: UserAccount;
+	} = useOutletContext();
 
 	const [{myUserAccount}] = useContext(AccountContext);
 
 	const {
 		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
-	const validationId = myUserAccount?.id === userAccount.id ? true : false;
+	const isSelfAccount = myUserAccount?.id === userAccount.id;
 	const {
 		formState: {errors},
 		handleSubmit,
 		register,
 		setError,
 	} = useForm({
-		defaultValues: userAccount,
+		defaultValues: userAccount as any,
 		reValidateMode: 'onSubmit',
 		resolver: yupResolver(
-			validationId ? yupSchema.passwordRequired : yupSchema.password
+			isSelfAccount ? yupSchema.passwordRequired : yupSchema.password
 		),
 	});
 
@@ -83,7 +86,9 @@ const ChangeUserPassword: React.FC = () => {
 			.catch((error) => {
 				if (error.info.type === 'MustMatchCurrentPassword') {
 					return setError('currentPassword', {
-						message: i18n.translate('current-password-incorrect'),
+						message: i18n.translate(
+							'current-password-is-incorrect'
+						),
 					});
 				}
 
@@ -100,17 +105,15 @@ const ChangeUserPassword: React.FC = () => {
 	return (
 		<Container className="change-user-password">
 			<ClayForm>
-				{validationId ? (
+				{isSelfAccount && (
 					<Form.Input
 						{...inputProps}
 						label={i18n.translate('current-password')}
 						name="currentPassword"
 						placeholder={i18n.translate('current-password')}
-						required={true}
+						required
 						type="password"
 					/>
-				) : (
-					''
 				)}
 
 				<Form.Input

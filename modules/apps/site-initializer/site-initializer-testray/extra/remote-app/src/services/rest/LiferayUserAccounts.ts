@@ -42,4 +42,5 @@ class LiferayUserAccountsRest extends Rest<UserForm, UserAccount> {
 }
 
 const liferayUserAccountsRest = new LiferayUserAccountsRest();
+
 export {liferayUserAccountsRest};

@@ -138,15 +138,6 @@ public class ObjectEntryDTOConverter
 		ObjectRelationship objectRelationship) {
 
 		try {
-			boolean reverse = objectRelationship.isReverse();
-
-			if (reverse) {
-				objectRelationship =
-					_objectRelationshipLocalService.
-						fetchReverseObjectRelationship(
-							objectRelationship, false);
-			}
-
 			return _toObjectEntries(
 				dtoConverterContext, nestedFieldsDepth,
 				_objectEntryLocalService.getManyToManyObjectEntries(

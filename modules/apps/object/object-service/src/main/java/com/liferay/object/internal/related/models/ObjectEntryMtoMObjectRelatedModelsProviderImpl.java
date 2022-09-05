@@ -64,12 +64,6 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
-		if (objectRelationship.isReverse()) {
-			objectRelationship =
-				_objectRelationshipLocalService.fetchReverseObjectRelationship(
-					objectRelationship, false);
-		}
-
 		if (Objects.equals(
 				objectRelationship.getDeletionType(),
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE) ||
@@ -123,17 +117,9 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
-		boolean reverse = objectRelationship.isReverse();
-
-		if (objectRelationship.isReverse()) {
-			objectRelationship =
-				_objectRelationshipLocalService.fetchReverseObjectRelationship(
-					objectRelationship, false);
-		}
-
 		return _objectEntryLocalService.getManyToManyObjectEntries(
 			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
-			true, reverse, start, end);
+			true, objectRelationship.isReverse(), start, end);
 	}
 
 	@Override
@@ -145,17 +131,9 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
-		boolean reverse = objectRelationship.isReverse();
-
-		if (objectRelationship.isReverse()) {
-			objectRelationship =
-				_objectRelationshipLocalService.fetchReverseObjectRelationship(
-					objectRelationship, false);
-		}
-
 		return _objectEntryLocalService.getManyToManyObjectEntriesCount(
 			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
-			true, reverse);
+			true, objectRelationship.isReverse());
 	}
 
 	@Override
@@ -168,18 +146,10 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
-		boolean reverse = objectRelationship.isReverse();
-
-		if (objectRelationship.isReverse()) {
-			objectRelationship =
-				_objectRelationshipLocalService.fetchReverseObjectRelationship(
-					objectRelationship, false);
-		}
-
 		return _objectEntryLocalService.getManyToManyObjectEntries(
 			groupId, objectRelationship.getObjectRelationshipId(),
-			objectEntryId, false, reverse, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			objectEntryId, false, objectRelationship.isReverse(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	private final String _className;

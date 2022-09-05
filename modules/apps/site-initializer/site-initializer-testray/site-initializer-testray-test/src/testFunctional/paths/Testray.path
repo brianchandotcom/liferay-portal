@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_REQUIRED_MESSAGE</td>
+	<td>//label[contains(text(), '${key_fieldLabel}')]/..//span[contains(text(),'${key_warningMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEW_DESCRIPTION_PROJECT</td>
 	<td>//input[contains(@id, 'description')]</td>
 	<td></td>

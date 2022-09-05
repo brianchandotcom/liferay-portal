@@ -1,0 +1,186 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+
+        Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        TestrayManage.deleteAllProductVersion();
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-160531 - Verify if As an Administrator I am able to add Product Versions"
+	@priority = "5"
+	test AdminCanAddProductVersion {
+		task ("Go to Testray and Create Project") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Product_Ver_1 Project Description",
+				key_name = "Product_Ver_1 Project");
+		}
+
+		task ("Change pagination, create Product Version and Assert it was created") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+            TestrayManage.createProductVersion(
+                nameOptions = "Product_Ver_1 Project",
+				manageOption = "Manage Product Versions",
+                version = "1.x");
+
+			Testray.assertProjectName(key_name = "1.x");
+		}
+
+	}
+
+	@description = "This is a test for LPS-160532 - Verify if as an Administrator I am able to Edit Product Versions"
+	@priority = "5"
+	test AdminCanEditProductVersion {
+		task ("Go to Testray and Create Project") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Product_Ver_3 Project Description",
+				key_name = "Product_Ver_3 Project");
+		}
+
+		task ("Change pagination, create Product Version") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			TestrayManage.createProductVersion(
+                nameOptions = "Product_Ver_3 Project",
+				manageOption = "Manage Product Versions",
+                version = "1.x");
+		}
+
+        task ("Edit Product Version and Assert it was Edited") {
+			TestrayManage.editProductVersion(
+				valueName = "1.x",
+				itemManage = "Edit",
+				caseName = "1.1.x");
+
+            Testray.assertProjectName(key_name = "1.1.x");
+		}
+
+	}
+
+	@description = "This is a test for LPS-160533 - Verify if as an Administrator I am able to delete Product Versions"
+	@priority = "5"
+	test AdminCanDeleteProductVersion {
+		task ("Go to Testray and Create Project") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Product_Ver_2 Project Description",
+				key_name = "Product_Ver_2 Project");
+		}
+
+		task ("Change pagination, create Product Version") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			TestrayManage.createProductVersion(
+                nameOptions = "Product_Ver_2 Project",
+				manageOption = "Manage Product Versions",
+                version = "1.x");
+		}
+
+        task ("Delete Product Version and Assert it was Deleted") {
+			TestrayManage.deleteProductVersion(
+				itemManage = "Delete",
+				versionName = "1.x");
+
+            Testray.assertProjectNotPresent(key_name = "1.x");
+		}
+
+	}
+
+	@description = "This is a test for LPS-160534 - Verify if as an Administrator I should not be able to add a duplicate Product Versions"
+	@priority = "5"
+	test AdminCanNotAddDuplicateProductVersion {
+		task ("Go to Testray and Create Project") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Product_Ver_4 Project Description",
+				key_name = "Product_Ver_4 Project");
+		}
+
+		task ("Change pagination, create Product Version and Assert that no duplicate product version was created") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			TestrayManage.createProductVersion(
+                nameOptions = "Product_Ver_4 Project",
+				manageOption = "Manage Product Versions",
+                version = "1.x");
+			
+			Click(locator1 = "TestrayManage#CLOSE_MODAL");
+
+			TestrayManage.specificVersion(
+                nameOptions = "Product_Ver_4 Project",
+				manageOption = "Manage Product Versions",
+				caseName = "1.x");
+
+			Alert.viewErrorMessage(errorMessage = "An unexpected error ocurred");
+
+			
+		}
+
+	}
+
+	@description = "This is a test for LPS-161334 - Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
+	@priority = "4"
+	test AdminCanViewWarningMessage {
+		task ("Go to Testray and Create Project") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Product_Ver_5 Project Description",
+				key_name = "Product_Ver_5 Project");
+		}
+
+		task ("Change pagination and Assert that field Name is required") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			TestrayManage.specificVersion(
+                nameOptions = "Product_Ver_5 Project",
+				manageOption = "Manage Product Versions",
+                caseName = "");
+
+			AssertElementPresent(
+				key_fieldLabel = "Name",
+				key_warningMessage = "name is a required field",
+				locator1 = "Testray#FIELD_REQUIRED_MESSAGE");
+		}
+	}
+
+}

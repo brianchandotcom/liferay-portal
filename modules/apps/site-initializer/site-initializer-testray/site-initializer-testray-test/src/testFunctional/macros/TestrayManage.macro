@@ -90,6 +90,48 @@ definition {
 		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 	}
 
+	macro createProductVersion {
+		TestrayContextMenu.clickContextMenuProjects(name = "${nameOptions}");
+
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "${manageOption}");
+
+		TestrayManage.createNewCaseTypes(caseName = "${version}");
+	}
+
+	macro specificVersion {
+		TestrayContextMenu.clickContextMenuProjects(name = "${nameOptions}");
+
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "${manageOption}");
+
+		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${caseName}");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+	}
+
+	macro deleteAllProductVersion {
+		TestrayLayout.clickResultsOnSidebar();
+
+		Refresh();
+
+		Testray.changePagination(
+			numberItems = "20",
+			valuePagination = "150");
+
+		while (IsElementPresent(key_projectName = "Product_", locator1 = "Testray#PROJECT_NAME")) {
+			TestrayContextMenu.clickContextMenuProjects(name = "Product_");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	macro deleteAllCasesTypes {
 		TestrayLayout.clickManageOnSidebar();
 
@@ -168,6 +210,16 @@ definition {
 		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 	}
 
+	macro deleteProductVersion {
+		TestrayContextMenu.clickContextMenuProjects(name = "${versionName}");
+
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "${itemManage}");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this item?");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro editCategoryOption {
 		Type(
 			locator1 = "TestrayManage#SELECT_CATEGORY_IN_OPTIONS",
@@ -220,6 +272,18 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 
 		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+	}
+
+	macro editProductVersion {
+		TestrayContextMenu.clickContextMenuProjects(name = "${valueName}");
+
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "${itemManage}");
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${caseName}");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
 	macro goToEditPage {

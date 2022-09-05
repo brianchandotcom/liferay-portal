@@ -44,11 +44,11 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public DLViewFileEntryMetadataSetsManagementToolbarDisplayContext(
+			DLViewFileEntryMetadataSetsDisplayContext
+				dlViewFileEntryMetadataSetsDisplayContext,
 			HttpServletRequest httpServletRequest,
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			DLViewFileEntryMetadataSetsDisplayContext
-				dlViewFileEntryMetadataSetsDisplayContext)
+			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
 		super(

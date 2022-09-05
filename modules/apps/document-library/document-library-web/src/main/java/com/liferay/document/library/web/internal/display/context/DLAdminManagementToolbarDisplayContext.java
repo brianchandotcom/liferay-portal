@@ -84,21 +84,20 @@ public class DLAdminManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public DLAdminManagementToolbarDisplayContext(
-		HttpServletRequest httpServletRequest,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
 		DLAdminDisplayContext dlAdminDisplayContext,
-		DLTrashHelper dlTrashHelper) {
+		DLTrashHelper dlTrashHelper, HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			dlAdminDisplayContext.getSearchContainer());
 
+		_dlAdminDisplayContext = dlAdminDisplayContext;
+		_dlTrashHelper = dlTrashHelper;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_dlAdminDisplayContext = dlAdminDisplayContext;
-		_dlTrashHelper = dlTrashHelper;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);

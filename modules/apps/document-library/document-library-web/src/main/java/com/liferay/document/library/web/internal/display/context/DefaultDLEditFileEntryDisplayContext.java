@@ -72,11 +72,11 @@ public class DefaultDLEditFileEntryDisplayContext
 	implements DLEditFileEntryDisplayContext {
 
 	public DefaultDLEditFileEntryDisplayContext(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse,
+		DDMBeanTranslator ddmBeanTranslator,
+		DDMFormValuesFactory ddmFormValuesFactory,
 		DLFileEntryType dlFileEntryType, DLValidator dlValidator,
-		StorageEngine storageEngine, DDMBeanTranslator ddmBeanTranslator,
-		DDMFormValuesFactory ddmFormValuesFactory) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, StorageEngine storageEngine) {
 
 		this(
 			httpServletRequest, dlFileEntryType, dlValidator, null,
@@ -84,11 +84,10 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	public DefaultDLEditFileEntryDisplayContext(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, DLValidator dlValidator,
-		FileEntry fileEntry, StorageEngine storageEngine,
 		DDMBeanTranslator ddmBeanTranslator,
-		DDMFormValuesFactory ddmFormValuesFactory) {
+		DDMFormValuesFactory ddmFormValuesFactory, DLValidator dlValidator,
+		FileEntry fileEntry, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, StorageEngine storageEngine) {
 
 		this(
 			httpServletRequest, (DLFileEntryType)null, dlValidator, fileEntry,

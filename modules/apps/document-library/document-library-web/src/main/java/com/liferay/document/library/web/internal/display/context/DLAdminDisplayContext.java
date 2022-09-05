@@ -112,15 +112,15 @@ public class DLAdminDisplayContext {
 		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		VersioningStrategy versioningStrategy, TrashHelper trashHelper) {
+		LiferayPortletResponse liferayPortletResponse, TrashHelper trashHelper,
+		VersioningStrategy versioningStrategy) {
 
 		_assetAutoTaggerConfiguration = assetAutoTaggerConfiguration;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_versioningStrategy = versioningStrategy;
 		_trashHelper = trashHelper;
+		_versioningStrategy = versioningStrategy;
 
 		_dlRequestHelper = new DLRequestHelper(_httpServletRequest);
 

@@ -48,15 +48,15 @@ import javax.portlet.PortletURL;
 public class DLViewFileEntryMetadataSetsDisplayContext {
 
 	public DLViewFileEntryMetadataSetsDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
 		DDMStructureLinkLocalService ddmStructureLinkLocalService,
-		DDMStructureService ddmStructureService, Portal portal) {
+		DDMStructureService ddmStructureService,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, Portal portal) {
 
-		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
 		_ddmStructureLinkLocalService = ddmStructureLinkLocalService;
 		_ddmStructureService = ddmStructureService;
+		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 
 		_portal = portal;
 

@@ -41,24 +41,12 @@ public class DefaultIGViewFileVersionDisplayContext
 	implements IGViewFileVersionDisplayContext {
 
 	public DefaultIGViewFileVersionDisplayContext(
+			DLTrashHelper dlTrashHelper, DLURLHelper dlURLHelper,
+			FileShortcut fileShortcut, FileVersion fileVersion,
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, FileShortcut fileShortcut,
-			ResourceBundle resourceBundle, DLTrashHelper dlTrashHelper,
-			VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper)
-		throws PortalException {
-
-		this(
-			httpServletRequest, httpServletResponse,
-			fileShortcut.getFileVersion(), fileShortcut, resourceBundle,
-			dlTrashHelper, versioningStrategy, dlURLHelper);
-	}
-
-	public DefaultIGViewFileVersionDisplayContext(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, FileVersion fileVersion,
-			FileShortcut fileShortcut, ResourceBundle resourceBundle,
-			DLTrashHelper dlTrashHelper, VersioningStrategy versioningStrategy,
-			DLURLHelper dlURLHelper)
+			HttpServletResponse httpServletResponse,
+			ResourceBundle resourceBundle,
+			VersioningStrategy versioningStrategy)
 		throws PortalException {
 
 		_igRequestHelper = new IGRequestHelper(httpServletRequest);
@@ -79,6 +67,20 @@ public class DefaultIGViewFileVersionDisplayContext
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
+			DLTrashHelper dlTrashHelper, DLURLHelper dlURLHelper,
+			FileShortcut fileShortcut, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
+			ResourceBundle resourceBundle,
+			VersioningStrategy versioningStrategy)
+		throws PortalException {
+
+		this(
+			dlTrashHelper, dlURLHelper, fileShortcut,
+			fileShortcut.getFileVersion(), httpServletRequest,
+			httpServletResponse, resourceBundle, versioningStrategy);
+	}
+
+	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, FileVersion fileVersion,
 			ResourceBundle resourceBundle, DLTrashHelper dlTrashHelper,
@@ -86,8 +88,8 @@ public class DefaultIGViewFileVersionDisplayContext
 		throws PortalException {
 
 		this(
-			httpServletRequest, httpServletResponse, fileVersion, null,
-			resourceBundle, dlTrashHelper, versioningStrategy, dlURLHelper);
+			dlTrashHelper, dlURLHelper, null, fileVersion, httpServletRequest,
+			httpServletResponse, resourceBundle, versioningStrategy);
 	}
 
 	@Override

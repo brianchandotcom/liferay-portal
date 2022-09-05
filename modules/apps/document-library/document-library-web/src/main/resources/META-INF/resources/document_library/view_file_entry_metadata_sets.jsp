@@ -23,7 +23,7 @@ DLViewFileEntryMetadataSetsDisplayContext dLViewFileEntryMetadataSetsDisplayCont
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new DLViewFileEntryMetadataSetsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dLViewFileEntryMetadataSetsDisplayContext) %>"
+	managementToolbarDisplayContext="<%= new DLViewFileEntryMetadataSetsManagementToolbarDisplayContext(dLViewFileEntryMetadataSetsDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
 	propsTransformer="document_library/js/DDMStructuresManagementToolbarPropsTransformer"
 />
 

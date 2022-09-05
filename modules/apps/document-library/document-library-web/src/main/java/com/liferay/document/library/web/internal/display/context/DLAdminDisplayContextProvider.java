@@ -52,8 +52,8 @@ public class DLAdminDisplayContextProvider {
 		return new DLAdminDisplayContext(
 			_getAssetAutoTaggerConfiguration(dlRequestHelper),
 			httpServletRequest, dlRequestHelper.getLiferayPortletRequest(),
-			dlRequestHelper.getLiferayPortletResponse(), _versioningStrategy,
-			_trashHelper);
+			dlRequestHelper.getLiferayPortletResponse(), _trashHelper,
+			_versioningStrategy);
 	}
 
 	public DLAdminManagementToolbarDisplayContext
@@ -66,9 +66,9 @@ public class DLAdminDisplayContextProvider {
 			httpServletRequest);
 
 		return new DLAdminManagementToolbarDisplayContext(
-			httpServletRequest, dlRequestHelper.getLiferayPortletRequest(),
-			dlRequestHelper.getLiferayPortletResponse(), dlAdminDisplayContext,
-			_dlTrashHelper);
+			dlAdminDisplayContext, _dlTrashHelper, httpServletRequest,
+			dlRequestHelper.getLiferayPortletRequest(),
+			dlRequestHelper.getLiferayPortletResponse());
 	}
 
 	private AssetAutoTaggerConfiguration _getAssetAutoTaggerConfiguration(

@@ -64,9 +64,9 @@ public class IGDisplayContextProvider {
 
 			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
 				new DefaultIGViewFileVersionDisplayContext(
-					httpServletRequest, httpServletResponse, fileShortcut,
-					resourceBundle, _dlTrashHelper, _versioningStrategy,
-					_dlURLHelper);
+					_dlTrashHelper, _dlURLHelper, fileShortcut,
+					httpServletRequest, httpServletResponse, resourceBundle,
+					_versioningStrategy);
 
 			if (fileShortcut == null) {
 				return igViewFileVersionDisplayContext;

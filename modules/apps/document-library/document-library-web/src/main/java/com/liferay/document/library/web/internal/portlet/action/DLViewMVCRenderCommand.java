@@ -84,9 +84,9 @@ public class DLViewMVCRenderCommand extends BaseFolderMVCRenderCommand {
 				DLWebKeys.
 					DOCUMENT_LIBRARY_VIEW_FILE_ENTRY_METADATA_SETS_DISPLAY_CONTEXT,
 				new DLViewFileEntryMetadataSetsDisplayContext(
+					_ddmStructureLinkLocalService, _ddmStructureService,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
-					_ddmStructureLinkLocalService, _ddmStructureService,
 					_portal));
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FOLDER, _getFolder(renderRequest));

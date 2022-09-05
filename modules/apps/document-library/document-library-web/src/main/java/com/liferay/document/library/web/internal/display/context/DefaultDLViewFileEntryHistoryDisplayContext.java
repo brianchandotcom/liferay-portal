@@ -39,9 +39,9 @@ public class DefaultDLViewFileEntryHistoryDisplayContext
 	implements DLViewFileEntryHistoryDisplayContext {
 
 	public DefaultDLViewFileEntryHistoryDisplayContext(
-		HttpServletRequest httpServletRequest, FileVersion fileVersion,
-		ResourceBundle resourceBundle, DLTrashHelper dlTrashHelper,
-		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
+		DLTrashHelper dlTrashHelper, DLURLHelper dlURLHelper,
+		FileVersion fileVersion, HttpServletRequest httpServletRequest,
+		ResourceBundle resourceBundle, VersioningStrategy versioningStrategy) {
 
 		_resourceBundle = resourceBundle;
 

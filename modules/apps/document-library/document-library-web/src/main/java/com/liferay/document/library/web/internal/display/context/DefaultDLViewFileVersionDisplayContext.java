@@ -72,13 +72,13 @@ public class DefaultDLViewFileVersionDisplayContext
 	implements DLViewFileVersionDisplayContext {
 
 	public DefaultDLViewFileVersionDisplayContext(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, FileShortcut fileShortcut,
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
-			ResourceBundle resourceBundle, StorageEngine storageEngine,
-			DLTrashHelper dlTrashHelper,
 			DLPreviewRendererProvider dlPreviewRendererProvider,
-			VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper)
+			DLTrashHelper dlTrashHelper, DLURLHelper dlURLHelper,
+			FileShortcut fileShortcut, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
+			ResourceBundle resourceBundle, StorageEngine storageEngine,
+			VersioningStrategy versioningStrategy)
 		throws PortalException {
 
 		this(
@@ -89,13 +89,12 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, FileVersion fileVersion,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
-		ResourceBundle resourceBundle, StorageEngine storageEngine,
-		DLTrashHelper dlTrashHelper,
 		DLPreviewRendererProvider dlPreviewRendererProvider,
-		VersioningStrategy versioningStrategy, DLURLHelper dlURLHelper) {
+		DLTrashHelper dlTrashHelper, DLURLHelper dlURLHelper,
+		FileVersion fileVersion, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, ResourceBundle resourceBundle,
+		StorageEngine storageEngine, VersioningStrategy versioningStrategy) {
 
 		this(
 			httpServletRequest, fileVersion, null, dlMimeTypeDisplayContext,

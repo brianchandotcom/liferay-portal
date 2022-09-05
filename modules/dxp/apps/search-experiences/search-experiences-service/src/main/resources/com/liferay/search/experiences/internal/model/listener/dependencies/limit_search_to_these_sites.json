@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Limit the search scope to the given sites."
+		"en_US": "Limit the search scope to the given sites.",
+		"ja_JP": "検索範囲を指定したサイトに限定する。"
 	},
 	"elementDefinition": {
 		"category": "filter",
@@ -40,6 +41,7 @@
 	},
 	"externalReferenceCode": "LIMIT_SEARCH_TO_THESE_SITES",
 	"title_i18n": {
-		"en_US": "Limit Search to These Sites"
+		"en_US": "Limit Search to These Sites",
+		"ja_JP": "検索範囲を指定したサイトに限定"
 	}
 }

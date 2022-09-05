@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Limit the search scope to the sites that the user is a member of."
+		"en_US": "Limit the search scope to the sites that the user is a member of.",
+		"ja_JP": "ユーザーが所属しているサイトに検索範囲を限定する。"
 	},
 	"elementDefinition": {
 		"category": "filter",
@@ -29,6 +30,7 @@
 	},
 	"externalReferenceCode": "LIMIT_SEARCH_TO_MY_SITES",
 	"title_i18n": {
-		"en_US": "Limit Search to My Sites"
+		"en_US": "Limit Search to My Sites",
+		"ja_JP": "ユーザーが所属しているサイトに検索範囲を限定"
 	}
 }

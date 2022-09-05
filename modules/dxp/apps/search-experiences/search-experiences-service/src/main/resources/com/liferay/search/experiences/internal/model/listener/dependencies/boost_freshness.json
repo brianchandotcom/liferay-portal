@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Boost contents modified recently using a Gaussian function."
+		"en_US": "Boost contents modified recently using a Gaussian function.",
+		"ja_JP": "ガウス関数を使った最近修正したコンテンツのブースト。"
 	},
 	"elementDefinition": {
 		"category": "boost",
@@ -85,6 +86,7 @@
 	},
 	"externalReferenceCode": "BOOST_FRESHNESS",
 	"title_i18n": {
-		"en_US": "Boost Freshness"
+		"en_US": "Boost Freshness",
+		"ja_JP": "記事の新鮮度でブースト"
 	}
 }

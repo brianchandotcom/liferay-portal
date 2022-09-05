@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Limit the search to contents that are published."
+		"en_US": "Limit the search to contents that are published.",
+		"ja_JP": "公開されているコンテンツに限定して検索します。"
 	},
 	"elementDefinition": {
 		"category": "filter",
@@ -29,6 +30,7 @@
 	},
 	"externalReferenceCode": "LIMIT_SEARCH_TO_PUBLISHED_CONTENTS",
 	"title_i18n": {
-		"en_US": "Limit Search to Published Contents"
+		"en_US": "Limit Search to Published Contents",
+		"ja_JP": "公開されているコンテンツに限定して検索"
 	}
 }

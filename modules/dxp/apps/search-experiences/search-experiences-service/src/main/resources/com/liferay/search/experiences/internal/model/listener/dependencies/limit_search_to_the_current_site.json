@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Limit the search to the current site."
+		"en_US": "Limit the search to the current site.",
+		"ja_JP": "現在のサイトに限定して検索します。"
 	},
 	"elementDefinition": {
 		"category": "filter",
@@ -29,6 +30,7 @@
 	},
 	"externalReferenceCode": "LIMIT_SEARCH_TO_THE_CURRENT_SITE",
 	"title_i18n": {
-		"en_US": "Limit Search to the Current Site"
+		"en_US": "Limit Search to the Current Site",
+		"ja_JP": "現在のサイトに限定して検索"
 	}
 }

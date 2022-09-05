@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Show only published contents on live sites. Show only published and staged contents on staging sites. This Element duplicates the functionality of a Liferay Search Framework query clause."
+		"en_US": "Show only published contents on live sites. Show only published and staged contents on staging sites. This Element duplicates the functionality of a Liferay Search Framework query clause.",
+		"ja_JP": "ライブサイトでは、公開されたコンテンツのみを表示する。ステージングサイトでは、公開されたコンテンツとステージングされたコンテンツのみを表示する。この要素は Liferay Search Framework のクエリ句の機能を複製したものです。"
 	},
 	"elementDefinition": {
 		"category": "filter",
@@ -58,6 +59,7 @@
 	},
 	"externalReferenceCode": "STAGING_AWARE",
 	"title_i18n": {
-		"en_US": "Staging Aware"
+		"en_US": "Staging Aware",
+		"ja_JP": "ライブサイトでは、公開されたコンテンツのみを表示、ステージングサイトでは、公開されたコンテンツとステージングされたコンテンツのみを表示"
 	}
 }

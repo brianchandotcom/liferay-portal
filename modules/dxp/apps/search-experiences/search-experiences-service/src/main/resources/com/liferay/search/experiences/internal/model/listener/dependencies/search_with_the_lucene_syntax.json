@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Use Query String query syntax to match one or more fields with a single operator (OR or AND)."
+		"en_US": "Use Query String query syntax to match one or more fields with a single operator (OR or AND).",
+		"ja_JP": "クエリ文字列のクエリ構文を使用して、1つまたは複数のフィールドを1つの演算子（ORまたはAND）でマッチングさせることができます。"
 	},
 	"elementDefinition": {
 		"category": "match",
@@ -84,6 +85,7 @@
 	},
 	"externalReferenceCode": "SEARCH_WITH_QUERY_STRING_SYNTAX",
 	"title_i18n": {
-		"en_US": "Search with Query String Syntax"
+		"en_US": "Search with Query String Syntax",
+		"ja_JP": "クエリ文字列の構文で検索"
 	}
 }

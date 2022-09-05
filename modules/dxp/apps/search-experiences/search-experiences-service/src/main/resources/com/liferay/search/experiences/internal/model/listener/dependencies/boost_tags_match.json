@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Boost contents with an exact keyword match to a tag."
+		"en_US": "Boost contents with an exact keyword match to a tag.",
+		"ja_JP": "タグに完全一致するキーワードでコンテンツをブーストする。"
 	},
 	"elementDefinition": {
 		"category": "boost",
@@ -47,6 +48,7 @@
 	},
 	"externalReferenceCode": "BOOST_TAGS_MATCH",
 	"title_i18n": {
-		"en_US": "Boost Tags Match"
+		"en_US": "Boost Tags Match",
+		"ja_JP": "マッチしたタグでブースト"
 	}
 }

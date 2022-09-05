@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Hide contents with an exact term match on the given field."
+		"en_US": "Hide contents with an exact term match on the given field.",
+		"ja_JP": "指定されたフィールドに完全に一致する単語を持つコンテンツを隠す。"
 	},
 	"elementDefinition": {
 		"category": "hide",
@@ -53,6 +54,7 @@
 	},
 	"externalReferenceCode": "HIDE_BY_EXACT_TERM_MATCH",
 	"title_i18n": {
-		"en_US": "Hide by Exact Term Match"
+		"en_US": "Hide by Exact Term Match",
+		"ja_JP": "完全一致のコンテンツを隠す"
 	}
 }

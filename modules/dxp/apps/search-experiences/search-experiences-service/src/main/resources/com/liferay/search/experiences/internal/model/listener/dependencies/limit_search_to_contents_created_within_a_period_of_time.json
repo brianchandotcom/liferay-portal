@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Limit search to contents created within the given time range."
+		"en_US": "Limit search to contents created within the given time range.",
+		"ja_JP": "指定した時間範囲内に作成されたコンテンツに限定して検索します。"
 	},
 	"elementDefinition": {
 		"category": "filter",
@@ -50,6 +51,7 @@
 	},
 	"externalReferenceCode": "LIMIT_SEARCH_TO_CONTENTS_CREATED_WITHIN_A_PERIOD_OF_TIME",
 	"title_i18n": {
-		"en_US": "Limit Search to Contents Created Within a Period of Time"
+		"en_US": "Limit Search to Contents Created Within a Period of Time",
+		"ja_JP": "指定した時間範囲内に作成されたコンテンツに限定して検索します。"
 	}
 }

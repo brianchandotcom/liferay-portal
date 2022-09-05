@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Boost certain Web Content if the user's search keywords contain the given keywords."
+		"en_US": "Boost certain Web Content if the user's search keywords contain the given keywords.",
+		"ja_JP": "ユーザーの検索キーワードに指定されたキーワードが含まれている場合、特定のWebコンテンツをブーストします。"
 	},
 	"elementDefinition": {
 		"category": "conditional",
@@ -61,6 +62,7 @@
 	},
 	"externalReferenceCode": "BOOST_WEB_CONTENTS_BY_KEYWORD_MATCH",
 	"title_i18n": {
-		"en_US": "Boost Web Contents by Keyword Match"
+		"en_US": "Boost Web Contents by Keyword Match",
+		"ja_JP": "キーワードが一致した場合にWebコンテンツをブースト"
 	}
 }

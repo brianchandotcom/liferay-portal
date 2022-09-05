@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Limit the search to PDF files, as recorded in the mimeType field."
+		"en_US": "Limit the search to PDF files, as recorded in the mimeType field.",
+		"ja_JP": "mimeTypeフィールドに記録されているPDFファイルに限定して検索します。"
 	},
 	"elementDefinition": {
 		"category": "filter",
@@ -29,6 +30,7 @@
 	},
 	"externalReferenceCode": "LIMIT_SEARCH_TO_PDF_FILES",
 	"title_i18n": {
-		"en_US": "Limit Search to PDF files"
+		"en_US": "Limit Search to PDF files",
+		"ja_JP": "PDFファイルに限定して検索"
 	}
 }

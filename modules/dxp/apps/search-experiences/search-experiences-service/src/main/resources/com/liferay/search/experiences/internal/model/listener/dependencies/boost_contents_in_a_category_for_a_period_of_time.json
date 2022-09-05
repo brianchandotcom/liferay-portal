@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Boost contents in a category for the given period of time."
+		"en_US": "Boost contents in a category for the given period of time.",
+		"ja_JP": "指定期間でカテゴリ内のコンテンツをブーストする"
 	},
 	"elementDefinition": {
 		"category": "conditional",
@@ -76,6 +77,7 @@
 	},
 	"externalReferenceCode": "BOOST_CONTENTS_IN_A_CATEGORY_FOR_A_PERIOD_OF_TIME",
 	"title_i18n": {
-		"en_US": "Boost Contents in a Category for a Period of Time"
+		"en_US": "Boost Contents in a Category for a Period of Time",
+		"ja_JP": "一定期間内のカテゴリ内コンテンツをブーストする"
 	}
 }

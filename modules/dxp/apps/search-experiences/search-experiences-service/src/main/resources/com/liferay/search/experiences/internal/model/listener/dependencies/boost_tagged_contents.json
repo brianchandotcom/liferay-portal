@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Boost contents having at least one of the given tags."
+		"en_US": "Boost contents having at least one of the given tags.",
+		"ja_JP": "指定されたタグのうち少なくとも1つを持つコンテンツをブーストする。"
 	},
 	"elementDefinition": {
 		"category": "boost",
@@ -50,6 +51,7 @@
 	},
 	"externalReferenceCode": "BOOST_TAGGED_CONTENTS",
 	"title_i18n": {
-		"en_US": "Boost Tagged Contents"
+		"en_US": "Boost Tagged Contents",
+		"ja_JP": "指定したタグを１つでも含むならでブースト"
 	}
 }

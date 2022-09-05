@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Limit the search to return only the HEAD version of Web Content articles. This Element duplicates the functionality of a Liferay Search Framework query clause."
+		"en_US": "Limit the search to return only the HEAD version of Web Content articles. This Element duplicates the functionality of a Liferay Search Framework query clause.",
+		"ja_JP": "Webコンテンツ記事の最新バージョンのみを返すように検索を制限します。この要素は Liferay Search Framework のクエリ句の機能を複製したものです。"
 	},
 	"elementDefinition": {
 		"category": "filter",
@@ -63,6 +64,7 @@
 	},
 	"externalReferenceCode": "LIMIT_SEARCH_TO_HEAD_VERSION",
 	"title_i18n": {
-		"en_US": "Limit Search to HEAD Version"
+		"en_US": "Limit Search to HEAD Version",
+		"ja_JP": "Webコンテンツ記事の最新バージョンのみを返すように検索を制限"
 	}
 }

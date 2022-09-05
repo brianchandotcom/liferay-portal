@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Paste any Elasticsearch DSL query body into the element as-is."
+		"en_US": "Paste any Elasticsearch DSL query body into the element as-is.",
+		"ja_JP": "Elasticsearch DSLのクエリ本体をそのまま要素に貼り付ける。"
 	},
 	"elementDefinition": {
 		"category": "custom",
@@ -64,6 +65,7 @@
 	},
 	"externalReferenceCode": "PASTE_ANY_ELASTICSEARCH_QUERY",
 	"title_i18n": {
-		"en_US": "Paste Any Elasticsearch Query"
+		"en_US": "Paste Any Elasticsearch Query",
+		"ja_JP": "Elasticsearch DSLのクエリ本体をそのまま要素に貼り付け"
 	}
 }

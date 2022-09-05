@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Limit the search to contents the user is an owner of."
+		"en_US": "Limit the search to contents the user is an owner of.",
+		"ja_JP": "ユーザーが所有者であるコンテンツに限定して検索します。"
 	},
 	"elementDefinition": {
 		"category": "filter",
@@ -29,6 +30,7 @@
 	},
 	"externalReferenceCode": "LIMIT_SEARCH_TO_MY_CONTENTS",
 	"title_i18n": {
-		"en_US": "Limit Search to My Contents"
+		"en_US": "Limit Search to My Contents",
+		"ja_JP": "ユーザーが所有者であるコンテンツに限定して検索"
 	}
 }

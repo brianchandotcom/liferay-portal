@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Boost contents in a category for user accounts created within the given time."
+		"en_US": "Boost contents in a category for user accounts created within the given time.",
+		"ja_JP": "指定された時間内に作成されたユーザーアカウントに対して、カテゴリ内のコンテンツをブーストします"
 	},
 	"elementDefinition": {
 		"category": "conditional",
@@ -70,6 +71,7 @@
 	},
 	"externalReferenceCode": "BOOST_CONTENTS_IN_A_CATEGORY_FOR_NEW_USER_ACCOUNTS",
 	"title_i18n": {
-		"en_US": "Boost Contents in a Category for New User Accounts"
+		"en_US": "Boost Contents in a Category for New User Accounts",
+		"ja_JP": "新規ユーザーアカウントのカテゴリ内コンテンツをブースト"
 	}
 }

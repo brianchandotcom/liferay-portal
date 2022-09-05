@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Boost contents in closer proximity to the search user with a Gaussian function. Additional setup is required."
+		"en_US": "Boost contents in closer proximity to the search user with a Gaussian function. Additional setup is required.",
+		"ja_JP": "ガウス関数で計算したコンテンツの近似値でブーストします。別途設定が必要です。"
 	},
 	"elementDefinition": {
 		"category": "boost",
@@ -89,6 +90,7 @@
 	},
 	"externalReferenceCode": "BOOST_PROXIMITY",
 	"title_i18n": {
-		"en_US": "Boost Proximity"
+		"en_US": "Boost Proximity",
+		"ja_JP": "近似値によるブースト"
 	}
 }

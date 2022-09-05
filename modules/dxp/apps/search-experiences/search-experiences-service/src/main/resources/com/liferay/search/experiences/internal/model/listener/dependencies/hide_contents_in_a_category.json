@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Hide contents in the given category."
+		"en_US": "Hide contents in the given category.",
+		"ja_JP": "指定されたカテゴリのコンテンツを非表示にします。"
 	},
 	"elementDefinition": {
 		"category": "hide",
@@ -48,6 +49,7 @@
 	},
 	"externalReferenceCode": "HIDE_CONTENTS_IN_A_CATEGORY",
 	"title_i18n": {
-		"en_US": "Hide Contents in a Category"
+		"en_US": "Hide Contents in a Category",
+		"ja_JP": "カテゴリ内のコンテンツを隠す"
 	}
 }

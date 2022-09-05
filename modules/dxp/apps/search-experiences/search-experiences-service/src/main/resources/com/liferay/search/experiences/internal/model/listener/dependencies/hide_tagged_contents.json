@@ -1,6 +1,7 @@
 {
 	"description_i18n": {
-		"en_US": "Hide contents with a given tag."
+		"en_US": "Hide contents with a given tag.",
+		"ja_JP": "指定されたタグを持つコンテンツを非表示にします。"
 	},
 	"elementDefinition": {
 		"category": "hide",
@@ -49,6 +50,7 @@
 	},
 	"externalReferenceCode": "HIDE_TAGGED_CONTENTS",
 	"title_i18n": {
-		"en_US": "Hide Tagged Contents"
+		"en_US": "Hide Tagged Contents",
+		"ja_JP": "指定されたタグを持つコンテンツを非表示にします。"
 	}
 }

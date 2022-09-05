@@ -196,11 +196,6 @@ public class DDMFormValuesJSONDeserializer
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
 	private DDMFormFieldValue _getDDMFormFieldValue(
 		JSONObject jsonObject, Map<String, DDMFormField> ddmFormFieldsMap) {
 
@@ -333,6 +328,7 @@ public class DDMFormValuesJSONDeserializer
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormValuesJSONDeserializer.class);
 
+	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference

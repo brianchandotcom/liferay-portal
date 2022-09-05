@@ -201,6 +201,9 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectRelationship reverseObjectRelationship =
 				fetchReverseObjectRelationship(objectRelationship, true);
 
+			_objectLayoutTabPersistence.removeByObjectRelationshipId(
+				reverseObjectRelationship.getObjectRelationshipId());
+
 			objectRelationshipPersistence.remove(
 				reverseObjectRelationship.getObjectRelationshipId());
 

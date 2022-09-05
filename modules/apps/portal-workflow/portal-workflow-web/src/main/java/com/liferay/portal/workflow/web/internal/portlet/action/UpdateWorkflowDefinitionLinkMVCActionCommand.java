@@ -114,14 +114,6 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 		sendRedirect(actionRequest, actionResponse);
 	}
 
-	@Reference(unbind = "-")
-	protected void setWorkflowDefinitionLinkLocalService(
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
-
-		_workflowDefinitionLinkLocalService =
-			workflowDefinitionLinkLocalService;
-	}
-
 	private String[] _getClassNameAndWorkflowDefinition(
 		ActionRequest actionRequest) {
 
@@ -151,6 +143,7 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 	@Reference
 	private Language _language;
 
+	@Reference
 	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 

@@ -179,13 +179,6 @@ public class WorkflowTaskUserNotificationHandler
 			workflowTaskId, serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserNotificationEventLocalService(
-		UserNotificationEventLocalService userNotificationEventLocalService) {
-
-		_userNotificationEventLocalService = userNotificationEventLocalService;
-	}
-
 	private WorkflowTask _fetchWorkflowTask(long workflowTaskId)
 		throws Exception {
 
@@ -226,8 +219,10 @@ public class WorkflowTaskUserNotificationHandler
 	@Reference
 	private Language _language;
 
+	@Reference
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
+
 	private final WorkflowTaskPermissionChecker _workflowTaskPermissionChecker =
 		new WorkflowTaskPermissionChecker();
 

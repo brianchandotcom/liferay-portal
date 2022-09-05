@@ -41,30 +41,20 @@ public class KaleoPortalInstanceLifecycleListener
 		_portalKaleoManager.deployKaleoDefaults(company.getCompanyId());
 	}
 
-	@Reference(unbind = "-")
-	protected void setKaleoConditionLocalService(
-		KaleoConditionLocalService kaleoConditionLocalService) {
-	}
+	@Reference
+	private KaleoConditionLocalService _kaleoConditionLocalService;
 
-	@Reference(unbind = "-")
-	protected void setKaleoDefinitionLocalService(
-		KaleoDefinitionLocalService kaleoDefinitionLocalService) {
-	}
+	@Reference
+	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
 
-	@Reference(unbind = "-")
-	protected void setKaleoNodeLocalService(
-		KaleoNodeLocalService kaleoNodeLocalService) {
-	}
+	@Reference
+	private KaleoNodeLocalService _kaleoNodeLocalService;
 
-	@Reference(unbind = "-")
-	protected void setKaleoTaskLocalService(
-		KaleoTaskLocalService kaleoTaskLocalService) {
-	}
+	@Reference
+	private KaleoTaskLocalService _kaleoTaskLocalService;
 
-	@Reference(unbind = "-")
-	protected void setKaleoTransitionLocalService(
-		KaleoTransitionLocalService kaleoTransitionLocalService) {
-	}
+	@Reference
+	private KaleoTransitionLocalService _kaleoTransitionLocalService;
 
 	@Reference
 	private KaleoWorkflowMessagingConfigurator

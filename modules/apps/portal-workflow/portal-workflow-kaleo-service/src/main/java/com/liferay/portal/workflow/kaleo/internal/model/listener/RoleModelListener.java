@@ -44,13 +44,6 @@ public class RoleModelListener extends BaseModelListener<Role> {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setKaleoTaskAssignmentLocalService(
-		KaleoTaskAssignmentLocalService kaleoTaskAssignmentLocalService) {
-
-		_kaleoTaskAssignmentLocalService = kaleoTaskAssignmentLocalService;
-	}
-
 	private void _deleteKaleoTaskAssignmentByRole(long roleId)
 		throws PortalException {
 
@@ -78,6 +71,7 @@ public class RoleModelListener extends BaseModelListener<Role> {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference
 	private KaleoTaskAssignmentLocalService _kaleoTaskAssignmentLocalService;
 
 }

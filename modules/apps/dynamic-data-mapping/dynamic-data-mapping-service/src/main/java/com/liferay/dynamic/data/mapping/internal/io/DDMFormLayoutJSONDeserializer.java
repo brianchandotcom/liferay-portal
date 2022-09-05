@@ -188,18 +188,6 @@ public class DDMFormLayoutJSONDeserializer
 		return ddmFormLayoutRows;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypeServicesTracker(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
-
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
 	private List<String> _getDDMFormLayoutColumnFieldNames(
 		JSONArray jsonArray) {
 
@@ -302,7 +290,10 @@ public class DDMFormLayoutJSONDeserializer
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormLayoutJSONDeserializer.class);
 
+	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 }

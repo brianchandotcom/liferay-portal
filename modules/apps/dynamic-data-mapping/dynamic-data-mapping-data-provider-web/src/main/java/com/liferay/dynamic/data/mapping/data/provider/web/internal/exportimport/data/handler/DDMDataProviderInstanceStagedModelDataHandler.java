@@ -216,16 +216,6 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance)",
-		unbind = "-"
-	)
-	protected void setStagedModelRepository(
-		StagedModelRepository<DDMDataProviderInstance> stagedModelRepository) {
-
-		_stagedModelRepository = stagedModelRepository;
-	}
-
 	private DDMFormValues _deserialize(String content, DDMForm ddmForm) {
 		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
 			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
@@ -248,6 +238,9 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance)"
+	)
 	private StagedModelRepository<DDMDataProviderInstance>
 		_stagedModelRepository;
 

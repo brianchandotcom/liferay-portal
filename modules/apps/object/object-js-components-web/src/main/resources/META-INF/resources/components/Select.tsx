@@ -22,7 +22,7 @@ interface ISelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 	error?: string;
 	feedbackMessage?: string;
 	label: string;
-	options?: string[];
+	options?: {key?: string; label?: string; name?: string}[];
 	required?: boolean;
 	tooltip?: string;
 }
@@ -64,12 +64,14 @@ export function Select({
 					selected={!value}
 				/>
 
-				{options?.map((label, index) => (
+				{options?.map(({key, label, name}, index) => (
 					<ClaySelect.Option
 						key={index}
-						label={label}
-						selected={value === index}
-						value={index}
+						label={label ?? name}
+						selected={
+							value === key ?? value === label ?? value === name
+						}
+						value={key ?? label ?? name}
 					/>
 				))}
 			</ClaySelect>

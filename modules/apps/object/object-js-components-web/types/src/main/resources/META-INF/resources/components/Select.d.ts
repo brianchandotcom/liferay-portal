@@ -18,7 +18,11 @@ interface ISelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 	error?: string;
 	feedbackMessage?: string;
 	label: string;
-	options?: string[];
+	options?: {
+		key?: string;
+		label?: string;
+		name?: string;
+	}[];
 	required?: boolean;
 	tooltip?: string;
 }

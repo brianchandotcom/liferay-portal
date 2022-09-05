@@ -62,7 +62,7 @@ export function BasicInfo({
 
 			<TriggerEventContainer
 				disabled={disabled}
-				eventTypes={[Liferay.Language.get('on-submission')]}
+				eventTypes={[{label: Liferay.Language.get('on-submission')}]}
 			/>
 		</>
 	);
@@ -136,7 +136,7 @@ function TriggerEventContainer({disabled, eventTypes}: ITriggerEventProps) {
 	return (
 		<Card title={Liferay.Language.get('trigger-event')}>
 			<Select
-				defaultValue={0}
+				defaultValue={Liferay.Language.get('on-submission')}
 				disabled={disabled}
 				label={Liferay.Language.get('event')}
 				options={eventTypes}
@@ -147,7 +147,7 @@ function TriggerEventContainer({disabled, eventTypes}: ITriggerEventProps) {
 
 interface ITriggerEventProps {
 	disabled: boolean;
-	eventTypes: string[];
+	eventTypes: {label: string}[];
 }
 
 interface ITabs {

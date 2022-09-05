@@ -20,7 +20,9 @@ import {ObjectFieldErrors} from './ObjectFieldFormBase';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const languages = Liferay.Language.available;
-const languageLabels = Object.values(languages);
+const languageLabels = Object.values(languages).map((language) => {
+	return {label: language};
+});
 
 interface ISearchableProps {
 	disabled?: boolean;
@@ -45,12 +47,12 @@ export function SearchableContainer({
 			objectField.businessType === 'Attachment') &&
 		objectField.businessType !== 'Aggregation';
 
-	const selectedLanguageIndex = useMemo(() => {
+	const selectedLanguage = useMemo(() => {
 		const label =
 			objectField.indexedLanguageId &&
 			languages[objectField.indexedLanguageId];
 
-		return label ? languageLabels.indexOf(label) : undefined;
+		return label ?? undefined;
 	}, [objectField.indexedLanguageId]);
 
 	return (
@@ -104,21 +106,18 @@ export function SearchableContainer({
 					label={Liferay.Language.get('language')}
 					name="indexedLanguageId"
 					onChange={({target: {value}}) => {
-						const selectedLabel =
-							languageLabels[
-								value as keyof typeof languageLabels
-							];
 						const [indexedLanguageId] = Object.entries(
 							languages
-						).find(([, label]) => selectedLabel === label) as [
+						).find(([, label]) => value === label) as [
 							Locale,
 							string
 						];
+
 						setValues({indexedLanguageId});
 					}}
 					options={languageLabels}
 					required
-					value={selectedLanguageIndex}
+					value={selectedLanguage}
 				/>
 			)}
 		</Card>

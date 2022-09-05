@@ -300,17 +300,15 @@ export default function ObjectFieldFormBase({
 						setValues({
 							defaultValue: '',
 							listTypeDefinitionId: Number(
-								pickLists[Number(value)].id
+								pickLists.find(({name}) => name === value)?.id
 							),
 							state: false,
 						});
 					}}
-					options={pickLists.map(({name}) => name)}
+					options={pickLists}
 					required
 					value={
-						(validListTypeDefinitionId &&
-							selectedPicklist &&
-							pickLists.indexOf(selectedPicklist)) as number
+						validListTypeDefinitionId ? selectedPicklist?.name : ''
 					}
 				/>
 			)}

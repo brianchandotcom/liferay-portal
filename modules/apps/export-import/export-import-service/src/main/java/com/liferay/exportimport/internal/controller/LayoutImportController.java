@@ -455,13 +455,6 @@ public class LayoutImportController implements ImportController {
 			new StagedModelType(StagedAssetLink.class));
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
 	protected void validateFile(
 			long companyId, long groupId, Map<String, String[]> parameterMap,
 			ZipReader zipReader)
@@ -1342,7 +1335,9 @@ public class LayoutImportController implements ImportController {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutImportController.class);
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
+
 	private final DeletionSystemEventImporter _deletionSystemEventImporter =
 		DeletionSystemEventImporter.getInstance();
 

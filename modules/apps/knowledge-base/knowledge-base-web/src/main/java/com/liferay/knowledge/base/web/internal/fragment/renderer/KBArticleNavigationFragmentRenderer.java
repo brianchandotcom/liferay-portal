@@ -14,12 +14,15 @@
 
 package com.liferay.knowledge.base.web.internal.fragment.renderer;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.knowledge.base.web.internal.display.context.KBArticleNavigationFragmentDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -100,6 +103,10 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 				return;
 			}
 
+			httpServletRequest.setAttribute(
+				KBArticleNavigationFragmentDisplayContext.class.getName(),
+				new KBArticleNavigationFragmentDisplayContext(kbArticle));
+
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/navigation/view.jsp");
 
@@ -110,6 +117,13 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 				"KB article navigation fragment can not be rendered",
 				servletException);
 		}
+	}
+
+	private KBArticle _getKBArticle(AssetEntry assetEntry) {
+		AssetRenderer<KBArticle> assetRenderer =
+			(AssetRenderer<KBArticle>)assetEntry.getAssetRenderer();
+
+		return assetRenderer.getAssetObject();
 	}
 
 	private KBArticle _getKBArticle(
@@ -140,8 +154,9 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 				fragmentRendererContext.getDisplayObjectOptional();
 
 			Object displayObject = displayObjectOptional.orElseGet(
-				() -> httpServletRequest.getAttribute(
-					WebKeys.LAYOUT_ASSET_ENTRY));
+				() -> _getKBArticle(
+					(AssetEntry)httpServletRequest.getAttribute(
+						WebKeys.LAYOUT_ASSET_ENTRY)));
 
 			if (displayObject instanceof KBArticle) {
 				return (KBArticle)displayObject;

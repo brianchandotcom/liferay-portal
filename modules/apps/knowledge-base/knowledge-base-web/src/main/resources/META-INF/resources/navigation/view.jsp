@@ -15,3 +15,17 @@
 --%>
 
 <%@ include file="/navigation/init.jsp" %>
+
+<%
+KBArticleNavigationFragmentDisplayContext kbArticleNavigationFragmentDisplayContext = (KBArticleNavigationFragmentDisplayContext)request.getAttribute(KBArticleNavigationFragmentDisplayContext.class.getName());
+%>
+
+<div class="kb-article-navigation">
+
+	<%
+	request.setAttribute("view_navigation_kb_articles.jsp-level", 0);
+	request.setAttribute("view_navigation_kb_articles.jsp-parentResourcePrimKey", kbArticleNavigationFragmentDisplayContext.getKBArticleRootResourcePrimKey());
+	%>
+
+	<liferay-util:include page="/navigation/view_navigation_kb_articles.jsp" servletContext="<%= application %>" />
+</div>

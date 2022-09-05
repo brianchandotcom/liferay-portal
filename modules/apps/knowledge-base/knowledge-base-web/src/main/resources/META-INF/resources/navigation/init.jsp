@@ -15,3 +15,5 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%@ page import="com.liferay.knowledge.base.web.internal.display.context.KBArticleNavigationFragmentDisplayContext" %>

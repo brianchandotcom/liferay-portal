@@ -207,20 +207,13 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserGroupService(UserGroupService userGroupService) {
-		_userGroupService = userGroupService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserService(UserService userService) {
-		_userService = userService;
-	}
-
 	@Reference
 	private Sites _sites;
 
+	@Reference
 	private UserGroupService _userGroupService;
+
+	@Reference
 	private UserService _userService;
 
 }

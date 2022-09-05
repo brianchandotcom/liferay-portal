@@ -13,33 +13,33 @@
  */
 
 import yupSchema from '../../schema/yup';
-import fetcher from '../fetcher';
+import Rest from './Rest';
+import {UserAccount} from './types';
 
-type User = typeof yupSchema.userWithPassword.__outputType;
+type UserForm = typeof yupSchema.userWithPassword.__outputType;
 
-const adapter = ({
-	alternateName,
-	emailAddress,
-	familyName,
-	givenName,
-	password,
-	repassword,
-}: User) => ({
-	alternateName,
-	emailAddress,
-	familyName,
-	givenName,
-	password,
-	repassword,
-});
+class LiferayUserAccountsRest extends Rest<UserForm, UserAccount> {
+	constructor() {
+		super({
+			adapter: ({
+				alternateName,
+				currentPassword,
+				emailAddress,
+				familyName,
+				givenName,
+				password,
+			}) => ({
+				alternateName,
+				currentPassword,
+				emailAddress,
+				familyName,
+				givenName,
+				password,
+			}),
+			uri: 'user-accounts',
+		});
+	}
+}
 
-const getUserAccountQuery = (userId: number | string) =>
-	`/user-accounts/${userId}`;
-
-const createUserAccount = (user: User) =>
-	fetcher.post('/user-accounts', adapter(user));
-
-const updateUserAccount = (id: number, user: User) =>
-	fetcher.patch(`/user-accounts/${id}`, adapter(user as User));
-
-export {createUserAccount, updateUserAccount, getUserAccountQuery};
+const liferayUserAccountsRest = new LiferayUserAccountsRest();
+export {liferayUserAccountsRest};

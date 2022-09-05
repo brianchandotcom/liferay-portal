@@ -24,7 +24,7 @@ import {useFetch} from '../../../hooks/useFetch';
 import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
-import {createUserAccount, updateUserAccount} from '../../../services/rest';
+import {liferayUserAccountsRest} from '../../../services/rest';
 import {RoleTypes} from '../../../util/constants';
 
 type UserFormDefault = {
@@ -74,8 +74,10 @@ const UserForm = () => {
 		onSubmit(
 			{...form, userId: userAccount.id},
 			{
-				create: createUserAccount,
-				update: updateUserAccount,
+				create: (...params) =>
+					liferayUserAccountsRest.create(...params),
+				update: (...params) =>
+					liferayUserAccountsRest.update(...params),
 			}
 		)
 			.then(onSave)

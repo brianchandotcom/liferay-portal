@@ -17,14 +17,14 @@ import {Outlet, useParams} from 'react-router-dom';
 
 import {AccountContext} from '../../../context/AccountContext';
 import {useFetch} from '../../../hooks/useFetch';
-import {getUserAccountQuery} from '../../../services/rest';
+import {liferayUserAccountsRest} from '../../../services/rest';
 
 const UserOutlet = () => {
 	const {userId} = useParams();
 
 	const [{myUserAccount}, , mutateMyUserAccount] = useContext(AccountContext);
 	const {data, mutate} = useFetch(
-		userId ? getUserAccountQuery(userId as string) : null
+		userId ? liferayUserAccountsRest.getResource(userId as string) : null
 	);
 
 	const context = {

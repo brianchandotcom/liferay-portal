@@ -246,4 +246,10 @@ definition {
 			value1 = "${key_option}");
 	}
 
+	macro selectSubscription {
+		Click(
+			locator1 = "CP2ActivationKeys#SUBSCRIPTION_CHOICE",
+			key_position = "${position}");
+	}
+
 }

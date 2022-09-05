@@ -47,15 +47,14 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.display-category=category.tools",
 		"javax.portlet.display-name=IP Geocoder Sample",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + IPGeocoderSamplePortletKeys.IP_GEOCODER_SAMPLE,
 		"javax.portlet.portlet-info.keywords=IP Geocoder Sample",
 		"javax.portlet.portlet-info.short-title=IP Geocoder Sample",
 		"javax.portlet.portlet-info.title=IP Geocoder Sample",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
-		"javax.portlet.supports.mime-type=text/html"
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
 	},
 	service = Portlet.class
 )
@@ -66,9 +65,6 @@ public class IPGeocoderSamplePortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
-			renderRequest);
-
 		ServiceReference<IPGeocoder> serviceReference =
 			_bundleContext.getServiceReference(IPGeocoder.class);
 
@@ -76,9 +72,12 @@ public class IPGeocoderSamplePortlet extends MVCPortlet {
 			IPGeocoder ipGeocoder = _bundleContext.getService(serviceReference);
 
 			if (ipGeocoder != null) {
-				IPInfo ipInfo = ipGeocoder.getIPInfo(request.getRemoteAddr());
+				HttpServletRequest httpServletRequest =
+					_portal.getHttpServletRequest(renderRequest);
 
-				renderRequest.setAttribute(IPInfo.class.getName(), ipInfo);
+				renderRequest.setAttribute(
+					IPInfo.class.getName(),
+					ipGeocoder.getIPInfo(httpServletRequest.getRemoteAddr()));
 			}
 		}
 

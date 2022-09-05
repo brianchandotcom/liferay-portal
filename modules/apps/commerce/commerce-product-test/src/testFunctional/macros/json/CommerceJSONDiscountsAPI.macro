@@ -86,7 +86,6 @@ definition {
 			-H 'accept: application/json' \
 			-H 'Content-Type: application/json' \
   			-d '{
-				"discountId": ${discountId},
 				"accountGroupId": ${accountGroupId}
 			}'
 		''';
@@ -112,7 +111,6 @@ definition {
 			-H 'accept: application/json' \
 			-H 'Content-Type: application/json' \
   			-d '{
-				"discountId": ${discountId},
 				"productId": ${productId}
 			}'
 		''';

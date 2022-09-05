@@ -111,27 +111,6 @@ public class StorageEngineImpl implements StorageEngine {
 		return _storageAdapterRegistry.getDefaultStorageAdapter();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStorageLinkLocalService(
-		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
-
-		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStorageAdapterRegistry(
-		StorageAdapterRegistry storageAdapterRegistry) {
-
-		_storageAdapterRegistry = storageAdapterRegistry;
-	}
-
 	private StorageAdapter _getClassStorageAdapter(long classPK)
 		throws StorageException {
 
@@ -187,8 +166,13 @@ public class StorageEngineImpl implements StorageEngine {
 	private static final Log _log = LogFactoryUtil.getLog(
 		StorageEngineImpl.class);
 
+	@Reference
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private StorageAdapterRegistry _storageAdapterRegistry;
 
 }

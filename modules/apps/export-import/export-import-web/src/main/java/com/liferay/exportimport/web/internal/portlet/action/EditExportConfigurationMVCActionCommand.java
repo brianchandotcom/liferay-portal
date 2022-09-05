@@ -130,14 +130,14 @@ public class EditExportConfigurationMVCActionCommand
 
 			if (moveToTrash) {
 				ExportImportConfiguration exportImportConfiguration =
-					_exportImportConfigurationService.
+					exportImportConfigurationService.
 						moveExportImportConfigurationToTrash(
 							deleteExportImportConfigurationId);
 
 				trashedModels.add(exportImportConfiguration);
 			}
 			else {
-				_exportImportConfigurationService.
+				exportImportConfigurationService.
 					deleteExportImportConfiguration(
 						deleteExportImportConfigurationId);
 			}
@@ -194,29 +194,6 @@ public class EditExportConfigurationMVCActionCommand
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService
-			exportImportConfigurationLocalService) {
-
-		this.exportImportConfigurationLocalService =
-			exportImportConfigurationLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExportImportConfigurationService(
-		ExportImportConfigurationService exportImportConfigurationService) {
-
-		_exportImportConfigurationService = exportImportConfigurationService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExportImportService(
-		ExportImportService exportImportService) {
-
-		_exportImportService = exportImportService;
-	}
-
 	protected void setLayoutIdMap(ActionRequest actionRequest) {
 		HttpServletRequest httpServletRequest = portal.getHttpServletRequest(
 			actionRequest);
@@ -235,16 +212,14 @@ public class EditExportConfigurationMVCActionCommand
 					httpServletRequest, treeId + "SelectedNode")));
 	}
 
-	@Reference(unbind = "-")
-	protected void setTrashEntryService(TrashEntryService trashEntryService) {
-		_trashEntryService = trashEntryService;
-	}
-
 	@Reference
 	protected BackgroundTaskManager backgroundTaskManager;
 
 	protected ExportImportConfigurationLocalService
 		exportImportConfigurationLocalService;
+
+	@Reference
+	protected ExportImportConfigurationService exportImportConfigurationService;
 
 	@Reference
 	protected ExportImportConfigurationSettingsMapFactory
@@ -254,7 +229,13 @@ public class EditExportConfigurationMVCActionCommand
 	protected ExportImportHelper exportImportHelper;
 
 	@Reference
+	protected ExportImportService exportImportService;
+
+	@Reference
 	protected Portal portal;
+
+	@Reference
+	protected TrashEntryService trashEntryService;
 
 	private void _relaunchExportLayoutConfiguration(ActionRequest actionRequest)
 		throws Exception {
@@ -275,7 +256,7 @@ public class EditExportConfigurationMVCActionCommand
 			ExportImportConfigurationFactory.cloneExportImportConfiguration(
 				exportImportConfiguration);
 
-		_exportImportService.exportLayoutsAsFileInBackground(
+		exportImportService.exportLayoutsAsFileInBackground(
 			exportImportConfiguration);
 	}
 
@@ -286,7 +267,7 @@ public class EditExportConfigurationMVCActionCommand
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
 		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			_trashEntryService.restoreEntry(restoreTrashEntryId);
+			trashEntryService.restoreEntry(restoreTrashEntryId);
 		}
 	}
 
@@ -308,9 +289,5 @@ public class EditExportConfigurationMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditExportConfigurationMVCActionCommand.class);
-
-	private ExportImportConfigurationService _exportImportConfigurationService;
-	private ExportImportService _exportImportService;
-	private TrashEntryService _trashEntryService;
 
 }

@@ -40,6 +40,8 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 
 	const [saveChanges, setSaveChanges] = useState<boolean>(false);
 
+	const {form} = state?.steps?.driverInfo;
+
 	const tooltipTitle =
 		'You must enter first name, last name, phone number and email address to save this quote.';
 
@@ -77,10 +79,18 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 		event?.preventDefault();
 		dispatch({payload: false, type: ACTIONS.SET_HAS_FORM_CHANGE});
 
-		const applicationStatus =
+		const hasUnderwritingStatus = form.some(
+			(currentIndex) => currentIndex.hasAccidentOrCitations === 'yes'
+		);
+
+		const hasOpenOrBoundStatus =
 			state.currentStep < 4
 				? CONSTANTS.APPLICATION_STATUS.OPEN
 				: CONSTANTS.APPLICATION_STATUS.BOUND;
+
+		const applicationStatus = hasUnderwritingStatus
+			? CONSTANTS.APPLICATION_STATUS.UNDERWRITING
+			: hasOpenOrBoundStatus;
 
 		createOrUpdateRaylifeApplication(state, applicationStatus).then(
 			(response) => {

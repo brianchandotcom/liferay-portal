@@ -585,7 +585,8 @@ public class DDMFormValidatorTest {
 			SetUtil.fromArray("date", "html-çê的Ü", "html-text_*", "html-text_@")
 		);
 
-		_ddmFormValidatorImpl.setDDMFormFieldTypeServicesTracker(
+		ReflectionTestUtil.setFieldValue(
+			_ddmFormValidatorImpl, "_ddmFormFieldTypeServicesTracker",
 			ddmFormFieldTypeServicesTracker);
 	}
 
@@ -597,7 +598,9 @@ public class DDMFormValidatorTest {
 			ddmExpressionFactoryImpl, "ddmExpressionFunctionTracker",
 			Mockito.mock(DDMExpressionFunctionTracker.class));
 
-		_ddmFormValidatorImpl.setDDMExpressionFactory(ddmExpressionFactoryImpl);
+		ReflectionTestUtil.setFieldValue(
+			_ddmFormValidatorImpl, "_ddmExpressionFactory",
+			ddmExpressionFactoryImpl);
 	}
 
 	private final DDMFormValidatorImpl _ddmFormValidatorImpl =

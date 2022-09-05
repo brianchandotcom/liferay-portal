@@ -945,10 +945,12 @@ public class DDMFormValuesValidatorTest {
 
 			});
 
-		_ddmFormValuesValidatorImpl.setDDMExpressionFactory(
+		ReflectionTestUtil.setFieldValue(
+			_ddmFormValuesValidatorImpl, "_ddmExpressionFactory",
 			ddmExpressionFactoryImpl);
 
-		_ddmFormValuesValidatorImpl.setJSONFactory(new JSONFactoryImpl());
+		ReflectionTestUtil.setFieldValue(
+			_ddmFormValuesValidatorImpl, "_jsonFactory", new JSONFactoryImpl());
 
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesValidatorImpl, "_ddmFormFieldTypeServicesTracker",

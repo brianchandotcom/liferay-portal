@@ -237,14 +237,20 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship.getType(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-			ObjectDefinition objectDefinition1 =
-				_objectDefinitionPersistence.findByPrimaryKey(
-					objectRelationship.getObjectDefinitionId1());
+			Map<String, String> pkObjectFieldDBColumnNames =
+				ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
+					_objectDefinitionPersistence.findByPrimaryKey(
+						objectRelationship.getObjectDefinitionId1()),
+					_objectDefinitionPersistence.findByPrimaryKey(
+						objectRelationship.getObjectDefinitionId2()),
+					objectRelationship.isReverse());
 
 			runSQL(
 				StringBundler.concat(
 					"delete from ", objectRelationship.getDBTableName(),
-					" where ", objectDefinition1.getPKObjectFieldDBColumnName(),
+					" where ",
+					pkObjectFieldDBColumnNames.get(
+						"pkObjectFieldDBColumnName1"),
 					" = ", primaryKey1));
 		}
 	}

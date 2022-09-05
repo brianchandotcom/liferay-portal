@@ -168,27 +168,14 @@ public class DummyFolderWithMissingDummyPortletDataHandler
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.exportimport.test.util.model.DummyFolder)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.exportimport.test.util.model.DummyFolder)"
 	)
-	protected void setDummyFolderStagedModelRepository(
-		StagedModelRepository<DummyFolder> dummyFolderStagedModelRepository) {
-
-		_dummyFolderStagedModelRepository = dummyFolderStagedModelRepository;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.exportimport.test.util.model.Dummy)",
-		unbind = "-"
-	)
-	protected void setDummyStagedModelRepository(
-		StagedModelRepository<Dummy> dummyStagedModelRepository) {
-
-		_dummyStagedModelRepository = dummyStagedModelRepository;
-	}
-
 	private StagedModelRepository<DummyFolder>
 		_dummyFolderStagedModelRepository;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.exportimport.test.util.model.Dummy)"
+	)
 	private StagedModelRepository<Dummy> _dummyStagedModelRepository;
 
 	@Reference

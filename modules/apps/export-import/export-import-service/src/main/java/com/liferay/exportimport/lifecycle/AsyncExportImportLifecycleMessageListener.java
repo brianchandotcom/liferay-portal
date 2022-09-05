@@ -46,10 +46,8 @@ public class AsyncExportImportLifecycleMessageListener
 	}
 
 	@Reference(
-		target = "(destination.name=" + DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_ASYNC + ")",
-		unbind = "-"
+		target = "(destination.name=" + DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_ASYNC + ")"
 	)
-	protected void setDestination(Destination destination) {
-	}
+	private Destination _destination;
 
 }

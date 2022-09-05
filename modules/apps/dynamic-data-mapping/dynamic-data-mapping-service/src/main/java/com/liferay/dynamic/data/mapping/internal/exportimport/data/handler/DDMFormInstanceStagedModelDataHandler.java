@@ -187,23 +187,6 @@ public class DDMFormInstanceStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormInstanceLocalService(
-		DDMFormInstanceLocalService ddmFormInstanceLocalService) {
-
-		_ddmFormInstanceLocalService = ddmFormInstanceLocalService;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)",
-		unbind = "-"
-	)
-	protected void setStagedModelRepository(
-		StagedModelRepository<DDMFormInstance> stagedModelRepository) {
-
-		_stagedModelRepository = stagedModelRepository;
-	}
-
 	private void _exportFormInstanceSettings(
 		PortletDataContext portletDataContext, DDMFormInstance formInstance,
 		Element formInstanceElement) {
@@ -233,11 +216,15 @@ public class DDMFormInstanceStagedModelDataHandler
 		return deserialize(serializedSettingsDDMFormValues, ddmForm);
 	}
 
+	@Reference
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)"
+	)
 	private StagedModelRepository<DDMFormInstance> _stagedModelRepository;
 
 }

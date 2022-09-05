@@ -67,6 +67,8 @@ const HEADERS = [
 const STATUS_DISABLED = ['Bound', 'Quoted'];
 
 const PARAMETERS = {
+	page: '0',
+	pageSize: '0',
 	sort: 'applicationCreateDate:desc',
 };
 
@@ -88,7 +90,14 @@ const ApplicationsTable = () => {
 	const [totalCount, setTotalCount] = useState<number>(0);
 	const [pageSize, setPageSize] = useState<number>(5);
 	const [totalPages, setTotalPages] = useState<number>(0);
-	const [active, setActive] = useState(1);
+	const [page, setPage] = useState<number>(1);
+	const [firstPaginationLabel, setFirstPaginationLabel] = useState<number>(1);
+	const [secondPaginationLabel, setSecondPaginationLabel] = useState<number>(
+		1
+	);
+
+	PARAMETERS.pageSize = pageSize.toString();
+	PARAMETERS.page = page.toString();
 
 	const handleDeleteApplication = (externalReferenceCode: string) => {
 		deleteApplicationByExternalReferenceCode(externalReferenceCode);
@@ -149,8 +158,15 @@ const ApplicationsTable = () => {
 
 			const totalPages = Math.ceil(totalCount / pageSize);
 			setTotalPages(totalPages);
+
+			const firstPaginationLabel = (page - 1) * pageSize + 1;
+			setFirstPaginationLabel(firstPaginationLabel);
+
+			const secondPaginationLabel =
+				totalCount > page * pageSize ? page * pageSize : totalCount;
+			setSecondPaginationLabel(secondPaginationLabel);
 		});
-	}, [pageSize]);
+	}, [pageSize, page]);
 
 	const title = `Applications (${totalCount})`;
 
@@ -182,57 +198,66 @@ const ApplicationsTable = () => {
 								label: '5',
 								onClick: () => {
 									setPageSize(5);
+									setPage(1);
 								},
 							},
 							{
 								label: '10',
 								onClick: () => {
 									setPageSize(10);
+									setPage(1);
 								},
 							},
 							{
 								label: '20',
 								onClick: () => {
 									setPageSize(20);
+									setPage(1);
 								},
 							},
 							{
 								label: '30',
 								onClick: () => {
 									setPageSize(30);
+									setPage(1);
 								},
 							},
 							{
+								href: '#3',
 								label: '50',
 								onClick: () => {
 									setPageSize(50);
+									setPage(1);
 								},
 							},
 							{
 								label: '75',
 								onClick: () => {
 									setPageSize(75);
+									setPage(1);
 								},
 							},
 						]}
 						trigger={
 							<ClayButton displayType="unstyled">
 								{pageSize}
-								Entries
+								&nbsp;Entries
 								<ClayIcon symbol="caret-double-l" />
 							</ClayButton>
 						}
 					/>
 
 					<ClayPaginationBar.Results>
-						Showing ## to ## of {totalCount} entries.
+						Showing {firstPaginationLabel}
+						&nbsp;to&nbsp;
+						{secondPaginationLabel} of {totalCount} entries.
 					</ClayPaginationBar.Results>
 				</ClayPaginationBar>
 
 				<ClayPaginationWithBasicItems
-					active={active}
+					activePage={page}
 					ellipsisBuffer={2}
-					onActiveChange={setActive}
+					onPageChange={(page: number) => setPage(page)}
 					totalPages={totalPages}
 				/>
 			</div>

@@ -16,6 +16,8 @@ package com.liferay.saml.persistence.internal.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.saml.runtime.configuration.SamlConfiguration;
 
 import java.io.IOException;
@@ -54,11 +56,18 @@ public class SamlConfigurationUtil {
 			}
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+
 			samlConfiguration = ConfigurableUtil.createConfigurable(
 				SamlConfiguration.class, Collections.emptyMap());
 		}
 
 		return samlConfiguration;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SamlConfigurationUtil.class);
 
 }

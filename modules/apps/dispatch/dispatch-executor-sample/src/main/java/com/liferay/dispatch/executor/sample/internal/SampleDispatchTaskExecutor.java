@@ -19,6 +19,8 @@ import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -60,6 +62,10 @@ public class SampleDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 					new Date()));
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			dispatchTaskExecutorOutput.setError(
 				StringBundler.concat(
 					"Unable to sleep for ", time, " milliseconds"));
@@ -70,5 +76,8 @@ public class SampleDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	public String getName() {
 		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SampleDispatchTaskExecutor.class);
 
 }

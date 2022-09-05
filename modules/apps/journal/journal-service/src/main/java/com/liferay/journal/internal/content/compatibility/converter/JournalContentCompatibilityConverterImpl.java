@@ -24,6 +24,8 @@ import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -60,6 +62,10 @@ public class JournalContentCompatibilityConverterImpl
 			return XMLUtil.formatXML(_convert(document));
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return content;
 		}
 	}
@@ -341,6 +347,9 @@ public class JournalContentCompatibilityConverterImpl
 	}
 
 	private static final String _LATEST_CONTENT_VERSION = "1.0";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalContentCompatibilityConverterImpl.class);
 
 	@Reference(unbind = "-")
 	private LayoutLocalService _layoutLocalService;

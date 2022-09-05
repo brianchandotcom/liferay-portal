@@ -18,6 +18,8 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNam
 import com.liferay.frontend.js.module.launcher.JSModuleResolver;
 import com.liferay.frontend.taglib.react.internal.util.ServicesProvider;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -140,6 +142,10 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 			return NPMResolvedPackageNameUtil.get(servletContext);
 		}
 		catch (UnsupportedOperationException unsupportedOperationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(unsupportedOperationException);
+			}
+
 			JSModuleResolver jsModuleResolver =
 				ServicesProvider.getJSModuleResolver();
 
@@ -196,6 +202,8 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 
 	protected void prepareProps(Map<String, Object> props) {
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(ComponentTag.class);
 
 	private String _componentId;
 	private String _module;

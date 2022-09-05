@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -164,6 +166,10 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 						fragmentEntryLink.getSegmentsExperienceId()));
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
 				return null;
 			}
 		}
@@ -172,6 +178,9 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
 				fragmentEntryLink.getFragmentEntryLinkId());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StylesFragmentEntryProcessor.class);
 
 	@Reference
 	private Language _language;

@@ -14,6 +14,9 @@
 
 package com.liferay.portal.json.web.service.client.internal;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.util.concurrent.TimeUnit;
 
 import org.apache.http.nio.conn.NHttpClientConnectionManager;
@@ -45,6 +48,9 @@ public class IdleConnectionMonitorThread extends Thread {
 			}
 		}
 		catch (InterruptedException interruptedException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(interruptedException);
+			}
 		}
 	}
 
@@ -55,6 +61,9 @@ public class IdleConnectionMonitorThread extends Thread {
 			notifyAll();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		IdleConnectionMonitorThread.class);
 
 	private final NHttpClientConnectionManager _nHttpClientConnectionManager;
 	private volatile boolean _shutdown;

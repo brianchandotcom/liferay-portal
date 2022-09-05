@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -149,6 +151,10 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 		catch (UnsupportedOperationException unsupportedOperationException) {
 			JSModuleResolver jsModuleResolver =
 				ServicesProvider.getJSModuleResolver();
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(unsupportedOperationException);
+			}
 
 			return jsModuleResolver.resolveModule(servletContext, null);
 		}
@@ -322,6 +328,8 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	private static final char[] _UNSAFE_MODULE_NAME_CHARS = {
 		CharPool.PERIOD, CharPool.DASH
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(ComponentTag.class);
 
 	private String _componentId;
 	private String _containerId;

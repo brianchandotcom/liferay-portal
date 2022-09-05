@@ -19,6 +19,8 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLEntryValidator;
 
@@ -47,6 +49,10 @@ public class LayoutFriendlyURLEntryValidatorImpl
 		catch (DuplicateFriendlyURLEntryException
 					duplicateFriendlyURLEntryException) {
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(duplicateFriendlyURLEntryException);
+			}
+
 			LayoutFriendlyURLException layoutFriendlyURLException =
 				new LayoutFriendlyURLException(
 					LayoutFriendlyURLException.DUPLICATE);
@@ -58,6 +64,9 @@ public class LayoutFriendlyURLEntryValidatorImpl
 			throw layoutFriendlyURLException;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutFriendlyURLEntryValidatorImpl.class);
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

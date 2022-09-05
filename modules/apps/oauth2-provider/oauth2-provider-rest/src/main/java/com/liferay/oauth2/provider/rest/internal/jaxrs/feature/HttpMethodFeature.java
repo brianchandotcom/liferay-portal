@@ -18,6 +18,8 @@ import com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filt
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.osgi.util.StringPlus;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -151,9 +153,16 @@ public class HttpMethodFeature implements Feature {
 				method.getName(), method.getParameterTypes());
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchMethodException);
+			}
+
 			return null;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		HttpMethodFeature.class);
 
 	private BundleContext _bundleContext;
 	private Set<String> _ignoreMissingScopes;

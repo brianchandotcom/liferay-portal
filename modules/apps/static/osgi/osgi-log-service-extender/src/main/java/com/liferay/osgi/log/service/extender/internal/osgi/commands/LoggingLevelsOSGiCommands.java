@@ -16,6 +16,8 @@ package com.liferay.osgi.log.service.extender.internal.osgi.commands;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.log4j.Log4JUtil;
 
@@ -65,6 +67,10 @@ public class LoggingLevelsOSGiCommands {
 				name, StringPool.EQUAL, logLevel.name());
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(illegalArgumentException);
+			}
+
 			return "Invalid log level: " + level;
 		}
 	}
@@ -86,6 +92,9 @@ public class LoggingLevelsOSGiCommands {
 
 		return categories.toArray(new String[0]);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LoggingLevelsOSGiCommands.class);
 
 	private final LoggerAdmin _loggerAdmin;
 

@@ -17,6 +17,8 @@ package com.liferay.document.library.internal.util;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Objects;
@@ -82,9 +84,16 @@ public class MimeTypeSizeLimitUtil {
 			return value;
 		}
 		catch (NumberFormatException numberFormatException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(numberFormatException);
+			}
+
 			return null;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MimeTypeSizeLimitUtil.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		"[a-zA-Z0-9][a-zA-Z0-9$!#&^_-]*");

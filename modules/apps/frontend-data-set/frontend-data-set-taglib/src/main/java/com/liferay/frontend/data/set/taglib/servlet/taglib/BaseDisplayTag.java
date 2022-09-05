@@ -19,6 +19,8 @@ import com.liferay.frontend.data.set.taglib.internal.util.ServicesProvider;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.js.module.launcher.JSModuleResolver;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Validator;
@@ -204,6 +206,10 @@ public class BaseDisplayTag extends AttributesTagSupport {
 			catch (UnsupportedOperationException
 						unsupportedOperationException) {
 
+				if (_log.isDebugEnabled()) {
+					_log.debug(unsupportedOperationException);
+				}
+
 				JSModuleResolver jsModuleResolver =
 					ServicesProvider.getJSModuleResolver();
 
@@ -231,6 +237,8 @@ public class BaseDisplayTag extends AttributesTagSupport {
 
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(BaseDisplayTag.class);
 
 	private Map<String, Object> _additionalProps;
 	private String _id;

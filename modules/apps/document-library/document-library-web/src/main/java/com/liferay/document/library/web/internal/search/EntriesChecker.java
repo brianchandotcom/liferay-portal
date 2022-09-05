@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -84,6 +86,10 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 							folder = DLAppServiceUtil.getFolder(entryId);
 						}
 						catch (Exception exception3) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(exception3);
+							}
+
 							return StringPool.BLANK;
 						}
 					}
@@ -170,6 +176,8 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 
 	private static final String _SIMPLE_NAME_FOLDER =
 		Folder.class.getSimpleName();
+
+	private static final Log _log = LogFactoryUtil.getLog(EntriesChecker.class);
 
 	private final LiferayPortletResponse _liferayPortletResponse;
 

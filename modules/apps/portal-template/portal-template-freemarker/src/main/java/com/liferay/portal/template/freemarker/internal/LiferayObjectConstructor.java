@@ -14,6 +14,8 @@
 
 package com.liferay.portal.template.freemarker.internal;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import freemarker.ext.beans.BeansWrapper;
@@ -53,6 +55,10 @@ public class LiferayObjectConstructor implements TemplateMethodModelEx {
 				className, true, currentThread.getContextClassLoader());
 		}
 		catch (Exception exception1) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception1);
+			}
+
 			try {
 				clazz = Class.forName(
 					className, true, PortalClassLoaderUtil.getClassLoader());
@@ -67,6 +73,9 @@ public class LiferayObjectConstructor implements TemplateMethodModelEx {
 
 		return _beansWrapper.wrap(object);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferayObjectConstructor.class);
 
 	private final BeansWrapper _beansWrapper;
 

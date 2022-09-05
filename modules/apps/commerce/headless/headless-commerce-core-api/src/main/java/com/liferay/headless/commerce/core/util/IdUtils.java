@@ -14,6 +14,9 @@
 
 package com.liferay.headless.commerce.core.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.text.NumberFormat;
 import java.text.ParseException;
 
@@ -41,6 +44,10 @@ public class IdUtils {
 			numberFormat.parse(id);
 		}
 		catch (ParseException parseException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(parseException);
+			}
+
 			return false;
 		}
 
@@ -49,5 +56,7 @@ public class IdUtils {
 
 	private IdUtils() {
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(IdUtils.class);
 
 }

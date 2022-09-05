@@ -69,6 +69,9 @@ public class CommerceOptionFieldTypeFDSFilter extends BaseSelectionFDSFilter {
 			}
 		}
 		catch (MissingResourceException missingResourceException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(missingResourceException);
+			}
 		}
 
 		return ddmFormFieldType.getName();

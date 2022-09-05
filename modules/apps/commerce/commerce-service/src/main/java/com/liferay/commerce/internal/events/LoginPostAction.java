@@ -106,6 +106,10 @@ public class LoginPostAction extends Action {
 					commerceOrderUuid, commerceChannelGroupId);
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return;
 		}
 

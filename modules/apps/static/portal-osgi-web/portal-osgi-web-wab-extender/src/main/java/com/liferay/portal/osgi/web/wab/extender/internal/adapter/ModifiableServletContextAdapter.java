@@ -689,6 +689,10 @@ public class ModifiableServletContextAdapter
 					adapterMethod);
 			}
 			catch (NoSuchMethodException noSuchMethodException1) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchMethodException1);
+				}
+
 				try {
 					methods.put(
 						ModifiableServletContext.class.getMethod(
@@ -696,6 +700,9 @@ public class ModifiableServletContextAdapter
 						adapterMethod);
 				}
 				catch (NoSuchMethodException noSuchMethodException2) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(noSuchMethodException2);
+					}
 				}
 			}
 		}

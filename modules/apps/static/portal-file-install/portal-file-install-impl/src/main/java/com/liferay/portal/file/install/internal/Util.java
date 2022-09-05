@@ -53,6 +53,10 @@ public class Util {
 			return dataInputStream.readLong();
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return Long.MIN_VALUE;
 		}
 	}

@@ -15,6 +15,8 @@
 package com.liferay.wiki.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -145,6 +147,10 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 				page = _wikiPageService.getPage(nodeId, title, false);
 			}
 			catch (NoSuchPageException noSuchPageException2) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchPageException2);
+				}
+
 				WikiWebComponentProvider wikiWebComponentProvider =
 					WikiWebComponentProvider.getWikiWebComponentProvider();
 
@@ -178,6 +184,9 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditPageMVCRenderCommand.class);
 
 	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;

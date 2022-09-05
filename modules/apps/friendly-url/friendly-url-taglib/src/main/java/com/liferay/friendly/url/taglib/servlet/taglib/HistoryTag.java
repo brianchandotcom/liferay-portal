@@ -18,6 +18,8 @@ import com.liferay.friendly.url.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -128,6 +130,10 @@ public class HistoryTag extends IncludeTag {
 			return user.getLanguageId();
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return LanguageUtil.getLanguageId(LocaleUtil.getDefault());
 		}
 	}
@@ -155,6 +161,8 @@ public class HistoryTag extends IncludeTag {
 	}
 
 	private static final String _PAGE = "/history/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(HistoryTag.class);
 
 	private String _className;
 	private long _classPK;

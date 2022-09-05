@@ -15,6 +15,8 @@
 package com.liferay.saml.runtime.configuration;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -65,18 +67,27 @@ public class MetaTypeVirtualBundleRegistrator implements Closeable {
 			_servicesDropDownMetaTypeProvider.close();
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
 		}
 
 		try {
 			_serviceRegistration.unregister();
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 
 		try {
 			_bundle.uninstall();
 		}
 		catch (BundleException bundleException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(bundleException);
+			}
 		}
 	}
 
@@ -133,6 +144,9 @@ public class MetaTypeVirtualBundleRegistrator implements Closeable {
 
 		return this;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MetaTypeVirtualBundleRegistrator.class);
 
 	private Bundle _bundle;
 	private final BundleContext _bundleContext;

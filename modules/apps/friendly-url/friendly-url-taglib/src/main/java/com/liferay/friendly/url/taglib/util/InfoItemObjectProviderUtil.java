@@ -16,6 +16,8 @@ package com.liferay.friendly.url.taglib.util;
 
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,6 +42,10 @@ public class InfoItemObjectProviderUtil {
 			return infoItemObjectProvider.getInfoItem(classPK);
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return null;
 		}
 	}
@@ -56,6 +62,9 @@ public class InfoItemObjectProviderUtil {
 
 		_infoItemServiceTracker = null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InfoItemObjectProviderUtil.class);
 
 	private static volatile InfoItemServiceTracker _infoItemServiceTracker;
 

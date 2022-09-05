@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.headless.delivery.dynamic.data.mapping.DDMStructureField;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -61,6 +63,8 @@ public class FilterUtil {
 
 		return filter.accept(_ddmFilterVisitor);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(FilterUtil.class);
 
 	private static final FilterVisitor<Filter> _ddmFilterVisitor =
 		new DDMFilterVisitor();
@@ -217,6 +221,10 @@ public class FilterUtil {
 					new NestedQuery(DDMIndexer.DDM_FIELD_ARRAY, booleanQuery));
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
 				return originalQueryFilter;
 			}
 		}

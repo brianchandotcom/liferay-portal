@@ -451,6 +451,10 @@ public class FragmentEntryLinkManager {
 						formStyledLayoutStructureItem.getClassTypeId()));
 			}
 			catch (NoSuchFormVariationException noSuchFormVariationException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchFormVariationException);
+				}
+
 				return null;
 			}
 		}

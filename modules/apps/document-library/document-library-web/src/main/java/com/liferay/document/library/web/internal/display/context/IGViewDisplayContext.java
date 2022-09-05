@@ -28,6 +28,8 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -260,6 +262,9 @@ public class IGViewDisplayContext {
 				}
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
 			}
 		}
 
@@ -391,10 +396,17 @@ public class IGViewDisplayContext {
 				_folder = DLAppLocalServiceUtil.getFolder(_folderId);
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
 				_folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		IGViewDisplayContext.class);
 
 	private Long _assetCategoryId;
 	private String _assetTagName;

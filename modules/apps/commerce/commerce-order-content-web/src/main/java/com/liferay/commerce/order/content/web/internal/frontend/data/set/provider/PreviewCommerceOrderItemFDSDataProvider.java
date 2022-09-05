@@ -223,6 +223,10 @@ public class PreviewCommerceOrderItemFDSDataProvider
 			return simpleDateFormat.format(formattedRequestedDeliveryDate);
 		}
 		catch (IllegalArgumentException | ParseException exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return _language.get(locale, "request-delivery-date-invalid");
 		}
 	}

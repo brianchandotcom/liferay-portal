@@ -26,6 +26,8 @@ import com.liferay.headless.commerce.admin.site.setting.internal.dto.v1_0.conver
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.MeasurementUnitResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -129,6 +131,10 @@ public class MeasurementUnitResourceImpl
 					contextCompany.getCompanyId(), type));
 		}
 		catch (CPMeasurementUnitTypeException cpMeasurementUnitTypeException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(cpMeasurementUnitTypeException);
+			}
+
 			return Page.of(Collections.emptyList());
 		}
 	}
@@ -368,6 +374,9 @@ public class MeasurementUnitResourceImpl
 			_getType(measurementUnit.getType()),
 			_serviceContextHelper.getServiceContext(contextUser));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MeasurementUnitResourceImpl.class);
 
 	@Reference
 	private CPMeasurementUnitService _cpMeasurementUnitService;

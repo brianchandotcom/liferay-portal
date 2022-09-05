@@ -14,6 +14,9 @@
 
 package com.liferay.saml.opensaml.integration.internal.credential;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.io.Closeable;
 import java.io.IOException;
 
@@ -105,6 +108,10 @@ public class FileWatcher implements Closeable {
 				catch (ClosedWatchServiceException | InterruptedException
 							exception) {
 
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+
 					return;
 				}
 
@@ -148,6 +155,10 @@ public class FileWatcher implements Closeable {
 				catch (ExecutionException | InterruptedException |
 					   TimeoutException exception) {
 
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+
 					return;
 				}
 
@@ -162,12 +173,17 @@ public class FileWatcher implements Closeable {
 			_watchService.close();
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
 		}
 
 		_notificationsExecutorService.shutdown();
 
 		_scheduledExecutorService.shutdownNow();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(FileWatcher.class);
 
 	private final Consumer<WatchEvent<Path>> _consumer;
 	private final ExecutorService _notificationsExecutorService;

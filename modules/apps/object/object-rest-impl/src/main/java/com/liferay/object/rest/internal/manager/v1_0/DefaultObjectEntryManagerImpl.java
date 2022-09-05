@@ -48,6 +48,8 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -759,6 +761,10 @@ public class DefaultObjectEntryManagerImpl
 				"yyyy-MM-dd'T'HH:mm:ss'Z'", valueString, locale);
 		}
 		catch (ParseException parseException1) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(parseException1);
+			}
+
 			try {
 				return DateUtil.parseDate("yyyy-MM-dd", valueString, locale);
 			}
@@ -925,6 +931,9 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private static final long _NONEXISTING_ACCOUNT_ENTRY_ID = -1;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultObjectEntryManagerImpl.class);
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;

@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -237,6 +239,10 @@ public class ObjectActionLocalServiceImpl
 					).build());
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
 				errorMessageKeys.put("conditionExpression", "syntax-error");
 			}
 		}
@@ -334,6 +340,10 @@ public class ObjectActionLocalServiceImpl
 					).build());
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
 				predefinedValuesErrorMessageKeys.put(name, "syntax-error");
 			}
 		}
@@ -357,6 +367,9 @@ public class ObjectActionLocalServiceImpl
 				"predefinedValues", predefinedValuesErrorMessageKeys);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectActionLocalServiceImpl.class);
 
 	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;

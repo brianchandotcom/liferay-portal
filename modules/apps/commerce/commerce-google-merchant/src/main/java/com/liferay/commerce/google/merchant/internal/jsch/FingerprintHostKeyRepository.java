@@ -20,6 +20,8 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.UserInfo;
 
 import com.liferay.commerce.google.merchant.internal.constants.CommerceGoogleMerchantConstants;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
  * @author Eric Chin
@@ -52,6 +54,10 @@ public class FingerprintHostKeyRepository implements HostKeyRepository {
 			}
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return NOT_INCLUDED;
 		}
 
@@ -80,6 +86,9 @@ public class FingerprintHostKeyRepository implements HostKeyRepository {
 	@Override
 	public void remove(String s, String s1, byte[] bytes) {
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FingerprintHostKeyRepository.class);
 
 	private final String _configuredFingerprint;
 	private final JSch _jSch;

@@ -21,6 +21,8 @@ import com.google.ical.values.DateValueImpl;
 
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.text.ParseException;
 
@@ -63,6 +65,10 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 		}
 		catch (SplitTimeOutsideRecurrenceException
 					splitTimeOutsideRecurrenceException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(splitTimeOutsideRecurrenceException);
+			}
 
 			firstRecurrence = recurrence.clone();
 
@@ -181,6 +187,9 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 				"Split date comes before the start date of the recurrence");
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RecurrenceSplitterImpl.class);
 
 	private static class SplitTimeOutsideRecurrenceException extends Exception {
 

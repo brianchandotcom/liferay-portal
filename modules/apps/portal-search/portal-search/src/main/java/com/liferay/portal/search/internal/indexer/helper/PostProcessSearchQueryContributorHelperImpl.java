@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal.indexer.helper;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
@@ -56,6 +58,10 @@ public class PostProcessSearchQueryContributorHelperImpl
 			return indexer.getIndexerPostProcessors();
 		}
 		catch (UnsupportedOperationException unsupportedOperationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(unsupportedOperationException);
+			}
+
 			return new IndexerPostProcessor[0];
 		}
 	}
@@ -124,5 +130,8 @@ public class PostProcessSearchQueryContributorHelperImpl
 			throw new RuntimeException(exception);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PostProcessSearchQueryContributorHelperImpl.class);
 
 }

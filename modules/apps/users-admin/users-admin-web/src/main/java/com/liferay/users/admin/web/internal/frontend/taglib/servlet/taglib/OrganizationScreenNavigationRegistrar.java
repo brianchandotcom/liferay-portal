@@ -17,6 +17,8 @@ package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationService;
@@ -97,6 +99,10 @@ public class OrganizationScreenNavigationRegistrar {
 						}
 					}
 					catch (Exception exception) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(exception);
+						}
+
 						return false;
 					}
 
@@ -195,6 +201,9 @@ public class OrganizationScreenNavigationRegistrar {
 					"screen.navigation.entry.order", order
 				).build()));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OrganizationScreenNavigationRegistrar.class);
 
 	private BundleContext _bundleContext;
 

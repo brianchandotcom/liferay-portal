@@ -19,6 +19,8 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration;
@@ -69,9 +71,16 @@ public class GoogleCloudTranslatorConfigurationModelListener
 			return false;
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return false;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GoogleCloudTranslatorConfigurationModelListener.class);
 
 	@Reference
 	private Language _language;

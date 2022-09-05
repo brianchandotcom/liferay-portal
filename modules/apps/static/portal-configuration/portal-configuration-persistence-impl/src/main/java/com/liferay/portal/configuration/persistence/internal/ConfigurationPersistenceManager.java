@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -208,6 +210,10 @@ public class ConfigurationPersistenceManager
 			_populateDictionaries();
 		}
 		catch (IOException | SQLException exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			_createConfigurationTable();
 
 			for (Bundle bundle : _bundleContext.getBundles()) {
@@ -562,6 +568,10 @@ public class ConfigurationPersistenceManager
 				configFile = new File(URI.create(felixFileInstallFileName));
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
 				configFile = new File(felixFileInstallFileName);
 			}
 
@@ -630,6 +640,9 @@ public class ConfigurationPersistenceManager
 
 	private static final String _SERVIE_BUNDLE_LOCATION =
 		"service.bundleLocation";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConfigurationPersistenceManager.class);
 
 	private final BundleContext _bundleContext;
 	private final DataSource _dataSource;

@@ -105,6 +105,10 @@ public class OrganizationUserChecker extends EmptyOnClickRowChecker {
 					name += User.class.getSimpleName();
 				}
 				catch (Exception exception2) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception2);
+					}
+
 					return StringPool.BLANK;
 				}
 			}

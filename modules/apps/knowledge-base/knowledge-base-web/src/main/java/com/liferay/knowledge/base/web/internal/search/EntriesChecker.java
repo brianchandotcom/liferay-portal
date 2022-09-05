@@ -84,6 +84,10 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 					entryId, WorkflowConstants.STATUS_ANY);
 			}
 			catch (NoSuchArticleException noSuchArticleException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchArticleException);
+				}
+
 				kbFolder = KBFolderServiceUtil.getKBFolder(entryId);
 			}
 

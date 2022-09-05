@@ -20,6 +20,8 @@ import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.document.library.kernel.exception.RequiredFileEntryTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -52,6 +54,10 @@ public class DeleteDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 			_deleteDepotEntry(actionRequest);
 		}
 		catch (DepotEntryStagedException depotEntryStagedException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(depotEntryStagedException);
+			}
+
 			SessionErrors.add(actionRequest, DepotEntryStagedException.class);
 		}
 		catch (SystemException systemException) {
@@ -98,6 +104,9 @@ public class DeleteDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		return true;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeleteDepotEntryMVCActionCommand.class);
 
 	@Reference
 	private DepotEntryService _depotEntryService;

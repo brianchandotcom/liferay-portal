@@ -297,6 +297,10 @@ public abstract class BaseJSONWebServiceClientImpl
 			return _objectMapper.readValue(json, javaType);
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+
 			throw _getJSONWebServiceSerializeException(json, clazz);
 		}
 	}
@@ -330,6 +334,10 @@ public abstract class BaseJSONWebServiceClientImpl
 			return _objectMapper.readValue(json, clazz);
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+
 			throw _getJSONWebServiceSerializeException(json, clazz);
 		}
 	}
@@ -388,6 +396,10 @@ public abstract class BaseJSONWebServiceClientImpl
 			return doPostAsJSON(url, json);
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+
 			throw _getJSONWebServiceSerializeException(object);
 		}
 	}
@@ -437,6 +449,10 @@ public abstract class BaseJSONWebServiceClientImpl
 			return _objectMapper.readValue(json, clazz);
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+
 			throw _getJSONWebServiceSerializeException(json, clazz);
 		}
 	}
@@ -458,6 +474,10 @@ public abstract class BaseJSONWebServiceClientImpl
 			return _objectMapper.readValue(json, clazz);
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+
 			throw _getJSONWebServiceSerializeException(json, clazz);
 		}
 	}
@@ -533,6 +553,10 @@ public abstract class BaseJSONWebServiceClientImpl
 			return _objectMapper.readValue(json, clazz);
 		}
 		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+
 			throw _getJSONWebServiceSerializeException(json, clazz);
 		}
 	}

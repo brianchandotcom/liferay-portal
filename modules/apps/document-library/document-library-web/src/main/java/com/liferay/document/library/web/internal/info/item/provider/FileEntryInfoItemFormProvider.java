@@ -35,6 +35,8 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -310,6 +312,10 @@ public class FileEntryInfoItemFormProvider
 			return infoFieldSets;
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return Collections.emptyList();
 		}
 	}
@@ -337,6 +343,9 @@ public class FileEntryInfoItemFormProvider
 			throw new RuntimeException("Unexpected exception", portalException);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FileEntryInfoItemFormProvider.class);
 
 	@Reference
 	private AssetEntryInfoItemFieldSetProvider

@@ -236,6 +236,9 @@ public class ImportCommerceOrderItemsMVCActionCommand
 					}
 				}
 				catch (IllegalArgumentException | ParseException exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
 				}
 
 				counts[0]++;

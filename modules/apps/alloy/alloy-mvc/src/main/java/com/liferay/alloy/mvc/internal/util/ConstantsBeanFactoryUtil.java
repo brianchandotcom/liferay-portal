@@ -18,6 +18,8 @@ import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.ref.Reference;
@@ -62,6 +64,9 @@ public class ConstantsBeanFactoryUtil {
 					constantsBeanClassName);
 			}
 			catch (ClassNotFoundException classNotFoundException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(classNotFoundException);
+				}
 			}
 
 			try {
@@ -182,6 +187,9 @@ public class ConstantsBeanFactoryUtil {
 			new ConcurrentReferenceValueHashMap<Reference<Class<?>>, Object>(
 				FinalizeManager.WEAK_REFERENCE_FACTORY),
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConstantsBeanFactoryUtil.class);
 
 	private static final Method _defineClassMethod;
 

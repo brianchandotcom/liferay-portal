@@ -332,6 +332,10 @@ public class FragmentEntryConfigurationParserImpl
 					fragmentConfigurationField.getName(), null));
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return fragmentConfigurationField.getDefaultValue();
 		}
 	}

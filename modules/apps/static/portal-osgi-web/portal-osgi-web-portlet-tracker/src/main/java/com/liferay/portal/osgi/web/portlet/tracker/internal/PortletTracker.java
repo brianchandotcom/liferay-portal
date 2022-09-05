@@ -1594,6 +1594,9 @@ public class PortletTracker
 					_servletContextHelperRegistrationServiceReference);
 			}
 			catch (IllegalStateException illegalStateException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(illegalStateException);
+				}
 			}
 		}
 

@@ -46,6 +46,8 @@ import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -412,6 +414,10 @@ public class BillingAddressCommerceCheckoutStep
 			}
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return false;
 		}
 
@@ -442,6 +448,9 @@ public class BillingAddressCommerceCheckoutStep
 			commerceAccount.getCommerceAccountGroup(),
 			CommerceOrderActionKeys.VIEW_BILLING_ADDRESS);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BillingAddressCommerceCheckoutStep.class);
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;

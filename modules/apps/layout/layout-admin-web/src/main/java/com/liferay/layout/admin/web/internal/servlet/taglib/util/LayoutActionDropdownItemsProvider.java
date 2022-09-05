@@ -20,6 +20,8 @@ import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplay
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -492,6 +494,10 @@ public class LayoutActionDropdownItemsProvider {
 			return false;
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return false;
 		}
 	}
@@ -505,6 +511,9 @@ public class LayoutActionDropdownItemsProvider {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutActionDropdownItemsProvider.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;

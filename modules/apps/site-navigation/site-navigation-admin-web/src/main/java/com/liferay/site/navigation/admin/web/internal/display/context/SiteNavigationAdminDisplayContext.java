@@ -454,6 +454,9 @@ public class SiteNavigationAdminDisplayContext {
 				}
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
 			}
 
 			jsonArray.put(

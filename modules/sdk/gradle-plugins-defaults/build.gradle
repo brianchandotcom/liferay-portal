@@ -26,7 +26,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.dependency.checker", version: "1.0.5"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.go", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.jsdoc", version: "2.0.71"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.20"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.21"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "3.0.47"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.testray", version: "1.0.7"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.9"

@@ -226,25 +226,6 @@ public class DefaultDDMStructureHelperImpl
 			ddmForm, locale, _language.getAvailableLocales(groupId));
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDM(DDM ddm) {
-		_ddm = ddm;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
 	private DDMFormLayout _getDDMFormLayout(
 		Element structureElement, DDMForm ddmForm) {
 
@@ -348,8 +329,13 @@ public class DefaultDDMStructureHelperImpl
 		return localizedValue;
 	}
 
+	@Reference
 	private DDM _ddm;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference(target = "(ddm.form.deserializer.type=json)")

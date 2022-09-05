@@ -97,20 +97,6 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			ddmForm.getAvailableLocales(), ddmForm.getDefaultLocale());
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMExpressionFactory(
-		DDMExpressionFactory ddmExpressionFactory) {
-
-		_ddmExpressionFactory = ddmExpressionFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypeServicesTracker(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
-
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-	}
-
 	protected void validateDDMFormFieldValidationExpression(
 			DDMFormField ddmFormField, Set<Locale> locales)
 		throws DDMFormValidationException {
@@ -485,7 +471,10 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	@Reference
 	private BeanProperties _beanProperties;
 
+	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;
+
+	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 }

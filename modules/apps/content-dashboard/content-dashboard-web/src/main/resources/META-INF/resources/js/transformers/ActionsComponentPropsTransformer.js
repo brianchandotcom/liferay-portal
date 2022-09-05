@@ -74,7 +74,7 @@ const handleSessionOnSidebarOpen = ({panelState, rowId, selectedItemRowId}) => {
 
 const deselectAllRows = (portletNamespace) => {
 	const activeRows = document.querySelectorAll(
-		`[data-searchcontainerid="${portletNamespace}content"] tr.${ACTIVE_ROW_CSS_CLASS}`
+		`#${portletNamespace}contentSearchContainer tr.${ACTIVE_ROW_CSS_CLASS}`
 	);
 
 	activeRows.forEach((row) => row.classList.remove(ACTIVE_ROW_CSS_CLASS));
@@ -82,7 +82,7 @@ const deselectAllRows = (portletNamespace) => {
 
 const getRow = (portletNamespace, rowId) =>
 	document.querySelector(
-		`[data-searchcontainerid="${portletNamespace}content"] [data-rowid="${rowId}"]`
+		`#${portletNamespace}contentSearchContainer [data-rowid="${rowId}"]`
 	);
 
 const selectRow = (portletNamespace, rowId) => {

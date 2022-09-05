@@ -861,13 +861,6 @@ public class LayoutReferencesExportImportContentProcessor
 		return content;
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
 	protected void validateLayoutReferences(long groupId, String content)
 		throws PortalException {
 
@@ -1340,7 +1333,9 @@ public class LayoutReferencesExportImportContentProcessor
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
+
 	private volatile ExportImportServiceConfiguration
 		_exportImportServiceConfiguration;
 

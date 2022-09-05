@@ -339,11 +339,6 @@ public class CPDefinitionLocalServiceWrapper
 		_cpDefinitionLocalService.deleteCPDefinitions(companyId);
 	}
 
-	@Override
-	public void deleteCPDefinitions(long cProductId, int status) {
-		_cpDefinitionLocalService.deleteCPDefinitions(cProductId, status);
-	}
-
 	/**
 	 * @throws PortalException
 	 */

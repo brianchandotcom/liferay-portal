@@ -960,10 +960,10 @@
   resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.70.1.tgz#d1d70171ab1e000384f184d3cec9e5512ca67432"
   integrity sha512-cjei1WYL5amKvWjb52A0DNqfcnpHYLqHd1bzc+NUiDp4qhGsKS2Dyr9LJHQAcRgTnqIPKUoQeMvoyULYw1q6TQ==
 
-"@clayui/drop-down@3.71.0":
-  version "3.71.0"
-  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.71.0.tgz#bff543aca9bc0f5e323ea62da844d1dd109a072e"
-  integrity sha512-hRbLSyZZl9wMTAGVTpRE0gSTT1zSLt528d7LsiJVLiH1OWB7C0IGJbebiz2zme1VUHCE/nF6tHNvbnIRuDV1qw==
+"@clayui/drop-down@3.72.0":
+  version "3.72.0"
+  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.72.0.tgz#f6576eb1282964a40012146ec16755396d13debd"
+  integrity sha512-QoxWKn85aMXtyJEkSnyT0mCqxDQyi+K/j+5a5v2RuiYX7DB7Z1BQXjfk3CsaQYSAWhvCgpRQy+BhosrSnSL++A==
   dependencies:
     "@clayui/button" "^3.65.0"
     "@clayui/form" "^3.71.0"

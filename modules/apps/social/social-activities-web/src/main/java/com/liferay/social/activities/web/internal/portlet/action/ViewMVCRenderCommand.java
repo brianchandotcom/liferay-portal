@@ -51,13 +51,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return "/view.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setSocialActivitiesQueryHelper(
-		SocialActivitiesQueryHelper socialActivitiesQueryHelper) {
-
-		_socialActivitiesQueryHelper = socialActivitiesQueryHelper;
-	}
-
+	@Reference
 	private SocialActivitiesQueryHelper _socialActivitiesQueryHelper;
 
 }

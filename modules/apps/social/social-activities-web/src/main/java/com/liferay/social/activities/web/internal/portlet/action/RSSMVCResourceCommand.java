@@ -124,27 +124,6 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 			portletPreferences.getValue("enableRss", null), true);
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSocialActivitiesQueryHelper(
-		SocialActivitiesQueryHelper socialActivitiesQueryHelper) {
-
-		_socialActivitiesQueryHelper = socialActivitiesQueryHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSocialActivityInterpreterLocalService(
-		SocialActivityInterpreterLocalService
-			socialActivityInterpreterLocalService) {
-
-		_socialActivityInterpreterLocalService =
-			socialActivityInterpreterLocalService;
-	}
-
 	private String _exportToRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 			String title, String description, String format, double version,
@@ -240,6 +219,7 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 		return _rssExporter.export(syndFeed);
 	}
 
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -251,7 +231,10 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 	@Reference
 	private RSSExporter _rssExporter;
 
+	@Reference
 	private SocialActivitiesQueryHelper _socialActivitiesQueryHelper;
+
+	@Reference
 	private SocialActivityInterpreterLocalService
 		_socialActivityInterpreterLocalService;
 

@@ -24,7 +24,6 @@ export default function ActionBuilder({
 	objectActionTriggers,
 	objectDefinitionsRelationshipsURL,
 	setValues,
-	setWarningAlert,
 	validateExpressionURL,
 	values,
 }: IProps): JSX.Element;
@@ -35,7 +34,6 @@ interface IProps {
 	objectActionTriggers: CustomItem[];
 	objectDefinitionsRelationshipsURL: string;
 	setValues: (values: Partial<ObjectAction>) => void;
-	setWarningAlert: (value: boolean) => void;
 	validateExpressionURL: string;
 	values: Partial<ObjectAction>;
 }

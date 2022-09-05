@@ -52,7 +52,6 @@ export default function ActionBuilder({
 	objectActionTriggers,
 	objectDefinitionsRelationshipsURL,
 	setValues,
-	setWarningAlert,
 	validateExpressionURL,
 	values,
 }: IProps) {
@@ -79,10 +78,12 @@ export default function ActionBuilder({
 
 	const [infoAlert, setInfoAlert] = useState(true);
 
+	const [warningAlert, setWarningAlert] = useState(false);
+
 	const [
 		mandatoryRelationshipWarning,
 		setMandatoryRelationshipWarning,
-	] = useState<boolean>(false);
+	] = useState(false);
 
 	const fetchObjectDefinitions = async () => {
 		const relationships = await API.fetchJSON<
@@ -394,6 +395,19 @@ export default function ActionBuilder({
 				)}
 			</Card>
 
+			{warningAlert && (
+				<ClayAlert
+					className="lfr-objects__side-panel-content-container"
+					displayType="warning"
+					onClose={() => setWarningAlert(false)}
+					title={`${Liferay.Language.get('warning')}:`}
+				>
+					{Liferay.Language.get(
+						'required-fields-must-have-predefined-values'
+					)}
+				</ClayAlert>
+			)}
+
 			{mandatoryRelationshipWarning && (
 				<ClayAlert
 					className="lfr-objects__side-panel-content-container"
@@ -592,7 +606,6 @@ interface IProps {
 	objectActionTriggers: CustomItem[];
 	objectDefinitionsRelationshipsURL: string;
 	setValues: (values: Partial<ObjectAction>) => void;
-	setWarningAlert: (value: boolean) => void;
 	validateExpressionURL: string;
 	values: Partial<ObjectAction>;
 }

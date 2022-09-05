@@ -13,7 +13,6 @@
  */
 
 import 'codemirror/mode/groovy/groovy';
-import ClayAlert from '@clayui/alert';
 import ClayTabs from '@clayui/tabs';
 import {
 	API,
@@ -49,8 +48,6 @@ export default function Action({
 	successMessage,
 	validateExpressionURL,
 }: IProps) {
-	const [warningAlert, setWarningAlert] = useState(false);
-
 	const [backEndErrors, setBackEndErrors] = useState<Error>({});
 
 	const onSubmit = async (objectAction: ObjectAction) => {
@@ -141,19 +138,6 @@ export default function Action({
 				))}
 			</ClayTabs>
 
-			{warningAlert && (
-				<ClayAlert
-					className="lfr-objects__side-panel-content-container"
-					displayType="warning"
-					onClose={() => setWarningAlert(false)}
-					title={`${Liferay.Language.get('warning')}:`}
-				>
-					{Liferay.Language.get(
-						'required-fields-must-have-predefined-values'
-					)}
-				</ClayAlert>
-			)}
-
 			<ClayTabs.Content activeIndex={activeIndex} fade>
 				<ClayTabs.TabPane>
 					<BasicInfo
@@ -179,7 +163,6 @@ export default function Action({
 							objectDefinitionsRelationshipsURL
 						}
 						setValues={setValues}
-						setWarningAlert={setWarningAlert}
 						validateExpressionURL={validateExpressionURL}
 						values={values}
 					/>

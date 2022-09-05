@@ -46,10 +46,8 @@ public class SyncExportImportLifecycleMessageListener
 	}
 
 	@Reference(
-		target = "(destination.name=" + DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_SYNC + ")",
-		unbind = "-"
+		target = "(destination.name=" + DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_SYNC + ")"
 	)
-	protected void setDestination(Destination destination) {
-	}
+	private Destination _destination;
 
 }

@@ -108,11 +108,6 @@ public class DDMFormValuesJSONSerializer implements DDMFormValuesSerializer {
 		_serviceTrackerMap.close();
 	}
 
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
 	protected JSONObject toJSONObject(
 		Map<String, DDMFormField> ddmFormFieldsMap,
 		DDMFormFieldValue ddmFormFieldValue) {
@@ -220,7 +215,9 @@ public class DDMFormValuesJSONSerializer implements DDMFormValuesSerializer {
 		return jsonArray;
 	}
 
+	@Reference
 	private JSONFactory _jsonFactory;
+
 	private ServiceTrackerMap<String, DDMFormFieldValueJSONSerializer>
 		_serviceTrackerMap;
 

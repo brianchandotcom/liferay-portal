@@ -14,9 +14,9 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
+import {useOutletContext, useParams} from 'react-router-dom';
 
 import Form from '../../../../../components/Form';
 import Container from '../../../../../components/Layout/Container';
@@ -50,6 +50,17 @@ const BuildForm = () => {
 
 	const {projectId, routineId} = useParams();
 
+	const {buildId} = useParams();
+
+	useEffect(() => {
+		if (buildId) {
+			testrayBuildRest
+				.getCurrentCaseIds(buildId)
+				.then(setCaseIds)
+				.catch(console.error);
+		}
+	}, [buildId]);
+
 	const {data: productVersionsData, mutate} = useFetch<
 		APIResponse<TestrayProductVersion>
 	>(
@@ -81,11 +92,10 @@ const BuildForm = () => {
 		},
 	});
 
-	const navigate = useNavigate();
 	const {mutateBuild, testrayBuild}: OutletContext = useOutletContext();
 
 	const {
-		form: {onClose, onSubmit},
+		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
 
 	const {
@@ -145,13 +155,13 @@ const BuildForm = () => {
 		const response = await onSubmit(data, {
 			create: (...params) => testrayBuildRest.create(...params),
 			update: (...params) => testrayBuildRest.update(...params),
-		});
+		})
+			.then(onSave)
+			.catch(onError);
 
 		if (testrayBuild) {
 			mutateBuild(response);
 		}
-
-		navigate(-1);
 	};
 
 	return (

@@ -109,6 +109,7 @@ export type TestrayCaseResult = {
 	key: string;
 	r_buildToCaseResult_c_build?: TestrayBuild;
 	r_caseToCaseResult_c_case?: TestrayCase;
+	r_caseToCaseResult_c_caseId?: number;
 	r_componentToCaseResult_c_component?: TestrayComponent;
 	r_runToCaseResult_c_run?: TestrayRun;
 	r_userToCaseResults_user?: UserAccount;

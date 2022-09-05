@@ -117,7 +117,7 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 								},
 								{
 									key: 'component',
-									render: (component) => component.name,
+									render: (component) => component?.name,
 									value: i18n.translate('component'),
 								},
 								{

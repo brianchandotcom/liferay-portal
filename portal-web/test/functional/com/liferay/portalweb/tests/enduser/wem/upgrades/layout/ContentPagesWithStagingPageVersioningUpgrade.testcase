@@ -28,7 +28,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name Staging");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
 
 			Button.viewNotPresent(button = "Enable in Main Variation");
 		}
@@ -46,7 +46,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name Staging");
 
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
 
 			Button.viewNotPresent(button = "Enable in Main Variation");
 		}

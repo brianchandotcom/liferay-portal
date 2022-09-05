@@ -347,35 +347,6 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 		_ddmStructureLocalService.updateDDMStructure(ddmStructure);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDM(DDM ddm) {
-		_ddm = ddm;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMBeanTranslator(DDMBeanTranslator ddmBeanTranslator) {
-		_ddmBeanTranslator = ddmBeanTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMIndexer(DDMIndexer ddmIndexer) {
-		_ddmIndexer = ddmIndexer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStorageLinkLocalService(
-		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
-
-		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
 	protected PortalException translate(PortalException portalException) {
 		if (portalException instanceof
 				com.liferay.dynamic.data.mapping.exception.
@@ -425,10 +396,19 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 		return new StructureIdComparator();
 	}
 
+	@Reference
 	private DDM _ddm;
+
+	@Reference
 	private DDMBeanTranslator _ddmBeanTranslator;
+
+	@Reference
 	private DDMIndexer _ddmIndexer;
+
+	@Reference
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

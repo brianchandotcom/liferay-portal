@@ -36,6 +36,8 @@ import java.net.URLConnection;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -56,8 +58,10 @@ import org.tukaani.xz.XZInputStream;
 public class IPGeocoderImpl implements IPGeocoder {
 
 	@Override
-	public IPInfo getIPInfo(String ipAddress) {
+	public IPInfo getIPInfo(HttpServletRequest httpServletRequest) {
 		LookupService lookupService = _getLookupService();
+
+		String ipAddress = _getIPAddress(httpServletRequest);
 
 		Location location = lookupService.getLocation(ipAddress);
 
@@ -89,6 +93,10 @@ public class IPGeocoderImpl implements IPGeocoder {
 	protected void deactivate(Map<String, String> properties) {
 		_lookupService = null;
 		_properties = null;
+	}
+
+	private String _getIPAddress(HttpServletRequest httpServletRequest) {
+		return httpServletRequest.getRemoteAddr();
 	}
 
 	private File _getIPGeocoderFile(

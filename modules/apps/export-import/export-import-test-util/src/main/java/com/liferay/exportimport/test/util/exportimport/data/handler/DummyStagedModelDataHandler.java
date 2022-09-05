@@ -118,29 +118,14 @@ public class DummyStagedModelDataHandler
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.exportimport.test.util.model.DummyReference)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.exportimport.test.util.model.DummyReference)"
 	)
-	protected void setDummyReferenceStagedModelRepository(
-		StagedModelRepository<DummyReference>
-			dummyReferenceStagedModelRepository) {
-
-		_dummyReferenceStagedModelRepository =
-			dummyReferenceStagedModelRepository;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.exportimport.test.util.model.Dummy)",
-		unbind = "-"
-	)
-	protected void setDummyStagedModelRepository(
-		StagedModelRepository<Dummy> dummyStagedModelRepository) {
-
-		_dummyStagedModelRepository = dummyStagedModelRepository;
-	}
-
 	private StagedModelRepository<DummyReference>
 		_dummyReferenceStagedModelRepository;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.exportimport.test.util.model.Dummy)"
+	)
 	private StagedModelRepository<Dummy> _dummyStagedModelRepository;
 
 }

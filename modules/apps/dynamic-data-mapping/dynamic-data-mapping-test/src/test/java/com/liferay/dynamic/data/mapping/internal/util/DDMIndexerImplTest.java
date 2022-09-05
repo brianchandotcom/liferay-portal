@@ -289,7 +289,8 @@ public class DDMIndexerImplTest {
 				ReflectionTestUtil.setFieldValue(
 					this, "_ddmIndexerConfiguration", ddmIndexerConfiguration);
 
-				setDDMFormValuesToFieldsConverter(
+				ReflectionTestUtil.setFieldValue(
+					this, "_ddmFormValuesToFieldsConverter",
 					new DDMFormValuesToFieldsConverterImpl());
 			}
 		};

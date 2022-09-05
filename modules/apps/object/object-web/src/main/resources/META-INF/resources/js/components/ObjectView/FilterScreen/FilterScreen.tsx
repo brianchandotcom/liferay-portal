@@ -173,6 +173,11 @@ export function FilterScreen() {
 										if (
 											objectField.businessType ===
 												'Picklist' ||
+											(Liferay.FeatureFlags[
+												'LPS-152650'
+											] &&
+												objectField.businessType ===
+													'Relationship') ||
 											objectField.name === 'createDate' ||
 											objectField.name ===
 												'modifiedDate' ||

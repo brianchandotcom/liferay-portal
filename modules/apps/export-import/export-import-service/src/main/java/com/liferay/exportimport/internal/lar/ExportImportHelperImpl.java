@@ -1141,56 +1141,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					StringPool.SLASH + fileName));
 	}
 
-	@Reference(unbind = "-")
-	protected void setDlFileEntryLocalService(
-		DLFileEntryLocalService dlFileEntryLocalService) {
-
-		_dlFileEntryLocalService = dlFileEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutRevisionLocalService(
-		LayoutRevisionLocalService layoutRevisionLocalService) {
-
-		_layoutRevisionLocalService = layoutRevisionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutService(LayoutService layoutService) {
-		_layoutService = layoutService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSystemEventLocalService(
-		SystemEventLocalService systemEventLocalService) {
-
-		_systemEventLocalService = systemEventLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private Map<String, Boolean> _createAllPortletSetupControlsMap(
 		Map<String, String[]> parameterMap, boolean portletConfiguration) {
 
@@ -1525,10 +1475,19 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
+	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private LayoutRevisionLocalService _layoutRevisionLocalService;
+
+	@Reference
 	private LayoutService _layoutService;
 
 	@Reference
@@ -1537,9 +1496,15 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	@Reference
 	private PortletDataHandlerProvider _portletDataHandlerProvider;
 
+	@Reference
 	private PortletLocalService _portletLocalService;
+
 	private volatile StagingConfiguration _stagingConfiguration;
+
+	@Reference
 	private SystemEventLocalService _systemEventLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 	@Reference

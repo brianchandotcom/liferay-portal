@@ -986,65 +986,6 @@ public class PortletExportControllerImpl implements PortletExportController {
 			PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetLinkLocalService(
-		AssetLinkLocalService assetLinkLocalService) {
-
-		_assetLinkLocalService = assetLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExportImportLifecycleManager(
-		ExportImportLifecycleManager exportImportLifecycleManager) {
-
-		_exportImportLifecycleManager = exportImportLifecycleManager;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletItemLocalService(
-		PortletItemLocalService portletItemLocalService) {
-
-		_portletItemLocalService = portletItemLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletPreferencesLocalService(
-		PortletPreferencesLocalService portletPreferencesLocalService) {
-
-		_portletPreferencesLocalService = portletPreferencesLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private void _exportPortletPreference(
 			PortletDataContext portletDataContext, long ownerId, int ownerType,
 			boolean defaultUser, PortletPreferences portletPreferences,
@@ -1372,7 +1313,10 @@ public class PortletExportControllerImpl implements PortletExportController {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletExportControllerImpl.class);
 
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
 	private AssetLinkLocalService _assetLinkLocalService;
 
 	@Reference
@@ -1384,18 +1328,22 @@ public class PortletExportControllerImpl implements PortletExportController {
 	@Reference
 	private ExportImportHelper _exportImportHelper;
 
+	@Reference
 	private ExportImportLifecycleManager _exportImportLifecycleManager;
 
 	@Reference
 	private ExportImportProcessCallbackRegistry
 		_exportImportProcessCallbackRegistry;
 
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;
 
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
 	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();
 
@@ -1412,14 +1360,20 @@ public class PortletExportControllerImpl implements PortletExportController {
 	private PortletDataHandlerStatusMessageSender
 		_portletDataHandlerStatusMessageSender;
 
+	@Reference
 	private PortletItemLocalService _portletItemLocalService;
+
+	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference
 	private PortletPreferenceValueLocalService
 		_portletPreferenceValueLocalService;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 	private class UpdatePortletLastPublishDateCallable

@@ -91,6 +91,12 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 				String objectFieldName = objectField.getName();
 
+				_entityFieldsMap.put(
+					objectFieldName,
+					new IdEntityField(
+						objectFieldName, locale -> objectFieldName,
+						String::valueOf));
+
 				String relationshipIdName = objectFieldName.substring(
 					objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1);
 

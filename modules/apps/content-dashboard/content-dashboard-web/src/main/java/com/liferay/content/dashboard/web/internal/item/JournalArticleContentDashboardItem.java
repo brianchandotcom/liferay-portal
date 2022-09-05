@@ -28,7 +28,9 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -122,9 +124,22 @@ public class JournalArticleContentDashboardItem
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
+		List<JournalArticle> journalArticles =
+			_journalArticleService.getArticlesByArticleId(
+				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
+				status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new ArticleVersionComparator());
 
-
-		return Collections.emptyList();
+		return ListUtil.toList(
+			journalArticles,
+			journalArticle -> new Version(
+				_language.get(
+					themeDisplay.getLocale(),
+					WorkflowConstants.getStatusLabel(
+						journalArticle.getStatus())),
+				WorkflowConstants.getStatusStyle(journalArticle.getStatus()),
+				String.valueOf(journalArticle.getVersion()), null,
+				journalArticle.getUserName(), journalArticle.getCreateDate()));
 	}
 
 	@Override

@@ -128,7 +128,7 @@ export function ObjectRelationshipFormBase({
 
 	useEffect(() => {
 		const fetchObjectDefinitions = async () => {
-			const items = await API.getObjectDefinitions();
+			const items = await API.getAllObjectDefinitions();
 
 			const currentObjectDefinition = items.find(
 				({id}) => values.objectDefinitionId1 === id

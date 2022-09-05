@@ -114,7 +114,7 @@ export function DefinitionOfTerms({baseResourceURL}: IProps) {
 	}, [objectDefinitions, query]);
 
 	useEffect(() => {
-		API.getObjectDefinitions().then((items) => {
+		API.getAllObjectDefinitions().then((items) => {
 			if (!Liferay.FeatureFlags['LPS-158482']) {
 				const objectDefinitions = items.filter(
 					({system}: ObjectDefinition) => !system

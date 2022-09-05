@@ -100,7 +100,7 @@ export function Attachments({setValues, values}: IProps) {
 	}, [values.objectDefinitionId]);
 
 	useEffect(() => {
-		API.getObjectDefinitions().then((items) => {
+		API.getAllObjectDefinitions().then((items) => {
 			const objectDefinitions = items.filter(({system}) => !system);
 
 			setObjectDefinitions(objectDefinitions);

@@ -19,3 +19,8 @@ export declare function stringIncludesQuery(
 	str: string,
 	query: string
 ): boolean;
+
+/**
+ * Convert the received string into the format of a URL parameter
+ */
+export declare function stringToURLParameterFormat(str: string): any;

@@ -85,6 +85,43 @@ public class IPGeocoderImpl implements IPGeocoder {
 		_properties = properties;
 	}
 
+	@Deactivate
+	protected void deactivate(Map<String, String> properties) {
+		_lookupService = null;
+		_properties = null;
+	}
+
+	private File _getIPGeocoderFile(
+			String filePath, String fileURL, boolean forceDownload)
+		throws IOException {
+
+		File file = new File(filePath);
+
+		if (file.exists() && !forceDownload) {
+			return file;
+		}
+
+		synchronized (this) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Downloading " + fileURL);
+			}
+
+			URL url = new URL(fileURL);
+
+			URLConnection urlConnection = url.openConnection();
+
+			File xzFile = new File(
+				System.getProperty("java.io.tmpdir") +
+					"/liferay/geoip/GeoIPCity.dat.xz");
+
+			_write(xzFile, urlConnection.getInputStream());
+
+			_write(file, new XZInputStream(new FileInputStream(xzFile)));
+		}
+
+		return file;
+	}
+
 	private LookupService _getLookupService() {
 		LookupService lookupService = _lookupService;
 
@@ -123,46 +160,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 		}
 	}
 
-	@Deactivate
-	protected void deactivate(Map<String, String> properties) {
-		_lookupService = null;
-		_properties = null;
-	}
-
-	private File _getIPGeocoderFile(
-			String filePath, String fileURL, boolean forceDownload)
-		throws IOException {
-
-		File file = new File(filePath);
-
-		if (file.exists() && !forceDownload) {
-			return file;
-		}
-
-		synchronized (this) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Downloading " + fileURL);
-			}
-
-			URL url = new URL(fileURL);
-
-			URLConnection urlConnection = url.openConnection();
-
-			File xzFile = new File(
-				System.getProperty("java.io.tmpdir") +
-					"/liferay/geoip/GeoIPCity.dat.xz");
-
-			_write(xzFile, urlConnection.getInputStream());
-
-			_write(file, new XZInputStream(new FileInputStream(xzFile)));
-		}
-
-		return file;
-	}
-
-	private void _write(File file, InputStream inputStream)
-		throws IOException {
-
+	private void _write(File file, InputStream inputStream) throws IOException {
 		File parentFile = file.getParentFile();
 
 		if (parentFile == null) {

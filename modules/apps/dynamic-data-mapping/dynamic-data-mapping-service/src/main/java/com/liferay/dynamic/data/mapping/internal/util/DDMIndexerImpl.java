@@ -572,25 +572,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 		return sb.toString();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDM(DDM ddm) {
-		_ddm = ddm;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesToFieldsConverter(
-		DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter) {
-
-		_ddmFormValuesToFieldsConverter = ddmFormValuesToFieldsConverter;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
 	@Reference
 	protected Queries queries;
 
@@ -863,9 +844,15 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMIndexerImpl.class);
 
+	@Reference
 	private DDM _ddm;
+
+	@Reference
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+
 	private volatile DDMIndexerConfiguration _ddmIndexerConfiguration;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference

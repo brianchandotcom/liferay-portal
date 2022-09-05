@@ -80,18 +80,6 @@ public class DDMFormFieldTypesJSONSerializer
 		return builder.build();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypeServicesTracker(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
-
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
 	protected JSONObject toJSONObject(DDMFormFieldType ddmFormFieldType)
 		throws PortalException {
 
@@ -176,7 +164,10 @@ public class DDMFormFieldTypesJSONSerializer
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormFieldTypesJSONSerializer.class);
 
+	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference

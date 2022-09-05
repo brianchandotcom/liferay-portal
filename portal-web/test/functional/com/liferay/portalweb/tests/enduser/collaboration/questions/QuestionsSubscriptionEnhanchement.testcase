@@ -40,329 +40,440 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can create a question with an AL image."
+	@description = "This is a test for LPS-159138. Verify if the user is able to subscribe a tag if they want to."
 	@priority = "5"
 	test CanASubscribeAQuestion {
+		task ("Create a Topic") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Topic",
+				userEmailAddress = "test@liferay.com");
+		}
 
-        task("Create a Topic"){
+		task ("Create a Question") {
+			JSONQuestions.addQuestion(
+				bodyField = "Content AddQuestion",
+				categoryName = "Questions Test Topic",
+				groupName = "Guest",
+				titleField = "Question1");
+		}
 
-        }
+		task ("Go to My Subscription") {
+			Questions.gotoTab(questionTabField = "My Subscriptions");
+		}
 
-        task("Create a Question"){
-            
-        }
-
-        task("Go to My Subscription"){
-
-        }
-
-        task("Validate the subcribed question"){
-
-        }
-		
+		task ("Validate the subcribed question") {
+			Questions.viewSubscribedQuestion(subscribedQuestion = "Question1");
+		}
 	}
 
-	@description = "Validate if the user can create a question with an AL image."
+	@description = "This is a test for LPS-159144. Verify if the user is able to subscribe a tag if they want to."
 	@priority = "5"
 	test CanASubscribeATag {
+		task ("Create a Topic") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Topic",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		task("Create a Topic"){
+		task ("Create a Question with a tag") {
+			JSONQuestions.addQuestionWithTag(
+				bodyField = "Content1",
+				categoryName = "Questions Test Topic",
+				groupName = "Guest",
+				tagField = "new",
+				titleField = "Question1");
+		}
 
-        }
+		task ("Subscribe to Tag") {
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
 
-        task("Create a Question with a tag"){
-            
-        }
+			Questions.subscribeFromTag();
+		}
 
-        task("Subscribe to Tag"){
+		task ("Go to My Subscription page") {
+			Questions.gotoTab(questionTabField = "My Subscriptions");
+		}
 
-        }
-
-        task("Go to My Subscription page"){
-            
-        }
-
-        task("Validate the subcribed tag"){
-            
-        }
+		task ("Validate the subcribed tag") {
+			Questions.viewSubscribedTag(subscribedTag = "new");
+		}
 	}
 
-    @description = "Validate if the user can create a question with an AL image."
+	@description = "This is a test for LPS-159160. Verify if the user is able to subscribe a topic if they want to."
 	@priority = "5"
 	test CanASubscribeATopic {
+		task ("Create a Topic") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Topic",
+				userEmailAddress = "test@liferay.com");
+		}
 
-        task("Create a Topic"){
+		task ("Subcribe to the Topic") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-topic");
 
-        }
+			Questions.subscribeTopic();
+		}
 
-        task("Enter on a Topic"){
-            
-        }
+		task ("Validate the subcribed topic") {
+			Questions.gotoTab(questionTabField = "My Subscriptions");
 
-        task("Subcribe to the Topic"){
-
-        }
-
-        task("Validate the subcribed topic"){
-            
-        }
-		
+			Questions.viewSubscribedTopic(subscribedTopic = "Questions Test Topic");
+		}
 	}
 
-	@description = "Validate if the user can create a question with an AL image."
-	@priority = "5"
-	test CanUnsubscribeAQuestion {
-		
-        task("Create a Topic"){
-
-        }
-
-        task("Enter on a Topic"){
-            
-        }
-
-        task("Create a Question"){
-
-        }
-
-        task("Go to my subscription page"){
-
-        }
-
-        task("Validate the subcribed Question"){
-            
-        }
-
-        task("Enter on a Topic"){
-            
-        }
-
-        task("Create a Question"){
-
-        }
-
-        task("Validate the subcribed Question"){
-            
-        }
-	}
-
-	@description = "Validate if the user can create a question with an AL image."
-	@priority = "5"
-	test CanUnsubscribeATag {
-
-		task("Create a Topic"){
-
-        }
-
-        task("Create a Question with a tag"){
-            
-        }
-
-        task("Subscribe to Tag"){
-
-        }
-
-        task("Go to My Subscription page"){
-            
-        }
-
-        task("Validate the subcribed tag"){
-            
-        }
-
-        task("Unsubscribe to Tag"){
-
-        }
-
-        task("Go to My Subscription page"){
-            
-        }
-
-        task("Validate the unsubcribed tag"){
-            
-        }
-	}
-
-    @description = "Validate if the user can create a question with an AL image."
-	@priority = "5"
-	test CanUnsubscribeATopic {
-		
-        task("Create a Topic"){
-
-        }
-
-        task("Enter on a Topic"){
-            
-        }
-
-        task("Subcribe to the Topic"){
-
-        }
-
-        task("Validate the subcribed topic"){
-            
-        }
-
-        task("Enter on a Topic"){
-            
-        }
-
-        task("Unsubcribe to the Topic"){
-
-        }
-
-        task("Validate if the unsubcribed topic"){
-            
-        }
-	}
-
-    @description = "Validate if the user can create a question with an AL image."
+	@description = "This is a test for LPS-159147. Verify if the user is notified when a followed question has a new answer."
 	@priority = "3"
 	test CanBeNotifiedByAnswer {
+		task ("Create a Topic") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Topic",
+				userEmailAddress = "test@liferay.com");
+		}
 
-        task("Create a Topic"){
+		task ("Create a Question") {
+			JSONQuestions.addQuestion(
+				bodyField = "Content AddQuestion",
+				categoryName = "Questions Test Topic",
+				groupName = "Guest",
+				titleField = "Question1");
+		}
 
-        }
+		task ("Create a new User with an Admin Role") {
+			JSONUser.addUser(
+				userEmailAddress = "test1@liferay.com",
+				userFirstName = "test1",
+				userLastName = "test",
+				userScreenName = "test1");
 
-        task("Enter on a Topic"){
-            
-        }
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test1@liferay.com");
 
-        task("Create a Question"){
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "test1@liferay.com");
+		}
 
-        }
+		task ("Login with a new User") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test1@liferay.com",
+				userLoginFullName = "test1 test");
+		}
 
-        task("Create a new User with an Admin Role"){
-            
-        }
+		task ("Answer the Question") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-topic");
 
-        task("Logout from Test test"){
-            
-        }
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Questions1");
 
-        task("Login with a new User"){
-            
-        }
+			Questions.answerQuestion(contentField = "This is my answer");
+		}
 
-        task("Enter on the Question"){
-            
-        }
+		task ("Login with Test test") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+		}
 
-        task("Answer the Question"){
-            
-        }
-		
-        task("Logout from the new User"){
-            
-        }
-
-        task("Login with Test test"){
-            
-        }
-
-        task("Validate the notifications"){
-            
-        }
+		task ("Validate the notifications") {
+			Notifications.viewBadgeCount(notificationCount = "1");
+		}
 	}
 
-	@description = "Validate if the user can create a question with an AL image."
+	@description = "This is a test for LPS-159156. Verify if the user is notified when a followed topic has a new comment."
 	@priority = "3"
 	test CanBeNotifiedByComment {
+		task ("Create a Topic") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Topic",
+				userEmailAddress = "test@liferay.com");
+		}
 
-        task("Create a Topic"){
+		task ("Create a Question") {
+			JSONQuestions.addQuestion(
+				bodyField = "Content AddQuestion",
+				categoryName = "Questions Test Topic",
+				groupName = "Guest",
+				titleField = "Question1");
+		}
 
-        }
+		task ("Answer a Question") {
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Questions1");
 
-        task("Enter on a Topic"){
-            
-        }
+			Questions.answerQuestion(
+				answeredLabel = "true",
+				contentField = "This is my answer text.");
+		}
 
-        task("Create a Question"){
+		task ("Create a new User with an Admin Role") {
+			JSONUser.addUser(
+				userEmailAddress = "test1@liferay.com",
+				userFirstName = "test1",
+				userLastName = "test",
+				userScreenName = "test1");
 
-        }
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test1@liferay.com");
 
-         task("Answer a Question"){
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "test1@liferay.com");
+		}
 
-        }
+		task ("Login with a new User") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test1@liferay.com",
+				userLoginFullName = "test1 test");
+		}
 
-        task("Create a new User with an Admin Role"){
-            
-        }
+		task ("Enter on the Question") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-topic");
 
-        task("Logout from Test test"){
-            
-        }
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Questions1");
+		}
 
-        task("Login with a new User"){
-            
-        }
+		task ("Comment the Answer") {
+			Questions.replyToComment(
+				commentReply = "This is my reply text.",
+				repliedLabel = "true");
+		}
 
-        task("Enter on the Question"){
-            
-        }
+		task ("Login with Test test") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+		}
 
-        task("Comment the Answer"){
-            
-        }
-		
-        task("Logout from the new User"){
-            
-        }
-
-        task("Login with Test test"){
-            
-        }
-
-        task("Validate the notifications"){
-            
-        }
-		
+		task ("Validate the notifications") {
+			Notifications.viewBadgeCount(notificationCount = "1");
+		}
 	}
 
-	@description = "Validate if the user can create a question with an AL image."
+	@description = "This is a test for LPS-159158. Verify if the user is notified when a followed topic has a new question."
 	@priority = "3"
 	test CanBeNotifiedByQuestion {
-		
-        task("Create a Topic"){
+		task ("Create a Topic") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Topic",
+				userEmailAddress = "test@liferay.com");
+		}
 
-        }
+		task ("Subcribe on a Topic") {
+			Questions.subscribeTopic();
+		}
 
-        task("Subcribe on a Topic"){
-            
-        }
+		task ("Create a new User with an Admin Role") {
+			JSONUser.addUser(
+				userEmailAddress = "test1@liferay.com",
+				userFirstName = "test1",
+				userLastName = "test",
+				userScreenName = "test1");
 
-        task("Create a new User with an Admin Role"){
-            
-        }
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test1@liferay.com");
 
-        task("Logout from Test test"){
-            
-        }
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "test1@liferay.com");
+		}
 
-        task("Login with a new User"){
-            
-        }
+		task ("Login with a new User") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test1@liferay.com",
+				userLoginFullName = "test1 test");
+		}
 
-        task("Enter on the Topic"){
-            
-        }
+		task ("Enter on the Topic") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-topic");
+		}
 
-        task("Create a Question"){
+		task ("Create a Question") {
+			JSONQuestions.addQuestion(
+				bodyField = "Content AddQuestion",
+				categoryName = "Questions Test Topic",
+				groupName = "Guest",
+				titleField = "Question1");
+		}
 
-        }
-		
-        task("Logout from the new User"){
-            
-        }
+		task ("Login with Test test") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+		}
 
-        task("Login with Test test"){
-            
-        }
+		task ("Validate the notifications") {
+			Notifications.viewBadgeCount(notificationCount = "1");
+		}
+	}
 
-        task("Validate the notifications"){
-            
-        }
+	@description = "This is a test for LPS-159138. Verify if the user is able to unsubscribe a question if they want to."
+	@priority = "5"
+	test CanUnsubscribeAQuestion {
+		task ("Create a Topic") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Topic",
+				userEmailAddress = "test@liferay.com");
+		}
 
+		task ("Create a Question") {
+			JSONQuestions.addQuestion(
+				bodyField = "Content AddQuestion",
+				categoryName = "Questions Test Topic",
+				groupName = "Guest",
+				titleField = "Question1");
+		}
+
+		task ("Go to my subscription page") {
+			Questions.gotoTab(questionTabField = "My Subscriptions");
+		}
+
+		task ("Validate the subcribed Question") {
+			Questions.viewSubscribedQuestion(subscribedQuestion = "Question1");
+		}
+
+		task ("Enter on a Topic") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-topic");
+		}
+
+		task ("Unsubsribe the Question") {
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Questions Title");
+
+			Questions.unsubscribeFromQuestion(questionTitle = "Question1");
+		}
+
+		task ("Validate the unsubcribed Question") {
+			Questions.gotoTab(questionTabField = "My Subscriptions");
+
+			Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");
+		}
+	}
+
+	@description = "This is a test for LPS-159144. Verify if the user is able to unsubscribe a tag if they want to."
+	@priority = "5"
+	test CanUnsubscribeATag {
+		task ("Create a Topic") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Topic",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Create a Question with a tag") {
+			JSONQuestions.addQuestionWithTag(
+				bodyField = "Content1",
+				categoryName = "Questions Test Topic",
+				groupName = "Guest",
+				tagField = "new",
+				titleField = "Question1");
+		}
+
+		task ("Subscribe to Tag") {
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
+
+			Questions.subscribeFromTag();
+		}
+
+		task ("Go to My Subscription page") {
+			Questions.gotoTab(questionTabField = "My Subscriptions");
+		}
+
+		task ("Validate the subcribed tag") {
+			Questions.viewSubscribedTag(subscribedTag = "new");
+		}
+
+		task ("Unsubscribe to Tag") {
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
+
+			Questions.unsubscribeFromTag();
+		}
+
+		task ("Go to My Subscription page") {
+			Questions.gotoTab(questionTabField = "My Subscriptions");
+		}
+
+		task ("Validate the unsubcribed tag") {
+			Questions.viewSubscribedTag();
+		}
+	}
+
+	@description = "This is a test for LPS-159160. Verify if the user is able to unsubscribe a topic if they want to"
+	@priority = "5"
+	test CanUnsubscribeATopic {
+		task ("Create a Topic") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Topic",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Enter on a Topic") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-topic");
+		}
+
+		task ("Subcribe to the Topic") {
+			Questions.subscribeTopic();
+		}
+
+		task ("Validate the subcribed topic") {
+			Questions.gotoTab(questionTabField = "My Subscriptions");
+
+			Questions.viewSubscribedTopic(subscribedTopic = "Questions Test Topic");
+		}
+
+		task ("Unsubcribe to the Topic") {
+			Questions.gotoTab(questionTabField = "Questions");
+
+			Questions.unsubscribeFromTopic(topicName = "Questions Test Topic");
+		}
+
+		task ("Validate if the unsubcribed topic") {
+			Questions.gotoTab(questionTabField = "My Subscriptions");
+
+			Questions.viewSubscribedTopic(noSubscribedTopic = "true");
+		}
 	}
 
 }

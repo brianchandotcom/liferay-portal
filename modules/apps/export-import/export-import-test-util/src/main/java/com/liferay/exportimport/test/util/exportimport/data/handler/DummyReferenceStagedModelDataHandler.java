@@ -95,17 +95,8 @@ public class DummyReferenceStagedModelDataHandler
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.exportimport.test.util.model.DummyReference)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.exportimport.test.util.model.DummyReference)"
 	)
-	protected void setDummyReferenceStagedModelRepository(
-		StagedModelRepository<DummyReference>
-			dummyReferenceStagedModelRepository) {
-
-		_dummyReferenceStagedModelRepository =
-			dummyReferenceStagedModelRepository;
-	}
-
 	private StagedModelRepository<DummyReference>
 		_dummyReferenceStagedModelRepository;
 

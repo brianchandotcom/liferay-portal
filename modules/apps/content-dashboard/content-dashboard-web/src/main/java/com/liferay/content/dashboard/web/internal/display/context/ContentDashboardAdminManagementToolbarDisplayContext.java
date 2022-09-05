@@ -364,7 +364,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		List<Long> assetCategoryIds =
 			_contentDashboardAdminDisplayContext.getAssetCategoryIds();
 
-		if (!ListUtil.isEmpty(assetCategoryIds)) {
+		if (ListUtil.isNotEmpty(assetCategoryIds)) {
 			Stream<Long> stream = assetCategoryIds.stream();
 
 			portletURL.setParameter(
@@ -389,7 +389,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		List<Long> authorIds =
 			_contentDashboardAdminDisplayContext.getAuthorIds();
 
-		if (!ListUtil.isEmpty(authorIds)) {
+		if (ListUtil.isNotEmpty(authorIds)) {
 			Stream<Long> stream = authorIds.stream();
 
 			portletURL.setParameter(
@@ -406,7 +406,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				_contentDashboardAdminDisplayContext.
 					getContentDashboardItemSubtypes();
 
-		if (!ListUtil.isEmpty(contentDashboardItemSubtypes)) {
+		if (ListUtil.isNotEmpty(contentDashboardItemSubtypes)) {
 			Stream<? extends ContentDashboardItemSubtype> stream =
 				contentDashboardItemSubtypes.stream();
 
@@ -648,7 +648,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			).putData(
 				"selectFileExtensionURL", contentDashboardItemFilter.getURL()
 			).setActive(
-				!ListUtil.isEmpty(
+				ListUtil.isNotEmpty(
 					contentDashboardItemFilter.getParameterValues())
 			).setLabel(
 				_language.get(httpServletRequest, "extension") +
@@ -746,7 +746,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				"selectAssetCategoryURL",
 				String.valueOf(_getAssetCategorySelectorURL())
 			).setActive(
-				!ListUtil.isEmpty(
+				ListUtil.isNotEmpty(
 					_contentDashboardAdminDisplayContext.getAssetCategoryIds())
 			).setLabel(
 				_language.get(httpServletRequest, "categories") +
@@ -798,7 +798,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					_contentDashboardAdminDisplayContext.
 						getContentDashboardItemSubtypeItemSelectorURL())
 			).setActive(
-				!ListUtil.isEmpty(
+				ListUtil.isNotEmpty(
 					_contentDashboardAdminDisplayContext.
 						getContentDashboardItemSubtypes())
 			).setLabel(

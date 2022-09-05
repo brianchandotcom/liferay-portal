@@ -117,10 +117,10 @@ public class IPGeocoderImpl implements IPGeocoder {
 			return lookupService;
 		}
 		catch (IOException ioException) {
-			_log.error("Unable to activate Liferay IP Geocoder", ioException);
+			_log.error("Unable to activate IP Geocoder", ioException);
 
 			throw new RuntimeException(
-				"Unable to activate Liferay IP Geocoder", ioException);
+				"Unable to activate IP Geocoder", ioException);
 		}
 	}
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,7 +13,7 @@
 const currentPath = Liferay.currentURL.split('/');
 const mdfRequestId = +currentPath[currentPath.length - 1];
 
-const getMDFRequest = async () => {
+const updateMDFDetailsSummary = async () => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`/o/c/mdfrequests/${mdfRequestId}`, {
 		headers: {
@@ -34,21 +35,9 @@ const getMDFRequest = async () => {
 			{day: 'numeric', month: 'short', year: 'numeric'}
 		).format(new Date(data.maxDateActivity));
 
-		const totalCost = new Intl.NumberFormat(
-			Liferay.ThemeDisplay.getBCP47LanguageId(),
-			{
-				currency: 'USD',
-				style: 'currency',
-			}
-		).format(data.totalCostOfExpense);
+		const totalCost = formatCurrency(data.totalCostOfExpense);
 
-		const requestedCost = new Intl.NumberFormat(
-			Liferay.ThemeDisplay.getBCP47LanguageId(),
-			{
-				currency: 'USD',
-				style: 'currency',
-			}
-		).format(data.totalMDFRequestAmount);
+		const requestedCost = formatCurrency(data.totalMDFRequestAmount);
 
 		fragmentElement.querySelector(
 			'#dateField'
@@ -59,7 +48,20 @@ const getMDFRequest = async () => {
 		fragmentElement.querySelector(
 			'#requestedCost'
 		).innerHTML = `${requestedCost}`;
+
+		return;
 	}
+
+	Liferay.Util.openToast({
+		message: 'An unexpected error occured.',
+		type: 'danger',
+	});
 };
 
-getMDFRequest();
+const formatCurrency = (value) =>
+	new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
+		currency: 'USD',
+		style: 'currency',
+	}).format(value);
+
+updateMDFDetailsSummary();

@@ -278,28 +278,26 @@ const Table = ({items, title}) => (
 	</ClayTable>
 );
 
-const RangeDate = ({endDate, startDate}) => {
-	const dateOptions = {
-		day: 'numeric',
-		month: 'short',
-	};
-
-	return (
-		<div className="mb-1 text-neutral-7 text-paragraph-sm">
-			{new Date(startDate).toLocaleString(
-				Liferay.ThemeDisplay.getBCP47LanguageId(),
-				dateOptions
-			)}
-			&nbsp; - &nbsp;
-			{new Date(endDate).toLocaleString(
-				Liferay.ThemeDisplay.getBCP47LanguageId(),
-				dateOptions
-			)}
-			, &nbsp;
-			{new Date(endDate).getFullYear()}
-		</div>
-	);
+const DATE_FORMAT_OPTION = {
+	day: 'numeric',
+	month: 'short',
 };
+
+const RangeDate = ({endDate, startDate}) => (
+	<div className="mb-1 text-neutral-7 text-paragraph-sm">
+		{new Date(startDate).toLocaleString(
+			Liferay.ThemeDisplay.getBCP47LanguageId(),
+			DATE_FORMAT_OPTION
+		)}
+		&nbsp; - &nbsp;
+		{new Date(endDate).toLocaleString(
+			Liferay.ThemeDisplay.getBCP47LanguageId(),
+			DATE_FORMAT_OPTION
+		)}
+		, &nbsp;
+		{new Date(endDate).getFullYear()}
+	</div>
+);
 
 const Panel = ({children, mdfRequestActivity}) => (
 	<ClayPanel
@@ -326,6 +324,7 @@ const Panel = ({children, mdfRequestActivity}) => (
 
 export default function () {
 	const [activities, setActivities] = useState();
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const getActivities = async () => {
@@ -343,6 +342,8 @@ export default function () {
 			if (response.ok) {
 				setActivities(await response.json());
 
+				setLoading(false);
+
 				return;
 			}
 
@@ -357,9 +358,13 @@ export default function () {
 		}
 	}, []);
 
+	if (loading) {
+		return <>Loading...</>;
+	}
+
 	return (
 		<div>
-			{activities?.items.length === 0 ? (
+			{!activities?.items.length ? (
 				<ClayAlert displayType="info" title="Info:">
 					No entries were found
 				</ClayAlert>

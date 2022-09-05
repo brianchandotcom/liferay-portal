@@ -10,86 +10,41 @@
  * distribution rights of the Software.
  */
 
-const managerButtons = fragmentElement.querySelector('.manager-buttons');
 const currentPath = Liferay.currentURL.split('/');
 const mdfRequestId = +currentPath[currentPath.length - 1];
 
-const updateStatusToApproved = fragmentElement.querySelector('.st-approved');
-const updateStatusToRequestMoreInfo = fragmentElement.querySelector(
-	'.st-request'
+const updateStatusToApproved = fragmentElement.querySelector(
+	'#status-approved'
 );
-const updateStatusToReject = fragmentElement.querySelector('.st-reject');
+const updateStatusToRequestMoreInfo = fragmentElement.querySelector(
+	'#status-request'
+);
+const updateStatusToReject = fragmentElement.querySelector('#status-reject');
 
-const getMDFRequestStatus = async () => {
+const updateStatus = async (status) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const statusResponse = await fetch(`/o/c/mdfrequests/${mdfRequestId}`, {
-		headers: {
-			'accept': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-	});
-
-	if (statusResponse.ok) {
-		const data = await statusResponse.json();
-
-		fragmentElement.querySelector(
-			'#mdfStatus'
-		).innerHTML = `Status : ${data.requestStatus}`;
-	}
-};
-
-const handleFetch = (status) => {
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	fetch(`/o/c/mdfrequests/${mdfRequestId}`, {
-		body: `{"requestStatus": "${status}"}`,
-		headers: {
-			'content-type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-		method: 'PATCH',
-	}).then(() => {
-		fragmentElement.querySelector(
-			'#mdfStatus'
-		).innerHTML = `Status : ${status}`;
-	});
-};
-
-const ROLE_TYPES = [
-	'Channel Account Manager',
-	'Channel Finance Manager',
-	'Channel General Manager',
-	'Channel Global Marketing Manager',
-	'Channel Regional Marketing Manager',
-];
-
-const getUserRole = async () => {
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(
-		`/o/headless-admin-user/v1.0/my-user-account`,
+	const statusManagerResponse = await fetch(
+		`/o/c/mdfrequests/${mdfRequestId}`,
 		{
+			body: `{"requestStatus": "${status}"}`,
 			headers: {
 				'content-type': 'application/json',
 				'x-csrf-token': Liferay.authToken,
 			},
+			method: 'PATCH',
 		}
 	);
-
-	if (response.ok) {
-		const result = await response.json();
-		const hasAllowedRoleBriefs = result.roleBriefs?.some((roleBrief) =>
-			ROLE_TYPES.includes(roleBrief.name)
-		);
-
-		if (hasAllowedRoleBriefs) {
-			managerButtons.classList.toggle('d-none');
-			managerButtons.classList.toggle('d-flex');
-		}
+	if (statusManagerResponse.ok) {
+		const data = await statusManagerResponse.json();
+		document.getElementById(
+			'mdfStatusDisplay'
+		).innerHTML = `Status : ${data.requestStatus}`;
 
 		return;
 	}
 
 	Liferay.Util.openToast({
-		message: 'An unexpected error occurred.',
+		message: 'An unexpected error occured.',
 		type: 'danger',
 	});
 };
@@ -97,20 +52,29 @@ const getUserRole = async () => {
 updateStatusToApproved.onclick = () =>
 	Liferay.Util.openConfirmModal({
 		message: 'Do you want to Approve this MDF?',
-		onConfirm: () => handleFetch('Approved'),
+		onConfirm: (isConfirmed) => {
+			if (isConfirmed) {
+				updateStatus('Approved');
+			}
+		},
 	});
 
 updateStatusToRequestMoreInfo.onclick = () =>
 	Liferay.Util.openConfirmModal({
 		message: 'Do you want to Request more info for this MDF?',
-		onConfirm: () => handleFetch('Request more info'),
+		onConfirm: (isConfirmed) => {
+			if (isConfirmed) {
+				updateStatus('Request More Info');
+			}
+		},
 	});
 
 updateStatusToReject.onclick = () =>
 	Liferay.Util.openConfirmModal({
 		message: 'Do you want to Reject this MDF?',
-		onConfirm: () => handleFetch('Reject'),
+		onConfirm: (isConfirmed) => {
+			if (isConfirmed) {
+				updateStatus('Reject');
+			}
+		},
 	});
-
-getMDFRequestStatus();
-getUserRole();

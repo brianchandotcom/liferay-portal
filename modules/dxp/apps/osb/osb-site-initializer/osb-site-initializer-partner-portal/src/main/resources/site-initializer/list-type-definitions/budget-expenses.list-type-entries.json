@@ -88,10 +88,10 @@
 		"type": "string"
 	},
 	{
-		"key": "roomRentel",
-		"name": "Room Rentel",
+		"key": "roomRental",
+		"name": "Room Rental",
 		"name_i18n": {
-			"en-US": "Room Rentel"
+			"en-US": "Room Rental"
 		},
 		"type": "string"
 	},

@@ -147,19 +147,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Campaign MDF Request ",
-																		"ca_ES": "Campaign MDF Request ",
-																		"de_DE": "Campaign MDF Request ",
-																		"en_US": "Campaign MDF Request ",
-																		"es_ES": "Campaign MDF Request ",
-																		"fi_FI": "Campaign MDF Request ",
-																		"fr_FR": "Campaign MDF Request ",
-																		"hu_HU": "Campaign MDF Request ",
-																		"ja_JP": "Campaign MDF Request ",
-																		"nl_NL": "Campaign MDF Request ",
-																		"pt_BR": "Campaign MDF Request ",
-																		"sv_SE": "Campaign MDF Request ",
-																		"zh_CN": "Campaign MDF Request "
+																		"ar_SA": "Campaign MDF Request",
+																		"ca_ES": "Campaign MDF Request",
+																		"de_DE": "Campaign MDF Request",
+																		"en_US": "Campaign MDF Request",
+																		"es_ES": "Campaign MDF Request",
+																		"fi_FI": "Campaign MDF Request",
+																		"fr_FR": "Campaign MDF Request",
+																		"hu_HU": "Campaign MDF Request",
+																		"ja_JP": "Campaign MDF Request",
+																		"nl_NL": "Campaign MDF Request",
+																		"pt_BR": "Campaign MDF Request",
+																		"sv_SE": "Campaign MDF Request",
+																		"zh_CN": "Campaign MDF Request"
 																	}
 																}
 															}
@@ -213,19 +213,19 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"ar_SA": "Date Submitted: ",
-																				"ca_ES": "Date Submitted: ",
-																				"de_DE": "Date Submitted: ",
-																				"en_US": "Date Submitted: ",
-																				"es_ES": "Date Submitted: ",
-																				"fi_FI": "Date Submitted: ",
-																				"fr_FR": "Date Submitted: ",
-																				"hu_HU": "Date Submitted: ",
-																				"ja_JP": "Date Submitted: ",
-																				"nl_NL": "Date Submitted: ",
-																				"pt_BR": "Date Submitted: ",
-																				"sv_SE": "Date Submitted: ",
-																				"zh_CN": "Date Submitted: "
+																				"ar_SA": "Date Submitted:",
+																				"ca_ES": "Date Submitted:",
+																				"de_DE": "Date Submitted:",
+																				"en_US": "Date Submitted:",
+																				"es_ES": "Date Submitted:",
+																				"fi_FI": "Date Submitted:",
+																				"fr_FR": "Date Submitted:",
+																				"hu_HU": "Date Submitted:",
+																				"ja_JP": "Date Submitted:",
+																				"nl_NL": "Date Submitted:",
+																				"pt_BR": "Date Submitted:",
+																				"sv_SE": "Date Submitted:",
+																				"zh_CN": "Date Submitted:"
 																			}
 																		}
 																	}
@@ -290,19 +290,19 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"ar_SA": ", Last Modified: ",
-																				"ca_ES": ", Last Modified: ",
-																				"de_DE": ", Last Modified: ",
-																				"en_US": ", Last Modified: ",
-																				"es_ES": ", Last Modified: ",
-																				"fi_FI": ", Last Modified: ",
-																				"fr_FR": ", Last Modified: ",
-																				"hu_HU": ", Last Modified: ",
-																				"ja_JP": ", Last Modified: ",
-																				"nl_NL": ", Last Modified: ",
-																				"pt_BR": ", Last Modified: ",
-																				"sv_SE": ", Last Modified: ",
-																				"zh_CN": ", Last Modified: "
+																				"ar_SA": ", Last Modified:",
+																				"ca_ES": ", Last Modified:",
+																				"de_DE": ", Last Modified:",
+																				"en_US": ", Last Modified:",
+																				"es_ES": ", Last Modified:",
+																				"fi_FI": ", Last Modified:",
+																				"fr_FR": ", Last Modified:",
+																				"hu_HU": ", Last Modified:",
+																				"ja_JP": ", Last Modified:",
+																				"nl_NL": ", Last Modified:",
+																				"pt_BR": ", Last Modified:",
+																				"sv_SE": ", Last Modified:",
+																				"zh_CN": ", Last Modified:"
 																			}
 																		}
 																	}
@@ -352,27 +352,55 @@
 													}
 												],
 												"type": "Section"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "mdf-request-manager-status"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-													],
-													"fragmentStyle": {
-														"marginTop": "1",
-														"paddingTop": "2",
-														"textAlign": ""
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
 											}
 										],
 										"type": "Section"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "mdf-details-status-display"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "mdf-request-manager-status"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
 									}
 								],
 								"type": "Section"
@@ -1097,6 +1125,13 @@
 																	}
 																},
 																{
+																	"id": "rowTitle-3",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
 																	"id": "tableTitle",
 																	"value": {
 																		"fragmentLink": {
@@ -1132,6 +1167,13 @@
 																					"contextSource": "DisplayPageItem"
 																				}
 																			}
+																		}
+																	}
+																},
+																{
+																	"id": "rowValue-3",
+																	"value": {
+																		"fragmentLink": {
 																		}
 																	}
 																}

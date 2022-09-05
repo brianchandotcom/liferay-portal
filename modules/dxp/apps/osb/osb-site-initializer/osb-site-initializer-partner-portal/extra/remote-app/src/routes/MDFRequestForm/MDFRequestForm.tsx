@@ -69,7 +69,13 @@ const MDFRequestForm = () => {
 			<Goals
 				onCancel={onCancel}
 				onContinue={onContinue}
-				onSaveAsDraft={submitForm}
+				onSaveAsDraft={(
+					values: MDFRequest,
+					formikHelpers: Omit<
+						FormikHelpers<MDFRequest>,
+						'setFieldValue'
+					>
+				) => submitForm(values, formikHelpers, RequestStatus.DRAFT)}
 				validationSchema={goalsSchema}
 			/>
 		),
@@ -80,7 +86,13 @@ const MDFRequestForm = () => {
 				onCancel={onCancel}
 				onContinue={onContinue}
 				onPrevious={onPrevious}
-				onSaveAsDraft={submitForm}
+				onSaveAsDraft={(
+					values: MDFRequest,
+					formikHelpers: Omit<
+						FormikHelpers<MDFRequest>,
+						'setFieldValue'
+					>
+				) => submitForm(values, formikHelpers, RequestStatus.DRAFT)}
 				validationSchema={activitiesSchema}
 			/>
 		),
@@ -88,7 +100,13 @@ const MDFRequestForm = () => {
 			<Review
 				onCancel={onCancel}
 				onPrevious={onPrevious}
-				onSaveAsDraft={submitForm}
+				onSaveAsDraft={(
+					values: MDFRequest,
+					formikHelpers: Omit<
+						FormikHelpers<MDFRequest>,
+						'setFieldValue'
+					>
+				) => submitForm(values, formikHelpers, RequestStatus.DRAFT)}
 			/>
 		),
 	};

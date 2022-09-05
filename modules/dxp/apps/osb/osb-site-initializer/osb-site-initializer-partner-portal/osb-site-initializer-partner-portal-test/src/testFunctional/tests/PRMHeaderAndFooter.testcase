@@ -1,4 +1,4 @@
-@component-name = "portal-solutions"
+@component-name = "OSB Site Initializer Partner Portal"
 definition {
 
 	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";

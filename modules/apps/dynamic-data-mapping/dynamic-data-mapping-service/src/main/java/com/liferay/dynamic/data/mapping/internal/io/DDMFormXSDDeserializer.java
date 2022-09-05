@@ -268,11 +268,6 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 			getDDMFormFields(dynamicElementElement));
 	}
 
-	@Reference(unbind = "-")
-	protected void setSAXReader(SAXReader saxReader) {
-		_saxReader = saxReader;
-	}
-
 	private Element _fetchMetadataEntry(
 		Element parentElement, String entryName) {
 
@@ -407,6 +402,7 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormXSDDeserializer.class);
 
+	@Reference
 	private SAXReader _saxReader;
 
 }

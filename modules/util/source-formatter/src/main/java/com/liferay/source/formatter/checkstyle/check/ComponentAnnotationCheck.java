@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.check;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.poshi.runner.util.StringUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -68,7 +69,21 @@ public class ComponentAnnotationCheck extends BaseCheck {
 			return;
 		}
 
-		String extendsClassName = getName(extendsClauseDetailAST);
+		DetailAST firstChildDetailAST = extendsClauseDetailAST.getFirstChild();
+
+		String extendsClassName = null;
+
+		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			extendsClassName = getName(extendsClauseDetailAST);
+		}
+		else if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+			FullIdent fullIdent = FullIdent.createFullIdent(
+				firstChildDetailAST);
+
+			String[] parts = StringUtil.split(fullIdent.getText(), "\\.");
+
+			extendsClassName = parts[parts.length - 1];
+		}
 
 		if (!extendsClassName.equals("BaseAuthVerifierPipelineConfigurator")) {
 			return;

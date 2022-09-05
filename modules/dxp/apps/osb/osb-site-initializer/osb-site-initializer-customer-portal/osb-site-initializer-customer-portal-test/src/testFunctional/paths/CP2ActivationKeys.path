@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACTIVE_PRODUCT_TYPE</td>
+	<td>//button[contains(@class, 'cp-menu-btn-active') and (contains(text(), '${key_productType}'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN</td>
 	<td>//select/option[text()='${key_option}']</td>
 	<td></td>
@@ -119,6 +124,11 @@
 <!--GENERATE_NEW_KEY-->
 
 <tr>
+	<td>ENABLED_PRODUCT</td>
+	<td>//*[contains(.,'Product')]//*[contains(@class, 'cp-select-card')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GENERATE_KEY_FORM</td>
 	<td>//div[contains(@class, 'cp-generateKey')]</td>
 	<td></td>
@@ -129,8 +139,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUBSCRIPTION_BY_INDEX</td>
-	<td>//div[contains(@class, 'cp-radio-card')][${index}]</td>
+	<td>SUBSCRIPTION_CHOICE</td>
+	<td>//div[contains(@class, 'cp-radio-card')][${key_position}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,13 +149,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUBSCRIPTION_KEY_UNAVAILABLE</td>
+	<td>SUBSCRIPTION_KEY_DISABLED</td>
 	<td>//div[contains(@class, 'cp-radio-card') and @disabled]//*[contains(@class,'text-danger')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SUBSCRIPTION_LENGTH_BY_INDEX</td>
-	<td>//div[contains(@class, 'cp-radio-card')][${index}]//label[contains(@class, 'cp-radio-card-label')]</td>
+	<td>SUBSCRIPTION_LENGTH</td>
+	<td>//div[contains(@class, 'cp-radio-card')][${key_position}]//label[contains(@class, 'cp-radio-card-label')]</td>
 	<td></td>
 </tr>
 </tbody>

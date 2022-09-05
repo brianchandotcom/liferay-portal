@@ -803,9 +803,7 @@
 		<exception>ObjectFieldSettingValue</exception>
 		<exception>ObjectFieldState</exception>
 		<exception>ObjectFilter</exception>
-		<exception>ObjectLayoutBox</exception>
-		<exception>ObjectLayoutBoxCategorizationType</exception>
-		<exception>ObjectLayoutBoxCommentsType</exception>
+		<exception>ObjectLayoutBoxType</exception>
 		<exception>ObjectLayoutColumnSize</exception>
 		<exception>ObjectRelationshipName</exception>
 		<exception>ObjectRelationshipParameterObjectFieldId</exception>

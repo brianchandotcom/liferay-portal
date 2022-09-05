@@ -150,19 +150,10 @@ public class UserGroupStagedModelDataHandler
 		portletDataContext.importClassedModel(userGroup, importedUserGroup);
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserGroupLocalService(
-		UserGroupLocalService userGroupLocalService) {
-
-		_userGroupLocalService = userGroupLocalService;
-	}
-
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private UserGroupLocalService _userGroupLocalService;
 
 }

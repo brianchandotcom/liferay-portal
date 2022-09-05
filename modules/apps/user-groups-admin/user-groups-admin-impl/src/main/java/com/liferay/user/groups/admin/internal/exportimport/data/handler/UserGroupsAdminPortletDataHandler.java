@@ -142,13 +142,7 @@ public class UserGroupsAdminPortletDataHandler extends BasePortletDataHandler {
 		actionableDynamicQuery.performCount();
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserGroupLocalService(
-		UserGroupLocalService userGroupLocalService) {
-
-		_userGroupLocalService = userGroupLocalService;
-	}
-
+	@Reference
 	private UserGroupLocalService _userGroupLocalService;
 
 }

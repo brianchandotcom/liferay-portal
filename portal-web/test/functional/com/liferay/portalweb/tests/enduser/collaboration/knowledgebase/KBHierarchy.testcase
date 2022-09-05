@@ -530,21 +530,23 @@ definition {
 			kbFolderDescription = "KB Folder 1",
 			kbFolderName = "KB Folder 1");
 
-		Refresh();
-
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		JSONKnowledgeBase.addkBArticle(
 			folderName = "KB Folder 1",
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content 1",
-			kbArticleTitle = "Knowledge Base Article Title 1");
+			kbArticleTitle = "Knowledge Base Article Title 1",
+			parentFolderName = "KB Root Folder");
 
 		JSONKnowledgeBase.addkBArticle(
 			folderName = "KB Folder 1",
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content 2",
-			kbArticleTitle = "Knowledge Base Article Title 2");
+			kbArticleTitle = "Knowledge Base Article Title 2",
+			parentFolderName = "KB Root Folder");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBFolder.gotoCP(kbFolderName = "KB Root Folder");
 
@@ -556,13 +558,15 @@ definition {
 			folderName = "KB Folder 2",
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content 1",
-			kbArticleTitle = "Knowledge Base Article Title 1");
+			kbArticleTitle = "Knowledge Base Article Title 1",
+			parentFolderName = "KB Root Folder");
 
 		JSONKnowledgeBase.addkBArticle(
 			folderName = "KB Folder 2",
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content 2",
-			kbArticleTitle = "Knowledge Base Article Title 2");
+			kbArticleTitle = "Knowledge Base Article Title 2",
+			parentFolderName = "KB Root Folder");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 

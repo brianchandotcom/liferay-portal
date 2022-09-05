@@ -277,6 +277,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.ComponentAnnotationCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Performs several checks on classes with @Component annotation." />
+			<message key="configuration.policy.incorrect" value="Always specify ''configurationPolicy = ConfigurationPolicy.REQUIRE'' when a classs extends ''BaseAuthVerifierPipelineConfigurator''" />
 			<message key="osgi.jaxrs.name.incorrect" value="The value of ''osgi.jaxrs.name'' should end with ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ConcatCheck">

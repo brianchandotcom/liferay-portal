@@ -54,7 +54,46 @@ public class ComponentAnnotationCheck extends BaseCheck {
 			return;
 		}
 
+		_checkConfigurationPolicy(detailAST, annotationDetailAST);
 		_checkOSGiJaxrsName(annotationDetailAST, importNames);
+	}
+
+	private void _checkConfigurationPolicy(
+		DetailAST detailAST, DetailAST annotationDetailAST) {
+
+		DetailAST extendsClauseDetailAST = detailAST.findFirstToken(
+			TokenTypes.EXTENDS_CLAUSE);
+
+		if (extendsClauseDetailAST == null) {
+			return;
+		}
+
+		String extendsClassName = getName(extendsClauseDetailAST);
+
+		if (!extendsClassName.equals("BaseAuthVerifierPipelineConfigurator")) {
+			return;
+		}
+
+		DetailAST annotationMemberValuePairDetailAST =
+			getAnnotationMemberValuePairDetailAST(
+				annotationDetailAST, "configurationPolicy");
+
+		if (annotationMemberValuePairDetailAST != null) {
+			DetailAST expressionDetailAST =
+				annotationMemberValuePairDetailAST.findFirstToken(
+					TokenTypes.EXPR);
+
+			FullIdent expressionIdent = FullIdent.createFullIdentBelow(
+				expressionDetailAST);
+
+			String annotationMemberValue = expressionIdent.getText();
+
+			if (annotationMemberValue.equals("ConfigurationPolicy.REQUIRE")) {
+				return;
+			}
+		}
+
+		log(annotationDetailAST, _MSG_INCORRECT_CONFIGURATION_POLICY);
 	}
 
 	private void _checkOSGiJaxrsName(
@@ -151,6 +190,9 @@ public class ComponentAnnotationCheck extends BaseCheck {
 
 		return true;
 	}
+
+	private static final String _MSG_INCORRECT_CONFIGURATION_POLICY =
+		"configuration.policy.incorrect";
 
 	private static final String _MSG_INCORRECT_OSGI_JAXRS_MAME =
 		"osgi.jaxrs.name.incorrect";

@@ -27,11 +27,14 @@ import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -66,7 +69,8 @@ public class JournalArticleContentDashboardItem
 			contentDashboardItemActionProviderTracker,
 		ContentDashboardItemSubtype contentDashboardItemSubtype, Group group,
 		InfoItemFieldValuesProvider<JournalArticle> infoItemFieldValuesProvider,
-		JournalArticle journalArticle, Language language,
+		JournalArticle journalArticle,
+		JournalArticleService journalArticleService, Language language,
 		JournalArticle latestApprovedJournalArticle, Portal portal) {
 
 		if (ListUtil.isEmpty(assetCategories)) {
@@ -89,6 +93,7 @@ public class JournalArticleContentDashboardItem
 		_group = group;
 		_infoItemFieldValuesProvider = infoItemFieldValuesProvider;
 		_journalArticle = journalArticle;
+		_journalArticleService = journalArticleService;
 		_language = language;
 
 		if (!journalArticle.equals(latestApprovedJournalArticle)) {
@@ -103,6 +108,22 @@ public class JournalArticleContentDashboardItem
 
 	@Override
 	public List<Version> getAllVersions(ThemeDisplay themeDisplay) {
+		int status = WorkflowConstants.STATUS_APPROVED;
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		User user = themeDisplay.getUser();
+
+		if ((user.getUserId() == _journalArticle.getUserId()) ||
+			permissionChecker.isContentReviewer(
+				user.getCompanyId(), themeDisplay.getScopeGroupId())) {
+
+			status = WorkflowConstants.STATUS_ANY;
+		}
+
+
+
 		return Collections.emptyList();
 	}
 
@@ -460,6 +481,7 @@ public class JournalArticleContentDashboardItem
 	private final InfoItemFieldValuesProvider<JournalArticle>
 		_infoItemFieldValuesProvider;
 	private final JournalArticle _journalArticle;
+	private final JournalArticleService _journalArticleService;
 	private final Language _language;
 	private final JournalArticle _latestApprovedJournalArticle;
 	private final Portal _portal;

@@ -221,25 +221,6 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 				ddmFormFieldValue, locale));
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMExpressionFactory(
-		DDMExpressionFactory ddmExpressionFactory) {
-
-		_ddmExpressionFactory = ddmExpressionFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypeServicesTracker(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
-
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
 	protected void validateDDMFormFieldValidationExpression(
 			DDMFormField ddmFormField, DDMFormFieldValue ddmFormFieldValue)
 		throws DDMFormValuesValidationException {
@@ -454,14 +435,21 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormValuesValidatorImpl.class);
 
+	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;
+
+	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
 	private DDMFormFieldValueExpressionParameterAccessor
 		_ddmFormFieldValueExpressionParameterAccessor;
 	private final DDMFormFieldValueAccessor<String>
 		_defaultDDMFormFieldValueAccessor =
 			new DefaultDDMFormFieldValueAccessor();
+
+	@Reference
 	private JSONFactory _jsonFactory;
+
 	private ServiceTrackerMap<String, DDMFormFieldValueValidator>
 		_serviceTrackerMap;
 

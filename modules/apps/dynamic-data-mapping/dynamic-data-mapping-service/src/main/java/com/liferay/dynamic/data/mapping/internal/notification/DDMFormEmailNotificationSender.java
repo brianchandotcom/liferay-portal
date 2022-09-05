@@ -171,23 +171,6 @@ public class DDMFormEmailNotificationSender {
 		return fields;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypeServicesTracker(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
-
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMailService(MailService mailService) {
-		_mailService = mailService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private MailMessage _createMailMessage(
 			DDMFormInstanceRecord ddmFormInstanceRecord,
 			ServiceContext serviceContext)
@@ -576,6 +559,7 @@ public class DDMFormEmailNotificationSender {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormEmailNotificationSender.class);
 
+	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 	@Reference
@@ -587,11 +571,13 @@ public class DDMFormEmailNotificationSender {
 	@Reference
 	private Language _language;
 
+	@Reference
 	private MailService _mailService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

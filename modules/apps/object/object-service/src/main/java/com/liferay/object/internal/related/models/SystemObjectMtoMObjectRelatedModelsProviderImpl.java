@@ -82,7 +82,8 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
-		if (Objects.equals(
+		if (objectRelationship.isReverse() ||
+			Objects.equals(
 				objectRelationship.getDeletionType(),
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE) ||
 			Objects.equals(

@@ -181,7 +181,6 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 		BufferedInputStream bufferedInputStream = new BufferedInputStream(
 			inputStream);
-
 		BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
 			new FileOutputStream(file));
 

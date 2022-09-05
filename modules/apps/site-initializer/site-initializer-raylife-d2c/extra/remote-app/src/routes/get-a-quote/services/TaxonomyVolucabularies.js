@@ -24,7 +24,7 @@ export function getTaxonomyCategories(id, taxonomyCategoryName) {
 }
 
 export function getTaxonomyVocabularies() {
-	const taxonomyVocabularyName = 'Raylife D2C Vocabulary';
+	const taxonomyVocabularyName = 'Raylife Industry Type';
 
 	const taxonomyVocabularies = axios.get(
 		`o/headless-admin-taxonomy/v1.0/sites/${Liferay.ThemeDisplay.getCompanyGroupId()}/taxonomy-vocabularies?filter=name eq '${taxonomyVocabularyName}'`

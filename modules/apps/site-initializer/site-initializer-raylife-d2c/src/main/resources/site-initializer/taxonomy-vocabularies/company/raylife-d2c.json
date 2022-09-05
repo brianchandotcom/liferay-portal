@@ -1,6 +1,6 @@
 {
-	"description": "Description of the Raylife D2C vocabulary",
+	"description": "Industry code",
 	"externalReferenceCode": "RAYD2CVOC0001",
-	"name": "Raylife D2C Vocabulary",
+	"name": "Raylife Industry Type",
 	"viewableBy": "Anyone"
 }

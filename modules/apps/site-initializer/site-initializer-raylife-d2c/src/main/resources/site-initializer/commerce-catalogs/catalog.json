@@ -1,7 +1,7 @@
 {
-	"assetVocabularyName": "Raylife D2C Vocabulary",
+	"assetVocabularyName": "Raylife Insurance Line",
 	"currencyCode": "USD",
 	"defaultLanguageId": "en_US",
-	"externalReferenceCode": "",
-	"name": "Raylife D2C"
+	"externalReferenceCode": "RAYCATALOG001",
+	"name": "Raylife"
 }

@@ -16,11 +16,8 @@ import {axios} from './liferay/api';
 
 const headlessAPI = '/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies';
 
-export function getCategoryByExternalReferenceCode(
-	externalReferenceCode: string,
-	vocabularyId: number
-) {
+export function getCategoriesByVocabulary(vocabularyId: number) {
 	return axios.get(
-		`${headlessAPI}/${vocabularyId}/taxonomy-categories/by-external-reference-code/${externalReferenceCode}?fields=id,name`
+		`${headlessAPI}/${vocabularyId}/taxonomy-categories/?fields=id,name,externalReferenceCode`
 	);
 }

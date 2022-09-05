@@ -17,7 +17,7 @@ import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {useCallback, useEffect, useState} from 'react';
 
-import {getCategoryByExternalReferenceCode} from '../../../common/services/taxonomy-category';
+import {getCategoriesByVocabulary} from '../../../common/services/taxonomy-category';
 import {getVocabulariesByExternalReferenceCode} from '../../../common/services/taxonomy-vocabulary';
 
 type InsuranceProps = {
@@ -25,47 +25,54 @@ type InsuranceProps = {
 	loadedCategories: any[];
 };
 
-const SITES = {
-	AP: 'AP',
-	D2C: 'D2C',
-};
-
-type categoryCardsTypes = {
+type CategoriesCardsTypes = {
 	active: boolean;
 	channelName: string;
 	id: number;
 	name: string;
 };
 
+type CategoryType = {[keys: string]: string};
+
 const InsuranceCard: React.FC<InsuranceProps> = ({
 	getSelectedCard,
 	loadedCategories,
 }) => {
-	const [insuranceCards, setInsuranceCards] = useState<categoryCardsTypes[]>(
-		[]
-	);
+	const [insuranceCards, setInsuranceCards] = useState<
+		CategoriesCardsTypes[]
+	>([]);
 
-	const getCategories = async (site: string) => {
+	const insuranceLineExternalReferenceCode = 'RAYAPVOC0001';
+
+	const getCategories = async () => {
 		const vocabulary = await getVocabulariesByExternalReferenceCode(
-			`RAY${site}VOC0001`
+			`${insuranceLineExternalReferenceCode}`
 		);
 
 		const vocabularyId = vocabulary?.data?.id;
 
-		const category = await getCategoryByExternalReferenceCode(
-			`RAY${site}CAT0001`,
-			vocabularyId
+		const categories = await getCategoriesByVocabulary(vocabularyId);
+
+		const sortCategoriesByExternalReferenceCode = categories?.data?.items.sort(
+			(personal: any, business: any) =>
+				personal.externalReferenceCode > business.externalReferenceCode
+					? 1
+					: business.externalReferenceCode >
+					  personal.externalReferenceCode
+					? -1
+					: 0
 		);
 
-		const categoryId = category?.data?.id;
-		const categoryName = category?.data?.name;
-
-		const payload = {
-			active: site === SITES.AP,
-			channelName: `Raylife ${site}`,
-			id: categoryId,
-			name: categoryName,
-		};
+		const payload: CategoriesCardsTypes[] = sortCategoriesByExternalReferenceCode?.map(
+			(category: CategoryType, index: number) => {
+				return {
+					active: index === 0,
+					channelName: `Raylife AP`,
+					id: category.id,
+					name: category.name,
+				};
+			}
+		);
 
 		return payload;
 	};
@@ -75,14 +82,13 @@ const InsuranceCard: React.FC<InsuranceProps> = ({
 			return setInsuranceCards(loadedCategories);
 		}
 
-		getCategories(SITES.AP).then((item) => {
-			getCategories(SITES.D2C).then((response) => {
-				const listCategories = [...insuranceCards, item, response];
+		getCategories().then((response) => {
+			const listCategories = [...insuranceCards, ...response];
 
-				setInsuranceCards(listCategories);
-				getSelectedCard(listCategories);
-			});
+			setInsuranceCards(listCategories);
+			getSelectedCard(listCategories);
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [insuranceCards]);
 

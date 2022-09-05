@@ -1,7 +1,7 @@
 {
-	"assetVocabularyName": "Raylife AP Vocabulary",
+	"assetVocabularyName": "Raylife Insurance Line",
 	"currencyCode": "USD",
 	"defaultLanguageId": "en_US",
-	"externalReferenceCode": "",
-	"name": "Raylife AP"
+	"externalReferenceCode": "RAYCATALOG001",
+	"name": "Raylife"
 }

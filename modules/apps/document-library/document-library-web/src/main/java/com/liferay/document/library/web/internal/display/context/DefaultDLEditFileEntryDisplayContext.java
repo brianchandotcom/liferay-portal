@@ -111,8 +111,12 @@ public class DefaultDLEditFileEntryDisplayContext
 		}
 
 		DLFileEntryMetadata fileEntryMetadata =
-			DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+			DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
 				ddmStructure.getStructureId(), fileVersionId);
+
+		if (fileEntryMetadata == null) {
+			return null;
+		}
 
 		return getDDMFormValues(fileEntryMetadata.getDDMStorageId());
 	}

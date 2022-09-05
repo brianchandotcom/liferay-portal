@@ -235,11 +235,6 @@ public class DDMXMLImpl implements DDMXML {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setSAXReader(SAXReader saxReader) {
-		_saxReader = saxReader;
-	}
-
 	private void _appendField(Element element, Field field) {
 		Element dynamicElementElement = element.addElement("dynamic-element");
 
@@ -323,7 +318,9 @@ public class DDMXMLImpl implements DDMXML {
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMXMLImpl.class);
 
+	@Reference
 	private SAXReader _saxReader;
+
 	private XMLSchema _xmlSchema;
 
 }

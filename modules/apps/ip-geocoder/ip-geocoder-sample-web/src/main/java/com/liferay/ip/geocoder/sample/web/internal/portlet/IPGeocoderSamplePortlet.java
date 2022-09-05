@@ -65,8 +65,7 @@ public class IPGeocoderSamplePortlet extends MVCPortlet {
 			renderRequest);
 
 		renderRequest.setAttribute(
-			IPInfo.class.getName(),
-			_ipGeocoder.getIPInfo(httpServletRequest.getRemoteAddr()));
+			IPInfo.class.getName(), _ipGeocoder.getIPInfo(httpServletRequest));
 
 		super.doView(renderRequest, renderResponse);
 	}

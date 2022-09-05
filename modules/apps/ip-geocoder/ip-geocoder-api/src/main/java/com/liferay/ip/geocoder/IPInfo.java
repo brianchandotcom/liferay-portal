@@ -14,6 +14,8 @@
 
 package com.liferay.ip.geocoder;
 
+import com.liferay.petra.string.StringBundler;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -105,6 +107,15 @@ public class IPInfo {
 
 	public void setRegionName(String regionName) {
 		_regionName = regionName;
+	}
+
+	@Override
+	public String toString() {
+		return StringBundler.concat(
+			"{city=", _city, ", countryCode=", _countryCode, ", countryName=",
+			_countryName, ", ipAddress=", _ipAddress, ", latitude=", _latitude,
+			", longitude=", _longitude, ", postalCode=", _postalCode,
+			", regionCode=", _regionCode, ", regionName=", _regionName, "}");
 	}
 
 	private String _city;

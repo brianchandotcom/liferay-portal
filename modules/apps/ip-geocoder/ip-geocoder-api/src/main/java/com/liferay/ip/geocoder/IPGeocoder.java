@@ -14,11 +14,13 @@
 
 package com.liferay.ip.geocoder;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Julio Camarero
  */
 public interface IPGeocoder {
 
-	public IPInfo getIPInfo(String ipAddress);
+	public IPInfo getIPInfo(HttpServletRequest httpServletRequest);
 
 }

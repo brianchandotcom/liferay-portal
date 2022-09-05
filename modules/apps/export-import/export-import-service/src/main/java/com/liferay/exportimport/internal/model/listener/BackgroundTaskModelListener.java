@@ -68,15 +68,7 @@ public class BackgroundTaskModelListener
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService
-			exportImportConfigurationLocalService) {
-
-		_exportImportConfigurationLocalService =
-			exportImportConfigurationLocalService;
-	}
-
+	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
 

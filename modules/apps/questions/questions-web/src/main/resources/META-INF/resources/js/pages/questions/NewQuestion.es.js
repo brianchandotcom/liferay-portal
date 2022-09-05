@@ -100,8 +100,7 @@ export default withRouter(
 							.messageBoardSections.items,
 						...section.messageBoardSections.items,
 					]);
-				}
-				else {
+				} else {
 					setSections([
 						{
 							id: section.id,
@@ -155,8 +154,7 @@ export default withRouter(
 				})
 					.then(({error}) => processResponse(error))
 					.catch(processError);
-			}
-			else {
+			} else {
 				createQuestionInASection({
 					fetchOptionsOverrides: getContextLink(sectionTitle),
 					variables: {
@@ -199,6 +197,8 @@ export default withRouter(
 									type="text"
 									value={headline}
 								/>
+
+								<span className="d-flex justify-content-end mt-2 text-secondary">{`${headline.length} / 75`}</span>
 
 								<ClayForm.FeedbackGroup>
 									<ClayForm.FeedbackItem>

@@ -14,32 +14,25 @@
 
 package com.liferay.ip.geocoder;
 
-import com.maxmind.geoip.Location;
-import com.maxmind.geoip.regionName;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public class IPInfo {
 
-	public IPInfo() {
-	}
+	public IPInfo(
+		String city, String countryCode, String countryName, String ipAddress,
+		float latitude, float longitude, String postalCode, String regionCode,
+		String regionName) {
 
-	public IPInfo(String ipAddress, Location location) {
+		_city = city;
+		_countryCode = countryCode;
+		_countryName = countryName;
 		_ipAddress = ipAddress;
-
-		if (location != null) {
-			_city = location.city;
-			_countryCode = location.countryCode;
-			_countryName = location.countryName;
-			_latitude = location.latitude;
-			_longitude = location.longitude;
-			_postalCode = location.postalCode;
-			_regionCode = location.region;
-
-			_regionName = regionName.regionNameByCode(
-				_countryCode, _regionCode);
-		}
+		_latitude = latitude;
+		_longitude = longitude;
+		_postalCode = postalCode;
+		_regionCode = regionCode;
+		_regionName = regionName;
 	}
 
 	public String getCity() {

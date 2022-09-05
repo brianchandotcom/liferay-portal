@@ -240,11 +240,6 @@ public class DDMDataProviderInstanceServiceImpl
 			ddmFormValues, serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
 	private JSONArray _filterFieldValues(JSONArray fieldValuesJSONArray) {
 		JSONArray filteredFieldValuesJSONArray = _jsonFactory.createJSONArray();
 

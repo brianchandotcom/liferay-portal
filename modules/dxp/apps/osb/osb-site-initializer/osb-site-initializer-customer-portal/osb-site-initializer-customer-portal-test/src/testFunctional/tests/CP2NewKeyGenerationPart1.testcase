@@ -234,6 +234,38 @@ definition {
         }
     }
 
+	@description = "LPS-149731 - Verify if product field is already enabled with the product the user selected in product activation."
+    @priority = "4"
+    test IfProductEnabledFromStart {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		}
+
+		task ("When a user selects a DXP project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+            CP2ActivationKeys.generateNewKey();
+		}
+
+        task ("Then the product field will be filled in by default with the project selected - DXP") {
+			AssertTextEquals(
+				locator1 = "CP2ActivationKeys#ENABLED_PRODUCT",
+				value1 = "DXP");
+        }
+    }
+
 	@description = "LPS-149702 - Verify if user can select the Version when generating a new key."
     @priority = "5"
     test IfProductVersionCanBeSelected {

@@ -451,16 +451,7 @@ renderResponse.setTitle(headerTitle);
 									boolean localizable = true;
 
 									for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
-										com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
-
-										try {
-											ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(ddmStructure, fileVersionId);
-										}
-										catch (Exception exception) {
-											if (_log.isWarnEnabled()) {
-												_log.warn(exception);
-											}
-										}
+										com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(ddmStructure, fileVersionId);
 								%>
 
 										<div class="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) ? "hide" : "" %> file-entry-type-fields">

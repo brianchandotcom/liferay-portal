@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
 import com.liferay.portal.kernel.service.RegionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 
@@ -186,10 +187,34 @@ public class CommerceInventoryTestUtil {
 	public static Country addCountry(ServiceContext serviceContext)
 		throws Exception {
 
+		int safetyCount = 0;
+
+		String a2 = RandomTestUtil.randomString(
+			2, UniqueStringRandomizerBumper.INSTANCE);
+
+		while ((safetyCount < 10) &&
+			   (CountryLocalServiceUtil.fetchCountryByA2(
+				   serviceContext.getCompanyId(), a2) != null)) {
+
+			a2 = RandomTestUtil.randomString(
+				2, UniqueStringRandomizerBumper.INSTANCE);
+		}
+
+		safetyCount = 0;
+
+		String a3 = RandomTestUtil.randomString(
+			3, UniqueStringRandomizerBumper.INSTANCE);
+
+		while ((safetyCount < 10) &&
+			   (CountryLocalServiceUtil.fetchCountryByA3(
+				   serviceContext.getCompanyId(), a3) != null)) {
+
+			a3 = RandomTestUtil.randomString(
+				2, UniqueStringRandomizerBumper.INSTANCE);
+		}
+
 		return CountryLocalServiceUtil.addCountry(
-			String.valueOf(RandomTestUtil.randomInt(10, 99)),
-			String.valueOf(RandomTestUtil.randomInt(100, 999)), true, true,
-			null, RandomTestUtil.randomString(),
+			a2, a3, true, true, null, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(NumericStringRandomizerBumper.INSTANCE),
 			0, true, false, false, serviceContext);
 	}

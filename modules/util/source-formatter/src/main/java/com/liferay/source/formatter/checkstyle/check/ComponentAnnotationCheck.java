@@ -73,16 +73,16 @@ public class ComponentAnnotationCheck extends BaseCheck {
 
 		String extendsClassName = null;
 
-		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
-			extendsClassName = getName(extendsClauseDetailAST);
-		}
-		else if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+		if (firstChildDetailAST.getType() == TokenTypes.DOT) {
 			FullIdent fullIdent = FullIdent.createFullIdent(
 				firstChildDetailAST);
 
 			String[] parts = StringUtil.split(fullIdent.getText(), "\\.");
 
 			extendsClassName = parts[parts.length - 1];
+		}
+		else if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			extendsClassName = getName(extendsClauseDetailAST);
 		}
 
 		if (!extendsClassName.equals("BaseAuthVerifierPipelineConfigurator")) {

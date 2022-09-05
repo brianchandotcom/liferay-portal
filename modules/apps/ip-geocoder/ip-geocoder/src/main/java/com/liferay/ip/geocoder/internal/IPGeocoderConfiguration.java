@@ -21,11 +21,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Julio Camarero
  */
-@ExtendedObjectClassDefinition(category = "mobile-and-devices")
+@ExtendedObjectClassDefinition(category = "ip-geocoder")
 @Meta.OCD(
 	id = "com.liferay.ip.geocoder.internal.IPGeocoderConfiguration",
-	localization = "content/Language",
-	name = "ip-geocoder-service-configuration-name"
+	localization = "content/Language", name = "ip-geocoder-configuration-name"
 )
 public interface IPGeocoderConfiguration {
 

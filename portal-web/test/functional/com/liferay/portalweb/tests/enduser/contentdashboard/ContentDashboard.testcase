@@ -3104,6 +3104,119 @@ definition {
 		}
 	}
 
+	@description = "LPS-150553: Add Filtering by Status in Content Dashboard for Blogs"
+	@priority = "4"
+	test FilterBlogByStatusAndAuthor {
+		task ("Given the Filter and Order dropdown") {
+			task ("Create a blog with the tag") {
+				JSONBlog.addEntry(
+					entryContent = "Blogs Entry Content",
+					entryTitle = "Blogs Entry Title",
+					groupName = "Test Site Name");
+			}
+
+			task ("Go to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+		}
+
+		task ("When the user selects the option Filter by Status and another filter") {
+			ContentDashboard.filterByStatusApproved(filterOption = "Approved");
+
+			ContentDashboard.filterByAuthorMe(filterOption = "Me");
+		}
+
+		task ("Then the list is filtered displaying only contents included in both filters, including Blogs") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Blogs Entry Title");
+		}
+	}
+
+	@description = "LPS-150553: Add Filtering by Status in Content Dashboard for Blogs"
+	@priority = "5"
+	test FilterBlogByStatusApproved {
+		task ("Given The Filter and Order dropdown") {
+			task ("Create an approved blog") {
+				JSONBlog.addEntry(
+					entryContent = "Blogs Entry Content",
+					entryTitle = "Blogs Entry Title",
+					groupName = "Test Site Name");
+			}
+
+			task ("Go to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+		}
+
+		task ("When the user selects the option Filter by Status: Approved") {
+			ContentDashboard.filterByStatusApproved(filterOption = "Approved");
+		}
+
+		task ("Then the list is filtered displaying only contents labeled as Approved, including Blogs") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Blogs Entry Title");
+		}
+	}
+
+	@description = "LPS-150553: Add Filtering by Status in Content Dashboard for Blogs"
+	@priority = "5"
+	test FilterBlogByStatusDraft {
+		task ("Given The Filter and Order dropdown") {
+			task ("Create an approved blog") {
+				JSONBlog.addEntry(
+					entryContent = "Blogs Entry Content",
+					entryTitle = "Blogs Entry Title",
+					groupName = "Test Site Name",
+					workflowAction = "DRAFT");
+			}
+
+			task ("Go to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+		}
+
+		task ("When the user selects the option Filter by Status: Draft") {
+			ContentDashboard.filterByStatusDraft(filterOption = "Draft");
+		}
+
+		task ("Then the list is filtered displaying only contents labeled as Draft, including Blogs") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Blogs Entry Title");
+		}
+	}
+
+	@description = "LPS-150553: Add Filtering by Status in Content Dashboard for Blogs"
+	@priority = "5"
+	test FilterBlogByStatusScheduled {
+		task ("Given The Filter and Order dropdown") {
+			task ("Create an approved blog") {
+				JSONBlog.addEntry(
+					displayDate = "true",
+					entryContent = "Blogs Entry Content",
+					entryTitle = "Blogs Entry Title",
+					groupName = "Test Site Name",
+					increaseMinutes = "10");
+			}
+
+			task ("Go to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+		}
+
+		task ("When the user selects the option Filter by Status: Scheduled'") {
+			ContentDashboard.filterByStatusScheduled(filterOption = "Scheduled");
+		}
+
+		task ("Then the list is filtered displaying only contents labeled as Scheduled, including Blogs") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Blogs Entry Title");
+		}
+	}
+
 	@description = "LPS-150558 Given The Filter by... > Tags
 	When the user clicks on several tags and clicks Save
 	Then the content list in the Content Dashboard filters accordingly, including Blogs"

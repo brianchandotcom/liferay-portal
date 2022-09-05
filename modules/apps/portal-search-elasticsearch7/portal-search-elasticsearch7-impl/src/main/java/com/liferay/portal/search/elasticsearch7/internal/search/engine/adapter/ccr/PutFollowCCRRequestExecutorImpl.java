@@ -52,13 +52,6 @@ public class PutFollowCCRRequestExecutorImpl
 			putFollowResponse.isIndexFollowingStarted());
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private PutFollowRequest _createPutFollowRequest(
 		PutFollowCCRRequest putFollowCCRRequest) {
 
@@ -97,6 +90,7 @@ public class PutFollowCCRRequestExecutorImpl
 		}
 	}
 
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

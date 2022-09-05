@@ -63,13 +63,6 @@ public class FollowInfoCCRRequestExecutorImpl
 		return new FollowInfoCCRResponse(FollowInfoStatus.PAUSED);
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private FollowInfoRequest _createFollowInfoRequest(
 		FollowInfoCCRRequest followInfoCCRRequest) {
 
@@ -96,6 +89,7 @@ public class FollowInfoCCRRequestExecutorImpl
 		}
 	}
 
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

@@ -70,19 +70,13 @@ public class PauseFollowCCRRequestExecutorImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private PauseFollowRequest _createPauseFollowRequest(
 		PauseFollowCCRRequest pauseFollowCCRRequest) {
 
 		return new PauseFollowRequest(pauseFollowCCRRequest.getIndexName());
 	}
 
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

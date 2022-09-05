@@ -291,11 +291,6 @@ public class ElasticsearchConfigurationWrapper
 		_elasticsearchConfiguration = elasticsearchConfiguration;
 	}
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
-
 	private Map<String, Object> _getPropsMap(
 		String[] keys, Class<?> clazz, Props props) {
 
@@ -329,7 +324,10 @@ public class ElasticsearchConfigurationWrapper
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final Set<ElasticsearchConfigurationObserver>
 		_elasticsearchConfigurationObservers = new ConcurrentSkipListSet<>();
+
+	@Reference
 	private Props _props;
+
 	private volatile ElasticsearchConfiguration
 		_propsElasticsearchConfiguration;
 	private volatile Map<String, Object> _propsMap = Collections.emptyMap();

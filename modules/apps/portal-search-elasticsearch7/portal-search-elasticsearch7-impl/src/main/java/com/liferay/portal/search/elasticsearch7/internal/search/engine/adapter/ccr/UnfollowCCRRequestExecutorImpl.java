@@ -66,19 +66,13 @@ public class UnfollowCCRRequestExecutorImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private UnfollowRequest _createUnfollowRequest(
 		UnfollowCCRRequest unfollowCCRRequest) {
 
 		return new UnfollowRequest(unfollowCCRRequest.getIndexName());
 	}
 
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

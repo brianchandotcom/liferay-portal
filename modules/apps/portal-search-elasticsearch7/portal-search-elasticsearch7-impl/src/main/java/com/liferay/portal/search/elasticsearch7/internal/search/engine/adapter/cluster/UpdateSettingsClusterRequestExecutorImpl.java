@@ -61,13 +61,6 @@ public class UpdateSettingsClusterRequestExecutorImpl
 			persistentSettings.toString(), transientSettings.toString());
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private ClusterUpdateSettingsRequest _createClusterUpdateSettingsRequest(
 		UpdateSettingsClusterRequest updateSettingsClusterRequest) {
 
@@ -121,6 +114,7 @@ public class UpdateSettingsClusterRequestExecutorImpl
 		}
 	}
 
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

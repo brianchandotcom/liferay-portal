@@ -357,11 +357,6 @@ public class ElasticsearchConnectionManager
 		return getElasticsearchConnection(remoteClusterConnectionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setClusterExecutor(ClusterExecutor clusterExecutor) {
-		_clusterExecutor = clusterExecutor;
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
@@ -426,7 +421,9 @@ public class ElasticsearchConnectionManager
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchConnectionManager.class);
 
+	@Reference
 	private ClusterExecutor _clusterExecutor;
+
 	private final Map<String, ElasticsearchConnection>
 		_elasticsearchConnections = new ConcurrentHashMap<>();
 

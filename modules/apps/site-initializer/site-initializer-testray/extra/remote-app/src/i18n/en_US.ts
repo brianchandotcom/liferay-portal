@@ -98,6 +98,7 @@ export default {
 	'current-case-types': 'Current Case Types',
 	'current-main-components': 'Current Main Components',
 	'current-password': 'Current Password',
+	'current-password-incorrect': 'Current password incorrect.',
 	'current-priorities': 'Current Priorities',
 	'current-requirements': 'Current Requirements',
 	'current-subcomponents': 'Current Sub Components',
@@ -176,6 +177,7 @@ export default {
 	'manage-x': 'Manage {0}',
 	'merged-with': 'Merged With',
 	'metrics': 'Metrics',
+	'minimum-8-characters': 'Minimum 8 characters.',
 	'modified-date': 'Modified Date',
 	'name': 'Name',
 	'new-build': 'New Build',
@@ -204,11 +206,9 @@ export default {
 	'overview': 'Overview',
 	'passed': 'Passed',
 	'password': 'Password',
-	'password-can-only-contain-latin-letters':
-		'Password can only contain Latin letters',
-	'password-is-too-short-should-be-8-chars-minimum':
-		'Password is too short - should be 8 chars minimum',
-	'passwords-must-match': 'Passwords must match',
+	'password-may-contain-letters-and-number':
+		'Password may contain letters and number.',
+	'passwords-do-not-match': 'Passwords do not match.',
 	'priority': 'Priority',
 	'product-version': 'Product Version',
 	'progress': 'Progress',
@@ -296,6 +296,7 @@ export default {
 		'This build is currently in analysis.',
 	'this-builds-task-has-been-abandoned':
 		"This build's task has been abandoned.",
+	'this-field-is-required': 'This field is required.',
 	'this-role-is-for-general-liferay-employees-and-enables-authenticated-users-to-view-test-results':
 		'This role is for general Liferay employees and enables authenticated users to view test results.',
 	'time-x-total-issues': 'Time {0} Total Issues',

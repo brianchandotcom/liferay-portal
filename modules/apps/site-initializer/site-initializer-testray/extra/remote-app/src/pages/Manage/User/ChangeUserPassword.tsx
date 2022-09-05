@@ -14,27 +14,83 @@
 
 import ClayForm from '@clayui/form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import React from 'react';
+import React, {useContext} from 'react';
 import {useForm} from 'react-hook-form';
-import {useNavigate, useOutletContext} from 'react-router-dom';
+import {useOutletContext} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
+import {AccountContext} from '../../../context/AccountContext';
+import useFormActions from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema from '../../../schema/yup';
+import {liferayUserAccountsRest} from '../../../services/rest';
+
+type UserPasswordDefault = {
+	alternateName?: string;
+	currentPassword: string;
+	emailAddress?: string;
+	familyName?: string;
+	givenName?: string;
+	id: string;
+	password: string;
+	repassword?: string;
+};
 
 const ChangeUserPassword: React.FC = () => {
-	const navigate = useNavigate();
 	const {userAccount} = useOutletContext<any>();
+	const {
+		mutatePassword,
+	}: {mutatePassword: KeyedMutator<any>} = useOutletContext();
+
+	const [{myUserAccount}] = useContext(AccountContext);
+
+	const {
+		form: {onClose, onError, onSave, onSubmit},
+	} = useFormActions();
+	const validationId = myUserAccount?.id === userAccount.id ? true : false;
 	const {
 		formState: {errors},
 		handleSubmit,
 		register,
+		setError,
 	} = useForm({
 		defaultValues: userAccount,
-		resolver: yupResolver(yupSchema.password),
+		reValidateMode: 'onSubmit',
+		resolver: yupResolver(
+			validationId ? yupSchema.passwordRequired : yupSchema.password
+		),
 	});
-	const _onSubmit = () => alert('successful send');
+
+	const _onSubmit = (form: UserPasswordDefault) => {
+		delete form.alternateName;
+		delete form.emailAddress;
+		delete form.familyName;
+		delete form.givenName;
+
+		onSubmit(
+			{...form, userId: userAccount.id},
+			{
+				create: (...params) =>
+					liferayUserAccountsRest.create(...params),
+				update: (...params) =>
+					liferayUserAccountsRest.update(...params),
+			}
+		)
+			.then(mutatePassword)
+			.then(() => onSave())
+			.catch((error) => {
+				if (error.info.type === 'MustMatchCurrentPassword') {
+					return setError('currentPassword', {
+						message: i18n.translate('current-password-incorrect'),
+					});
+				}
+
+				onError(error);
+			});
+	};
+
 	const inputProps = {
 		errors,
 		register,
@@ -44,13 +100,18 @@ const ChangeUserPassword: React.FC = () => {
 	return (
 		<Container className="change-user-password">
 			<ClayForm>
-				<Form.Input
-					{...inputProps}
-					label={i18n.translate('current-password')}
-					name="currentpassword"
-					placeholder={i18n.translate('current-password')}
-					type="password"
-				/>
+				{validationId ? (
+					<Form.Input
+						{...inputProps}
+						label={i18n.translate('current-password')}
+						name="currentPassword"
+						placeholder={i18n.translate('current-password')}
+						required={true}
+						type="password"
+					/>
+				) : (
+					''
+				)}
 
 				<Form.Input
 					{...inputProps}
@@ -63,7 +124,7 @@ const ChangeUserPassword: React.FC = () => {
 				<Form.Input
 					{...inputProps}
 					label={i18n.translate('confirm-password')}
-					name="confirmpassword"
+					name="rePassword"
 					onPaste={(event) => {
 						event.preventDefault();
 
@@ -76,7 +137,7 @@ const ChangeUserPassword: React.FC = () => {
 
 			<div>
 				<Form.Footer
-					onClose={() => navigate(-1)}
+					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
 				/>
 			</div>

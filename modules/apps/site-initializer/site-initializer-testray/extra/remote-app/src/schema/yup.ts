@@ -25,22 +25,45 @@ const userSchema = yup.object({
 });
 
 const passwordStructure = {
+	currentPassword: yup.string(),
+
 	password: yup
 		.string()
-		.required(i18n.translate('no-password-provided'))
-		.min(
-			8,
-			i18n.translate('password-is-too-short-should-be-8-chars-minimum')
-		)
+		.required(i18n.translate('this-field-is-required'))
+		.min(8, i18n.translate('minimum-8-characters'))
 		.matches(
-			/[a-zA-Z]/,
-			i18n.translate('password-can-only-contain-latin-letters')
+			/[a-zA-Z0-9]/,
+			i18n.translate('password-may-contain-letters-and-number')
 		),
-	repassword: yup
+
+	rePassword: yup
 		.string()
+		.required(i18n.translate('this-field-is-required'))
 		.oneOf(
 			[yup.ref('password'), null],
-			i18n.translate('passwords-must-match')
+			i18n.translate('passwords-do-not-match')
+		),
+};
+
+const passwordRequiredStructure = {
+	currentPassword: yup
+		.string()
+		.required(i18n.translate('this-field-is-required')),
+
+	password: yup
+		.string()
+		.required(i18n.translate('this-field-is-required'))
+		.min(8, i18n.translate('minimum-8-characters'))
+		.matches(
+			/[a-zA-Z0-9]/,
+			i18n.translate('password-may-contain-letters-and-number')
+		),
+	rePassword: yup
+		.string()
+		.required(i18n.translate('this-field-is-required'))
+		.oneOf(
+			[yup.ref('password'), null],
+			i18n.translate('passwords-do-not-match')
 		),
 };
 
@@ -110,6 +133,7 @@ const yupSchema = {
 		name: yup.string(),
 	}),
 	password: yup.object(passwordStructure),
+	passwordRequired: yup.object(passwordRequiredStructure),
 	productVersion: yup.object({
 		id: yup.string(),
 		name: yup.string().required(),
@@ -158,6 +182,7 @@ const yupSchema = {
 	}),
 	user: userSchema,
 	userWithPassword: userSchema.shape(passwordStructure),
+	userWithPasswordRequired: userSchema.shape(passwordRequiredStructure),
 };
 
 export {yupResolver};

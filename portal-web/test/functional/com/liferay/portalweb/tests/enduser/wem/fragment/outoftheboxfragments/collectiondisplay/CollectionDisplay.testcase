@@ -2442,45 +2442,49 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
+			var fragmentElementId = selenium.getText("//div[contains(@class,'fragment-name')]//div[contains(@id,'fragment-')]");
+
 			AssertTextEquals(
 				key_colPosition = "1",
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM",
-				value1 = "${fragmentId}");
+				value1 = "${fragmentElementId}");
 
 			AssertTextNotEquals(
 				key_colPosition = "1",
 				key_rowPosition = "2",
 				locator1 = "PageEditor#COLLECTION_ITEM",
-				value1 = "${fragmentId}");
+				value1 = "${fragmentElementId}");
 
 			AssertTextNotEquals(
 				key_colPosition = "1",
 				key_rowPosition = "3",
 				locator1 = "PageEditor#COLLECTION_ITEM",
-				value1 = "${fragmentId}");
+				value1 = "${fragmentElementId}");
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name 2",
 				siteName = "Test Site Name");
 
+			var fragmentElementId = selenium.getText("//div[contains(@class,'fragment-name')]//div[contains(@id,'fragment-')]");
+
 			AssertTextEquals.assertPartialText(
 				key_colPosition = "1",
 				key_rowPosition = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM",
-				value1 = "${fragmentId2}");
+				value1 = "${fragmentElementId}");
 
 			AssertTextNotEquals.assertNotPartialText(
 				key_colPosition = "1",
 				key_rowPosition = "2",
 				locator1 = "PageEditor#COLLECTION_ITEM",
-				value1 = "${fragmentId2}");
+				value1 = "${fragmentElementId}");
 
 			AssertTextNotEquals.assertNotPartialText(
 				key_colPosition = "1",
 				key_rowPosition = "3",
 				locator1 = "PageEditor#COLLECTION_ITEM",
-				value1 = "${fragmentId2}");
+				value1 = "${fragmentElementId}");
 		}
 	}
 

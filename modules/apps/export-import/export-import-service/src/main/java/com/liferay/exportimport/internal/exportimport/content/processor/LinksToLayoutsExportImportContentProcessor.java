@@ -85,13 +85,6 @@ public class LinksToLayoutsExportImportContentProcessor
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
 	private boolean _isValidateLinksToLayoutsReferences() {
 		try {
 			ExportImportServiceConfiguration configuration =
@@ -338,6 +331,7 @@ public class LinksToLayoutsExportImportContentProcessor
 	private static final Pattern _importLinksToLayoutPattern = Pattern.compile(
 		"\\[([\\d]+)@(private(-group|-user)?|public)@([\\d]+)(@([\\d]+))?\\]");
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference

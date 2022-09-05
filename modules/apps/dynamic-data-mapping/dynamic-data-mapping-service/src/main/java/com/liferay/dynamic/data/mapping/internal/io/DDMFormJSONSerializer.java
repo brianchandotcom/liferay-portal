@@ -107,18 +107,6 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 			"rules", DDMFormRuleJSONSerializer.serialize(ddmFormRules));
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypeServicesTracker(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
-
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
 	protected JSONObject toJSONObject(
 		DDMFormSuccessPageSettings ddmFormSuccessPageSettings) {
 
@@ -164,7 +152,10 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 		jsonObject.put("successPage", toJSONObject(ddmFormSuccessPageSettings));
 	}
 
+	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 }

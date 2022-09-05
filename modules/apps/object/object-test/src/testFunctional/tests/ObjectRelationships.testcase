@@ -144,20 +144,76 @@ definition {
 			objectName = "CustomObject290",
 			pluralLabelName = "Custom Objects 290");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject290");
+
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "User");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 290");
 
 		ObjectAdmin.gotoRelationshipsTab();
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			object = "Custom Object 290",
+			object = "User",
 			type = "Many to Many");
 
 		AssertElementPresent(
 			key_label = "Relationship",
 			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject290");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 290");
+
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "1",
+			fieldList = "Custom Field",
+			tabName = "Field Tab");
+
+		ObjectAdmin.addTabRelationshipsOnLayout(
+			relationshipsLabelName = "Relationship",
+			tabName = "Relationship Tab");
+
+		Button.clickSave();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject290");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject290");
+
+		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry A");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Test Test");
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject290");
+
+		ObjectPortlet.viewEntry(entry = "Entry A");
 	}
 
 	@description = "LPS-145393 - Verify it is possible to create a Relationship One-to-Many from a Native Object to a Custom Object"
@@ -433,6 +489,46 @@ definition {
 			AssertElementNotPresent(
 				key_columnOption = "Custom Objects 290",
 				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+		}
+	}
+
+	@description = "LPS-152508 - Verify that it's not possible to delete a Many-to-Many relationship from the child side"
+	@priority = "4"
+	test CannotDeleteManyToManyRelationshipFromChildSide {
+		task ("Create Custom Object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 289",
+				objectName = "CustomObject289",
+				pluralLabelName = "Custom Objects 289");
+		}
+
+		task ("Add a relationship between a Custom Object and Native Object") {
+			Navigator.openURL();
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "User",
+				objectName_2 = "CustomObject289",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "manyToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject289");
+		}
+
+		task ("Delete a Many-to-Many relationship from the child side") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 289");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			Click(
+				key_objectLabel = "Relationship",
+				locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			ObjectAdmin.assertCannotDeleteRelationshipFromChildSideErrorMessage();
 		}
 	}
 

@@ -399,6 +399,16 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_BLOCK_ADD_FIELD_BUTTON");
 	}
 
+	macro assertCannotDeleteRelationshipFromChildSideErrorMessage {
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Deletion Not Allowed");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Modal#BODY",
+			value1 = "You do not have permission to delete this relationship.");
+	}
+
 	macro assertClobTypeText {
 		AssertElementPresent(
 			key_clobType = "${clobType}",

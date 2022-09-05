@@ -168,22 +168,6 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				exportLayoutSettingsMap);
 	}
 
-	@Reference(unbind = "-")
-	protected void setExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService
-			exportImportConfigurationLocalService) {
-
-		_exportImportConfigurationLocalService =
-			exportImportConfigurationLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExportImportService(
-		ExportImportService exportImportService) {
-
-		_exportImportService = exportImportService;
-	}
-
 	protected void setLayoutIdMap(ActionRequest actionRequest) {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
@@ -202,13 +186,6 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 					httpServletRequest, treeId + "SelectedNode")));
 	}
 
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
 	private long[] _getLayoutIds(PortletRequest portletRequest)
 		throws Exception {
 
@@ -218,6 +195,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportLayoutsMVCActionCommand.class);
 
+	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
 
@@ -228,11 +206,13 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private ExportImportHelper _exportImportHelper;
 
+	@Reference
 	private ExportImportService _exportImportService;
 
 	@Reference
 	private Language _language;
 
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference

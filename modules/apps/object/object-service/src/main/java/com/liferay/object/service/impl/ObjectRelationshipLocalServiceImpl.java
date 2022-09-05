@@ -373,11 +373,26 @@ public class ObjectRelationshipLocalServiceImpl
 			objectRelationship.getObjectDefinitionId2(), parameterObjectFieldId,
 			objectRelationship.getType());
 
-		objectRelationship.setParameterObjectFieldId(parameterObjectFieldId);
-		objectRelationship.setDeletionType(deletionType);
-		objectRelationship.setLabelMap(labelMap);
+		if (Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-		return objectRelationshipPersistence.update(objectRelationship);
+			ObjectRelationship reverseObjectRelationship =
+				fetchReverseObjectRelationship(objectRelationship, true);
+
+			_updateObjectRelationship(
+				parameterObjectFieldId, deletionType, labelMap,
+				reverseObjectRelationship);
+
+			Indexer<ObjectRelationship> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(
+					ObjectRelationship.class);
+
+			indexer.reindex(reverseObjectRelationship);
+		}
+
+		return _updateObjectRelationship(
+			parameterObjectFieldId, deletionType, labelMap, objectRelationship);
 	}
 
 	private ObjectField _addObjectField(
@@ -575,6 +590,17 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	private ObjectRelationship _updateObjectRelationship(
+		long parameterObjectFieldId, String deletionType,
+		Map<Locale, String> labelMap, ObjectRelationship objectRelationship) {
+
+		objectRelationship.setParameterObjectFieldId(parameterObjectFieldId);
+		objectRelationship.setDeletionType(deletionType);
+		objectRelationship.setLabelMap(labelMap);
+
+		return objectRelationshipPersistence.update(objectRelationship);
 	}
 
 	private void _validate(

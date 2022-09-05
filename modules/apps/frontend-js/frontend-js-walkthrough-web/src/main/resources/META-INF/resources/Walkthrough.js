@@ -359,13 +359,15 @@ const Step = ({
 
 	return (
 		<>
-			{!popoverVisible && (
-				<Hotspot
-					onHotspotClick={() => setPopoverVisible(true)}
-					ref={hotspotRef}
-					trigger={memoizedTrigger}
-				/>
-			)}
+			{!popoverVisible &&
+				currentStep !== steps.length &&
+				!localStorage.getItem(LOCAL_STORAGE_KEYS.SKIPPABLE) && (
+					<Hotspot
+						onHotspotClick={() => setPopoverVisible(true)}
+						ref={hotspotRef}
+						trigger={memoizedTrigger}
+					/>
+				)}
 
 			{darkbg && (
 				<Overlay

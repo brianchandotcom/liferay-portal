@@ -113,13 +113,6 @@ public class DLReferencesExportImportContentProcessor
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
 	private ObjectValuePair<String, Integer>
 		_getDLReferenceEndPosObjectValuePair(
 			String content, int beginPos, int endPos) {
@@ -883,6 +876,7 @@ public class DLReferencesExportImportContentProcessor
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference

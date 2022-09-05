@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import org.codehaus.groovy.ast.CodeVisitorSupport;
 import org.codehaus.groovy.ast.expr.ArgumentListExpression;
@@ -34,6 +35,10 @@ import org.codehaus.groovy.ast.stmt.BlockStatement;
  * @author Kevin Lee
  */
 public class GradleBuildFileVisitor extends CodeVisitorSupport {
+
+	public List<GradleDependency> getBuildscriptDependencies() {
+		return _buildscriptDependencies;
+	}
 
 	public int getDependenciesLastLineNumber() {
 		return _dependenciesLastLineNumber;
@@ -51,7 +56,7 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 	public void visitArgumentlistExpression(
 		ArgumentListExpression argumentListExpression) {
 
-		if (!_inDependencies) {
+		if (!_inDependencies && !_inBuildscript) {
 			return;
 		}
 
@@ -72,7 +77,12 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 					_configuration, textParts[0], textParts[1], textParts[2],
 					_methodCallLineNumber, _methodCallLastLineNumber);
 
-				_gradleDependencies.add(gradleDependency);
+				if (_inBuildscriptDependencies) {
+					_buildscriptDependencies.add(gradleDependency);
+				}
+				else {
+					_gradleDependencies.add(gradleDependency);
+				}
 			}
 		}
 
@@ -81,12 +91,12 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 
 	@Override
 	public void visitBlockStatement(BlockStatement blockStatement) {
-		if (_inDependencies) {
-			_numberOfBlocks++;
+		if (_inDependencies || _inBuildscriptDependencies) {
+			_blockStatementStack.push(true);
 
 			super.visitBlockStatement(blockStatement);
 
-			_numberOfBlocks--;
+			_blockStatementStack.pop();
 		}
 		else {
 			super.visitBlockStatement(blockStatement);
@@ -95,10 +105,6 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 
 	@Override
 	public void visitMapExpression(MapExpression mapExpression) {
-		if (!_inDependencies) {
-			return;
-		}
-
 		Map<String, String> keyValues = new HashMap<>();
 
 		boolean gav = false;
@@ -128,7 +134,12 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 				keyValues.get("version"), _methodCallLineNumber,
 				_methodCallLastLineNumber);
 
-			_gradleDependencies.add(gradleDependency);
+			if (_inBuildscriptDependencies) {
+				_buildscriptDependencies.add(gradleDependency);
+			}
+			else if (_inDependencies) {
+				_gradleDependencies.add(gradleDependency);
+			}
 		}
 
 		super.visitMapExpression(mapExpression);
@@ -141,11 +152,25 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 		_methodCallLineNumber = methodCallExpression.getLineNumber();
 		_methodCallLastLineNumber = methodCallExpression.getLastLineNumber();
 
+		if (_methodCallLineNumber > _buildscriptLastLineNumber) {
+			_inBuildscript = false;
+		}
+
 		if (_methodCallLineNumber > _dependenciesLastLineNumber) {
 			_inDependencies = false;
 		}
 
+		if (_methodCallLineNumber > _buildscriptDependenciesLastLineNumber) {
+			_inBuildscriptDependencies = false;
+		}
+
 		String methodName = methodCallExpression.getMethodAsString();
+
+		if (methodName.equals("buildscript")) {
+			_inBuildscript = true;
+			_buildscriptLastLineNumber =
+				methodCallExpression.getLastLineNumber();
+		}
 
 		if (methodName.equals("dependencies")) {
 			_inDependencies = true;
@@ -154,14 +179,17 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 				methodCallExpression.getLastLineNumber();
 		}
 
-		if (_inDependencies && (_numberOfBlocks > 0)) {
-			if (_numberOfBlocks > 1) {
+		if (_inBuildscript && _inDependencies &&
+			(_buildscriptDependenciesLastLineNumber == -1)) {
 
-				// Assume all dependencies are initialized within the first
-				// level of "dependencies" block
+			_inBuildscriptDependencies = true;
+			_buildscriptDependenciesLastLineNumber =
+				methodCallExpression.getLastLineNumber();
+		}
 
-				return;
-			}
+		if ((_inBuildscriptDependencies || _inDependencies) &&
+			(_blockStatementStack.isEmpty() ? false :
+				_blockStatementStack.peek())) {
 
 			_configuration = methodName;
 
@@ -174,14 +202,20 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 		}
 	}
 
+	private final Stack<Boolean> _blockStatementStack = new Stack<>();
+	private final List<GradleDependency> _buildscriptDependencies =
+		new ArrayList<>();
+	private int _buildscriptDependenciesLastLineNumber = -1;
+	private int _buildscriptLastLineNumber = -1;
 	private String _configuration;
 	private int _dependenciesLastLineNumber = -1;
 	private int _dependenciesLineNumber = -1;
 	private final List<GradleDependency> _gradleDependencies =
 		new ArrayList<>();
+	private boolean _inBuildscript;
+	private boolean _inBuildscriptDependencies;
 	private boolean _inDependencies;
 	private int _methodCallLastLineNumber = -1;
 	private int _methodCallLineNumber = -1;
-	private int _numberOfBlocks;
 
 }

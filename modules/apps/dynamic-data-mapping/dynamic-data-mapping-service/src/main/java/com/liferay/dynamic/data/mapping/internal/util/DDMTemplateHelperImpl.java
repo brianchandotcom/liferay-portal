@@ -133,25 +133,6 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		_ddmStructureService = ddmStructureService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
 	private JSONObject _getAutocompleteClassJSONObject(Class<?> clazz) {
 		JSONObject typeJSONObject = _jsonFactory.createJSONObject();
 
@@ -280,8 +261,13 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMTemplateHelperImpl.class);
 
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private DDMStructureService _ddmStructureService;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference

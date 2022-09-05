@@ -21,7 +21,8 @@
 		"useDefineForClassFields": true
 	},
 	"include": [
-		"src"
+		"src",
+		"src/react-app-env.d.ts"
 	],
 	"references": [
 		{

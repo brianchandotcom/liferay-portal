@@ -79,6 +79,11 @@ export default function ActionBuilder({
 
 	const [infoAlert, setInfoAlert] = useState(true);
 
+	const [
+		mandatoryRelationshipWarning,
+		setMandatoryRelationshipWarning,
+	] = useState<boolean>(false);
+
 	const fetchObjectDefinitions = async () => {
 		const relationships = await API.fetchJSON<
 			ObjectDefinitionsRelationship[]
@@ -264,6 +269,14 @@ export default function ActionBuilder({
 				...parameters,
 			},
 		});
+
+		setMandatoryRelationshipWarning(
+			items.some(
+				(field) =>
+					field.businessType === 'Relationship' &&
+					field.required === true
+			)
+		);
 	};
 
 	useEffect(() => {
@@ -380,6 +393,19 @@ export default function ActionBuilder({
 					/>
 				)}
 			</Card>
+
+			{mandatoryRelationshipWarning && (
+				<ClayAlert
+					className="lfr-objects__side-panel-content-container"
+					displayType="warning"
+					onClose={() => setMandatoryRelationshipWarning(false)}
+					title={`${Liferay.Language.get('warning')}:`}
+				>
+					{Liferay.Language.get(
+						'assigning-predefined-values-to-relationship-fields-is-not-supported'
+					)}
+				</ClayAlert>
+			)}
 
 			<Card title={Liferay.Language.get('action')}>
 				<Card

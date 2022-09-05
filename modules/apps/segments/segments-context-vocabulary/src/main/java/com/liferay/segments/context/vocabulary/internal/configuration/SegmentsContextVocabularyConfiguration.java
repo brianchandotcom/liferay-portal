@@ -34,13 +34,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SegmentsContextVocabularyConfiguration {
 
 	@Meta.AD(
-		description = "segments-context-vocabulary-configuration-entity-field-description",
 		name = "segments-context-vocabulary-configuration-entity-field-name"
 	)
 	public String entityFieldName();
 
 	@Meta.AD(
-		description = "segments-context-vocabulary-configuration-asset-vocabulary-description",
 		name = "segments-context-vocabulary-configuration-asset-vocabulary-name"
 	)
 	public String assetVocabularyName();

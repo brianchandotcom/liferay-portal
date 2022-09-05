@@ -78,9 +78,7 @@ public abstract class BaseJSPPanelCategory extends BasePanelCategory {
 			httpServletRequest, httpServletResponse, getHeaderJspPath());
 	}
 
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
+	protected abstract ServletContext getServletContext();
 
 	protected boolean includeJSP(
 			HttpServletRequest httpServletRequest,
@@ -91,8 +89,10 @@ public abstract class BaseJSPPanelCategory extends BasePanelCategory {
 			return false;
 		}
 
+		ServletContext servletContext = getServletContext();
+
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(jspPath);
+			servletContext.getRequestDispatcher(jspPath);
 
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
@@ -108,7 +108,5 @@ public abstract class BaseJSPPanelCategory extends BasePanelCategory {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseJSPPanelCategory.class);
-
-	private ServletContext _servletContext;
 
 }

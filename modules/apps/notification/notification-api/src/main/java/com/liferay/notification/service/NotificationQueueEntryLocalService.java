@@ -280,7 +280,7 @@ public interface NotificationQueueEntryLocalService
 			long notificationQueueEntryId)
 		throws PortalException;
 
-	public void sendNotificationQueueEntries() throws PortalException;
+	public void sendNotificationQueueEntries();
 
 	/**
 	 * Updates the notification queue entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

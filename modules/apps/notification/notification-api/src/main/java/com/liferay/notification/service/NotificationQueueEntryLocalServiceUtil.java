@@ -320,7 +320,7 @@ public class NotificationQueueEntryLocalServiceUtil {
 			notificationQueueEntryId);
 	}
 
-	public static void sendNotificationQueueEntries() throws PortalException {
+	public static void sendNotificationQueueEntries() {
 		getService().sendNotificationQueueEntries();
 	}
 

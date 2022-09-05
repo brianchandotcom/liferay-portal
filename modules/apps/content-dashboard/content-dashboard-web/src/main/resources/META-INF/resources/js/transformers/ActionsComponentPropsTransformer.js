@@ -20,6 +20,8 @@ import SidebarPanelInfoViewCollapsable from '../components/SidebarPanelInfoView/
 import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
 import {OPEN_PANEL_VALUE} from '../utils/constants';
 
+const ACTIVE_ROW_CSS_CLASS = 'table-active';
+
 const handlePanelStateFromSession = ({
 	currentRowId,
 	namespace,
@@ -67,10 +69,10 @@ const handleSessionOnSidebarOpen = ({rowId}) => {
 
 const deselectAllRows = (portletNamespace) => {
 	const activeRows = document.querySelectorAll(
-		`[data-searchcontainerid="${portletNamespace}content"] tr.active`
+		`[data-searchcontainerid="${portletNamespace}content"] tr.${ACTIVE_ROW_CSS_CLASS}`
 	);
 
-	activeRows.forEach((row) => row.classList.remove('active'));
+	activeRows.forEach((row) => row.classList.remove(ACTIVE_ROW_CSS_CLASS));
 };
 
 const getRow = (portletNamespace, rowId) =>
@@ -87,7 +89,7 @@ const selectRow = (portletNamespace, rowId) => {
 		return;
 	}
 
-	currentRow.classList.add('active');
+	currentRow.classList.add(ACTIVE_ROW_CSS_CLASS);
 };
 
 const showSidebar = ({View, fetchURL, portletNamespace}) => {

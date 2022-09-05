@@ -247,10 +247,11 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	private static void _setUpUserNotificationEventLocalService()
 		throws Exception {
 
-		_workflowTaskUserNotificationHandler.
-			setUserNotificationEventLocalService(
-				ProxyFactory.newDummyInstance(
-					UserNotificationEventLocalService.class));
+		ReflectionTestUtil.setFieldValue(
+			_workflowTaskUserNotificationHandler,
+			"_userNotificationEventLocalService",
+			ProxyFactory.newDummyInstance(
+				UserNotificationEventLocalService.class));
 	}
 
 	private static void _setUpWorkflowTaskManagerUtil() throws Exception {

@@ -274,6 +274,11 @@
 			<property name="enabled" value="false" />
 			<message key="company.local.service.use" value="Use ''CompanyLocalService.{0}'' when iterating over ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.ComponentAnnotationCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Performs several checks on classes with @Component annotation." />
+			<message key="osgi.jaxrs.name.incorrect" value="The value of ''osgi.jaxrs.name'' should end with ''{0}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ConcatCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Checks for correct use of `StringBundler.concat`." />
@@ -364,11 +369,6 @@
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds private methods that throw unnecessary exception." />
 			<message key="exception.unnecessary" value="Method ''{0}'' throws unnecessary {1}. All methods calling ''{0}'' throw ''Exception''." />
-		</module>
-		<module name="com.liferay.source.formatter.checkstyle.check.ExceptionMapperAnnotationCheck">
-			<property name="category" value="Bug Prevention" />
-			<property name="description" value="Performs several checks on classes with @Reference annotation." />
-			<message key="osgi.jaxrs.name.incorrect" value="The value of ''osgi.jaxrs.name'' should end with ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ExceptionMessageCheck">
 			<property name="category" value="Styling" />

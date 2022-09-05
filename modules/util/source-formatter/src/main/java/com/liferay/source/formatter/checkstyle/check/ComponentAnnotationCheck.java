@@ -27,7 +27,7 @@ import java.util.Objects;
 /**
  * @author Simon Jiang
  */
-public class ExceptionMapperAnnotationCheck extends BaseCheck {
+public class ComponentAnnotationCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -38,23 +38,29 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		List<String> importNames = getImportNames(detailAST);
 
-		if (!importNames.contains("javax.ws.rs.ext.ExceptionMapper") ||
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if ((parentDetailAST != null) ||
 			!importNames.contains(
 				"org.osgi.service.component.annotations.Component")) {
 
 			return;
 		}
 
-		DetailAST parentDetailAST = detailAST.getParent();
-
-		if (parentDetailAST != null) {
-			return;
-		}
-
 		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
 			detailAST, "Component");
 
-		if ((annotationDetailAST == null) ||
+		if (annotationDetailAST == null) {
+			return;
+		}
+
+		_checkOSGiJaxrsName(annotationDetailAST, importNames);
+	}
+
+	private void _checkOSGiJaxrsName(
+		DetailAST annotationDetailAST, List<String> importNames) {
+
+		if (!importNames.contains("javax.ws.rs.ext.ExceptionMapper") ||
 			!_isExceptionMapperService(annotationDetailAST)) {
 
 			return;

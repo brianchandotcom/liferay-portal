@@ -113,6 +113,7 @@ export default {
 	getInfoItemFieldValue({
 		classNameId,
 		classPK,
+		editableTypeOptions,
 		fieldId,
 		languageId,
 		onNetworkStatus,
@@ -123,6 +124,7 @@ export default {
 				body: {
 					classNameId,
 					classPK,
+					editableTypeOptions: JSON.stringify(editableTypeOptions),
 					fieldId,
 					languageId,
 				},

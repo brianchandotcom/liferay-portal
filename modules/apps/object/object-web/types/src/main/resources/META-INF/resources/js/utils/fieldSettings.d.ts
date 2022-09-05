@@ -20,6 +20,7 @@ export declare function normalizeFieldSettings(
 		| number
 		| boolean
 		| ObjectFieldPicklistSetting
+		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
 	maxLength?:
@@ -27,6 +28,7 @@ export declare function normalizeFieldSettings(
 		| number
 		| boolean
 		| ObjectFieldPicklistSetting
+		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
 	acceptedFileExtensions?:
@@ -34,6 +36,7 @@ export declare function normalizeFieldSettings(
 		| number
 		| boolean
 		| ObjectFieldPicklistSetting
+		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
 	fileSource?:
@@ -41,6 +44,7 @@ export declare function normalizeFieldSettings(
 		| number
 		| boolean
 		| ObjectFieldPicklistSetting
+		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
 	filters?:
@@ -48,6 +52,7 @@ export declare function normalizeFieldSettings(
 		| number
 		| boolean
 		| ObjectFieldPicklistSetting
+		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
 	maximumFileSize?:
@@ -55,6 +60,7 @@ export declare function normalizeFieldSettings(
 		| number
 		| boolean
 		| ObjectFieldPicklistSetting
+		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
 	objectFieldName?:
@@ -62,6 +68,7 @@ export declare function normalizeFieldSettings(
 		| number
 		| boolean
 		| ObjectFieldPicklistSetting
+		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
 	objectRelationshipName?:
@@ -69,6 +76,7 @@ export declare function normalizeFieldSettings(
 		| number
 		| boolean
 		| ObjectFieldPicklistSetting
+		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
 	showCounter?:
@@ -76,6 +84,7 @@ export declare function normalizeFieldSettings(
 		| number
 		| boolean
 		| ObjectFieldPicklistSetting
+		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
 	showFilesInDocumentsAndMedia?:
@@ -83,6 +92,7 @@ export declare function normalizeFieldSettings(
 		| number
 		| boolean
 		| ObjectFieldPicklistSetting
+		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
 	stateFlow?:
@@ -90,6 +100,7 @@ export declare function normalizeFieldSettings(
 		| number
 		| boolean
 		| ObjectFieldPicklistSetting
+		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
 	storageDLFolderPath?:
@@ -97,6 +108,7 @@ export declare function normalizeFieldSettings(
 		| number
 		| boolean
 		| ObjectFieldPicklistSetting
+		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
 };

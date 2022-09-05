@@ -220,6 +220,38 @@ export function ModalAddFilter({
 
 				setItems(newItems);
 			}
+			else if (objectField.businessType === 'Relationship') {
+				const makeFetch = async () => {
+					const {objectFieldSettings} = objectField;
+
+					const [{value}] = objectFieldSettings as NameValueObject[];
+
+					const [
+						{objectFields, restContextPath, titleObjectFieldId},
+					] = await API.getObjectDefinitions(
+						`filter=name eq '${value}'`
+					);
+
+					const titleField = objectFields.find(
+						(objectField) => objectField.id === titleObjectFieldId
+					) as ObjectField;
+
+					const relatedEntries = await API.getList<any>(
+						`${restContextPath}`
+					);
+
+					const newItems = relatedEntries.map((entry) => {
+						return {
+							label: entry[titleField?.name],
+							value: entry.id,
+						};
+					});
+
+					setItems(newItems);
+				};
+
+				makeFetch();
+			}
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
@@ -289,7 +321,8 @@ export function ModalAddFilter({
 				selectedFilterBy?.businessType,
 				selectedFilterType?.value,
 				selectedFilterBy?.name === 'status' ||
-					selectedFilterBy?.businessType === 'Picklist'
+					selectedFilterBy?.businessType === 'Picklist' ||
+					selectedFilterBy?.businessType === 'Relationship'
 					? checkedItems
 					: undefined,
 				value ?? undefined
@@ -303,7 +336,8 @@ export function ModalAddFilter({
 				selectedFilterBy?.businessType,
 				selectedFilterType?.value,
 				selectedFilterBy?.name === 'status' ||
-					selectedFilterBy?.businessType === 'Picklist'
+					selectedFilterBy?.businessType === 'Picklist' ||
+					selectedFilterBy?.businessType === 'Relationship'
 					? checkedItems
 					: selectedFilterBy?.businessType === 'Date'
 					? items
@@ -398,7 +432,8 @@ export function ModalAddFilter({
 
 				{selectedFilterType &&
 					(selectedFilterBy?.name === 'status' ||
-						selectedFilterBy?.businessType === 'Picklist') && (
+						selectedFilterBy?.businessType === 'Picklist' ||
+						selectedFilterBy?.businessType === 'Relationship') && (
 						<MultipleSelect
 							error={errors.items}
 							label={Liferay.Language.get('value')}

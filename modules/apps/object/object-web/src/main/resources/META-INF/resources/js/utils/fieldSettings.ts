@@ -20,6 +20,7 @@ export function normalizeFieldSettings(
 			| string
 			| number
 			| boolean
+			| NameValueObject[]
 			| ObjectFieldFilterSetting[]
 			| ObjectFieldPicklistSetting;
 	} = {};

@@ -58,13 +58,6 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 		_validateDDMFormLayoutRowSizes(ddmFormLayout);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMExpressionFactory(
-		DDMExpressionFactory ddmExpressionFactory) {
-
-		_ddmExpressionFactory = ddmExpressionFactory;
-	}
-
 	private void _validateDDMFormFieldNames(DDMFormLayout ddmFormLayout)
 		throws DDMFormLayoutValidationException {
 
@@ -156,6 +149,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 
 	private static final int _MAX_ROW_SIZE = 12;
 
+	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;
 
 }

@@ -56,15 +56,20 @@ const handlePanelStateFromSession = ({
 	selectRow(namespace, selectedItemRowId);
 };
 
-const handleSessionOnSidebarOpen = ({rowId}) => {
-	Liferay.Util.Session.set(
-		'com.liferay.content.dashboard.web_panelState',
-		OPEN_PANEL_VALUE
-	);
-	Liferay.Util.Session.set(
-		'com.liferay.content.dashboard.web_selectedItemRowId',
-		rowId
-	);
+const handleSessionOnSidebarOpen = ({panelState, rowId, selectedItemRowId}) => {
+	if (panelState !== OPEN_PANEL_VALUE) {
+		Liferay.Util.Session.set(
+			'com.liferay.content.dashboard.web_panelState',
+			OPEN_PANEL_VALUE
+		);
+	}
+
+	if (selectedItemRowId !== rowId) {
+		Liferay.Util.Session.set(
+			'com.liferay.content.dashboard.web_selectedItemRowId',
+			rowId
+		);
+	}
 };
 
 const deselectAllRows = (portletNamespace) => {
@@ -125,10 +130,21 @@ const showSidebar = ({View, fetchURL, portletNamespace}) => {
 };
 
 const actions = {
-	showInfo({fetchURL, portletNamespace, rowId}) {
+	showInfo({
+		fetchURL,
+		panelState,
+		portletNamespace,
+		rowId,
+		selectedItemRowId,
+	}) {
 		selectRow(portletNamespace, rowId);
 
-		handleSessionOnSidebarOpen({fetchURL, portletNamespace, rowId});
+		handleSessionOnSidebarOpen({
+			fetchURL,
+			panelState,
+			rowId,
+			selectedItemRowId,
+		});
 
 		showSidebar({
 			View: Liferay.FeatureFlags['LPS-161013']
@@ -154,6 +170,8 @@ export default function propsTransformer({
 	portletNamespace,
 	...otherProps
 }) {
+	const {panelState, selectedItemRowId} = additionalProps;
+
 	handlePanelStateFromSession(additionalProps);
 
 	return {
@@ -169,8 +187,10 @@ export default function propsTransformer({
 
 						actions[action]({
 							fetchURL: item.data.fetchURL,
+							panelState,
 							portletNamespace,
 							rowId: item.data.classPK,
+							selectedItemRowId,
 						});
 					}
 				},

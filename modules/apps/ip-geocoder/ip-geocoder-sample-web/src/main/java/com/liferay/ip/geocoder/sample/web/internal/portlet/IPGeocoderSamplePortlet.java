@@ -29,10 +29,6 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -65,35 +61,18 @@ public class IPGeocoderSamplePortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		ServiceReference<IPGeocoder> serviceReference =
-			_bundleContext.getServiceReference(IPGeocoder.class);
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
 
-		if (serviceReference != null) {
-			IPGeocoder ipGeocoder = _bundleContext.getService(serviceReference);
-
-			if (ipGeocoder != null) {
-				HttpServletRequest httpServletRequest =
-					_portal.getHttpServletRequest(renderRequest);
-
-				renderRequest.setAttribute(
-					IPInfo.class.getName(),
-					ipGeocoder.getIPInfo(httpServletRequest.getRemoteAddr()));
-			}
-		}
+		renderRequest.setAttribute(
+			IPInfo.class.getName(),
+			_ipGeocoder.getIPInfo(httpServletRequest.getRemoteAddr()));
 
 		super.doView(renderRequest, renderResponse);
 	}
 
-	@Override
-	public void init() throws PortletException {
-		Bundle bundle = FrameworkUtil.getBundle(IPGeocoderSamplePortlet.class);
-
-		_bundleContext = bundle.getBundleContext();
-
-		super.init();
-	}
-
-	private static BundleContext _bundleContext;
+	@Reference
+	private IPGeocoder _ipGeocoder;
 
 	@Reference
 	private Portal _portal;

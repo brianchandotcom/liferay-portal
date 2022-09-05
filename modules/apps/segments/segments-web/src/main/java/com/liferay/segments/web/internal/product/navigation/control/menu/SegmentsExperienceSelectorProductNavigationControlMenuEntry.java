@@ -144,12 +144,8 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.segments.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -185,6 +181,9 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.segments.web)")
+	private ServletContext _servletContext;
 
 	@Reference
 	private Sites _sites;

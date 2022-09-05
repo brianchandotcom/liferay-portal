@@ -85,12 +85,8 @@ public class PortletOptionsProductNavigationControlMenuEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.product.navigation.control.menu.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	private String _getPortletId(HttpServletRequest httpServletRequest) {
@@ -102,5 +98,10 @@ public class PortletOptionsProductNavigationControlMenuEntry
 
 		return portletDisplay.getRootPortletId();
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.product.navigation.control.menu.web)"
+	)
+	private ServletContext _servletContext;
 
 }

@@ -90,15 +90,16 @@ public class PropagationMessageProductNavigationControlMenuEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.set.prototype.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.set.prototype.web)"
+	)
+	private ServletContext _servletContext;
 
 }

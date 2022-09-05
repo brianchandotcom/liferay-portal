@@ -57,7 +57,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 
 	@Override
 	public IPInfo getIPInfo(String ipAddress) {
-		LookupService lookupService = configure();
+		LookupService lookupService = _getLookupService();
 
 		Location location = lookupService.getLocation(ipAddress);
 
@@ -85,7 +85,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 		_properties = properties;
 	}
 
-	protected LookupService configure() {
+	private LookupService _getLookupService() {
 		LookupService lookupService = _lookupService;
 
 		if (lookupService != null) {
@@ -105,7 +105,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 		}
 
 		try {
-			File ipGeocoderFile = getIPGeocoderFile(
+			File ipGeocoderFile = _getIPGeocoderFile(
 				filePath, igGeocoderConfiguration.fileURL(), false);
 
 			lookupService = new LookupService(
@@ -129,7 +129,7 @@ public class IPGeocoderImpl implements IPGeocoder {
 		_properties = null;
 	}
 
-	protected File getIPGeocoderFile(
+	private File _getIPGeocoderFile(
 			String filePath, String fileURL, boolean forceDownload)
 		throws IOException {
 
@@ -152,15 +152,15 @@ public class IPGeocoderImpl implements IPGeocoder {
 				System.getProperty("java.io.tmpdir") +
 					"/liferay/geoip/GeoIPCity.dat.xz");
 
-			write(xzFile, urlConnection.getInputStream());
+			_write(xzFile, urlConnection.getInputStream());
 
-			write(file, new XZInputStream(new FileInputStream(xzFile)));
+			_write(file, new XZInputStream(new FileInputStream(xzFile)));
 		}
 
 		return file;
 	}
 
-	protected void write(File file, InputStream inputStream)
+	private void _write(File file, InputStream inputStream)
 		throws IOException {
 
 		File parentFile = file.getParentFile();

@@ -86,18 +86,6 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelCategoryRegistry(
-		PanelCategoryRegistry panelCategoryRegistry) {
-
-		_panelCategoryRegistry = panelCategoryRegistry;
-	}
-
 	private int _getNotificationsCount(ThemeDisplay themeDisplay) {
 		if (_userNotificationEventLocalService == null) {
 			return 0;
@@ -109,7 +97,10 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 				UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false);
 	}
 
+	@Reference
 	private PanelAppRegistry _panelAppRegistry;
+
+	@Reference
 	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	@Reference

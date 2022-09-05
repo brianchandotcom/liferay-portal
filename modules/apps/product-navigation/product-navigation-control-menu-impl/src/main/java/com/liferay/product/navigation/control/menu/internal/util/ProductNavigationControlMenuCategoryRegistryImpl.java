@@ -130,21 +130,14 @@ public class ProductNavigationControlMenuCategoryRegistryImpl
 		_productNavigationControlMenuCategoryServiceTrackerMap.close();
 	}
 
-	@Reference(unbind = "-")
-	protected void setProductNavigationControlMenuEntryRegistry(
-		ProductNavigationControlMenuEntryRegistry
-			productNavigationControlMenuEntryRegistry) {
-
-		_productNavigationControlMenuEntryRegistry =
-			productNavigationControlMenuEntryRegistry;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductNavigationControlMenuCategoryRegistryImpl.class);
 
 	private ServiceTrackerMap
 		<String, List<ProductNavigationControlMenuCategory>>
 			_productNavigationControlMenuCategoryServiceTrackerMap;
+
+	@Reference
 	private ProductNavigationControlMenuEntryRegistry
 		_productNavigationControlMenuEntryRegistry;
 

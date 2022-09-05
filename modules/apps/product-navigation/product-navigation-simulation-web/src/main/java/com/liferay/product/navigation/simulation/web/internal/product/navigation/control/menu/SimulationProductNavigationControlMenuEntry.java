@@ -201,23 +201,11 @@ public class SimulationProductNavigationControlMenuEntry
 		return super.isShow(httpServletRequest);
 	}
 
-	@Reference(
-		target = "(panel.category.key=" + PanelCategoryKeys.HIDDEN + ")",
-		unbind = "-"
-	)
-	public void setPanelCategory(PanelCategory panelCategory) {
-	}
-
 	@Activate
 	protected void activate() {
 		_portletNamespace = _portal.getPortletNamespace(
 			ProductNavigationSimulationPortletKeys.
 				PRODUCT_NAVIGATION_SIMULATION);
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
 	}
 
 	private void _processBodyBottomTagBody(PageContext pageContext) {
@@ -296,7 +284,11 @@ public class SimulationProductNavigationControlMenuEntry
 	@Reference
 	private Language _language;
 
+	@Reference
 	private PanelAppRegistry _panelAppRegistry;
+
+	@Reference(target = "(panel.category.key=" + PanelCategoryKeys.HIDDEN + ")")
+	private PanelCategory _panelCategory;
 
 	@Reference
 	private Portal _portal;

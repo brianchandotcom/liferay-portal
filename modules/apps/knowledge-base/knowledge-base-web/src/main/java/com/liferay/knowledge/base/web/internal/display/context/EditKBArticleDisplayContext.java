@@ -384,10 +384,10 @@ public class EditKBArticleDisplayContext {
 		KBArticle kbArticle = getKBArticle();
 
 		if (kbArticle == null) {
-			return true;
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	public boolean isWorkflowStatusVisible() {

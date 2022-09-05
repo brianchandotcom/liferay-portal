@@ -250,36 +250,6 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLFileEntryLocalService(
-		DLFileEntryLocalService dlFileEntryLocalService) {
-
-		_dlFileEntryLocalService = dlFileEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService
-			exportImportConfigurationLocalService) {
-
-		_exportImportConfigurationLocalService =
-			exportImportConfigurationLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExportImportService(
-		ExportImportService exportImportService) {
-
-		_exportImportService = exportImportService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setImportLayoutsMVCActionCommand(
-		ImportLayoutsMVCActionCommand importLayoutsMVCActionCommand) {
-
-		_importLayoutsMVCActionCommand = importLayoutsMVCActionCommand;
-	}
-
 	protected void validateFile(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			String folderName)
@@ -400,7 +370,10 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportMVCActionCommand.class);
 
+	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
 
@@ -411,7 +384,10 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private ExportImportHelper _exportImportHelper;
 
+	@Reference
 	private ExportImportService _exportImportService;
+
+	@Reference
 	private ImportLayoutsMVCActionCommand _importLayoutsMVCActionCommand;
 
 	@Reference

@@ -137,7 +137,7 @@ public class VelocityManager extends BaseTemplateManager {
 				StringBundler.concat(
 					"liferay.", VelocityEngine.RESOURCE_LOADER, ".",
 					VelocityTemplateResourceLoader.class.getName()),
-				templateResourceLoader);
+				_templateResourceLoader);
 
 			boolean cacheEnabled = false;
 
@@ -172,7 +172,7 @@ public class VelocityManager extends BaseTemplateManager {
 
 			extendedProperties.setProperty(
 				VelocityTemplateResourceLoader.class.getName(),
-				templateResourceLoader);
+				_templateResourceLoader);
 
 			extendedProperties.setProperty(
 				VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
@@ -207,14 +207,6 @@ public class VelocityManager extends BaseTemplateManager {
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}
-	}
-
-	@Override
-	@Reference(service = VelocityTemplateResourceLoader.class, unbind = "-")
-	public void setTemplateResourceLoader(
-		TemplateResourceLoader templateResourceLoader) {
-
-		super.setTemplateResourceLoader(templateResourceLoader);
 	}
 
 	@Activate
@@ -272,6 +264,9 @@ public class VelocityManager extends BaseTemplateManager {
 
 	@Reference(service = VelocityTemplateContextHelper.class)
 	private TemplateContextHelper _templateContextHelper;
+
+	@Reference(service = VelocityTemplateResourceLoader.class)
+	private TemplateResourceLoader _templateResourceLoader;
 
 	private VelocityEngine _velocityEngine;
 

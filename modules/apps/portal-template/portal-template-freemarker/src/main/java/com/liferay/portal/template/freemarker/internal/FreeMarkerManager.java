@@ -209,7 +209,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 						getSecondLevelPortalCache();
 
 			TemplateCache templateCache = new LiferayTemplateCache(
-				_configuration, templateResourceLoader, portalCache);
+				_configuration, _templateResourceLoader, portalCache);
 
 			field.set(_configuration, templateCache);
 
@@ -263,14 +263,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		TemplateClassResolver templateClassResolver) {
 
 		_templateClassResolver = templateClassResolver;
-	}
-
-	@Override
-	@Reference(service = FreeMarkerTemplateResourceLoader.class, unbind = "-")
-	public void setTemplateResourceLoader(
-		TemplateResourceLoader templateResourceLoader) {
-
-		super.setTemplateResourceLoader(templateResourceLoader);
 	}
 
 	@Activate
@@ -623,6 +615,10 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 	private final Map<String, TemplateModel> _templateModels =
 		new ConcurrentHashMap<>();
+
+	@Reference(service = FreeMarkerTemplateResourceLoader.class)
+	private TemplateResourceLoader _templateResourceLoader;
+
 	private volatile Map<String, AtomicInteger> _timeoutTemplateCounters;
 
 	private static class ThreadLocalUtil {

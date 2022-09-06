@@ -21,6 +21,7 @@ import {useNavigate} from 'react-router-dom';
 
 import {HeaderContext} from '../../context/HeaderContext';
 import {Permission} from '../../util/permission';
+import BreadcrumbFinder from '../BreadcrumbFinder';
 import DropDown from '../DropDown';
 import DropDownWithActions from '../DropDown/DropDown';
 
@@ -81,6 +82,8 @@ const Header = () => {
 						<BreadCrumbTrigger />
 					)}
 				</div>
+
+				<BreadcrumbFinder />
 
 				<div className="d-flex flex-row justify-content-between w-100">
 					<div className="d-flex flex-1 flex-wrap">

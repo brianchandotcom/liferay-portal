@@ -202,7 +202,22 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 	private String _transform(String imgElementString, String src)
 		throws PortalException {
 
-		if (!src.contains("/documents") || src.startsWith("data:image/")) {
+		// Check if the src starts with "data:image/" first because "data:image"
+		// indicates a Base64 URL which can potentially be millions of
+		// characters. So it is faster to run startsWith first to return early
+		// on these Strings first so that we don't have to do a 'contains' over
+		// a very long string.
+
+		if (src.startsWith("data:image/")) {
+			return imgElementString;
+		}
+
+		// If we got past the above check, we have a URL. Now we can do a quick
+		// check if the URL contains "/documents" as a crude way of bypassing
+		// most non-Liferay URLs before we have to get into the less performant
+		// regex logic.
+
+		if (!src.contains("/documents")) {
 			return imgElementString;
 		}
 

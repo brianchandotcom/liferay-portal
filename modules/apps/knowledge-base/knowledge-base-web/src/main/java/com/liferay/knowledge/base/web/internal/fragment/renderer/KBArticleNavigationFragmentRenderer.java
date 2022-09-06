@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.web.internal.fragment.renderer;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
@@ -23,6 +24,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.web.internal.display.context.KBArticleNavigationFragmentDisplayContext;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -98,6 +101,17 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 		try {
 			KBArticle kbArticle = _getKBArticle(
 				httpServletRequest, fragmentRendererContext);
+
+			if ((kbArticle == null) &&
+				Objects.equals(
+					FragmentEntryLinkConstants.EDIT,
+					fragmentRendererContext.getMode())) {
+
+				_printPortletMessageInfo(
+					httpServletRequest, httpServletResponse,
+					"the-navigation-tree-for-the-displayed-knowledge-base-" +
+						"article-will-be-shown-here");
+			}
 
 			if (kbArticle == null) {
 				return;
@@ -168,6 +182,23 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 			_log.error(portalException);
 
 			return null;
+		}
+	}
+
+	private void _printPortletMessageInfo(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String message) {
+
+		try {
+			PrintWriter printWriter = httpServletResponse.getWriter();
+
+			printWriter.write(
+				StringBundler.concat(
+					"<div class=\"portlet-msg-info\">",
+					_language.get(httpServletRequest, message), "</div>"));
+		}
+		catch (IOException ioException) {
+			_log.error(ioException);
 		}
 	}
 

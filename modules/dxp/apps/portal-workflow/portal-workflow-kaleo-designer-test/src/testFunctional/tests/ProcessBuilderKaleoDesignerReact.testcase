@@ -720,9 +720,9 @@ definition {
 			propertyValue = "Duration: 2 minute");
 
 		ProcessBuilderKaleoDesignerReact.addMultiplesActionsOnTimers(
-			newSection = "New Action",
 			actionName = "Liferay Timer",
 			actionsTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
+			newSection = "New Action",
 			sectionOptionList = "4,5");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
@@ -734,7 +734,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewActionsInsideTimersPresent(actionName = "Liferay Timer 4");
 
 		ProcessBuilderKaleoDesignerReact.viewActionsInsideTimersPresent(actionName = "Liferay Timer 5");
-
 	}
 
 	@description = "Verify that the user can select and define an Reassignment to be conducted once the timer expires"
@@ -912,12 +911,53 @@ definition {
 	}
 
 	@description = "Verify that the user can delete actions inside Timers"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteActionsAtTimers {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteActionsAtTimers";
 
-		// TODO CanDeleteActionsAtTimers pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+			actionName = "Liferay Timer 1",
+			actionsTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
+			durationValue = "2",
+			newTimer = "true",
+			scaleTypeOption = "Minute",
+			singleTimer = "true");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Timer",
+			propertyValue = "Duration: 2 minute");
+
+		ProcessBuilderKaleoDesignerReact.addMultiplesActionsOnTimers(
+			actionName = "Liferay Timer",
+			actionsTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
+			newSection = "New Action",
+			sectionOptionList = "4,5");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Timer",
+			propertyValue = "Duration: 2 minute");
+
+		ProcessBuilderKaleoDesignerReact.viewActionsInsideTimersPresent(actionName = "Liferay Timer 4");
+
+		ProcessBuilderKaleoDesignerReact.viewActionsInsideTimersPresent(actionName = "Liferay Timer 5");
+
+		ProcessBuilderKaleoDesignerReact.deleteByTrashTopSidebar(
+			modalMessage = "Are you sure you want to delete all timers and their settings?",
+			sidebarPropertyName = "Timers");
 	}
 
 	@description = "Verify that the user can delete all actions with the trash icon at the top right corner"
@@ -3168,69 +3208,68 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			selectedRole = "Account",
-			positonOption = "2");
+			positonOption = "2",
+			selectedRole = "Account");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			selectedRole = "Account",
-			positonOption = "3");
+			positonOption = "3",
+			selectedRole = "Account");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			selectedRole = "Asset Library",
-			positonOption = "4");
+			positonOption = "4",
+			selectedRole = "Asset Library");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			selectedRole = "Asset Library",
-			positonOption = "5");
+			positonOption = "5",
+			selectedRole = "Asset Library");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			selectedRole = "Asset Library",
-			positonOption = "6");
+			positonOption = "6",
+			selectedRole = "Asset Library");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			selectedRole = "Organization",
-			positonOption = "7");
+			positonOption = "7",
+			selectedRole = "Organization");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			selectedRole = "Organization",
-			positonOption = "8");
+			positonOption = "8",
+			selectedRole = "Organization");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			selectedRole = "Organization",
-			positonOption = "9");
+			positonOption = "9",
+			selectedRole = "Organization");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			selectedRole = "Regular",
-			positonOption = "10");
+			positonOption = "10",
+			selectedRole = "Regular");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			selectedRole = "Regular",
-			positonOption = "11");
+			positonOption = "11",
+			selectedRole = "Regular");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			selectedRole = "Site",
-			positonOption = "12");
+			positonOption = "12",
+			selectedRole = "Site");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			selectedRole = "Site",
-			positonOption = "13");
+			positonOption = "13",
+			selectedRole = "Site");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			selectedRole = "Site",
-			positonOption = "14");
-
+			positonOption = "14",
+			selectedRole = "Site");
 	}
 
 	@description = "Verify that at the Details/Revision Story sidebar Header the definition Title is present"
@@ -4158,9 +4197,8 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
 			inputOption = "Role",
-			selectedRole = "Account",
-			positonOption = "2");
-
+			positonOption = "2",
+			selectedRole = "Account");
 	}
 
 	@description = "LPS-129928 - Verify that when hovering the Source button the text Source view is displayed"

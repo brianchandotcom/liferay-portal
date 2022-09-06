@@ -112,6 +112,54 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#LANGUAGE_MANAGE_TRANSLATIONS_BUTTON");
 	}
 
+	macro addMultiplesActionsOnTimers {
+		Click(
+			key_buttonName = "${newSection}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
+
+		if (isSet(sectionOptionList)) {
+			for (var sectionOption : list "${sectionOptionList}") {
+				if (isSet(actionName)) {
+					Type(
+						key_inputOption = "Name*",
+						key_sectionOption = "${sectionOption}",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
+						value1 = "${actionName} ${sectionOption}");
+				}
+
+				if (isSet(actionDescription)) {
+					Type(
+						key_inputOption = "Description",
+						key_sectionOption = "${sectionOption}",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
+						value1 = "${actionDescription} ${sectionOption}");
+				}
+
+				if (isSet(actionsTemplateValue)) {
+					Type(
+						key_sectionOption = "${sectionOption}",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA_ACTIONS_BY_POSITION",
+						value1 = "${actionsTemplateValue}");
+				}
+
+				if (isSet(priorityValue)) {
+					Type(
+						key_inputOption = "Priority",
+						key_sectionOption = "${sectionOption}",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
+						value1 = "${priorityValue}");
+				}
+
+				if (isSet(newSection)) {
+					Click(
+						key_buttonName = "${newSection}",
+						key_sectionOption = "${sectionOption}",
+						locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC_BY_POSITION");
+				}
+			}
+		}
+	}
+
 	macro backArrowOnSidebar {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BACK_TO_SIDEBAR_BUTTON");
 	}
@@ -418,6 +466,12 @@ definition {
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
 				value1 = "${priorityValue}");
 		}
+	}
+
+	macro viewActionsInsideTimersPresent {
+		AssertElementPresent(
+			key_actionName = "${actionName}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ACTIONS_NAME_ON_TIMERS_FIELD");
 	}
 
 	macro viewActiveNodeHighlighted {
@@ -1659,6 +1713,14 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_NODE");
 	}
 
+	macro viewSelectedRoleAssignmentsByPosition {
+		AssertElementPresent(
+			key_inputOption = "${inputOption}",
+			key_positonOption = "${positonOption}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_NAME_FIELD_ASSIGNMENTS_BY_POSITON",
+			value1 = "${selectedRole}");
+	}
+
 	macro viewSidebarFeedback {
 		AssertElementPresent(
 			key_sidebarMessage = "${sidebarMessage}",
@@ -1862,62 +1924,4 @@ definition {
 			value1 = "${coordinateY}");
 	}
 
-	macro viewSelectedRoleAssignmentsByPosition {
-		AssertElementPresent(
-				key_inputOption = "${inputOption}",
-				locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_NAME_FIELD_ASSIGNMENTS_BY_POSITON",
-				key_positonOption = "${positonOption}",
-				value1 = "${selectedRole}");
-
-	}
-
-	macro addMultiplesActionsOnTimers {
-		Click(
-            key_buttonName = "${newSection}",
-            locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
-
-		if (isSet(sectionOptionList)) {
-            for (var sectionOption : list "${sectionOptionList}") {
-                if (isSet(actionName)) {
-                    Type(
-                        key_inputOption = "Name*",
-                        key_sectionOption = "${sectionOption}",
-                        locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
-                        value1 = "${actionName} ${sectionOption}");
-                }
-                if (isSet(actionDescription)) {
-                    Type(
-                        key_inputOption = "Description",
-                        key_sectionOption = "${sectionOption}",
-                        locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
-                        value1 = "${actionDescription} ${sectionOption}");
-                }
-                if (isSet(actionsTemplateValue)) {
-                    Type(
-                        key_sectionOption = "${sectionOption}",
-                        locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA_ACTIONS_BY_POSITION",
-                        value1 = "${actionsTemplateValue}");
-                }
-                if (isSet(priorityValue)) {
-                    Type(
-                        key_inputOption = "Priority",
-                        key_sectionOption = "${sectionOption}",
-                        locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
-                        value1 = "${priorityValue}");
-                }
-                if (isSet(newSection)) {
-                    Click(
-                        key_buttonName = "${newSection}",
-                        key_sectionOption = "${sectionOption}",
-                        locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC_BY_POSITION");
-                }
-            }
-        }
-	}
-
-	macro viewActionsInsideTimersPresent {
-		AssertElementPresent(
-			key_actionName = "${actionName}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#ACTIONS_NAME_ON_TIMERS_FIELD");
-	}
 }

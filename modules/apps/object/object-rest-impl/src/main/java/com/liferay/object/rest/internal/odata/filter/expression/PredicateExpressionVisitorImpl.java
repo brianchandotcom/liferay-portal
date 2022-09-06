@@ -17,6 +17,8 @@ package com.liferay.object.rest.internal.odata.filter.expression;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.spi.expression.DefaultPredicate;
+import com.liferay.petra.sql.dsl.spi.expression.Operand;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -212,13 +214,22 @@ public class PredicateExpressionVisitorImpl
 	public Predicate visitUnaryExpressionOperation(
 		UnaryExpression.Operation operation, Object operand) {
 
-		if (Objects.equals(UnaryExpression.Operation.NOT, operation)) {
-			return Predicate.not((Predicate)operand);
+		if (!Objects.equals(UnaryExpression.Operation.NOT, operation)) {
+			throw new UnsupportedOperationException(
+				StringBundler.concat(
+					"Unsupported method visitUnaryExpressionOperation with ",
+					"operation ", operation));
 		}
 
-		throw new UnsupportedOperationException(
-			"Unsupported method visitUnaryExpressionOperation with operation " +
-				operation);
+		DefaultPredicate defaultPredicate = (DefaultPredicate)operand;
+
+		if (Objects.equals(Operand.IN, defaultPredicate.getOperand())) {
+			return new DefaultPredicate(
+				defaultPredicate.getLeftExpression(), Operand.NOT_IN,
+				defaultPredicate.getRightExpression());
+		}
+
+		return Predicate.not(defaultPredicate);
 	}
 
 	private PredicateExpressionVisitorImpl(

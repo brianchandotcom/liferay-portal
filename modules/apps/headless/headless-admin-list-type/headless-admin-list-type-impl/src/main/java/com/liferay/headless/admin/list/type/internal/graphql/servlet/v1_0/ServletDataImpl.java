@@ -16,9 +16,15 @@ package com.liferay.headless.admin.list.type.internal.graphql.servlet.v1_0;
 
 import com.liferay.headless.admin.list.type.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.admin.list.type.internal.graphql.query.v1_0.Query;
+import com.liferay.headless.admin.list.type.internal.resource.v1_0.ListTypeDefinitionResourceImpl;
+import com.liferay.headless.admin.list.type.internal.resource.v1_0.ListTypeEntryResourceImpl;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeEntryResource;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -50,6 +56,10 @@ public class ServletDataImpl implements ServletData {
 			_listTypeEntryResourceComponentServiceObjects);
 	}
 
+	public String getApplicationName() {
+		return "Liferay.Headless.Admin.List.Type";
+	}
+
 	@Override
 	public Mutation getMutation() {
 		return new Mutation();
@@ -63,6 +73,100 @@ public class ServletDataImpl implements ServletData {
 	@Override
 	public Query getQuery() {
 		return new Query();
+	}
+
+	public ObjectValuePair<Class<?>, String> getResourceMethodPair(
+		String methodName, boolean mutation) {
+
+		if (mutation) {
+			return _resourceMethodPairs.get("mutation#" + methodName);
+		}
+
+		return _resourceMethodPairs.get("query#" + methodName);
+	}
+
+	private static final Map<String, ObjectValuePair<Class<?>, String>>
+		_resourceMethodPairs = new HashMap<>();
+
+	static {
+		_resourceMethodPairs.put(
+			"mutation#createListTypeDefinition",
+			new ObjectValuePair<>(
+				ListTypeDefinitionResourceImpl.class,
+				"postListTypeDefinition"));
+		_resourceMethodPairs.put(
+			"mutation#createListTypeDefinitionBatch",
+			new ObjectValuePair<>(
+				ListTypeDefinitionResourceImpl.class,
+				"postListTypeDefinitionBatch"));
+		_resourceMethodPairs.put(
+			"mutation#deleteListTypeDefinition",
+			new ObjectValuePair<>(
+				ListTypeDefinitionResourceImpl.class,
+				"deleteListTypeDefinition"));
+		_resourceMethodPairs.put(
+			"mutation#deleteListTypeDefinitionBatch",
+			new ObjectValuePair<>(
+				ListTypeDefinitionResourceImpl.class,
+				"deleteListTypeDefinitionBatch"));
+		_resourceMethodPairs.put(
+			"mutation#patchListTypeDefinition",
+			new ObjectValuePair<>(
+				ListTypeDefinitionResourceImpl.class,
+				"patchListTypeDefinition"));
+		_resourceMethodPairs.put(
+			"mutation#updateListTypeDefinition",
+			new ObjectValuePair<>(
+				ListTypeDefinitionResourceImpl.class, "putListTypeDefinition"));
+		_resourceMethodPairs.put(
+			"mutation#updateListTypeDefinitionBatch",
+			new ObjectValuePair<>(
+				ListTypeDefinitionResourceImpl.class,
+				"putListTypeDefinitionBatch"));
+		_resourceMethodPairs.put(
+			"mutation#createListTypeDefinitionListTypeEntry",
+			new ObjectValuePair<>(
+				ListTypeEntryResourceImpl.class,
+				"postListTypeDefinitionListTypeEntry"));
+		_resourceMethodPairs.put(
+			"mutation#createListTypeDefinitionListTypeEntryBatch",
+			new ObjectValuePair<>(
+				ListTypeEntryResourceImpl.class,
+				"postListTypeDefinitionListTypeEntryBatch"));
+		_resourceMethodPairs.put(
+			"mutation#deleteListTypeEntry",
+			new ObjectValuePair<>(
+				ListTypeEntryResourceImpl.class, "deleteListTypeEntry"));
+		_resourceMethodPairs.put(
+			"mutation#deleteListTypeEntryBatch",
+			new ObjectValuePair<>(
+				ListTypeEntryResourceImpl.class, "deleteListTypeEntryBatch"));
+		_resourceMethodPairs.put(
+			"mutation#updateListTypeEntry",
+			new ObjectValuePair<>(
+				ListTypeEntryResourceImpl.class, "putListTypeEntry"));
+		_resourceMethodPairs.put(
+			"mutation#updateListTypeEntryBatch",
+			new ObjectValuePair<>(
+				ListTypeEntryResourceImpl.class, "putListTypeEntryBatch"));
+		_resourceMethodPairs.put(
+			"query#listTypeDefinitions",
+			new ObjectValuePair<>(
+				ListTypeDefinitionResourceImpl.class,
+				"getListTypeDefinitionsPage"));
+		_resourceMethodPairs.put(
+			"query#listTypeDefinition",
+			new ObjectValuePair<>(
+				ListTypeDefinitionResourceImpl.class, "getListTypeDefinition"));
+		_resourceMethodPairs.put(
+			"query#listTypeDefinitionListTypeEntries",
+			new ObjectValuePair<>(
+				ListTypeEntryResourceImpl.class,
+				"getListTypeDefinitionListTypeEntriesPage"));
+		_resourceMethodPairs.put(
+			"query#listTypeEntry",
+			new ObjectValuePair<>(
+				ListTypeEntryResourceImpl.class, "getListTypeEntry"));
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)

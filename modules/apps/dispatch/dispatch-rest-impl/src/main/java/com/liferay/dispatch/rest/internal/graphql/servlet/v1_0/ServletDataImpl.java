@@ -16,8 +16,13 @@ package com.liferay.dispatch.rest.internal.graphql.servlet.v1_0;
 
 import com.liferay.dispatch.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.dispatch.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.dispatch.rest.internal.resource.v1_0.DispatchTriggerResourceImpl;
 import com.liferay.dispatch.rest.resource.v1_0.DispatchTriggerResource;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -45,6 +50,10 @@ public class ServletDataImpl implements ServletData {
 			_dispatchTriggerResourceComponentServiceObjects);
 	}
 
+	public String getApplicationName() {
+		return "Liferay.Dispatch.REST";
+	}
+
 	@Override
 	public Mutation getMutation() {
 		return new Mutation();
@@ -58,6 +67,38 @@ public class ServletDataImpl implements ServletData {
 	@Override
 	public Query getQuery() {
 		return new Query();
+	}
+
+	public ObjectValuePair<Class<?>, String> getResourceMethodPair(
+		String methodName, boolean mutation) {
+
+		if (mutation) {
+			return _resourceMethodPairs.get("mutation#" + methodName);
+		}
+
+		return _resourceMethodPairs.get("query#" + methodName);
+	}
+
+	private static final Map<String, ObjectValuePair<Class<?>, String>>
+		_resourceMethodPairs = new HashMap<>();
+
+	static {
+		_resourceMethodPairs.put(
+			"mutation#createDispatchTrigger",
+			new ObjectValuePair<>(
+				DispatchTriggerResourceImpl.class, "postDispatchTrigger"));
+		_resourceMethodPairs.put(
+			"mutation#createDispatchTriggerBatch",
+			new ObjectValuePair<>(
+				DispatchTriggerResourceImpl.class, "postDispatchTriggerBatch"));
+		_resourceMethodPairs.put(
+			"mutation#createDispatchTriggerRun",
+			new ObjectValuePair<>(
+				DispatchTriggerResourceImpl.class, "postDispatchTriggerRun"));
+		_resourceMethodPairs.put(
+			"query#dispatchTriggers",
+			new ObjectValuePair<>(
+				DispatchTriggerResourceImpl.class, "getDispatchTriggersPage"));
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)

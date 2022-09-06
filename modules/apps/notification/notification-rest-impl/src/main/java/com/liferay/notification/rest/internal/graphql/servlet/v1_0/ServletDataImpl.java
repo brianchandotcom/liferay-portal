@@ -16,9 +16,15 @@ package com.liferay.notification.rest.internal.graphql.servlet.v1_0;
 
 import com.liferay.notification.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.notification.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.notification.rest.internal.resource.v1_0.NotificationQueueEntryResourceImpl;
+import com.liferay.notification.rest.internal.resource.v1_0.NotificationTemplateResourceImpl;
 import com.liferay.notification.rest.resource.v1_0.NotificationQueueEntryResource;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -50,6 +56,10 @@ public class ServletDataImpl implements ServletData {
 			_notificationTemplateResourceComponentServiceObjects);
 	}
 
+	public String getApplicationName() {
+		return "Liferay.Notification.REST";
+	}
+
 	@Override
 	public Mutation getMutation() {
 		return new Mutation();
@@ -63,6 +73,97 @@ public class ServletDataImpl implements ServletData {
 	@Override
 	public Query getQuery() {
 		return new Query();
+	}
+
+	public ObjectValuePair<Class<?>, String> getResourceMethodPair(
+		String methodName, boolean mutation) {
+
+		if (mutation) {
+			return _resourceMethodPairs.get("mutation#" + methodName);
+		}
+
+		return _resourceMethodPairs.get("query#" + methodName);
+	}
+
+	private static final Map<String, ObjectValuePair<Class<?>, String>>
+		_resourceMethodPairs = new HashMap<>();
+
+	static {
+		_resourceMethodPairs.put(
+			"mutation#deleteNotificationQueueEntry",
+			new ObjectValuePair<>(
+				NotificationQueueEntryResourceImpl.class,
+				"deleteNotificationQueueEntry"));
+		_resourceMethodPairs.put(
+			"mutation#deleteNotificationQueueEntryBatch",
+			new ObjectValuePair<>(
+				NotificationQueueEntryResourceImpl.class,
+				"deleteNotificationQueueEntryBatch"));
+		_resourceMethodPairs.put(
+			"mutation#updateNotificationQueueEntryResend",
+			new ObjectValuePair<>(
+				NotificationQueueEntryResourceImpl.class,
+				"putNotificationQueueEntryResend"));
+		_resourceMethodPairs.put(
+			"mutation#createNotificationTemplate",
+			new ObjectValuePair<>(
+				NotificationTemplateResourceImpl.class,
+				"postNotificationTemplate"));
+		_resourceMethodPairs.put(
+			"mutation#createNotificationTemplateBatch",
+			new ObjectValuePair<>(
+				NotificationTemplateResourceImpl.class,
+				"postNotificationTemplateBatch"));
+		_resourceMethodPairs.put(
+			"mutation#deleteNotificationTemplate",
+			new ObjectValuePair<>(
+				NotificationTemplateResourceImpl.class,
+				"deleteNotificationTemplate"));
+		_resourceMethodPairs.put(
+			"mutation#deleteNotificationTemplateBatch",
+			new ObjectValuePair<>(
+				NotificationTemplateResourceImpl.class,
+				"deleteNotificationTemplateBatch"));
+		_resourceMethodPairs.put(
+			"mutation#patchNotificationTemplate",
+			new ObjectValuePair<>(
+				NotificationTemplateResourceImpl.class,
+				"patchNotificationTemplate"));
+		_resourceMethodPairs.put(
+			"mutation#updateNotificationTemplate",
+			new ObjectValuePair<>(
+				NotificationTemplateResourceImpl.class,
+				"putNotificationTemplate"));
+		_resourceMethodPairs.put(
+			"mutation#updateNotificationTemplateBatch",
+			new ObjectValuePair<>(
+				NotificationTemplateResourceImpl.class,
+				"putNotificationTemplateBatch"));
+		_resourceMethodPairs.put(
+			"mutation#createNotificationTemplateCopy",
+			new ObjectValuePair<>(
+				NotificationTemplateResourceImpl.class,
+				"postNotificationTemplateCopy"));
+		_resourceMethodPairs.put(
+			"query#notificationQueueEntries",
+			new ObjectValuePair<>(
+				NotificationQueueEntryResourceImpl.class,
+				"getNotificationQueueEntriesPage"));
+		_resourceMethodPairs.put(
+			"query#notificationQueueEntry",
+			new ObjectValuePair<>(
+				NotificationQueueEntryResourceImpl.class,
+				"getNotificationQueueEntry"));
+		_resourceMethodPairs.put(
+			"query#notificationTemplates",
+			new ObjectValuePair<>(
+				NotificationTemplateResourceImpl.class,
+				"getNotificationTemplatesPage"));
+		_resourceMethodPairs.put(
+			"query#notificationTemplate",
+			new ObjectValuePair<>(
+				NotificationTemplateResourceImpl.class,
+				"getNotificationTemplate"));
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)

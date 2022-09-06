@@ -1,0 +1,36 @@
+definition {
+
+	macro _getLanguages {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(assetLibraryId)) {
+			var api = "asset-libraries/${assetLibraryId}";
+		}
+		else {
+			var api = "sites/${siteId}";
+		}
+
+		var curl = '''
+            ${portalURL}/o/headless-delivery/v1.0/${api}/languages \
+		    -u test@liferay.com:test \
+		    -H accept: application/json \
+	    ''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
+	macro getAssetLibraryLanguages {
+		Variables.assertDefined(parameterList = "${assetLibraryId}");
+
+		LanguageAPI._getLanguages(assetLibraryId = "${assetLibraryId}");
+	}
+
+	macro getSiteLanguages {
+		Variables.assertDefined(parameterList = "${siteId}");
+
+		LanguageAPI._getLanguages(siteId = "${siteId}");
+	}
+
+}

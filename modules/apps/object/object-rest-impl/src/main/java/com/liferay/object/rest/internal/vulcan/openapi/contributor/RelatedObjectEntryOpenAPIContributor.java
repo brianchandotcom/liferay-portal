@@ -16,6 +16,7 @@ package com.liferay.object.rest.internal.vulcan.openapi.contributor;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
@@ -31,6 +32,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
@@ -51,6 +53,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -64,8 +67,10 @@ public class RelatedObjectEntryOpenAPIContributor
 	implements OpenAPIContributor {
 
 	@Override
-	public void contribute(OpenAPI openAPI, UriInfo uriInfo) {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153324"))) {
+	public void contribute(OpenAPI openAPI, UriInfo uriInfo) throws Exception {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153324")) ||
+			(uriInfo == null)) {
+
 			return;
 		}
 
@@ -77,14 +82,37 @@ public class RelatedObjectEntryOpenAPIContributor
 		for (SystemObjectDefinitionMetadata systemObjectDefinitionMetadata :
 				systemObjectDefinitionMetadatas) {
 
-			_populatePathItems(
-				openAPI.getPaths(), systemObjectDefinitionMetadata, uriInfo);
+			List<ObjectRelationship> systemObjectRelationships =
+				_getSystemObjectRelationships(systemObjectDefinitionMetadata);
+
+			for (ObjectRelationship systemObjectRelationship :
+					systemObjectRelationships) {
+
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						systemObjectRelationship.getObjectDefinitionId2());
+
+				openAPI.schema(
+					objectDefinition.getShortName(),
+					_getObjectDefinitionSchema(objectDefinition));
+
+				Paths paths = openAPI.getPaths();
+
+				paths.addPathItem(
+					_getPath(
+						systemObjectRelationship,
+						systemObjectDefinitionMetadata, uriInfo),
+					_createPathItem(
+						systemObjectRelationship,
+						systemObjectDefinitionMetadata));
+			}
 		}
 	}
 
 	private PathItem _createPathItem(
-		ObjectRelationship objectRelationship,
-		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
+			ObjectRelationship objectRelationship,
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata)
+		throws Exception {
 
 		return new PathItem() {
 			{
@@ -116,9 +144,25 @@ public class RelatedObjectEntryOpenAPIContributor
 		return path.split(StringPool.SLASH)[0];
 	}
 
+	private Schema _getObjectDefinitionSchema(ObjectDefinition objectDefinition)
+		throws Exception {
+
+		Response response = _objectEntryOpenAPIResource.getOpenAPI(
+			objectDefinition.getObjectDefinitionId(), "json", null);
+
+		OpenAPI openAPI = (OpenAPI)response.getEntity();
+
+		Components components = openAPI.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		return schemas.get(objectDefinition.getShortName());
+	}
+
 	private Operation _getOperation(
-		ObjectRelationship objectRelationship,
-		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
+			ObjectRelationship objectRelationship,
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata)
+		throws Exception {
 
 		String systemObjectDefinitionExternalType =
 			StringUtil.lowerCaseFirstLetter(
@@ -148,9 +192,13 @@ public class RelatedObjectEntryOpenAPIContributor
 
 		MediaType mediaType = new MediaType();
 
-		Schema<Object> schema = new Schema<>();
+		Schema schema = new Schema();
 
-		schema.set$ref("");
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
+
+		schema.set$ref(objectDefinition.getShortName());
 
 		mediaType.setSchema(schema);
 
@@ -273,26 +321,6 @@ public class RelatedObjectEntryOpenAPIContributor
 		return Collections.emptyList();
 	}
 
-	private void _populatePathItems(
-		Paths paths,
-		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata,
-		UriInfo uriInfo) {
-
-		List<ObjectRelationship> systemObjectRelationships =
-			_getSystemObjectRelationships(systemObjectDefinitionMetadata);
-
-		for (ObjectRelationship systemObjectRelationship :
-				systemObjectRelationships) {
-
-			paths.addPathItem(
-				_getPath(
-					systemObjectRelationship, systemObjectDefinitionMetadata,
-					uriInfo),
-				_createPathItem(
-					systemObjectRelationship, systemObjectDefinitionMetadata));
-		}
-	}
-
 	private boolean _shouldGenerateSystemObjectEndpoints(
 		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata,
 		UriInfo uriInfo) {
@@ -309,6 +337,9 @@ public class RelatedObjectEntryOpenAPIContributor
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

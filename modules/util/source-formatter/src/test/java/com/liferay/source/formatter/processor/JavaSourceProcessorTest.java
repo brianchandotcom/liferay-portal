@@ -537,6 +537,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testSimplifyListUtilCalls() throws Exception {
+		test("SimplifyListUtilCalls.testjava");
+	}
+
+	@Test
 	public void testSizeIsZeroCheck() throws Exception {
 		test(
 			"SizeIsZero.testjava",

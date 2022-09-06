@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.PortletCategoryManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -104,7 +105,8 @@ public class GetPortletsMVCResourceCommand extends BaseMVCResourceCommand {
 		try {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				_getPortletsJSONArray(httpServletRequest, themeDisplay));
+				_portletCategoryManager.getPortletsJSONArray(
+					httpServletRequest, themeDisplay));
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get portlets", exception);
@@ -379,6 +381,9 @@ public class GetPortletsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletCategoryManager _portletCategoryManager;
 
 	@Reference
 	private PortletItemLocalService _portletItemLocalService;

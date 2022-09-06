@@ -237,7 +237,7 @@ public class AccountEntryUserRelLocalServiceTest {
 			).build());
 
 		try {
-			_accountEntry.setDomains("test1.com, test2.com");
+			_accountEntry.setDomains("test1.com,test2.com");
 
 			_accountEntry = _accountEntryLocalService.updateAccountEntry(
 				_accountEntry);

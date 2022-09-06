@@ -139,6 +139,10 @@ public class FragmentManager {
 				).build());
 		}
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158737"))) {
+			return allFragmentCollectionMapsList;
+		}
+
 		List<String> sortedFragmentCollectionKeys = ListUtil.fromArray(
 			portalPreferences.getValues(
 				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
@@ -162,9 +166,7 @@ public class FragmentManager {
 					fragmentCollectionMaps, sortedFragmentCollectionKeys);
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158737")) &&
-			!SetUtil.isEmpty(highlightedFragmentEntryKeys)) {
-
+		if (!SetUtil.isEmpty(highlightedFragmentEntryKeys)) {
 			Map<String, Map<String, Object>> highlightedFragmentMaps =
 				new TreeMap<>();
 
@@ -543,8 +545,8 @@ public class FragmentManager {
 		}
 
 		return _getSortedFragmentCollectionMapsList(
-				fragmentCollectionMaps,
-				ListUtil.fromArray(_SORTED_FRAGMENT_COLLECTION_KEYS));
+			fragmentCollectionMaps,
+			ListUtil.fromArray(_SORTED_FRAGMENT_COLLECTION_KEYS));
 	}
 
 	private boolean _isAllowedFragmentEntryKey(

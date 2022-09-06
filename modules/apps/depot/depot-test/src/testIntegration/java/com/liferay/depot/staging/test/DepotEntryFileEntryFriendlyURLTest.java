@@ -46,6 +46,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Collections;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -69,6 +70,22 @@ public class DepotEntryFileEntryFriendlyURLTest {
 	@Before
 	public void setUp() throws Exception {
 		_liveDepotEntry = _addDepotEntry();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		if (_stagingDepotEntry == null) {
+			return;
+		}
+
+		Group stagingDepotEntryGroup = _stagingDepotEntry.getGroup();
+
+		if (stagingDepotEntryGroup.isStagedRemotely()) {
+			DepotStagingTestUtil.disableRemoteStaging(_stagingDepotEntry);
+		}
+		else {
+			DepotStagingTestUtil.disableStaging(_liveDepotEntry.getGroup());
+		}
 	}
 
 	@Test

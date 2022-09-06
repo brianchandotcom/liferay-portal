@@ -106,6 +106,33 @@ public class DepotTestUtil {
 		}
 	}
 
+	public static void withLocalStagingEnabled(
+			DepotEntry depotEntry,
+			UnsafeConsumer<DepotEntry, Exception> unsafeConsumer)
+		throws Exception {
+
+		try {
+			unsafeConsumer.accept(
+				DepotStagingTestUtil.enableLocalStaging(depotEntry));
+		}
+		finally {
+			DepotStagingTestUtil.disableStaging(depotEntry);
+		}
+	}
+
+	public static void withLocalStagingEnabled(
+			Group group, UnsafeConsumer<Group, Exception> unsafeConsumer)
+		throws Exception {
+
+		try {
+			unsafeConsumer.accept(
+				DepotStagingTestUtil.enableLocalStaging(group));
+		}
+		finally {
+			DepotStagingTestUtil.disableStaging(group);
+		}
+	}
+
 	public static void withRegularUser(
 			UnsafeBiConsumer<User, Role, Exception> unsafeBiConsumer)
 		throws Exception {

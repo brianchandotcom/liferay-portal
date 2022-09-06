@@ -19,7 +19,6 @@ import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.depot.test.util.DepotStagingTestUtil;
 import com.liferay.depot.test.util.DepotTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -236,20 +235,17 @@ public class DepotPermissionCheckerWrapperTest {
 		throws Exception {
 
 		DepotTestUtil.withRegularUser(
-			(user, role) -> {
-				DepotEntry depotEntry = _addDepotEntry(user.getUserId());
+			(user, role) -> DepotTestUtil.withLocalStagingEnabled(
+				_addDepotEntry(user.getUserId()),
+				stagingDepotEntry -> {
+					PermissionChecker permissionChecker =
+						_permissionCheckerFactory.create(user);
 
-				DepotEntry stagingDepotEntry =
-					DepotStagingTestUtil.enableLocalStaging(depotEntry);
-
-				PermissionChecker permissionChecker =
-					_permissionCheckerFactory.create(user);
-
-				Assert.assertTrue(
-					permissionChecker.hasPermission(
-						stagingDepotEntry.getGroup(), Group.class.getName(),
-						Group.class.getName(), ActionKeys.PUBLISH_STAGING));
-			});
+					Assert.assertTrue(
+						permissionChecker.hasPermission(
+							stagingDepotEntry.getGroup(), Group.class.getName(),
+							Group.class.getName(), ActionKeys.PUBLISH_STAGING));
+				}));
 	}
 
 	@Test
@@ -292,19 +288,19 @@ public class DepotPermissionCheckerWrapperTest {
 	public void testIsContentReviewerWithStagingEnabled() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
 
-		DepotEntry stagingDepotEntry = DepotStagingTestUtil.enableLocalStaging(
-			depotEntry);
-
-		DepotTestUtil.withAssetLibraryContentReviewer(
+		DepotTestUtil.withLocalStagingEnabled(
 			depotEntry,
-			user -> {
-				PermissionChecker permissionChecker =
-					_permissionCheckerFactory.create(user);
+			stagingDepotEntry -> DepotTestUtil.withAssetLibraryContentReviewer(
+				depotEntry,
+				user -> {
+					PermissionChecker permissionChecker =
+						_permissionCheckerFactory.create(user);
 
-				Assert.assertTrue(
-					permissionChecker.isContentReviewer(
-						user.getCompanyId(), stagingDepotEntry.getGroupId()));
-			});
+					Assert.assertTrue(
+						permissionChecker.isContentReviewer(
+							user.getCompanyId(),
+							stagingDepotEntry.getGroupId()));
+				}));
 	}
 
 	@Test
@@ -386,19 +382,18 @@ public class DepotPermissionCheckerWrapperTest {
 	public void testIsGroupAdminWithStagingEnabled() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
 
-		DepotEntry stagingDepotEntry = DepotStagingTestUtil.enableLocalStaging(
-			depotEntry);
-
-		DepotTestUtil.withAssetLibraryAdministrator(
+		DepotTestUtil.withLocalStagingEnabled(
 			depotEntry,
-			user -> {
-				PermissionChecker permissionChecker =
-					_permissionCheckerFactory.create(user);
+			stagingDepotEntry -> DepotTestUtil.withAssetLibraryAdministrator(
+				depotEntry,
+				user -> {
+					PermissionChecker permissionChecker =
+						_permissionCheckerFactory.create(user);
 
-				Assert.assertTrue(
-					permissionChecker.isGroupAdmin(
-						stagingDepotEntry.getGroupId()));
-			});
+					Assert.assertTrue(
+						permissionChecker.isGroupAdmin(
+							stagingDepotEntry.getGroupId()));
+				}));
 	}
 
 	@Test
@@ -497,21 +492,20 @@ public class DepotPermissionCheckerWrapperTest {
 	public void testIsGroupMemberWithStagingEnabled() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUserId());
 
-		DepotEntry stagingDepotEntry = DepotStagingTestUtil.enableLocalStaging(
-			depotEntry);
+		DepotTestUtil.withLocalStagingEnabled(
+			depotEntry,
+			stagingDepotEntry -> DepotTestUtil.withRegularUser(
+				(user, role) -> {
+					_userLocalService.addGroupUsers(
+						depotEntry.getGroupId(), new long[] {user.getUserId()});
 
-		DepotTestUtil.withRegularUser(
-			(user, role) -> {
-				_userLocalService.addGroupUsers(
-					depotEntry.getGroupId(), new long[] {user.getUserId()});
+					PermissionChecker permissionChecker =
+						_permissionCheckerFactory.create(user);
 
-				PermissionChecker permissionChecker =
-					_permissionCheckerFactory.create(user);
-
-				Assert.assertTrue(
-					permissionChecker.isGroupMember(
-						stagingDepotEntry.getGroupId()));
-			});
+					Assert.assertTrue(
+						permissionChecker.isGroupMember(
+							stagingDepotEntry.getGroupId()));
+				}));
 	}
 
 	@Test
@@ -609,19 +603,16 @@ public class DepotPermissionCheckerWrapperTest {
 	@Test
 	public void testIsGroupOwnerWithStagingEnabled() throws Exception {
 		DepotTestUtil.withRegularUser(
-			(user, role) -> {
-				PermissionChecker permissionChecker =
-					_permissionCheckerFactory.create(user);
+			(user, role) -> DepotTestUtil.withLocalStagingEnabled(
+				_addDepotEntry(user.getUserId()),
+				stagingDepotEntry -> {
+					PermissionChecker permissionChecker =
+						_permissionCheckerFactory.create(user);
 
-				DepotEntry depotEntry = _addDepotEntry(user.getUserId());
-
-				DepotEntry stagingDepotEntry =
-					DepotStagingTestUtil.enableLocalStaging(depotEntry);
-
-				Assert.assertTrue(
-					permissionChecker.isGroupOwner(
-						stagingDepotEntry.getGroupId()));
-			});
+					Assert.assertTrue(
+						permissionChecker.isGroupOwner(
+							stagingDepotEntry.getGroupId()));
+				}));
 	}
 
 	@Test

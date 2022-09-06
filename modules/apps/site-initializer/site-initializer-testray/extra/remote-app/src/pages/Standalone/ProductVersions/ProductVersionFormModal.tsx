@@ -20,10 +20,7 @@ import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
-import {
-	createProductVersion,
-	updateProductVersion,
-} from '../../../services/rest';
+import {testrayProductVersionImpl} from '../../../services/rest';
 
 type ProductVersionForm = typeof yupSchema.productVersion.__outputType;
 
@@ -53,8 +50,9 @@ const ProductVersionFormModal: React.FC<ProductVersionProps> = ({
 				projectId,
 			},
 			{
-				create: createProductVersion,
-				update: updateProductVersion,
+				create: (data) => testrayProductVersionImpl.create(data),
+				update: (id, data) =>
+					testrayProductVersionImpl.update(id, data),
 			}
 		)
 			.then(onSave)
@@ -72,8 +70,9 @@ const ProductVersionFormModal: React.FC<ProductVersionProps> = ({
 			}
 			observer={observer}
 			size="lg"
-			title={i18n.translate(
-				modalState?.id ? 'edit-product-version' : 'new-product-version'
+			title={i18n.sub(
+				modalState?.id ? 'edit-x' : 'new-x',
+				'product-version'
 			)}
 			visible
 		>

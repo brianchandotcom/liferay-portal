@@ -15,11 +15,7 @@
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import {
-	TestrayTeam,
-	deleteResource,
-	getTeamsComponentsQuery,
-} from '../../../services/rest';
+import {TestrayTeam, testrayTeamImpl} from '../../../services/rest';
 import {Action} from '../../../types';
 
 const useTeamActions = () => {
@@ -36,20 +32,10 @@ const useTeamActions = () => {
 		},
 		{
 			action: ({id}, mutate) => {
-				getTeamsComponentsQuery(id)
-					.then((response) => {
-						if (response?.items?.length) {
-							throw new Error(
-								i18n.translate(
-									'the-team-cannot-be-deleted-because-it-has-associated-components'
-								)
-							);
-						}
-						deleteResource(`/teams/${id}`)
-							?.then(() => removeItemFromList(mutate, id))
-							.then(modal.onSave)
-							.catch(modal.onError);
-					})
+				testrayTeamImpl
+					.remove(id)
+					.then(() => removeItemFromList(mutate, id))
+					.then(modal.onSave)
 					.catch(modal.onError);
 			},
 			icon: 'trash',

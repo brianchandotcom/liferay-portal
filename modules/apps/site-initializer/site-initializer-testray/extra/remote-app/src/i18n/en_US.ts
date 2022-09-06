@@ -195,6 +195,7 @@ export default {
 	'new-task': 'New Task',
 	'new-team': 'New Team',
 	'new-user-account': 'New User Account',
+	'new-x': 'New {0}',
 	'next': 'Next',
 	'no-password-provided': 'No password provided',
 	'no-permissions': 'No Permissions',

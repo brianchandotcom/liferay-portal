@@ -14,10 +14,7 @@
 
 import ListView from '../../../components/ListView';
 import i18n from '../../../i18n';
-import {
-	getProductVersionsTransformData,
-	productVersionsResource,
-} from '../../../services/rest';
+import {testrayProductVersionImpl} from '../../../services/rest';
 import {searchUtil} from '../../../util/search';
 import TeamFormModal from './ProductVersionFormModal';
 import useTeamActions from './useProductVersionActions';
@@ -38,7 +35,7 @@ const ProductVersionModal: React.FC<ProductVersionModalProps> = ({
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
 				}}
-				resource={productVersionsResource}
+				resource={testrayProductVersionImpl.resource}
 				tableProps={{
 					actions,
 					columns: [
@@ -48,7 +45,9 @@ const ProductVersionModal: React.FC<ProductVersionModalProps> = ({
 						},
 					],
 				}}
-				transformData={getProductVersionsTransformData}
+				transformData={(response) =>
+					testrayProductVersionImpl.transformDataFromList(response)
+				}
 				variables={{filter: searchUtil.eq('projectId', projectId)}}
 			/>
 

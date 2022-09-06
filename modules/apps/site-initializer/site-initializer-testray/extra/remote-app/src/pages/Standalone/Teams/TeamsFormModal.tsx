@@ -26,8 +26,8 @@ import yupSchema, {yupResolver} from '../../../schema/yup';
 import {
 	APIResponse,
 	TestrayComponent,
-	assignTeamsToComponents,
-	testrayTeamRest,
+	testrayComponentImpl,
+	testrayTeamImpl,
 } from '../../../services/rest';
 import {searchUtil} from '../../../util/search';
 
@@ -117,11 +117,16 @@ const TeamFormModal: React.FC<TeamProps> = ({
 		onSubmit(
 			{id: teamForm.id, name: teamForm.name, projectId},
 			{
-				create: (...params) => testrayTeamRest.create(...params),
-				update: (...params) => testrayTeamRest.update(...params),
+				create: (data) => testrayTeamImpl.create(data),
+				update: (id, data) => testrayTeamImpl.update(id, data),
 			}
 		)
-			.then((response) => assignTeamsToComponents(response.id, state))
+			.then((teamResponse) =>
+				testrayComponentImpl.assignTeamsToComponents(
+					teamResponse.id,
+					state
+				)
+			)
 			.then(onSave)
 			.catch(onError);
 	};

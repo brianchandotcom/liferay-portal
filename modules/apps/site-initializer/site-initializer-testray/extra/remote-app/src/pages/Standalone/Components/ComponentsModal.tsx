@@ -14,11 +14,7 @@
 
 import ListView from '../../../components/ListView';
 import i18n from '../../../i18n';
-import {
-	TestrayTeam,
-	componentsResource,
-	getComponentsTransformData,
-} from '../../../services/rest';
+import {TestrayTeam, testrayComponentImpl} from '../../../services/rest';
 import {searchUtil} from '../../../util/search';
 import TeamFormModal from './ComponentsFormModal';
 import useComponentActions from './useComponentActions';
@@ -37,7 +33,7 @@ const ComponentsModal: React.FC<ComponentsModalProps> = ({projectId}) => {
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
 				}}
-				resource={componentsResource}
+				resource={testrayComponentImpl.resource}
 				tableProps={{
 					actions,
 					columns: [
@@ -53,7 +49,9 @@ const ComponentsModal: React.FC<ComponentsModalProps> = ({projectId}) => {
 						},
 					],
 				}}
-				transformData={getComponentsTransformData}
+				transformData={(response) =>
+					testrayComponentImpl.transformDataFromList(response)
+				}
 				variables={{filter: searchUtil.eq('projectId', projectId)}}
 			/>
 

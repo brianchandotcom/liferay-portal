@@ -15,7 +15,7 @@
 import ListView from '../../../components/ListView';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';
-import {testrayTeamRest} from '../../../services/rest';
+import {testrayTeamImpl} from '../../../services/rest';
 import {searchUtil} from '../../../util/search';
 import TeamFormModal from './TeamsFormModal';
 import useTeamActions from './useTeamActions';
@@ -35,7 +35,7 @@ const TeamsModal: React.FC<TeamsModalProps> = ({projectId}) => {
 					addButton: () => formModal.modal.open(),
 					filterFields: filters.team as any,
 				}}
-				resource={testrayTeamRest.resource}
+				resource={testrayTeamImpl.resource}
 				tableProps={{
 					actions,
 					columns: [
@@ -46,7 +46,7 @@ const TeamsModal: React.FC<TeamsModalProps> = ({projectId}) => {
 					],
 				}}
 				transformData={(response) =>
-					testrayTeamRest.transformDataFromList(response)
+					testrayTeamImpl.transformDataFromList(response)
 				}
 				variables={{filter: searchUtil.eq('projectId', projectId)}}
 			/>

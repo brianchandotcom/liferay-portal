@@ -15,7 +15,10 @@
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import {TestrayProductVersion, deleteResource} from '../../../services/rest';
+import {
+	TestrayProductVersion,
+	testrayProductVersionImpl,
+} from '../../../services/rest';
 import {Action} from '../../../types';
 
 const useProductVersionActions = () => {
@@ -32,7 +35,8 @@ const useProductVersionActions = () => {
 		},
 		{
 			action: ({id}, mutate) =>
-				deleteResource(`/productversions/${id}`)
+				testrayProductVersionImpl
+					.remove(id)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
 					.catch(modal.onError),

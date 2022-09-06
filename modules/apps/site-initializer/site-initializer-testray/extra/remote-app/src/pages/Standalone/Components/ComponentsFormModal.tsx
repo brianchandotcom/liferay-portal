@@ -24,8 +24,7 @@ import yupSchema, {yupResolver} from '../../../schema/yup';
 import {
 	APIResponse,
 	TestrayTeam,
-	createComponent,
-	updateComponent,
+	testrayComponentImpl,
 } from '../../../services/rest';
 import {searchUtil} from '../../../util/search';
 
@@ -73,8 +72,8 @@ const ComponentFormModal: React.FC<ComponentProps> = ({
 				projectId,
 			},
 			{
-				create: createComponent,
-				update: updateComponent,
+				create: (data) => testrayComponentImpl.create(data),
+				update: (id, data) => testrayComponentImpl.update(id, data),
 			}
 		)
 			.then(onSave)

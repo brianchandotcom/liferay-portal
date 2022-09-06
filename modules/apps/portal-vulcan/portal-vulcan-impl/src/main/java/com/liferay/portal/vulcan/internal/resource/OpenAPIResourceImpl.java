@@ -14,16 +14,15 @@
 
 package com.liferay.portal.vulcan.internal.resource;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
-import com.liferay.portal.vulcan.extension.OpenAPIEndpointsExtension;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
 import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
@@ -31,6 +30,7 @@ import com.liferay.portal.vulcan.internal.extension.util.ExtensionUtil;
 import com.liferay.portal.vulcan.jaxrs.JaxRsResourceRegistry;
 import com.liferay.portal.vulcan.openapi.DTOProperty;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
+import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
@@ -74,8 +74,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -157,27 +160,15 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			openAPI.setServers(Collections.singletonList(server));
 		}
 
-		OpenAPI finalOpenAPI = openAPI;
-
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153324"))) {
-			Map<String, PathItem> extendedEndpoints =
-				_openAPIEndpointsExtension.getExtendedEndpoints(uriInfo);
-
-			if ((extendedEndpoints != null) && !extendedEndpoints.isEmpty()) {
-				extendedEndpoints.forEach(
-					(key, pathItem) -> {
-						Paths paths = finalOpenAPI.getPaths();
-
-						paths.addPathItem(key, pathItem);
-					});
-			}
+		for (OpenAPIContributor openAPIContributor : _openAPIContributors) {
+			openAPIContributor.contribute(openAPI, uriInfo);
 		}
 
 		if (StringUtil.equalsIgnoreCase("yaml", type)) {
 			return Response.status(
 				Response.Status.OK
 			).entity(
-				Yaml.pretty(finalOpenAPI)
+				Yaml.pretty(openAPI)
 			).type(
 				"application/yaml"
 			).build();
@@ -205,6 +196,17 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		throws Exception {
 
 		return getOpenAPI(null, resourceClasses, type, uriInfo);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_openAPIContributors = ServiceTrackerListFactory.open(
+			bundleContext, OpenAPIContributor.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_openAPIContributors.close();
 	}
 
 	private String _getBasePath(UriInfo uriInfo) {
@@ -902,7 +904,6 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	@Reference
 	private JaxRsResourceRegistry _jaxRsResourceRegistry;
 
-	@Reference
-	private OpenAPIEndpointsExtension _openAPIEndpointsExtension;
+	private ServiceTrackerList<OpenAPIContributor> _openAPIContributors;
 
 }

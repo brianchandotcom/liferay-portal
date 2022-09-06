@@ -10,6 +10,8 @@
  */
 
 import MDFRequestActivity from '../interfaces/mdfRequestActivity';
+import getMaxDateActivity from './getMaxDateActivity';
+import getMinDateActivity from './getMinDateActivity';
 import getTotalBudget from './getTotalBudget';
 import getTotalMDFRequest from './getTotalMDFRequest';
 
@@ -43,19 +45,9 @@ export default function getSummaryActivities(
 			{endDates: [] as Date[], startDates: [] as Date[]}
 		);
 
-		const minDateActivity = datesActivities.startDates.reduce(
-			(dateAccumulator, startDate) =>
-				dateAccumulator < startDate ? dateAccumulator : startDate
-		);
-
-		const maxDateActivity = datesActivities.endDates.reduce(
-			(dateAccumulator, endDate) =>
-				dateAccumulator > endDate ? dateAccumulator : endDate
-		);
-
 		return {
-			maxDateActivity,
-			minDateActivity,
+			maxDateActivity: getMaxDateActivity(datesActivities.endDates),
+			minDateActivity: getMinDateActivity(datesActivities.startDates),
 			totalCostOfExpense: getTotalBudget(mdfRequestActivities),
 			totalMDFRequestAmount: getTotalMDFRequest(mdfRequestActivities),
 		};

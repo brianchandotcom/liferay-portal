@@ -9,20 +9,12 @@
  * distribution rights of the Software.
  */
 
-interface IOption {
-	[key: string]: Intl.DateTimeFormatOptions;
-}
+export default function getMinDateActivity(dates: Date[]) {
+	if (dates.length) {
+		const endDate = dates.reduce((dateAccumulator, endDate) =>
+			dateAccumulator > endDate ? dateAccumulator : endDate
+		);
 
-export const customFormatDateOptions: IOption = {
-	SHORT_MONTH: {
-		day: '2-digit',
-		month: 'short',
-		timeZone: 'UTC',
-		year: 'numeric',
-	},
-	SHORT_MONTH_YEAR: {
-		day: '2-digit',
-		month: 'short',
-		timeZone: 'UTC',
-	},
-};
+		return endDate;
+	}
+}

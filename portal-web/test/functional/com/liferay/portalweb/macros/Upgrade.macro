@@ -3176,8 +3176,6 @@ definition {
 	macro viewAndAddKBArticle {
 		Navigator.gotoPage(pageName = "Knowledge Base");
 
-		var portalVersion = PropsUtil.get("portal.version");
-
 		if ("${portalVersion}" == "7.1.10.5") {
 			KBArticle.viewPG(
 				kbArticleContent = "Knowledge Base Video Content",

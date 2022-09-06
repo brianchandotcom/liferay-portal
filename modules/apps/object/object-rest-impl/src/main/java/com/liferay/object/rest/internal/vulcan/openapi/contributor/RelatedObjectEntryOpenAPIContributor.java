@@ -203,6 +203,7 @@ public class RelatedObjectEntryOpenAPIContributor
 		mediaType.setSchema(schema);
 
 		content.addMediaType("application/json", mediaType);
+		content.addMediaType("application/xml", mediaType);
 
 		defaultResponse.setContent(content);
 

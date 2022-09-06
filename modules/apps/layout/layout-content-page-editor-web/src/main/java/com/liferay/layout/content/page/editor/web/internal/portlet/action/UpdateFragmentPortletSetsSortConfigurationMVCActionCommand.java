@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentManager;
+import com.liferay.layout.content.page.editor.web.internal.util.PortletCategoryManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -108,7 +109,8 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommand
 	}
 
 	private Object _updateFragmentPortletSetsSortConfiguration(
-		ActionRequest actionRequest) {
+			ActionRequest actionRequest)
+		throws Exception {
 
 		String fragmentCollectionKeys = ParamUtil.getString(
 			actionRequest, "fragmentCollectionKeys");
@@ -191,7 +193,9 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommand
 				_getMasterDropZoneLayoutStructureItem(themeDisplay),
 				themeDisplay)
 		).put(
-			"portletCategories", JSONFactoryUtil.createJSONArray()
+			"portletCategories",
+			_portletCategoryManager.getPortletsJSONArray(
+				httpServletRequest, themeDisplay)
 		);
 	}
 
@@ -206,6 +210,9 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletCategoryManager _portletCategoryManager;
 
 	@Reference
 	private PortletPreferencesFactory _portletPreferencesFactory;

@@ -76,21 +76,10 @@ public class CheckIndividualSegmentsMessageListener
 		_individualSegmentsChecker.checkIndividualSegments();
 	}
 
-	@Reference(unbind = "-")
-	protected void setIndividualSegmentsChecker(
-		IndividualSegmentsChecker individualSegmentsChecker) {
-
-		_individualSegmentsChecker = individualSegmentsChecker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSchedulerEngineHelper(
-		SchedulerEngineHelper schedulerEngineHelper) {
-
-		_schedulerEngineHelper = schedulerEngineHelper;
-	}
-
+	@Reference
 	private IndividualSegmentsChecker _individualSegmentsChecker;
+
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference

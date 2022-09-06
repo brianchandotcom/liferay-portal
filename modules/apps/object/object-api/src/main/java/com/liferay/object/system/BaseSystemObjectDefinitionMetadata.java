@@ -14,22 +14,15 @@
 
 package com.liferay.object.system;
 
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Marco Leo
@@ -63,18 +56,6 @@ public abstract class BaseSystemObjectDefinitionMetadata
 		return "id";
 	}
 
-	@Override
-	public List<ObjectRelationship> getSystemObjectRelationships() {
-		ObjectDefinition systemObjectDefinition = _getSystemObjectDefinition();
-
-		if (systemObjectDefinition != null) {
-			return ObjectRelationshipLocalServiceUtil.getObjectRelationships(
-				systemObjectDefinition.getObjectDefinitionId());
-		}
-
-		return Collections.emptyList();
-	}
-
 	protected Map<Locale, String> createLabelMap(String labelKey) {
 		return LocalizedMapUtil.getLocalizedMap(_translate(labelKey));
 	}
@@ -94,21 +75,6 @@ public abstract class BaseSystemObjectDefinitionMetadata
 		return ObjectFieldUtil.createObjectField(
 			0, businessType, dbColumnName, dbType, false, false, null,
 			_translate(labelKey), name, required, system);
-	}
-
-	private ObjectDefinition _getSystemObjectDefinition() {
-		List<ObjectDefinition> systemObjectDefinitions =
-			ObjectDefinitionLocalServiceUtil.getSystemObjectDefinitions();
-
-		for (ObjectDefinition systemObjectDefinition :
-				systemObjectDefinitions) {
-
-			if (Objects.equals(systemObjectDefinition.getName(), getName())) {
-				return systemObjectDefinition;
-			}
-		}
-
-		return null;
 	}
 
 	private String _translate(String labelKey) {

@@ -15750,5 +15750,38 @@ diff -y -B -W250 upgraded.sql fresh.sql | expand | grep -E -C40 '^.{123} [|>]( |
 				<isset property="app.server.shutdown.timeout" />
 			</condition>
 		</fail>
+
+		<if>
+			<or>
+				<equals arg1="${app.server.type}" arg2="weblogic" />
+				<equals arg1="${app.server.type}" arg2="websphere" />
+			</or>
+			<then>
+				<if>
+					<equals arg1="${app.server.type}" arg2="weblogic" />
+					<then>
+						<var name="admin.server.path" value="8080/console" />
+					</then>
+					<elseif>
+						<equals arg1="${app.server.type}" arg2="websphere" />
+						<then>
+							<var name="admin.server.path" value="9060" />
+						</then>
+					</elseif>
+				</if>
+
+				<waitfor checkevery="5" checkeveryunit="second" maxwait="5" maxwaitunit="minute" timeoutproperty="admin.server.shutdown.timeout">
+					<not>
+						<http url="http://localhost:${admin.server.path}" />
+					</not>
+				</waitfor>
+
+				<fail message="Admin Server is still available at localhost:${admin.server.path}">
+					<condition>
+						<isset property="admin.server.shutdown.timeout" />
+					</condition>
+				</fail>
+			</then>
+		</if>
 	</target>
 </project>

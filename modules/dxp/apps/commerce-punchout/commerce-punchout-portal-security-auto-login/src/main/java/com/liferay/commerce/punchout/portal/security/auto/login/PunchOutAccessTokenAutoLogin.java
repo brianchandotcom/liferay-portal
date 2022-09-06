@@ -71,18 +71,6 @@ public class PunchOutAccessTokenAutoLogin extends BaseAutoLogin {
 		return punchOutAccessTokenAutoLoginConfiguration.enabled();
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
 	private PunchOutAccessTokenAutoLoginConfiguration
 		_getPunchOutAccessTokenAutoLoginConfiguration(long companyId) {
 
@@ -109,7 +97,10 @@ public class PunchOutAccessTokenAutoLogin extends BaseAutoLogin {
 	)
 	private AutoLogin _autoLogin;
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private Portal _portal;
 
 }

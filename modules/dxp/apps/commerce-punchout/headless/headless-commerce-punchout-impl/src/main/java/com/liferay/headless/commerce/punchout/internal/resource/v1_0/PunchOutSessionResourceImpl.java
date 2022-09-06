@@ -208,13 +208,6 @@ public class PunchOutSessionResourceImpl
 		return punchOutSession;
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
 	private com.liferay.portal.kernel.model.User _addBuyerUser(
 			long companyId, long groupId, String email, String firstName,
 			String middleName, String lastName)
@@ -506,6 +499,7 @@ public class PunchOutSessionResourceImpl
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference

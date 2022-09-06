@@ -77,13 +77,6 @@ public class SSOImpl implements SSO {
 		return _isSessionRedirectOnExpire(_getOpenSSOConfiguration(companyId));
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
 	private OpenSSOConfiguration _getOpenSSOConfiguration(long companyId) {
 		try {
 			return _configurationProvider.getConfiguration(
@@ -111,6 +104,7 @@ public class SSOImpl implements SSO {
 
 	private static final Log _log = LogFactoryUtil.getLog(SSOImpl.class);
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 }

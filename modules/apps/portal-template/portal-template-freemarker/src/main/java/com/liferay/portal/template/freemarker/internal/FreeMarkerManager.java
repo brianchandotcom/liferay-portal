@@ -258,13 +258,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			_restrictedBeansWrapper);
 	}
 
-	@Reference(unbind = "-")
-	public void setTemplateClassResolver(
-		TemplateClassResolver templateClassResolver) {
-
-		_templateClassResolver = templateClassResolver;
-	}
-
 	@Activate
 	protected void activate(ComponentContext componentContext) {
 		_freeMarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
@@ -469,11 +462,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setSingleVMPool(SingleVMPool singleVMPool) {
-		_singleVMPool = singleVMPool;
-	}
-
 	private String _getMacroLibrary() {
 		Set<String> macroLibraries = SetUtil.fromArray(
 			_freeMarkerEngineConfiguration.macroLibrary());
@@ -605,9 +593,14 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	private volatile BeansWrapper _restrictedBeansWrapper;
 	private volatile ServiceRegistration<PortalExecutorConfig>
 		_serviceRegistration;
+
+	@Reference
 	private SingleVMPool _singleVMPool;
+
 	private final Map<String, String> _taglibMappings =
 		new ConcurrentHashMap<>();
+
+	@Reference
 	private TemplateClassResolver _templateClassResolver;
 
 	@Reference(service = FreeMarkerTemplateContextHelper.class)

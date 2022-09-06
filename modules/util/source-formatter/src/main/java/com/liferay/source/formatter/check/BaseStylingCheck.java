@@ -33,6 +33,11 @@ public abstract class BaseStylingCheck extends BaseFileCheck {
 
 	protected String formatStyling(String content) {
 		content = _formatStyling(
+			content, "!ListUtil.isNotEmpty(", "ListUtil.isEmpty(");
+		content = _formatStyling(
+			content, "!ListUtil.isEmpty(", "ListUtil.isNotEmpty(");
+
+		content = _formatStyling(
 			content, "!Validator.isNotNull(", "Validator.isNull(");
 		content = _formatStyling(
 			content, "!Validator.isNull(", "Validator.isNotNull(");

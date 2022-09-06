@@ -16,12 +16,21 @@ package com.liferay.bulk.rest.internal.graphql.servlet.v1_0;
 
 import com.liferay.bulk.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.bulk.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.bulk.rest.internal.resource.v1_0.KeywordResourceImpl;
+import com.liferay.bulk.rest.internal.resource.v1_0.SelectionResourceImpl;
+import com.liferay.bulk.rest.internal.resource.v1_0.StatusResourceImpl;
+import com.liferay.bulk.rest.internal.resource.v1_0.TaxonomyCategoryResourceImpl;
+import com.liferay.bulk.rest.internal.resource.v1_0.TaxonomyVocabularyResourceImpl;
 import com.liferay.bulk.rest.resource.v1_0.KeywordResource;
 import com.liferay.bulk.rest.resource.v1_0.SelectionResource;
 import com.liferay.bulk.rest.resource.v1_0.StatusResource;
 import com.liferay.bulk.rest.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.bulk.rest.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -55,6 +64,10 @@ public class ServletDataImpl implements ServletData {
 			_statusResourceComponentServiceObjects);
 	}
 
+	public String getApplicationName() {
+		return "Liferay.Bulk.REST";
+	}
+
 	@Override
 	public Mutation getMutation() {
 		return new Mutation();
@@ -68,6 +81,56 @@ public class ServletDataImpl implements ServletData {
 	@Override
 	public Query getQuery() {
 		return new Query();
+	}
+
+	public ObjectValuePair<Class<?>, String> getResourceMethodPair(
+		String methodName, boolean mutation) {
+
+		if (mutation) {
+			return _resourceMethodPairs.get("mutation#" + methodName);
+		}
+
+		return _resourceMethodPairs.get("query#" + methodName);
+	}
+
+	private static final Map<String, ObjectValuePair<Class<?>, String>>
+		_resourceMethodPairs = new HashMap<>();
+
+	static {
+		_resourceMethodPairs.put(
+			"mutation#patchKeywordBatch",
+			new ObjectValuePair<>(
+				KeywordResourceImpl.class, "patchKeywordBatch"));
+		_resourceMethodPairs.put(
+			"mutation#updateKeywordBatch",
+			new ObjectValuePair<>(
+				KeywordResourceImpl.class, "putKeywordBatch"));
+		_resourceMethodPairs.put(
+			"mutation#createKeywordsCommonPage",
+			new ObjectValuePair<>(
+				KeywordResourceImpl.class, "postKeywordsCommonPage"));
+		_resourceMethodPairs.put(
+			"mutation#createBulkSelection",
+			new ObjectValuePair<>(
+				SelectionResourceImpl.class, "postBulkSelection"));
+		_resourceMethodPairs.put(
+			"mutation#patchTaxonomyCategoryBatch",
+			new ObjectValuePair<>(
+				TaxonomyCategoryResourceImpl.class,
+				"patchTaxonomyCategoryBatch"));
+		_resourceMethodPairs.put(
+			"mutation#updateTaxonomyCategoryBatch",
+			new ObjectValuePair<>(
+				TaxonomyCategoryResourceImpl.class,
+				"putTaxonomyCategoryBatch"));
+		_resourceMethodPairs.put(
+			"mutation#createSiteTaxonomyVocabulariesCommonPage",
+			new ObjectValuePair<>(
+				TaxonomyVocabularyResourceImpl.class,
+				"postSiteTaxonomyVocabulariesCommonPage"));
+		_resourceMethodPairs.put(
+			"query#status",
+			new ObjectValuePair<>(StatusResourceImpl.class, "getStatus"));
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)

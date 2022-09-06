@@ -16,10 +16,17 @@ package com.liferay.headless.admin.content.internal.graphql.servlet.v1_0;
 
 import com.liferay.headless.admin.content.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.admin.content.internal.graphql.query.v1_0.Query;
+import com.liferay.headless.admin.content.internal.resource.v1_0.DisplayPageTemplateResourceImpl;
+import com.liferay.headless.admin.content.internal.resource.v1_0.PageDefinitionResourceImpl;
+import com.liferay.headless.admin.content.internal.resource.v1_0.StructuredContentResourceImpl;
 import com.liferay.headless.admin.content.resource.v1_0.DisplayPageTemplateResource;
 import com.liferay.headless.admin.content.resource.v1_0.PageDefinitionResource;
 import com.liferay.headless.admin.content.resource.v1_0.StructuredContentResource;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -51,6 +58,10 @@ public class ServletDataImpl implements ServletData {
 			_structuredContentResourceComponentServiceObjects);
 	}
 
+	public String getApplicationName() {
+		return "Liferay.Headless.Admin.Content";
+	}
+
 	@Override
 	public String getGraphQLNamespace() {
 		return "admin";
@@ -69,6 +80,62 @@ public class ServletDataImpl implements ServletData {
 	@Override
 	public Query getQuery() {
 		return new Query();
+	}
+
+	public ObjectValuePair<Class<?>, String> getResourceMethodPair(
+		String methodName, boolean mutation) {
+
+		if (mutation) {
+			return _resourceMethodPairs.get("mutation#" + methodName);
+		}
+
+		return _resourceMethodPairs.get("query#" + methodName);
+	}
+
+	private static final Map<String, ObjectValuePair<Class<?>, String>>
+		_resourceMethodPairs = new HashMap<>();
+
+	static {
+		_resourceMethodPairs.put(
+			"mutation#createSitePageDefinitionPreview",
+			new ObjectValuePair<>(
+				PageDefinitionResourceImpl.class,
+				"postSitePageDefinitionPreview"));
+		_resourceMethodPairs.put(
+			"mutation#createSiteStructuredContentDraft",
+			new ObjectValuePair<>(
+				StructuredContentResourceImpl.class,
+				"postSiteStructuredContentDraft"));
+		_resourceMethodPairs.put(
+			"mutation#deleteStructuredContentByVersion",
+			new ObjectValuePair<>(
+				StructuredContentResourceImpl.class,
+				"deleteStructuredContentByVersion"));
+		_resourceMethodPairs.put(
+			"query#displayPageTemplates",
+			new ObjectValuePair<>(
+				DisplayPageTemplateResourceImpl.class,
+				"getSiteDisplayPageTemplatesPage"));
+		_resourceMethodPairs.put(
+			"query#displayPageTemplate",
+			new ObjectValuePair<>(
+				DisplayPageTemplateResourceImpl.class,
+				"getSiteDisplayPageTemplate"));
+		_resourceMethodPairs.put(
+			"query#structuredContents",
+			new ObjectValuePair<>(
+				StructuredContentResourceImpl.class,
+				"getSiteStructuredContentsPage"));
+		_resourceMethodPairs.put(
+			"query#structuredContentByVersion",
+			new ObjectValuePair<>(
+				StructuredContentResourceImpl.class,
+				"getStructuredContentByVersion"));
+		_resourceMethodPairs.put(
+			"query#structuredContentsVersions",
+			new ObjectValuePair<>(
+				StructuredContentResourceImpl.class,
+				"getStructuredContentsVersionsPage"));
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)

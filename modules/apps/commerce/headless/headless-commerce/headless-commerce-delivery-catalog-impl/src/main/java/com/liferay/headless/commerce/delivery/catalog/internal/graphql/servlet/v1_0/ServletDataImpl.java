@@ -16,6 +16,18 @@ package com.liferay.headless.commerce.delivery.catalog.internal.graphql.servlet.
 
 import com.liferay.headless.commerce.delivery.catalog.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.commerce.delivery.catalog.internal.graphql.query.v1_0.Query;
+import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.AttachmentResourceImpl;
+import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.CategoryResourceImpl;
+import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.ChannelResourceImpl;
+import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.MappedProductResourceImpl;
+import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.PinResourceImpl;
+import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.ProductOptionResourceImpl;
+import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.ProductResourceImpl;
+import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.ProductSpecificationResourceImpl;
+import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.RelatedProductResourceImpl;
+import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.SkuResourceImpl;
+import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.WishListItemResourceImpl;
+import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.WishListResourceImpl;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.CategoryResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ChannelResource;
@@ -28,7 +40,11 @@ import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.RelatedProdu
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.WishListItemResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.WishListResource;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -80,6 +96,10 @@ public class ServletDataImpl implements ServletData {
 			_wishListItemResourceComponentServiceObjects);
 	}
 
+	public String getApplicationName() {
+		return "Liferay.Headless.Commerce.Delivery.Catalog";
+	}
+
 	@Override
 	public Mutation getMutation() {
 		return new Mutation();
@@ -93,6 +113,118 @@ public class ServletDataImpl implements ServletData {
 	@Override
 	public Query getQuery() {
 		return new Query();
+	}
+
+	public ObjectValuePair<Class<?>, String> getResourceMethodPair(
+		String methodName, boolean mutation) {
+
+		if (mutation) {
+			return _resourceMethodPairs.get("mutation#" + methodName);
+		}
+
+		return _resourceMethodPairs.get("query#" + methodName);
+	}
+
+	private static final Map<String, ObjectValuePair<Class<?>, String>>
+		_resourceMethodPairs = new HashMap<>();
+
+	static {
+		_resourceMethodPairs.put(
+			"mutation#createChannelWishList",
+			new ObjectValuePair<>(
+				WishListResourceImpl.class, "postChannelWishList"));
+		_resourceMethodPairs.put(
+			"mutation#deleteWishList",
+			new ObjectValuePair<>(
+				WishListResourceImpl.class, "deleteWishList"));
+		_resourceMethodPairs.put(
+			"mutation#deleteWishListBatch",
+			new ObjectValuePair<>(
+				WishListResourceImpl.class, "deleteWishListBatch"));
+		_resourceMethodPairs.put(
+			"mutation#patchChannelWishList",
+			new ObjectValuePair<>(
+				WishListResourceImpl.class, "patchChannelWishList"));
+		_resourceMethodPairs.put(
+			"mutation#deleteWishListItem",
+			new ObjectValuePair<>(
+				WishListItemResourceImpl.class, "deleteWishListItem"));
+		_resourceMethodPairs.put(
+			"mutation#deleteWishListItemBatch",
+			new ObjectValuePair<>(
+				WishListItemResourceImpl.class, "deleteWishListItemBatch"));
+		_resourceMethodPairs.put(
+			"mutation#createChannelWishListItem",
+			new ObjectValuePair<>(
+				WishListItemResourceImpl.class, "postChannelWishListItem"));
+		_resourceMethodPairs.put(
+			"query#channelProductAttachments",
+			new ObjectValuePair<>(
+				AttachmentResourceImpl.class,
+				"getChannelProductAttachmentsPage"));
+		_resourceMethodPairs.put(
+			"query#channelProductImages",
+			new ObjectValuePair<>(
+				AttachmentResourceImpl.class, "getChannelProductImagesPage"));
+		_resourceMethodPairs.put(
+			"query#channelProductCategories",
+			new ObjectValuePair<>(
+				CategoryResourceImpl.class, "getChannelProductCategoriesPage"));
+		_resourceMethodPairs.put(
+			"query#channels",
+			new ObjectValuePair<>(
+				ChannelResourceImpl.class, "getChannelsPage"));
+		_resourceMethodPairs.put(
+			"query#channelProductMappedProducts",
+			new ObjectValuePair<>(
+				MappedProductResourceImpl.class,
+				"getChannelProductMappedProductsPage"));
+		_resourceMethodPairs.put(
+			"query#channelProductPins",
+			new ObjectValuePair<>(
+				PinResourceImpl.class, "getChannelProductPinsPage"));
+		_resourceMethodPairs.put(
+			"query#channelProducts",
+			new ObjectValuePair<>(
+				ProductResourceImpl.class, "getChannelProductsPage"));
+		_resourceMethodPairs.put(
+			"query#channelProduct",
+			new ObjectValuePair<>(
+				ProductResourceImpl.class, "getChannelProduct"));
+		_resourceMethodPairs.put(
+			"query#channelProductOptions",
+			new ObjectValuePair<>(
+				ProductOptionResourceImpl.class,
+				"getChannelProductOptionsPage"));
+		_resourceMethodPairs.put(
+			"query#channelProductProductSpecifications",
+			new ObjectValuePair<>(
+				ProductSpecificationResourceImpl.class,
+				"getChannelProductProductSpecificationsPage"));
+		_resourceMethodPairs.put(
+			"query#channelProductRelatedProducts",
+			new ObjectValuePair<>(
+				RelatedProductResourceImpl.class,
+				"getChannelProductRelatedProductsPage"));
+		_resourceMethodPairs.put(
+			"query#channelProductSkus",
+			new ObjectValuePair<>(
+				SkuResourceImpl.class, "getChannelProductSkusPage"));
+		_resourceMethodPairs.put(
+			"query#channelWishLists",
+			new ObjectValuePair<>(
+				WishListResourceImpl.class, "getChannelWishListsPage"));
+		_resourceMethodPairs.put(
+			"query#wishList",
+			new ObjectValuePair<>(WishListResourceImpl.class, "getWishList"));
+		_resourceMethodPairs.put(
+			"query#wishListItem",
+			new ObjectValuePair<>(
+				WishListItemResourceImpl.class, "getWishListItem"));
+		_resourceMethodPairs.put(
+			"query#wishListItems",
+			new ObjectValuePair<>(
+				WishListItemResourceImpl.class, "getWishListItemsPage"));
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)

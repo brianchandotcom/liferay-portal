@@ -16,10 +16,17 @@ package com.liferay.headless.commerce.machine.learning.internal.graphql.servlet.
 
 import com.liferay.headless.commerce.machine.learning.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.commerce.machine.learning.internal.graphql.query.v1_0.Query;
+import com.liferay.headless.commerce.machine.learning.internal.resource.v1_0.AccountCategoryForecastResourceImpl;
+import com.liferay.headless.commerce.machine.learning.internal.resource.v1_0.AccountForecastResourceImpl;
+import com.liferay.headless.commerce.machine.learning.internal.resource.v1_0.SkuForecastResourceImpl;
 import com.liferay.headless.commerce.machine.learning.resource.v1_0.AccountCategoryForecastResource;
 import com.liferay.headless.commerce.machine.learning.resource.v1_0.AccountForecastResource;
 import com.liferay.headless.commerce.machine.learning.resource.v1_0.SkuForecastResource;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -48,6 +55,10 @@ public class ServletDataImpl implements ServletData {
 			_skuForecastResourceComponentServiceObjects);
 	}
 
+	public String getApplicationName() {
+		return "Liferay.Headless.Commerce.Machine.Learning";
+	}
+
 	@Override
 	public Mutation getMutation() {
 		return new Mutation();
@@ -61,6 +72,37 @@ public class ServletDataImpl implements ServletData {
 	@Override
 	public Query getQuery() {
 		return new Query();
+	}
+
+	public ObjectValuePair<Class<?>, String> getResourceMethodPair(
+		String methodName, boolean mutation) {
+
+		if (mutation) {
+			return _resourceMethodPairs.get("mutation#" + methodName);
+		}
+
+		return _resourceMethodPairs.get("query#" + methodName);
+	}
+
+	private static final Map<String, ObjectValuePair<Class<?>, String>>
+		_resourceMethodPairs = new HashMap<>();
+
+	static {
+		_resourceMethodPairs.put(
+			"query#accountCategoryForecastsByMonthlyRevenue",
+			new ObjectValuePair<>(
+				AccountCategoryForecastResourceImpl.class,
+				"getAccountCategoryForecastsByMonthlyRevenuePage"));
+		_resourceMethodPairs.put(
+			"query#accountForecastsByMonthlyRevenue",
+			new ObjectValuePair<>(
+				AccountForecastResourceImpl.class,
+				"getAccountForecastsByMonthlyRevenuePage"));
+		_resourceMethodPairs.put(
+			"query#skuForecastsByMonthlyRevenue",
+			new ObjectValuePair<>(
+				SkuForecastResourceImpl.class,
+				"getSkuForecastsByMonthlyRevenuePage"));
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)

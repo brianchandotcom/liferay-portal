@@ -16,8 +16,13 @@ package com.liferay.digital.signature.rest.internal.graphql.servlet.v1_0;
 
 import com.liferay.digital.signature.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.digital.signature.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.digital.signature.rest.internal.resource.v1_0.DSEnvelopeResourceImpl;
 import com.liferay.digital.signature.rest.resource.v1_0.DSEnvelopeResource;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -45,6 +50,10 @@ public class ServletDataImpl implements ServletData {
 			_dsEnvelopeResourceComponentServiceObjects);
 	}
 
+	public String getApplicationName() {
+		return "Liferay.Digital.Signature.REST";
+	}
+
 	@Override
 	public Mutation getMutation() {
 		return new Mutation();
@@ -58,6 +67,38 @@ public class ServletDataImpl implements ServletData {
 	@Override
 	public Query getQuery() {
 		return new Query();
+	}
+
+	public ObjectValuePair<Class<?>, String> getResourceMethodPair(
+		String methodName, boolean mutation) {
+
+		if (mutation) {
+			return _resourceMethodPairs.get("mutation#" + methodName);
+		}
+
+		return _resourceMethodPairs.get("query#" + methodName);
+	}
+
+	private static final Map<String, ObjectValuePair<Class<?>, String>>
+		_resourceMethodPairs = new HashMap<>();
+
+	static {
+		_resourceMethodPairs.put(
+			"mutation#createSiteDSEnvelope",
+			new ObjectValuePair<>(
+				DSEnvelopeResourceImpl.class, "postSiteDSEnvelope"));
+		_resourceMethodPairs.put(
+			"mutation#createSiteDSEnvelopeBatch",
+			new ObjectValuePair<>(
+				DSEnvelopeResourceImpl.class, "postSiteDSEnvelopeBatch"));
+		_resourceMethodPairs.put(
+			"query#dSEnvelopes",
+			new ObjectValuePair<>(
+				DSEnvelopeResourceImpl.class, "getSiteDSEnvelopesPage"));
+		_resourceMethodPairs.put(
+			"query#dSEnvelope",
+			new ObjectValuePair<>(
+				DSEnvelopeResourceImpl.class, "getSiteDSEnvelope"));
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)

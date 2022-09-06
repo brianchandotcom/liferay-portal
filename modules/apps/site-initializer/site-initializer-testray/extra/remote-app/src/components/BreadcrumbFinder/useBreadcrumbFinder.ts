@@ -35,6 +35,7 @@ type Resource =
 
 type Entity = {
 	entity: string;
+	getPage?: (ids: number[]) => string;
 	getResource: (ids: number[], search: string) => string;
 	transformer?: (response: APIResponse<any>) => any;
 };
@@ -47,6 +48,7 @@ const entities: Entity[] = [
 	},
 	{
 		entity: 'routines',
+		getPage: ([projectId]) => `/project/${projectId}/routines`,
 		getResource: ([projectId], search) =>
 			`/routines?filter=${searchUtil.eq(
 				'projectId',
@@ -118,10 +120,10 @@ const useBreadcrumbFinder = () => {
 
 	const debouncedSearch = useDebounce(search, 1000);
 
-	const ids = breadCrumb.map(({value}) => value);
-
 	const baseOptions = {enabled: active};
 	const currentEntity = entities[breadCrumb.length];
+	const ids = breadCrumb.map(({value}) => value);
+	const tabDisabled = breadCrumb.length + 1 === entities.length;
 	const {transformer, url} = getEntityUrlAndNormalizer(
 		currentEntity,
 		ids,
@@ -142,15 +144,36 @@ const useBreadcrumbFinder = () => {
 	const onBackscape = useCallback(() => {
 		if (breadCrumb.length) {
 			const lastBreadcrumb = breadCrumb[breadCrumb.length - 1];
+
 			setBreadCrumb((prevBreadcrumb) =>
 				prevBreadcrumb.filter(
 					(_, index) => breadCrumb.length !== index + 1
 				)
 			);
 
-			setTimeout(() => setSearch(lastBreadcrumb.label), 10);
+			setTimeout(() => {
+				setSearch(lastBreadcrumb.label);
+			}, 10);
+
+			setTimeout(() => {
+				inputRef.current?.select();
+			}, 20);
 		}
 	}, [breadCrumb]);
+
+	const onEnter = useCallback(() => {
+		navigate(`/project/${activeItem.value}/overview`);
+		setActive(false);
+	}, [activeItem, navigate]);
+
+	const onClickRow = (rowIndex: number) => {
+		if (ON_CLICK_ROW_ENABLED) {
+			const currentItem = items[rowIndex];
+
+			navigate(`/project/${currentItem.value}/overview`);
+			setActive(false);
+		}
+	};
 
 	const onKeyDown = useCallback(() => {
 		setIndex((prevIndex) => {
@@ -183,20 +206,6 @@ const useBreadcrumbFinder = () => {
 		inputRef.current?.focus();
 	}, [activeItem]);
 
-	const onEnter = useCallback(() => {
-		navigate(`/project/${activeItem.value}/overview`);
-		setActive(false);
-	}, [activeItem, navigate]);
-
-	const onClickRow = (rowIndex: number) => {
-		if (ON_CLICK_ROW_ENABLED) {
-			const currentItem = items[rowIndex];
-
-			navigate(`/project/${currentItem.value}/overview`);
-			setActive(false);
-		}
-	};
-
 	useEffect(() => {
 		setTimeout(() => inputRef.current?.focus(), 1500);
 	}, []);
@@ -204,7 +213,12 @@ const useBreadcrumbFinder = () => {
 	useHotkeys('shift+/', () => setActive(true), {enabled: !active});
 	useHotkeys('enter', onEnter, baseOptions, [index, activeItem]);
 	useHotkeys('down', onKeyDown, baseOptions, [itemsLength]);
-	useHotkeys('tab', onTab, baseOptions, [index, activeItem]);
+	useHotkeys(
+		'tab',
+		onTab,
+		{...baseOptions, enabled: baseOptions.enabled && !tabDisabled},
+		[index, activeItem]
+	);
 	useHotkeys('up', onKeyUp, baseOptions, [itemsLength]);
 
 	return {
@@ -217,6 +231,7 @@ const useBreadcrumbFinder = () => {
 		onClickRow,
 		search,
 		setSearch,
+		tabDisabled,
 	};
 };
 

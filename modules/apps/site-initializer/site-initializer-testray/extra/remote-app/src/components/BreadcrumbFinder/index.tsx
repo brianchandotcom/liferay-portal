@@ -29,6 +29,7 @@ const BreadcrumbFinder = () => {
 		onClickRow,
 		search,
 		setSearch,
+		tabDisabled,
 	} = useBreadcrumbFinder();
 
 	if (!active) {
@@ -115,15 +116,17 @@ const BreadcrumbFinder = () => {
 
 									{itemIndex === index && (
 										<div className="d-flex result-hotkey-hint-container">
-											<span className="result-hotkey-hint">
-												<kbd>TAB</kbd>
+											{!tabDisabled && (
+												<span className="result-hotkey-hint">
+													<kbd>TAB</kbd>
 
-												<span>
-													{i18n.translate(
-														'search-in'
-													)}
+													<span>
+														{i18n.translate(
+															'search-in'
+														)}
+													</span>
 												</span>
-											</span>
+											)}
 
 											<span className="ml-4 result-hotkey-hint">
 												<kbd>ENTER</kbd>

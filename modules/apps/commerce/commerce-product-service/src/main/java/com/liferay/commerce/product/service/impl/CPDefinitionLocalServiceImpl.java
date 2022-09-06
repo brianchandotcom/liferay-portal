@@ -53,7 +53,6 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
-import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
@@ -1026,8 +1025,14 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product display layouts
 
-		_cpDisplayLayoutLocalService.deleteCPDisplayLayouts(
-			CPDefinition.class, cpDefinition.getCPDefinitionId());
+		List<CPDisplayLayout> cpDisplayLayouts =
+			_cpDisplayLayoutPersistence.findByC_C(
+				_classNameLocalService.getClassNameId(CPDefinition.class),
+				cpDefinition.getCPDefinitionId());
+
+		for (CPDisplayLayout cpDisplayLayout : cpDisplayLayouts) {
+			_cpDisplayLayoutPersistence.remove(cpDisplayLayout);
+		}
 
 		// Commerce product version contributors
 
@@ -1456,8 +1461,10 @@ public class CPDefinitionLocalServiceImpl
 	@Override
 	public String getLayoutUuid(long groupId, long cpDefinitionId) {
 		CPDisplayLayout cpDisplayLayout =
-			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(
-				groupId, CPDefinition.class, cpDefinitionId);
+			_cpDisplayLayoutPersistence.fetchByG_C_C(
+				groupId,
+				_classNameLocalService.getClassNameId(CPDefinition.class),
+				cpDefinitionId);
 
 		if (cpDisplayLayout == null) {
 			return null;
@@ -2820,9 +2827,6 @@ public class CPDefinitionLocalServiceImpl
 	@BeanReference(type = CPDefinitionSpecificationOptionValuePersistence.class)
 	private CPDefinitionSpecificationOptionValuePersistence
 		_cpDefinitionSpecificationOptionValuePersistence;
-
-	@BeanReference(type = CPDisplayLayoutLocalService.class)
-	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
 
 	@BeanReference(type = CPDisplayLayoutPersistence.class)
 	private CPDisplayLayoutPersistence _cpDisplayLayoutPersistence;

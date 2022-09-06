@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.rest.internal.deployer;
+package com.liferay.object.rest.internal.vulcan.openapi.contributor;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
@@ -20,16 +20,20 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
-import com.liferay.portal.vulcan.extension.OpenAPIEndpointsExtension;
+import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
+import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.media.Schema;
@@ -53,15 +57,15 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Luis Miguel Barcos
  */
-@Component(service = OpenAPIEndpointsExtension.class)
-public class OpenAPIRelationshipsExtendedEndpoints
-	implements OpenAPIEndpointsExtension {
+@Component(service = OpenAPIContributor.class)
+public class RelatedObjectEntryOpenAPIContributor
+	implements OpenAPIContributor {
 
 	@Override
-	public Map<String, PathItem> getExtendedEndpoints(UriInfo uriInfo)
-		throws Exception {
-
-		Map<String, PathItem> pathItemMap = new HashMap<>();
+	public void contribute(OpenAPI openAPI, UriInfo uriInfo) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153324"))) {
+			return;
+		}
 
 		List<SystemObjectDefinitionMetadata>
 			systemObjectDefinitionMetadataList =
@@ -73,10 +77,8 @@ public class OpenAPIRelationshipsExtendedEndpoints
 				systemObjectDefinitionMetadataList) {
 
 			_populatePathItems(
-				pathItemMap, systemObjectDefinitionMetadata, uriInfo);
+				openAPI.getPaths(), systemObjectDefinitionMetadata, uriInfo);
 		}
-
-		return pathItemMap;
 	}
 
 	private PathItem _createPathItem(
@@ -237,7 +239,7 @@ public class OpenAPIRelationshipsExtendedEndpoints
 	}
 
 	private void _populatePathItems(
-		Map<String, PathItem> pathItemMap,
+		Paths paths,
 		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata,
 		UriInfo uriInfo) {
 
@@ -247,7 +249,7 @@ public class OpenAPIRelationshipsExtendedEndpoints
 		for (ObjectRelationship systemObjectRelationship :
 				systemObjectRelationships) {
 
-			pathItemMap.put(
+			paths.addPathItem(
 				_getPath(
 					systemObjectRelationship, systemObjectDefinitionMetadata,
 					uriInfo),

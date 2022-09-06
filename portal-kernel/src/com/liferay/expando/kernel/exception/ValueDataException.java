@@ -23,8 +23,12 @@ import java.util.Locale;
  */
 public class ValueDataException extends PortalException {
 
-	public ValueDataException(String msg) {
-		super(msg);
+	public static class MismatchColumnTypeException extends ValueDataException {
+
+		public MismatchColumnTypeException(String msg) {
+			super(msg);
+		}
+
 	}
 
 	public static class MustInformDefaultLocale extends ValueDataException {
@@ -35,6 +39,19 @@ public class ValueDataException extends PortalException {
 					") must be defined");
 		}
 
+	}
+
+	public static class UnsupportedColumnTypeException
+		extends ValueDataException {
+
+		public UnsupportedColumnTypeException(String msg) {
+			super(msg);
+		}
+
+	}
+
+	private ValueDataException(String msg) {
+		super(msg);
 	}
 
 }

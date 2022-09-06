@@ -1,5 +1,17 @@
 definition {
 
+	macro assertItemName {
+		AssertElementPresent(
+			key_projectName = "${key_name}",
+			locator1 = "Testray#ITEM_NAME");
+	}
+
+	macro assertItemNotPresent {
+		AssertElementNotPresent(
+			key_projectName = "${key_name}",
+			locator1 = "Testray#ITEM_NAME");
+	}
+
 	macro assertItemsPerPageValue {
 		AssertElementPresent(
 			key_value = "${itemValue}",
@@ -22,18 +34,6 @@ definition {
 		AssertElementPresent(
 			key_value = "${value}",
 			locator1 = "Testray#DESCRIPTION_PROJECT");
-	}
-
-	macro assertItemName {
-		AssertElementPresent(
-			key_projectName = "${key_name}",
-			locator1 = "Testray#ITEM_NAME");
-	}
-
-	macro assertItemNotPresent {
-		AssertElementNotPresent(
-			key_projectName = "${key_name}",
-			locator1 = "Testray#ITEM_NAME");
 	}
 
 	macro assertProjectTitleHeader {

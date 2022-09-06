@@ -14,13 +14,13 @@ definition {
 
 		Testray.createTestraySite(siteName = "Testray 2");
 
-        Refresh();
+		Refresh();
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        TestrayManage.deleteAllProductVersion();
+		TestrayManage.deleteAllProductVersion();
 
 		Testray.tearDownCP();
 
@@ -45,47 +45,13 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 
-            TestrayManage.createProductVersion(
-                nameOptions = "Product_Ver_1 Project",
+			TestrayManage.createProductVersion(
 				manageOption = "Manage Product Versions",
-                version = "1.x");
+				nameOptions = "Product_Ver_1 Project",
+				version = "1.x");
 
 			Testray.assertItemName(key_name = "1.x");
 		}
-
-	}
-
-	@description = "This is a test for LPS-160532 - Verify if as an Administrator I am able to Edit Product Versions"
-	@priority = "5"
-	test AdminCanEditProductVersion {
-		task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			Testray.createProjectTestray(
-				description = "Product_Ver_3 Project Description",
-				key_name = "Product_Ver_3 Project");
-		}
-
-		task ("Change pagination, create Product Version") {
-			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
-
-			TestrayManage.createProductVersion(
-                nameOptions = "Product_Ver_3 Project",
-				manageOption = "Manage Product Versions",
-                version = "1.x");
-		}
-
-        task ("Edit Product Version and Assert it was Edited") {
-			TestrayManage.editProductVersion(
-				valueName = "1.x",
-				itemManage = "Edit",
-				caseName = "1.1.x");
-
-            Testray.assertItemName(key_name = "1.1.x");
-		}
-
 	}
 
 	@description = "This is a test for LPS-160533 - Verify if as an Administrator I am able to delete Product Versions"
@@ -105,19 +71,50 @@ definition {
 				valuePagination = "150");
 
 			TestrayManage.createProductVersion(
-                nameOptions = "Product_Ver_2 Project",
 				manageOption = "Manage Product Versions",
-                version = "1.x");
+				nameOptions = "Product_Ver_2 Project",
+				version = "1.x");
 		}
 
-        task ("Delete Product Version and Assert it was Deleted") {
+		task ("Delete Product Version and Assert it was Deleted") {
 			TestrayManage.deleteProductVersion(
 				itemManage = "Delete",
 				versionName = "1.x");
 
-            Testray.assertItemNotPresent(key_name = "1.x");
+			Testray.assertItemNotPresent(key_name = "1.x");
+		}
+	}
+
+	@description = "This is a test for LPS-160532 - Verify if as an Administrator I am able to Edit Product Versions"
+	@priority = "5"
+	test AdminCanEditProductVersion {
+		task ("Go to Testray and Create Project") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Product_Ver_3 Project Description",
+				key_name = "Product_Ver_3 Project");
 		}
 
+		task ("Change pagination, create Product Version") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			TestrayManage.createProductVersion(
+				manageOption = "Manage Product Versions",
+				nameOptions = "Product_Ver_3 Project",
+				version = "1.x");
+		}
+
+		task ("Edit Product Version and Assert it was Edited") {
+			TestrayManage.editProductVersion(
+				caseName = "1.1.x",
+				itemManage = "Edit",
+				valueName = "1.x");
+
+			Testray.assertItemName(key_name = "1.1.x");
+		}
 	}
 
 	@description = "This is a test for LPS-160534 - Verify if as an Administrator I should not be able to add a duplicate Product Versions"
@@ -137,22 +134,19 @@ definition {
 				valuePagination = "150");
 
 			TestrayManage.createProductVersion(
-                nameOptions = "Product_Ver_4 Project",
 				manageOption = "Manage Product Versions",
-                version = "1.x");
-			
+				nameOptions = "Product_Ver_4 Project",
+				version = "1.x");
+
 			Click(locator1 = "TestrayManage#CLOSE_MODAL");
 
 			TestrayManage.specificVersion(
-                nameOptions = "Product_Ver_4 Project",
+				caseName = "1.x",
 				manageOption = "Manage Product Versions",
-				caseName = "1.x");
+				nameOptions = "Product_Ver_4 Project");
 
 			Alert.viewErrorMessage(errorMessage = "An unexpected error ocurred");
-
-			
 		}
-
 	}
 
 	@description = "This is a test for LPS-161334 - Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
@@ -172,9 +166,9 @@ definition {
 				valuePagination = "150");
 
 			TestrayManage.specificVersion(
-                nameOptions = "Product_Ver_5 Project",
+				caseName = "",
 				manageOption = "Manage Product Versions",
-                caseName = "");
+				nameOptions = "Product_Ver_5 Project");
 
 			AssertElementPresent(
 				key_fieldLabel = "Name",

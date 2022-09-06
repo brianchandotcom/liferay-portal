@@ -109,7 +109,6 @@ definition {
 			contentBody = "for review in the workflow.",
 			portletName = "Test Test",
 			publicationType = "sent you a Commerce Order");
-			
 	}
 
 	@description = "Verify that the user can open new user details by notifications"

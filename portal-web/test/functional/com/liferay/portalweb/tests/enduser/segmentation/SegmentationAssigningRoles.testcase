@@ -566,6 +566,44 @@ definition {
 		}
 	}
 
+	@description = "LPS-161227 Bug: NoSuchExperienceException when attempting to edit Content Page with Enable Assign Roles by Segment configuration enabled"
+	@priority = "5"
+	test EditPageAfterEnableAssignRole {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationAssigningRoles#";
+
+		task ("Create a Content Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page",
+				type = "content");
+		}
+
+		task ("Enable Assign roles by segment from system settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "System Scope");
+
+			Segmentation.enableAssingRolesBySegmentsCheckbox();
+		}
+
+		task ("Navigate to page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Check no error are thrown ") {
+			AssertConsoleTextNotPresent(value1 = "javax.servlet.ServletException");
+		}
+	}
+
 	@description = "LPS-121943: Validate if, with the option Enable Assign roles by segments enabled, the role is working for the user."
 	@priority = "4"
 	@uitest

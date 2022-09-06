@@ -125,25 +125,19 @@ public class ReleasePublisher {
 		}
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
 	private static final int _STATE_IN_PROGRESS = -1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReleasePublisher.class);
 
 	private BundleContext _bundleContext;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
 	private ReleaseLocalService _releaseLocalService;
+
 	private final Map<String, ServiceRegistration<Release>>
 		_serviceConfiguratorRegistrations = new HashMap<>();
 	private ServiceRegistration<?> _serviceRegistration;

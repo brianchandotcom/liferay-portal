@@ -82,11 +82,6 @@ public class SystemCheckOSGiCommands {
 		_serviceTracker.close();
 	}
 
-	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private void _check(boolean useSystemOut) {
 		Map<ServiceReference<SystemChecker>, SystemChecker> systemCheckerMap =
 			_serviceTracker.getTracked();
@@ -145,6 +140,9 @@ public class SystemCheckOSGiCommands {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SystemCheckOSGiCommands.class);
+
+	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private Props _props;

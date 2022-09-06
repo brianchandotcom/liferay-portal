@@ -214,11 +214,6 @@ public class VerifyProcessTrackerOSGiCommands {
 		_verifyProcesses.close();
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	@Reference
 	protected CounterLocalService counterLocalService;
 
@@ -386,6 +381,10 @@ public class VerifyProcessTrackerOSGiCommands {
 		VerifyProcessTrackerOSGiCommands.class);
 
 	private BundleContext _bundleContext;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
 	private ServiceTrackerMap<String, List<VerifyProcess>> _verifyProcesses;
 
 	private class AllVerifiersRunnable implements Runnable {

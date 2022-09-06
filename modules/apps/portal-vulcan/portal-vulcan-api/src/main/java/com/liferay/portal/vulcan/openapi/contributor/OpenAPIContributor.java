@@ -23,6 +23,6 @@ import javax.ws.rs.core.UriInfo;
  */
 public interface OpenAPIContributor {
 
-	public void contribute(OpenAPI openAPI, UriInfo uriInfo);
+	public void contribute(OpenAPI openAPI, UriInfo uriInfo) throws Exception;
 
 }

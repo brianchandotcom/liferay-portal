@@ -64,19 +64,19 @@ export default function ItemSelectorRepositoryEntryBrowser({
 			)
 		).map((node) => node.dataset);
 
-		const clicablePreviewButtons = Array.from(
+		const clickablePreviewButtons = Array.from(
 			document.querySelectorAll(`#p_p_id${portletNamespace} .icon-view`)
 		);
 
 		if (
 			itemSelectorPreviewItems.length &&
-			itemSelectorPreviewItems.length === clicablePreviewButtons.length
+			itemSelectorPreviewItems.length === clickablePreviewButtons.length
 		) {
 			if (!itemSelectorPreviewItemsRef.current) {
 				itemSelectorPreviewItemsRef.current = itemSelectorPreviewItems;
 			}
 
-			clicablePreviewButtons.forEach((clicableItem, index) => {
+			clickablePreviewButtons.forEach((clickableItem, index) => {
 				const handleOpenPreview = (event) => {
 					event.preventDefault();
 					event.stopPropagation();
@@ -85,11 +85,11 @@ export default function ItemSelectorRepositoryEntryBrowser({
 					setItemSelectorPreviewOpen(true);
 				};
 
-				clicableItem.addEventListener('click', handleOpenPreview);
+				clickableItem.addEventListener('click', handleOpenPreview);
 
 				eventListeners.push({
 					dispose: () => {
-						clicableItem.removeEventListener(
+						clickableItem.removeEventListener(
 							'click',
 							handleOpenPreview
 						);

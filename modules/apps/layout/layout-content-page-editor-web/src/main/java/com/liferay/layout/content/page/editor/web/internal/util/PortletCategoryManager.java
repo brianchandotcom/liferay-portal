@@ -99,6 +99,12 @@ public class PortletCategoryManager {
 					httpServletRequest, highlightedPortletCategory),
 				httpServletRequest, portletCategory, themeDisplay);
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158737"))) {
+			return JSONUtil.toJSONArray(
+				new ArrayList<>(portletCategoryJSONObjectMap.values()),
+				portletCategoryJSONObject -> portletCategoryJSONObject);
+		}
+
 		PortalPreferences portalPreferences =
 			_portletPreferencesFactory.getPortalPreferences(httpServletRequest);
 

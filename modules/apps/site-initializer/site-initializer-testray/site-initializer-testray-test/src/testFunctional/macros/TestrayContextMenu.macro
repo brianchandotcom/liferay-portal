@@ -3,7 +3,7 @@ definition {
 	macro clickContextMenuProjects {
 		var key_projectName = "${name}";
 
-		RightClick.rightClick(locator1 = "Testray#PROJECT_NAME");
+		RightClick.rightClick(locator1 = "Testray#ITEM_NAME");
 	}
 
 	macro selectItemFromProjectsContextMenu {

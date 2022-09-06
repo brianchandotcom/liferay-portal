@@ -25,7 +25,7 @@ definition {
 	macro goToRoutine {
 		Click(
 			key_projectName = "${routineName}",
-			locator1 = "Testray#PROJECT_NAME");
+			locator1 = "Testray#ITEM_NAME");
 	}
 
 	macro selectOptionDropdownRoutine {

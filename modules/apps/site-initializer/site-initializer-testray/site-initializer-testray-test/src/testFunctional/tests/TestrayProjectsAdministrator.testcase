@@ -45,7 +45,7 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 
-			Testray.assertProjectName(key_name = "Projects_1 Project");
+			Testray.assertItemName(key_name = "Projects_1 Project");
 		}
 	}
 
@@ -63,7 +63,7 @@ definition {
 		task ("Delete the project and assert has been deleted") {
 			Testray.deleteProject(nameProject = "Projects_2 Project");
 
-			Testray.assertProjectNotPresent(key_name = "Projects_2 Project");
+			Testray.assertItemNotPresent(key_name = "Projects_2 Project");
 		}
 	}
 
@@ -99,7 +99,7 @@ definition {
 		task ("Go to Home Page and Assert it the name and description has been edited") {
 			TestrayLayout.clickResultsOnSidebar();
 
-			Testray.assertProjectName(key_name = "Projects_3 Project Edited");
+			Testray.assertItemName(key_name = "Projects_3 Project Edited");
 
 			Testray.assertProjectDescription(value = "Projects_3 Project Description Edited");
 		}
@@ -160,7 +160,7 @@ definition {
 		task ("Delete the project and assert it was deleted") {
 			Testray.deleteProject(nameProject = "Projects_4 Project");
 
-			Testray.assertProjectNotPresent(key_name = "Projects_4 Project");
+			Testray.assertItemNotPresent(key_name = "Projects_4 Project");
 		}
 	}
 

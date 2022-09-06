@@ -24,16 +24,16 @@ definition {
 			locator1 = "Testray#DESCRIPTION_PROJECT");
 	}
 
-	macro assertProjectName {
+	macro assertItemName {
 		AssertElementPresent(
 			key_projectName = "${key_name}",
-			locator1 = "Testray#PROJECT_NAME");
+			locator1 = "Testray#ITEM_NAME");
 	}
 
-	macro assertProjectNotPresent {
+	macro assertItemNotPresent {
 		AssertElementNotPresent(
 			key_projectName = "${key_name}",
-			locator1 = "Testray#PROJECT_NAME");
+			locator1 = "Testray#ITEM_NAME");
 	}
 
 	macro assertProjectTitleHeader {
@@ -153,7 +153,7 @@ definition {
 			numberItems = "20",
 			valuePagination = "150");
 
-		while (IsElementPresent(key_projectName = "Projects_", locator1 = "Testray#PROJECT_NAME")) {
+		while (IsElementPresent(key_projectName = "Projects_", locator1 = "Testray#ITEM_NAME")) {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
@@ -226,7 +226,7 @@ definition {
 	macro goToProjectPage {
 		Click(
 			key_projectName = "${projectName}",
-			locator1 = "Testray#PROJECT_NAME");
+			locator1 = "Testray#ITEM_NAME");
 	}
 
 	macro goToTestflow {

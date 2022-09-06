@@ -57,13 +57,13 @@ definition {
 
 			Testray.clickOnPageNumberModal(pageNumber = "2");
 
-			TestrayManage.assertName(name = "Environments_2 Factor Option");
+			Testray.assertItemName(key_name = "Environments_2 Factor Option");
 		}
 
 		task ("Delete Factor Option and assert it deleted") {
 			TestrayManage.deleteOption(nameOptions = "Environments_2 Factor Option");
 
-			TestrayManage.assertOptionNotPresent(key_title = "Environments_2 Factor Option");
+			Testray.assertItemNotPresent(key_name = "Environments_2 Factor Option");
 		}
 	}
 
@@ -81,7 +81,7 @@ definition {
 		task ("Add a category and check if the category was created") {
 			TestrayManage.addNewCategory(category = "Environments_1 Category");
 
-			TestrayManage.assertName(name = "Environments_1 Category");
+			Testray.assertItemName(key_name = "Environments_1 Category");
 		}
 	}
 
@@ -115,7 +115,7 @@ definition {
 
 			Testray.clickOnPageNumberModal(pageNumber = "2");
 
-			TestrayManage.assertName(name = "Environments_2 Option");
+			Testray.assertItemName(key_name = "Environments_2 Option");
 		}
 	}
 
@@ -146,7 +146,7 @@ definition {
 				nameCategory = "Environments_4 Category",
 				selectCategories = "Categories");
 
-			TestrayManage.assertNameNotPresent(name = "Environments_4 Category");
+			Testray.assertItemNotPresent(key_name = "Environments_4 Category");
 		}
 	}
 
@@ -166,7 +166,7 @@ definition {
 
 			TestrayManage.editNameCategory(category = "Environments_6 Category Edited");
 
-			TestrayManage.assertName(name = "Environments_6 Category Edited");
+			Testray.assertItemName(key_name = "Environments_6 Category Edited");
 		}
 	}
 
@@ -208,11 +208,11 @@ definition {
 		}
 
 		task ("Change the pagination and confirm that the option has been changed with a new category") {
-			TestrayManage.assertNameCategoryInOptions(category = "Environments_8 Category B");
+			Testray.assertItemName(key_name = "Environments_8 Category B");
 
-			TestrayManage.assertCategoryNotPresent(key_title = "Environments_8 Category A");
+			Testray.assertItemNotPresent(key_name = "Environments_8 Category A");
 
-			TestrayManage.assertName(name = "Environments_8 Option");
+			Testray.assertItemName(key_name = "Environments_8 Option");
 		}
 	}
 
@@ -250,7 +250,7 @@ definition {
 				category = "Environments_7 Category",
 				option = "Environments_7 Option Edited");
 
-			TestrayManage.assertName(name = "Environments_7 Option Edited");
+			Testray.assertItemName(key_name = "Environments_7 Option Edited");
 		}
 	}
 

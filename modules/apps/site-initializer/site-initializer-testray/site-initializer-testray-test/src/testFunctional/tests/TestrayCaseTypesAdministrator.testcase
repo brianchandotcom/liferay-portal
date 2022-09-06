@@ -47,7 +47,7 @@ definition {
 		task ("Create a new Case Type and assert it was created") {
 			TestrayManage.createNewCaseTypes(caseName = "Case_Type");
 
-			TestrayManage.assertName(name = "Case_Type");
+			Testray.assertItemName(name = "Case_Type");
 		}
 	}
 
@@ -71,7 +71,7 @@ definition {
 
 			TestrayManage.deleteCasesTypes(valueName = "Case_Type");
 
-			TestrayManage.assertNameNotPresent(name = "Case_Type");
+			Testray.assertItemNotPresent(name = "Case_Type");
 		}
 	}
 
@@ -97,7 +97,7 @@ definition {
 				valueName = "Case_Type",
 				valueType = "Case_Type_Edited");
 
-			TestrayManage.assertName(name = "Case_Type_Edited");
+			Testray.assertItemName(name = "Case_Type_Edited");
 		}
 	}
 

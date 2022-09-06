@@ -41,11 +41,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS_NAME</td>
-	<td>//td[contains(text(),'${key_value}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MANAGE_SIDEBAR</td>
 	<td>//div[contains(@class, 'testray-sidebar')]//div[contains(@class, 'dropdown-toggle') and contains(., 'Manage')]</td>
 	<td></td>

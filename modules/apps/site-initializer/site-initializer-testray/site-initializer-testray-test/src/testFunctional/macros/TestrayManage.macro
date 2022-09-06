@@ -26,32 +26,6 @@ definition {
 		Click(locator1 = "TestrayManage#CLOSE_MODAL");
 	}
 
-	macro assertCategoryNotPresent {
-		TestrayManage.assertNameNotPresent(name = "${key_title}");
-	}
-
-	macro assertName {
-		AssertElementPresent(
-			key_value = "${name}",
-			locator1 = "TestrayManage#OPTIONS_NAME");
-	}
-
-	macro assertNameCategoryInOptions {
-		AssertElementPresent(
-			key_value = "${category}",
-			locator1 = "TestrayManage#OPTIONS_NAME");
-	}
-
-	macro assertNameNotPresent {
-		AssertElementNotPresent(
-			locator1 = "TestrayManage#OPTIONS_NAME",
-			value = "${name}");
-	}
-
-	macro assertOptionNotPresent {
-		TestrayManage.assertNameNotPresent(name = "${key_title}");
-	}
-
 	macro assertTitleModal {
 		AssertElementNotPresent(
 			key_title = "${key_itemvalue}",
@@ -121,7 +95,7 @@ definition {
 			numberItems = "20",
 			valuePagination = "150");
 
-		while (IsElementPresent(key_projectName = "Product_", locator1 = "Testray#PROJECT_NAME")) {
+		while (IsElementPresent(key_projectName = "Product_", locator1 = "Testray#ITEM_NAME")) {
 			TestrayContextMenu.clickContextMenuProjects(name = "Product_");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
@@ -137,7 +111,7 @@ definition {
 
 		TestrayManage.selectOptionsManage(itemValue = "Case Types");
 
-		while (IsElementPresent(key_projectName = "Case_", locator1 = "Testray#PROJECT_NAME")) {
+		while (IsElementPresent(key_projectName = "Case_", locator1 = "Testray#ITEM_NAME")) {
 			TestrayContextMenu.clickContextMenuProjects(name = "Case_");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
@@ -155,7 +129,7 @@ definition {
 
 		TestrayManage.selectOptionsManage(itemValue = "Categories");
 
-		while (IsElementPresent(key_projectName = "Environments_", locator1 = "Testray#PROJECT_NAME")) {
+		while (IsElementPresent(key_projectName = "Environments_", locator1 = "Testray#ITEM_NAME")) {
 			TestrayContextMenu.clickContextMenuProjects(name = "Environments_");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
@@ -170,8 +144,8 @@ definition {
 
 	macro deleteCasesTypes {
 		MouseOver(
-			key_value = "${valueName}",
-			locator1 = "TestrayManage#OPTIONS_NAME");
+			key_projectName = "${valueName}",
+			locator1 = "Testray#ITEM_NAME");
 
 		Click(locator1 = "TestrayDropdown#DROPDOWN_ITEM");
 
@@ -288,16 +262,12 @@ definition {
 
 	macro goToEditPage {
 		MouseOver(
-			key_value = "${valueName}",
-			locator1 = "TestrayManage#OPTIONS_NAME");
+			key_projectName = "${valueName}",
+			locator1 = "Testray#ITEM_NAME");
 
 		Click(locator1 = "TestrayDropdown#DROPDOWN_ITEM");
 
 		MenuItem.clickNoError(menuItem = "Edit");
-	}
-
-	macro selectOption {
-		Select(locator1 = "TestrayManage#OPTIONS_NAME");
 	}
 
 	macro selectOptionDropdownCategory {

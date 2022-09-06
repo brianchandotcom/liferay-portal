@@ -50,7 +50,7 @@ definition {
 				manageOption = "Manage Product Versions",
                 version = "1.x");
 
-			Testray.assertProjectName(key_name = "1.x");
+			Testray.assertItemName(key_name = "1.x");
 		}
 
 	}
@@ -83,7 +83,7 @@ definition {
 				itemManage = "Edit",
 				caseName = "1.1.x");
 
-            Testray.assertProjectName(key_name = "1.1.x");
+            Testray.assertItemName(key_name = "1.1.x");
 		}
 
 	}
@@ -115,7 +115,7 @@ definition {
 				itemManage = "Delete",
 				versionName = "1.x");
 
-            Testray.assertProjectNotPresent(key_name = "1.x");
+            Testray.assertItemNotPresent(key_name = "1.x");
 		}
 
 	}

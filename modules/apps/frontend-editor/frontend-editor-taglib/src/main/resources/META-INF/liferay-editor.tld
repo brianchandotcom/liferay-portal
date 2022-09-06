@@ -136,6 +136,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>Set editor's resizing directions. The default value is <![CDATA[<code>vertical</code>]]>. Possible values are <![CDATA[<code>vertical</code>]]>, <![CDATA[<code>horizontal</code>]]> and <![CDATA[<code>both</code>]]>.</description>
+			<name>resizeDirection</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether to enable editing the HTML source code of the content. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>showSource</name>
 			<required>false</required>
@@ -161,7 +167,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description></description>
+		<description/>
 		<name>resources</name>
 		<tag-class>com.liferay.frontend.editor.taglib.servlet.taglib.ResourcesTag</tag-class>
 		<body-content>empty</body-content>

@@ -1,7 +1,7 @@
 Bundle-Activator: com.liferay.frontend.editor.taglib.internal.activator.EditorTaglibBundleActivator
 Bundle-Name: Liferay Frontend Editor Taglib
 Bundle-SymbolicName: com.liferay.frontend.editor.taglib
-Bundle-Version: 4.0.9
+Bundle-Version: 4.1.0
 Export-Package: com.liferay.frontend.editor.taglib.servlet.taglib
 Provide-Capability:\
 	osgi.extender;\

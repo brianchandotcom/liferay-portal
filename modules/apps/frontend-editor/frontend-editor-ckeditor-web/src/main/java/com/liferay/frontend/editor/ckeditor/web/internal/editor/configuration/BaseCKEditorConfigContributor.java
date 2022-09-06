@@ -113,7 +113,12 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 				CKEditorConstants.ATTRIBUTE_NAMESPACE + ":resizable"));
 
 		if (resizable) {
-			jsonObject.put("resize_dir", "vertical");
+			String resizeDirection = GetterUtil.getString(
+				inputEditorTaglibAttributes.get(
+					CKEditorConstants.ATTRIBUTE_NAMESPACE +
+						":resizeDirection"));
+
+			jsonObject.put("resizeDirection", resizeDirection);
 		}
 
 		jsonObject.put("resize_enabled", resizable);

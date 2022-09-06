@@ -138,6 +138,10 @@ public class EditorTag extends BaseValidatorTagSupport {
 		return _placeholder;
 	}
 
+	public String getResizeDirection() {
+		return _resizeDirection;
+	}
+
 	public String getToolbarSet() {
 		return _toolbarSet;
 	}
@@ -258,6 +262,10 @@ public class EditorTag extends BaseValidatorTagSupport {
 		_resizable = resizable;
 	}
 
+	public void setResizeDirection(String resizeDir) {
+		_resizeDirection = resizeDir;
+	}
+
 	public void setShowSource(boolean showSource) {
 		_showSource = showSource;
 	}
@@ -299,6 +307,7 @@ public class EditorTag extends BaseValidatorTagSupport {
 		_placeholder = null;
 		_required = false;
 		_resizable = true;
+		_resizeDirection = "vertical";
 		_showSource = true;
 		_skipEditorLoading = false;
 		_toolbarSet = _TOOLBAR_SET_DEFAULT;
@@ -370,6 +379,8 @@ public class EditorTag extends BaseValidatorTagSupport {
 			httpServletRequest, "required", String.valueOf(_required));
 		setNamespacedAttribute(
 			httpServletRequest, "resizable", String.valueOf(_resizable));
+		setNamespacedAttribute(
+			httpServletRequest, "resizeDirection", _resizeDirection);
 		setNamespacedAttribute(
 			httpServletRequest, "showSource", String.valueOf(_showSource));
 		setNamespacedAttribute(
@@ -564,6 +575,7 @@ public class EditorTag extends BaseValidatorTagSupport {
 	private String _placeholder;
 	private boolean _required;
 	private boolean _resizable = true;
+	private String _resizeDirection = "vertical";
 	private boolean _showSource = true;
 	private boolean _skipEditorLoading;
 	private String _toolbarSet = _TOOLBAR_SET_DEFAULT;

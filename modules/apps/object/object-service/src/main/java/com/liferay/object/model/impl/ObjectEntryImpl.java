@@ -40,15 +40,6 @@ import java.util.Map;
 public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 
 	@Override
-	public ObjectEntry cloneWithOriginalValues() {
-		ObjectEntry objectEntry = super.cloneWithOriginalValues();
-
-		objectEntry.setValues(_transientValues);
-
-		return objectEntry;
-	}
-
-	@Override
 	public String getModelClassName() {
 		return "com.liferay.object.model.ObjectDefinition#" +
 			getObjectDefinitionId();
@@ -123,17 +114,11 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 		_transientValues = values;
 	}
 
-	@Override
-	public void setValues(Map<String, Serializable> values) {
-		_values = values;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryImpl.class);
 
 	private Map<String, Serializable> _transientValues;
 
-	@CacheField(propagateToInterface = true)
 	private Map<String, Serializable> _values;
 
 }

@@ -40,6 +40,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.view-template=/authorize/authorize.jsp",
 		"javax.portlet.name=" + OAuth2ProviderPortletKeys.OAUTH2_AUTHORIZE,
 		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.version=3.0",
 		"portlet.add.default.resource.check.whitelist=" + OAuth2ProviderPortletKeys.OAUTH2_AUTHORIZE
 	},
 	service = Portlet.class

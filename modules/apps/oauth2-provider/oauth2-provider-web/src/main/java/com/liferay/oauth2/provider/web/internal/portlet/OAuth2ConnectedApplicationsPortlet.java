@@ -37,7 +37,8 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.template-path=/connected_applications/",
 		"javax.portlet.init-param.view-template=/connected_applications/view.jsp",
 		"javax.portlet.name=" + OAuth2ProviderPortletKeys.OAUTH2_CONNECTED_APPLICATIONS,
-		"javax.portlet.resource-bundle=content.Language"
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )

@@ -266,7 +266,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				key_productName = "Hoses",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
-				value1 = "120.00");
+				value1 = "$ 120.00");
 
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Hoses");
 
@@ -314,12 +314,12 @@ definition {
 			AssertTextEquals.assertPartialText(
 				key_productName = "Hoses",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
-				value1 = "0.00");
+				value1 = "$ 120.00");
 
 			AssertTextNotEquals.assertNotPartialText(
 				key_productName = "Hoses",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
-				value1 = "120.00");
+				value1 = "$ 0.00");
 		}
 
 		task ("And if the admin opens the details will see the new description") {

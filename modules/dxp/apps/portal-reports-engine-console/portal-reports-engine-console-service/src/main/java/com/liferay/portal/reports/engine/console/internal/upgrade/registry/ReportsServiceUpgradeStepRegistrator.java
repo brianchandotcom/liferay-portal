@@ -68,9 +68,7 @@ public class ReportsServiceUpgradeStepRegistrator
 			new UpgradeKernelPackage(), new UpgradeLastPublishDate());
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 }

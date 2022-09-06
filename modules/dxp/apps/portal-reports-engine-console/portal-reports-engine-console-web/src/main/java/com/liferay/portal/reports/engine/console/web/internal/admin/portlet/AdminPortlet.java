@@ -139,18 +139,6 @@ public class AdminPortlet extends MVCPortlet {
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setDefinitionLocalService(
-		DefinitionLocalService definitionLocalService) {
-
-		_definitionLocalService = definitionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setSourceLocalService(SourceLocalService sourceLocalService) {
-		_sourceLocalService = sourceLocalService;
-	}
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -214,9 +202,13 @@ public class AdminPortlet extends MVCPortlet {
 		renderRequest.setAttribute(ReportsEngineWebKeys.SOURCE, source);
 	}
 
+	@Reference
 	private DefinitionLocalService _definitionLocalService;
+
 	private volatile ReportsEngineAdminWebConfiguration
 		_reportsEngineAdminWebConfiguration;
+
+	@Reference
 	private SourceLocalService _sourceLocalService;
 
 }

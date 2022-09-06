@@ -19,6 +19,55 @@ definition {
 		}
 	}
 
+	@description = "This test asserts the account manager can assign the organizations to the account by default."
+	@priority = "4"
+	test AccountManagersCanAssignOrganizationtoAccountbyDefault {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given add user useramsn as Account Manager for AM Account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "AM Account",
+				accountEntryType = "Business");
+
+			AccountConfiguration.addAccountManager(
+				accountName = "AM Account",
+				orgName = "AM Organization",
+				orgRoleTitle = "Account Manager",
+				userEmailAddress = "useramea@liferay.com",
+				userFirstName = "useramfn",
+				userLastName = "useramln",
+				userScreenName = "useramsn");
+		}
+
+		task ("And add 2 organizations") {
+			JSONOrganization.addOrganization(organizationName = "Account Org1");
+
+			JSONOrganization.addOrganization(organizationName = "Account Org2");
+		}
+
+		task ("When the Account Manager useramsn assign the Account Org1 to AM Account") {
+			User.logoutPG();
+
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "useramea@liferay.com");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AM Account");
+
+			Accounts.assignOrganizations(
+				accountName = "AM Account",
+				assigneeName = "Account Org1");
+		}
+
+		task ("Then only the Account Org1 displays in the Organizations list for AM Account") {
+			LexiconEntry.viewEntryName(rowEntry = "Account Org1");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Account Org2");
+		}
+	}
+
 	@description = "This test assert the account manager can view account organizations by default."
 	@priority = "4"
 	test AccountManagersCanViewOrganizationsbyDefault {

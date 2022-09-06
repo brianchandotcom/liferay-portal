@@ -932,14 +932,20 @@ definition {
 
 	macro openPageTreePanel {
 		if ("${section}" == "Folders and Articles") {
+			AssertElementPresent.assertVisible(locator1 = "KnowledgeBase#PAGE_TREE_FOLDERS_AND_ARTICLES");
+
 			Click(locator1 = "KnowledgeBase#PAGE_TREE_FOLDERS_AND_ARTICLES");
 		}
 
 		if ("${section}" == "Templates") {
+			AssertElementPresent.assertVisible(locator1 = "KnowledgeBase#PAGE_TREE_TEMPLATES");
+
 			Click(locator1 = "KnowledgeBase#PAGE_TREE_TEMPLATES");
 		}
 
 		if ("${section}" == "Suggestions") {
+			AssertElementPresent.assertVisible(locator1 = "KnowledgeBase#PAGE_TREE_SUGGESTIONS");
+
 			Click(locator1 = "KnowledgeBase#PAGE_TREE_SUGGESTIONS");
 		}
 	}

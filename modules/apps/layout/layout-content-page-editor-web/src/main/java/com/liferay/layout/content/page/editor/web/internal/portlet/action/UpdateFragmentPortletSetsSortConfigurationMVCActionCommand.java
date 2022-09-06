@@ -30,11 +30,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/layout_content_page_editor/update_fragment_collections_sort_configuration"
+		"mvc.command.name=/layout_content_page_editor/update_fragment_portlet_sets_sort_configuration"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateFragmentCollectionsSortConfigurationMVCActionCommand
+public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override

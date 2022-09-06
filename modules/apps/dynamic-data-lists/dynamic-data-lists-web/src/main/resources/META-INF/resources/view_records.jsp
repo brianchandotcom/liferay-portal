@@ -178,3 +178,5 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 </clay:container-fluid>
 
 <%@ include file="/export_record_set.jspf" %>
+
+<aui:script use="liferay-portlet-dynamic-data-lists"></aui:script>

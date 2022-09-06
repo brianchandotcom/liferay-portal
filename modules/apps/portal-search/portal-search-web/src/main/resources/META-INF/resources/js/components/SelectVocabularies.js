@@ -283,15 +283,10 @@ function SelectVocabularies({
 		}
 	};
 
-	const _isDisplayInfoSelectedVocabulariesHidden = () => {
-		initialSelectedIdsRef.current.forEach((id) => {
-			if (!vocabularyTreeIds.includes(id)) {
-				return true;
-			}
-		});
-
-		return false;
-	};
+	const _isDisplayInfoSelectedVocabulariesHidden = () =>
+		Array.from(initialSelectedIdsRef.current).some(
+			(id) => !vocabularyTreeIds.includes(id)
+		);
 
 	return (
 		<div className="select-vocabularies">

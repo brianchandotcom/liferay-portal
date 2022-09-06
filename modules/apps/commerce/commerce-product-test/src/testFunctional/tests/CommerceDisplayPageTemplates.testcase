@@ -406,9 +406,15 @@ definition {
 					locator1 = "Categories#CATEGORY_NAME_FIELD",
 					value1 = "Category ${categoryNum}");
 
+				SelectFrame.selectFrameNoLoading(
+					key_fieldLabel = "Description",
+					locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
 				Type(
-					locator1 = "CommerceEntry#DESCRIPTION_FIELD",
+					locator1 = "CKEditor#BODY",
 					value1 = "Description ${categoryNum}");
+
+				SelectFrame(value1 = "relative=top");
 
 				Button.clickSave();
 			}

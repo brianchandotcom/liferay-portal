@@ -69,14 +69,13 @@ public class RelatedObjectEntryOpenAPIContributor
 			return;
 		}
 
-		List<SystemObjectDefinitionMetadata>
-			systemObjectDefinitionMetadataList =
-				_getSystemObjectDefinitionsMetadata(
-					_objectDefinitionLocalService.getSystemObjectDefinitions(),
-					uriInfo);
+		List<SystemObjectDefinitionMetadata> systemObjectDefinitionMetadatas =
+			_getSystemObjectDefinitionsMetadata(
+				_objectDefinitionLocalService.getSystemObjectDefinitions(),
+				uriInfo);
 
 		for (SystemObjectDefinitionMetadata systemObjectDefinitionMetadata :
-				systemObjectDefinitionMetadataList) {
+				systemObjectDefinitionMetadatas) {
 
 			_populatePathItems(
 				openAPI.getPaths(), systemObjectDefinitionMetadata, uriInfo);

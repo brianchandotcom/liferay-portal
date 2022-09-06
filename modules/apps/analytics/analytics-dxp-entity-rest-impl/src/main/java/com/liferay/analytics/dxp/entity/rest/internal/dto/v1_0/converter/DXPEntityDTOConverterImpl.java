@@ -91,7 +91,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
 
 		for (Map.Entry<String, Object> entry : modelAttributes.entrySet()) {
-			if (!ListUtil.isEmpty(includeAttributeNames) &&
+			if (ListUtil.isNotEmpty(includeAttributeNames) &&
 				!includeAttributeNames.contains(entry.getKey())) {
 
 				continue;
@@ -140,7 +140,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 			false);
 
 		for (Map.Entry<String, Serializable> entry : attributes.entrySet()) {
-			if (!ListUtil.isEmpty(includeAttributeNames) &&
+			if (ListUtil.isNotEmpty(includeAttributeNames) &&
 				!includeAttributeNames.contains(entry.getKey())) {
 
 				continue;

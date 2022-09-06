@@ -52,7 +52,7 @@ public class SXPBlueprintValidatorImpl implements SXPBlueprintValidator {
 			SXPBlueprintValidatorImpl.class, configurationJSON,
 			"dependencies/sxpblueprint.schema.json");
 
-		if (!ListUtil.isEmpty(problems)) {
+		if (ListUtil.isNotEmpty(problems)) {
 			throw new SXPBlueprintConfigurationJSONException(problems);
 		}
 	}

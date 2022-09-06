@@ -247,7 +247,7 @@ public class MultiselectTag extends BaseContainerTag {
 		List<MultiselectItem> selectedMultiselectItems =
 			getSelectedMultiselectItems();
 
-		if (!ListUtil.isEmpty(selectedMultiselectItems)) {
+		if (ListUtil.isNotEmpty(selectedMultiselectItems)) {
 			MultiselectLocator multiselectLocator = getMultiselectLocator();
 
 			for (MultiselectItem selectedItem : selectedMultiselectItems) {

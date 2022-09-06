@@ -51,7 +51,7 @@ public class HistogramAggregationTranslatorImpl
 				histogramAggregation, aggregationTranslator,
 				pipelineAggregationTranslator);
 
-		if (!ListUtil.isEmpty(histogramAggregation.getOrders())) {
+		if (ListUtil.isNotEmpty(histogramAggregation.getOrders())) {
 			List<BucketOrder> bucketOrders = _orderTranslator.translate(
 				histogramAggregation.getOrders());
 

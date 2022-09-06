@@ -479,7 +479,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 			List<MessageListener> messageListeners =
 				_queuedMessageListeners.remove(destination.getName());
 
-			if (!ListUtil.isEmpty(messageListeners)) {
+			if (ListUtil.isNotEmpty(messageListeners)) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(

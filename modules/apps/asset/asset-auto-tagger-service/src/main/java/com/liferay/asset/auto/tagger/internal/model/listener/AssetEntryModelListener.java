@@ -86,7 +86,7 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 				(Callable<Void>)() -> {
 					if (!updateAutoTags &&
 						((assetEntry.getPublishDate() == null) ||
-						 !ListUtil.isEmpty(assetEntry.getTags()) ||
+						 ListUtil.isNotEmpty(assetEntry.getTags()) ||
 						 !_assetAutoTaggerHelper.isAutoTaggable(assetEntry))) {
 
 						return null;

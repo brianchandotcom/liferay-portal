@@ -169,7 +169,7 @@ public class IFrameDisplayContext {
 
 		_iFrameSrc += (String)_request.getAttribute(IFrameWebKeys.IFRAME_SRC);
 
-		if (!ListUtil.isEmpty(getIFrameVariables())) {
+		if (ListUtil.isNotEmpty(getIFrameVariables())) {
 			if (_iFrameSrc.contains(StringPool.QUESTION)) {
 				_iFrameSrc += StringPool.AMPERSAND;
 			}

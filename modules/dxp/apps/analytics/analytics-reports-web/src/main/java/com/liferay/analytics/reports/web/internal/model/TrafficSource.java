@@ -129,7 +129,7 @@ public class TrafficSource {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (!ListUtil.isEmpty(_countrySearchKeywordsList)) {
+		if (ListUtil.isNotEmpty(_countrySearchKeywordsList)) {
 			jsonObject.put(
 				"countryKeywords", _getCountryKeywordsJSONArray(locale));
 		}

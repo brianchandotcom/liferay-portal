@@ -121,7 +121,7 @@ public class ContentDashboardAdminSharingDisplayContext {
 				_httpServletRequest,
 				ContentDashboardItemAction.Type.SHARING_COLLABORATORS);
 
-		if (!ListUtil.isEmpty(contentDashboardItemActions)) {
+		if (ListUtil.isNotEmpty(contentDashboardItemActions)) {
 			return contentDashboardItemActions.get(0);
 		}
 
@@ -136,7 +136,7 @@ public class ContentDashboardAdminSharingDisplayContext {
 				_httpServletRequest,
 				ContentDashboardItemAction.Type.SHARING_BUTTON);
 
-		if (!ListUtil.isEmpty(contentDashboardItemActions)) {
+		if (ListUtil.isNotEmpty(contentDashboardItemActions)) {
 			return contentDashboardItemActions.get(0);
 		}
 

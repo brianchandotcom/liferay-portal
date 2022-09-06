@@ -243,14 +243,14 @@ public class FacetedSearcherImpl
 
 		List<String> entryClassNames = searchRequest.getEntryClassNames();
 
-		if (!ListUtil.isEmpty(entryClassNames)) {
+		if (ListUtil.isNotEmpty(entryClassNames)) {
 			return entryClassNames;
 		}
 
 		List<String> modelIndexerClassNames =
 			searchRequest.getModelIndexerClassNames();
 
-		if (!ListUtil.isEmpty(modelIndexerClassNames)) {
+		if (ListUtil.isNotEmpty(modelIndexerClassNames)) {
 			return modelIndexerClassNames;
 		}
 

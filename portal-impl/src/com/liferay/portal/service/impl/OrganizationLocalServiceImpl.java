@@ -1217,7 +1217,7 @@ public class OrganizationLocalServiceImpl
 			organizationsTree.addAll(organization.getSuborganizations());
 		}
 
-		if (!ListUtil.isEmpty(organizationsTree)) {
+		if (ListUtil.isNotEmpty(organizationsTree)) {
 			int count = _userFinder.countByUser(
 				userId,
 				LinkedHashMapBuilder.<String, Object>put(

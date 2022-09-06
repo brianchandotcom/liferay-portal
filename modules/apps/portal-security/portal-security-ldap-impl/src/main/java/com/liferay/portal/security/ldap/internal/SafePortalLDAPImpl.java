@@ -321,7 +321,7 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 			}
 		}
 
-		if (!ListUtil.isEmpty(ldapServerConfigurations)) {
+		if (ListUtil.isNotEmpty(ldapServerConfigurations)) {
 			LDAPServerConfiguration ldapServerConfiguration =
 				ldapServerConfigurations.get(0);
 

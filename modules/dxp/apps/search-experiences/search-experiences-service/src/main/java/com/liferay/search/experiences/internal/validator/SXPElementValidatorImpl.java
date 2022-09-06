@@ -52,7 +52,7 @@ public class SXPElementValidatorImpl implements SXPElementValidator {
 			SXPElementValidatorImpl.class, _wrap(elementDefinitionJSON, type),
 			"dependencies/sxpelement.schema.json");
 
-		if (!ListUtil.isEmpty(problems)) {
+		if (ListUtil.isNotEmpty(problems)) {
 			throw new SXPElementElementDefinitionJSONException(problems);
 		}
 	}

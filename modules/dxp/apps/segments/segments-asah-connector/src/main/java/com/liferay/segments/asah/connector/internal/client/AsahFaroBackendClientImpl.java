@@ -146,7 +146,7 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 			List<Individual> items = individualResults.getItems();
 
-			if (!ListUtil.isEmpty(items)) {
+			if (ListUtil.isNotEmpty(items)) {
 				return items.get(0);
 			}
 

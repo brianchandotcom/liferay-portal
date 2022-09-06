@@ -543,7 +543,7 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 				}
 			}
 
-			if (!ListUtil.isEmpty(
+			if (ListUtil.isNotEmpty(
 					ddmFormFieldValue.getNestedDDMFormFieldValues()) &&
 				(type != null) &&
 				!com.liferay.portal.kernel.util.StringUtil.equals(

@@ -1349,7 +1349,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		List<AssetEntryValidator> generalAssetEntryValidators =
 			_assetEntryValidatorServiceTrackerMap.getService("*");
 
-		if (!ListUtil.isEmpty(generalAssetEntryValidators)) {
+		if (ListUtil.isNotEmpty(generalAssetEntryValidators)) {
 			assetEntryValidators.addAll(generalAssetEntryValidators);
 		}
 
@@ -1357,7 +1357,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			List<AssetEntryValidator> classNameAssetEntryValidators =
 				_assetEntryValidatorServiceTrackerMap.getService(className);
 
-			if (!ListUtil.isEmpty(classNameAssetEntryValidators)) {
+			if (ListUtil.isNotEmpty(classNameAssetEntryValidators)) {
 				assetEntryValidators.addAll(classNameAssetEntryValidators);
 			}
 		}

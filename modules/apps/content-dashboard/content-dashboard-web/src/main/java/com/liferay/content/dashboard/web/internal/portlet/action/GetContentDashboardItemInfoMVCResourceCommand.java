@@ -441,7 +441,7 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			contentDashboardItem.getContentDashboardItemActions(
 				httpServletRequest, ContentDashboardItemAction.Type.SUBSCRIBE);
 
-		if (!ListUtil.isEmpty(contentDashboardItemActions)) {
+		if (ListUtil.isNotEmpty(contentDashboardItemActions)) {
 			ContentDashboardItemAction contentDashboardItemAction =
 				contentDashboardItemActions.get(0);
 
@@ -481,7 +481,7 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				httpServletRequest,
 				ContentDashboardItemAction.Type.UNSUBSCRIBE);
 
-		if (!ListUtil.isEmpty(contentDashboardItemActions)) {
+		if (ListUtil.isNotEmpty(contentDashboardItemActions)) {
 			ContentDashboardItemAction contentDashboardItemAction =
 				contentDashboardItemActions.get(0);
 

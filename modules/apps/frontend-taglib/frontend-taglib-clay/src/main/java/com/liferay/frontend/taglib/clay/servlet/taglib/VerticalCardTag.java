@@ -585,7 +585,7 @@ public class VerticalCardTag extends BaseCardTag {
 
 		List<LabelItem> labels = getLabels();
 
-		if (!ListUtil.isEmpty(labels)) {
+		if (ListUtil.isNotEmpty(labels)) {
 			jspWriter.write("<div class=\"card-detail\">");
 
 			for (LabelItem labelItem : labels) {

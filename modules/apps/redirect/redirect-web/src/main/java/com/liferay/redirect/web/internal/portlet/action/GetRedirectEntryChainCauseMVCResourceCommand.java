@@ -68,7 +68,7 @@ public class GetRedirectEntryChainCauseMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!ListUtil.isEmpty(
+		if (ListUtil.isNotEmpty(
 				_redirectEntryLocalService.getRedirectEntries(
 					themeDisplay.getScopeGroupId(),
 					RedirectUtil.getGroupBaseURL(themeDisplay) +

@@ -122,7 +122,7 @@ public class AccountUserDisplaySearchContainerFactory {
 			_userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
 				accountEntry.getAccountEntryGroupId(), roleId);
 
-		if (!ListUtil.isEmpty(userGroupRoles)) {
+		if (ListUtil.isNotEmpty(userGroupRoles)) {
 			emptyResultsMessage = "no-users-were-found";
 		}
 

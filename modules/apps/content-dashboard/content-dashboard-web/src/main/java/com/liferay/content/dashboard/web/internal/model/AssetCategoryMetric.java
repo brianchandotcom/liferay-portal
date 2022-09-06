@@ -92,7 +92,7 @@ public class AssetCategoryMetric {
 	public JSONObject toJSONObject(String vocabularyName) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (!ListUtil.isEmpty(
+		if (ListUtil.isNotEmpty(
 				_assetVocabularyMetric.getAssetCategoryMetrics())) {
 
 			jsonObject.put("categories", _assetVocabularyMetric.toJSONArray());

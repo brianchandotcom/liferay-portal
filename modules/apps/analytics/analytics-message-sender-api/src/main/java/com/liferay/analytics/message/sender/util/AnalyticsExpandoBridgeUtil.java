@@ -49,7 +49,7 @@ public class AnalyticsExpandoBridgeUtil {
 			false);
 
 		for (Map.Entry<String, Serializable> entry : attributes.entrySet()) {
-			if (!ListUtil.isEmpty(includeAttributeNames) &&
+			if (ListUtil.isNotEmpty(includeAttributeNames) &&
 				!includeAttributeNames.contains(entry.getKey())) {
 
 				continue;

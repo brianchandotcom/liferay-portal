@@ -132,7 +132,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 					label="oauth-client-oidc-user-info-mapper-json"
 					name="oidcUserInfoMapperJSON"
 					style="min-height: 400px;"
-					type="textarea"
+					type="hidden"
 					value='<%=
 						JSONUtil.put(
 							"address",

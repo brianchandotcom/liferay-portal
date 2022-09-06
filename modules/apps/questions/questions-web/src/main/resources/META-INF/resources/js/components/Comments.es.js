@@ -19,8 +19,8 @@ import React, {useCallback, useContext, useRef, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
-import {createCommentQuery} from '../utils/client.es';
-import {getContextLink} from '../utils/utils.es';
+import {createCommentQuery, getUserActivityQuery} from '../utils/client.es';
+import {deleteCacheKey, getContextLink} from '../utils/utils.es';
 import Comment from './Comment.es';
 import DefaultQuestionsEditor from './DefaultQuestionsEditor.es';
 import SubscritionCheckbox from './SubscribeCheckbox.es';
@@ -82,6 +82,13 @@ export default withRouter(
 			]);
 
 			onSubscription({allowSubscription});
+
+			deleteCacheKey(getUserActivityQuery, {
+				filter: `creatorId eq ${context.userId}`,
+				page: 1,
+				pageSize: 20,
+				siteKey: context.siteKey,
+			});
 		};
 
 		return (

@@ -49,6 +49,7 @@ import {
 	getMessages,
 	getSubscriptionsQuery,
 	getThread,
+	getUserActivityQuery,
 	markAsAnswerMessageBoardMessageQuery,
 	subscribeQuery,
 	unsubscribeQuery,
@@ -219,6 +220,13 @@ export default withRouter(
 				await onSubscription();
 
 				fetchMessages();
+
+				deleteCacheKey(getUserActivityQuery, {
+					filter: `creatorId eq ${context.userId}`,
+					page: 1,
+					pageSize: 20,
+					siteKey: context.siteKey,
+				});
 			}
 			catch (error) {}
 		};

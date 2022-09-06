@@ -353,15 +353,13 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		_addObjectEntry(
 			"Factor",
 			HashMapBuilder.<String, Object>put(
-				"classNameId", testrayRunId
-			).put(
-				"classPK", testrayRunId
-			).put(
 				"r_factorCategoryToFactors_c_factorCategoryId",
 				testrayFactorCategoryId
 			).put(
 				"r_factorOptionToFactors_c_factorOptionId",
 				testrayFactorOptionId
+			).put(
+				"r_runToFactors_c_runId", testrayRunId
 			).put(
 				"testrayFactorCategoryName", testrayFactorCategoryName
 			).put(

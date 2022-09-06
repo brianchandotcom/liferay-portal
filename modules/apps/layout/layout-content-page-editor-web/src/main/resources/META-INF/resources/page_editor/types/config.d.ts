@@ -214,6 +214,7 @@ export interface Config {
 	updateCollectionDisplayConfigURL: string;
 	updateConfigurationValuesURL: string;
 	updateFormItemConfigURL: string;
+	updateFragmentPortletSetsSortURL: string;
 	updateItemConfigURL: string;
 	updateLayoutPageTemplateDataURL: string;
 	updateRowColumnsURL: string;

@@ -144,18 +144,6 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 		actionableDynamicQuery.performCount();
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setPasswordPolicyLocalService(
-		PasswordPolicyLocalService passwordPolicyLocalService) {
-
-		_passwordPolicyLocalService = passwordPolicyLocalService;
-	}
-
 	protected static final String RESOURCE_NAME =
 		"com.liferay.portlet.passwordpoliciesadmin";
 
@@ -179,6 +167,10 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 		return actionableDynamicQuery;
 	}
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
 
 }

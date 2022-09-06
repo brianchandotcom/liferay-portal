@@ -38,6 +38,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/dlapp/add-folder \
 				-u test@liferay.com:test \
+				-d externalReferenceCode= \
 				-d repositoryId=${repositoryId} \
 				-d parentFolderId=${parentFolderId} \
 				-d name=${dmFolderName} \

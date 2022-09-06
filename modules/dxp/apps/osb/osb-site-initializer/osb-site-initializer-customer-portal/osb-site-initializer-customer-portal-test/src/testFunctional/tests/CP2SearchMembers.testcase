@@ -20,10 +20,16 @@ definition {
 		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
+
+		task ("Adding a user to the project") {
+			CustomerPortal.createUserForCP();
+		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		JSONUser.deleteUserByEmailAddress(userEmailAddress = "test.user@liferay.com");
 
 		CustomerPortal.customerPortalApisTearDown();
 
@@ -84,27 +90,6 @@ definition {
 
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
 
-		task ("Adding a user to the project") {
-			JSONUser.addUser(
-				userEmailAddress = "test.user@liferay.com",
-				userFirstName = "User",
-				userLastName = "2",
-				userScreenName = "Testing");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "test.user@liferay.com");
-
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Test Account Portal");
-
-			Accounts.assignUsers(
-				accountName = "Test Account Portal",
-				assigneeName = "User 2");
-		}
-
 		task ("Go to CP2.0") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 		}
@@ -138,10 +123,6 @@ definition {
 				locator1 = "CP2TeamMembers#SEARCH_RESULT",
 				result = "1 result for test.user@liferay.com");
 		}
-
-		task ("Delete user created") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "test.user@liferay.com");
-		}
 	}
 
 	@description = "Automation ID: LPS-150832 | Test Summary: Verify if the text box search filters by first and last name"
@@ -150,27 +131,6 @@ definition {
 		property portal.upstream = "quarantine";
 
 		// "Reason: Not able to reproduce scenario without OKTA workaround."
-
-		task ("Adding a user to the project") {
-			JSONUser.addUser(
-				userEmailAddress = "test.user@liferay.com",
-				userFirstName = "User",
-				userLastName = "2",
-				userScreenName = "Testing");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "test.user@liferay.com");
-
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Test Account Portal");
-
-			Accounts.assignUsers(
-				accountName = "Test Account Portal",
-				assigneeName = "User 2");
-		}
 
 		task ("Go to CP2.0") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
@@ -220,10 +180,6 @@ definition {
 			AssertElementPresent(
 				locator1 = "CP2TeamMembers#SEARCH_RESULT",
 				result = "1 result for 2");
-		}
-
-		task ("Delete user created") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "test.user@liferay.com");
 		}
 	}
 

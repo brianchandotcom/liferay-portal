@@ -16,5 +16,5 @@
  * Checks if the string includes the query
  */
 export function stringIncludesQuery(str: string, query: string) {
-	return str.toLocaleLowerCase().includes(query.toLowerCase());
+	return str.toLowerCase().includes(query.toLowerCase());
 }

@@ -54,6 +54,7 @@ import com.liferay.portal.util.WebAppPool;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -98,8 +99,39 @@ public class PortletCategoryManager {
 					httpServletRequest, highlightedPortletCategory),
 				httpServletRequest, portletCategory, themeDisplay);
 
+		PortalPreferences portalPreferences =
+			_portletPreferencesFactory.getPortalPreferences(httpServletRequest);
+
+		List<String> sortedPortletCategoryKeys = ListUtil.fromArray(
+			portalPreferences.getValues(
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+				"sortedPortletCategoryKeys", new String[0]));
+
+		if (sortedPortletCategoryKeys.isEmpty()) {
+			return JSONUtil.toJSONArray(
+				new ArrayList<>(portletCategoryJSONObjectMap.values()),
+				portletCategoryJSONObject -> portletCategoryJSONObject);
+		}
+
+		List<JSONObject> sortedPortletCategoryJSONObjectsList =
+			new LinkedList<>();
+
+		for (String portletCategoryKey : sortedPortletCategoryKeys) {
+			JSONObject portletCategoryJSONObject =
+				portletCategoryJSONObjectMap.remove(portletCategoryKey);
+
+			if (portletCategoryJSONObject == null) {
+				continue;
+			}
+
+			sortedPortletCategoryJSONObjectsList.add(portletCategoryJSONObject);
+		}
+
+		sortedPortletCategoryJSONObjectsList.addAll(
+			portletCategoryJSONObjectMap.values());
+
 		return JSONUtil.toJSONArray(
-			new ArrayList<>(portletCategoryJSONObjectMap.values()),
+			sortedPortletCategoryJSONObjectsList,
 			portletCategoryJSONObject -> portletCategoryJSONObject);
 	}
 

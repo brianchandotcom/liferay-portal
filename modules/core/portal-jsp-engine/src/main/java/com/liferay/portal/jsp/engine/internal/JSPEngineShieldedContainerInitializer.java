@@ -15,6 +15,9 @@
 package com.liferay.portal.jsp.engine.internal;
 
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.jsp.engine.internal.delegate.CheckEnabledServletDelegate;
 import com.liferay.portal.jsp.engine.internal.delegate.JspConfigDescriptorServletContextDelegate;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -70,9 +73,17 @@ public class JSPEngineShieldedContainerInitializer
 			servletContext.getRealPath(SHIELDED_CONTAINER_LIB));
 
 		try {
+			String path = shieldedContainerLib.getCanonicalPath();
+
+			path = StringUtil.replace(
+				path, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			if (!path.endsWith(StringPool.SLASH)) {
+				path += StringPool.SLASH;
+			}
+
 			System.setProperty(
-				PropsKeys.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR,
-				shieldedContainerLib.getCanonicalPath());
+				PropsKeys.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR, path);
 		}
 		catch (IOException ioException) {
 			throw new ServletException(ioException);

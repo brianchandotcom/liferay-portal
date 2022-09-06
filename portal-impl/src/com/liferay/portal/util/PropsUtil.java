@@ -351,32 +351,6 @@ public class PropsUtil {
 		SystemProperties.set(
 			PropsKeys.DEFAULT_LIFERAY_HOME, _getDefaultLiferayHome());
 
-		// Portal shielded container lib directory
-
-		String portalShieldedContainerLibDir = _getLibDir(PropsUtil.class);
-
-		String portalShieldedContainerLibDirProperty = System.getProperty(
-			PropsKeys.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR);
-
-		if (portalShieldedContainerLibDirProperty != null) {
-			portalShieldedContainerLibDirProperty = StringUtil.replace(
-				portalShieldedContainerLibDirProperty, CharPool.BACK_SLASH,
-				CharPool.SLASH);
-
-			if (!portalShieldedContainerLibDirProperty.endsWith(
-					StringPool.SLASH)) {
-
-				portalShieldedContainerLibDirProperty += StringPool.SLASH;
-			}
-
-			portalShieldedContainerLibDir =
-				portalShieldedContainerLibDirProperty;
-		}
-
-		SystemProperties.set(
-			PropsKeys.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR,
-			portalShieldedContainerLibDir);
-
 		// Liferay home directory
 
 		_configuration = ConfigurationFactoryImpl.CONFIGURATION_PORTAL;

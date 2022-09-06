@@ -177,20 +177,6 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSAPEntryLocalService(
-		SAPEntryLocalService sapEntryLocalService) {
-
-		_sapEntryLocalService = sapEntryLocalService;
-	}
-
 	private void _checkAccess(
 		Set<String> allowedServiceSignatures, String className,
 		String methodName) {
@@ -359,7 +345,10 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		return allowedServiceSignatures;
 	}
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;
 
 }

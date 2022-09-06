@@ -59,24 +59,13 @@ public class SAPServiceVerifyProcess extends VerifyProcess {
 		verifyDefaultSAPEntry();
 	}
 
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSAPEntryLocalService(
-		SAPEntryLocalService sapEntryLocalService) {
-
-		_sapEntryLocalService = sapEntryLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SAPServiceVerifyProcess.class);
 
+	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;
 
 }

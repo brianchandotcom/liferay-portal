@@ -95,18 +95,6 @@ public class ServiceAccessPolicyManagerImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSAPEntryService(SAPEntryService sapEntryService) {
-		_sapEntryService = sapEntryService;
-	}
-
 	private SAPConfiguration _getSAPConfiguration(long companyId) {
 		try {
 			return _configurationProvider.getConfiguration(
@@ -155,7 +143,10 @@ public class ServiceAccessPolicyManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceAccessPolicyManagerImpl.class);
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private SAPEntryService _sapEntryService;
 
 }

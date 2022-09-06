@@ -147,75 +147,6 @@ public class LDAPAuth implements Authenticator {
 			_props.get(PropsKeys.AUTH_PIPELINE_ENABLE_LIFERAY_CHECK));
 	}
 
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration)",
-		unbind = "-"
-	)
-	protected void setConfigurationProvider(
-		ConfigurationProvider<LDAPAuthConfiguration>
-			ldapAuthConfigurationProvider) {
-
-		_ldapAuthConfigurationProvider = ldapAuthConfigurationProvider;
-	}
-
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration)",
-		unbind = "-"
-	)
-	protected void setLDAPImportConfigurationProvider(
-		ConfigurationProvider<LDAPImportConfiguration>
-			ldapImportConfigurationProvider) {
-
-		_ldapImportConfigurationProvider = ldapImportConfigurationProvider;
-	}
-
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration)",
-		unbind = "-"
-	)
-	protected void setLDAPServerConfigurationProvider(
-		ConfigurationProvider<LDAPServerConfiguration>
-			ldapServerConfigurationProvider) {
-
-		_ldapServerConfigurationProvider = ldapServerConfigurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLdapSettings(LDAPSettings ldapSettings) {
-		_ldapSettings = ldapSettings;
-	}
-
-	@Reference(unbind = "-")
-	protected void setOmniadmin(Omniadmin omniadmin) {
-		_omniadmin = omniadmin;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPasswordEncryptor(PasswordEncryptor passwordEncryptor) {
-		_passwordEncryptor = passwordEncryptor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
-
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.SystemLDAPConfiguration)",
-		unbind = "-"
-	)
-	protected void setSystemLDAPConfigurationProvider(
-		ConfigurationProvider<SystemLDAPConfiguration>
-			systemLDAPConfigurationProvider) {
-
-		_systemLDAPConfigurationProvider = systemLDAPConfigurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private LDAPAuthResult _authenticate(
 			LdapContext ctx, long companyId, Attributes attributes,
 			String userDN, String password)
@@ -819,6 +750,10 @@ public class LDAPAuth implements Authenticator {
 	private final ThreadLocal<Map<String, LDAPAuthResult>>
 		_failedLDAPAuthResults = new CentralizedThreadLocal<>(
 			LDAPAuth.class + "._failedLDAPAuthResultCache", HashMap::new);
+
+	@Reference(
+		target = "(factoryPid=com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration)"
+	)
 	private ConfigurationProvider<LDAPAuthConfiguration>
 		_ldapAuthConfigurationProvider;
 
@@ -828,10 +763,19 @@ public class LDAPAuth implements Authenticator {
 	)
 	private volatile LDAPFilterValidator _ldapFilterValidator;
 
+	@Reference(
+		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration)"
+	)
 	private ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
+
+	@Reference(
+		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration)"
+	)
 	private ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
+
+	@Reference
 	private LDAPSettings _ldapSettings;
 
 	@Reference(
@@ -840,7 +784,10 @@ public class LDAPAuth implements Authenticator {
 	)
 	private volatile LDAPUserImporter _ldapUserImporter;
 
+	@Reference
 	private Omniadmin _omniadmin;
+
+	@Reference
 	private PasswordEncryptor _passwordEncryptor;
 
 	@Reference(
@@ -849,9 +796,16 @@ public class LDAPAuth implements Authenticator {
 	)
 	private volatile SafePortalLDAP _portalLDAP;
 
+	@Reference
 	private Props _props;
+
+	@Reference(
+		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.SystemLDAPConfiguration)"
+	)
 	private ConfigurationProvider<SystemLDAPConfiguration>
 		_systemLDAPConfigurationProvider;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

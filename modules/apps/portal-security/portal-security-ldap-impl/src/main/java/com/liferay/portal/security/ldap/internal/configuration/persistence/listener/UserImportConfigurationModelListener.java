@@ -97,38 +97,6 @@ public class UserImportConfigurationModelListener
 		_importUsers(companyId, _getLastImportTime());
 	}
 
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(
-		target = "(destination.name=" + LDAPDestinationNames.SCHEDULED_USER_LDAP_IMPORT + ")",
-		unbind = "-"
-	)
-	protected void setDestination(Destination destination) {
-	}
-
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration)",
-		unbind = "-"
-	)
-	protected void setLDAPImportConfigurationProvider(
-		ConfigurationProvider<LDAPImportConfiguration>
-			ldapImportConfigurationProvider) {
-
-		_ldapImportConfigurationProvider = ldapImportConfigurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSchedulerEngineHelper(
-		SchedulerEngineHelper schedulerEngineHelper) {
-
-		_schedulerEngineHelper = schedulerEngineHelper;
-	}
-
 	private long _getLastImportTime() throws Exception {
 		long time =
 			System.currentTimeMillis() - _ldapUserImporter.getLastImportTime();
@@ -200,7 +168,17 @@ public class UserImportConfigurationModelListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserImportConfigurationModelListener.class);
 
+	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference(
+		target = "(destination.name=" + LDAPDestinationNames.SCHEDULED_USER_LDAP_IMPORT + ")"
+	)
+	private Destination _destination;
+
+	@Reference(
+		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration)"
+	)
 	private ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
 
@@ -210,6 +188,7 @@ public class UserImportConfigurationModelListener
 	)
 	private volatile LDAPUserImporter _ldapUserImporter;
 
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference

@@ -318,23 +318,6 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		return ldapUser;
 	}
 
-	@Reference(unbind = "-")
-	protected void setContactPersistence(
-		ContactPersistence contactPersistence) {
-
-		_contactPersistence = contactPersistence;
-	}
-
-	@Reference(unbind = "-")
-	protected void setListTypeService(ListTypeService listTypeService) {
-		_listTypeService = listTypeService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserPersistence(UserPersistence userPersistence) {
-		_userPersistence = userPersistence;
-	}
-
 	private Map<String, String[]> _getExpandoAttributes(
 			Attributes attributes, Properties expandoMappings)
 		throws Exception {
@@ -381,8 +364,13 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	@Reference
 	private ContactPersistence _contactPersistence;
+
+	@Reference
 	private ListTypeService _listTypeService;
+
+	@Reference
 	private UserPersistence _userPersistence;
 
 }

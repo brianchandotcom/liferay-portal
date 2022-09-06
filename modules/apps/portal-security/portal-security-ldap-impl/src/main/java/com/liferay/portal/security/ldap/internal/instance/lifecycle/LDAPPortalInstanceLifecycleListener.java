@@ -53,14 +53,10 @@ public class LDAPPortalInstanceLifecycleListener
 	public void portalInstanceUnregistered(Company company) throws Exception {
 	}
 
-	@Reference(unbind = "-")
-	protected void setLdapSettings(LDAPSettings ldapSettings) {
-		_ldapSettings = ldapSettings;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPPortalInstanceLifecycleListener.class);
 
+	@Reference
 	private LDAPSettings _ldapSettings;
 
 	@Reference(

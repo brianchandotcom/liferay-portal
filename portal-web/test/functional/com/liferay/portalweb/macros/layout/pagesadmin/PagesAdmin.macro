@@ -52,6 +52,17 @@ definition {
 			}
 		}
 		else if ("${sitePageType}" == "Link to URL") {
+			if (isSet(targetType)) {
+				Navigator.gotoNavTab(navTab = "Advanced");
+
+				Select(
+					key_fieldLabel = "Target type",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${targetType}");
+			}
+
+			Navigator.gotoNavUnderline(navUnderline = "General");
+
 			Type(
 				locator1 = "TextInput#URL",
 				value1 = "${pageTypeURL}");
@@ -425,6 +436,7 @@ definition {
 			pageTypeURL = "${pageTypeURL}",
 			portlet = "${portlet}",
 			sitePageType = "${sitePageType}",
+			targetType = "${targetType}",
 			vocabularyName = "${vocabularyName}");
 	}
 

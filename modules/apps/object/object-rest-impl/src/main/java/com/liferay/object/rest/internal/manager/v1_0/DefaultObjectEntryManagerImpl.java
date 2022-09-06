@@ -639,8 +639,6 @@ public class DefaultObjectEntryManagerImpl
 				GetterUtil.getLong(
 					values.get(objectDefinition.getPKObjectFieldName())));
 
-		objectEntry.setValues(values);
-
 		_checkObjectEntryObjectDefinitionId(objectDefinition, objectEntry);
 
 		return _toObjectEntry(

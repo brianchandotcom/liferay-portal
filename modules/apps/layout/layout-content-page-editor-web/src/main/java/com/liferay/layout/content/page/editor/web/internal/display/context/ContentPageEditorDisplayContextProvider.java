@@ -14,8 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.item.selector.ItemSelector;
@@ -23,6 +21,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -71,11 +70,9 @@ public class ContentPageEditorDisplayContextProvider {
 
 		if (Objects.equals(className, Layout.class.getName())) {
 			return new ContentPageLayoutEditorDisplayContext(
-				_getContentPageEditorSidebarPanels(),
-				_fragmentCollectionContributorTracker,
-				_fragmentEntryLinkManager, _fragmentRendererTracker,
-				_frontendTokenDefinitionRegistry, httpServletRequest,
-				_infoItemServiceTracker, _itemSelector,
+				_getContentPageEditorSidebarPanels(), _fragmentEntryLinkManager,
+				_fragmentManager, _frontendTokenDefinitionRegistry,
+				httpServletRequest, _infoItemServiceTracker, _itemSelector,
 				_pageEditorConfiguration, portletRequest, renderResponse,
 				_segmentsConfigurationProvider,
 				new SegmentsExperienceManager(_segmentsExperienceLocalService),
@@ -99,9 +96,8 @@ public class ContentPageEditorDisplayContextProvider {
 		}
 
 		return new ContentPageEditorLayoutPageTemplateDisplayContext(
-			_getContentPageEditorSidebarPanels(),
-			_fragmentCollectionContributorTracker, _fragmentEntryLinkManager,
-			_fragmentRendererTracker, _frontendTokenDefinitionRegistry,
+			_getContentPageEditorSidebarPanels(), _fragmentEntryLinkManager,
+			_fragmentManager, _frontendTokenDefinitionRegistry,
 			httpServletRequest, _infoItemServiceTracker, _itemSelector,
 			_pageEditorConfiguration, pageIsDisplayPage, portletRequest,
 			renderResponse, _segmentsConfigurationProvider,
@@ -141,14 +137,10 @@ public class ContentPageEditorDisplayContextProvider {
 	}
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
-
-	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;
 
 	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
+	private FragmentManager _fragmentManager;
 
 	@Reference
 	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;

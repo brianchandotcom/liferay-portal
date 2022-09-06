@@ -22,8 +22,6 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
@@ -36,6 +34,7 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.PageEdi
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.content.page.editor.web.internal.segments.SegmentsExperienceUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
@@ -98,10 +97,8 @@ public class ContentPageLayoutEditorDisplayContext
 
 	public ContentPageLayoutEditorDisplayContext(
 		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
 		FragmentEntryLinkManager fragmentEntryLinkManager,
-		FragmentRendererTracker fragmentRendererTracker,
+		FragmentManager fragmentManager,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
 		InfoItemServiceTracker infoItemServiceTracker,
@@ -113,9 +110,8 @@ public class ContentPageLayoutEditorDisplayContext
 		StagingGroupHelper stagingGroupHelper) {
 
 		super(
-			contentPageEditorSidebarPanels,
-			fragmentCollectionContributorTracker, fragmentEntryLinkManager,
-			fragmentRendererTracker, frontendTokenDefinitionRegistry,
+			contentPageEditorSidebarPanels, fragmentEntryLinkManager,
+			fragmentManager, frontendTokenDefinitionRegistry,
 			httpServletRequest, infoItemServiceTracker, itemSelector,
 			pageEditorConfiguration, portletRequest, renderResponse,
 			segmentsConfigurationProvider, segmentsExperienceManager,

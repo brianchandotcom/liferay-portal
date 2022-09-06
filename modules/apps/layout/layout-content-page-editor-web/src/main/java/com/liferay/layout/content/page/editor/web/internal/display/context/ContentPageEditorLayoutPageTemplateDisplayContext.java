@@ -19,8 +19,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.collection.provider.item.selector.criterion.RelatedInfoItemCollectionProviderItemSelectorCriterion;
 import com.liferay.info.item.InfoItemClassDetails;
@@ -38,6 +36,7 @@ import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSid
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.info.search.InfoSearchClassMapperTrackerUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -72,10 +71,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 	public ContentPageEditorLayoutPageTemplateDisplayContext(
 		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker,
 		FragmentEntryLinkManager fragmentEntryLinkManager,
-		FragmentRendererTracker fragmentRendererTracker,
+		FragmentManager fragmentManager,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
 		InfoItemServiceTracker infoItemServiceTracker,
@@ -88,9 +85,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		StagingGroupHelper stagingGroupHelper) {
 
 		super(
-			contentPageEditorSidebarPanels,
-			fragmentCollectionContributorTracker, fragmentEntryLinkManager,
-			fragmentRendererTracker, frontendTokenDefinitionRegistry,
+			contentPageEditorSidebarPanels, fragmentEntryLinkManager,
+			fragmentManager, frontendTokenDefinitionRegistry,
 			httpServletRequest, infoItemServiceTracker, itemSelector,
 			pageEditorConfiguration, portletRequest, renderResponse,
 			segmentsConfigurationProvider, segmentsExperienceManager,

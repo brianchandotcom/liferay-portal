@@ -22,6 +22,7 @@ dependencies {
 	compileOnly group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", version: "1.2.3"
 	compileOnly project(":apps:static:portal-osgi-web:portal-osgi-web-jasper-plugins-taglib")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:shielded-container-api")
 }
 

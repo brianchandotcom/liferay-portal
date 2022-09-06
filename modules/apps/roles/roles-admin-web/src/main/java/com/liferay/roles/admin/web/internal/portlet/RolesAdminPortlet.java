@@ -619,45 +619,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupService(GroupService groupService) {
-		_groupService = groupService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelCategoryRegistry(
-		PanelCategoryRegistry panelCategoryRegistry) {
-
-		_panelCategoryRegistry = panelCategoryRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourcePermissionService(
-		ResourcePermissionService resourcePermissionService) {
-
-		_resourcePermissionService = resourcePermissionService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRoleLocalService(RoleLocalService roleLocalService) {
-		_roleLocalService = roleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRoleService(RoleService roleService) {
-		_roleService = roleService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserService(UserService userService) {
-		_userService = userService;
-	}
-
 	private String[] _getExcludedPanelAppKeys(Role role) {
 		Set<String> panelAppKeys = new HashSet<>();
 
@@ -893,13 +854,18 @@ public class RolesAdminPortlet extends MVCPortlet {
 	@Reference
 	private DepotConfiguration _depotConfiguration;
 
+	@Reference
 	private GroupService _groupService;
 
 	@Reference
 	private ItemSelector _itemSelector;
 
+	@Reference
 	private PanelAppRegistry _panelAppRegistry;
+
+	@Reference
 	private PanelCategoryRegistry _panelCategoryRegistry;
+
 	private ServiceTrackerList<PanelCategoryRoleTypeMapper>
 		_panelCategoryRoleTypeMapperServiceTrackerList;
 	private ServiceTrackerList<PersonalMenuEntry>
@@ -911,8 +877,13 @@ public class RolesAdminPortlet extends MVCPortlet {
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
 
+	@Reference
 	private ResourcePermissionService _resourcePermissionService;
+
+	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
 	private RoleService _roleService;
 
 	@Reference
@@ -921,6 +892,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 	@Reference
 	private SegmentsEntryRoleLocalService _segmentsEntryRoleLocalService;
 
+	@Reference
 	private UserService _userService;
 
 }

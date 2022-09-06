@@ -206,30 +206,6 @@ public class RoleStagedModelDataHandler
 		portletDataContext.importClassedModel(role, importedRole);
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourcePermissionLocalService(
-		ResourcePermissionLocalService resourcePermissionLocalService) {
-
-		_resourcePermissionLocalService = resourcePermissionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourcePermissionService(
-		ResourcePermissionService resourcePermissionService) {
-
-		_resourcePermissionService = resourcePermissionService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRoleLocalService(RoleLocalService roleLocalService) {
-		_roleLocalService = roleLocalService;
-	}
-
 	private void _deleteRolePermissions(
 		PortletDataContext portletDataContext, Role importedRole) {
 
@@ -326,11 +302,19 @@ public class RoleStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		RoleStagedModelDataHandler.class);
 
+	@Reference
 	private GroupLocalService _groupLocalService;
+
 	private final PermissionConversionFilter _permissionConversionFilter =
 		new ImportExportPermissionConversionFilter();
+
+	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
 	private ResourcePermissionService _resourcePermissionService;
+
+	@Reference
 	private RoleLocalService _roleLocalService;
 
 }

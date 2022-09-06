@@ -88,21 +88,10 @@ public class RolesSelectorPortlet extends MVCPortlet {
 			removeUserIds, groupId, roleId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserGroupGroupRoleService(
-		UserGroupGroupRoleService userGroupGroupRoleService) {
-
-		_userGroupGroupRoleService = userGroupGroupRoleService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserGroupRoleService(
-		UserGroupRoleService userGroupRoleService) {
-
-		_userGroupRoleService = userGroupRoleService;
-	}
-
+	@Reference
 	private UserGroupGroupRoleService _userGroupGroupRoleService;
+
+	@Reference
 	private UserGroupRoleService _userGroupRoleService;
 
 }

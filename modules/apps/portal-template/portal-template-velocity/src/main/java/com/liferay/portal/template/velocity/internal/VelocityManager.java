@@ -63,12 +63,12 @@ public class VelocityManager extends BaseTemplateManager {
 
 		_velocityEngine = null;
 
-		templateContextHelper.removeAllHelperUtilities();
+		_templateContextHelper.removeAllHelperUtilities();
 	}
 
 	@Override
 	public void destroy(ClassLoader classLoader) {
-		templateContextHelper.removeHelperUtilities(classLoader);
+		_templateContextHelper.removeHelperUtilities(classLoader);
 	}
 
 	@Override
@@ -210,14 +210,6 @@ public class VelocityManager extends BaseTemplateManager {
 	}
 
 	@Override
-	@Reference(service = VelocityTemplateContextHelper.class, unbind = "-")
-	public void setTemplateContextHelper(
-		TemplateContextHelper templateContextHelper) {
-
-		super.setTemplateContextHelper(templateContextHelper);
-	}
-
-	@Override
 	@Reference(service = VelocityTemplateResourceLoader.class, unbind = "-")
 	public void setTemplateResourceLoader(
 		TemplateResourceLoader templateResourceLoader) {
@@ -239,7 +231,12 @@ public class VelocityManager extends BaseTemplateManager {
 
 		return new VelocityTemplate(
 			templateResource, helperUtilities, _velocityEngine,
-			templateContextHelper, _velocityTemplateResourceCache, restricted);
+			_templateContextHelper, _velocityTemplateResourceCache, restricted);
+	}
+
+	@Override
+	protected TemplateContextHelper getTemplateContextHelper() {
+		return _templateContextHelper;
 	}
 
 	private String _getVelocimacroLibrary(Class<?> clazz) {
@@ -272,6 +269,9 @@ public class VelocityManager extends BaseTemplateManager {
 
 	@Reference
 	private SingleVMPool _singleVMPool;
+
+	@Reference(service = VelocityTemplateContextHelper.class)
+	private TemplateContextHelper _templateContextHelper;
 
 	private VelocityEngine _velocityEngine;
 

@@ -167,7 +167,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		_configuration = null;
 
-		templateContextHelper.removeAllHelperUtilities();
+		_templateContextHelper.removeAllHelperUtilities();
 
 		_templateModels.clear();
 
@@ -178,7 +178,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 	@Override
 	public void destroy(ClassLoader classLoader) {
-		templateContextHelper.removeHelperUtilities(classLoader);
+		_templateContextHelper.removeHelperUtilities(classLoader);
 	}
 
 	@Override
@@ -250,7 +250,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		}
 
 		FreeMarkerTemplateContextHelper freeMarkerTemplateContextHelper =
-			(FreeMarkerTemplateContextHelper)templateContextHelper;
+			(FreeMarkerTemplateContextHelper)_templateContextHelper;
 
 		freeMarkerTemplateContextHelper.setDefaultBeansWrapper(
 			_defaultBeansWrapper);
@@ -263,14 +263,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		TemplateClassResolver templateClassResolver) {
 
 		_templateClassResolver = templateClassResolver;
-	}
-
-	@Override
-	@Reference(service = FreeMarkerTemplateContextHelper.class, unbind = "-")
-	public void setTemplateContextHelper(
-		TemplateContextHelper templateContextHelper) {
-
-		super.setTemplateContextHelper(templateContextHelper);
 	}
 
 	@Override
@@ -372,8 +364,13 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		return new FreeMarkerTemplate(
 			templateResource, helperUtilities, _configuration,
-			templateContextHelper, _freeMarkerTemplateResourceCache, restricted,
-			beansWrapper, this);
+			_templateContextHelper, _freeMarkerTemplateResourceCache,
+			restricted, beansWrapper, this);
+	}
+
+	@Override
+	protected TemplateContextHelper getTemplateContextHelper() {
+		return _templateContextHelper;
 	}
 
 	@Modified
@@ -620,6 +617,10 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	private final Map<String, String> _taglibMappings =
 		new ConcurrentHashMap<>();
 	private TemplateClassResolver _templateClassResolver;
+
+	@Reference(service = FreeMarkerTemplateContextHelper.class)
+	private TemplateContextHelper _templateContextHelper;
+
 	private final Map<String, TemplateModel> _templateModels =
 		new ConcurrentHashMap<>();
 	private volatile Map<String, AtomicInteger> _timeoutTemplateCounters;

@@ -50,7 +50,7 @@ dependencies {
 	compileOnly group: "org.jboss.classfilewriter", name: "jboss-classfilewriter", version: "1.2.3.Final"
 	compileOnly group: "org.jboss.logging", name: "jboss-logging", version: "3.3.2.Final"
 	compileOnly group: "org.jboss.weld", name: "weld-osgi-bundle", version: "3.0.5.Final"
-	compileOnly group: "org.jsoup", name: "jsoup", version: "1.15.1"
+	compileOnly group: "org.jsoup", name: "jsoup", version: "1.15.3"
 	compileOnly group: "org.osgi", name: "org.osgi.service.cdi", version: "1.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.configurator", version: "1.0.0"

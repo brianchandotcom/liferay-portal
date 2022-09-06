@@ -136,13 +136,6 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 		actionableDynamicQuery.performCount();
 	}
 
-	@Reference(unbind = "-")
-	protected void setRatingsEntryLocalService(
-		RatingsEntryLocalService ratingsEntryLocalService) {
-
-		_ratingsEntryLocalService = ratingsEntryLocalService;
-	}
-
 	private long _getGroupId(RatingsEntry ratingsEntry) throws PortalException {
 		PersistedModelLocalService persistedModelLocalService =
 			PersistedModelLocalServiceRegistryUtil.
@@ -263,6 +256,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 	@Reference
 	private PortletDataContextFactory _portletDataContextFactory;
 
+	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
 
 	private static class ImportRatingsCallable implements Callable<Void> {

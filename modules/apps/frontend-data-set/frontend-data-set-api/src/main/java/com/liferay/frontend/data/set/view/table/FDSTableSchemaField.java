@@ -52,6 +52,10 @@ public class FDSTableSchemaField {
 		return _expand;
 	}
 
+	public boolean isLocalizeLabel() {
+		return _localizeLabel;
+	}
+
 	public boolean isSortable() {
 		return _sortable;
 	}
@@ -94,6 +98,12 @@ public class FDSTableSchemaField {
 		return this;
 	}
 
+	public FDSTableSchemaField setLocalizeLabel(boolean localizeLabel) {
+		_localizeLabel = localizeLabel;
+
+		return this;
+	}
+
 	public FDSTableSchemaField setSortable(boolean sortable) {
 		_sortable = sortable;
 
@@ -127,6 +137,8 @@ public class FDSTableSchemaField {
 				return fieldName;
 			}
 		).put(
+			"localizeLabel", isLocalizeLabel()
+		).put(
 			"sortable", isSortable()
 		).put(
 			"sortingOrder",
@@ -155,6 +167,7 @@ public class FDSTableSchemaField {
 	private boolean _expand;
 	private String _fieldName;
 	private String _label;
+	private boolean _localizeLabel;
 	private boolean _sortable;
 	private SortingOrder _sortingOrder;
 

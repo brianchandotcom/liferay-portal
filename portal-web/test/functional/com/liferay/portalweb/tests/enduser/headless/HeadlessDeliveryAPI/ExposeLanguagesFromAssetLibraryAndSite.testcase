@@ -1,0 +1,91 @@
+@component-name = "portal-headless-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless Frontend Infrastructure";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DepotNavigator.openDepotAdmin();
+
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+
+			Site.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test CanRecieveCurrentConfiguredLanguagesFromAssetLibrary {
+		property portal.acceptance = "true";
+
+		task ("Given an AssetLibrary with a list of languages configured") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+
+			DepotNavigator.openDepotAdmin();
+
+			DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
+
+			Button.click(button = "Edit");
+
+			Depot.configureCurrentLanguages(
+				currentLanguages = "English (United States),Chinese (China),French (France),Spanish (Spain)",
+				defaultDepotLanguage = "English (United States)");
+
+			Button.click(button = "Save");
+		}
+
+		task ("When a user makes a query to getAssetLibraryLanguagesPage") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = LanguageAPI.getAssetLibraryLanguages(assetLibraryId = "${assetLibraryId}");
+		}
+
+		task ("Then the response returns the configured languages for the AssetLibrary") {
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.items..name");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "English,Chinese,French,Spanish");
+		}
+	}
+
+	@priority = "4"
+	test CanRecieveCurrentConfiguredLanguagesFromSite {
+		property portal.acceptance = "true";
+
+		task ("Given a site with a language configured") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.configureCurrentLanguagesCP(
+				currentSiteLanguages = "English (United States)",
+				defaultSiteLanguage = "English (United States)");
+		}
+
+		task ("When a user makes a query to getSiteLanguagesPage") {
+			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
+
+			var response = LanguageAPI.getSiteLanguages(siteId = "${siteId}");
+		}
+
+		task ("Then the response returns the configured languages for the site") {
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$.items..name");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "English");
+		}
+	}
+
+}

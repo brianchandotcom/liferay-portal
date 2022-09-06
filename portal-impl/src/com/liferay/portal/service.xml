@@ -1431,7 +1431,7 @@
 		<column name="classPK" type="long" />
 		<column name="number" type="String" />
 		<column name="extension" type="String" />
-		<column name="typeId" type="long" />
+		<column name="listTypeId" type="long" />
 		<column name="primary" type="boolean" />
 
 		<!-- Order -->

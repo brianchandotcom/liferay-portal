@@ -37,6 +37,7 @@ import {
 	slugToText,
 	useDebounceCallback,
 } from '../../utils/utils.es';
+
 const HEADLINE_MAX_LENGTH = 75;
 
 export default withRouter(

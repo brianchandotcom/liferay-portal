@@ -107,11 +107,6 @@ public class SambaAuth implements Authenticator {
 		return SUCCESS;
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private void _setSambaPasswords(User user, String password) {
 		try {
 			PortalSambaUtil.setSambaLMPassword(user, password);
@@ -126,6 +121,7 @@ public class SambaAuth implements Authenticator {
 
 	private static final Log _log = LogFactoryUtil.getLog(SambaAuth.class);
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

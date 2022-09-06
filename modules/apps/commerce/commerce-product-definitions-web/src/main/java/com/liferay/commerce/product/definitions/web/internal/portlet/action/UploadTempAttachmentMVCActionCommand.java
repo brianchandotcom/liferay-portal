@@ -17,8 +17,13 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.upload.AttachmentsUploadResponseHandler;
 import com.liferay.commerce.product.definitions.web.internal.upload.TempAttachmentsUploadFileEntryHandler;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadHandler;
 
 import javax.portlet.ActionRequest;
@@ -45,6 +50,19 @@ public class UploadTempAttachmentMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpDefinitionId);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setScopeGroupId(cpDefinition.getGroupId());
+
+		actionRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
 		_uploadHandler.upload(
 			_tempAttachmentsUploadFileEntryHandler,
 			_attachmentsUploadResponseHandler, actionRequest, actionResponse);
@@ -52,6 +70,9 @@ public class UploadTempAttachmentMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AttachmentsUploadResponseHandler _attachmentsUploadResponseHandler;
+
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private TempAttachmentsUploadFileEntryHandler

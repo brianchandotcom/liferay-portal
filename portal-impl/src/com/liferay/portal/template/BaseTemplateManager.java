@@ -17,7 +17,6 @@ package com.liferay.portal.template;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.TemplateResourceLoader;
 
 import java.util.Map;
 
@@ -37,12 +36,6 @@ public abstract class BaseTemplateManager implements TemplateManager {
 
 		return doGetTemplate(
 			templateResource, restricted, getHelperUtilities(restricted));
-	}
-
-	public void setTemplateResourceLoader(
-		TemplateResourceLoader templateResourceLoader) {
-
-		this.templateResourceLoader = templateResourceLoader;
 	}
 
 	protected abstract Template doGetTemplate(
@@ -68,8 +61,5 @@ public abstract class BaseTemplateManager implements TemplateManager {
 
 		return templateControlContext.getClassLoader();
 	}
-
-
-	protected TemplateResourceLoader templateResourceLoader;
 
 }

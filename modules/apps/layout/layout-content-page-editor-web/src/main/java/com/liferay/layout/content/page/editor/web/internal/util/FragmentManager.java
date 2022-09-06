@@ -139,6 +139,29 @@ public class FragmentManager {
 				).build());
 		}
 
+		List<String> sortedFragmentCollectionKeys = ListUtil.fromArray(
+			portalPreferences.getValues(
+				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+				"sortedFragmentCollectionKeys", new String[0]));
+
+		if (!sortedFragmentCollectionKeys.isEmpty()) {
+			Map<String, Map<String, Object>> fragmentCollectionMaps =
+				new LinkedHashMap<>();
+
+			for (Map<String, Object> fragmentCollectionMap :
+					allFragmentCollectionMapsList) {
+
+				fragmentCollectionMaps.put(
+					String.valueOf(
+						fragmentCollectionMap.get("fragmentCollectionId")),
+					fragmentCollectionMap);
+			}
+
+			allFragmentCollectionMapsList =
+				_getSortedFragmentCollectionMapsList(
+					fragmentCollectionMaps, sortedFragmentCollectionKeys);
+		}
+
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158737")) &&
 			!SetUtil.isEmpty(highlightedFragmentEntryKeys)) {
 
@@ -419,6 +442,30 @@ public class FragmentManager {
 		}
 
 		return fragmentEntryKey + StringPool.POUND + group.getGroupKey();
+	}
+
+	private List<Map<String, Object>> _getSortedFragmentCollectionMapsList(
+		Map<String, Map<String, Object>> fragmentCollectionMaps,
+		List<String> sortedFragmentCollectionKeys) {
+
+		List<Map<String, Object>> sortedFragmentCollectionMapsList =
+			new LinkedList<>();
+
+		for (String collectionKey : sortedFragmentCollectionKeys) {
+			Map<String, Object> fragmentCollectionMap =
+				fragmentCollectionMaps.remove(collectionKey);
+
+			if (fragmentCollectionMap == null) {
+				continue;
+			}
+
+			sortedFragmentCollectionMapsList.add(fragmentCollectionMap);
+		}
+
+		sortedFragmentCollectionMapsList.addAll(
+			fragmentCollectionMaps.values());
+
+		return sortedFragmentCollectionMapsList;
 	}
 
 	private List<Map<String, Object>> _getSystemFragmentCollectionMapsList(

@@ -15,7 +15,6 @@
 package com.liferay.object.system;
 
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectRelationship;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 
@@ -50,8 +49,6 @@ public interface SystemObjectDefinitionMetadata {
 	public String getRESTDTOIdPropertyName();
 
 	public String getScope();
-
-	public List<ObjectRelationship> getSystemObjectRelationships();
 
 	public Table getTable();
 

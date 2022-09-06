@@ -17,6 +17,7 @@ package com.liferay.object.rest.internal.vulcan.openapi.contributor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.petra.string.StringPool;
@@ -48,6 +49,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -208,6 +210,26 @@ public class RelatedObjectEntryOpenAPIContributor
 				[systemObjectRestContextPathSplit.length - 1]);
 	}
 
+	private ObjectDefinition _getSystemObjectDefinition(
+		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
+
+		List<ObjectDefinition> systemObjectDefinitions =
+			_objectDefinitionLocalService.getSystemObjectDefinitions();
+
+		for (ObjectDefinition systemObjectDefinition :
+				systemObjectDefinitions) {
+
+			if (Objects.equals(
+					systemObjectDefinition.getName(),
+					systemObjectDefinitionMetadata.getName())) {
+
+				return systemObjectDefinition;
+			}
+		}
+
+		return null;
+	}
+
 	private String _getSystemObjectDefinitionPathName(
 		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
 
@@ -238,13 +260,27 @@ public class RelatedObjectEntryOpenAPIContributor
 			getSystemObjectDefinitionMetadata(objectDefinition.getName());
 	}
 
+	private List<ObjectRelationship> _getSystemObjectRelationships(
+		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
+
+		ObjectDefinition systemObjectDefinition = _getSystemObjectDefinition(
+			systemObjectDefinitionMetadata);
+
+		if (systemObjectDefinition != null) {
+			return _objectRelationshipLocalService.getObjectRelationships(
+				systemObjectDefinition.getObjectDefinitionId());
+		}
+
+		return Collections.emptyList();
+	}
+
 	private void _populatePathItems(
 		Paths paths,
 		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata,
 		UriInfo uriInfo) {
 
 		List<ObjectRelationship> systemObjectRelationships =
-			systemObjectDefinitionMetadata.getSystemObjectRelationships();
+			_getSystemObjectRelationships(systemObjectDefinitionMetadata);
 
 		for (ObjectRelationship systemObjectRelationship :
 				systemObjectRelationships) {
@@ -274,6 +310,9 @@ public class RelatedObjectEntryOpenAPIContributor
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private SystemObjectDefinitionMetadataTracker

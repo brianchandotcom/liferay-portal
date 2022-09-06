@@ -189,12 +189,14 @@ public class CallFunction
 
 		for (Map.Entry<String, String> entry : resultMap.entrySet()) {
 			String outputName = entry.getValue();
+			String ddmFormFieldName = entry.getKey();
 
 			if (!ddmDataProviderResponse.hasOutput(outputName)) {
+				setDDMFormFieldOptions(
+					ddmFormFieldName, Collections.emptyList());
+
 				continue;
 			}
-
-			String ddmFormFieldName = entry.getKey();
 
 			Optional<List<KeyValuePair>> optionsOptional =
 				ddmDataProviderResponse.getOutputOptional(

@@ -1795,6 +1795,68 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-159631. Page opens in new tab when setting Target in advanced tab."
+	@priority = "4"
+	test ViewLinkToURLTypePageWhichSettingTargetInAdvancedTab {
+		task ("Given a page creator has a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+		}
+
+		task ("When adding a Link to URL type page and setting Target in advanced tab") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.addPage(
+				pageName = "Test Link to URL Page Name",
+				pageTypeURL = "https://www.google.com",
+				sitePageType = "Link to URL",
+				target = "_blank");
+		}
+
+		task ("Then viewing the linked URL page opens in new tab") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			AssertClick.assertPartialTextClickAt(
+				key_pageName = "Test Link to URL Page Name",
+				locator1 = "Home#PAGE",
+				value1 = "Test Link to URL Page Name");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
+
+			Navigator.closeWindow();
+
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			PagesFinder.goToPagesFinder();
+
+			Click(
+				key_pageName = "Test Link to URL Page Name",
+				locator1 = "PagesFinder#PAGE_NAME",
+				value1 = "${pageName}");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
+
+			Navigator.closeWindow();
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "Test Link to URL Page Name");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
+
+			Navigator.closeWindow();
+		}
+	}
+
 	@description = "This is a test for LPS-159631. Page opens in current page in default setting."
 	@priority = "4"
 	test ViewLinkToURLTypePageWithDefaultSetting {

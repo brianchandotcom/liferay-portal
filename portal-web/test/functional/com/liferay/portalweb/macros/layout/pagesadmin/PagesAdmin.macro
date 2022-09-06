@@ -61,6 +61,15 @@ definition {
 					value1 = "${targetType}");
 			}
 
+			if (isSet(target)) {
+				Navigator.gotoNavTab(navTab = "Advanced");
+
+				Type(
+					key_text = "Target",
+					locator1 = "TextInput#ANY",
+					value1 = "${target}");
+			}
+
 			Navigator.gotoNavUnderline(navUnderline = "General");
 
 			Type(
@@ -436,6 +445,7 @@ definition {
 			pageTypeURL = "${pageTypeURL}",
 			portlet = "${portlet}",
 			sitePageType = "${sitePageType}",
+			target = "${target}",
 			targetType = "${targetType}",
 			vocabularyName = "${vocabularyName}");
 	}

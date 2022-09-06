@@ -5,26 +5,15 @@
 	"name": "Factor",
 	"objectFields": [
 		{
-			"DBType": "Long",
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Class Name Id"
+				"en_US": "Name"
 			},
-			"name": "classNameId",
+			"name": "name",
 			"required": false,
-			"type": "Long"
-		},
-		{
-			"DBType": "Long",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Class PK"
-			},
-			"name": "classPK",
-			"required": false,
-			"type": "Long"
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

@@ -19,69 +19,6 @@ definition {
 		}
 	}
 
-	@description = "This test asserts the account manager can assign and remove organizations."
-	@priority = "4"
-	test AccountManagersCanManageOrganizations {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		task ("Given add 3 organizations and assign 2 of them to an account") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "AM Account",
-				accountEntryType = "Business");
-
-			for (var orgNum : list "1,2,3") {
-				JSONOrganization.addOrganization(organizationName = "Account Org${orgNum}");
-			}
-
-			for (var orgNum : list "1,2") {
-				JSONAccountEntry.addAccountEntryOrganization(
-					accountEntryName = "AM Account",
-					organizationName = "Account Org${orgNum}");
-			}
-		}
-
-		task ("When an account manager is added to the account") {
-			AccountConfiguration.addAccountManager(
-				accountName = "AM Account",
-				orgName = "AM Organization",
-				orgRoleTitle = "Account Manager",
-				userEmailAddress = "useramea@liferay.com",
-				userFirstName = "useramfn",
-				userLastName = "useramln",
-				userScreenName = "useramsn");
-
-			User.logoutPG();
-
-			User.loginUserPG(
-				password = "test",
-				userEmailAddress = "useramea@liferay.com");
-		}
-
-		task ("Then the account manager user is able to assign organization") {
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "AM Account");
-
-			Accounts.assignOrganizations(
-				accountName = "AM Account",
-				assigneeName = "Account Org3");
-
-			for (var orgNum : list "1,2,3") {
-				LexiconEntry.viewEntryName(rowEntry = "Account Org${orgNum}");
-			}
-		}
-
-		task ("And the account manager user is able to remove organizations") {
-			Accounts.removeOrganizationAsAssignee(assigneeName = "Account Org1");
-
-			for (var orgNum : list "2,3") {
-				LexiconEntry.viewEntryName(rowEntry = "Account Org${orgNum}");
-			}
-
-			LexiconEntry.viewNoEntry(rowEntry = "Account Org1");
-		}
-	}
-
 	@description = "This test assert the account manager can view account organizations by default."
 	@priority = "4"
 	test AccountManagersCanViewOrganizationsbyDefault {

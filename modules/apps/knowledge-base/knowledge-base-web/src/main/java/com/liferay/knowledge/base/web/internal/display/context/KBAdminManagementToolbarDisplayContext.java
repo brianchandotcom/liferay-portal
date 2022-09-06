@@ -166,7 +166,7 @@ public class KBAdminManagementToolbarDisplayContext {
 						).setParameter(
 							"parentResourcePrimKey", parentResourcePrimKey
 						).buildPortletURL());
-
+					dropdownItem.setIcon("folder");
 					dropdownItem.setLabel(
 						LanguageUtil.get(_httpServletRequest, "folder"));
 				});
@@ -188,7 +188,7 @@ public class KBAdminManagementToolbarDisplayContext {
 						).setParameter(
 							"parentResourcePrimKey", parentResourcePrimKey
 						).buildPortletURL());
-
+					dropdownItem.setIcon("document-text");
 					dropdownItem.setLabel(
 						LanguageUtil.get(_httpServletRequest, "basic-article"));
 				});
@@ -221,7 +221,7 @@ public class KBAdminManagementToolbarDisplayContext {
 									"parentResourcePrimKey",
 									parentResourcePrimKey
 								).buildPortletURL());
-
+							dropdownItem.setIcon("document-text");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest,
@@ -248,7 +248,7 @@ public class KBAdminManagementToolbarDisplayContext {
 						).setParameter(
 							"parentKBFolderId", parentResourcePrimKey
 						).buildPortletURL());
-
+					dropdownItem.setIcon("import");
 					dropdownItem.setLabel(
 						LanguageUtil.get(_httpServletRequest, "import"));
 				});
@@ -290,7 +290,7 @@ public class KBAdminManagementToolbarDisplayContext {
 					).setParameter(
 						"parentResourcePrimKey", parentResourcePrimKey
 					).buildPortletURL());
-
+				dropdownItem.setIcon("folder");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "folder"));
 			}
@@ -309,7 +309,7 @@ public class KBAdminManagementToolbarDisplayContext {
 					).setParameter(
 						"parentResourcePrimKey", parentResourcePrimKey
 					).buildPortletURL());
-
+				dropdownItem.setIcon("document-text");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "basic-article"));
 			}
@@ -331,7 +331,7 @@ public class KBAdminManagementToolbarDisplayContext {
 					).setParameter(
 						"parentKBFolderId", parentResourcePrimKey
 					).buildPortletURL());
-
+				dropdownItem.setIcon("import");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "import"));
 			}

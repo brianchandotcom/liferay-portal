@@ -35,9 +35,9 @@ export default function ItemSelectorRepositoryEntryBrowser({
 	const itemSelectorPreviewItemsRef = useRef();
 
 	const handleSelectedItem = useCallback(
-		({returnType, value}) => {
+		({returntype, value}) => {
 			Liferay.Util.getOpener().Liferay.fire(itemSelectedEventName, {
-				returnType,
+				returnType: returntype,
 				value,
 			});
 		},

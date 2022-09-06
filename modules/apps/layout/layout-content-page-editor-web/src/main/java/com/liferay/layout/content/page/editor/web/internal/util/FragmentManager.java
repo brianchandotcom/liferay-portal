@@ -542,23 +542,9 @@ public class FragmentManager {
 			fragmentEntryMapsList.addAll(0, layoutElementMapsList);
 		}
 
-		List<Map<String, Object>> fragmentCollectionMapsList =
-			new LinkedList<>();
-
-		for (String collectionKey : _SORTED_FRAGMENT_COLLECTION_KEYS) {
-			Map<String, Object> fragmentCollectionMap =
-				fragmentCollectionMaps.remove(collectionKey);
-
-			if (fragmentCollectionMap == null) {
-				continue;
-			}
-
-			fragmentCollectionMapsList.add(fragmentCollectionMap);
-		}
-
-		fragmentCollectionMapsList.addAll(fragmentCollectionMaps.values());
-
-		return fragmentCollectionMapsList;
+		return _getSortedFragmentCollectionMapsList(
+				fragmentCollectionMaps,
+				ListUtil.fromArray(_SORTED_FRAGMENT_COLLECTION_KEYS));
 	}
 
 	private boolean _isAllowedFragmentEntryKey(

@@ -15,16 +15,6 @@
 /// <reference types="react" />
 
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
-export declare function AggregationFormBase({
-	disabled,
-	errors,
-	editingField,
-	onAggregationFilterChange,
-	onRelationshipChange,
-	objectDefinitionId,
-	objectFieldSettings,
-	setValues,
-}: IAggregationSourcePropertyProps): JSX.Element;
 interface IAggregationSourcePropertyProps {
 	disabled?: boolean;
 	editingField?: boolean;
@@ -35,4 +25,14 @@ interface IAggregationSourcePropertyProps {
 	onRelationshipChange?: (objectDefinitionId2: number) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
+export declare function AggregationFormBase({
+	disabled,
+	errors,
+	editingField,
+	onAggregationFilterChange,
+	onRelationshipChange,
+	objectDefinitionId,
+	objectFieldSettings,
+	setValues,
+}: IAggregationSourcePropertyProps): JSX.Element;
 export {};

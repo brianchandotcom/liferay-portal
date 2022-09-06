@@ -15,14 +15,6 @@
 /// <reference types="react" />
 
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
-export declare function MaxLengthProperties({
-	disabled,
-	errors,
-	objectField,
-	objectFieldSettings,
-	onSettingsChange,
-	setValues,
-}: IMaxLengthPropertiesProps): JSX.Element;
 interface IMaxLengthPropertiesProps {
 	disabled?: boolean;
 	errors: ObjectFieldErrors;
@@ -31,4 +23,12 @@ interface IMaxLengthPropertiesProps {
 	onSettingsChange: (setting: ObjectFieldSetting) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
+export declare function MaxLengthProperties({
+	disabled,
+	errors,
+	objectField,
+	objectFieldSettings,
+	onSettingsChange,
+	setValues,
+}: IMaxLengthPropertiesProps): JSX.Element;
 export {};

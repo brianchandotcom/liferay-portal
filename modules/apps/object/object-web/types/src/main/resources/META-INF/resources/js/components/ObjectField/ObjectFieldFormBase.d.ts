@@ -15,20 +15,6 @@
 import {FormError} from '@liferay/object-js-components-web';
 import {ChangeEventHandler, ReactNode} from 'react';
 import './ObjectFieldFormBase.scss';
-export default function ObjectFieldFormBase({
-	children,
-	disabled,
-	editingField,
-	errors,
-	handleChange,
-	objectDefinitionId,
-	objectField: values,
-	objectFieldTypes,
-	objectName,
-	onAggregationFilterChange,
-	onRelationshipChange,
-	setValues,
-}: IProps): JSX.Element;
 interface IProps {
 	children?: ReactNode;
 	disabled?: boolean;
@@ -49,4 +35,18 @@ export declare type ObjectFieldErrors = FormError<
 			[key in ObjectFieldSettingName]: unknown;
 		}
 >;
+export default function ObjectFieldFormBase({
+	children,
+	disabled,
+	editingField,
+	errors,
+	handleChange,
+	objectDefinitionId,
+	objectField: values,
+	objectFieldTypes,
+	objectName,
+	onAggregationFilterChange,
+	onRelationshipChange,
+	setValues,
+}: IProps): JSX.Element;
 export {};

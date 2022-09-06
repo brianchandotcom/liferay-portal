@@ -15,14 +15,14 @@
 /// <reference types="react" />
 
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
-export declare function AttachmentProperties({
-	errors,
-	objectFieldSettings,
-	onSettingsChange,
-}: IAttachmentPropertiesProps): JSX.Element;
 interface IAttachmentPropertiesProps {
 	errors: ObjectFieldErrors;
 	objectFieldSettings: ObjectFieldSetting[];
 	onSettingsChange: (setting: ObjectFieldSetting) => void;
 }
+export declare function AttachmentProperties({
+	errors,
+	objectFieldSettings,
+	onSettingsChange,
+}: IAttachmentPropertiesProps): JSX.Element;
 export {};

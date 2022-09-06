@@ -23,6 +23,23 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {normalizeFieldSettings} from '../../utils/fieldSettings';
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
 
+interface IAggregationSourcePropertyProps {
+	disabled?: boolean;
+	editingField?: boolean;
+	errors: ObjectFieldErrors;
+	objectDefinitionId: number;
+	objectFieldSettings: ObjectFieldSetting[];
+	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
+	onRelationshipChange?: (objectDefinitionId2: number) => void;
+	setValues: (values: Partial<ObjectField>) => void;
+}
+
+type TObjectRelationship = {
+	label: LocalizedValue<string>;
+	name: string;
+	objectDefinitionId2: number;
+};
+
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const aggregationFunctions = [
@@ -364,20 +381,3 @@ export function AggregationFormBase({
 		</>
 	);
 }
-
-interface IAggregationSourcePropertyProps {
-	disabled?: boolean;
-	editingField?: boolean;
-	errors: ObjectFieldErrors;
-	objectDefinitionId: number;
-	objectFieldSettings: ObjectFieldSetting[];
-	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
-	onRelationshipChange?: (objectDefinitionId2: number) => void;
-	setValues: (values: Partial<ObjectField>) => void;
-}
-
-type TObjectRelationship = {
-	label: LocalizedValue<string>;
-	name: string;
-	objectDefinitionId2: number;
-};

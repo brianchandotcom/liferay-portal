@@ -18,6 +18,14 @@ import {sub} from 'frontend-js-web';
 import {normalizeFieldSettings} from '../../utils/fieldSettings';
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
 
+interface IUseObjectFieldForm {
+	forbiddenChars?: string[];
+	forbiddenLastChars?: string[];
+	forbiddenNames?: string[];
+	initialValues: Partial<ObjectField>;
+	onSubmit: (field: ObjectField) => void;
+}
+
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const REQUIRED_MSG = Liferay.Language.get('required');
 
@@ -190,12 +198,4 @@ export function useObjectFieldForm({
 	});
 
 	return {errors, handleChange, handleSubmit, setValues, values};
-}
-
-interface IUseObjectFieldForm {
-	forbiddenChars?: string[];
-	forbiddenLastChars?: string[];
-	forbiddenNames?: string[];
-	initialValues: Partial<ObjectField>;
-	onSubmit: (field: ObjectField) => void;
 }

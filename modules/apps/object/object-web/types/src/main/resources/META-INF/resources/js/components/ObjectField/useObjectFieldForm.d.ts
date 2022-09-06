@@ -15,6 +15,13 @@
 /// <reference types="react" />
 /// <reference types="src/main/resources/META-INF/resources/ts_modules/object-js-components-web" />
 
+interface IUseObjectFieldForm {
+	forbiddenChars?: string[];
+	forbiddenLastChars?: string[];
+	forbiddenNames?: string[];
+	initialValues: Partial<ObjectField>;
+	onSubmit: (field: ObjectField) => void;
+}
 export declare function useObjectFieldForm({
 	forbiddenChars,
 	forbiddenLastChars,
@@ -43,11 +50,4 @@ export declare function useObjectFieldForm({
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 };
-interface IUseObjectFieldForm {
-	forbiddenChars?: string[];
-	forbiddenLastChars?: string[];
-	forbiddenNames?: string[];
-	initialValues: Partial<ObjectField>;
-	onSubmit: (field: ObjectField) => void;
-}
 export {};

@@ -36,6 +36,33 @@ import {AttachmentFormBase} from './AttachmentFormBase';
 
 import './ObjectFieldFormBase.scss';
 
+interface IProps {
+	children?: ReactNode;
+	disabled?: boolean;
+	editingField?: boolean;
+	errors: ObjectFieldErrors;
+	handleChange: ChangeEventHandler<HTMLInputElement>;
+	objectDefinitionId: number;
+	objectField: Partial<ObjectField>;
+	objectFieldTypes: ObjectFieldType[];
+	objectName: string;
+	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
+	onRelationshipChange?: (objectDefinitionId2: number) => void;
+	setValues: (values: Partial<ObjectField>) => void;
+}
+
+type TObjectRelationship = {
+	deletionType: string;
+	id: number;
+	label: LocalizedValue<string>;
+	name: string;
+	objectDefinitionId2: number;
+};
+
+export type ObjectFieldErrors = FormError<
+	ObjectField & {[key in ObjectFieldSettingName]: unknown}
+>;
+
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export default function ObjectFieldFormBase({
@@ -369,29 +396,3 @@ export default function ObjectFieldFormBase({
 		</>
 	);
 }
-interface IProps {
-	children?: ReactNode;
-	disabled?: boolean;
-	editingField?: boolean;
-	errors: ObjectFieldErrors;
-	handleChange: ChangeEventHandler<HTMLInputElement>;
-	objectDefinitionId: number;
-	objectField: Partial<ObjectField>;
-	objectFieldTypes: ObjectFieldType[];
-	objectName: string;
-	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
-	onRelationshipChange?: (objectDefinitionId2: number) => void;
-	setValues: (values: Partial<ObjectField>) => void;
-}
-
-type TObjectRelationship = {
-	deletionType: string;
-	id: number;
-	label: LocalizedValue<string>;
-	name: string;
-	objectDefinitionId2: number;
-};
-
-export type ObjectFieldErrors = FormError<
-	ObjectField & {[key in ObjectFieldSettingName]: unknown}
->;

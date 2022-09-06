@@ -14,16 +14,16 @@
 
 /// <reference types="react" />
 
-export default function AddObjectField({
-	apiURL,
-	objectDefinitionId,
-	objectFieldTypes,
-	objectName,
-}: IProps): JSX.Element;
 interface IProps {
 	apiURL: string;
 	objectDefinitionId: number;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 }
+export default function AddObjectField({
+	apiURL,
+	objectDefinitionId,
+	objectFieldTypes,
+	objectName,
+}: IProps): JSX.Element;
 export {};

@@ -15,13 +15,6 @@
 /// <reference types="react" />
 
 import './ObjectFieldFormBase.scss';
-export declare function AttachmentFormBase({
-	disabled,
-	error,
-	objectFieldSettings,
-	objectName,
-	setValues,
-}: IAttachmentFormBaseProps): JSX.Element;
 interface IAttachmentFormBaseProps {
 	disabled?: boolean;
 	error?: string;
@@ -29,4 +22,11 @@ interface IAttachmentFormBaseProps {
 	objectName: string;
 	setValues: (values: Partial<ObjectField>) => void;
 }
+export declare function AttachmentFormBase({
+	disabled,
+	error,
+	objectFieldSettings,
+	objectName,
+	setValues,
+}: IAttachmentFormBaseProps): JSX.Element;
 export {};

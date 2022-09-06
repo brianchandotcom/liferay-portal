@@ -24,6 +24,18 @@ import {toCamelCase} from '../../utils/string';
 import ObjectFieldFormBase from './ObjectFieldFormBase';
 import {useObjectFieldForm} from './useObjectFieldForm';
 
+interface IModal extends IProps {
+	observer: Observer;
+	onClose: () => void;
+}
+
+interface IProps {
+	apiURL: string;
+	objectDefinitionId: number;
+	objectFieldTypes: ObjectFieldType[];
+	objectName: string;
+}
+
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 function ModalAddObjectField({
@@ -168,16 +180,4 @@ export default function AddObjectField({
 			)}
 		</ClayModalProvider>
 	);
-}
-
-interface IModal extends IProps {
-	observer: Observer;
-	onClose: () => void;
-}
-
-interface IProps {
-	apiURL: string;
-	objectDefinitionId: number;
-	objectFieldTypes: ObjectFieldType[];
-	objectName: string;
 }

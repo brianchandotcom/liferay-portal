@@ -22,6 +22,15 @@ import {createAutoCorrectedNumberPipe} from '../../utils/createAutoCorrectedNumb
 import {normalizeFieldSettings} from '../../utils/fieldSettings';
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
 
+interface IMaxLengthPropertiesProps {
+	disabled?: boolean;
+	errors: ObjectFieldErrors;
+	objectField: Partial<ObjectField>;
+	objectFieldSettings: ObjectFieldSetting[];
+	onSettingsChange: (setting: ObjectFieldSetting) => void;
+	setValues: (values: Partial<ObjectField>) => void;
+}
+
 export function MaxLengthProperties({
 	disabled,
 	errors,
@@ -113,13 +122,4 @@ export function MaxLengthProperties({
 			</ClayForm.Group>
 		</>
 	);
-}
-
-interface IMaxLengthPropertiesProps {
-	disabled?: boolean;
-	errors: ObjectFieldErrors;
-	objectField: Partial<ObjectField>;
-	objectFieldSettings: ObjectFieldSetting[];
-	onSettingsChange: (setting: ObjectFieldSetting) => void;
-	setValues: (values: Partial<ObjectField>) => void;
 }

@@ -22,6 +22,15 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const languages = Liferay.Language.available;
 const languageLabels = Object.values(languages);
 
+interface ISearchableProps {
+	disabled?: boolean;
+	errors: ObjectFieldErrors;
+	isApproved: boolean;
+	objectField: Partial<ObjectField>;
+	readOnly: boolean;
+	setValues: (values: Partial<ObjectField>) => void;
+}
+
 export function SearchableContainer({
 	disabled,
 	isApproved,
@@ -114,13 +123,4 @@ export function SearchableContainer({
 			)}
 		</Card>
 	);
-}
-
-interface ISearchableProps {
-	disabled?: boolean;
-	errors: ObjectFieldErrors;
-	isApproved: boolean;
-	objectField: Partial<ObjectField>;
-	readOnly: boolean;
-	setValues: (values: Partial<ObjectField>) => void;
 }

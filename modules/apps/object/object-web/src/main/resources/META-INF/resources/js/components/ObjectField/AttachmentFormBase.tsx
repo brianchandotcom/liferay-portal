@@ -20,6 +20,14 @@ import {normalizeFieldSettings} from '../../utils/fieldSettings';
 
 import './ObjectFieldFormBase.scss';
 
+interface IAttachmentFormBaseProps {
+	disabled?: boolean;
+	error?: string;
+	objectFieldSettings: ObjectFieldSetting[];
+	objectName: string;
+	setValues: (values: Partial<ObjectField>) => void;
+}
+
 const attachmentSources = [
 	{
 		description: Liferay.Language.get(
@@ -127,12 +135,4 @@ export function AttachmentFormBase({
 			)}
 		</>
 	);
-}
-
-interface IAttachmentFormBaseProps {
-	disabled?: boolean;
-	error?: string;
-	objectFieldSettings: ObjectFieldSetting[];
-	objectName: string;
-	setValues: (values: Partial<ObjectField>) => void;
 }

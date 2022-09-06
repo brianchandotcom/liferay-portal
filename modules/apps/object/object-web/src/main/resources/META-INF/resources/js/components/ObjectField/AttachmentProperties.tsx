@@ -20,6 +20,12 @@ import React from 'react';
 import {normalizeFieldSettings} from '../../utils/fieldSettings';
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
 
+interface IAttachmentPropertiesProps {
+	errors: ObjectFieldErrors;
+	objectFieldSettings: ObjectFieldSetting[];
+	onSettingsChange: (setting: ObjectFieldSetting) => void;
+}
+
 export function AttachmentProperties({
 	errors,
 	objectFieldSettings,
@@ -83,10 +89,4 @@ export function AttachmentProperties({
 			/>
 		</>
 	);
-}
-
-interface IAttachmentPropertiesProps {
-	errors: ObjectFieldErrors;
-	objectFieldSettings: ObjectFieldSetting[];
-	onSettingsChange: (setting: ObjectFieldSetting) => void;
 }

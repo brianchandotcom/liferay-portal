@@ -15,13 +15,6 @@
 /// <reference types="react" />
 
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
-export declare function SearchableContainer({
-	disabled,
-	isApproved,
-	objectField,
-	readOnly,
-	setValues,
-}: ISearchableProps): JSX.Element;
 interface ISearchableProps {
 	disabled?: boolean;
 	errors: ObjectFieldErrors;
@@ -30,4 +23,11 @@ interface ISearchableProps {
 	readOnly: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
 }
+export declare function SearchableContainer({
+	disabled,
+	isApproved,
+	objectField,
+	readOnly,
+	setValues,
+}: ISearchableProps): JSX.Element;
 export {};

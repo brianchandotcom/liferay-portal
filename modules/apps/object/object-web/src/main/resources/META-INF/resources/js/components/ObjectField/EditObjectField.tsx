@@ -40,6 +40,39 @@ import {useObjectFieldForm} from './useObjectFieldForm';
 
 import './EditObjectField.scss';
 
+interface AggregationFilters {
+	defaultSort?: boolean;
+	fieldLabel?: string;
+	filterBy?: string;
+	filterType?: string;
+	label: LocalizedValue<string>;
+	objectFieldBusinessType?: string;
+	objectFieldName: string;
+	priority?: number;
+	sortOrder?: string;
+	type?: string;
+	value?: string;
+	valueList?: LabelValueObject[];
+}
+
+interface IItem extends LabelValueObject {
+	checked?: boolean;
+}
+interface IProps {
+	filterOperators: TFilterOperators;
+	forbiddenChars: string[];
+	forbiddenLastChars: string[];
+	forbiddenNames: string[];
+	isApproved: boolean;
+	isDefaultStorageType: boolean;
+	objectDefinitionId: number;
+	objectField: ObjectField;
+	objectFieldTypes: ObjectFieldType[];
+	objectName: string;
+	readOnly: boolean;
+	workflowStatusJSONArray: LabelValueObject[];
+}
+
 const REQUIRED_MSG = Liferay.Language.get('required');
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
@@ -638,37 +671,4 @@ export default function EditObjectField({
 			)}
 		</SidePanelForm>
 	);
-}
-
-interface AggregationFilters {
-	defaultSort?: boolean;
-	fieldLabel?: string;
-	filterBy?: string;
-	filterType?: string;
-	label: LocalizedValue<string>;
-	objectFieldBusinessType?: string;
-	objectFieldName: string;
-	priority?: number;
-	sortOrder?: string;
-	type?: string;
-	value?: string;
-	valueList?: LabelValueObject[];
-}
-
-interface IItem extends LabelValueObject {
-	checked?: boolean;
-}
-interface IProps {
-	filterOperators: TFilterOperators;
-	forbiddenChars: string[];
-	forbiddenLastChars: string[];
-	forbiddenNames: string[];
-	isApproved: boolean;
-	isDefaultStorageType: boolean;
-	objectDefinitionId: number;
-	objectField: ObjectField;
-	objectFieldTypes: ObjectFieldType[];
-	objectName: string;
-	readOnly: boolean;
-	workflowStatusJSONArray: LabelValueObject[];
 }

@@ -225,8 +225,12 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_whenIndexerRegistryGetIndexer(className, _createIndexer());
 
+		Document document = _createDocument(className, entryClassPK);
+
+		document.addKeyword(Field.USER_ID, userId);
+
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
-			build(_createDocument(className, entryClassPK));
+			build(document);
 
 		_assertAssetRendererURLDownloadVisible(
 			urlDownload, searchResultSummaryDisplayContext);
@@ -280,6 +284,8 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		Document document = _createDocument(className, entryClassPK);
 
 		document.addKeyword(Field.ROOT_ENTRY_CLASS_PK, rootEntryClassPK);
+
+		document.addKeyword(Field.USER_ID, userId);
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			build(document);

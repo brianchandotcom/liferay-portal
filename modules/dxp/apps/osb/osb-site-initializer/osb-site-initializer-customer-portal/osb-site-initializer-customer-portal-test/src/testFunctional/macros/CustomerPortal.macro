@@ -205,27 +205,6 @@ definition {
 			title = "${title}");
 	}
 
-	macro createUserForCP {
-		JSONUser.addUser(
-			userEmailAddress = "test.user@liferay.com",
-			userFirstName = "User",
-			userLastName = "2",
-			userScreenName = "Testing");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "test.user@liferay.com");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Test Account Portal");
-
-		Accounts.assignUsers(
-			accountName = "Test Account Portal",
-			assigneeName = "User 2");
-	}
-
 	macro changeUserRole {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -316,6 +295,27 @@ definition {
 		CustomerPortal.showCPObject(title = "Account Flag");
 
 		CustomerPortal.showCPObject(title = "Koroneiki Account");
+	}
+
+	macro createUserForCP {
+		JSONUser.addUser(
+			userEmailAddress = "test.user@liferay.com",
+			userFirstName = "User",
+			userLastName = "2",
+			userScreenName = "Testing");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "test.user@liferay.com");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Test Account Portal");
+
+		Accounts.assignUsers(
+			accountName = "Test Account Portal",
+			assigneeName = "User 2");
 	}
 
 	macro customerPortalApisTearDown {

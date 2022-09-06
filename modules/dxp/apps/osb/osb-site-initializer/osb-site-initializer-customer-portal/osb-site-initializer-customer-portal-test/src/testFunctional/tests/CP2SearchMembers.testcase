@@ -71,7 +71,7 @@ definition {
 		}
 
 		task ("Search for the user's first name and affirm that the search worked") {
-			CP2TeamMembers.searchCP(search = "testing");
+			CP2TeamMembers.searchCP(search = "abcd");
 
 			KeyPress(
 				locator1 = "CP2TeamMembers#SEARCH_TM",

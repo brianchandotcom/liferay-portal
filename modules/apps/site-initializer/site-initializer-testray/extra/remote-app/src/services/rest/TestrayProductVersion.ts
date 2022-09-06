@@ -16,83 +16,72 @@ import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
 import {SearchBuilder} from '../../util/search';
 import fetcher from '../fetcher';
+import Rest from './Rest';
 import {APIResponse, TestrayProductVersion} from './types';
 
 type ProductVersion = typeof yupSchema.productVersion.__outputType;
 
-const nestedFieldsParam = 'nestedFields=project';
-const productVersionsResource = `/productversions?${nestedFieldsParam}`;
-
-const adapter = ({
-	name,
-	projectId: r_projectToProductVersions_c_projectId,
-}: ProductVersion) => ({
-	name,
-	r_projectToProductVersions_c_projectId,
-});
-
-const validateProductVersionName = async (
-	productVersion: ProductVersion,
-	productVersionId?: number
-): Promise<void | Error> => {
-	const filter = new SearchBuilder()
-		.eq('name', productVersion.name)
-		.and()
-		.eq('projectId', productVersion.projectId as string)
-		.build();
-
-	const response = await fetcher<APIResponse<TestrayProductVersion>>(
-		`/productversions?filter=${filter}`
-	);
-
-	const checkProductVersionId = productVersionId
-		? response?.items[0]?.id !== productVersionId
-		: true;
-
-	if (response?.totalCount && checkProductVersionId) {
-		throw new Error(
-			i18n.sub('the-x-name-already-exists', 'product-version')
-		);
+class TestrayProductVersionImpl extends Rest<
+	ProductVersion,
+	TestrayProductVersion
+> {
+	constructor() {
+		super({
+			adapter: ({
+				name,
+				projectId: r_projectToProductVersions_c_projectId,
+			}) => ({
+				name,
+				r_projectToProductVersions_c_projectId,
+			}),
+			nestedFields: 'project',
+			transformData: (testrayProductVersion) => ({
+				...testrayProductVersion,
+				project:
+					testrayProductVersion?.r_projectToProductVersions_c_project,
+			}),
+			uri: 'productversions',
+		});
 	}
-};
 
-const createProductVersion = async (productVersion: ProductVersion) => {
-	await validateProductVersionName(productVersion);
+	private async validate(productVersion: ProductVersion, id?: number) {
+		const searchBuilder = new SearchBuilder();
 
-	return fetcher.post('/productversions', adapter(productVersion));
-};
+		if (id) {
+			searchBuilder.ne('id', id).and();
+		}
 
-const updateProductVersion = async (
-	id: number,
-	productVersion: ProductVersion
-) => {
-	await validateProductVersionName(productVersion, id);
+		const filter = searchBuilder
+			.eq('name', productVersion.name)
+			.and()
+			.eq('projectId', productVersion.projectId as string)
+			.build();
 
-	return fetcher.put(`/productversions/${id}`, adapter(productVersion));
-};
+		const response = await fetcher<APIResponse<TestrayProductVersion>>(
+			`/productversions?filter=${filter}`
+		);
 
-const getProductVersionQuery = (productVersionId: number | string) =>
-	`/productversions/${productVersionId}?${nestedFieldsParam}`;
+		if (response?.totalCount) {
+			throw new Error(
+				i18n.sub('the-x-name-already-exists', 'product-version')
+			);
+		}
+	}
 
-const getProductVersionTransformData = (
-	testrayProductVersion: TestrayProductVersion
-): TestrayProductVersion => ({
-	...testrayProductVersion,
-	project: testrayProductVersion?.r_projectToProductVersions_c_project,
-});
+	protected async beforeCreate(
+		productVersion: ProductVersion
+	): Promise<void> {
+		await this.validate(productVersion);
+	}
 
-const getProductVersionsTransformData = (
-	response: APIResponse<TestrayProductVersion>
-) => ({
-	...response,
-	items: response?.items?.map(getProductVersionTransformData),
-});
+	protected async beforeUpdate(
+		id: number,
+		productVersion: ProductVersion
+	): Promise<void> {
+		await this.validate(productVersion, id);
+	}
+}
 
-export {
-	productVersionsResource,
-	createProductVersion,
-	updateProductVersion,
-	getProductVersionQuery,
-	getProductVersionTransformData,
-	getProductVersionsTransformData,
-};
+const testrayProductVersionImpl = new TestrayProductVersionImpl();
+
+export {testrayProductVersionImpl};

@@ -15,110 +15,100 @@
 import i18n from '../../i18n';
 import {State} from '../../pages/Standalone/Teams/TeamsFormModal';
 import yupSchema from '../../schema/yup';
-import {searchUtil} from '../../util/search';
-import fetcher from '../fetcher';
+import {SearchBuilder, searchUtil} from '../../util/search';
+import Rest from './Rest';
 import {APIResponse, TestrayComponent} from './types';
 
 type Component = typeof yupSchema.component.__outputType;
+class TestrayComponentImpl extends Rest<Component, TestrayComponent> {
+	private UNASSIGNED_TEAM_ID = 0;
 
-const adapter = ({
-	name,
-	projectId: r_projectToComponents_c_projectId,
-	teamId: r_teamToComponents_c_teamId,
-}: Component) => ({
-	name,
-	r_projectToComponents_c_projectId,
-	r_teamToComponents_c_teamId,
-});
-
-const createComponent = async (component: Component) => {
-	const response = await fetcher(
-		`/components?filter=${searchUtil.eq(
-			'projectId',
-			component.projectId as any
-		)} and ${searchUtil.eq('name', component.name)}`
-	);
-
-	if (response.items?.length) {
-		throw new Error(i18n.translate('the-component-name-already-exists'));
+	constructor() {
+		super({
+			adapter: ({
+				name,
+				projectId: r_projectToComponents_c_projectId,
+				teamId: r_teamToComponents_c_teamId,
+			}) => ({
+				name,
+				r_projectToComponents_c_projectId,
+				r_teamToComponents_c_teamId,
+			}),
+			nestedFields: 'project,team',
+			transformData: (testrayComponent) => ({
+				...testrayComponent,
+				project: testrayComponent?.r_projectToComponents_c_project,
+				team: testrayComponent?.r_teamToComponents_c_team,
+				teamId: testrayComponent.r_teamToComponents_c_teamId,
+			}),
+			uri: 'components',
+		});
 	}
 
-	return fetcher.post('/components', adapter(component));
-};
+	public async assignTeamsToComponents(teamId: number, state: State) {
+		const [unassignedItems = [], currentItems = []] = state;
 
-const updateComponent = async (id: number, component: Partial<Component>) => {
-	if (component.name) {
-		const response = await fetcher(
-			`/components?filter=${searchUtil.eq(
-				'projectId',
-				component.projectId as any
-			)} and ${searchUtil.eq('name', component.name)}`
+		for (const unassigned of unassignedItems) {
+			if (this.UNASSIGNED_TEAM_ID !== unassigned.teamId) {
+				await this.update(Number(unassigned.value), {
+					name: unassigned.label,
+					teamId: this.UNASSIGNED_TEAM_ID,
+				});
+			}
+		}
+
+		for (const current of currentItems) {
+			if (this.UNASSIGNED_TEAM_ID === current.teamId) {
+				await this.update(Number(current.value), {
+					name: current.label,
+					teamId,
+				});
+			}
+		}
+	}
+
+	protected async validate(component: Component, id?: number): Promise<void> {
+		const searchBuilder = new SearchBuilder();
+
+		if (id) {
+			searchBuilder.ne('id', id).and();
+		}
+
+		const filter = searchBuilder
+			.eq('name', component.name)
+			.and()
+			.eq('projectId', component.projectId as string)
+			.build();
+
+		const response = await this.fetcher<APIResponse<TestrayComponent>>(
+			`/components?filter=${filter}`
 		);
 
-		if (response.items?.length) {
-			throw new Error(
-				i18n.translate('the-component-name-already-exists')
-			);
-		}
-		fetcher.patch(`/components/${id}`, adapter(component as Component));
-	}
-};
-
-const nestedFieldsParam = 'nestedFields=project,team';
-
-const componentsResource = `/components?${nestedFieldsParam}`;
-
-const assignTeamsToComponents = async (teamId: number, state: State) => {
-	const [unassignedItems = [], currentItems = []] = state;
-
-	for (const unassigned of unassignedItems) {
-		if (unassigned.teamId !== 0) {
-			await updateComponent(Number(unassigned.value), {
-				name: unassigned.label,
-				teamId: '0',
-			});
+		if (response?.items?.length) {
+			throw new Error(i18n.sub('the-x-name-already-exists', 'component'));
 		}
 	}
 
-	for (const current of currentItems) {
-		if (current.teamId === 0) {
-			await updateComponent(Number(current.value), {
-				name: current.label,
-				teamId: teamId?.toString(),
-			});
-		}
+	protected async beforeCreate(component: Component): Promise<void> {
+		await this.validate(component);
 	}
-};
 
-const getTeamsComponentsQuery = (teamId: number) =>
-	fetcher(`/components?filter=${searchUtil.eq('teamId', teamId)}`);
+	protected async beforeUpdate(
+		id: number,
+		component: Component
+	): Promise<void> {
+		await this.validate(component, id);
+	}
 
-const getComponentQuery = (componentId: number | string) =>
-	`/components/${componentId}?${nestedFieldsParam}`;
+	public getComponentsByTeamId(
+		teamId: number
+	): Promise<APIResponse<TestrayComponent> | undefined> {
+		return this.fetcher<APIResponse<TestrayComponent>>(
+			`/components?filter=${searchUtil.eq('teamId', teamId)}`
+		);
+	}
+}
 
-const getComponentTransformData = (
-	testrayComponent: TestrayComponent
-): TestrayComponent => ({
-	...testrayComponent,
-	project: testrayComponent?.r_projectToComponents_c_project,
-	team: testrayComponent?.r_teamToComponents_c_team,
-	teamId: testrayComponent.r_teamToComponents_c_teamId,
-});
+const testrayComponentImpl = new TestrayComponentImpl();
 
-const getComponentsTransformData = (
-	response: APIResponse<TestrayComponent>
-) => ({
-	...response,
-	items: response?.items?.map(getComponentTransformData),
-});
-
-export {
-	assignTeamsToComponents,
-	componentsResource,
-	createComponent,
-	updateComponent,
-	getComponentQuery,
-	getComponentTransformData,
-	getComponentsTransformData,
-	getTeamsComponentsQuery,
-};
+export {testrayComponentImpl};

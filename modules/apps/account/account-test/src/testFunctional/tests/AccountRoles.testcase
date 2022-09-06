@@ -68,6 +68,57 @@ definition {
 		}
 	}
 
+	@description = "This test asserts the account manager can remove the organizations from the account by default."
+	@priority = "4"
+	test AccountManagersCanRemoveOrganizationfromAccountbyDefault {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given assign the Organization Account Org1 to Account AM Account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "AM Account",
+				accountEntryType = "Business");
+
+			JSONOrganization.addOrganization(organizationName = "Account Org1");
+
+			JSONAccountEntry.addAccountEntryOrganization(
+				accountEntryName = "AM Account",
+				organizationName = "Account Org1");
+		}
+
+		task ("And add user useramsn as Account Manager") {
+			AccountConfiguration.addAccountManager(
+				accountName = "AM Account",
+				orgName = "AM Organization",
+				orgRoleTitle = "Account Manager",
+				userEmailAddress = "useramea@liferay.com",
+				userFirstName = "useramfn",
+				userLastName = "useramln",
+				userScreenName = "useramsn");
+		}
+
+		task ("When the Account Manager useramsn remove the Account Org1 from AM Account") {
+			User.logoutPG();
+
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "useramea@liferay.com");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AM Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+
+			Accounts.removeOrganizationAsAssignee(assigneeName = "Account Org1");
+		}
+
+		task ("Then only the AM Organization displays in the Organizations list for AM Account") {
+			LexiconEntry.viewNoEntry(rowEntry = "Account Org1");
+
+			LexiconEntry.viewEntryName(rowEntry = "AM Organization");
+		}
+	}
+
 	@description = "This test assert the account manager can view account organizations by default."
 	@priority = "4"
 	test AccountManagersCanViewOrganizationsbyDefault {

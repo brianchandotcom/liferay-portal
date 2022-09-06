@@ -161,13 +161,6 @@ public class WorkflowMetricsSLAProcessMessageListener
 		activate(properties);
 	}
 
-	@Reference(
-		target = ModuleServiceLifecycle.PORTLETS_INITIALIZED, unbind = "-"
-	)
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private String _getBackgroundTaskName(
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
 
@@ -189,6 +182,9 @@ public class WorkflowMetricsSLAProcessMessageListener
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

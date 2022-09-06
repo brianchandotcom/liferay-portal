@@ -311,11 +311,6 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 		_siteMemberUserDemoDataCreator.delete();
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private WorkflowInstance _addWorkflowInstance(
 			long companyId, Date createDate, long ddmFormInstanceId,
 			long groupId, long userId)
@@ -433,6 +428,9 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private OmniAdminUserDemoDataCreator _omniAdminUserDemoDataCreator;

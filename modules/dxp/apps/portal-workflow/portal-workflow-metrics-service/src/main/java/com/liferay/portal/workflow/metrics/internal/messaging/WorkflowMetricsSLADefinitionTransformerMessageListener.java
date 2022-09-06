@@ -105,13 +105,6 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 		_transform(companyId);
 	}
 
-	@Reference(
-		target = ModuleServiceLifecycle.PORTLETS_INITIALIZED, unbind = "-"
-	)
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private BooleanQuery _createBooleanQuery(long companyId) {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -180,6 +173,9 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference(target = "(workflow.metrics.index.entity.name=process)")
 	private WorkflowMetricsIndexNameBuilder

@@ -450,5 +450,9 @@
 	"h4FontSize": {
 		"cssVariableMapping": "h4-font-size",
 		"value": "1.4375rem"
+	},
+	"textParagraphLineHeight": {
+		"cssVariableMapping": "text-paragraph-line-height",
+		"value": "18px"
 	}
 }

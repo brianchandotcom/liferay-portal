@@ -361,7 +361,7 @@ public class DefaultSearchResponseTranslator
 		Hits hits, Map<String, Aggregation> aggregationsMap,
 		Map<String, Stats> statsMap) {
 
-		if (!MapUtil.isEmpty(statsMap)) {
+		if (MapUtil.isNotEmpty(statsMap)) {
 			for (Stats stats : statsMap.values()) {
 				hits.addStatsResults(getStatsResults(aggregationsMap, stats));
 			}

@@ -544,8 +544,8 @@ public class AssignScopesDisplayContext
 
 			// Preserve assignable scopes that are assigned an alias
 
-			if (!SetUtil.isEmpty(relations.getAssignedScopeAliases()) ||
-				!SetUtil.isEmpty(relations.getScopeAliases())) {
+			if (SetUtil.isNotEmpty(relations.getAssignedScopeAliases()) ||
+				SetUtil.isNotEmpty(relations.getScopeAliases())) {
 
 				combinedAssignableScopesRelations.put(
 					assignableScopes, relations);

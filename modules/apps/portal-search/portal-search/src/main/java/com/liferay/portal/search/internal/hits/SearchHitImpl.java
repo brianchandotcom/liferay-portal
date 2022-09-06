@@ -39,7 +39,7 @@ public class SearchHitImpl implements SearchHit, Serializable {
 	}
 
 	public void addSources(Map<String, Object> sourcesMap) {
-		if (!MapUtil.isEmpty(sourcesMap)) {
+		if (MapUtil.isNotEmpty(sourcesMap)) {
 			_sourcesMap.putAll(sourcesMap);
 		}
 	}

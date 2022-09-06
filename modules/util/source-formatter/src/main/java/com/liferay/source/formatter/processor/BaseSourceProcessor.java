@@ -379,7 +379,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		throws IOException {
 
 		if (!forceIncludeAllFiles &&
-			!SetUtil.isEmpty(
+			SetUtil.isNotEmpty(
 				_sourceFormatterArgs.getRecentChangesFileNames())) {
 
 			return SourceFormatterUtil.filterRecentChangesFileNames(

@@ -412,7 +412,7 @@ public class AccountEntryUserRelLocalServiceImpl
 		Set<Long> set = SetUtil.intersect(
 			addAccountEntryIds, deleteAccountEntryIds);
 
-		if (!SetUtil.isEmpty(set)) {
+		if (SetUtil.isNotEmpty(set)) {
 			throw new DuplicateAccountEntryIdException();
 		}
 

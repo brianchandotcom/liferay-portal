@@ -379,7 +379,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		Set<String> assetTagIds =
 			_contentDashboardAdminDisplayContext.getAssetTagIds();
 
-		if (!SetUtil.isEmpty(assetTagIds)) {
+		if (SetUtil.isNotEmpty(assetTagIds)) {
 			Stream<String> stream = assetTagIds.stream();
 
 			portletURL.setParameter(

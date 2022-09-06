@@ -1,6 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "org.jsoup", name: "jsoup", version: "1.15.1"
+	testIntegrationCompile group: "org.jsoup", name: "jsoup", version: "1.15.3"
 	testIntegrationCompile project(":apps:fragment:fragment-api")
 	testIntegrationCompile project(":apps:layout:layout-api")
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")

@@ -100,7 +100,7 @@ const yupSchema = {
 		id: yup.string(),
 		name: yup.string().required(),
 		projectId: yup.string(),
-		teamId: yup.string(),
+		teamId: yup.number(),
 	}),
 	factor: yup.object({
 		factorCategoryId: yup.string().required(),

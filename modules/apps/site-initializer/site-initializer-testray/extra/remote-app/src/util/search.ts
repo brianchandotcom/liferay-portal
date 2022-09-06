@@ -18,9 +18,30 @@ type Filter = {
 	[key: string]: string | number | string[] | number[];
 };
 
+/**
+ * @description
+ * Based in the following article https://help.liferay.com/hc/pt/articles/360031163631-Filter-Sort-and-Search
+ */
+
 export const searchUtil = {
+	/**
+	 * @description Contains
+	 * @example contains(title,'edmon')
+	 */
+
 	contains: (key: Key, value: Value) => `contains(${key}, '${value}')`,
+
+	/**
+	 * @description Equal
+	 * @example addressLocality eq 'Redmond'
+	 */
+
 	eq: (key: Key, value: Value) => `${key} eq '${value}'`,
+
+	/**
+	 * @description In [values]
+	 * @example addressLocality in ('London', 'Recife')
+	 */
 	in: (key: Key, values: Value[]) => {
 		if (values) {
 			const operator = `${key} in ({values})`;
@@ -35,6 +56,12 @@ export const searchUtil = {
 
 		return '';
 	},
+
+	/**
+	 * @description Not equal
+	 * @example addressLocality ne 'London'
+	 */
+	ne: (key: Key, value: Value) => `${key} ne '${value}'`,
 };
 
 export class SearchBuilder {
@@ -96,12 +123,20 @@ export class SearchBuilder {
 		return _filter.join(' and ');
 	}
 
+	contains(key: Key, value: Value) {
+		return this.#setContext(searchUtil.contains(key, value));
+	}
+
 	eq(key: Key, value: Value) {
 		return this.#setContext(searchUtil.eq(key, value));
 	}
 
 	in(key: Key, values: Value[]) {
 		return this.#setContext(searchUtil.in(key, values));
+	}
+
+	ne(key: Key, value: Value) {
+		return this.#setContext(searchUtil.ne(key, value));
 	}
 
 	or() {

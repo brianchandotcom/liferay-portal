@@ -68,14 +68,6 @@ public class TestOpenSSOMVCRenderCommand implements MVCRenderCommand {
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.opensso.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static final String _JSP_PATH =
 		"/com.liferay.portal.settings.web/test_opensso.jsp";
 
@@ -85,6 +77,9 @@ public class TestOpenSSOMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private Portal _portal;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.opensso.web)"
+	)
 	private ServletContext _servletContext;
 
 }

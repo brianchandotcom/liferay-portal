@@ -528,6 +528,119 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-159631. Page opens in new tab when selecting New Tab in advanced tab on staging."
+	@priority = "3"
+	test ViewLinkToURLTypePageWhichSelectingNewTabInAdvancedTab {
+		task ("Given a page creator has a widget page in staging") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false");
+		}
+
+		task ("When adding a Link to URL type page and selecting New Tab in advanced tab") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			PagesAdmin.addPage(
+				pageName = "Test Link to URL Page Name",
+				pageTypeURL = "https://www.google.com",
+				sitePageType = "Link to URL",
+				targetType = "New Tab");
+		}
+
+		task ("Then viewing the linked URL page opens in new tab in staging site and live site") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertClick.assertPartialTextClickAt(
+				key_pageName = "Test Link to URL Page Name",
+				locator1 = "Home#PAGE",
+				value1 = "Test Link to URL Page Name");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
+
+			Navigator.closeWindow();
+
+			ProductMenu.gotoStagingSite(site = "Test Site Name");
+
+			PagesFinder.goToPagesFinder();
+
+			Click(
+				key_pageName = "Test Link to URL Page Name",
+				locator1 = "PagesFinder#PAGE_NAME",
+				value1 = "${pageName}");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
+
+			Navigator.closeWindow();
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "Test Link to URL Page Name");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
+
+			Navigator.closeWindow();
+
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			Navigator.gotoLiveView();
+
+			AssertClick.assertPartialTextClickAt(
+				key_pageName = "Test Link to URL Page Name",
+				locator1 = "Home#PAGE",
+				value1 = "Test Link to URL Page Name");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
+
+			Navigator.closeWindow();
+
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			Navigator.gotoLiveView();
+
+			PagesFinder.goToPagesFinder();
+
+			Click(
+				key_pageName = "Test Link to URL Page Name",
+				locator1 = "PagesFinder#PAGE_NAME",
+				value1 = "${pageName}");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
+
+			Navigator.closeWindow();
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "Test Link to URL Page Name");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
+
+			Navigator.closeWindow();
+		}
+	}
+
 	@description = "This is a use case for LPS-140253. View no private page in staging."
 	@priority = "4"
 	test ViewNoPrivatePageInStaging {

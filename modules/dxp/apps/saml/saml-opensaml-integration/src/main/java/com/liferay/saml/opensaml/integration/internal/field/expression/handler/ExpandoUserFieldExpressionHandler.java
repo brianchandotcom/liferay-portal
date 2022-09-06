@@ -489,7 +489,7 @@ public class ExpandoUserFieldExpressionHandler
 		if (valueConsumer == null) {
 			ExpandoColumn expandoColumn = expandoValue.getColumn();
 
-			throw new ValueDataException(
+			throw new ValueDataException.UnsupportedColumnTypeException(
 				StringBundler.concat(
 					"Unsupported column ", expandoColumn.getColumnId(),
 					" type ",

@@ -75,16 +75,6 @@ public class FacebookConnectAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	@Reference(unbind = "-")
-	protected void setFacebookConnect(FacebookConnect facebookConnect) {
-		_facebookConnect = facebookConnect;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private User _getUser(HttpServletRequest httpServletRequest, long companyId)
 		throws Exception {
 
@@ -111,11 +101,13 @@ public class FacebookConnectAutoLogin extends BaseAutoLogin {
 		return null;
 	}
 
+	@Reference
 	private FacebookConnect _facebookConnect;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

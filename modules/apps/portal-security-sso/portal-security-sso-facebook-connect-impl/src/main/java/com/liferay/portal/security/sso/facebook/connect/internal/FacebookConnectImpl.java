@@ -238,13 +238,6 @@ public class FacebookConnectImpl implements FacebookConnect {
 		return facebookConnectConfiguration.verifiedAccountRequired();
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
 	private FacebookConnectConfiguration _getFacebookConnectConfiguration(
 		long companyId) {
 
@@ -266,6 +259,7 @@ public class FacebookConnectImpl implements FacebookConnect {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FacebookConnectImpl.class);
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference

@@ -96,6 +96,10 @@ definition {
 			if (isSet(increaseMinutes)) {
 				var displayDateMinute = ${displayDateMinute} + ${increaseMinutes};
 			}
+
+			if (isSet(increaseYears)) {
+				var displayDateYear = ${displayDateYear} + ${increaseYears};
+			}
 		}
 		else {
 			var displayDateMinute = "01";

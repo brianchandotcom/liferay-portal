@@ -3198,7 +3198,7 @@ definition {
 					entryContent = "Blogs Entry Content",
 					entryTitle = "Blogs Entry Title",
 					groupName = "Test Site Name",
-					increaseMinutes = "10");
+					increaseYears = "1");
 			}
 
 			task ("Go to Content Dashboard") {

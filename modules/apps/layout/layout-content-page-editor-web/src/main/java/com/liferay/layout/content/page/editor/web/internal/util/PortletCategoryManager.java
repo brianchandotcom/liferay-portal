@@ -105,16 +105,16 @@ public class PortletCategoryManager {
 		PortalPreferences portalPreferences =
 			_portletPreferencesFactory.getPortalPreferences(httpServletRequest);
 
-		highlightedPortletIds.removeAll(
-			SetUtil.fromArray(
-				portalPreferences.getValues(
-					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-					"nonhighlightedPortletIds", new String[0])));
 		highlightedPortletIds.addAll(
 			SetUtil.fromArray(
 				portalPreferences.getValues(
 					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 					"highlightedPortletIds", new String[0])));
+		highlightedPortletIds.removeAll(
+			SetUtil.fromArray(
+				portalPreferences.getValues(
+					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+					"nonhighlightedPortletIds", new String[0])));
 
 		return highlightedPortletIds;
 	}

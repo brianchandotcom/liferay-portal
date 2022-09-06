@@ -4800,20 +4800,11 @@ public class ObjectEntryPersistenceImpl
 		}
 
 		for (ObjectEntry objectEntry : objectEntries) {
-			ObjectEntry cachedObjectEntry = (ObjectEntry)entityCache.getResult(
-				ObjectEntryImpl.class, objectEntry.getPrimaryKey());
+			if (entityCache.getResult(
+					ObjectEntryImpl.class, objectEntry.getPrimaryKey()) ==
+						null) {
 
-			if (cachedObjectEntry == null) {
 				cacheResult(objectEntry);
-			}
-			else {
-				ObjectEntryModelImpl objectEntryModelImpl =
-					(ObjectEntryModelImpl)objectEntry;
-				ObjectEntryModelImpl cachedObjectEntryModelImpl =
-					(ObjectEntryModelImpl)cachedObjectEntry;
-
-				objectEntryModelImpl.setValues(
-					cachedObjectEntryModelImpl.getValues());
 			}
 		}
 	}

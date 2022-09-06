@@ -26,7 +26,6 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import java.util.Date;
-import java.util.Map;
 
 /**
  * The cache model class for representing ObjectEntry in entity cache.
@@ -191,15 +190,11 @@ public class ObjectEntryCacheModel
 
 		objectEntryImpl.resetOriginalValues();
 
-		objectEntryImpl.setValues(_values);
-
 		return objectEntryImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput)
-		throws ClassNotFoundException, IOException {
-
+	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -223,8 +218,6 @@ public class ObjectEntryCacheModel
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
-
-		_values = (Map)objectInput.readObject();
 	}
 
 	@Override
@@ -278,8 +271,6 @@ public class ObjectEntryCacheModel
 		}
 
 		objectOutput.writeLong(statusDate);
-
-		objectOutput.writeObject(_values);
 	}
 
 	public long mvccVersion;
@@ -298,6 +289,5 @@ public class ObjectEntryCacheModel
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
-	public Map _values;
 
 }

@@ -724,13 +724,6 @@ public class ObjectEntryModelImpl
 		_statusDate = statusDate;
 	}
 
-	public Map<String, Serializable> getValues() {
-		return null;
-	}
-
-	public void setValues(Map<String, Serializable> values) {
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1005,8 +998,6 @@ public class ObjectEntryModelImpl
 
 		_setModifiedDate = false;
 
-		setValues(null);
-
 		_columnBitmask = 0;
 	}
 
@@ -1102,10 +1093,6 @@ public class ObjectEntryModelImpl
 		else {
 			objectEntryCacheModel.statusDate = Long.MIN_VALUE;
 		}
-
-		setValues(null);
-
-		objectEntryCacheModel._values = getValues();
 
 		return objectEntryCacheModel;
 	}

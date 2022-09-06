@@ -665,11 +665,6 @@ public class ObjectEntryWrapper
 	}
 
 	@Override
-	public void setValues(Map<String, Serializable> values) {
-		model.setValues(values);
-	}
-
-	@Override
 	public StagedModelType getStagedModelType() {
 		return model.getStagedModelType();
 	}

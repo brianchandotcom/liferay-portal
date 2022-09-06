@@ -489,15 +489,12 @@ public class CommerceOrderLocalServiceImpl
 		_commerceOrderPaymentLocalService.deleteCommerceOrderPayments(
 			commerceOrder.getCommerceOrderId());
 
-		// Commerce addresses
-
-		_commerceAddressLocalService.deleteCommerceAddresses(
-			commerceOrder.getModelClassName(),
-			commerceOrder.getCommerceOrderId());
-
 		// Commerce order
 
 		commerceOrderPersistence.remove(commerceOrder);
+		_commerceAddressLocalService.deleteCommerceAddresses(
+			commerceOrder.getModelClassName(),
+			commerceOrder.getCommerceOrderId());
 
 		// Expando
 

@@ -98,10 +98,10 @@ public class ComponentAnnotationCheck extends BaseCheck {
 				annotationMemberValuePairDetailAST.findFirstToken(
 					TokenTypes.EXPR);
 
-			FullIdent expressionIdent = FullIdent.createFullIdentBelow(
+			FullIdent expressionFullIdent = FullIdent.createFullIdentBelow(
 				expressionDetailAST);
 
-			String annotationMemberValue = expressionIdent.getText();
+			String annotationMemberValue = expressionFullIdent.getText();
 
 			if (annotationMemberValue.equals("ConfigurationPolicy.REQUIRE")) {
 				return;

@@ -48,14 +48,14 @@ describe('Sidebar', () => {
 			window.sessionStorage.clear();
 		});
 
-		it('can be resized with mouse', () => {
+		it('can be resized with mouse', async () => {
 			renderSidebar();
 
 			const handler = screen.getByRole('separator', {
 				label: 'resize-sidebar',
 			});
 
-			act(() => {
+			await act(async () => {
 				fireEvent(
 					handler,
 					new MouseEvent('mousedown', {
@@ -89,14 +89,14 @@ describe('Sidebar', () => {
 			);
 		});
 
-		it('can be resized with arrow keys', () => {
+		it('can be resized with arrow keys', async () => {
 			renderSidebar();
 
 			const handler = screen.getByRole('separator', {
 				label: 'resize-sidebar',
 			});
 
-			act(() => {
+			await act(async () => {
 				fireEvent(
 					handler,
 					new KeyboardEvent('keydown', {

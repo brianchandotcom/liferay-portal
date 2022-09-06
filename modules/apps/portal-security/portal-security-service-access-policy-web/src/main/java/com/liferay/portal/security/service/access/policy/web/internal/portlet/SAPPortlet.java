@@ -175,18 +175,6 @@ public class SAPPortlet extends MVCPortlet {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setJSONWebServiceActionsManager(
-		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
-
-		_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSAPEntryService(SAPEntryService sapEntryService) {
-		_sapEntryService = sapEntryService;
-	}
-
 	private JSONArray _getServiceClassNamesToContextNamesJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -279,7 +267,10 @@ public class SAPPortlet extends MVCPortlet {
 		return jsonWebServiceActionMappingsMap;
 	}
 
+	@Reference
 	private JSONWebServiceActionsManager _jsonWebServiceActionsManager;
+
+	@Reference
 	private SAPEntryService _sapEntryService;
 
 }

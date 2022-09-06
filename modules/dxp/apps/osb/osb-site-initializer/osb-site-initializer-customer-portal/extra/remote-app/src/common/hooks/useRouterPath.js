@@ -10,6 +10,7 @@
  */
 
 import {useMemo} from 'react';
+import {Liferay} from '../services/liferay';
 import {ROUTE_TYPES} from '../utils/constants';
 
 export default function useRouterPath() {

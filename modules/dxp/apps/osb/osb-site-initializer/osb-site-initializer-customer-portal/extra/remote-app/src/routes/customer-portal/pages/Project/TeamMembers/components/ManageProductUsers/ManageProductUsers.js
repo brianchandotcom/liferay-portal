@@ -12,6 +12,8 @@
 import {useEffect, useState} from 'react';
 import i18n from '../../../../../../../common/I18n';
 import {useAppPropertiesContext} from '../../../../../../../common/contexts/AppPropertiesContext';
+import {Liferay} from '../../../../../../../common/services/liferay';
+import {useGetLiferayExperienceCloudEnvironments} from '../../../../../../../common/services/liferay/graphql/liferay-experience-cloud-environments/queries/useGetLiferayExperienceEnvironments';
 import {
 	getAnalyticsCloudWorkspace,
 	getDXPCloudEnvironment,
@@ -65,6 +67,15 @@ const ManageProductUsers = ({project, subscriptionGroups}) => {
 		getAnalyticsCloudWorkspaces();
 	}, [client, project.accountKey]);
 
+	const {data} = useGetLiferayExperienceCloudEnvironments({
+		filter: `accountKey eq '${project.accountKey}'`,
+	});
+
+	const lxcProjectId =
+		data?.c?.liferayExperienceCloudEnvironments?.items[0]?.projectId;
+
+	const activatedLinkLxc = `http://${lxcProjectId}.lxc.liferay.com`;
+
 	const isActiveStatusDXPC =
 		subscriptionGroups.find(
 			(subscriptionGroup) =>
@@ -76,14 +87,33 @@ const ManageProductUsers = ({project, subscriptionGroups}) => {
 				subscriptionGroup.name === PRODUCT_TYPES.analyticsCloud
 		)?.activationStatus === STATUS_TAG_TYPE_NAMES.active;
 
+	const isActiveStatusLXC =
+		subscriptionGroups.find(
+			(subscriptionGroup) =>
+				subscriptionGroup.name === PRODUCT_TYPES.liferayExperienceCloud
+		)?.activationStatus === STATUS_TAG_TYPE_NAMES.active;
+
+	const isLXCProject = subscriptionGroups.find(
+		(subscriptionGroup) =>
+			subscriptionGroup.name === PRODUCT_TYPES.liferayExperienceCloud
+	);
+
 	return (
 		<>
-			{(isActiveStatusDXPC || isActiveStatusAC) && (
+			{(isActiveStatusDXPC || isActiveStatusAC || isActiveStatusLXC) && (
 				<div className="bg-brand-primary-lighten-6 border-0 card card-flat cp-manager-product-container mt-5">
 					<div className="p-4">
-						<p className="h4">
-							{i18n.translate('manage-product-users')}
-						</p>
+						{isLXCProject.name ? (
+							<p className="h4">
+								{i18n.translate(
+									'manage-liferay-experience-cloud-users'
+								)}
+							</p>
+						) : (
+							<p className="h4">
+								{i18n.translate('manage-product-users')}
+							</p>
+						)}
 
 						<p className="mt-2 text-neutral-7 text-paragraph-sm">
 							{i18n.translate(
@@ -106,6 +136,15 @@ const ManageProductUsers = ({project, subscriptionGroups}) => {
 									activatedLink={activatedLinkAC}
 									activatedTitle={i18n.translate(
 										'manage-analytics-cloud-users'
+									)}
+								/>
+							)}
+
+							{isActiveStatusLXC && (
+								<ManageProductButton
+									activatedLink={activatedLinkLxc}
+									activatedTitle={i18n.translate(
+										'manage-lxc-sm-users'
 									)}
 								/>
 							)}

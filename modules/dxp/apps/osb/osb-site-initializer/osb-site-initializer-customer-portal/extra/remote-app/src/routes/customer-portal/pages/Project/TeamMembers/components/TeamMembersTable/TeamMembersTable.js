@@ -251,45 +251,49 @@ const TeamMembersTable = ({project, provisioningServerAPI, sessionId}) => {
 			/>
 
 			{!!userAccounts.length && (
-				<Table
-					className="border-0 cp-team-members-table"
-					columns={columnsByUserAccess}
-					isLoading={isLoadingUserAccounts}
-					rows={userAccounts?.map((userAccount) => ({
-						email: (
-							<p className="m-0 text-truncate">
-								{userAccount?.emailAddress}
-							</p>
-						),
-						name: <NameColumnType userAccount={userAccount} />,
-						options: (
-							<OptionsColumnType
-								confirmChanges={handleChangeUserRole}
-								setSelectedRole={setSelectedRole}
-								setUserAction={setUserAction}
-								userAccount={userAccount}
-								userAction={userAction}
-							/>
-						),
-						role: (
-							<RoleColumnType
-								accountRoles={accountRolesOptions}
-								selectedRole={selectedRole}
-								setSelectedRole={setSelectedRole}
-								userAccount={userAccount}
-								userAction={userAction}
-							/>
-						),
-						status: (
-							<StatusColumnType
-								hasLoggedBefore={userAccount?.lastLoginDate}
-							/>
-						),
-						supportSeat: (
-							<SupportSeatColumnType roles={userAccount?.roles} />
-						),
-					}))}
-				/>
+				<div className="cp-team-members-table-wrapper overflow-auto">
+					<Table
+						className="border-0 cp-team-members-table"
+						columns={columnsByUserAccess}
+						isLoading={isLoadingUserAccounts}
+						rows={userAccounts?.map((userAccount) => ({
+							email: (
+								<p className="m-0 text-truncate">
+									{userAccount?.emailAddress}
+								</p>
+							),
+							name: <NameColumnType userAccount={userAccount} />,
+							options: (
+								<OptionsColumnType
+									confirmChanges={handleChangeUserRole}
+									setSelectedRole={setSelectedRole}
+									setUserAction={setUserAction}
+									userAccount={userAccount}
+									userAction={userAction}
+								/>
+							),
+							role: (
+								<RoleColumnType
+									accountRoles={accountRolesOptions}
+									selectedRole={selectedRole}
+									setSelectedRole={setSelectedRole}
+									userAccount={userAccount}
+									userAction={userAction}
+								/>
+							),
+							status: (
+								<StatusColumnType
+									hasLoggedBefore={userAccount?.lastLoginDate}
+								/>
+							),
+							supportSeat: (
+								<SupportSeatColumnType
+									roles={userAccount?.roles}
+								/>
+							),
+						}))}
+					/>
+				</div>
 			)}
 
 			{!userAccounts.length &&

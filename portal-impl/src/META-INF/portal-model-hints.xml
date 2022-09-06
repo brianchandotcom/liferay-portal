@@ -1133,7 +1133,7 @@
 		<field name="extension" type="String">
 			<hint name="display-width">50</hint>
 		</field>
-		<field name="typeId" type="long" />
+		<field name="listTypeId" type="long" />
 		<field name="primary" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.PluginSetting">

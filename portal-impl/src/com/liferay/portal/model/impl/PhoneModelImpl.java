@@ -80,7 +80,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
 		{"number_", Types.VARCHAR}, {"extension", Types.VARCHAR},
-		{"typeId", Types.BIGINT}, {"primary_", Types.BOOLEAN}
+		{"listTypeId", Types.BIGINT}, {"primary_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,12 +99,12 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("number_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("extension", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("typeId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("listTypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Phone (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,phoneId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,number_ VARCHAR(75) null,extension VARCHAR(75) null,typeId LONG,primary_ BOOLEAN)";
+		"create table Phone (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,phoneId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,number_ VARCHAR(75) null,extension VARCHAR(75) null,listTypeId LONG,primary_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table Phone";
 
@@ -310,9 +310,9 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		attributeGetterFunctions.put("extension", Phone::getExtension);
 		attributeSetterBiConsumers.put(
 			"extension", (BiConsumer<Phone, String>)Phone::setExtension);
-		attributeGetterFunctions.put("typeId", Phone::getTypeId);
+		attributeGetterFunctions.put("listTypeId", Phone::getListTypeId);
 		attributeSetterBiConsumers.put(
-			"typeId", (BiConsumer<Phone, Long>)Phone::setTypeId);
+			"listTypeId", (BiConsumer<Phone, Long>)Phone::setListTypeId);
 		attributeGetterFunctions.put("primary", Phone::getPrimary);
 		attributeSetterBiConsumers.put(
 			"primary", (BiConsumer<Phone, Boolean>)Phone::setPrimary);
@@ -614,17 +614,17 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	@JSON
 	@Override
-	public long getTypeId() {
-		return _typeId;
+	public long getListTypeId() {
+		return _listTypeId;
 	}
 
 	@Override
-	public void setTypeId(long typeId) {
+	public void setListTypeId(long listTypeId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_typeId = typeId;
+		_listTypeId = listTypeId;
 	}
 
 	@JSON
@@ -732,7 +732,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		phoneImpl.setClassPK(getClassPK());
 		phoneImpl.setNumber(getNumber());
 		phoneImpl.setExtension(getExtension());
-		phoneImpl.setTypeId(getTypeId());
+		phoneImpl.setListTypeId(getListTypeId());
 		phoneImpl.setPrimary(isPrimary());
 
 		phoneImpl.resetOriginalValues();
@@ -761,7 +761,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		phoneImpl.setNumber(this.<String>getColumnOriginalValue("number_"));
 		phoneImpl.setExtension(
 			this.<String>getColumnOriginalValue("extension"));
-		phoneImpl.setTypeId(this.<Long>getColumnOriginalValue("typeId"));
+		phoneImpl.setListTypeId(
+			this.<Long>getColumnOriginalValue("listTypeId"));
 		phoneImpl.setPrimary(this.<Boolean>getColumnOriginalValue("primary_"));
 
 		return phoneImpl;
@@ -900,7 +901,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 			phoneCacheModel.extension = null;
 		}
 
-		phoneCacheModel.typeId = getTypeId();
+		phoneCacheModel.listTypeId = getListTypeId();
 
 		phoneCacheModel.primary = isPrimary();
 
@@ -1007,7 +1008,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	private long _classPK;
 	private String _number;
 	private String _extension;
-	private long _typeId;
+	private long _listTypeId;
 	private boolean _primary;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1051,7 +1052,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		_columnOriginalValues.put("classPK", _classPK);
 		_columnOriginalValues.put("number_", _number);
 		_columnOriginalValues.put("extension", _extension);
-		_columnOriginalValues.put("typeId", _typeId);
+		_columnOriginalValues.put("listTypeId", _listTypeId);
 		_columnOriginalValues.put("primary_", _primary);
 	}
 
@@ -1102,7 +1103,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 		columnBitmasks.put("extension", 2048L);
 
-		columnBitmasks.put("typeId", 4096L);
+		columnBitmasks.put("listTypeId", 4096L);
 
 		columnBitmasks.put("primary_", 8192L);
 

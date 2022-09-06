@@ -102,8 +102,8 @@ public class PhoneCacheModel
 		sb.append(number);
 		sb.append(", extension=");
 		sb.append(extension);
-		sb.append(", typeId=");
-		sb.append(typeId);
+		sb.append(", listTypeId=");
+		sb.append(listTypeId);
 		sb.append(", primary=");
 		sb.append(primary);
 		sb.append("}");
@@ -166,7 +166,7 @@ public class PhoneCacheModel
 			phoneImpl.setExtension(extension);
 		}
 
-		phoneImpl.setTypeId(typeId);
+		phoneImpl.setListTypeId(listTypeId);
 		phoneImpl.setPrimary(primary);
 
 		phoneImpl.resetOriginalValues();
@@ -194,7 +194,7 @@ public class PhoneCacheModel
 		number = objectInput.readUTF();
 		extension = objectInput.readUTF();
 
-		typeId = objectInput.readLong();
+		listTypeId = objectInput.readLong();
 
 		primary = objectInput.readBoolean();
 	}
@@ -244,7 +244,7 @@ public class PhoneCacheModel
 			objectOutput.writeUTF(extension);
 		}
 
-		objectOutput.writeLong(typeId);
+		objectOutput.writeLong(listTypeId);
 
 		objectOutput.writeBoolean(primary);
 	}
@@ -261,7 +261,7 @@ public class PhoneCacheModel
 	public long classPK;
 	public String number;
 	public String extension;
-	public long typeId;
+	public long listTypeId;
 	public boolean primary;
 
 }

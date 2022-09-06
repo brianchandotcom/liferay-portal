@@ -943,7 +943,7 @@ create table Phone (
 	classPK LONG,
 	number_ VARCHAR(75) null,
 	extension VARCHAR(75) null,
-	typeId LONG,
+	listTypeId LONG,
 	primary_ BOOLEAN
 );
 

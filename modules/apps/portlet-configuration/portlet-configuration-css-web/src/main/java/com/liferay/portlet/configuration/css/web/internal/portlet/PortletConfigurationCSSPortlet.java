@@ -160,13 +160,6 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 			portletId);
 	}
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.portlet.configuration.css.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	private JSONObject _getAdvancedDataJSONObject(ActionRequest actionRequest) {
 		return JSONUtil.put(
 			"customCSS", ParamUtil.getString(actionRequest, "customCSS")
@@ -418,5 +411,10 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.portlet.configuration.css.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
+	)
+	private Release _release;
 
 }

@@ -133,23 +133,6 @@ public class TokenAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserImporter(UserImporter userImporter) {
-		_userImporter = userImporter;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private User _getUser(
 			long companyId, String login,
 			TokenConfiguration tokenCompanyServiceSettings)
@@ -217,13 +200,18 @@ public class TokenAutoLogin extends BaseAutoLogin {
 
 	private static final Log _log = LogFactoryUtil.getLog(TokenAutoLogin.class);
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Portal _portal;
 
 	private ServiceTrackerMap<String, TokenRetriever> _tokenRetrievers;
+
+	@Reference
 	private UserImporter _userImporter;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

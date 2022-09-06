@@ -9,20 +9,12 @@
  * distribution rights of the Software.
  */
 
-interface IOption {
-	[key: string]: Intl.DateTimeFormatOptions;
-}
+export default function getMaxDateActivity(dates: Date[]) {
+	if (dates.length) {
+		const startDate = dates.reduce((dateAccumulator, startDate) =>
+			dateAccumulator < startDate ? dateAccumulator : startDate
+		);
 
-export const customFormatDateOptions: IOption = {
-	SHORT_MONTH: {
-		day: '2-digit',
-		month: 'short',
-		timeZone: 'UTC',
-		year: 'numeric',
-	},
-	SHORT_MONTH_YEAR: {
-		day: '2-digit',
-		month: 'short',
-		timeZone: 'UTC',
-	},
-};
+		return startDate;
+	}
+}

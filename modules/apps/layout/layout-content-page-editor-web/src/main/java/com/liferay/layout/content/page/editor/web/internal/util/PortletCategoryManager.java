@@ -18,6 +18,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -52,7 +53,9 @@ import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -89,10 +92,15 @@ public class PortletCategoryManager {
 				themeDisplay.getCompanyId(), themeDisplay.getLayout(),
 				rootPortletCategory, themeDisplay.getLayoutTypePortlet());
 
-		return _getPortletCategoriesJSONArray(
-			_getHighlightedPortletIds(
-				httpServletRequest, highlightedPortletCategory),
-			httpServletRequest, portletCategory, themeDisplay);
+		Map<String, JSONObject> portletCategoryJSONObjectMap =
+			_getPortletCategoryJSONObjectMap(
+				_getHighlightedPortletIds(
+					httpServletRequest, highlightedPortletCategory),
+				httpServletRequest, portletCategory, themeDisplay);
+
+		return JSONUtil.toJSONArray(
+			new ArrayList<>(portletCategoryJSONObjectMap.values()),
+			portletCategoryJSONObject -> portletCategoryJSONObject);
 	}
 
 	private Set<String> _getHighlightedPortletIds(
@@ -119,13 +127,14 @@ public class PortletCategoryManager {
 		return highlightedPortletIds;
 	}
 
-	private JSONArray _getPortletCategoriesJSONArray(
+	private Map<String, JSONObject> _getPortletCategoryJSONObjectMap(
 			Set<String> highlightedPortletIds,
 			HttpServletRequest httpServletRequest,
 			PortletCategory portletCategory, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		Map<String, JSONObject> portletCategoryJSONObjectMap =
+			new LinkedHashMap<>();
 
 		List<PortletCategory> portletCategories = ListUtil.fromCollection(
 			portletCategory.getCategories());
@@ -139,17 +148,25 @@ public class PortletCategoryManager {
 				continue;
 			}
 
-			jsonArray.put(
+			String portletCategoryKey = StringUtil.replace(
+				currentPortletCategory.getPath(), new String[] {"/", "."},
+				new String[] {"-", "-"});
+
+			portletCategoryJSONObjectMap.put(
+				portletCategoryKey,
 				JSONUtil.put(
 					"categories",
-					_getPortletCategoriesJSONArray(
-						highlightedPortletIds, httpServletRequest,
-						currentPortletCategory, themeDisplay)
+					() -> {
+						Map<String, JSONObject>
+							childPortletCategoryJSONObjectsMap =
+								_getPortletCategoryJSONObjectMap(
+									highlightedPortletIds, httpServletRequest,
+									currentPortletCategory, themeDisplay);
+
+						return childPortletCategoryJSONObjectsMap.values();
+					}
 				).put(
-					"path",
-					StringUtil.replace(
-						currentPortletCategory.getPath(),
-						new String[] {"/", "."}, new String[] {"-", "-"})
+					"path", portletCategoryKey
 				).put(
 					"portlets",
 					_getPortletsJSONArray(
@@ -163,7 +180,7 @@ public class PortletCategoryManager {
 				));
 		}
 
-		return jsonArray;
+		return portletCategoryJSONObjectMap;
 	}
 
 	private String _getPortletCategoryTitle(

@@ -84,7 +84,7 @@ export declare type FilterValidation = {
 };
 declare type TCurrentFilter = {
 	definition: {
-		[key: string]: string[];
+		[key: string]: string[] | number[];
 	} | null;
 	fieldLabel?: string;
 	filterBy?: string;

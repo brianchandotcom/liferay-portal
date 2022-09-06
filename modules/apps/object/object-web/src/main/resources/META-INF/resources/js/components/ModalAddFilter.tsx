@@ -88,11 +88,7 @@ export function ModalAddFilter({
 		);
 	}, [objectFields, query]);
 
-	const getCheckedWorkflowStatusItems = (
-		itemValues: TWorkflowStatus[]
-	): IItem[] => {
-		let newItemsValues: IItem[] = [];
-
+	const setEditingFilterType = () => {
 		const currentFilterColumn = currentFilters.find((filterColumn) => {
 			if (filterColumn.objectFieldName === editingObjectFieldName) {
 				return filterColumn;
@@ -116,6 +112,16 @@ export function ModalAddFilter({
 			});
 		}
 
+		return valuesArray;
+	};
+
+	const getCheckedWorkflowStatusItems = (
+		itemValues: TWorkflowStatus[]
+	): IItem[] => {
+		let newItemsValues: IItem[] = [];
+
+		const valuesArray = setEditingFilterType() as number[];
+
 		newItemsValues = itemValues.map((itemValue) => {
 			const item = {
 				checked: false,
@@ -123,7 +129,7 @@ export function ModalAddFilter({
 				value: itemValue.value,
 			};
 
-			if (valuesArray?.includes(itemValue.value)) {
+			if (valuesArray?.includes(Number(itemValue.value))) {
 				item.checked = true;
 			}
 
@@ -136,30 +142,9 @@ export function ModalAddFilter({
 	const getCheckedPickListItems = (itemValues: PickListItem[]): IItem[] => {
 		let newItemsValues: IItem[] = [];
 
-		const currentFilterColumn = currentFilters.find((filterColumn) => {
-			if (filterColumn.objectFieldName === editingObjectFieldName) {
-				return filterColumn;
-			}
-		});
+		const valuesArray = setEditingFilterType() as string[];
 
-		const definition = currentFilterColumn?.definition;
-		const filterType = currentFilterColumn?.filterType;
-
-		const valuesArray =
-			definition && filterType ? definition[filterType] : null;
-
-		const editingFilterType = filterOperators.picklistOperators.find(
-			(filterType) => filterType.value === currentFilterColumn?.filterType
-		);
-
-		if (editingFilterType) {
-			setSelectedFilterType({
-				label: editingFilterType.label,
-				value: editingFilterType.value,
-			});
-		}
-
-		newItemsValues = itemValues.map((itemValue) => {
+		newItemsValues = (itemValues as PickListItem[]).map((itemValue) => {
 			const item = {
 				checked: false,
 				label: itemValue.name,
@@ -167,6 +152,31 @@ export function ModalAddFilter({
 			};
 
 			if (valuesArray?.includes(itemValue.key)) {
+				item.checked = true;
+			}
+
+			return item;
+		});
+
+		return newItemsValues;
+	};
+
+	const getCheckedRelationshipItems = (
+		relatedEntries: ObjectEntry[],
+		titleFieldName: string
+	): IItem[] => {
+		let newItemsValues: IItem[] = [];
+
+		const valuesArray = setEditingFilterType() as string[];
+
+		newItemsValues = relatedEntries.map((entry) => {
+			const item: IItem = {
+				checked: false,
+				label: entry[titleFieldName] as string,
+				value: entry.id.toString(),
+			};
+
+			if (valuesArray.includes(entry.id.toString())) {
 				item.checked = true;
 			}
 
@@ -236,18 +246,28 @@ export function ModalAddFilter({
 						(objectField) => objectField.id === titleObjectFieldId
 					) as ObjectField;
 
-					const relatedEntries = await API.getList<any>(
+					const relatedEntries = await API.getList<ObjectEntry>(
 						`${restContextPath}`
 					);
 
-					const newItems = relatedEntries.map((entry) => {
-						return {
-							label: entry[titleField?.name],
-							value: entry.id,
-						};
-					});
+					if (editingFilter) {
+						setItems(
+							getCheckedRelationshipItems(
+								relatedEntries,
+								titleField.name
+							)
+						);
+					}
+					else {
+						const newItems = relatedEntries.map((entry) => {
+							return {
+								label: entry[titleField?.name] as string,
+								value: entry.id.toString(),
+							};
+						});
 
-					setItems(newItems);
+						setItems(newItems);
+					}
 				};
 
 				makeFetch();
@@ -573,7 +593,9 @@ export type FilterValidation = {
 };
 
 type TCurrentFilter = {
-	definition: {[key: string]: string[]} | null;
+	definition: {
+		[key: string]: string[] | number[];
+	} | null;
 	fieldLabel?: string;
 	filterBy?: string;
 	filterType: string | null;

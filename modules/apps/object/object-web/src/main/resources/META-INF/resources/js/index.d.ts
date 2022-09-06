@@ -140,6 +140,19 @@ interface ObjectFieldSetting {
 		| ObjectFieldPicklistSetting;
 }
 
+interface ObjectEntry {
+	dateCreated: string;
+	dateModified: string;
+	id: number;
+	name: string;
+	status: {
+		code: number;
+		label: string;
+		label_i18n: string;
+	};
+	[key: string]: string | number | unknown;
+}
+
 type ObjectFieldPicklistSetting = {
 	id: number;
 	objectStates: ObjectState[];

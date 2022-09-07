@@ -501,6 +501,12 @@ public class ModulesStructureTest {
 				public FileVisitResult preVisitDirectory(
 					Path dirPath, BasicFileAttributes basicFileAttributes) {
 
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (_excludedDirNames.contains(dirName)) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
 					if (Files.exists(dirPath.resolve("bnd.bnd"))) {
 						for (Map.Entry<String, String> entry :
 								renameMap.entrySet()) {
@@ -1688,7 +1694,8 @@ public class ModulesStructureTest {
 	private static Set<String> _checkoutPrivateAppsDirs;
 	private static final Set<String> _excludedDirNames = SetUtil.fromList(
 		Arrays.asList(
-			"bin", "build", "classes", "node_modules", "test-classes", "tmp"));
+			"bin", "build", "classes", "ext-test-impl", "node_modules",
+			"test-classes", "tmp"));
 	private static final Pattern _gitRepoGradleProjectGroupPattern =
 		Pattern.compile("com\\.liferay(?:\\.[a-z]+)+");
 	private static final Set<String> _gitRepoGradlePropertiesKeys =

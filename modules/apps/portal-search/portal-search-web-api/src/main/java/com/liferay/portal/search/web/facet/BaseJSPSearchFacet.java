@@ -45,8 +45,10 @@ public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 			return;
 		}
 
+		ServletContext servletContext = getServletContext();
+
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(getConfigurationJspPath());
+			servletContext.getRequestDispatcher(getConfigurationJspPath());
 
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
@@ -71,8 +73,10 @@ public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 			return;
 		}
 
+		ServletContext servletContext = getServletContext();
+
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(getDisplayJspPath());
+			servletContext.getRequestDispatcher(getDisplayJspPath());
 
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
@@ -85,13 +89,9 @@ public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 		}
 	}
 
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
+	protected abstract ServletContext getServletContext();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseJSPSearchFacet.class);
-
-	private ServletContext _servletContext;
 
 }

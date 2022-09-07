@@ -105,6 +105,25 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_tabs1=display-page-templates");
 	}
 
+	@summary = "You can use this navigation when you need to access the configuration quickly without checking the UI."
+	macro openToDisplayPageTemplateConfiguration {
+		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+
+		var plid = JSONLayoutpagetemplateSetter.setDisplayPageTemplatePlid(
+			displayPageTemplateEntryName = "${displayPageTemplateEntryName}",
+			groupId = "${groupId}");
+
+		if ("${navItem}" == "Open Graph") {
+			var screenNavigationEntryKey = "open-graph";
+		}
+
+		if ("${navItem}" == "SEO") {
+			var screenNavigationEntryKey = "seo";
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_portletResource=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&p_r_p_selPlid=${plid}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_screenNavigationCategoryKey=general&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_screenNavigationEntryKey=${screenNavigationEntryKey}");
+	}
+
 	macro renameDisplayPage {
 		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 			displayPageName = "${displayPageName}",

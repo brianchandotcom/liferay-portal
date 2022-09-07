@@ -67,18 +67,6 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		return requestParameterAutoLoginConfiguration.enabled();
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
 	private RequestParameterAutoLoginConfiguration
 		_getRequestParameterAutoLoginConfiguration(long companyId) {
 
@@ -104,7 +92,10 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 	@Reference(target = "(&(private.auto.login=true)(type=request.parameter))")
 	private AutoLogin _autoLogin;
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private Portal _portal;
 
 }

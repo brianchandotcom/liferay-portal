@@ -114,21 +114,14 @@ public class RequestParameterAutoLoginSupport extends BaseAutoLogin {
 		return _PASSWORD_PARAM;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private static final String _LOGIN_PARAM = "parameterAutoLoginLogin";
 
 	private static final String _PASSWORD_PARAM = "parameterAutoLoginPassword";
 
+	@Reference
 	private Portal _portal;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

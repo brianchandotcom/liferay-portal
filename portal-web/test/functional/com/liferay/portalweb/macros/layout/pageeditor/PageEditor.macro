@@ -3959,6 +3959,11 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				action = "${action}",
 				warningMessage = "${objectName} form has some fragments not mapped to object fields. Unmapped fragments data will not be stored. Are you sure you want to publish?");
 		}
+		else if ((IsElementPresent(locator1 = "Modal#BODY")) && (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Required Fields Missing"))) {
+			Modal.publish(
+				action = "${action}",
+				warningMessage = "${objectName} form has one or more required fields not mapped from the form. A form with missing required fields will not generate a valid entry. Are you sure you want to publish it?");
+		}
 		else if ((IsElementPresent(locator1 = "Modal#BODY")) && (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Required Fields Hidden"))) {
 			Modal.publish(
 				action = "${action}",

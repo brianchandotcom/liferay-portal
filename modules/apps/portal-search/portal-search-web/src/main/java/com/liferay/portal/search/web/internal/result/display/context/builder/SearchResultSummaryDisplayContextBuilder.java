@@ -576,15 +576,8 @@ public class SearchResultSummaryDisplayContextBuilder {
 	private void _buildCreatorUserPortrait(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
-		String articleIdString = _getFieldValueString(Field.USER_ID);
-
-		long userId = GetterUtil.getLong(articleIdString);
-
-		String creatorByPortraitUrlString = null;
-
-		if (userId != 0) {
-			creatorByPortraitUrlString = _getPortraitURLString(userId);
-		}
+		String creatorByPortraitUrlString = _getPortraitURLString(
+			_getFieldValueLong(Field.USER_ID));
 
 		if (creatorByPortraitUrlString != null) {
 			searchResultSummaryDisplayContext.setCreatorUserPortraitURLString(
@@ -845,45 +838,31 @@ public class SearchResultSummaryDisplayContextBuilder {
 	private void _buildModifiedByUserName(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
-		String statusByUserId = _getFieldValueString("statusByUserId");
+		User user = _userLocalService.fetchUser(
+			_getFieldValueLong("statusByUserId"));
 
-		if (!Validator.isBlank(statusByUserId)) {
-			long userId = GetterUtil.getLong(statusByUserId);
+		if (user != null) {
+			searchResultSummaryDisplayContext.setModifiedByUserName(
+				user.getScreenName());
 
-			User user = _userLocalService.fetchUser(userId);
-
-			if (user != null) {
-				searchResultSummaryDisplayContext.setModifiedByUserName(
-					user.getScreenName());
-
-				searchResultSummaryDisplayContext.setModifiedByUserNameVisible(
-					true);
-			}
+			searchResultSummaryDisplayContext.setModifiedByUserNameVisible(
+				true);
 		}
 	}
 
 	private void _buildModifiedByUserPortrait(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
-		String statusByUserId = _getFieldValueString("statusByUserId");
+		String modifiedByUserPortraitURLString = _getPortraitURLString(
+			_getFieldValueLong("statusByUserId"));
 
-		if (!Validator.isBlank(statusByUserId)) {
-			long userId = GetterUtil.getLong(statusByUserId);
+		if (modifiedByUserPortraitURLString != null) {
+			searchResultSummaryDisplayContext.
+				setModifiedByUserPortraitURLString(
+					modifiedByUserPortraitURLString);
 
-			String modifiedByUserPortraitURLString = null;
-
-			if (userId != 0) {
-				modifiedByUserPortraitURLString = _getPortraitURLString(userId);
-			}
-
-			if (modifiedByUserPortraitURLString != null) {
-				searchResultSummaryDisplayContext.
-					setModifiedByUserPortraitURLString(
-						modifiedByUserPortraitURLString);
-
-				searchResultSummaryDisplayContext.
-					setModifiedByUserPortraitVisible(true);
-			}
+			searchResultSummaryDisplayContext.setModifiedByUserPortraitVisible(
+				true);
 		}
 	}
 

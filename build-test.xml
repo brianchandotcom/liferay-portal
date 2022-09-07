@@ -13026,9 +13026,9 @@ database.partition.enabled=true</echo>
 							<![CDATA[
 								#!/bin/bash
 
-								echo "db2 restore database lportal user ${database.username} using ${database.password} from /sqllib/bin/db2 replace existing"
+								echo "su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 ON /database/config/db2inst1 replace existing'"
 
-								output=$(db2 restore database lportal user ${database.username} using ${database.password} from /sqllib/bin/db2 replace existing)
+								output=$(su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 ON /database/config/db2inst1 replace existing')
 
 								exit_code=$?
 
@@ -13043,7 +13043,7 @@ database.partition.enabled=true</echo>
 							]]>
 						</echo>
 
-						<property name="docker.database.dest.path" value="/sqllib/bin/db2" />
+						<property name="docker.database.dest.path" value="/opt/ibm/db2" />
 						<property name="import.database.src.path" value="${liferay.home}/." />
 					</then>
 					<elseif>

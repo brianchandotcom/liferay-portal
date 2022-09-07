@@ -52,7 +52,7 @@ String bundleIds = _getBundleIds(appDisplay);
 				</portlet:actionURL>
 
 				<%
-				String taglibDeactivateBundlesURL = "javascript:if (confirm(\'" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-this") + "\')) {submitForm(document.hrefFm, \'" + HtmlUtil.unescape(deactivateBundlesURL.toString()) + "\');};";
+				String taglibDeactivateBundlesURL = "javascript:if (confirm('" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-this") + "')) {submitForm(document.hrefFm, '" + HtmlUtil.unescape(deactivateBundlesURL.toString()) + "');};";
 				%>
 
 				<liferay-ui:icon

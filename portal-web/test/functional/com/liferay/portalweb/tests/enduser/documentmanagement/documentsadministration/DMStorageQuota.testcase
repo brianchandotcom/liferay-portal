@@ -31,7 +31,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ExceedStorageQuotaMultipleUpload {
-		property custom.properties = "data.limit.dl.storage.max.size=1048576";
+		property custom.properties = "data.limit.dl.storage.max.size=1048576${line.separator}dl.actions.visible=true";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -44,8 +44,6 @@ definition {
 			widgetName = "Documents and Media");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

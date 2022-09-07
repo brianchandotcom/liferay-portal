@@ -41,6 +41,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanAddDocumentInFolder {
+		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
 		JSONFolder.addFolder(
@@ -49,8 +50,6 @@ definition {
 			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -66,6 +65,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddImageInFolder {
+		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
 		JSONFolder.addFolder(
@@ -74,8 +74,6 @@ definition {
 			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -95,6 +93,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddImageInSubFolder {
+		property custom.properties = "dl.actions.visible=true";
+
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -107,8 +107,6 @@ definition {
 			parentFolderName = "DM Folder Name");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -129,6 +127,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAddMultipleSubFolders {
+		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
 		JSONFolder.addFolder(
@@ -150,8 +149,6 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.enableActionsMenuOnPortlet();
-
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMFolder.viewEntryPresent(dmFolderName = "DM SubFolder1 Name");
@@ -162,11 +159,10 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDeleteDocumentInFolder {
+		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -190,6 +186,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanDeleteFolderWithDocument {
+		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
 		JSONFolder.addFolder(
@@ -209,8 +206,6 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.enableActionsMenuOnPortlet();
-
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMFolder.deletePG(dmFolderName = "DM Folder Name");
@@ -219,6 +214,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CanDeleteSubFolder {
+		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
 		JSONFolder.addFolder(
@@ -233,8 +229,6 @@ definition {
 			parentFolderName = "DM Folder Name");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -269,6 +263,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanEditSubFolder {
+		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
 		JSONFolder.addFolder(
@@ -283,8 +278,6 @@ definition {
 			parentFolderName = "DM Folder Name");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -336,6 +329,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanMoveDocumentWithSlashesInTitle {
+		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -350,8 +344,6 @@ definition {
 			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

@@ -1,7 +1,7 @@
 @component-name = "portal-lima"
 definition {
 
-	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Asset Sharing";
@@ -33,8 +33,6 @@ definition {
 			widgetName = "Documents and Media");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
 	}
 
 	tearDown {

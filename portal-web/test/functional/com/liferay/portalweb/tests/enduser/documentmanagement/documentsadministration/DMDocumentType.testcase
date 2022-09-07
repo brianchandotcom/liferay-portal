@@ -780,6 +780,8 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test ViewLocalizedDocumentField {
+		property custom.properties = "dl.actions.visible=true";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");
@@ -791,8 +793,6 @@ definition {
 			widgetName = "Documents and Media");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

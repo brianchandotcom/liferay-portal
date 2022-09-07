@@ -2,7 +2,7 @@
 definition {
 
 	property app.server.bundles.size = "1";
-	property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+	property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}dl.actions.visible=true";
 	property databases.size = "1";
 	property minimum.slave.ram = "24";
 	property portal.release = "true";
@@ -25,12 +25,6 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Staging DM Page",
 			widgetName = "Documents and Media");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
@@ -910,7 +904,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test DocumentCanBeRepublishedAfterCheckout {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}dl.actions.visible=true";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMRemoteStaging#DocumentCanBeRepublishedAfterCheckout";
 

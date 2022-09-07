@@ -1,6 +1,7 @@
 @component-name = "portal-document-management-ee"
 definition {
 
+	property custom.properties = "dl.actions.visible=true";
 	property osgi.app.includes = "sharepoint-rest";
 	property portal.release = "false";
 	property portal.ssl.enabled = "true";
@@ -586,8 +587,6 @@ definition {
 
 		Portlet.addPG(portletName = "Documents and Media");
 
-		DMDocument.enableActionsMenuOnPortlet();
-
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.doc");
@@ -769,8 +768,6 @@ definition {
 			siteName = "Guest");
 
 		PageEditor.addWidget(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		PageEditor.publish();
 

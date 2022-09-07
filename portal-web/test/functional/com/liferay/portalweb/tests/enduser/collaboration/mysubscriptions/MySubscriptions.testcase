@@ -39,6 +39,8 @@ definition {
 	}
 
 	test SubscribeAndUnsubscribetoDMFolder {
+		property custom.properties = "dl.actions.visible=true";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -50,8 +52,6 @@ definition {
 		Navigator.gotoPage(pageName = "Test Page");
 
 		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",

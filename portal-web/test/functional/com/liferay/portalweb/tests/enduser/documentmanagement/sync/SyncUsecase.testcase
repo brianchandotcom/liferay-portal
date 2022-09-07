@@ -1,7 +1,7 @@
 @component-name = "portal-document-management"
 definition {
 
-	property custom.properties = "default.layout.template.id=1_column";
+	property custom.properties = "default.layout.template.id=1_column${line.separator}dl.actions.visible=true";
 	property osgi.app.includes = "oauth,oauth-api,oauth-service,oauth-web,sync-encryptor,sync-oauth,sync-security,sync-service,sync-web";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -40,8 +40,6 @@ definition {
 		Navigator.gotoPage(pageName = "Sync Page");
 
 		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		Navigator.gotoPage(pageName = "Sync Page");
 

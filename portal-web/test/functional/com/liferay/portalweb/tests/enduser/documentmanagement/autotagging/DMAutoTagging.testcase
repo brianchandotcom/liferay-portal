@@ -86,6 +86,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanAssertImageAutoTagAfterPublishToLive {
+		property custom.properties = "dl.actions.visible=true";
 		property test.name.skip.portal.instance = "DMAutoTagging#CanAssertImageAutoTagAfterPublishToLive";
 
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -99,10 +100,6 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/documents-and-media-page");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 

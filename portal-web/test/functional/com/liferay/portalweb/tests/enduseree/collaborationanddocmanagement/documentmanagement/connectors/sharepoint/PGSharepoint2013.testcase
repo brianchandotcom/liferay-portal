@@ -2,7 +2,7 @@
 definition {
 
 	property cmis.repository.type = "sharepoint2013";
-	property custom.properties = "session.store.password=true${line.separator}company.security.auth.type=screenName${line.separator}default.layout.template.id=1_column";
+	property custom.properties = "session.store.password=true${line.separator}company.security.auth.type=screenName${line.separator}default.layout.template.id=1_column${line.separator}dl.actions.visible=true";
 	property osgi.app.includes = "sharepoint-soap";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -59,8 +59,6 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

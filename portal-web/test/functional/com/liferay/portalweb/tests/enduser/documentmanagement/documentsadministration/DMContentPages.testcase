@@ -32,6 +32,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test CreateTagUsingAutocomplete {
+		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(
@@ -44,8 +45,6 @@ definition {
 			siteName = "Guest");
 
 		PageEditor.addWidget(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		PageEditor.publish();
 
@@ -115,6 +114,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test EditFolderDocument {
+		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(
@@ -127,8 +127,6 @@ definition {
 			siteName = "Guest");
 
 		PageEditor.addWidget(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		PageEditor.publish();
 
@@ -171,6 +169,8 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test RestoreShortcutAfterDeletingTarget {
+		property custom.properties = "dl.actions.visible=true";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -185,8 +185,6 @@ definition {
 			siteName = "Test Site Name");
 
 		PageEditor.addWidget(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		PageEditor.publish();
 

@@ -124,6 +124,8 @@ definition {
 	@description = "This validates LPS-68795. It ensures that a shortcut can be moved into a folder."
 	@priority = "4"
 	test CanMoveShortcutIntoFolder {
+		property custom.properties = "dl.actions.visible=true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -140,12 +142,6 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		JSONDocument.addShortcut(
 			dmDocumentTitle = "DM Document Title",

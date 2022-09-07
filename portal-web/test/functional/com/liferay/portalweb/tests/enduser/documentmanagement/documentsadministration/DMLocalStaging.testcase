@@ -1735,6 +1735,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test PublishEditsToMetadataSet {
+		property custom.properties = "dl.actions.visible=true";
+
 		DMNavigator.gotoMetadataSets();
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
@@ -1769,8 +1771,6 @@ definition {
 			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
@@ -1917,7 +1917,7 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ShareDMDocumentOnLiveSite {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1942,8 +1942,6 @@ definition {
 			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -2039,6 +2037,7 @@ definition {
 	@refactorneeded
 	test StagingDemoDocumentsAndMedia {
 		property custom.properties = "default.layout.template.id=1_column";
+		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMLocalStaging#StagingDemoDocumentsAndMedia";
 		property testray.component.names = "Training";
@@ -2052,8 +2051,6 @@ definition {
 		Portlet.addPG(portletName = "Documents and Media");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",
@@ -2149,6 +2146,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewRepublishedDocumentInfo {
+		property custom.properties = "dl.actions.visible=true";
+
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			portlet = "Tags");
@@ -2160,8 +2159,6 @@ definition {
 			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",

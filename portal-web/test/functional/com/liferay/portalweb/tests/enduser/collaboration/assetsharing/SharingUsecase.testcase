@@ -39,6 +39,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanDisableSharingAtInstanceScope {
+		property custom.properties = "dl.actions.visible=true";
 		property test.name.skip.portal.instance = "SharingUsecase#CanDisableSharingAtInstanceScope";
 
 		SystemSettings.openSystemSettingsAdmin();
@@ -61,8 +62,6 @@ definition {
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
 			siteName = "Test Site");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document with sharing disabled",
@@ -100,6 +99,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanDisableSharingAtSystemScope {
+		property custom.properties = "dl.actions.visible=true";
 		property test.name.skip.portal.instance = "SharingUsecase#CanDisableSharingAtSystemScope";
 
 		SystemSettings.openSystemSettingsAdmin();
@@ -122,8 +122,6 @@ definition {
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
 			siteName = "Test Site");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document with sharing disabled",
@@ -161,6 +159,8 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanFilterByAssetType {
+		property custom.properties = "dl.actions.visible=true";
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Test Site",
 			layoutName = "Test Page",
@@ -169,8 +169,6 @@ definition {
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
 			siteName = "Test Site");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -236,6 +234,8 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanOrderBySharedDate {
+		property custom.properties = "dl.actions.visible=true";
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Test Site",
 			layoutName = "Test Page",
@@ -244,8 +244,6 @@ definition {
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
 			siteName = "Test Site");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(

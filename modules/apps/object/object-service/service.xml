@@ -41,7 +41,7 @@
 			<finder-column name="objectActionTriggerKey" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="ObjectDefinition" remote-service="true" uuid="true">
+	<entity external-reference-code="company" local-service="true" name="ObjectDefinition" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -105,6 +105,11 @@
 		<finder name="S_S" return-type="Collection">
 			<finder-column name="system" />
 			<finder-column name="status" />
+		</finder>
+		<finder name="C_ERC_ODI" return-type="ObjectDefinition" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="externalReferenceCode" />
+			<finder-column name="objectDefinitionId" />
 		</finder>
 		<finder name="C_A_S" return-type="Collection">
 			<finder-column name="companyId" />

@@ -173,15 +173,6 @@ public class IndexOnStartupIndexerServiceCustomizer
 		}
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(target = "(search.engine.id=SYSTEM_ENGINE)", unbind = "-")
-	protected void setSearchEngine(SearchEngine searchEngine) {
-	}
-
 	private boolean _isBaseSearcher(Class<?> indexerClass) {
 		while ((indexerClass != null) && !Object.class.equals(indexerClass)) {
 			if (indexerClass.equals(BaseSearcher.class)) {
@@ -205,8 +196,14 @@ public class IndexOnStartupIndexerServiceCustomizer
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
 	@Reference
 	private Props _props;
+
+	@Reference(target = "(search.engine.id=SYSTEM_ENGINE)")
+	private SearchEngine _searchEngine;
 
 	private final Map
 		<String, ServiceRegistration<PortalInstanceLifecycleListener>>

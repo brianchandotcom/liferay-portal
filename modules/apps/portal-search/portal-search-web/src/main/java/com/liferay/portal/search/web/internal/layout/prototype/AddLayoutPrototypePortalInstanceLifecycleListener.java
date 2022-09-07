@@ -51,17 +51,13 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 		}
 	}
 
-	@Reference(
-		target = ModuleServiceLifecycle.PORTLETS_INITIALIZED, unbind = "-"
-	)
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	@Reference
 	protected GroupLocalService groupLocalService;
 
 	@Reference
 	protected SearchLayoutFactory searchLayoutFactory;
+
+	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 }

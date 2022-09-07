@@ -184,6 +184,7 @@ public class StructuredContentDTOConverter
 				renderedContents = _toRenderedContents(
 					ddmStructure, dtoConverterContext, journalArticle);
 				siteId = GroupUtil.getSiteId(group);
+				structuredContentFolderId = journalArticle.getFolderId();
 				subscribed = _subscriptionLocalService.isSubscribed(
 					journalArticle.getCompanyId(),
 					dtoConverterContext.getUserId(),

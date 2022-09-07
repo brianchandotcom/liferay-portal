@@ -182,8 +182,8 @@ Set this to true to compile the JSP files in OSGi modules and have them added
 to the distributable Zip/Tar. The default value is `false`.
 
 $h4 liferay.workspace.node.package.manager
-Set this property to `yarn` to build Node.js-style projects using Yarn. The
-default value is `npm`.
+Set this property to `npm` to build Node.js-style projects using NPM. The
+default value is `yarn`.
 
 $h4 liferay.workspace.plugins.sdk.dir
 Set the folder that contains the Plugins SDK environment. The default value is

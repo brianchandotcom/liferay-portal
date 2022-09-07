@@ -778,6 +778,7 @@
 	<exceptions>
 		<exception>DefaultObjectLayout</exception>
 		<exception>DefaultObjectView</exception>
+		<exception>DuplicateObjectDefinitionExternalReferenceCode</exception>
 		<exception>DuplicateObjectFieldExternalReferenceCode</exception>
 		<exception>DuplicateObjectRelationship</exception>
 		<exception>ObjectActionConditionExpression</exception>

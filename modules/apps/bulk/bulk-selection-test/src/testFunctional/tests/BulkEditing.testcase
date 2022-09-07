@@ -333,6 +333,7 @@ definition {
 
 		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
 			addOrRemoveViewPermission = "Add",
+			permissionsBulkEditing = "true",
 			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
 			roleTitle = "Guest");
 
@@ -471,6 +472,7 @@ definition {
 
 		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
 			addOrRemoveViewPermission = "Remove",
+			permissionsBulkEditing = "true",
 			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
 			roleTitle = "Guest");
 

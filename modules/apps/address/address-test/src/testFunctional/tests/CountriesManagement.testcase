@@ -616,6 +616,49 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that country name is a localizable field"
+	@priority = "4"
+	test CountryNameCanBeLocalized {
+		task ("Given other languages are not translated by default") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			LexiconEntry.gotoAdd();
+
+			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
+
+			AssertTextEquals(
+				key_localizedLanguage = "es-ES",
+				locator1 = "Translation#TRANSLATION_STATUS_LABEL",
+				value1 = "Not Translated");
+
+			CountriesManagement._inputCountryDetails(
+				countryNumber = "23",
+				threeLetterISOCode = "AAA",
+				twoLetterISOCode = "AA");
+		}
+
+		task ("When a user changes the localization to -es-ES and inputs a name") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "es-ES");
+
+			CountriesManagement._inputCountryDetails(countryName = "Country Name");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the name will have an es-ES translation") {
+			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
+
+			AssertTextEquals(
+				key_localizedLanguage = "es-ES",
+				locator1 = "Translation#TRANSLATION_STATUS_LABEL",
+				value1 = "Translated");
+		}
+	}
+
 	@description = "Changing the filter to Active will not display countries in Inactive status"
 	@priority = "3"
 	test FilterByActiveWillNotDisplayInactiveCountries {
@@ -726,6 +769,48 @@ definition {
 			LexiconEntry.viewNoEntry(rowEntry = "District of Columbia");
 
 			Pagination.viewResults(results = "Showing 1 to 8 of 52 entries.");
+		}
+	}
+
+	@description = "This test asserts that region name is a localizable field"
+	@priority = "4"
+	test RegionNameCanBeLocalized {
+		task ("Given other languages are not translated by default") {
+			CountriesManagement.openCountriesManagementPortlet();
+
+			CountriesManagement.goToRegions(countryName = "China");
+
+			LexiconEntry.gotoAdd();
+
+			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
+
+			AssertTextEquals(
+				key_localizedLanguage = "hu-HU",
+				locator1 = "Translation#TRANSLATION_STATUS_LABEL",
+				value1 = "Not Translated");	
+
+			CountriesManagement._inputRegionDetails(regionCode = "123");
+		}
+
+		task ("When a user changes the localization to hu-HU and inputs a name") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "hu-HU");
+
+			CountriesManagement._inputRegionDetails(regionName = "Region Name");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the name will have an hu-HU translation") {
+			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
+
+			AssertTextEquals(
+				key_localizedLanguage = "hu-HU",
+				locator1 = "Translation#TRANSLATION_STATUS_LABEL",
+				value1 = "Translated");
 		}
 	}
 

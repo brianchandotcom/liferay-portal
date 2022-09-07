@@ -52,53 +52,52 @@ public class RedirectEntrySourceURLUpgradeProcess extends UpgradeProcess {
 				long groupId = resultSet.getLong(2);
 				String sourceURL = resultSet.getString(3);
 
-				Set<String> groupSpecificSourceURLs;
-				Map<String, Long> groupSpecificUpgrades;
+				Set<String> groupSourceURLs;
+				Map<String, Long> groupSourceURLEntryIdMap;
 
-				if (!_redirectEntries.containsKey(groupId)) {
-					groupSpecificSourceURLs = new HashSet<>();
-					groupSpecificUpgrades = new LinkedHashMap<>();
+				if (!_sourceURLs.containsKey(groupId)) {
+					groupSourceURLs = new HashSet<>();
+					groupSourceURLEntryIdMap = new LinkedHashMap<>();
 				}
 				else {
-					groupSpecificSourceURLs = _redirectEntries.get(groupId);
-					groupSpecificUpgrades = _upgradeEntries.get(groupId);
+					groupSourceURLs = _sourceURLs.get(groupId);
+					groupSourceURLEntryIdMap = _sourceURLEntryIdMap.get(
+						groupId);
 				}
 
 				String lowerCaseSourceURL = StringUtil.toLowerCase(sourceURL);
 
-				if (!groupSpecificSourceURLs.contains(lowerCaseSourceURL)) {
-					groupSpecificSourceURLs.add(lowerCaseSourceURL);
+				if (!groupSourceURLs.contains(lowerCaseSourceURL)) {
+					groupSourceURLs.add(lowerCaseSourceURL);
 
 					if (!sourceURL.equals(lowerCaseSourceURL)) {
-						groupSpecificUpgrades.put(
+						groupSourceURLEntryIdMap.put(
 							lowerCaseSourceURL, redirectEntryId);
 					}
 
-					_upgradeEntries.put(groupId, groupSpecificUpgrades);
-					_redirectEntries.put(groupId, groupSpecificSourceURLs);
+					_sourceURLEntryIdMap.put(groupId, groupSourceURLEntryIdMap);
+					_sourceURLs.put(groupId, groupSourceURLs);
 				}
 				else {
 					if (sourceURL.equals(lowerCaseSourceURL)) {
-						groupSpecificUpgrades.remove(lowerCaseSourceURL);
+						groupSourceURLEntryIdMap.remove(lowerCaseSourceURL);
 					}
-					else {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								StringBundler.concat(
-									"Can not modify '", sourceURL, "' to '",
-									lowerCaseSourceURL,
-									"' because it is already in use in group: ",
-									groupId, " at id: ", redirectEntryId));
-						}
+					else if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Can not modify '", sourceURL, "' to '",
+								lowerCaseSourceURL,
+								"' because it is already in use in group: ",
+								groupId, " at id: ", redirectEntryId));
 					}
 				}
 			}
 
-			for (Map<String, Long> groupSpecificUpgrades :
-					_upgradeEntries.values()) {
+			for (Map<String, Long> groupSourceURLEntryIdMap :
+					_sourceURLEntryIdMap.values()) {
 
 				for (Map.Entry<String, Long> upgradeRedirectEntry :
-						groupSpecificUpgrades.entrySet()) {
+						groupSourceURLEntryIdMap.entrySet()) {
 
 					String lowerCaseSourceURL = upgradeRedirectEntry.getKey();
 					long redirectEntryId = upgradeRedirectEntry.getValue();
@@ -117,9 +116,8 @@ public class RedirectEntrySourceURLUpgradeProcess extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RedirectEntrySourceURLUpgradeProcess.class);
 
-	private final Map<Long, Set<String>> _redirectEntries =
+	private final Map<Long, Map<String, Long>> _sourceURLEntryIdMap =
 		new LinkedHashMap<>();
-	private final Map<Long, Map<String, Long>> _upgradeEntries =
-		new LinkedHashMap<>();
+	private final Map<Long, Set<String>> _sourceURLs = new LinkedHashMap<>();
 
 }

@@ -12,35 +12,20 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
 import {TreeView as ClayTreeView} from '@clayui/core';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayLink from '@clayui/link';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import normalizeDropdownItems from './normalizeDropdownItems';
+import ActionsDropdown from './ActionsDropdown';
 export default function TemplatesPanel({items}) {
 	return items?.length ? (
 		<ClayTreeView defaultItems={items} nestedKey="children">
 			{(item) => {
 				return (
 					<ClayTreeView.Item
-						actions={
-							item?.actions?.length && (
-								<ClayDropDownWithItems
-									items={normalizeDropdownItems(item.actions)}
-									trigger={
-										<ClayButtonWithIcon
-											displayType="unstyled"
-											small
-											symbol="ellipsis-v"
-										/>
-									}
-								/>
-							)
-						}
+						actions={<ActionsDropdown actions={item.actions} />}
 						className="pl-1"
 					>
 						<ClayTreeView.ItemStack>

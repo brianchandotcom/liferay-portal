@@ -108,11 +108,6 @@ public class CheckCommerceNotificationQueueEntryMessageListener
 			deleteCommerceNotificationQueueEntries(date);
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CheckCommerceNotificationQueueEntryMessageListener.class);
 
@@ -125,6 +120,9 @@ public class CheckCommerceNotificationQueueEntryMessageListener
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

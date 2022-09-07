@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
 public class QuartzSchedulerProxyMessageListener extends ProxyMessageListener {
 
 	@Override
-	@Reference(unbind = "-")
 	public void setMessageBus(MessageBus messageBus) {
 		_messageBus = messageBus;
 	}
@@ -46,12 +45,10 @@ public class QuartzSchedulerProxyMessageListener extends ProxyMessageListener {
 		setMessageBus(_messageBus);
 	}
 
-	@Reference(service = QuartzSchedulerEngine.class, unbind = "-")
-	protected void setSchedulerEngine(SchedulerEngine schedulerEngine) {
-		_schedulerEngine = schedulerEngine;
-	}
-
+	@Reference
 	private MessageBus _messageBus;
+
+	@Reference(service = QuartzSchedulerEngine.class)
 	private SchedulerEngine _schedulerEngine;
 
 }

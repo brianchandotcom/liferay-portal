@@ -837,30 +837,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				SchedulerEngineHelperConfiguration.class, properties);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDestinationFactory(
-		DestinationFactory destinationFactory) {
-
-		_destinationFactory = destinationFactory;
-	}
-
-	@Reference(
-		target = "(&(destination.name=" + DestinationNames.SCHEDULER_ENGINE + ")(destination.ready=true))",
-		unbind = "-"
-	)
-	protected void setDestinationReady(Object object) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setJsonFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
-	@Reference(target = "(scheduler.engine.proxy=true)", unbind = "-")
-	protected void setSchedulerEngine(SchedulerEngine schedulerEngine) {
-		_schedulerEngine = schedulerEngine;
-	}
-
 	private void _addWeeklyDayPos(
 		PortletRequest portletRequest, List<DayAndPosition> list, int day) {
 
@@ -904,10 +880,21 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	private volatile AuditRouter _auditRouter;
 
 	private volatile BundleContext _bundleContext;
+
+	@Reference
 	private DestinationFactory _destinationFactory;
+
+	@Reference(
+		target = "(&(destination.name=" + DestinationNames.SCHEDULER_ENGINE + ")(destination.ready=true))"
+	)
+	private Object _destinationReady;
+
 	private final Set<ServiceRegistration<Destination>>
 		_destinationServiceRegistrations = new HashSet<>();
+
+	@Reference
 	private JSONFactory _jsonFactory;
+
 	private final Map<String, ServiceRegistration<MessageListener>>
 		_messageListenerServiceRegistrations = new ConcurrentHashMap<>();
 
@@ -917,7 +904,9 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	@Reference
 	private Portal _portal;
 
+	@Reference(target = "(scheduler.engine.proxy=true)")
 	private SchedulerEngine _schedulerEngine;
+
 	private volatile SchedulerEngineHelperConfiguration
 		_schedulerEngineHelperConfiguration;
 	private final Map

@@ -93,12 +93,9 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
-
+	@Reference
 	private Props _props;
+
 	private ServiceRegistration<SchedulerEngine>
 		_schedulerEngineServiceRegistration;
 	private ServiceRegistration<TriggerFactory>

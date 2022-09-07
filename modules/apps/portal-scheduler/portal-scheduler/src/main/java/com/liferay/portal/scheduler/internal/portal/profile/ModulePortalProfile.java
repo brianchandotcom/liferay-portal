@@ -72,11 +72,7 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 			SchedulerProxyMessagingConfigurator.class.getName());
 	}
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
-
+	@Reference
 	private Props _props;
 
 }

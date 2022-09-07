@@ -114,7 +114,7 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.DELETE) %>">
+	<c:if test="<%= (segmentsEntry.getGroupId() == themeDisplay.getScopeGroupId()) && SegmentsEntryPermission.contains(permissionChecker, segmentsEntry, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/segments/delete_segments_entry" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

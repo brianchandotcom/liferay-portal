@@ -1776,10 +1776,10 @@ public class JavaParserUtil {
 			childDetailAST = childDetailAST.getFirstChild();
 		}
 
-		FullIdent typeIdent = FullIdent.createFullIdent(childDetailAST);
+		FullIdent typeFullIdent = FullIdent.createFullIdent(childDetailAST);
 
 		JavaType javaType = new JavaType(
-			typeIdent.getText(), javaAnnotations, arrayDimension);
+			typeFullIdent.getText(), javaAnnotations, arrayDimension);
 
 		DetailAST typeInfoDetailAST = childDetailAST;
 

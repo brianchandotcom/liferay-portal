@@ -297,10 +297,10 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 				return null;
 			}
 
-			FullIdent expressionIdent = FullIdent.createFullIdentBelow(
+			FullIdent expressionFullIdent = FullIdent.createFullIdentBelow(
 				expressionDetailAST);
 
-			return expressionIdent.getText();
+			return expressionFullIdent.getText();
 		}
 
 		return defaultValue;

@@ -241,9 +241,9 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 		DetailAST typeDetailAST = parameterDefinitionDetailAST.findFirstToken(
 			TokenTypes.TYPE);
 
-		FullIdent typeIdent = FullIdent.createFullIdentBelow(typeDetailAST);
+		FullIdent typeFullIdent = FullIdent.createFullIdentBelow(typeDetailAST);
 
-		return typeIdent.getText();
+		return typeFullIdent.getText();
 	}
 
 	private Set<String> _getImportedExceptionClassNames(

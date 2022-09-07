@@ -19,6 +19,7 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {useGlobalContext} from '../../app/contexts/GlobalContext';
 import {useId} from '../../app/utils/useId';
+import {LengthField} from '../../common/components/LengthField';
 import {useStyleBook} from '../../plugins/page-design-options/hooks/useStyleBook';
 import {Tooltip} from './Tooltip';
 
@@ -137,7 +138,7 @@ export default function SpacingBox({fields, onChange, value}) {
 							<SpacingSelectorButton
 								field={fields[key]}
 								key={key}
-								onChange={(value) => onChange(key, value)}
+								onChange={onChange}
 								position={position}
 								type={type}
 								value={value[key]}
@@ -233,6 +234,14 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 			<div ref={itemListRef}>
 				<ClayDropDown.ItemList aria-labelledby={triggerId}>
 					<ClayDropDown.Group header={field?.label}>
+						{Liferay.FeatureFlags['LPS-143206'] ? (
+							<LengthField
+								field={field}
+								onValueSelect={onChange}
+								value={value}
+							/>
+						) : null}
+
 						{field?.typeOptions?.validValues?.map((option) => (
 							<ClayDropDown.Item
 								aria-label={Liferay.Util.sub(
@@ -243,7 +252,7 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 								data-value={option.value}
 								key={option.value}
 								onClick={() => {
-									onChange(option.value);
+									onChange(field.name, option.value);
 									setActive(false);
 									document.getElementById(triggerId)?.focus();
 								}}

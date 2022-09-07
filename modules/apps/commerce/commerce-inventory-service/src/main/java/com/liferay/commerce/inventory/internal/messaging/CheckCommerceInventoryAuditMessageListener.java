@@ -89,17 +89,15 @@ public class CheckCommerceInventoryAuditMessageListener
 		_commerceInventoryAuditLocalService.checkCommerceInventoryAudit(date);
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	@Reference
 	private CommerceInventoryAuditLocalService
 		_commerceInventoryAuditLocalService;
 
 	private CommerceInventorySystemConfiguration
 		_commerceInventorySystemConfiguration;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

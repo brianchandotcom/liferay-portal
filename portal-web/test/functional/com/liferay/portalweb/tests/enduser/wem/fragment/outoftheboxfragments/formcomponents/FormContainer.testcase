@@ -1668,6 +1668,79 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-157998. The page creator should see warning message when publish the content page without the Submit Button fragment or with a hidden Submit Button fragment."
+	@priority = "4"
+	test ViewWarningMessageWhenPublishContentPageWithoutSubmitButtonOrWithHiddenSubmitButton {
+		property test.name.skip.portal.instance = "FormContainer#ViewWarningMessageWhenPublishContentPageWithoutSubmitButtonOrWithHiddenSubmitButton";
+
+		task ("Given a page creator has a Form Container without Submit Button on content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Text Input");
+
+			PageEditor.editInput(
+				field = "Region",
+				fragmentName = "Text Input");
+		}
+
+		task ("When the page creator publishes the content page") {
+			Button.click(button = "Publish");
+		}
+
+		task ("Then the page creator could see Submit Button Missing warning message") {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Submit Button Missing");
+
+			Modal.publish(
+				action = "Cancel",
+				warningMessage = "Purchase Order form has a hidden or missing submit button. If you continue, your users may not be able to submit the form. Are you sure you want to publish it?");
+		}
+
+		task ("Given a page creator has a Form Container with a hidden Submit Button on content page") {
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Container",
+				targetFragmentName = "Text Input");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Form Components",
+				fragmentName = "Submit Button",
+				navTab = "Fragments");
+
+			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
+		}
+
+		task ("When the page creator publishes the content page") {
+			Button.click(button = "Publish");
+		}
+
+		task ("Then the page creator could see Submit Button Missing warning message") {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Submit Button Missing");
+
+			Modal.publish(warningMessage = "Purchase Order form has a hidden or missing submit button. If you continue, your users may not be able to submit the form. Are you sure you want to publish it?");
+		}
+	}
+
 	@description = "This is a test for LPS-157998. The page creator should see warning message when publish the content page with unmapped input fragments."
 	@priority = "4"
 	test ViewWarningMessageWhenPublishContentPageWithUnmappedInputFragments {

@@ -110,20 +110,19 @@ public class FolderSearchFacet extends BaseJSPSearchFacet {
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.search.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
 	protected FacetFactory getFacetFactory() {
 		return folderFacetFactory;
 	}
 
+	@Override
+	protected ServletContext getServletContext() {
+		return _servletContext;
+	}
+
 	@Reference
 	protected FolderFacetFactory folderFacetFactory;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.portal.search.web)")
+	private ServletContext _servletContext;
 
 }

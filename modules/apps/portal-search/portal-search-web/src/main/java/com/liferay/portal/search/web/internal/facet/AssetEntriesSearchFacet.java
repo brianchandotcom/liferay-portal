@@ -208,15 +208,6 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 		return "asset-type";
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.search.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	protected String[] getAssetTypes(long companyId) {
 		return searchableAssetClassNamesProvider.getClassNames(companyId);
 	}
@@ -224,6 +215,11 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 	@Override
 	protected FacetFactory getFacetFactory() {
 		return assetEntriesFacetFactory;
+	}
+
+	@Override
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Reference
@@ -235,5 +231,8 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetEntriesSearchFacet.class);
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.portal.search.web)")
+	private ServletContext _servletContext;
 
 }

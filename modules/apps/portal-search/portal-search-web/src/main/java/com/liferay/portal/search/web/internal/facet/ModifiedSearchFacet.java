@@ -156,17 +156,13 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.search.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	protected FacetFactory getFacetFactory() {
+		return modifiedFacetFactory;
 	}
 
 	@Override
-	protected FacetFactory getFacetFactory() {
-		return modifiedFacetFactory;
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	protected CalendarFactory calendarFactory;
@@ -227,5 +223,8 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 		"[past-hour TO *]", "[past-24-hours TO *]", "[past-week TO *]",
 		"[past-month TO *]", "[past-year TO *]"
 	};
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.portal.search.web)")
+	private ServletContext _servletContext;
 
 }

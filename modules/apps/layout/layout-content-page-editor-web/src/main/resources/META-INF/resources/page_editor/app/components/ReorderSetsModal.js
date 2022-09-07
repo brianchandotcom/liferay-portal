@@ -26,11 +26,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
-import {
-	useDispatch,
-	useSelector,
-	useSelectorRef,
-} from '../contexts/StoreContext';
+import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectWidgetFragmentEntryLinks from '../selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../thunks/loadWidgets';
 import {useId} from '../utils/useId';
@@ -100,7 +96,7 @@ function Tabs() {
 	const [activeTabId, setActiveTabId] = useState(TAB_IDS.fragments);
 
 	const dispatch = useDispatch();
-	const widgetFragmentEntryLinksRef = useSelectorRef(
+	const widgetFragmentEntryLinks = useSelector(
 		selectWidgetFragmentEntryLinks
 	);
 
@@ -144,11 +140,11 @@ function Tabs() {
 		if (activeTabId === TAB_IDS.widgets && !widgets) {
 			dispatch(
 				loadWidgets({
-					fragmentEntryLinks: widgetFragmentEntryLinksRef.current,
+					fragmentEntryLinks: widgetFragmentEntryLinks,
 				})
 			);
 		}
-	}, [activeTabId, dispatch, widgetFragmentEntryLinksRef, widgets]);
+	}, [activeTabId, dispatch, widgetFragmentEntryLinks, widgets]);
 
 	return (
 		<>

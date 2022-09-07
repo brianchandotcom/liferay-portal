@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Michael C. Han
@@ -231,6 +232,8 @@ public abstract class CompanyScopedConfigurationProvider
 			Configuration configuration = null;
 
 			if (objectValuePair == null) {
+				ConfigurationAdmin configurationAdmin = getConfigurationAdmin();
+
 				configuration = configurationAdmin.createFactoryConfiguration(
 					getMetatypeId(), StringPool.QUESTION);
 			}
@@ -260,6 +263,8 @@ public abstract class CompanyScopedConfigurationProvider
 
 		updateProperties(companyId, properties);
 	}
+
+	protected abstract ConfigurationAdmin getConfigurationAdmin();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyScopedConfigurationProvider.class);

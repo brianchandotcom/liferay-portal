@@ -1554,6 +1554,10 @@
 				"store": true,
 				"type": "keyword"
 			},
+			"statusByUserId": {
+				"store": true,
+				"type": "keyword"
+			},
 			"subtitle": {
 				"store": true,
 				"type": "text"

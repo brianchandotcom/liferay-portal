@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -282,9 +283,11 @@ public class SearchBarPrecedenceHelperTest {
 		SearchBarPrecedenceHelper searchBarPrecedenceHelper =
 			new SearchBarPrecedenceHelper();
 
-		searchBarPrecedenceHelper.setPortletLocalService(_portletLocalService);
-
-		searchBarPrecedenceHelper.setPortletPreferencesLookup(
+		ReflectionTestUtil.setFieldValue(
+			searchBarPrecedenceHelper, "_portletLocalService",
+			_portletLocalService);
+		ReflectionTestUtil.setFieldValue(
+			searchBarPrecedenceHelper, "_portletPreferencesLookup",
 			_portletPreferencesLookup);
 
 		return searchBarPrecedenceHelper;

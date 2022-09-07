@@ -100,6 +100,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -1067,6 +1068,9 @@ public class PortletExportControllerImpl implements PortletExportController {
 			Element exportDataRootElement =
 				portletDataContext.getExportDataRootElement();
 
+			Set<String> oldScopedPrimaryKeys = new HashSet<>(
+				portletDataContext.getScopedPrimaryKeys());
+
 			try {
 				portletDataContext.clearScopedPrimaryKeys();
 
@@ -1102,6 +1106,8 @@ public class PortletExportControllerImpl implements PortletExportController {
 			finally {
 				portletDataContext.setExportDataRootElement(
 					exportDataRootElement);
+
+				portletDataContext.addScopedPrimaryKeys(oldScopedPrimaryKeys);
 			}
 		}
 

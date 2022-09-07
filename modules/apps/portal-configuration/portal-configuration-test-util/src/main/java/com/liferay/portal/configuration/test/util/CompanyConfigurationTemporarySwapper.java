@@ -52,8 +52,14 @@ public class CompanyConfigurationTemporarySwapper implements AutoCloseable {
 
 			_initialProperties.put(key, modifiableSettings.getValue(key, null));
 
-			modifiableSettings.setValue(
-				key, String.valueOf(properties.get(key)));
+			Object value = properties.get(key);
+
+			if (value instanceof String[]) {
+				modifiableSettings.setValues(key, (String[])value);
+			}
+			else {
+				modifiableSettings.setValue(key, String.valueOf(value));
+			}
 		}
 
 		modifiableSettings.store();

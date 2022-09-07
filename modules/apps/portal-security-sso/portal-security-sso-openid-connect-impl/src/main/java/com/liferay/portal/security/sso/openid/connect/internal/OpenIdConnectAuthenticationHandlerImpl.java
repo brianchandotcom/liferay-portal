@@ -188,9 +188,6 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION_ID);
 
 		if (openIdConnectSessionId != null) {
-			_offlineOpenIdConnectSessionManager.endOpenIdConnectSession(
-				openIdConnectSessionId);
-
 			httpSession.removeAttribute(
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION_ID);
 		}

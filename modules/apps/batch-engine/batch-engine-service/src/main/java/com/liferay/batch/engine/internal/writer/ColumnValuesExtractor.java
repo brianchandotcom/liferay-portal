@@ -16,7 +16,6 @@ package com.liferay.batch.engine.internal.writer;
 
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -29,9 +28,11 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Shuyang Zhou
@@ -128,6 +129,10 @@ public class ColumnValuesExtractor {
 		for (String fieldName : fieldNames) {
 			Field field = fieldMap.get(fieldName);
 
+			if (field == null) {
+				throw new IllegalArgumentException("Field " + fieldName);
+			}
+
 			columnDescriptors[localIndex] = ColumnDescriptor._from(
 				masterIndex++, _getUnsafeFunction(fieldMap, fieldName), field,
 				parentColumnDescriptor);
@@ -135,7 +140,8 @@ public class ColumnValuesExtractor {
 			Class<?> fieldClass = field.getType();
 
 			if (ItemClassIndexUtil.isSingleColumnAdoptableValue(fieldClass) ||
-				ItemClassIndexUtil.isSingleColumnAdoptableArray(fieldClass)) {
+				ItemClassIndexUtil.isSingleColumnAdoptableArray(fieldClass) ||
+				ItemClassIndexUtil.isMap(fieldClass)) {
 
 				localIndex++;
 
@@ -220,6 +226,52 @@ public class ColumnValuesExtractor {
 				};
 			}
 
+			if (ItemClassIndexUtil.isMap(fieldClass)) {
+				return new UnsafeFunction
+					<Object, Object, ReflectiveOperationException>() {
+
+					@Override
+					public Object apply(Object object)
+						throws ReflectiveOperationException {
+
+						Map<?, ?> map = (Map<?, ?>)field.get(object);
+
+						if (map == null) {
+							return StringPool.BLANK;
+						}
+
+						StringBundler sb = new StringBundler(map.size() * 3);
+
+						Set<? extends Map.Entry<?, ?>> entries = map.entrySet();
+
+						Iterator<? extends Map.Entry<?, ?>> iterator =
+							entries.iterator();
+
+						while (iterator.hasNext()) {
+							Map.Entry<?, ?> entry = iterator.next();
+
+							sb.append(CSVUtil.encode(entry.getKey()));
+
+							sb.append(StringPool.COLON);
+
+							if (entry.getValue() != null) {
+								sb.append(CSVUtil.encode(entry.getValue()));
+							}
+							else {
+								sb.append(StringPool.BLANK);
+							}
+
+							if (iterator.hasNext()) {
+								sb.append(StringPool.COMMA_AND_SPACE);
+							}
+						}
+
+						return sb.toString();
+					}
+
+				};
+			}
+
 			return new UnsafeFunction
 				<Object, Object, ReflectiveOperationException>() {
 
@@ -237,60 +289,12 @@ public class ColumnValuesExtractor {
 			};
 		}
 
-		int index = fieldName.indexOf(CharPool.UNDERLINE);
+		Field propertiesField = fieldMap.get("properties");
 
-		if (index == -1) {
-			Field propertiesField = fieldMap.get("properties");
-
-			if (!ItemClassIndexUtil.isObjectEntryProperties(propertiesField)) {
-				throw new IllegalArgumentException(
-					"Invalid field name : " + fieldName);
-			}
-
-			return new UnsafeFunction
-				<Object, Object, ReflectiveOperationException>() {
-
-				@Override
-				public Object apply(Object object)
-					throws ReflectiveOperationException {
-
-					Map<?, ?> map = (Map<?, ?>)propertiesField.get(object);
-
-					Object value = map.get(fieldName);
-
-					if (value == null) {
-						return StringPool.BLANK;
-					}
-
-					if (ItemClassIndexUtil.isListEntry(value)) {
-						return _getListEntryKey(value);
-					}
-
-					if (value instanceof String) {
-						return CSVUtil.encode(value);
-					}
-
-					return value;
-				}
-
-			};
-		}
-
-		String prefixFieldName = fieldName.substring(0, index);
-
-		Field mapField = fieldMap.get(prefixFieldName);
-
-		if (mapField == null) {
+		if (!ItemClassIndexUtil.isObjectEntryProperties(propertiesField)) {
 			throw new IllegalArgumentException(
 				"Invalid field name : " + fieldName);
 		}
-
-		if (mapField.getType() != Map.class) {
-			throw new IllegalArgumentException(
-				"Invalid field name : " + fieldName + ", it is not Map type.");
-		}
-
-		String key = fieldName.substring(index + 1);
 
 		return new UnsafeFunction
 			<Object, Object, ReflectiveOperationException>() {
@@ -299,12 +303,20 @@ public class ColumnValuesExtractor {
 			public Object apply(Object object)
 				throws ReflectiveOperationException {
 
-				Map<?, ?> map = (Map<?, ?>)mapField.get(object);
+				Map<?, ?> map = (Map<?, ?>)propertiesField.get(object);
 
-				Object value = map.get(key);
+				Object value = map.get(fieldName);
 
 				if (value == null) {
 					return StringPool.BLANK;
+				}
+
+				if (ItemClassIndexUtil.isListEntry(value)) {
+					return _getListEntryKey(value);
+				}
+
+				if (value instanceof String) {
+					return CSVUtil.encode(value);
 				}
 
 				return value;
@@ -392,11 +404,11 @@ public class ColumnValuesExtractor {
 				(_parentColumnDescriptors.size() * 2) + 2);
 
 			for (ColumnDescriptor columnDescriptor : _parentColumnDescriptors) {
-				sb.append(columnDescriptor._field.getName());
+				sb.append(_getSanitizedFieldName(columnDescriptor._field));
 				sb.append(StringPool.PERIOD);
 			}
 
-			sb.append(_field.getName());
+			sb.append(_getSanitizedFieldName(_field));
 
 			return sb.toString();
 		}
@@ -410,6 +422,16 @@ public class ColumnValuesExtractor {
 				_parentColumnDescriptors.size() - 1);
 
 			return columnDescriptor.hashCode();
+		}
+
+		private String _getSanitizedFieldName(Field field) {
+			String name = field.getName();
+
+			if (name.startsWith(StringPool.UNDERLINE)) {
+				return name.substring(1);
+			}
+
+			return name;
 		}
 
 		private Object _getValue(Object object)

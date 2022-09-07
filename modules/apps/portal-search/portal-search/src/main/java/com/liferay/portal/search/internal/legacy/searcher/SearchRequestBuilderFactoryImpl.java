@@ -34,14 +34,7 @@ public class SearchRequestBuilderFactoryImpl
 			_searchRequestBuilderFactory, searchContext);
 	}
 
-	@Reference(unbind = "-")
-	public void setSearchRequestBuilderFactory(
-		com.liferay.portal.search.searcher.SearchRequestBuilderFactory
-			searchRequestBuilderFactory) {
-
-		_searchRequestBuilderFactory = searchRequestBuilderFactory;
-	}
-
+	@Reference
 	private com.liferay.portal.search.searcher.SearchRequestBuilderFactory
 		_searchRequestBuilderFactory;
 

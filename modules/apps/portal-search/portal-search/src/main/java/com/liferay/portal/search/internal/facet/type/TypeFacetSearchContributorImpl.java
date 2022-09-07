@@ -53,13 +53,7 @@ public class TypeFacetSearchContributorImpl
 			facetContext -> facetContext.addFacet(facet));
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetEntriesFacetFactory(
-		AssetEntriesFacetFactory assetEntriesFacetFactory) {
-
-		_assetEntriesFacetFactory = assetEntriesFacetFactory;
-	}
-
+	@Reference
 	private AssetEntriesFacetFactory _assetEntriesFacetFactory;
 
 	private class TypeFacetBuilderImpl implements TypeFacetBuilder {

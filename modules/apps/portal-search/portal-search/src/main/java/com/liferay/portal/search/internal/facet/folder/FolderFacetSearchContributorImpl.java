@@ -54,13 +54,7 @@ public class FolderFacetSearchContributorImpl
 			facetContext -> facetContext.addFacet(facet));
 	}
 
-	@Reference(unbind = "-")
-	protected void setFolderFacetFactory(
-		FolderFacetFactory folderFacetFactory) {
-
-		_folderFacetFactory = folderFacetFactory;
-	}
-
+	@Reference
 	private FolderFacetFactory _folderFacetFactory;
 
 	private class FolderFacetBuilderImpl implements FolderFacetBuilder {

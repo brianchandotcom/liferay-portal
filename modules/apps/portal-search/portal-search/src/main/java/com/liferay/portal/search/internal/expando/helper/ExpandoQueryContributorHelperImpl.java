@@ -64,27 +64,6 @@ public class ExpandoQueryContributorHelperImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setExpandoBridgeFactory(
-		ExpandoBridgeFactory expandoBridgeFactory) {
-
-		_expandoBridgeFactory = expandoBridgeFactory;
-	}
-
-	@Reference(unbind = "-")
-	public void setExpandoBridgeIndexer(
-		ExpandoBridgeIndexer expandoBridgeIndexer) {
-
-		_expandoBridgeIndexer = expandoBridgeIndexer;
-	}
-
-	@Reference(unbind = "-")
-	public void setExpandoColumnLocalService(
-		ExpandoColumnLocalService expandoColumnLocalService) {
-
-		_expandoColumnLocalService = expandoColumnLocalService;
-	}
-
 	protected void contribute(
 		String className, BooleanQuery booleanQuery, String keywords,
 		SearchContext searchContext) {
@@ -204,8 +183,13 @@ public class ExpandoQueryContributorHelperImpl
 			name, LocaleUtil.toLanguageId(locale));
 	}
 
+	@Reference
 	private ExpandoBridgeFactory _expandoBridgeFactory;
+
+	@Reference
 	private ExpandoBridgeIndexer _expandoBridgeIndexer;
+
+	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;
 
 }

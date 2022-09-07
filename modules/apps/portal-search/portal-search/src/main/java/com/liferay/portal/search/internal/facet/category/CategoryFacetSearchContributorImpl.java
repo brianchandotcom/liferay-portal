@@ -54,13 +54,7 @@ public class CategoryFacetSearchContributorImpl
 			facetContext -> facetContext.addFacet(facet));
 	}
 
-	@Reference(unbind = "-")
-	protected void setCategoryFacetFactory(
-		CategoryFacetFactory categoryFacetFactory) {
-
-		_categoryFacetFactory = categoryFacetFactory;
-	}
-
+	@Reference
 	private CategoryFacetFactory _categoryFacetFactory;
 
 	private class CategoryFacetBuilderImpl implements CategoryFacetBuilder {

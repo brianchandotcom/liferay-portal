@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.test;
 
+import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.exception.AccountEntryNameException;
@@ -40,6 +41,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Group;
@@ -58,6 +60,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -66,6 +69,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -313,34 +317,55 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testAddAccountEntryWithDomains() throws Exception {
-		String[] domains = {"test1.com", "test.1.com", "test-1.com"};
+		String[] domains = {
+			"test1.com", "test.1.com", "test-1.com", "UPPER.COM", " trim.com "
+		};
+		String[] expectedDomains = {
+			"test1.com", "test.1.com", "test-1.com", "upper.com", "trim.com"
+		};
 
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService, domains);
 
 		Assert.assertEquals(
-			StringUtil.merge(ArrayUtil.distinct(domains), ","),
+			StringUtil.merge(ArrayUtil.distinct(expectedDomains), ","),
 			accountEntry.getDomains());
 	}
 
 	@Test
 	public void testAddAccountEntryWithInvalidDomains() throws Exception {
+		String blockedEmailDomain = "blocked.com";
+
 		String[] invalidDomains = {
 			"invalid", ".invalid", "-invalid", "invalid-", "_invalid",
 			"invalid_", "@invalid.com", "invalid#domain", "invalid&domain",
 			"invalid!.com", "invalid$domain.com", "invalid%.com", "*invalid",
-			"invalid*", "invalid.*.com", "invalid+domain", ">", "<"
+			"invalid*", "invalid.*.com", "invalid+domain", ">", "<",
+			"invalid@domain.com", blockedEmailDomain
 		};
 
-		for (String domain : invalidDomains) {
-			try {
-				AccountEntryTestUtil.addAccountEntry(
-					_accountEntryLocalService, new String[] {domain});
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AccountEntryEmailDomainsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"blockedEmailDomains", blockedEmailDomain
+						).build(),
+						SettingsFactoryUtil.getSettingsFactory())) {
 
-				Assert.fail(
-					"Created an account entry with invalid domain " + domain);
-			}
-			catch (AccountEntryDomainsException accountEntryDomainsException) {
+			for (String domain : invalidDomains) {
+				try {
+					AccountEntryTestUtil.addAccountEntry(
+						_accountEntryLocalService, new String[] {domain});
+
+					Assert.fail(
+						"Created an account entry with invalid domain " +
+							domain);
+				}
+				catch (AccountEntryDomainsException
+							accountEntryDomainsException) {
+				}
 			}
 		}
 	}

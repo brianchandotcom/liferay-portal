@@ -158,7 +158,7 @@ definition {
 			''';
 
 		if (isSet(warehouseName)) {
-			var warehouseId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'] == '${warehouseName}')].['id']");
+			var warehouseId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'].['en_US'] == '${warehouseName}')].['id']");
 		}
 
 		return "${warehouseId}";

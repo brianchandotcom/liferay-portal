@@ -79,15 +79,12 @@ public class AuditRouterProxyBeanConfigurator {
 		}
 	}
 
+	private ServiceRegistration<AuditRouter> _auditRouterServiceRegistration;
+
 	@Reference(
 		service = ProxyMessageListener.class,
-		target = "(destination.name=" + DestinationNames.AUDIT + ")",
-		unbind = "-"
+		target = "(destination.name=" + DestinationNames.AUDIT + ")"
 	)
-	protected void setProxyMessageListener(
-		ProxyMessageListener proxyMessageListener) {
-	}
-
-	private ServiceRegistration<AuditRouter> _auditRouterServiceRegistration;
+	private ProxyMessageListener _proxyMessageListener;
 
 }

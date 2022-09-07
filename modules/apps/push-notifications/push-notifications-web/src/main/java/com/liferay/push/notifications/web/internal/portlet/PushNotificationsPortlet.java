@@ -80,28 +80,15 @@ public class PushNotificationsPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference(unbind = "-")
-	protected void setPushNotificationsDeviceService(
-		PushNotificationsDeviceService pushNotificationsDeviceService) {
-
-		_pushNotificationsDeviceService = pushNotificationsDeviceService;
-	}
+	@Reference
+	private PushNotificationsDeviceService _pushNotificationsDeviceService;
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.push.notifications.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))",
-		unbind = "-"
+		target = "(&(release.bundle.symbolic.name=com.liferay.push.notifications.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
 	)
-	protected void setRelease(Release release) {
-	}
+	private Release _release;
 
-	@Reference(unbind = "-")
-	protected void setResourceBundleLoaderProvider(
-		ResourceBundleLoaderProvider resourceBundleLoaderProvider) {
-
-		_resourceBundleLoaderProvider = resourceBundleLoaderProvider;
-	}
-
-	private PushNotificationsDeviceService _pushNotificationsDeviceService;
+	@Reference
 	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

@@ -202,11 +202,6 @@ public class QuestionsPortlet extends MVCPortlet {
 			QuestionsConfiguration.class, properties);
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
 	private String _getTagSelectorURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -281,6 +276,7 @@ public class QuestionsPortlet extends MVCPortlet {
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
+	@Reference
 	private ItemSelector _itemSelector;
 
 	@Reference

@@ -341,6 +341,36 @@ definition {
 		echo("## * File Entry ID: ${fileEntryId}");
 	}
 
+	macro getFileEntryTypeId {
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "${groupName}",
+			portalURL = "${portalURL}",
+			site = "${site}");
+
+		if (!(isSet(folderId))) {
+			var folderId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlfileentrytype/get-file-entry-types \
+			  -d groupIds=${groupId} \
+		''';
+
+		var fileEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${dmDocumentTitle}')]['fileEntryTypeId']");
+
+		return "${fileEntryTypeId}";
+
+		echo("## * File Entry ID: ${fileEntryTypeId}");
+	}
+
 	macro getFileEntryUUID {
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();

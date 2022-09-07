@@ -1214,6 +1214,68 @@ public interface ObjectDefinitionPersistence
 	public int filterCountByS_S(boolean system, int status);
 
 	/**
+	 * Returns the object definition where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object definition
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
+	 */
+	public ObjectDefinition findByC_ERC_ODI(
+			long companyId, String externalReferenceCode,
+			long objectDefinitionId)
+		throws NoSuchObjectDefinitionException;
+
+	/**
+	 * Returns the object definition where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	public ObjectDefinition fetchByC_ERC_ODI(
+		long companyId, String externalReferenceCode, long objectDefinitionId);
+
+	/**
+	 * Returns the object definition where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @param objectDefinitionId the object definition ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	public ObjectDefinition fetchByC_ERC_ODI(
+		long companyId, String externalReferenceCode, long objectDefinitionId,
+		boolean useFinderCache);
+
+	/**
+	 * Removes the object definition where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @param objectDefinitionId the object definition ID
+	 * @return the object definition that was removed
+	 */
+	public ObjectDefinition removeByC_ERC_ODI(
+			long companyId, String externalReferenceCode,
+			long objectDefinitionId)
+		throws NoSuchObjectDefinitionException;
+
+	/**
+	 * Returns the number of object definitions where companyId = &#63; and externalReferenceCode = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @param objectDefinitionId the object definition ID
+	 * @return the number of matching object definitions
+	 */
+	public int countByC_ERC_ODI(
+		long companyId, String externalReferenceCode, long objectDefinitionId);
+
+	/**
 	 * Returns all the object definitions where companyId = &#63; and active = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -1720,6 +1782,59 @@ public interface ObjectDefinitionPersistence
 	 */
 	public int filterCountByC_A_S_S(
 		long companyId, boolean active, boolean system, int status);
+
+	/**
+	 * Returns the object definition where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching object definition
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
+	 */
+	public ObjectDefinition findByC_ERC(
+			long companyId, String externalReferenceCode)
+		throws NoSuchObjectDefinitionException;
+
+	/**
+	 * Returns the object definition where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	public ObjectDefinition fetchByC_ERC(
+		long companyId, String externalReferenceCode);
+
+	/**
+	 * Returns the object definition where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	public ObjectDefinition fetchByC_ERC(
+		long companyId, String externalReferenceCode, boolean useFinderCache);
+
+	/**
+	 * Removes the object definition where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the object definition that was removed
+	 */
+	public ObjectDefinition removeByC_ERC(
+			long companyId, String externalReferenceCode)
+		throws NoSuchObjectDefinitionException;
+
+	/**
+	 * Returns the number of object definitions where companyId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching object definitions
+	 */
+	public int countByC_ERC(long companyId, String externalReferenceCode);
 
 	/**
 	 * Caches the object definition in the entity cache if it is enabled.

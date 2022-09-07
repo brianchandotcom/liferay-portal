@@ -127,11 +127,11 @@ public class ObjectDefinitionServiceImpl
 	@Override
 	public ObjectDefinition updateCustomObjectDefinition(
 			long objectDefinitionId, long accountEntryRestrictedObjectFieldId,
-			long descriptionObjectFieldId, long titleObjectFieldId,
-			boolean accountEntryRestricted, boolean active,
-			boolean enableCategorization, boolean enableComments,
-			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, boolean portlet,
+			long descriptionObjectFieldId, String externalReferenceCode,
+			long titleObjectFieldId, boolean accountEntryRestricted,
+			boolean active, boolean enableCategorization,
+			boolean enableComments, Map<Locale, String> labelMap, String name,
+			String panelAppOrder, String panelCategoryKey, boolean portlet,
 			Map<Locale, String> pluralLabelMap, String scope)
 		throws PortalException {
 
@@ -140,7 +140,7 @@ public class ObjectDefinitionServiceImpl
 
 		return _objectDefinitionLocalService.updateCustomObjectDefinition(
 			objectDefinitionId, accountEntryRestrictedObjectFieldId,
-			descriptionObjectFieldId, titleObjectFieldId,
+			descriptionObjectFieldId, externalReferenceCode, titleObjectFieldId,
 			accountEntryRestricted, active, enableCategorization,
 			enableComments, labelMap, name, panelAppOrder, panelCategoryKey,
 			portlet, pluralLabelMap, scope);

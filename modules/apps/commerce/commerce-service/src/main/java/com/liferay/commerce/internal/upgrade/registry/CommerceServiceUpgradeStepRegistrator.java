@@ -406,6 +406,13 @@ public class CommerceServiceUpgradeStepRegistrator
 					_resourceActionLocalService,
 					_resourcePermissionLocalService, _roleLocalService));
 
+		registry.register(
+			"8.8.0", "8.9.0",
+			UpgradeProcessFactory.addColumns(
+				"CommerceOrderItem", "discountManuallyAdjusted BOOLEAN"),
+			UpgradeProcessFactory.addColumns(
+				"CommerceOrderItem", "priceManuallyAdjusted BOOLEAN"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

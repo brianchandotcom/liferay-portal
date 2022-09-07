@@ -1668,6 +1668,74 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-157998. The page creator should see warning message when delete a required input fragment."
+	@priority = "4"
+	test ViewWarningMessageWhenDeleteRequiredInputFragments {
+		property test.name.skip.portal.instance = "FormContainer#ViewWarningMessageWhenDeleteRequiredInputFragments";
+
+		task ("Given a page designer has a Form Container with a required input fragment on content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Date",
+				fieldLabelName = "Purchase Date",
+				fieldName = "purchaseDate",
+				fieldType = "Date",
+				isRequired = "true",
+				objectName = "PurchaseOrder");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Text Input");
+
+			PageEditor.editInput(
+				field = "Region",
+				fragmentName = "Text Input",
+				markAsRequired = "true");
+		}
+
+		task ("When the page designer removes the Text Input fragment") {
+			PageEditor.removeFragment(fragmentName = "Text Input");
+		}
+
+		task ("Then the page designer could see a warning message") {
+			Alert.viewWarningSpecific(warningMessage = "The deleted fragment was marked as required. A form with missing required fields may not generate a valid entry.");
+		}
+
+		task ("Given a page designer has a Form Container with an input fragment mapped to a required field on content page") {
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Date");
+
+			PageEditor.editInput(
+				field = "Purchase Date*",
+				fragmentName = "Date");
+		}
+
+		task ("When the page designer removes the Date fragment") {
+			PageEditor.removeFragment(fragmentName = "Date");
+		}
+
+		task ("Then the page designer could see a warning message") {
+			Alert.viewWarningSpecific(warningMessage = "The deleted fragment was marked as required. A form with missing required fields may not generate a valid entry.");
+		}
+	}
+
 	@description = "This is a test for LPS-157998. The page creator should see warning message when publish the content page with hidden required input fragment."
 	@priority = "4"
 	test ViewWarningMessageWhenPublishContentPageWithHiddenRequiredInputFragments {

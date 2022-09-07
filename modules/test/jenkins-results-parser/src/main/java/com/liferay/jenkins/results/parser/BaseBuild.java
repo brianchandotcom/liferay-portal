@@ -3998,13 +3998,15 @@ public abstract class BaseBuild implements Build {
 			throw new RuntimeException("Unable to write file", ioException);
 		}
 		finally {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Archived ", String.valueOf(getArchiveFile(urlSuffix)),
-					" in ",
-					JenkinsResultsParserUtil.toDurationString(
-						JenkinsResultsParserUtil.getCurrentTimeMillis() -
-							start)));
+			if (JenkinsResultsParserUtil.debug) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Archived ", String.valueOf(getArchiveFile(urlSuffix)),
+						" in ",
+						JenkinsResultsParserUtil.toDurationString(
+							JenkinsResultsParserUtil.getCurrentTimeMillis() -
+								start)));
+			}
 		}
 	}
 

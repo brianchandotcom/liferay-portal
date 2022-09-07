@@ -1668,6 +1668,241 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-157998. The page creator should see warning message when publish the content page with hidden required input fragment."
+	@priority = "4"
+	test ViewWarningMessageWhenPublishContentPageWithHiddenRequiredInputFragments {
+		property test.name.skip.portal.instance = "FormContainer#ViewWarningMessageWhenPublishContentPageWithHiddenRequiredInputFragments";
+
+		task ("Given a page designer has a Form Container with a hidden Container containing a required input fragment on content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 1",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Submit Button",
+				height = "Tall",
+				targetFragmentName = "Container");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Form Components",
+				fragmentName = "Text Input",
+				navTab = "Fragments");
+
+			PageEditor.editInput(
+				field = "Region",
+				fragmentName = "Text Input",
+				markAsRequired = "true");
+
+			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
+		}
+
+		task ("When the page designer publishes the content page") {
+			Button.click(button = "Publish");
+		}
+
+		task ("Then the page designer could see Required Fields Hidden warning message") {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Required Fields Hidden");
+
+			Modal.publish(warningMessage = "Purchase Order form contains one or more hidden fragments mapped to required fields. A form with missing required fields will not generate a valid entry. Are you sure you want to publish it?");
+		}
+
+		task ("Given a page designer has a Form Container with a hidden Container containing an input fragment mapped to a required field on content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "PurchaseOrder");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 2",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Submit Button",
+				height = "Tall",
+				targetFragmentName = "Container");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Form Components",
+				fragmentName = "Text Input",
+				navTab = "Fragments");
+
+			PageEditor.editInput(
+				field = "Name*",
+				fragmentName = "Text Input");
+
+			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
+		}
+
+		task ("When the page designer publishes the content page") {
+			Button.click(button = "Publish");
+		}
+
+		task ("Then the page designer could see Required Fields Hidden warning message") {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Required Fields Hidden");
+
+			Modal.publish(warningMessage = "Purchase Order form contains one or more hidden fragments mapped to required fields. A form with missing required fields will not generate a valid entry. Are you sure you want to publish it?");
+		}
+
+		task ("Given a page designer has a Form Container with a hidden Grid containing a required input fragment on content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 3",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 3",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Text Input",
+				height = "Tall",
+				targetFragmentName = "Grid");
+
+			PageEditor.editInput(
+				field = "Name*",
+				fragmentName = "Text Input");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Submit Button",
+				targetFragmentName = "Text Input");
+
+			PageEditor.addElementToColumn(
+				collectionName = "Form Components",
+				columnNumber = "1",
+				fragmentName = "Text Input",
+				navTab = "Fragments");
+
+			PageEditor.editInput(
+				field = "Region",
+				fragmentName = "Text Input",
+				markAsRequired = "true");
+
+			PageEditor.hideFragmentViaHeader(fragmentName = "Grid");
+		}
+
+		task ("When the page designer publishes the content page") {
+			Button.click(button = "Publish");
+		}
+
+		task ("Then the page designer could see Required Fields Hidden warning message") {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Required Fields Hidden");
+
+			Modal.publish(warningMessage = "Purchase Order form contains one or more hidden fragments mapped to required fields. A form with missing required fields will not generate a valid entry. Are you sure you want to publish it?");
+		}
+
+		task ("Given a page designer has a Form Container with a hidden Grid containing an input fragment mapped to a required field on content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 4",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 4",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Submit Button",
+				height = "Tall",
+				targetFragmentName = "Grid");
+
+			PageEditor.addElementToColumn(
+				collectionName = "Form Components",
+				columnNumber = "1",
+				fragmentName = "Text Input",
+				navTab = "Fragments");
+
+			PageEditor.editInput(
+				field = "Name*",
+				fragmentName = "Text Input");
+
+			PageEditor.hideFragmentViaHeader(fragmentName = "Grid");
+		}
+
+		task ("When the page designer publishes the content page") {
+			Button.click(button = "Publish");
+		}
+
+		task ("Then the page designer could see Required Fields Hidden warning message") {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Required Fields Hidden");
+
+			Modal.publish(warningMessage = "Purchase Order form contains one or more hidden fragments mapped to required fields. A form with missing required fields will not generate a valid entry. Are you sure you want to publish it?");
+		}
+	}
+
 	@description = "This is a test for LPS-157998. The page creator should see warning message when publish the content page without the Submit Button fragment or with a hidden Submit Button fragment."
 	@priority = "4"
 	test ViewWarningMessageWhenPublishContentPageWithoutSubmitButtonOrWithHiddenSubmitButton {

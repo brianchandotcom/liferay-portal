@@ -125,20 +125,6 @@ public class SearchBarPrecedenceHelper {
 		return true;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletPreferencesLookup(
-		PortletPreferencesLookup portletPreferencesLookup) {
-
-		_portletPreferencesLookup = portletPreferencesLookup;
-	}
-
 	private List<Portlet> _getPortlets(ThemeDisplay themeDisplay) {
 		Layout layout = themeDisplay.getLayout();
 

@@ -63,6 +63,7 @@ definition {
 			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
 	}
 
+	@description = "This test checks that a document using a document type with a custom metadata set can be created successfully."
 	@priority = "5"
 	@refactorneeded
 	test AddEntryWithMetadataSet {
@@ -99,11 +100,10 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name",
 			numericField = "123");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Contract Title");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Type Contract Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Type Contract Title");
 	}

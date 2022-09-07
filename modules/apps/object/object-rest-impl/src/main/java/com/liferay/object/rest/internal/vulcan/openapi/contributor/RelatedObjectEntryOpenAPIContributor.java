@@ -184,28 +184,28 @@ public class RelatedObjectEntryOpenAPIContributor
 			}
 		};
 
-		ApiResponses apiResponses = new ApiResponses();
-
-		ApiResponse defaultResponse = new ApiResponse();
-
-		Content content = new Content();
-
 		MediaType mediaType = new MediaType();
-
-		Schema schema = new Schema();
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2());
 
+		Schema schema = new Schema();
+
 		schema.set$ref(objectDefinition.getShortName());
 
 		mediaType.setSchema(schema);
 
+		Content content = new Content();
+
 		content.addMediaType("application/json", mediaType);
 		content.addMediaType("application/xml", mediaType);
 
+		ApiResponse defaultResponse = new ApiResponse();
+
 		defaultResponse.setContent(content);
+
+		ApiResponses apiResponses = new ApiResponses();
 
 		apiResponses.setDefault(defaultResponse);
 

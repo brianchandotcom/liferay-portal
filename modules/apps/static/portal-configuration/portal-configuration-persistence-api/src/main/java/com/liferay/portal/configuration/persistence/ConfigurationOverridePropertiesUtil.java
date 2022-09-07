@@ -64,9 +64,19 @@ public class ConfigurationOverridePropertiesUtil {
 						key.substring(0, index), pid -> new HashMap<>());
 
 				try {
-					overrideProperties.put(
-						key.substring(index + 1),
-						ConfigurationHandler.read(properties.getProperty(key)));
+					String valueContent = properties.getProperty(key);
+
+					Object value = ConfigurationHandler.read(valueContent);
+
+					if ((value == null) && !valueContent.isEmpty()) {
+						_log.error(
+							"Key " + key + " is overrided with a non-empty " +
+								"content but decoded into a null value, " +
+									"please check override content syntax.");
+					}
+					else {
+						overrideProperties.put(key.substring(index + 1), value);
+					}
 				}
 				catch (IOException ioException) {
 					_log.error("Unable to parse property", ioException);

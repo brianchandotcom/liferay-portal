@@ -189,8 +189,6 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		).put(
 			"statusByUserId", String.valueOf(blogsEntry.getStatusByUserId())
 		).put(
-			"statusByUserId", String.valueOf(blogsEntry.getStatusByUserId())
-		).put(
 			"title_sortable", StringUtil.lowerCase(blogsEntry.getTitle())
 		).put(
 			"urlTitle", blogsEntry.getUrlTitle()

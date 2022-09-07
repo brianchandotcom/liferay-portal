@@ -122,6 +122,8 @@ public class AutoUpgradeProcessTest {
 
 		@Override
 		public void register(Registry registry) {
+			registry.registerInitialization();
+
 			registry.register("1.0.0", "2.0.0", new DummyUpgradeStep());
 		}
 

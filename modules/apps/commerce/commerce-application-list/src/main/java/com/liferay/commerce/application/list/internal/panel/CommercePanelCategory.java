@@ -67,14 +67,10 @@ public class CommercePanelCategory extends BasePanelCategory {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
-	}
-
 	@Reference
 	private Language _language;
 
+	@Reference
 	private PanelAppRegistry _panelAppRegistry;
 
 	@Reference

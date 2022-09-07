@@ -797,7 +797,7 @@ definition {
 			AssertTextEquals(
 				key_localizedLanguage = "hu-HU",
 				locator1 = "Translation#TRANSLATION_STATUS_LABEL",
-				value1 = "Not Translated");	
+				value1 = "Not Translated");
 
 			CountriesManagement._inputRegionDetails(regionCode = "123");
 		}

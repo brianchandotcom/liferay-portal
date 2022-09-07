@@ -67,15 +67,17 @@ public class ItemClassIndexUtil {
 
 						Class<?> fieldClass = field.getType();
 
-						if (!isSingleColumnAdoptableValue(fieldClass) &&
-							!isSingleColumnAdoptableArray(fieldClass)) {
+						if (!isMap(fieldClass) &&
+							!isSingleColumnAdoptableValue(fieldClass) &&
+							!isSingleColumnAdoptableArray(fieldClass) &&
+							!Objects.equals(clazz, fieldClass)) {
 
 							index(fieldClass);
 						}
 					}
 
-					if (clazz.isAnonymousClass() || clazz.isLocalClass() ||
-						clazz.isMemberClass()) {
+					if (Objects.equals(
+							clazz.getSuperclass(), clazz.getDeclaringClass())) {
 
 						break;
 					}
@@ -89,6 +91,14 @@ public class ItemClassIndexUtil {
 
 	public static boolean isListEntry(Object object) {
 		if (object instanceof ListEntry) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isMap(Class<?> valueClass) {
+		if (Objects.equals(valueClass, Map.class)) {
 			return true;
 		}
 
@@ -150,6 +160,6 @@ public class ItemClassIndexUtil {
 	private static final List<Class<?>> _objectTypes = Arrays.asList(
 		Boolean.class, BigDecimal.class, BigInteger.class, Byte.class,
 		Date.class, Double.class, Float.class, Integer.class, Long.class,
-		Map.class, String.class);
+		String.class);
 
 }

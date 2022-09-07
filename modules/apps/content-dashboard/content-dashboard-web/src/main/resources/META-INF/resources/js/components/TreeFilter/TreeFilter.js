@@ -281,7 +281,10 @@ const TreeFilter = ({
 										<ClayTreeView.ItemStack>
 											<ClayCheckbox />
 
-											<ClayIcon symbol={item.icon} />
+											<ClayIcon
+												className={item.iconCssClass}
+												symbol={item.icon}
+											/>
 
 											{handleNodeName({
 												childrenPropertyKey,

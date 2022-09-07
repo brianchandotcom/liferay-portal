@@ -29,6 +29,15 @@ jest.mock(
 	'../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
+			availableLanguages: {
+				en_US: {
+					default: false,
+					displayName: 'English (United States)',
+					languageIcon: 'en-us',
+					languageId: 'en_US',
+					w3cLanguageId: 'en-US',
+				},
+			},
 			commonStyles: [],
 			searchContainerPageMaxDelta: '50',
 		},
@@ -90,6 +99,7 @@ const renderComponent = ({
 			dispatch={() => {}}
 			getState={() => ({
 				fragmentEntryLinks,
+				languageId: 'en_US',
 				layoutData,
 				permissions: {UPDATE: true},
 				segmentsExperienceId: '0',
@@ -115,6 +125,7 @@ describe('CollectionGeneralPanel', () => {
 			...Liferay,
 			FeatureFlags: {
 				'LPS-160243': true,
+				'LPS-160789': true,
 			},
 		};
 	});
@@ -165,6 +176,30 @@ describe('CollectionGeneralPanel', () => {
 			itemConfig: expect.objectContaining({
 				emptyCollectionOptions: {
 					displayMessage: false,
+				},
+			}),
+			itemId: '0',
+			segmentsExperienceId: '0',
+		});
+	});
+
+	it('allows changing the Empty Collection Alert input', () => {
+		renderComponent();
+
+		const input = screen.getByLabelText('empty-collection-alert');
+
+		userEvent.type(input, 'Hello world!');
+
+		act(() => {
+			fireEvent.blur(input);
+		});
+
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: expect.objectContaining({
+				emptyCollectionOptions: {
+					message: {
+						['en_US']: 'Hello world!',
+					},
 				},
 			}),
 			itemId: '0',

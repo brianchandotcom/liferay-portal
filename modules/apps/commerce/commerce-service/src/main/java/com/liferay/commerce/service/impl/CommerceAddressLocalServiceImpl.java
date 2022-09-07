@@ -189,14 +189,6 @@ public class CommerceAddressLocalServiceImpl
 	}
 
 	@Override
-	public CommerceAddress deleteCommerceAddress(long commerceAddressId)
-		throws PortalException {
-
-		return CommerceAddressImpl.fromAddress(
-			_addressLocalService.deleteAddress(commerceAddressId));
-	}
-
-	@Override
 	public void deleteCommerceAddresses(String className, long classPK)
 		throws PortalException {
 

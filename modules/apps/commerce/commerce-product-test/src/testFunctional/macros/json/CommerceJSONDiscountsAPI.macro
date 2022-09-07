@@ -36,6 +36,10 @@ definition {
 		if (!(isSet(useCouponCode))) {
 			var useCouponCode = "false";
 		}
+
+		if ("${useCouponCode}" == "false") {
+			var couponCode = "";
+		}
 		else {
 			if (!(isSet(couponCode))) {
 				var couponCode = "TEST";

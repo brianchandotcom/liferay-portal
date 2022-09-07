@@ -257,7 +257,7 @@ definition {
 		else if (isSet(productSalePriceInactive)) {
 			AssertElementPresent(
 				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PROMO_PRICE_INACTIVE",
-				value1 = "${productSalePricePriceInactive}");
+				value1 = "${productSalePriceInactive}");
 		}
 
 		if (isSet(discountPercentage) && isSet(productNetPrice)) {

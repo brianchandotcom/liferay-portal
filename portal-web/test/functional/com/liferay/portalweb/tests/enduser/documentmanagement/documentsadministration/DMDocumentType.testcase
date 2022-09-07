@@ -69,15 +69,17 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
+		task ("Add a metadata set with numeric field") {
+			DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
 
-		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
+			DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric");
+			DataEngine.addField(
+				fieldFieldLabel = "Numeric",
+				fieldName = "Numeric");
 
-		DDLDataDefinition.save();
+			DDLDataDefinition.save();
+		}
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
@@ -86,17 +88,6 @@ definition {
 			dmDocumentTypeFieldNames = "Date",
 			dmDocumentTypeName = "DM Document Type Name",
 			metadataSetName = "Document Metadata Set Name");
-
-		DMDocumentType.edit(
-			dmDocumentTypeFieldRequiredEdit = "Date",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openToAddEntry(
-			dmDocumentTypeName = "DM Document Type Name",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Date");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

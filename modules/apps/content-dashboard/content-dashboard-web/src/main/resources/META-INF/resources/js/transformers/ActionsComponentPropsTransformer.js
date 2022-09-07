@@ -50,7 +50,12 @@ const selectRow = (portletNamespace, rowId) => {
 	currentRow.classList.add(ACTIVE_ROW_CSS_CLASS);
 };
 
-const showSidebar = ({View, fetchURL, portletNamespace}) => {
+const showSidebar = ({
+	View,
+	fetchURL,
+	portletNamespace,
+	singlePageApplicationEnabled,
+}) => {
 	const id = `${portletNamespace}sidebar`;
 
 	const sidebarPanel = Liferay.component(id);
@@ -72,6 +77,7 @@ const showSidebar = ({View, fetchURL, portletNamespace}) => {
 				ref: (element) => {
 					Liferay.component(id, element);
 				},
+				singlePageApplicationEnabled,
 				viewComponent: View,
 			},
 			container
@@ -89,15 +95,18 @@ const actions = {
 		portletNamespace,
 		rowId,
 		selectedItemRowId,
+		singlePageApplicationEnabled,
 	}) {
 		selectRow(portletNamespace, rowId);
 
-		handleSessionOnSidebarOpen({
-			fetchURL,
-			panelState,
-			rowId,
-			selectedItemRowId,
-		});
+		if (singlePageApplicationEnabled) {
+			handleSessionOnSidebarOpen({
+				fetchURL,
+				panelState,
+				rowId,
+				selectedItemRowId,
+			});
+		}
 
 		showSidebar({
 			View: Liferay.FeatureFlags['LPS-161013']
@@ -105,6 +114,7 @@ const actions = {
 				: SidebarPanelInfoViewCollapsable,
 			fetchURL,
 			portletNamespace,
+			singlePageApplicationEnabled,
 		});
 	},
 	showMetrics({fetchURL, portletNamespace, rowId}) {
@@ -125,9 +135,15 @@ export default function propsTransformer({
 	portletNamespace,
 	...otherProps
 }) {
-	const {panelState, selectedItemRowId} = additionalProps;
+	const {
+		panelState,
+		selectedItemRowId,
+		singlePageApplicationEnabled,
+	} = additionalProps;
 
-	handlePanelStateFromSession(additionalProps);
+	if (singlePageApplicationEnabled) {
+		handlePanelStateFromSession(additionalProps);
+	}
 
 	return {
 		...otherProps,
@@ -146,6 +162,7 @@ export default function propsTransformer({
 							portletNamespace,
 							rowId: item.data.classPK,
 							selectedItemRowId,
+							singlePageApplicationEnabled,
 						});
 					}
 				},

@@ -24,12 +24,14 @@ const handlePanelStateFromSession = ({
 	panelState,
 	selectedItemFetchURL,
 	selectedItemRowId,
+	singlePageApplicationEnabled,
 }: {
 	currentRowId: string;
 	namespace: string;
 	panelState: string;
 	selectedItemFetchURL: string;
 	selectedItemRowId: string;
+	singlePageApplicationEnabled: boolean;
 }) => {
 	if (
 		!selectedItemRowId ||
@@ -53,6 +55,7 @@ const handlePanelStateFromSession = ({
 		View: SidebarPanelInfoView,
 		fetchURL: selectedItemFetchURL,
 		portletNamespace: namespace,
+		singlePageApplicationEnabled,
 	});
 
 	ActionsComponentPropsTransformer.selectRow(namespace, selectedItemRowId);

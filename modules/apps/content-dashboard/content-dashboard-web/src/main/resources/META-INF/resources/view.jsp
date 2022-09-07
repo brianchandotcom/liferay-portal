@@ -301,6 +301,8 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 									"selectedItemFetchURL", contentDashboardAdminDisplayContext.getSelectedItemFetchURL(contentDashboardItem)
 								).put(
 									"selectedItemRowId", contentDashboardAdminDisplayContext.getSelectedItemRowId()
+								).put(
+									"singlePageApplicationEnabled", contentDashboardAdminDisplayContext.getSinglePageApplicationEnabled()
 								).build()
 							%>'
 							dropdownItems="<%= contentDashboardAdminDisplayContext.getDropdownItems(contentDashboardItem) %>"

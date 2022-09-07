@@ -96,7 +96,10 @@ const dataReducer = (state, action) => {
 };
 
 const SidebarPanel = React.forwardRef(
-	({fetchURL, onClose, viewComponent: View}, ref) => {
+	(
+		{fetchURL, onClose, singlePageApplicationEnabled, viewComponent: View},
+		ref
+	) => {
 		const CurrentViewRef = useRef(View);
 
 		const isMounted = useIsMounted();
@@ -151,6 +154,10 @@ const SidebarPanel = React.forwardRef(
 		}, [View]);
 
 		useEffect(() => {
+			if (!singlePageApplicationEnabled) {
+				return;
+			}
+
 			const navigationEventHandler = Liferay.on(
 				'startNavigate',
 				({path, target}) => {
@@ -167,7 +174,7 @@ const SidebarPanel = React.forwardRef(
 			return () => {
 				navigationEventHandler.detach();
 			};
-		}, []);
+		}, [singlePageApplicationEnabled]);
 
 		useImperativeHandle(ref, () => ({
 			close: () => safeDispatch({type: 'CLOSE_SIDEBAR'}),

@@ -18,12 +18,14 @@ declare const handlePanelStateFromSession: ({
 	panelState,
 	selectedItemFetchURL,
 	selectedItemRowId,
+	singlePageApplicationEnabled,
 }: {
 	currentRowId: string;
 	namespace: string;
 	panelState: string;
 	selectedItemFetchURL: string;
 	selectedItemRowId: string;
+	singlePageApplicationEnabled: boolean;
 }) => void;
 declare const handleSessionOnSidebarOpen: ({
 	panelState,

@@ -201,13 +201,7 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 		return portletURL.toString();
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletDisplayTemplate(
-		PortletDisplayTemplate portletDisplayTemplate) {
-
-		this.portletDisplayTemplate = portletDisplayTemplate;
-	}
-
+	@Reference
 	protected PortletDisplayTemplate portletDisplayTemplate;
 
 	private static final Set<String> _viewTemplateExcludedColumnNames =

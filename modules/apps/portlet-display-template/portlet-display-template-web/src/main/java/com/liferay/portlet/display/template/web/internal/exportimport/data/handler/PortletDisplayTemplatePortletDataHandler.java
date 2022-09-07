@@ -181,18 +181,6 @@ public class PortletDisplayTemplatePortletDataHandler
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private List<Long> _getClassNameIds(PortletDataContext portletDataContext) {
 		List<Long> classNameIds = new ArrayList<>();
 
@@ -307,7 +295,11 @@ public class PortletDisplayTemplatePortletDataHandler
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
+	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private Portal _portal;

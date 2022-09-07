@@ -97,17 +97,11 @@ public class PortletDisplayTemplateManagerImpl
 			contextObjects);
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletDisplayTemplate(
-		PortletDisplayTemplate portletDisplayTemplate) {
-
-		_portletDisplayTemplate = portletDisplayTemplate;
-	}
-
 	private static final Function<InvocationHandler, DDMTemplate>
 		_ddmTemplateProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
 			DDMTemplate.class, ModelWrapper.class);
 
+	@Reference
 	private PortletDisplayTemplate _portletDisplayTemplate;
 
 }

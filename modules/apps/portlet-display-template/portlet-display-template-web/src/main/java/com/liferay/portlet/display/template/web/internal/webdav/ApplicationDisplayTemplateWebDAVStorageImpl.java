@@ -88,18 +88,6 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 			webDAVRequest, getRootPath(), getToken(), 0);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMWebDAV(DDMWebDAV ddmWebDAV) {
-		_ddmWebDAV = ddmWebDAV;
-	}
-
 	private List<Resource> _getFolders(WebDAVRequest webDAVRequest)
 		throws Exception {
 
@@ -127,7 +115,10 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 		return resources;
 	}
 
+	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
 	private DDMWebDAV _ddmWebDAV;
 
 }

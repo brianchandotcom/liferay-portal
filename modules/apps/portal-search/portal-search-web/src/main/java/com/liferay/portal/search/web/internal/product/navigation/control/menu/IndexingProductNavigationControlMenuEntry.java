@@ -86,14 +86,10 @@ public class IndexingProductNavigationControlMenuEntry
 		return super.isShow(httpServletRequest);
 	}
 
-	@Reference(unbind = "-")
-	public void setIndexWriterHelper(IndexWriterHelper indexWriterHelper) {
-		_indexWriterHelper = indexWriterHelper;
-	}
-
 	private static final Map<String, Object> _data =
 		Collections.<String, Object>singletonMap("qa-id", "indexing");
 
+	@Reference
 	private IndexWriterHelper _indexWriterHelper;
 
 	@Reference

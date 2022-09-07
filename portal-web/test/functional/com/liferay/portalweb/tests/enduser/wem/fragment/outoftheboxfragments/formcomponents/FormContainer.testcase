@@ -1736,6 +1736,184 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-150278 and LPS-157998. The page creator should see warning message when hide a layout element that doesn't contain the whole form and with required input fragment."
+	@priority = "4"
+	test ViewWarningMessageWhenHideLayoutElementWithPartialFormAndRequiredInputFragments {
+		property test.name.skip.portal.instance = "FormContainer#ViewWarningMessageWhenHideLayoutElementWithPartialFormAndRequiredInputFragments";
+
+		task ("Given a page designer has a Form Container with a Container containing a required input fragment on content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 1",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Form Components",
+				fragmentName = "Text Input",
+				navTab = "Fragments");
+
+			PageEditor.editInput(
+				field = "Region",
+				fragmentName = "Text Input",
+				markAsRequired = "true");
+		}
+
+		task ("When the page designer hides the Container") {
+			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
+		}
+
+		task ("Then the page designer could see a warning message") {
+			Alert.viewWarningSpecific(warningMessage = "The hidden fragment contained required fields. A form with missing required fields will not generate a valid entry.");
+		}
+
+		task ("Given a page designer has a Form Container with a Container containing an input fragment mapped to a required field on content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Date",
+				fieldLabelName = "Purchase Date",
+				fieldName = "purchaseDate",
+				fieldType = "Date",
+				isRequired = "true",
+				objectName = "PurchaseOrder");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 2",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Form Components",
+				fragmentName = "Date",
+				navTab = "Fragments");
+
+			PageEditor.editInput(
+				field = "Purchase Date*",
+				fragmentName = "Date");
+		}
+
+		task ("When the page designer hides the Container") {
+			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
+		}
+
+		task ("Then the page designer could see a warning message") {
+			Alert.viewWarningSpecific(warningMessage = "The hidden fragment contained required fields. A form with missing required fields will not generate a valid entry.");
+		}
+
+		task ("Given a page designer has a Form Container with a Grid containing a required input fragment on content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 3",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 3",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+
+			PageEditor.addElementToColumn(
+				collectionName = "Form Components",
+				columnNumber = "1",
+				fragmentName = "Text Input",
+				navTab = "Fragments");
+
+			PageEditor.editInput(
+				field = "Region",
+				fragmentName = "Text Input",
+				markAsRequired = "true");
+		}
+
+		task ("When the page designer hides the Grid") {
+			PageEditor.hideFragmentViaHeader(fragmentName = "Grid");
+		}
+
+		task ("Then the page designer could see a warning message") {
+			Alert.viewWarningSpecific(warningMessage = "The hidden fragment contained required fields. A form with missing required fields will not generate a valid entry.");
+		}
+
+		task ("Given a page designer has a Form Container with a Grid containing an input fragment mapped to a required field on content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 4",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 4",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+
+			PageEditor.addElementToColumn(
+				collectionName = "Form Components",
+				columnNumber = "1",
+				fragmentName = "Date",
+				navTab = "Fragments");
+
+			PageEditor.editInput(
+				field = "Purchase Date*",
+				fragmentName = "Date");
+		}
+
+		task ("When the page designer hides the Grid") {
+			PageEditor.hideFragmentViaHeader(fragmentName = "Grid");
+		}
+
+		task ("Then the page designer could see a warning message") {
+			Alert.viewWarningSpecific(warningMessage = "The hidden fragment contained required fields. A form with missing required fields will not generate a valid entry.");
+		}
+	}
+
 	@description = "This is a test for LPS-157998. The page creator should see warning message when publish the content page with hidden required input fragment."
 	@priority = "4"
 	test ViewWarningMessageWhenPublishContentPageWithHiddenRequiredInputFragments {

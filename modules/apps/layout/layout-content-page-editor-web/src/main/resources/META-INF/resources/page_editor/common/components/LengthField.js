@@ -39,7 +39,13 @@ const REGEX = /^(-?(?:[\d]*\.?[\d]+))(px|em|vh|vw|rem|%)$/;
 
 const UNITS = ['px', '%', 'em', 'rem', 'vw', 'vh', CUSTOM];
 
-export function LengthField({field, onValueSelect, showLabel = true, value}) {
+export function LengthField({
+	className,
+	field,
+	onValueSelect,
+	showLabel = true,
+	value,
+}) {
 	const inputId = useId();
 
 	const initialValue = useMemo(() => {
@@ -65,7 +71,11 @@ export function LengthField({field, onValueSelect, showLabel = true, value}) {
 	}, [value]);
 
 	return (
-		<ClayForm.Group className="page-editor__length-field">
+		<ClayForm.Group
+			className={classNames('page-editor__length-field', {
+				[className]: className,
+			})}
+		>
 			<label
 				className={classNames({'sr-only': !showLabel})}
 				htmlFor={inputId}
@@ -85,6 +95,7 @@ export function LengthField({field, onValueSelect, showLabel = true, value}) {
 }
 
 LengthField.propTypes = {
+	className: PropTypes.string,
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
 	onValueSelect: PropTypes.func.isRequired,
 	showLabel: PropTypes.bool,

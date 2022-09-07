@@ -236,6 +236,7 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 					<ClayDropDown.Group header={field?.label}>
 						{Liferay.FeatureFlags['LPS-143206'] ? (
 							<LengthField
+								className="mb-3 mt-2 px-3"
 								field={field}
 								onValueSelect={onChange}
 								showLabel={false}

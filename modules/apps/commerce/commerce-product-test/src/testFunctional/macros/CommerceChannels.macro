@@ -620,7 +620,7 @@ definition {
 			key_frameTitle = "Select File",
 			locator1 = "CommerceEntry#ANY_IFRAME");
 
-		Click(locator1 = "CommerceOrders#PRINT_ORDER_TEMPLATE_SELECT_FILE");
+		Click(locator1 = "CommerceOrders#PRINT_ORDER_TEMPLATE_DROPZONE");
 
 		SelectFrameTop();
 

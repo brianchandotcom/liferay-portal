@@ -231,8 +231,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PRINT_ORDER_TEMPLATE_SELECT_FILE</td>
-	<td>//label[@class='btn btn-secondary' and contains(.,'Select File')]</td>
+	<td>PRINT_ORDER_TEMPLATE_DROPZONE</td>
+	<td>//div[contains(@class, 'dropzone')]</td>
 	<td></td>
 </tr>
 <tr>

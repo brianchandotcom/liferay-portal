@@ -44,9 +44,10 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+		DMNavigator.openToAddEntry(
+			dmDocumentTypeName = "DM Document Type Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		PortletEntry.inputTitle(title = "DM Document Title");
 
@@ -108,9 +109,10 @@ definition {
 			dmDocumentTypeFieldRequiredEdit = "Date",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+		DMNavigator.openToAddEntry(
+			dmDocumentTypeName = "DM Document Type Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Date");
 
@@ -157,9 +159,10 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name",
 			metadataSetName = "Document Metadata Set Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+		DMNavigator.openToAddEntry(
+			dmDocumentTypeName = "DM Document Type Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		Type(
 			key_fieldLabel = "Numeric",
@@ -259,9 +262,10 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+		DMNavigator.openToAddEntry(
+			dmDocumentTypeName = "DM Document Type Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		PortletEntry.inputTitle(title = "DM Document Title");
 
@@ -315,9 +319,10 @@ definition {
 
 		PortletEntry.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+		DMNavigator.openToAddEntry(
+			dmDocumentTypeName = "DM Document Type Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		PortletEntry.inputTitle(title = "DM Document Title");
 
@@ -459,9 +464,10 @@ definition {
 			dmDocumentTypeFieldNames = "Text,Date,Image,Upload",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+		DMNavigator.openToAddEntry(
+			dmDocumentTypeName = "DM Document Type Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		for (var fieldFieldLabel : list "Text,Date,Image,Upload") {
 			AssertElementPresent(
@@ -475,9 +481,10 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name",
 			fieldFieldLabel = "Text,Date,Image");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+		DMNavigator.openToAddEntry(
+			dmDocumentTypeName = "DM Document Type Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		for (var fieldFieldLabel : list "Text,Date,Image") {
 			AssertElementNotPresent(
@@ -737,9 +744,10 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+		DMNavigator.openToAddEntry(
+			dmDocumentTypeName = "DM Document Type Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		PortletEntry.inputTitle(title = "DM Document Title");
 

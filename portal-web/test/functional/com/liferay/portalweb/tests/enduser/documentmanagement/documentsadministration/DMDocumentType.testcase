@@ -32,17 +32,19 @@ definition {
 	test AddDuplicateFields {
 		property portal.acceptance = "true";
 
-		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
+		task ("Add a document type with a repeatable numeric field") {
+			DMNavigator.openToAddDocumentType(siteURLKey = "guest");
 
-		PortletEntry.inputName(name = "DM Document Type Name");
+			PortletEntry.inputName(name = "DM Document Type Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric");
+			DataEngine.addField(
+				fieldFieldLabel = "Numeric",
+				fieldName = "Numeric");
 
-		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Numeric");
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Numeric");
 
-		DDLDataDefinition.save();
+			DDLDataDefinition.save();
+		}
 
 		DMNavigator.openToAddEntry(
 			dmDocumentTypeName = "DM Document Type Name",

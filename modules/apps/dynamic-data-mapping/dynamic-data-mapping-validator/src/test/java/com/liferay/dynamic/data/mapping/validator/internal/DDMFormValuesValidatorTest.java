@@ -948,6 +948,7 @@ public class DDMFormValuesValidatorTest {
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesValidatorImpl, "_ddmExpressionFactory",
 			ddmExpressionFactoryImpl);
+
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesValidatorImpl, "_ddmFormFieldTypeServicesTracker",
 			ProxyFactory.newDummyInstance(

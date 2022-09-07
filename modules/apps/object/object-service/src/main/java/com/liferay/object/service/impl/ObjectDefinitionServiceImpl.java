@@ -124,9 +124,9 @@ public class ObjectDefinitionServiceImpl
 			getUserId(), objectDefinitionId);
 	}
 
-	@Override
 	public ObjectDefinition updateCustomObjectDefinition(
-			long objectDefinitionId, long accountEntryRestrictedObjectFieldId,
+			String externalReferenceCode, long objectDefinitionId,
+			long accountEntryRestrictedObjectFieldId,
 			long descriptionObjectFieldId, long titleObjectFieldId,
 			boolean accountEntryRestricted, boolean active,
 			boolean enableCategorization, boolean enableComments,
@@ -139,11 +139,11 @@ public class ObjectDefinitionServiceImpl
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
 		return _objectDefinitionLocalService.updateCustomObjectDefinition(
-			objectDefinitionId, accountEntryRestrictedObjectFieldId,
-			descriptionObjectFieldId, titleObjectFieldId,
-			accountEntryRestricted, active, enableCategorization,
-			enableComments, labelMap, name, panelAppOrder, panelCategoryKey,
-			portlet, pluralLabelMap, scope);
+			externalReferenceCode, objectDefinitionId,
+			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
+			titleObjectFieldId, accountEntryRestricted, active,
+			enableCategorization, enableComments, labelMap, name, panelAppOrder,
+			panelCategoryKey, portlet, pluralLabelMap, scope);
 	}
 
 	@Override

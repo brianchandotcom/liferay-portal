@@ -48,7 +48,7 @@ const SidebarHeader = ({children, title}) => {
 				<ClayLayout.ContentCol>
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('close')}
-						className="text-secondary"
+						className="component-action text-secondary"
 						data-tooltip-align="bottom"
 						displayType="unstyled"
 						onClick={onClose}

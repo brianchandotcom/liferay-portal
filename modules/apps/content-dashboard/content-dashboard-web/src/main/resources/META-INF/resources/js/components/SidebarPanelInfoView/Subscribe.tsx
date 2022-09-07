@@ -52,10 +52,9 @@ const Subscribe = ({icon, label, url}: IProps) => {
 
 	return (
 		<ClayButtonWithIcon
-			borderless
-			className="mr-2"
+			className="component-action mr-2"
 			data-tooltip-align="bottom"
-			displayType="secondary"
+			displayType="unstyled"
 			onClick={handleSubscribe}
 			symbol={icon}
 			title={label}

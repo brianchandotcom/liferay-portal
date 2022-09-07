@@ -60,6 +60,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletRequest;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -433,17 +435,16 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private String _getSegmentsExperimentActionURL(String action) {
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
-
-		return HttpComponentsUtil.addParameter(
-			PortletURLBuilder.create(
-				requestBackedPortletURLFactory.createActionURL(
-					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET)
-			).setActionName(
-				action
-			).buildString(),
-			"p_l_mode", Constants.VIEW);
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				_httpServletRequest, _themeDisplay.getScopeGroup(),
+				SegmentsPortletKeys.SEGMENTS_EXPERIMENT, 0, 0,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			action
+		).setParameter(
+			"p_l_mode", Constants.VIEW
+		).buildString();
 	}
 
 	private JSONArray _getSegmentsExperimentGoalsJSONArray(Locale locale) {

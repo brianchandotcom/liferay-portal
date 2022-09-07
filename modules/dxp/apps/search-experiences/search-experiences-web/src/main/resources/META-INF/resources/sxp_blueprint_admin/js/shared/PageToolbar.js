@@ -53,9 +53,11 @@ const getDisplayLocale = (title, locale, defaultLocale) => {
 	if (title[formatLocaleWithDashes(locale)]) {
 		return formatLocaleWithDashes(locale);
 	}
+
 	if (title[formatLocaleWithDashes(defaultLocale)]) {
 		return formatLocaleWithDashes(defaultLocale);
 	}
+
 	if (Object.keys(title).length) {
 		return Object.keys(title)[0];
 	}
@@ -108,7 +110,7 @@ function EditTitleModal({
 		}
 	};
 
-	const _handleChangeLocale = (inputRef) => (value) => {
+	const _handleSelectedLocaleChange = (inputRef) => (value) => {
 		setSelectedLocale(value);
 		inputRef.current.focus();
 	};
@@ -160,7 +162,7 @@ function EditTitleModal({
 							label={_getTitleLabel()}
 							locales={localesForSelector}
 							onBlur={_handleBlur}
-							onSelectedLocaleChange={_handleChangeLocale(
+							onSelectedLocaleChange={_handleSelectedLocaleChange(
 								titleInputRef
 							)}
 							onTranslationsChange={setTitle}
@@ -193,7 +195,7 @@ function EditTitleModal({
 							id="description"
 							label={Liferay.Language.get('description')}
 							locales={localesForSelector}
-							onSelectedLocaleChange={_handleChangeLocale(
+							onSelectedLocaleChange={_handleSelectedLocaleChange(
 								descriptionInputRef
 							)}
 							onTranslationsChange={setDescription}

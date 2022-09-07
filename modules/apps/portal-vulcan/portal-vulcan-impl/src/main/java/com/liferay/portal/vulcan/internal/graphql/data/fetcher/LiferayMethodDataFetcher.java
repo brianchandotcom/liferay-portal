@@ -14,15 +14,14 @@
 
 package com.liferay.portal.vulcan.internal.graphql.data.fetcher;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.portal.vulcan.graphql.validation.GraphQLRequestContext;
+import com.liferay.portal.vulcan.graphql.validation.GraphQLRequestContextValidator;
 import com.liferay.portal.vulcan.internal.graphql.data.processor.LiferayMethodDataFetchingProcessor;
 
-import graphql.kickstart.servlet.context.GraphQLServletContext;
-
-import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.GraphQLFieldDefinition;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,11 +30,16 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Carlos Correa
  */
-public class LiferayMethodDataFetcher implements DataFetcher<Object> {
+public class LiferayMethodDataFetcher extends BaseDataFetcher {
 
 	public LiferayMethodDataFetcher(
+		GraphQLRequestContext graphQLRequestContext,
+		ServiceTrackerList<GraphQLRequestContextValidator>
+			graphQLRequestContextValidators,
 		LiferayMethodDataFetchingProcessor liferayMethodDataFetchingProcessor,
 		Method method) {
+
+		super(graphQLRequestContext, graphQLRequestContextValidators);
 
 		_liferayMethodDataFetchingProcessor =
 			liferayMethodDataFetchingProcessor;
@@ -43,44 +47,20 @@ public class LiferayMethodDataFetcher implements DataFetcher<Object> {
 	}
 
 	@Override
-	public Object get(DataFetchingEnvironment dataFetchingEnvironment) {
-		try {
-			GraphQLFieldDefinition graphQLFieldDefinition =
-				dataFetchingEnvironment.getFieldDefinition();
+	public Object get(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
 
-			return _liferayMethodDataFetchingProcessor.process(
-				dataFetchingEnvironment.getArguments(),
-				graphQLFieldDefinition.getName(),
-				_getHttpServletRequest(dataFetchingEnvironment),
-				_getHttpServletResponse(dataFetchingEnvironment), _method,
-				dataFetchingEnvironment.getRoot(),
-				dataFetchingEnvironment.getSource());
-		}
-		catch (InvocationTargetException invocationTargetException) {
-			throw new RuntimeException(
-				invocationTargetException.getTargetException());
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-	}
+		GraphQLFieldDefinition graphQLFieldDefinition =
+			dataFetchingEnvironment.getFieldDefinition();
 
-	private HttpServletRequest _getHttpServletRequest(
-		DataFetchingEnvironment dataFetchingEnvironment) {
-
-		GraphQLServletContext graphQLServletContext =
-			dataFetchingEnvironment.getContext();
-
-		return graphQLServletContext.getHttpServletRequest();
-	}
-
-	private HttpServletResponse _getHttpServletResponse(
-		DataFetchingEnvironment dataFetchingEnvironment) {
-
-		GraphQLServletContext graphQLServletContext =
-			dataFetchingEnvironment.getContext();
-
-		return graphQLServletContext.getHttpServletResponse();
+		return _liferayMethodDataFetchingProcessor.process(
+			dataFetchingEnvironment.getArguments(),
+			graphQLFieldDefinition.getName(), httpServletRequest,
+			httpServletResponse, _method, dataFetchingEnvironment.getRoot(),
+			dataFetchingEnvironment.getSource());
 	}
 
 	private final LiferayMethodDataFetchingProcessor

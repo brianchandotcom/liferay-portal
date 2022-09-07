@@ -1426,6 +1426,125 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-157998. No warning message shown when hide a layout element with whole form and required input fragments or when publish a content page where a hidden layout element contains a whole form with required input fragments."
+	@priority = "4"
+	test ViewNoWarningMessageShownWhenHideFormOrPublishHiddenFormWithRequiredInputFragments {
+		property test.name.skip.portal.instance = "FormContainer#ViewNoWarningMessageShownWhenHideFormOrPublishHiddenFormWithRequiredInputFragments";
+
+		task ("Given a page designer has a Form Container with an input fragment mapped to a required field inside a Container") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Date",
+				fieldLabelName = "Purchase Date",
+				fieldName = "purchaseDate",
+				fieldType = "Date",
+				isRequired = "true",
+				objectName = "PurchaseOrder");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 1",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Form Components",
+				fragmentName = "Form Container",
+				navTab = "Fragments");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Date");
+
+			PageEditor.editInput(
+				field = "Purchase Date*",
+				fragmentName = "Date");
+		}
+
+		task ("When the page designer hides the Container") {
+			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
+		}
+
+		task ("Then the page designer cannot see a warning message") {
+			AssertElementNotPresent(
+				key_warningMessage = "The hidden fragment contained required fields. A form with missing required fields will not generate a valid entry.",
+				locator1 = "Message#WARNING_SPECIFIC");
+		}
+
+		task ("When the page designer publishes the content page") {
+			Button.click(button = "Publish");
+		}
+
+		task ("Then the page designer cannot see a warning message") {
+			AssertElementNotPresent(locator1 = "Modal#BODY");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Given a page designer has a Form Container with an input fragment mapped to a required field inside a Grid") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 2",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+
+			PageEditor.addElementToColumn(
+				collectionName = "Form Components",
+				columnNumber = "1",
+				fragmentName = "Form Container",
+				navTab = "Fragments");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Date");
+
+			PageEditor.editInput(
+				field = "Purchase Date*",
+				fragmentName = "Date");
+		}
+
+		task ("When the page designer hides the Grid") {
+			PageEditor.hideFragmentViaHeader(fragmentName = "Grid");
+		}
+
+		task ("Then the page designer cannot see a warning message") {
+			AssertElementNotPresent(
+				key_warningMessage = "The hidden fragment contained required fields. A form with missing required fields will not generate a valid entry.",
+				locator1 = "Message#WARNING_SPECIFIC");
+		}
+
+		task ("When the page designer publishes the content page") {
+			Button.click(button = "Publish");
+		}
+
+		task ("Then the page designer cannot see a warning message") {
+			AssertElementNotPresent(locator1 = "Modal#BODY");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	@description = "This is a test for LPS-157998. When publish a form content page with multiple warning messages, the page creator should see them in one modal."
 	@priority = "4"
 	test ViewOnlyOneModalShownWhenPublishContentPageWithMultipleWarningMessages {
@@ -1797,16 +1916,17 @@ definition {
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.addElementToContainer(
 				collectionName = "Form Components",
-				fragmentName = "Form Container");
+				fragmentName = "Form Container",
+				navTab = "Fragments");
 
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				panel = "General");
-
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
 
 			PageEditor.addElementToContainer(
 				collectionName = "Form Components",

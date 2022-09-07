@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "This test covers LPS-127049. It ensures that a document can be created with duplicate fields."
+	@description = "This test covers LPS-127049. A document can be created with duplicate fields is covered in DMFieldsets#FieldsetSetAsRepeatable."
 	@priority = "4"
 	@refactorneeded
 	test AddDuplicateFields {
@@ -61,26 +61,6 @@ definition {
 			key_fieldName = "Numeric",
 			key_repeatableFieldNumber = "2",
 			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
-
-		Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
-
-		Type(
-			key_fieldLabel = "Numeric",
-			locator1 = "TextInput#NUMERIC",
-			value1 = "123");
-
-		Type(
-			key_fieldName = "Numeric",
-			locator1 = "TextInput#NUMERIC_2",
-			value1 = "456");
-
-		PortletEntry.publish();
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
 	@priority = "5"

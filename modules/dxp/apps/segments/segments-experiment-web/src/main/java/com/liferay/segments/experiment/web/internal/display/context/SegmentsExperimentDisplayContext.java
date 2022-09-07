@@ -183,7 +183,8 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private String _getCreateSegmentsVariantURL() {
-		return _getContentPageEditorActionURL("/layout_content_page_editor/+");
+		return _getContentPageEditorActionURL(
+			"/layout_content_page_editor/add_segments_experience");
 	}
 
 	private String _getDeleteSegmentsExperimentURL() {

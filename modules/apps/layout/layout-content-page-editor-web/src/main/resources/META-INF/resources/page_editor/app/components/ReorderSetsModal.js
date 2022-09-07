@@ -31,10 +31,8 @@ import selectWidgetFragmentEntryLinks from '../selectors/selectWidgetFragmentEnt
 import loadWidgets from '../thunks/loadWidgets';
 import {useId} from '../utils/useId';
 
-const TAB_IDS = {
-	fragments: 'fragments',
-	widgets: 'widgets',
-};
+const FRAGMENTS_ID = 'fragments';
+const WIDGETS_ID = 'widgets';
 
 const ACCEPTING_ITEM_TYPE = 'acceptingItemType';
 
@@ -93,7 +91,7 @@ function Tabs() {
 	const getTabId = (id) => `${namespace}tab${id}`;
 	const getTabPanelId = (tabId) => `${namespace}tabPanel${tabId}`;
 
-	const [activeTabId, setActiveTabId] = useState(TAB_IDS.fragments);
+	const [activeTabId, setActiveTabId] = useState(FRAGMENTS_ID);
 
 	const dispatch = useDispatch();
 	const widgetFragmentEntryLinks = useSelector(
@@ -126,12 +124,12 @@ function Tabs() {
 	const tabs = useMemo(
 		() => [
 			{
-				id: TAB_IDS.fragments,
+				id: FRAGMENTS_ID,
 				items: fragments,
 				label: Liferay.Language.get('fragments'),
 			},
 			{
-				id: TAB_IDS.widgets,
+				id: WIDGETS_ID,
 				items: widgets,
 				label: Liferay.Language.get('widgets'),
 			},
@@ -140,7 +138,7 @@ function Tabs() {
 	);
 
 	useEffect(() => {
-		if (activeTabId === TAB_IDS.widgets && !widgets) {
+		if (activeTabId === WIDGETS_ID && !widgets) {
 			dispatch(
 				loadWidgets({
 					fragmentEntryLinks: widgetFragmentEntryLinks,

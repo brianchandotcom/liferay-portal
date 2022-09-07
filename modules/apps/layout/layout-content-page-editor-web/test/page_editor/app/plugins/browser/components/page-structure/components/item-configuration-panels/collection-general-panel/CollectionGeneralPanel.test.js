@@ -14,6 +14,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {act, fireEvent, render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React, {useEffect} from 'react';
 
 import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/collectionFilterFragmentEntryKey';
@@ -112,7 +113,9 @@ describe('CollectionGeneralPanel', () => {
 	beforeAll(() => {
 		window.Liferay = {
 			...Liferay,
-			FeatureFlags: {},
+			FeatureFlags: {
+				'LPS-160243': true,
+			},
 		};
 	});
 
@@ -147,6 +150,24 @@ describe('CollectionGeneralPanel', () => {
 			itemConfig: {
 				verticalAlignment: 'center',
 			},
+			itemId: '0',
+			segmentsExperienceId: '0',
+		});
+	});
+
+	it('allows changing the Show Empty Collection Alert checkbox', async () => {
+		renderComponent();
+
+		const input = screen.getByLabelText('show-empty-collection-alert');
+
+		userEvent.click(input);
+		
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: expect.objectContaining({
+				emptyCollectionOptions: {
+					displayMessage: false,
+				},
+			}),
 			itemId: '0',
 			segmentsExperienceId: '0',
 		});

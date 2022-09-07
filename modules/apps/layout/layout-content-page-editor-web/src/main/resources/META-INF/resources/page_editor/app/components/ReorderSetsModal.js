@@ -22,10 +22,11 @@ import ClayModal, {useModal} from '@clayui/modal';
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
+import updateSetsOrder from '../../app/thunks/updateSetsOrder';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectWidgetFragmentEntryLinks from '../selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../thunks/loadWidgets';
@@ -45,6 +46,23 @@ export function ReorderSetsModal({onCloseModal}) {
 		onClose: onCloseModal,
 	});
 
+	const dispatch = useDispatch();
+
+	const widgetFragmentEntryLinks = useSelector(
+		selectWidgetFragmentEntryLinks
+	);
+
+	const [lists, setLists] = useState({
+		[FRAGMENTS_ID]: null,
+		[WIDGETS_ID]: null,
+	});
+
+	const updateLists = useCallback(
+		(listId, newItems) =>
+			setLists({...lists, [listId]: newItems.map(({id}) => id)}),
+		[lists, setLists]
+	);
+
 	return (
 		<ClayModal
 			className="page-editor__reorder-set-modal"
@@ -61,7 +79,7 @@ export function ReorderSetsModal({onCloseModal}) {
 					)}
 				</p>
 
-				<Tabs />
+				<Tabs updateLists={updateLists} />
 			</ClayModal.Body>
 
 			<ClayModal.Footer
@@ -71,7 +89,27 @@ export function ReorderSetsModal({onCloseModal}) {
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton displayType="primary" onClick={() => {}}>
+						<ClayButton
+							displayType="primary"
+							onClick={() => {
+								const orderedFragments = lists[FRAGMENTS_ID];
+								const orderedWidgets = lists[WIDGETS_ID];
+
+								if (!orderedFragments && !orderedWidgets) {
+									return;
+								}
+
+								dispatch(
+									updateSetsOrder({
+										fragments: orderedFragments,
+										widgetFragmentEntryLinks,
+										widgets: orderedWidgets,
+									})
+								);
+
+								onClose();
+							}}
+						>
 							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>
@@ -85,7 +123,7 @@ ReorderSetsModal.propTypes = {
 	onCloseModal: PropTypes.func.isRequired,
 };
 
-function Tabs() {
+function Tabs({updateLists}) {
 	const namespace = useId();
 
 	const getTabId = (id) => `${namespace}tab${id}`;
@@ -176,7 +214,11 @@ function Tabs() {
 						key={id}
 					>
 						{items ? (
-							<Items items={items} />
+							<Items
+								items={items}
+								listId={id}
+								updateLists={updateLists}
+							/>
 						) : (
 							<ClayLoadingIndicator small />
 						)}
@@ -187,7 +229,11 @@ function Tabs() {
 	);
 }
 
-function Items({items: initialItems}) {
+Tabs.propTypes = {
+	updateLists: PropTypes.func.isRequired,
+};
+
+function Items({items: initialItems, listId, updateLists}) {
 	const [items, setItems] = useState(initialItems);
 
 	const onChangeItemPosition = (itemId, newPosition) => {
@@ -197,10 +243,10 @@ function Items({items: initialItems}) {
 		const nextItems = [...items];
 
 		nextItems.splice(itemIndex, 1);
-
 		nextItems.splice(newPosition, 0, item);
 
 		setItems(nextItems);
+		updateLists(listId, nextItems);
 	};
 
 	return (
@@ -219,7 +265,9 @@ function Items({items: initialItems}) {
 }
 
 Items.propTypes = {
-	items: PropTypes.array.isRequired,
+	items: PropTypes.array,
+	listId: PropTypes.string.isRequired,
+	updateLists: PropTypes.func.isRequired,
 };
 
 function CardItem({index, item, numberOfItems, onChangeItemPosition}) {

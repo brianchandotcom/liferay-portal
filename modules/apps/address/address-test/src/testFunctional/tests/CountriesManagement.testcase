@@ -23,6 +23,8 @@ definition {
 	@description = "This test asserts that a user can activate an inactive country."
 	@priority = "5"
 	test CanActivateAnInactiveCountry {
+		property portal.acceptance = "true";
+
 		task ("Given that Brazil is set to inactive") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -62,6 +64,8 @@ definition {
 	@description = "This test asserts that a user can activate an inactive region"
 	@priority = "5"
 	test CanActivateAnInactiveRegion {
+		property portal.acceptance = "true";
+
 		task ("Given that an inactive region exists") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -215,6 +219,8 @@ definition {
 	@description = "This test asserts that a user can delete an existing country."
 	@priority = "5"
 	test CanDeleteCountry {
+		property portal.acceptance = "true";
+
 		task ("Given that a country named Angola exists in Countries Management portlet") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -247,6 +253,8 @@ definition {
 	@description = "Test deleting a region from country"
 	@priority = "5"
 	test CanDeleteRegion {
+		property portal.acceptance = "true";
+
 		task ("Given a region exists") {
 			CountriesManagement.openCountriesManagementPortlet();
 
@@ -355,6 +363,8 @@ definition {
 	@description = "This test asserts that a user cannot add a new region with a region code that already exists"
 	@priority = "5"
 	test CannotAddExistingRegionCode {
+		property portal.acceptance = "true";
+
 		task ("Given a country with existing regions") {
 			CountriesManagement.openCountriesManagementPortlet();
 

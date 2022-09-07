@@ -1426,6 +1426,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-157998. When publish a form content page with multiple warning messages, the page creator should see them in one modal."
+	@priority = "4"
+	test ViewOnlyOneModalShownWhenPublishContentPageWithMultipleWarningMessages {
+		property test.name.skip.portal.instance = "FormContainer#ViewOnlyOneModalShownWhenPublishContentPageWithMultipleWarningMessages";
+
+		task ("Given a page designer has a Form Container with an unmapped Text Input fragment on content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Text Input");
+		}
+
+		task ("When the page designer publishes the content page") {
+			Button.click(button = "Publish");
+		}
+
+		task ("Then the page designer could see all warning messages shown in one modal") {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Form Errors");
+
+			Alert.viewWarningSpecific(warningMessage = "Submit button is hidden or missing. Your users may not be able to submit the form.");
+
+			Alert.viewWarningSpecific(warningMessage = "Some fragments are not mapped to object fields. Unmapped fragments data will not be stored.");
+
+			Modal.publish(warningMessage = "The following errors have been found with the forms on the page. Publishing without fixing these errors may affect form performance. Are you sure you want to publish?");
+		}
+	}
+
 	@description = "This is a test for LPS-151402. The user could only see the first error message when multiple validation issues happen on submitting a form."
 	@priority = "4"
 	test ViewOnlyTheFirstErrorMessageShownWhenMultipleValidationIssuesHappen {

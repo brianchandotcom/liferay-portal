@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import normalizeDropdownItems from './normalizeDropdownItems';
@@ -32,3 +33,18 @@ export default function ActionsDropdown({actions}) {
 		/>
 	) : null;
 }
+
+ActionsDropdown.propTypes = {
+	actions: PropTypes.arrayOf(
+		PropTypes.shape({
+			data: PropTypes.shape({
+				action: PropTypes.string,
+				deleteURL: PropTypes.string,
+				permissionsURL: PropTypes.string,
+			}),
+			href: PropTypes.string,
+			icon: PropTypes.string,
+			label: PropTypes.string.isRequired,
+		})
+	),
+};

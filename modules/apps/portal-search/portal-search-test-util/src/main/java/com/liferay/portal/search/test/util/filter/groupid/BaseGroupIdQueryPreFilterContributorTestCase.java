@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.internal.spi.model.query.contributor.GroupIdQueryPreFilterContributor;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -170,7 +171,8 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 		GroupIdQueryPreFilterContributor contributor =
 			new GroupIdQueryPreFilterContributor();
 
-		contributor.setGroupLocalService(groupLocalService);
+		ReflectionTestUtil.setFieldValue(
+			contributor, "_groupLocalService", groupLocalService);
 
 		BooleanFilter booleanFilter = new BooleanFilter();
 

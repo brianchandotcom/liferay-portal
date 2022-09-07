@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.constants.SearchContextAttributes;
@@ -150,7 +151,8 @@ public class FacetedSearcherImplTest {
 		SearchRequestBuilderFactoryImpl searchRequestBuilderFactoryImpl =
 			new SearchRequestBuilderFactoryImpl();
 
-		searchRequestBuilderFactoryImpl.setSearchRequestBuilderFactory(
+		ReflectionTestUtil.setFieldValue(
+			searchRequestBuilderFactoryImpl, "_searchRequestBuilderFactory",
 			new com.liferay.portal.search.internal.searcher.
 				SearchRequestBuilderFactoryImpl());
 

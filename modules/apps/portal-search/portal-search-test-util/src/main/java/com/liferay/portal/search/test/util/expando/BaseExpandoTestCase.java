@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.query.FieldQueryFactory;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.search.analysis.FieldQueryBuilderFactory;
@@ -284,13 +285,20 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 	protected ExpandoQueryContributorHelper
 		createExpandoQueryContributorHelper() {
 
-		return new ExpandoQueryContributorHelperImpl() {
-			{
-				setExpandoBridgeFactory(createExpandoBridgeFactory());
-				setExpandoBridgeIndexer(createExpandoBridgeIndexer());
-				setExpandoColumnLocalService(createExpandoColumnLocalService());
-			}
-		};
+		ExpandoQueryContributorHelperImpl expandoQueryContributorHelperImpl =
+			new ExpandoQueryContributorHelperImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			expandoQueryContributorHelperImpl, "_expandoBridgeFactory",
+			createExpandoBridgeFactory());
+		ReflectionTestUtil.setFieldValue(
+			expandoQueryContributorHelperImpl, "_expandoBridgeIndexer",
+			createExpandoBridgeIndexer());
+		ReflectionTestUtil.setFieldValue(
+			expandoQueryContributorHelperImpl, "_expandoColumnLocalService",
+			createExpandoColumnLocalService());
+
+		return expandoQueryContributorHelperImpl;
 	}
 
 	protected UnicodeProperties createUnicodeProperties(int indexType) {

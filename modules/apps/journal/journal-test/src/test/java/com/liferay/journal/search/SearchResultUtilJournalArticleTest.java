@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultManager;
 import com.liferay.portal.kernel.search.SummaryFactory;
 import com.liferay.portal.kernel.search.result.SearchResultTranslator;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.internal.result.SearchResultManagerImpl;
 import com.liferay.portal.search.internal.result.SearchResultTranslatorImpl;
@@ -160,7 +161,8 @@ public class SearchResultUtilJournalArticleTest
 		SearchResultTranslatorImpl searchResultTranslatorImpl =
 			new SearchResultTranslatorImpl();
 
-		searchResultTranslatorImpl.setSearchResultManager(
+		ReflectionTestUtil.setFieldValue(
+			searchResultTranslatorImpl, "_searchResultManager",
 			createSearchResultManager());
 
 		return searchResultTranslatorImpl;
@@ -169,7 +171,8 @@ public class SearchResultUtilJournalArticleTest
 	protected SummaryFactory createSummaryFactory() {
 		SummaryFactoryImpl summaryFactoryImpl = new SummaryFactoryImpl();
 
-		summaryFactoryImpl.setIndexerRegistry(_indexerRegistry);
+		ReflectionTestUtil.setFieldValue(
+			summaryFactoryImpl, "_indexerRegistry", _indexerRegistry);
 
 		return summaryFactoryImpl;
 	}

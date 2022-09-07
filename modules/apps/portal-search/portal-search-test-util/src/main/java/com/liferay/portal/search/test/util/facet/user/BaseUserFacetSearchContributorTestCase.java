@@ -17,6 +17,7 @@ package com.liferay.portal.search.test.util.facet.user;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.facet.user.UserFacetSearchContributor;
 import com.liferay.portal.search.internal.facet.user.UserFacetFactoryImpl;
 import com.liferay.portal.search.internal.facet.user.UserFacetSearchContributorImpl;
@@ -40,11 +41,11 @@ public abstract class BaseUserFacetSearchContributorTestCase
 
 		setUpJSONFactoryUtil();
 
-		_userFacetSearchContributor = new UserFacetSearchContributorImpl() {
-			{
-				setUserFacetFactory(new UserFacetFactoryImpl());
-			}
-		};
+		_userFacetSearchContributor = new UserFacetSearchContributorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			_userFacetSearchContributor, "_userFacetFactory",
+			new UserFacetFactoryImpl());
 	}
 
 	@Test

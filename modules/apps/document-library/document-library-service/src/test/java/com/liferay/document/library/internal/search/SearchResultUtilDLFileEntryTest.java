@@ -355,7 +355,8 @@ public class SearchResultUtilDLFileEntryTest
 		SearchResultTranslatorImpl searchResultTranslatorImpl =
 			new SearchResultTranslatorImpl();
 
-		searchResultTranslatorImpl.setSearchResultManager(
+		ReflectionTestUtil.setFieldValue(
+			searchResultTranslatorImpl, "_searchResultManager",
 			_createSearchResultManager());
 
 		return searchResultTranslatorImpl;
@@ -393,7 +394,8 @@ public class SearchResultUtilDLFileEntryTest
 	private SummaryFactory _createSummaryFactory() {
 		SummaryFactoryImpl summaryFactoryImpl = new SummaryFactoryImpl();
 
-		summaryFactoryImpl.setIndexerRegistry(_indexerRegistry);
+		ReflectionTestUtil.setFieldValue(
+			summaryFactoryImpl, "_indexerRegistry", _indexerRegistry);
 
 		return summaryFactoryImpl;
 	}

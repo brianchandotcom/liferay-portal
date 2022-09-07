@@ -15,6 +15,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search;
 
 import com.liferay.portal.kernel.search.query.QueryTranslator;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.SearchHitDocumentTranslatorImpl;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.ElasticsearchAggregationVisitorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline.ElasticsearchPipelineAggregationVisitorFixture;
@@ -166,11 +167,13 @@ public class SearchRequestExecutorFixture {
 	protected static ComplexQueryBuilderFactory
 		createComplexQueryBuilderFactory(Queries queries) {
 
-		return new ComplexQueryBuilderFactoryImpl() {
-			{
-				setQueries(queries);
-			}
-		};
+		ComplexQueryBuilderFactoryImpl complexQueryBuilderFactoryImpl =
+			new ComplexQueryBuilderFactoryImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			complexQueryBuilderFactoryImpl, "_queries", queries);
+
+		return complexQueryBuilderFactoryImpl;
 	}
 
 	protected void setElasticsearchClientResolver(

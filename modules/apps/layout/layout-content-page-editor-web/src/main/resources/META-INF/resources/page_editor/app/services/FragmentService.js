@@ -354,4 +354,31 @@ export default {
 			{requestGenerateDraft: true}
 		);
 	},
+
+	/**
+	 * Update fragment and widgets sets sorting them according to user criteria
+	 * @param {object} options
+	 * @param {array} options.fragmentCollectionKeys
+	 * @param {array} options.portletCategoryKeys
+	 * @param {function} options.onNetworkStatus
+	 */
+	updateSetsOrder({
+		fragmentCollectionKeys,
+		onNetworkStatus,
+		portletCategoryKeys,
+	}) {
+		return serviceFetch(
+			config.updateFragmentPortletSetsSortURL,
+			{
+				body: {
+					fragmentCollectionKeys:
+						JSON.stringify(fragmentCollectionKeys) || null,
+					portletCategoryKeys:
+						JSON.stringify(portletCategoryKeys) || null,
+				},
+			},
+			onNetworkStatus,
+			{requestGenerateDraft: true}
+		);
+	},
 };

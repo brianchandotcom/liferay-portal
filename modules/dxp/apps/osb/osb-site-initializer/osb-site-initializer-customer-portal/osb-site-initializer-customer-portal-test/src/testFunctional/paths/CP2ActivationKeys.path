@@ -162,16 +162,6 @@
 <!--ACTIVATION_KEY_DETAILS_MODAL -->
 
 <tr>
-	<td>HOST_NAME_VALUE</td>
-	<td>//div[contains(@class, 'row')][5]//*[contains(@class,'col-4')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>IP_ADDRESS_VALUE</td>
-	<td>//div[contains(@class, 'row')][7]//*[contains(@class,'col-4')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>KEY_DETAILS_MODAL</td>
 	<td>//div[contains(@class, 'modal-content') and contains(.,'Activation Key Details') and contains (.,'${key_environmentName}')]</td>
 	<td></td>
@@ -179,11 +169,6 @@
 <tr>
 	<td>KEY_DETAILS_ELEMENT_VALUES</td>
 	<td>//div[contains(@class, 'modal-content')]//div[contains(.,'${key_group}')]//*[contains(.,'${key_label}') and contains(.,'${key_value}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MAC_ADDRESS_VALUE</td>
-	<td>//div[contains(@class, 'row')][9]//*[contains(@class,'col-4')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -494,6 +494,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testReplaceDummyUpgradeStepForInitialize() throws Exception {
+		test("ReplaceDummyUpgradeStepForInitialize1.testjava");
+		test("ReplaceDummyUpgradeStepForInitialize2.testjava");
+		test("ReplaceDummyUpgradeStepForInitialize3.testjava",
+			"Registered starting with '0.0.0' should be replace for " +
+			"registry.registerInitialization();");
+	}
+
+	@Test
 	public void testResultCountSet() throws Exception {
 		test(
 			"ResultSetCount.testjava", "Use resultSet.getInt(1) for count", 35);

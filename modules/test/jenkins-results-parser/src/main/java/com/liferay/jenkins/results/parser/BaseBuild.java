@@ -2710,13 +2710,14 @@ public abstract class BaseBuild implements Build {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("Build \"");
-			sb.append(jobName);
 
 			if (this instanceof DownstreamBuild) {
 				DownstreamBuild downstreamBuild = (DownstreamBuild)this;
 
-				sb.append("/");
 				sb.append(downstreamBuild.getAxisName());
+			}
+			else {
+				sb.append(jobName);
 			}
 
 			sb.append("\"");

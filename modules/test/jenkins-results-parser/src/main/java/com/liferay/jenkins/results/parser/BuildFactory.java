@@ -31,7 +31,7 @@ public class BuildFactory {
 	}
 
 	public static Build newBuild(
-		String url, Build parentBuild, String axisName) {
+		String url, Build parentBuild, String jobVariant) {
 
 		url = JenkinsResultsParserUtil.getLocalURL(url);
 
@@ -44,15 +44,8 @@ public class BuildFactory {
 
 		String axisVariable = matcher.group("axisVariable");
 
-		String jobVariant = null;
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(axisName)) {
-			if (axisName.contains("/")) {
-				jobVariant = axisName.substring(0, axisName.lastIndexOf("/"));
-			}
-			else {
-				jobVariant = axisName;
-			}
+		if (jobVariant == null) {
+			jobVariant = "";
 		}
 
 		if (axisVariable != null) {

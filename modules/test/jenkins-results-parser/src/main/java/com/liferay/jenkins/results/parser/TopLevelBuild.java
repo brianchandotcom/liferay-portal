@@ -2119,7 +2119,19 @@ public abstract class TopLevelBuild extends BaseBuild {
 				continue;
 			}
 
-			urlAxisNames.put(url, downstreamBuildURLMatcher.group("axisName"));
+			String jobVariant = downstreamBuildURLMatcher.group("jobVariant");
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant)) {
+				String jobName = downstreamBuildURLMatcher.group("jobName");
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(jobName) &&
+					jobVariant.contains(jobName + "/")) {
+
+					jobVariant = jobVariant.replaceAll(jobName + "/", "");
+				}
+			}
+
+			urlAxisNames.put(url, jobVariant);
 		}
 
 		addDownstreamBuilds(urlAxisNames);
@@ -2188,7 +2200,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 			"/index.html";
 
 	private static final Pattern _downstreamBuildURLPattern = Pattern.compile(
-		"[\\'\\\"][^/]*(/(?<axisName>.*))?[\\'\\\"] started at (?<url>.+)\\.");
+		"[\\'\\\"](?<jobVariant>[^\\'\\\"]+)[\\'\\\"] started at " +
+			"(?<url>.+/job/(?<jobName>[^/]+)/.+)\\.");
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);
 

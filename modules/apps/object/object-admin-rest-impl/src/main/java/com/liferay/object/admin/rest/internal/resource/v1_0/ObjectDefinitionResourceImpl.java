@@ -195,7 +195,7 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getLong(
 						objectDefinition.
 							getAccountEntryRestrictedObjectFieldId()),
-					0,
+					0, StringPool.BLANK,
 					GetterUtil.get(objectDefinition.getTitleObjectFieldId(), 0),
 					GetterUtil.getBoolean(
 						objectDefinition.getAccountEntryRestricted()),
@@ -217,7 +217,8 @@ public class ObjectDefinitionResourceImpl
 				objectDefinitionId,
 				GetterUtil.getLong(
 					objectDefinition.getAccountEntryRestrictedObjectFieldId()),
-				0, GetterUtil.get(objectDefinition.getTitleObjectFieldId(), 0),
+				0, StringPool.BLANK,
+				GetterUtil.get(objectDefinition.getTitleObjectFieldId(), 0),
 				GetterUtil.getBoolean(
 					objectDefinition.getAccountEntryRestricted()),
 				GetterUtil.getBoolean(objectDefinition.getActive(), true),

@@ -18,59 +18,12 @@ import SidebarPanel from '../components/SidebarPanel';
 import SidebarPanelInfoView from '../components/SidebarPanelInfoView/SidebarPanelInfoView';
 import SidebarPanelInfoViewCollapsable from '../components/SidebarPanelInfoView/SidebarPanelInfoViewCollapsable';
 import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
-import {OPEN_PANEL_VALUE} from '../utils/constants';
+import {
+	handlePanelStateFromSession,
+	handleSessionOnSidebarOpen,
+} from './panelStateHandler';
 
 const ACTIVE_ROW_CSS_CLASS = 'table-active';
-
-const handlePanelStateFromSession = ({
-	currentRowId,
-	namespace,
-	panelState,
-	selectedItemFetchURL,
-	selectedItemRowId,
-}) => {
-	if (
-		!selectedItemRowId ||
-		panelState !== OPEN_PANEL_VALUE ||
-		selectedItemRowId !== currentRowId
-	) {
-		return;
-	}
-
-	const allRequestValuesArePositive = [
-		selectedItemFetchURL,
-		namespace,
-		selectedItemRowId,
-	].every(Boolean);
-
-	if (!allRequestValuesArePositive) {
-		return;
-	}
-
-	showSidebar({
-		View: SidebarPanelInfoView,
-		fetchURL: selectedItemFetchURL,
-		portletNamespace: namespace,
-	});
-
-	selectRow(namespace, selectedItemRowId);
-};
-
-const handleSessionOnSidebarOpen = ({panelState, rowId, selectedItemRowId}) => {
-	if (panelState !== OPEN_PANEL_VALUE) {
-		Liferay.Util.Session.set(
-			'com.liferay.content.dashboard.web_panelState',
-			OPEN_PANEL_VALUE
-		);
-	}
-
-	if (selectedItemRowId !== rowId) {
-		Liferay.Util.Session.set(
-			'com.liferay.content.dashboard.web_selectedItemRowId',
-			rowId
-		);
-	}
-};
 
 const deselectAllRows = (portletNamespace) => {
 	const activeRows = document.querySelectorAll(
@@ -163,6 +116,8 @@ const actions = {
 		});
 	},
 };
+
+export {selectRow, showSidebar};
 
 export default function propsTransformer({
 	additionalProps,

@@ -154,7 +154,7 @@ boolean allowUpdateDomains = portletName.equals(AccountPortletKeys.ACCOUNT_ENTRI
 								var newDomains = event.data.split(',');
 
 								newDomains.forEach((domain) => {
-									domain = domain.trim();
+									domain = domain.trim().toLowerCase();
 
 									if (!domains.includes(domain)) {
 										var rowColumns = [];

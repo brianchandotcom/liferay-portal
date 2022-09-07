@@ -1055,15 +1055,19 @@ public class ObjectDefinitionLocalServiceTest {
 			objectField.getObjectFieldId(),
 			objectDefinition.getTitleObjectFieldId());
 
+		String externalReferenceCode = RandomTestUtil.randomString();
+
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
-				StringPool.BLANK, objectDefinition.getObjectDefinitionId(), 0,
-				0, 0, false, objectDefinition.isActive(), true, false,
+				externalReferenceCode, objectDefinition.getObjectDefinitionId(),
+				0, 0, 0, false, objectDefinition.isActive(), true, false,
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
 				false, LocalizedMapUtil.getLocalizedMap("Ables"),
 				objectDefinition.getScope());
 
 		Assert.assertEquals(0, objectDefinition.getDescriptionObjectFieldId());
+		Assert.assertEquals(
+			externalReferenceCode, objectDefinition.getExternalReferenceCode());
 		Assert.assertEquals(0, objectDefinition.getTitleObjectFieldId());
 		Assert.assertFalse(objectDefinition.isActive());
 		Assert.assertEquals(

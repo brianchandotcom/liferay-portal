@@ -100,36 +100,39 @@ function Tabs() {
 		selectWidgetFragmentEntryLinks
 	);
 
-	const fragments = useSelector((state) => state.fragments);
-	const widgets = useSelector((state) => state.widgets);
+	const fragments = useSelector((state) =>
+		state.fragments
+			.filter(
+				({fragmentCollectionId}) =>
+					fragmentCollectionId !== HIGHLIGHTED_COLLECTION_ID
+			)
+			.map(({fragmentCollectionId, name}) => ({
+				id: fragmentCollectionId,
+				name,
+			}))
+	);
+
+	const widgets = useSelector((state) =>
+		state.widgets
+			? state.widgets
+					.filter(({path}) => path !== HIGHLIGHTED_CATEGORY_ID)
+					.map(({path, title}) => ({
+						id: path,
+						name: title,
+					}))
+			: null
+	);
 
 	const tabs = useMemo(
 		() => [
 			{
 				id: TAB_IDS.fragments,
-				items: fragments
-					.filter(
-						({fragmentCollectionId}) =>
-							fragmentCollectionId !== HIGHLIGHTED_COLLECTION_ID
-					)
-					.map(({fragmentCollectionId, name}) => ({
-						id: fragmentCollectionId,
-						name,
-					})),
+				items: fragments,
 				label: Liferay.Language.get('fragments'),
 			},
 			{
 				id: TAB_IDS.widgets,
-				items: widgets
-					? widgets
-							.filter(
-								({path}) => path !== HIGHLIGHTED_CATEGORY_ID
-							)
-							.map(({path, title}) => ({
-								id: path,
-								name: title,
-							}))
-					: null,
+				items: widgets,
 				label: Liferay.Language.get('widgets'),
 			},
 		],

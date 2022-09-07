@@ -48,7 +48,7 @@ export default function NavigationPanel({items, selectedItemId}) {
 			{(item) => {
 				return (
 					<ClayTreeView.Item
-						actions={<ActionsDropdown actions={item.actions} />}
+						actions={ActionsDropdown({actions: item.actions})}
 						onClick={(event) => {
 							handleClickItem(event, item);
 						}}
@@ -68,11 +68,9 @@ export default function NavigationPanel({items, selectedItemId}) {
 							{(item) => {
 								return (
 									<ClayTreeView.Item
-										actions={
-											<ActionsDropdown
-												actions={item.actions}
-											/>
-										}
+										actions={ActionsDropdown({
+											actions: item.actions,
+										})}
 										onClick={(event) => {
 											handleClickItem(event, item);
 										}}

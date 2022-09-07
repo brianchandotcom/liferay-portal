@@ -25,7 +25,7 @@ export default function TemplatesPanel({items}) {
 			{(item) => {
 				return (
 					<ClayTreeView.Item
-						actions={<ActionsDropdown actions={item.actions} />}
+						actions={ActionsDropdown({actions: item.actions})}
 						className="pl-1"
 					>
 						<ClayTreeView.ItemStack>

@@ -39,11 +39,11 @@ public class SystemLDAPConfigurationProviderImpl
 	}
 
 	@Override
-	@Reference(unbind = "-")
-	protected void setConfigurationAdmin(
-		ConfigurationAdmin configurationAdmin) {
-
-		super.configurationAdmin = configurationAdmin;
+	protected ConfigurationAdmin getConfigurationAdmin() {
+		return _configurationAdmin;
 	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 }

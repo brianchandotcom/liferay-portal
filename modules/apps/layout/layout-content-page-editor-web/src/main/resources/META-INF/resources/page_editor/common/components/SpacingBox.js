@@ -238,6 +238,7 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 							<LengthField
 								field={field}
 								onValueSelect={onChange}
+								showLabel={false}
 								value={value}
 							/>
 						) : null}

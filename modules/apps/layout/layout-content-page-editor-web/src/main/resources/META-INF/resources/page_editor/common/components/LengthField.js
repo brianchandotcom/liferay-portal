@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
@@ -38,7 +39,7 @@ const REGEX = /^(-?(?:[\d]*\.?[\d]+))(px|em|vh|vw|rem|%)$/;
 
 const UNITS = ['px', '%', 'em', 'rem', 'vw', 'vh', CUSTOM];
 
-export function LengthField({field, onValueSelect, value}) {
+export function LengthField({field, onValueSelect, showLabel = true, value}) {
 	const inputId = useId();
 
 	const initialValue = useMemo(() => {
@@ -65,7 +66,10 @@ export function LengthField({field, onValueSelect, value}) {
 
 	return (
 		<ClayForm.Group className="page-editor__length-field">
-			<label className={field.icon ? 'sr-only' : null} htmlFor={inputId}>
+			<label
+				className={classNames({'sr-only': !showLabel})}
+				htmlFor={inputId}
+			>
 				{field.label}
 			</label>
 
@@ -83,6 +87,7 @@ export function LengthField({field, onValueSelect, value}) {
 LengthField.propTypes = {
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
 	onValueSelect: PropTypes.func.isRequired,
+	showLabel: PropTypes.bool,
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 

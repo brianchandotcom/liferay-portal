@@ -130,6 +130,7 @@ export function AdvancedSelectField({
 				<LengthField
 					field={field}
 					onValueSelect={onValueSelect}
+					showLabel={!field.icon}
 					value={nextValue}
 				/>
 			) : (

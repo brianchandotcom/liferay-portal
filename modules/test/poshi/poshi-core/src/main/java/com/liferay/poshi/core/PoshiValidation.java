@@ -31,10 +31,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -478,6 +482,33 @@ public class PoshiValidation {
 		}
 	}
 
+	protected static void validateDeprecatedMethods(
+		PoshiElement poshiElement, String method) {
+
+		URL filePathURL = poshiElement.getFilePathURL();
+
+		String file = filePathURL.getFile();
+
+		Logger logger = Logger.getAnonymousLogger();
+
+		logger.setLevel(Level.WARNING);
+
+		if (_deprecatedMethods.containsKey(method)) {
+			String className = file.substring(
+				file.lastIndexOf("/") + 1, file.indexOf("."));
+
+			_deprecatedFunctionNames.add(className + "#" + method);
+
+			logger.warning(
+				"Deprecated Method: " + method + "\nReplace with: " +
+					_deprecatedMethods.get(method) + "\nFile path: " + file);
+		}
+		else if (_deprecatedFunctionNames.contains(method)) {
+			logger.warning(
+				"Deprecated Method: " + method + "\nFile path: " + file);
+		}
+	}
+
 	protected static void validateElementName(
 		PoshiElement poshiElement, List<String> possibleElementNames) {
 
@@ -573,6 +604,14 @@ public class PoshiValidation {
 				"function", "line-number", "locator1", "locator2", "value1",
 				"value2", "value3");
 
+			String function = poshiElement.attributeValue("function");
+
+			if (Validator.isNotNull(function) &&
+				!filePath.endsWith(".function")) {
+
+				validateDeprecatedMethods(poshiElement, function);
+			}
+
 			validatePossibleAttributeNames(
 				poshiElement, possibleAttributeNames);
 
@@ -594,6 +633,9 @@ public class PoshiValidation {
 			List<String> possibleAttributeNames = Arrays.asList(
 				"argument1", "argument2", "argument3", "line-number",
 				"selenium");
+
+			validateDeprecatedMethods(
+				poshiElement, poshiElement.attributeValue("selenium"));
 
 			validatePossibleAttributeNames(
 				poshiElement, possibleAttributeNames);
@@ -1919,6 +1961,21 @@ public class PoshiValidation {
 		throw new Exception();
 	}
 
+	private static final List<String> _deprecatedFunctionNames =
+		new ArrayList<>();
+	private static final Map<String, String> _deprecatedMethods =
+		new Hashtable<String, String>() {
+			{
+				put("assertAlert", "assertAlertText");
+				put("copyText", "getText (store as var)");
+				put("copyValue", "getElementValue (store as var)");
+				put("getEval", "getJavaScriptResult");
+				put("runScript", "executeJavaScript");
+				put("paste", "var saved from copy methods");
+				put("typeAlloyEditor", "typeEditor");
+				put("typeCKEditor", "typeEditor");
+			}
+		};
 	private static final Set<Exception> _exceptions = new HashSet<>();
 	private static final Pattern _invalidMethodParameterPattern =
 		Pattern.compile("(?<invalidSyntax>(?:locator|value)[1-3]?[\\s]*=)");

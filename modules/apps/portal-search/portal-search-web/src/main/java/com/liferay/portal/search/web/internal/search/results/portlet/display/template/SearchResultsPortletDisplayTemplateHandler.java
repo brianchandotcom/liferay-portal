@@ -101,7 +101,7 @@ public class SearchResultsPortletDisplayTemplateHandler
 		templateVariableGroup.addVariable(
 			"created-by-user-portrait", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY,
-			"getCreatedByUserPortraitURLString()");
+			"getCreatorUserPortraitURLString()");
 		templateVariableGroup.addVariable(
 			"creation-date", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getCreationDateString()");

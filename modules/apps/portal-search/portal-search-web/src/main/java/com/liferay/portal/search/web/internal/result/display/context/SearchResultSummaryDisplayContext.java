@@ -45,10 +45,6 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		return _content;
 	}
 
-	public String getCreatedByUserPortraitURLString() {
-		return _createdByUserPortraitURLString;
-	}
-
 	public String getCreationDateString() {
 		return _creationDateString;
 	}
@@ -147,10 +143,6 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		return _contentVisible;
 	}
 
-	public boolean isCreatedByUserPortraitVisible() {
-		return _createdByUserPortraitVisible;
-	}
-
 	public boolean isCreationDateVisible() {
 		return _creationDateVisible;
 	}
@@ -241,18 +233,6 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 
 	public void setContentVisible(boolean contentVisible) {
 		_contentVisible = contentVisible;
-	}
-
-	public void setCreatedByUserPortraitURLString(
-		String createdByUserPortraitURLString) {
-
-		_createdByUserPortraitURLString = createdByUserPortraitURLString;
-	}
-
-	public void setCreatedByUserPortraitVisible(
-		boolean createdByUserPortraitVisible) {
-
-		_createdByUserPortraitVisible = createdByUserPortraitVisible;
 	}
 
 	public void setCreationDateString(String creationDateString) {
@@ -418,8 +398,6 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 	private long _classPK;
 	private String _content;
 	private boolean _contentVisible;
-	private String _createdByUserPortraitURLString;
-	private boolean _createdByUserPortraitVisible;
 	private String _creationDateString;
 	private boolean _creationDateVisible;
 	private String _creatorUserName;

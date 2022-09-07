@@ -587,9 +587,9 @@ public class SearchResultSummaryDisplayContextBuilder {
 		}
 
 		if (creatorByPortraitUrlString != null) {
-			searchResultSummaryDisplayContext.setCreatedByUserPortraitURLString(
+			searchResultSummaryDisplayContext.setCreatorUserPortraitURLString(
 				creatorByPortraitUrlString);
-			searchResultSummaryDisplayContext.setCreatedByUserPortraitVisible(
+			searchResultSummaryDisplayContext.setCreatorUserPortraitVisible(
 				true);
 
 			searchResultSummaryDisplayContext.setUserPortraitURLString(

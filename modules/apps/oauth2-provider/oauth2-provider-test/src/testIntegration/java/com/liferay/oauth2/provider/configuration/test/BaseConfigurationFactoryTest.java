@@ -19,14 +19,14 @@ import com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadle
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.test.function.ConfigurationHolder;
+import com.liferay.portal.test.function.CreatingFactoryConfigurationHolder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -36,7 +36,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
@@ -57,33 +56,6 @@ public class BaseConfigurationFactoryTest {
 				getName());
 		_testGetFactoryConfiguration(
 			OAuth2ProviderApplicationUserAgentConfiguration.class.getName());
-	}
-
-	public static class ConfigurationHolder
-		extends ClosableHolder<Configuration> {
-
-		public ConfigurationHolder(
-				UnsafeSupplier<Configuration, Exception> onInitUnsafeSupplier)
-			throws Exception {
-
-			super(
-				configuration -> configuration.delete(), onInitUnsafeSupplier);
-		}
-
-		public Dictionary<String, Object> getProperties() throws Exception {
-			Configuration configuration = get();
-
-			return configuration.getProcessedProperties(null);
-		}
-
-		public void update(Dictionary<String, Object> properties)
-			throws Exception {
-
-			Configuration configuration = get();
-
-			configuration.update(properties);
-		}
-
 	}
 
 	private OAuth2Application _fetchOAuthApplication(
@@ -121,9 +93,9 @@ public class BaseConfigurationFactoryTest {
 
 		String externalReferenceCode = "foo";
 
-		try (ConfigurationHolder configurationHolder = new ConfigurationHolder(
-				() -> _configurationAdmin.getFactoryConfiguration(
-					className, externalReferenceCode, "?"))) {
+		try (ConfigurationHolder configurationHolder =
+				new CreatingFactoryConfigurationHolder(
+					_configurationAdmin, className, externalReferenceCode)) {
 
 			configurationHolder.update(
 				HashMapDictionaryBuilder.<String, Object>put(

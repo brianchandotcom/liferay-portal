@@ -15,7 +15,6 @@
 package com.liferay.portal.k8s.agent.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
@@ -29,6 +28,11 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.function.AwaitingConfigurationHolder;
+import com.liferay.portal.test.function.CloseableHolder;
+import com.liferay.portal.test.function.ConfigurationHolder;
+import com.liferay.portal.test.function.CreatingConfigurationHolder;
+import com.liferay.portal.test.function.ThreadContextClassLoaderCloseableHolder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
@@ -51,7 +55,6 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.mockwebserver.MockResponse;
@@ -68,12 +71,8 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.cm.ManagedService;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -106,9 +105,10 @@ public class PortalK8sAgentImplTest {
 				public MockResponse dispatch(RecordedRequest request)
 					throws InterruptedException {
 
-					try (ClassLoaderClosableHolder classLoaderClosableHolder =
-							new ClassLoaderClosableHolder(
-								DefaultKubernetesClient.class)) {
+					try (ThreadContextClassLoaderSwappingHolder
+							threadContextClassLoaderSwappingHolder =
+								new ThreadContextClassLoaderSwappingHolder(
+									DefaultKubernetesClient.class)) {
 
 						return super.dispatch(request);
 					}
@@ -127,9 +127,9 @@ public class PortalK8sAgentImplTest {
 		_kubernetesMockClient = _kubernetesMockServer.createClient();
 
 		_agentConfigurationHolder = new CreatingConfigurationHolder(
-			PortalK8sAgentConfiguration.class.getName());
+			_configurationAdmin , PortalK8sAgentConfiguration.class.getName());
 		_portalK8sConfigMapModifierHolder =
-			new PortalK8sConfigMapModifierClosableHolder(_bundleContext);
+			new PortalK8sConfigMapModifierHolder(_bundleContext);
 
 		_agentConfigurationHolder.update(
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -292,7 +292,8 @@ public class PortalK8sAgentImplTest {
 
 		try (ConfigurationHolder configurationHolder =
 				new AwaitingConfigurationHolder(
-					_bundleContext, "test.pid", 10000, TimeUnit.MILLISECONDS)) {
+					_bundleContext, _configurationAdmin , "test.pid", 10000,
+					TimeUnit.MILLISECONDS)) {
 
 			Dictionary<String, Object> properties =
 				configurationHolder.getProperties();
@@ -331,115 +332,12 @@ public class PortalK8sAgentImplTest {
 		}
 	}
 
-	public static class AwaitingConfigurationHolder
-		extends ConfigurationHolder {
-
-		public AwaitingConfigurationHolder(
-				BundleContext bundleContext, String pid, long timeout,
-				TimeUnit timeUnit)
-			throws Exception {
-
-			super(
-				() -> {
-					CountDownLatch countDownLatch = new CountDownLatch(2);
-
-					ServiceRegistration<ManagedService> serviceRegistration =
-						bundleContext.registerService(
-							ManagedService.class,
-							properties -> countDownLatch.countDown(),
-							HashMapDictionaryBuilder.<String, Object>put(
-								Constants.SERVICE_PID, pid
-							).build());
-
-					try {
-						countDownLatch.await(timeout, timeUnit);
-					}
-					finally {
-						serviceRegistration.unregister();
-					}
-
-					Configuration[] configurations =
-						_configurationAdmin.listConfigurations(
-							"(service.pid=".concat(
-								pid
-							).concat(
-								")"
-							));
-
-					Assert.assertNotNull(configurations);
-
-					return configurations[0];
-				});
-		}
-
-	}
-
-	public static class ClassLoaderClosableHolder
-		extends ClosableHolder<ClassLoader> {
-
-		public ClassLoaderClosableHolder(Class<?> clazz) throws Exception {
-			super(
-				classLoader -> {
-					Thread currentThread = Thread.currentThread();
-
-					currentThread.setContextClassLoader(classLoader);
-				},
-				() -> {
-					Thread currentThread = Thread.currentThread();
-
-					ClassLoader classLoader =
-						currentThread.getContextClassLoader();
-
-					currentThread.setContextClassLoader(clazz.getClassLoader());
-
-					return classLoader;
-				});
-		}
-
-	}
-
-	public static class ConfigurationHolder
-		extends ClosableHolder<Configuration> {
-
-		public ConfigurationHolder(
-				UnsafeSupplier<Configuration, Exception> onInitUnsafeSupplier)
-			throws Exception {
-
-			super(
-				configuration -> configuration.delete(), onInitUnsafeSupplier);
-		}
-
-		public Dictionary<String, Object> getProperties() throws Exception {
-			Configuration configuration = get();
-
-			return configuration.getProcessedProperties(null);
-		}
-
-		public void update(Dictionary<String, Object> properties)
-			throws Exception {
-
-			Configuration configuration = get();
-
-			configuration.update(properties);
-		}
-
-	}
-
-	public static class CreatingConfigurationHolder
-		extends ConfigurationHolder {
-
-		public CreatingConfigurationHolder(String pid) throws Exception {
-			super(() -> _configurationAdmin.getConfiguration(pid, "?"));
-		}
-
-	}
-
-	public static class PortalK8sConfigMapModifierClosableHolder
-		extends ClosableHolder
+	public static class PortalK8sConfigMapModifierHolder
+		extends CloseableHolder
 			<ServiceTracker
 				<PortalK8sConfigMapModifier, PortalK8sConfigMapModifier>> {
 
-		public PortalK8sConfigMapModifierClosableHolder(
+		public PortalK8sConfigMapModifierHolder(
 				BundleContext bundleContext)
 			throws Exception {
 
@@ -486,7 +384,7 @@ public class PortalK8sAgentImplTest {
 	private static NamespacedKubernetesClient _kubernetesMockClient;
 	private static KubernetesMockServer _kubernetesMockServer;
 	private static PortalK8sConfigMapModifier _portalK8sConfigMapModifier;
-	private static PortalK8sConfigMapModifierClosableHolder
+	private static PortalK8sConfigMapModifierHolder
 		_portalK8sConfigMapModifierHolder;
 
 }

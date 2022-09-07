@@ -115,6 +115,31 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Get the displayPageTemplatePlid from a layoutPageTemplateEntry by using groupId and layoutPageTemplateEntryName"
+	macro _getDisplayPageTemplatePlidByName {
+		Variables.assertDefined(parameterList = "${groupId},${displayPageTemplateEntryName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d type=1 \
+			  -d "start=-1" \
+			  -d "end=-1" \
+			  -d -orderByComparator=
+		''';
+
+		var displayPageTemplatePlid = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${displayPageTemplateEntryName}')]['plid']");
+
+		if ("${plid}" == "") {
+			fail("FAIL. Cannot find displayPageTemplateEntryName.");
+		}
+
+		return "${displayPageTemplatePlid}";
+	}
+
 	@summary = "Get the layoutPageTemplateCollectionId from a layoutPageTemplateCollection by using groupId and layoutPageTemplateCollectionName"
 	macro _getLayoutPageTemplateCollectionIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionName}");

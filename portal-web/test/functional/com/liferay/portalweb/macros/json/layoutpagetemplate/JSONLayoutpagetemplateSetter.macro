@@ -49,6 +49,16 @@ definition {
 		return "${descriptionMap}";
 	}
 
+	macro setDisplayPageTemplatePlid {
+		Variables.assertDefined(parameterList = "${groupId},${displayPageTemplateEntryName}");
+
+		var displayPageTemplatePlid = JSONLayoutpagetemplateAPI._getDisplayPageTemplatePlidByName(
+			displayPageTemplateEntryName = "${displayPageTemplateEntryName}",
+			groupId = "${groupId}");
+
+		return "${displayPageTemplatePlid}";
+	}
+
 	macro setGroupId {
 		Variables.assertDefined(parameterList = "${groupKey}");
 

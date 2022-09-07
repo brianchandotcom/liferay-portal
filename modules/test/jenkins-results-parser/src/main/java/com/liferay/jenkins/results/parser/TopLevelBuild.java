@@ -2208,8 +2208,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 			"/index.html";
 
 	private static final Pattern _downstreamBuildURLPattern = Pattern.compile(
-		"[\\'\\\"](?<jobVariant>[^\\'\\\"]+)[\\'\\\"] started at " +
-			"(?<url>.+/job/(?<jobName>[^/]+)/.+)\\.");
+		"[\\'\\\"][^/]*(/(?<axisName>.*))?[\\'\\\"] " +
+			"(completed|started) at (?<url>.+)\\.");
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);
 

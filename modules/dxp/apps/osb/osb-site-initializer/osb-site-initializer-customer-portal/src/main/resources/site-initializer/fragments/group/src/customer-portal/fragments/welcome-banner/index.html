@@ -1,9 +1,7 @@
 [#assign firstName = themeDisplay.getUser().getFirstName()]
 
-<div
-	class="align-items-center d-flex customer-portal-welcome-banner position-relative"
->
-	<div class="customer-portal-text text-neutral-0 ml-3 pl-5">
+<div class="align-items-center customer-portal-welcome-banner d-flex position-relative">
+	<div class="customer-portal-text ml-3 pl-5 text-neutral-0">
 		<div class="mb-4 pb-2">
 			${languageUtil.get(locale, "welcome")},
 			<span class="font-weight-bold">${firstName}!</span>
@@ -19,8 +17,5 @@
 		</div>
 	</div>
 
-	<img
-		class="h-100 customer-portal-welcome-img position-absolute w-100"
-		src="[resources:banner_background_customer_portal.svg]"
-	/>
+	<img class="customer-portal-welcome-img h-100 position-absolute w-100" src="[resources:banner_background_customer_portal.svg]" />
 </div>

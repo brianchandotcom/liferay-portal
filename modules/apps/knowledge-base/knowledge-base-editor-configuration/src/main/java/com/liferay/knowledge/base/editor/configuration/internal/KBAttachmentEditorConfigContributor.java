@@ -118,11 +118,6 @@ public class KBAttachmentEditorConfigContributor
 		);
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
 	private ItemSelectorCriterion _getImageItemSelectorCriterion(
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
@@ -183,6 +178,7 @@ public class KBAttachmentEditorConfigContributor
 		return itemSelectorCriterion;
 	}
 
+	@Reference
 	private ItemSelector _itemSelector;
 
 }

@@ -61,6 +61,6 @@ public interface Address extends AddressModel, PersistedModel {
 
 	public Region getRegion();
 
-	public ListType getType();
+	public ListType getListType();
 
 }

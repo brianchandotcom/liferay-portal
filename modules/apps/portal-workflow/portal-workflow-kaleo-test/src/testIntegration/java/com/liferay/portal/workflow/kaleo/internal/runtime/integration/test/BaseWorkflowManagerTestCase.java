@@ -89,7 +89,7 @@ public abstract class BaseWorkflowManagerTestCase {
 							return clazz.getName();
 						}
 
-						if (Objects.equals(method.getName(), "getType")) {
+						if (Objects.equals(method.getName(), "getListType")) {
 							return StringPool.BLANK;
 						}
 

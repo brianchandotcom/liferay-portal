@@ -359,6 +359,11 @@ public class AddressWrapper
 		return model.getLatitude();
 	}
 
+	@Override
+	public ListType getListType() {
+		return model.getListType();
+	}
+
 	/**
 	 * Returns the list type ID of this address.
 	 *
@@ -487,11 +492,6 @@ public class AddressWrapper
 	@Override
 	public String getStreet3() {
 		return model.getStreet3();
-	}
-
-	@Override
-	public ListType getType() {
-		return model.getType();
 	}
 
 	/**

@@ -41,15 +41,14 @@ const ProjectList = ({
 		}
 	}, [isIntersecting, koroneikiAccounts?.page, onIntersect, allowFetching]);
 
-	const getProjects = () => {
-		return koroneikiAccounts?.items.map((koroneikiAccount, index) => (
+	const getProjects = () =>
+		koroneikiAccounts?.items.map((koroneikiAccount, index) => (
 			<ProjectCard
 				compressed={hasManyProjects}
 				key={`${koroneikiAccount.accountKey}-${index}`}
 				{...koroneikiAccount}
 			/>
 		));
-	};
 
 	const showResults = () => {
 		if (!koroneikiAccounts) {

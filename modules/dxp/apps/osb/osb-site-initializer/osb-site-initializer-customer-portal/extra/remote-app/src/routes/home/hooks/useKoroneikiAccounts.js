@@ -10,58 +10,17 @@
  */
 
 import {NetworkStatus} from '@apollo/client';
-import {useMemo} from 'react';
-import {Liferay} from '../../../common/services/liferay';
 import {useGetKoroneikiAccounts} from '../../../common/services/liferay/graphql/koroneiki-accounts';
-import {useGetUserAccount} from '../../../common/services/liferay/graphql/user-accounts';
-import {getAccountBriefsFilter} from '../utils/getAccountBriefsFilter';
 import useSearchTerm from './useSearchTerm';
 
 export default function useKoroneikiAccounts() {
-	const {
-		data: userAccountData,
-		loading: userAccountLoading,
-	} = useGetUserAccount(Liferay.ThemeDisplay.getUserId());
-
-	const userAccount = userAccountData?.userAccount;
-	const hasProjects =
-		userAccount?.accountBriefs.length || userAccount?.isLiferayStaff;
-
-	const filterKoroneikiAccounts = useMemo(
-		() =>
-			!userAccount?.isLiferayStaff
-				? `accountKey in ${getAccountBriefsFilter(
-						userAccount?.accountBriefs
-				  )}`
-				: '',
-		[userAccount?.accountBriefs, userAccount?.isLiferayStaff]
-	);
-
 	const {data, fetchMore, networkStatus, refetch} = useGetKoroneikiAccounts({
-		filter: filterKoroneikiAccounts,
 		notifyOnNetworkStatusChange: true,
-		skip: userAccountLoading || !hasProjects,
 	});
-
-	const loadingKoroneikiAccounts =
-		networkStatus === NetworkStatus.loading ||
-		networkStatus === NetworkStatus.setVariables;
-
-	const getFilterKoroneikiAccountsBySearch = (searchTerm) => {
-		if (searchTerm) {
-			const searchByName = `contains(name, '${searchTerm}')`;
-
-			return filterKoroneikiAccounts
-				? `${filterKoroneikiAccounts} and ${searchByName}`
-				: searchByName;
-		}
-
-		return filterKoroneikiAccounts;
-	};
 
 	const search = useSearchTerm((searchTerm) =>
 		refetch({
-			filter: getFilterKoroneikiAccountsBySearch(searchTerm),
+			filter: searchTerm && `contains(name, '${searchTerm}')`,
 			page: 1,
 		})
 	);
@@ -70,7 +29,9 @@ export default function useKoroneikiAccounts() {
 		data,
 		fetchMore,
 		fetching: networkStatus === NetworkStatus.fetchMore,
-		loading: loadingKoroneikiAccounts || userAccountLoading,
+		loading:
+			networkStatus === NetworkStatus.loading ||
+			networkStatus === NetworkStatus.setVariables,
 		networkStatus,
 		refetch,
 		search,

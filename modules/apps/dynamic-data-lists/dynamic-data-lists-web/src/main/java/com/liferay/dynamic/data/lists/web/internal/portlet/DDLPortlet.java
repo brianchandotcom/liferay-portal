@@ -86,7 +86,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
+		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )

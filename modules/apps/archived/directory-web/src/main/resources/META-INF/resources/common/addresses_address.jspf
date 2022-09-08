@@ -15,7 +15,7 @@
 --%>
 
 <%
-ListType addressListType = address.getType();
+ListType addressListType = address.getListType();
 %>
 
 <em class="mailing-name"><%= LanguageUtil.get(request, addressListType.getName()) %></em><br />

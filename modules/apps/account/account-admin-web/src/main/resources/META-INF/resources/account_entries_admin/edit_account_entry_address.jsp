@@ -66,7 +66,7 @@ renderResponse.setTitle((accountEntryAddressId == 0) ? LanguageUtil.get(request,
 			ListType addressListType = null;
 
 			if (address != null) {
-				addressListType = address.getType();
+				addressListType = address.getListType();
 			}
 
 			for (String type : types) {

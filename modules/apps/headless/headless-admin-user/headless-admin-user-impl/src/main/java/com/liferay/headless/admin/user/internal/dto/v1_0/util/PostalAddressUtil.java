@@ -36,7 +36,7 @@ public class PostalAddressUtil {
 		boolean acceptAllLanguages, Address address, long companyId,
 		Locale locale) {
 
-		ListType listType = address.getType();
+		ListType listType = address.getListType();
 
 		return new PostalAddress() {
 			{

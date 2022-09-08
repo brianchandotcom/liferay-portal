@@ -97,7 +97,7 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 						<h4>
 
 							<%
-							ListType listType = address.getType();
+							ListType listType = address.getListType();
 							%>
 
 							<liferay-ui:message key="<%= listType.getName() %>" />

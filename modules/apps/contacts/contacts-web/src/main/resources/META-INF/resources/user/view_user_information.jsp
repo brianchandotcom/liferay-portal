@@ -228,7 +228,7 @@ if (addresses.isEmpty()) {
 
 			<%
 			for (Address address : addresses) {
-				ListType listType = address.getType();
+				ListType listType = address.getListType();
 			%>
 
 				<li class="<%= address.isPrimary() ? "primary" : "" %>">

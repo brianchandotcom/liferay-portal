@@ -80,19 +80,6 @@ public class JSONWebServiceTracker
 		_serviceTracker = null;
 	}
 
-	@Reference
-	protected void setJSONWebServiceActionsManager(
-		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
-
-		_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
-	}
-
-	protected void unsetJSONWebServiceActionsManager(
-		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
-
-		_jsonWebServiceActionsManager = null;
-	}
-
 	private ClassLoader _getBundleClassLoader(Bundle bundle) {
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
@@ -137,7 +124,10 @@ public class JSONWebServiceTracker
 	}
 
 	private ComponentContext _componentContext;
+
+	@Reference
 	private JSONWebServiceActionsManager _jsonWebServiceActionsManager;
+
 	private ServiceTracker<Object, Object> _serviceTracker;
 
 }

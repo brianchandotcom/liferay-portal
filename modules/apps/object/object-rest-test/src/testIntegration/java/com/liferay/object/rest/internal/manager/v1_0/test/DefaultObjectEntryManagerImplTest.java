@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParserUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -263,13 +264,6 @@ public class DefaultObjectEntryManagerImplTest {
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
-				_buildInExpressionFilterString(
-					"picklistObjectFieldName", true, picklistObjectFieldValue1)
-			).build(),
-			objectEntry1);
-		_testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
 				_buildInExpressionFilterString("id", true, objectEntry1.getId())
 			).build(),
 			objectEntry1);
@@ -277,7 +271,7 @@ public class DefaultObjectEntryManagerImplTest {
 			HashMapBuilder.put(
 				"filter",
 				_buildInExpressionFilterString(
-					"picklistObjectFieldName", false, picklistObjectFieldValue1)
+					"id", false, objectEntry1.getId())
 			).build(),
 			objectEntry2);
 		_testGetObjectEntries(
@@ -308,7 +302,14 @@ public class DefaultObjectEntryManagerImplTest {
 			HashMapBuilder.put(
 				"filter",
 				_buildInExpressionFilterString(
-					"id", false, objectEntry1.getId())
+					"picklistObjectFieldName", true, picklistObjectFieldValue1)
+			).build(),
+			objectEntry1);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildInExpressionFilterString(
+					"picklistObjectFieldName", false, picklistObjectFieldValue1)
 			).build(),
 			objectEntry2);
 		_testGetObjectEntries(
@@ -336,6 +337,16 @@ public class DefaultObjectEntryManagerImplTest {
 			objectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
+				"sort", "createDate:asc"
+			).build(),
+			objectEntry1, objectEntry2);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "createDate:desc"
+			).build(),
+			objectEntry2, objectEntry1);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
 				"sort", "id:asc"
 			).build(),
 			objectEntry1, objectEntry2);
@@ -352,16 +363,6 @@ public class DefaultObjectEntryManagerImplTest {
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"sort", "textObjectFieldName:desc"
-			).build(),
-			objectEntry2, objectEntry1);
-		_testGetObjectEntries(
-			HashMapBuilder.put(
-				"sort", "createDate:asc"
-			).build(),
-			objectEntry1, objectEntry2);
-		_testGetObjectEntries(
-			HashMapBuilder.put(
-				"sort", "createDate:desc"
 			).build(),
 			objectEntry2, objectEntry1);
 	}
@@ -387,16 +388,17 @@ public class DefaultObjectEntryManagerImplTest {
 	}
 
 	private void _assertEquals(
-			List<ObjectEntry> actualObjectEntries,
-			ObjectEntry... expectedObjectEntries)
+			List<ObjectEntry> expectedObjectEntries,
+			List<ObjectEntry> actualObjectEntries)
 		throws Exception {
 
 		Assert.assertEquals(
-			actualObjectEntries.toString(), expectedObjectEntries.length,
+			actualObjectEntries.toString(), expectedObjectEntries.size(),
 			actualObjectEntries.size());
 
-		for (int i = 0; i < expectedObjectEntries.length; i++) {
-			_assertEquals(actualObjectEntries.get(i), expectedObjectEntries[i]);
+		for (int i = 0; i < expectedObjectEntries.size(); i++) {
+			_assertEquals(
+				actualObjectEntries.get(i), expectedObjectEntries.get(i));
 		}
 	}
 
@@ -638,8 +640,8 @@ public class DefaultObjectEntryManagerImplTest {
 				context.get("search"), sorts);
 
 		_assertEquals(
-			(List<ObjectEntry>)objectEntryPage.getItems(),
-			expectedObjectEntries);
+			ListUtil.fromArray(expectedObjectEntries),
+			(List<ObjectEntry>)objectEntryPage.getItems());
 	}
 
 	private static long _companyId;

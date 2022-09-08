@@ -22,7 +22,6 @@ import com.liferay.portal.cache.ehcache.internal.constants.EhcacheConstants;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -148,8 +147,6 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 
 		return properties;
 	}
-
-	protected Props props;
 
 	private void _clearListenerConfigrations(
 		CacheConfiguration cacheConfiguration) {

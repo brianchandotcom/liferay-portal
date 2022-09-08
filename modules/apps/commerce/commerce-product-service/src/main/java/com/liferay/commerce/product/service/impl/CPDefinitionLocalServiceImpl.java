@@ -53,7 +53,7 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUti
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalServiceUtil;
-import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
+import com.liferay.commerce.product.service.CPDisplayLayoutLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
@@ -1414,7 +1414,7 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product display layouts
 
-		_cpDisplayLayoutLocalService.deleteCPDisplayLayouts(
+		CPDisplayLayoutLocalServiceUtil.deleteCPDisplayLayouts(
 			CPDefinition.class, cpDefinition.getCPDefinitionId());
 
 		// Commerce product version contributors
@@ -1861,7 +1861,7 @@ public class CPDefinitionLocalServiceImpl
 	@Override
 	public String getLayoutUuid(long groupId, long cpDefinitionId) {
 		CPDisplayLayout cpDisplayLayout =
-			_cpDisplayLayoutLocalService.fetchCPDisplayLayout(
+			CPDisplayLayoutLocalServiceUtil.fetchCPDisplayLayout(
 				groupId, CPDefinition.class, cpDefinitionId);
 
 		if (cpDisplayLayout == null) {
@@ -3210,9 +3210,6 @@ public class CPDefinitionLocalServiceImpl
 	@Reference
 	private CPDefinitionSpecificationOptionValuePersistence
 		_cpDefinitionSpecificationOptionValuePersistence;
-
-	@Reference
-	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
 
 	@Reference
 	private CPDisplayLayoutPersistence _cpDisplayLayoutPersistence;

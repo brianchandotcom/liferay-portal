@@ -334,7 +334,9 @@ public class Main {
 
 		return jsonObject.getJSONArray(
 			key
-		).toString(5);
+		).toString(
+			5
+		);
 	}
 
 	private String _getJSONObjectString(

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -70,7 +71,7 @@ public class MBModerationConditionEvaluator implements ConditionEvaluator {
 		String[] domains = mbModerationGroupConfiguration.approvedDomains();
 
 		for (String domain : domains) {
-			if ((email.length() != 0) &&
+			if ((Validator.isNotNull(domain)) &&
 				StringUtil.endsWith(email, domain.trim())) {
 
 				return "approve";

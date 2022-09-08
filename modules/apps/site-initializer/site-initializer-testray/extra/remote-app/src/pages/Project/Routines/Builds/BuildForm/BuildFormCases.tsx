@@ -15,8 +15,10 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {Dispatch, SetStateAction} from 'react';
+import {useParams} from 'react-router-dom';
 
 import Form from '../../../../../components/Form';
+import {useFetch} from '../../../../../hooks/useFetch';
 import useFormModal from '../../../../../hooks/useFormModal';
 import i18n from '../../../../../i18n';
 import fetcher from '../../../../../services/fetcher';
@@ -40,11 +42,17 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 	caseIds,
 	setCaseIds,
 }) => {
+	const {projectId} = useParams();
+
+	const {data: casesResponse} = useFetch<APIResponse<TestrayCase>>(
+		`/cases?filter=${searchUtil.eq(
+			'projectId',
+			projectId as string
+		)}&pageSize=1&fields=id`
+	);
+
 	const {modal} = useFormModal({
-		onSave: (newCases) =>
-			setCaseIds((prevCases) =>
-				getUniqueList([...prevCases, ...newCases])
-			),
+		onSave: setCaseIds,
 	});
 
 	const {modal: buildSelectSuitesModal} = useFormModal({
@@ -69,6 +77,16 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 			});
 		},
 	});
+
+	if (casesResponse?.totalCount === 0) {
+		return (
+			<ClayAlert>
+				{i18n.translate(
+					'create-cases-if-you-want-to-link-cases-to-this-build'
+				)}
+			</ClayAlert>
+		);
+	}
 
 	return (
 		<>
@@ -139,7 +157,11 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 			)}
 
 			<BuildSelectSuitesModal modal={buildSelectSuitesModal} />
-			<SuiteFormSelectModal modal={modal} type="select-cases" />
+			<SuiteFormSelectModal
+				modal={modal}
+				selectedCaseIds={caseIds}
+				type="select-cases"
+			/>
 		</>
 	);
 };

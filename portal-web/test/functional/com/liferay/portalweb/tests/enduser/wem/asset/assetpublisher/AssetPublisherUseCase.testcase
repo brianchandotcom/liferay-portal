@@ -1345,6 +1345,93 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-158221. The Asset Publisher widget should not lose the layout article reference after edit associated content page."
+	@priority = "4"
+	test RepublishAssociatedContentPage {
+		task ("Given a page creator has a web content with an associated content page") {
+			task ("Add two content pages") {
+				for (var i : list "1,2") {
+					JSONLayout.addPublicLayout(
+						groupName = "Test Site Name",
+						layoutName = "Test Page Name ${i}",
+						type = "content");
+				}
+			}
+
+			task ("Add an Asset Publisher to each page") {
+				for (var i : list "1,2") {
+					ContentPagesNavigator.openEditContentPage(
+						pageName = "Test Page Name ${i}",
+						siteName = "Test Site Name");
+
+					PageEditor.addWidget(portletName = "Asset Publisher");
+
+					PageEditor.publish();
+				}
+			}
+
+			task ("Select Content Editing") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name 2",
+					siteName = "Test Site Name");
+
+				Click(locator1 = "PageEditor#EDIT_MODE_SELECTOR");
+
+				MenuItem.click(menuItem = "Content Editing");
+			}
+
+			task ("Set the Asset Publisher as default for second page") {
+				AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
+
+				IFrame.closeFrame();
+
+				PageEditor.publish();
+			}
+
+			task ("Add a web content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Select the second page as display template in the web content") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+				WebContent.editDisplayPage(
+					pageName = "Test Page Name 2",
+					pageType = "Pages",
+					webContentTitle = "Web Content Title");
+
+				PortletEntry.publish();
+			}
+		}
+
+		task ("When the page creator republish the associated content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			PortletEntry.publish();
+		}
+
+		task ("Then page creator should be redirected to the associated content page after clicking the web content title on Asset Publisher") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Web Content Title");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name 2");
+		}
+	}
+
 	@description = "This is a use case for LPS-133629. The user can select folder by search when create web content based on custom structure via Asset Publisher."
 	@priority = "4"
 	test SelectFolderBySearchWhenCreateWebContentBasedOnCustomStructureViaAssetPublisher {

@@ -501,6 +501,15 @@ public class ObjectEntryLocalServiceWrapper
 			externalReferenceCode, companyId, groupId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntry getObjectEntryByERC_ODI(
+			String externalReferenceCode, long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.getObjectEntryByERC_ODI(
+			externalReferenceCode, objectDefinitionId);
+	}
+
 	/**
 	 * Returns the object entry matching the UUID and group.
 	 *
@@ -568,6 +577,14 @@ public class ObjectEntryLocalServiceWrapper
 
 		return _objectEntryLocalService.getSystemModelAttributes(
 			objectDefinition, primaryKey);
+	}
+
+	@Override
+	public String getTitleValue(long entryId, long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.getTitleValue(
+			entryId, objectDefinitionId);
 	}
 
 	@Override

@@ -2618,10 +2618,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		KnowledgeBaseFolder knowledgeBaseFolder = KnowledgeBaseFolder.toDTO(
 			jsonObject.toString());
 
-		if (parentKnowledgeBaseObjectId != 0) {
-			knowledgeBaseFolder.setParentKnowledgeBaseFolderId(
-				parentKnowledgeBaseObjectId);
-		}
+		knowledgeBaseFolder.setParentKnowledgeBaseFolderId(
+			parentKnowledgeBaseObjectId);
 
 		return knowledgeBaseFolderResource.
 			putSiteKnowledgeBaseFolderByExternalReferenceCode(

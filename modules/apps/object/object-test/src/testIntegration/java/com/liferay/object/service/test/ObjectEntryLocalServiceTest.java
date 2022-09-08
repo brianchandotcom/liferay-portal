@@ -1235,7 +1235,7 @@ public class ObjectEntryLocalServiceTest {
 
 		int expectedValuesSize = 18;
 
-		Map<String, Serializable> values = _getValuesFromCacheField(
+		Map<String, Serializable> values = _getValuesFromDatabase(
 			objectEntries.get(0));
 
 		Assert.assertEquals(
@@ -1263,7 +1263,7 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(2);
 
-		values = _getValuesFromCacheField(objectEntries.get(0));
+		values = _getValuesFromDatabase(objectEntries.get(0));
 
 		Assert.assertEquals(
 			"peter@liferay.com", values.get("emailAddressRequired"));
@@ -1273,7 +1273,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			values.toString(), expectedValuesSize, values.size());
 
-		values = _getValuesFromCacheField(objectEntries.get(1));
+		values = _getValuesFromDatabase(objectEntries.get(1));
 
 		Assert.assertEquals(
 			"james@liferay.com", values.get("emailAddressRequired"));
@@ -1300,7 +1300,7 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(3);
 
-		values = _getValuesFromCacheField(objectEntries.get(0));
+		values = _getValuesFromDatabase(objectEntries.get(0));
 
 		Assert.assertEquals(
 			"peter@liferay.com", values.get("emailAddressRequired"));
@@ -1310,7 +1310,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			values.toString(), expectedValuesSize, values.size());
 
-		values = _getValuesFromCacheField(objectEntries.get(1));
+		values = _getValuesFromDatabase(objectEntries.get(1));
 
 		Assert.assertEquals(
 			"james@liferay.com", values.get("emailAddressRequired"));
@@ -1320,7 +1320,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			values.toString(), expectedValuesSize, values.size());
 
-		values = _getValuesFromCacheField(objectEntries.get(2));
+		values = _getValuesFromDatabase(objectEntries.get(2));
 
 		Assert.assertEquals(
 			"john@liferay.com", values.get("emailAddressRequired"));
@@ -1587,7 +1587,7 @@ public class ObjectEntryLocalServiceTest {
 
 		int expectedValuesSize = 18;
 
-		Map<String, Serializable> values = _getValuesFromCacheField(
+		Map<String, Serializable> values = _getValuesFromDatabase(
 			objectEntries.get(0));
 
 		Assert.assertEquals(
@@ -1617,7 +1617,7 @@ public class ObjectEntryLocalServiceTest {
 
 		objectEntries = baseModelSearchResult.getBaseModels();
 
-		values = _getValuesFromCacheField(objectEntries.get(0));
+		values = _getValuesFromDatabase(objectEntries.get(0));
 
 		Assert.assertEquals(
 			"peter@liferay.com", values.get("emailAddressRequired"));
@@ -1628,7 +1628,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			values.toString(), expectedValuesSize, values.size());
 
-		values = _getValuesFromCacheField(objectEntries.get(1));
+		values = _getValuesFromDatabase(objectEntries.get(1));
 
 		Assert.assertEquals(
 			"james@liferay.com", values.get("emailAddressRequired"));
@@ -1657,7 +1657,7 @@ public class ObjectEntryLocalServiceTest {
 
 		objectEntries = baseModelSearchResult.getBaseModels();
 
-		values = _getValuesFromCacheField(objectEntries.get(0));
+		values = _getValuesFromDatabase(objectEntries.get(0));
 
 		Assert.assertEquals(
 			"peter@liferay.com", values.get("emailAddressRequired"));
@@ -1668,7 +1668,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			values.toString(), expectedValuesSize, values.size());
 
-		values = _getValuesFromCacheField(objectEntries.get(1));
+		values = _getValuesFromDatabase(objectEntries.get(1));
 
 		Assert.assertEquals(
 			"james@liferay.com", values.get("emailAddressRequired"));
@@ -1679,7 +1679,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			values.toString(), expectedValuesSize, values.size());
 
-		values = _getValuesFromCacheField(objectEntries.get(2));
+		values = _getValuesFromDatabase(objectEntries.get(2));
 
 		Assert.assertEquals(
 			"john@liferay.com", values.get("emailAddressRequired"));
@@ -1780,17 +1780,12 @@ public class ObjectEntryLocalServiceTest {
 		objectEntry = _objectEntryLocalService.getObjectEntry(
 			objectEntry.getObjectEntryId());
 
-		Assert.assertNotNull(
+		Assert.assertNull(
 			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
 
-		Map<String, Serializable> values = _objectEntryLocalService.getValues(
-			objectEntry.getObjectEntryId());
+		Map<String, Serializable> values = objectEntry.getValues();
 
 		Assert.assertEquals(_getValuesFromCacheField(objectEntry), values);
-
-		objectEntry.setValues(null);
-
-		Assert.assertEquals(_getValuesFromDatabase(objectEntry), values);
 
 		Assert.assertEquals(0L, values.get("ageOfDeath"));
 		Assert.assertFalse((boolean)values.get("authorOfGospel"));

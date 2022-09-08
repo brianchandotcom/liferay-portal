@@ -127,18 +127,6 @@ public class ControlPanelLayoutTypeController
 			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 	}
 
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelCategoryRegistry(
-		PanelCategoryRegistry panelCategoryRegistry) {
-
-		_panelCategoryRegistry = panelCategoryRegistry;
-	}
-
 	private static final String _EDIT_PAGE = "/layout/edit/control_panel.jsp";
 
 	private static final String _URL =
@@ -147,7 +135,10 @@ public class ControlPanelLayoutTypeController
 
 	private static final String _VIEW_PAGE = "/layout/view/control_panel.jsp";
 
+	@Reference
 	private PanelAppRegistry _panelAppRegistry;
+
+	@Reference
 	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	@Reference(

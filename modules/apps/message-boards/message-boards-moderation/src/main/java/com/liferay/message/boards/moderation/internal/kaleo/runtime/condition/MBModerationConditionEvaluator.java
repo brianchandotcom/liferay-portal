@@ -71,7 +71,7 @@ public class MBModerationConditionEvaluator implements ConditionEvaluator {
 		String[] domains = mbModerationGroupConfiguration.approvedDomains();
 
 		for (String domain : domains) {
-			if ((Validator.isNotNull(domain)) &&
+			if (Validator.isNotNull(domain) &&
 				StringUtil.endsWith(email, domain.trim())) {
 
 				return "approve";

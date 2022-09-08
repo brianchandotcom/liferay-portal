@@ -55,7 +55,12 @@ const REVERSED_POSITION = {
 const BUTTON_CLASSNAME = 'page-editor__spacing-selector__button';
 const DROPDOWN_CLASSNAME = 'page-editor__spacing-selector__dropdown';
 
-export default function SpacingBox({fields, onChange, value}) {
+export default function SpacingBox({
+	canSetCustomValue,
+	fields,
+	onChange,
+	value,
+}) {
 	const ref = useRef();
 
 	const focusButton = (type, position) => {
@@ -137,6 +142,7 @@ export default function SpacingBox({fields, onChange, value}) {
 
 						return (
 							<SpacingSelectorButton
+								canSetCustomValue={canSetCustomValue}
 								field={fields[key]}
 								key={key}
 								onChange={onChange}
@@ -152,7 +158,14 @@ export default function SpacingBox({fields, onChange, value}) {
 	);
 }
 
-function SpacingSelectorButton({field, onChange, position, type, value}) {
+function SpacingSelectorButton({
+	canSetCustomValue,
+	field,
+	onChange,
+	position,
+	type,
+	value,
+}) {
 	const [active, setActive] = useState(false);
 	const disabled = !field || field.disabled;
 	const itemListRef = useRef();
@@ -235,7 +248,8 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 			<div ref={itemListRef}>
 				<ClayDropDown.ItemList aria-labelledby={triggerId}>
 					<ClayDropDown.Group header={field?.label}>
-						{Liferay.FeatureFlags['LPS-143206'] ? (
+						{Liferay.FeatureFlags['LPS-143206'] &&
+						canSetCustomValue ? (
 							<LengthField
 								className="mb-3 mt-2 px-3"
 								field={field}

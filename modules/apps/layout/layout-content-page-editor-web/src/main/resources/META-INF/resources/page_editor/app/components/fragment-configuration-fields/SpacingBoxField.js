@@ -19,9 +19,12 @@ import InvisibleFieldset from '../../../common/components/InvisibleFieldset';
 import SpacingBox from '../../../common/components/SpacingBox';
 import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
+import {useSelector} from '../../contexts/StoreContext';
+import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';
 
 export function SpacingBoxField({disabled, field, onValueSelect, value}) {
 	const [nextValue, setNextValue] = useControlledState(value);
+	const canSetCustomValue = useSelector(selectCanDetachTokenValues);
 
 	const handleChange = (key, value) => {
 		setNextValue((previousvalue) => ({...previousvalue, [key]: value}));
@@ -48,6 +51,7 @@ export function SpacingBoxField({disabled, field, onValueSelect, value}) {
 				) : null}
 
 				<SpacingBox
+					canSetCustomValue={canSetCustomValue}
 					fields={fields}
 					onChange={handleChange}
 					value={nextValue}

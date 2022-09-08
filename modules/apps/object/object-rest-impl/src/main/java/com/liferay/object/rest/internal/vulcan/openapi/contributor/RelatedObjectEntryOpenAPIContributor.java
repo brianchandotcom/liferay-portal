@@ -198,42 +198,6 @@ public class RelatedObjectEntryOpenAPIContributor
 		return dtoConverter.getContentType();
 	}
 
-	private String _getIdParameterName(String name) {
-		return StringUtil.lowerCaseFirstLetter(name) + "Id";
-	}
-
-	private String _getIdParameterTemplate(String name) {
-		return StringPool.OPEN_CURLY_BRACE + _getIdParameterName(name) +
-			StringPool.CLOSE_CURLY_BRACE;
-	}
-
-	private String _getJaxRsVersion(UriInfo uriInfo) {
-		String path = uriInfo.getPath();
-
-		return path.split(StringPool.SLASH)[0];
-	}
-
-	private String _getObjectDefinitionPathName(
-		ObjectDefinition objectDefinition) {
-
-		return _getIdParameterTemplate(objectDefinition.getShortName());
-	}
-
-	private Schema _getObjectDefinitionSchema(ObjectDefinition objectDefinition)
-		throws Exception {
-
-		Response response = _objectEntryOpenAPIResource.getOpenAPI(
-			objectDefinition.getObjectDefinitionId(), "json", null);
-
-		OpenAPI openAPI = (OpenAPI)response.getEntity();
-
-		Components components = openAPI.getComponents();
-
-		Map<String, Schema> schemas = components.getSchemas();
-
-		return schemas.get(objectDefinition.getShortName());
-	}
-
 	private Operation _getGetOperation(
 			ObjectRelationship objectRelationship,
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata)
@@ -278,6 +242,42 @@ public class RelatedObjectEntryOpenAPIContributor
 						_getContentType(systemObjectDefinitionMetadata)));
 			}
 		};
+	}
+
+	private String _getIdParameterName(String name) {
+		return StringUtil.lowerCaseFirstLetter(name) + "Id";
+	}
+
+	private String _getIdParameterTemplate(String name) {
+		return StringPool.OPEN_CURLY_BRACE + _getIdParameterName(name) +
+			StringPool.CLOSE_CURLY_BRACE;
+	}
+
+	private String _getJaxRsVersion(UriInfo uriInfo) {
+		String path = uriInfo.getPath();
+
+		return path.split(StringPool.SLASH)[0];
+	}
+
+	private String _getObjectDefinitionPathName(
+		ObjectDefinition objectDefinition) {
+
+		return _getIdParameterTemplate(objectDefinition.getShortName());
+	}
+
+	private Schema _getObjectDefinitionSchema(ObjectDefinition objectDefinition)
+		throws Exception {
+
+		Response response = _objectEntryOpenAPIResource.getOpenAPI(
+			objectDefinition.getObjectDefinitionId(), "json", null);
+
+		OpenAPI openAPI = (OpenAPI)response.getEntity();
+
+		Components components = openAPI.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		return schemas.get(objectDefinition.getShortName());
 	}
 
 	private Operation _getPutOperation(

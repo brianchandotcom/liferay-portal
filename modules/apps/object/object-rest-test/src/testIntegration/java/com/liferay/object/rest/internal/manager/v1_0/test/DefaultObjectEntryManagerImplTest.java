@@ -199,7 +199,7 @@ public class DefaultObjectEntryManagerImplTest {
 					"attachmentObjectFieldName",
 					_getAttachmentObjectFieldValue()
 				).put(
-					"picklistObjectFieldName", _getPicklistObjectFieldValue()
+					"picklistObjectFieldName", _getListTypeEntryKey()
 				).put(
 					"r_oneToManyRelationshipName_" +
 						_objectDefinition1.getPKObjectFieldName(),
@@ -229,7 +229,7 @@ public class DefaultObjectEntryManagerImplTest {
 			"r_oneToManyRelationshipName_" +
 				_objectDefinition1.getPKObjectFieldName();
 
-		String picklistObjectFieldValue1 = _getPicklistObjectFieldValue();
+		String picklistObjectFieldValue1 = _getListTypeEntryKey();
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			new ObjectEntry() {
@@ -245,7 +245,7 @@ public class DefaultObjectEntryManagerImplTest {
 				}
 			});
 
-		String picklistObjectFieldValue2 = _getPicklistObjectFieldValue();
+		String picklistObjectFieldValue2 = _getListTypeEntryKey();
 
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			new ObjectEntry() {
@@ -565,7 +565,7 @@ public class DefaultObjectEntryManagerImplTest {
 		return objectEntry.getId();
 	}
 
-	private String _getPicklistObjectFieldValue() throws Exception {
+	private String _getListTypeEntryKey() throws Exception {
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.addListTypeEntry(
 				_user.getUserId(),

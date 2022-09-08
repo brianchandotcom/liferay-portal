@@ -67,6 +67,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEMPLATE_TABLE_ID</td>
+	<td>//td[contains(.,'${key_ddlTemplateName}')]/..//td[contains(@class,'lfr-id-column')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEMPLATE_TABLE_MODE</td>
 	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//td[5])[contains(.,'${key_ddlStructureName}')]</td>
 	<td></td>

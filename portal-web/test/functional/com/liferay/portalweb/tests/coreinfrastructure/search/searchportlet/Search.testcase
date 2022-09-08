@@ -142,6 +142,69 @@ definition {
 		AssertAlertNotPresent();
 	}
 
+	@description = "This is a use case for LPS-160922."
+	@priority = "4"
+	test AssertDefaultSearchResultsDisplayTemplate {
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
+
+		ApplicationDisplayTemplates.addCP(
+			adtType = "Search Results",
+			fieldNameList = "Search Results Display Context");
+
+		var key_ddlTemplateName = "Search Results Test ADT";
+		var templateID = selenium.getText("DDMSelectTemplate#TEMPLATE_TABLE_ID");
+
+		var templateKey = ApplicationDisplayTemplates.getWidgetTemplateKey(templateID = "${templateID}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Search",
+			configurationName = "Search Results",
+			configurationScope = "Widget Scope");
+
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+
+		FormFields.editText(
+			fieldName = "displayStyleGroupId",
+			fieldValue = "${siteId}");
+
+		FormFields.editTextMultiline(
+			fieldName = "displayStyle",
+			fieldValue = "ddmTemplate_${templateKey}");
+
+		PortletEntry.save();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "New Search Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "New Search Page",
+			widgetName = "Search Results");
+
+		Navigator.openSitePage(
+			pageName = "New Search Page",
+			siteName = "Guest");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Results",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertSelectedLabel(
+			locator1 = "Select#DISPLAY_TEMPLATE",
+			value1 = "Search Results Test ADT");
+	}
+
 	@description = "This is a use case for LPS-92008."
 	@priority = "3"
 	test AssertGuestCannotSeeEmptySearchWidgets {

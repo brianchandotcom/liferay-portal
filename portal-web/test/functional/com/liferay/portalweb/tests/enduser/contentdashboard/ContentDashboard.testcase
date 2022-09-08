@@ -3825,6 +3825,93 @@ definition {
 		}
 	}
 
+	@description = "LPS-161330: Add Filtering by Expired Status to the Content Dashboard"
+	@priority = "5"
+	test FilterByStatusExpiredDocument {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+		property portal.acceptance = "true";
+
+		task ("Given an expired Document asset") {
+			task ("Set update interval") {
+				DMDocument.updateCheckInterval(fieldValue = "1");
+			}
+
+			task ("Create a Document") {
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentDescription = "DM Document Description",
+					dmDocumentTitle = "Document_1.txt",
+					groupName = "Test Site Name",
+					mimeType = "text/plain",
+					sourceFileName = "Document_1.txt");
+			}
+
+			task ("Expire the Document") {
+				DMNavigator.openToEditEntryInSite(
+					dmDocumentTitle = "Document_1.txt",
+					groupName = "Test Site Name",
+					siteURLKey = "test-site-name");
+
+				DMDocument.setExpirationDate(
+					enableExpirationDate = "true",
+					increaseMinutes = "1");
+			}
+
+			task ("Wait for document to expire") {
+				Navigator.openURL();
+
+				Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "3000");
+
+				Notifications.viewBadgeCount(notificationCount = "1");
+			}
+		}
+
+		task ("When the user filters by Expired status") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByStatus(filterOption = "Expired");
+		}
+
+		task ("Then the asset is exhibited") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "");
+		}
+	}
+
+	@description = "LPS-161330: Add Filtering by Expired Status to the Content Dashboard"
+	@priority = "5"
+	test FilterByStatusExpiredWebContent {
+		property portal.acceptance = "true";
+
+		task ("Given an expired Web Content asset") {
+			task ("Create a Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Expire the WC") {
+				JSONWebcontent.updateStatus(
+					groupName = "Test Site Name",
+					statusKey = "EXPIRE",
+					title = "Web Content Title");
+			}
+		}
+
+		task ("When the user filters by Expired status") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByStatus(filterOption = "Expired");
+		}
+
+		task ("Then the asset is exhibited") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "");
+		}
+	}
+
 	@description = "LPS-155386: Add Filtering by Pending Status to the Content Dashboard"
 	@priority = "4"
 	test FilterByStatusPendingBlog {

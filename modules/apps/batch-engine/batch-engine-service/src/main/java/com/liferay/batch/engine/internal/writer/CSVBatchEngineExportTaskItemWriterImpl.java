@@ -39,6 +39,8 @@ import org.apache.commons.csv.CSVPrinter;
 
 /**
  * @author Ivica Cardic
+ * @author Igor Beslic
+ * @author Matija Petanjek
  */
 public class CSVBatchEngineExportTaskItemWriterImpl
 	implements BatchEngineExportTaskItemWriter {
@@ -67,7 +69,7 @@ public class CSVBatchEngineExportTaskItemWriterImpl
 				(String)parameters.getOrDefault(
 					"containsHeaders", StringPool.TRUE))) {
 
-			_csvPrinter.printRecord(fieldNames);
+			_csvPrinter.printRecord(_columnValuesExtractor.getHeaders());
 		}
 	}
 
@@ -82,7 +84,9 @@ public class CSVBatchEngineExportTaskItemWriterImpl
 			"yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 
 		for (Object item : items) {
-			_write(dateFormat, _columnValuesExtractor.extractValues(item));
+			for (Object[] row : _columnValuesExtractor.extractValues(item)) {
+				_write(dateFormat, row);
+			}
 		}
 	}
 
@@ -94,7 +98,7 @@ public class CSVBatchEngineExportTaskItemWriterImpl
 		return builder.build();
 	}
 
-	private void _write(DateFormat dateFormat, Collection<?> values)
+	private void _write(DateFormat dateFormat, Object[] values)
 		throws Exception {
 
 		for (Object value : values) {

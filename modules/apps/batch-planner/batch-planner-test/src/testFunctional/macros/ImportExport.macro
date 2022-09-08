@@ -44,7 +44,7 @@ definition {
 
 	macro assertExportTemplate {
 		WaitForElementPresent(
-			key_title = "Field Mapping",
+			key_title = "Fields",
 			locator1 = "Header#H4_TITLE");
 
 		AssertSelectedLabel(

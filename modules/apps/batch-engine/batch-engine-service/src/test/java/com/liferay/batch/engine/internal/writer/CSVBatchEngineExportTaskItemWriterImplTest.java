@@ -15,10 +15,10 @@
 package com.liferay.batch.engine.internal.writer;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -29,8 +29,11 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -56,11 +59,9 @@ public class CSVBatchEngineExportTaskItemWriterImplTest
 	@Test
 	public void testWriteRowsWithDefinedFieldNames2() throws Exception {
 		_testWriteRows(
-			Arrays.asList(
-				"createDate", "description", "id", "name_en", "name_hr"));
+			Arrays.asList("createDate", "description", "id", "name"));
 		_testWriteRows(
-			Arrays.asList(
-				"createDate", "description", "id", "name_en", "name_hr"),
+			Arrays.asList("createDate", "description", "id", "name"),
 			HashMapBuilder.<String, Serializable>put(
 				"containsHeaders", "false"
 			).build());
@@ -68,9 +69,9 @@ public class CSVBatchEngineExportTaskItemWriterImplTest
 
 	@Test
 	public void testWriteRowsWithDefinedFieldNames3() throws Exception {
-		_testWriteRows(Arrays.asList("createDate", "id", "name_en"));
+		_testWriteRows(Arrays.asList("createDate", "id", "name"));
 		_testWriteRows(
-			Arrays.asList("createDate", "id", "name_en"),
+			Arrays.asList("createDate", "id", "name"),
 			HashMapBuilder.<String, Serializable>put(
 				"containsHeaders", "false"
 			).build());
@@ -79,8 +80,7 @@ public class CSVBatchEngineExportTaskItemWriterImplTest
 	@Test
 	public void testWriteRowsWithDefinedFieldNames4() throws Exception {
 		_testWriteRows(
-			Arrays.asList(
-				"id", "name_hr", "name_en", "description", "createDate"));
+			Arrays.asList("id", "name", "description", "createDate"));
 	}
 
 	@Test
@@ -130,21 +130,44 @@ public class CSVBatchEngineExportTaskItemWriterImplTest
 			for (int i = 0; i < fieldNames.size(); i++) {
 				String fieldName = fieldNames.get(i);
 
-				int index = fieldName.indexOf(CharPool.UNDERLINE);
+				Field field = fieldMap.get(fieldName);
 
-				if (index == -1) {
-					Field field = fieldMap.get(fieldName);
+				if (Objects.equals(field.getType(), Map.class)) {
+					Map<?, ?> map = (Map<?, ?>)field.get(item);
 
-					sb.append(_formatValue(field.get(item), i));
+					Set<? extends Map.Entry<?, ?>> entries = map.entrySet();
+
+					Iterator<? extends Map.Entry<?, ?>> iterator =
+						entries.iterator();
+
+					if (iterator.hasNext()) {
+						sb.append(StringPool.QUOTE);
+					}
+
+					while (iterator.hasNext()) {
+						Map.Entry<?, ?> entry = iterator.next();
+
+						sb.append(CSVUtil.encode(entry.getKey()));
+
+						sb.append(StringPool.COLON);
+
+						if (entry.getValue() != null) {
+							sb.append(CSVUtil.encode(entry.getValue()));
+						}
+						else {
+							sb.append(StringPool.BLANK);
+						}
+
+						if (iterator.hasNext()) {
+							sb.append(StringPool.COMMA_AND_SPACE);
+						}
+						else {
+							sb.append(StringPool.QUOTE);
+						}
+					}
 				}
 				else {
-					Field field = fieldMap.get(fieldName.substring(0, index));
-
-					Map<?, ?> valueMap = (Map<?, ?>)field.get(item);
-
-					sb.append(
-						_formatValue(
-							valueMap.get(fieldName.substring(index + 1)), i));
+					sb.append(_formatValue(field.get(item), i));
 				}
 
 				sb.append(StringPool.COMMA);

@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.FragmentManager;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentCollectionManager;
 import com.liferay.layout.content.page.editor.web.internal.util.PortletCategoryManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
@@ -238,10 +238,10 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommand
 				fragmentCollectionKeysJSONArray);
 
 			List<String> oldSortedFragmentCollectionKeys =
-				_fragmentManager.getSortedFragmentCollectionKeys(
+				_fragmentCollectionManager.getSortedFragmentCollectionKeys(
 					portalPreferences);
 
-			_fragmentManager.updateSortedFragmentCollectionKeys(
+			_fragmentCollectionManager.updateSortedFragmentCollectionKeys(
 				portalPreferences,
 				_mergeFragmentCollectionKeys(
 					sortedFragmentCollectionKeys,
@@ -263,7 +263,7 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommand
 
 		return JSONUtil.put(
 			"fragmentCollections",
-			_fragmentManager.getFragmentCollectionMapsList(
+			_fragmentCollectionManager.getFragmentCollectionMapsList(
 				themeDisplay.getScopeGroupId(), httpServletRequest, false, true,
 				_getMasterDropZoneLayoutStructureItem(themeDisplay),
 				themeDisplay)
@@ -278,7 +278,7 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommand
 		UpdateFragmentPortletSetsSortConfigurationMVCActionCommand.class);
 
 	@Reference
-	private FragmentManager _fragmentManager;
+	private FragmentCollectionManager _fragmentCollectionManager;
 
 	@Reference
 	private Language _language;

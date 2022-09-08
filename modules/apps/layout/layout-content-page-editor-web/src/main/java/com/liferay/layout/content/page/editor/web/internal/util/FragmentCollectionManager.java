@@ -62,8 +62,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(immediate = true, service = FragmentManager.class)
-public class FragmentManager {
+@Component(immediate = true, service = FragmentCollectionManager.class)
+public class FragmentCollectionManager {
 
 	public List<Map<String, Object>> getFragmentCollectionMapsList(
 		long groupId, HttpServletRequest httpServletRequest,

@@ -49,8 +49,8 @@ import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSid
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentCollectionManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
-import com.liferay.layout.content.page.editor.web.internal.util.FragmentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingTypesUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUtil;
@@ -169,7 +169,7 @@ public class ContentPageEditorDisplayContext {
 	public ContentPageEditorDisplayContext(
 		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
 		FragmentEntryLinkManager fragmentEntryLinkManager,
-		FragmentManager fragmentManager,
+		FragmentCollectionManager fragmentCollectionManager,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
 		InfoItemServiceTracker infoItemServiceTracker,
@@ -182,7 +182,7 @@ public class ContentPageEditorDisplayContext {
 
 		_contentPageEditorSidebarPanels = contentPageEditorSidebarPanels;
 		_fragmentEntryLinkManager = fragmentEntryLinkManager;
-		_fragmentManager = fragmentManager;
+		_fragmentCollectionManager = fragmentCollectionManager;
 		_frontendTokenDefinitionRegistry = frontendTokenDefinitionRegistry;
 		_itemSelector = itemSelector;
 		_pageEditorConfiguration = pageEditorConfiguration;
@@ -668,14 +668,14 @@ public class ContentPageEditorDisplayContext {
 			"state",
 			HashMapBuilder.<String, Object>put(
 				"collections",
-				_fragmentManager.getFragmentCollectionMapsList(
+a				_fragmentCollectionManager.getFragmentCollectionMapsList(
 					getGroupId(), httpServletRequest, true, false,
 					_getMasterDropZoneLayoutStructureItem(), themeDisplay)
 			).put(
 				"fragmentEntryLinks", _getFragmentEntryLinks()
 			).put(
 				"fragments",
-				_fragmentManager.getFragmentCollectionMapsList(
+				_fragmentCollectionManager.getFragmentCollectionMapsList(
 					getGroupId(), httpServletRequest, false, true,
 					_getMasterDropZoneLayoutStructureItem(), themeDisplay)
 			).put(
@@ -1863,9 +1863,9 @@ public class ContentPageEditorDisplayContext {
 	private Map<String, Object> _defaultConfigurations;
 	private StyleBookEntry _defaultMasterStyleBookEntry;
 	private StyleBookEntry _defaultStyleBookEntry;
+	private final FragmentCollectionManager _fragmentCollectionManager;
 	private final FragmentEntryLinkManager _fragmentEntryLinkManager;
 	private Map<String, Object> _fragmentEntryLinks;
-	private final FragmentManager _fragmentManager;
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
 	private Long _groupId;

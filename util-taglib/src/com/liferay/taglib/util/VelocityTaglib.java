@@ -16,7 +16,6 @@ package com.liferay.taglib.util;
 
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.taglib.ui.BreadcrumbTag;
 import com.liferay.taglib.ui.IconTag;
 
 import javax.portlet.WindowState;
@@ -56,17 +55,7 @@ public interface VelocityTaglib {
 			String queryString)
 		throws Exception;
 
-	public void breadcrumb() throws Exception;
-
-	public void breadcrumb(
-			long ddmTemplateGroupId, String ddmTemplateKey,
-			boolean showGuestGroup, boolean showParentGroups,
-			boolean showLayout, boolean showPortletBreadcrumb)
-		throws Exception;
-
 	public void doAsURL(long doAsUserId) throws Exception;
-
-	public BreadcrumbTag getBreadcrumbTag() throws Exception;
 
 	public IconTag getIconTag() throws Exception;
 

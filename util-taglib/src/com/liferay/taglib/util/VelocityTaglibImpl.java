@@ -34,7 +34,6 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.taglib.servlet.PageContextWrapper;
 import com.liferay.taglib.theme.MetaTagsTag;
 import com.liferay.taglib.theme.WrapPortletTag;
-import com.liferay.taglib.ui.BreadcrumbTag;
 import com.liferay.taglib.ui.IconHelpTag;
 import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.LanguageTag;
@@ -158,47 +157,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
-	public void breadcrumb() throws Exception {
-		BreadcrumbTag breadcrumbTag = new BreadcrumbTag();
-
-		setUp(breadcrumbTag);
-
-		breadcrumbTag.runTag();
-	}
-
-	@Override
-	public void breadcrumb(
-			long ddmTemplateGroupId, String ddmTemplateKey,
-			boolean showGuestGroup, boolean showParentGroups,
-			boolean showLayout, boolean showPortletBreadcrumb)
-		throws Exception {
-
-		BreadcrumbTag breadcrumbTag = new BreadcrumbTag();
-
-		setUp(breadcrumbTag);
-
-		breadcrumbTag.setDdmTemplateGroupId(ddmTemplateGroupId);
-		breadcrumbTag.setDdmTemplateKey(ddmTemplateKey);
-		breadcrumbTag.setShowGuestGroup(showGuestGroup);
-		breadcrumbTag.setShowLayout(showLayout);
-		breadcrumbTag.setShowParentGroups(showParentGroups);
-		breadcrumbTag.setShowPortletBreadcrumb(showPortletBreadcrumb);
-
-		breadcrumbTag.runTag();
-	}
-
-	@Override
 	public void doAsURL(long doAsUserId) throws Exception {
 		DoAsURLTag.doTag(doAsUserId, _httpServletRequest);
-	}
-
-	@Override
-	public BreadcrumbTag getBreadcrumbTag() throws Exception {
-		BreadcrumbTag breadcrumbTag = new BreadcrumbTag();
-
-		setUp(breadcrumbTag);
-
-		return breadcrumbTag;
 	}
 
 	@Override

@@ -17,7 +17,6 @@ package com.liferay.taglib.util;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.taglib.ui.BreadcrumbTag;
 import com.liferay.taglib.ui.IconTag;
 
 import javax.portlet.WindowState;
@@ -68,23 +67,7 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public void breadcrumb() {
-	}
-
-	@Override
-	public void breadcrumb(
-		long ddmTemplateGroupId, String ddmTemplateKey, boolean showGuestGroup,
-		boolean showParentGroups, boolean showLayout,
-		boolean showPortletBreadcrumb) {
-	}
-
-	@Override
 	public void doAsURL(long doAsUserId) {
-	}
-
-	@Override
-	public BreadcrumbTag getBreadcrumbTag() {
-		return null;
 	}
 
 	@Override

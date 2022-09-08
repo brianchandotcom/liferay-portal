@@ -19,26 +19,12 @@ package com.liferay.info.constants;
  */
 public class InfoDisplayWebKeys {
 
-	public static final String INFO_DISPLAY_CONTRIBUTOR =
-		"INFO_DISPLAY_CONTRIBUTOR";
-
-	public static final String INFO_DISPLAY_CONTRIBUTOR_TRACKER =
-		"INFO_DISPLAY_CONTRIBUTOR_TRACKER";
-
 	public static final String INFO_ITEM = "INFO_ITEM";
 
 	public static final String INFO_ITEM_DETAILS = "INFO_ITEM_DETAILS";
 
 	public static final String INFO_ITEM_FIELD_VALUES_PROVIDER =
 		"INFO_FIELD_VALUES_PROVIDER";
-
-	public static final String INFO_ITEM_NAME = "INFO_ITEM_NAME";
-
-	public static final String INFO_ITEM_RENDERER_TRACKER =
-		"INFO_ITEM_RENDERER_TRACKER";
-
-	public static final String INFO_ITEM_SELECTOR_TRACKER =
-		"INFO_ITEM_SELECTOR_TRACKER";
 
 	public static final String INFO_ITEM_SERVICE_TRACKER =
 		"INFO_ITEM_SERVICE_TRACKER";
@@ -48,7 +34,5 @@ public class InfoDisplayWebKeys {
 
 	public static final String INFO_LIST_DISPLAY_OBJECT_ITEM_TYPE =
 		"INFO_LIST_DISPLAY_OBJECT_ITEM_TYPE";
-
-	public static final String VERSION_CLASS_PK = "VERSION_CLASS_PK";
 
 }

@@ -73,11 +73,7 @@ public class ServiceManager
 			className, methodName, parameterTypes);
 	}
 
-	@Reference(unbind = "-")
-	protected void setServerStatistics(ServerStatistics serverStatistics) {
-		_serverStatistics = serverStatistics;
-	}
-
+	@Reference
 	private ServerStatistics _serverStatistics;
 
 }

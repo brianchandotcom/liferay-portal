@@ -182,25 +182,6 @@ public class MonitoringFilter
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDataSampleFactory(DataSampleFactory dataSampleFactory) {
-		_dataSampleFactory = dataSampleFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected final void setPortletMonitoringControl(
-		PortletMonitoringControl portletMonitoringControl) {
-
-		_portletMonitoringControl = portletMonitoringControl;
-	}
-
-	@Reference(unbind = "-")
-	protected void setServiceMonitoringControl(
-		ServiceMonitoringControl serviceMonitoringControl) {
-
-		_serviceMonitoringControl = serviceMonitoringControl;
-	}
-
 	private int _decrementProcessFilterCount() {
 		AtomicInteger processFilterCount = _processFilterCount.get();
 
@@ -253,6 +234,7 @@ public class MonitoringFilter
 			MonitoringFilter.class + "._processFilterCount",
 			AtomicInteger::new);
 
+	@Reference
 	private DataSampleFactory _dataSampleFactory;
 
 	@Reference(
@@ -270,7 +252,10 @@ public class MonitoringFilter
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private PortletMonitoringControl _portletMonitoringControl;
+
+	@Reference
 	private ServiceMonitoringControl _serviceMonitoringControl;
 
 }

@@ -4,4 +4,7 @@
 	<source-check>
 		<suppress checks="GradleDependencyArtifactsCheck" files=".*" />
 	</source-check>
+	<checkstyle>
+		<suppress checks="ExceptionPrintStackTraceCheck" files=".*" />
+	</checkstyle>
 </suppressions>

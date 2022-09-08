@@ -28,9 +28,11 @@ public class MainHttpFunction implements HttpFunction {
 		throws Exception {
 
 		Main main = new Main(
+			_getSystemEnv("LIFERAY_ARTICLE_STRUCTURE_ID"),
 			_getSystemEnv("LIFERAY_CLIENT_ID"),
 			_getSystemEnv("LIFERAY_CLIENT_SECRET"),
-			_getSystemEnv("LIFERAY_URL"));
+			_getSystemEnv("LIFERAY_URL"), _getSystemEnv("LIFERAY_SITE_ID"),
+			_getSystemEnv("SPHINX_OUTPUT_DIRECTORY"));
 
 		main.uploadToLiferay();
 	}

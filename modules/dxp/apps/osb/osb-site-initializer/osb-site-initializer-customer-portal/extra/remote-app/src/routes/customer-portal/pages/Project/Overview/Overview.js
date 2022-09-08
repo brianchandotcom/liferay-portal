@@ -18,10 +18,11 @@ const Overview = () => {
 	const [{project}] = useCustomerPortal();
 
 	return (
-		<>
+		<div>
 			<SupportOverview koroneikiAccount={project} />
+
 			<SubscriptionsOverview />
-		</>
+		</div>
 	);
 };
 

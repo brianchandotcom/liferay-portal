@@ -12,6 +12,7 @@
 
 .cp-project-cards-container {
 	max-width: 1217px;
+	min-height: 51.5vh;
 
 	@media screen and (min-width: 1441px) {
 		margin-left: auto;
@@ -19,6 +20,7 @@
 	}
 
 	&-sm {
+		min-height: 51.5vh;
 		max-width: 700px;
 	}
 }

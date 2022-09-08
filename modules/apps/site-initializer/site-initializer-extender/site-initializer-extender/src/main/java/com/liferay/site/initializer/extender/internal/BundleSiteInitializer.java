@@ -1369,100 +1369,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			siteNavigationMenuItemSettingsBuilder);
 	}
 
-	private KnowledgeBaseArticle _addKnowledgeBaseArticle(
-			boolean folder, JSONObject jsonObject,
-			long parentKnowledgeBaseObjectId, ServiceContext serviceContext)
-		throws Exception {
-
-		KnowledgeBaseArticleResource.Builder
-			knowledgeBaseArticleResourceBuilder =
-				_knowledgeBaseArticleResourceFactory.create();
-
-		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
-			knowledgeBaseArticleResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
-
-		KnowledgeBaseArticle knowledgeBaseArticle = KnowledgeBaseArticle.toDTO(
-			jsonObject.toString());
-
-		if (!folder) {
-			knowledgeBaseArticle.setParentKnowledgeBaseArticleId(
-				parentKnowledgeBaseObjectId);
-		}
-		else {
-			knowledgeBaseArticle.setParentKnowledgeBaseFolderId(
-				parentKnowledgeBaseObjectId);
-		}
-
-		return knowledgeBaseArticleResource.
-			putSiteKnowledgeBaseArticleByExternalReferenceCode(
-				serviceContext.getScopeGroupId(),
-				knowledgeBaseArticle.getExternalReferenceCode(),
-				knowledgeBaseArticle);
-	}
-
-	private void _addKnowledgeBaseArticle(
-			boolean folder, JSONObject jsonObject,
-			long parentKnowledgeBaseObjectId, String resourcePath,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		KnowledgeBaseArticle knowledgeBaseArticle = _addKnowledgeBaseArticle(
-			folder, jsonObject, parentKnowledgeBaseObjectId, serviceContext);
-
-		_addKnowledgeBaseObjects(
-			false, knowledgeBaseArticle.getId(), resourcePath, serviceContext);
-	}
-
 	private void _addKnowledgeBaseArticles(ServiceContext serviceContext)
 		throws Exception {
 
 		_addKnowledgeBaseObjects(
 			true, 0, "/site-initializer/knowledge-base-articles",
 			serviceContext);
-	}
-
-	private KnowledgeBaseFolder _addKnowledgeBaseFolder(
-			JSONObject jsonObject, long parentKnowledgeBaseObjectId,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		KnowledgeBaseFolderResource.Builder knowledgeBaseFolderResourceBuilder =
-			_knowledgeBaseFolderResourceFactory.create();
-
-		KnowledgeBaseFolderResource knowledgeBaseFolderResource =
-			knowledgeBaseFolderResourceBuilder.httpServletRequest(
-				serviceContext.getRequest()
-			).user(
-				serviceContext.fetchUser()
-			).build();
-
-		KnowledgeBaseFolder knowledgeBaseFolder = KnowledgeBaseFolder.toDTO(
-			jsonObject.toString());
-
-		if (parentKnowledgeBaseObjectId != 0) {
-			knowledgeBaseFolder.setParentKnowledgeBaseFolderId(
-				parentKnowledgeBaseObjectId);
-		}
-
-		return knowledgeBaseFolderResource.
-			putSiteKnowledgeBaseFolderByExternalReferenceCode(
-				serviceContext.getScopeGroupId(),
-				knowledgeBaseFolder.getExternalReferenceCode(),
-				knowledgeBaseFolder);
-	}
-
-	private void _addKnowledgeBaseFolder(
-			JSONObject jsonObject, long parentKnowledgeBaseObjectId,
-			String resourcePath, ServiceContext serviceContext)
-		throws Exception {
-
-		KnowledgeBaseFolder knowledgeBaseFolder = _addKnowledgeBaseFolder(
-			jsonObject, parentKnowledgeBaseObjectId, serviceContext);
-
-		_addKnowledgeBaseObjects(
-			true, knowledgeBaseFolder.getId(), resourcePath, serviceContext);
 	}
 
 	private void _addKnowledgeBaseObjects(
@@ -1492,14 +1404,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
 			if (jsonObject.has("articleBody")) {
-				_addKnowledgeBaseArticle(
+				_addOrUpdateKnowledgeBaseArticle(
 					folder, jsonObject, parentKnowledgeBaseObjectId,
 					resourcePath.substring(
 						0, resourcePath.indexOf(".metadata.json")),
 					serviceContext);
 			}
 			else {
-				_addKnowledgeBaseFolder(
+				_addOrUpdateKnowledgeBaseFolder(
 					jsonObject, parentKnowledgeBaseObjectId,
 					resourcePath.substring(
 						0, resourcePath.indexOf(".metadata.json")),
@@ -2638,6 +2550,97 @@ public class BundleSiteInitializer implements SiteInitializer {
 				assetListEntry.getAssetListEntryId(),
 				assetListJSONObject.getString("title"));
 		}
+	}
+
+	private KnowledgeBaseArticle _addOrUpdateKnowledgeBaseArticle(
+			boolean folder, JSONObject jsonObject,
+			long parentKnowledgeBaseObjectId, ServiceContext serviceContext)
+		throws Exception {
+
+		KnowledgeBaseArticleResource.Builder
+			knowledgeBaseArticleResourceBuilder =
+				_knowledgeBaseArticleResourceFactory.create();
+
+		KnowledgeBaseArticleResource knowledgeBaseArticleResource =
+			knowledgeBaseArticleResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		KnowledgeBaseArticle knowledgeBaseArticle = KnowledgeBaseArticle.toDTO(
+			jsonObject.toString());
+
+		if (!folder) {
+			knowledgeBaseArticle.setParentKnowledgeBaseArticleId(
+				parentKnowledgeBaseObjectId);
+		}
+		else {
+			knowledgeBaseArticle.setParentKnowledgeBaseFolderId(
+				parentKnowledgeBaseObjectId);
+		}
+
+		return knowledgeBaseArticleResource.
+			putSiteKnowledgeBaseArticleByExternalReferenceCode(
+				serviceContext.getScopeGroupId(),
+				knowledgeBaseArticle.getExternalReferenceCode(),
+				knowledgeBaseArticle);
+	}
+
+	private void _addOrUpdateKnowledgeBaseArticle(
+			boolean folder, JSONObject jsonObject,
+			long parentKnowledgeBaseObjectId, String resourcePath,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		KnowledgeBaseArticle knowledgeBaseArticle =
+			_addOrUpdateKnowledgeBaseArticle(
+				folder, jsonObject, parentKnowledgeBaseObjectId,
+				serviceContext);
+
+		_addKnowledgeBaseObjects(
+			false, knowledgeBaseArticle.getId(), resourcePath, serviceContext);
+	}
+
+	private KnowledgeBaseFolder _addOrUpdateKnowledgeBaseFolder(
+			JSONObject jsonObject, long parentKnowledgeBaseObjectId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		KnowledgeBaseFolderResource.Builder knowledgeBaseFolderResourceBuilder =
+			_knowledgeBaseFolderResourceFactory.create();
+
+		KnowledgeBaseFolderResource knowledgeBaseFolderResource =
+			knowledgeBaseFolderResourceBuilder.httpServletRequest(
+				serviceContext.getRequest()
+			).user(
+				serviceContext.fetchUser()
+			).build();
+
+		KnowledgeBaseFolder knowledgeBaseFolder = KnowledgeBaseFolder.toDTO(
+			jsonObject.toString());
+
+		if (parentKnowledgeBaseObjectId != 0) {
+			knowledgeBaseFolder.setParentKnowledgeBaseFolderId(
+				parentKnowledgeBaseObjectId);
+		}
+
+		return knowledgeBaseFolderResource.
+			putSiteKnowledgeBaseFolderByExternalReferenceCode(
+				serviceContext.getScopeGroupId(),
+				knowledgeBaseFolder.getExternalReferenceCode(),
+				knowledgeBaseFolder);
+	}
+
+	private void _addOrUpdateKnowledgeBaseFolder(
+			JSONObject jsonObject, long parentKnowledgeBaseObjectId,
+			String resourcePath, ServiceContext serviceContext)
+		throws Exception {
+
+		KnowledgeBaseFolder knowledgeBaseFolder =
+			_addOrUpdateKnowledgeBaseFolder(
+				jsonObject, parentKnowledgeBaseObjectId, serviceContext);
+
+		_addKnowledgeBaseObjects(
+			true, knowledgeBaseFolder.getId(), resourcePath, serviceContext);
 	}
 
 	private void _addPermissions(

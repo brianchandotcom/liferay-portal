@@ -20,6 +20,7 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
 import com.liferay.content.dashboard.item.filter.provider.ContentDashboardItemFilterProvider;
 import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderTracker;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -111,6 +112,11 @@ public class ContentDashboardAdminManagementToolbarDisplayContextTest {
 						throws ContentDashboardItemActionException {
 
 						return new ContentDashboardItemFilter() {
+
+							@Override
+							public DropdownItem getDropdownItem() {
+								return null;
+							}
 
 							@Override
 							public String getIcon() {
@@ -293,6 +299,11 @@ public class ContentDashboardAdminManagementToolbarDisplayContextTest {
 						throws ContentDashboardItemActionException {
 
 						return new ContentDashboardItemFilter() {
+
+							@Override
+							public DropdownItem getDropdownItem() {
+								return null;
+							}
 
 							@Override
 							public String getIcon() {

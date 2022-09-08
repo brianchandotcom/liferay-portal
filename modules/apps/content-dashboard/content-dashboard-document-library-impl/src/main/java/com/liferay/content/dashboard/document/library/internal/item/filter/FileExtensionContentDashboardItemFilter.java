@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.document.library.internal.item.filter;
 
 import com.liferay.content.dashboard.document.library.internal.item.selector.file.extension.criterio.ContentDashboardFileExtensionItemSelectorCriterion;
 import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -53,6 +54,11 @@ public class FileExtensionContentDashboardItemFilter
 		_itemSelector = itemSelector;
 		_language = language;
 		_portal = portal;
+	}
+
+	@Override
+	public DropdownItem getDropdownItem() {
+		return null;
 	}
 
 	@Override

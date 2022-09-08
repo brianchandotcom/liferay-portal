@@ -194,4 +194,104 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test CanReceiveIdFieldValuesOnlyInResponseForIndividualElement {
+		property portal.acceptance = "true";
+
+		task ("Given a content structure created") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "content-structure");
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+			FormFields.editFieldReference(key_fieldReference = "Text");
+
+			Button.clickSave();
+		}
+
+		task ("And Given web content created") {
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Test Site Name");
+
+			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContent(
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				siteId = "${siteId}",
+				title = "WC WebContent Title");
+		}
+
+		task ("When with curl I request getStructuredContentByVersion with fields=id") {
+			var structuredContentId = HeadlessWebcontentAPI.getWebContentIdFromResponse(responseToParse = "${responseFromCreate}");
+
+			var response = HeadlessWebcontentAPI.versionStructureContent(
+				parameter = "fields",
+				parameterValue = "id",
+				structuredContentId = "${structuredContentId}",
+				versionvalue = "1.0");
+		}
+
+		task ("Then in a response I received an id value only") {
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "{id=${structuredContentId}}");
+		}
+	}
+
+	@priority = "4"
+	test CanReceiveTitleFieldValuesOnlyInResponseForIndividualElement {
+		property portal.acceptance = "true";
+
+		task ("Given a content structure created") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "content-structure");
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+			FormFields.editFieldReference(key_fieldReference = "Text");
+
+			Button.clickSave();
+		}
+
+		task ("And Given web content created") {
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Test Site Name");
+
+			var responseFromCreate = HeadlessWebcontentAPI.createStructuredContent(
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				label = "Text",
+				name = "Text",
+				siteId = "${siteId}",
+				title = "WC WebContent Title");
+		}
+
+		task ("When with curl I request getStructuredContentByVersion with restrictFields equal all fields except title field") {
+			var structuredContentId = HeadlessWebcontentAPI.getWebContentIdFromResponse(responseToParse = "${responseFromCreate}");
+
+			var response = HeadlessWebcontentAPI.versionStructureContent(
+				parameter = "restrictFields",
+				parameterValue = "actions,availableLanguages,contentFields,contentStructureId,creator,customFields,dateCreated,dateModified,datePublished,description,externalReferenceCode,friendlyUrlPath,id,key,keywords,numberOfComments,priority,relatedContents,renderedContents,siteId,subscribed,taxonomyCategoryBriefs,uuid,version",
+				structuredContentId = "${structuredContentId}",
+				versionvalue = "1.0");
+		}
+
+		task ("Then in a response I receive a body with title field values only") {
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "{title=WC WebContent Title}");
+		}
+	}
+
 }

@@ -150,10 +150,8 @@ public class StyleBookPortletDataHandler extends BasePortletDataHandler {
 		exportActionableDynamicQuery.performCount();
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.style.book.model.StyleBookEntry)",

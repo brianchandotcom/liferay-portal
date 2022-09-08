@@ -389,26 +389,12 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		return bundle;
 	}
 
-	@Reference(name = "default", unbind = "-")
-	protected void setDefaultScopeMatcherFactory(
-		ScopeMatcherFactory defaultScopeMatcherFactory) {
-
-		_defaultScopeMatcherFactory = defaultScopeMatcherFactory;
-	}
-
 	protected void setPrefixHandlerFactoriesScopedServiceTrackerMap(
 		ScopedServiceTrackerMap<PrefixHandlerFactory>
 			prefixHandlerFactoriesScopedServiceTrackerMap) {
 
 		_prefixHandlerFactoriesScopedServiceTrackerMap =
 			prefixHandlerFactoriesScopedServiceTrackerMap;
-	}
-
-	@Reference(unbind = "-")
-	protected void setScopedServiceTrackerMapFactory(
-		ScopedServiceTrackerMapFactory scopedServiceTrackerMapFactory) {
-
-		_scopedServiceTrackerMapFactory = scopedServiceTrackerMapFactory;
 	}
 
 	protected void setScopeFinderByNameServiceTrackerMap(
@@ -517,10 +503,15 @@ public class ScopeLocatorImpl implements ScopeLocator {
 	)
 	private volatile ScopeMapper _defaultScopeMapper;
 
+	@Reference(name = "default")
 	private ScopeMatcherFactory _defaultScopeMatcherFactory;
+
 	private ScopedServiceTrackerMap<PrefixHandlerFactory>
 		_prefixHandlerFactoriesScopedServiceTrackerMap;
+
+	@Reference
 	private ScopedServiceTrackerMapFactory _scopedServiceTrackerMapFactory;
+
 	private ServiceTrackerMap
 		<String, ServiceReferenceServiceTuple<?, ScopeFinder>>
 			_scopeFinderByNameServiceTrackerMap;

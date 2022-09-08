@@ -85,19 +85,14 @@ public class ScopeDescriptorLocatorImpl implements ScopeDescriptorLocator {
 		_scopedServiceTrackerMap.close();
 	}
 
-	@Reference(unbind = "-")
-	protected void setScopedServiceTrackerMapFactory(
-		ScopedServiceTrackerMapFactory scopedServiceTrackerMapFactory) {
-
-		_scopedServiceTrackerMapFactory = scopedServiceTrackerMapFactory;
-	}
-
 	@Reference(target = "(default=true)")
 	private ScopeDescriptor _defaultScopeDescriptor;
 
 	private ServiceTrackerMap<Long, ScopeDescriptor>
 		_scopeDescriptorServiceTrackerMap;
 	private ScopedServiceTrackerMap<ScopeDescriptor> _scopedServiceTrackerMap;
+
+	@Reference
 	private ScopedServiceTrackerMapFactory _scopedServiceTrackerMapFactory;
 
 }

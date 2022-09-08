@@ -279,29 +279,16 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setOrganizationService(
-		OrganizationService organizationService) {
-
-		_organizationService = organizationService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPasswordPolicyService(
-		PasswordPolicyService passwordPolicyService) {
-
-		_passwordPolicyService = passwordPolicyService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserService(UserService userService) {
-		_userService = userService;
-	}
-
+	@Reference
 	private OrganizationService _organizationService;
+
 	private volatile PasswordPoliciesConfiguration
 		_passwordPoliciesConfiguration;
+
+	@Reference
 	private PasswordPolicyService _passwordPolicyService;
+
+	@Reference
 	private UserService _userService;
 
 }

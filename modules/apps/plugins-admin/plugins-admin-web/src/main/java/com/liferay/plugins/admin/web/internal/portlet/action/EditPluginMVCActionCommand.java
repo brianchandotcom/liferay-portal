@@ -69,18 +69,6 @@ public class EditPluginMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setPluginSettingService(
-		PluginSettingService pluginSettingService) {
-
-		_pluginSettingService = pluginSettingService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletService(PortletService portletService) {
-		_portletService = portletService;
-	}
-
 	private void _updatePluginSetting(ActionRequest actionRequest)
 		throws Exception {
 
@@ -109,11 +97,13 @@ public class EditPluginMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference
 	private PluginSettingService _pluginSettingService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private PortletService _portletService;
 
 }

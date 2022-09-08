@@ -468,7 +468,11 @@ const NotificationsInfo = ({
 					<span className="ml-1 mr-1 text-warning">*</span>
 				</label>
 
-				<MultipleSelect options={items} setOptions={setItems} />
+				<MultipleSelect
+					onBlur={() => updateNotificationType()}
+					options={items}
+					setOptions={setItems}
+				/>
 			</ClayForm.Group>
 
 			<ClayForm.Group>

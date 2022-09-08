@@ -49,5 +49,6 @@ export declare function BaseSelect({
 	required,
 	setDropdownActive,
 	value,
+	...restProps
 }: IProps): JSX.Element;
 export {};

@@ -58,6 +58,7 @@ export function BaseSelect({
 	required,
 	setDropdownActive,
 	value,
+	...restProps
 }: IProps) {
 	const inputRef = useRef(null);
 
@@ -79,6 +80,7 @@ export function BaseSelect({
 					placeholder={placeholder}
 					ref={inputRef}
 					value={value}
+					{...restProps}
 				/>
 
 				<ClayAutocomplete.DropDown
@@ -87,8 +89,11 @@ export function BaseSelect({
 					alignmentByViewport
 					closeOnClickOutside
 					onSetActive={setDropdownActive}
+					{...restProps}
 				>
-					<ClayDropDown.ItemList>{children}</ClayDropDown.ItemList>
+					<ClayDropDown.ItemList {...restProps}>
+						{children}
+					</ClayDropDown.ItemList>
 				</ClayAutocomplete.DropDown>
 			</ClayAutocomplete>
 		</FieldBase>

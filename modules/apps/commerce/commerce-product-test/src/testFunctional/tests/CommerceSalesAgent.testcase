@@ -1,0 +1,152 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Order Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(
+			minium = "true",
+			moneyOrder = "true");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_COMMERCE_ORDERS",
+			resourceName = "com.liferay.commerce.order",
+			roleTitle = "Sales Agent");
+
+		task ("Given an organization is created") {
+			JSONOrganization.addOrganization(organizationName = "Test Organization");
+		}
+
+		task ("And a user with the Sales Agent role, Minium site membership and linked to the organization is created") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Sales Agent",
+				userEmailAddress = "sales.agent@liferay.com",
+				userFirstName = "Sales",
+				userLastName = "Agent",
+				userScreenName = "salesagent");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium",
+				userEmailAddress = "sales.agent@liferay.com");
+
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Test Organization",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-9871 |  As a Sales Agent, I want to be able to see all the accounts and orders that are present in the organization to which the Sales Agent belongs"
+	@priority = "4"
+	test CanViewAccountsAndOrdersAsSalesAgent {
+		task ("Given 4 accounts are created") {
+			for (var account : list "A,B,C,D") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Account ${account}",
+					accountEntryType = "Business");
+			}
+		}
+
+		task ("And 2 accounts are linked to the organization") {
+			for (var account : list "A,B") {
+				JSONAccountEntry.addAccountEntryOrganization(
+					accountEntryName = "Account ${account}",
+					organizationName = "Test Organization");
+			}
+		}
+
+		task ("And the account A has a placed order") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Account A",
+				orderItems = "MIN55861:1",
+				orderStatus = "1",
+				paymentMethod = "money-order",
+				paymentStatus = "2");
+		}
+
+		task ("And the account B has a pending order") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Account B",
+				orderItems = "MIN55861:1",
+				orderStatus = "2",
+				paymentMethod = "money-order",
+				paymentStatus = "2");
+		}
+
+		task ("When the Sales Agent logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("Then the Sales Agent can see the accounts that are part of the organization in the Account Selector") {
+			CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
+
+			for (var account : list "A,B") {
+				AssertElementPresent(
+					key_accountName = "Account ${account}",
+					locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+			}
+
+			for (var account : list "C,D") {
+				AssertElementNotPresent(
+					key_accountName = "Account ${account}",
+					locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+			}
+		}
+
+		task ("And the Sales Agent can see the accounts that are part of the organization in the Account Management page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			for (var account : list "A,B") {
+				AssertElementPresent(
+					key_tableEntry = "Account ${account}",
+					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
+			}
+
+			for (var account : list "C,D") {
+				AssertElementNotPresent(
+					key_tableEntry = "Account ${account}",
+					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
+			}
+		}
+
+		task ("And the Sales Agent can see one Pending Order related to Account B") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			AssertElementPresent(
+				key_orderAuthor = "Account B",
+				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+		}
+
+		task ("And the Sales Agent can see one Placed Order related to Account A") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+			AssertElementPresent(
+				key_orderAuthor = "Account A",
+				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+		}
+
+		task ("And the Sales Agent can see the order item on the mini-cart if Account B is set as active") {
+			CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Account B");
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceValue = "24.00",
+				cartItemQuantity = "1",
+				cartItemSku = "MIN55861");
+		}
+	}
+
+}

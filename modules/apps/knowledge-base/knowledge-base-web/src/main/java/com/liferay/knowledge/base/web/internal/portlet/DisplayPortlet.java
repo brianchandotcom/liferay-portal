@@ -167,13 +167,6 @@ public class DisplayPortlet extends BaseKBPortlet {
 		}
 	}
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(&(release.schema.version>=1.2.0)(!(release.schema.version>=2.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	private KBArticleSelection _getKBArticle(RenderRequest renderRequest)
 		throws PortalException {
 
@@ -270,5 +263,10 @@ public class DisplayPortlet extends BaseKBPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(&(release.schema.version>=1.2.0)(!(release.schema.version>=2.0.0))))"
+	)
+	private Release _release;
 
 }

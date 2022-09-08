@@ -272,13 +272,6 @@ public class AdminPortlet extends BaseKBPortlet {
 		return false;
 	}
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(&(release.schema.version>=1.2.0)(!(release.schema.version>=2.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	private List<KBFolder> _getKBFolders(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -296,5 +289,10 @@ public class AdminPortlet extends BaseKBPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(&(release.schema.version>=1.2.0)(!(release.schema.version>=2.0.0))))"
+	)
+	private Release _release;
 
 }

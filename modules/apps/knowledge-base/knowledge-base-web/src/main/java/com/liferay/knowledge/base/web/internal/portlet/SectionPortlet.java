@@ -114,13 +114,6 @@ public class SectionPortlet extends BaseKBPortlet {
 		}
 	}
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(&(release.schema.version>=1.2.0)(!(release.schema.version>=2.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	private KBArticle _getKBArticle(RenderRequest renderRequest)
 		throws PortalException {
 
@@ -154,5 +147,10 @@ public class SectionPortlet extends BaseKBPortlet {
 
 	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(&(release.schema.version>=1.2.0)(!(release.schema.version>=2.0.0))))"
+	)
+	private Release _release;
 
 }

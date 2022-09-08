@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.web.internal.display.context;
 
+import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
@@ -21,6 +22,9 @@ import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
@@ -31,7 +35,11 @@ import java.util.List;
  */
 public class KBArticleNavigationFragmentDisplayContext {
 
-	public KBArticleNavigationFragmentDisplayContext(KBArticle kbArticle) {
+	public KBArticleNavigationFragmentDisplayContext(
+		InfoItemFriendlyURLProvider<KBArticle> infoItemFriendlyURLProvider,
+		KBArticle kbArticle) {
+
+		_infoItemFriendlyURLProvider = infoItemFriendlyURLProvider;
 		_kbArticle = kbArticle;
 	}
 
@@ -50,7 +58,11 @@ public class KBArticleNavigationFragmentDisplayContext {
 	}
 
 	public String getKBArticleFriendlyURL(KBArticle kbArticle) {
-		return "/k/" + kbArticle.getUrlTitle();
+		String friendlyURL = _infoItemFriendlyURLProvider.getFriendlyURL(
+			kbArticle, LanguageUtil.getLanguageId(LocaleUtil.getDefault()));
+
+		return FriendlyURLResolverConstants.
+			URL_SEPARATOR_KNOWLEDGE_BASE_ARTICLE + friendlyURL;
 	}
 
 	public long getKBArticleRootResourcePrimKey() {
@@ -141,6 +153,8 @@ public class KBArticleNavigationFragmentDisplayContext {
 
 	private static final int _MAX_NESTING_LEVEL = 3;
 
+	private final InfoItemFriendlyURLProvider<KBArticle>
+		_infoItemFriendlyURLProvider;
 	private final KBArticle _kbArticle;
 	private List<Long> _kbArticleAncestorResourcePrimKeys;
 

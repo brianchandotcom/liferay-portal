@@ -21,6 +21,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.web.internal.display.context.KBArticleNavigationFragmentDisplayContext;
@@ -119,7 +120,8 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 
 			httpServletRequest.setAttribute(
 				KBArticleNavigationFragmentDisplayContext.class.getName(),
-				new KBArticleNavigationFragmentDisplayContext(kbArticle));
+				new KBArticleNavigationFragmentDisplayContext(
+					_infoItemFriendlyURLProvider, kbArticle));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/navigation/view.jsp");
@@ -207,6 +209,11 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference(
+		target = "(item.class.name=com.liferay.knowledge.base.model.KBArticle)"
+	)
+	private InfoItemFriendlyURLProvider<KBArticle> _infoItemFriendlyURLProvider;
 
 	@Reference
 	private KBArticleService _kbArticleService;

@@ -66,12 +66,9 @@ public class ClusterLinkPortalCacheClusterChannelFactory
 			portalCacheClusterConfiguration.usingCoalescedPipe();
 	}
 
-	@Reference(unbind = "-")
-	protected void setClusterLink(ClusterLink clusterLink) {
-		_clusterLink = clusterLink;
-	}
-
+	@Reference
 	private ClusterLink _clusterLink;
+
 	private volatile boolean _usingCoalescedPipe;
 
 }

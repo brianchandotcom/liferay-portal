@@ -98,13 +98,7 @@ public class EhcachePortalCacheListenerFactory
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortalCacheReplicatorFactory(
-		PortalCacheReplicatorFactory portalCacheReplicatorFactory) {
-
-		_portalCacheReplicatorFactory = portalCacheReplicatorFactory;
-	}
-
+	@Reference
 	private PortalCacheReplicatorFactory _portalCacheReplicatorFactory;
 
 	private class EhcachePortalCacheReplicator

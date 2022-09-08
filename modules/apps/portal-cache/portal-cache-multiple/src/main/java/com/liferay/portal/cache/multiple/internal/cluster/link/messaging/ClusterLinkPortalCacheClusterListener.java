@@ -89,13 +89,6 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 		_handlePortalCacheClusterEvent(portalCacheClusterEvent);
 	}
 
-	@Reference(
-		target = "(destination.name=" + PortalCacheDestinationNames.CACHE_REPLICATION + ")",
-		unbind = "-"
-	)
-	protected void setDestination(Destination destination) {
-	}
-
 	private void _handlePortalCacheClusterEvent(
 		PortalCacheClusterEvent portalCacheClusterEvent) {
 
@@ -168,6 +161,11 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterLinkPortalCacheClusterListener.class);
+
+	@Reference(
+		target = "(destination.name=" + PortalCacheDestinationNames.CACHE_REPLICATION + ")"
+	)
+	private Destination _destination;
 
 	private ServiceTrackerMap
 		<String, PortalCacheManager<? extends Serializable, ?>>

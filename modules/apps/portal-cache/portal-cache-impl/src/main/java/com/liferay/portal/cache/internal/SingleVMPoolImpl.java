@@ -66,16 +66,8 @@ public class SingleVMPoolImpl implements SingleVMPool {
 	}
 
 	@Reference(
-		target = "(portal.cache.manager.name=" + PortalCacheManagerNames.SINGLE_VM + ")",
-		unbind = "-"
+		target = "(portal.cache.manager.name=" + PortalCacheManagerNames.SINGLE_VM + ")"
 	)
-	protected void setPortalCacheManager(
-		PortalCacheManager<? extends Serializable, ? extends Serializable>
-			portalCacheManager) {
-
-		_portalCacheManager = portalCacheManager;
-	}
-
 	private PortalCacheManager<? extends Serializable, ?> _portalCacheManager;
 
 }

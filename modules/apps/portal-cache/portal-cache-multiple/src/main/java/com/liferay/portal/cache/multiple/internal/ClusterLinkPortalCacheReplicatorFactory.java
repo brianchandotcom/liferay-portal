@@ -43,13 +43,7 @@ public class ClusterLinkPortalCacheReplicatorFactory
 			properties, _portalCacheClusterLink);
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortalCacheClusterLink(
-		PortalCacheClusterLink portalCacheClusterLink) {
-
-		_portalCacheClusterLink = portalCacheClusterLink;
-	}
-
+	@Reference
 	private PortalCacheClusterLink _portalCacheClusterLink;
 
 }

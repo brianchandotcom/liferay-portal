@@ -93,13 +93,7 @@ public class LoremIpsumMBThreadDemoDataCreatorImpl
 	public void delete() throws PortalException {
 	}
 
-	@Reference(target = "(source=lorem-ipsum)", unbind = "-")
-	protected void setLorenIpsumMBMessageDemoDataCreator(
-		MBMessageDemoDataCreator mbMessageDemoDataCreator) {
-
-		_mbMessageDemoDataCreator = mbMessageDemoDataCreator;
-	}
-
+	@Reference(target = "(source=lorem-ipsum)")
 	private MBMessageDemoDataCreator _mbMessageDemoDataCreator;
 
 }

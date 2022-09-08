@@ -148,18 +148,10 @@ public class LayoutSetPrototypePortletDataHandler
 		layoutSetPrototypeExportActionableDynamicQuery.performCount();
 	}
 
-	@Reference(unbind = "-")
-	protected void setLayoutSetPrototypeLocalService(
-		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
-
-		this.layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
+	@Reference
 	protected LayoutSetPrototypeLocalService layoutSetPrototypeLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 }

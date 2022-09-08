@@ -71,14 +71,9 @@ public abstract class BaseMBCategoryDemoDataCreatorImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBCategoryLocalService(
-		MBCategoryLocalService mbCategoryLocalService) {
-
-		this.mbCategoryLocalService = mbCategoryLocalService;
-	}
-
 	protected final List<Long> categoryIds = new CopyOnWriteArrayList<>();
+
+	@Reference
 	protected MBCategoryLocalService mbCategoryLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(

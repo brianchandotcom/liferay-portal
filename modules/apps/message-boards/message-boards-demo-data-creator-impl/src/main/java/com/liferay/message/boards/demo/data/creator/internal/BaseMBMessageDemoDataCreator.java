@@ -88,20 +88,12 @@ public abstract class BaseMBMessageDemoDataCreator
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		this.mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		this.userLocalService = userLocalService;
-	}
-
+	@Reference
 	protected MBMessageLocalService mbMessageLocalService;
+
 	protected final List<Long> messageIds = new CopyOnWriteArrayList<>();
+
+	@Reference
 	protected UserLocalService userLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -79,11 +79,6 @@ public class MBAttachmentHTMLEditorConfigContributor
 		);
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
 	private ItemSelectorCriterion _getImageItemSelectorCriterion() {
 		ItemSelectorCriterion itemSelectorCriterion =
 			new ImageItemSelectorCriterion();
@@ -135,6 +130,7 @@ public class MBAttachmentHTMLEditorConfigContributor
 				"liferay-ui:input-editor:showSource"));
 	}
 
+	@Reference
 	private ItemSelector _itemSelector;
 
 }

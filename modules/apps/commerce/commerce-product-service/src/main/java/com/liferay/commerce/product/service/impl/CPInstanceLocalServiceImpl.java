@@ -32,7 +32,7 @@ import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
-import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.base.CPInstanceLocalServiceBaseImpl;
@@ -463,7 +463,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		_cpInstanceOptionValueRelPersistence.removeByCPInstanceId(
 			cpInstance.getCPInstanceId());
 
-		_cpDefinitionOptionValueRelLocalService.
+		CPDefinitionOptionValueRelLocalServiceUtil.
 			resetCPInstanceCPDefinitionOptionValueRels(
 				cpInstance.getCPInstanceUuid());
 
@@ -1009,7 +1009,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		if ((cpInstance.getStatus() == WorkflowConstants.STATUS_APPROVED) &&
 			(status != WorkflowConstants.STATUS_APPROVED)) {
 
-			_cpDefinitionOptionValueRelLocalService.
+			CPDefinitionOptionValueRelLocalServiceUtil.
 				resetCPInstanceCPDefinitionOptionValueRels(
 					cpInstance.getCPInstanceUuid());
 		}
@@ -1689,10 +1689,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Reference
-	private CPDefinitionOptionValueRelLocalService
-		_cpDefinitionOptionValueRelLocalService;
 
 	@Reference
 	private CPInstanceOptionValueRelLocalService

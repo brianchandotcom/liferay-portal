@@ -241,7 +241,11 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 								field={field}
 								onValueSelect={onChange}
 								showLabel={false}
-								value={value}
+								value={
+									isValidStyleValue(field.cssProperty, value)
+										? value
+										: ''
+								}
 							/>
 						) : null}
 

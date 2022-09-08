@@ -93,27 +93,18 @@ const ManageProductUsers = ({project, subscriptionGroups}) => {
 				subscriptionGroup.name === PRODUCT_TYPES.liferayExperienceCloud
 		)?.activationStatus === STATUS_TAG_TYPE_NAMES.active;
 
-	const isLXCProject = subscriptionGroups.find(
-		(subscriptionGroup) =>
-			subscriptionGroup.name === PRODUCT_TYPES.liferayExperienceCloud
-	);
-
 	return (
 		<>
 			{(isActiveStatusDXPC || isActiveStatusAC || isActiveStatusLXC) && (
 				<div className="bg-brand-primary-lighten-6 border-0 card card-flat cp-manager-product-container mt-5">
 					<div className="p-4">
-						{isLXCProject.name ? (
-							<p className="h4">
-								{i18n.translate(
-									'manage-liferay-experience-cloud-users'
-								)}
-							</p>
-						) : (
-							<p className="h4">
-								{i18n.translate('manage-product-users')}
-							</p>
-						)}
+						<h4>
+							{isActiveStatusLXC
+								? i18n.translate(
+										'manage-liferay-experience-cloud-users'
+								  )
+								: i18n.translate('manage-product-users')}
+						</h4>
 
 						<p className="mt-2 text-neutral-7 text-paragraph-sm">
 							{i18n.translate(

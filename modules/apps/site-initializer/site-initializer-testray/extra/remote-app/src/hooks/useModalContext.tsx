@@ -21,6 +21,7 @@ import Form from '../components/Form';
 interface ModalOptions {
 	body: ReactElement;
 	footer?: ReactElement;
+	footerDefault?: boolean;
 	size: Size;
 	title: string;
 }
@@ -28,7 +29,13 @@ interface ModalOptions {
 const useModalContext = () => {
 	const [state, dispatch] = useContext(Context);
 
-	const onOpenModal = ({body, footer, size, title}: ModalOptions) => {
+	const onOpenModal = ({
+		body,
+		footer,
+		footerDefault = true,
+		size,
+		title,
+	}: ModalOptions) => {
 		dispatch({
 			payload: {
 				body,
@@ -36,11 +43,15 @@ const useModalContext = () => {
 					? [
 							undefined,
 							undefined,
-							<Form.Footer
-								key={4}
-								onClose={state.onClose}
-								onSubmit={state.onClose}
-							/>,
+							footerDefault ? (
+								<Form.Footer
+									key={4}
+									onClose={state.onClose}
+									onSubmit={state.onClose}
+								/>
+							) : (
+								footer
+							),
 					  ]
 					: [],
 				header: title,

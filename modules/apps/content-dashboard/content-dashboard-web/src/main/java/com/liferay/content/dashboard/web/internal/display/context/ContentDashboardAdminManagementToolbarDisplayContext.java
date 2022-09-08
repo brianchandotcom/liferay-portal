@@ -634,26 +634,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		).filter(
 			Objects::nonNull
 		).map(
-			contentDashboardItemFilter -> DropdownItemBuilder.putData(
-				"action", "selectFileExtension"
-			).putData(
-				"dialogTitle", contentDashboardItemFilter.getLabel(_locale)
-			).putData(
-				"redirectURL",
-				PortletURLBuilder.create(
-					getPortletURL()
-				).setParameter(
-					contentDashboardItemFilter.getParameterName(), (String)null
-				).buildString()
-			).putData(
-				"selectFileExtensionURL", contentDashboardItemFilter.getURL()
-			).setActive(
-				ListUtil.isNotEmpty(
-					contentDashboardItemFilter.getParameterValues())
-			).setLabel(
-				_language.get(httpServletRequest, "extension") +
-					StringPool.TRIPLE_PERIOD
-			).build()
+			contentDashboardItemFilter ->
+				contentDashboardItemFilter.getDropdownItem()
 		).collect(
 			Collectors.toList()
 		);

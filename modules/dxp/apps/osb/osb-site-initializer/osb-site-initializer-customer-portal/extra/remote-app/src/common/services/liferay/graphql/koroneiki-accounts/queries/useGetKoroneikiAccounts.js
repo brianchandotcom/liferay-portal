@@ -27,6 +27,7 @@ const GET_KORONEIKI_ACCOUNTS = gql`
 					accountKey
 					code
 					dxpVersion
+					externalReferenceCode
 					liferayContactEmailAddress
 					liferayContactName
 					liferayContactRole

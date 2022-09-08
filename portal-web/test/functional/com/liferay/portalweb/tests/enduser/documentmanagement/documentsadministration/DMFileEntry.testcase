@@ -615,6 +615,10 @@ definition {
 
 		Refresh();
 
+		DMDocument.viewStatus(
+			dmDocumentStatus = "Draft",
+			dmDocumentTitle = "Check in as major version");
+
 		DMDocument.checkinCP(
 			dmDocumentTitle = "Check in as major version",
 			revision = "Major");

@@ -25,7 +25,6 @@ import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -67,6 +66,8 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "accountEntryRestrictedObjectFieldId");
 		long descriptionObjectFieldId = ParamUtil.getLong(
 			actionRequest, "descriptionObjectFieldId");
+		String externalReferenceCode = ParamUtil.getString(
+			actionRequest, "externalReferenceCode");
 		long titleObjectFieldId = ParamUtil.getLong(
 			actionRequest, "titleObjectFieldId");
 		boolean accountEntryRestricted = ParamUtil.getBoolean(
@@ -102,10 +103,11 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			_objectDefinitionService.updateCustomObjectDefinition(
 				objectDefinitionId, accountEntryRestrictedObjectFieldId,
-				descriptionObjectFieldId, StringPool.BLANK, titleObjectFieldId,
-				accountEntryRestricted, active, enableCategorization,
-				enableComments, labelMap, name, panelCategoryOrder,
-				panelCategoryKey, portlet, pluralLabelMap, scope);
+				descriptionObjectFieldId, externalReferenceCode,
+				titleObjectFieldId, accountEntryRestricted, active,
+				enableCategorization, enableComments, labelMap, name,
+				panelCategoryOrder, panelCategoryKey, portlet, pluralLabelMap,
+				scope);
 
 			if (StringUtil.equals(
 					ParamUtil.getString(actionRequest, Constants.CMD),

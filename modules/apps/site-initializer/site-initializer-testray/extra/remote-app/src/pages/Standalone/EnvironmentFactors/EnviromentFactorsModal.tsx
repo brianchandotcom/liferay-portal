@@ -173,6 +173,7 @@ const EnvironmentFactorsModal: React.FC<EnvironmentFactorsModalProps> = ({
 						onClose={() => (lastStep ? setStep(0) : onCloseModal())}
 						onSubmit={handleSubmit(_onSubmit)}
 						primaryButtonProps={{
+							disabled: !selectedEnvironmentFactors.length,
 							title: i18n.translate(lastStep ? 'save' : 'next'),
 						}}
 						secondaryButtonProps={{

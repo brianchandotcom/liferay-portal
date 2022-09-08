@@ -36,7 +36,6 @@ const Runs = () => {
 					columns: [
 						{
 							key: 'number',
-							render: (_, {rowIndex}) => rowIndex + 1,
 							value: i18n.translate('run'),
 						},
 						{

@@ -609,4 +609,49 @@ definition {
 			locator1 = "TextInput#ANY");
 	}
 
+	@description = "This is a test for LPS-162031. The Theme CSS Extension is hidden by default."
+	@priority = "3"
+	test ThemeCSSHiddenByDefault {
+		property test.name.skip.portal.instance = "RemoteApps#ThemeCSSHiddenByDefault";
+
+		task ("Given a site administrator has a default portal") {
+			RemoteApps.goToRemoteAppsPortlet();
+		}
+
+		task ("When the site administrator create a remote app") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the site administrator cannot see the Theme CSS option") {
+			MenuItem.viewNotPresent(menuItem = "Add Theme CSS");
+		}
+
+		task ("Given a site administrator has a portal with LPS-153457 feature flag enabled") {
+			ServerAdministration.openServerAdmin();
+
+			var script = '''
+import com.liferay.portal.util.PropsUtil;
+import java.util.Properties;
+
+Properties properties = new Properties();
+properties.setProperty("feature.flag.LPS-153457","true");
+PropsUtil.addProperties(properties);
+			''';
+
+			ServerAdministration.executeScript(
+				language = "Groovy",
+				script = "${script}");
+		}
+
+		task ("When the site administrator create a remote app") {
+			RemoteApps.goToRemoteAppsPortlet();
+
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the site administrator sees the Theme CSS option") {
+			MenuItem.viewPresent(menuItem = "Add Theme CSS");
+		}
+	}
+
 }

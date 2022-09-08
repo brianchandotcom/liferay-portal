@@ -68,6 +68,29 @@ definition {
 		return "${curl}";
 	}
 
+	macro _getDocumentsByDifferentParameters {
+		Variables.assertDefined(parameterList = "${documentId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(parameter)) {
+			var api = "documents/${documentId}?${parameter}=${parameterValue}";
+		}
+		else {
+			var api = "documents/${documentId}";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/${api} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _getDocumentsByErcInAssetLibrary {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode}");
 
@@ -188,6 +211,15 @@ definition {
 		DocumentAPI._deleteDocumentsByErcInAssetLibrary(
 			assetLibraryId = "${assetLibraryId}",
 			externalReferenceCode = "${externalReferenceCode}");
+	}
+
+	macro getDocumentsByDifferentParameters {
+		var response = DocumentAPI._getDocumentsByDifferentParameters(
+			documentId = "${documentId}",
+			parameter = "${parameter}",
+			parameterValue = "${parameterValue}");
+
+		return "${response}";
 	}
 
 	macro getDocumentsByErcInAssetLibrary {

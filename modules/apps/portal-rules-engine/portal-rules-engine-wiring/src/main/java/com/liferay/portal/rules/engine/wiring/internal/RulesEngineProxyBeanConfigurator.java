@@ -81,12 +81,9 @@ public class RulesEngineProxyBeanConfigurator {
 
 	@Reference(
 		service = ProxyMessageListener.class,
-		target = "(destination.name=" + RulesEngineConstants.DESTINATION_NAME + ")",
-		unbind = "-"
+		target = "(destination.name=" + RulesEngineConstants.DESTINATION_NAME + ")"
 	)
-	protected void setProxyMessageListener(
-		ProxyMessageListener proxyMessageListener) {
-	}
+	private ProxyMessageListener _proxyMessageListener;
 
 	private ServiceRegistration<RulesEngine> _serviceRegistration;
 

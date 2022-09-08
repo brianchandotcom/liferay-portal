@@ -44,9 +44,9 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
@@ -973,7 +973,7 @@ public class BatchEngineImportTaskExecutorTest
 			int importStrategy)
 		throws Exception {
 
-		Map<String, Serializable> parameters = Collections.emptyMap();
+		Map<String, Serializable> parameters = new HashMap<>();
 
 		if (batchEngineTaskOperation == BatchEngineTaskOperation.CREATE) {
 			parameters = HashMapBuilder.<String, Serializable>put(

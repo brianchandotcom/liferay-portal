@@ -86,6 +86,38 @@ definition {
 	}
 
 	@priority = "4"
+	test CanReceiveIdFieldValuesOnlyInResponseForIndividualElement {
+		property portal.acceptance = "true";
+
+		task ("Given a AssetLibrary with keyword created") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var responseFromCreate = TaxonomyVocabularyAPI.createAssetLibraryWithKeyWords(
+				assetLibraryId = "${assetLibraryId}",
+				name = "liferay");
+		}
+
+		task ("When with curl I request getKeyword with restrictFields equal all fields except id field") {
+			var keywordId = JSONUtil.getWithJSONPath("${responseFromCreate}", "$.id");
+
+			var response = TaxonomyVocabularyAPI.getAssetLibraryKeywordsWithDifferentParameters(
+				keywordId = "${keywordId}",
+				parameter = "restrictFields",
+				parameterValue = "actions,assetLibraryKey,creator,dateCreated,dateModified,name,keywordUsageCount,subscribed");
+		}
+
+		task ("Then in a response I receive a body with id field values only") {
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "{id=${keywordId}}");
+		}
+	}
+
+	@priority = "4"
 	test CanReceiveNameFieldValuesOnlyInResponse {
 		property portal.acceptance = "true";
 
@@ -115,6 +147,38 @@ definition {
 			TaxonomyVocabularyAPI.assertResponseHasNameFieldValueOnly(
 				expectedValue = "{name=${taxonomyVocabularyName}}",
 				responseToParse = "${response}");
+		}
+	}
+
+	@priority = "4"
+	test CanReceiveNameFieldValuesOnlyInResponseForIndividualElement {
+		property portal.acceptance = "true";
+
+		task ("Given a AssetLibrary with keyword created") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var responseFromCreate = TaxonomyVocabularyAPI.createAssetLibraryWithKeyWords(
+				assetLibraryId = "${assetLibraryId}",
+				name = "liferay");
+		}
+
+		task ("When with curl I request getKeyword with fields=name") {
+			var keywordId = JSONUtil.getWithJSONPath("${responseFromCreate}", "$.id");
+
+			var response = TaxonomyVocabularyAPI.getAssetLibraryKeywordsWithDifferentParameters(
+				keywordId = "${keywordId}",
+				parameter = "fields",
+				parameterValue = "name");
+		}
+
+		task ("Then in a response I receive a body with name values only") {
+			var actualValue = JSONUtil.getWithJSONPath("${response}", "$");
+
+			TestUtils.assertEquals(
+				actual = "${actualValue}",
+				expected = "{name=liferay}");
 		}
 	}
 

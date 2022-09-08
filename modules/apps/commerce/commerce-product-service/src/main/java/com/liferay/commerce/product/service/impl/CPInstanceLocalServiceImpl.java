@@ -31,7 +31,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
@@ -322,7 +322,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstanceLocalService.addCPInstance(
 			externalReferenceCode, cpDefinitionId, groupId, sku, gtin,
 			manufacturerPartNumber, purchasable,
-			_cpDefinitionOptionRelLocalService.
+			CPDefinitionOptionRelLocalServiceUtil.
 				getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 					cpDefinitionId, json),
 			width, height, depth, weight, price, promoPrice, cost, published,
@@ -1497,7 +1497,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		throws NoSuchSkuContributorCPDefinitionOptionRelException {
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+			CPDefinitionOptionRelLocalServiceUtil.getCPDefinitionOptionRels(
 				cpDefinitionId, true);
 
 		if (cpDefinitionOptionRels.isEmpty()) {
@@ -1689,10 +1689,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Reference
-	private CPDefinitionOptionRelLocalService
-		_cpDefinitionOptionRelLocalService;
 
 	@Reference
 	private CPDefinitionOptionValueRelLocalService

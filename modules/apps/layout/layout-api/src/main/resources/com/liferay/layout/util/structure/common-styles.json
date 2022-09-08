@@ -3,6 +3,7 @@
 		"label": "margin",
 		"styles": [
 			{
+				"cssProperty": "margin-top",
 				"cssTemplate": "margin-top: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
@@ -13,6 +14,7 @@
 				"responsiveTemplate": "mt{viewport}{value}",
 				"type": "select",
 				"typeOptions": {
+					"showLengthField": true,
 					"validValues": [
 						{
 							"label": "0",
@@ -62,6 +64,7 @@
 				}
 			},
 			{
+				"cssProperty": "margin-bottom",
 				"cssTemplate": "margin-bottom: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
@@ -72,6 +75,7 @@
 				"responsiveTemplate": "mb{viewport}{value}",
 				"type": "select",
 				"typeOptions": {
+					"showLengthField": true,
 					"validValues": [
 						{
 							"label": "0",
@@ -121,6 +125,7 @@
 				}
 			},
 			{
+				"cssProperty": "margin-left",
 				"cssTemplate": "margin-left: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
@@ -131,6 +136,7 @@
 				"responsiveTemplate": "ml{viewport}{value}",
 				"type": "select",
 				"typeOptions": {
+					"showLengthField": true,
 					"validValues": [
 						{
 							"label": "0",
@@ -180,6 +186,7 @@
 				}
 			},
 			{
+				"cssProperty": "margin-right",
 				"cssTemplate": "margin-right: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
@@ -190,6 +197,7 @@
 				"responsiveTemplate": "mr{viewport}{value}",
 				"type": "select",
 				"typeOptions": {
+					"showLengthField": true,
 					"validValues": [
 						{
 							"label": "0",
@@ -244,6 +252,7 @@
 		"label": "padding",
 		"styles": [
 			{
+				"cssProperty": "padding-top",
 				"cssTemplate": "padding-top: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
@@ -254,6 +263,7 @@
 				"responsiveTemplate": "pt{viewport}{value}",
 				"type": "select",
 				"typeOptions": {
+					"showLengthField": true,
 					"validValues": [
 						{
 							"label": "0",
@@ -303,6 +313,7 @@
 				}
 			},
 			{
+				"cssProperty": "padding-bottom",
 				"cssTemplate": "padding-bottom: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
@@ -313,6 +324,7 @@
 				"responsiveTemplate": "pb{viewport}{value}",
 				"type": "select",
 				"typeOptions": {
+					"showLengthField": true,
 					"validValues": [
 						{
 							"label": "0",
@@ -362,6 +374,7 @@
 				}
 			},
 			{
+				"cssProperty": "padding-left",
 				"cssTemplate": "padding-left: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
@@ -372,6 +385,7 @@
 				"responsiveTemplate": "pl{viewport}{value}",
 				"type": "select",
 				"typeOptions": {
+					"showLengthField": true,
 					"validValues": [
 						{
 							"label": "0",
@@ -421,6 +435,7 @@
 				}
 			},
 			{
+				"cssProperty": "padding-right",
 				"cssTemplate": "padding-right: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
@@ -431,6 +446,7 @@
 				"responsiveTemplate": "pr{viewport}{value}",
 				"type": "select",
 				"typeOptions": {
+					"showLengthField": true,
 					"validValues": [
 						{
 							"label": "0",

@@ -80,6 +80,13 @@ FolderFacetPortletPreferences folderFacetPortletPreferences = new FolderFacetPor
 				<aui:input label="frequency-threshold" name="<%= PortletPreferencesJspUtil.getInputName(FolderFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD) %>" value="<%= folderFacetPortletPreferences.getFrequencyThreshold() %>" />
 
 				<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(FolderFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= folderFacetPortletPreferences.isFrequenciesVisible() %>" />
+
+				<aui:select label="order-terms-by" name="<%= PortletPreferencesJspUtil.getInputName(FolderFacetPortletPreferences.PREFERENCE_KEY_ORDER) %>" value="<%= folderFacetPortletPreferences.getOrder() %>">
+					<aui:option label="term-frequency-descending" value="count:desc" />
+					<aui:option label="term-frequency-ascending" value="count:asc" />
+					<aui:option label="term-value-ascending" value="key:asc" />
+					<aui:option label="term-value-descending" value="key:desc" />
+				</aui:select>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

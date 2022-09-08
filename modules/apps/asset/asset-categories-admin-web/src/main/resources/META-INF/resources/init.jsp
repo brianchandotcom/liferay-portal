@@ -81,7 +81,8 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portlet.asset.util.AssetVocabularySettingsHelper" %>
+page import="com.liferay.portlet.asset.util.AssetVocabularySettingsHelper" %><%@
+page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Collections" %><%@

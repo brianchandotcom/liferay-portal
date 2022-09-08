@@ -22,6 +22,7 @@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
+taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigation" %><%@
 taglib uri="http://liferay.com/tld/staging" prefix="liferay-staging" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
@@ -80,7 +81,8 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.roles.admin.kernel.util.RolesAdminUtil" %><%@
-page import="com.liferay.sharing.configuration.SharingConfiguration" %>
+page import="com.liferay.sharing.configuration.SharingConfiguration" %><%@
+page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %>
 
 <%@ page import="java.util.Collection" %><%@
 page import="java.util.Collections" %><%@

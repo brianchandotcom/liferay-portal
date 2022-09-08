@@ -21,6 +21,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigation" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -39,6 +40,7 @@ page import="com.liferay.site.item.selector.display.context.SitesItemSelectorVie
 page import="com.liferay.site.item.selector.web.internal.constants.SitesItemSelectorWebKeys" %><%@
 page import="com.liferay.site.item.selector.web.internal.display.context.SitesItemSelectorViewManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.item.selector.web.internal.frontend.taglib.clay.servlet.taglib.SiteVerticalCard" %><%@
+page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %><%@
 page import="com.liferay.site.util.GroupURLProvider" %>
 
 <%@ page import="java.util.List" %><%@

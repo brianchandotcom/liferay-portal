@@ -39,11 +39,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 />
 
 <clay:container-fluid>
-	<liferay-ui:breadcrumb
-		showCurrentGroup="<%= false %>"
-		showGuestGroup="<%= false %>"
-		showLayout="<%= false %>"
-		showParentGroups="<%= false %>"
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, false, false, false, false, true) %>"
 	/>
 
 	<liferay-ui:search-container

@@ -34,11 +34,8 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 <aui:form action="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="selectGroupFm">
 	<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
 		<div id="breadcrumb">
-			<liferay-ui:breadcrumb
-				showCurrentGroup="<%= false %>"
-				showGuestGroup="<%= false %>"
-				showLayout="<%= false %>"
-				showPortletBreadcrumb="<%= true %>"
+			<liferay-site-navigation:breadcrumb
+				breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, false, false, false, true, true) %>"
 			/>
 		</div>
 	</c:if>

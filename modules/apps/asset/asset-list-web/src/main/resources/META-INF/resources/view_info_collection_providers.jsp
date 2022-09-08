@@ -26,8 +26,8 @@ InfoCollectionProviderDisplayContext infoCollectionProviderDisplayContext = (Inf
 />
 
 <div class="container-fluid container-fluid-max-xl lfr-search-container-wrapper" id="<portlet:namespace />collectionProviders">
-	<liferay-ui:breadcrumb
-		showLayout="<%= false %>"
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
 	/>
 
 	<liferay-ui:search-container

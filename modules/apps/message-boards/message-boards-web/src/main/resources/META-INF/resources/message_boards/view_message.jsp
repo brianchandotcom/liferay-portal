@@ -52,11 +52,8 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
 	<div <%= !portletTitleBasedNavigation ? "class=\"main-content-body mt-4\"" : StringPool.BLANK %>>
 		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:breadcrumb
-				showCurrentGroup="<%= false %>"
-				showGuestGroup="<%= false %>"
-				showLayout="<%= false %>"
-				showParentGroups="<%= false %>"
+			<liferay-site-navigation:breadcrumb
+				breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, false, false, false, false, true) %>"
 			/>
 		</c:if>
 

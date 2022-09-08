@@ -128,11 +128,8 @@ if (organization != null) {
 
 			<c:if test="<%= (portletName.equals(UsersAdminPortletKeys.USERS_ADMIN) && usersListView.equals(UserConstants.LIST_VIEW_TREE)) || portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) %>">
 				<div id="breadcrumb">
-					<liferay-ui:breadcrumb
-						showCurrentGroup="<%= false %>"
-						showGuestGroup="<%= false %>"
-						showLayout="<%= false %>"
-						showPortletBreadcrumb="<%= true %>"
+					<liferay-site-navigation:breadcrumb
+						breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, false, false, false, true, true) %>"
 					/>
 				</div>
 			</c:if>

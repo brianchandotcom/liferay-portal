@@ -49,8 +49,8 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 		<clay:container-fluid
 			cssClass="main-content-body mt-4"
 		>
-			<liferay-ui:breadcrumb
-				showLayout="<%= false %>"
+			<liferay-site-navigation:breadcrumb
+				breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
 			/>
 
 			<clay:sheet

@@ -52,8 +52,8 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 				<aui:input name="tabs1" type="hidden" value="organizations" />
 				<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 
-				<liferay-ui:breadcrumb
-					showLayout="<%= false %>"
+				<liferay-site-navigation:breadcrumb
+					breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
 				/>
 
 				<liferay-ui:search-container

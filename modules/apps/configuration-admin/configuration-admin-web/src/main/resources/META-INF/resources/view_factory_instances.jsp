@@ -54,11 +54,8 @@ renderResponse.setTitle(categoryDisplayName);
 	<clay:col
 		size="12"
 	>
-		<liferay-ui:breadcrumb
-			showCurrentGroup="<%= false %>"
-			showGuestGroup="<%= false %>"
-			showLayout="<%= false %>"
-			showParentGroups="<%= false %>"
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, false, false, false, false, true) %>"
 		/>
 	</clay:col>
 </clay:container-fluid>

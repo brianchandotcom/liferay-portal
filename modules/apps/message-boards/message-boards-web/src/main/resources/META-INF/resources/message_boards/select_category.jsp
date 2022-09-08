@@ -39,10 +39,8 @@ else {
 
 <clay:container-fluid>
 	<aui:form method="post" name="selectCategoryFm">
-		<liferay-ui:breadcrumb
-			showGuestGroup="<%= false %>"
-			showLayout="<%= false %>"
-			showParentGroups="<%= false %>"
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, false, true) %>"
 		/>
 
 		<liferay-ui:search-container

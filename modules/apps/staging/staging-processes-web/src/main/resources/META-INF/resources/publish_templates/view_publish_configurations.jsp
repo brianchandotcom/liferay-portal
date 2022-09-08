@@ -70,8 +70,8 @@ StagingProcessesWebPublishTemplatesToolbarDisplayContext stagingProcessesWebPubl
 	cssClass="closed sidenav-container sidenav-right"
 	id='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
 >
-	<liferay-ui:breadcrumb
-		showLayout="<%= false %>"
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
 	/>
 
 	<aui:form action="<%= portletURL %>">

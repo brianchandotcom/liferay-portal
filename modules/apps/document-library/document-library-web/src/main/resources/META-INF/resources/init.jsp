@@ -34,6 +34,7 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/ratings" prefix="liferay-ratings" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/sharing" prefix="liferay-sharing" %><%@
+taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigation" %><%@
 taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
@@ -208,6 +209,7 @@ page import="com.liferay.portal.util.PropsUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.documentlibrary.DLGroupServiceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.constants.DLConstants" %><%@
+page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %><%@
 page import="com.liferay.trash.model.TrashEntry" %>

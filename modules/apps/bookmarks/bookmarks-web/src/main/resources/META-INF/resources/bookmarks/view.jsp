@@ -89,11 +89,8 @@ BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 	>
 		<div class="bookmarks-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 			<c:if test="<%= !bookmarksDisplayContext.isNavigationRecent() && !bookmarksDisplayContext.isNavigationMine() %>">
-				<liferay-ui:breadcrumb
-					showCurrentGroup="<%= false %>"
-					showGuestGroup="<%= false %>"
-					showLayout="<%= false %>"
-					showParentGroups="<%= false %>"
+				<liferay-site-navigation:breadcrumb
+					breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, false, false, false, false, true) %>"
 				/>
 			</c:if>
 		</div>

@@ -24,6 +24,7 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigation" %><%@
 taglib uri="http://liferay.com/tld/staging" prefix="liferay-staging" %><%@
 taglib uri="http://liferay.com/tld/text-localizer" prefix="liferay-text-localizer" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -162,6 +163,7 @@ page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl" %><%@
 page import="com.liferay.roles.admin.kernel.util.RolesAdminUtil" %><%@
+page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.users.admin.constants.UserScreenNavigationEntryConstants" %><%@
 page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %><%@

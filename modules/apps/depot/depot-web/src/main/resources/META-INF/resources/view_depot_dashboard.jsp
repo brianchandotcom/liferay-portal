@@ -25,8 +25,8 @@ boolean panelsShown = false;
 <clay:container-fluid
 	cssClass="lfr-depot-dashboard-container"
 >
-	<liferay-ui:breadcrumb
-		showLayout="<%= false %>"
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
 	/>
 
 	<%

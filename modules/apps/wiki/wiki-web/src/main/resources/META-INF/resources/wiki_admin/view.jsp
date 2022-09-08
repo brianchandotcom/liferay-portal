@@ -70,11 +70,8 @@ request.setAttribute("view.jsp-orderByType", wikiNodesManagementToolbarDisplayCo
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "wiki"), String.valueOf(wikiNodesManagementToolbarDisplayContext.getPortletURL()));
 		%>
 
-		<liferay-ui:breadcrumb
-			showCurrentGroup="<%= false %>"
-			showGuestGroup="<%= false %>"
-			showLayout="<%= false %>"
-			showParentGroups="<%= false %>"
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, false, false, false, false, true) %>"
 		/>
 
 		<liferay-trash:undo

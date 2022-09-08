@@ -24,8 +24,8 @@
 <clay:container-fluid
 	cssClass="container-view"
 >
-	<liferay-ui:breadcrumb
-		showLayout="<%= false %>"
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
 	/>
 
 	<clay:row>

@@ -60,8 +60,8 @@ Role role = usersDisplayContext.getRole();
 				<aui:input name="addUserIds" type="hidden" />
 				<aui:input name="roleId" type="hidden" value="<%= (role != null) ? role.getRoleId() : 0 %>" />
 
-				<liferay-ui:breadcrumb
-					showLayout="<%= false %>"
+				<liferay-site-navigation:breadcrumb
+					breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
 				/>
 
 				<liferay-ui:membership-policy-error />

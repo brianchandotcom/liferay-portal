@@ -34,8 +34,8 @@
 	<clay:container-fluid
 		id='<%= liferayPortletResponse.getNamespace() + "processesContainer" %>'
 	>
-		<liferay-ui:breadcrumb
-			showLayout="<%= false %>"
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
 		/>
 
 		<liferay-util:include page="/processes_list/publish_layouts_processes.jsp" servletContext="<%= application %>" />

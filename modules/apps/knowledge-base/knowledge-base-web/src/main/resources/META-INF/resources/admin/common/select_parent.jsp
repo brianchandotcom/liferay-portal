@@ -39,11 +39,8 @@ kbSelectParentDisplayContext.populatePortletBreadcrumbEntries(currentURLObj);
 
 <clay:container-fluid>
 	<aui:form method="post" name="fm">
-		<liferay-ui:breadcrumb
-			showCurrentGroup="<%= false %>"
-			showGuestGroup="<%= false %>"
-			showLayout="<%= false %>"
-			showParentGroups="<%= false %>"
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, false, false, false, false, true) %>"
 		/>
 
 		<c:if test="<%= ArrayUtil.contains(selectableClassNameIds, kbSelectParentDisplayContext.getParentResourceClassNameId()) && ((kbSelectParentDisplayContext.getParentResourceClassNameId() != kbArticleClassNameId) || (kbSelectParentDisplayContext.getParentResourcePrimKey() != 0)) %>">

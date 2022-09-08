@@ -25,8 +25,8 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 	<clay:container-fluid
 		id='<%= liferayPortletResponse.getNamespace() + "processesContainer" %>'
 	>
-		<liferay-ui:breadcrumb
-			showLayout="<%= false %>"
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
 		/>
 
 		<liferay-util:include page="/export/processes_list/export_layouts_processes.jsp" servletContext="<%= application %>">

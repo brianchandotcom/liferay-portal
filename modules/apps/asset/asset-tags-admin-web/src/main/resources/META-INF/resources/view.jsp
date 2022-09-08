@@ -26,8 +26,8 @@
 </portlet:actionURL>
 
 <aui:form action="<%= deleteTagURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
-	<liferay-ui:breadcrumb
-		showLayout="<%= false %>"
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
 	/>
 
 	<liferay-ui:search-container

@@ -34,11 +34,8 @@ if (folder != null) {
 
 <clay:container-fluid>
 	<aui:form method="post" name="selectFolderFm">
-		<liferay-ui:breadcrumb
-			showCurrentGroup="<%= false %>"
-			showGuestGroup="<%= false %>"
-			showLayout="<%= false %>"
-			showParentGroups="<%= false %>"
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, false, false, false, false, true) %>"
 		/>
 
 		<br />

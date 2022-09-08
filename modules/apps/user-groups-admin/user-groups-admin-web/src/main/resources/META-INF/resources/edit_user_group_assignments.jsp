@@ -92,11 +92,8 @@ SearchContainer<User> searchContainer = editUserGroupAssignmentsManagementToolba
 	<aui:input name="removeUserIds" type="hidden" />
 
 	<div id="breadcrumb">
-		<liferay-ui:breadcrumb
-			showCurrentGroup="<%= false %>"
-			showGuestGroup="<%= false %>"
-			showLayout="<%= false %>"
-			showPortletBreadcrumb="<%= true %>"
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, false, false, false, true, true) %>"
 		/>
 	</div>
 

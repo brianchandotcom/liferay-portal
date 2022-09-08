@@ -29,8 +29,8 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 	cssClass="container-view"
 >
 	<aui:form action="<%= viewDisplayContext.getActionURL() %>" name="fm">
-		<liferay-ui:breadcrumb
-			showLayout="<%= false %>"
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
 		/>
 
 		<liferay-ui:search-container

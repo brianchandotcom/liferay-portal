@@ -193,11 +193,8 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 						MBBreadcrumbUtil.addPortletBreadcrumbEntries(categoryId, request, renderResponse);
 						%>
 
-						<liferay-ui:breadcrumb
-							showCurrentGroup="<%= false %>"
-							showGuestGroup="<%= false %>"
-							showLayout="<%= false %>"
-							showParentGroups="<%= false %>"
+						<liferay-site-navigation:breadcrumb
+							breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, false, false, false, false, true) %>"
 						/>
 					</c:if>
 
@@ -217,11 +214,8 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 									MBBreadcrumbUtil.addPortletBreadcrumbEntries(categoryId, request, renderResponse);
 									%>
 
-									<liferay-ui:breadcrumb
-										showCurrentGroup="<%= false %>"
-										showGuestGroup="<%= false %>"
-										showLayout="<%= false %>"
-										showParentGroups="<%= false %>"
+									<liferay-site-navigation:breadcrumb
+										breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, false, false, false, false, true) %>"
 									/>
 								</c:otherwise>
 							</c:choose>

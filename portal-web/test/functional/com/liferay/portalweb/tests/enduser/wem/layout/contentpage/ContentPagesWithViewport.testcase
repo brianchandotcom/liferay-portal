@@ -822,6 +822,63 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153383. The page creator can resize editor sidebar on non desktop Viewport."
+	@priority = "4"
+	test ResizeLeftSidebarPanelInNonDesktopViewport {
+		property custom.properties = "feature.flag.LPS-153452=true";
+
+		task ("Given a page creator accesses to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("When the page creator resizes the left sidebar panel in the Desktop viewport") {
+			DragAndDrop.dragAndDrop(
+				locator1 = "PageEditor#SIDEBAR_RESIZER",
+				value1 = "100,0");
+		}
+
+		task ("Then the page creator see the left sidebar panel resized in the Tablet viewport") {
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			AssertCssValue(
+				locator1 = "Sidebar#PANEL_OPEN",
+				locator2 = "width",
+				value1 = "380px");
+		}
+
+		task ("When the page creator resizes the left sidebar panel in the Tablet viewport") {
+			DragAndDrop.dragAndDrop(
+				locator1 = "PageEditor#SIDEBAR_RESIZER",
+				value1 = "100,0");
+		}
+
+		task ("Then the page creator see the left sidebar panel resized in the Landscape Phone viewport") {
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+
+			AssertCssValue(
+				locator1 = "Sidebar#PANEL_OPEN",
+				locator2 = "width",
+				value1 = "480px");
+		}
+
+		task ("When the page creator resizes the left sidebar panel in the Landscape Phone viewport") {
+			DragAndDrop.dragAndDrop(
+				locator1 = "PageEditor#SIDEBAR_RESIZER",
+				value1 = "-180,0");
+		}
+
+		task ("Then the page creator see the left sidebar panel resized in the Portrait Phone viewport") {
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
+
+			AssertCssValue(
+				locator1 = "Sidebar#PANEL_OPEN",
+				locator2 = "width",
+				value1 = "300px");
+		}
+	}
+
 	@description = "This is a test for LPS-110707. Can resize the width of non-desktop viewports when edit content page."
 	@priority = "5"
 	@uitest

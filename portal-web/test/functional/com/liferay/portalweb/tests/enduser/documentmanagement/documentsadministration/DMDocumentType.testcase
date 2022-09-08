@@ -307,50 +307,6 @@ definition {
 		DMDocument.viewCustomFieldLocalizableLanguages(localizableLanguages = "ar-SA,ca-ES,zh-CN,nl-NL,fi-FI,fr-FR,de-DE,hu-HU,ja-JP,pt-BR,es-ES,sv-SE");
 	}
 
-	@description = "This ensures that the user can delete fields within a document type ."
-	@priority = "3"
-	@refactorneeded
-	test DeleteFields {
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text,Date,Image,Upload",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openToAddEntry(
-			dmDocumentTypeName = "DM Document Type Name",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		for (var fieldFieldLabel : list "Text,Date,Image,Upload") {
-			AssertElementPresent(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-		}
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.deleteFields(
-			dmDocumentTypeName = "DM Document Type Name",
-			fieldFieldLabel = "Text,Date,Image");
-
-		DMNavigator.openToAddEntry(
-			dmDocumentTypeName = "DM Document Type Name",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		for (var fieldFieldLabel : list "Text,Date,Image") {
-			AssertElementNotPresent(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-		}
-
-		AssertElementPresent(
-			key_fieldFieldLabel = "Upload",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-	}
-
 	@description = "This test covers LPS-127049. A document can be created with duplicate fields is covered in DMFieldsets#FieldsetSetAsRepeatable."
 	@priority = "4"
 	@refactordone

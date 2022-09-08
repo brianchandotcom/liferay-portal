@@ -18,6 +18,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:ratings:ratings-taglib")
+	compileOnly project(":apps:site-navigation:site-navigation-taglib")
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":apps:subscription:subscription-api")

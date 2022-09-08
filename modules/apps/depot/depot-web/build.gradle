@@ -32,6 +32,7 @@ dependencies {
 	compileOnly project(":apps:portal-workflow:portal-workflow-api")
 	compileOnly project(":apps:roles:roles-admin-api")
 	compileOnly project(":apps:sharing:sharing-api")
+	compileOnly project(":apps:site-navigation:site-navigation-taglib")
 	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:site:site-item-selector-api")
 	compileOnly project(":apps:site:site-memberships-api")

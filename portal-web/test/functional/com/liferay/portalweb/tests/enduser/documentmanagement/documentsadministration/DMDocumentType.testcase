@@ -56,19 +56,6 @@ definition {
 			portlet = "Documents and Media");
 
 		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type 2 Name");
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type 3 Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type 3 Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type 3 Name");
 	}
 
 	@description = "This test checks that a document using a document type with a custom metadata set can be created successfully."

@@ -64,12 +64,8 @@ public class GoogleMapsMapProvider extends BaseJSPMapProvider {
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.map.google.maps)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -87,5 +83,8 @@ public class GoogleMapsMapProvider extends BaseJSPMapProvider {
 
 	@Reference
 	private NPMResolver _npmResolver;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.map.google.maps)")
+	private ServletContext _servletContext;
 
 }

@@ -150,11 +150,6 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private void _checkCaptcha(ActionRequest actionRequest)
 		throws CaptchaConfigurationException, CaptchaException {
 
@@ -392,6 +387,7 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

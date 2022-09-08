@@ -214,16 +214,6 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 		_forward = GetterUtil.getString(properties, "/common/referer_jsp.jsp");
 	}
 
-	@Reference(unbind = "-")
-	protected void setFacebookConnect(FacebookConnect facebookConnect) {
-		_facebookConnect = facebookConnect;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private User _addUser(
 			HttpSession httpSession, long companyId, JSONObject jsonObject,
 			ServiceContext serviceContext)
@@ -492,12 +482,15 @@ public class FacebookConnectStrutsAction implements StrutsAction {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	@Reference
 	private FacebookConnect _facebookConnect;
+
 	private String _forward;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

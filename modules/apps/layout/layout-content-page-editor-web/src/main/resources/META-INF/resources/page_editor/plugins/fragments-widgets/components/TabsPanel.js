@@ -110,7 +110,7 @@ export default function TabsPanel({
 
 	return (
 		<>
-			<ClayTabs className="flex-shrink-0 mx-3 page-editor__sidebar__fragments-widgets-panel__tabs">
+			<ClayTabs className="flex-shrink-0 page-editor__sidebar__fragments-widgets-panel__tabs">
 				{tabs.map((tab, index) => (
 					<ClayTabs.Item
 						active={tab.id === activeTabId}

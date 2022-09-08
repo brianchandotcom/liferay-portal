@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.expando.service.impl;
 
+import com.liferay.expando.kernel.exception.ValueDataException;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoRow;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.typeconverter.DateArrayConverter;
 import com.liferay.portal.typeconverter.NumberArrayConverter;
 import com.liferay.portal.typeconverter.NumberConverter;
@@ -819,6 +821,19 @@ public class ExpandoValueLocalServiceImpl
 				value.setStringArray((String[])attributeValue);
 			}
 			else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
+				Map<Locale, String> defaultValuesMap =
+					(Map<Locale, String>)attributeValue;
+
+				Locale defaultLocale = LocaleUtil.getDefault();
+				if (Validator.isNull(defaultValuesMap.get(defaultLocale))) {
+					for (String defaultValue : defaultValuesMap.values()) {
+						if (Validator.isNotNull(defaultValue)) {
+							throw new ValueDataException.MustInformDefaultLocale(
+								LocaleUtil.getDefault());
+						}
+					}
+				}
+
 				value.setStringMap(
 					(Map<Locale, String>)attributeValue,
 					LocaleUtil.getDefault());

@@ -330,7 +330,7 @@ export default function () {
 		const getActivities = async () => {
 			// eslint-disable-next-line @liferay/portal/no-global-fetch
 			const response = await fetch(
-				`http://localhost:8080/o/c/mdfrequests/${mdfRequestId}/mdfRequestToActivities/?nestedFields=typeActivity,tactic`,
+				`/o/c/mdfrequests/${mdfRequestId}/mdfRequestToActivities/?nestedFields=typeActivity,tactic`,
 				{
 					headers: {
 						'accept': 'application/json',

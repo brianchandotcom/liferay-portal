@@ -44,7 +44,7 @@ const MDFRequestList = () => {
 				</ClayButton>
 			</div>
 
-			{data.listItems?.items &&
+			{!!data.listItems?.items &&
 				data.listItems?.totalCount &&
 				data.listColumns && (
 					<div className="mt-3">

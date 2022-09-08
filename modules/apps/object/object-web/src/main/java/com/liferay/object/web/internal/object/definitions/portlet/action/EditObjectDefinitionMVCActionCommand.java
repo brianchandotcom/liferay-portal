@@ -59,6 +59,8 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		String externalReferenceCode = ParamUtil.getString(
+			actionRequest, "externalReferenceCode");
 		long objectDefinitionId = ParamUtil.getLong(
 			actionRequest, "objectDefinitionId");
 
@@ -100,11 +102,12 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			_objectDefinitionService.updateCustomObjectDefinition(
-				objectDefinitionId, accountEntryRestrictedObjectFieldId,
-				descriptionObjectFieldId, titleObjectFieldId,
-				accountEntryRestricted, active, enableCategorization,
-				enableComments, labelMap, name, panelCategoryOrder,
-				panelCategoryKey, portlet, pluralLabelMap, scope);
+				externalReferenceCode, objectDefinitionId,
+				accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
+				titleObjectFieldId, accountEntryRestricted, active,
+				enableCategorization, enableComments, labelMap, name,
+				panelCategoryOrder, panelCategoryKey, portlet, pluralLabelMap,
+				scope);
 
 			if (StringUtil.equals(
 					ParamUtil.getString(actionRequest, Constants.CMD),

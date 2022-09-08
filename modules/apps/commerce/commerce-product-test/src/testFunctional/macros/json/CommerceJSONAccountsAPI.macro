@@ -29,6 +29,54 @@ definition {
 		}
 	}
 
+	macro _getAccountAddressCityByAddressName {
+		Variables.assertDefined(parameterList = "${addressName}");
+
+		if (isSet(accountEntryName) && !(isSet(accountEntryId))) {
+			var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
+		}
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-admin-user/v1.0/accounts/${accountEntryId}/postal-addresses \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var accountAddressCity = JSONCurlUtil.get("${curl}", "$.items.[?(@['name']=='${addressName}')].['addressLocality']]");
+
+		return "${accountAddressCity}";
+	}
+
+	macro _getAccountAddressCountryByAddressName {
+		Variables.assertDefined(parameterList = "${addressName}");
+
+		if (isSet(accountEntryName) && !(isSet(accountEntryId))) {
+			var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
+		}
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-admin-user/v1.0/accounts/${accountEntryId}/postal-addresses \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var accountAddressCountry = JSONCurlUtil.get("${curl}", "$.items.[?(@['name']=='${addressName}')].['addressCountry']]");
+
+		return "${accountAddressCountry}";
+	}
+
 	macro _getAccountAddressIdByAddressName {
 		Variables.assertDefined(parameterList = "${addressName}");
 
@@ -51,6 +99,30 @@ definition {
 		var accountAddressId = JSONCurlUtil.get("${curl}", "$.items.[?(@['name']=='${addressName}')].['id']]");
 
 		return "${accountAddressId}";
+	}
+
+	macro _getAccountAddressStreetByAddressName {
+		Variables.assertDefined(parameterList = "${addressName},${streetNumber}");
+
+		if (isSet(accountEntryName) && !(isSet(accountEntryId))) {
+			var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
+		}
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-admin-user/v1.0/accounts/${accountEntryId}/postal-addresses \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var accountAddressStreet = JSONCurlUtil.get("${curl}", "$.items.[?(@['name']=='${addressName}')].['streetAddressLine${streetNumber}']]");
+
+		return "${accountAddressStreet}";
 	}
 
 	macro _getCommerceAccountEmail {

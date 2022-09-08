@@ -202,6 +202,16 @@ definition {
 		Accounts.deactivateAccount(accountName = "${accountName}");
 	}
 
+	macro gotoAccountSelectorAccountsList {
+		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+
+		var currentListHead = selenium.getText("CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_MENU_SELECTED_ACCOUNT");
+
+		if ("${currentListHead}" != "Select Account") {
+			Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_BACK_BUTTON");
+		}
+	}
+
 	macro gotoMiniumProductDetailsPage {
 		Click(
 			key_productName = "${productName}",

@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -733,6 +734,39 @@ public class ObjectEntryLocalServiceImpl
 					objectDefinition, primaryKey));
 
 		return modelAttributes;
+	}
+
+	@Override
+	public String getTitleValue(long entryId, long objectDefinitionId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		if (!objectDefinition.isSystem()) {
+			ObjectEntry objectEntry = getObjectEntry(entryId);
+
+			return objectEntry.getTitleValue();
+		}
+
+		ObjectField titleObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectDefinition.getTitleObjectFieldId());
+
+		if (Objects.isNull(titleObjectField)) {
+			titleObjectField = _objectFieldLocalService.getObjectField(
+				objectDefinitionId, "id");
+		}
+
+		PersistedModelLocalService persistedModelLocalService =
+			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
+				objectDefinition.getClassName());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			String.valueOf(
+				persistedModelLocalService.getPersistedModel(entryId)));
+
+		return jsonObject.getString(titleObjectField.getDBColumnName());
 	}
 
 	@Override

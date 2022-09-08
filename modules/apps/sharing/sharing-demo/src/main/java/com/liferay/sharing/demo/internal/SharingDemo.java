@@ -104,11 +104,6 @@ public class SharingDemo extends BasePortalInstanceLifecycleListener {
 		_rootFolderDemoDataCreator.delete();
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private Date _getExpirationDate(int daysFromNow) {
 		LocalDateTime localDateTime = LocalDateTime.now();
 
@@ -125,6 +120,9 @@ public class SharingDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private Portal _portal;

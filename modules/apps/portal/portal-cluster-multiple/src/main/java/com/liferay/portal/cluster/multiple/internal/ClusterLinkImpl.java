@@ -176,25 +176,6 @@ public class ClusterLinkImpl implements ClusterLink {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setClusterChannelFactory(
-		ClusterChannelFactory clusterChannelFactory) {
-
-		_clusterChannelFactory = clusterChannelFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortalExecutorManager(
-		PortalExecutorManager portalExecutorManager) {
-
-		_portalExecutorManager = portalExecutorManager;
-	}
-
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
-
 	private Map<String, String> _getChannelSettings(String propertyPrefix) {
 		Map<String, String> channelSettings = new HashMap<>();
 
@@ -261,7 +242,10 @@ public class ClusterLinkImpl implements ClusterLink {
 		ClusterLinkImpl.class);
 
 	private int _channelCount;
+
+	@Reference
 	private ClusterChannelFactory _clusterChannelFactory;
+
 	private List<ClusterChannel> _clusterChannels;
 	private List<ClusterReceiver> _clusterReceivers;
 	private boolean _enabled;
@@ -271,7 +255,10 @@ public class ClusterLinkImpl implements ClusterLink {
 	@Reference
 	private MessageBus _messageBus;
 
+	@Reference
 	private PortalExecutorManager _portalExecutorManager;
+
+	@Reference
 	private Props _props;
 
 }

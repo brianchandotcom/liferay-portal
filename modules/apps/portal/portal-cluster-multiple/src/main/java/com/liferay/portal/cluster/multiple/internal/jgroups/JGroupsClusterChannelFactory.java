@@ -117,11 +117,6 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		_classLoaders.clear();
 	}
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
-
 	private InputStream _getInputStream(String channelPropertiesLocation)
 		throws IOException {
 
@@ -311,6 +306,8 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		new ConcurrentReferenceKeyHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private volatile ClusterExecutorConfiguration _clusterExecutorConfiguration;
+
+	@Reference
 	private Props _props;
 
 }

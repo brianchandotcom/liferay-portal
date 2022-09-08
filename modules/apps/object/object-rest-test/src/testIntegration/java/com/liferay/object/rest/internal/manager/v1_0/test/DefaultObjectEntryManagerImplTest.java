@@ -367,6 +367,18 @@ public class DefaultObjectEntryManagerImplTest {
 			objectEntry2, objectEntry1);
 	}
 
+	private String _addListTypeEntry() throws Exception {
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.addListTypeEntry(
+				_user.getUserId(),
+				_listTypeDefinition.getListTypeDefinitionId(),
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()));
+
+		return listTypeEntry.getKey();
+	}
+
 	private ObjectEntry _addObjectEntry(ObjectEntry objectEntry)
 		throws Exception {
 
@@ -540,18 +552,6 @@ public class DefaultObjectEntryManagerImplTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		return dlFileEntry.getFileEntryId();
-	}
-
-	private String _addListTypeEntry() throws Exception {
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.addListTypeEntry(
-				_user.getUserId(),
-				_listTypeDefinition.getListTypeDefinitionId(),
-				RandomTestUtil.randomString(),
-				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
-
-		return listTypeEntry.getKey();
 	}
 
 	private ObjectEntry _getObjectEntry(

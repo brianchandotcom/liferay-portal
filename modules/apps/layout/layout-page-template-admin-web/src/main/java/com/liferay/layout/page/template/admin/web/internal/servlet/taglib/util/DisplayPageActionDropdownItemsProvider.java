@@ -346,17 +346,17 @@ public class DisplayPageActionDropdownItemsProvider {
 	private String _getItemSelectorURL() {
 		ItemSelectorCriterion itemSelectorCriterion =
 			UploadItemSelectorCriterion.builder(
-			).setDesiredItemSelectorReturnTypes(
+			).desiredItemSelectorReturnTypes(
 				new FileEntryItemSelectorReturnType()
-			).setExtensions(
+			).extensions(
 				_layoutPageTemplateAdminWebConfiguration.thumbnailExtensions()
-			).setMaxFileSize(
+			).maxFileSize(
 				UploadServletRequestConfigurationHelperUtil.getMaxSize()
-			).setPortletId(
+			).portletId(
 				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES
-			).setRepositoryName(
+			).repositoryName(
 				LanguageUtil.get(_themeDisplay.getLocale(), "page-template")
-			).setURL(
+			).url(
 				PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(

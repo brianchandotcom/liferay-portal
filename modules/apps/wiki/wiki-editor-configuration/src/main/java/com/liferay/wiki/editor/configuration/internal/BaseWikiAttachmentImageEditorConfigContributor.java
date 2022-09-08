@@ -134,15 +134,15 @@ public abstract class BaseWikiAttachmentImageEditorConfigContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		return UploadItemSelectorCriterion.builder(
-		).setDesiredItemSelectorReturnTypes(
+		).desiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType()
-		).setMimeTypeRestriction(
+		).mimeTypeRestriction(
 			ItemSelectorCriterionConstants.MIME_TYPE_RESTRICTION_IMAGE
-		).setPortletId(
+		).portletId(
 			WikiPortletKeys.WIKI
-		).setRepositoryName(
+		).repositoryName(
 			LanguageUtil.get(themeDisplay.getLocale(), "page-attachments")
-		).setURL(
+		).url(
 			PortletURLBuilder.create(
 				requestBackedPortletURLFactory.createActionURL(
 					WikiPortletKeys.WIKI)

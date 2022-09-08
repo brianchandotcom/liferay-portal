@@ -39,7 +39,7 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 			}
 
 			@Override
-			public Builder setDesiredItemSelectorReturnTypes(
+			public Builder desiredItemSelectorReturnTypes(
 				ItemSelectorReturnType... desiredItemSelectorReturnTypes) {
 
 				_uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
@@ -49,21 +49,21 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 			}
 
 			@Override
-			public Builder setExtensions(String[] extensions) {
+			public Builder extensions(String[] extensions) {
 				_uploadItemSelectorCriterion.setExtensions(extensions);
 
 				return this;
 			}
 
 			@Override
-			public Builder setMaxFileSize(long maxFileSize) {
+			public Builder maxFileSize(long maxFileSize) {
 				_uploadItemSelectorCriterion.setMaxFileSize(maxFileSize);
 
 				return this;
 			}
 
 			@Override
-			public Builder setMimeTypeRestriction(String mimeTypeRestriction) {
+			public Builder mimeTypeRestriction(String mimeTypeRestriction) {
 				_uploadItemSelectorCriterion._setMimeTypeRestriction(
 					mimeTypeRestriction);
 
@@ -71,21 +71,21 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 			}
 
 			@Override
-			public Builder setPortletId(String portletId) {
+			public Builder portletId(String portletId) {
 				_uploadItemSelectorCriterion.setPortletId(portletId);
 
 				return this;
 			}
 
 			@Override
-			public Builder setRepositoryName(String repositoryName) {
+			public Builder repositoryName(String repositoryName) {
 				_uploadItemSelectorCriterion.setRepositoryName(repositoryName);
 
 				return this;
 			}
 
 			@Override
-			public Builder setURL(String url) {
+			public Builder url(String url) {
 				_uploadItemSelectorCriterion.setURL(url);
 
 				return this;
@@ -151,20 +151,20 @@ public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 		public UploadItemSelectorCriterion build();
 
-		public Builder setDesiredItemSelectorReturnTypes(
+		public Builder desiredItemSelectorReturnTypes(
 			ItemSelectorReturnType... desiredItemSelectorReturnTypes);
 
-		public Builder setExtensions(String[] extensions);
+		public Builder extensions(String[] extensions);
 
-		public Builder setMaxFileSize(long maxFileSize);
+		public Builder maxFileSize(long maxFileSize);
 
-		public Builder setMimeTypeRestriction(String mimeTypeRestriction);
+		public Builder mimeTypeRestriction(String mimeTypeRestriction);
 
-		public Builder setPortletId(String portletId);
+		public Builder portletId(String portletId);
 
-		public Builder setRepositoryName(String repositoryName);
+		public Builder repositoryName(String repositoryName);
 
-		public Builder setURL(String url);
+		public Builder url(String url);
 
 	}
 

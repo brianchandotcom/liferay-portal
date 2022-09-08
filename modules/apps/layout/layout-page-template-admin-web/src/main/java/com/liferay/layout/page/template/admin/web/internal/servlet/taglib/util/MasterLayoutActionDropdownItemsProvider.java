@@ -355,15 +355,15 @@ public class MasterLayoutActionDropdownItemsProvider {
 	private String _getItemSelectorURL() {
 		ItemSelectorCriterion itemSelectorCriterion =
 			UploadItemSelectorCriterion.builder(
-			).setDesiredItemSelectorReturnTypes(
+			).desiredItemSelectorReturnTypes(
 				new FileEntryItemSelectorReturnType()
-			).setMaxFileSize(
+			).maxFileSize(
 				UploadServletRequestConfigurationHelperUtil.getMaxSize()
-			).setPortletId(
+			).portletId(
 				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES
-			).setRepositoryName(
+			).repositoryName(
 				LanguageUtil.get(_themeDisplay.getLocale(), "master-page")
-			).setURL(
+			).url(
 				PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(

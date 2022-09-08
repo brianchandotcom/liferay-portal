@@ -134,17 +134,17 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 	private String _getItemSelectorURL() {
 		ItemSelectorCriterion itemSelectorCriterion =
 			UploadItemSelectorCriterion.builder(
-			).setDesiredItemSelectorReturnTypes(
+			).desiredItemSelectorReturnTypes(
 				new FileEntryItemSelectorReturnType()
-			).setExtensions(
+			).extensions(
 				_fragmentPortletConfiguration.thumbnailExtensions()
-			).setMaxFileSize(
+			).maxFileSize(
 				UploadServletRequestConfigurationHelperUtil.getMaxSize()
-			).setPortletId(
+			).portletId(
 				FragmentPortletKeys.FRAGMENT
-			).setRepositoryName(
+			).repositoryName(
 				LanguageUtil.get(_themeDisplay.getLocale(), "resources")
-			).setURL(
+			).url(
 				PortletURLBuilder.createActionURL(
 					liferayPortletResponse
 				).setActionName(

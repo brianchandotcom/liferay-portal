@@ -252,15 +252,15 @@ public class StyleBookEntryActionDropdownItemsProvider {
 	private String _getItemSelectorURL() {
 		ItemSelectorCriterion itemSelectorCriterion =
 			UploadItemSelectorCriterion.builder(
-			).setDesiredItemSelectorReturnTypes(
+			).desiredItemSelectorReturnTypes(
 				new FileEntryItemSelectorReturnType()
-			).setMaxFileSize(
+			).maxFileSize(
 				UploadServletRequestConfigurationHelperUtil.getMaxSize()
-			).setPortletId(
+			).portletId(
 				StyleBookPortletKeys.STYLE_BOOK
-			).setRepositoryName(
+			).repositoryName(
 				LanguageUtil.get(_httpServletRequest, "style-book")
-			).setURL(
+			).url(
 				PortletURLBuilder.createActionURL(
 					_renderResponse
 				).setActionName(

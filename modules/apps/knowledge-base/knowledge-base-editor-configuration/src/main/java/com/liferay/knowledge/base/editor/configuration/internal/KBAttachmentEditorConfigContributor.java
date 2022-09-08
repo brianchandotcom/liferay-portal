@@ -153,14 +153,14 @@ public class KBAttachmentEditorConfigContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		return UploadItemSelectorCriterion.builder(
-		).setDesiredItemSelectorReturnTypes(
+		).desiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType()
-		).setMimeTypeRestriction(
+		).mimeTypeRestriction(
 			ItemSelectorCriterionConstants.MIME_TYPE_RESTRICTION_IMAGE
-		).setRepositoryName(
+		).repositoryName(
 			LanguageResources.getMessage(
 				themeDisplay.getLocale(), "article-attachments")
-		).setURL(
+		).url(
 			PortletURLBuilder.create(
 				requestBackedPortletURLFactory.createActionURL(
 					KBPortletKeys.KNOWLEDGE_BASE_ADMIN)

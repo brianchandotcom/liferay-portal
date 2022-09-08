@@ -641,6 +641,38 @@ definition {
 			locator1 = "TextInput#ANY");
 	}
 
+	@description = "This is a test for LPS-162031. The site administrator could add a JS remote app."
+	@priority = "3"
+	test JSCanBeCreated {
+		task ("Given a site administrator accesses to the Remote Apps admin") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Text Color",
+				groupName = "Test Site Name",
+				mimeType = "application/javascript",
+				sourceFileName = "TextColor.js");
+
+			var url = JSONDocument.getLatestVersionURL(
+				dmDocumentTitle = "Text Color",
+				groupName = "Test Site Name");
+
+			RemoteApps.goToRemoteAppsPortlet();
+		}
+
+		task ("When the site administrator creates a JS remote app") {
+			RemoteApps.addType(type = "Add JS");
+
+			RemoteApps.addApp(
+				entryName = "Text Color",
+				entryURL = "${url}");
+		}
+
+		task ("Then the site administrator sees the created JS remote app") {
+			RemoteApps.viewTableEntryName(entryName = "Text Color");
+		}
+	}
+
 	@description = "This is a test for LPS-162031. The Theme CSS Extension is hidden by default."
 	@priority = "3"
 	test ThemeCSSHiddenByDefault {

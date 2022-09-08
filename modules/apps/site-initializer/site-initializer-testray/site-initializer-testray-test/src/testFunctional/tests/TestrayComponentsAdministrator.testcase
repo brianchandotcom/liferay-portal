@@ -123,11 +123,50 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156994 - Verify if as an Administrator I am able to edit Components and change the assigned Team"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test AdminCanEditChangeComponent {
+		task ("Given that the user adds a new Team") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
-		// TODO LPS-156994 AdminCanEditChangeComponent pending implementation
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			Testray.addNewTeam(teamName = "Components_1 Team,Components_1 Team Second");
+
+			Testray.assertItemName(key_name = "Components_1 Team");
+
+			Testray.assertItemName(key_name = "Components_1 Team Second");
+		}
+
+		task ("And given that the user goes to add a new component and selects the team") {
+			TestrayManage.closeModalInOptions();
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(
+				componentName = "Components_1 Project",
+				teamName = "Components_1 Team");
+
+			Testray.assertItemName(key_name = "Components_1 Project");
+
+			Testray.assertItemName(key_name = "Components_1 Team");
+		}
+
+		task ("When the user goes to edit the component and change the team") {
+			SelectFrameTop();
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Components_1 Project");
+
+			Testray.editComponent(
+				componentName = "Components_1 Project",
+				newComponentName = "Components_1 Project",
+				newTeamName = "Components_1 Team Second");
+		}
+
+		task ("Then the team should be updated on the list") {
+			Testray.assertItemName(key_name = "Components_1 Team Second");
+		}
 
 	}
 

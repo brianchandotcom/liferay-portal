@@ -1,0 +1,61 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property osgi.modules.includes = "frontend-js-walkthrough-sample-web";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Walkthrough";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		PortalInstances.tearDownCP();
+	}
+
+	@description = "LPS-159836. Walkthrough displays when defined for a site."
+	@priority = "5"
+	test WillDisplayWhenDefinedForSite {
+		property portal.acceptance = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given there is a site-level JSON defined for current site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			ApplicationsMenu.gotoSite(site = "Site Name");
+
+			Walkthrough.enableWalkthrough(fileName = "walkthrough_configuration.json");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 1");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 1",
+				widgetName = "JS Walkthrough Sample");
+		}
+
+		task ("When instantiate the walkthrough") {
+			Navigator.openSitePage(
+				pageName = "Walkthrough Page 1",
+				siteName = "Site Name");
+
+			Walkthrough.enablePopoverMode();
+		}
+
+		task ("Then walkthrough is instantiated on the site") {
+			AssertElementPresent(
+				key_title = "Step 1 of 2: Click the Button",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+	}
+
+}

@@ -55,9 +55,7 @@ public abstract class BaseJSPMapProvider implements MapProvider {
 			httpServletRequest, httpServletResponse, getConfigurationJspPath());
 	}
 
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
+	protected abstract ServletContext getServletContext();
 
 	protected boolean includeJSP(
 			HttpServletRequest httpServletRequest,
@@ -68,8 +66,10 @@ public abstract class BaseJSPMapProvider implements MapProvider {
 			return false;
 		}
 
+		ServletContext servletContext = getServletContext();
+
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(jspPath);
+			servletContext.getRequestDispatcher(jspPath);
 
 		prepareRequest(httpServletRequest);
 
@@ -90,7 +90,5 @@ public abstract class BaseJSPMapProvider implements MapProvider {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseJSPMapProvider.class);
-
-	private ServletContext _servletContext;
 
 }

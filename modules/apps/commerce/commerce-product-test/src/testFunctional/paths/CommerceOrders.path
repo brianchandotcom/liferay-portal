@@ -171,6 +171,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PLACED_ORDERS_LIST_ACCOUNT</td>
+	<td>//div[@class='dnd-tr']/div[@class='dnd-td'][6][contains(.,'${key_orderAccount}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PLACED_ORDERS_LIST_DATE</td>
 	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_orderId}')]/following::div[4]</td>
 	<td></td>

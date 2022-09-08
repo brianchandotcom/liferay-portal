@@ -965,15 +965,17 @@ definition {
 	macro attemptImpersonateCP {
 		Search.searchCP(searchTerm = "${userScreenName}");
 
-		var key_rowEntry = "${userScreenName}";
-
 		if (isSet(notAdmin)) {
-			AssertElementNotPresent(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS");
+			AssertElementNotPresent(
+				key_tableEntry = "${userScreenName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
 			AssertElementNotPresent(locator1 = "UsersAndOrganizations#USER_TABLE_IMPERSONATE");
 		}
 		else {
-			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS");
+			Click(
+				key_tableEntry = "${userScreenName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
 			MenuItem.viewNotPresent(menuItem = "Impersonate User");
 		}
@@ -1406,11 +1408,9 @@ definition {
 	macro editDisplaySettingsCP {
 		User.searchCP(searchTerm = "${userScreenName}");
 
-		var key_rowEntry = "${userScreenName}";
-
-		Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Edit");
+		LexiconTable.clickEllipsisItem(
+			item = "Edit",
+			tableEntry = "${userScreenName}");
 
 		Select(
 			locator1 = "Select#DEFAULT_LANGUAGE",

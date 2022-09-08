@@ -176,7 +176,8 @@
 						TEMP_TABLE.plid = FragmentEntryLink.plid
 			WHERE
 				(groupId = ?) AND
-				(fragmentEntryId = ?)
+				(fragmentEntryId = ?) AND
+				(deleted = [$FALSE$])
 		]]>
 	</sql>
 	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.countByG_F_C_L">
@@ -219,7 +220,8 @@
 						TEMP_TABLE.plid = FragmentEntryLink.plid
 			WHERE
 				(FragmentEntryLink.groupId = ?) AND
-				(FragmentEntryLink.fragmentEntryId = ?)
+				(FragmentEntryLink.fragmentEntryId = ?) AND
+				(FragmentEntryLink.deleted = [$FALSE$])
 		]]>
 	</sql>
 	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.findByType">
@@ -311,6 +313,7 @@
 			WHERE
 				(groupId = ?) AND
 				(fragmentEntryId = ?) AND
+				(deleted = [$FALSE$]) AND
 				(
 					FragmentEntryLink.createDate =
 						(
@@ -381,6 +384,7 @@
 			WHERE
 				(FragmentEntryLink.groupId = ?) AND
 				(FragmentEntryLink.fragmentEntryId = ?) AND
+				(FragmentEntryLink.deleted = [$FALSE$]) AND
 				(
 					FragmentEntryLink.createDate =
 						(

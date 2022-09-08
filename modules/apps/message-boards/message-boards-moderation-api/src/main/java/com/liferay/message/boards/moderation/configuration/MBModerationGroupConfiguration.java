@@ -16,7 +16,10 @@ package com.liferay.message.boards.moderation.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
+import java.util.List;
 
 /**
  * @author Eduardo García
@@ -43,5 +46,13 @@ public interface MBModerationGroupConfiguration {
 		min = "1", name = "minimum-contributed-messages", required = false
 	)
 	public int minimumContributedMessages();
+
+
+	@Meta.AD(
+		deflt = " ", description = "Digite o dominio que você deseja que não tenha " +
+								  "moderação ex:'@exemplo.com'",
+		name = "dominosEnable", required = false
+	)
+	public String[] dominosEnable();
 
 }

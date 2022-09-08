@@ -49,7 +49,7 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
-import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
@@ -1385,7 +1385,7 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product definition attachment file entries
 
-		_cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntries(
+		CPAttachmentFileEntryLocalServiceUtil.deleteCPAttachmentFileEntries(
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
 		// Commerce product definition links
@@ -1776,7 +1776,7 @@ public class CPDefinitionLocalServiceImpl
 		throws PortalException {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
-			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
+			CPAttachmentFileEntryLocalServiceUtil.getCPAttachmentFileEntries(
 				_classNameLocalService.getClassNameId(CPDefinition.class),
 				cpDefinitionId, CPAttachmentFileEntryConstants.TYPE_IMAGE,
 				WorkflowConstants.STATUS_APPROVED, 0, 1);
@@ -2676,7 +2676,7 @@ public class CPDefinitionLocalServiceImpl
 				new HashMap<String, Serializable>());
 
 			if (cpDefinition.isApproved()) {
-				_cpAttachmentFileEntryLocalService.
+				CPAttachmentFileEntryLocalServiceUtil.
 					checkCPAttachmentFileEntriesByDisplayDate(
 						_classNameLocalService.getClassNameId(
 							cpDefinition.getModelClassName()),
@@ -3192,10 +3192,6 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;
-
-	@Reference
-	private CPAttachmentFileEntryLocalService
-		_cpAttachmentFileEntryLocalService;
 
 	@Reference
 	private CPAttachmentFileEntryPersistence _cpAttachmentFileEntryPersistence;

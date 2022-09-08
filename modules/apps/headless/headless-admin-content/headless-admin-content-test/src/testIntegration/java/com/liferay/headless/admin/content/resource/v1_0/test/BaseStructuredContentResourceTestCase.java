@@ -1138,6 +1138,16 @@ public abstract class BaseStructuredContentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"structuredContentFolderId", additionalAssertFieldName)) {
+
+				if (structuredContent.getStructuredContentFolderId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("subscribed", additionalAssertFieldName)) {
 				if (structuredContent.getSubscribed() == null) {
 					valid = false;
@@ -1538,6 +1548,19 @@ public abstract class BaseStructuredContentResourceTestCase {
 				if (!Objects.deepEquals(
 						structuredContent1.getRenderedContents(),
 						structuredContent2.getRenderedContents())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"structuredContentFolderId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						structuredContent1.getStructuredContentFolderId(),
+						structuredContent2.getStructuredContentFolderId())) {
 
 					return false;
 				}
@@ -1949,6 +1972,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("structuredContentFolderId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("subscribed")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2051,6 +2079,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				numberOfComments = RandomTestUtil.randomInt();
 				priority = RandomTestUtil.randomDouble();
 				siteId = testGroup.getGroupId();
+				structuredContentFolderId = RandomTestUtil.randomLong();
 				subscribed = RandomTestUtil.randomBoolean();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());

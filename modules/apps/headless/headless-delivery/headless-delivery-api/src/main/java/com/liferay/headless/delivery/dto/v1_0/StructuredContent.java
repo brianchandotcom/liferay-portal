@@ -824,6 +824,40 @@ public class StructuredContent implements Serializable {
 	protected Long siteId;
 
 	@Schema(
+		description = "The ID of the folder where structured content is stored."
+	)
+	public Long getStructuredContentFolderId() {
+		return structuredContentFolderId;
+	}
+
+	public void setStructuredContentFolderId(Long structuredContentFolderId) {
+		this.structuredContentFolderId = structuredContentFolderId;
+	}
+
+	@JsonIgnore
+	public void setStructuredContentFolderId(
+		UnsafeSupplier<Long, Exception>
+			structuredContentFolderIdUnsafeSupplier) {
+
+		try {
+			structuredContentFolderId =
+				structuredContentFolderIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The ID of the folder where structured content is stored."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long structuredContentFolderId;
+
+	@Schema(
 		description = "A flag that indicates whether the user making the requests is subscribed to this structured content."
 	)
 	public Boolean getSubscribed() {
@@ -1424,6 +1458,16 @@ public class StructuredContent implements Serializable {
 			sb.append("\"siteId\": ");
 
 			sb.append(siteId);
+		}
+
+		if (structuredContentFolderId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"structuredContentFolderId\": ");
+
+			sb.append(structuredContentFolderId);
 		}
 
 		if (subscribed != null) {

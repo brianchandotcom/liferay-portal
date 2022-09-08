@@ -1617,6 +1617,11 @@ public abstract class BaseStructuredContentResourceImpl
 			existingStructuredContent.setSiteId(structuredContent.getSiteId());
 		}
 
+		if (structuredContent.getStructuredContentFolderId() != null) {
+			existingStructuredContent.setStructuredContentFolderId(
+				structuredContent.getStructuredContentFolderId());
+		}
+
 		if (structuredContent.getSubscribed() != null) {
 			existingStructuredContent.setSubscribed(
 				structuredContent.getSubscribed());

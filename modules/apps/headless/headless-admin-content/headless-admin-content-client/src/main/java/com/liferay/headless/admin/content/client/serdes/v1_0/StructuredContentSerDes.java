@@ -426,6 +426,16 @@ public class StructuredContentSerDes {
 			sb.append(structuredContent.getSiteId());
 		}
 
+		if (structuredContent.getStructuredContentFolderId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"structuredContentFolderId\": ");
+
+			sb.append(structuredContent.getStructuredContentFolderId());
+		}
+
 		if (structuredContent.getSubscribed() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -768,6 +778,16 @@ public class StructuredContentSerDes {
 			map.put("siteId", String.valueOf(structuredContent.getSiteId()));
 		}
 
+		if (structuredContent.getStructuredContentFolderId() == null) {
+			map.put("structuredContentFolderId", null);
+		}
+		else {
+			map.put(
+				"structuredContentFolderId",
+				String.valueOf(
+					structuredContent.getStructuredContentFolderId()));
+		}
+
 		if (structuredContent.getSubscribed() == null) {
 			map.put("subscribed", null);
 		}
@@ -1025,6 +1045,14 @@ public class StructuredContentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setSiteId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "structuredContentFolderId")) {
+
+				if (jsonParserFieldValue != null) {
+					structuredContent.setStructuredContentFolderId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

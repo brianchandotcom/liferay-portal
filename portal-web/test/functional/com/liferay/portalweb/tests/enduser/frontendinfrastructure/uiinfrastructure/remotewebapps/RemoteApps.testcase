@@ -125,6 +125,8 @@ definition {
 
 		task ("Then the site administrator sees the created CSS remote app") {
 			RemoteApps.viewTableEntryName(entryName = "Font Family");
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
@@ -670,6 +672,8 @@ definition {
 
 		task ("Then the site administrator sees the created JS remote app") {
 			RemoteApps.viewTableEntryName(entryName = "Text Color");
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 

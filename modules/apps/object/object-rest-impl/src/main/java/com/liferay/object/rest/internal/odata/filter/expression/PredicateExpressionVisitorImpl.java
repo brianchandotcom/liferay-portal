@@ -216,9 +216,8 @@ public class PredicateExpressionVisitorImpl
 
 		if (!Objects.equals(UnaryExpression.Operation.NOT, operation)) {
 			throw new UnsupportedOperationException(
-				StringBundler.concat(
-					"Unsupported method visitUnaryExpressionOperation with ",
-					"operation ", operation));
+				"Unsupported method visitUnaryExpressionOperation with " +
+					"operation " + operation);
 		}
 
 		DefaultPredicate defaultPredicate = (DefaultPredicate)operand;

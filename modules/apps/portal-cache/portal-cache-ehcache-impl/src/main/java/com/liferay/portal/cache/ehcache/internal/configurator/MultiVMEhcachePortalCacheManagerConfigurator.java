@@ -51,10 +51,10 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 	@Activate
 	protected void activate() {
 		clusterEnabled = GetterUtil.getBoolean(
-			props.get(PropsKeys.CLUSTER_LINK_ENABLED));
+			_props.get(PropsKeys.CLUSTER_LINK_ENABLED));
 		_defaultReplicatorPropertiesString = _getPortalPropertiesString(
 			PropsKeys.EHCACHE_REPLICATOR_PROPERTIES_DEFAULT);
-		_replicatorProperties = props.getProperties(
+		_replicatorProperties = _props.getProperties(
 			PropsKeys.EHCACHE_REPLICATOR_PROPERTIES + StringPool.PERIOD, true);
 	}
 
@@ -149,11 +149,6 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 		return portalCacheConfiguration;
 	}
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		this.props = props;
-	}
-
 	protected boolean clusterEnabled;
 
 	private Map<String, ObjectValuePair<Properties, Properties>>
@@ -188,7 +183,7 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 	}
 
 	private String _getPortalPropertiesString(String portalPropertyKey) {
-		String[] array = props.getArray(portalPropertyKey);
+		String[] array = _props.getArray(portalPropertyKey);
 
 		if (array.length == 0) {
 			return null;
@@ -211,6 +206,10 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 	}
 
 	private String _defaultReplicatorPropertiesString;
+
+	@Reference
+	private Props _props;
+
 	private Properties _replicatorProperties;
 
 }

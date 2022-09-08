@@ -29,9 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SingleVMEhcachePortalCacheManagerConfigurator
 	extends BaseEhcachePortalCacheManagerConfigurator {
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		this.props = props;
-	}
+	@Reference
+	private Props _props;
 
 }

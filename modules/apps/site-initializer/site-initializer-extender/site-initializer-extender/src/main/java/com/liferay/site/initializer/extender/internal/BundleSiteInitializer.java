@@ -1438,16 +1438,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		if (parentKnowledgeBaseObjectId == 0) {
-			return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
-				serviceContext.getScopeGroupId(),
-				KnowledgeBaseFolder.toDTO(jsonObject.toString()));
+		KnowledgeBaseFolder knowledgeBaseFolder = KnowledgeBaseFolder.toDTO(
+			jsonObject.toString());
+
+		if (parentKnowledgeBaseObjectId != 0) {
+			knowledgeBaseFolder.setParentKnowledgeBaseFolderId(
+				parentKnowledgeBaseObjectId);
 		}
 
 		return knowledgeBaseFolderResource.
-			postKnowledgeBaseFolderKnowledgeBaseFolder(
-				parentKnowledgeBaseObjectId,
-				KnowledgeBaseFolder.toDTO(jsonObject.toString()));
+			putSiteKnowledgeBaseFolderByExternalReferenceCode(
+				serviceContext.getScopeGroupId(),
+				knowledgeBaseFolder.getExternalReferenceCode(),
+				knowledgeBaseFolder);
 	}
 
 	private void _addKnowledgeBaseFolder(

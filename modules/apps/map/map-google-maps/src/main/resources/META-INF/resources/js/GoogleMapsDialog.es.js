@@ -17,14 +17,27 @@
  * @review
  */
 export default class GoogleMapsDialog {
+	get map() {
+		return this._STATE_.map;
+	}
+
+	set map(map) {
+		this._STATE_.map = map;
+	}
 
 	/**
 	 * Creates a new map dialog using Google Map's API
 	 * @param  {Array} args List of arguments to be passed to State
 	 * @review
 	 */
-	constructor() {
+	constructor(args = {}) {
+		const {map} = args;
+
 		this._dialog = new google.maps.InfoWindow();
+
+		this._STATE_ = {
+			map,
+		};
 	}
 
 	/**

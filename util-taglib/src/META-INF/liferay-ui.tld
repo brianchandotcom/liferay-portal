@@ -134,47 +134,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Deprecated as of 7.3.0, replaced by the <![CDATA[<code>liferay-site-navigation:breadcrumb</code>]]> tag.</description>
-		<name>breadcrumb</name>
-		<tag-class>com.liferay.taglib.ui.BreadcrumbTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>ddmTemplateGroupId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>ddmTemplateKey</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>showCurrentGroup</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>showGuestGroup</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>showLayout</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>showParentGroups</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>showPortletBreadcrumb</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<name>diff-html</name>
 		<tag-class>com.liferay.taglib.ui.DiffHtmlTag</tag-class>
 		<body-content>JSP</body-content>

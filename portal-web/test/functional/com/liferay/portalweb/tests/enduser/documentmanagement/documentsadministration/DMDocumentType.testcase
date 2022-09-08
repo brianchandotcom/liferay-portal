@@ -110,42 +110,21 @@ definition {
 
 	@description = "This test covers LPS-123711. It ensures that the document type cannot be published if the title is left blank."
 	@priority = "4"
-	@refactorneeded
-	test AddEntryWithNoTitle {
+	@refactordone
+	test CannotAddEntryWithoutTitle {
 		property portal.acceptance = "true";
-
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
-
-		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric");
-
-		DDLDataDefinition.save();
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Date",
-			dmDocumentTypeName = "DM Document Type Name",
-			metadataSetName = "Document Metadata Set Name");
+			dmDocumentTypeName = "DM Document Type Name");
 
 		DMNavigator.openToAddEntry(
 			dmDocumentTypeName = "DM Document Type Name",
 			groupName = "Guest",
 			siteURLKey = "guest");
-
-		Type(
-			key_fieldLabel = "Numeric",
-			locator1 = "TextInput#NUMERIC",
-			value1 = "123");
-
-		Type(
-			key_fieldFieldLabel = "Date",
-			locator1 = "WCEditWebContent#DATE_INPUT",
-			value1 = "01/01/2022");
 
 		Button.clickPublish();
 
@@ -302,6 +281,35 @@ definition {
 		AssertElementPresent(
 			key_imageFileName = "document_2",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_PREDEFINED_IMAGE");
+	}
+
+	@description = "This test covers LPS-123711. It ensures that the document type cannot be published if the title is left blank."
+	@priority = "4"
+	@refactordone
+	test CannotAddEntryWithoutTitle {
+		property portal.acceptance = "true";
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Date",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openToAddEntry(
+			dmDocumentTypeName = "DM Document Type Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		Button.clickPublish();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "This field is required.");
+
+		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
+		AssertElementPresent(locator1 = "TextInput#TITLE");
 	}
 
 	@description = "This is a test for LPS-136815. It checks that a document type cannot be deleted when it is being used by a document."

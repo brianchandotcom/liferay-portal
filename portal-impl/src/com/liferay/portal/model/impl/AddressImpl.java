@@ -50,6 +50,23 @@ public class AddressImpl extends AddressBaseImpl {
 		return country;
 	}
 
+	public ListType getListType() {
+		ListType listType = null;
+
+		try {
+			listType = ListTypeServiceUtil.getListType(getListTypeId());
+		}
+		catch (Exception exception) {
+			listType = new ListTypeImpl();
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+
+		return listType;
+	}
+
 	@Override
 	public String getPhoneNumber() {
 		List<Phone> phones = PhoneLocalServiceUtil.getPhones(
@@ -80,24 +97,6 @@ public class AddressImpl extends AddressBaseImpl {
 		}
 
 		return region;
-	}
-
-	@Override
-	public ListType getType() {
-		ListType type = null;
-
-		try {
-			type = ListTypeServiceUtil.getListType(getListTypeId());
-		}
-		catch (Exception exception) {
-			type = new ListTypeImpl();
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
-
-		return type;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AddressImpl.class);

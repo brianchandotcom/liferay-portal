@@ -141,6 +141,16 @@ public class PortletCategoryManager {
 			portletCategoryJSONObject -> portletCategoryJSONObject);
 	}
 
+	public void updateSortedPortletCategoryKeys(
+		PortalPreferences portalPreferences,
+		String[] sortedPortletCategoryKeys) {
+
+		PortalPreferencesUtil.updateSortedPortalPreferencesValues(
+			portalPreferences,
+			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+			"sortedPortletCategoryKeys", sortedPortletCategoryKeys);
+	}
+
 	private Set<String> _getHighlightedPortletIds(
 		HttpServletRequest httpServletRequest,
 		PortletCategory highlightedPortletCategory) {
@@ -374,6 +384,15 @@ public class PortletCategoryManager {
 		}
 
 		return jsonArray;
+	}
+
+	private List<String> _getSortedPortletCategoryKeys(
+		PortalPreferences portalPreferences) {
+
+		return PortalPreferencesUtil.getSortedPortalPreferencesValues(
+			portalPreferences,
+			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+			"sortedPortletCategoryKeys");
 	}
 
 	private static final String[] _UNSUPPORTED_PORTLETS_NAMES = {

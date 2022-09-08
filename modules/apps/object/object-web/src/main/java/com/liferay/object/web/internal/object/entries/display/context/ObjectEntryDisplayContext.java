@@ -385,6 +385,8 @@ public class ObjectEntryDisplayContext {
 					"selectRelatedModalEntry",
 				infoItemItemSelectorCriterion)
 		).setParameter(
+			"groupId", _getGroupId()
+		).setParameter(
 			"objectDefinitionId",
 			() -> {
 				ObjectDefinition objectDefinition1 =
@@ -486,6 +488,9 @@ public class ObjectEntryDisplayContext {
 		ObjectEntry objectEntry = getObjectEntry();
 
 		if (objectEntry != null) {
+			ddmFormRenderingContext.addProperty(
+				"objectEntryId", objectEntry.getId());
+
 			DDMFormValues ddmFormValues = _getDDMFormValues(
 				ddmForm, objectEntry);
 

@@ -550,6 +550,13 @@ public class DDMFormFieldTemplateContextFactory {
 			_setDDMFormFieldFieldSetTemplateContextContributedParameters(
 				ddmFormField, ddmFormFieldRenderingContext);
 		}
+		else if (StringUtil.equals(
+					ddmFormField.getType(), "object-relationship")) {
+
+			ddmFormFieldRenderingContext.setProperty(
+				"objectEntryId",
+				_ddmFormRenderingContext.getProperty("objectEntryId"));
+		}
 
 		Map<String, Object> contributedParameters =
 			ddmFormFieldTemplateContextContributor.getParameters(

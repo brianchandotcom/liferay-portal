@@ -453,26 +453,44 @@ definition {
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
+			fieldName = "customObjectField1",
 			fieldType = "String",
 			isRequired = "false",
 			objectName = "CustomObject141652");
 
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 141653",
+			objectName = "CustomObject141653",
+			pluralLabelName = "Custom Objects 141653");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField2",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject141653");
+
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "CustomObject141652",
-			objectName_2 = "CustomObject141652",
+			objectName_2 = "CustomObject141653",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141652");
 
-		for (var fieldEntry : list "A") {
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "customObjectField",
-				objectName = "CustomObject141652",
-				value = "Entry ${fieldEntry}");
-		}
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141653");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField1",
+			objectName = "CustomObject141652",
+			value = "Entry A");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField2",
+			objectName = "CustomObject141653",
+			value = "Entry B");
 
 		ObjectAdmin.addObjectLayoutViaAPI(
 			layoutName = "Layout Name",
@@ -497,7 +515,7 @@ definition {
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
 			columnsNumber = "1",
-			fieldList = "Custom Field,Relationship",
+			fieldList = "Custom Field",
 			tabName = "Field Tab");
 
 		ObjectAdmin.addTabRelationshipsOnLayout(
@@ -506,11 +524,19 @@ definition {
 
 		Button.clickSave();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 141653");
+
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+		Button.clickSave();
+
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject141652");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject141653");
 
-		ObjectPortlet.viewEntryDetails(entry = "Entry A");
+		ObjectPortlet.viewEntryDetails(entry = "Entry B");
 
 		ObjectPortlet.selectRelationshipFieldEntry(
 			entry = "",
@@ -524,7 +550,7 @@ definition {
 
 		ObjectPortlet.gotoRelationshipTab();
 
-		ObjectPortlet.viewEntry(entry = "Entry A");
+		ObjectPortlet.viewEntry(entry = "Entry B");
 	}
 
 	@description = "LPS-135400 - Verify it is possible to add many relations through the Relationship tab"

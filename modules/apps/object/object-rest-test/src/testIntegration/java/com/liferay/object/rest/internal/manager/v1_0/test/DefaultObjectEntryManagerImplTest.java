@@ -603,7 +603,7 @@ public class DefaultObjectEntryManagerImplTest {
 				}
 
 				throw new UnsupportedOperationException(
-					"Unsupported method: " + method.getName());
+					"Unsupported method " + method.getName());
 			});
 
 		_dtoConverterContext = new DefaultDTOConverterContext(

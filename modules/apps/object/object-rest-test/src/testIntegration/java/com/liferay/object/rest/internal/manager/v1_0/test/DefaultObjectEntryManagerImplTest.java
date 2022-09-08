@@ -577,7 +577,7 @@ public class DefaultObjectEntryManagerImplTest {
 		UriInfo uriInfo = (UriInfo)ProxyUtil.newProxyInstance(
 			DefaultObjectEntryManagerImplTest.class.getClassLoader(),
 			new Class<?>[] {UriInfo.class},
-			(proxy, method, methodArgs) -> {
+			(proxy, method, arguments) -> {
 				if (Objects.equals(method.getName(), "getBaseUriBuilder")) {
 					return UriBuilder.fromPath(RandomTestUtil.randomString());
 				}

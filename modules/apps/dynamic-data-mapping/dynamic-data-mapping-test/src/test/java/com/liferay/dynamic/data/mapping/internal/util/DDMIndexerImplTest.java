@@ -273,10 +273,11 @@ public class DDMIndexerImplTest {
 	private DDMFormJSONSerializer _createDDMFormJSONSerializer() {
 		return new DDMFormJSONSerializer() {
 			{
-				setDDMFormFieldTypeServicesTracker(
+				ReflectionTestUtil.setFieldValue(
+					this, "_ddmFormFieldTypeServicesTracker",
 					Mockito.mock(DDMFormFieldTypeServicesTracker.class));
-
-				setJSONFactory(new JSONFactoryImpl());
+				ReflectionTestUtil.setFieldValue(
+					this, "_jsonFactory", new JSONFactoryImpl());
 			}
 		};
 	}

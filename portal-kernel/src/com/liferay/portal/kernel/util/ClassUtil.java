@@ -14,27 +14,14 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
-
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -139,40 +126,6 @@ public class ClassUtil {
 		return clazz.getName();
 	}
 
-	public static String getParentPath(
-		ClassLoader classLoader, String className) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Class name " + className);
-		}
-
-		if (!className.endsWith(_CLASS_EXTENSION)) {
-			className += _CLASS_EXTENSION;
-		}
-
-		className = StringUtil.replace(
-			className, CharPool.PERIOD, CharPool.SLASH);
-
-		className = StringUtil.replace(className, "/class", _CLASS_EXTENSION);
-
-		URL url = classLoader.getResource(className);
-
-		Path path = Paths.get(_getPathURIFromURL(url));
-
-		String parentPath = StringUtil.replace(
-			path.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
-
-		int pos = parentPath.indexOf(className);
-
-		parentPath = parentPath.substring(0, pos);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Parent path " + parentPath);
-		}
-
-		return parentPath;
-	}
-
 	public static boolean isSubclass(Class<?> a, Class<?> b) {
 		if (a == b) {
 			return true;
@@ -229,38 +182,6 @@ public class ClassUtil {
 		}
 
 		return false;
-	}
-
-	private static URI _getPathURIFromURL(URL url) {
-		String urlProtocol = url.getProtocol();
-
-		if (urlProtocol.equals("jar") || urlProtocol.equals("wsjar")) {
-			try {
-				url = new URL(url.getPath());
-			}
-			catch (MalformedURLException malformedURLException) {
-				throw new SystemException(malformedURLException);
-			}
-		}
-
-		String path = url.getPath();
-
-		if (!path.startsWith(StringPool.SLASH)) {
-			path = StringPool.SLASH + path;
-		}
-
-		try {
-			URI uri = new URI("file:" + path);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("URI " + uri);
-			}
-
-			return uri;
-		}
-		catch (URISyntaxException uriSyntaxException) {
-			throw new SystemException(uriSyntaxException);
-		}
 	}
 
 	private static String[] _processAnnotation(String s, StreamTokenizer st)
@@ -370,10 +291,6 @@ public class ClassUtil {
 		st.wordChars('}', '}');
 		st.wordChars(',', ',');
 	}
-
-	private static final String _CLASS_EXTENSION = ".class";
-
-	private static final Log _log = LogFactoryUtil.getLog(ClassUtil.class);
 
 	private static final Pattern _annotationNamePattern = Pattern.compile(
 		"@(\\w+)\\.?(\\w*)$");

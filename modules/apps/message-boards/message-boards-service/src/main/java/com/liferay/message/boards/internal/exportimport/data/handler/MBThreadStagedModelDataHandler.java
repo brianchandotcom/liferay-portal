@@ -105,13 +105,7 @@ public class MBThreadStagedModelDataHandler
 		throws Exception {
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBThreadLocalService(
-		MBThreadLocalService mbThreadLocalService) {
-
-		_mbThreadLocalService = mbThreadLocalService;
-	}
-
+	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
 
 }

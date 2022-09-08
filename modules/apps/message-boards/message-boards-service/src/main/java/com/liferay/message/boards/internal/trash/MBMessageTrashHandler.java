@@ -114,27 +114,13 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageService(MBMessageService mbMessageService) {
-		_mbMessageService = mbMessageService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBThreadLocalService(
-		MBThreadLocalService mbThreadLocalService) {
-
-		_mbThreadLocalService = mbThreadLocalService;
-	}
-
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
 	private MBMessageService _mbMessageService;
+
+	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference(

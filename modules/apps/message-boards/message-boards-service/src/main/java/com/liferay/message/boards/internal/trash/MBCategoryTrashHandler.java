@@ -418,42 +418,24 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBCategoryLocalService(
-		MBCategoryLocalService mbCategoryLocalService) {
-
-		_mbCategoryLocalService = mbCategoryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBThreadLocalService(
-		MBThreadLocalService mbThreadLocalService) {
-
-		_mbThreadLocalService = mbThreadLocalService;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)",
-		unbind = "-"
-	)
-	protected void setTrashRendererFactory(
-		TrashRendererFactory trashRendererFactory) {
-
-		_trashRendererFactory = trashRendererFactory;
-	}
-
 	@Reference(
 		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
 	)
 	private ModelResourcePermission<MBCategory>
 		_categoryModelResourcePermission;
 
+	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
+	)
 	private TrashRendererFactory _trashRendererFactory;
 
 }

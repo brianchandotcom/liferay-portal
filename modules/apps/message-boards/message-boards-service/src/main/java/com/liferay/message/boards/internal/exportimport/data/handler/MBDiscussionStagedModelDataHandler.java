@@ -180,32 +180,16 @@ public class MBDiscussionStagedModelDataHandler
 			discussion.getThreadId(), existingDiscussion.getThreadId());
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBDiscussionLocalService(
-		MBDiscussionLocalService mbDiscussionLocalService) {
-
-		_mbDiscussionLocalService = mbDiscussionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBDiscussionStagedModelDataHandler.class);
 
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
 }

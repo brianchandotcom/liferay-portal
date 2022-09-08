@@ -61,13 +61,6 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		verifyGroupedModels();
 	}
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.message.boards.service)(&(release.schema.version>=6.0.0)(!(release.schema.version>=7.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	protected void updateStagedPortletNames() throws PortalException {
 		ActionableDynamicQuery groupActionableDynamicQuery =
 			_groupLocalService.getActionableDynamicQuery();
@@ -131,6 +124,11 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.message.boards.service)(&(release.schema.version>=6.0.0)(!(release.schema.version>=7.0.0))))"
+	)
+	private Release _release;
 
 	@Reference
 	private Staging _staging;

@@ -48,13 +48,7 @@ public class MBDiscussionPermissionUpdateHandler
 		_mbDiscussionLocalService.updateMBDiscussion(mbDiscussion);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBDiscussionLocalService(
-		MBDiscussionLocalService mbDiscussionLocalService) {
-
-		_mbDiscussionLocalService = mbDiscussionLocalService;
-	}
-
+	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 
 }

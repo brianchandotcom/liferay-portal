@@ -48,13 +48,7 @@ public class MBMessagePermissionUpdateHandler
 		_mbMessageLocalService.updateMBMessage(mbMessage);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
 }

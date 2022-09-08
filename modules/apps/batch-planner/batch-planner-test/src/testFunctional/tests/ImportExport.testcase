@@ -1049,7 +1049,7 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "csv_account_import.csv");
 
 			JobScheduler.addScheduleTrigger(
-				taskExecutorType = "batch-planner-executor-name",
+				taskExecutorType = "batch-planner",
 				triggerName = "Scheduled Account Import",
 				triggerProperties = '''batchPlannerPlanId=${templateId}
 					external-file-url=${filePath}''');

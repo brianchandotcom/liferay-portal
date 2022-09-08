@@ -26,34 +26,6 @@ definition {
 		}
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test AddMultipleEntries {
-		property portal.acceptance = "true";
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type 1 Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type 1 Name");
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type 1 Name");
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type 2 Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type 2 Name");
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type 2 Name");
-	}
-
 	@description = "This test checks that a document using a document type with a custom metadata set can be created successfully."
 	@priority = "5"
 	@refactordone
@@ -96,6 +68,34 @@ definition {
 			siteURLKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Type Contract Title");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanAddMultipleEntries {
+		property portal.acceptance = "true";
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type 1 Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type 1 Name");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type 1 Name");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type 2 Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type 2 Name");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type 2 Name");
 	}
 
 	@description = "This test covers LPS-129777. It ensures that a predefined image can be added via image field."

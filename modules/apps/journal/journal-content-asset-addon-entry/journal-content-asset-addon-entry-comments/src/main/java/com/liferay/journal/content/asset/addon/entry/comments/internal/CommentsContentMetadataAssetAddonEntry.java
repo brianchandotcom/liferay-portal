@@ -70,6 +70,11 @@ public class CommentsContentMetadataAssetAddonEntry
 	}
 
 	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
 	public Double getWeight() {
 		return 3.0;
 	}
@@ -122,15 +127,6 @@ public class CommentsContentMetadataAssetAddonEntry
 			commentRatingsContentMetadataAssetAddonEntry;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.comments)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -144,5 +140,10 @@ public class CommentsContentMetadataAssetAddonEntry
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.comments)"
+	)
+	private ServletContext _servletContext;
 
 }

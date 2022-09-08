@@ -44,18 +44,18 @@ public class DOCConvertionUserToolAssetAddonEntry
 		return "enableDOC";
 	}
 
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
 	@Override
 	public Double getWeight() {
 		return 4.0;
 	}
 
-	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.conversions)",
-		unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.conversions)"
 	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
+	private ServletContext _servletContext;
 
 }

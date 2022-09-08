@@ -61,7 +61,7 @@ public class AccountEntryDisplay {
 			return new AccountEntryDisplay(accountEntry);
 		}
 
-		return _EMPTY_INSTANCE;
+		return new AccountEntryDisplay();
 	}
 
 	public static AccountEntryDisplay of(long accountEntryId) {
@@ -356,9 +356,6 @@ public class AccountEntryDisplay {
 
 		return false;
 	}
-
-	private static final AccountEntryDisplay _EMPTY_INSTANCE =
-		new AccountEntryDisplay();
 
 	private static final int _ORGANIZATION_NAMES_LIMIT = 5;
 

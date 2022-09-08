@@ -239,7 +239,7 @@ definition {
 		SearchBarSuggestions.viewSuggestions(
 			searchAssetDescription = "Page: Home",
 			searchAssetTitle = "Home",
-			suggestionContributorDisplayGroupName = "suggestions");
+			suggestionContributorDisplayGroupName = "Suggestions");
 	}
 
 	@priority = "5"

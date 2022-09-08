@@ -63,7 +63,7 @@ definition {
 
 	macro gotoSuggestionResultDetails {
 		if (!(isSet(suggestionContributorDisplayGroupName))) {
-			var suggestionContributorDisplayGroupName = "suggestions";
+			var suggestionContributorDisplayGroupName = "Suggestions";
 		}
 
 		Click.mouseDownMouseUp(
@@ -78,7 +78,7 @@ definition {
 
 	macro viewNoResultAssetTitle {
 		if (!(isSet(suggestionContributorDisplayGroupName))) {
-			var suggestionContributorDisplayGroupName = "suggestions";
+			var suggestionContributorDisplayGroupName = "Suggestions";
 		}
 
 		AssertElementNotPresent(
@@ -95,7 +95,7 @@ definition {
 
 	macro viewSuggestions {
 		if (!(isSet(suggestionContributorDisplayGroupName))) {
-			var suggestionContributorDisplayGroupName = "suggestions";
+			var suggestionContributorDisplayGroupName = "Suggestions";
 		}
 
 		AssertTextEquals.assertPartialText(

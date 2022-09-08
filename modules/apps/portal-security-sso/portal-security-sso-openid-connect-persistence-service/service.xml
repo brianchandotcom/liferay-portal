@@ -19,6 +19,7 @@
 		<!-- Other fields -->
 
 		<column name="accessToken" type="String" />
+		<column name="accessTokenExpirationDate" type="Date" />
 		<column name="authServerWellKnownURI" type="String" />
 		<column name="clientId" type="String" />
 		<column name="idToken" type="String" />

@@ -1,0 +1,24 @@
+{
+	"label": {
+		"en_US": "MDF Claim Activity"
+	},
+	"name": "MDFClaimActivity",
+	"objectFields": [
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Metrics"
+			},
+			"name": "metrics",
+			"required": false,
+			"type": "Clob"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "MDF Claim Activity"
+	},
+	"scope": "company"
+}

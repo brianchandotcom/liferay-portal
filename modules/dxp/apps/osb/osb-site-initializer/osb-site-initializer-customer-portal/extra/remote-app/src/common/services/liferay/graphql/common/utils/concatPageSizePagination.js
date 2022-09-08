@@ -9,7 +9,10 @@
  * distribution rights of the Software.
  */
 
-export default function concatPageSizePagination(keyArgs = false) {
+export default function concatPageSizePagination(
+	clearOnFirstPage,
+	keyArgs = false
+) {
 	return {
 		keyArgs,
 		merge(existing = [], incoming, {variables}) {
@@ -18,6 +21,10 @@ export default function concatPageSizePagination(keyArgs = false) {
 			if (variables) {
 				const {page = 1, pageSize = 20} = variables;
 				const offset = (page - 1) * pageSize;
+
+				if (!offset && clearOnFirstPage) {
+					return [...incoming];
+				}
 
 				for (let i = 0; i < incoming.length; ++i) {
 					merged[offset + i] = incoming[i];

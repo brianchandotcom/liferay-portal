@@ -34,7 +34,7 @@ export const koroneikiAccountsTypePolicy = {
 	C_KoroneikiAccountPage: {
 		fields: {
 			items: {
-				...concatPageSizePagination(),
+				...concatPageSizePagination(true),
 			},
 		},
 	},

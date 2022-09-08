@@ -45,6 +45,7 @@ import io.swagger.v3.oas.models.responses.ApiResponses;
 
 import java.net.URI;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -144,6 +145,25 @@ public class RelatedObjectEntryOpenAPIContributor
 							systemObjectDefinitionMetadata));
 				}
 			});
+
+		paths.addPathItem(
+			StringBundler.concat(
+				StringPool.SLASH, _getJaxRsVersion(uriInfo), StringPool.SLASH,
+				_getSystemObjectBasePath(systemObjectDefinitionMetadata),
+				StringPool.SLASH,
+				_getSystemObjectDefinitionPathName(
+					systemObjectDefinitionMetadata),
+				StringPool.SLASH, systemObjectRelationship.getName(),
+				StringPool.SLASH,
+				_getObjectDefinitionPathName(objectDefinition)),
+			new PathItem() {
+				{
+					put(
+						_getPutOperation(
+							objectDefinition, systemObjectRelationship,
+							systemObjectDefinitionMetadata));
+				}
+			});
 	}
 
 	private Content _getContent(ObjectRelationship objectRelationship)
@@ -178,10 +198,25 @@ public class RelatedObjectEntryOpenAPIContributor
 		return dtoConverter.getContentType();
 	}
 
+	private String _getIdParameterName(String name) {
+		return StringUtil.lowerCaseFirstLetter(name) + "Id";
+	}
+
+	private String _getIdParameterTemplate(String name) {
+		return StringPool.OPEN_CURLY_BRACE + _getIdParameterName(name) +
+			StringPool.CLOSE_CURLY_BRACE;
+	}
+
 	private String _getJaxRsVersion(UriInfo uriInfo) {
 		String path = uriInfo.getPath();
 
 		return path.split(StringPool.SLASH)[0];
+	}
+
+	private String _getObjectDefinitionPathName(
+		ObjectDefinition objectDefinition) {
+
+		return _getIdParameterTemplate(objectDefinition.getShortName());
 	}
 
 	private Schema _getObjectDefinitionSchema(ObjectDefinition objectDefinition)
@@ -245,6 +280,59 @@ public class RelatedObjectEntryOpenAPIContributor
 		};
 	}
 
+	private Operation _getPutOperation(
+		ObjectDefinition objectDefinition,
+		ObjectRelationship objectRelationship,
+		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
+
+		return new Operation() {
+			{
+				String upperCaseFirstLetterObjectRelationShipName =
+					StringUtil.upperCaseFirstLetter(
+						objectRelationship.getName());
+
+				operationId("put" + upperCaseFirstLetterObjectRelationShipName);
+
+				parameters(
+					Arrays.asList(
+						new Parameter() {
+							{
+								in("path");
+
+								DTOConverter<?, ?> dtoConverter =
+									_dtoConverterRegistry.getDTOConverter(
+										systemObjectDefinitionMetadata.
+											getModelClassName());
+
+								name(
+									_getIdParameterName(
+										dtoConverter.getContentType()));
+
+								required(true);
+							}
+						},
+						new Parameter() {
+							{
+								in("path");
+								name(
+									_getIdParameterName(
+										objectDefinition.getShortName()));
+								required(true);
+							}
+						}));
+				responses(
+					new ApiResponses() {
+						{
+							setDefault(new ApiResponse());
+						}
+					});
+				tags(
+					Collections.singletonList(
+						_getContentType(systemObjectDefinitionMetadata)));
+			}
+		};
+	}
+
 	private String _getSystemObjectBasePath(
 		String systemObjectRESTContextPath) {
 
@@ -286,11 +374,8 @@ public class RelatedObjectEntryOpenAPIContributor
 	private String _getSystemObjectDefinitionPathName(
 		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
 
-		return StringBundler.concat(
-			StringPool.OPEN_CURLY_BRACE,
-			StringUtil.lowerCaseFirstLetter(
-				_getContentType(systemObjectDefinitionMetadata)),
-			"Id}");
+		return _getIdParameterTemplate(
+			_getContentType(systemObjectDefinitionMetadata));
 	}
 
 	private List<ObjectRelationship> _getSystemObjectRelationships(

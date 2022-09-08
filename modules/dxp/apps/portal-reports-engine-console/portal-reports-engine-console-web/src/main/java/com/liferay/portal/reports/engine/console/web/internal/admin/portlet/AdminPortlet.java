@@ -147,6 +147,12 @@ public class AdminPortlet extends MVCPortlet {
 				ReportsEngineAdminWebConfiguration.class, properties);
 	}
 
+	@Reference
+	protected DefinitionLocalService definitionLocalService;
+
+	@Reference
+	protected SourceLocalService sourceLocalService;
+
 	private void _serveDownload(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -174,7 +180,7 @@ public class AdminPortlet extends MVCPortlet {
 		Definition definition = null;
 
 		if (definitionId > 0) {
-			definition = _definitionLocalService.getDefinition(definitionId);
+			definition = definitionLocalService.getDefinition(definitionId);
 		}
 
 		renderRequest.setAttribute(ReportsEngineWebKeys.DEFINITION, definition);
@@ -196,19 +202,13 @@ public class AdminPortlet extends MVCPortlet {
 		Source source = null;
 
 		if (sourceId > 0) {
-			source = _sourceLocalService.getSource(sourceId);
+			source = sourceLocalService.getSource(sourceId);
 		}
 
 		renderRequest.setAttribute(ReportsEngineWebKeys.SOURCE, source);
 	}
 
-	@Reference
-	private DefinitionLocalService _definitionLocalService;
-
 	private volatile ReportsEngineAdminWebConfiguration
 		_reportsEngineAdminWebConfiguration;
-
-	@Reference
-	private SourceLocalService _sourceLocalService;
 
 }

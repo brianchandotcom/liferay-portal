@@ -1,5 +1,40 @@
 definition {
 
+	macro addNewComponent {
+		SelectFrame(locator1 = "Testray#MODAL_BODY");
+
+		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${componentName}");
+
+		if (isSet(teamName)) {
+			Select(
+				key_fieldLabel = "Team",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${teamName}");
+		}
+
+		Button.clickSave();
+	}
+
+	macro addNewTeam {
+		SelectFrame(locator1 = "Testray#MODAL_BODY");
+
+		for (var teamName : list "${teamName}") {
+			Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
+
+			SelectFrame(locator1 = "Testray#MODAL_BODY");
+
+			Type(
+				locator1 = "TestrayManage#NEW_OPTION_NAME",
+				value1 = "${teamName}");
+
+			Button.clickSave();
+		}
+	}
+
 	macro assertItemName {
 		AssertElementPresent(
 			key_projectName = "${key_name}",
@@ -192,6 +227,25 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editComponent {
+		TestrayContextMenu.clickContextMenuProjects(name = "${componentName}");
+
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${newComponentName}");
+
+		if (isSet(newTeamName)) {
+			Select(
+				key_fieldLabel = "Team",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${newTeamName}");
+		}
+
+		Button.clickSave();
+	}
+
 	macro editProjectTestray {
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
@@ -309,72 +363,17 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	macro viewOverviewTab {
-		AssertElementPresent(
-			key_rowValue = "${rowValue}",
-			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
-	}
-
-	macro addNewTeam {
-		SelectFrame(locator1 = "Testray#MODAL_BODY");
-
-		for (var teamName : list "${teamName}") {
-			Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
-
-			SelectFrame(locator1 = "Testray#MODAL_BODY");
-
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "${teamName}");
-
-			Button.clickSave();
-		}
-
-	}
-
-	macro addNewComponent {
-		SelectFrame(locator1 = "Testray#MODAL_BODY");
-
-		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
-
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${componentName}");
-
-		if (isSet(teamName)) {
-			Select(
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				key_fieldLabel = "Team",
-				value1 = "${teamName}");
-		}
-
-		Button.clickSave();
-	}
-
-	macro editComponent {
-		TestrayContextMenu.clickContextMenuProjects(name = "${componentName}");
-
-		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
-
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${newComponentName}");
-
-		if (isSet(newTeamName)) {
-			Select(
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				key_fieldLabel = "Team",
-				value1 = "${newTeamName}");
-		}
-
-		Button.clickSave();
-	}
-
-	macro viewErrorMessage{
+	macro viewErrorMessage {
 		AssertElementPresent(
 			key_fieldLabel = "${fieldLabel}",
 			key_warningMessage = "${warningMessage}",
 			locator1 = "Testray#FIELD_REQUIRED_MESSAGE");
+	}
+
+	macro viewOverviewTab {
+		AssertElementPresent(
+			key_rowValue = "${rowValue}",
+			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
 	}
 
 }

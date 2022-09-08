@@ -39,7 +39,9 @@ const SuiteFormSelectModal: React.FC<SuiteSelectCasesModalProps> = ({
 					isModal
 					onClose={onClose}
 					onSubmit={() => onSave(state)}
-					primaryButtonTitle={i18n.translate('select-cases')}
+					primaryButtonProps={{
+						title: i18n.translate('select-cases'),
+					}}
 				/>
 			}
 			observer={observer}

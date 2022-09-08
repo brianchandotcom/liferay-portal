@@ -45,7 +45,9 @@ const BuildSelectSuitesModal: React.FC<BuildSelectSuitesModalProps> = ({
 					isModal
 					onClose={onClose}
 					onSubmit={() => onSave(state)}
-					primaryButtonTitle={i18n.translate('select-suites')}
+					primaryButtonProps={{
+						title: i18n.translate('select-suites'),
+					}}
 				/>
 			}
 			observer={observer}

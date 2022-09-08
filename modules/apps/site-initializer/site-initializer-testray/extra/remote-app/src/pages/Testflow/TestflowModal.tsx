@@ -142,7 +142,9 @@ const TestflowModal: React.FC<TestflowModalProps> = ({
 					isModal
 					onClose={onClose}
 					onSubmit={onSubmit}
-					primaryButtonTitle="analyse"
+					primaryButtonProps={{
+						title: i18n.translate('analyse'),
+					}}
 				/>
 			}
 			observer={observer}

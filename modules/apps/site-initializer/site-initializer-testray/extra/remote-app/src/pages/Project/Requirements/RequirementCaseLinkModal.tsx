@@ -45,7 +45,7 @@ const RequirementCaseLinkModal: React.FC<RequirementCaseLinkModalProps> = ({
 					isModal
 					onClose={onClose}
 					onSubmit={() => onSave({items, state})}
-					primaryButtonTitle={i18n.translate('select-cases')}
+					primaryButtonProps={{title: i18n.translate('select-cases')}}
 				/>
 			}
 			observer={observer}

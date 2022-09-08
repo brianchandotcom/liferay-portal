@@ -68,9 +68,9 @@ const BuildSelectOptionModal: React.FC<
 					isModal
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
-					primaryButtonTitle={i18n.translate(
-						lastStep ? 'add' : 'next'
-					)}
+					primaryButtonProps={{
+						title: i18n.translate(lastStep ? 'add' : 'next'),
+					}}
 				/>
 			}
 			observer={observer}

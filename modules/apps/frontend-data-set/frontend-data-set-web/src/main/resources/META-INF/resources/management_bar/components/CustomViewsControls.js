@@ -17,16 +17,23 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import {openModal} from 'frontend-js-web';
-import React, {useContext, useState} from 'react';
+import {fetch, openModal, openToast} from 'frontend-js-web';
+import React, {useContext, useRef, useState} from 'react';
 
-import FrontendDataSetContext from './../../FrontendDataSetContext';
+import FrontendDataSetContext from '../../FrontendDataSetContext';
+import ViewsContext from '../../views/ViewsContext';
 
 const CustomViewsControls = () => {
 	const [viewsDropdownActive, setViewsDropdownActive] = useState(false);
 	const [actionsDropdownActive, setActionsDropdownActive] = useState(false);
+	const [customViews, setCustomViews] = useState({});
 
-	const {namespace} = useContext(FrontendDataSetContext);
+	const {appURL, id, namespace, portletId} = useContext(
+		FrontendDataSetContext
+	);
+	const [{activeView}] = useContext(ViewsContext);
+
+	const customViewNameInputRef = useRef();
 
 	const SaveCustomViewModalBody = () => {
 		return (
@@ -40,10 +47,23 @@ const CustomViewsControls = () => {
 				<ClayInput
 					autoFocus={true}
 					id={`${namespace}customViewNameInput`}
+					ref={customViewNameInputRef}
 					type="text"
 				/>
 			</ClayForm.Group>
 		);
+	};
+
+	const getNextCustomViewId = () => {
+		const ids = Object.keys(customViews);
+
+		let nextId = 1;
+
+		if (ids.length) {
+			nextId = Math.max(...ids.map((item) => Number(item))) + 1;
+		}
+
+		return String(nextId);
 	};
 
 	const openSaveCustomViewModal = () => {
@@ -58,7 +78,61 @@ const CustomViewsControls = () => {
 				{
 					label: Liferay.Language.get('save'),
 					onClick: ({processClose}) => {
-						processClose();
+						const url = new URL(`${appURL}/fds/${id}/custom-views`);
+
+						url.searchParams.append('portletId', portletId);
+
+						const nextCustomViewId = getNextCustomViewId();
+						const viewState = {
+							contentRenderer: activeView.contentRenderer,
+							customViewName:
+								customViewNameInputRef.current.value,
+						};
+
+						fetch(url, {
+							body: JSON.stringify({
+								customViewId: nextCustomViewId,
+								viewState,
+							}),
+							headers: {
+								'Accept': 'application/json',
+								'Content-Type': 'application/json',
+							},
+							method: 'POST',
+						})
+							.then((response) => {
+								if (response.ok) {
+									processClose();
+
+									openToast({
+										message: Liferay.Language.get(
+											'view-was-saved-successfully'
+										),
+										type: 'success',
+									});
+
+									setCustomViews({
+										...customViews,
+										[nextCustomViewId]: viewState,
+									});
+								}
+								else {
+									openToast({
+										message: Liferay.Language.get(
+											'an-unexpected-error-occurred'
+										),
+										type: 'danger',
+									});
+								}
+							})
+							.catch(() => {
+								openToast({
+									message: Liferay.Language.get(
+										'an-unexpected-error-occurred'
+									),
+									type: 'danger',
+								});
+							});
 					},
 				},
 			],

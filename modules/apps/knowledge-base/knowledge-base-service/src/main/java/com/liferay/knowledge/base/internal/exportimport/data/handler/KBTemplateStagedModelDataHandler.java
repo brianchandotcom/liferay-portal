@@ -137,13 +137,7 @@ public class KBTemplateStagedModelDataHandler
 		portletDataContext.importClassedModel(kbTemplate, importedKBTemplate);
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBTemplateLocalService(
-		KBTemplateLocalService kbTemplateLocalService) {
-
-		_kbTemplateLocalService = kbTemplateLocalService;
-	}
-
+	@Reference
 	private KBTemplateLocalService _kbTemplateLocalService;
 
 }

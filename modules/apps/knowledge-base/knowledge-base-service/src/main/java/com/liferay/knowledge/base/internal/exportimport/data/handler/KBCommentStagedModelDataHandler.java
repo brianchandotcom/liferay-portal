@@ -86,13 +86,6 @@ public class KBCommentStagedModelDataHandler
 		return kbComment.getUuid();
 	}
 
-	@Reference(unbind = "-")
-	public void setKBCommentLocalService(
-		KBCommentLocalService kbCommentLocalService) {
-
-		_kbCommentLocalService = kbCommentLocalService;
-	}
-
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, KBComment kbComment)
@@ -155,6 +148,7 @@ public class KBCommentStagedModelDataHandler
 		portletDataContext.importClassedModel(kbComment, importedKBComment);
 	}
 
+	@Reference
 	private KBCommentLocalService _kbCommentLocalService;
 
 }

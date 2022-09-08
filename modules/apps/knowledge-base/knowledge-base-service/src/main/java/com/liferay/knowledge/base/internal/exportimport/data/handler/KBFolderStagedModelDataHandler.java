@@ -146,13 +146,7 @@ public class KBFolderStagedModelDataHandler
 		portletDataContext.importClassedModel(kbFolder, importedKBFolder);
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBFolderLocalService(
-		KBFolderLocalService kbFolderLocalService) {
-
-		_kbFolderLocalService = kbFolderLocalService;
-	}
-
+	@Reference
 	private KBFolderLocalService _kbFolderLocalService;
 
 }

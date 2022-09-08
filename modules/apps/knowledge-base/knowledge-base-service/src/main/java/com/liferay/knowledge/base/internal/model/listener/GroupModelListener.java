@@ -40,27 +40,16 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBArticleLocalService(
-		KBArticleLocalService kbArticleLocalService) {
-
-		_kbArticleLocalService = kbArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBTemplateLocalService(
-		KBTemplateLocalService kbTemplateLocalService) {
-
-		_kbTemplateLocalService = kbTemplateLocalService;
-	}
-
 	private void _onBeforeRemove(Group group) throws Exception {
 		_kbArticleLocalService.deleteGroupKBArticles(group.getGroupId());
 
 		_kbTemplateLocalService.deleteGroupKBTemplates(group.getGroupId());
 	}
 
+	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
+
+	@Reference
 	private KBTemplateLocalService _kbTemplateLocalService;
 
 }

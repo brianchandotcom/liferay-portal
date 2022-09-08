@@ -51,13 +51,6 @@ public class KBArticleWorkflowHandler extends BaseWorkflowHandler<KBArticle> {
 		return _resourceActions.getModelResource(locale, getClassName());
 	}
 
-	@Reference(unbind = "-")
-	public void setKBArticleLocalService(
-		KBArticleLocalService kbArticleLocalService) {
-
-		_kbArticleLocalService = kbArticleLocalService;
-	}
-
 	@Override
 	public KBArticle updateStatus(
 			int status, Map<String, Serializable> workflowContext)
@@ -76,12 +69,10 @@ public class KBArticleWorkflowHandler extends BaseWorkflowHandler<KBArticle> {
 			userId, resourcePrimKey, status, serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setResourceActions(ResourceActions resourceActions) {
-		_resourceActions = resourceActions;
-	}
-
+	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
+
+	@Reference
 	private ResourceActions _resourceActions;
 
 }

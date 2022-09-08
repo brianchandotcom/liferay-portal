@@ -542,6 +542,18 @@ public class DefaultObjectEntryManagerImplTest {
 		return dlFileEntry.getFileEntryId();
 	}
 
+	private String _getListTypeEntryKey() throws Exception {
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.addListTypeEntry(
+				_user.getUserId(),
+				_listTypeDefinition.getListTypeDefinitionId(),
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()));
+
+		return listTypeEntry.getKey();
+	}
+
 	private ObjectEntry _getObjectEntry(
 			ObjectDefinition objectDefinition, long objectEntryId)
 		throws Exception {
@@ -563,18 +575,6 @@ public class DefaultObjectEntryManagerImplTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		return objectEntry.getId();
-	}
-
-	private String _getListTypeEntryKey() throws Exception {
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.addListTypeEntry(
-				_user.getUserId(),
-				_listTypeDefinition.getListTypeDefinitionId(),
-				RandomTestUtil.randomString(),
-				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
-
-		return listTypeEntry.getKey();
 	}
 
 	private void _setUpDTOConverterContext() {

@@ -13,6 +13,7 @@ import {render} from '@testing-library/react';
 import React from 'react';
 
 import BasicInformation from '../../../src/main/resources/META-INF/resources/js/components/BasicInformation';
+import {StoreStateContext} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 
 import '@testing-library/jest-dom/extend-expect';
 
@@ -49,7 +50,11 @@ describe('BasicInformation', () => {
 			],
 		};
 
-		const {getByText} = render(<BasicInformation {...testProps} />);
+		const {getByText} = render(
+			<StoreStateContext.Provider value={{languageTag: 'en-US'}}>
+				<BasicInformation {...testProps} />
+			</StoreStateContext.Provider>
+		);
 
 		expect(getByText(testProps.title)).toBeInTheDocument();
 

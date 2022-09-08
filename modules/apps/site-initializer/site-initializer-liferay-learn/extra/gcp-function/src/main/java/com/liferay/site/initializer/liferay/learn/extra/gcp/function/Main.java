@@ -77,6 +77,9 @@ import org.jsoup.select.Elements;
  */
 public class Main {
 
+	public static final String GITHUB_EDIT_LINK_BASE_URL =
+		"https://github.com/liferay/liferay-learn/edit/master/docs/";
+
 	public static void main(String[] arguments) throws Exception {
 		Properties properties = new Properties();
 
@@ -110,6 +113,8 @@ public class Main {
 		_liferaySiteId = GetterUtil.getLong(liferaySiteId);
 		_sphinxOutputDirectory = sphinxOutputDirectory;
 
+		_oauthExpirationMillis = 0L;
+
 		_logger = Logger.getLogger(Main.class.getName());
 
 		try {
@@ -135,9 +140,19 @@ public class Main {
 	}
 
 	public void uploadToLiferay() throws Exception {
+		long start = System.currentTimeMillis();
+
 		for (String fileName : _fileNames) {
 			if (!fileName.contains("/en/") || !fileName.endsWith(".fjson")) {
 				continue;
+			}
+
+			long timeElapsed = System.currentTimeMillis() - start;
+
+			if (timeElapsed > (_oauthExpirationMillis - 10000)) {
+				_initResourceBuilders(_getOAuthAuthorization());
+
+				start = System.currentTimeMillis();
 			}
 
 			System.out.println(fileName);
@@ -159,6 +174,58 @@ public class Main {
 		}
 
 		_fileNames.add(fileName);
+	}
+
+	private Map<String, ContentFieldValue> _getContentFieldValues(
+			String fileName, JSONObject jsonObject)
+		throws Exception {
+
+		return HashMapBuilder.<String, ContentFieldValue>put(
+			"Body",
+			new ContentFieldValue() {
+				{
+					data = _uploadImagesFromHTML(
+						fileName,
+						_getJSONObjectString(
+							jsonObject, "body", StringPool.BLANK));
+				}
+			}
+		).put(
+			"Breadcrumb",
+			new ContentFieldValue() {
+				{
+					data = _getJSONObjectArray(
+						jsonObject, "parents", StringPool.BLANK);
+				}
+			}
+		).put(
+			"githubEditLink",
+			new ContentFieldValue() {
+				{
+					String githubURLPath = StringUtil.replace(
+						fileName.substring(_sphinxOutputDirectory.length()),
+						".fjson", ".md");
+
+					data = GITHUB_EDIT_LINK_BASE_URL + githubURLPath;
+				}
+			}
+		).put(
+			"Navigation",
+			new ContentFieldValue() {
+				{
+					data = _getJSONObjectString(
+						jsonObject, "navtoc", StringPool.BLANK);
+				}
+			}
+		).put(
+			"TOC",
+			new ContentFieldValue() {
+				{
+					data = _getJSONObjectString(
+						jsonObject, "toc", StringPool.BLANK);
+				}
+			}
+		).build();
 	}
 
 	private String[] _getDirNames(String fileName) throws Exception {
@@ -258,6 +325,18 @@ public class Main {
 		return documentFolderId;
 	}
 
+	private String _getJSONObjectArray(
+		JSONObject jsonObject, String key, String defaultValue) {
+
+		if (!jsonObject.has(key)) {
+			return defaultValue;
+		}
+
+		return jsonObject.getJSONArray(
+			key
+		).toString(5);
+	}
+
 	private String _getJSONObjectString(
 		JSONObject jsonObject, String key, String defaultValue) {
 
@@ -269,6 +348,8 @@ public class Main {
 	}
 
 	private String _getOAuthAuthorization() throws Exception {
+		System.out.println("Obtaining OAuth token");
+
 		HttpPost httpPost = new HttpPost(_liferayURL + "/o/oauth2/token");
 
 		httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -297,6 +378,9 @@ public class Main {
 					EntityUtils.toString(
 						closeableHttpResponse.getEntity(),
 						Charset.defaultCharset()));
+
+				_oauthExpirationMillis =
+					responseJSONObject.getLong("expires_in") * 1000;
 
 				return responseJSONObject.getString("token_type") + " " +
 					responseJSONObject.getString("access_token");
@@ -436,14 +520,15 @@ public class Main {
 
 		JSONObject englishJSONObject = new JSONObject(englishText);
 
-		ContentFieldValue englishContentFieldValue = new ContentFieldValue() {
-			{
-				data = _uploadImagesFromHTML(
-					fileName,
-					_getJSONObjectString(
-						englishJSONObject, "body", StringPool.BLANK));
-			}
-		};
+		Map<String, ContentFieldValue> englishContentFieldValues =
+			_getContentFieldValues(fileName, englishJSONObject);
+
+		Set<String> contentFieldNames = englishContentFieldValues.keySet();
+
+		ContentField[] contentFields =
+			new ContentField[contentFieldNames.size()];
+
+		int contentFieldCount = 0;
 
 		String englishTitle = _getJSONObjectString(
 			englishJSONObject, "title", fileName);
@@ -457,29 +542,27 @@ public class Main {
 
 			JSONObject japaneseJSONObject = new JSONObject(japaneseText);
 
-			structuredContent.setContentFields(
-				new ContentField[] {
-					new ContentField() {
-						{
-							contentFieldValue = englishContentFieldValue;
-							contentFieldValue_i18n = HashMapBuilder.put(
-								"en-US", englishContentFieldValue
-							).put(
-								"ja-JP",
-								new ContentFieldValue() {
-									{
-										data = _uploadImagesFromHTML(
-											japaneseFile.getAbsolutePath(),
-											_getJSONObjectString(
-												japaneseJSONObject, "body",
-												StringPool.BLANK));
-									}
-								}
-							).build();
-							name = "content";
-						}
+			Map<String, ContentFieldValue> japaneseContentFieldValues =
+				_getContentFieldValues(fileName, japaneseJSONObject);
+
+			for (String contentFieldName : contentFieldNames) {
+				contentFields[contentFieldCount++] = new ContentField() {
+					{
+						contentFieldValue = englishContentFieldValues.get(
+							contentFieldName);
+						contentFieldValue_i18n = HashMapBuilder.put(
+							"en-US",
+							englishContentFieldValues.get(contentFieldName)
+						).put(
+							"ja-JP",
+							japaneseContentFieldValues.get(contentFieldName)
+						).build();
+						name = contentFieldName;
 					}
-				});
+				};
+			}
+
+			structuredContent.setContentFields(contentFields);
 
 			structuredContent.setFriendlyUrlPath_i18n(
 				HashMapBuilder.put(
@@ -497,15 +580,17 @@ public class Main {
 				).build());
 		}
 		else {
-			structuredContent.setContentFields(
-				new ContentField[] {
-					new ContentField() {
-						{
-							contentFieldValue = englishContentFieldValue;
-							name = "content";
-						}
+			for (String contentFieldName : contentFieldNames) {
+				contentFields[contentFieldCount++] = new ContentField() {
+					{
+						contentFieldValue = englishContentFieldValues.get(
+							contentFieldName);
+						name = contentFieldName;
 					}
-				});
+				};
+			}
+
+			structuredContent.setContentFields(contentFields);
 		}
 
 		structuredContent.setContentStructureId(
@@ -591,6 +676,7 @@ public class Main {
 	private final long _liferaySiteId;
 	private final String _liferayURL;
 	private final Logger _logger;
+	private long _oauthExpirationMillis;
 	private final String _sphinxOutputDirectory;
 	private final Map<String, Long> _structuredContentFolderIds =
 		new HashMap<>();

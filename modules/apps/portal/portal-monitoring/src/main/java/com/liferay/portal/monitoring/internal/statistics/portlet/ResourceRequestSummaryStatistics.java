@@ -651,11 +651,7 @@ public class ResourceRequestSummaryStatistics
 		return requestStatistics.getTimeoutCount();
 	}
 
-	@Reference(unbind = "-")
-	protected void setServerStatistics(ServerStatistics serverStatistics) {
-		_serverStatistics = serverStatistics;
-	}
-
+	@Reference
 	private ServerStatistics _serverStatistics;
 
 }

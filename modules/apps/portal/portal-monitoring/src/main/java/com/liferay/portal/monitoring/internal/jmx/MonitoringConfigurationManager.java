@@ -230,36 +230,18 @@ public class MonitoringConfigurationManager
 			_monitoringConfiguration.monitorServiceRequest());
 	}
 
-	@Reference(unbind = "-")
-	protected void setMonitoringControl(MonitoringControl monitoringControl) {
-		_monitoringControl = monitoringControl;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortalMonitoringControl(
-		PortalMonitoringControl portalMonitoringControl) {
-
-		_portalMonitoringControl = portalMonitoringControl;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletMonitoringControl(
-		PortletMonitoringControl portletMonitoringControl) {
-
-		_portletMonitoringControl = portletMonitoringControl;
-	}
-
-	@Reference(unbind = "-")
-	protected void setServiceMonitoringControl(
-		ServiceMonitoringControl serviceMonitoringControl) {
-
-		_serviceMonitoringControl = serviceMonitoringControl;
-	}
-
 	private volatile MonitoringConfiguration _monitoringConfiguration;
+
+	@Reference
 	private MonitoringControl _monitoringControl;
+
+	@Reference
 	private PortalMonitoringControl _portalMonitoringControl;
+
+	@Reference
 	private PortletMonitoringControl _portletMonitoringControl;
+
+	@Reference
 	private ServiceMonitoringControl _serviceMonitoringControl;
 
 }

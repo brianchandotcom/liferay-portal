@@ -113,10 +113,6 @@ public class MonitoringMessagingConfigurator {
 		_bundleContext = null;
 	}
 
-	@Reference(unbind = "-")
-	protected void setMessageBus(MessageBus messageBus) {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MonitoringMessagingConfigurator.class);
 
@@ -127,5 +123,8 @@ public class MonitoringMessagingConfigurator {
 
 	private volatile ServiceRegistration<Destination>
 		_destinationServiceRegistration;
+
+	@Reference
+	private MessageBus _messageBus;
 
 }

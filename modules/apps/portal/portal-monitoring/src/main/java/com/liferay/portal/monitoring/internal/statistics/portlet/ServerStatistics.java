@@ -178,14 +178,9 @@ public class ServerStatistics
 			companyStatistics.getWebId(), companyStatistics);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
+	@Reference
 	private CompanyLocalService _companyLocalService;
+
 	private final Map<Long, CompanyStatistics> _companyStatisticsByCompanyId =
 		new TreeMap<>();
 	private final Map<String, CompanyStatistics> _companyStatisticsByWebId =

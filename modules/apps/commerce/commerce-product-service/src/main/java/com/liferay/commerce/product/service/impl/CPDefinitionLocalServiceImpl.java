@@ -51,7 +51,7 @@ import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalServiceUtil;
-import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -1380,7 +1380,7 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product definition option rels
 
-		_cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRels(
+		CPDefinitionOptionRelLocalServiceUtil.deleteCPDefinitionOptionRels(
 			cpDefinition.getCPDefinitionId());
 
 		// Commerce product definition attachment file entries
@@ -1939,11 +1939,11 @@ public class CPDefinitionLocalServiceImpl
 	@Override
 	public boolean hasChildCPDefinitions(long cpDefinitionId) {
 		int count =
-			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
-				cpDefinitionId);
+			CPDefinitionOptionRelLocalServiceUtil.
+				getCPDefinitionOptionRelsCount(cpDefinitionId);
 
 		if ((count <= 0) ||
-			!_cpDefinitionOptionRelLocalService.
+			!CPDefinitionOptionRelLocalServiceUtil.
 				hasLinkedCPInstanceCPDefinitionOptionRels(cpDefinitionId)) {
 
 			return false;
@@ -2736,8 +2736,8 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		int cpDefinitionOptionRelsCount =
-			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
-				cpDefinitionId, true);
+			CPDefinitionOptionRelLocalServiceUtil.
+				getCPDefinitionOptionRelsCount(cpDefinitionId, true);
 
 		if (cpDefinitionOptionRelsCount == 0) {
 			return;
@@ -3199,10 +3199,6 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private CPDefinitionLinkPersistence _cpDefinitionLinkPersistence;
-
-	@Reference
-	private CPDefinitionOptionRelLocalService
-		_cpDefinitionOptionRelLocalService;
 
 	@Reference
 	private CPDefinitionOptionRelPersistence _cpDefinitionOptionRelPersistence;

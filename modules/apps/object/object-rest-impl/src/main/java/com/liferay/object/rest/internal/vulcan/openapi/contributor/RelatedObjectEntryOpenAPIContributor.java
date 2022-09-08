@@ -140,7 +140,7 @@ public class RelatedObjectEntryOpenAPIContributor
 			new PathItem() {
 				{
 					get(
-						_getOperation(
+						_getGetOperation(
 							systemObjectRelationship,
 							systemObjectDefinitionMetadata));
 				}
@@ -234,7 +234,7 @@ public class RelatedObjectEntryOpenAPIContributor
 		return schemas.get(objectDefinition.getShortName());
 	}
 
-	private Operation _getOperation(
+	private Operation _getGetOperation(
 			ObjectRelationship objectRelationship,
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata)
 		throws Exception {

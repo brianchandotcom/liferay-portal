@@ -441,6 +441,14 @@ public class ObjectEntryLocalServiceUtil {
 			externalReferenceCode, companyId, groupId);
 	}
 
+	public static ObjectEntry getObjectEntryByERC_ODI(
+			String externalReferenceCode, long objectDefinitionId)
+		throws PortalException {
+
+		return getService().getObjectEntryByERC_ODI(
+			externalReferenceCode, objectDefinitionId);
+	}
+
 	/**
 	 * Returns the object entry matching the UUID and group.
 	 *
@@ -499,6 +507,12 @@ public class ObjectEntryLocalServiceUtil {
 
 		return getService().getSystemModelAttributes(
 			objectDefinition, primaryKey);
+	}
+
+	public static String getTitleValue(long entryId, long objectDefinitionId)
+		throws PortalException {
+
+		return getService().getTitleValue(entryId, objectDefinitionId);
 	}
 
 	public static Map<String, Serializable> getValues(long objectEntryId)

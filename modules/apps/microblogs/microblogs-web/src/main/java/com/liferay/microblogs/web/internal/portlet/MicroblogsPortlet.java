@@ -127,36 +127,13 @@ public class MicroblogsPortlet extends MVCPortlet {
 			microblogsEntryId, 1);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		this.assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMicroblogsEntryLocalService(
-		MicroblogsEntryLocalService microblogsEntryLocalService) {
-
-		this.microblogsEntryLocalService = microblogsEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMicroblogsEntryService(
-		MicroblogsEntryService microblogsEntryService) {
-
-		this.microblogsEntryService = microblogsEntryService;
-	}
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.microblogs.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
+	@Reference
 	protected AssetEntryLocalService assetEntryLocalService;
+
+	@Reference
 	protected MicroblogsEntryLocalService microblogsEntryLocalService;
+
+	@Reference
 	protected MicroblogsEntryService microblogsEntryService;
 
 	private String[] _getAssetTagNames(String content) {
@@ -168,5 +145,10 @@ public class MicroblogsPortlet extends MVCPortlet {
 
 		return assetTagNames.toArray(new String[0]);
 	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.microblogs.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
+	)
+	private Release _release;
 
 }

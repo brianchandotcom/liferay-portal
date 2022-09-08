@@ -113,17 +113,11 @@ public class MicroblogsActivityInterpreter
 			permissionChecker, activity.getClassPK(), ActionKeys.VIEW);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMicroblogsEntryLocalService(
-		MicroblogsEntryLocalService microblogsEntryLocalService) {
-
-		_microblogsEntryLocalService = microblogsEntryLocalService;
-	}
-
 	private static final String[] _CLASS_NAMES = {
 		MicroblogsEntry.class.getName()
 	};
 
+	@Reference
 	private MicroblogsEntryLocalService _microblogsEntryLocalService;
 
 	@Reference(

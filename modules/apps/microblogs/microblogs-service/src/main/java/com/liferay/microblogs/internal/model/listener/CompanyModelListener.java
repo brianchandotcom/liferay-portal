@@ -50,13 +50,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setMicroblogsEntryLocalService(
-		MicroblogsEntryLocalService microblogsEntryLocalService) {
-
-		_microblogsEntryLocalService = microblogsEntryLocalService;
-	}
-
+	@Reference
 	private MicroblogsEntryLocalService _microblogsEntryLocalService;
 
 }

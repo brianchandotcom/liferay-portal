@@ -2,32 +2,12 @@
 	{
 		"menuItems": [
 			{
-				"friendlyURL": "/Home",
+				"friendlyURL": "/home",
 				"privateLayout": false,
 				"type": "layout"
 			},
 			{
-				"friendlyURL": "/Upcoming",
-				"privateLayout": false,
-				"type": "layout"
-			},
-			{
-				"friendlyURL": "/Stories",
-				"privateLayout": false,
-				"type": "layout"
-			},
-			{
-				"friendlyURL": "/About",
-				"privateLayout": false,
-				"type": "layout"
-			},
-			{
-				"friendlyURL": "/FAQs",
-				"privateLayout": false,
-				"type": "layout"
-			},
-			{
-				"friendlyURL": "/My EVP",
+				"friendlyURL": "/my-evp",
 				"privateLayout": false,
 				"type": "layout"
 			}

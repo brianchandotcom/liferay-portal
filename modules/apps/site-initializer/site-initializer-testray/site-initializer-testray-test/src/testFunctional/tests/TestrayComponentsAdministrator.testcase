@@ -85,30 +85,41 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156982 - Verify if as an Administrator I am able to add Components"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanAddComponent {
+		task ("Given that the user add a new Component") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
-		// TODO LPS-156982 AdminCanAddComponent pending implementation
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
 
+			Testray.addNewComponent(componentName = "Components_1 Project");
+		}
+		
+		task ("Then the component should appear on the list") {
+			Testray.assertItemName(key_name = "Components_1 Project");
+		}
 	}
 
-	@description = "This is a test for LPS-156987 - Verify if as an Administrator I am able to add Components with a Team"
-	@ignore = "Test Stub"
+	@description = "This is a test for LPS-LPS-156998 - Verify if as an Administrator I should be able to add and delete a Component that doesn't have a Team"
 	@priority = "5"
-	test AdminCanAddComponentTeam {
+	test AdminCanAddAndDeleteComponentWithoutTeam {
+		task ("Given that the user add a new Component") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
-		// TODO LPS-156987 AdminCanAddComponentTeam pending implementation
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
 
-	}
+			Testray.addNewComponent(componentName = "Components_1 Project");
 
-	@description = "This is a test for LPS-156989 - Verify if as an Administrator I am able to edit Components while connecting a Team"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test AdminCanDeleteComponent {
+			Testray.assertItemName(key_name = "Components_1 Project");
+		}
 
-		// TODO LPS-156989 AdminCanDeleteComponentpending implementation
+		task ("When a component is deleted") {
+			Testray.deleteComponent(itemName = "Components_1 Project");
+		}
 
+		task ("Then the component should not appear on the list") {
+			Testray.deleteComponent(itemName = "Components_1 Project");	
+		}
 	}
 
 	@description = "This is a test for LPS-156994 - Verify if as an Administrator I am able to edit Components and change the assigned Team"

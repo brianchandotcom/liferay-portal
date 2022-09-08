@@ -370,4 +370,11 @@ definition {
 		Button.clickSave();
 	}
 
+	macro viewErrorMessage{
+		AssertElementPresent(
+			key_fieldLabel = "${fieldLabel}",
+			key_warningMessage = "${warningMessage}",
+			locator1 = "Testray#FIELD_REQUIRED_MESSAGE");
+	}
+
 }

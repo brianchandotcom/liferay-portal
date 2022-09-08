@@ -167,6 +167,7 @@ const renderComponent = (widgets = DEFAULT_WIDGETS) => {
 			<StoreAPIContextProvider
 				dispatch={() => Promise.resolve({})}
 				getState={() => ({
+					fragmentEntryLinks: [],
 					fragments: [
 						{
 							fragmentCollectionId: 'collection-1',

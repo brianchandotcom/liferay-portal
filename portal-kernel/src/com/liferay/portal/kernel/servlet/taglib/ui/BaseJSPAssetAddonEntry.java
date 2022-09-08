@@ -32,14 +32,18 @@ public abstract class BaseJSPAssetAddonEntry extends BaseAssetAddonEntry {
 
 	public abstract String getJspPath();
 
+	public abstract ServletContext getServletContext();
+
 	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
+		ServletContext servletContext = getServletContext();
+
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(getJspPath());
+			servletContext.getRequestDispatcher(getJspPath());
 
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
@@ -53,13 +57,7 @@ public abstract class BaseJSPAssetAddonEntry extends BaseAssetAddonEntry {
 		}
 	}
 
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseJSPAssetAddonEntry.class);
-
-	private ServletContext _servletContext;
 
 }

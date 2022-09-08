@@ -101,6 +101,7 @@ export default function ObjectRelationship({
 	inputName,
 	labelKey = 'label',
 	name,
+	objectEntryId,
 	onBlur,
 	onChange,
 	onFocus,
@@ -120,6 +121,7 @@ export default function ObjectRelationship({
 	] = useState<State>({url: null});
 
 	const dispatch = useForm();
+
 	const {objectRelationships} = useFormState<{
 		objectRelationships?: ObjectMap<number>;
 	}>();
@@ -163,8 +165,14 @@ export default function ObjectRelationship({
 
 			try {
 				const {items} = await fetchOptions<Resource>(newURL);
+
 				const state: State = {
-					list: items,
+					list:
+						objectEntryId !== '0'
+							? items.filter(
+									(item) => item.id !== Number(objectEntryId)
+							  )
+							: items,
 					loading: false,
 					url: newURL,
 				};
@@ -207,6 +215,7 @@ export default function ObjectRelationship({
 		fetchData();
 	}, [
 		apiURL,
+		objectEntryId,
 		onChange,
 		parameterObjectFieldId,
 		parameterObjectFieldName,
@@ -344,6 +353,7 @@ interface IProps {
 	inputName: string;
 	labelKey?: string;
 	name: string;
+	objectEntryId: string;
 	onBlur?: React.FocusEventHandler<HTMLInputElement>;
 	onChange: (event: {target: {value: unknown}}) => void;
 	onFocus?: React.FocusEventHandler<HTMLInputElement>;

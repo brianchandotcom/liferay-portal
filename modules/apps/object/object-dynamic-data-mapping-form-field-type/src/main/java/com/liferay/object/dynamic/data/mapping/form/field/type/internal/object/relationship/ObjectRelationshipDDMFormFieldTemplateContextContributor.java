@@ -80,6 +80,10 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 			"objectDefinitionId",
 			GetterUtil.getLong(ddmFormField.getProperty("objectDefinitionId"))
 		).put(
+			"objectEntryId",
+			GetterUtil.getLong(
+				ddmFormFieldRenderingContext.getProperty("objectEntryId"))
+		).put(
 			"parameterObjectFieldName",
 			GetterUtil.getString(
 				ddmFormField.getProperty("parameterObjectFieldName"))

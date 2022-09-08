@@ -1,0 +1,26 @@
+[
+	{
+		"key": "invoice",
+		"name": "Invoice",
+		"name_i18n": {
+			"en-US": "Invoice"
+		},
+		"type": "string"
+	},
+	{
+		"key": "leadOfList",
+		"name": "Lead of List",
+		"name_i18n": {
+			"en-US": "Lead of List"
+		},
+		"type": "string"
+	},
+	{
+		"key": "allContents",
+		"name": "All Contents",
+		"name_i18n": {
+			"en-US": "All Contents"
+		},
+		"type": "string"
+	}
+]

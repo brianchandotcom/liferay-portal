@@ -1,0 +1,37 @@
+{
+	"label": {
+		"en_US": "MDF Claim Document"
+	},
+	"name": "MDFClaimDocument",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "URL"
+			},
+			"name": "url",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Type Documents"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Type Documents$]",
+			"name": "typeDocuments",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "MDF Claim Document"
+	},
+	"scope": "company"
+}

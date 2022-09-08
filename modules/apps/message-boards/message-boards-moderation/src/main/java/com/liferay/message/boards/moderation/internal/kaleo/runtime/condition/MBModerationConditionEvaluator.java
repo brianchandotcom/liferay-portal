@@ -17,19 +17,24 @@ package com.liferay.message.boards.moderation.internal.kaleo.runtime.condition;
 import com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
 
 /**
  * @author Eduardo García
@@ -45,6 +50,8 @@ public class MBModerationConditionEvaluator implements ConditionEvaluator {
 			KaleoCondition kaleoCondition, ExecutionContext executionContext)
 		throws PortalException {
 
+
+
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 
@@ -57,6 +64,21 @@ public class MBModerationConditionEvaluator implements ConditionEvaluator {
 
 		long userId = GetterUtil.getLong(
 			workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
+
+		User user = GuestOrUserUtil.getUser(userId);
+
+		String email = user.getEmailAddress().trim();
+
+		String[] dominions = mbModerationGroupConfiguration.dominosEnable();
+
+		for (String dominio : dominions ){
+
+			if((email).length() != 0 && StringUtil.endsWith(email,dominio.trim())){
+				return "approve";
+			}
+
+		}
+
 
 		if (_mbStatsUserLocalService.getMessageCountByUserId(userId) >=
 				mbModerationGroupConfiguration.minimumContributedMessages()) {

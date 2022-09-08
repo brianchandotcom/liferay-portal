@@ -460,10 +460,17 @@ definition {
 			Variables.assertDefined(parameterList = "${versionvalue},${structuredContentId}");
 		}
 
+		if (isSet(parameter)) {
+			var api = "${structuredContentId}/by-version/${versionvalue}?${parameter}=${parameterValue}";
+		}
+		else {
+			var api = "${structuredContentId}/by-version/${versionvalue}";
+		}
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/o/headless-admin-content/v1.0/structured-contents/${structuredContentId}/by-version/${versionvalue} \
+			${portalURL}/o/headless-admin-content/v1.0/structured-contents/${api} \
 			-u test@liferay.com:test \
 			-H accept: application/json
 		''';
@@ -767,6 +774,8 @@ definition {
 			Variables.assertDefined(parameterList = "${structuredContentId},${versionvalue}");
 
 			var response = HeadlessWebcontentAPI._versionStructureContent(
+				parameter = "${parameter}",
+				parameterValue = "${parameterValue}",
 				structuredContentId = "${structuredContentId}",
 				versionvalue = "${versionvalue}");
 		}

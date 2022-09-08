@@ -25,7 +25,7 @@ export default function ContentList({contents, selectedType}) {
 	const hasSelectedType = selectedType !== CONTENT_TYPE_LABELS.allContent;
 
 	return (
-		<div className="overflow-auto px-3">
+		<div className="overflow-auto page-editor__page-contents__content-list px-3">
 			{(filteredContentTypes.includes(selectedType) ||
 				!hasSelectedType) &&
 			!!filteredContentTypes.length ? (

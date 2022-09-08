@@ -44,7 +44,7 @@ export default function ResolvedCommentsToggle() {
 	}, [dispatch, hasResolvedComments]);
 
 	return (
-		<div className="pb-3 px-3">
+		<div className="page-editor__resolved-comments-toggle pb-3 px-3">
 			<ClayCheckbox
 				checked={showResolvedComments}
 				disabled={!showResolvedComments && !hasResolvedComments}

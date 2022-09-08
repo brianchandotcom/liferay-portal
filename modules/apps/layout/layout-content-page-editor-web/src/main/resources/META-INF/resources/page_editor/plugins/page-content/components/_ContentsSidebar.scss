@@ -41,4 +41,8 @@ html#{$cadmin-selector} .cadmin .page-editor__page-contents {
 		color: $cadmin-gray-600;
 		font-size: 12px;
 	}
+
+	&__content-list {
+		border-top: 1px solid $secondary-l3;
+	}
 }

@@ -488,6 +488,9 @@ public class ObjectEntryDisplayContext {
 		ObjectEntry objectEntry = getObjectEntry();
 
 		if (objectEntry != null) {
+			ddmFormRenderingContext.addProperty(
+				"objectEntryId", objectEntry.getId());
+
 			DDMFormValues ddmFormValues = _getDDMFormValues(
 				ddmForm, objectEntry);
 

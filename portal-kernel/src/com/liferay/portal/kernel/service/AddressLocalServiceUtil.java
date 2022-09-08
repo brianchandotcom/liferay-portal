@@ -394,6 +394,22 @@ public class AddressLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static List<Address> getListTypeAddresses(
+		long companyId, String className, long classPK, long[] listTypeIds) {
+
+		return getService().getListTypeAddresses(
+			companyId, className, classPK, listTypeIds);
+	}
+
+	public static List<Address> getListTypeAddresses(
+		long companyId, String className, long classPK, long[] listTypeIds,
+		int start, int end, OrderByComparator<Address> orderByComparator) {
+
+		return getService().getListTypeAddresses(
+			companyId, className, classPK, listTypeIds, start, end,
+			orderByComparator);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -410,22 +426,6 @@ public class AddressLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static List<Address> getTypeAddresses(
-		long companyId, String className, long classPK, long[] listTypeIds) {
-
-		return getService().getTypeAddresses(
-			companyId, className, classPK, listTypeIds);
-	}
-
-	public static List<Address> getTypeAddresses(
-		long companyId, String className, long classPK, long[] listTypeIds,
-		int start, int end, OrderByComparator<Address> orderByComparator) {
-
-		return getService().getTypeAddresses(
-			companyId, className, classPK, listTypeIds, start, end,
-			orderByComparator);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult

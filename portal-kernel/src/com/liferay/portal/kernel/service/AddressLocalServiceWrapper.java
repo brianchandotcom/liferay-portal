@@ -449,6 +449,29 @@ public class AddressLocalServiceWrapper
 		return _addressLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Address>
+		getListTypeAddresses(
+			long companyId, java.lang.String className, long classPK,
+			long[] listTypeIds) {
+
+		return _addressLocalService.getListTypeAddresses(
+			companyId, className, classPK, listTypeIds);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Address>
+		getListTypeAddresses(
+			long companyId, java.lang.String className, long classPK,
+			long[] listTypeIds, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.Address> orderByComparator) {
+
+		return _addressLocalService.getListTypeAddresses(
+			companyId, className, classPK, listTypeIds, start, end,
+			orderByComparator);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -468,29 +491,6 @@ public class AddressLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _addressLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Address>
-		getTypeAddresses(
-			long companyId, java.lang.String className, long classPK,
-			long[] listTypeIds) {
-
-		return _addressLocalService.getTypeAddresses(
-			companyId, className, classPK, listTypeIds);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Address>
-		getTypeAddresses(
-			long companyId, java.lang.String className, long classPK,
-			long[] listTypeIds, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.Address> orderByComparator) {
-
-		return _addressLocalService.getTypeAddresses(
-			companyId, className, classPK, listTypeIds, start, end,
-			orderByComparator);
 	}
 
 	@Override

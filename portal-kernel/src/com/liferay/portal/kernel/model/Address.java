@@ -57,10 +57,10 @@ public interface Address extends AddressModel, PersistedModel {
 
 	public Country getCountry();
 
+	public ListType getListType();
+
 	public String getPhoneNumber();
 
 	public Region getRegion();
-
-	public ListType getListType();
 
 }

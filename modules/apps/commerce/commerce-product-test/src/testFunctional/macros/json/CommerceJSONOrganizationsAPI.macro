@@ -1,0 +1,77 @@
+definition {
+
+	macro _deleteAllOrganizations {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var organizationsCount = CommerceJSONOrganizationsAPI._getOrganizationsCount();
+
+		if ("${organizationsCount}" != "0") {
+			var organizationIds = CommerceJSONOrganizationsAPI._getOrganizationIds(organizationsCount = "${organizationsCount}");
+
+			for (var organizationId : list "${organizationIds}") {
+				echo("Deleting organization with id: ${organizationId}");
+
+				var curl = '''
+					${baseURL}/o/headless-admin-user/v1.0/organizations/${organizationId} \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete("${curl}");
+			}
+		}
+		else {
+			echo("No Organizations to be deleted");
+		}
+	}
+
+	macro _getOrganizationIds {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(organizationsCount)) {
+			var organizationsCount = "${organizationsCount}";
+		}
+		else {
+			var organizationsCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-admin-user/v1.0/organizations?pageSize=${organizationsCount} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var channelIds = JSONCurlUtil.get("${curl}", "$..['id']");
+
+		return "${channelIds}";
+	}
+
+	macro _getOrganizationsCount {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-admin-user/v1.0/organizations \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var organizationsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
+
+		echo("The organizations count is: ${organizationsCount}");
+
+		return "${organizationsCount}";
+	}
+
+}

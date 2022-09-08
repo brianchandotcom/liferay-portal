@@ -31,6 +31,14 @@ definition {
 			actual = "${accountGroupsCount}",
 			expected = "${emptyCount}");
 
+		CommerceJSONOrganizationsAPI._deleteAllOrganizations();
+
+		var organizationsCount = CommerceJSONOrganizationsAPI._getOrganizationsCount();
+
+		TestUtils.assertEquals(
+			actual = "${organizationsCount}",
+			expected = "${emptyCount}");
+
 		CommerceJSONProductsAPI._deleteAllCommerceProducts();
 
 		var productsCount = CommerceJSONProductsAPI._getCommerceProductsCount();
@@ -158,6 +166,16 @@ definition {
 
 		if (isSet(minium)) {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			if (isSet(moneyOrder) && ("${moneyOrder}" == "true")) {
+				CommerceChannels.openChannelsAdmin();
+
+				CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+				CommerceChannels.editPaymentMethod(
+					active = "true",
+					paymentMethod = "Money Order");
+			}
 		}
 	}
 

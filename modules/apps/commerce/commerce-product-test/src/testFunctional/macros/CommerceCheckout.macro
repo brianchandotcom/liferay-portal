@@ -7,7 +7,8 @@ definition {
 			newAddressCity = "${newAddressCity}",
 			newAddressCountry = "${newAddressCountry}",
 			newAddressName = "${newAddressName}",
-			newAddressZipCode = "${newAddressZipCode}");
+			newAddressZipCode = "${newAddressZipCode}",
+			selectedAddressName = "${selectedShippingAddressName}");
 
 		Click(locator1 = "Button#CONTINUE");
 
@@ -78,7 +79,8 @@ definition {
 			newAddressCity = "${newAddressCity}",
 			newAddressCountry = "${newAddressCountry}",
 			newAddressName = "${newAddressName}",
-			newAddressZipCode = "${newAddressZipCode}");
+			newAddressZipCode = "${newAddressZipCode}",
+			selectedAddressName = "${selectedShippingAddressName}");
 
 		if ("${viewBillingAddressPermission}" != "false") {
 			if (isSet(billingAddressName)) {
@@ -178,7 +180,8 @@ definition {
 				newAddressCity = "${billingAddressCity}",
 				newAddressCountry = "${billingAddressCountry}",
 				newAddressName = "${billingAddressName}",
-				newAddressZipCode = "${billingAddressZipCode}");
+				newAddressZipCode = "${billingAddressZipCode}",
+				selectedAddressName = "${selectedBillingAddressName}");
 
 			Click(locator1 = "Button#CONTINUE");
 		}
@@ -245,6 +248,34 @@ definition {
 			}
 		}
 
+		if (isSet(selectedShippingAddressName) && isSet(accountName)) {
+			var newAddressAddress = CommerceJSONAccountsAPI._getAccountAddressStreetByAddressName(
+				accountEntryName = "${accountName}",
+				addressName = "${selectedShippingAddressName}",
+				streetNumber = "1");
+			var newAddressCity = CommerceJSONAccountsAPI._getAccountAddressCityByAddressName(
+				accountEntryName = "${accountName}",
+				addressName = "${selectedShippingAddressName}");
+			var newAddressCountry = CommerceJSONAccountsAPI._getAccountAddressCountryByAddressName(
+				accountEntryName = "${accountName}",
+				addressName = "${selectedShippingAddressName}");
+			var newAddressName = "${selectedShippingAddressName}";
+		}
+
+		if (isSet(selectedBillingAddressName) && isSet(accountName)) {
+			var billingAddressAddress = CommerceJSONAccountsAPI._getAccountAddressStreetByAddressName(
+				accountEntryName = "${accountName}",
+				addressName = "${selectedBillingAddressName}",
+				streetNumber = "1");
+			var billingAddressCity = CommerceJSONAccountsAPI._getAccountAddressCityByAddressName(
+				accountEntryName = "${accountName}",
+				addressName = "${selectedBillingAddressName}");
+			var billingAddressCountry = CommerceJSONAccountsAPI._getAccountAddressCountryByAddressName(
+				accountEntryName = "${accountName}",
+				addressName = "${selectedBillingAddressName}");
+			var billingAddressName = "${selectedBillingAddressName}";
+		}
+
 		CommerceCheckout.viewCheckoutOrderSummary(
 			addressAddress = "${newAddressAddress}",
 			addressCity = "${newAddressCity}",
@@ -306,6 +337,12 @@ definition {
 					locator1 = "CommerceAccelerators#GUEST_CHECKOUT_EMAIL",
 					value1 = "${guestEmail}");
 			}
+		}
+		else if (isSet(selectedAddressName)) {
+			Select(
+				key_selectFieldLabel = "Choose",
+				locator1 = "Select#ANY",
+				value1 = "${selectedAddressName}");
 		}
 	}
 

@@ -161,7 +161,7 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 	}
 
 	public static int toCommerceAddressType(Address address) {
-		ListType listType = address.getType();
+		ListType listType = address.getListType();
 
 		String listTypeName = listType.getName();
 

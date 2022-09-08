@@ -274,7 +274,7 @@ public class UserAttributes {
 
 		try {
 			for (Address address : user.getAddresses()) {
-				ListType listType = address.getType();
+				ListType listType = address.getListType();
 
 				String listTypeName = listType.getName();
 

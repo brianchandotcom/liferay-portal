@@ -213,9 +213,9 @@ public class ContactsUtil {
 		for (Address address : addresses) {
 			sb.append("ADR;TYPE=");
 
-			ListType listType = address.getType();
-
-			sb.append(StringUtil.toUpperCase(_getVCardListTypeName(listType)));
+			sb.append(
+				StringUtil.toUpperCase(
+					_getVCardListTypeName(address.getListType())));
 
 			sb.append(StringPool.COLON);
 			sb.append(StringPool.SEMICOLON);

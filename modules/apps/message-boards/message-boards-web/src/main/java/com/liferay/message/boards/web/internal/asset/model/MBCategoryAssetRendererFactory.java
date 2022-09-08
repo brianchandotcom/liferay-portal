@@ -121,13 +121,6 @@ public class MBCategoryAssetRendererFactory
 			permissionChecker, category, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBCategoryLocalService(
-		MBCategoryLocalService mbCategoryLocalService) {
-
-		_mbCategoryLocalService = mbCategoryLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBCategoryAssetRendererFactory.class);
 
@@ -137,6 +130,7 @@ public class MBCategoryAssetRendererFactory
 	private ModelResourcePermission<MBCategory>
 		_categoryModelResourcePermission;
 
+	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;
 
 }

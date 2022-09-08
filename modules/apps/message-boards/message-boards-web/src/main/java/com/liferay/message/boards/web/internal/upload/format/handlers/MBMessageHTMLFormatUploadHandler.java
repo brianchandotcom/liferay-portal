@@ -58,13 +58,6 @@ public class MBMessageHTMLFormatUploadHandler
 		return content;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletFileRepository(
-		PortletFileRepository portletFileRepository) {
-
-		_portletFileRepository = portletFileRepository;
-	}
-
 	private String _getMBAttachmentFileEntryHTMLImgTag(
 		FileEntry mbAttachmentFileEntry) {
 
@@ -77,6 +70,7 @@ public class MBMessageHTMLFormatUploadHandler
 	private static final String _ATTRIBUTE_LIST_REGEXP =
 		"(\\s*?\\w+\\s*?=\\s*?\"[^\"]*\")*?\\s*?";
 
+	@Reference
 	private PortletFileRepository _portletFileRepository;
 
 }

@@ -121,13 +121,6 @@ public class MBMessageAssetRendererFactory
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageAssetRendererFactory.class);
 
@@ -138,6 +131,7 @@ public class MBMessageAssetRendererFactory
 	@Reference
 	private HtmlParser _htmlParser;
 
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference(

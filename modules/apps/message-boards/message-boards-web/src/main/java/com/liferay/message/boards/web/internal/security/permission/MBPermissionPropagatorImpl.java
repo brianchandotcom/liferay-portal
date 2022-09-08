@@ -78,20 +78,6 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBCategoryLocalService(
-		MBCategoryLocalService mbCategoryLocalService) {
-
-		_mbCategoryLocalService = mbCategoryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
 	private void _propagateCategoryRolePermissions(
 			ActionRequest actionRequest, String className, long primaryKey,
 			long categoryId, long[] roleIds)
@@ -225,7 +211,10 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		}
 	}
 
+	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
 }

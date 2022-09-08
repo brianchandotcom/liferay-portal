@@ -248,29 +248,13 @@ public class MBExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBBanLocalService(MBBanLocalService mbBanLocalService) {
-		_mbBanLocalService = mbBanLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBCategoryLocalService(
-		MBCategoryLocalService mbCategoryLocalService) {
-
-		_mbCategoryLocalService = mbCategoryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBThreadFlagLocalService(
-		MBThreadFlagLocalService mbThreadFlagLocalService) {
-
-		_mbThreadFlagLocalService = mbThreadFlagLocalService;
-	}
-
 	@Reference
 	private ExportImportHelper _exportImportHelper;
 
+	@Reference
 	private MBBanLocalService _mbBanLocalService;
+
+	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;
 
 	@Reference(
@@ -282,6 +266,7 @@ public class MBExportImportPortletPreferencesProcessor
 	private MBRatingsExporterImporterCapability
 		_mbRatingsExporterImporterCapability;
 
+	@Reference
 	private MBThreadFlagLocalService _mbThreadFlagLocalService;
 
 }

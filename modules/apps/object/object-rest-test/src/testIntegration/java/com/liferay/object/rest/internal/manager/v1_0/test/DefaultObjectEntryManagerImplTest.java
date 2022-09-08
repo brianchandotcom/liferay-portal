@@ -228,7 +228,6 @@ public class DefaultObjectEntryManagerImplTest {
 		String oneToManyRelationshipFieldName =
 			"r_oneToManyRelationshipName_" +
 				_objectDefinition1.getPKObjectFieldName();
-
 		String picklistObjectFieldValue1 = _addListTypeEntry();
 
 		ObjectEntry objectEntry1 = _addObjectEntry(

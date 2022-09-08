@@ -96,6 +96,38 @@ definition {
 		RemoteApps.viewEmptyRemoteTable();
 	}
 
+	@description = "This is a test for LPS-162031. The site administrator could add a CSS remote app."
+	@priority = "3"
+	test CSSCanBeCreated {
+		task ("Given a site administrator accesses to the Remote Apps admin") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Font Family",
+				groupName = "Test Site Name",
+				mimeType = "text/css",
+				sourceFileName = "font_family.css");
+
+			var url = JSONDocument.getLatestVersionURL(
+				dmDocumentTitle = "Font Family",
+				groupName = "Test Site Name");
+
+			RemoteApps.goToRemoteAppsPortlet();
+		}
+
+		task ("When the site administrator creates a CSS remote app") {
+			RemoteApps.addType(type = "Add CSS");
+
+			RemoteApps.addApp(
+				entryName = "Font Family",
+				entryURL = "${url}");
+		}
+
+		task ("Then the site administrator sees the created CSS remote app") {
+			RemoteApps.viewTableEntryName(entryName = "Font Family");
+		}
+	}
+
 	@description = "Verify that remote app of type Custom Element can be created"
 	@priority = "5"
 	test CustomElementCanBeCreated {

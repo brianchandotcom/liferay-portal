@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.login.AuthLoginGroupSettingsUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -229,6 +230,15 @@ public class FriendlyURLServlet extends HttpServlet {
 
 				if (!LayoutPermissionUtil.contains(
 						permissionChecker, layout, ActionKeys.VIEW)) {
+
+					if (AuthLoginGroupSettingsUtil.isPromptEnabled(
+							group.getGroupId())) {
+
+						String redirect = portal.getLayoutActualURL(
+							layout, Portal.PATH_MAIN);
+
+						return new Redirect(redirect);
+					}
 
 					throw new LayoutPermissionException();
 				}

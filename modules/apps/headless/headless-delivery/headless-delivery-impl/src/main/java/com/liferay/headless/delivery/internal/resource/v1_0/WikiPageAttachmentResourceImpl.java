@@ -18,6 +18,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.delivery.dto.v1_0.WikiPageAttachment;
 import com.liferay.headless.delivery.dto.v1_0.util.ContentValueUtil;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageAttachmentResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -35,6 +36,7 @@ import com.liferay.wiki.service.WikiPageService;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,8 +60,19 @@ public class WikiPageAttachmentResourceImpl
 		throws Exception {
 
 		WikiPage wikiPage =
-			_wikiPageService.getLatestPageByExternalReferenceCode(
+			_wikiPageService.fetchLatestPageByExternalReferenceCode(
 				siteId, wikiPageExternalReferenceCode);
+
+		if (wikiPage == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("No wiki page exists with external reference code ");
+			sb.append(wikiPageExternalReferenceCode);
+			sb.append(" and site ID ");
+			sb.append(siteId);
+
+			throw new NotFoundException(sb.toString());
+		}
 
 		FileEntry fileEntry =
 			wikiPage.getAttachmentsFileEntryByExternalReferenceCode(

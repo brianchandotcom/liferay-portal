@@ -3,6 +3,14 @@ buildService {
 }
 
 dependencies {
+	compileInclude group: "com.github.stephenc.jcip", name: "jcip-annotations", version: "1.0-1"
+	compileInclude group: "com.nimbusds", name: "content-type", version: "2.0"
+	compileInclude group: "com.nimbusds", name: "lang-tag", version: "1.4.4"
+	compileInclude group: "com.nimbusds", name: "nimbus-jose-jwt", version: "8.14.1"
+	compileInclude group: "com.nimbusds", name: "oauth2-oidc-sdk", version: "8.4.3"
+	compileInclude group: "net.minidev", name: "accessors-smart", version: "2.4.2"
+	compileInclude group: "net.minidev", name: "json-smart", version: "2.4.5"
+
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"

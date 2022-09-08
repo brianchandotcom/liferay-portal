@@ -27,6 +27,7 @@ import com.liferay.expando.kernel.service.ExpandoValueServiceUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -157,7 +158,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 				throw (PortalException)exception;
 			}
 
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -235,7 +236,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 
 		return data;
@@ -243,16 +244,11 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 	@Override
 	public Serializable getAttributeDefault(String name) {
-		try {
-			ExpandoColumn column =
-				ExpandoColumnLocalServiceUtil.getDefaultTableColumn(
-					_companyId, _className, name);
+		ExpandoColumn column =
+			ExpandoColumnLocalServiceUtil.getDefaultTableColumn(
+				_companyId, _className, name);
 
-			return column.getDefaultValue();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		return column.getDefaultValue();
 	}
 
 	@Override
@@ -268,16 +264,11 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 	@Override
 	public UnicodeProperties getAttributeProperties(String name) {
-		try {
-			ExpandoColumn column =
-				ExpandoColumnLocalServiceUtil.getDefaultTableColumn(
-					_companyId, _className, name);
+		ExpandoColumn column =
+			ExpandoColumnLocalServiceUtil.getDefaultTableColumn(
+				_companyId, _className, name);
 
-			return column.getTypeSettingsProperties();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		return column.getTypeSettingsProperties();
 	}
 
 	@Override
@@ -341,7 +332,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 
 		return attributeValues;
@@ -349,16 +340,11 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 	@Override
 	public int getAttributeType(String name) {
-		try {
-			ExpandoColumn column =
-				ExpandoColumnLocalServiceUtil.getDefaultTableColumn(
-					_companyId, _className, name);
+		ExpandoColumn column =
+			ExpandoColumnLocalServiceUtil.getDefaultTableColumn(
+				_companyId, _className, name);
 
-			return column.getType();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		return column.getType();
 	}
 
 	@Override
@@ -378,15 +364,9 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 	@Override
 	public boolean hasAttribute(String name) {
-		ExpandoColumn column = null;
-
-		try {
-			column = ExpandoColumnLocalServiceUtil.getDefaultTableColumn(
+		ExpandoColumn column =
+			ExpandoColumnLocalServiceUtil.getDefaultTableColumn(
 				_companyId, _className, name);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
 
 		if (column != null) {
 			return true;
@@ -431,7 +411,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			indexer.reindex(_className, _classPK);
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -472,7 +452,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -488,7 +468,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 				defaultValue);
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -528,7 +508,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -575,7 +555,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -685,17 +665,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	}
 
 	protected List<ExpandoColumn> getAttributeColumns() {
-		List<ExpandoColumn> columns = new ArrayList<>();
-
-		try {
-			columns = ExpandoColumnLocalServiceUtil.getDefaultTableColumns(
-				_companyId, _className);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-
-		return columns;
+		return ExpandoColumnLocalServiceUtil.getDefaultTableColumns(
+			_companyId, _className);
 	}
 
 	protected ExpandoTable getTable() throws PortalException {

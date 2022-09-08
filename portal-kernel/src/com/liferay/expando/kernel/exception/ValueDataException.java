@@ -16,24 +16,42 @@ package com.liferay.expando.kernel.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Locale;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class ValueDataException extends PortalException {
 
-	public ValueDataException() {
+	public static class MismatchColumnTypeException extends ValueDataException {
+
+		public MismatchColumnTypeException(String msg) {
+			super(msg);
+		}
+
 	}
 
-	public ValueDataException(String msg) {
+	public static class MustInformDefaultLocale extends ValueDataException {
+
+		public MustInformDefaultLocale(Locale locale) {
+			super(
+				"A value for the default locale (" + locale.getLanguage() +
+					") must be defined");
+		}
+
+	}
+
+	public static class UnsupportedColumnTypeException
+		extends ValueDataException {
+
+		public UnsupportedColumnTypeException(String msg) {
+			super(msg);
+		}
+
+	}
+
+	private ValueDataException(String msg) {
 		super(msg);
-	}
-
-	public ValueDataException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public ValueDataException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

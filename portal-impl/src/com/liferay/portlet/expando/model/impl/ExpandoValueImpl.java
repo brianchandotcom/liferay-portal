@@ -619,7 +619,7 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 			return;
 		}
 
-		throw new ValueDataException(
+		throw new ValueDataException.MismatchColumnTypeException(
 			StringBundler.concat(
 				"Column ", getColumnId(), " has type ",
 				ExpandoColumnConstants.getTypeLabel(column.getType()),

@@ -148,25 +148,6 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	@Reference(unbind = "-")
-	protected void setMentionsMatcherRegistry(
-		MentionsMatcherRegistry mentionsMatcherRegistry) {
-
-		_mentionsMatcherRegistry = mentionsMatcherRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMentionsUserFinder(
-		MentionsUserFinder mentionsUserFinder) {
-
-		_mentionsUserFinder = mentionsUserFinder;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private String _getAssetEntryName(String className, Locale locale) {
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -215,7 +196,10 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 	@Reference
 	private LayoutPermission _layoutPermission;
 
+	@Reference
 	private MentionsMatcherRegistry _mentionsMatcherRegistry;
+
+	@Reference
 	private MentionsUserFinder _mentionsUserFinder;
 
 	@Reference
@@ -227,6 +211,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 	@Reference
 	private PortletPermission _portletPermission;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

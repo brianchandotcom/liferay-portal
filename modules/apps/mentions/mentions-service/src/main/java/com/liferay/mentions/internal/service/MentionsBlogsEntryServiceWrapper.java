@@ -85,27 +85,13 @@ public class MentionsBlogsEntryServiceWrapper
 		return entry;
 	}
 
-	@Reference(unbind = "-")
-	protected void setBlogsEntryLocalService(
-		BlogsEntryLocalService blogsEntryLocalService) {
-
-		_blogsEntryLocalService = blogsEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMentionsNotifier(MentionsNotifier mentionsNotifier) {
-		_mentionsNotifier = mentionsNotifier;
-	}
-
+	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private MentionsNotifier _mentionsNotifier;
 
 	@Reference

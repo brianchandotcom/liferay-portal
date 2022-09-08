@@ -107,16 +107,10 @@ public class MentionsUserNotificationHandler
 			false);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
 	@Reference
 	private Language _language;
 
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference

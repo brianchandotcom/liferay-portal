@@ -46,6 +46,7 @@ const SpacingBoxTest = ({onChange = () => {}, value = {}}) => (
 				marginBottom: {
 					defaultValue: '0',
 					label: 'margin-bottom',
+					name: 'marginTop',
 					typeOptions: {
 						validValues: [
 							{label: '0', value: '0'},
@@ -56,6 +57,7 @@ const SpacingBoxTest = ({onChange = () => {}, value = {}}) => (
 				marginLeft: {
 					defaultValue: '0',
 					label: 'margin-left',
+					name: 'marginLeft',
 					typeOptions: {
 						validValues: [
 							{label: '0', value: '0'},
@@ -66,6 +68,7 @@ const SpacingBoxTest = ({onChange = () => {}, value = {}}) => (
 				marginRight: {
 					defaultValue: '0',
 					label: 'margin-right',
+					name: 'marginRight',
 					typeOptions: {
 						validValues: [
 							{label: '0', value: '0'},
@@ -76,6 +79,7 @@ const SpacingBoxTest = ({onChange = () => {}, value = {}}) => (
 				marginTop: {
 					defaultValue: '0',
 					label: 'margin-top',
+					name: 'marginTop',
 					typeOptions: {
 						validValues: [
 							{label: '0', value: '0'},
@@ -86,6 +90,7 @@ const SpacingBoxTest = ({onChange = () => {}, value = {}}) => (
 				paddingBottom: {
 					defaultValue: '0',
 					label: 'padding-bottom',
+					name: 'paddingBottom',
 					typeOptions: {
 						validValues: [
 							{label: '0', value: '0'},
@@ -96,6 +101,7 @@ const SpacingBoxTest = ({onChange = () => {}, value = {}}) => (
 				paddingLeft: {
 					defaultValue: '0',
 					label: 'padding-left',
+					name: 'paddingLeft',
 					typeOptions: {
 						validValues: [
 							{label: '0', value: '0'},
@@ -106,6 +112,7 @@ const SpacingBoxTest = ({onChange = () => {}, value = {}}) => (
 				paddingRight: {
 					defaultValue: '0',
 					label: 'padding-right',
+					name: 'paddingRight',
 					typeOptions: {
 						validValues: [
 							{label: '0', value: '0'},
@@ -116,6 +123,7 @@ const SpacingBoxTest = ({onChange = () => {}, value = {}}) => (
 				paddingTop: {
 					defaultValue: '0',
 					label: 'padding-top',
+					name: 'paddingTop',
 					typeOptions: {
 						validValues: [
 							{label: '0', value: '0'},

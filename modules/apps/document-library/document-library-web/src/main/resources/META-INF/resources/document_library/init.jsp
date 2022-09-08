@@ -49,6 +49,7 @@ page import="com.liferay.document.library.web.internal.util.DataRecordValuesUtil
 page import="com.liferay.document.library.web.internal.util.RepositoryClassDefinitionUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.RequiredStructureException" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter" %><%@
+page import="com.liferay.expando.kernel.exception.ValueDataException" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList" %><%@
 page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.item.selector.criteria.FolderItemSelectorReturnType" %><%@

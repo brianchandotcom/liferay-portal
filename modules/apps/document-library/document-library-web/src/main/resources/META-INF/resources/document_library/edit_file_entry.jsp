@@ -261,6 +261,8 @@ renderResponse.setTitle(headerTitle);
 				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(dlEditFileEntryDisplayContext.getMaximumUploadRequestSize(), locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
+			<liferay-ui:error exception="<%= ValueDataException.MustInformDefaultLocale.class %>" message="please-enter-a-value-also-for-default-locale" />
+
 			<liferay-asset:asset-categories-error />
 
 			<liferay-asset:asset-tags-error />

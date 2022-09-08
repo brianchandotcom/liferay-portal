@@ -267,30 +267,33 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 	protected Map<String, String> getTypeNames() {
 		Map<String, String> assetTypesTypeNames = new HashMap<>();
 
-		for (String className : _classNames) {
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
+		if (_classNames != null) {
+			for (String className : _classNames) {
+				AssetRendererFactory<?> assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassName(className);
 
-			String typeName = className;
+				String typeName = className;
 
-			if (assetRendererFactory != null) {
-				typeName = assetRendererFactory.getTypeName(
-					_themeDisplay.getLocale());
+				if (assetRendererFactory != null) {
+					typeName = assetRendererFactory.getTypeName(
+						_themeDisplay.getLocale());
+				}
+				else if (className.startsWith(
+							ObjectDefinition.class.getName() + "#")) {
+
+					String[] parts = StringUtil.split(className, "#");
+
+					ObjectDefinition objectDefinition =
+						ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+							Long.valueOf(parts[1]));
+
+					typeName = objectDefinition.getLabel(
+						_themeDisplay.getLocale());
+				}
+
+				assetTypesTypeNames.put(className, typeName);
 			}
-			else if (className.startsWith(
-						ObjectDefinition.class.getName() + "#")) {
-
-				String[] parts = StringUtil.split(className, "#");
-
-				ObjectDefinition objectDefinition =
-					ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-						Long.valueOf(parts[1]));
-
-				typeName = objectDefinition.getLabel(_themeDisplay.getLocale());
-			}
-
-			assetTypesTypeNames.put(className, typeName);
 		}
 
 		return assetTypesTypeNames;

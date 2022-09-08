@@ -39,13 +39,6 @@ public class JournalServiceComponentProvider {
 		return _journalGroupServiceConfiguration;
 	}
 
-	@Reference
-	public void setJournalGroupServiceConfiguration(
-		JournalGroupServiceConfiguration journalGroupServiceConfiguration) {
-
-		_journalGroupServiceConfiguration = journalGroupServiceConfiguration;
-	}
-
 	@Activate
 	protected void activate() {
 		_journalServiceComponentProvider = this;
@@ -65,6 +58,7 @@ public class JournalServiceComponentProvider {
 	private static JournalServiceComponentProvider
 		_journalServiceComponentProvider;
 
+	@Reference
 	private JournalGroupServiceConfiguration _journalGroupServiceConfiguration;
 
 }

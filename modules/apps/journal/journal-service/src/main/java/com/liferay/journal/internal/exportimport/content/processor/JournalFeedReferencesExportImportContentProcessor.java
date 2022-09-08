@@ -92,13 +92,6 @@ public class JournalFeedReferencesExportImportContentProcessor
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
 	private JournalFeed _getJournalFeed(Map<String, String> map) {
 		if (MapUtil.isEmpty(map)) {
 			return null;
@@ -437,6 +430,7 @@ public class JournalFeedReferencesExportImportContentProcessor
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference

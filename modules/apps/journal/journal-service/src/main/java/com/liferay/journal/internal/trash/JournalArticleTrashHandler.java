@@ -399,36 +399,10 @@ public class JournalArticleTrashHandler extends BaseJournalTrashHandler {
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleResourceLocalService(
-		JournalArticleResourceLocalService journalArticleResourceLocalService) {
-
-		_journalArticleResourceLocalService =
-			journalArticleResourceLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalFolderLocalService(
-		JournalFolderLocalService journalFolderLocalService) {
-
-		_journalFolderLocalService = journalFolderLocalService;
-	}
-
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference(
@@ -437,8 +411,11 @@ public class JournalArticleTrashHandler extends BaseJournalTrashHandler {
 	private ModelResourcePermission<JournalArticle>
 		_journalArticleModelResourcePermission;
 
+	@Reference
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
+
+	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;
 
 	@Reference(

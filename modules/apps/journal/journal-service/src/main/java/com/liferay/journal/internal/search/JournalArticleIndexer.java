@@ -248,28 +248,6 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleResourceLocalService(
-		JournalArticleResourceLocalService journalArticleResourceLocalService) {
-
-		_journalArticleResourceLocalService =
-			journalArticleResourceLocalService;
-	}
-
 	@Reference(
 		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
 	)
@@ -453,11 +431,13 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	@Reference
 	private BatchIndexingHelper _batchIndexingHelper;
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
 
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference(
@@ -466,6 +446,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	private ModelResourcePermission<JournalArticle>
 		_journalArticleModelResourcePermission;
 
+	@Reference
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
 

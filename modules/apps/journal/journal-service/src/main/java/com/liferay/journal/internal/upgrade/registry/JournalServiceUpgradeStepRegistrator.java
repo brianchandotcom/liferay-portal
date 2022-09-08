@@ -339,14 +339,6 @@ public class JournalServiceUpgradeStepRegistrator
 				_groupLocalService));
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortalCapabilityLocator(
-		PortalCapabilityLocator portalCapabilityLocator) {
-
-		// See LPS-82746
-
-	}
-
 	private void _deleteTempImages() throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Delete temporary images");
@@ -438,6 +430,11 @@ public class JournalServiceUpgradeStepRegistrator
 
 	@Reference
 	private Portal _portal;
+
+	// See LPS-82746
+
+	@Reference
+	private PortalCapabilityLocator _portalCapabilityLocator;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

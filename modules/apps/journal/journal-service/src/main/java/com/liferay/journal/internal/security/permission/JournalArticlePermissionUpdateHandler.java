@@ -48,13 +48,7 @@ public class JournalArticlePermissionUpdateHandler
 		_journalArticleLocalService.updateJournalArticle(article);
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
 }

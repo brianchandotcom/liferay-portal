@@ -327,19 +327,13 @@ public class JournalFolderTrashHandler extends BaseJournalTrashHandler {
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalFolderLocalService(
-		JournalFolderLocalService journalFolderLocalService) {
-
-		_journalFolderLocalService = journalFolderLocalService;
-	}
-
 	private JournalFolder _getJournalFolder(long classPK)
 		throws PortalException {
 
 		return _journalFolderLocalService.getFolder(classPK);
 	}
 
+	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;
 
 	@Reference(

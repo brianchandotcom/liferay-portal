@@ -86,16 +86,10 @@ public final class JournalValidatorImpl implements JournalValidator {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalValidatorImpl.class);
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 }

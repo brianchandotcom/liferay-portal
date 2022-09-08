@@ -223,11 +223,6 @@ public class JournalCacheExportImportLifecycleListener
 		throws Exception {
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalContent(JournalContent journalContent) {
-		_journalContent = journalContent;
-	}
-
 	private void _clearCache() {
 		_journalContent.clearCache();
 	}
@@ -236,6 +231,7 @@ public class JournalCacheExportImportLifecycleListener
 	private JournalArticleExportImportProcessorCache
 		_journalArticleExportImportCache;
 
+	@Reference
 	private JournalContent _journalContent;
 
 }

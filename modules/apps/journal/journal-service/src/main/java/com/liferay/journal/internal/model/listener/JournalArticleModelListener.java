@@ -66,11 +66,7 @@ public class JournalArticleModelListener
 		CacheUtil.clearCache(journalArticle.getCompanyId());
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalContent(JournalContent journalContent) {
-		_journalContent = journalContent;
-	}
-
+	@Reference
 	private JournalContent _journalContent;
 
 	@Reference

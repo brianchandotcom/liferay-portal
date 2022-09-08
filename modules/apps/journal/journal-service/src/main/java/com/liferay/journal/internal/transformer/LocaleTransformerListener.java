@@ -95,13 +95,6 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
 	private void _filterByLanguage(Document document, String languageId) {
 		Element rootElement = document.getRootElement();
 
@@ -228,6 +221,7 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LocaleTransformerListener.class);
 
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

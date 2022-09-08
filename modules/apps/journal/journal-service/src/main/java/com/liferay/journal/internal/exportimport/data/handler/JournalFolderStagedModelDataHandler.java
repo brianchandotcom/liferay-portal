@@ -254,20 +254,6 @@ public class JournalFolderStagedModelDataHandler
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalFolderLocalService(
-		JournalFolderLocalService journalFolderLocalService) {
-
-		_journalFolderLocalService = journalFolderLocalService;
-	}
-
 	private void _exportFolderDDMStructures(
 			PortletDataContext portletDataContext, JournalFolder folder)
 		throws Exception {
@@ -338,7 +324,10 @@ public class JournalFolderStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalFolderStagedModelDataHandler.class);
 
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;
 
 }

@@ -43,13 +43,7 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
 }

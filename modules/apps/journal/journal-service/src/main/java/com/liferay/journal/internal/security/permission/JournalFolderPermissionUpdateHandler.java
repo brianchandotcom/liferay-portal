@@ -48,13 +48,7 @@ public class JournalFolderPermissionUpdateHandler
 		_journalFolderLocalService.updateJournalFolder(folder);
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalFolderLocalService(
-		JournalFolderLocalService journalFolderLocalService) {
-
-		_journalFolderLocalService = journalFolderLocalService;
-	}
-
+	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;
 
 }

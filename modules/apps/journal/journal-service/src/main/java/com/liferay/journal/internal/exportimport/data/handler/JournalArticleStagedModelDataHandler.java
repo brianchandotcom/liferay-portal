@@ -1205,59 +1205,6 @@ public class JournalArticleStagedModelDataHandler
 		};
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setImageLocalService(ImageLocalService imageLocalService) {
-		_imageLocalService = imageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleResourceLocalService(
-		JournalArticleResourceLocalService journalArticleResourceLocalService) {
-
-		_journalArticleResourceLocalService =
-			journalArticleResourceLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalCreationStrategy(
-		JournalCreationStrategy journalCreationStrategy) {
-
-		_journalCreationStrategy = journalCreationStrategy;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private void _exportAssetDisplayPage(
 			PortletDataContext portletDataContext, JournalArticle article)
 		throws Exception {
@@ -1783,8 +1730,13 @@ public class JournalArticleStagedModelDataHandler
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
+	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference(target = "(content.processor.type=DLReferences)")
@@ -1797,6 +1749,7 @@ public class JournalArticleStagedModelDataHandler
 	@Reference
 	private GroupLocalService _groupLocalService;
 
+	@Reference
 	private ImageLocalService _imageLocalService;
 
 	@Reference(
@@ -1807,14 +1760,20 @@ public class JournalArticleStagedModelDataHandler
 	private volatile ExportImportContentProcessor<String>
 		_journalArticleExportImportContentProcessor;
 
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
+
+	@Reference
 	private JournalCreationStrategy _journalCreationStrategy;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 	@Reference

@@ -95,26 +95,15 @@ public class JournalServicePreAction extends Action {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleService(
-		JournalArticleService journalArticleService) {
-
-		_journalArticleService = journalArticleService;
-	}
-
 	private static final String _PATH_PORTAL_LAYOUT = "/portal/layout";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalServicePreAction.class);
 
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
 	private JournalArticleService _journalArticleService;
 
 	@Reference

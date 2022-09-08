@@ -23,15 +23,11 @@
 		</h1>
 
 		<span class="font-weight-bold">
-		<liferay-ui:message key="ab-test" /></span>
+			<liferay-ui:message key="ab-test" /></span>
 
-		<clay:button
-			aria-label='<%= LanguageUtil.get(request, "close") %>'
-			cssClass="sidenav-close text-secondary"
-			displayType="unstyled"
-			icon="times"
-			monospaced="<%= true %>"
-		/>
+		<clay:button aria-label='<%= LanguageUtil.get(request, "close") %>'
+			cssClass="btn btn-monospaced btn-unstyle component-action sidenav-close text-secondary" displayType="unstyled"
+			icon="times" monospaced="<%= true %>" />
 	</div>
 
 	<div class="sidebar-body">

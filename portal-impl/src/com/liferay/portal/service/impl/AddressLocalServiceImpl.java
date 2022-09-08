@@ -222,8 +222,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			classPK);
 	}
 
-	@Override
-	public List<Address> getTypeAddresses(
+	public List<Address> getListTypeAddresses(
 		long companyId, String className, long classPK, long[] listTypeIds) {
 
 		return addressPersistence.findByC_C_C_L(
@@ -231,8 +230,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			classPK, listTypeIds);
 	}
 
-	@Override
-	public List<Address> getTypeAddresses(
+	public List<Address> getListTypeAddresses(
 		long companyId, String className, long classPK, long[] listTypeIds,
 		int start, int end, OrderByComparator<Address> orderByComparator) {
 

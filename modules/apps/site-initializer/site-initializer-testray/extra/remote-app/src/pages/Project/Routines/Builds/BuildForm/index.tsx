@@ -210,10 +210,10 @@ const BuildForm = () => {
 
 					<ClayButtonWithIcon
 						className="mt-5"
-						displayType="secondary"
+						displayType="primary"
 						onClick={() => newProductVersionModal.open()}
 						symbol="plus"
-						title={i18n.translate('add-product-version')}
+						title={i18n.sub('add-x', 'product-version')}
 					/>
 				</div>
 

@@ -139,142 +139,122 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({
 			)}
 
 			<ClayLayout.Row>
-				{fields.map((field, index) => {
-					return (
-						<Fragment key={field.id}>
-							<ClayLayout.Col size={12}>
-								<ClayLayout.Row className="align-items-center d-flex justify-content-space-between">
-									{factorItems.map(
-										(factorItem, factorIndex) => {
-											const factorOptions: any =
-												factorOptionsList[
-													factorIndex
-												] || [];
+				{fields.map((field, index) => (
+					<Fragment key={field.id}>
+						<ClayLayout.Col size={12}>
+							<ClayLayout.Row className="align-items-center d-flex justify-content-space-between">
+								{factorItems.map((factorItem, factorIndex) => {
+									const factorOptions: any =
+										factorOptionsList[factorIndex] || [];
 
-											const currentCategory =
-												categories[index];
+									const currentCategory = categories[index];
 
-											const categoryOptions =
-												currentCategory[factorIndex] ||
-												{};
+									const categoryOptions =
+										currentCategory[factorIndex] || {};
 
-											const factorOptionSelected =
-												factorOptions.find(
-													({id}: any) =>
-														String(id) ===
-														String(
-															categoryOptions?.factorOptionId
-														)
-												) || {};
+									const factorOptionSelected =
+										factorOptions.find(
+											({id}: any) =>
+												String(id) ===
+												String(
+													categoryOptions?.factorOptionId
+												)
+										) || {};
 
-											return (
-												<ClayLayout.Col
-													key={factorIndex}
-													size={3}
-												>
-													<input
-														type="hidden"
-														value={
-															factorOptionSelected.name
-														}
-														{...register(
-															`categories.${index}.${factorIndex}.factorOption` as const
-														)}
-													/>
-
-													<input
-														type="hidden"
-														value={
-															factorItem
-																.factorCategory
-																?.name
-														}
-														{...register(
-															`categories.${index}.${factorIndex}.factorCategory` as const
-														)}
-													/>
-
-													<input
-														type="hidden"
-														value={
-															factorItem
-																.factorCategory
-																?.id
-														}
-														{...register(
-															`categories.${index}.${factorIndex}.factorCategoryId` as const
-														)}
-													/>
-
-													<Form.Select
-														defaultValue={
-															factorItem
-																.factorOption
-																?.id
-														}
-														label={
-															factorItem
-																.factorCategory
-																?.name
-														}
-														name={`categories.${index}.${factorIndex}.factorOptionId`}
-														options={factorOptions.map(
-															({
-																id,
-																name,
-															}: any) => ({
-																label: name,
-																value: id,
-															})
-														)}
-														register={register}
-														registerOptions={{
-															onBlur: () => {
-																update(index, {
-																	...currentCategory,
-																	[factorIndex]: {
-																		...categoryOptions,
-																		factorOption:
-																			factorOptionSelected.name,
-																	},
-																});
-															},
-														}}
-													/>
-												</ClayLayout.Col>
-											);
-										}
-									)}
-
-									{!!factorItems.length && (
-										<ClayLayout.Col className="d-flex justify-content-end">
-											<ClayButtonWithIcon
-												displayType="secondary"
-												onClick={() =>
-													append({} as const)
+									return (
+										<ClayLayout.Col
+											key={factorIndex}
+											size={3}
+										>
+											<input
+												type="hidden"
+												value={
+													factorOptionSelected.name
 												}
-												symbol="plus"
+												{...register(
+													`categories.${index}.${factorIndex}.factorOption` as const
+												)}
 											/>
 
-											{index !== 0 && (
-												<ClayButtonWithIcon
-													className="ml-1"
-													displayType="secondary"
-													onClick={() =>
-														remove(index)
-													}
-													symbol="hr"
-												/>
-											)}
-										</ClayLayout.Col>
-									)}
-								</ClayLayout.Row>
+											<input
+												type="hidden"
+												value={
+													factorItem.factorCategory
+														?.name
+												}
+												{...register(
+													`categories.${index}.${factorIndex}.factorCategory` as const
+												)}
+											/>
 
-								<Form.Divider />
-							</ClayLayout.Col>
-						</Fragment>
-					);
-				})}
+											<input
+												type="hidden"
+												value={
+													factorItem.factorCategory
+														?.id
+												}
+												{...register(
+													`categories.${index}.${factorIndex}.factorCategoryId` as const
+												)}
+											/>
+
+											<Form.Select
+												defaultValue={
+													factorItem.factorOption?.id
+												}
+												label={
+													factorItem.factorCategory
+														?.name
+												}
+												name={`categories.${index}.${factorIndex}.factorOptionId`}
+												options={factorOptions.map(
+													({id, name}: any) => ({
+														label: name,
+														value: id,
+													})
+												)}
+												register={register}
+												registerOptions={{
+													onBlur: () => {
+														update(index, {
+															...currentCategory,
+															[factorIndex]: {
+																...categoryOptions,
+																factorOption:
+																	factorOptionSelected.name,
+															},
+														});
+													},
+												}}
+											/>
+										</ClayLayout.Col>
+									);
+								})}
+
+								{!!factorItems.length && (
+									<ClayLayout.Col className="d-flex justify-content-end">
+										<ClayButtonWithIcon
+											displayType="secondary"
+											onClick={() => append({} as const)}
+											symbol="plus"
+										/>
+
+										{index !== 0 && (
+											<ClayButtonWithIcon
+												className="ml-1"
+												displayType="secondary"
+												onClick={() => remove(index)}
+												symbol="hr"
+											/>
+										)}
+									</ClayLayout.Col>
+								)}
+							</ClayLayout.Row>
+
+							<Form.Divider />
+						</ClayLayout.Col>
+					</Fragment>
+				))}
 			</ClayLayout.Row>
 
 			<FactorOptionsFormModal modal={optionModal} />

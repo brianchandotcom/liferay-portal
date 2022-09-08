@@ -25,6 +25,7 @@ export default {
 	'add-suite': 'Add Suite',
 	'add-suites': 'Add Suites',
 	'add-user-account': 'Add User Account',
+	'add-x': 'Add {0}',
 	'all-issues-found': 'All Issues Found',
 	'an-unexpected-error-occurred': 'An unexpected error ocurred',
 	'analyse': 'Analyse',

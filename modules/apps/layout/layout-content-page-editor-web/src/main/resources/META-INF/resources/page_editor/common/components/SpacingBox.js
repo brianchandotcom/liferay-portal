@@ -239,6 +239,10 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 							<LengthField
 								className="mb-3 mt-2 px-3"
 								field={field}
+								onEnter={() => {
+									setActive(false);
+									document.getElementById(triggerId)?.focus();
+								}}
 								onValueSelect={onChange}
 								showLabel={false}
 								value={

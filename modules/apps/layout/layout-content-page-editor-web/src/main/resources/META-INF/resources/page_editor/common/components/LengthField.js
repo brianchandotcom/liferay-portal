@@ -42,6 +42,7 @@ const UNITS = ['px', '%', 'em', 'rem', 'vw', 'vh', CUSTOM];
 export function LengthField({
 	className,
 	field,
+	onEnter,
 	onValueSelect,
 	showLabel = true,
 	value,
@@ -87,6 +88,7 @@ export function LengthField({
 				field={field}
 				id={inputId}
 				initialValue={initialValue}
+				onEnter={onEnter}
 				onValueSelect={onValueSelect}
 				value={value}
 			/>
@@ -97,12 +99,20 @@ export function LengthField({
 LengthField.propTypes = {
 	className: PropTypes.string,
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
+	onEnter: PropTypes.func,
 	onValueSelect: PropTypes.func.isRequired,
 	showLabel: PropTypes.bool,
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
-const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
+const LengthInput = ({
+	field,
+	id,
+	initialValue,
+	onEnter,
+	onValueSelect,
+	value,
+}) => {
 	const [active, setActive] = useState(false);
 	const [error, setError] = useState(false);
 	const inputRef = useRef();
@@ -180,12 +190,16 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 		}
 	};
 
-	const handleKeyDown = (event) => {
+	const handleKeyUp = (event) => {
 		if (nextUnit !== CUSTOM && KEYS_NOT_ALLOWED.has(event.key)) {
 			event.preventDefault();
 		}
 
 		if (event.key === 'Enter') {
+			if (onEnter) {
+				onEnter();
+			}
+
 			handleValueSelect();
 		}
 	};
@@ -211,7 +225,7 @@ const LengthInput = ({field, id, initialValue, onValueSelect, value}) => {
 					onChange={(event) => {
 						setNextValue(event.target.value);
 					}}
-					onKeyDown={handleKeyDown}
+					onKeyUp={handleKeyUp}
 					ref={inputRef}
 					sizing="sm"
 					type={nextUnit === CUSTOM ? 'text' : 'number'}

@@ -126,7 +126,14 @@ public class AssetListEntryLocalServiceImpl
 					AssetListEntryAssetEntryRelTable.INSTANCE
 				).where(
 					AssetListEntryAssetEntryRelTable.INSTANCE.assetListEntryId.
-						eq(assetListEntryId)
+						eq(
+							assetListEntryId
+						).and(
+							AssetListEntryAssetEntryRelTable.INSTANCE.
+								segmentsEntryId.eq(
+									assetListEntrySegmentsEntryRel.
+										getSegmentsEntryId())
+						)
 				)));
 
 		for (long assetEntryId : SetUtil.fromArray(assetEntryIds)) {

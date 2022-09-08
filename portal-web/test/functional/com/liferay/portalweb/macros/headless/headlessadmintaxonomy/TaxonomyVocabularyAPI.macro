@@ -159,6 +159,7 @@ definition {
 	macro getAssetLibraryKeywordsWithDifferentParameters {
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(
 			assetLibraryId = "${assetLibraryId}",
+			keywordId = "${keywordId}",
 			parameter = "${parameter}",
 			parameterValue = "${parameterValue}");
 

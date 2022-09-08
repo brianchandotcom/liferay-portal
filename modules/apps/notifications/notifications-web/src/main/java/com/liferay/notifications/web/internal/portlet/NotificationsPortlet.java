@@ -311,13 +311,6 @@ public class NotificationsPortlet extends MVCPortlet {
 		_sendRedirect(actionRequest, actionResponse);
 	}
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.notifications.web)(&(release.schema.version>=2.1.0)(!(release.schema.version>=3.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	private void _addSuccessMessage(
 		ActionRequest actionRequest, String message) {
 
@@ -438,6 +431,11 @@ public class NotificationsPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.notifications.web)(&(release.schema.version>=2.1.0)(!(release.schema.version>=3.0.0))))"
+	)
+	private Release _release;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

@@ -37,9 +37,7 @@ public class MySubscriptionsWebUpgradeStepRegistrator
 		registry.register("0.0.1", "1.0.0", new UpgradePortletId());
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 }

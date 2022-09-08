@@ -76,13 +76,7 @@ public class NotificationsWebUpgradeStepRegistrator
 			upgradePortletId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(
-		UserNotificationEventLocalService userNotificationEventLocalService) {
-
-		_userNotificationEventLocalService = userNotificationEventLocalService;
-	}
-
+	@Reference
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
 

@@ -490,6 +490,100 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9877. A user can search orders by account name"
+	@priority = "3"
+	test CanReturnOrdersBySearchForAccountName {
+		property portal.acceptance = "false";
+
+		task ("Given 2 accounts associated with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account 1",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account 2",
+				accountType = "Business",
+				createNewAccount = "true",
+				existingUser = "true",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And an order created by the user from the first account") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("And an order created by the user from the second account") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Commerce Account 2");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the buyer user navigates to Placed Orders on the Minium sidebar") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+		}
+
+		task ("Then the search of orders by account works properly") {
+			var searchAccount1 = '''"Commerce Account 1"''';
+
+			CommerceNavigator.searchEntry(entryName = "${searchAccount1}");
+
+			AssertElementPresent(
+				key_orderAccount = "Commerce Account 1",
+				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_ACCOUNT");
+
+			AssertElementNotPresent(
+				key_orderAccount = "Commerce Account 2",
+				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_ACCOUNT");
+		}
+	}
+
 	@description = "COMMERCE-6374. As a buyer, I want to be able to create a new order by clicking on 'Add Order' button"
 	@priority = "3"
 	test CreateNewOrderFromPendingOrdersPage {

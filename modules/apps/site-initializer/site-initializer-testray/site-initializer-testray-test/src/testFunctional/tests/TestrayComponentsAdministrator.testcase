@@ -8,15 +8,33 @@ definition {
 	property testray.main.component.name = "Site Initializer Testray";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
 
-		Testray.createTestraySite(siteName = "Testray 2");
+			Testray.createTestraySite(siteName = "Testray 2");
+
+			Refresh();
+		}
+
+		task ("Go to Testray, Create Project and change pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.deleteAllProjects();
 
 		Testray.tearDownCP();
 

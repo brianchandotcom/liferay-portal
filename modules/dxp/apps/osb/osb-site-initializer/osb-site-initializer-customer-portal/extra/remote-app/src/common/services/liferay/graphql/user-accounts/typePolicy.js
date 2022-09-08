@@ -38,58 +38,6 @@ export const userAccountsTypePolicy = {
 					);
 				},
 			},
-			selectedAccountBrief: {
-				read(_, {args, readField, toReference}) {
-					const accountKey = args?.accountKey;
-
-					if (!accountKey) {
-						return null;
-					}
-
-					const accountBriefRef = readField('accountBriefs')?.find(
-						(accountBrief) =>
-							readField('externalReferenceCode', accountBrief) ===
-							accountKey
-					);
-
-					if (accountBriefRef) {
-						const hasAccountAdministratorRole = !!readField(
-							'roleBriefs',
-							accountBriefRef
-						)?.find(
-							(roleBrief) =>
-								readField('name', roleBrief) ===
-								'Account Administrator'
-						);
-
-						return {
-							externalReferenceCode: accountKey,
-							hasAccountAdministratorRole,
-							id: readField('id', accountBriefRef),
-							name: readField('name', accountBriefRef),
-						};
-					}
-
-					if (readField('isLiferayStaff')) {
-						const accountRef = toReference({
-							__typename:
-								'com_liferay_headless_admin_user_dto_v1_0_Account',
-							externalReferenceCode: accountKey,
-						});
-
-						if (accountRef) {
-							return {
-								externalReferenceCode: accountKey,
-								hasAccountAdministratorRole: false,
-								id: readField('id', accountRef),
-								name: readField('name', accountRef),
-							};
-						}
-					}
-
-					return null;
-				},
-			},
 		},
 		keyFields: ['id'],
 	},

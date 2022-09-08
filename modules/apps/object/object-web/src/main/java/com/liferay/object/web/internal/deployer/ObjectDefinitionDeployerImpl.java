@@ -337,13 +337,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		return serviceRegistrations;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.object.web)", unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
@@ -459,6 +452,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	private ServiceTrackerMap<String, PortletResourcePermission>
 		_serviceTrackerMap;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.object.web)")
 	private ServletContext _servletContext;
 
 	@Reference

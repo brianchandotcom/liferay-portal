@@ -155,13 +155,6 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 		_serviceTrackerList.close();
 	}
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.object.service)(release.schema.version>=1.0.0))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	private void _addSAPEntry(long companyId) throws PortalException {
 		SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
 			companyId, ObjectSAPConstants.SAP_ENTRY_NAME);
@@ -290,6 +283,11 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.object.service)(release.schema.version>=1.0.0))"
+	)
+	private Release _release;
 
 	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;

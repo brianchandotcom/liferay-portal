@@ -122,52 +122,26 @@ public class MBDemo extends BasePortalInstanceLifecycleListener {
 		_rootMBCategoryDemoDataCreator.delete();
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(target = "(source=liferay)", unbind = "-")
-	protected void setLiferayMBCategoryDemoDataCreator(
-		MBCategoryDemoDataCreator mbCategoryDemoDataCreator) {
-
-		_mbCategoryDemoDataCreator = mbCategoryDemoDataCreator;
-	}
-
-	@Reference(target = "(source=liferay)", unbind = "-")
-	protected void setLiferayRootMBCategoryDemoDataCreator(
-		RootMBCategoryDemoDataCreator rootMBCategoryDemoDataCreator) {
-
-		_rootMBCategoryDemoDataCreator = rootMBCategoryDemoDataCreator;
-	}
-
-	@Reference(target = "(source=lorem-ipsum)", unbind = "-")
-	protected void setLoremIpsumMBThreadDemoDataCreator(
-		MBThreadDemoDataCreator mbThreadDemoDataCreator) {
-
-		_mbThreadDemoDataCreator = mbThreadDemoDataCreator;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setOmniAdminUserDemoDataCreator(
-		OmniAdminUserDemoDataCreator omniAdminUserDemoDataCreator) {
-
-		_omniAdminUserDemoDataCreator = omniAdminUserDemoDataCreator;
-	}
-
 	private <T> T _getRandomElement(List<T> list) {
 		return list.get(RandomUtil.nextInt(list.size()));
 	}
 
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference(target = "(source=liferay)")
 	private MBCategoryDemoDataCreator _mbCategoryDemoDataCreator;
+
+	@Reference(target = "(source=lorem-ipsum)")
 	private MBThreadDemoDataCreator _mbThreadDemoDataCreator;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
 	private OmniAdminUserDemoDataCreator _omniAdminUserDemoDataCreator;
+
+	@Reference(target = "(source=liferay)")
 	private RootMBCategoryDemoDataCreator _rootMBCategoryDemoDataCreator;
 
 }

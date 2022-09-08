@@ -50,7 +50,7 @@ import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUtil;
-import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLinkLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
@@ -1390,8 +1390,9 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product definition links
 
-		_cpDefinitionLinkLocalService.deleteCPDefinitionLinksByCPDefinitionId(
-			cpDefinition.getCPDefinitionId());
+		CPDefinitionLinkLocalServiceUtil.
+			deleteCPDefinitionLinksByCPDefinitionId(
+				cpDefinition.getCPDefinitionId());
 
 		// Commerce product type
 
@@ -3195,9 +3196,6 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private CPAttachmentFileEntryPersistence _cpAttachmentFileEntryPersistence;
-
-	@Reference
-	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
 
 	@Reference
 	private CPDefinitionLinkPersistence _cpDefinitionLinkPersistence;

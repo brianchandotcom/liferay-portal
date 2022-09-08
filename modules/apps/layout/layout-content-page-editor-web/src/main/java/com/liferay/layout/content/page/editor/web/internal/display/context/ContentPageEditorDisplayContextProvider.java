@@ -70,9 +70,10 @@ public class ContentPageEditorDisplayContextProvider {
 
 		if (Objects.equals(className, Layout.class.getName())) {
 			return new ContentPageLayoutEditorDisplayContext(
-				_getContentPageEditorSidebarPanels(), _fragmentEntryLinkManager,
-				_fragmentCollectionManager, _frontendTokenDefinitionRegistry,
-				httpServletRequest, _infoItemServiceTracker, _itemSelector,
+				_getContentPageEditorSidebarPanels(),
+				_fragmentCollectionManager, _fragmentEntryLinkManager,
+				_frontendTokenDefinitionRegistry, httpServletRequest,
+				_infoItemServiceTracker, _itemSelector,
 				_pageEditorConfiguration, portletRequest, renderResponse,
 				_segmentsConfigurationProvider,
 				new SegmentsExperienceManager(_segmentsExperienceLocalService),
@@ -96,8 +97,8 @@ public class ContentPageEditorDisplayContextProvider {
 		}
 
 		return new ContentPageEditorLayoutPageTemplateDisplayContext(
-			_getContentPageEditorSidebarPanels(), _fragmentEntryLinkManager,
-			_fragmentCollectionManager, _frontendTokenDefinitionRegistry,
+			_getContentPageEditorSidebarPanels(), _fragmentCollectionManager,
+			_fragmentEntryLinkManager, _frontendTokenDefinitionRegistry,
 			httpServletRequest, _infoItemServiceTracker, _itemSelector,
 			_pageEditorConfiguration, pageIsDisplayPage, portletRequest,
 			renderResponse, _segmentsConfigurationProvider,

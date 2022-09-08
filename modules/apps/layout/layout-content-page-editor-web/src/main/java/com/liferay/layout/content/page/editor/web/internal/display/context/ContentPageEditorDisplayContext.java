@@ -168,8 +168,8 @@ public class ContentPageEditorDisplayContext {
 
 	public ContentPageEditorDisplayContext(
 		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
-		FragmentEntryLinkManager fragmentEntryLinkManager,
 		FragmentCollectionManager fragmentCollectionManager,
+		FragmentEntryLinkManager fragmentEntryLinkManager,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
 		InfoItemServiceTracker infoItemServiceTracker,
@@ -181,8 +181,8 @@ public class ContentPageEditorDisplayContext {
 		StagingGroupHelper stagingGroupHelper) {
 
 		_contentPageEditorSidebarPanels = contentPageEditorSidebarPanels;
-		_fragmentEntryLinkManager = fragmentEntryLinkManager;
 		_fragmentCollectionManager = fragmentCollectionManager;
+		_fragmentEntryLinkManager = fragmentEntryLinkManager;
 		_frontendTokenDefinitionRegistry = frontendTokenDefinitionRegistry;
 		_itemSelector = itemSelector;
 		_pageEditorConfiguration = pageEditorConfiguration;
@@ -668,7 +668,7 @@ public class ContentPageEditorDisplayContext {
 			"state",
 			HashMapBuilder.<String, Object>put(
 				"collections",
-a				_fragmentCollectionManager.getFragmentCollectionMapsList(
+				_fragmentCollectionManager.getFragmentCollectionMapsList(
 					getGroupId(), httpServletRequest, true, false,
 					_getMasterDropZoneLayoutStructureItem(), themeDisplay)
 			).put(

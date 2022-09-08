@@ -43,21 +43,44 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-156998 - Verify if as an Administrator I should be able to add and delete a Component that doesn't have a Team"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test AdminCanAddAndDeleteComponentWithoutTeam {
-
-		// TODO LPS-156998 AdminCanAddAndDeleteComponentWithoutTeam pending implementation
-
-	}
-
 	@description = "This is a test for LPS-156997 - Verify if as an Administrator I should be able to add and delete a Component that has a Team"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanAddAndDeleteComponentWithTeam {
+		task ("Given that the user adds a new Team") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
-		// TODO LPS-156997 AdminCanAddAndDeleteComponentWithTeam pending implementation
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			Testray.addNewTeam(teamName = "Components_1 Team");
+
+			Testray.assertItemName(key_name = "Components_1 Team");
+		}
+
+		task ("When the user goes to add a new component and selects the team") {
+			TestrayManage.closeModalInOptions();
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(
+				componentName = "Components_1 Project",
+				teamName = "Components_1 Team");
+		}
+
+		task ("Then the component and team should appear on the list") {
+			Testray.assertItemName(key_name = "Components_1 Project");
+
+			Testray.assertItemName(key_name = "Components_1 Team");
+		}
+
+		task ("And when a component is deleted") {
+			Testray.deleteComponent(itemName = "Components_1 Project");
+		}
+
+		task ("Then the component should not appear on the list") {
+			Testray.assertItemNotPresent(itemName = "Components_1 Project");
+		}
 
 	}
 

@@ -114,7 +114,14 @@ public class LayoutTableReferenceDefinition
 				).innerJoinON(
 					LayoutTable.INSTANCE,
 					LayoutTable.INSTANCE.parentLayoutId.eq(
-						aliasLayoutTable.layoutId)
+						aliasLayoutTable.layoutId
+					).and(
+						LayoutTable.INSTANCE.groupId.eq(
+							aliasLayoutTable.groupId)
+					).and(
+						LayoutTable.INSTANCE.privateLayout.eq(
+							aliasLayoutTable.privateLayout)
+					)
 				);
 			}
 		).referenceInnerJoin(

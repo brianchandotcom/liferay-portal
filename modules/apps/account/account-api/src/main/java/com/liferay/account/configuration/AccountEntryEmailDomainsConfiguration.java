@@ -22,7 +22,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Pei-Jung Lan
  */
 @ExtendedObjectClassDefinition(
-	category = "accounts", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "accounts", scope = ExtendedObjectClassDefinition.Scope.COMPANY,
+	strictScope = true
 )
 @Meta.OCD(
 	id = "com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration",

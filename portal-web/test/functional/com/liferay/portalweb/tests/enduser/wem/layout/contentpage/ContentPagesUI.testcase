@@ -65,6 +65,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153383. The page creator cannot resize editor sidebar to an invalid size."
+	@priority = "4"
+	test CannotResizeLeftSidebarPanelBeyoundLimitation {
+		property custom.properties = "feature.flag.LPS-153452=true";
+
+		task ("Given a page creator accesses to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("When the page creator accesses to the left sidebar panel") {
+			AssertVisible(
+				key_sidebarButton = "Fragments and Widgets",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+		}
+
+		task ("Then the page creator cannot resize the left sidebar panel more than 500px or less than 280px") {
+			DragAndDrop.dragAndDrop(
+				locator1 = "PageEditor#SIDEBAR_RESIZER",
+				value1 = "220,0");
+
+			AssertCssValue(
+				locator1 = "Sidebar#PANEL_OPEN",
+				locator2 = "width",
+				value1 = "500px");
+
+			DragAndDrop.dragAndDrop(
+				locator1 = "PageEditor#SIDEBAR_RESIZER",
+				value1 = "100,0");
+
+			AssertCssValue(
+				locator1 = "Sidebar#PANEL_OPEN",
+				locator2 = "width",
+				value1 = "500px");
+
+			DragAndDrop.dragAndDrop(
+				locator1 = "PageEditor#SIDEBAR_RESIZER",
+				value1 = "-220,0");
+
+			AssertCssValue(
+				locator1 = "Sidebar#PANEL_OPEN",
+				locator2 = "width",
+				value1 = "280px");
+
+			DragAndDrop.dragAndDrop(
+				locator1 = "PageEditor#SIDEBAR_RESIZER",
+				value1 = "-100,0");
+
+			AssertCssValue(
+				locator1 = "Sidebar#PANEL_OPEN",
+				locator2 = "width",
+				value1 = "280px");
+		}
+	}
+
 	@description = "This is a test for LPS-146373. The page creator could close the left sidebar panel via the times icon."
 	@priority = "4"
 	test CloseLeftPageEditorSidebar {

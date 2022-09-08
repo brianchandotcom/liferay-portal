@@ -43,6 +43,28 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-LPS-156998 - Verify if as an Administrator I should be able to add and delete a Component that doesn't have a Team"
+	@priority = "5"
+	test AdminCanAddAndDeleteComponentWithoutTeam {
+		task ("Given that the user add a new Component") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(componentName = "Components_1 Project");
+
+			Testray.assertItemName(key_name = "Components_1 Project");
+		}
+
+		task ("When a component is deleted") {
+			Testray.deleteComponent(itemName = "Components_1 Project");
+		}
+
+		task ("Then the component should not appear on the list") {
+			Testray.assertItemNotPresent(itemName = "Components_1 Project");
+		}
+	}
+
 	@description = "This is a test for LPS-156997 - Verify if as an Administrator I should be able to add and delete a Component that has a Team"
 	@priority = "5"
 	test AdminCanAddAndDeleteComponentWithTeam {
@@ -171,21 +193,27 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156988 - Verify that as an Administrator I am able to edit Components while connecting a Team"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanEditComponent {
+		task ("Given that the user add a new Component") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
-		// TODO LPS-156988 AdminCanEditComponent pending implementation
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
 
-	}
+			Testray.addNewComponent(componentName = "Components_1 Project");
 
-	@description = "This is a test for LPS-156992 - Verify if as an Administrator I am able to edit Components while connecting a Team"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test AdminCanEditConnectComponent {
+			Testray.assertItemName(key_name = "Components_1 Project");
+		}
 
-		// TODO LPS-156992 AdminCanEditConnectComponent pending implementation
+		task ("When the user goes to edit the component and change the name") {
+			Testray.editComponent(
+				componentName = "Components_1 Project",
+				newComponentName = "Components_1 Project Edited");
+		}
 
+		task ("Then the component should be update on the list") {
+			Testray.assertItemName(key_name = "Components_1 Project Edited");
+		}
 	}
 
 	@description = "This is a test for LPS-156995 - Verify if as an Administrator when I search for a Component the system should return that component"

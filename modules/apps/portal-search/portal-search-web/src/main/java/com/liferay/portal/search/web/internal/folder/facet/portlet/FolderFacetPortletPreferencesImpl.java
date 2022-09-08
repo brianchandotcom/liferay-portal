@@ -47,6 +47,13 @@ public class FolderFacetPortletPreferencesImpl
 	}
 
 	@Override
+	public String getOrder() {
+		return _portletPreferencesHelper.getString(
+			FolderFacetPortletPreferences.PREFERENCE_KEY_ORDER,
+			"count:desc");
+	}
+
+	@Override
 	public String getParameterName() {
 		return _portletPreferencesHelper.getString(
 			FolderFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,

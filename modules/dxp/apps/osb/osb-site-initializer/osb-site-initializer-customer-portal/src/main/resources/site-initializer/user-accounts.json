@@ -1,0 +1,50 @@
+[
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "ERC-001"
+			},
+			{
+				"externalReferenceCode": "ERC-002"
+			},
+			{
+				"externalReferenceCode": "ERC-003"
+			},
+			{
+				"externalReferenceCode": "ERC-004"
+			},
+			{
+				"externalReferenceCode": "ERC-005"
+			},
+			{
+				"externalReferenceCode": "ERC-006"
+			},
+			{
+				"externalReferenceCode": "ERC-007"
+			},
+			{
+				"externalReferenceCode": "ERC-008"
+			},
+			{
+				"externalReferenceCode": "ERC-009"
+			},
+			{
+				"externalReferenceCode": "ERC-010"
+			},
+			{
+				"externalReferenceCode": "ERC-011"
+			},
+			{
+				"externalReferenceCode": "ERC-012"
+			},
+			{
+				"externalReferenceCode": "ERC-013"
+			}
+		],
+		"alternateName": "test",
+		"emailAddress": "test@liferay.com",
+		"familyName": "Test",
+		"givenName": "Test",
+		"name": "Test Test"
+	}
+]

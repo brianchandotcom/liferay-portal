@@ -2,6 +2,7 @@
 	"object-entries": [
 		{
 			"accountKey": "ERC-001",
+			"externalReferenceCode": "ERC-001",
 			"code": "TESTACCOUNT01",
 			"dxpVersion": "7.4",
 			"liferayContactEmailAddress": "customer-service@liferay.com",
@@ -22,6 +23,7 @@
 		},
 		{
 			"accountKey": "ERC-002",
+			"externalReferenceCode": "ERC-002",
 			"code": "TESTACCOUNT02",
 			"dxpVersion": "7.4",
 			"liferayContactEmailAddress": "customer-service@liferay.com",
@@ -36,6 +38,7 @@
 		},
 		{
 			"accountKey": "ERC-003",
+			"externalReferenceCode": "ERC-003",
 			"code": "TESTACCOUNT03",
 			"dxpVersion": "7.4",
 			"liferayContactEmailAddress": "customer-service@liferay.com",
@@ -51,6 +54,7 @@
 		},
 		{
 			"accountKey": "ERC-004",
+			"externalReferenceCode": "ERC-004",
 			"code": "TESTACCOUNT04",
 			"dxpVersion": "7.4",
 			"liferayContactEmailAddress": "customer-service@liferay.com",
@@ -65,6 +69,7 @@
 		},
 		{
 			"accountKey": "ERC-005",
+			"externalReferenceCode": "ERC-005",
 			"code": "TESTACCOUNT05",
 			"dxpVersion": "7.4",
 			"liferayContactEmailAddress": "customer-service@liferay.com",
@@ -79,6 +84,7 @@
 		},
 		{
 			"accountKey": "ERC-006",
+			"externalReferenceCode": "ERC-006",
 			"code": "TESTACCOUNT06",
 			"dxpVersion": "7.4",
 			"liferayContactEmailAddress": "customer-service@liferay.com",
@@ -93,6 +99,7 @@
 		},
 		{
 			"accountKey": "ERC-007",
+			"externalReferenceCode": "ERC-007",
 			"code": "TESTACCOUNT07",
 			"dxpVersion": "7.4",
 			"liferayContactEmailAddress": "customer-service@liferay.com",
@@ -113,6 +120,7 @@
 		},
 		{
 			"accountKey": "ERC-008",
+			"externalReferenceCode": "ERC-008",
 			"code": "TESTACCOUNT08",
 			"dxpVersion": "7.4",
 			"liferayContactEmailAddress": "customer-service@liferay.com",
@@ -127,6 +135,7 @@
 		},
 		{
 			"accountKey": "ERC-009",
+			"externalReferenceCode": "ERC-009",
 			"code": "TESTACCOUNT09",
 			"dxpVersion": "7.4",
 			"liferayContactEmailAddress": "customer-service@liferay.com",
@@ -141,6 +150,7 @@
 		},
 		{
 			"accountKey": "ERC-010",
+			"externalReferenceCode": "ERC-010",
 			"code": "TESTACCOUNT10",
 			"dxpVersion": "7.3",
 			"liferayContactEmailAddress": "customer-service@liferay.com",
@@ -155,6 +165,7 @@
 		},
 		{
 			"accountKey": "ERC-011",
+			"externalReferenceCode": "ERC-011",
 			"code": "TESTACCOUNT11",
 			"dxpVersion": "7.2",
 			"liferayContactEmailAddress": "customer-service@liferay.com",
@@ -169,6 +180,7 @@
 		},
 		{
 			"accountKey": "ERC-012",
+			"externalReferenceCode": "ERC-012",
 			"code": "TESTACCOUNT12",
 			"dxpVersion": "7.1",
 			"liferayContactEmailAddress": "customer-service@liferay.com",
@@ -183,6 +195,7 @@
 		},
 		{
 			"accountKey": "ERC-013",
+			"externalReferenceCode": "ERC-013",
 			"code": "TESTACCOUNT13",
 			"dxpVersion": "7.0",
 			"liferayContactEmailAddress": "customer-service@liferay.com",

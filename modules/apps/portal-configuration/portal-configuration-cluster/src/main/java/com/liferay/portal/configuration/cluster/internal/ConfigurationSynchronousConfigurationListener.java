@@ -54,18 +54,12 @@ public class ConfigurationSynchronousConfigurationListener
 		_clusterLink.sendMulticastMessage(message, Priority.LEVEL10);
 	}
 
-	@Reference(unbind = "-")
-	protected void setClusterLink(ClusterLink clusterLink) {
-		_clusterLink = clusterLink;
-	}
+	@Reference
+	private ClusterLink _clusterLink;
 
 	@Reference(
-		target = "(destination.name=" + ConfigurationClusterDestinationNames.CONFIGURATION + ")",
-		unbind = "-"
+		target = "(destination.name=" + ConfigurationClusterDestinationNames.CONFIGURATION + ")"
 	)
-	protected void setDestination(Destination destination) {
-	}
-
-	private ClusterLink _clusterLink;
+	private Destination _destination;
 
 }

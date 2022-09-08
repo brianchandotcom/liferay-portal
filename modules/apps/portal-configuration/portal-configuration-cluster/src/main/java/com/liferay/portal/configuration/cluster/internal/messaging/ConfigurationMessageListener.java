@@ -42,32 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ConfigurationMessageListener extends BaseMessageListener {
 
-	@Reference(unbind = "-")
-	public void setReloadablePersistenceManager(
-		ReloadablePersistenceManager reloadablePersistenceManager) {
-
-		_reloadablePersistenceManager = reloadablePersistenceManager;
-	}
-
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		_reloadConfiguration(
 			message.getString(Constants.SERVICE_PID),
 			message.getInteger("configuration.event.type"));
-	}
-
-	@Reference(unbind = "-")
-	protected void setConfigurationAdmin(
-		ConfigurationAdmin configurationAdmin) {
-
-		_configurationAdmin = configurationAdmin;
-	}
-
-	@Reference(
-		target = "(destination.name=" + ConfigurationClusterDestinationNames.CONFIGURATION + ")",
-		unbind = "-"
-	)
-	protected void setDestination(Destination destination) {
 	}
 
 	private void _reloadConfiguration(String pid, int type) throws Exception {
@@ -107,7 +86,15 @@ public class ConfigurationMessageListener extends BaseMessageListener {
 		}
 	}
 
+	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference(
+		target = "(destination.name=" + ConfigurationClusterDestinationNames.CONFIGURATION + ")"
+	)
+	private Destination _destination;
+
+	@Reference
 	private ReloadablePersistenceManager _reloadablePersistenceManager;
 
 }

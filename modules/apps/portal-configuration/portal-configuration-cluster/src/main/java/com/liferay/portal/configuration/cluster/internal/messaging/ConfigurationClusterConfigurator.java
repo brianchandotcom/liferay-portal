@@ -70,15 +70,11 @@ public class ConfigurationClusterConfigurator {
 		_bundleContext = null;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDestinationFactory(
-		DestinationFactory destinationFactory) {
-
-		_destinationFactory = destinationFactory;
-	}
-
 	private volatile BundleContext _bundleContext;
+
+	@Reference
 	private DestinationFactory _destinationFactory;
+
 	private ServiceRegistration<Destination> _serviceRegistration;
 
 }

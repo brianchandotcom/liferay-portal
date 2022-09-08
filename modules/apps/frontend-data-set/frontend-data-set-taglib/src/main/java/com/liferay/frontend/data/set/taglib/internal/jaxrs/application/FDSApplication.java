@@ -179,6 +179,52 @@ public class FDSApplication extends Application {
 		).build();
 	}
 
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/fds/{fdsName}/custom-views")
+	@POST
+	public Response saveFDSCustomView(
+		@PathParam("fdsName") String fdsName,
+		@Context HttpServletRequest httpServletRequest,
+		@Context ThemeDisplay themeDisplay, String customViewJSON) {
+
+		try {
+			PortalPreferences portalPreferences =
+				PortletPreferencesFactoryUtil.getPortalPreferences(
+					httpServletRequest);
+
+			String fdsSettingsNamespace =
+				ServletContextUtil.getFDSSettingsNamespace(
+					httpServletRequest, fdsName);
+
+			String customViews = portalPreferences.getValue(
+				fdsSettingsNamespace, "customViews", "{}");
+
+			JSONObject customViewsJSONObject = _jsonFactory.createJSONObject(
+				customViews);
+
+			JSONObject customViewJSONObject = _jsonFactory.createJSONObject(
+				customViewJSON);
+
+			customViewsJSONObject.put(
+				String.valueOf(customViewJSONObject.get("customViewId")),
+				customViewJSONObject.get("viewState"));
+
+			portalPreferences.setValue(
+				fdsSettingsNamespace, "customViews",
+				customViewsJSONObject.toString());
+
+			return Response.ok(
+			).build();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return Response.status(
+			Response.Status.INTERNAL_SERVER_ERROR
+		).build();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(FDSApplication.class);
 
 	@Reference

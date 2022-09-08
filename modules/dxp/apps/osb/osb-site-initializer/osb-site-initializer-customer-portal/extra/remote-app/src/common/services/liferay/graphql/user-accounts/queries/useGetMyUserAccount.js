@@ -14,20 +14,17 @@ import {CORE_USER_ACCOUNT_FIELDS} from '../fragments';
 
 const GET_USER_ACCOUNT = gql`
 	${CORE_USER_ACCOUNT_FIELDS}
-	query getUserAccount($userAccountId: Long!) {
-		userAccount(userAccountId: $userAccountId) {
+	query getMyUserAccount {
+		myUserAccount {
 			...CoreUserAccountFields
 		}
 	}
 `;
 
-export function useGetUserAccount(userAccountId, options = {skip: false}) {
+export function useGetMyUserAccount(options = {skip: false}) {
 	return useQuery(GET_USER_ACCOUNT, {
 		fetchPolicy: 'cache-and-network',
 		nextFetchPolicy: 'cache-first',
 		skip: options.skip,
-		variables: {
-			userAccountId,
-		},
 	});
 }

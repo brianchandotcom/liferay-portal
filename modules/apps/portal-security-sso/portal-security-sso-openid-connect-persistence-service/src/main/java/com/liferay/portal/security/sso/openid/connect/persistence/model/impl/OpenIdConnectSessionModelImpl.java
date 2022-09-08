@@ -73,6 +73,7 @@ public class OpenIdConnectSessionModelImpl
 		{"mvccVersion", Types.BIGINT}, {"openIdConnectSessionId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"modifiedDate", Types.TIMESTAMP}, {"accessToken", Types.VARCHAR},
+		{"accessTokenExpiredDate", Types.TIMESTAMP},
 		{"authServerWellKnownURI", Types.VARCHAR}, {"clientId", Types.VARCHAR},
 		{"idToken", Types.VARCHAR}, {"refreshToken", Types.VARCHAR}
 	};
@@ -87,6 +88,7 @@ public class OpenIdConnectSessionModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("accessToken", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("accessTokenExpiredDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("authServerWellKnownURI", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("clientId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("idToken", Types.VARCHAR);
@@ -94,7 +96,7 @@ public class OpenIdConnectSessionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OpenIdConnectSession (mvccVersion LONG default 0 not null,openIdConnectSessionId LONG not null primary key,companyId LONG,userId LONG,modifiedDate DATE null,accessToken VARCHAR(3000) null,authServerWellKnownURI VARCHAR(256) null,clientId VARCHAR(256) null,idToken VARCHAR(3999) null,refreshToken VARCHAR(2000) null)";
+		"create table OpenIdConnectSession (mvccVersion LONG default 0 not null,openIdConnectSessionId LONG not null primary key,companyId LONG,userId LONG,modifiedDate DATE null,accessToken VARCHAR(3000) null,accessTokenExpiredDate DATE null,authServerWellKnownURI VARCHAR(256) null,clientId VARCHAR(256) null,idToken VARCHAR(3999) null,refreshToken VARCHAR(2000) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OpenIdConnectSession";
@@ -293,6 +295,13 @@ public class OpenIdConnectSessionModelImpl
 			(BiConsumer<OpenIdConnectSession, String>)
 				OpenIdConnectSession::setAccessToken);
 		attributeGetterFunctions.put(
+			"accessTokenExpiredDate",
+			OpenIdConnectSession::getAccessTokenExpiredDate);
+		attributeSetterBiConsumers.put(
+			"accessTokenExpiredDate",
+			(BiConsumer<OpenIdConnectSession, Date>)
+				OpenIdConnectSession::setAccessTokenExpiredDate);
+		attributeGetterFunctions.put(
 			"authServerWellKnownURI",
 			OpenIdConnectSession::getAuthServerWellKnownURI);
 		attributeSetterBiConsumers.put(
@@ -455,6 +464,20 @@ public class OpenIdConnectSessionModelImpl
 	}
 
 	@Override
+	public Date getAccessTokenExpiredDate() {
+		return _accessTokenExpiredDate;
+	}
+
+	@Override
+	public void setAccessTokenExpiredDate(Date accessTokenExpiredDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_accessTokenExpiredDate = accessTokenExpiredDate;
+	}
+
+	@Override
 	public String getAuthServerWellKnownURI() {
 		if (_authServerWellKnownURI == null) {
 			return "";
@@ -613,6 +636,8 @@ public class OpenIdConnectSessionModelImpl
 		openIdConnectSessionImpl.setUserId(getUserId());
 		openIdConnectSessionImpl.setModifiedDate(getModifiedDate());
 		openIdConnectSessionImpl.setAccessToken(getAccessToken());
+		openIdConnectSessionImpl.setAccessTokenExpiredDate(
+			getAccessTokenExpiredDate());
 		openIdConnectSessionImpl.setAuthServerWellKnownURI(
 			getAuthServerWellKnownURI());
 		openIdConnectSessionImpl.setClientId(getClientId());
@@ -641,6 +666,8 @@ public class OpenIdConnectSessionModelImpl
 			this.<Date>getColumnOriginalValue("modifiedDate"));
 		openIdConnectSessionImpl.setAccessToken(
 			this.<String>getColumnOriginalValue("accessToken"));
+		openIdConnectSessionImpl.setAccessTokenExpiredDate(
+			this.<Date>getColumnOriginalValue("accessTokenExpiredDate"));
 		openIdConnectSessionImpl.setAuthServerWellKnownURI(
 			this.<String>getColumnOriginalValue("authServerWellKnownURI"));
 		openIdConnectSessionImpl.setClientId(
@@ -753,6 +780,17 @@ public class OpenIdConnectSessionModelImpl
 
 		if ((accessToken != null) && (accessToken.length() == 0)) {
 			openIdConnectSessionCacheModel.accessToken = null;
+		}
+
+		Date accessTokenExpiredDate = getAccessTokenExpiredDate();
+
+		if (accessTokenExpiredDate != null) {
+			openIdConnectSessionCacheModel.accessTokenExpiredDate =
+				accessTokenExpiredDate.getTime();
+		}
+		else {
+			openIdConnectSessionCacheModel.accessTokenExpiredDate =
+				Long.MIN_VALUE;
 		}
 
 		openIdConnectSessionCacheModel.authServerWellKnownURI =
@@ -892,6 +930,7 @@ public class OpenIdConnectSessionModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _accessToken;
+	private Date _accessTokenExpiredDate;
 	private String _authServerWellKnownURI;
 	private String _clientId;
 	private String _idToken;
@@ -932,6 +971,8 @@ public class OpenIdConnectSessionModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("accessToken", _accessToken);
 		_columnOriginalValues.put(
+			"accessTokenExpiredDate", _accessTokenExpiredDate);
+		_columnOriginalValues.put(
 			"authServerWellKnownURI", _authServerWellKnownURI);
 		_columnOriginalValues.put("clientId", _clientId);
 		_columnOriginalValues.put("idToken", _idToken);
@@ -961,13 +1002,15 @@ public class OpenIdConnectSessionModelImpl
 
 		columnBitmasks.put("accessToken", 32L);
 
-		columnBitmasks.put("authServerWellKnownURI", 64L);
+		columnBitmasks.put("accessTokenExpiredDate", 64L);
 
-		columnBitmasks.put("clientId", 128L);
+		columnBitmasks.put("authServerWellKnownURI", 128L);
 
-		columnBitmasks.put("idToken", 256L);
+		columnBitmasks.put("clientId", 256L);
 
-		columnBitmasks.put("refreshToken", 512L);
+		columnBitmasks.put("idToken", 512L);
+
+		columnBitmasks.put("refreshToken", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

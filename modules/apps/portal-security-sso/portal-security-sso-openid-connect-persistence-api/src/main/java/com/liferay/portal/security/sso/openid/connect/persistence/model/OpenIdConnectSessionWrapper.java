@@ -50,6 +50,7 @@ public class OpenIdConnectSessionWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("accessToken", getAccessToken());
+		attributes.put("accessTokenExpiredDate", getAccessTokenExpiredDate());
 		attributes.put("authServerWellKnownURI", getAuthServerWellKnownURI());
 		attributes.put("clientId", getClientId());
 		attributes.put("idToken", getIdToken());
@@ -97,6 +98,13 @@ public class OpenIdConnectSessionWrapper
 			setAccessToken(accessToken);
 		}
 
+		Date accessTokenExpiredDate = (Date)attributes.get(
+			"accessTokenExpiredDate");
+
+		if (accessTokenExpiredDate != null) {
+			setAccessTokenExpiredDate(accessTokenExpiredDate);
+		}
+
 		String authServerWellKnownURI = (String)attributes.get(
 			"authServerWellKnownURI");
 
@@ -136,6 +144,16 @@ public class OpenIdConnectSessionWrapper
 	@Override
 	public String getAccessToken() {
 		return model.getAccessToken();
+	}
+
+	/**
+	 * Returns the access token expired date of this open ID connect session.
+	 *
+	 * @return the access token expired date of this open ID connect session
+	 */
+	@Override
+	public Date getAccessTokenExpiredDate() {
+		return model.getAccessTokenExpiredDate();
 	}
 
 	/**
@@ -261,6 +279,16 @@ public class OpenIdConnectSessionWrapper
 	@Override
 	public void setAccessToken(String accessToken) {
 		model.setAccessToken(accessToken);
+	}
+
+	/**
+	 * Sets the access token expired date of this open ID connect session.
+	 *
+	 * @param accessTokenExpiredDate the access token expired date of this open ID connect session
+	 */
+	@Override
+	public void setAccessTokenExpiredDate(Date accessTokenExpiredDate) {
+		model.setAccessTokenExpiredDate(accessTokenExpiredDate);
 	}
 
 	/**

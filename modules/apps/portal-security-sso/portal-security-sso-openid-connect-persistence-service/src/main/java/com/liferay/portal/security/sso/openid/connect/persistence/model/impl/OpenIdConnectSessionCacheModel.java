@@ -78,7 +78,7 @@ public class OpenIdConnectSessionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -92,6 +92,8 @@ public class OpenIdConnectSessionCacheModel
 		sb.append(modifiedDate);
 		sb.append(", accessToken=");
 		sb.append(accessToken);
+		sb.append(", accessTokenExpiredDate=");
+		sb.append(accessTokenExpiredDate);
 		sb.append(", authServerWellKnownURI=");
 		sb.append(authServerWellKnownURI);
 		sb.append(", clientId=");
@@ -128,6 +130,14 @@ public class OpenIdConnectSessionCacheModel
 		}
 		else {
 			openIdConnectSessionImpl.setAccessToken(accessToken);
+		}
+
+		if (accessTokenExpiredDate == Long.MIN_VALUE) {
+			openIdConnectSessionImpl.setAccessTokenExpiredDate(null);
+		}
+		else {
+			openIdConnectSessionImpl.setAccessTokenExpiredDate(
+				new Date(accessTokenExpiredDate));
 		}
 
 		if (authServerWellKnownURI == null) {
@@ -175,6 +185,7 @@ public class OpenIdConnectSessionCacheModel
 		userId = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		accessToken = objectInput.readUTF();
+		accessTokenExpiredDate = objectInput.readLong();
 		authServerWellKnownURI = objectInput.readUTF();
 		clientId = objectInput.readUTF();
 		idToken = objectInput.readUTF();
@@ -198,6 +209,8 @@ public class OpenIdConnectSessionCacheModel
 		else {
 			objectOutput.writeUTF(accessToken);
 		}
+
+		objectOutput.writeLong(accessTokenExpiredDate);
 
 		if (authServerWellKnownURI == null) {
 			objectOutput.writeUTF("");
@@ -234,6 +247,7 @@ public class OpenIdConnectSessionCacheModel
 	public long userId;
 	public long modifiedDate;
 	public String accessToken;
+	public long accessTokenExpiredDate;
 	public String authServerWellKnownURI;
 	public String clientId;
 	public String idToken;

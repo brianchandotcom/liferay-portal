@@ -273,6 +273,16 @@ public class OpenIdConnectSessionLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.portal.security.sso.openid.connect.persistence.model.
+			OpenIdConnectSession> getAccessTokenExpiredOpenIdConnectSessions(
+				java.util.Date beforeDate, int start, int end) {
+
+		return _openIdConnectSessionLocalService.
+			getAccessTokenExpiredOpenIdConnectSessions(beforeDate, start, end);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

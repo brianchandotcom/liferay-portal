@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalService;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalServiceUtil;
+import com.liferay.portal.security.sso.openid.connect.persistence.service.persistence.OpenIdConnectSessionFinder;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.persistence.OpenIdConnectSessionPersistence;
 
 import java.io.Serializable;
@@ -488,6 +489,9 @@ public abstract class OpenIdConnectSessionLocalServiceBaseImpl
 
 	@Reference
 	protected OpenIdConnectSessionPersistence openIdConnectSessionPersistence;
+
+	@Reference
+	protected OpenIdConnectSessionFinder openIdConnectSessionFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

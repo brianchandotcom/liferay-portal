@@ -162,6 +162,20 @@ public interface OpenIdConnectSessionModel
 	public void setAccessToken(String accessToken);
 
 	/**
+	 * Returns the access token expired date of this open ID connect session.
+	 *
+	 * @return the access token expired date of this open ID connect session
+	 */
+	public Date getAccessTokenExpiredDate();
+
+	/**
+	 * Sets the access token expired date of this open ID connect session.
+	 *
+	 * @param accessTokenExpiredDate the access token expired date of this open ID connect session
+	 */
+	public void setAccessTokenExpiredDate(Date accessTokenExpiredDate);
+
+	/**
 	 * Returns the auth server well known uri of this open ID connect session.
 	 *
 	 * @return the auth server well known uri of this open ID connect session

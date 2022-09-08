@@ -193,28 +193,32 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Test
 	public void testAddObjectEntry() throws Exception {
-		_testAddObjectEntry(
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"attachmentObjectFieldName",
-						_getAttachmentObjectFieldValue()
-					).put(
-						"picklistObjectFieldName",
-						_getPicklistObjectFieldValue()
-					).put(
-						"r_oneToManyRelationshipName_" +
-							_objectDefinition1.getPKObjectFieldName(),
-						_getOneToManyRelationshipFieldValue()
-					).put(
-						"richTextObjectFieldName",
-						StringBundler.concat(
-							"<i>", RandomTestUtil.randomString(), "</i>")
-					).put(
-						"textObjectFieldName", RandomTestUtil.randomString()
-					).build();
-				}
-			});
+		ObjectEntry objectEntry = new ObjectEntry() {
+			{
+				properties = HashMapBuilder.<String, Object>put(
+					"attachmentObjectFieldName",
+					_getAttachmentObjectFieldValue()
+				).put(
+					"picklistObjectFieldName", _getPicklistObjectFieldValue()
+				).put(
+					"r_oneToManyRelationshipName_" +
+						_objectDefinition1.getPKObjectFieldName(),
+					_getOneToManyRelationshipFieldValue()
+				).put(
+					"richTextObjectFieldName",
+					StringBundler.concat(
+						"<i>", RandomTestUtil.randomString(), "</i>")
+				).put(
+					"textObjectFieldName", RandomTestUtil.randomString()
+				).build();
+			}
+		};
+
+		_assertEquals(
+			_objectEntryManager.addObjectEntry(
+				_dtoConverterContext, _objectDefinition2, objectEntry,
+				ObjectDefinitionConstants.SCOPE_COMPANY),
+			objectEntry);
 	}
 
 	@Test
@@ -609,16 +613,6 @@ public class DefaultObjectEntryManagerImplTest {
 		_dtoConverterContext = new DefaultDTOConverterContext(
 			false, Collections.emptyMap(), _dtoConverterRegistry, null,
 			LocaleUtil.getDefault(), uriInfo, _user);
-	}
-
-	private void _testAddObjectEntry(ObjectEntry newObjectEntry)
-		throws Exception {
-
-		_assertEquals(
-			_objectEntryManager.addObjectEntry(
-				_dtoConverterContext, _objectDefinition2, newObjectEntry,
-				ObjectDefinitionConstants.SCOPE_COMPANY),
-			newObjectEntry);
 	}
 
 	private void _testGetObjectEntries(

@@ -64,6 +64,8 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "DXPLicense#TermsOfUseNotShownToNonAdminUser";
 
+		User.firstLoginPG();
+
 		SelectFrame(value1 = "relative=top");
 
 		Click(locator1 = "Button#DONE");
@@ -100,6 +102,8 @@ definition {
 		property custom.properties = "enterprise.product.notification.enabled=true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "DXPLicense#TermsOfUseShownToNewAdmin";
+
+		User.firstLoginPG();
 
 		SelectFrame(value1 = "relative=top");
 

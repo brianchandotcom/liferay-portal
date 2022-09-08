@@ -104,31 +104,19 @@ public class KBAttachmentItemSelectorView
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelectorReturnTypeResolverHandler(
-		ItemSelectorReturnTypeResolverHandler
-			itemSelectorReturnTypeResolverHandler) {
-
-		_itemSelectorReturnTypeResolverHandler =
-			itemSelectorReturnTypeResolverHandler;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.knowledge.base.item.selector.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
 				new FileEntryItemSelectorReturnType(),
 				new URLItemSelectorReturnType()));
 
+	@Reference
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.knowledge.base.item.selector.web)"
+	)
 	private ServletContext _servletContext;
 
 }

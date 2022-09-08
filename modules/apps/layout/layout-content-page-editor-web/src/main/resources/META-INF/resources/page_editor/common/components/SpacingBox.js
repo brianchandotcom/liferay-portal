@@ -18,6 +18,7 @@ import classNames from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {useGlobalContext} from '../../app/contexts/GlobalContext';
+import isValidStyleValue from '../../app/utils/isValidStyleValue';
 import {useId} from '../../app/utils/useId';
 import {LengthField} from '../../common/components/LengthField';
 import {useStyleBook} from '../../plugins/page-design-options/hooks/useStyleBook';
@@ -294,6 +295,12 @@ function SpacingOptionValue({
 	useEffect(() => {
 		if (tokenValues[`spacer${optionValue}`]) {
 			setValue(tokenValues[`spacer${optionValue}`].value);
+
+			return;
+		}
+
+		if (isValidStyleValue(`${type}-${position}`, optionValue)) {
+			setValue(optionValue);
 
 			return;
 		}

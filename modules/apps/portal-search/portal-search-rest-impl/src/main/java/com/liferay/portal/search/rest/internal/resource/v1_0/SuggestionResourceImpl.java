@@ -16,6 +16,7 @@ package com.liferay.portal.search.rest.internal.resource.v1_0;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
@@ -99,9 +100,10 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 						{
 							attributes =
 								suggestionsContributorResult.getAttributes();
-							displayGroupName =
+							displayGroupName = _language.get(
+								contextAcceptLanguage.getPreferredLocale(),
 								suggestionsContributorResult.
-									getDisplayGroupName();
+									getDisplayGroupName());
 							suggestions = transformToArray(
 								suggestionsContributorResult.getSuggestions(),
 								suggestion -> new Suggestion() {
@@ -223,6 +225,9 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 			throw new RuntimeException(portalException);
 		}
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

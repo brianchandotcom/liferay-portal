@@ -122,7 +122,7 @@ public class CollectionPageLayoutTypeController
 
 		RequestDispatcher requestDispatcher =
 			_transferHeadersHelper.getTransferHeadersRequestDispatcher(
-				servletContext.getRequestDispatcher(page));
+				_servletContext.getRequestDispatcher(page));
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -235,16 +235,13 @@ public class CollectionPageLayoutTypeController
 	}
 
 	@Override
-	protected String getViewPage() {
-		return _VIEW_PAGE;
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.collection)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
+	@Override
+	protected String getViewPage() {
+		return _VIEW_PAGE;
 	}
 
 	private boolean _hasUpdatePermissions(
@@ -282,6 +279,11 @@ public class CollectionPageLayoutTypeController
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.collection)"
+	)
+	private ServletContext _servletContext;
 
 	@Reference
 	private TransferHeadersHelper _transferHeadersHelper;

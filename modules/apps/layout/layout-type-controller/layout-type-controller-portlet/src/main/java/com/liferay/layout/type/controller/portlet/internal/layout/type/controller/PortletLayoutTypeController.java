@@ -68,7 +68,7 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		RequestDispatcher requestDispatcher =
 			_transferHeadersHelper.getTransferHeadersRequestDispatcher(
 				_directRequestDispatcherFactory.getRequestDispatcher(
-					servletContext, getEditPage()));
+					_servletContext, getEditPage()));
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -89,7 +89,7 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		RequestDispatcher requestDispatcher =
 			_transferHeadersHelper.getTransferHeadersRequestDispatcher(
 				_directRequestDispatcherFactory.getRequestDispatcher(
-					servletContext, getViewPage()));
+					_servletContext, getViewPage()));
 
 		HttpServletRequest originalHttpServletRequest =
 			_portal.getOriginalServletRequest(httpServletRequest);
@@ -175,16 +175,13 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	}
 
 	@Override
-	protected String getViewPage() {
-		return _VIEW_PAGE;
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.portlet)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
+	@Override
+	protected String getViewPage() {
+		return _VIEW_PAGE;
 	}
 
 	private static final String _EDIT_PAGE = "/layout/edit/portlet.jsp";
@@ -211,6 +208,11 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.portlet)"
+	)
+	private ServletContext _servletContext;
 
 	@Reference
 	private TransferHeadersHelper _transferHeadersHelper;

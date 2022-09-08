@@ -108,16 +108,13 @@ public class LinkToPageLayoutTypeController
 	}
 
 	@Override
-	protected String getViewPage() {
-		return StringPool.BLANK;
+	protected ServletContext getServletContext() {
+		return _servletContext;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.link.to.page)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
+	@Override
+	protected String getViewPage() {
+		return StringPool.BLANK;
 	}
 
 	private static final String _EDIT_PAGE = "/layout/edit/link_to_layout.jsp";
@@ -129,5 +126,10 @@ public class LinkToPageLayoutTypeController
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.link.to.page)"
+	)
+	private ServletContext _servletContext;
 
 }

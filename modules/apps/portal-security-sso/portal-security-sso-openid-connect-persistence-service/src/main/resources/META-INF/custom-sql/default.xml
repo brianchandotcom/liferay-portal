@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.portal.security.sso.openid.connect.persistence.service.persistence.OpenIdConnectSessionFinder.findAccessTokenExpiredSessions">
+		<![CDATA[
+			SELECT
+				OpenIdConnectSession.*
+			FROM
+				OpenIdConnectSession
+			WHERE
+				(OpenIdConnectSession.accessTokenExpiredDate < ?)
+			ORDER BY
+				OpenIdConnectSession.accessTokenExpiredDate ASC
+		]]>
+	</sql>
+</custom-sql>

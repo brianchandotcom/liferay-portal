@@ -76,32 +76,16 @@ public class MarketplaceServiceUpgradeStepRegistrator
 				"Marketplace_App", "category", "VARCHAR(255) null"));
 	}
 
-	@Reference(unbind = "-")
-	protected void setExpandoColumnLocalService(
-		ExpandoColumnLocalService expandoColumnLocalService) {
-
-		_expandoColumnLocalService = expandoColumnLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExpandoTableLocalService(
-		ExpandoTableLocalService expandoTableLocalService) {
-
-		_expandoTableLocalService = expandoTableLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExpandoValueLocalService(
-		ExpandoValueLocalService expandoValueLocalService) {
-
-		_expandoValueLocalService = expandoValueLocalService;
-	}
-
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;
 
 }

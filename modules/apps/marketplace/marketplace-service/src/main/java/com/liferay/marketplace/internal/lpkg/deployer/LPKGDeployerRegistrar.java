@@ -102,13 +102,6 @@ public class LPKGDeployerRegistrar {
 		bundleContext.removeBundleListener(_bundleListener);
 	}
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.marketplace.service)(release.schema.version=2.0.3))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	private void _doRegister(
 			Bundle lpkgBundle, Map<Long, App> apps,
 			Map<Long, List<Module>> modules)
@@ -265,6 +258,11 @@ public class LPKGDeployerRegistrar {
 
 	@Reference
 	private ModuleLocalService _moduleLocalService;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.marketplace.service)(release.schema.version=2.0.3))"
+	)
+	private Release _release;
 
 	private static class Tuple {
 

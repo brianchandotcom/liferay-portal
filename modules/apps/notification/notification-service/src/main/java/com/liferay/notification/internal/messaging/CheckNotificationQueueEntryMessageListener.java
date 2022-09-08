@@ -74,10 +74,8 @@ public class CheckNotificationQueueEntryMessageListener
 			new Date(System.currentTimeMillis() - (43200 * Time.MINUTE)));
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private NotificationQueueEntryLocalService

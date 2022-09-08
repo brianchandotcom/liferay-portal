@@ -79,13 +79,11 @@ public class TranslationResourceBundleLoader implements ResourceBundleLoader {
 			});
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private static final String _PREFIX =
 		"model.resource." + TranslationConstants.RESOURCE_NAME +
 			StringPool.PERIOD;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 }

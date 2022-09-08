@@ -227,11 +227,6 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 		templateEntryExportActionableDynamicQuery.performCount();
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private List<Long> _getClassNameIds(PortletDataContext portletDataContext) {
 		List<Long> classNameIds = new ArrayList<>();
 
@@ -349,6 +344,9 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private Portal _portal;

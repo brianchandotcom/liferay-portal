@@ -237,14 +237,12 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommand
 			List<String> sortedFragmentCollectionKeys = JSONUtil.toStringList(
 				fragmentCollectionKeysJSONArray);
 
-			List<String> oldSortedFragmentCollectionKeys = ListUtil.fromArray(
-				portalPreferences.getValues(
-					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-					"sortedFragmentCollectionKeys", new String[0]));
+			List<String> oldSortedFragmentCollectionKeys =
+				_fragmentManager.getSortedFragmentCollectionKeys(
+					portalPreferences);
 
-			portalPreferences.setValues(
-				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-				"sortedFragmentCollectionKeys",
+			_fragmentManager.updateSortedFragmentCollectionKeys(
+				portalPreferences,
 				_mergeFragmentCollectionKeys(
 					sortedFragmentCollectionKeys,
 					oldSortedFragmentCollectionKeys));
@@ -254,9 +252,8 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommand
 			List<String> sortedPortletCategoryKeys = JSONUtil.toStringList(
 				portletCategoryKeysJSONArray);
 
-			portalPreferences.setValues(
-				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-				"sortedPortletCategoryKeys",
+			_portletCategoryManager.updateSortedPortletCategoryKeys(
+				portalPreferences,
 				sortedPortletCategoryKeys.toArray(new String[0]));
 		}
 

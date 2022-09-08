@@ -143,10 +143,8 @@ public class FragmentManager {
 			return allFragmentCollectionMapsList;
 		}
 
-		List<String> sortedFragmentCollectionKeys = ListUtil.fromArray(
-			portalPreferences.getValues(
-				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-				"sortedFragmentCollectionKeys", new String[0]));
+		List<String> sortedFragmentCollectionKeys =
+			getSortedFragmentCollectionKeys(portalPreferences);
 
 		if (!sortedFragmentCollectionKeys.isEmpty()) {
 			Map<String, Map<String, Object>> fragmentCollectionMaps =

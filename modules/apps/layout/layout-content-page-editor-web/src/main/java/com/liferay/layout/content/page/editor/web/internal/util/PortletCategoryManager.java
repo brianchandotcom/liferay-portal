@@ -105,13 +105,9 @@ public class PortletCategoryManager {
 				portletCategoryJSONObject -> portletCategoryJSONObject);
 		}
 
-		PortalPreferences portalPreferences =
-			_portletPreferencesFactory.getPortalPreferences(httpServletRequest);
-
-		List<String> sortedPortletCategoryKeys = ListUtil.fromArray(
-			portalPreferences.getValues(
-				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-				"sortedPortletCategoryKeys", new String[0]));
+		List<String> sortedPortletCategoryKeys = _getSortedPortletCategoryKeys(
+			_portletPreferencesFactory.getPortalPreferences(
+				httpServletRequest));
 
 		if (sortedPortletCategoryKeys.isEmpty()) {
 			return JSONUtil.toJSONArray(

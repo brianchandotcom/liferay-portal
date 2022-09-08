@@ -37,7 +37,7 @@ Bundle bundle = (Bundle)row.getObject();
 			</portlet:actionURL>
 
 			<%
-			String taglibDeactivateBundlesURL = "javascript: Liferay.Util.openConfirmModal({message: '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-this") + "', onConfirm: function (isConfirmed) {if (isConfirmed) {submitForm(document.hrefFm, '" + HtmlUtil.unescape(deactivateBundlesURL.toString()) + "');}}});";
+			String taglibDeactivateBundlesURL = "javascript:Liferay.Util.openConfirmModal({message: '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-this") + "', onConfirm: function (isConfirmed) {if (isConfirmed) {submitForm(document.hrefFm, '" + HtmlUtil.unescape(deactivateBundlesURL.toString()) + "');}}});";
 			%>
 
 			<liferay-ui:icon

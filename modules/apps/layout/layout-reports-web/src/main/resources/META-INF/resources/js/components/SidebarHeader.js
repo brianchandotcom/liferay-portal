@@ -46,7 +46,7 @@ const DefaultSidebarHeader = () => {
 			<div>
 				{showRefreshButton && (
 					<ClayButtonWithIcon
-						className="sidenav-relaunch text-secondary"
+						className="component-action mr-2 sidenav-relaunch text-secondary"
 						disabled={loading}
 						displayType="unstyled"
 						onClick={() => {
@@ -69,7 +69,7 @@ const DefaultSidebarHeader = () => {
 				)}
 
 				<ClayButtonWithIcon
-					className="sidenav-close text-secondary"
+					className="component-action sidenav-close text-secondary"
 					displayType="unstyled"
 					symbol="times"
 					title={Liferay.Language.get('close')}
@@ -87,7 +87,7 @@ const IssueDetailSidebarHeader = () => {
 		<div className="d-flex justify-content-between p-3 sidebar-header">
 			<div className="d-flex">
 				<ClayButtonWithIcon
-					className="flex-shrink-0 sidenav-back text-secondary"
+					className="component-action flex-shrink-0 mr-2 sidenav-back text-secondary"
 					displayType="unstyled"
 					onClick={() => {
 						dispatch({
@@ -105,7 +105,7 @@ const IssueDetailSidebarHeader = () => {
 			</div>
 
 			<ClayButtonWithIcon
-				className="flex-shrink-0 sidenav-close text-secondary"
+				className="component-action flex-shrink-0 sidenav-close text-secondary"
 				displayType="unstyled"
 				symbol="times"
 				title={Liferay.Language.get('close')}

@@ -13,13 +13,17 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import TabCollection from './TabCollection';
 
-export default function SearchResultsPanel({filteredTabs}) {
+export default function SearchResultsPanel({filteredTabs, loading = false}) {
+	if (loading) {
+		return <ClayLoadingIndicator className="mt-3" small />;
+	}
+
 	return filteredTabs.length ? (
 		<div className="overflow-auto px-3">
 			{filteredTabs.map((tab, index) => (
@@ -52,6 +56,6 @@ export default function SearchResultsPanel({filteredTabs}) {
 }
 
 SearchResultsPanel.proptypes = {
-	displayStyle: PropTypes.oneOf(Object.values(FRAGMENTS_DISPLAY_STYLES)),
 	filteredTabs: PropTypes.object.isRequired,
+	loading: PropTypes.bool,
 };

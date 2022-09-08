@@ -13,14 +13,20 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {ReorderSetsModal} from '../../../app/components/ReorderSetsModal';
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {HIGHLIGHTED_COLLECTION_ID} from '../../../app/config/constants/highlightedCollectionId';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {config} from '../../../app/config/index';
-import {useSelector} from '../../../app/contexts/StoreContext';
+import {
+	useDispatch,
+	useSelector,
+	useSelectorRef,
+} from '../../../app/contexts/StoreContext';
+import selectWidgetFragmentEntryLinks from '../../../app/selectors/selectWidgetFragmentEntryLinks';
+import loadWidgets from '../../../app/thunks/loadWidgets';
 import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import {useSessionState} from '../../../core/hooks/useSessionState';
@@ -132,6 +138,12 @@ export default function FragmentsSidebar() {
 	const fragments = useSelector((state) => state.fragments);
 	const widgets = useSelector((state) => state.widgets);
 
+	const dispatch = useDispatch();
+	const widgetFragmentEntryLinksRef = useSelectorRef(
+		selectWidgetFragmentEntryLinks
+	);
+	const [loadingWidgets, setLoadingWidgets] = useState(false);
+
 	const [
 		activeTabId,
 		setActiveTabId,
@@ -195,6 +207,18 @@ export default function FragmentsSidebar() {
 	const displayStyleButtonDisabled =
 		searchValue || activeTabId === COLLECTION_IDS.widgets;
 
+	useEffect(() => {
+		if (searchValue && !widgets) {
+			setLoadingWidgets(true);
+
+			dispatch(
+				loadWidgets({
+					fragmentEntryLinks: widgetFragmentEntryLinksRef.current,
+				})
+			).then(() => setLoadingWidgets(false));
+		}
+	}, [dispatch, searchValue, widgetFragmentEntryLinksRef, widgets]);
+
 	return (
 		<>
 			<SidebarPanelHeader>
@@ -251,7 +275,10 @@ export default function FragmentsSidebar() {
 				</div>
 
 				{searchValue ? (
-					<SearchResultsPanel filteredTabs={filteredTabs} />
+					<SearchResultsPanel
+						filteredTabs={filteredTabs}
+						loading={loadingWidgets}
+					/>
 				) : (
 					<TabsPanel
 						activeTabId={activeTabId}

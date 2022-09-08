@@ -17,7 +17,7 @@ import WidgetService from '../services/WidgetService';
 
 export default function loadWidgets({fragmentEntryLinks}) {
 	return (dispatch) => {
-		WidgetService.getWidgets().then((widgets) =>
+		return WidgetService.getWidgets().then((widgets) =>
 			dispatch(
 				updateWidgets({
 					fragmentEntryLinks,

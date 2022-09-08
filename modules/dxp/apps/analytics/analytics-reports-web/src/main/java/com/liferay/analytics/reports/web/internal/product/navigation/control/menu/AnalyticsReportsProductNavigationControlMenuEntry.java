@@ -370,7 +370,9 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 			IconTag iconTag = new IconTag();
 
-			iconTag.setCssClass("sidenav-close text-secondary");
+			iconTag.setCssClass(
+				"btn btn-monospaced btn-unstyled component-action " +
+					"sidenav-close text-secondary");
 			iconTag.setImage("times");
 			iconTag.setUrl("javascript:void(0);");
 

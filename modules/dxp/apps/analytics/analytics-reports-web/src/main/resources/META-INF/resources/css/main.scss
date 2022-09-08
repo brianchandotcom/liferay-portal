@@ -16,10 +16,6 @@ html#{$cadmin-selector} {
 			.sidebar-header {
 				height: 64px;
 				line-height: 32px;
-
-				.lexicon-icon {
-					font-size: 14px;
-				}
 			}
 
 			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {

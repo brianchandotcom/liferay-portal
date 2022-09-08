@@ -1383,23 +1383,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		if (!folder) {
-			return knowledgeBaseArticleResource.
-				postKnowledgeBaseArticleKnowledgeBaseArticle(
-					parentKnowledgeBaseObjectId,
-					KnowledgeBaseArticle.toDTO(jsonObject.toString()));
-		}
+		KnowledgeBaseArticle knowledgeBaseArticle = KnowledgeBaseArticle.toDTO(
+			jsonObject.toString());
 
-		if (parentKnowledgeBaseObjectId == 0) {
-			return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-				serviceContext.getScopeGroupId(),
-				KnowledgeBaseArticle.toDTO(jsonObject.toString()));
+		if (!folder) {
+			knowledgeBaseArticle.setParentKnowledgeBaseArticleId(
+				parentKnowledgeBaseObjectId);
+		}
+		else {
+			knowledgeBaseArticle.setParentKnowledgeBaseFolderId(
+				parentKnowledgeBaseObjectId);
 		}
 
 		return knowledgeBaseArticleResource.
-			postKnowledgeBaseFolderKnowledgeBaseArticle(
-				parentKnowledgeBaseObjectId,
-				KnowledgeBaseArticle.toDTO(jsonObject.toString()));
+			putSiteKnowledgeBaseArticleByExternalReferenceCode(
+				serviceContext.getScopeGroupId(),
+				knowledgeBaseArticle.getExternalReferenceCode(),
+				knowledgeBaseArticle);
 	}
 
 	private void _addKnowledgeBaseArticle(

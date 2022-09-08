@@ -209,6 +209,25 @@ public class FragmentManager {
 		return allFragmentCollectionMapsList;
 	}
 
+	public List<String> getSortedFragmentCollectionKeys(
+		PortalPreferences portalPreferences) {
+
+		return PortalPreferencesUtil.getSortedPortalPreferencesValues(
+			portalPreferences,
+			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+			"sortedFragmentCollectionKeys");
+	}
+
+	public void updateSortedFragmentCollectionKeys(
+		PortalPreferences portalPreferences,
+		String[] sortedFragmentCollectionKeys) {
+
+		PortalPreferencesUtil.updateSortedPortalPreferencesValues(
+			portalPreferences,
+			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+			"sortedFragmentCollectionKeys", sortedFragmentCollectionKeys);
+	}
+
 	private Map<String, Map<String, Object>> _getDynamicFragmentCollectionMaps(
 		Set<String> highlightedFragmentEntryKeys,
 		HttpServletRequest httpServletRequest,

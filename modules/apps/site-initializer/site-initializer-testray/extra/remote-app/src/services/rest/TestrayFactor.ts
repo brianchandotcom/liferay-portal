@@ -107,7 +107,8 @@ class TestrayFactorRest extends Rest<TestrayFactorType, TestrayFactor> {
 						return _factor;
 					});
 				}
-			} else {
+			}
+			else {
 				const newFactor = await super.create({
 					...form,
 					name: '',

@@ -19,22 +19,20 @@ import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
-import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
 
 /**
  * @author Eduardo García
@@ -49,8 +47,6 @@ public class MBModerationConditionEvaluator implements ConditionEvaluator {
 	public String evaluate(
 			KaleoCondition kaleoCondition, ExecutionContext executionContext)
 		throws PortalException {
-
-
 
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
@@ -67,18 +63,19 @@ public class MBModerationConditionEvaluator implements ConditionEvaluator {
 
 		User user = GuestOrUserUtil.getUser(userId);
 
-		String email = user.getEmailAddress().trim();
+		String email = user.getEmailAddress();
 
-		String[] dominions = mbModerationGroupConfiguration.dominosEnable();
+		email = email.trim();
 
-		for (String dominio : dominions ){
+		String[] domains = mbModerationGroupConfiguration.approvedDomains();
 
-			if((email).length() != 0 && StringUtil.endsWith(email,dominio.trim())){
+		for (String domain : domains) {
+			if ((email.length() != 0) &&
+				StringUtil.endsWith(email, domain.trim())) {
+
 				return "approve";
 			}
-
 		}
-
 
 		if (_mbStatsUserLocalService.getMessageCountByUserId(userId) >=
 				mbModerationGroupConfiguration.minimumContributedMessages()) {

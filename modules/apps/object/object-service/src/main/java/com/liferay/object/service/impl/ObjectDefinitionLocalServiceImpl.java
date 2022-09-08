@@ -640,7 +640,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		return _updateObjectDefinition(
 			objectDefinition, accountEntryRestrictedObjectFieldId,
-			descriptionObjectFieldId, titleObjectFieldId,
+			descriptionObjectFieldId, externalReferenceCode, titleObjectFieldId,
 			accountEntryRestricted, active, null, enableCategorization,
 			enableComments, labelMap, name, panelAppOrder, panelCategoryKey,
 			portlet, null, null, pluralLabelMap, scope);
@@ -1035,11 +1035,11 @@ public class ObjectDefinitionLocalServiceImpl
 	private ObjectDefinition _updateObjectDefinition(
 			ObjectDefinition objectDefinition,
 			long accountEntryRestrictedObjectFieldId,
-			long descriptionObjectFieldId, long titleObjectFieldId,
-			boolean accountEntryRestricted, boolean active, String dbTableName,
-			boolean enableCategorization, boolean enableComments,
-			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, boolean portlet,
+			long descriptionObjectFieldId, String externalReferenceCode,
+			long titleObjectFieldId, boolean accountEntryRestricted,
+			boolean active, String dbTableName, boolean enableCategorization,
+			boolean enableComments, Map<Locale, String> labelMap, String name,
+			String panelAppOrder, String panelCategoryKey, boolean portlet,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
 			Map<Locale, String> pluralLabelMap, String scope)
 		throws PortalException {
@@ -1081,6 +1081,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setAccountEntryRestrictedObjectFieldId(
 			accountEntryRestrictedObjectFieldId);
 		objectDefinition.setDescriptionObjectFieldId(descriptionObjectFieldId);
+		objectDefinition.setExternalReferenceCode(externalReferenceCode);
 		objectDefinition.setTitleObjectFieldId(titleObjectFieldId);
 		objectDefinition.setAccountEntryRestricted(accountEntryRestricted);
 		objectDefinition.setActive(active);

@@ -72,6 +72,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -404,9 +405,19 @@ public class SearchResultSummaryDisplayContextBuilder {
 		_buildModifiedByUserPortrait(searchResultSummaryDisplayContext);
 		_buildModifiedDateString(searchResultSummaryDisplayContext);
 		_buildModifiedByUserName(searchResultSummaryDisplayContext);
+		_buildUserPortrait(
+			searchResultSummaryDisplayContext, assetEntry, className);
 		_buildViewURL(className, classPK, searchResultSummaryDisplayContext);
 
 		return searchResultSummaryDisplayContext;
+	}
+
+	protected long getAssetEntryUserId(AssetEntry assetEntry) {
+		if (Objects.equals(assetEntry.getClassName(), User.class.getName())) {
+			return assetEntry.getClassPK();
+		}
+
+		return assetEntry.getUserId();
 	}
 
 	protected AssetRenderer<?> getAssetRenderer(
@@ -584,11 +595,6 @@ public class SearchResultSummaryDisplayContextBuilder {
 				creatorByPortraitUrlString);
 			searchResultSummaryDisplayContext.setCreatorUserPortraitVisible(
 				true);
-
-			searchResultSummaryDisplayContext.setUserPortraitURLString(
-				creatorByPortraitUrlString);
-
-			searchResultSummaryDisplayContext.setUserPortraitVisible(true);
 		}
 	}
 
@@ -890,6 +896,33 @@ public class SearchResultSummaryDisplayContextBuilder {
 		searchResultSummaryDisplayContext.setTemporarilyUnavailable(true);
 
 		return searchResultSummaryDisplayContext;
+	}
+
+	private void _buildUserPortrait(
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
+		AssetEntry assetEntry, String className) {
+
+		AssetEntry childAssetEntry = _assetEntryLocalService.fetchEntry(
+			className, _getEntryClassPK());
+
+		if (childAssetEntry != null) {
+			assetEntry = childAssetEntry;
+		}
+
+		if (assetEntry != null) {
+			long assetEntryUserId = getAssetEntryUserId(assetEntry);
+
+			searchResultSummaryDisplayContext.setAssetEntryUserId(
+				assetEntryUserId);
+
+			String portraitURLString = _getPortraitURLString(assetEntryUserId);
+
+			if (portraitURLString != null) {
+				searchResultSummaryDisplayContext.setUserPortraitURLString(
+					portraitURLString);
+				searchResultSummaryDisplayContext.setUserPortraitVisible(true);
+			}
+		}
 	}
 
 	private void _buildViewURL(

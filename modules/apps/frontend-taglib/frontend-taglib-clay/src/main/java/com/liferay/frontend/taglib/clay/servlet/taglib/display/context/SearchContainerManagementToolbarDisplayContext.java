@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -61,6 +63,13 @@ public class SearchContainerManagementToolbarDisplayContext
 	@Override
 	public int getItemsTotal() {
 		return searchContainer.getTotal();
+	}
+
+	@Override
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		return searchActionURL.toString();
 	}
 
 	@Override

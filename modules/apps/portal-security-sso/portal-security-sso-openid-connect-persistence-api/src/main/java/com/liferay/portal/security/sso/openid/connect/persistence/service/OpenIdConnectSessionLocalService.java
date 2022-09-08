@@ -34,6 +34,7 @@ import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdCo
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -213,6 +214,11 @@ public interface OpenIdConnectSessionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OpenIdConnectSession fetchOpenIdConnectSession(
 		long userId, String authServerWellKnownURI, String clientId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OpenIdConnectSession>
+		getAccessTokenExpirationDateOpenIdConnectSessions(
+			Date beforeDate, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

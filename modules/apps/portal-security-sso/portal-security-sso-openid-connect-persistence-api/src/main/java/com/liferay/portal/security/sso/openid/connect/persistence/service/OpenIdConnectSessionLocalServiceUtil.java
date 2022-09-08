@@ -236,6 +236,14 @@ public class OpenIdConnectSessionLocalServiceUtil {
 			userId, authServerWellKnownURI, clientId);
 	}
 
+	public static List<OpenIdConnectSession>
+		getAccessTokenExpirationDateOpenIdConnectSessions(
+			java.util.Date beforeDate, int start, int end) {
+
+		return getService().getAccessTokenExpirationDateOpenIdConnectSessions(
+			beforeDate, start, end);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

@@ -257,6 +257,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 						<clay:col
 							md="11"
 						>
+							<aui:input name="externalReferenceCode" type="text" value="<%= objectDefinition.getExternalReferenceCode() %>" />
+
 							<aui:select disabled="<%= true %>" name="storageType" showEmptyOption="<%= false %>">
 								<aui:option label="<%= LanguageUtil.get(request, objectDefinition.getStorageType()) %>" selected="<%= true %>" value="" />
 							</aui:select>

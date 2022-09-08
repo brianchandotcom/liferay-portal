@@ -23,11 +23,13 @@ import SelectCaseParameters from './SelectCaseParameters';
 
 type SuiteSelectCasesModalProps = {
 	modal: FormModalOptions;
+	selectedCaseIds?: number[];
 	type: 'select-cases' | 'select-case-parameters';
 };
 
 const SuiteFormSelectModal: React.FC<SuiteSelectCasesModalProps> = ({
 	modal: {observer, onClose, onSave, visible},
+	selectedCaseIds,
 	type,
 }) => {
 	const [state, setState] = useState<any>({});
@@ -53,7 +55,12 @@ const SuiteFormSelectModal: React.FC<SuiteSelectCasesModalProps> = ({
 				<SelectCaseParameters setState={setState} state={state} />
 			)}
 
-			{type === 'select-cases' && <SelectCase setState={setState} />}
+			{type === 'select-cases' && (
+				<SelectCase
+					selectedCaseIds={selectedCaseIds}
+					setState={setState}
+				/>
+			)}
 		</Modal>
 	);
 };

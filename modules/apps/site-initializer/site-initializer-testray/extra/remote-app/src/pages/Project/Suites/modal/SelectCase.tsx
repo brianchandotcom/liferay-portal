@@ -13,40 +13,54 @@
  */
 
 import React from 'react';
+import {useParams} from 'react-router-dom';
 
 import i18n from '../../../../i18n';
 import {filters} from '../../../../schema/filter';
+import {searchUtil} from '../../../../util/search';
 import {CaseListView} from '../../Cases';
 
 type SelectCaseParametersProps = {
+	selectedCaseIds?: number[];
 	setState: any;
 };
 
 const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
+	selectedCaseIds = [],
 	setState,
-}) => (
-	<CaseListView
-		listViewProps={{
-			managementToolbarProps: {
-				addButton: undefined,
-				filterFields: filters.case as any,
-				title: i18n.translate('cases'),
-			},
-			onContextChange: ({selectedRows}) => setState(selectedRows),
-		}}
-		tableProps={{
-			columns: [
-				{key: 'priority', value: i18n.translate('priority')},
-				{
-					key: 'component',
-					render: (component) => component?.name,
-					value: i18n.translate('component'),
+}) => {
+	const {projectId} = useParams();
+
+	return (
+		<CaseListView
+			listViewProps={{
+				initialContext: {selectedRows: selectedCaseIds},
+				managementToolbarProps: {
+					addButton: undefined,
+					filterFields: filters.case as any,
+					title: i18n.translate('cases'),
 				},
-				{key: 'name', value: i18n.translate('name')},
-			],
-			rowSelectable: true,
-		}}
-	/>
-);
+				onContextChange: ({selectedRows}) => setState(selectedRows),
+			}}
+			tableProps={{
+				columns: [
+					{key: 'priority', value: i18n.translate('priority')},
+					{
+						key: 'component',
+						render: (component) => component?.name,
+						value: i18n.translate('component'),
+					},
+					{key: 'name', value: i18n.translate('name')},
+				],
+				rowSelectable: true,
+			}}
+			variables={{
+				filter: projectId
+					? searchUtil.eq('projectId', projectId)
+					: null,
+			}}
+		/>
+	);
+};
 
 export default SelectCaseParameters;

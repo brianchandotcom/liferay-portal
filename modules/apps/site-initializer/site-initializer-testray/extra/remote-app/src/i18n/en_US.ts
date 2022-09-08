@@ -90,6 +90,8 @@ export default {
 	'components': 'Components',
 	'confirm-password': 'Confirm Password',
 	'create': 'Create',
+	'create-cases-if-you-want-to-link-cases-to-this-build':
+		'Create cases if you want to link cases to this build.',
 	'create-date': 'Create Date',
 	'create-environment-factors-if-you-want-to-generate-runs':
 		'Create environment factors if you want to generate runs.',

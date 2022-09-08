@@ -165,23 +165,6 @@ public class BackgroundTaskThreadLocalManagerImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPermissionCheckerFactory(
-		PermissionCheckerFactory permissionCheckerFactory) {
-
-		_permissionCheckerFactory = permissionCheckerFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	protected static final String KEY_THREAD_LOCAL_VALUES = "threadLocalValues";
 
 	@Reference
@@ -198,8 +181,13 @@ public class BackgroundTaskThreadLocalManagerImpl
 			"Unable to find company " + companyId);
 	}
 
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

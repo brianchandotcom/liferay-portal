@@ -99,13 +99,6 @@ public class BackgroundTaskStatusRegistryImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setClusterMasterExecutor(
-		ClusterMasterExecutor clusterMasterExecutor) {
-
-		_clusterMasterExecutor = clusterMasterExecutor;
-	}
-
 	private BackgroundTaskStatus _getMasterBackgroundTaskStatus(
 		long backgroundTaskId) {
 
@@ -132,7 +125,10 @@ public class BackgroundTaskStatusRegistryImpl
 
 	private final Map<Long, BackgroundTaskStatus> _backgroundTaskStatuses =
 		new HashMap<>();
+
+	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
+
 	private final ReadWriteLock _readWriteLock = new ReentrantReadWriteLock();
 
 }

@@ -561,10 +561,6 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setLockManager(LockManager lockManager) {
-	}
-
 	private List<BackgroundTask> _translate(
 		List<com.liferay.portal.background.task.model.BackgroundTask>
 			backgroundTaskModels) {
@@ -621,5 +617,8 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
+
+	@Reference
+	private LockManager _lockManager;
 
 }

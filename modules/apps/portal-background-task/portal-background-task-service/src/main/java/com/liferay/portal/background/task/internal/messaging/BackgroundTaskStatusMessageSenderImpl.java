@@ -48,11 +48,7 @@ public class BackgroundTaskStatusMessageSenderImpl
 		_messageBus.sendMessage(destinationName, message);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMessageBus(MessageBus messageBus) {
-		_messageBus = messageBus;
-	}
-
+	@Reference
 	private MessageBus _messageBus;
 
 }

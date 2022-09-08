@@ -54,21 +54,10 @@ public class BackgroundTaskDisplayFactoryImpl
 			_backgroundTaskManager.fetchBackgroundTask(backgroundTaskId));
 	}
 
-	@Reference(unbind = "-")
-	protected void setBackgroundTaskExecutorRegistry(
-		BackgroundTaskExecutorRegistry backgroundTaskExecutorRegistry) {
-
-		_backgroundTaskExecutorRegistry = backgroundTaskExecutorRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setBackgroundTaskManager(
-		BackgroundTaskManager backgroundTaskManager) {
-
-		_backgroundTaskManager = backgroundTaskManager;
-	}
-
+	@Reference
 	private BackgroundTaskExecutorRegistry _backgroundTaskExecutorRegistry;
+
+	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;
 
 }

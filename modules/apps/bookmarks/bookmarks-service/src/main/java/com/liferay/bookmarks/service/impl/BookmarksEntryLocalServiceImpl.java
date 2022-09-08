@@ -140,6 +140,9 @@ public class BookmarksEntryLocalServiceImpl
 		entry.setUrl(url);
 		entry.setDescription(description);
 		entry.setExpandoBridgeAttributes(serviceContext);
+		entry.setStatusByUserId(userId);
+		entry.setStatusByUserName(user.getFullName());
+		entry.setStatusDate(serviceContext.getModifiedDate(new Date()));
 
 		entry = bookmarksEntryPersistence.update(entry);
 
@@ -630,12 +633,17 @@ public class BookmarksEntryLocalServiceImpl
 
 		_validate(url);
 
+		User user = _userLocalService.getUser(userId);
+
 		entry.setFolderId(folderId);
 		entry.setTreePath(entry.buildTreePath());
 		entry.setName(name);
 		entry.setUrl(url);
 		entry.setDescription(description);
 		entry.setExpandoBridgeAttributes(serviceContext);
+		entry.setStatusByUserId(userId);
+		entry.setStatusByUserName(user.getFullName());
+		entry.setStatusDate(serviceContext.getModifiedDate(new Date()));
 
 		entry = bookmarksEntryPersistence.update(entry);
 

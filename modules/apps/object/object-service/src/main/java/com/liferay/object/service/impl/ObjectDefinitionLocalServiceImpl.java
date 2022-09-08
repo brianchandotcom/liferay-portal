@@ -24,6 +24,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
+import com.liferay.object.exception.DuplicateObjectDefinitionExternalReferenceCodeException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedObjectFieldIdException;
@@ -640,7 +641,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		return _updateObjectDefinition(
 			objectDefinition, accountEntryRestrictedObjectFieldId,
-			descriptionObjectFieldId, titleObjectFieldId,
+			descriptionObjectFieldId, externalReferenceCode, titleObjectFieldId,
 			accountEntryRestricted, active, null, enableCategorization,
 			enableComments, labelMap, name, panelAppOrder, panelCategoryKey,
 			portlet, null, null, pluralLabelMap, scope);
@@ -1035,11 +1036,11 @@ public class ObjectDefinitionLocalServiceImpl
 	private ObjectDefinition _updateObjectDefinition(
 			ObjectDefinition objectDefinition,
 			long accountEntryRestrictedObjectFieldId,
-			long descriptionObjectFieldId, long titleObjectFieldId,
-			boolean accountEntryRestricted, boolean active, String dbTableName,
-			boolean enableCategorization, boolean enableComments,
-			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, boolean portlet,
+			long descriptionObjectFieldId, String externalReferenceCode,
+			long titleObjectFieldId, boolean accountEntryRestricted,
+			boolean active, String dbTableName, boolean enableCategorization,
+			boolean enableComments, Map<Locale, String> labelMap, String name,
+			String panelAppOrder, String panelCategoryKey, boolean portlet,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
 			Map<Locale, String> pluralLabelMap, String scope)
 		throws PortalException {
@@ -1049,6 +1050,9 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateAccountEntryRestrictedObjectFieldId(
 			accountEntryRestrictedObjectFieldId, accountEntryRestricted,
 			objectDefinition);
+		_validateExternalReferenceCode(
+			objectDefinition.getCompanyId(), externalReferenceCode,
+			objectDefinition.getObjectDefinitionId());
 		_validateObjectFieldId(objectDefinition, descriptionObjectFieldId);
 		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
 		_validateActive(objectDefinition, active);
@@ -1081,6 +1085,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setAccountEntryRestrictedObjectFieldId(
 			accountEntryRestrictedObjectFieldId);
 		objectDefinition.setDescriptionObjectFieldId(descriptionObjectFieldId);
+		objectDefinition.setExternalReferenceCode(externalReferenceCode);
 		objectDefinition.setTitleObjectFieldId(titleObjectFieldId);
 		objectDefinition.setAccountEntryRestricted(accountEntryRestricted);
 		objectDefinition.setActive(active);
@@ -1262,6 +1267,26 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionEnableCategorizationException(
 				"Enable comments is allowed only for object definitions with " +
 					"the default storage type");
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			long companyId, String externalReferenceCode,
+			long objectDefinitionId)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionPersistence.fetchByC_ERC_ODI(
+				companyId, externalReferenceCode, objectDefinitionId);
+
+		if ((objectDefinition != null) &&
+			(objectDefinition.getObjectDefinitionId() != objectDefinitionId)) {
+
+			throw new DuplicateObjectDefinitionExternalReferenceCodeException();
 		}
 	}
 

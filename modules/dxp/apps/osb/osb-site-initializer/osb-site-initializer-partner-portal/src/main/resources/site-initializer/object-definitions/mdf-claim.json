@@ -1,0 +1,24 @@
+{
+	"label": {
+		"en_US": "MDF Claim"
+	},
+	"name": "MDFClaim",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Requested Amount"
+			},
+			"name": "mdfRequestAmount",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "MDF Claim"
+	},
+	"scope": "company"
+}

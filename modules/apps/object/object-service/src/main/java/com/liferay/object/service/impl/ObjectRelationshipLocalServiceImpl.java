@@ -536,11 +536,11 @@ public class ObjectRelationshipLocalServiceImpl
 				"Names must be less than 41 characters");
 		}
 
-		ObjectRelationship objectRelationship =
-			objectRelationshipLocalService.getObjectRelationship(
+		int objectRelationshipCount =
+			objectRelationshipPersistence.countByODI1_N(
 				objectDefinitionId1, name);
 
-		if (objectRelationship != null) {
+		if (objectRelationshipCount > 0) {
 			throw new DuplicateObjectRelationshipException(
 				"Duplicate name " + name);
 		}

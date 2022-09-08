@@ -12,7 +12,6 @@
  * details.
  */
 
-import {deleteResource} from '.';
 import fetcher from '../fetcher';
 import {APIResponse} from './types';
 
@@ -82,7 +81,7 @@ class Rest<YupModel = any, ObjectModel = any> {
 	public async remove(id: number): Promise<void> {
 		await this.beforeRemove(id);
 
-		return deleteResource(`/${this.uri}/${id}`);
+		await fetcher.delete(`/${this.uri}/${id}`);
 	}
 
 	public async update(

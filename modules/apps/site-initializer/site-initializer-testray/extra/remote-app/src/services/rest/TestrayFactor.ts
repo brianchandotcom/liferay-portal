@@ -16,6 +16,7 @@ import yupSchema from '../../schema/yup';
 import Rest from './Rest';
 import {TestrayFactor} from './types';
 
+type FactorEnviroment = typeof yupSchema.enviroment.__outputType;
 type TestrayFactorType = Omit<typeof yupSchema.factor.__outputType, 'id'>;
 
 class TestrayFactorRest extends Rest<TestrayFactorType, TestrayFactor> {
@@ -46,6 +47,80 @@ class TestrayFactorRest extends Rest<TestrayFactorType, TestrayFactor> {
 			}),
 			uri: 'factors',
 		});
+	}
+
+	public async selectDefaultEnvironmentFactor(
+		factorEnvironment: FactorEnviroment,
+		factors: TestrayFactor[]
+	): Promise<TestrayFactor[]> {
+		let _factors: TestrayFactor[] = [];
+		let index = 0;
+
+		const {
+			factorCategoryIds = [],
+			factorOptionIds = [],
+			routineId,
+		} = factorEnvironment;
+
+		const unselectedFactorsIds = factors
+			.filter((factor) => factor.factorCategory)
+			.filter(
+				(factor) =>
+					!(factorCategoryIds as number[]).includes(
+						factor?.factorCategory?.id as number
+					)
+			)
+			.map(({id}) => id);
+
+		for (const unselectedFactorsId of unselectedFactorsIds) {
+			await super.remove(unselectedFactorsId);
+		}
+
+		_factors = factors.filter(({id}) => !unselectedFactorsIds.includes(id));
+
+		for (const factorCategoryId of factorCategoryIds) {
+			const factor = factors.find(
+				(factor) => factor?.factorCategory?.id === factorCategoryId
+			);
+
+			const factorOptionId = factorOptionIds[index];
+
+			const form = {
+				factorCategoryId,
+				factorOptionId,
+				routineId,
+			};
+
+			if (factor) {
+				const isTheSameFactorValues =
+					factor.factorCategory?.id === factorCategoryId &&
+					factor.factorOption?.id === factorOptionId;
+
+				if (!isTheSameFactorValues) {
+					const updatedFactor = await super.update(factor.id, form);
+
+					_factors = factors.map((_factor) => {
+						if (_factor.id === factor.id) {
+							return updatedFactor;
+						}
+
+						return _factor;
+					});
+				}
+			} else {
+				const newFactor = await super.create({
+					...form,
+					name: '',
+					runId: 0,
+				});
+
+				_factors = [..._factors, newFactor];
+			}
+
+			index++;
+		}
+
+		return _factors;
 	}
 }
 

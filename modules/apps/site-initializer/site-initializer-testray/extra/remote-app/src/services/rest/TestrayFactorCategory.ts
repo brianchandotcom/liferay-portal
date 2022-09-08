@@ -37,24 +37,22 @@ class TestrayFactorCategoryRest extends Rest<
 		});
 	}
 
-	public async getFactoryCategoryItems(factorItems: TestrayFactor[]) {
-		const factorItemsPromised = factorItems
-			.filter(({factorCategory}) => factorCategory?.id)
-			.map((factoritem) =>
-				fetcher<APIResponse<TestrayFactorOptions>>(
-					this.getFactorCategoryOptionsURL(
-						factoritem.factorCategory?.id as number
-					)
-				)
-			);
-
+	public async getFactorCategoryItems(factorItems: TestrayFactor[]) {
 		const factorCategoryItems: Array<TestrayFactor[]> = [];
 
-		for (const factorItemPromise of factorItemsPromised) {
-			const resolve = await factorItemPromise;
+		const factorItemsFiltered = factorItems.filter(
+			({factorCategory}) => factorCategory?.id
+		);
 
-			if (resolve?.items) {
-				factorCategoryItems.push(resolve?.items);
+		for (const factorItem of factorItemsFiltered) {
+			const response = await fetcher<APIResponse<TestrayFactorOptions>>(
+				`${this.getFactorCategoryOptionsURL(
+					factorItem.factorCategory?.id as number
+				)}?fields=id,name&pageSize=1000`
+			);
+
+			if (response?.items) {
+				factorCategoryItems.push(response.items);
 			}
 		}
 

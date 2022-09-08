@@ -237,11 +237,6 @@ public class LockManagerImpl implements LockManager {
 		clear();
 	}
 
-	@Reference(unbind = "-")
-	protected void setLockLocalService(LockLocalService lockLocalService) {
-		_lockLocalService = lockLocalService;
-	}
-
 	private PortalException _translate(PortalException portalException) {
 		if (portalException instanceof
 				com.liferay.portal.lock.exception.DuplicateLockException) {
@@ -289,6 +284,7 @@ public class LockManagerImpl implements LockManager {
 		return portalException;
 	}
 
+	@Reference
 	private LockLocalService _lockLocalService;
 
 }

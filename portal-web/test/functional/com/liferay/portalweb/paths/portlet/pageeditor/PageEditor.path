@@ -265,6 +265,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SIDEBAR_RESIZER</td>
+	<td>//div[contains(@class,'page-editor__sidebar__resizer')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEWPORT</td>
 	<td>//div[contains(@class,'layout-viewport')][contains(@class,'${key_deviceType}')]</td>
 	<td></td>

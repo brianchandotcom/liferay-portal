@@ -1,9 +1,0 @@
-#card-structure {
-	right: 0;
-	width: 343px;
-}
-
-.cp-link-body {
-	background: var(--color-action-primary-lighten-1, rgba(250, 251, 255, 1));
-	border: 1px solid rgba(0, 74, 215, 0.1);
-}

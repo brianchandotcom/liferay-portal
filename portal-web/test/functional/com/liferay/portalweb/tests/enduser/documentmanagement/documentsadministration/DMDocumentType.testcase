@@ -199,6 +199,25 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_PREDEFINED_IMAGE");
 	}
 
+	@priority = "4"
+	@refactordone
+	test CanDeleteEntry {
+		property portal.acceptance = "true";
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.delete(dmDocumentTypeName = "DM Document Type Name");
+
+		DMDocumentType.viewDefaultCP();
+	}
+
 	@description = "This test covers LPS-123711. It ensures that the document type cannot be published if the title is left blank."
 	@priority = "4"
 	@refactordone
@@ -286,33 +305,6 @@ definition {
 		DMDocument.viewTypeFieldLocalizableLanguages(localizableLanguages = "ar-SA,ca-ES,zh-CN,nl-NL,fi-FI,fr-FR,de-DE,hu-HU,ja-JP,pt-BR,es-ES,sv-SE");
 
 		DMDocument.viewCustomFieldLocalizableLanguages(localizableLanguages = "ar-SA,ca-ES,zh-CN,nl-NL,fi-FI,fr-FR,de-DE,hu-HU,ja-JP,pt-BR,es-ES,sv-SE");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test DeleteEntry {
-		property portal.acceptance = "true";
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.viewDefaultCP();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.delete(dmDocumentTypeName = "DM Document Type Name");
-
-		DMDocumentType.viewDefaultCP();
 	}
 
 	@description = "This ensures that the user can delete fields within a document type ."

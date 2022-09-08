@@ -50,7 +50,7 @@ public class ProjectTemplatesTemplateContextContributorTest
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"7.0.6-2"}, {"7.1.3-1"}, {"7.2.1-1"}, {"7.3.7"}, {"7.4.1-1"}
+				{"7.0.6-2"}, {"7.1.3-1"}, {"7.2.1-1"}, {"7.3.7"}, {"7.4.3.36"}
 			});
 	}
 
@@ -129,7 +129,7 @@ public class ProjectTemplatesTemplateContextContributorTest
 			mavenProjectDir, "bnd.bnd",
 			"-plugin.metatype: com.liferay.ant.bnd.metatype.MetatypePlugin");
 
-		if (isBuildProjects()) {
+//		if (isBuildProjects()) {
 			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
 			File mavenOutputDir = new File(mavenProjectDir, "target");
 
@@ -137,7 +137,7 @@ public class ProjectTemplatesTemplateContextContributorTest
 				_gradleDistribution, mavenExecutor, gradleWorkspaceDir,
 				mavenProjectDir, gradleOutputDir, mavenOutputDir,
 				":modules:" + name + GRADLE_TASK_PATH_BUILD);
-		}
+//		}
 	}
 
 	@Rule

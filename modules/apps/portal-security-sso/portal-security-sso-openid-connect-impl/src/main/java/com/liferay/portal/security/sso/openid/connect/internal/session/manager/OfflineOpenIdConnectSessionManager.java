@@ -43,7 +43,6 @@ import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnec
 import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalService;
 
-import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.oauth2.sdk.token.AccessToken;
 import com.nimbusds.oauth2.sdk.token.RefreshToken;
 import com.nimbusds.oauth2.sdk.util.JSONObjectUtils;
@@ -105,15 +104,15 @@ public class OfflineOpenIdConnectSessionManager {
 			return true;
 		}
 
-		AccessToken accessToken = _getAccessToken(openIdConnectSession);
+		Date accessTokenExpirationDate =
+			openIdConnectSession.getAccessTokenExpirationDate();
 
-		long lifetime = accessToken.getLifetime() * Time.SECOND;
+		long currentTime = System.currentTimeMillis();
 
-		Date modifiedDate = openIdConnectSession.getModifiedDate();
+		if (currentTime <=
+				(accessTokenExpirationDate.getTime() -
+					_tokenRefreshOffsetMillis)) {
 
-		long elapsedTime = System.currentTimeMillis() - modifiedDate.getTime();
-
-		if (elapsedTime <= (lifetime - _tokenRefreshOffsetMillis)) {
 			return false;
 		}
 
@@ -125,14 +124,15 @@ public class OfflineOpenIdConnectSessionManager {
 			OpenIdConnectSession.class.getSimpleName(), key, lockOwner);
 
 		if (!lockOwner.equals(lock.getOwner())) {
-			if (elapsedTime <= lifetime) {
+			if (currentTime <= accessTokenExpirationDate.getTime()) {
 				return false;
 			}
 
 			return true;
 		}
 
-		accessToken = _extendOpenIdConnectSession(openIdConnectSession);
+		AccessToken accessToken = _extendOpenIdConnectSession(
+			openIdConnectSession);
 
 		_lockManager.unlock(
 			OpenIdConnectSession.class.getSimpleName(), key, lockOwner);
@@ -284,22 +284,6 @@ public class OfflineOpenIdConnectSessionManager {
 		return currentThread.getName();
 	}
 
-	private AccessToken _getAccessToken(
-		OpenIdConnectSession openIdConnectSession) {
-
-		try {
-			return AccessToken.parse(
-				JSONObjectUtils.parse(openIdConnectSession.getAccessToken()));
-		}
-		catch (ParseException parseException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(parseException);
-			}
-
-			return null;
-		}
-	}
-
 	private void _updateOpenIdConnectSession(
 		AccessToken accessToken, OpenIdConnectSession openIdConnectSession,
 		RefreshToken refreshToken) {
@@ -310,7 +294,19 @@ public class OfflineOpenIdConnectSessionManager {
 			openIdConnectSession.setRefreshToken(refreshToken.toString());
 		}
 
-		openIdConnectSession.setModifiedDate(new Date());
+		long currentTime = System.currentTimeMillis();
+
+		openIdConnectSession.setModifiedDate(new Date(currentTime));
+
+		if (accessToken.getLifetime() > 0) {
+			openIdConnectSession.setAccessTokenExpirationDate(
+				new Date(
+					currentTime + (accessToken.getLifetime() * Time.SECOND)));
+		}
+		else {
+			openIdConnectSession.setAccessTokenExpirationDate(
+				new Date(currentTime + Time.HOUR));
+		}
 
 		_openIdConnectSessionLocalService.updateOpenIdConnectSession(
 			openIdConnectSession);

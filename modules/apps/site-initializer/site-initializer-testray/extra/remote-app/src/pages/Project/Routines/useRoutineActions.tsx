@@ -12,19 +12,22 @@
  * details.
  */
 
-import {useRef} from 'react';
+import React, {useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import useFormActions from '../../../hooks/useFormActions';
+import useModalContext from '../../../hooks/useModalContext';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
 import {TestrayRoutine, deleteResource} from '../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../types';
+import EnvironmentFactorsModal from '../../Standalone/EnvironmentFactors/EnviromentFactorsModal';
 
 const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const {form} = useFormActions();
 	const navigate = useNavigate();
 	const {removeItemFromList} = useMutate();
+	const {onOpenModal, state} = useModalContext();
 
 	const actionsRef = useRef([
 		{
@@ -40,7 +43,20 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			name: i18n.translate('manage-templates'),
 		},
 		{
-			action: () => alert('Select Default Environment Factors'),
+			action: (routine) =>
+				onOpenModal({
+					body: (
+						<EnvironmentFactorsModal
+							onCloseModal={state.onClose}
+							routineId={routine.id}
+						/>
+					),
+					footer: <div id="environment-factor-modal-footer"></div>,
+					footerDefault: false,
+					size: 'full-screen',
+
+					title: i18n.translate('select-default-environment-factors'),
+				}),
 			icon: 'display',
 			name: i18n.translate('select-default-environment-factors'),
 		},

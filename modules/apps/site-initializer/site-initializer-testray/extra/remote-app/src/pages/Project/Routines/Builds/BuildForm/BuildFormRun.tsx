@@ -85,7 +85,7 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({
 	useEffect(() => {
 		if (factorItems.length) {
 			testrayFactorCategoryRest
-				.getFactoryCategoryItems(factorItems)
+				.getFactorCategoryItems(factorItems)
 				.then(setFactorOptionsList);
 		}
 	}, [factorItems]);

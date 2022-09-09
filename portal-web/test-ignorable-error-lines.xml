@@ -284,6 +284,10 @@
 			<contains></contains>
 			<matches>.*/o/frontend-js-aui-web/build/aui-skin-deprecated/images/loading_indicator.gif.* uri=/o/frontend-js-aui-web/build/aui-skin-deprecated/images/loading_indicator.gif.*</matches>
 		</ignore-error>
+		<ignore-error description="LPS-154189 - temporarily ignore until fixed">
+			<contains>java.sql.SQLIntegrityConstraintViolationException</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>

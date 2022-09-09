@@ -20,6 +20,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
 import com.liferay.object.exception.ObjectRelationshipParameterObjectFieldIdException;
+import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.exception.ObjectRelationshipTypeException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -402,6 +403,24 @@ public class ObjectRelationshipLocalServiceTest {
 			_hasColumn(
 				objectRelationship.getDBTableName(),
 				pkObjectFieldDBColumnNames.get("pkObjectFieldDBColumnName2")));
+
+		ObjectRelationship reverseObjectRelationship =
+			_objectRelationshipLocalService.fetchReverseObjectRelationship(
+				objectRelationship, true);
+
+		Assert.assertNotNull(reverseObjectRelationship);
+
+		try {
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				reverseObjectRelationship);
+		}
+		catch (ObjectRelationshipReverseException
+					objectRelationshipReverseException) {
+
+			Assert.assertEquals(
+				"Reverse object relationships cannot be deleted",
+				objectRelationshipReverseException.getMessage());
+		}
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);

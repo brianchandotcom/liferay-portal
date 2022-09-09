@@ -122,16 +122,8 @@ public abstract class BaseLayoutScreenNavigationEntry
 				storageEngine));
 
 		jspRenderer.renderJSP(
-			_servletContext, httpServletRequest, httpServletResponse,
+			servletContext, httpServletRequest, httpServletResponse,
 			getJspPath());
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.seo.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
 	}
 
 	protected abstract String getJspPath();
@@ -170,6 +162,9 @@ public abstract class BaseLayoutScreenNavigationEntry
 	@Reference
 	protected Portal portal;
 
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.seo.web)")
+	protected ServletContext servletContext;
+
 	@Reference
 	protected StorageEngine storageEngine;
 
@@ -180,7 +175,5 @@ public abstract class BaseLayoutScreenNavigationEntry
 		return new AggregateResourceBundle(
 			resourceBundle, portal.getResourceBundle(locale));
 	}
-
-	private ServletContext _servletContext;
 
 }

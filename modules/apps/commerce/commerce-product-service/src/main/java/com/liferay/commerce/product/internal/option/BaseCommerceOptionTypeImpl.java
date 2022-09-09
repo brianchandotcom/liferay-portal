@@ -28,7 +28,7 @@ public abstract class BaseCommerceOptionTypeImpl implements CommerceOptionType {
 	@Override
 	public boolean isPriceContributor(long cpDefinitionOptionRelId) {
 		CPDefinitionOptionRel cpDefinitionOptionRel =
-			_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
+			cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
 				cpDefinitionOptionRelId);
 
 		if (cpDefinitionOptionRel == null) {
@@ -41,7 +41,7 @@ public abstract class BaseCommerceOptionTypeImpl implements CommerceOptionType {
 	@Override
 	public boolean isRequired(long cpDefinitionOptionRelId) {
 		CPDefinitionOptionRel cpDefinitionOptionRel =
-			_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
+			cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
 				cpDefinitionOptionRelId);
 
 		if (cpDefinitionOptionRel == null) {
@@ -54,7 +54,7 @@ public abstract class BaseCommerceOptionTypeImpl implements CommerceOptionType {
 	@Override
 	public boolean isSKUContributor(long cpDefinitionOptionRelId) {
 		CPDefinitionOptionRel cpDefinitionOptionRel =
-			_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
+			cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
 				cpDefinitionOptionRelId);
 
 		if (cpDefinitionOptionRel == null) {
@@ -65,7 +65,7 @@ public abstract class BaseCommerceOptionTypeImpl implements CommerceOptionType {
 	}
 
 	@Reference
-	private CPDefinitionOptionRelLocalService
-		_cpDefinitionOptionRelLocalService;
+	protected CPDefinitionOptionRelLocalService
+		cpDefinitionOptionRelLocalService;
 
 }

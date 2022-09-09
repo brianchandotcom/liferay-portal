@@ -15,6 +15,9 @@
 const {
 	default: SidebarPanelInfoView,
 } = require('../components/SidebarPanelInfoView/SidebarPanelInfoView');
+const {
+	default: SidebarPanelInfoViewCollapsable,
+} = require('../components/SidebarPanelInfoView/SidebarPanelInfoViewCollapsable');
 const {OPEN_PANEL_VALUE} = require('../utils/constants');
 const ActionsComponentPropsTransformer = require('./ActionsComponentPropsTransformer');
 
@@ -52,7 +55,9 @@ const handlePanelStateFromSession = ({
 	}
 
 	ActionsComponentPropsTransformer.showSidebar({
-		View: SidebarPanelInfoView,
+		View: Liferay.FeatureFlags['LPS-161013']
+			? SidebarPanelInfoView
+			: SidebarPanelInfoViewCollapsable,
 		fetchURL: selectedItemFetchURL,
 		portletNamespace: namespace,
 		singlePageApplicationEnabled,

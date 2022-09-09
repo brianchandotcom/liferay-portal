@@ -799,6 +799,14 @@ public abstract class PoshiElement
 		return false;
 	}
 
+	protected boolean isQuotedContent(String content) {
+		if (content.matches(NONQUOTED_REGEX)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	protected boolean isValidFunctionFileName(String poshiScriptInvocation) {
 		poshiScriptInvocation = poshiScriptInvocation.trim();
 
@@ -987,6 +995,8 @@ public abstract class PoshiElement
 		"[\\s]*\\(.*?\\)$";
 
 	protected static final String INVOCATION_REGEX;
+
+	protected static final String NONQUOTED_REGEX = "(\\$\\{.*\\}|\\d+)";
 
 	protected static final String PARAMETER_REGEX = "\\(.*\\)";
 

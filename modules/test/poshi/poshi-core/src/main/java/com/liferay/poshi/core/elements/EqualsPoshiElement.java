@@ -57,26 +57,48 @@ public class EqualsPoshiElement extends PoshiElement {
 
 		String arg1 = equalsContentArray[0].trim();
 
-		arg1 = getDoubleQuotedContent(arg1);
+		if (!isQuotedContent(arg1)) {
+			addAttribute("arg1", arg1);
+		}
+		else {
+			arg1 = getDoubleQuotedContent(arg1);
 
-		addAttribute("arg1", arg1);
+			addAttribute("arg1", arg1);
+		}
 
 		String arg2 = equalsContentArray[1].trim();
 
-		arg2 = getDoubleQuotedContent(arg2);
+		if (!isQuotedContent(arg2)) {
+			addAttribute("arg2", arg2);
+		}
+		else {
+			arg2 = getDoubleQuotedContent(arg2);
 
-		addAttribute("arg2", arg2);
+			addAttribute("arg2", arg2);
+		}
 	}
 
 	@Override
 	public String toPoshiScript() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("\"");
-		sb.append(attributeValue("arg1"));
-		sb.append("\" == \"");
-		sb.append(attributeValue("arg2"));
-		sb.append("\"");
+		String arg1 = attributeValue("arg1");
+
+		String arg2 = attributeValue("arg2");
+
+		if (isQuotedContent(arg1)) {
+			arg1 = "\"" + arg1 + "\"";
+		}
+
+		sb.append(arg1);
+
+		sb.append(" == ");
+
+		if (isQuotedContent(arg2)) {
+			arg2 = "\"" + arg2 + "\"";
+		}
+
+		sb.append(arg2);
 
 		PoshiElement parentPoshiElement = (PoshiElement)getParent();
 
@@ -145,6 +167,7 @@ public class EqualsPoshiElement extends PoshiElement {
 	private static final String _ELEMENT_NAME = "equals";
 
 	private static final Pattern _conditionPattern = Pattern.compile(
-		"^[\\(]*\"[\\s\\S]*\"[\\s]*==[\\s]*\"[\\s\\S]*\"[\\)]*$");
+		"^[\\(]*(?:\\d+|(?:\\$\\{|\\\")[\\s\\S]*(?:\\}|\"))[\\s]*==" +
+			"[\\s]*(?:\\d+|(?:\\$\\{|\\\")[\\s\\S]*(?:\\}|\"))[\\)]*$");
 
 }

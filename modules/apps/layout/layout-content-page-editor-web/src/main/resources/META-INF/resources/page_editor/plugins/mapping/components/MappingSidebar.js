@@ -25,64 +25,75 @@ export default function MappingSidebar() {
 				{Liferay.Language.get('mapping')}
 			</SidebarPanelHeader>
 
-			<p className="mb-4 small text-secondary">
-				{config.selectedMappingTypes.mappingDescription}
-			</p>
-
-			<div className="d-flex flex-column mb-4">
-				<p className="list-group-title">
-					{config.selectedMappingTypes.type.groupTypeTitle}:
+			<div className="p-3">
+				<p className="mb-4 small text-secondary">
+					{config.selectedMappingTypes.mappingDescription}
 				</p>
 
-				<p className="mb-0 small">
-					{config.selectedMappingTypes.type.label}
-				</p>
+				<div className="d-flex flex-column mb-4">
+					<p className="list-group-title">
+						{config.selectedMappingTypes.type.groupTypeTitle}:
+					</p>
+
+					<p className="mb-0 small">
+						{config.selectedMappingTypes.type.label}
+					</p>
+				</div>
+
+				{config.selectedMappingTypes.subtype &&
+					config.selectedMappingTypes.subtype.label && (
+						<div className="d-flex flex-column mb-4">
+							<p className="list-group-title">
+								{
+									config.selectedMappingTypes.subtype
+										.groupSubtypeTitle
+								}
+								:
+							</p>
+
+							<p className="mb-0 small">
+								{config.selectedMappingTypes.subtype.url ? (
+									<ClayLink
+										href={
+											config.selectedMappingTypes.subtype
+												.url
+										}
+										target="_parent"
+									>
+										{
+											config.selectedMappingTypes.subtype
+												.label
+										}
+									</ClayLink>
+								) : (
+									<>
+										{
+											config.selectedMappingTypes.subtype
+												.label
+										}
+									</>
+								)}
+							</p>
+						</div>
+					)}
+
+				{config.selectedMappingTypes.itemType &&
+					config.selectedMappingTypes.itemType.label && (
+						<div className="d-flex flex-column">
+							<p className="list-group-title">
+								{
+									config.selectedMappingTypes.itemType
+										.groupItemTypeTitle
+								}
+								:
+							</p>
+
+							<p className="small">
+								{config.selectedMappingTypes.itemType.label}
+							</p>
+						</div>
+					)}
 			</div>
-
-			{config.selectedMappingTypes.subtype &&
-				config.selectedMappingTypes.subtype.label && (
-					<div className="d-flex flex-column mb-4">
-						<p className="list-group-title">
-							{
-								config.selectedMappingTypes.subtype
-									.groupSubtypeTitle
-							}
-							:
-						</p>
-
-						<p className="mb-0 small">
-							{config.selectedMappingTypes.subtype.url ? (
-								<ClayLink
-									href={
-										config.selectedMappingTypes.subtype.url
-									}
-									target="_parent"
-								>
-									{config.selectedMappingTypes.subtype.label}
-								</ClayLink>
-							) : (
-								<>{config.selectedMappingTypes.subtype.label}</>
-							)}
-						</p>
-					</div>
-				)}
-
-			{config.selectedMappingTypes.itemType &&
-				config.selectedMappingTypes.itemType.label && (
-					<div className="d-flex flex-column">
-						<p className="list-group-title">
-							{
-								config.selectedMappingTypes.itemType
-									.groupItemTypeTitle
-							}
-							:
-						</p>
-
-						<p className="small">
-							{config.selectedMappingTypes.itemType.label}
-						</p>
-					</div>
-				)}
 		</>
 	);
 }

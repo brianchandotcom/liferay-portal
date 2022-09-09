@@ -48,6 +48,6 @@ public interface MBModerationGroupConfiguration {
 		description = "enter-authorized-domains",
 		name = "authorized-domains", required = false
 	)
-	public String[] authorizeddomains();
+	public String[] authorizedDomains();
 
 }

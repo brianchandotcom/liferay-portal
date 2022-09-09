@@ -67,7 +67,7 @@ public class MBModerationConditionEvaluator implements ConditionEvaluator {
 		String emailAddress = user.getEmailAddress();
 
 		String[] authorizedDomains =
-			mbModerationGroupConfiguration.authorizeddomains();
+			mbModerationGroupConfiguration.authorizedDomains();
 
 		for (String authorizedDomain : authorizedDomains) {
 			if (Validator.isNotNull(authorizedDomain) &&

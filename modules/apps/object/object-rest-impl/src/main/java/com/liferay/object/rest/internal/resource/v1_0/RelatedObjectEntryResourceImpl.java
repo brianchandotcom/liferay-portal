@@ -16,14 +16,17 @@ package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.ObjectRelationshipService;
+import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -63,7 +66,7 @@ public class RelatedObjectEntryResourceImpl
 			objectRelationshipName);
 
 		ObjectDefinition currentObjectDefinition = _getCurrentObjectDefinition(
-			objectEntryId, objectRelationship, _uriInfo);
+			objectRelationship, _getRESTContextPath(previousPath));
 
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
 			currentObjectDefinition, objectRelationship);
@@ -92,51 +95,43 @@ public class RelatedObjectEntryResourceImpl
 			Pagination pagination)
 		throws Exception {
 
+		ObjectRelationship objectRelationship = _getObjectRelationship(
+			objectRelationshipName);
+
 		ObjectDefinition currentObjectDefinition = _getCurrentObjectDefinition(
-			objectEntryId, _getObjectRelationship(objectRelationshipName),
-			_uriInfo);
-
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerTracker.getObjectEntryManager(
-				currentObjectDefinition.getStorageType());
-
-		objectEntryManager.addObjectRelationshipMappingTableValues(
-			_getDefaultDTOConverterContext(
-				currentObjectDefinition, objectEntryId, _uriInfo),
-			currentObjectDefinition, objectRelationshipName, objectEntryId,
-			relatedObjectEntryId);
-	}
-
-	private ObjectDefinition _getCurrentObjectDefinition(
-			long objectEntryId, ObjectRelationship objectRelationship,
-			UriInfo uriInfo)
-		throws Exception {
-
-		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			objectEntryId);
-
-		if (objectEntry != null) {
-			return _objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-		}
+			objectRelationship, _getRESTContextPath(previousPath));
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
 
-		URI uri = uriInfo.getBaseUri();
+		_objectRelationshipService.addObjectRelationshipMappingTableValues(
+			objectRelationship.getObjectRelationshipId(),
+			_getPrimaryKey1(
+				currentObjectDefinition, objectDefinition, objectEntryId,
+				relatedObjectEntryId),
+			_getPrimaryKey2(
+				currentObjectDefinition, objectDefinition, objectEntryId,
+				relatedObjectEntryId),
+			new ServiceContext());
+	}
 
-		String path = uri.getPath();
+	private ObjectDefinition _getCurrentObjectDefinition(
+			ObjectRelationship objectRelationship, String restContextPath)
+		throws Exception {
 
-		if (!Objects.equals(
-				objectDefinition.getRESTContextPath(), path.split("/")[2])) {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
 
-			objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectRelationship.getObjectDefinitionId2());
+		if (Objects.equals(
+				_getRestContextPath(objectDefinition), restContextPath)) {
+
+			return objectDefinition;
 		}
 
-		return objectDefinition;
+		return _objectDefinitionLocalService.getObjectDefinition(
+			objectRelationship.getObjectDefinitionId2());
 	}
 
 	private DefaultDTOConverterContext _getDefaultDTOConverterContext(
@@ -173,6 +168,34 @@ public class RelatedObjectEntryResourceImpl
 		return objectRelationships.get(0);
 	}
 
+	private long _getPrimaryKey1(
+		ObjectDefinition currentObjectDefinition,
+		ObjectDefinition objectDefinition, long objectEntryId,
+		long relatedObjectEntryId) {
+
+		if (objectDefinition.getObjectDefinitionId() ==
+				currentObjectDefinition.getObjectDefinitionId()) {
+
+			return objectEntryId;
+		}
+
+		return relatedObjectEntryId;
+	}
+
+	private long _getPrimaryKey2(
+		ObjectDefinition currentObjectDefinition,
+		ObjectDefinition objectDefinition, long objectEntryId,
+		long relatedObjectEntryId) {
+
+		if (objectDefinition.getObjectDefinitionId() ==
+				currentObjectDefinition.getObjectDefinitionId()) {
+
+			return relatedObjectEntryId;
+		}
+
+		return objectEntryId;
+	}
+
 	private ObjectDefinition _getRelatedObjectDefinition(
 			ObjectDefinition objectDefinition,
 			ObjectRelationship objectRelationship)
@@ -189,6 +212,27 @@ public class RelatedObjectEntryResourceImpl
 			objectRelationship.getObjectDefinitionId2());
 	}
 
+	private String _getRestContextPath(ObjectDefinition objectDefinition) {
+		if (objectDefinition.isSystem()) {
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+				_systemObjectDefinitionMetadataTracker.
+					getSystemObjectDefinitionMetadata(
+						objectDefinition.getName());
+
+			return systemObjectDefinitionMetadata.getRESTContextPath();
+		}
+
+		return objectDefinition.getRESTContextPath();
+	}
+
+	private String _getRESTContextPath(String previousPath) {
+		URI uri = _uriInfo.getBaseUri();
+
+		String path = uri.getPath();
+
+		return path.split("/")[2] + "/v1.0/" + previousPath;
+	}
+
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
@@ -203,6 +247,13 @@ public class RelatedObjectEntryResourceImpl
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
+	private ObjectRelationshipService _objectRelationshipService;
+
+	@Reference
+	private SystemObjectDefinitionMetadataTracker
+		_systemObjectDefinitionMetadataTracker;
 
 	@Context
 	private UriInfo _uriInfo;

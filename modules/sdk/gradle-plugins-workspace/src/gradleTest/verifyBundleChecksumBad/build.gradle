@@ -21,6 +21,6 @@ runGradleTest {
 	dependsOn verifyBundle
 
 	doLast {
-		assert errorMessage.contains("Expected bad_md5sum but got 20f63152bda79884061f419c227a22f7")
+		assert errorMessage.contains("Expected bad_md5sum, but got 20f63152bda79884061f419c227a22f7")
 	}
 }

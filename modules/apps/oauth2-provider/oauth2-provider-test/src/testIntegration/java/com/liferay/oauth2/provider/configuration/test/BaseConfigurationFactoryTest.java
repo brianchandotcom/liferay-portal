@@ -19,11 +19,11 @@ import com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadle
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationUserAgentConfiguration;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.test.function.ConfigurationHolder;
-import com.liferay.portal.test.function.CreatingFactoryConfigurationHolder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -36,6 +36,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
@@ -93,11 +94,13 @@ public class BaseConfigurationFactoryTest {
 
 		String externalReferenceCode = "foo";
 
-		try (ConfigurationHolder configurationHolder =
-				new CreatingFactoryConfigurationHolder(
-					_configurationAdmin, className, externalReferenceCode)) {
+		Configuration configuration =
+			_configurationAdmin.getFactoryConfiguration(
+				className, externalReferenceCode, StringPool.QUESTION);
 
-			configurationHolder.update(
+		try {
+			ConfigurationTestUtil.saveConfiguration(
+				configuration,
 				HashMapDictionaryBuilder.<String, Object>put(
 					"_portalK8sConfigMapModifier.cardinality.minimum", 0
 				).put(
@@ -112,6 +115,9 @@ public class BaseConfigurationFactoryTest {
 			Assert.assertNotNull(oAuth2Application);
 			Assert.assertEquals(
 				externalReferenceCode, oAuth2Application.getName());
+		}
+		finally {
+			ConfigurationTestUtil.deleteConfiguration(configuration);
 		}
 
 		Thread.sleep(200);

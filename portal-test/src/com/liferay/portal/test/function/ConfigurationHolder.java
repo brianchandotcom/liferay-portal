@@ -14,11 +14,11 @@
 
 package com.liferay.portal.test.function;
 
+import com.liferay.petra.function.UnsafeSupplier;
+
 import java.util.Dictionary;
 
 import org.osgi.service.cm.Configuration;
-
-import com.liferay.petra.function.UnsafeSupplier;
 
 /**
  * @author Raymond Augé
@@ -29,8 +29,7 @@ public class ConfigurationHolder extends CloseableHolder<Configuration> {
 			UnsafeSupplier<Configuration, Exception> onInitUnsafeSupplier)
 		throws Exception {
 
-		super(
-			configuration -> configuration.delete(), onInitUnsafeSupplier);
+		super(configuration -> configuration.delete(), onInitUnsafeSupplier);
 	}
 
 	public Dictionary<String, Object> getProperties() throws Exception {
@@ -39,9 +38,7 @@ public class ConfigurationHolder extends CloseableHolder<Configuration> {
 		return configuration.getProcessedProperties(null);
 	}
 
-	public void update(Dictionary<String, Object> properties)
-		throws Exception {
-
+	public void update(Dictionary<String, Object> properties) throws Exception {
 		Configuration configuration = get();
 
 		configuration.update(properties);

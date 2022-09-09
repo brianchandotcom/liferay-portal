@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -20,7 +18,7 @@ interface TableProps<T> {
 	columns: TableColumn<T>[];
 	responsive?: boolean;
 	rows: T[];
-};
+}
 
 const Table = <T extends unknown>({columns, rows, ...props}: TableProps<T>) => (
 	<ClayTable {...props} noWrap={true} tableVerticalAlignment="middle">
@@ -36,22 +34,20 @@ const Table = <T extends unknown>({columns, rows, ...props}: TableProps<T>) => (
 
 		<ClayTable.Body>
 			{rows.map((row, index) => (
-				<ClayTable.Row key={index}
-				 >
+				<ClayTable.Row key={index}>
 					{columns.map((column, index) => {
 						const data = row[column.columnKey as keyof T];
-						console.log("🚀 ~ file: Table.tsx ~ line 43 ~ {columns.map ~ data", row)
-
 
 						return (
-							<ClayTable.Cell  align="left"
+							<ClayTable.Cell
+								align="left"
 								className="font-weight-normal py-5 text-neutral-10"
 								headingCell
-								key={index}				
+								key={index}
 							>
 								{column.render
 									? column.render(data, row)
-									: data} 
+									: data}
 							</ClayTable.Cell>
 						);
 					})}

@@ -12,11 +12,13 @@
 import {PRMPageRoute} from '../enums/prmPageRoute';
 import {Liferay} from '../services/liferay';
 
-export default function liferayNavigate(path: PRMPageRoute | string | undefined) {
+export default function liferayNavigate(
+	path: PRMPageRoute | string | undefined
+) {
 	const relativeURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
 	const relativePath = relativeURL.split('/').slice(0, 3);
 
-	path && relativePath.push(path)
+	path && relativePath.push(path);
 
 	Liferay.Util.navigate(relativePath.join('/'));
 }

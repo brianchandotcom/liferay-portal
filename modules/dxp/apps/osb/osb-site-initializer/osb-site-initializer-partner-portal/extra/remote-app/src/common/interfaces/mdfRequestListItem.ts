@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import { MDFColumnKey } from "../enums/mdfColumnKey";
+import {MDFColumnKey} from '../enums/mdfColumnKey';
 
 export type MDFRequestListItem = {
 	[key in MDFColumnKey]?: string;

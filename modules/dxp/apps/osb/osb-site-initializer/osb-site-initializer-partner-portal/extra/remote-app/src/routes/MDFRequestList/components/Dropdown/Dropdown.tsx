@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -33,10 +32,10 @@ const DropDown = ({onClick, optionList}: Props) => (
 			</ClayButton>
 		}
 	>
-		<ClayDropDown.ItemList >
+		<ClayDropDown.ItemList>
 			<ClayDropDown.Group>
 				{optionList.map((item, index) => (
-					<ClayDropDown.Item key={index} onClick={onClick} >
+					<ClayDropDown.Item key={index} onClick={onClick}>
 						<ClayIcon symbol={item.icon}></ClayIcon>
 
 						{item.label}

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -15,7 +14,7 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 
 import {MDFColumnKey} from '../../common/enums/mdfColumnKey';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
-import { MDFRequestListItem } from '../../common/interfaces/mdfRequestListItem';
+import {MDFRequestListItem} from '../../common/interfaces/mdfRequestListItem';
 import liferayNavigate from '../../common/utils/liferayNavigate';
 import DropDown from './components/Dropdown';
 import Table from './components/Table';
@@ -35,18 +34,21 @@ const MDFRequestList = () => {
 		render: (_, row) => {
 			return (
 				<DropDown
-					onClick={() => liferayNavigate(`l/${row[MDFColumnKey.ID]?.split("-")[1]}`)}
+					onClick={() =>
+						liferayNavigate(
+							`l/${row[MDFColumnKey.ID]?.split('-')[1]}`
+						)
+					}
 					optionList={[
 						{
 							icon: 'view',
 							key: 'approve',
 							label: ' View',
-						}
+						},
 					]}
-				
 				></DropDown>
-			)
-		}
+			);
+		},
 	});
 
 	return (

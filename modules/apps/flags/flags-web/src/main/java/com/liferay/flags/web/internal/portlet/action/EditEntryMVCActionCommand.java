@@ -107,11 +107,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	@Reference(unbind = "-")
-	protected void setFlagsEntryService(FlagsEntryService flagsEntryService) {
-		_flagsEntryService = flagsEntryService;
-	}
-
 	private String _getCaptchaExceptionErrorMessageKey(
 		CaptchaException captchaException) {
 
@@ -125,6 +120,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditEntryMVCActionCommand.class);
 
+	@Reference
 	private FlagsEntryService _flagsEntryService;
 
 	@Reference

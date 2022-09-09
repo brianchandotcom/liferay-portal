@@ -22,6 +22,7 @@ import com.liferay.portal.workflow.kaleo.definition.Transition;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -38,6 +39,7 @@ public abstract class BaseNodeValidator<T extends Node>
 
 		doValidate(definition, node);
 
+		_validateLabel(node);
 		_validateName(node);
 		_validateNotifications(node);
 		_validateTransitions(node.getOutgoingTransitions());
@@ -46,14 +48,33 @@ public abstract class BaseNodeValidator<T extends Node>
 	protected abstract void doValidate(Definition definition, T node)
 		throws KaleoDefinitionValidationException;
 
+	private void _validateLabel(T node)
+		throws KaleoDefinitionValidationException {
+
+		Map<Locale, String> labelMap = node.getLabelMap();
+
+		if (labelMap == null) {
+			return;
+		}
+
+		for (Map.Entry<Locale, String> labelEntry : labelMap.entrySet()) {
+			String label = labelEntry.getValue();
+
+			if (label.length() > _NODE_VALUE_MAX_LENGTH) {
+				throw new KaleoDefinitionValidationException.
+					MustSetValidNodeNameLength(_NODE_VALUE_MAX_LENGTH, label);
+			}
+		}
+	}
+
 	private void _validateName(T node)
 		throws KaleoDefinitionValidationException {
 
-		String name = node.getDefaultLabel();
+		String name = node.getName();
 
-		if (name.length() > 200) {
+		if (name.length() > _NODE_VALUE_MAX_LENGTH) {
 			throw new KaleoDefinitionValidationException.
-				MustSetValidNodeNameLength(200, name);
+				MustSetValidNodeNameLength(_NODE_VALUE_MAX_LENGTH, name);
 		}
 	}
 
@@ -88,5 +109,7 @@ public abstract class BaseNodeValidator<T extends Node>
 			_validateTransition(transition);
 		}
 	}
+
+	private static final int _NODE_VALUE_MAX_LENGTH = 200;
 
 }

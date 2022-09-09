@@ -225,19 +225,15 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_whenIndexerRegistryGetIndexer(className, _createIndexer());
 
-		Document document = _createDocument(className, entryClassPK);
-
-		document.addKeyword(Field.USER_ID, userId);
-
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
-			build(document);
+			build(_createDocument(className, entryClassPK));
 
 		_assertAssetRendererURLDownloadVisible(
 			urlDownload, searchResultSummaryDisplayContext);
 
 		_assertTagsVisible(entryClassPK, searchResultSummaryDisplayContext);
 
-		_assertUserPortraitVisible(searchResultSummaryDisplayContext);
+		_assertUserPortraitVisible(userId, searchResultSummaryDisplayContext);
 	}
 
 	@Test
@@ -285,8 +281,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		document.addKeyword(Field.ROOT_ENTRY_CLASS_PK, rootEntryClassPK);
 
-		document.addKeyword(Field.USER_ID, userId);
-
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			build(document);
 
@@ -295,7 +289,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_assertTagsVisible(rootEntryClassPK, searchResultSummaryDisplayContext);
 
-		_assertUserPortraitVisible(searchResultSummaryDisplayContext);
+		_assertUserPortraitVisible(userId, searchResultSummaryDisplayContext);
 	}
 
 	protected SearchResultSummaryDisplayContext build(Document document)
@@ -417,10 +411,14 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	}
 
 	private void _assertUserPortraitVisible(
+		long userId,
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
 		Assert.assertTrue(
 			searchResultSummaryDisplayContext.isUserPortraitVisible());
+
+		Assert.assertEquals(
+			userId, searchResultSummaryDisplayContext.getAssetEntryUserId());
 	}
 
 	private AssetEntry _createAssetEntry(long userId) {

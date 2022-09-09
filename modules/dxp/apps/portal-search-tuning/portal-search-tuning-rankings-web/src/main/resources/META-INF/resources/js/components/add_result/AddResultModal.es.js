@@ -28,6 +28,7 @@ import {
 	DELTAS,
 	FETCH_OPTIONS,
 	KEY_CODES,
+	PORTAL_TOOLTIP_TRIGGER_CLASS,
 } from '../../utils/constants.es';
 import {getPluralMessage} from '../../utils/language.es';
 import {buildUrl, resultsDataToMap, toggleListItem} from '../../utils/util.es';
@@ -432,13 +433,12 @@ function AddResultModal({
 						className={getCN(
 							'inline-item',
 							'inline-item-after',
-							'modal-title-help-icon'
+							'modal-title-help-icon',
+							PORTAL_TOOLTIP_TRIGGER_CLASS
 						)}
+						data-title={Liferay.Language.get('add-results-help')}
 					>
-						<ClayIcon
-							symbol="question-circle-full"
-							title={Liferay.Language.get('add-results-help')}
-						/>
+						<ClayIcon symbol="question-circle-full" />
 					</span>
 				</ClayModal.Header>
 

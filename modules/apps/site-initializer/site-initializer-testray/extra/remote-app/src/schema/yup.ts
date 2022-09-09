@@ -126,6 +126,12 @@ const yupSchema = {
 		id: yup.string(),
 		name: yup.string().required(i18n.translate('this-field-is-required')),
 	}),
+	factorToRun: yup.object({
+		buildId: yup.number(),
+		factorOptionName: yup.mixed(),
+		id: yup.string(),
+		number: yup.number(),
+	}),
 	option: yup.object({
 		name: yup.string(),
 	}),

@@ -49,7 +49,7 @@ import CaseResultOutlet from './pages/Project/Routines/Builds/Inner/CaseResult/C
 import CaseResultHistory from './pages/Project/Routines/Builds/Inner/CaseResult/History';
 import CaseTypes from './pages/Project/Routines/Builds/Inner/CaseTypes';
 import Components from './pages/Project/Routines/Builds/Inner/Components';
-import Runs from './pages/Project/Routines/Builds/Inner/Run';
+import Runs from './pages/Project/Routines/Builds/Inner/Run/Run';
 import Teams from './pages/Project/Routines/Builds/Inner/Teams';
 import Routine from './pages/Project/Routines/Routine';
 import RoutineArchived from './pages/Project/Routines/RoutineArchived';

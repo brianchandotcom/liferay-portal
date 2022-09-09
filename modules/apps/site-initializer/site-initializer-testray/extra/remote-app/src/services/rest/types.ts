@@ -182,6 +182,7 @@ export type TestrayRun = {
 	externalReferenceCode: string;
 	externalReferencePK: string;
 	externalReferenceType: string;
+	factorOption?: TestrayFactorOptions;
 	id: number;
 	jenkinsJobKey: string;
 	name: string;

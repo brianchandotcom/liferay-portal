@@ -247,6 +247,7 @@ export default {
 	'select-case-parameters': 'Select Case Parameters',
 	'select-cases': 'Select Cases',
 	'select-default-environment-factors': 'Select Default Environment Factors',
+	'select-environment-factors': 'Select Environment Factors',
 	'select-options': 'Select Options',
 	'select-requirements': 'Select Requirements',
 	'select-stacks': 'Select Stacks',

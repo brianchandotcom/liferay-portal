@@ -14,25 +14,30 @@
 
 import {useParams} from 'react-router-dom';
 
-import Container from '../../../../../components/Layout/Container';
-import ListViewRest from '../../../../../components/ListView';
-import i18n from '../../../../../i18n';
-import {filters} from '../../../../../schema/filter';
-import {testrayRunRest} from '../../../../../services/rest';
-import {searchUtil} from '../../../../../util/search';
+import Container from '../../../../../../components/Layout/Container';
+import ListViewRest from '../../../../../../components/ListView';
+import i18n from '../../../../../../i18n';
+import {filters} from '../../../../../../schema/filter';
+import {testrayRunRest} from '../../../../../../services/rest';
+import {searchUtil} from '../../../../../../util/search';
+import RunFormModal from './RunFormModal';
+import useRunActions from './useRunActions';
 
 const Runs = () => {
+	const {actions, formModal} = useRunActions();
 	const {buildId} = useParams();
 
 	return (
 		<Container className="mt-4">
 			<ListViewRest
 				managementToolbarProps={{
+					addButton: () => formModal.modal.open(),
 					filterFields: filters.build.runs,
 					title: i18n.translate('runs'),
 				}}
 				resource="/runs"
 				tableProps={{
+					actions,
 					columns: [
 						{
 							key: 'number',
@@ -69,6 +74,8 @@ const Runs = () => {
 					filter: searchUtil.eq('buildId', buildId as string),
 				}}
 			/>
+
+			<RunFormModal modal={formModal.modal} />
 		</Container>
 	);
 };

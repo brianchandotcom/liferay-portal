@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.function.AwaitingConfigurationHolder;
-import com.liferay.portal.test.function.CloseableHolder;
 import com.liferay.portal.test.function.ConfigurationHolder;
 import com.liferay.portal.test.function.ThreadContextClassLoaderCloseableHolder;
 import com.liferay.portal.test.rule.Inject;
@@ -131,8 +130,11 @@ public class PortalK8sAgentImplTest {
 
 		_agentConfiguration = _configurationAdmin.getConfiguration(
 			PortalK8sAgentConfiguration.class.getName(), StringPool.QUESTION);
-		_portalK8sConfigMapModifierCloseableHolder =
-			new PortalK8sConfigMapModifierCloseableHolder(_bundleContext);
+
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, PortalK8sConfigMapModifier.class, null);
+
+		_serviceTracker.open();
 
 		ConfigurationTestUtil.saveConfiguration(
 			_agentConfiguration,
@@ -152,8 +154,7 @@ public class PortalK8sAgentImplTest {
 				"saToken", "saToken"
 			).build());
 
-		_portalK8sConfigMapModifier =
-			_portalK8sConfigMapModifierCloseableHolder.waitForService(2000);
+		_portalK8sConfigMapModifier = _serviceTracker.waitForService(2000);
 
 		Assert.assertNotNull(_portalK8sConfigMapModifier);
 	}
@@ -166,7 +167,7 @@ public class PortalK8sAgentImplTest {
 
 		_kubernetesMockServer.destroy();
 
-		_portalK8sConfigMapModifierCloseableHolder.close();
+		_serviceTracker.close();
 	}
 
 	@Test
@@ -336,42 +337,6 @@ public class PortalK8sAgentImplTest {
 		}
 	}
 
-	public static class PortalK8sConfigMapModifierCloseableHolder
-		extends CloseableHolder
-			<ServiceTracker
-				<PortalK8sConfigMapModifier, PortalK8sConfigMapModifier>> {
-
-		public PortalK8sConfigMapModifierCloseableHolder(
-				BundleContext bundleContext)
-			throws Exception {
-
-			super(
-				serviceTracker -> serviceTracker.close(),
-				() -> {
-					ServiceTracker
-						<PortalK8sConfigMapModifier, PortalK8sConfigMapModifier>
-							serviceTracker = new ServiceTracker<>(
-								bundleContext, PortalK8sConfigMapModifier.class,
-								null);
-
-					serviceTracker.open();
-
-					return serviceTracker;
-				});
-		}
-
-		public PortalK8sConfigMapModifier waitForService(long timeout)
-			throws Exception {
-
-			ServiceTracker
-				<PortalK8sConfigMapModifier, PortalK8sConfigMapModifier>
-					serviceTracker = get();
-
-			return serviceTracker.waitForService(timeout);
-		}
-
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalK8sAgentImplTest.class);
 
@@ -388,7 +353,8 @@ public class PortalK8sAgentImplTest {
 	private static NamespacedKubernetesClient _kubernetesMockClient;
 	private static KubernetesMockServer _kubernetesMockServer;
 	private static PortalK8sConfigMapModifier _portalK8sConfigMapModifier;
-	private static PortalK8sConfigMapModifierCloseableHolder
-		_portalK8sConfigMapModifierCloseableHolder;
+	private static ServiceTracker
+		<PortalK8sConfigMapModifier, PortalK8sConfigMapModifier>
+			_serviceTracker;
 
 }

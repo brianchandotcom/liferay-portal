@@ -401,10 +401,6 @@ public class LayoutTestUtil {
 			boolean hidden)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		User user = UserTestUtil.getAdminUser(group.getCompanyId());
-
 		String friendlyURL =
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
 
@@ -417,6 +413,10 @@ public class LayoutTestUtil {
 				_log.debug(noSuchLayoutException);
 			}
 		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		User user = UserTestUtil.getAdminUser(group.getCompanyId());
 
 		String description = "This is a test page.";
 

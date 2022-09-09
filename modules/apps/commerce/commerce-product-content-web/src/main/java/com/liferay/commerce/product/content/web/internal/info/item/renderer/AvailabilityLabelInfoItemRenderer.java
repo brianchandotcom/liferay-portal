@@ -143,14 +143,6 @@ public class AvailabilityLabelInfoItemRenderer
 		}
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private long _getCommerceAccountId(
 			long groupId, HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -191,6 +183,9 @@ public class AvailabilityLabelInfoItemRenderer
 	@Reference
 	private ProductHelper _productHelper;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.content.web)"
+	)
 	private ServletContext _servletContext;
 
 }

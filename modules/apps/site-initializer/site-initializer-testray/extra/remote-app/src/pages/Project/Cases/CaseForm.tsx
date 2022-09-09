@@ -74,10 +74,10 @@ const CaseForm = () => {
 
 	const {data: testrayComponentsData} = useFetch<
 		APIResponse<TestrayComponent>
-	>('/components?fields=id,name');
+	>('/components?fields=id,name&pageSize=1000');
 
 	const {data: testrayCaseTypesData} = useFetch<APIResponse<TestrayCaseType>>(
-		'/casetypes?fields=id,name'
+		'/casetypes?fields=id,name&pageSize=1000'
 	);
 
 	const testrayCaseTypes = testrayCaseTypesData?.items || [];

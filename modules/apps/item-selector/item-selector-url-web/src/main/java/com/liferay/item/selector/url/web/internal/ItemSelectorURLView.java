@@ -90,14 +90,6 @@ public class ItemSelectorURLView
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.item.selector.url.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(new URLItemSelectorReturnType()));
@@ -105,6 +97,9 @@ public class ItemSelectorURLView
 	@Reference
 	private Language _language;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.item.selector.url.web)"
+	)
 	private ServletContext _servletContext;
 
 }

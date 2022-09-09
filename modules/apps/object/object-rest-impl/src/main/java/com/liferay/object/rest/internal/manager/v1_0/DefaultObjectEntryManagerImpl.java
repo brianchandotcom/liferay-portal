@@ -617,6 +617,8 @@ public class DefaultObjectEntryManagerImpl
 					(List<String>)properties.get("tagNames")));
 		}
 
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setUserId(userId);
 
 		return serviceContext;

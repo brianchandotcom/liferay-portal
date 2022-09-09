@@ -51,6 +51,7 @@ import CaseTypes from './pages/Project/Routines/Builds/Inner/CaseTypes';
 import Components from './pages/Project/Routines/Builds/Inner/Components';
 import Runs from './pages/Project/Routines/Builds/Inner/Run/Run';
 import Teams from './pages/Project/Routines/Builds/Inner/Teams';
+import BuildTemplates from './pages/Project/Routines/Builds/Templates';
 import Routine from './pages/Project/Routines/Routine';
 import RoutineArchived from './pages/Project/Routines/RoutineArchived';
 import RoutineForm from './pages/Project/Routines/RoutineForm';
@@ -154,6 +155,11 @@ const TestrayRoute = () => (
 									element={<RoutineOutlet />}
 									path=":routineId"
 								>
+									<Route
+										element={<BuildTemplates />}
+										path="templates"
+									/>
+
 									<Route element={<Routine />} index />
 
 									<Route

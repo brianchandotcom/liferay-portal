@@ -87,16 +87,14 @@ public class CheckGuestCommerceWishListsMessageListener
 			UserConstants.USER_ID_DEFAULT, createDate);
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private volatile CommerceWishListConfiguration
 		_commerceWishListConfiguration;
 
 	@Reference
 	private CommerceWishListLocalService _commerceWishListLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

@@ -1407,8 +1407,19 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public StopWatchRecordsGroup getStopWatchRecordsGroup() {
-		StopWatchRecordsGroup stopWatchRecordsGroup =
-			new StopWatchRecordsGroup();
+		String status = getStatus();
+
+		if ((status == null) || !status.equals("completed")) {
+			_stopWatchRecordsGroup = null;
+
+			return new StopWatchRecordsGroup();
+		}
+
+		if (_stopWatchRecordsGroup != null) {
+			return _stopWatchRecordsGroup;
+		}
+
+		_stopWatchRecordsGroup = new StopWatchRecordsGroup();
 
 		String consoleText = getConsoleText();
 
@@ -1429,7 +1440,7 @@ public abstract class BaseBuild implements Build {
 
 				String stopWatchName = matcher.group("name");
 
-				stopWatchRecordsGroup.add(
+				_stopWatchRecordsGroup.add(
 					new StopWatchRecord(stopWatchName, timestamp.getTime()));
 
 				continue;
@@ -1454,7 +1465,7 @@ public abstract class BaseBuild implements Build {
 
 				String stopWatchName = matcher.group("name");
 
-				StopWatchRecord stopWatchRecord = stopWatchRecordsGroup.get(
+				StopWatchRecord stopWatchRecord = _stopWatchRecordsGroup.get(
 					stopWatchName);
 
 				if (stopWatchRecord != null) {
@@ -1463,7 +1474,7 @@ public abstract class BaseBuild implements Build {
 			}
 		}
 
-		return stopWatchRecordsGroup;
+		return _stopWatchRecordsGroup;
 	}
 
 	@Override
@@ -4313,6 +4324,7 @@ public abstract class BaseBuild implements Build {
 	private String _previousStatus;
 	private int _reinvocationCount;
 	private String _status;
+	private StopWatchRecordsGroup _stopWatchRecordsGroup;
 	private Map<String, TestClassResult> _testClassResults;
 	private List<URL> _testrayAttachmentURLs;
 	private List<URL> _testrayS3AttachmentURLs;

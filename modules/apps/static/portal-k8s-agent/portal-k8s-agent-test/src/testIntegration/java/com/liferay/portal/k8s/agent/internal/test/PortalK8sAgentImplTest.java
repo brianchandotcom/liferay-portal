@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.function.AwaitingConfigurationHolder;
-import com.liferay.portal.test.function.ConfigurationHolder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
@@ -53,6 +51,7 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.mockwebserver.MockResponse;
@@ -70,9 +69,12 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.cm.ManagedService;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -301,13 +303,32 @@ public class PortalK8sAgentImplTest {
 			).build()
 		);
 
-		try (ConfigurationHolder configurationHolder =
-				new AwaitingConfigurationHolder(
-					_bundleContext, _configurationAdmin, "test.pid", 10000,
-					TimeUnit.MILLISECONDS)) {
+		CountDownLatch countDownLatch = new CountDownLatch(2);
 
+		ServiceRegistration<ManagedService> serviceRegistration =
+			_bundleContext.registerService(
+				ManagedService.class, properties -> countDownLatch.countDown(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					Constants.SERVICE_PID, "test.pid"
+				).build());
+
+		try {
+			countDownLatch.await(10000, TimeUnit.MILLISECONDS);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			"(service.pid=test.pid)");
+
+		Assert.assertNotNull(configurations);
+
+		Configuration configuration = configurations[0];
+
+		try {
 			Dictionary<String, Object> properties =
-				configurationHolder.getProperties();
+				configuration.getProcessedProperties(null);
 
 			Assert.assertEquals(
 				Http.HTTPS_WITH_SLASH.concat(mainDomain),
@@ -316,6 +337,9 @@ public class PortalK8sAgentImplTest {
 				TestPropsValues.getCompanyId(),
 				(long)properties.get("companyId"));
 			Assert.assertEquals("test.value", properties.get("test.key"));
+		}
+		finally {
+			ConfigurationTestUtil.deleteConfiguration(configuration);
 		}
 	}
 

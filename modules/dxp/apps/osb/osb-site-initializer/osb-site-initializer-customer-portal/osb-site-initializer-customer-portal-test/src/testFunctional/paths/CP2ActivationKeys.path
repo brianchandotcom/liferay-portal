@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEACTIVATE_KEY_PAGE</td>
+	<td>//*[contains(.,'cp-project')]//p[contains(text(),'Select the activation key you wish to deactivate.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN</td>
 	<td>//select/option[text()='${key_option}']</td>
 	<td></td>

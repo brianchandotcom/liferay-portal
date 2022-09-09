@@ -79,4 +79,54 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 	}
+
+	@description = "Automation ID: LPS-157445 | Test Summary: Verify if the fields (Environment Name - Host Name) are required"
+	@priority = "5"
+	test CanViewAMandatoryMessageForBothFields {
+		task ("Given I go to next form at Genarate New Key") {
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("And The Generate button should be deactivated") {
+			CustomerPortal.assertButtonIsDisabled(text = "Generate 1 Key");
+		}
+
+		task ("And I fulfill the Environment and Host name fields") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				field = "Environment Name",
+				content = "Environment Test Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				field = "Host Name",
+				content = "localhost");
+		}
+
+		task ("Then The Generate button should be active") {
+			CustomerPortal.assertButtonIsActive(text = "Generate 1 Key");
+		}
+
+		task ("When I erase the Environment Name field content") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				field = "Environment Name",
+				content = "");
+		}
+
+		task ("Then I should see the alert with the text 'This field is required.'") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "This field is required.");
+		}
+
+		task ("And The Generate button should be deactivated") {
+			CustomerPortal.assertButtonIsDisabled(text = "Generate 1 Key");
+		}
+
+		task ("When I erase the Host Name field content") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				field = "Host Name",
+				content = "");
+		}
+
+		task ("Then The Generate button should be deactivated") {
+			CustomerPortal.assertButtonIsDisabled(text = "Generate 1 Key");
+		}
+	}
 }

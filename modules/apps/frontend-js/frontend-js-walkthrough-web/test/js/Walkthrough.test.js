@@ -13,12 +13,13 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render, screen} from '@testing-library/react';
+import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 import userEvents from '@testing-library/user-event';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 import Walkthrough from '../../src/main/resources/META-INF/resources/Walkthrough';
+import {LOCAL_STORAGE_KEYS} from '../../src/main/resources/META-INF/resources/localStorageKeys';
 import {
 	BOX_SHADOW_ELEMENT_MOCK,
 	DOM_STRUCTURE_FOR_PLACING_STEPS,
@@ -58,8 +59,6 @@ jest.mock('frontend-js-web', () => ({
 	navigate: jest.fn((url) => url),
 }));
 
-const USER_ID = 42;
-
 /**
  * List of tuples containing as the first member
  * a layoutRelativeURL and the other one, if it
@@ -88,11 +87,6 @@ const POSSIBLE_LAYOUT_RELATIVE_URLS_HOME_ABC = [
 ];
 
 describe('Walkthrough', () => {
-	window.themeDisplay = {
-		getLayoutRelativeURL: jest.fn(() => '/home'),
-		getUserId: jest.fn(() => USER_ID),
-	};
-
 	let cleanUpDocument;
 
 	beforeEach(() => {
@@ -102,7 +96,7 @@ describe('Walkthrough', () => {
 	afterEach(() => {
 		cleanUpDocument();
 		cleanup();
-		window.themeDisplay.getLayoutRelativeURL = jest.fn(() => '/home');
+		themeDisplay.getLayoutRelativeURL = jest.fn(() => '/home');
 	});
 
 	it('renders', () => {
@@ -254,11 +248,29 @@ describe('Walkthrough', () => {
 		userEvents.click(okButton);
 
 		expect(
-			localStorage.getItem(`${USER_ID}-walkthrough-popover-visible`)
+			localStorage.getItem(LOCAL_STORAGE_KEYS.POPOVER_VISIBILITY)
 		).toBe('true');
 
+		expect(localStorage.getItem(LOCAL_STORAGE_KEYS.CURRENT_STEP)).toBe('1');
+	});
+
+	it('when clicking on "Do not show me this again" makes the Hotspot not render when closing the popover ', () => {
+		const {getByLabelText} = renderWalkthrough(PAGE_MOCK);
+
+		const hotspot = getByLabelText('start-the-walkthrough');
+
+		userEvents.click(hotspot);
+
+		expect(localStorage.getItem(LOCAL_STORAGE_KEYS.SKIPPABLE)).not.toBe(
+			'true'
+		);
+
+		fireEvent.click(screen.queryByLabelText('do-not-show-me-this-again'));
+
 		expect(
-			localStorage.getItem(`${USER_ID}-walkthrough-current-step`)
-		).toBe('1');
+			screen.getByLabelText('do-not-show-me-this-again')
+		).toBeChecked();
+
+		expect(localStorage.getItem(LOCAL_STORAGE_KEYS.SKIPPABLE)).toBe('true');
 	});
 });

@@ -2,6 +2,11 @@
 	"dependencies": {
 		"dom-align": "1.12.2"
 	},
+	"jest": {
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.js"
+		]
+	},
 	"main": "index.js",
 	"name": "@liferay/frontend-js-walkthrough-web",
 	"scripts": {

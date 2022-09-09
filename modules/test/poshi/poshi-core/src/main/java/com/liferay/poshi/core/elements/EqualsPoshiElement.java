@@ -57,25 +57,19 @@ public class EqualsPoshiElement extends PoshiElement {
 
 		String arg1 = equalsContentArray[0].trim();
 
-		if (!isQuotedContent(arg1)) {
-			addAttribute("arg1", arg1);
-		}
-		else {
+		if (isQuotedContent(arg1)) {
 			arg1 = getDoubleQuotedContent(arg1);
-
-			addAttribute("arg1", arg1);
 		}
+
+		addAttribute("arg1", arg1);
 
 		String arg2 = equalsContentArray[1].trim();
 
-		if (!isQuotedContent(arg2)) {
-			addAttribute("arg2", arg2);
-		}
-		else {
+		if (isQuotedContent(arg2)) {
 			arg2 = getDoubleQuotedContent(arg2);
-
-			addAttribute("arg2", arg2);
 		}
+
+		addAttribute("arg2", arg2);
 	}
 
 	@Override

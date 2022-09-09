@@ -180,12 +180,12 @@ public class ExecutePoshiElement extends PoshiElement {
 							(PoshiElement)getParent());
 					}
 
-					if (!value.matches(_NONQUOTED_REGEX)) {
+					if (isQuotedContent(value)) {
 						value = getDoubleQuotedContent(value);
 
-					value = value.replace("\\\"", "\"");
+						value = value.replace("\\\"", "\"");
 
-					value = StringEscapeUtils.unescapeXml(value);
+						value = StringEscapeUtils.unescapeXml(value);
 					}
 
 					add(
@@ -232,7 +232,7 @@ public class ExecutePoshiElement extends PoshiElement {
 				String poshiElementAttributeValue =
 					poshiElementAttribute.getValue();
 
-				if (poshiElementAttributeValue.matches(_NONQUOTED_REGEX)) {
+				if (!isQuotedContent(poshiElementAttributeValue)) {
 					assignments.add(poshiElementAttributeValue);
 				}
 				else {
@@ -431,10 +431,8 @@ public class ExecutePoshiElement extends PoshiElement {
 	private static final String _FUNCTION_PARAMETER_REGEX =
 		QUOTED_REGEX + "|\\$\\{\\S+\\}|\\d*";
 
-	private static final String _NONQUOTED_REGEX = "(\\$\\{.*\\}|\\d+)";
-
 	private static final String _UNQUOTED_PARAMETER_REGEX =
-		"\\w*\\s*=\\s\"(\\$\\{\\S+\\}|\\d+)\"";
+		"\\w*\\s*=\\s\"(\\$\\{[\\w_-]+\\}|\\d+)\"";
 
 	private static final String _UTILITY_INVOCATION_REGEX =
 		"(echo|fail|takeScreenshot)\\(.*?\\)";

@@ -93,36 +93,36 @@ public class SearchResultsPortletDisplayTemplateHandler
 		templateVariableGroup.empty();
 
 		templateVariableGroup.addVariable(
-			"created-by-user-portrait-url",
+			"created-by-user-portrait",
 			SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY,
 			"getCreatedByUserPortraitURLString()");
 		templateVariableGroup.addVariable(
-			"document-content", SearchResultSummaryDisplayContext.class,
+			"content", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getContent()");
 		templateVariableGroup.addVariable(
-			"document-creation-date", SearchResultSummaryDisplayContext.class,
+			"creation-date", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getCreationDateString()");
 		templateVariableGroup.addVariable(
-			"document-creator-user-name",
+			"created-by-user-name",
 			SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getCreatorUserName()");
 		templateVariableGroup.addVariable(
-			"document-modified-by-user-name",
+			"modified-by-user-name",
 			SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getModifiedByUserName()");
 		templateVariableGroup.addVariable(
-			"document-modified-date", SearchResultSummaryDisplayContext.class,
+			"modified-date", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getModifiedDateString()");
 		templateVariableGroup.addVariable(
-			"document-title", SearchResultSummaryDisplayContext.class,
+			"title", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getHighlightedTitle()");
 		templateVariableGroup.addCollectionVariable(
 			"documents", List.class, PortletDisplayTemplateConstants.ENTRIES,
 			"document", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getHighlightedTitle()");
 		templateVariableGroup.addVariable(
-			"modified-by-user-portrait-url",
+			"modified-by-user-portrait",
 			SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY,
 			"getModifiedByUserPortraitURLString()");

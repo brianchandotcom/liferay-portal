@@ -131,7 +131,7 @@ definition {
 		DDLDataDefinition.save();
 
 		DMNavigator.openToAddEntry(
-			dmDocumentTypeName = "DM Document Type Name",
+			documentTypeName = "DM Document Type Name",
 			groupName = "Guest",
 			siteURLKey = "guest");
 
@@ -188,7 +188,7 @@ definition {
 		PortletEntry.save();
 
 		DMNavigator.openToAddEntry(
-			dmDocumentTypeName = "DM Document Type Name",
+			documentTypeName = "DM Document Type Name",
 			groupName = "Guest",
 			siteURLKey = "guest");
 
@@ -477,7 +477,7 @@ definition {
 		DDLDataDefinition.save();
 
 		DMNavigator.openToAddEntry(
-			dmDocumentTypeName = "DM Document Type Name",
+			documentTypeName = "DM Document Type Name",
 			groupName = "Guest",
 			siteURLKey = "guest");
 
@@ -658,7 +658,7 @@ definition {
 		}
 
 		DMNavigator.openToAddEntry(
-			dmDocumentTypeName = "DM Document Type Name",
+			documentTypeName = "DM Document Type Name",
 			groupName = "Guest",
 			siteURLKey = "guest");
 

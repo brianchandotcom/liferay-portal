@@ -14,8 +14,28 @@
 
 import React from 'react';
 
+import MultiStepNav from './components/MultiStepNav.es';
+
 const App = () => {
-	return <div>Analytics Settings React App</div>;
+	return (
+		<MultiStepNav
+			steps={[
+				{
+					description: 'Use the token generated in your Analytics Cloud to connect this workspace.',
+					title: 'Connect AC',
+				},
+				{
+					title: 'Property',
+				},
+				{
+					title: 'People',
+				},
+				{
+					title: 'Data',
+				},
+			]}
+		/>
+	);
 };
 
 export default App;

@@ -195,7 +195,7 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getLong(
 						objectDefinition.
 							getAccountEntryRestrictedObjectFieldId()),
-					0, StringPool.BLANK,
+					0, objectDefinition.getExternalReferenceCode(),
 					GetterUtil.get(objectDefinition.getTitleObjectFieldId(), 0),
 					GetterUtil.getBoolean(
 						objectDefinition.getAccountEntryRestricted()),
@@ -305,6 +305,8 @@ public class ObjectDefinitionResourceImpl
 					enableComments = objectDefinition.getEnableComments();
 				}
 
+				externalReferenceCode =
+					objectDefinition.getExternalReferenceCode();
 				id = objectDefinition.getObjectDefinitionId();
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getLabelMap());

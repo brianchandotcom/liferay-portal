@@ -93,11 +93,6 @@ public class TempFileEntriesMessageListener extends BaseMessageListener {
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private void _deleteExpiredTemporaryFileEntries(Repository repository) {
 		LocalRepository localRepository = null;
 
@@ -144,6 +139,9 @@ public class TempFileEntriesMessageListener extends BaseMessageListener {
 		TempFileEntriesMessageListener.class);
 
 	private volatile DLConfiguration _dlConfiguration;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private RepositoryLocalService _repositoryLocalService;

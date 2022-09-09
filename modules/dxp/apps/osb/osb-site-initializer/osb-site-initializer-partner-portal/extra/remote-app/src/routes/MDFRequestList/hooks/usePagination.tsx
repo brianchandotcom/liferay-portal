@@ -12,7 +12,7 @@
 import {useState} from 'react';
 
 export default function usePagination() {
-	const [activeDelta, setActiveDelta] = useState<number>(5);
+	const [activeDelta, setActiveDelta] = useState<number>(10);
 	const [activePage, setActivePage] = useState<number>(1);
 
 	return {

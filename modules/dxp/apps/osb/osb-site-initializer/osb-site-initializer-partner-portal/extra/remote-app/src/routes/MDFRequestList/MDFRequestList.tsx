@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -14,14 +15,12 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 
 import {MDFColumnKey} from '../../common/enums/mdfColumnKey';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
+import { MDFRequestListItem } from '../../common/interfaces/mdfRequestListItem';
 import liferayNavigate from '../../common/utils/liferayNavigate';
+import DropDown from './components/Dropdown';
 import Table from './components/Table';
 import useGetMDFRequestListData from './hooks/useGetMDFRequestListData';
 import usePagination from './hooks/usePagination';
-
-type MDFRequestListItem = {
-	[key in MDFColumnKey]?: string;
-};
 
 const MDFRequestList = () => {
 	const pagination = usePagination();
@@ -29,6 +28,26 @@ const MDFRequestList = () => {
 		pagination.activePage,
 		pagination.activeDelta
 	);
+
+	data.listColumns?.push({
+		columnKey: MDFColumnKey.ACTION,
+		label: '',
+		render: (_, row) => {
+			return (
+				<DropDown
+					onClick={() => liferayNavigate(`l/${row[MDFColumnKey.ID]?.split("-")[1]}`)}
+					optionList={[
+						{
+							icon: 'view',
+							key: 'approve',
+							label: ' View',
+						}
+					]}
+				
+				></DropDown>
+			)
+		}
+	});
 
 	return (
 		<div className="border-0 pb-3 pt-5 px-6 sheet">

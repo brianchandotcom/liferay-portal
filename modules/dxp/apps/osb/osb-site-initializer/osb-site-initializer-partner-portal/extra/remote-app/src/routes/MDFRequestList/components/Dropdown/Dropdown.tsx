@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -20,10 +21,11 @@ interface OptionList {
 }
 
 interface Props {
+	onClick?: () => void;
 	optionList: OptionList[];
 }
 
-const DropDown = ({optionList}: Props) => (
+const DropDown = ({onClick, optionList}: Props) => (
 	<ClayDropDown
 		trigger={
 			<ClayButton displayType="unstyled">
@@ -31,10 +33,10 @@ const DropDown = ({optionList}: Props) => (
 			</ClayButton>
 		}
 	>
-		<ClayDropDown.ItemList>
+		<ClayDropDown.ItemList >
 			<ClayDropDown.Group>
 				{optionList.map((item, index) => (
-					<ClayDropDown.Item key={index}>
+					<ClayDropDown.Item key={index} onClick={onClick} >
 						<ClayIcon symbol={item.icon}></ClayIcon>
 
 						{item.label}

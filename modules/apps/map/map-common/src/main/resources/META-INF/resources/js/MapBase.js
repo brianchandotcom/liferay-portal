@@ -61,6 +61,46 @@ const pendingCallbacks = {};
  * @review
  */
 class MapBase extends EventEmitter {
+	get boundingBox() {
+		return this._STATE_.boundingBox;
+	}
+
+	set boundingBox(boundingBox) {
+		this._STATE_.boundingBox = boundingBox;
+	}
+
+	get controls() {
+		return this._STATE_.controls;
+	}
+
+	set controls(controls) {
+		this._STATE_.controls = controls;
+	}
+
+	get data() {
+		return this._STATE_.data;
+	}
+
+	set data(data) {
+		this._STATE_.data = data;
+	}
+
+	get geolocation() {
+		return this._STATE_.geolocation;
+	}
+
+	set geolocation(geolocation) {
+		this._STATE_.geolocation = geolocation;
+	}
+
+	get zoom() {
+		return this._STATE_.zoom;
+	}
+
+	set zoom(zoom) {
+		this._STATE_.zoom = zoom;
+	}
+
 	get position() {
 		return this._STATE_.position;
 	}
@@ -84,16 +124,27 @@ class MapBase extends EventEmitter {
 	constructor(args = {}) {
 		super(args);
 
-		const {controls, geolocation, position} = args;
+		const {
+			boundingBox = '',
+			controls = [
+				MapBase.CONTROLS.PAN,
+				MapBase.CONTROLS.TYPE,
+				MapBase.CONTROLS.ZOOM,
+			],
+			data,
+			geolocation = false,
+			position = {location: {lat: 0, lng: 0}},
+			zoom = 11,
+		} = args;
 
 		this._STATE_ = {
+			boundingBox,
+			controls,
+			data,
+			geolocation,
 			position,
+			zoom,
 		};
-
-		this.controls = controls;
-		this.geolocation = geolocation;
-		this.position = position;
-		this.zoom = 11;
 
 		this._customControls = {};
 		this._dialog = null;
@@ -760,3 +811,28 @@ Liferay.MapBase = MapBase;
 
 export default MapBase;
 export {MapBase};
+
+// mapImpl:  MapImpl {
+// 	_disposed: false,
+// 	_events: { positionChange: [Function: bound _handlePositionChanged] },
+// 	_listenerHandlers: null,
+// 	_shouldUseFacade: false,
+// 	_STATE_: { position: undefined },
+// 	controls: undefined,
+// 	geolocation: undefined,
+// 	zoom: 11,
+// 	_customControls: {},
+// 	_dialog: null,
+// 	_eventHandlers: [],
+// 	_geoJSONLayer: null,
+// 	_geocoder: null,
+// 	_geolocationMarker: null,
+// 	_map: null,
+// 	_originalPosition: null,
+// 	_handleGeoJSONLayerFeatureClicked: [Function: bound _handleGeoJSONLayerFeatureClicked],
+// 	_handleGeoJSONLayerFeaturesAdded: [Function: bound _handleGeoJSONLayerFeaturesAdded],
+// 	_handleGeoLocationMarkerDragended: [Function: bound _handleGeoLocationMarkerDragended],
+// 	_handleHomeButtonClicked: [Function: bound _handleHomeButtonClicked],
+// 	_handlePositionChanged: [Function: bound _handlePositionChanged],
+// 	_handleSearchButtonClicked: [Function: bound _handleSearchButtonClicked]
+//   }

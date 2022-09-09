@@ -68,6 +68,8 @@ components:
                     type: boolean
                 enableComments:
                     type: boolean
+                enableEntryHistory:
+                    type: boolean
                 externalReferenceCode:
                     type: string
                 id:

@@ -68,6 +68,17 @@ describe('LengthField', () => {
 		expect(onValueSelect).toBeCalledWith(FIELD.name, '24px');
 	});
 
+	it('saves the value when the Enter button is pressed', () => {
+		const onValueSelect = jest.fn();
+		renderLengthField({onValueSelect});
+		const input = screen.getByLabelText('length-field');
+
+		userEvent.type(input, '30');
+		fireEvent.keyUp(input, {key: 'Enter'});
+
+		expect(onValueSelect).toBeCalledWith(FIELD.name, '30px');
+	});
+
 	it('changes the unit of the value', () => {
 		renderLengthField();
 

@@ -26,8 +26,16 @@ for (KBArticle kbArticle : kbArticleNavigationFragmentDisplayContext.getKBArticl
 %>
 
 	<ul>
-		<li>
-			<a class="<%= kbArticleNavigationFragmentDisplayContext.getKBArticleCssClass(kbArticle, level) %>" href="<%= kbArticleNavigationFragmentDisplayContext.getKBArticleFriendlyURL(kbArticle) %>"><%= HtmlUtil.escape(kbArticle.getTitle()) %></a>
+		<li class="<%= kbArticleNavigationFragmentDisplayContext.getKBArticleCssClass(kbArticle, level) %>">
+			<c:choose>
+				<c:when test="<%= kbArticleNavigationFragmentDisplayContext.isSelected(kbArticle) %>">
+					<span class="sr-only"><liferay-ui:message key="current-article" /></span>
+					<%= HtmlUtil.escape(kbArticle.getTitle()) %>
+				</c:when>
+				<c:otherwise>
+					<a href="<%= kbArticleNavigationFragmentDisplayContext.getKBArticleFriendlyURL(kbArticle) %>"><%= HtmlUtil.escape(kbArticle.getTitle()) %></a>
+				</c:otherwise>
+			</c:choose>
 
 			<c:if test="<%= kbArticleNavigationFragmentDisplayContext.isFurtherExpansionRequired(kbArticle, level) %>">
 

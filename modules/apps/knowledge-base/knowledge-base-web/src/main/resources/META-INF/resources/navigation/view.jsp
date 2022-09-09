@@ -20,7 +20,7 @@
 KBArticleNavigationFragmentDisplayContext kbArticleNavigationFragmentDisplayContext = (KBArticleNavigationFragmentDisplayContext)request.getAttribute(KBArticleNavigationFragmentDisplayContext.class.getName());
 %>
 
-<div class="kb-article-navigation">
+<nav class="kb-article-navigation">
 
 	<%
 	request.setAttribute("view_navigation_kb_articles.jsp-level", 0);
@@ -28,4 +28,4 @@ KBArticleNavigationFragmentDisplayContext kbArticleNavigationFragmentDisplayCont
 	%>
 
 	<liferay-util:include page="/navigation/view_navigation_kb_articles.jsp" servletContext="<%= application %>" />
-</div>
+</nav>

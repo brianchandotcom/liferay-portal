@@ -46,7 +46,7 @@ public class KBArticleNavigationFragmentDisplayContext {
 	public String getKBArticleCssClass(KBArticle kbArticle, int level)
 		throws PortalException {
 
-		if (kbArticle.getResourcePrimKey() == _kbArticle.getResourcePrimKey()) {
+		if (isSelected(kbArticle)) {
 			return "kb-article-selected";
 		}
 
@@ -102,6 +102,14 @@ public class KBArticleNavigationFragmentDisplayContext {
 			kbArticleAncestorResourcePrimaryKeys.contains(
 				kbArticle.getResourcePrimKey())) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSelected(KBArticle kbArticle) {
+		if (kbArticle.getResourcePrimKey() == _kbArticle.getResourcePrimKey()) {
 			return true;
 		}
 

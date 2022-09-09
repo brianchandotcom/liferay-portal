@@ -493,6 +493,7 @@ definition {
 	@description = "COMMERCE-9877. A user can search orders by account name"
 	@priority = "3"
 	test CanReturnOrdersBySearchForAccountName {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given 2 accounts associated with a buyer user") {

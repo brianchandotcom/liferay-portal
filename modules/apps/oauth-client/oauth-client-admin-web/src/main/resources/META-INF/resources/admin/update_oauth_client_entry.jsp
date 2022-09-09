@@ -127,61 +127,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 				<h3 class="sheet-subtitle"><liferay-ui:message key="oauth-client-oidc-specific-configurations" /></h3>
 
-				<aui:input
-					helpMessage="oauth-client-oidc-user-info-mapper-json-help"
-					label="oauth-client-oidc-user-info-mapper-json"
-					name="oidcUserInfoMapperJSON"
-					style="min-height: 400px;"
-					type="hidden"
-					value='<%=
-						JSONUtil.put(
-							"address",
-							JSONUtil.put(
-								"addressType", ""
-							).put(
-								"city", "address->locality"
-							).put(
-								"country", "address->country"
-							).put(
-								"region", "address->region"
-							).put(
-								"street", "address->street_address"
-							).put(
-								"zip", "address->postal_code"
-							)
-						).put(
-							"contact", JSONUtil.put("birthdate", "birthdate")
-						).put(
-							"phone",
-							JSONUtil.put(
-								"phone", "phone_number"
-							).put(
-								"phoneType", ""
-							)
-						).put(
-							"user",
-							JSONUtil.put(
-								"emailAddress", "email"
-							).put(
-								"firstName", "given_name"
-							).put(
-								"gender", "gender"
-							).put(
-								"jobTitle", ""
-							).put(
-								"languageId", "locale"
-							).put(
-								"lastName", "family_name"
-							).put(
-								"middleName", "middle_name"
-							).put(
-								"roles", ""
-							).put(
-								"screenName", ""
-							)
-						)
-					%>'
-				/>
+				<aui:input helpMessage="oauth-client-oidc-user-info-mapper-json-help" label="oauth-client-oidc-user-info-mapper-json" name="oidcUserInfoMapperJSON" style="min-height: 400px;" type="hidden" value="<%= OAuthClientPersistenceDefaultValues.DEFAULT_OIDC_USER_INFO_MAPPER_JSON %>" />
 
 				<aui:button-row>
 					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />

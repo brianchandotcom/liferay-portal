@@ -14,7 +14,7 @@
 
 package com.liferay.oauth.client.persistence.internal.upgrade.V1_1_0;
 
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.oauth.client.persistence.constants.OAuthClientPersistenceDefaultValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
@@ -40,7 +40,9 @@ public class OAuthClientEntryOIDCUserInfoMapperJSONUpgradeProcess
 									"oAuthClientEntryId = ?")) {
 
 					preparedStatement2.setString(
-						1, _OIDC_USER_INFO_MAPPER_JSON);
+						1,
+						OAuthClientPersistenceDefaultValues.
+							DEFAULT_OIDC_USER_INFO_MAPPER_JSON);
 					preparedStatement2.setLong(
 						2, resultSet.getLong("oAuthClientEntryId"));
 
@@ -49,52 +51,5 @@ public class OAuthClientEntryOIDCUserInfoMapperJSONUpgradeProcess
 			}
 		}
 	}
-
-	private static final String _OIDC_USER_INFO_MAPPER_JSON = JSONUtil.put(
-		"address",
-		JSONUtil.put(
-			"addressType", ""
-		).put(
-			"city", "address->locality"
-		).put(
-			"country", "address->country"
-		).put(
-			"region", "address->region"
-		).put(
-			"street", "address->street_address"
-		).put(
-			"zip", "address->postal_code"
-		)
-	).put(
-		"contact", JSONUtil.put("birthdate", "birthdate")
-	).put(
-		"phone",
-		JSONUtil.put(
-			"phone", "phone_number"
-		).put(
-			"phoneType", ""
-		)
-	).put(
-		"user",
-		JSONUtil.put(
-			"emailAddress", "email"
-		).put(
-			"firstName", "given_name"
-		).put(
-			"gender", "gender"
-		).put(
-			"jobTitle", ""
-		).put(
-			"languageId", "locale"
-		).put(
-			"lastName", "family_name"
-		).put(
-			"middleName", "middle_name"
-		).put(
-			"roles", ""
-		).put(
-			"screenName", ""
-		)
-	).toString();
 
 }

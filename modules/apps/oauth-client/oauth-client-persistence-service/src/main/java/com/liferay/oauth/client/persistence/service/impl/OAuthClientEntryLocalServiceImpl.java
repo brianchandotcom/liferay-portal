@@ -27,7 +27,6 @@ import com.liferay.oauth.client.persistence.service.base.OAuthClientEntryLocalSe
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
@@ -521,53 +520,6 @@ public class OAuthClientEntryLocalServiceImpl
 				exception.getMessage(), exception);
 		}
 	}
-
-	private static final String _OIDC_USER_INFO_MAPPER_JSON = JSONUtil.put(
-		"address",
-		JSONUtil.put(
-			"addressType", ""
-		).put(
-			"city", "address->locality"
-		).put(
-			"country", "address->country"
-		).put(
-			"region", "address->region"
-		).put(
-			"street", "address->street_address"
-		).put(
-			"zip", "address->postal_code"
-		)
-	).put(
-		"contact", JSONUtil.put("birthdate", "birthdate")
-	).put(
-		"phone",
-		JSONUtil.put(
-			"phone", "phone_number"
-		).put(
-			"phoneType", ""
-		)
-	).put(
-		"user",
-		JSONUtil.put(
-			"emailAddress", "email"
-		).put(
-			"firstName", "given_name"
-		).put(
-			"gender", "gender"
-		).put(
-			"jobTitle", ""
-		).put(
-			"languageId", "locale"
-		).put(
-			"lastName", "family_name"
-		).put(
-			"middleName", "middle_name"
-		).put(
-			"roles", ""
-		).put(
-			"screenName", ""
-		)
-	).toString();
 
 	@Reference
 	private OAuthClientASLocalMetadataLocalService

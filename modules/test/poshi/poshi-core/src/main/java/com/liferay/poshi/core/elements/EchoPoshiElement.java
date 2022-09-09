@@ -53,9 +53,16 @@ public class EchoPoshiElement extends PoshiElement {
 	public void parsePoshiScript(String poshiScript)
 		throws PoshiScriptParserException {
 
-		String content = getDoubleQuotedContent(poshiScript);
+		String parentheticalContent = getParentheticalContent(poshiScript);
 
-		addAttribute("message", content);
+		if (!isQuotedContent(parentheticalContent)) {
+			addAttribute("message", parentheticalContent);
+		}
+		else {
+			String content = getDoubleQuotedContent(poshiScript);
+
+			addAttribute("message", content);
+		}
 	}
 
 	@Override
@@ -112,9 +119,18 @@ public class EchoPoshiElement extends PoshiElement {
 		sb.append("\n\n");
 		sb.append(getPad());
 		sb.append(getBlockName());
-		sb.append("(\"");
-		sb.append(content);
-		sb.append("\");");
+		sb.append("(");
+
+		if (isQuotedContent(content)) {
+			sb.append("\"");
+			sb.append(content);
+			sb.append("\"");
+		}
+		else {
+			sb.append(content);
+		}
+
+		sb.append(");");
 
 		return sb.toString();
 	}

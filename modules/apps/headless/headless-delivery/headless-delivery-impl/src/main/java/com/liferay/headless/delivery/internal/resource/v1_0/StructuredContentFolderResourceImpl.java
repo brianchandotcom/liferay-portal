@@ -301,7 +301,7 @@ public class StructuredContentFolderResourceImpl
 
 		return _addStructuredContentFolder(
 			externalReferenceCode, assetLibraryId,
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			structuredContentFolder.getParentStructuredContentFolderId(),
 			structuredContentFolder);
 	}
 
@@ -325,7 +325,7 @@ public class StructuredContentFolderResourceImpl
 
 		return _addStructuredContentFolder(
 			externalReferenceCode, siteId,
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			structuredContentFolder.getParentStructuredContentFolderId(),
 			structuredContentFolder);
 	}
 
@@ -395,6 +395,10 @@ public class StructuredContentFolderResourceImpl
 			String externalReferenceCode, Long siteId, Long parentFolderId,
 			StructuredContentFolder structuredContentFolder)
 		throws Exception {
+
+		if (parentFolderId == null) {
+			parentFolderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
 
 		return _toStructuredContentFolder(
 			_journalFolderService.addFolder(

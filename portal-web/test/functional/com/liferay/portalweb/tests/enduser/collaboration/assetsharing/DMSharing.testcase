@@ -782,7 +782,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewSharedContentViaEmail {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.smtp.server.enabled = "true";
 
 		JSONUser.addUser(

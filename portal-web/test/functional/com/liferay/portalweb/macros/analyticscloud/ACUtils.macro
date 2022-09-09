@@ -1185,4 +1185,13 @@ definition {
 
 		return "${groupId}";
 	}
+
+	macro getIPAddress {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+		var extractedIPAddress = StringUtil.extractFirst("${analyticsCloudURL}", ":8080");
+		var extractedIPAddress = StringUtil.extractLast("${extractedIPAddress}", "/");
+
+		return "${extractedIPAddress}";
+	}
+
 }

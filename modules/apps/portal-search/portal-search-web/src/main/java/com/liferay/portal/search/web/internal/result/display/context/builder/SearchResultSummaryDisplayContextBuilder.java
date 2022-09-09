@@ -402,9 +402,9 @@ public class SearchResultSummaryDisplayContextBuilder {
 			assetRenderer);
 		_buildLocaleReminder(searchResultSummaryDisplayContext, summary);
 		_buildModelResource(searchResultSummaryDisplayContext, className);
+		_buildModifiedByUserName(searchResultSummaryDisplayContext);
 		_buildModifiedByUserPortrait(searchResultSummaryDisplayContext);
 		_buildModifiedDateString(searchResultSummaryDisplayContext);
-		_buildModifiedByUserName(searchResultSummaryDisplayContext);
 		_buildUserPortrait(
 			searchResultSummaryDisplayContext, assetEntry, className);
 		_buildViewURL(className, classPK, searchResultSummaryDisplayContext);
@@ -588,12 +588,12 @@ public class SearchResultSummaryDisplayContextBuilder {
 	private void _buildCreatorUserPortrait(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
-		String creatorByPortraitUrlString = _getPortraitURLString(
+		String creatorUserPortraitUrlString = _getPortraitURLString(
 			_getFieldValueLong(Field.USER_ID));
 
-		if (creatorByPortraitUrlString != null) {
+		if (creatorUserPortraitUrlString != null) {
 			searchResultSummaryDisplayContext.setCreatorUserPortraitURLString(
-				creatorByPortraitUrlString);
+				creatorUserPortraitUrlString);
 			searchResultSummaryDisplayContext.setCreatorUserPortraitVisible(
 				true);
 		}
@@ -851,7 +851,6 @@ public class SearchResultSummaryDisplayContextBuilder {
 		if (user != null) {
 			searchResultSummaryDisplayContext.setModifiedByUserName(
 				user.getFullName());
-
 			searchResultSummaryDisplayContext.setModifiedByUserNameVisible(
 				true);
 		}
@@ -867,7 +866,6 @@ public class SearchResultSummaryDisplayContextBuilder {
 			searchResultSummaryDisplayContext.
 				setModifiedByUserPortraitURLString(
 					modifiedByUserPortraitURLString);
-
 			searchResultSummaryDisplayContext.setModifiedByUserPortraitVisible(
 				true);
 		}

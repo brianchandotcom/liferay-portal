@@ -127,7 +127,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 			%>
 
 			<c:choose>
-				<c:when test='<%= !GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) || kbAdminManagementToolbarDisplayContextSearchContainer.hasResults() %>'>
+				<c:when test='<%= !GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) || kbAdminManagementToolbarDisplayContextSearchContainer.hasResults() || kbAdminManagementToolbarDisplayContext.isSearch() %>'>
 					<liferay-ui:search-container
 						id="kbObjects"
 						searchContainer="<%= kbAdminManagementToolbarDisplayContextSearchContainer %>"

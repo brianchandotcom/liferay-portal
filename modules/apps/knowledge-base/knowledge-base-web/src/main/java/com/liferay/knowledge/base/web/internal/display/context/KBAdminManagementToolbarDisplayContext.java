@@ -383,8 +383,16 @@ public class KBAdminManagementToolbarDisplayContext {
 		return !_searchContainer.hasResults();
 	}
 
+	public boolean isSearch() {
+		if (Validator.isNotNull(_getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowInfoButton() {
-		return Validator.isNull(_getKeywords());
+		return !isSearch();
 	}
 
 	private SearchContainer<Object> _createSearchContainer()

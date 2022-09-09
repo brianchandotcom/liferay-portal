@@ -57,24 +57,26 @@ const BuildFormCases: React.FC<BuildFormCasesProps> = ({
 
 	const {modal: buildSelectSuitesModal} = useFormModal({
 		onSave: (newSuites) => {
-			fetcher<APIResponse<TestraySuiteCase>>(
-				`/suitescaseses?fields=r_caseToSuitesCases_c_caseId&filter=${searchUtil.in(
-					'suiteId',
-					newSuites
-				)}`
-			).then((response) => {
-				if (response?.totalCount) {
-					setCaseIds((prevCases) =>
-						getUniqueList([
-							...prevCases,
-							...response.items.map(
-								({r_caseToSuitesCases_c_caseId}) =>
-									r_caseToSuitesCases_c_caseId
-							),
-						])
-					);
-				}
-			});
+			if (newSuites?.length) {
+				fetcher<APIResponse<TestraySuiteCase>>(
+					`/suitescaseses?fields=r_caseToSuitesCases_c_caseId&filter=${searchUtil.in(
+						'suiteId',
+						newSuites
+					)}`
+				).then((response) => {
+					if (response?.totalCount) {
+						setCaseIds((prevCases) =>
+							getUniqueList([
+								...prevCases,
+								...response.items.map(
+									({r_caseToSuitesCases_c_caseId}) =>
+										r_caseToSuitesCases_c_caseId
+								),
+							])
+						);
+					}
+				});
+			}
 		},
 	});
 

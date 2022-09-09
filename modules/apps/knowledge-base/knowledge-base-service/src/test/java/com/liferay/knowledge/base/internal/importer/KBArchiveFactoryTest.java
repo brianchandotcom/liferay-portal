@@ -49,7 +49,9 @@ public class KBArchiveFactoryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_kbArchiveFactory.setConfigurationProvider(_configurationProvider);
+		ReflectionTestUtil.setFieldValue(
+			_kbArchiveFactory, "_configurationProvider",
+			_configurationProvider);
 
 		Mockito.doReturn(
 			_kbGroupServiceConfiguration

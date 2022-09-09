@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -62,7 +63,7 @@ public class MBModerationConditionEvaluator implements ConditionEvaluator {
 		long userId = GetterUtil.getLong(
 			workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
 
-		User user = GuestOrUserUtil.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		String emailAddress = user.getEmailAddress();
 
@@ -91,5 +92,8 @@ public class MBModerationConditionEvaluator implements ConditionEvaluator {
 
 	@Reference
 	private MBStatsUserLocalService _mbStatsUserLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

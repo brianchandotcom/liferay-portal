@@ -17,6 +17,7 @@ package com.liferay.portal.k8s.agent.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
 import com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration;
 import com.liferay.portal.kernel.log.Log;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.function.AwaitingConfigurationHolder;
 import com.liferay.portal.test.function.CloseableHolder;
 import com.liferay.portal.test.function.ConfigurationHolder;
-import com.liferay.portal.test.function.CreatingConfigurationHolder;
 import com.liferay.portal.test.function.ThreadContextClassLoaderCloseableHolder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -73,6 +73,7 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -128,12 +129,13 @@ public class PortalK8sAgentImplTest {
 
 		_kubernetesMockClient = _kubernetesMockServer.createClient();
 
-		_agentConfigurationHolder = new CreatingConfigurationHolder(
-			_configurationAdmin, PortalK8sAgentConfiguration.class.getName());
+		_agentConfiguration = _configurationAdmin.getConfiguration(
+			PortalK8sAgentConfiguration.class.getName(), StringPool.QUESTION);
 		_portalK8sConfigMapModifierCloseableHolder =
 			new PortalK8sConfigMapModifierCloseableHolder(_bundleContext);
 
-		_agentConfigurationHolder.update(
+		ConfigurationTestUtil.saveConfiguration(
+			_agentConfiguration,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"apiServerHost", _kubernetesMockServer.getHostName()
 			).put(
@@ -158,7 +160,7 @@ public class PortalK8sAgentImplTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_agentConfigurationHolder.close();
+		ConfigurationTestUtil.deleteConfiguration(_agentConfiguration);
 
 		_kubernetesMockClient.close();
 
@@ -373,7 +375,7 @@ public class PortalK8sAgentImplTest {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalK8sAgentImplTest.class);
 
-	private static ConfigurationHolder _agentConfigurationHolder;
+	private static Configuration _agentConfiguration;
 	private static Bundle _bundle;
 	private static BundleContext _bundleContext;
 

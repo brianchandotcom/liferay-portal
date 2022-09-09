@@ -2486,7 +2486,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		_finderPathWithPaginationFindAll =
 			<#if serviceBuilder.isVersionGTE_7_4_0()>
-				new FinderPath(
+				new FinderPath(this,
 			<#elseif serviceBuilder.isVersionGTE_7_3_0()>
 				_createFinderPath(
 			<#else>
@@ -2504,7 +2504,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		_finderPathWithoutPaginationFindAll =
 			<#if serviceBuilder.isVersionGTE_7_4_0()>
-				new FinderPath(
+				new FinderPath(this,
 			<#elseif serviceBuilder.isVersionGTE_7_3_0()>
 				_createFinderPath(
 			<#else>
@@ -2522,7 +2522,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		_finderPathCountAll =
 			<#if serviceBuilder.isVersionGTE_7_4_0()>
-				new FinderPath(
+				new FinderPath(this,
 			<#elseif serviceBuilder.isVersionGTE_7_3_0()>
 				_createFinderPath(
 			<#else>
@@ -2541,7 +2541,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		<#if entity.isHierarchicalTree()>
 			_finderPathWithPaginationCountAncestors =
 				<#if serviceBuilder.isVersionGTE_7_4_0()>
-					new FinderPath(
+					new FinderPath(this,
 				<#elseif serviceBuilder.isVersionGTE_7_3_0()>
 					_createFinderPath(
 				<#else>
@@ -2560,7 +2560,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 			_finderPathWithPaginationCountDescendants =
 				<#if serviceBuilder.isVersionGTE_7_4_0()>
-					new FinderPath(
+					new FinderPath(this,
 				<#elseif serviceBuilder.isVersionGTE_7_3_0()>
 					_createFinderPath(
 				<#else>
@@ -2579,7 +2579,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 			_finderPathWithPaginationGetAncestors =
 				<#if serviceBuilder.isVersionGTE_7_4_0()>
-					new FinderPath(
+					new FinderPath(this,
 				<#elseif serviceBuilder.isVersionGTE_7_3_0()>
 					_createFinderPath(
 				<#else>
@@ -2598,7 +2598,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 			_finderPathWithPaginationGetDescendants =
 				<#if serviceBuilder.isVersionGTE_7_4_0()>
-					new FinderPath(
+					new FinderPath(this,
 				<#elseif serviceBuilder.isVersionGTE_7_3_0()>
 					_createFinderPath(
 				<#else>
@@ -2622,7 +2622,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#if entityFinder.isCollection()>
 				_finderPathWithPaginationFindBy${entityFinder.name} =
 					<#if serviceBuilder.isVersionGTE_7_4_0()>
-						new FinderPath(
+						new FinderPath(this,
 					<#elseif serviceBuilder.isVersionGTE_7_3_0()>
 						_createFinderPath(
 					<#else>
@@ -2658,7 +2658,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				<#if !entityFinder.hasCustomComparator()>
 					_finderPathWithoutPaginationFindBy${entityFinder.name} =
 						<#if serviceBuilder.isVersionGTE_7_4_0()>
-							new FinderPath(
+							new FinderPath(this,
 						<#elseif serviceBuilder.isVersionGTE_7_3_0()>
 							_createFinderPath(
 						<#else>
@@ -2721,7 +2721,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#if !entityFinder.isCollection() || entityFinder.isUnique()>
 				_finderPathFetchBy${entityFinder.name} =
 					<#if serviceBuilder.isVersionGTE_7_4_0()>
-						new FinderPath(
+						new FinderPath(this,
 					<#elseif serviceBuilder.isVersionGTE_7_3_0()>
 						_createFinderPath(
 					<#else>
@@ -2771,7 +2771,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#if !entityFinder.hasCustomComparator()>
 				_finderPathCountBy${entityFinder.name} =
 					<#if serviceBuilder.isVersionGTE_7_4_0()>
-						new FinderPath(
+						new FinderPath(this,
 					<#elseif serviceBuilder.isVersionGTE_7_3_0()>
 						_createFinderPath(
 					<#else>
@@ -2810,7 +2810,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#if entityFinder.hasArrayableOperator() || entityFinder.hasCustomComparator()>
 				_finderPathWithPaginationCountBy${entityFinder.name} =
 					<#if serviceBuilder.isVersionGTE_7_4_0()>
-						new FinderPath(
+						new FinderPath(this,
 					<#elseif serviceBuilder.isVersionGTE_7_3_0()>
 						_createFinderPath(
 					<#else>

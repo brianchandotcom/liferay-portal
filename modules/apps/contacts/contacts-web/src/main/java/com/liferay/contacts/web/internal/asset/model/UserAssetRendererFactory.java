@@ -102,26 +102,13 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 		return _userPermission.contains(permissionChecker, classPK, actionId);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.contacts.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.contacts.web)")
 	private ServletContext _servletContext;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 	@Reference

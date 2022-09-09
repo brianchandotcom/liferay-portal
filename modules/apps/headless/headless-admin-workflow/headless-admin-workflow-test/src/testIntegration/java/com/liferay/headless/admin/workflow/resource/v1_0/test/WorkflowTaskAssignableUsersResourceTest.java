@@ -26,7 +26,9 @@ import com.liferay.headless.admin.workflow.resource.v1_0.test.util.ObjectReviewe
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowDefinitionTestUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowInstanceTestUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowTaskTestUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.junit.Assert;
@@ -55,16 +57,20 @@ public class WorkflowTaskAssignableUsersResourceTest
 
 		_workflowTask = WorkflowTaskTestUtil.getWorkflowTask(
 			workflowInstance.getId());
+
+		_user = TestPropsValues.getUser();
 	}
 
 	@Override
 	@Test
 	public void testPostWorkflowTaskAssignableUser() throws Exception {
-		_assertPostWorkflowTaskAssignableUser();
+		_assertPostWorkflowTaskAssignableUser(
+			AssigneeTestUtil.toAssignee(_user));
 
 		_assertPostWorkflowTaskAssignableUser(
 			AssigneeTestUtil.addAssignee(testGroup),
-			AssigneeTestUtil.addAssignee(testGroup));
+			AssigneeTestUtil.addAssignee(testGroup),
+			AssigneeTestUtil.toAssignee(_user));
 	}
 
 	private void _assertPostWorkflowTaskAssignableUser(
@@ -103,6 +109,7 @@ public class WorkflowTaskAssignableUsersResourceTest
 		}
 	}
 
+	private User _user;
 	private WorkflowTask _workflowTask;
 
 }

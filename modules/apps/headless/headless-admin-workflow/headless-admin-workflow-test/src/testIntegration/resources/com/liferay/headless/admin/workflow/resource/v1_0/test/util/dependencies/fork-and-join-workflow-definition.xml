@@ -107,6 +107,10 @@
 		<assignments>
 			<roles>
 				<role>
+					<role-type>regular</role-type>
+					<name>Administrator</name>
+				</role>
+				<role>
 					<role-type>site</role-type>
 					<name>Site Content Reviewer</name>
 				</role>
@@ -135,6 +139,10 @@
 		<assignments>
 			<roles>
 				<role>
+					<role-type>regular</role-type>
+					<name>Administrator</name>
+				</role>
+				<role>
 					<role-type>site</role-type>
 					<name>Site Content Reviewer</name>
 				</role>
@@ -162,6 +170,10 @@
 		</metadata>
 		<assignments>
 			<roles>
+				<role>
+					<role-type>regular</role-type>
+					<name>Administrator</name>
+				</role>
 				<role>
 					<role-type>site</role-type>
 					<name>Site Content Reviewer</name>

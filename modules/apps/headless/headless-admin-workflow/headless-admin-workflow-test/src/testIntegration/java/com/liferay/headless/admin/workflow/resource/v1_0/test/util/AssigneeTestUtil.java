@@ -47,6 +47,10 @@ public class AssigneeTestUtil {
 		UserTestUtil.addUserGroupRole(
 			user.getUserId(), group.getGroupId(), roleName);
 
+		return toAssignee(user);
+	}
+
+	public static Assignee toAssignee(User user) {
 		return new Assignee() {
 			{
 				id = user.getUserId();

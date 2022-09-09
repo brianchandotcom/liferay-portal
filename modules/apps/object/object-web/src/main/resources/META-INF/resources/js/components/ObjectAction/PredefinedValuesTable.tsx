@@ -15,9 +15,6 @@
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-
-// @ts-ignore
-
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {
 	Card,
@@ -29,64 +26,6 @@ import React, {useEffect, useMemo} from 'react';
 
 import './PredefinedValuesTable.scss';
 
-function getDataSetProps(items: Item[]) {
-	return {
-		creationMenu: {
-			primaryItems: [
-				{
-					href: 'handleAddFields',
-					id: 'handleAddFields',
-					label: Liferay.Language.get('add-fields'),
-					target: 'event',
-				},
-			],
-		},
-		id: 'PredefinedValuesTable',
-		items,
-		itemsActions: [
-			{
-				href: 'deletePredefinedValueField',
-				icon: 'trash',
-				id: 'deletePredefinedValueField',
-				label: Liferay.Language.get('delete'),
-				target: 'event',
-			},
-		],
-		namespace: '',
-
-		onActionDropdownItemClick,
-
-		selectedItemsKey: 'id',
-		showManagementBar: true,
-		showPagination: false,
-		showSearch: false,
-		views: [
-			{
-				contentRenderer: 'table',
-				label: 'Table',
-				name: 'table',
-				schema: {
-					fields: [
-						{
-							fieldName: 'name',
-							label: Liferay.Language.get('field'),
-						},
-						{
-							fieldName: 'inputAsValue',
-							label: Liferay.Language.get('input-method'),
-						},
-						{
-							fieldName: 'newValue',
-							label: Liferay.Language.get('new-value'),
-						},
-					],
-				},
-				thumbnail: 'table',
-			},
-		],
-	};
-}
-
 export default function PredefinedValuesTable({
 	currentObjectDefinitionFields,
 	errors,
@@ -97,7 +36,7 @@ export default function PredefinedValuesTable({
 }: IProps) {
 	const {predefinedValues = []} = values.parameters as ObjectActionParameters;
 
-	const props = useMemo(() => {
+	const items = useMemo(() => {
 		const updatePredefinedValues = (name: string, value: string) => {
 			const updatedPredefinedValues = predefinedValues.map((field) => {
 				return field.name === name ? {...field, value} : field;
@@ -114,7 +53,7 @@ export default function PredefinedValuesTable({
 			});
 		}
 
-		const items = predefinedValues.map(({inputAsValue, name, value}) => {
+		return predefinedValues.map(({inputAsValue, name, value}) => {
 			return {
 				inputAsValue: (
 					<div className="lfr-object-web__predefined-values-table-input-method">
@@ -224,8 +163,6 @@ export default function PredefinedValuesTable({
 				),
 			};
 		});
-
-		return getDataSetProps(items);
 	}, [
 		errors,
 		objectFieldsMap,
@@ -339,7 +276,64 @@ export default function PredefinedValuesTable({
 				viewMode="no-margin"
 			>
 				<div className="lfr-object-web__predefined-values-table">
-					<FrontendDataSet {...props} />
+					<FrontendDataSet
+						creationMenu={{
+							primaryItems: [
+								{
+									href: 'handleAddFields',
+									id: 'handleAddFields',
+									label: Liferay.Language.get('add-fields'),
+									target: 'event',
+								},
+							],
+						}}
+						id="PredefinedValuesTable"
+						items={items}
+						itemsActions={[
+							{
+								href: 'deletePredefinedValueField',
+								icon: 'trash',
+								id: 'deletePredefinedValueField',
+								label: Liferay.Language.get('delete'),
+								target: 'event',
+							},
+						]}
+						onActionDropdownItemClick={onActionDropdownItemClick}
+						selectedItemsKey="id"
+						showManagementBar={true}
+						showPagination={false}
+						showSearch={false}
+						views={[
+							{
+								contentRenderer: 'table',
+								label: 'Table',
+								name: 'table',
+								schema: {
+									fields: [
+										{
+											fieldName: 'name',
+											label: Liferay.Language.get(
+												'field'
+											),
+										},
+										{
+											fieldName: 'inputAsValue',
+											label: Liferay.Language.get(
+												'input-method'
+											),
+										},
+										{
+											fieldName: 'newValue',
+											label: Liferay.Language.get(
+												'new-value'
+											),
+										},
+									],
+								},
+								thumbnail: 'table',
+							},
+						]}
+					/>
 				</div>
 			</Card>
 		</>

@@ -319,12 +319,11 @@ definition {
 
 	macro openToAddDocumentType {
 		if (isSet(documentTypeName)) {
-
-		var fileEntryId = JSONDocument.getFileEntryTypeId(
-			dmDocumentTypeName = "${dmDocumentTypeName}",
-			folderId = "${folderId}",
-			groupName = "${groupName}",
-			site = "true");
+			var fileEntryId = JSONDocument.getFileEntryTypeId(
+				dmDocumentTypeName = "${dmDocumentTypeName}",
+				folderId = "${folderId}",
+				groupName = "${groupName}",
+				site = "true");
 
 			// Folder ID and repository ID is hardcoded to home by default.
 

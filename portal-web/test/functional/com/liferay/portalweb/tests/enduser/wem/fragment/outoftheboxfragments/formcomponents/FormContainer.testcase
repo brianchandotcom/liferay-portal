@@ -1916,17 +1916,16 @@ definition {
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-
-			PageEditor.addElementToContainer(
 				collectionName = "Form Components",
-				fragmentName = "Form Container",
-				navTab = "Fragments");
+				fragmentName = "Form Container");
 
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				panel = "General");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
 
 			PageEditor.addElementToContainer(
 				collectionName = "Form Components",

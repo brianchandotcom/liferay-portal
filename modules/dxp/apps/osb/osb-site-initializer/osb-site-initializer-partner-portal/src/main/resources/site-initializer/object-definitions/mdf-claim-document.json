@@ -13,7 +13,7 @@
 				"en_US": "URL"
 			},
 			"name": "url",
-			"required": false,
+			"required": true,
 			"type": "String"
 		},
 		{
@@ -22,16 +22,16 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Type Documents"
+				"en_US": "Type"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Type Documents$]",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:MDF Document Types$]",
 			"name": "typeDocuments",
-			"required": false,
+			"required": true,
 			"type": "String"
 		}
 	],
 	"pluralLabel": {
-		"en_US": "MDF Claim Document"
+		"en_US": "MDF Claim Documents"
 	},
 	"scope": "company"
 }

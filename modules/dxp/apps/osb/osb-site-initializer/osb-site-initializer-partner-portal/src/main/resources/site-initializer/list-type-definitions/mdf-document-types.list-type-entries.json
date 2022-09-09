@@ -8,18 +8,18 @@
 		"type": "string"
 	},
 	{
-		"key": "leadOfList",
-		"name": "Lead of List",
+		"key": "ListOfLeads",
+		"name": "List of Leads",
 		"name_i18n": {
-			"en-US": "Lead of List"
+			"en-US": "List of Leads"
 		},
 		"type": "string"
 	},
 	{
-		"key": "allContents",
-		"name": "All Contents",
+		"key": "content",
+		"name": "Content",
 		"name_i18n": {
-			"en-US": "All Contents"
+			"en-US": "Content"
 		},
 		"type": "string"
 	}

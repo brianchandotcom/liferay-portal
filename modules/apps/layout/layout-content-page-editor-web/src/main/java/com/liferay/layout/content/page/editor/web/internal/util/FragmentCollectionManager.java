@@ -164,7 +164,7 @@ public class FragmentCollectionManager {
 					fragmentCollectionMaps, sortedFragmentCollectionKeys);
 		}
 
-		if (!SetUtil.isEmpty(highlightedFragmentEntryKeys)) {
+		if (SetUtil.isNotEmpty(highlightedFragmentEntryKeys)) {
 			Map<String, Map<String, Object>> highlightedFragmentMaps =
 				new TreeMap<>();
 

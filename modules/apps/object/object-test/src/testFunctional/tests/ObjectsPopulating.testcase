@@ -541,6 +541,8 @@ definition {
 
 		Button.clickSubmitForPublication();
 
+		Alert.viewSuccessMessage();
+
 		Navigator.openURL();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject222");

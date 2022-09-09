@@ -33,17 +33,17 @@ public abstract class BaseStylingCheck extends BaseFileCheck {
 
 	protected String formatStyling(String content) {
 		content = _formatStyling(
-			content, "!ListUtil.isNotEmpty(", "ListUtil.isEmpty(");
-		content = _formatStyling(
 			content, "!ListUtil.isEmpty(", "ListUtil.isNotEmpty(");
 		content = _formatStyling(
-			content, "!MapUtil.isNotEmpty(", "MapUtil.isEmpty(");
+			content, "!ListUtil.isNotEmpty(", "ListUtil.isEmpty(");
 		content = _formatStyling(
 			content, "!MapUtil.isEmpty(", "MapUtil.isNotEmpty(");
 		content = _formatStyling(
-			content, "!SetUtil.isNotEmpty(", "SetUtil.isEmpty(");
+			content, "!MapUtil.isNotEmpty(", "MapUtil.isEmpty(");
 		content = _formatStyling(
 			content, "!SetUtil.isEmpty(", "SetUtil.isNotEmpty(");
+		content = _formatStyling(
+			content, "!SetUtil.isNotEmpty(", "SetUtil.isEmpty(");
 		content = _formatStyling(
 			content, "!Validator.isNotNull(", "Validator.isNull(");
 		content = _formatStyling(

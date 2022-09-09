@@ -180,12 +180,9 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 				_blockStatementStack.peek())) {
 
 			_configuration = methodName;
+		}
 
-			super.visitMethodCallExpression(methodCallExpression);
-		}
-		else {
-			super.visitMethodCallExpression(methodCallExpression);
-		}
+		super.visitMethodCallExpression(methodCallExpression);
 	}
 
 	private final Stack<Boolean> _blockStatementStack = new Stack<>();

@@ -9,6 +9,7 @@ definition {
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Upgrades Core";
 
+	@ignore = "true"
 	@priority = "4"
 	test DowngradeToLatest7413Update {
 		User.firstLoginPG();

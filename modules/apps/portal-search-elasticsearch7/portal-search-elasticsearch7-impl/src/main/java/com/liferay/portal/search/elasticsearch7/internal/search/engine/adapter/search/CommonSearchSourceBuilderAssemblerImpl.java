@@ -15,6 +15,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search;
 
 import com.liferay.portal.kernel.search.filter.FilterTranslator;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
@@ -222,7 +223,8 @@ public class CommonSearchSourceBuilderAssemblerImpl
 			complexQueryPart
 		);
 
-		String occur = complexQueryPart.getOccur();
+		String occur = GetterUtil.getString(
+			complexQueryPart.getOccur(), "must");
 
 		if (occur.equals("filter")) {
 			boolQueryBuilder.filter(_translateQuery(query));

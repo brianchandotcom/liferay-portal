@@ -543,46 +543,9 @@ definition {
 		DMDocument.viewCustomFieldLocalizableLanguages(localizableLanguages = "ar-SA,ca-ES,zh-CN,nl-NL,fi-FI,fr-FR,de-DE,hu-HU,ja-JP,pt-BR,es-ES,sv-SE");
 	}
 
-	@description = "This test covers LPS-127049. A document can be created with duplicate fields is covered in DMFieldsets#FieldsetSetAsRepeatable."
-	@priority = "4"
-	@refactordone
-	test DuplicateFieldCanBeRemoved {
-		property portal.acceptance = "true";
-
-		task ("Add a document type with a repeatable numeric field") {
-			DMNavigator.openToAddDocumentType(siteURLKey = "guest");
-
-			PortletEntry.inputName(name = "DM Document Type Name");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Numeric",
-				fieldName = "Numeric");
-
-			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Numeric");
-
-			DDLDataDefinition.save();
-		}
-
-		DMNavigator.openToAddEntry(
-			dmDocumentTypeName = "DM Document Type Name",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		PortletEntry.inputTitle(title = "DM Document Title");
-
-		Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
-
-		Click(locator1 = "FormFields#FIELD_ADD_REMOVE");
-
-		AssertElementNotPresent(
-			key_fieldName = "Numeric",
-			key_repeatableFieldNumber = "2",
-			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
-	}
-
 	@description = "This test covers LPS-128182. It ensures that the translated document field can be localized properly."
 	@priority = "3"
-	@refactorneeded
+	@refactordone
 	test CanViewLocalizedDocumentField {
 		property custom.properties = "dl.actions.visible=true";
 
@@ -644,8 +607,8 @@ definition {
 
 	@description = "This test covers LPS-127092. It ensures that the translated document type can be localized properly."
 	@priority = "5"
-	@refactorneeded
-	test ViewLocalizedDocumentType {
+	@refactordone
+	test CanViewLocalizedDocumentType {
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.add(
@@ -672,6 +635,43 @@ definition {
 			key_fieldFieldLabel = "Imagen",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
 			value1 = "Imagen");
+	}
+
+	@description = "This test covers LPS-127049. A document can be created with duplicate fields is covered in DMFieldsets#FieldsetSetAsRepeatable."
+	@priority = "4"
+	@refactordone
+	test DuplicateFieldCanBeRemoved {
+		property portal.acceptance = "true";
+
+		task ("Add a document type with a repeatable numeric field") {
+			DMNavigator.openToAddDocumentType(siteURLKey = "guest");
+
+			PortletEntry.inputName(name = "DM Document Type Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Numeric",
+				fieldName = "Numeric");
+
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Numeric");
+
+			DDLDataDefinition.save();
+		}
+
+		DMNavigator.openToAddEntry(
+			dmDocumentTypeName = "DM Document Type Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		PortletEntry.inputTitle(title = "DM Document Title");
+
+		Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
+
+		Click(locator1 = "FormFields#FIELD_ADD_REMOVE");
+
+		AssertElementNotPresent(
+			key_fieldName = "Numeric",
+			key_repeatableFieldNumber = "2",
+			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
 	}
 
 }

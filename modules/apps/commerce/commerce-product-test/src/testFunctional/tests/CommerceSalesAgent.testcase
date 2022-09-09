@@ -42,6 +42,175 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = " COMMERCE-9883 | As a Sales Agent, if he has the permission, I want to be able to see all the accounts and the orders that are present in th organization to which the same Sales Agent belongs"
+	@priority = "4"
+	test CanAddNewUserToAccountAsSalesAgent {
+		task ("And the admin creates an account called Commerce Account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And that Commerce Account is linked to the Test Organization") {
+			JSONAccountEntry.addAccountEntryOrganization(
+				accountEntryName = "Commerce Account",
+				organizationName = "Test Organization");
+		}
+
+		task ("When the Sales Agent goes into the Users tab of the Commerce Account") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+		}
+
+		task ("And create a new user by clicking on the + button") {
+			CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+				accountName = "Commerce Account",
+				emailAddress = "buyer@liferay.com",
+				role = "Buyer",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userScreenName = "buyeruser");
+		}
+
+		task ("Then when the admin login again, he will see the new User inside Commerce Account A that the Sales Agent created previously") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+			Accounts.viewAssignee(assigneeName = "Buyer User");
+		}
+	}
+
+	@description = "COMMERCE-9882 | As a Sales Agent, if he has the permission, I want to be able to see all the accounts and the orders that are present in the organization to which the same Sales Agent belongs"
+	@priority = "4"
+	test CanEditAccountDetailsAsSalesAgent {
+		task ("And the admin creates an account called Commerce Account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And that Commerce Account is linked to the Test Organization") {
+			JSONAccountEntry.addAccountEntryOrganization(
+				accountEntryName = "Commerce Account",
+				organizationName = "Test Organization");
+		}
+
+		task ("Given that the Sales Agent goes into Account Management of Commerce Account and creates a new Shipping and Billing Address (Type: Billing and Shipping)") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			Accounts.addAddressViaSetDefaultAddress(
+				addressCity = "Test Address",
+				addressCountry = "United States",
+				addressName = "Test Name",
+				addressPostalCode = "Test Zip Code",
+				addressRegion = "California",
+				addressStreet1 = "Test Street");
+
+			task ("When the Sales Agent goes into the Details tab of the Commerce Account") {
+				Accounts.gotoAssigneeTab(assigneeTab = "Details");
+			}
+
+			task ("And edit the fields: ACCOUNT NAME, TAX ID, DESCRIPTION, SET A DEFAULT SHIPPING AND BILLING ADDRESS And clicks on the Save button") {
+				PortletEntry.inputName(name = "Commerce Account Edit");
+
+				PortletEntry.inputDescription(description = "Commerce Account Edit Description");
+
+				PortletEntry.inputText(
+					fieldLabel = "Tax ID",
+					text = "123456");
+
+				Button.clickSave();
+
+				for (var addressType : list "Billing,Shipping") {
+					var addressTypeUppercase = StringUtil.upperCase("${addressType}");
+
+					AssertClick(
+						locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SET_DEFAULT_${addressTypeUppercase}",
+						value1 = "Set Default Address");
+
+					SelectFrame(
+						key_title = "Set Default ${addressType} Address",
+						locator1 = "IFrame#MODAL_ANY");
+
+					Click(
+						key_addressName = "Test Name",
+						locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SELECT_ADDRESS_RADIO");
+
+					SelectFrameTop();
+
+					AssertClick(
+						locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SAVE_BUTTON",
+						value1 = "Save");
+
+					Alert.viewSuccessMessage();
+				}
+			}
+
+			task ("Then when the admin login again, he will see all the changes that the Sales Agent marked previously") {
+				User.logoutPG();
+
+				CommerceLogin.miniumLogin(
+					password = "test",
+					urlAppend = "web/minium",
+					userEmailAddress = "test@liferay.com");
+
+				CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+				Accounts.viewAccountDetails(
+					accountDescription = "Commerce Account Edit Description",
+					accountName = "Commerce Account Edit",
+					accountTaxId = "123456");
+
+				Accounts.viewDefaultBillingAddress(
+					addressCity = "Test Address",
+					addressCountry = "United States",
+					addressName = "Test Name",
+					addressPostalCode = "Test Zip Code",
+					addressRegion = "California",
+					addressStreet1 = "Test Street");
+
+				Accounts.viewDefaultShippingAddress(
+					addressCity = "Test Address",
+					addressCountry = "United States",
+					addressName = "Test Name",
+					addressPostalCode = "Test Zip Code",
+					addressRegion = "California",
+					addressStreet1 = "Test Street");
+			}
+		}
+	}
+
 	@description = "COMMERCE-9872 | As a Sales Agent, I want to not be able to see accounts that are outside the organization I'm part of"
 	@priority = "4"
 	test CannotViewAccountsOutsideOrganizationAsSalesAgent {

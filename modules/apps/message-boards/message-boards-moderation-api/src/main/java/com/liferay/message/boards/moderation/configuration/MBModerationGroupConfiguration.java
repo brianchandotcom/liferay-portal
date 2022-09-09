@@ -45,7 +45,7 @@ public interface MBModerationGroupConfiguration {
 	public int minimumContributedMessages();
 
 	@Meta.AD(
-		description = "enter-authorized-domains",
+		description = "enter-the-authorized-domain",
 		name = "authorized-domains", required = false
 	)
 	public String[] authorizedDomains();

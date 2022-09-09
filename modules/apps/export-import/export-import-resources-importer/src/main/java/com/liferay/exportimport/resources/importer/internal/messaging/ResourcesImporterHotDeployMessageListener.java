@@ -129,25 +129,6 @@ public class ResourcesImporterHotDeployMessageListener
 		_initialize(message);
 	}
 
-	@Reference(
-		target = "(destination.name=" + DestinationNames.HOT_DEPLOY + ")",
-		unbind = "-"
-	)
-	protected void setDestination(Destination destination) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setImporterFactory(ImporterFactory importerFactory) {
-		_importerFactory = importerFactory;
-	}
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.exportimport.service)(release.schema.version=1.0.2))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	private void _importResources(
 			Company company, ServletContext servletContext,
 			PluginPackageProperties pluginPackageProperties,
@@ -284,15 +265,24 @@ public class ResourcesImporterHotDeployMessageListener
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	@Reference(
+		target = "(destination.name=" + DestinationNames.HOT_DEPLOY + ")"
+	)
 	private Destination _destination;
 
 	@Reference
 	private DestinationFactory _destinationFactory;
 
+	@Reference
 	private ImporterFactory _importerFactory;
 
 	@Reference
 	private MessageBus _messageBus;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.exportimport.service)(release.schema.version=1.0.2))"
+	)
+	private Release _release;
 
 	private ServiceRegistration<Destination> _serviceRegistration;
 	private ServiceTrackerMap<String, ServletContext> _serviceTrackerMap;

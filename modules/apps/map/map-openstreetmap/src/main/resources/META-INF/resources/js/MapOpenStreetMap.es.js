@@ -26,24 +26,31 @@ const defaultTileURI = '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
  * @review
  */
 class MapOpenStreetMap extends MapBase {
+	get tileURI() {
+		return this._STATE_.tileURI;
+	}
+
+	set tileURI(tileURI) {
+		this._STATE_.tileURI = tileURI;
+	}
 
 	/**
 	 * Creates a new map using OpenStreetMap's API
 	 * @param  {Array} args List of arguments to be passed to State
 	 * @review
 	 */
-	constructor(args = {...args, tileURI: defaultTileURI}) {
+	constructor(args) {
 		MapBase.DialogImpl = OpenStreetMapDialog;
 		MapBase.GeocoderImpl = OpenStreetMapGeocoder;
 		MapBase.GeoJSONImpl = OpenStreetMapGeoJSON;
 		MapBase.MarkerImpl = OpenStreetMapMarker;
 		MapBase.SearchImpl = null;
 
-		args = {...args, tileURI: defaultTileURI};
-
 		super(args);
 
-		const {boundingBox, tileURI} = args;
+		this._STATE_ = {};
+
+		const {boundingBox, tileURI = defaultTileURI} = args;
 
 		this.tileURI = tileURI;
 		this.boundingBox = boundingBox;

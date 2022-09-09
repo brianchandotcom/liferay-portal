@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+import React from 'react';
 
-<div id="analytics-sync-app">
-	<react:component
-		module="js/index.es"
-	/>
-</div>
+const App = () => {
+	return <div>Analytics Settings React App</div>;
+};
+
+export default App;

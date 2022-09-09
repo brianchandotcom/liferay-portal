@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -86,7 +87,8 @@ public abstract class BaseBackgroundTaskTestCase {
 			group
 		);
 
-		backgroundTaskThreadLocalManagerImpl.setGroupLocalService(
+		ReflectionTestUtil.setFieldValue(
+			backgroundTaskThreadLocalManagerImpl, "_groupLocalService",
 			groupLocalService);
 
 		PermissionCheckerFactory permissionCheckerFactory = Mockito.mock(
@@ -101,7 +103,8 @@ public abstract class BaseBackgroundTaskTestCase {
 			permissionChecker
 		);
 
-		backgroundTaskThreadLocalManagerImpl.setPermissionCheckerFactory(
+		ReflectionTestUtil.setFieldValue(
+			backgroundTaskThreadLocalManagerImpl, "_permissionCheckerFactory",
 			permissionCheckerFactory);
 
 		UserLocalService userLocalService = Mockito.mock(
@@ -121,7 +124,8 @@ public abstract class BaseBackgroundTaskTestCase {
 			user
 		);
 
-		backgroundTaskThreadLocalManagerImpl.setUserLocalService(
+		ReflectionTestUtil.setFieldValue(
+			backgroundTaskThreadLocalManagerImpl, "_userLocalService",
 			userLocalService);
 	}
 

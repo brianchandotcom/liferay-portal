@@ -191,6 +191,7 @@ public class ObjectDefinitionResourceImpl
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672"))) {
 			return _toObjectDefinition(
 				_objectDefinitionService.updateCustomObjectDefinition(
+					objectDefinition.getExternalReferenceCode(),
 					objectDefinitionId,
 					GetterUtil.getLong(
 						objectDefinition.
@@ -214,7 +215,7 @@ public class ObjectDefinitionResourceImpl
 
 		return _toObjectDefinition(
 			_objectDefinitionService.updateCustomObjectDefinition(
-				objectDefinitionId,
+				objectDefinition.getExternalReferenceCode(), objectDefinitionId,
 				GetterUtil.getLong(
 					objectDefinition.getAccountEntryRestrictedObjectFieldId()),
 				0, GetterUtil.get(objectDefinition.getTitleObjectFieldId(), 0),
@@ -304,6 +305,8 @@ public class ObjectDefinitionResourceImpl
 					enableComments = objectDefinition.getEnableComments();
 				}
 
+				externalReferenceCode =
+					objectDefinition.getExternalReferenceCode();
 				id = objectDefinition.getObjectDefinitionId();
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getLabelMap());

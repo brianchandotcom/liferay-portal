@@ -179,6 +179,8 @@ public class DefaultObjectEntryManagerImplTest {
 						RandomTestUtil.randomString())
 				).objectFieldSettings(
 					Collections.emptyList()
+				).indexed(
+					true
 				).name(
 					"textObjectFieldName"
 				).build()));
@@ -327,6 +329,24 @@ public class DefaultObjectEntryManagerImplTest {
 			objectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
+				"filter",
+				_buildEqualsExpressionFilterString(
+					"picklistObjectFieldName", picklistObjectFieldValue1)
+			).put(
+				"search", "aa"
+			).build(),
+			objectEntry1);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildEqualsExpressionFilterString(
+					"picklistObjectFieldName", picklistObjectFieldValue2)
+			).put(
+				"search", "aa"
+			).build(),
+			objectEntry2);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
 				"search", picklistObjectFieldValue1
 			).build(),
 			objectEntry1);
@@ -335,6 +355,11 @@ public class DefaultObjectEntryManagerImplTest {
 				"search", picklistObjectFieldValue2
 			).build(),
 			objectEntry2);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"search", "aa"
+			).build(),
+			objectEntry1, objectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
 				"sort", "createDate:asc"
@@ -468,6 +493,12 @@ public class DefaultObjectEntryManagerImplTest {
 					actualObjectEntryProperties.get(expectedEntry.getKey()));
 			}
 		}
+	}
+
+	private String _buildEqualsExpressionFilterString(
+		String fieldName, String value) {
+
+		return StringBundler.concat("( ", fieldName, " eq '", value, "')");
 	}
 
 	private String _buildInExpressionFilterString(

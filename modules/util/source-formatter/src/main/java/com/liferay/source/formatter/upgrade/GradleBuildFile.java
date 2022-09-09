@@ -93,21 +93,21 @@ public class GradleBuildFile {
 		_saveSource(sourceLines);
 	}
 
-	public List<GradleDependency> getBuildscriptDependencies() {
+	public List<GradleDependency> getBuildScriptDependencies() {
 		GradleBuildFileVisitor gradleBuildFileVisitor = _walkAST();
 
-		return gradleBuildFileVisitor.getBuildscriptDependencies();
+		return gradleBuildFileVisitor.getBuildScriptDependencies();
 	}
 
-	public List<GradleDependency> getBuildscriptDependencies(
+	public List<GradleDependency> getBuildScriptDependencies(
 		String configuration) {
 
 		GradleBuildFileVisitor gradleBuildFileVisitor = _walkAST();
 
-		List<GradleDependency> gradleDependencies =
-			gradleBuildFileVisitor.getBuildscriptDependencies();
+		List<GradleDependency> buildScriptDependencies =
+			gradleBuildFileVisitor.getBuildScriptDependencies();
 
-		Stream<GradleDependency> stream = gradleDependencies.stream();
+		Stream<GradleDependency> stream = buildScriptDependencies.stream();
 
 		return stream.filter(
 			gradleDependency -> Objects.equals(

@@ -36,8 +36,8 @@ import org.codehaus.groovy.ast.stmt.BlockStatement;
  */
 public class GradleBuildFileVisitor extends CodeVisitorSupport {
 
-	public List<GradleDependency> getBuildscriptDependencies() {
-		return _buildscriptDependencies;
+	public List<GradleDependency> getBuildScriptDependencies() {
+		return _buildScriptDependencies;
 	}
 
 	public int getDependenciesLastLineNumber() {
@@ -56,7 +56,7 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 	public void visitArgumentlistExpression(
 		ArgumentListExpression argumentListExpression) {
 
-		if (!_inDependencies && !_inBuildscript) {
+		if (!_inDependencies && !_inBuildScript) {
 			return;
 		}
 
@@ -77,8 +77,8 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 					_configuration, textParts[0], textParts[1], textParts[2],
 					_methodCallLineNumber, _methodCallLastLineNumber);
 
-				if (_inBuildscriptDependencies) {
-					_buildscriptDependencies.add(gradleDependency);
+				if (_inBuildScriptDependencies) {
+					_buildScriptDependencies.add(gradleDependency);
 				}
 				else {
 					_gradleDependencies.add(gradleDependency);
@@ -91,7 +91,7 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 
 	@Override
 	public void visitBlockStatement(BlockStatement blockStatement) {
-		if (_inDependencies || _inBuildscriptDependencies) {
+		if (_inDependencies || _inBuildScriptDependencies) {
 			_blockStatementStack.push(true);
 
 			super.visitBlockStatement(blockStatement);
@@ -134,8 +134,8 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 				keyValues.get("version"), _methodCallLineNumber,
 				_methodCallLastLineNumber);
 
-			if (_inBuildscriptDependencies) {
-				_buildscriptDependencies.add(gradleDependency);
+			if (_inBuildScriptDependencies) {
+				_buildScriptDependencies.add(gradleDependency);
 			}
 			else if (_inDependencies) {
 				_gradleDependencies.add(gradleDependency);
@@ -152,23 +152,23 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 		_methodCallLineNumber = methodCallExpression.getLineNumber();
 		_methodCallLastLineNumber = methodCallExpression.getLastLineNumber();
 
-		if (_methodCallLineNumber > _buildscriptLastLineNumber) {
-			_inBuildscript = false;
+		if (_methodCallLineNumber > _buildScriptLastLineNumber) {
+			_inBuildScript = false;
 		}
 
 		if (_methodCallLineNumber > _dependenciesLastLineNumber) {
 			_inDependencies = false;
 		}
 
-		if (_methodCallLineNumber > _buildscriptDependenciesLastLineNumber) {
-			_inBuildscriptDependencies = false;
+		if (_methodCallLineNumber > _buildScriptDependenciesLastLineNumber) {
+			_inBuildScriptDependencies = false;
 		}
 
 		String methodName = methodCallExpression.getMethodAsString();
 
 		if (methodName.equals("buildscript")) {
-			_inBuildscript = true;
-			_buildscriptLastLineNumber =
+			_inBuildScript = true;
+			_buildScriptLastLineNumber =
 				methodCallExpression.getLastLineNumber();
 		}
 
@@ -179,15 +179,15 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 				methodCallExpression.getLastLineNumber();
 		}
 
-		if (_inBuildscript && _inDependencies &&
-			(_buildscriptDependenciesLastLineNumber == -1)) {
+		if (_inBuildScript && _inDependencies &&
+			(_buildScriptDependenciesLastLineNumber == -1)) {
 
-			_inBuildscriptDependencies = true;
-			_buildscriptDependenciesLastLineNumber =
+			_inBuildScriptDependencies = true;
+			_buildScriptDependenciesLastLineNumber =
 				methodCallExpression.getLastLineNumber();
 		}
 
-		if ((_inBuildscriptDependencies || _inDependencies) &&
+		if ((_inBuildScriptDependencies || _inDependencies) &&
 			(_blockStatementStack.isEmpty() ? false :
 				_blockStatementStack.peek())) {
 
@@ -203,17 +203,17 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 	}
 
 	private final Stack<Boolean> _blockStatementStack = new Stack<>();
-	private final List<GradleDependency> _buildscriptDependencies =
+	private final List<GradleDependency> _buildScriptDependencies =
 		new ArrayList<>();
-	private int _buildscriptDependenciesLastLineNumber = -1;
-	private int _buildscriptLastLineNumber = -1;
+	private int _buildScriptDependenciesLastLineNumber = -1;
+	private int _buildScriptLastLineNumber = -1;
 	private String _configuration;
 	private int _dependenciesLastLineNumber = -1;
 	private int _dependenciesLineNumber = -1;
 	private final List<GradleDependency> _gradleDependencies =
 		new ArrayList<>();
-	private boolean _inBuildscript;
-	private boolean _inBuildscriptDependencies;
+	private boolean _inBuildScript;
+	private boolean _inBuildScriptDependencies;
 	private boolean _inDependencies;
 	private int _methodCallLastLineNumber = -1;
 	private int _methodCallLineNumber = -1;

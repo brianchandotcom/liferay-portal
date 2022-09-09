@@ -159,7 +159,7 @@ const SuiteForm = () => {
 				</ClayButton>
 			</ClayButton.Group>
 
-			{caseParameters ? (
+			{caseParameters || !!cases.length ? (
 				<div />
 			) : (
 				<ClayAlert>There are no linked cases.</ClayAlert>

@@ -29,7 +29,7 @@ const useSuiteActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const actionsRef = useRef([
 		{
 			action: (suite) =>
-				navigate(isHeaderActions ? 'update' : `${suite}/update`),
+				navigate(isHeaderActions ? 'update' : `${suite.id}/update`),
 			icon: 'pencil',
 			name: isHeaderActions
 				? i18n.sub('edit-x', 'suite')

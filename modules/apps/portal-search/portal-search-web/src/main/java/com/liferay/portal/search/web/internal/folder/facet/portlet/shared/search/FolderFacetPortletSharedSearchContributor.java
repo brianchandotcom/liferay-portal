@@ -56,6 +56,8 @@ public class FolderFacetPortletSharedSearchContributor
 				folderFacetPortletPreferences.getFrequencyThreshold()
 			).maxTerms(
 				folderFacetPortletPreferences.getMaxTerms()
+			).order(
+				folderFacetPortletPreferences.getOrder()
 			).selectedFolderIds(
 				_toLongArray(
 					portletSharedSearchSettings.getParameterValues(

@@ -182,8 +182,6 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 			_configuration = methodName;
 
 			super.visitMethodCallExpression(methodCallExpression);
-
-			_configuration = null;
 		}
 		else {
 			super.visitMethodCallExpression(methodCallExpression);

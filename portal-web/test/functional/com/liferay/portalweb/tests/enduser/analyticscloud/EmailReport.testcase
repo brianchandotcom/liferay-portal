@@ -325,4 +325,121 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-11665 | Automation ID: LRAC-11890 | Test Summary: Open the email report and see if the links are pointing to the right places"
+	@priority = "2"
+	test CheckLinksInEmailReportAreCorrect {
+		var reportDetailsNameList = "Workspace,Property";
+		var reportDetailsValueList = "FARO-DEV-liferay,${assignedPropertyName}";
+		var activitiesNameList = "Unique Visitors,Sessions / Visitor,Session Duration,Bounce Rate";
+		var activitiesValueList = "0,0.00,0s,0.0%";
+		var emailAddress = "test@liferay.com";
+
+		task ("Launch AC") {
+			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+			Open(locator1 = "${analyticsCloudURL}");
+
+			ACLogin.loginAs(emailAddress = "${emailAddress}");
+		}
+
+		task ("Go to admin page") {
+			ACAdmin.goToACAdmin();
+		}
+
+		task ("Go to Server Administration > Change SMTP Server Port") {
+		    var extractedIPAddress = ACUtils.getIPAddress();
+
+			ACAdmin.configureMailSettings(outgoingSMTPServer = "${extractedIPAddress}");
+		}
+
+		task ("Navigate to users page") {
+			ProductMenuHelper.expandPanel(panel = "control panel");
+
+			ProductMenuHelper.expandCategory(category = "Users");
+
+			ProductMenuHelper.gotoPortlet(portlet = "Users and Organizations");
+		}
+
+		task ("Go to user data page") {
+			UserNavigator.gotoUser(userScreenName = "bryan.cheung");
+		}
+
+		task ("Go the user ID") {
+			var userID = ACAdmin.getUserID();
+		}
+
+		task ("Go to FARO-DEV-liferay workspace > Go to settings") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+		}
+
+		task ("Run the API to send the email report") {
+			var channelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
+			var groupId = ACUtils.getGroupId();
+
+			ACApi.sendEmailReport(
+				userID = "${userID}",
+				groupId = "${groupId}",
+				channelId = "${channelId}",
+				frequency = "daily");
+		}
+
+		task ("Go to the Mock Mock page > Access the email that was received") {
+			MockMock._gotoMail();
+			
+			MockMock._gotoMailMessage(asset = "Analytics Cloud: Your Daily Report");
+		}
+
+		task ("Check that activity metrics appear in the email report") {
+			ACEmailReport.viewEmailReportDetails(
+				metricNameList = "${reportDetailsNameList},${activitiesNameList}",
+				metricValueList = "${reportDetailsValueList},${activitiesValueList}");
+		}
+
+		task ("Check that the Full Report link is redirected to the AC page in the correct property") {
+			ACUtils.clickGenericHyperlink(hyperlinkText = "SEE FULL REPORT");
+
+			SelectWindow(locator1 = "title=Analytics Cloud");
+
+			if (IsElementPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {
+				ACLogin.loginAs(emailAddress = "${emailAddress}");
+			}
+
+			ACProperties.assertCurrentActiveProperty(propertyName = "${assignedPropertyName}");
+
+			Close.closeWindow();
+		}
+
+		task ("Check Liferay.com page link") {
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Liferay, Inc.");
+
+			SelectWindow(locator1 = "title=Digital Experience Software Tailored to Your Needs | Liferay");
+
+			ACUtils.viewGenericText(textValueList = "Introducing Liferay Experience Cloud");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the Contact Support page link") {
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Contact Support");
+
+			SelectWindow(locator1 = "title=Liferay Help Center");
+
+			ACUtils.viewGenericText(textValueList = "Help Center,How can we help?");
+
+			Close.closeWindow();
+		}
+
+		task ("Check the Learn Liferay page link") {
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn Liferay");
+
+			SelectWindow(locator1 = "title=Liferay Learn — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Welcome to Liferay Docs");
+
+			Close.closeWindow();
+		}
+	}
+
 }

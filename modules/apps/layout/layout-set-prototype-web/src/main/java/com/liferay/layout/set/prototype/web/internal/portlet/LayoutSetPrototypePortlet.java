@@ -304,27 +304,13 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setLayoutSetPrototypeService(
-		LayoutSetPrototypeService layoutSetPrototypeService) {
-
-		this.layoutSetPrototypeService = layoutSetPrototypeService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		this.panelAppRegistry = panelAppRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelCategoryRegistry(
-		PanelCategoryRegistry panelCategoryRegistry) {
-
-		this.panelCategoryRegistry = panelCategoryRegistry;
-	}
-
+	@Reference
 	protected LayoutSetPrototypeService layoutSetPrototypeService;
+
+	@Reference
 	protected PanelAppRegistry panelAppRegistry;
+
+	@Reference
 	protected PanelCategoryRegistry panelCategoryRegistry;
 
 	@Reference

@@ -328,6 +328,8 @@ definition {
 	@description = "Story: LRAC-11665 | Automation ID: LRAC-11890 | Test Summary: Open the email report and see if the links are pointing to the right places"
 	@priority = "2"
 	test CheckLinksInEmailReportAreCorrect {
+		property test.name.skip.portal.instance = "EmailReport#CheckLinksInEmailReportAreCorrect";
+
 		var reportDetailsNameList = "Workspace,Property";
 		var reportDetailsValueList = "FARO-DEV-liferay,${assignedPropertyName}";
 		var activitiesNameList = "Unique Visitors,Sessions / Visitor,Session Duration,Bounce Rate";

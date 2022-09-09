@@ -51,6 +51,10 @@ public class NotificationMessageHelper {
 			String.valueOf(
 				workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID))
 		).put(
+			WorkflowConstants.CONTEXT_CT_COLLECTION_ID,
+			String.valueOf(
+				workflowContext.get(WorkflowConstants.CONTEXT_CT_COLLECTION_ID))
+		).put(
 			WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME,
 			(String)workflowContext.get(
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME)

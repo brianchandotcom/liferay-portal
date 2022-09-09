@@ -28,6 +28,8 @@ public class WorkflowConstants {
 
 	public static final String CONTEXT_COMPANY_ID = "companyId";
 
+	public static final String CONTEXT_CT_COLLECTION_ID = "ctCollectionId";
+
 	public static final String CONTEXT_ENTRY_CLASS_NAME = "entryClassName";
 
 	public static final String CONTEXT_ENTRY_CLASS_PK = "entryClassPK";

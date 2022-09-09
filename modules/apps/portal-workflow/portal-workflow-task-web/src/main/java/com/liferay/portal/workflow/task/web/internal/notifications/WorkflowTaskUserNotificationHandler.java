@@ -14,7 +14,11 @@
 
 package com.liferay.portal.workflow.task.web.internal.notifications;
 
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -30,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -103,12 +108,20 @@ public class WorkflowTaskUserNotificationHandler
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				userNotificationEvent.getPayload());
 
-			for (User user :
-					WorkflowTaskManagerUtil.getNotifiableUsers(
-						jsonObject.getLong("workflowTaskId"))) {
+			long ctCollectionId = jsonObject.getLong(
+				WorkflowConstants.CONTEXT_CT_COLLECTION_ID);
 
-				if (user.getUserId() == serviceContext.getUserId()) {
-					return true;
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollectionId)) {
+
+				for (User user :
+						WorkflowTaskManagerUtil.getNotifiableUsers(
+							jsonObject.getLong("workflowTaskId"))) {
+
+					if (user.getUserId() == serviceContext.getUserId()) {
+						return true;
+					}
 				}
 			}
 		}
@@ -130,8 +143,15 @@ public class WorkflowTaskUserNotificationHandler
 
 		long workflowTaskId = jsonObject.getLong("workflowTaskId");
 
+		String notificationMessage = jsonObject.getString(
+			"notificationMessage");
+
 		if (workflowTaskId > 0) {
-			WorkflowTask workflowTask = _fetchWorkflowTask(workflowTaskId);
+			long ctCollectionId = jsonObject.getLong(
+				WorkflowConstants.CONTEXT_CT_COLLECTION_ID);
+
+			WorkflowTask workflowTask = _fetchWorkflowTask(
+				ctCollectionId, workflowTaskId);
 
 			if (workflowTask == null) {
 				_userNotificationEventLocalService.deleteUserNotificationEvent(
@@ -139,9 +159,17 @@ public class WorkflowTaskUserNotificationHandler
 
 				return StringPool.BLANK;
 			}
+
+			if (ctCollectionId != CTCollectionThreadLocal.getCTCollectionId()) {
+				String ctCollectionBody = _getCTCollectionBody(
+					ctCollectionId, serviceContext.getLanguageId());
+
+				return HtmlUtil.escape(
+					notificationMessage + " " + ctCollectionBody);
+			}
 		}
 
-		return HtmlUtil.escape(jsonObject.getString("notificationMessage"));
+		return HtmlUtil.escape(notificationMessage);
 	}
 
 	@Override
@@ -153,6 +181,13 @@ public class WorkflowTaskUserNotificationHandler
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
+		long ctCollectionId = jsonObject.getLong(
+			WorkflowConstants.CONTEXT_CT_COLLECTION_ID);
+
+		if (ctCollectionId != CTCollectionThreadLocal.getCTCollectionId()) {
+			return StringPool.BLANK;
+		}
+
 		WorkflowHandler<?> workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(
 				jsonObject.getString("entryClassName"));
@@ -160,7 +195,7 @@ public class WorkflowTaskUserNotificationHandler
 		long workflowTaskId = jsonObject.getLong("workflowTaskId");
 
 		if ((workflowHandler == null) ||
-			!_hasPermission(workflowTaskId, serviceContext)) {
+			!_hasPermission(ctCollectionId, workflowTaskId, serviceContext)) {
 
 			return StringPool.BLANK;
 		}
@@ -179,21 +214,45 @@ public class WorkflowTaskUserNotificationHandler
 			workflowTaskId, serviceContext);
 	}
 
-	private WorkflowTask _fetchWorkflowTask(long workflowTaskId)
+	private WorkflowTask _fetchWorkflowTask(
+			long collectionId, long workflowTaskId)
 		throws Exception {
 
 		if (workflowTaskId <= 0) {
 			return null;
 		}
 
-		return WorkflowTaskManagerUtil.fetchWorkflowTask(workflowTaskId);
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					collectionId)) {
+
+			return WorkflowTaskManagerUtil.fetchWorkflowTask(workflowTaskId);
+		}
+	}
+
+	private String _getCTCollectionBody(
+		long ctCollectionId, String languageId) {
+
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
+
+		if (ctCollection != null) {
+			return _language.format(
+				LocaleUtil.fromLanguageId(languageId),
+				"select-the-publication-x-to-review-the-change",
+				new String[] {ctCollection.getName()});
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private boolean _hasPermission(
-			long workflowTaskId, ServiceContext serviceContext)
+			long ctCollectionId, long workflowTaskId,
+			ServiceContext serviceContext)
 		throws Exception {
 
-		WorkflowTask workflowTask = _fetchWorkflowTask(workflowTaskId);
+		WorkflowTask workflowTask = _fetchWorkflowTask(
+			ctCollectionId, workflowTaskId);
 
 		if (workflowTask == null) {
 			return false;
@@ -215,6 +274,9 @@ public class WorkflowTaskUserNotificationHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowTaskUserNotificationHandler.class);
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private Language _language;

@@ -47,6 +47,129 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-158328. The user can change default resource image on content page after propagation."
+	@priority = "4"
+	test ChangeResourceImageAfterPropagation {
+		task ("Given a page creator has a fragment on content page with propagated resource image") {
+			task ("Add a fragment with an invalid image resource") {
+				var newLine = '''
+''';
+				var htmlSnippet = '''
+<div class="fragment-name">
+	<img
+		data-lfr-editable-id="image-square"
+		data-lfr-editable-type="image"
+		alt=""
+		src="[resources:invalid.jpg]"
+	/>
+</div>	''';
+
+				var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+
+				JSONFragment.addSection(
+					collectionName = "Collection Name",
+					fragmentStatus = "Approved",
+					groupName = "Test Site Name",
+					html = "${htmlSnippet}",
+					name = "Fragment Name");
+			}
+
+			task ("Add the new fragment to content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Collection Name",
+					fragmentName = "Fragment Name");
+			}
+
+			task ("View Gray image is shown on the fragment at edit mode") {
+				PageEditor.viewFragmentEditableImage(
+					id = "image-square",
+					imageDescription = "",
+					imageFileName = "data:image/png");
+			}
+
+			task ("Publish the page") {
+				PageEditor.publish();
+			}
+
+			task ("Add an image resource") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+				Navigator.gotoNavItem(navItem = "Resources");
+
+				FragmentsAdmin.addResource(resourceFile = "Document_1.jpg");
+			}
+
+			task ("Add the new resource image within the fragment") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+				FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+				FragmentsAdminNavigator.gotoEntryEllipsisItem(
+					entry = "Fragment Name",
+					item = "Edit");
+
+				var htmlSnippet = '''
+<div class="fragment-name">
+	<img
+		data-lfr-editable-id="image-square"
+		data-lfr-editable-type="image"
+		alt=""
+		src="[resources:Document_1.jpg]"
+	/>
+</div>	''';
+
+				FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+				FragmentsEditor.waitForAutoSave();
+
+				FragmentsEditor.publish();
+			}
+
+			task ("Propagate the changes") {
+				FragmentsAdminNavigator.gotoEntryEllipsisItem(
+					entry = "Fragment Name",
+					item = "View Usages");
+
+				FragmentsAdmin.propagateChanges();
+			}
+		}
+
+		task ("When the page creator publishes the page after change resource image") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			// There is a missing step to validate the image was propagated to page until LPS-158453 be fixed.
+
+			PageEditor.editFragmentImage(
+				fileName = "Document_2.jpg",
+				fragmentName = "Fragment Name",
+				id = "image-square");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "document_2-jpg");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page creator should see the image on content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ContentPages.viewFragmentImage(
+				fragmentName = "fragment-name",
+				id = "image-square",
+				image = "document_2-jpg");
+		}
+	}
+
 	@description = "This is a test for LPS-152633. The changes of a draft contributed fragment cannot be shown on the content page."
 	@priority = "3"
 	test ChangesOfDraftContributedFragmentNotPresentOnPage {

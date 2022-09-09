@@ -12,7 +12,7 @@
 			"label": {
 				"en_US": "MDF Requested Amount"
 			},
-			"name": "mdfRequestAmount",
+			"name": "mdfRequestedAmount",
 			"required": false,
 			"type": "String"
 		},

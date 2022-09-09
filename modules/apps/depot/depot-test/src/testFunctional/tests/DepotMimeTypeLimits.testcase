@@ -54,7 +54,7 @@ definition {
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.jpeg",
 			dmDocumentTitle = "Document_1.jpeg",
-			validationError = "Please enter a file with a valid file size no larger than 10 KB");
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 10 KB");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -114,7 +114,7 @@ definition {
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.png",
 			dmDocumentTitle = "Document_1.png",
-			validationError = "Please enter a file with a valid file size no larger than 20 KB");
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 20 KB");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 

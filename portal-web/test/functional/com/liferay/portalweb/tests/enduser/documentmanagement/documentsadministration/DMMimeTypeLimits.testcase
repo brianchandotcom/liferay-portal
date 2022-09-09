@@ -80,7 +80,7 @@ definition {
 			dmDocumentTitle = "Document_2.jpg",
 			groupName = "Site Name",
 			siteURLKey = "site-name",
-			validationError = "Please enter a file with a valid file size no larger than 20 KB");
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 20 KB");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.jpg",
@@ -325,7 +325,7 @@ definition {
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.pdf",
 			dmDocumentTitle = "Document_1.pdf",
-			validationError = "Please enter a file with a valid file size no larger than 10 KB");
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 10 KB");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -419,7 +419,7 @@ definition {
 			dmDocumentTitle = "Document_2.jpg",
 			groupName = "Guest",
 			siteURLKey = "guest",
-			validationError = "Please enter a file with a valid file size no larger than 20 KB");
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 20 KB");
 
 		LexiconCard.viewNoCardThumbnail(card = "Document_2.jpg");
 	}

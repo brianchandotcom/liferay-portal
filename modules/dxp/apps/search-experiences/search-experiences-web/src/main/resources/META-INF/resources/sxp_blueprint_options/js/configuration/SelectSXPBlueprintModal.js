@@ -64,7 +64,10 @@ const SelectSXPBlueprintModal = ({observer, onClose, onSubmit, selectedId}) => {
 	const {resource} = useResource({
 		fetchOptions: {
 			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
+			headers: new Headers({
+				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+				'x-csrf-token': Liferay.authToken,
+			}),
 			method: 'GET',
 		},
 		fetchRetry: {

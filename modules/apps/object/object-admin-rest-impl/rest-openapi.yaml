@@ -68,6 +68,8 @@ components:
                     type: boolean
                 enableComments:
                     type: boolean
+                externalReferenceCode:
+                    type: string
                 id:
                     format: int64
                     readOnly: true

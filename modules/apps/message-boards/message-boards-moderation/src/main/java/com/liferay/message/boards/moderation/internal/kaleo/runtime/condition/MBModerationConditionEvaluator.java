@@ -64,15 +64,13 @@ public class MBModerationConditionEvaluator implements ConditionEvaluator {
 
 		User user = GuestOrUserUtil.getUser(userId);
 
-		String email = user.getEmailAddress();
+		String emailAddress = user.getEmailAddress();
 
-		email = email.trim();
+		String[] whiteListDomains = mbModerationGroupConfiguration.whitelistdomains();
 
-		String[] domains = mbModerationGroupConfiguration.approvedDomains();
-
-		for (String domain : domains) {
-			if (Validator.isNotNull(domain) &&
-				StringUtil.endsWith(email, domain.trim())) {
+		for (String whiteListDomain : whiteListDomains) {
+			if (Validator.isNotNull(whiteListDomain) &&
+				StringUtil.endsWith(emailAddress, whiteListDomain)) {
 
 				return "approve";
 			}

@@ -45,9 +45,9 @@ public interface MBModerationGroupConfiguration {
 	public int minimumContributedMessages();
 
 	@Meta.AD(
-		deflt = " ", description = "enter-the-approved-domains",
-		name = "approved-domains", required = false
+		deflt = " ", description = "enter-approved-domains",
+		name = "white-list-domains", required = false
 	)
-	public String[] approvedDomains();
+	public String[] whitelistdomains();
 
 }

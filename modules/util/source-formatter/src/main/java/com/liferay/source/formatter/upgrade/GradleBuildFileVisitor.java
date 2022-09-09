@@ -179,9 +179,7 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 				methodCallExpression.getLastLineNumber();
 		}
 
-		if (_inBuildScript && _inDependencies &&
-			(_buildScriptDependenciesLastLineNumber == -1)) {
-
+		if (_inBuildScript && _inDependencies && !_inBuildScriptDependencies) {
 			_inBuildScriptDependencies = true;
 			_buildScriptDependenciesLastLineNumber =
 				methodCallExpression.getLastLineNumber();

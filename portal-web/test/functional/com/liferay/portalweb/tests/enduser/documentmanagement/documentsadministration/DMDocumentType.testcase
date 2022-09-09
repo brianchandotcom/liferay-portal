@@ -199,6 +199,163 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_PREDEFINED_IMAGE");
 	}
 
+	@description = "This ensures that the user can create a document using edited image field inside document type."
+	@priority = "4"
+	@refactordone
+	test CanCreateDocumentwithEditedImageField {
+		property portal.acceptance = "true";
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Image",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			imageField = "Document_1.jpg",
+			navTab = "Documents and Media");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldNameEdit = "Photo",
+			dmDocumentTypeFieldRequiredEdit = "Photo",
+			dmDocumentTypeName = "DM Document Type Name",
+			dmDocumentTypeNameEdit = "DM Document Type Name Edit",
+			fieldFieldLabel = "Image",
+			fieldFieldLabelEdit = "Photo");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title 2",
+			dmDocumentTypeName = "DM Document Type Name Edit",
+			fieldFieldLabel = "Photo",
+			imageDescription = "Photo Description",
+			imageField = "Document_2.jpg",
+			navTab = "Documents and Media");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
+
+		DMDocument.viewDocumentTypePG(
+			fieldFieldLabel = "Photo",
+			imageName = "Document_2.jpg");
+	}
+
+	@description = "This ensures that the user can create a document using edited text field inside document type."
+	@priority = "4"
+	@refactordone
+	test CanCreateDocumentWithEditedTextField {
+		property portal.acceptance = "true";
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			textField = "DM Document Text");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldNameEdit = "Company",
+			dmDocumentTypeFieldRequiredEdit = "Company",
+			dmDocumentTypeName = "DM Document Type Name",
+			dmDocumentTypeNameEdit = "DM Document Type Name Edit",
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Company");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.png",
+			dmDocumentTitle = "DM Document Title 2",
+			dmDocumentTypeName = "DM Document Type Name Edit",
+			fieldFieldLabel = "Company",
+			textField = "Liferay");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
+
+		DMDocument.viewDocumentTypePG(
+			textContent = "Liferay",
+			textFieldLabel = "Company");
+	}
+
+	@description = "This ensures that the user can create a document using edited upload field inside document type."
+	@priority = "4"
+	@refactordone
+	test CanCreateDocumentwithEditedUploadField {
+		property portal.acceptance = "true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Upload",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			documentsAndMediaField = "Document_1.doc",
+			fieldFieldLabel = "Upload",
+			navTab = "Documents and Media");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldNameEdit = "Resume",
+			dmDocumentTypeFieldRequiredEdit = "Resume",
+			dmDocumentTypeName = "DM Document Type Name",
+			dmDocumentTypeNameEdit = "DM Document Type Name Edit",
+			fieldFieldLabel = "Upload",
+			fieldFieldLabelEdit = "Resume");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title 2",
+			dmDocumentTypeName = "DM Document Type Name Edit",
+			documentsAndMediaField = "Document_1.doc",
+			fieldFieldLabel = "Resume",
+			navTab = "Documents and Media");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
+
+		DMDocument.viewDocumentTypePG(
+			uploadFieldLabel = "Resume",
+			uploadFile = "Document_1.doc");
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanDeleteEntry {
@@ -216,6 +373,28 @@ definition {
 		DMDocumentType.delete(dmDocumentTypeName = "DM Document Type Name");
 
 		DMDocumentType.viewDefaultCP();
+	}
+
+	@priority = "5"
+	@refactordone
+	test CanEditEntry {
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.edit(
+			dmDocumentTypeDescriptionEdit = "DM Document Type Description Edit",
+			dmDocumentTypeName = "DM Document Type Name",
+			dmDocumentTypeNameEdit = "DM Document Type Name Edit");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type Name Edit");
 	}
 
 	@description = "This test covers LPS-123711. It ensures that the document type cannot be published if the title is left blank."
@@ -277,6 +456,63 @@ definition {
 		DMDocumentType.delete(
 			dmDocumentTypeName = "DM Document Type Name",
 			documentTypeHasReference = "true");
+	}
+
+	@description = "This test covers LPS-127131. It ensures that a user can view document with repeatable Image field when editing."
+	@priority = "4"
+	@refactordone
+	test CanViewDocumentwithRepeatableImageField {
+		property portal.acceptance = "true";
+
+		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
+
+		PortletEntry.inputName(name = "DM Document Type Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Image");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.openToAddEntry(
+			dmDocumentTypeName = "DM Document Type Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		PortletEntry.inputTitle(title = "DM Document Title");
+
+		Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
+
+		Click(
+			fieldLabel = "Image",
+			locator1 = "Button#BUTTON_LABEL",
+			text = "Select");
+
+		ItemSelector.uploadFile(uploadFileName = "Document_1.jpg");
+
+		AssertClick(
+			key_fieldFieldLabel = "Image",
+			locator1 = "WCEditWebContent#SELECT_BUTTON_2",
+			value1 = "Select");
+
+		ItemSelector.uploadFile(uploadFileName = "Document_2.jpg");
+
+		PortletEntry.publish();
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		for (var imageName : list "Document_1.jpg,Document_2.jpg") {
+			AssertVisible(
+				key_imageName = "${imageName}",
+				locator1 = "DocumentsAndMediaDocument#METADATA_PANEL_IMAGE");
+		}
+
+		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_REMOVE");
 	}
 
 	@description = "This test covers LPS-109066. It ensures that the localizable field available languages can be displayed correctly."
@@ -344,297 +580,10 @@ definition {
 			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
 	}
 
-	@priority = "5"
-	@refactorneeded
-	test EditEntry {
-		property testray.component.names = "Training";
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.edit(
-			dmDocumentTypeDescriptionEdit = "DM Document Type Description Edit",
-			dmDocumentTypeName = "DM Document Type Name",
-			dmDocumentTypeNameEdit = "DM Document Type Name Edit");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type Name Edit");
-	}
-
-	@description = "This ensures that the user can create a document using edited image field inside document type."
-	@priority = "4"
-	@refactorneeded
-	test ViewDocumentwithEditedImageField {
-		property portal.acceptance = "true";
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Image",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name",
-			imageField = "Document_1.jpg",
-			navTab = "Documents and Media");
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.edit(
-			dmDocumentTypeFieldNameEdit = "Photo",
-			dmDocumentTypeFieldRequiredEdit = "Photo",
-			dmDocumentTypeName = "DM Document Type Name",
-			dmDocumentTypeNameEdit = "DM Document Type Name Edit",
-			fieldFieldLabel = "Image",
-			fieldFieldLabelEdit = "Photo");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "DM Document Title");
-
-		AssertElementPresent(
-			key_fieldFieldLabel = "Photo",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Photo");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title 2",
-			dmDocumentTypeName = "DM Document Type Name Edit",
-			fieldFieldLabel = "Photo",
-			imageDescription = "Photo Description",
-			imageField = "Document_2.jpg",
-			navTab = "Documents and Media");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
-
-		DMDocument.viewDocumentTypePG(
-			fieldFieldLabel = "Photo",
-			imageName = "Document_2.jpg");
-	}
-
-	@description = "This ensures that the user can create a document using edited text field inside document type."
-	@priority = "4"
-	@refactorneeded
-	test ViewDocumentwithEditedTextField {
-		property portal.acceptance = "true";
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name",
-			textField = "DM Document Text");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewDocumentTypePG(textContent = "DM Document Text");
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.edit(
-			dmDocumentTypeFieldNameEdit = "Company",
-			dmDocumentTypeFieldRequiredEdit = "Company",
-			dmDocumentTypeName = "DM Document Type Name",
-			dmDocumentTypeNameEdit = "DM Document Type Name Edit",
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "Company");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "DM Document Title");
-
-		AssertElementPresent(
-			key_fieldFieldLabel = "Company",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Company");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.png",
-			dmDocumentTitle = "DM Document Title 2",
-			dmDocumentTypeName = "DM Document Type Name Edit",
-			fieldFieldLabel = "Company",
-			textField = "Liferay");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
-
-		DMDocument.viewDocumentTypePG(
-			textContent = "Liferay",
-			textFieldLabel = "Company");
-	}
-
-	@description = "This ensures that the user can create a document using edited upload field inside document type."
-	@priority = "4"
-	@refactorneeded
-	test ViewDocumentwithEditedUploadField {
-		property portal.acceptance = "true";
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "Document_1.doc",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Upload",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name",
-			documentsAndMediaField = "Document_1.doc",
-			fieldFieldLabel = "Upload",
-			navTab = "Documents and Media");
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
-
-		DMDocumentType.edit(
-			dmDocumentTypeFieldNameEdit = "Resume",
-			dmDocumentTypeFieldRequiredEdit = "Resume",
-			dmDocumentTypeName = "DM Document Type Name",
-			dmDocumentTypeNameEdit = "DM Document Type Name Edit",
-			fieldFieldLabel = "Upload",
-			fieldFieldLabelEdit = "Resume");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "DM Document Title");
-
-		AssertElementPresent(
-			key_fieldFieldLabel = "Resume",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Resume");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title 2",
-			dmDocumentTypeName = "DM Document Type Name Edit",
-			documentsAndMediaField = "Document_1.doc",
-			fieldFieldLabel = "Resume",
-			navTab = "Documents and Media");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
-
-		DMDocument.viewDocumentTypePG(
-			uploadFieldLabel = "Resume",
-			uploadFile = "Document_1.doc");
-	}
-
-	@description = "This test covers LPS-127131. It ensures that a user can view document with repeatable Image field when editing."
-	@priority = "4"
-	@refactorneeded
-	test ViewDocumentwithRepeatableImageField {
-		property portal.acceptance = "true";
-
-		DMNavigator.openToAddDocumentType(siteURLKey = "guest");
-
-		PortletEntry.inputName(name = "DM Document Type Name");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
-			fieldName = "Image");
-
-		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Image");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.openToAddEntry(
-			dmDocumentTypeName = "DM Document Type Name",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		PortletEntry.inputTitle(title = "DM Document Title");
-
-		Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
-
-		Click(
-			fieldLabel = "Image",
-			locator1 = "Button#BUTTON_LABEL",
-			text = "Select");
-
-		ItemSelector.uploadFile(uploadFileName = "Document_1.jpg");
-
-		AssertClick(
-			key_fieldFieldLabel = "Image",
-			locator1 = "WCEditWebContent#SELECT_BUTTON_2",
-			value1 = "Select");
-
-		ItemSelector.uploadFile(uploadFileName = "Document_2.jpg");
-
-		PortletEntry.publish();
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "DM Document Title");
-
-		for (var imageName : list "Document_1.jpg,Document_2.jpg") {
-			AssertVisible(
-				key_imageName = "${imageName}",
-				locator1 = "DocumentsAndMediaDocument#METADATA_PANEL_IMAGE");
-		}
-
-		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_REMOVE");
-	}
-
 	@description = "This test covers LPS-128182. It ensures that the translated document field can be localized properly."
 	@priority = "3"
 	@refactorneeded
-	test ViewLocalizedDocumentField {
+	test CanViewLocalizedDocumentField {
 		property custom.properties = "dl.actions.visible=true";
 
 		JSONLayout.addPublicLayout(

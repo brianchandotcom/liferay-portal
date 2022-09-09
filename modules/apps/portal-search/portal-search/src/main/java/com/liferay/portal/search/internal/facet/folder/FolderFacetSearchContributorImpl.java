@@ -104,6 +104,13 @@ public class FolderFacetSearchContributorImpl
 		}
 
 		@Override
+		public FolderFacetBuilder order(String order) {
+			_order = order;
+
+			return this;
+		}
+
+		@Override
 		public FolderFacetBuilder selectedFolderIds(long... selectedFolderIds) {
 			_selectedFolderIds = selectedFolderIds;
 
@@ -125,6 +132,8 @@ public class FolderFacetSearchContributorImpl
 				"frequencyThreshold", _frequencyThreshold
 			).put(
 				"maxTerms", _maxTerms
+			).put(
+				"order", _order
 			);
 
 			return facetConfiguration;
@@ -133,6 +142,7 @@ public class FolderFacetSearchContributorImpl
 		private String _aggregationName;
 		private int _frequencyThreshold;
 		private int _maxTerms;
+		private String _order;
 		private final SearchContext _searchContext;
 		private long[] _selectedFolderIds;
 

@@ -12,20 +12,6 @@
  * details.
  */
 
-/**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
- */
-
 import {useParams} from 'react-router-dom';
 
 import Container from '../../../../../components/Layout/Container';
@@ -38,15 +24,13 @@ import {searchUtil} from '../../../../../util/search';
 import useBuildTemplateActions from './useBuildTemplateActions';
 
 const BuildTemplates = () => {
-	const {projectId: _projectId} = useParams();
+	const {projectId} = useParams();
 	const {actions} = useBuildTemplateActions();
 
 	useHeader({
 		timeout: 110,
 		useTabs: [],
 	});
-
-	const projectId = Number(_projectId);
 
 	return (
 		<Container>
@@ -65,7 +49,7 @@ const BuildTemplates = () => {
 							key: 'name',
 							render: () => 'Active',
 							sorteable: true,
-							value: i18n.translate('status-template'),
+							value: i18n.translate('status'),
 						},
 						{
 							clickable: true,
@@ -95,7 +79,10 @@ const BuildTemplates = () => {
 					navigateTo: ({id}) => id?.toString(),
 				}}
 				variables={{
-					filter: searchUtil.eq('projectId', projectId),
+					filter: `${searchUtil.eq(
+						'projectId',
+						Number(projectId)
+					)} and ${searchUtil.eq('template', 'true')}`,
 				}}
 			/>
 		</Container>

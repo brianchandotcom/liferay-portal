@@ -274,6 +274,18 @@ const filters = {
 			name: 'team',
 		},
 	],
+	template: [
+		{
+			label: i18n.translate('template-name'),
+			name: 'template-name',
+			type: 'text',
+		},
+		{
+			label: i18n.translate('status'),
+			name: 'status',
+			type: 'select',
+		},
+	],
 };
 
 export {filters};

@@ -249,6 +249,7 @@ function SpacingSelectorButton({
 				<ClayDropDown.ItemList aria-labelledby={triggerId}>
 					<ClayDropDown.Group header={field?.label}>
 						{Liferay.FeatureFlags['LPS-143206'] &&
+						active &&
 						canSetCustomValue ? (
 							<LengthField
 								className="mb-3 mt-2 px-3"

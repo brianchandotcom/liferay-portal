@@ -84,7 +84,7 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getIcon() {
-		return "page";
+		return "hierarchy";
 	}
 
 	@Override

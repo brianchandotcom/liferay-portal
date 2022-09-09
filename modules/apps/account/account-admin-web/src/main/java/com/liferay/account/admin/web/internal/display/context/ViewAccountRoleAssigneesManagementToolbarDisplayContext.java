@@ -129,13 +129,6 @@ public class ViewAccountRoleAssigneesManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
-	}
-
-	@Override
 	public Boolean isShowCreationMenu() {
 		return _hasAssignUsersPermission();
 	}

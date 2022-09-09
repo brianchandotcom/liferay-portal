@@ -390,13 +390,6 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
-	}
-
-	@Override
 	public Boolean isDisabled() {
 		return false;
 	}

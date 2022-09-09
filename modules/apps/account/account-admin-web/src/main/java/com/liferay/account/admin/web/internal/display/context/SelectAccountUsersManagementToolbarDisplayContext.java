@@ -39,8 +39,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -128,13 +126,6 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 			liferayPortletRequest, getNavigationParam(),
 			ArrayUtil.isEmpty(getNavigationKeys()) ? "all-users" :
 				getNavigationKeys()[0]);
-	}
-
-	@Override
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
 	}
 
 	@Override

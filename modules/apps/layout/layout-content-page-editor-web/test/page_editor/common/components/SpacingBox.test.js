@@ -158,7 +158,7 @@ describe('SpacingBox', () => {
 		window.Liferay.Util.sub = _liferayUtilSub;
 	});
 
-	it('renders given spacing values from StyleBook', async () => {
+	it('renders given spacing values from StyleBook', () => {
 		render(<SpacingBoxTest value={{marginTop: '10'}} />);
 
 		expect(screen.getByLabelText('padding-left')).toHaveTextContent('3rem');
@@ -189,8 +189,8 @@ describe('SpacingBox', () => {
 		const onChange = jest.fn();
 		render(<SpacingBoxTest onChange={onChange} />);
 
-		fireEvent.click(screen.getByLabelText('padding-left'));
-		fireEvent.click(screen.getByLabelText('set-padding-left-to-10'));
+		userEvent.click(screen.getByLabelText('padding-left'));
+		userEvent.click(screen.getByLabelText('set-padding-left-to-10'));
 
 		expect(onChange).toHaveBeenCalledWith('paddingLeft', '10');
 	});
@@ -198,15 +198,15 @@ describe('SpacingBox', () => {
 	it('shows token value next to token name in the dropdown', () => {
 		render(<SpacingBoxTest />);
 
-		fireEvent.click(screen.getByLabelText('padding-left'));
+		userEvent.click(screen.getByLabelText('padding-left'));
 
 		expect(screen.getByText('5rem')).toBeInTheDocument();
 	});
 
-	it('focuses the selected option when the dropdown is opened', async () => {
+	it('focuses the selected option when the dropdown is opened', () => {
 		render(<SpacingBoxTest value={{marginTop: '10'}} />);
 
-		fireEvent.click(screen.getByLabelText('margin-top'));
+		userEvent.click(screen.getByLabelText('margin-top'));
 
 		expect(screen.getByText('Spacer 10').parentElement).toHaveFocus();
 	});
@@ -222,7 +222,7 @@ describe('SpacingBox', () => {
 
 		render(<SpacingBoxTest />);
 
-		fireEvent.click(screen.getByLabelText('padding-right'));
+		userEvent.click(screen.getByLabelText('padding-right'));
 
 		expect(screen.getByText('111px')).toBeInTheDocument();
 	});

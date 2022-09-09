@@ -22,12 +22,12 @@
 </tr>
 <tr>
 	<td>GENERIC_TEXT</td>
-	<td>//*[normalize-space()='${key_textValue}']</td>
+	<td>//*[normalize-space(text())='${key_textValue}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GENERIC_TEXT_ORDER</td>
-	<td>xpath=(//*[normalize-space()='${key_textValue}'])[${index}]</td>
+	<td>xpath=(//*[normalize-space(text())='${key_textValue}'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

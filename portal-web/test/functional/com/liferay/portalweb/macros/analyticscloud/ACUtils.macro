@@ -650,6 +650,26 @@ definition {
 		return "${value}";
 	}
 
+	macro getGroupId {
+		var currentURL = Navigator.getCurrentURL();
+
+		var groupId = StringUtil.extractLast("${currentURL}", "workspace/");
+
+		var groupId = StringUtil.extractFirst("${groupId}", "/");
+
+		return "${groupId}";
+	}
+
+	macro getIPAddress {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+		var extractedIPAddress = StringUtil.extractFirst("${analyticsCloudURL}", ":8080");
+
+		var extractedIPAddress = StringUtil.extractLast("${extractedIPAddress}", "/");
+
+		return "${extractedIPAddress}";
+	}
+
 	macro getIPCountry {
 		var curl = '''https://ipinfo.io''';
 
@@ -1176,22 +1196,6 @@ definition {
 
 			Pause(locator1 = "5000");
 		}
-	}
-
-	macro getGroupId {
-		var currentURL = Navigator.getCurrentURL();
-		var groupId = StringUtil.extractLast("${currentURL}", "workspace/");
-		var groupId = StringUtil.extractFirst("${groupId}", "/");
-
-		return "${groupId}";
-	}
-
-	macro getIPAddress {
-		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-		var extractedIPAddress = StringUtil.extractFirst("${analyticsCloudURL}", ":8080");
-		var extractedIPAddress = StringUtil.extractLast("${extractedIPAddress}", "/");
-
-		return "${extractedIPAddress}";
 	}
 
 }

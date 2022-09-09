@@ -1,89 +1,61 @@
 definition {
 
-	macro goToACAdmin {
-        var currentURL = Navigator.getCurrentURL();
-
-        Navigator.openSpecificURL(url = "${currentURL}admin");
-	}
-
-    macro goToServerAdministration {
-		ProductMenuHelper.expandPanel(panel = "control panel");
-
-		ProductMenuHelper.expandCategory(category = "Configuration");
-
-		ProductMenuHelper.gotoPortlet(portlet = "Server Administration");
-	}
-
-    macro configureMailSettings {
-        ACAdmin.goToServerAdministration();
+	macro configureMailSettings {
+		ACAdmin.goToServerAdministration();
 
 		Navigator.gotoNavItem(navItem = "Mail");
 
-        if (isSet(incomingPOPServer)) {
-		    Type(
-			    locator1 = "ServerAdministrationMail#INCOMING_POP_SERVER",
-			    value1 = "${incomingPOPServer}");
-        }
+		if (isSet(incomingPOPServer)) {
+			Type(
+				locator1 = "ServerAdministrationMail#INCOMING_POP_SERVER",
+				value1 = "${incomingPOPServer}");
+		}
 
-        if (isSet(incomingPort)) {
-            Type(
-                locator1 = "ServerAdministrationMail#INCOMING_PORT",
-                value1 = "${incomingPort}");
+		if (isSet(incomingPort)) {
+			Type(
+				locator1 = "ServerAdministrationMail#INCOMING_PORT",
+				value1 = "${incomingPort}");
 
-		    Check(locator1 = "ServerAdministrationMail#INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX");
-        }
+			Check(locator1 = "ServerAdministrationMail#INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX");
+		}
 
-        if (isSet(userName)) {
-            if ("${needsReply}" == "true") {
-                Type(
-                    locator1 = "ServerAdministrationMail#INCOMING_USER_NAME",
-                    value1 = "recent:${userName}");
-            }
-            else {
-                Type(
-                    locator1 = "ServerAdministrationMail#INCOMING_USER_NAME",
-                    value1 = "${userName}");
-            }
-        }
+		if (isSet(userName)) {
+			Type(
+				locator1 = "ServerAdministrationMail#INCOMING_USER_NAME",
+				value1 = "${userName}");
+		}
 
-        if (isSet(userPassword)) {
-            Type(
-                locator1 = "ServerAdministrationMail#INCOMING_PASSWORD",
-                value1 = "${userPassword}");
-        }
+		if (isSet(userPassword)) {
+			Type(
+				locator1 = "ServerAdministrationMail#INCOMING_PASSWORD",
+				value1 = "${userPassword}");
+		}
 
-        if (isSet(outgoingSMTPServer)) {
-            Type(
-                locator1 = "ServerAdministrationMail#OUTGOING_SMTP_SERVER",
-                value1 = "${outgoingSMTPServer}");
-        }
+		if (isSet(outgoingSMTPServer)) {
+			Type(
+				locator1 = "ServerAdministrationMail#OUTGOING_SMTP_SERVER",
+				value1 = "${outgoingSMTPServer}");
+		}
 
-        if (isSet(outgoingPort)) {
-            Type(
-                locator1 = "ServerAdministrationMail#OUTGOING_PORT",
-                value1 = "${outgoingPort}");
+		if (isSet(outgoingPort)) {
+			Type(
+				locator1 = "ServerAdministrationMail#OUTGOING_PORT",
+				value1 = "${outgoingPort}");
 
-            Check(locator1 = "ServerAdministrationMail#OUTGOING_SECURE_CONNECTION_CHECKBOX");
-        }
+			Check(locator1 = "ServerAdministrationMail#OUTGOING_SECURE_CONNECTION_CHECKBOX");
+		}
 
-        if (isSet(userName)) {
-            if ("${needsReply}" == "true") {
-                Type(
-                    locator1 = "ServerAdministrationMail#OUTGOING_USER_NAME",
-                    value1 = "recent:${userName}");
-            }
-            else {
-                Type(
-                    locator1 = "ServerAdministrationMail#OUTGOING_USER_NAME",
-                    value1 = "${userName}");
-            }
-        }
+		if (isSet(userName)) {
+			Type(
+				locator1 = "ServerAdministrationMail#OUTGOING_USER_NAME",
+				value1 = "${userName}");
+		}
 
-        if (isSet(userPassword)) {
-            Type(
-                locator1 = "ServerAdministrationMail#OUTGOING_PASSWORD",
-                value1 = "${userPassword}");
-        }
+		if (isSet(userPassword)) {
+			Type(
+				locator1 = "ServerAdministrationMail#OUTGOING_PASSWORD",
+				value1 = "${userPassword}");
+		}
 
 		AssertClick(
 			locator1 = "Button#SAVE",
@@ -94,10 +66,24 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-    macro getUserID {
-        var userID = selenium.getElementValue("UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD");
+	macro getUserID {
+		var userID = selenium.getElementValue("UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD");
 
-        return "${userID}";
+		return "${userID}";
+	}
+
+	macro goToACAdmin {
+		var currentURL = Navigator.getCurrentURL();
+
+		Navigator.openSpecificURL(url = "${currentURL}admin");
+	}
+
+	macro goToServerAdministration {
+		ProductMenuHelper.expandPanel(panel = "control panel");
+
+		ProductMenuHelper.expandCategory(category = "Configuration");
+
+		ProductMenuHelper.gotoPortlet(portlet = "Server Administration");
 	}
 
 }

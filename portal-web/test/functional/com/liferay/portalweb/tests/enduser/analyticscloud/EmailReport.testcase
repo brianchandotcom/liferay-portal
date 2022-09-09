@@ -349,7 +349,7 @@ definition {
 		}
 
 		task ("Go to Server Administration > Change SMTP Server Port") {
-		    var extractedIPAddress = ACUtils.getIPAddress();
+			var extractedIPAddress = ACUtils.getIPAddress();
 
 			ACAdmin.configureMailSettings(outgoingSMTPServer = "${extractedIPAddress}");
 		}
@@ -366,7 +366,7 @@ definition {
 			UserNavigator.gotoUser(userScreenName = "bryan.cheung");
 		}
 
-		task ("Go the user ID") {
+		task ("Get the user ID") {
 			var userID = ACAdmin.getUserID();
 		}
 
@@ -381,15 +381,15 @@ definition {
 			var groupId = ACUtils.getGroupId();
 
 			ACApi.sendEmailReport(
-				userID = "${userID}",
-				groupId = "${groupId}",
 				channelId = "${channelId}",
-				frequency = "daily");
+				frequency = "daily",
+				groupId = "${groupId}",
+				userID = "${userID}");
 		}
 
 		task ("Go to the Mock Mock page > Access the email that was received") {
 			MockMock._gotoMail();
-			
+
 			MockMock._gotoMailMessage(asset = "Analytics Cloud: Your Daily Report");
 		}
 

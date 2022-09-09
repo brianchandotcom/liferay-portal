@@ -39,6 +39,20 @@ definition {
 		return "${token}";
 	}
 
+	macro sendEmailReport {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+		var curl = '''
+			${analyticsCloudURL}/o/faro/main/${groupId}/preferences/send_email_report
+			-u 'test@liferay.com:test'
+			-F 'channelId="${channelId}"'
+			-F 'userId="${userID}"'
+			-F 'frequency="${frequency}"'
+			''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	macro viewApiResponseForError {
 
 		// Checks if the API response message explains the reason for the error
@@ -117,20 +131,6 @@ definition {
 				fail("${apiResponse}");
 			}
 		}
-	}
-
-	macro sendEmailReport {
-		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-
-		var curl = '''
-			${analyticsCloudURL}/o/faro/main/${groupId}/preferences/send_email_report
-			-u 'test@liferay.com:test'
-			-F 'channelId="${channelId}"'
-			-F 'userId="${userID}"'
-			-F 'frequency="${frequency}"'
-			''';
-
-		JSONCurlUtil.post("${curl}");
 	}
 
 }

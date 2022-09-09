@@ -15,7 +15,7 @@
 	},
 	"active": false,
 	"label": {
-		"en_US": "EVP Kaleo Fork Instanc"
+		"en_US": "EVP Kaleo Fork Instance"
 	},
 	"name": "EVPKaleoForkInstance",
 	"objectActions": [

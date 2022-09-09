@@ -1,0 +1,10 @@
+definition {
+
+	macro goToACAdmin {
+        var currentURL = Navigator.getCurrentURL();
+
+        Navigator.openSpecificURL(url = "${currentURL}admin");
+	}
+
+
+}

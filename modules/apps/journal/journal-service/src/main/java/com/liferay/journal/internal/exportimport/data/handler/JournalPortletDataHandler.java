@@ -500,60 +500,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		folderActionableDynamicQuery.performCount();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleStagedModelDataHandler(
-		JournalArticleStagedModelDataHandler
-			journalArticleStagedModelDataHandler) {
-
-		_journalArticleStagedModelDataHandler =
-			journalArticleStagedModelDataHandler;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalContent(JournalContent journalContent) {
-		_journalContent = journalContent;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalFeedLocalService(
-		JournalFeedLocalService journalFeedLocalService) {
-
-		_journalFeedLocalService = journalFeedLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalFolderLocalService(
-		JournalFolderLocalService journalFolderLocalService) {
-
-		_journalFolderLocalService = journalFolderLocalService;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private ActionableDynamicQuery _getArticleActionableDynamicQuery(
 		PortletDataContext portletDataContext) {
 
@@ -784,11 +730,13 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	@Reference
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
 
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
+	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
@@ -798,12 +746,24 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	@Reference
 	private ExportImportHelper _exportImportHelper;
 
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
 	private JournalArticleStagedModelDataHandler
 		_journalArticleStagedModelDataHandler;
+
+	@Reference
 	private JournalContent _journalContent;
+
+	@Reference
 	private JournalFeedLocalService _journalFeedLocalService;
+
+	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private Portal _portal;

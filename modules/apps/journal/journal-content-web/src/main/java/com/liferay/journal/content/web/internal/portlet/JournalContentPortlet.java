@@ -264,13 +264,6 @@ public class JournalContentPortlet extends MVCPortlet {
 		}
 	}
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.journal.content.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	private static final long _CLASS_NAME_ID = PortalUtil.getClassNameId(
 		DDMStructure.class);
 
@@ -297,6 +290,11 @@ public class JournalContentPortlet extends MVCPortlet {
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.journal.content.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
+	)
+	private Release _release;
 
 	@Reference
 	private TrashEntryService _trashEntryService;

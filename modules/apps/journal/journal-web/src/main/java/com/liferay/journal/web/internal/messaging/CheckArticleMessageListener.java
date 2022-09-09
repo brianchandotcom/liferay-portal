@@ -84,25 +84,6 @@ public class CheckArticleMessageListener
 		_journalArticleLocalService.checkArticles();
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setSchedulerEngineHelper(
-		SchedulerEngineHelper schedulerEngineHelper) {
-
-		_schedulerEngineHelper = schedulerEngineHelper;
-	}
-
 	private void _registerSchedulerEntry(
 		JournalServiceConfiguration journalServiceConfiguration) {
 
@@ -121,7 +102,13 @@ public class CheckArticleMessageListener
 			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference

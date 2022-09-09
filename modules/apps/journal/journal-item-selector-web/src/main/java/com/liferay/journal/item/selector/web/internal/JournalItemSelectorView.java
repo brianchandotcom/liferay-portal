@@ -106,23 +106,6 @@ public class JournalItemSelectorView
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelectorReturnTypeResolverHandler(
-		ItemSelectorReturnTypeResolverHandler
-			itemSelectorReturnTypeResolverHandler) {
-
-		_itemSelectorReturnTypeResolverHandler =
-			itemSelectorReturnTypeResolverHandler;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.item.selector.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static final List<String> _portletIds = Collections.singletonList(
 		JournalPortletKeys.JOURNAL);
 	private static final List<ItemSelectorReturnType>
@@ -131,12 +114,16 @@ public class JournalItemSelectorView
 				new FileEntryItemSelectorReturnType(),
 				new URLItemSelectorReturnType()));
 
+	@Reference
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
 
 	@Reference
 	private Language _language;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.item.selector.web)"
+	)
 	private ServletContext _servletContext;
 
 }

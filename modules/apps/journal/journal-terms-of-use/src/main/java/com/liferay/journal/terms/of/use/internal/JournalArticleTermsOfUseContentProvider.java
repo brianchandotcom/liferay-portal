@@ -60,14 +60,6 @@ public class JournalArticleTermsOfUseContentProvider
 			httpServletRequest, httpServletResponse, _JSP_PATH_VIEW);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.terms.of.use)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private void _includeJSPPath(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String jspPath)
@@ -100,6 +92,9 @@ public class JournalArticleTermsOfUseContentProvider
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.terms.of.use)"
+	)
 	private ServletContext _servletContext;
 
 }

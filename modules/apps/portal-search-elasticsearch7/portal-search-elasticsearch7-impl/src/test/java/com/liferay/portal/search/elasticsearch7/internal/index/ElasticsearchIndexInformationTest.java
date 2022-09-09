@@ -17,10 +17,12 @@ package com.liferay.portal.search.elasticsearch7.internal.index;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.test.util.AssertUtils;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -119,13 +121,24 @@ public class ElasticsearchIndexInformationTest {
 	private ElasticsearchIndexInformation _createElasticsearchIndexInformation(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		return new ElasticsearchIndexInformation() {
-			{
-				setElasticsearchClientResolver(elasticsearchClientResolver);
-				setIndexNameBuilder(
-					ElasticsearchIndexInformationTest::_getIndexNameBuilder);
-			}
-		};
+		ElasticsearchIndexInformation elasticsearchIndexInformation =
+			new ElasticsearchIndexInformation();
+
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexInformation, "_elasticsearchClientResolver",
+			elasticsearchClientResolver);
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexInformation, "_indexNameBuilder",
+			new IndexNameBuilder() {
+
+				@Override
+				public String getIndexName(long companyId) {
+					return "test-" + companyId;
+				}
+
+			});
+
+		return elasticsearchIndexInformation;
 	}
 
 	private JSONObject _loadJSONObject(String suffix) throws Exception {

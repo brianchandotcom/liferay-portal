@@ -73,11 +73,12 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 			String[] textParts = text.split(":");
 
 			if (textParts.length >= 3) {
-				GradleDependency gradleDependency = new GradleDependency(
-					_configuration, textParts[0], textParts[1], textParts[2],
-					_methodCallLineNumber, _methodCallLastLineNumber);
-
 				if (_inDependencies) {
+					GradleDependency gradleDependency = new GradleDependency(
+						_configuration, textParts[0], textParts[1],
+						textParts[2], _methodCallLineNumber,
+						_methodCallLastLineNumber);
+
 					if (_inBuildScript) {
 						_buildScriptDependencies.add(gradleDependency);
 					}
@@ -131,12 +132,12 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 		}
 
 		if (gav) {
-			GradleDependency gradleDependency = new GradleDependency(
-				_configuration, keyValues.get("group"), keyValues.get("name"),
-				keyValues.get("version"), _methodCallLineNumber,
-				_methodCallLastLineNumber);
-
 			if (_inDependencies) {
+				GradleDependency gradleDependency = new GradleDependency(
+					_configuration, keyValues.get("group"),
+					keyValues.get("name"), keyValues.get("version"),
+					_methodCallLineNumber, _methodCallLastLineNumber);
+
 				if (_inBuildScript) {
 					_buildScriptDependencies.add(gradleDependency);
 				}

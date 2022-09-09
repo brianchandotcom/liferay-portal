@@ -22,6 +22,7 @@ import com.liferay.object.exception.ObjectRelationshipParameterObjectFieldIdExce
 import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.exception.ObjectRelationshipTypeException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.object.internal.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -35,6 +36,8 @@ import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.object.util.ObjectRelationshipUtil;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -111,6 +114,13 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectDefinition objectDefinition1 =
 				_objectDefinitionPersistence.findByPrimaryKey(
 					objectRelationship.getObjectDefinitionId1());
+
+			if (_hasManyToManyObjectRelationshipMappingTableValues(
+					objectDefinition1, objectDefinition2, objectRelationship,
+					primaryKey1, primaryKey2)) {
+
+				return;
+			}
 
 			runSQL(
 				StringBundler.concat(
@@ -506,6 +516,43 @@ public class ObjectRelationshipLocalServiceImpl
 
 		return objectRelationshipLocalService.updateObjectRelationship(
 			objectRelationship);
+	}
+
+	private boolean _hasManyToManyObjectRelationshipMappingTableValues(
+		ObjectDefinition objectDefinition1, ObjectDefinition objectDefinition2,
+		ObjectRelationship objectRelationship, long primaryKey1,
+		long primaryKey2) {
+
+		DynamicObjectRelationshipMappingTable
+			dynamicObjectRelationshipMappingTable =
+				new DynamicObjectRelationshipMappingTable(
+					objectDefinition1.getPKObjectFieldDBColumnName(),
+					objectDefinition2.getPKObjectFieldDBColumnName(),
+					objectRelationship.getDBTableName());
+
+		Column<DynamicObjectRelationshipMappingTable, Long> primaryKeyColumn1 =
+			dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn1();
+
+		Column<DynamicObjectRelationshipMappingTable, Long> primaryKeyColumn2 =
+			dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn2();
+
+		int objectRelationshipMappingTableValuesCount = dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				dynamicObjectRelationshipMappingTable
+			).where(
+				primaryKeyColumn1.eq(
+					primaryKey1
+				).and(
+					primaryKeyColumn2.eq(primaryKey2)
+				)
+			));
+
+		if (objectRelationshipMappingTableValuesCount > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _validate(

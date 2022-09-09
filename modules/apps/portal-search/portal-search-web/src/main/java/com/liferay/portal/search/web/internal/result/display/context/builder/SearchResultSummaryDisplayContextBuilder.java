@@ -575,11 +575,12 @@ public class SearchResultSummaryDisplayContextBuilder {
 	private void _buildCreatorUserName(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
-		String creatorUserName = _getFieldValueString(Field.USER_NAME);
+		User user = _userLocalService.fetchUser(
+			_getFieldValueLong(Field.USER_ID));
 
-		if (!Validator.isBlank(creatorUserName)) {
+		if (user != null) {
 			searchResultSummaryDisplayContext.setCreatorUserName(
-				creatorUserName);
+				user.getFullName());
 			searchResultSummaryDisplayContext.setCreatorVisible(true);
 		}
 	}
@@ -849,7 +850,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 
 		if (user != null) {
 			searchResultSummaryDisplayContext.setModifiedByUserName(
-				user.getScreenName());
+				user.getFullName());
 
 			searchResultSummaryDisplayContext.setModifiedByUserNameVisible(
 				true);

@@ -16,6 +16,8 @@ package com.liferay.portal.log4j.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 
+import java.io.File;
+
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
@@ -66,7 +68,7 @@ public class CentralizedConfiguration extends AbstractConfiguration {
 		loggerContext.updateLoggers();
 	}
 
-	public String getCompanyLogDirectory(long companyId) {
+	public File getCompanyLogDirectory(long companyId) {
 		CompanyLogRoutingAppender companyLogRoutingAppender =
 			_companyLogRoutingAppender;
 

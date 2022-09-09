@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.util.List;
@@ -78,7 +79,7 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 		appender.append(logEvent);
 	}
 
-	public String getCompanyLogDirectory(long companyId) {
+	public File getCompanyLogDirectory(long companyId) {
 		Appender appender = _appenders.get(companyId);
 
 		if (appender instanceof RollingFileAppender) {
@@ -87,8 +88,9 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 
 			String filePattern = rollingFileAppender.getFilePattern();
 
-			return filePattern.substring(
-				0, filePattern.lastIndexOf(CharPool.SLASH));
+			return new File(
+				filePattern.substring(
+					0, filePattern.lastIndexOf(CharPool.SLASH)));
 		}
 
 		return null;

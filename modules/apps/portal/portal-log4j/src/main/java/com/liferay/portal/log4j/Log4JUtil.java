@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.log4j.internal.Log4jConfigUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -98,7 +99,7 @@ public class Log4JUtil {
 		}
 	}
 
-	public static String getCompanyLogDirectory(long companyId) {
+	public static File getCompanyLogDirectory(long companyId) {
 		return Log4jConfigUtil.getCompanyLogDirectory(companyId);
 	}
 

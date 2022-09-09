@@ -65,7 +65,7 @@ public interface PhoneLocalService
 	 */
 	public Phone addPhone(
 			long userId, String className, long classPK, String number,
-			String extension, long typeId, boolean primary,
+			String extension, long listTypeId, boolean primary,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -299,7 +299,7 @@ public interface PhoneLocalService
 	public int getPhonesCount();
 
 	public Phone updatePhone(
-			long phoneId, String number, String extension, long typeId,
+			long phoneId, String number, String extension, long listTypeId,
 			boolean primary)
 		throws PortalException;
 

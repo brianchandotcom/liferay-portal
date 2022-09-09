@@ -46,12 +46,12 @@ public class PhoneLocalServiceUtil {
 	 */
 	public static Phone addPhone(
 			long userId, String className, long classPK, String number,
-			String extension, long typeId, boolean primary,
+			String extension, long listTypeId, boolean primary,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addPhone(
-			userId, className, classPK, number, extension, typeId, primary,
+			userId, className, classPK, number, extension, listTypeId, primary,
 			serviceContext);
 	}
 
@@ -335,12 +335,12 @@ public class PhoneLocalServiceUtil {
 	}
 
 	public static Phone updatePhone(
-			long phoneId, String number, String extension, long typeId,
+			long phoneId, String number, String extension, long listTypeId,
 			boolean primary)
 		throws PortalException {
 
 		return getService().updatePhone(
-			phoneId, number, extension, typeId, primary);
+			phoneId, number, extension, listTypeId, primary);
 	}
 
 	/**

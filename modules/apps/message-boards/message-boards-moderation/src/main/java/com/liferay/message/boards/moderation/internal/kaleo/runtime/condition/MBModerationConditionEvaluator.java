@@ -63,25 +63,20 @@ public class MBModerationConditionEvaluator implements ConditionEvaluator {
 		long userId = GetterUtil.getLong(
 			workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
 
+		if (_mbStatsUserLocalService.getMessageCountByUserId(userId) >=
+			mbModerationGroupConfiguration.minimumContributedMessages()) {
+
+			return "approve";
+		}
+
 		User user = _userLocalService.getUser(userId);
 
-		String emailAddress = user.getEmailAddress();
-
-		String[] authorizedDomains =
-			mbModerationGroupConfiguration.authorizedDomains();
-
-		for (String authorizedDomain : authorizedDomains) {
+		for (String authorizedDomain : mbModerationGroupConfiguration.authorizedDomains()) {
 			if (Validator.isNotNull(authorizedDomain) &&
-				StringUtil.endsWith(emailAddress, authorizedDomain)) {
+				StringUtil.endsWith(user.getEmailAddress(), authorizedDomain)) {
 
 				return "approve";
 			}
-		}
-
-		if (_mbStatsUserLocalService.getMessageCountByUserId(userId) >=
-				mbModerationGroupConfiguration.minimumContributedMessages()) {
-
-			return "approve";
 		}
 
 		return "review";

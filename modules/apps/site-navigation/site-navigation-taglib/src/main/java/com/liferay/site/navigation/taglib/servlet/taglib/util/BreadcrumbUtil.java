@@ -14,6 +14,11 @@
 
 package com.liferay.site.navigation.taglib.servlet.taglib.util;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -45,6 +50,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -344,11 +350,13 @@ public class BreadcrumbUtil {
 				themeDisplay.getLocale(), "control-panel");
 		}
 
-		String infoItemName = (String)httpServletRequest.getAttribute(
-			"INFO_ITEM_NAME");
+		if (layout.isTypeAssetDisplay()) {
+			String infoItemName = _getInfoItemName(
+				httpServletRequest, themeDisplay.getLocale());
 
-		if (Validator.isNotNull(infoItemName) && layout.isTypeAssetDisplay()) {
-			layoutName = HtmlUtil.escape(infoItemName);
+			if (Validator.isNotNull(infoItemName)) {
+				layoutName = HtmlUtil.escape(infoItemName);
+			}
 		}
 
 		breadcrumbEntry.setTitle(layoutName);
@@ -363,6 +371,47 @@ public class BreadcrumbUtil {
 		breadcrumbEntry.setURL(layoutURL);
 
 		breadcrumbEntries.add(breadcrumbEntry);
+	}
+
+	private static String _getInfoItemName(
+		HttpServletRequest httpServletRequest, Locale locale) {
+
+		Object infoItem = httpServletRequest.getAttribute(
+			InfoDisplayWebKeys.INFO_ITEM);
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			(InfoItemFieldValuesProvider)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER);
+
+		if ((infoItem != null) && (infoItemFieldValuesProvider != null)) {
+			InfoItemFieldValues infoItemFieldValues =
+				infoItemFieldValuesProvider.getInfoItemFieldValues(infoItem);
+
+			InfoFieldValue<Object> titleInfoFieldValue =
+				infoItemFieldValues.getInfoFieldValue("title");
+
+			if (titleInfoFieldValue != null) {
+				return HtmlUtil.escape(
+					String.valueOf(titleInfoFieldValue.getValue(locale)));
+			}
+
+			InfoFieldValue<Object> nameInfoFieldValue =
+				infoItemFieldValues.getInfoFieldValue("name");
+
+			if (nameInfoFieldValue != null) {
+				return HtmlUtil.escape(
+					String.valueOf(nameInfoFieldValue.getValue(locale)));
+			}
+		}
+
+		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY);
+
+		if (assetEntry != null) {
+			return HtmlUtil.escape(assetEntry.getTitle(locale));
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private static LayoutSet _getParentLayoutSet(LayoutSet layoutSet)

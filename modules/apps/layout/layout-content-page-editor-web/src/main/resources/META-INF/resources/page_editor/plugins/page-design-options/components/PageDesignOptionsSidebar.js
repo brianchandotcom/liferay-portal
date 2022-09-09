@@ -204,7 +204,7 @@ const OptionList = ({options = [], icon, type}) => {
 	}
 
 	return (
-		<ul className="list-unstyled mt-3">
+		<ul className="list-unstyled mt-4">
 			{options.map(
 				(
 					{imagePreviewURL, isActive, name, onClick, subtitle},

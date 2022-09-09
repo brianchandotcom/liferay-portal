@@ -73,7 +73,7 @@ export default function ContentFilter({
 				</ClayDropDown.ItemList>
 			</ClayDropDown>
 
-			<SearchForm onChange={onChangeInput} />
+			<SearchForm className="mb-3" onChange={onChangeInput} />
 		</div>
 	);
 }

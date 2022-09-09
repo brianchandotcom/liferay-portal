@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,15 +13,11 @@
 
 import ClayTable from '@clayui/table';
 
-type Columns<T> = {
-	columnKey: string;
-	label: string;
-	render?: (data: T[keyof T], item: T) => JSX.Element;
-};
+import TableColumn from '../../interfaces/tableColumn';
 
-type TableProps<T> = {
+interface TableProps<T> {
 	borderless?: boolean;
-	columns: Columns<T>[];
+	columns: TableColumn<T>[];
 	responsive?: boolean;
 	rows: T[];
 };
@@ -28,7 +26,7 @@ const Table = <T extends unknown>({columns, rows, ...props}: TableProps<T>) => (
 	<ClayTable {...props} noWrap={true} tableVerticalAlignment="middle">
 		<ClayTable.Head>
 			<ClayTable.Row>
-				{columns.map((column: Columns<T>, index: number) => (
+				{columns.map((column: TableColumn<T>, index: number) => (
 					<ClayTable.Cell align="left" headingCell key={index}>
 						<span className="text-neutral-10">{column.label}</span>
 					</ClayTable.Cell>
@@ -38,20 +36,22 @@ const Table = <T extends unknown>({columns, rows, ...props}: TableProps<T>) => (
 
 		<ClayTable.Body>
 			{rows.map((row, index) => (
-				<ClayTable.Row key={index}>
+				<ClayTable.Row key={index}
+				 >
 					{columns.map((column, index) => {
 						const data = row[column.columnKey as keyof T];
+						console.log("🚀 ~ file: Table.tsx ~ line 43 ~ {columns.map ~ data", row)
+
 
 						return (
-							<ClayTable.Cell
-								align="left"
+							<ClayTable.Cell  align="left"
 								className="font-weight-normal py-5 text-neutral-10"
 								headingCell
-								key={index}
+								key={index}				
 							>
 								{column.render
 									? column.render(data, row)
-									: data}
+									: data} 
 							</ClayTable.Cell>
 						);
 					})}

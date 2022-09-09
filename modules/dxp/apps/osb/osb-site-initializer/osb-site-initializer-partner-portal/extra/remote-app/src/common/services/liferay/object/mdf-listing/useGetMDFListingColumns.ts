@@ -12,7 +12,9 @@
 import useSWR from 'swr';
 
 import {Liferay} from '../..';
+import TableColumn from '../../../../../routes/MDFRequestList/interfaces/tableColumn';
 import {MDFColumnKey} from '../../../../enums/mdfColumnKey';
+import { MDFRequestListItem } from '../../../../interfaces/mdfRequestListItem';
 import {LiferayAPIs} from '../../common/enums/apis';
 import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';
@@ -20,6 +22,7 @@ import liferayFetcher from '../../common/utils/fetcher';
 interface MDFListingColumn {
 	externalReferenceCode: MDFColumnKey;
 	label: string;
+	render?: () => JSX.Element;
 }
 
 export default function useGetMDFListingColumns() {
@@ -31,9 +34,9 @@ export default function useGetMDFListingColumns() {
 
 	return {
 		...swr,
-		data: swr.data?.items.map((item) => ({
+		data: swr.data?.items.map<TableColumn<MDFRequestListItem>>((item) => ({
 			columnKey: item.externalReferenceCode,
-			label: item.label,
+			label: item.label
 		})),
 	};
 }

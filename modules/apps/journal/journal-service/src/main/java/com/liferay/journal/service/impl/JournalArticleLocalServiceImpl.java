@@ -7843,7 +7843,7 @@ public class JournalArticleLocalServiceImpl
 				themeDisplay, tokens, viewMode, languageId, document,
 				portletRequestModel, script, propagateException,
 				HashMapBuilder.<String, Object>put(
-					"friendlyURL", _getFriendlyURL(friendlyURLMap, themeDisplay)
+					"friendlyURL", _getFriendlyURL(friendlyURLMap, languageId)
 				).put(
 					"friendlyURLs", friendlyURLMap
 				).build());
@@ -8975,10 +8975,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	private String _getFriendlyURL(
-			Map<String, String> friendlyURLMap, ThemeDisplay themeDisplay)
-		throws PortalException {
+		Map<String, String> friendlyURLMap, String languageId) {
 
-		String friendlyURL = friendlyURLMap.get(themeDisplay.getLanguageId());
+		String friendlyURL = friendlyURLMap.get(languageId);
 
 		if (Validator.isNotNull(friendlyURL)) {
 			return friendlyURL;

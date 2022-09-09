@@ -218,13 +218,6 @@ public class ExpandoPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setExpandoColumnService(
-		ExpandoColumnService expandoColumnService) {
-
-		_expandoColumnService = expandoColumnService;
-	}
-
 	private Serializable _getDefaultValue(ActionRequest actionRequest, int type)
 		throws Exception {
 
@@ -455,6 +448,7 @@ public class ExpandoPortlet extends MVCPortlet {
 		expandoBridge.setAttributeProperties(name, unicodeProperties);
 	}
 
+	@Reference
 	private ExpandoColumnService _expandoColumnService;
 
 	@Reference

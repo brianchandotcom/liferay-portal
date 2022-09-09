@@ -114,15 +114,8 @@ public class StagedExpandoTableStagedModelDataHandler
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.expando.kernel.model.adapter.StagedExpandoTable)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.expando.kernel.model.adapter.StagedExpandoTable)"
 	)
-	protected void setStagedModelRepository(
-		StagedModelRepository<StagedExpandoTable> stagedModelRepository) {
-
-		_stagedModelRepository = stagedModelRepository;
-	}
-
 	private StagedModelRepository<StagedExpandoTable> _stagedModelRepository;
 
 }

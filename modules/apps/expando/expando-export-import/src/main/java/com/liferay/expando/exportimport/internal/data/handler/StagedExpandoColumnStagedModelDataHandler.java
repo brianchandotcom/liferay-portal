@@ -196,19 +196,12 @@ public class StagedExpandoColumnStagedModelDataHandler
 			stagedExpandoColumn, importedExpandoColumn);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.expando.kernel.model.adapter.StagedExpandoColumn)",
-		unbind = "-"
-	)
-	protected void setStagedModelRepository(
-		StagedModelRepository<StagedExpandoColumn> stagedModelRepository) {
-
-		_stagedModelRepository = stagedModelRepository;
-	}
-
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.expando.kernel.model.adapter.StagedExpandoColumn)"
+	)
 	private StagedModelRepository<StagedExpandoColumn> _stagedModelRepository;
 
 }

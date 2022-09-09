@@ -303,18 +303,6 @@ public class StagedExpandoColumnStagedModelRepository
 			expandoColumn, ExpandoColumn.class, StagedExpandoColumn.class);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.expando.kernel.model.adapter.StagedExpandoTable)",
-		unbind = "-"
-	)
-	protected void setStagedExpandoTableStagedModelRepository(
-		StagedModelRepository<StagedExpandoTable>
-			stagedExpandoTableStagedModelRepository) {
-
-		_stagedExpandoTableStagedModelRepository =
-			stagedExpandoTableStagedModelRepository;
-	}
-
 	private String _parseExpandoColumnName(String uuid) {
 		return uuid.substring(uuid.lastIndexOf(StringPool.POUND) + 1);
 	}
@@ -338,6 +326,9 @@ public class StagedExpandoColumnStagedModelRepository
 	@Reference
 	private ExportImportHelper _exportImportHelper;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.expando.kernel.model.adapter.StagedExpandoTable)"
+	)
 	private StagedModelRepository<StagedExpandoTable>
 		_stagedExpandoTableStagedModelRepository;
 

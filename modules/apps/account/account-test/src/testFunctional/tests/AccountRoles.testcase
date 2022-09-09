@@ -329,6 +329,87 @@ definition {
 		}
 	}
 
+	@description = "Use case for LPS-142654. This test asserts that a user with the correct permissions is able to assign a user to an account role."
+	@priority = "3"
+	test CanAssignUsersToAccountRoleWithPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given one account and two account users are created and one user is granted permissions to access the Account Admin portlet") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			for (var userNumber : list "1,2") {
+				JSONAccountEntryUser.addAccountEntryUser(
+					accountEntryName = "Account Name",
+					userEmailAddress = "userea${userNumber}@liferay.com",
+					userFirstName = "userfn${userNumber}",
+					userLastName = "userln${userNumber}",
+					userScreenName = "usersn${userNumber}");
+			}
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			Accounts.grantUserAccessToAccountAdmin(userEmailAddress = "userea1@liferay.com");
+		}
+
+		task ("When the user with access permissions is given an account role wih permissions to update an account, view existing users and account roles, and assign account roles in an Account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.addOwnedAccountRole(accountRoleTitle = "Assign Account Roles");
+
+			for (var resourceActionIndex : list "UPDATE,VIEW_ACCOUNT_ROLES,VIEW_USERS") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.account.model.AccountEntry",
+					roleTitle = "Assign Account Roles",
+					roleType = "account");
+			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ASSIGN_USERS",
+				resourceName = "com.liferay.account.model.AccountRole",
+				roleTitle = "Assign Account Roles",
+				roleType = "account");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.addAssigneeToRoleViaRolesTab(
+				accountRoleTitle = "Assign Account Roles",
+				assigneeName = "userfn1 userln1");
+		}
+
+		task ("Then the user can assign an account role to another user and the role will be shown in the Users table") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.addAssigneeToRoleViaRolesTab(
+				accountRoleTitle = "Assign Account Roles",
+				assigneeName = "userfn2 userln2");
+
+			Navigator.gotoBack();
+
+			Navigator.gotoNavTab(navTab = "Users");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "lfr-account-roles",
+				tableEntry = "userfn2",
+				tableEntryInfo = "Assign Account Roles");
+		}
+	}
+
 	@description = "This is a use case for LPS-142654. This asserts user with Define Permission can define owned account role permissions."
 	@priority = "4"
 	test CanDefinePermissionsforAccountRoleWithPermissions {

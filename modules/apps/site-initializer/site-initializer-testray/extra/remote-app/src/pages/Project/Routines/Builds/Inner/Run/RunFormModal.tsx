@@ -15,6 +15,7 @@
 import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useParams} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
 import Form from '../../../../../../components/Form';
 import Modal from '../../../../../../components/Modal/index';
@@ -34,10 +35,12 @@ import {searchUtil} from '../../../../../../util/search';
 
 type Run = typeof yupSchema.factorToRun.__outputType;
 type RunFormModalProps = {
+	RunMutate: KeyedMutator<any>;
 	modal: FormModalOptions;
 };
 
 const RunFormModal: React.FC<RunFormModalProps> = ({
+	RunMutate,
 	modal: {modalState, observer, onClose, onError, onSave, onSubmit},
 }) => {
 	const {
@@ -82,6 +85,8 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 		onSubmit(
 			{
 				buildId: buildId as string,
+				factorCategoryId: Form.factorCategoryId,
+				factorOptionId: Form.factorOptionId,
 				id: Form.id,
 				name: Form.factorOptionName.join(' | '),
 				number: modalState ? Form.number : Number(_Number) + 1,
@@ -91,6 +96,7 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 				update: (id, data) => testrayRunRest.update(id, data),
 			}
 		)
+			.then(RunMutate)
 			.then(onSave)
 			.catch(onError);
 	};
@@ -121,21 +127,32 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 			visible
 		>
 			{factorItems.map((factorItem, index) => (
-				<Form.Select
-					defaultValue={factorItem.factorOption?.name}
-					errors={errors}
-					key={index}
-					label={factorItem.factorCategory?.name}
-					name={`factorOptionName.${index}`}
-					options={(factorOptionsList[index] || []).map(
-						({name}: any) => ({
-							label: name,
-							value: name,
-						})
-					)}
-					register={register}
-					required
-				/>
+				<>
+					<input
+						type="hidden"
+						value={factorItem.factorCategory?.id}
+						{...register(`factorCategoryId.${index}`)}
+					/>
+					<input
+						type="hidden"
+						value={factorItem.factorOption?.id}
+						{...register(`factorOptionId.${index}`)}
+					/>
+					<Form.Select
+						defaultValue={factorItem.factorOption?.name}
+						errors={errors}
+						key={index}
+						label={factorItem.factorCategory?.name}
+						name={`factorOptionName.${index}`}
+						options={(factorOptionsList[index] || []).map(
+							({name}: any) => ({
+								label: name,
+								value: name,
+							})
+						)}
+						register={register}
+					/>
+				</>
 			))}
 		</Modal>
 	);

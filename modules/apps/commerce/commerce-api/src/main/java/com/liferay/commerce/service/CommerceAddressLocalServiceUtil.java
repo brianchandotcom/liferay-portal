@@ -107,12 +107,6 @@ public class CommerceAddressLocalServiceUtil {
 		return getService().deleteCommerceAddress(commerceAddress);
 	}
 
-	public static CommerceAddress deleteCommerceAddress(long commerceAddressId)
-		throws PortalException {
-
-		return getService().deleteCommerceAddress(commerceAddressId);
-	}
-
 	public static void deleteCommerceAddresses(String className, long classPK)
 		throws PortalException {
 

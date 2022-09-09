@@ -817,6 +817,13 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
+	public void removeCommerceOrderAddresses(long addressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commerceOrderLocalService.removeCommerceOrderAddresses(addressId);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder reorderCommerceOrder(
 			long userId, long commerceOrderId,
 			com.liferay.commerce.context.CommerceContext commerceContext)
@@ -833,6 +840,14 @@ public class CommerceOrderLocalServiceWrapper
 
 		return _commerceOrderLocalService.resetCommerceOrderShipping(
 			commerceOrderId);
+	}
+
+	@Override
+	public void resetCommerceOrderShippingByAddressId(long addressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commerceOrderLocalService.resetCommerceOrderShippingByAddressId(
+			addressId);
 	}
 
 	@Override

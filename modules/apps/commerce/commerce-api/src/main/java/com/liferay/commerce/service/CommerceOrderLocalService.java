@@ -549,12 +549,18 @@ public interface CommerceOrderLocalService
 			long commerceOrderId, CommerceContext commerceContext)
 		throws PortalException;
 
+	public void removeCommerceOrderAddresses(long addressId)
+		throws PortalException;
+
 	public CommerceOrder reorderCommerceOrder(
 			long userId, long commerceOrderId, CommerceContext commerceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder resetCommerceOrderShipping(long commerceOrderId)
+		throws PortalException;
+
+	public void resetCommerceOrderShippingByAddressId(long addressId)
 		throws PortalException;
 
 	public CommerceOrder resetTermsAndConditions(

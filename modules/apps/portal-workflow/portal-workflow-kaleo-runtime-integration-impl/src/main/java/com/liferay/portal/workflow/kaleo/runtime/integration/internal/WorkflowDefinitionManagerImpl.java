@@ -272,11 +272,11 @@ public class WorkflowDefinitionManagerImpl
 				_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
 					companyId, name, getVersion(version)));
 		}
-		catch (WorkflowException workflowException) {
-			throw workflowException;
-		}
 		catch (NoSuchModelException noSuchModelException) {
 			throw new NoSuchWorkflowDefinitionException(noSuchModelException);
+		}
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);

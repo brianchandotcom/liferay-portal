@@ -330,6 +330,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		List<GradleDependency> gradleDependencies =
 			gradleBuildFile.getGradleDependencies();
 
+		gradleDependencies.addAll(gradleBuildFile.getBuildScriptDependencies());
+
 		Iterator<GradleDependency> iterator = gradleDependencies.iterator();
 
 		while (iterator.hasNext()) {

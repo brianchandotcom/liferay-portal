@@ -21,14 +21,6 @@ describe('MapBase', () => {
 	let bounds;
 
 	class MapImpl extends MapBase {
-		set position(position) {
-			this._STATE_.position = position;
-		}
-
-		get position() {
-			return getLocation();
-		}
-
 		_handlePositionChanged(data) {
 			const geolocation = (data && data.location) || getLocation();
 
@@ -36,8 +28,6 @@ describe('MapBase', () => {
 				newVal: {location: geolocation},
 			});
 		}
-
-		_getControlsConfig() {}
 
 		_createMap(location, controlsConfig) {
 			return {controlsConfig, location, name: 'map'};
@@ -358,12 +348,7 @@ describe('MapBase', () => {
 		it('stores the given position as position', () => {
 			mapImpl._initializeMap(position);
 
-			expect(position.location).toEqual(
-				expect.objectContaining({
-					lat: expect.any(Number),
-					lng: expect.any(Number),
-				})
-			);
+			expect(position).toBe(mapImpl.position);
 		});
 
 		it('stores the given position as originalPosition', () => {
@@ -457,12 +442,7 @@ describe('MapBase', () => {
 
 			mapImpl._handleGeoJSONLayerFeaturesAdded({features: [feature]});
 
-			expect(mapImpl.position).toEqual(
-				expect.objectContaining({
-					lat: expect.any(Number),
-					lng: expect.any(Number),
-				})
-			);
+			expect(mapImpl.position.location).toBe(feature.geometry.location);
 		});
 
 		it('adds the features locations to the map bounds when there are multiple features', () => {
@@ -512,12 +492,7 @@ describe('MapBase', () => {
 
 			mapImpl._handleGeoLocationMarkerDragended({location});
 
-			expect(mapImpl.position).toEqual(
-				expect.objectContaining({
-					lat: expect.any(Number),
-					lng: expect.any(Number),
-				})
-			);
+			expect(mapImpl.position).toEqual({location, name: 'data'});
 		});
 	});
 
@@ -541,12 +516,7 @@ describe('MapBase', () => {
 
 			mapImpl._handleHomeButtonClicked(event);
 
-			expect(mapImpl.position).toEqual(
-				expect.objectContaining({
-					lat: expect.any(Number),
-					lng: expect.any(Number),
-				})
-			);
+			expect(mapImpl.position).toBe(position);
 		});
 	});
 
@@ -577,16 +547,11 @@ describe('MapBase', () => {
 
 	describe('_handleSearchButtonClicked()', () => {
 		it('updates the instance position', () => {
-			const location = getLocation();
+			const position = {location: getLocation()};
 
-			mapImpl._handleSearchButtonClicked(location);
+			mapImpl._handleSearchButtonClicked({position});
 
-			expect(mapImpl.position).toEqual(
-				expect.objectContaining({
-					lat: expect.any(Number),
-					lng: expect.any(Number),
-				})
-			);
+			expect(mapImpl.position).toBe(position);
 		});
 	});
 

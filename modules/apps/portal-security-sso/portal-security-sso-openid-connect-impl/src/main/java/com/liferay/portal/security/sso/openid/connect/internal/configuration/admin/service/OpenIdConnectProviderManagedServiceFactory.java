@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal.configuration.admin.service;
 
+import com.liferay.oauth.client.persistence.constants.OAuthClientPersistenceDefaultValues;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
@@ -489,6 +490,8 @@ public class OpenIdConnectProviderManagedServiceFactory
 						defaultUserId,
 						_generateAuthRequestParametersJSON(properties),
 						authServerWellKnownURI, _generateInfoJSON(properties),
+						OAuthClientPersistenceDefaultValues.
+							DEFAULT_OIDC_USER_INFO_MAPPER_JSON,
 						_generateTokenRequestParametersJSON(properties));
 			}
 			else {
@@ -497,6 +500,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 						oAuthClientEntry.getOAuthClientEntryId(),
 						_generateAuthRequestParametersJSON(properties),
 						authServerWellKnownURI, _generateInfoJSON(properties),
+						oAuthClientEntry.getOIDCUserInfoMapperJSON(),
 						_generateTokenRequestParametersJSON(properties));
 			}
 

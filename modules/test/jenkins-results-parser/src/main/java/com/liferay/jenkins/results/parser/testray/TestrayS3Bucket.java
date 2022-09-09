@@ -49,23 +49,61 @@ public class TestrayS3Bucket {
 	}
 
 	public static boolean googleCredentialsAvailable() {
+		if (_googleCredentialsAvailable != null) {
+			return _googleCredentialsAvailable;
+		}
+
 		String googleApplicationCredentials = System.getenv(
 			"GOOGLE_APPLICATION_CREDENTIALS");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(
+		if (JenkinsResultsParserUtil.isNullOrEmpty(
 				googleApplicationCredentials)) {
 
-			try {
-				_testrayS3Bucket._getBucket();
-			}
-			catch (Exception exception) {
-				return false;
-			}
+			System.out.println(
+				"WARNING: GOOGLE_APPLICATION_CREDENTIALS is not set");
 
-			return true;
+			_googleCredentialsAvailable = false;
+
+			return _googleCredentialsAvailable;
 		}
 
-		return false;
+		File googleApplicationCredentialsFile = new File(
+			googleApplicationCredentials);
+
+		if (!googleApplicationCredentialsFile.exists()) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"WARNING: GOOGLE_APPLICATION_CREDENTIALS=",
+					googleApplicationCredentials, " does not exist"));
+
+			_googleCredentialsAvailable = false;
+
+			return _googleCredentialsAvailable;
+		}
+
+		try {
+			_testrayS3Bucket._getBucket();
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"INFO: Using GOOGLE_APPLICATION_CREDENTIALS=",
+					googleApplicationCredentials));
+
+			_googleCredentialsAvailable = true;
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"WARNING: GOOGLE_APPLICATION_CREDENTIALS=",
+					googleApplicationCredentials,
+					" is configured incorrectly"));
+
+			_googleCredentialsAvailable = false;
+		}
+
+		return _googleCredentialsAvailable;
 	}
 
 	public TestrayS3Object createTestrayS3Object(String key, File file) {
@@ -255,6 +293,7 @@ public class TestrayS3Bucket {
 
 	private static final Pattern _fileNamePattern = Pattern.compile(
 		".*\\.(?!gz)(?<fileExtension>([^\\.]+))(?<gzipFileExtension>\\.gz)?");
+	private static Boolean _googleCredentialsAvailable;
 	private static final TestrayS3Bucket _testrayS3Bucket =
 		new TestrayS3Bucket();
 

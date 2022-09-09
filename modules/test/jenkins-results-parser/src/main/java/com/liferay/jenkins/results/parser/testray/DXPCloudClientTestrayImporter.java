@@ -51,6 +51,13 @@ public class DXPCloudClientTestrayImporter {
 		for (Element testCaseResultElement : _getTestCaseResultElements()) {
 			Element testCaseElement = rootElement.addElement("testcase");
 
+			Matcher matcher = _pattern.matcher(
+				testCaseResultElement.attributeValue("name"));
+
+			if (matcher.find()) {
+				System.out.println("Importing " + matcher.group("testName"));
+			}
+
 			testCaseElement.add(
 				_getTestCaseAttachmentsElement(testCaseResultElement));
 			testCaseElement.add(
@@ -261,7 +268,7 @@ public class DXPCloudClientTestrayImporter {
 
 		Element attachmentsElement = Dom4JUtil.getNewElement("attachments");
 
-		if (!TestrayS3Bucket.googleCredentialsAvailable()) {
+		if (!_googleCredentialsAvailable) {
 			return attachmentsElement;
 		}
 
@@ -519,6 +526,9 @@ public class DXPCloudClientTestrayImporter {
 			_environmentOperatingSystemName = environmentOperatingSystemName;
 		}
 
+		_googleCredentialsAvailable =
+			TestrayS3Bucket.googleCredentialsAvailable();
+
 		String testrayBuildName = _getEnvVarValue("testrayBuildName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
@@ -620,6 +630,7 @@ public class DXPCloudClientTestrayImporter {
 
 	private static String _environmentBrowserName = "Google Chrome 86";
 	private static String _environmentOperatingSystemName = "CentOS 7";
+	private static boolean _googleCredentialsAvailable;
 	private static final LocalDate _localDate = LocalDate.now();
 	private static final Pattern _pattern = Pattern.compile(
 		"test\\[(?<testName>[^\\]]{1,150})[^\\]]*\\]");

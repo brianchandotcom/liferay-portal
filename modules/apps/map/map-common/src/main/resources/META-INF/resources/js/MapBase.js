@@ -811,28 +811,3 @@ Liferay.MapBase = MapBase;
 
 export default MapBase;
 export {MapBase};
-
-// mapImpl:  MapImpl {
-// 	_disposed: false,
-// 	_events: { positionChange: [Function: bound _handlePositionChanged] },
-// 	_listenerHandlers: null,
-// 	_shouldUseFacade: false,
-// 	_STATE_: { position: undefined },
-// 	controls: undefined,
-// 	geolocation: undefined,
-// 	zoom: 11,
-// 	_customControls: {},
-// 	_dialog: null,
-// 	_eventHandlers: [],
-// 	_geoJSONLayer: null,
-// 	_geocoder: null,
-// 	_geolocationMarker: null,
-// 	_map: null,
-// 	_originalPosition: null,
-// 	_handleGeoJSONLayerFeatureClicked: [Function: bound _handleGeoJSONLayerFeatureClicked],
-// 	_handleGeoJSONLayerFeaturesAdded: [Function: bound _handleGeoJSONLayerFeaturesAdded],
-// 	_handleGeoLocationMarkerDragended: [Function: bound _handleGeoLocationMarkerDragended],
-// 	_handleHomeButtonClicked: [Function: bound _handleHomeButtonClicked],
-// 	_handlePositionChanged: [Function: bound _handlePositionChanged],
-// 	_handleSearchButtonClicked: [Function: bound _handleSearchButtonClicked]
-//   }

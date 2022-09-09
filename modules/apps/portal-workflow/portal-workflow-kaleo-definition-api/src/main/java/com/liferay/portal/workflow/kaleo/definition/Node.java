@@ -14,6 +14,9 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -79,7 +82,26 @@ public abstract class Node implements ActionAware, NotificationAware {
 			return _name;
 		}
 
-		return _labelMap.get(LocaleUtil.getDefault());
+		User user = UserLocalServiceUtil.fetchUser(
+			PrincipalThreadLocal.getUserId());
+
+		if ((user != null) && _labelMap.containsKey(user.getLocale())) {
+			return _labelMap.get(user.getLocale());
+		}
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		if (_labelMap.containsKey(locale)) {
+			return _labelMap.get(locale);
+		}
+
+		locale = LocaleUtil.getDefault();
+
+		if (_labelMap.containsKey(locale)) {
+			return _labelMap.get(locale);
+		}
+
+		return _name;
 	}
 
 	public String getDescription() {

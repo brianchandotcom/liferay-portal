@@ -948,14 +948,13 @@ public class CommerceOrderItemLocalServiceImpl
 
 		validateParentCommerceOrderId(commerceOrderItem);
 
-		if (_isDiscountChanged(discountAmount, commerceOrderItem)) {
+		boolean discountChanged = _isDiscountChanged(
+			discountAmount, commerceOrderItem);
+
+		if (!commerceOrderItem.isDiscountManuallyAdjusted() &&
+			discountChanged) {
+
 			commerceOrderItem.setDiscountManuallyAdjusted(true);
-		}
-
-		if (_isPriceChanged(
-				finalPrice, promoPrice, unitPrice, commerceOrderItem)) {
-
-			commerceOrderItem.setPriceManuallyAdjusted(true);
 		}
 
 		commerceOrderItem.setDiscountAmount(
@@ -972,9 +971,19 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setDiscountPercentageLevel4(
 			(BigDecimal)GetterUtil.get(
 				discountPercentageLevel4, BigDecimal.ZERO));
+
+		boolean priceChanged = _isPriceChanged(
+			finalPrice, promoPrice, unitPrice, commerceOrderItem);
+
 		commerceOrderItem.setFinalPrice(
 			(BigDecimal)GetterUtil.get(finalPrice, BigDecimal.ZERO));
+
 		commerceOrderItem.setManuallyAdjusted(true);
+
+		if (!commerceOrderItem.isPriceManuallyAdjusted() && priceChanged) {
+			commerceOrderItem.setPriceManuallyAdjusted(true);
+		}
+
 		commerceOrderItem.setPromoPrice(
 			(BigDecimal)GetterUtil.get(promoPrice, BigDecimal.ZERO));
 		commerceOrderItem.setUnitPrice(
@@ -1004,23 +1013,18 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
-		if (_isDiscountChanged(
-				discountAmount, discountAmountWithTaxAmount,
-				commerceOrderItem)) {
+		boolean discountChanged = _isDiscountChanged(
+			discountAmount, discountAmountWithTaxAmount, commerceOrderItem);
+
+		commerceOrderItem.setDiscountAmount(
+			(BigDecimal)GetterUtil.get(discountAmount, BigDecimal.ZERO));
+
+		if (!commerceOrderItem.isDiscountManuallyAdjusted() &&
+			discountChanged) {
 
 			commerceOrderItem.setDiscountManuallyAdjusted(true);
 		}
 
-		if (_isPriceChanged(
-				finalPrice, finalPriceWithTaxAmount, promoPrice,
-				promoPriceWithTaxAmount, unitPrice, unitPriceWithTaxAmount,
-				commerceOrderItem)) {
-
-			commerceOrderItem.setPriceManuallyAdjusted(true);
-		}
-
-		commerceOrderItem.setDiscountAmount(
-			(BigDecimal)GetterUtil.get(discountAmount, BigDecimal.ZERO));
 		commerceOrderItem.setDiscountPercentageLevel1(
 			(BigDecimal)GetterUtil.get(
 				discountPercentageLevel1, BigDecimal.ZERO));
@@ -1053,6 +1057,11 @@ public class CommerceOrderItemLocalServiceImpl
 			(BigDecimal)GetterUtil.get(
 				discountAmountWithTaxAmount, BigDecimal.ZERO));
 
+		boolean priceChanged = _isPriceChanged(
+			finalPrice, finalPriceWithTaxAmount, promoPrice,
+			promoPriceWithTaxAmount, unitPrice, unitPriceWithTaxAmount,
+			commerceOrderItem);
+
 		commerceOrderItem.setFinalPrice(
 			(BigDecimal)GetterUtil.get(finalPrice, BigDecimal.ZERO));
 
@@ -1061,6 +1070,11 @@ public class CommerceOrderItemLocalServiceImpl
 				finalPriceWithTaxAmount, BigDecimal.ZERO));
 
 		commerceOrderItem.setManuallyAdjusted(true);
+
+		if (!commerceOrderItem.isPriceManuallyAdjusted() && priceChanged) {
+			commerceOrderItem.setPriceManuallyAdjusted(true);
+		}
+
 		commerceOrderItem.setPromoPrice(
 			(BigDecimal)GetterUtil.get(promoPrice, BigDecimal.ZERO));
 
@@ -1090,7 +1104,9 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
-		if (_isPriceChanged(unitPrice, commerceOrderItem)) {
+		if (!commerceOrderItem.isPriceManuallyAdjusted() &&
+			_isPriceChanged(unitPrice, commerceOrderItem)) {
+
 			commerceOrderItem.setPriceManuallyAdjusted(true);
 		}
 
@@ -1108,7 +1124,9 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
-		if (_isPriceChanged(unitPrice, commerceOrderItem)) {
+		if (!commerceOrderItem.isPriceManuallyAdjusted() &&
+			_isPriceChanged(unitPrice, commerceOrderItem)) {
+
 			commerceOrderItem.setPriceManuallyAdjusted(true);
 		}
 
@@ -1132,7 +1150,9 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
-		if (_isPriceChanged(unitPrice, commerceOrderItem)) {
+		if (!commerceOrderItem.isPriceManuallyAdjusted() &&
+			_isPriceChanged(unitPrice, commerceOrderItem)) {
+
 			commerceOrderItem.setPriceManuallyAdjusted(true);
 		}
 

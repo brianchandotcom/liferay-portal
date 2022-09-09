@@ -161,30 +161,6 @@ public class InviteMembersUserNotificationHandler
 		return StringPool.BLANK;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMemberRequestLocalService(
-		MemberRequestLocalService memberRequestLocalService) {
-
-		_memberRequestLocalService = memberRequestLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserNotificationEventLocalService(
-		UserNotificationEventLocalService userNotificationEventLocalService) {
-
-		_userNotificationEventLocalService = userNotificationEventLocalService;
-	}
-
 	private String _getSiteDescriptiveName(
 			long groupId, ServiceContext serviceContext)
 		throws Exception {
@@ -246,13 +222,19 @@ public class InviteMembersUserNotificationHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		InviteMembersUserNotificationHandler.class);
 
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private MemberRequestLocalService _memberRequestLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
 

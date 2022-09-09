@@ -199,13 +199,6 @@ public class InviteMembersPortlet extends MVCPortlet {
 		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.invitation.invite.members.service)(&(release.schema.version>=2.0.0)(!(release.schema.version>=3.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	private List<User> _getAvailableUsers(
 			long companyId, long groupId, String keywords, int start, int end)
 		throws Exception {
@@ -321,6 +314,11 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.invitation.invite.members.service)(&(release.schema.version>=2.0.0)(!(release.schema.version>=3.0.0))))"
+	)
+	private Release _release;
 
 	@Reference
 	private UserLocalService _userLocalService;

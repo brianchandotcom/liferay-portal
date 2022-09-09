@@ -365,8 +365,8 @@ public class ObjectRelatedModelsProviderTest {
 		_setUser(_user);
 
 		_testViewPermission(
-			objectRelatedModelsProvider, objectRelationship, objectEntry1,
-			objectEntryA.getObjectEntryId());
+			_objectDefinition2, objectRelatedModelsProvider, objectRelationship,
+			objectEntry1, objectEntryA.getObjectEntryId());
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
@@ -378,23 +378,74 @@ public class ObjectRelatedModelsProviderTest {
 
 		_testSystemObjectEntryMtoMRelatedModelsProviderImpl();
 
-		ObjectRelationship objectRelationship = _createObjectRelationship(
-			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		_testObjectEntryMtoMRelatedModelsProviderImpl(
+			_objectDefinition1, _objectDefinition1);
+
+		_testObjectEntryMtoMRelatedModelsProviderImpl(
+			_objectDefinition1, _objectDefinition2);
+	}
+
+	private long[] _addUsers(int numberOfUsers) throws Exception {
+		long[] userIds = new long[numberOfUsers];
+
+		for (int i = 0; i < numberOfUsers; i++) {
+			User user = UserTestUtil.addUser();
+
+			userIds[i] = user.getUserId();
+		}
+
+		return userIds;
+	}
+
+	private ObjectRelationship _createObjectRelationship(
+			String relationshipType)
+		throws Exception {
+
+		return _objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(), relationshipType);
+	}
+
+	private void _setUser(User user) {
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
+	}
+
+	private void _testObjectEntryMtoMRelatedModelsProviderImpl(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2)
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				objectDefinition1.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
-				_objectDefinition2.getClassName(),
+				objectDefinition2.getClassName(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		Assert.assertNotNull(objectRelatedModelsProvider);
 
 		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap(),
+			objectDefinition1.getObjectDefinitionId(), Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition2.getObjectDefinitionId(), Collections.emptyMap(),
+			objectDefinition2.getObjectDefinitionId(), Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
 		List<ObjectEntry> objectEntries =
@@ -420,7 +471,7 @@ public class ObjectRelatedModelsProviderTest {
 
 		objectEntry2 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition2.getObjectDefinitionId(), Collections.emptyMap(),
+			objectDefinition2.getObjectDefinitionId(), Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
 		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
@@ -439,8 +490,8 @@ public class ObjectRelatedModelsProviderTest {
 		_setUser(_user);
 
 		_testViewPermission(
-			objectRelatedModelsProvider, objectRelationship, objectEntry1,
-			objectEntry2.getObjectEntryId());
+			objectDefinition2, objectRelatedModelsProvider, objectRelationship,
+			objectEntry1, objectEntry2.getObjectEntryId());
 
 		_setUser(TestPropsValues.getUser());
 
@@ -488,38 +539,6 @@ public class ObjectRelatedModelsProviderTest {
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
-	}
-
-	private long[] _addUsers(int numberOfUsers) throws Exception {
-		long[] userIds = new long[numberOfUsers];
-
-		for (int i = 0; i < numberOfUsers; i++) {
-			User user = UserTestUtil.addUser();
-
-			userIds[i] = user.getUserId();
-		}
-
-		return userIds;
-	}
-
-	private ObjectRelationship _createObjectRelationship(
-			String relationshipType)
-		throws Exception {
-
-		return _objectRelationshipLocalService.addObjectRelationship(
-			TestPropsValues.getUserId(),
-			_objectDefinition1.getObjectDefinitionId(),
-			_objectDefinition2.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), relationshipType);
-	}
-
-	private void _setUser(User user) {
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-
-		PrincipalThreadLocal.setName(user.getUserId());
 	}
 
 	private void _testSystemObjectEntry1toMObjectRelatedModels()
@@ -864,7 +883,7 @@ public class ObjectRelatedModelsProviderTest {
 	}
 
 	private void _testViewPermission(
-			int expectedRelatedModelsCount,
+			int expectedRelatedModelsCount, ObjectDefinition objectDefinition,
 			ObjectRelatedModelsProvider<ObjectEntry>
 				objectRelatedModelsProvider,
 			ObjectRelationship objectRelationship,
@@ -878,7 +897,7 @@ public class ObjectRelatedModelsProviderTest {
 				parentObjectEntry.getObjectEntryId()));
 
 		_resourcePermissionLocalService.setResourcePermissions(
-			TestPropsValues.getCompanyId(), _objectDefinition2.getClassName(),
+			TestPropsValues.getCompanyId(), objectDefinition.getClassName(),
 			scope, String.valueOf(primKey), _role.getRoleId(),
 			new String[] {ActionKeys.VIEW});
 
@@ -889,11 +908,12 @@ public class ObjectRelatedModelsProviderTest {
 				parentObjectEntry.getObjectEntryId()));
 
 		_resourcePermissionLocalService.removeResourcePermission(
-			TestPropsValues.getCompanyId(), _objectDefinition2.getClassName(),
+			TestPropsValues.getCompanyId(), objectDefinition.getClassName(),
 			scope, String.valueOf(primKey), _role.getRoleId(), ActionKeys.VIEW);
 	}
 
 	private void _testViewPermission(
+			ObjectDefinition objectDefinition,
 			ObjectRelatedModelsProvider<ObjectEntry>
 				objectRelatedModelsProvider,
 			ObjectRelationship objectRelationship,
@@ -901,12 +921,13 @@ public class ObjectRelatedModelsProviderTest {
 		throws Exception {
 
 		_testViewPermission(
-			2, objectRelatedModelsProvider, objectRelationship,
-			parentObjectEntry, TestPropsValues.getCompanyId(),
-			ResourceConstants.SCOPE_COMPANY);
+			2, objectDefinition, objectRelatedModelsProvider,
+			objectRelationship, parentObjectEntry,
+			TestPropsValues.getCompanyId(), ResourceConstants.SCOPE_COMPANY);
 		_testViewPermission(
-			1, objectRelatedModelsProvider, objectRelationship,
-			parentObjectEntry, primKey, ResourceConstants.SCOPE_INDIVIDUAL);
+			1, objectDefinition, objectRelatedModelsProvider,
+			objectRelationship, parentObjectEntry, primKey,
+			ResourceConstants.SCOPE_INDIVIDUAL);
 	}
 
 	private static PermissionChecker _originalPermissionChecker;

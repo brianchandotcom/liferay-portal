@@ -835,7 +835,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			}
 
 			long typeId = ParamUtil.getLong(
-				actionRequest, "phoneTypeId" + phonesIndex);
+				actionRequest, "phoneListTypeId" + phonesIndex);
 
 			boolean primary = false;
 
@@ -850,7 +850,7 @@ public class UsersAdminImpl implements UsersAdmin {
 
 			phone.setNumber(number);
 			phone.setExtension(extension);
-			phone.setTypeId(typeId);
+			phone.setListTypeId(typeId);
 			phone.setPrimary(primary);
 
 			phones.add(phone);
@@ -1381,19 +1381,19 @@ public class UsersAdminImpl implements UsersAdmin {
 
 			String number = phone.getNumber();
 			String extension = phone.getExtension();
-			long typeId = phone.getTypeId();
+			long listTypeId = phone.getListTypeId();
 			boolean primary = phone.isPrimary();
 
 			if (phoneId <= 0) {
 				phone = PhoneServiceUtil.addPhone(
-					className, classPK, number, extension, typeId, primary,
+					className, classPK, number, extension, listTypeId, primary,
 					new ServiceContext());
 
 				phoneId = phone.getPhoneId();
 			}
 			else {
 				PhoneServiceUtil.updatePhone(
-					phoneId, number, extension, typeId, primary);
+					phoneId, number, extension, listTypeId, primary);
 			}
 
 			phoneIds.add(phoneId);

@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -118,6 +120,11 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 				return;
 			}
 
+			PrintWriter printWriter = httpServletResponse.getWriter();
+
+			_writeCss(
+				fragmentRendererContext.getFragmentElementId(), printWriter);
+
 			httpServletRequest.setAttribute(
 				KBArticleNavigationFragmentDisplayContext.class.getName(),
 				new KBArticleNavigationFragmentDisplayContext(
@@ -202,6 +209,21 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 		catch (IOException ioException) {
 			_log.error(ioException);
 		}
+	}
+
+	private void _writeCss(String fragmentElementId, PrintWriter printWriter)
+		throws IOException {
+
+		printWriter.write(
+			StringUtil.replace(
+				StringUtil.read(
+					getClass(),
+					"/com/liferay/knowledge/base/web/internal/fragment" +
+						"/renderer/dependencies/styles.tmpl"),
+				"${", "}",
+				HashMapBuilder.put(
+					"fragmentElementId", fragmentElementId
+				).build()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

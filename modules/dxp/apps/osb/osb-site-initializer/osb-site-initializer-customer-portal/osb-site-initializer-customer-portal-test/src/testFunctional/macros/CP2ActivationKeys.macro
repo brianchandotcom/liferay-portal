@@ -286,6 +286,18 @@ definition {
 			locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
 
 		AssertElementPresent(locator1 = "CP2ActivationKeys#GENERATE_KEY_FORM");
+
+macro gotoKeyDeactivation {
+		Click(
+			key_text = "Actions",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_action = "Deactivate",
+			locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
+		
+		AssertElementPresent(
+			locator1 = "CP2ActivationKeys#DEACTIVATE_KEY_PAGE");
 	}
 
 	macro goToKeyTab {

@@ -14,10 +14,13 @@
 
 package com.liferay.portal.test.function;
 
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
@@ -25,17 +28,14 @@ import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ManagedService;
 
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-
 /**
  * @author Raymond Augé
  */
 public class AwaitingConfigurationHolder extends ConfigurationHolder {
 
 	public AwaitingConfigurationHolder(
-			BundleContext bundleContext,
-			ConfigurationAdmin configurationAdmin, String pid, long timeout,
-			TimeUnit timeUnit)
+			BundleContext bundleContext, ConfigurationAdmin configurationAdmin,
+			String pid, long timeout, TimeUnit timeUnit)
 		throws Exception {
 
 		super(

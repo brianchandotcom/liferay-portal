@@ -63,19 +63,10 @@ public class LoginPostAction implements LifecycleAction {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setMemberRequestLocalService(
-		MemberRequestLocalService memberRequestLocalService) {
-
-		_memberRequestLocalService = memberRequestLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
+	@Reference
 	private MemberRequestLocalService _memberRequestLocalService;
+
+	@Reference
 	private Portal _portal;
 
 }

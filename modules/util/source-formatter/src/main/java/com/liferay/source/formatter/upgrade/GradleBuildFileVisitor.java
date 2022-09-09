@@ -91,7 +91,7 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 
 	@Override
 	public void visitBlockStatement(BlockStatement blockStatement) {
-		if (_inDependencies || _inBuildScriptDependencies) {
+		if (_inDependencies) {
 			_blockStatementStack.push(true);
 
 			super.visitBlockStatement(blockStatement);
@@ -183,7 +183,7 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 			_inBuildScriptDependencies = true;
 		}
 
-		if ((_inBuildScriptDependencies || _inDependencies) &&
+		if (_inDependencies &&
 			(_blockStatementStack.isEmpty() ? false :
 				_blockStatementStack.peek())) {
 

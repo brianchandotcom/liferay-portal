@@ -77,11 +77,13 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 					_configuration, textParts[0], textParts[1], textParts[2],
 					_methodCallLineNumber, _methodCallLastLineNumber);
 
-				if (_inBuildScriptDependencies) {
-					_buildScriptDependencies.add(gradleDependency);
-				}
-				else {
-					_gradleDependencies.add(gradleDependency);
+				if (_inDependencies) {
+					if (_inBuildScript) {
+						_buildScriptDependencies.add(gradleDependency);
+					}
+					else {
+						_gradleDependencies.add(gradleDependency);
+					}
 				}
 			}
 		}
@@ -134,11 +136,13 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 				keyValues.get("version"), _methodCallLineNumber,
 				_methodCallLastLineNumber);
 
-			if (_inBuildScriptDependencies) {
-				_buildScriptDependencies.add(gradleDependency);
-			}
-			else if (_inDependencies) {
-				_gradleDependencies.add(gradleDependency);
+			if (_inDependencies) {
+				if (_inBuildScript) {
+					_buildScriptDependencies.add(gradleDependency);
+				}
+				else {
+					_gradleDependencies.add(gradleDependency);
+				}
 			}
 		}
 
@@ -160,10 +164,6 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 			_inDependencies = false;
 		}
 
-		if (!_inBuildScript || !_inDependencies) {
-			_inBuildScriptDependencies = false;
-		}
-
 		String methodName = methodCallExpression.getMethodAsString();
 
 		if (methodName.equals("buildscript")) {
@@ -177,10 +177,6 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 			_dependenciesLineNumber = methodCallExpression.getLineNumber();
 			_dependenciesLastLineNumber =
 				methodCallExpression.getLastLineNumber();
-		}
-
-		if (_inBuildScript && _inDependencies && !_inBuildScriptDependencies) {
-			_inBuildScriptDependencies = true;
 		}
 
 		if (_inDependencies &&
@@ -208,7 +204,6 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 	private final List<GradleDependency> _gradleDependencies =
 		new ArrayList<>();
 	private boolean _inBuildScript;
-	private boolean _inBuildScriptDependencies;
 	private boolean _inDependencies;
 	private int _methodCallLastLineNumber = -1;
 	private int _methodCallLineNumber = -1;

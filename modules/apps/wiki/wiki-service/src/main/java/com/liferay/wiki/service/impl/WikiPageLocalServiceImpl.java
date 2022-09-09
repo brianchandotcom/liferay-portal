@@ -3223,9 +3223,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		serviceContext.setCommand(Constants.ADD);
 
-		addPage(
+		WikiPage newPage = addPage(
 			userId, nodeId, title, version, content, summary, false, format,
 			head, parentTitle, redirectTitle, serviceContext);
+
+		_resourceLocalService.deleteResource(
+			page.getCompanyId(), WikiPage.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, newPage.getResourcePrimKey());
+
+		_resourceLocalService.copyModelResources(
+			page.getCompanyId(), WikiPage.class.getName(),
+			page.getResourcePrimKey(), newPage.getResourcePrimKey());
 
 		WorkflowThreadLocal.setEnabled(workflowEnabled);
 

@@ -160,13 +160,6 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
-
-		return searchActionURL.toString();
-	}
-
-	@Override
 	public String getSearchFormName() {
 		return "searchFm";
 	}

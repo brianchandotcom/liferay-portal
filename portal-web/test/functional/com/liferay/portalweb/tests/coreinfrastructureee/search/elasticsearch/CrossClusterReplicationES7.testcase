@@ -104,6 +104,10 @@ definition {
 	test BreakWorkflowSLA {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#BreakWorkflowSLA";
 
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = "1",
+			slaJobInterval = "1");
+
 		CrossClusterReplication.setupCrossClusterReplication();
 
 		Navigator.openURL();

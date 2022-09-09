@@ -24,7 +24,8 @@ import java.util.Objects;
  * @author Leonardo Barros
  */
 public class IsURLFunction
-	implements DDMExpressionFunction.Function1<Object, Boolean> {
+	implements DDMExpressionFunction.Function1<Object, Boolean>,
+			   DDMExpressionFunction.Function2<Object, Boolean, Boolean> {
 
 	public static final String NAME = "isURL";
 
@@ -38,6 +39,18 @@ public class IsURLFunction
 		}
 
 		return Validator.isUrl(parameter.toString());
+	}
+
+	@Override
+	public Boolean apply(Object parameter, Boolean acceptRootRelative) {
+		if ((parameter == null) ||
+			Objects.equals(parameter.toString(), Http.HTTP_WITH_SLASH) ||
+			Objects.equals(parameter.toString(), Http.HTTPS_WITH_SLASH)) {
+
+			return false;
+		}
+
+		return Validator.isUrl(parameter.toString(), acceptRootRelative);
 	}
 
 	@Override

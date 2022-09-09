@@ -160,6 +160,20 @@ public class ObjectDefinitionSerDes {
 			sb.append(objectDefinition.getEnableComments());
 		}
 
+		if (objectDefinition.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinition.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (objectDefinition.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -518,6 +532,15 @@ public class ObjectDefinitionSerDes {
 				String.valueOf(objectDefinition.getEnableComments()));
 		}
 
+		if (objectDefinition.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(objectDefinition.getExternalReferenceCode()));
+		}
+
 		if (objectDefinition.getId() == null) {
 			map.put("id", null);
 		}
@@ -738,6 +761,14 @@ public class ObjectDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setEnableComments(
 						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

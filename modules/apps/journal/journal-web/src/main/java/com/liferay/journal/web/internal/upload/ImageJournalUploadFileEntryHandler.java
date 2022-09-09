@@ -114,26 +114,6 @@ public class ImageJournalUploadFileEntryHandler
 			JournalFileUploadsConfiguration.class, properties);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.journal.model.JournalArticle)",
-		unbind = "-"
-	)
-	protected void setJournalArticleModelResourcePermission(
-		ModelResourcePermission<JournalArticle> modelResourcePermission) {
-
-		_journalArticleModelResourcePermission = modelResourcePermission;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.journal.model.JournalFolder)",
-		unbind = "-"
-	)
-	protected void setJournalFolderModelResourcePermission(
-		ModelResourcePermission<JournalFolder> modelResourcePermission) {
-
-		_journalFolderModelResourcePermission = modelResourcePermission;
-	}
-
 	private FileEntry _addTempFileEntry(
 			String fileName, InputStream inputStream, String parameterName,
 			UploadPortletRequest uploadPortletRequest,
@@ -229,10 +209,18 @@ public class ImageJournalUploadFileEntryHandler
 	@Reference
 	private DLValidator _dlValidator;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+	)
 	private ModelResourcePermission<JournalArticle>
 		_journalArticleModelResourcePermission;
+
 	private volatile JournalFileUploadsConfiguration
 		_journalFileUploadsConfiguration;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalFolder)"
+	)
 	private ModelResourcePermission<JournalFolder>
 		_journalFolderModelResourcePermission;
 

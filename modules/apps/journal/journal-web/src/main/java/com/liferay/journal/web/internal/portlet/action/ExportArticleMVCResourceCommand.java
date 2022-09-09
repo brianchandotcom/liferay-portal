@@ -106,24 +106,13 @@ public class ExportArticleMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setExportArticleHelper(
-		ExportArticleHelper exportArticleHelper) {
-
-		_exportArticleHelper = exportArticleHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportArticleMVCResourceCommand.class);
 
+	@Reference
 	private ExportArticleHelper _exportArticleHelper;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference

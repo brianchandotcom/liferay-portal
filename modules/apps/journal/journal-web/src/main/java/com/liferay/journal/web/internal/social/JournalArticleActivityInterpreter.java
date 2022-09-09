@@ -212,13 +212,6 @@ public class JournalArticleActivityInterpreter
 			permissionChecker, activity.getClassPK(), actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
 	private static final String[] _CLASS_NAMES = {
 		JournalArticle.class.getName()
 	};
@@ -226,6 +219,7 @@ public class JournalArticleActivityInterpreter
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleActivityInterpreter.class);
 
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference(

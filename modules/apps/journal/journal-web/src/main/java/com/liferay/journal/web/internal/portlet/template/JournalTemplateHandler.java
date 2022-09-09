@@ -224,17 +224,13 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 		return _templateVariableCodeHandler;
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalContent(JournalContent journalContent) {
-		_journalContent = journalContent;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalTemplateHandler.class);
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
+	@Reference
 	private JournalContent _journalContent;
 
 	@Reference

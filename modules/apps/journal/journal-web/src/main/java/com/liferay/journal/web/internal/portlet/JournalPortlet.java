@@ -321,13 +321,6 @@ public class JournalPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.journal.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);
 
 	@Reference
@@ -365,6 +358,11 @@ public class JournalPortlet extends MVCPortlet {
 	private volatile JournalFileUploadsConfiguration
 		_journalFileUploadsConfiguration;
 	private volatile JournalWebConfiguration _journalWebConfiguration;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.journal.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
+	)
+	private Release _release;
 
 	@Reference
 	private TranslationPermission _translationPermission;

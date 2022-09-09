@@ -84,13 +84,6 @@ public class CopyArticleMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalArticleService(
-		JournalArticleService journalArticleService) {
-
-		_journalArticleService = journalArticleService;
-	}
-
 	private void _copyArticle(ActionRequest actionRequest) throws Exception {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String oldArticleId = ParamUtil.getString(
@@ -105,6 +98,7 @@ public class CopyArticleMVCActionCommand extends BaseMVCActionCommand {
 			groupId, oldArticleId, newArticleId, autoArticleId, version);
 	}
 
+	@Reference
 	private JournalArticleService _journalArticleService;
 
 }

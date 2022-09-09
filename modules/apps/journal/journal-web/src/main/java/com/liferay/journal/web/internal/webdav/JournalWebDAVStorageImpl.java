@@ -106,25 +106,6 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			_portal.getClassNameId(JournalArticle.class));
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMWebDAV(DDMWebDAV ddmWebDAV) {
-		_ddmWebDAV = ddmWebDAV;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalFolderService(
-		JournalFolderService journalFolderService) {
-
-		_journalFolderService = journalFolderService;
-	}
-
 	private List<Resource> _getFolders(WebDAVRequest webDAVRequest)
 		throws Exception {
 
@@ -178,8 +159,13 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		return resources;
 	}
 
+	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
 	private DDMWebDAV _ddmWebDAV;
+
+	@Reference
 	private JournalFolderService _journalFolderService;
 
 	@Reference

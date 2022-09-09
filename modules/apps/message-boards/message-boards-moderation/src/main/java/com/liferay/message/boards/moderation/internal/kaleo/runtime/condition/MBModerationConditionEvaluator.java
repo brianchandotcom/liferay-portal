@@ -19,7 +19,6 @@ import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -64,14 +63,16 @@ public class MBModerationConditionEvaluator implements ConditionEvaluator {
 			workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
 
 		if (_mbStatsUserLocalService.getMessageCountByUserId(userId) >=
-			mbModerationGroupConfiguration.minimumContributedMessages()) {
+				mbModerationGroupConfiguration.minimumContributedMessages()) {
 
 			return "approve";
 		}
 
 		User user = _userLocalService.getUser(userId);
 
-		for (String authorizedDomain : mbModerationGroupConfiguration.authorizedDomains()) {
+		for (String authorizedDomain :
+				mbModerationGroupConfiguration.authorizedDomains()) {
+
 			if (Validator.isNotNull(authorizedDomain) &&
 				StringUtil.endsWith(user.getEmailAddress(), authorizedDomain)) {
 

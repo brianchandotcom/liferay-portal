@@ -31,7 +31,7 @@ dependencies {
 	compileInclude group: "io.fabric8", name: "kubernetes-model-scheduling", version: "5.12.2"
 	compileInclude group: "io.fabric8", name: "kubernetes-model-storageclass", version: "5.12.2"
 	compileInclude group: "io.fabric8", name: "zjsonpatch", version: "0.3.0"
-	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.30"
+	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.31"
 
 	compileOnly group: "com.liferay", name: "org.apache.felix.configurator", version: "1.0.14.LIFERAY-PATCHED-3"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

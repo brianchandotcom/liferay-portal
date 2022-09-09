@@ -256,7 +256,7 @@ function SpacingSelectorButton({
 								field={field}
 								onEnter={() => {
 									setActive(false);
-									document.getElementById(triggerId)?.focus();
+									triggerElement?.focus();
 								}}
 								onValueSelect={onChange}
 								showLabel={false}
@@ -280,7 +280,7 @@ function SpacingSelectorButton({
 								onClick={() => {
 									onChange(field.name, option.value);
 									setActive(false);
-									document.getElementById(triggerId)?.focus();
+									triggerElement?.focus();
 								}}
 							>
 								<span className="text-truncate w-50">

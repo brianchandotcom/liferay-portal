@@ -23,6 +23,7 @@ folderSearchFacetDisplayContextBuilder.setFacet(facet);
 folderSearchFacetDisplayContextBuilder.setFolderTitleLookup(new FolderTitleLookupImpl(new FolderSearcher(), request));
 folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(dataJSONObject.getBoolean("showAssetCount", true));
 folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(dataJSONObject.getInt("frequencyThreshold"));
+folderSearchFacetDisplayContextBuilder.setOrder(dataJSONObject.getString("order"));
 folderSearchFacetDisplayContextBuilder.setMaxTerms(dataJSONObject.getInt("maxTerms", 10));
 folderSearchFacetDisplayContextBuilder.setParameterName(facet.getFieldId());
 folderSearchFacetDisplayContextBuilder.setParameterValue(fieldParam);

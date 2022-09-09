@@ -15,6 +15,7 @@
 package com.liferay.portal.search.web.internal.facet.display.context.builder;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
@@ -32,6 +33,7 @@ import com.liferay.portal.search.web.internal.folder.facet.configuration.FolderF
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -87,6 +89,10 @@ public class FolderSearchFacetDisplayContextBuilder {
 		return folderSearchFacetDisplayContext;
 	}
 
+	public String getOrder() {
+		return _order;
+	}
+
 	public void setFacet(Facet facet) {
 		_facet = facet;
 	}
@@ -105,6 +111,10 @@ public class FolderSearchFacetDisplayContextBuilder {
 
 	public void setMaxTerms(int maxTerms) {
 		_maxTerms = maxTerms;
+	}
+
+	public void setOrder(String order) {
+		_order = order;
 	}
 
 	public void setPaginationStartParameterName(
@@ -277,6 +287,21 @@ public class FolderSearchFacetDisplayContextBuilder {
 			}
 		}
 
+		if (_order.equals("key:asc")) {
+			folderSearchFacetTermDisplayContexts.sort(_ASC_TERM_COMPARATOR);
+		}
+		else if (_order.equals("key:desc")) {
+			folderSearchFacetTermDisplayContexts.sort(_DESC_TERM_COMPARATOR);
+		}
+		else if (_order.equals("count:asc")) {
+			folderSearchFacetTermDisplayContexts.sort(
+				_ASC_FREQUENCY_COMPARATOR);
+		}
+		else {
+			folderSearchFacetTermDisplayContexts.sort(
+				_DESC_FREQUENCY_COMPARATOR);
+		}
+
 		return folderSearchFacetTermDisplayContexts;
 	}
 
@@ -310,6 +335,56 @@ public class FolderSearchFacetDisplayContextBuilder {
 			Collectors.toList());
 	}
 
+	private static final Comparator<FolderSearchFacetTermDisplayContext>
+		_ASC_FREQUENCY_COMPARATOR =
+			new Comparator<FolderSearchFacetTermDisplayContext>() {
+
+				public int compare(
+					FolderSearchFacetTermDisplayContext
+						folderSearchFacetTermDisplayContext1,
+					FolderSearchFacetTermDisplayContext
+						folderSearchFacetTermDisplayContext2) {
+
+					return folderSearchFacetTermDisplayContext1.getFrequency() -
+						folderSearchFacetTermDisplayContext2.getFrequency();
+				}
+
+			};
+
+	private static final Comparator<FolderSearchFacetTermDisplayContext>
+		_ASC_TERM_COMPARATOR =
+			new Comparator<FolderSearchFacetTermDisplayContext>() {
+
+				@Override
+				public int compare(
+					FolderSearchFacetTermDisplayContext
+						folderSearchFacetTermDisplayContext1,
+					FolderSearchFacetTermDisplayContext
+						folderSearchFacetTermDisplayContext2) {
+
+					try {
+						String displayName1 =
+							folderSearchFacetTermDisplayContext1.
+								getDisplayName();
+						String displayName2 =
+							folderSearchFacetTermDisplayContext2.
+								getDisplayName();
+
+						return displayName1.compareTo(displayName2);
+					}
+					catch (PortalException portalException) {
+						throw new RuntimeException(portalException);
+					}
+				}
+
+			};
+
+	private static final Comparator<FolderSearchFacetTermDisplayContext>
+		_DESC_FREQUENCY_COMPARATOR = _ASC_FREQUENCY_COMPARATOR.reversed();
+
+	private static final Comparator<FolderSearchFacetTermDisplayContext>
+		_DESC_TERM_COMPARATOR = _ASC_TERM_COMPARATOR.reversed();
+
 	private Facet _facet;
 	private final FolderFacetPortletInstanceConfiguration
 		_folderFacetPortletInstanceConfiguration;
@@ -317,6 +392,7 @@ public class FolderSearchFacetDisplayContextBuilder {
 	private boolean _frequenciesVisible;
 	private int _frequencyThreshold;
 	private int _maxTerms;
+	private String _order;
 	private String _paginationStartParameterName;
 	private String _parameterName;
 	private List<Long> _selectedFolderIds = Collections.emptyList();

@@ -437,7 +437,7 @@ definition {
 	@description = "This is a test for LPS-136822. It checks that a document type can be updated and published using the normal publication process."
 	@priority = "3"
 	test CanPublishUpdatedDocumentType {
-		property osgi.app.includes = "document-library-google-docs";
+		property osgi.modules.includes = "document-library-google-docs";
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",

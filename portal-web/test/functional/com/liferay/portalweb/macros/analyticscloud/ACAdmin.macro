@@ -6,5 +6,12 @@ definition {
         Navigator.openSpecificURL(url = "${currentURL}admin");
 	}
 
+    macro goToServerAdministration {
+		ProductMenuHelper.expandPanel(panel = "control panel");
+
+		ProductMenuHelper.expandCategory(category = "Configuration");
+
+		ProductMenuHelper.gotoPortlet(portlet = "Server Administration");
+	}
 
 }

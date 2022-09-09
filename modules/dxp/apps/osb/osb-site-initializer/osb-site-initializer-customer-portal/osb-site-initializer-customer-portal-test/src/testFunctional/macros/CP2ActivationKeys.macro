@@ -375,6 +375,14 @@ definition {
 		}
 	}
 
+	macro selectGenerateActivationKeyOptionByField {
+		var key_label = "${field}";
+
+		Select(
+			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
+			value1 = "${option}");
+	}
+
 	macro selectProductVersion {
 		var key_label = "Version";
 

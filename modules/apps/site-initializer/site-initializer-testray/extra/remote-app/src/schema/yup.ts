@@ -141,7 +141,7 @@ const yupSchema = {
 	}),
 	requirement: yup.object({
 		componentId: yup.string().required(),
-		description: yup.string().required(),
+		description: yup.string(),
 		descriptionType: yup.string().required(),
 		id: yup.string(),
 		key: yup.string(),

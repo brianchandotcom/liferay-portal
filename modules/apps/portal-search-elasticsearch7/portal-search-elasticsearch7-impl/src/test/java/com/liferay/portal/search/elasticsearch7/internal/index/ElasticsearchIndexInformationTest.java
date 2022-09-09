@@ -107,10 +107,6 @@ public class ElasticsearchIndexInformationTest {
 	@Rule
 	public TestName testName = new TestName();
 
-	private static String _getIndexNameBuilder(long companyId) {
-		return "test-" + companyId;
-	}
-
 	private CompanyIndexFactoryFixture _createCompanyIndexFactoryFixture(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -139,6 +135,10 @@ public class ElasticsearchIndexInformationTest {
 			});
 
 		return elasticsearchIndexInformation;
+	}
+
+	private String _getIndexNameBuilder(long companyId) {
+		return "test-" + companyId;
 	}
 
 	private JSONObject _loadJSONObject(String suffix) throws Exception {

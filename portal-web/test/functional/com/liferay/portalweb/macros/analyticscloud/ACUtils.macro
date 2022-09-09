@@ -1178,4 +1178,11 @@ definition {
 		}
 	}
 
+	macro getGroupId {
+		var currentURL = Navigator.getCurrentURL();
+		var groupId = StringUtil.extractLast("${currentURL}", "workspace/");
+		var groupId = StringUtil.extractFirst("${groupId}", "/");
+
+		return "${groupId}";
+	}
 }

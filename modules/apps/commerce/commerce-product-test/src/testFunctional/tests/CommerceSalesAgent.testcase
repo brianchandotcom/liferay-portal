@@ -100,6 +100,113 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9880 | As a Sales Agent, I want to be able to checkout orders"
+	@priority = "4"
+	test CanCheckoutOrdersAsSalesAgent {
+		task ("Given 2 accounts are created") {
+			for (var account : list "A,B") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Account ${account}",
+					accountEntryType = "Business");
+			}
+		}
+
+		task ("And 2 accounts are linked to the organization") {
+			for (var account : list "A,B") {
+				JSONAccountEntry.addAccountEntryOrganization(
+					accountEntryName = "Account ${account}",
+					organizationName = "Test Organization");
+			}
+		}
+
+		task ("And VIEW_BILLING_ADDRESS permission is given to Sales Agent") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_BILLING_ADDRESS",
+				resourceName = "com.liferay.commerce.order",
+				roleTitle = "Sales Agent");
+		}
+
+		task ("And Account A has a Billing & Shipping address") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account A");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			Accounts.addAddress(
+				addressCity = "Test City",
+				addressCountry = "United States",
+				addressName = "Test Name",
+				addressPostalCode = "Test Zip Code",
+				addressRegion = "California",
+				addressStreet1 = "Test Street");
+		}
+
+		task ("And the account A has a pending order") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Account A",
+				orderItems = "MIN55861:1",
+				orderStatus = "2",
+				paymentMethod = "money-order",
+				paymentStatus = "2");
+		}
+
+		task ("When the Sales Agent logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("And Account A is set as active account") {
+			CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Account A");
+		}
+
+		task ("Then the Sales Agent can checkout Account A's order") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				accountName = "Account A",
+				manageShippingOptionsPermission = "false",
+				paymentMethod = "Money Order",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				selectedShippingAddressName = "Test Name",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the Sales Agent select Account B as the active account") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.selectAccountFromAccountSelector(accountName = "Account B");
+		}
+
+		task ("Then the Sales Agent can create and checkout an order") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				accountName = "Account B",
+				manageShippingOptionsPermission = "false",
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				paymentMethod = "Money Order",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+	}
+
 	@description = "COMMERCE-9882 | As a Sales Agent, if he has the permission, I want to be able to see all the accounts and the orders that are present in the organization to which the same Sales Agent belongs"
 	@priority = "4"
 	test CanEditAccountDetailsAsSalesAgent {

@@ -17,9 +17,9 @@ definition {
 			User.firstLoginPG();
 		}
 
-		/*task ("Create a new Customer Portal Site") {
+		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
-		}*/
+		}
 	}
 
 	tearDown {
@@ -50,29 +50,29 @@ definition {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 		}
 
-        task ("When the user selects a project in Customer Portal and chooses to Deactivate") {
-            CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+		task ("When the user selects a project in Customer Portal and chooses to Deactivate") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
 
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = "DXP");
 
-            CP2ActivationKeys.gotoKeyDeactivation();
-        }
+			CP2ActivationKeys.gotoKeyDeactivation();
+		}
 
-        task ("Then the user is able to select any key from a list to deactivate - minimum 1 key") {
-            WaitForElementPresent(
-                key_text = "Deactivate 0 Key",
-                locator1 = "Button#ANY_DISABLED");
+		task ("Then the user is able to select any key from a list to deactivate - minimum 1 key") {
+			WaitForElementPresent(
+				key_text = "Deactivate 0 Key",
+				locator1 = "Button#ANY_DISABLED");
 
-            CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "Redacted");
+			CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "Redacted");
 
-            Button.click(button = "Deactivate 1 Key");
+			Button.click(button = "Deactivate 1 Key");
 
-            AssertElementPresent(
-                key_text = "Confirm Deactivate Keys",
-                locator1 = "Button#ANY");
-        }
+			AssertElementPresent(
+				key_text = "Confirm Deactivate Keys",
+				locator1 = "Button#ANY");
+		}
 	}
 
 }

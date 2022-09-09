@@ -286,8 +286,9 @@ definition {
 			locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
 
 		AssertElementPresent(locator1 = "CP2ActivationKeys#GENERATE_KEY_FORM");
+	}
 
-macro gotoKeyDeactivation {
+	macro gotoKeyDeactivation {
 		Click(
 			key_text = "Actions",
 			locator1 = "Button#ANY");
@@ -295,9 +296,8 @@ macro gotoKeyDeactivation {
 		Click(
 			key_action = "Deactivate",
 			locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
-		
-		AssertElementPresent(
-			locator1 = "CP2ActivationKeys#DEACTIVATE_KEY_PAGE");
+
+		AssertElementPresent(locator1 = "CP2ActivationKeys#DEACTIVATE_KEY_PAGE");
 	}
 
 	macro goToKeyTab {
@@ -365,6 +365,7 @@ macro gotoKeyDeactivation {
 		Click(
 			key_position = "${position}",
 			locator1 = "CP2ActivationKeys#SUBSCRIPTION_CHOICE");
+	}
 
 	macro viewActivationKeyDetails {
 		Search.searchCP(searchTerm = "${key_environmentName}");

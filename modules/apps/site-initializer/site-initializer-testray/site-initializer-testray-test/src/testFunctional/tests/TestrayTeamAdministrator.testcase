@@ -14,13 +14,13 @@ definition {
 
 		Testray.createTestraySite(siteName = "Testray 2");
 
-        Refresh();
+		Refresh();
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        TestrayManage.deleteAllTeam();
+		TestrayManage.deleteAllTeam();
 
 		Testray.tearDownCP();
 
@@ -45,52 +45,19 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 
-            TestrayManage.createTeam(
-                nameOptions = "Teams_1 Project",
+			TestrayManage.createTeam(
 				manageOption = "Manage Teams",
-                version = "Teams_1 Team");
+				nameOptions = "Teams_1 Project",
+				version = "Teams_1 Team");
 
 			Testray.assertItemName(key_name = "Teams_1 Team");
 		}
-
 	}
 
-    @description = "This is a test for LPS-160596 - Verify if as an Administrator I am able to edit a Team"
-    @priority = "5"
-    test AdminCanEditTeam {
-        task ("Go to Testray and Create Project") {
-			ApplicationsMenu.gotoSite(site = "Testray 2");
-
-			Testray.createProjectTestray(
-				description = "Teams_3 Project Description",
-				key_name = "Teams_3 Project");
-		}
-
-		task ("Change pagination and create Team") {
-			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
-
-            TestrayManage.createTeam(
-                nameOptions = "Teams_3 Project",
-				manageOption = "Manage Teams",
-                version = "Teams_3 Team");
-        }
-
-        task ("Edit Team and Assert it was Edited") {
-            TestrayManage.editTeam(
-				nameTeam = "Teams_3 Team",
-				typeTeam = "Teams_3 Team Edited");
-
-            Testray.assertItemName(key_name = "Teams_3 Team Edited");
-        }
-
-    }
-
-    @description = "This is a test for LPS-160595 - Verify if as an Administrator I am able to delete a Team"
-    @priority = "5"
-    test AdminCanDeleteTeam {
-         task ("Go to Testray and Create Project") {
+	@description = "This is a test for LPS-160595 - Verify if as an Administrator I am able to delete a Team"
+	@priority = "5"
+	test AdminCanDeleteTeam {
+		task ("Go to Testray and Create Project") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
@@ -103,20 +70,50 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 
-            TestrayManage.createTeam(
-                nameOptions = "Teams_2 Project",
+			TestrayManage.createTeam(
 				manageOption = "Manage Teams",
-                version = "Teams_2 Team");
-        }
+				nameOptions = "Teams_2 Project",
+				version = "Teams_2 Team");
+		}
 
-        task ("Delete Team and Assert it was Deleted") {
-            TestrayManage.deleteProductVersion(
+		task ("Delete Team and Assert it was Deleted") {
+			TestrayManage.deleteProductVersion(
 				itemManage = "Delete",
 				versionName = "Teams_2 Team");
 
-            Testray.assertItemNotPresent(key_name = "Teams_2 Team");
-        }
+			Testray.assertItemNotPresent(key_name = "Teams_2 Team");
+		}
+	}
 
+	@description = "This is a test for LPS-160596 - Verify if as an Administrator I am able to edit a Team"
+	@priority = "5"
+	test AdminCanEditTeam {
+		task ("Go to Testray and Create Project") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Teams_3 Project Description",
+				key_name = "Teams_3 Project");
+		}
+
+		task ("Change pagination and create Team") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			TestrayManage.createTeam(
+				manageOption = "Manage Teams",
+				nameOptions = "Teams_3 Project",
+				version = "Teams_3 Team");
+		}
+
+		task ("Edit Team and Assert it was Edited") {
+			TestrayManage.editTeam(
+				nameTeam = "Teams_3 Team",
+				typeTeam = "Teams_3 Team Edited");
+
+			Testray.assertItemName(key_name = "Teams_3 Team Edited");
+		}
 	}
 
 	@description = "This is a test for LPS-162501 - Verify if as an Administrator I should not be able to add a duplicate Teams"
@@ -136,9 +133,9 @@ definition {
 				valuePagination = "150");
 
 			TestrayManage.createTeam(
-                nameOptions = "Teams_2 Project",
 				manageOption = "Manage Teams",
-                version = "Teams_2 Team");
+				nameOptions = "Teams_2 Project",
+				version = "Teams_2 Team");
 
 			Click(locator1 = "TestrayManage#CLOSE_MODAL");
 
@@ -177,7 +174,6 @@ definition {
 				key_warningMessage = "name is a required field",
 				locator1 = "Testray#FIELD_REQUIRED_MESSAGE");
 		}
-
-    }
+	}
 
 }

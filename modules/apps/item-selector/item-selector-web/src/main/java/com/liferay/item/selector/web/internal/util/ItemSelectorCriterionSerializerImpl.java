@@ -88,15 +88,6 @@ public class ItemSelectorCriterionSerializerImpl
 		return jsonSerializer.serializeDeep(itemSelectorCriterion);
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelectorViewReturnTypeProviderHandler(
-		ItemSelectorViewReturnTypeProviderHandler
-			itemSelectorViewReturnTypeProviderHandler) {
-
-		_itemSelectorViewReturnTypeProviderHandler =
-			itemSelectorViewReturnTypeProviderHandler;
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
@@ -174,8 +165,11 @@ public class ItemSelectorCriterionSerializerImpl
 			new DesiredItemSelectorReturnTypesJSONTransformer();
 	private final ConcurrentMap<String, List<ItemSelectorReturnType>>
 		_itemSelectorReturnTypes = new ConcurrentHashMap<>();
+
+	@Reference
 	private ItemSelectorViewReturnTypeProviderHandler
 		_itemSelectorViewReturnTypeProviderHandler;
+
 	private ServiceTracker
 		<ItemSelectorViewReturnTypeProvider, ItemSelectorViewReturnTypeProvider>
 			_serviceTracker;

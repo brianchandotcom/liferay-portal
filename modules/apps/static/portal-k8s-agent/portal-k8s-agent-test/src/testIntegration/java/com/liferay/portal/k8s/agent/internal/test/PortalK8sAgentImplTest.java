@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.function.AwaitingConfigurationHolder;
 import com.liferay.portal.test.function.ConfigurationHolder;
-import com.liferay.portal.test.function.ThreadContextClassLoaderCloseableHolder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
@@ -107,15 +106,22 @@ public class PortalK8sAgentImplTest {
 				public MockResponse dispatch(RecordedRequest request)
 					throws InterruptedException {
 
-					try (ThreadContextClassLoaderCloseableHolder
-							threadContextClassLoaderCloseableHolder =
-								new ThreadContextClassLoaderCloseableHolder(
-									DefaultKubernetesClient.class)) {
+					Thread thread = Thread.currentThread();
 
+					ClassLoader contextClassLoader =
+						thread.getContextClassLoader();
+
+					thread.setContextClassLoader(
+						DefaultKubernetesClient.class.getClassLoader());
+
+					try {
 						return super.dispatch(request);
 					}
 					catch (Exception exception) {
 						_log.error(exception);
+					}
+					finally {
+						thread.setContextClassLoader(contextClassLoader);
 					}
 
 					return null;

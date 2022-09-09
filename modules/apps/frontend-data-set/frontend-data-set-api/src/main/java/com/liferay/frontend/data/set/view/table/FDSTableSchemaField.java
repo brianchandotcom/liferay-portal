@@ -167,7 +167,7 @@ public class FDSTableSchemaField {
 	private boolean _expand;
 	private String _fieldName;
 	private String _label;
-	private boolean _localizeLabel;
+	private boolean _localizeLabel = true;
 	private boolean _sortable;
 	private SortingOrder _sortingOrder;
 

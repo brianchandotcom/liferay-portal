@@ -40,95 +40,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-159138. Verify if the user is able to subscribe a tag if they want to."
-	@priority = "5"
-	test CanASubscribeAQuestion {
-		task ("Create a Topic") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Topic",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("Create a Question") {
-			JSONQuestions.addQuestion(
-				bodyField = "Content AddQuestion",
-				categoryName = "Questions Test Topic",
-				groupName = "Guest",
-				titleField = "Question1");
-		}
-
-		task ("Go to My Subscription") {
-			Questions.gotoTab(questionTabField = "My Subscriptions");
-		}
-
-		task ("Validate the subcribed question") {
-			Questions.viewSubscribedQuestion(subscribedQuestion = "Question1");
-		}
-	}
-
-	@description = "This is a test for LPS-159144. Verify if the user is able to subscribe a tag if they want to."
-	@priority = "5"
-	test CanASubscribeATag {
-		task ("Create a Topic") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Topic",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("Create a Question with a tag") {
-			JSONQuestions.addQuestionWithTag(
-				bodyField = "Content1",
-				categoryName = "Questions Test Topic",
-				groupName = "Guest",
-				tagField = "new",
-				titleField = "Question1");
-		}
-
-		task ("Subscribe to Tag") {
-			Questions.openToTagsTab(
-				layoutName = "questions-page",
-				siteURLKey = "guest");
-
-			Questions.subscribeFromTag();
-		}
-
-		task ("Go to My Subscription page") {
-			Questions.gotoTab(questionTabField = "My Subscriptions");
-		}
-
-		task ("Validate the subcribed tag") {
-			Questions.viewSubscribedTag(subscribedTag = "new");
-		}
-	}
-
-	@description = "This is a test for LPS-159160. Verify if the user is able to subscribe a topic if they want to."
-	@priority = "5"
-	test CanASubscribeATopic {
-		task ("Create a Topic") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Topic",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("Subcribe to the Topic") {
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-topic");
-
-			Questions.subscribeTopic();
-		}
-
-		task ("Validate the subcribed topic") {
-			Questions.gotoTab(questionTabField = "My Subscriptions");
-
-			Questions.viewSubscribedTopic(subscribedTopic = "Questions Test Topic");
-		}
-	}
-
 	@description = "This is a test for LPS-159147. Verify if the user is notified when a followed question has a new answer."
 	@priority = "3"
 	test CanBeNotifiedByAnswer {
@@ -336,6 +247,95 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-159138. Verify if the user is able to subscribe a tag if they want to."
+	@priority = "5"
+	test CanSubscribeAQuestion {
+		task ("Create a Topic") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Topic",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Create a Question") {
+			JSONQuestions.addQuestion(
+				bodyField = "Content AddQuestion",
+				categoryName = "Questions Test Topic",
+				groupName = "Guest",
+				titleField = "Question1");
+		}
+
+		task ("Go to My Subscription") {
+			Questions.gotoTab(questionTabField = "My Subscriptions");
+		}
+
+		task ("Validate the subcribed question") {
+			Questions.viewSubscribedQuestion(subscribedQuestion = "Question1");
+		}
+	}
+
+	@description = "This is a test for LPS-159144. Verify if the user is able to subscribe a tag if they want to."
+	@priority = "5"
+	test CanSubscribeATag {
+		task ("Create a Topic") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Topic",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Create a Question with a tag") {
+			JSONQuestions.addQuestionWithTag(
+				bodyField = "Content1",
+				categoryName = "Questions Test Topic",
+				groupName = "Guest",
+				tagField = "new",
+				titleField = "Question1");
+		}
+
+		task ("Subscribe to Tag") {
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
+
+			Questions.subscribeFromTag();
+		}
+
+		task ("Go to My Subscription page") {
+			Questions.gotoTab(questionTabField = "My Subscriptions");
+		}
+
+		task ("Validate the subcribed tag") {
+			Questions.viewSubscribedTag(subscribedTag = "new");
+		}
+	}
+
+	@description = "This is a test for LPS-159160. Verify if the user is able to subscribe a topic if they want to."
+	@priority = "5"
+	test CanSubscribeATopic {
+		task ("Create a Topic") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Topic",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Subcribe to the Topic") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-topic");
+
+			Questions.subscribeTopic();
+		}
+
+		task ("Validate the subcribed topic") {
+			Questions.gotoTab(questionTabField = "My Subscriptions");
+
+			Questions.viewSubscribedTopic(subscribedTopic = "Questions Test Topic");
+		}
+	}
+
 	@description = "This is a test for LPS-159138. Verify if the user is able to unsubscribe a question if they want to."
 	@priority = "5"
 	test CanUnsubscribeAQuestion {
@@ -432,7 +432,7 @@ definition {
 		}
 
 		task ("Validate the unsubcribed tag") {
-			Questions.viewSubscribedTag();
+			Questions.viewSubscribedTag(noSubscribedTag = "true");
 		}
 	}
 

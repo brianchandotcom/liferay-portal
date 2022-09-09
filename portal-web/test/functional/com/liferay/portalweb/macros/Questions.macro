@@ -984,7 +984,7 @@ definition {
 				locator1 = "Questions#SUBSCRIBED_TAG",
 				value1 = "${subscribedTag}");
 		}
-		else if (isSet(nosubscribedTag)) {
+		else if (isSet(noSubscribedTag)) {
 			AssertTextEquals(
 				locator1 = "Questions#QUESTIONS_DEFAULT_SUBSCRIPTION_TOPICS",
 				value1 = "There are no results.");

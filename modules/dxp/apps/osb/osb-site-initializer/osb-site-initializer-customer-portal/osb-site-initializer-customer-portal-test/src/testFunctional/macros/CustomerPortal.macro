@@ -476,9 +476,11 @@ definition {
 	}
 
 	macro search {
-		Type(
-			locator1 = "CustomerPortalSite#SEARCH_BAR",
-			value1 = "${searchItem}");
+		if (IsElementPresent(locator1 = "CustomerPortalSite#SEARCH_BAR")) {
+			Type(
+				locator1 = "CustomerPortalSite#SEARCH_BAR",
+				value1 = "${searchItem}");
+		}
 	}
 
 	macro selectNavigatorWindow {

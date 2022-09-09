@@ -23,11 +23,11 @@ const updateMDFClaimSummary = async () => {
 	});
 
 	if (response.ok) {
-	const data = await response.json();
+		const data = await response.json();
 
 		const type = data.type;
 
-	const amountClaimed = formatCurrency(data.amountClaimed);
+		const amountClaimed = formatCurrency(data.amountClaimed);
 
 		const paymentReceived = formatCurrency(data.paymentReceived);
 

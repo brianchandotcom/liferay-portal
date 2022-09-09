@@ -15,12 +15,15 @@ const mdfRequestId = +currentPath[currentPath.length - 1];
 
 const getMDFRequestStatus = async () => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const statusResponse = await fetch(`/o/c/mdfrequests/${mdfRequestId}`, {
-		headers: {
-			'accept': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-	});
+	const statusResponse = await fetch(
+		`/o/c/${configuration.entity}/${mdfRequestId}`,
+		{
+			headers: {
+				'accept': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+		}
+	);
 
 	if (statusResponse.ok) {
 		const data = await statusResponse.json();

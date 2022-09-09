@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "MDF Details Summary",
+	"name": "MDF Request Details Summary",
 	"type": "component"
 }

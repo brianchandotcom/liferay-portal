@@ -221,7 +221,11 @@ const LengthInput = ({
 					aria-label={field.label}
 					id={id}
 					insetBefore={Boolean(field.icon)}
-					onBlur={handleValueSelect}
+					onBlur={(event) => {
+						if (nextValue !== value) {
+							handleValueSelect(event);
+						}
+					}}
 					onChange={(event) => {
 						setNextValue(event.target.value);
 					}}

@@ -61,9 +61,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 								id='<%= liferayPortletResponse.getNamespace() + "externalType" %>'
 								label="export-file-format"
 								name="externalType"
-								options="<%=
-									editBatchPlannerPlanDisplayContext.getExternalTypeSelectOptions()
-								%>"
+								options="<%= editBatchPlannerPlanDisplayContext.getExternalTypeSelectOptions() %>"
 							/>
 						</clay:col>
 					</clay:row>

@@ -123,14 +123,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 						/>
 					</div>
 
-					<aui:input
-						label="job-title"
-						maxlength='<%=
-							ModelHintsUtil.getMaxLength(Contact.class.getName(), "jobTitle")
-						%>'
-						name="jobTitle"
-						type="text"
-					>
+					<aui:input label="job-title" maxlength='<%= ModelHintsUtil.getMaxLength(Contact.class.getName(), "jobTitle") %>' name="jobTitle" type="text">
 					</aui:input>
 				</clay:col>
 			</clay:row>

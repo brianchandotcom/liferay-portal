@@ -162,12 +162,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 							<c:if test="<%= siteAdminDisplayContext.getUsersCount(group) > 0 %>">
 								<div>
-									<aui:a
-										href='<%=
-											HttpComponentsUtil.addParameter(assignMembersURL.toString(), "tabs1", "users")
-%>'
-										label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getUsersCount(group) == 1) ? "x-user" : "x-users", siteAdminDisplayContext.getUsersCount(group), false) %>'
-									/>
+									<aui:a href='<%= HttpComponentsUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getUsersCount(group) == 1) ? "x-user" : "x-users", siteAdminDisplayContext.getUsersCount(group), false) %>' />
 								<div>
 							</c:if>
 

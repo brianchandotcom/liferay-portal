@@ -177,12 +177,7 @@
 									</c:choose>
 
 									<c:if test="<%= Validator.isNull(PropsValues.JDBC_DEFAULT_JNDI_NAME) %>">
-										<a
-											href="<%=
-												HttpComponentsUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", false)
-											%>"
-											id="customDatabaseOptionsLink"
-										>
+										<a href="<%= HttpComponentsUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", false) %>" id="customDatabaseOptionsLink">
 											(<liferay-ui:message key="change" />)
 										</a>
 									</c:if>

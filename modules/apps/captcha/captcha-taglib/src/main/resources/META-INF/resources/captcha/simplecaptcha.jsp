@@ -24,9 +24,7 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 	<div class="my-3 taglib-captcha">
 		<img alt="<liferay-ui:message escapeAttribute="<%= true %>"
 		key="text-to-identify" />" class="captcha d-inline-block mb-2"
-			id="<portlet:namespace />captcha" src="<%=
-				HtmlUtil.escapeAttribute(HttpComponentsUtil.addParameter(url, "t", String.valueOf(System.currentTimeMillis())))
-%>"
+			id="<portlet:namespace />captcha" src="<%= HtmlUtil.escapeAttribute(HttpComponentsUtil.addParameter(url, "t", String.valueOf(System.currentTimeMillis()))) %>"
 		/>
 
 		<liferay-ui:icon

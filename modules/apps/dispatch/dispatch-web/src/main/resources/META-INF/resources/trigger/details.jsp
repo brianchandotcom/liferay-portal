@@ -118,9 +118,7 @@ if (dispatchTrigger != null) {
 	var xmlFormatter = new Liferay.XMLFormatter();
 
 	var content = xmlFormatter.format(
-		'<%=
-			HtmlUtil.escapeJS(dispatchTaskSettings)
-		%>'
+		'<%= HtmlUtil.escapeJS(dispatchTaskSettings) %>'
 	);
 
 	if (content) {

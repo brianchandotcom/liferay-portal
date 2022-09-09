@@ -59,9 +59,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 			cssClass="mr-4"
 		>
 			<clay:button
-				additionalProps="<%=
-					layoutLookAndFeelDisplayContext.getChangeFaviconButtonAdditionalProps()
-				%>"
+				additionalProps="<%= layoutLookAndFeelDisplayContext.getChangeFaviconButtonAdditionalProps() %>"
 				displayType="secondary"
 				id='<%= liferayPortletResponse.getNamespace() + "changeFaviconButton" %>'
 				label="change-favicon"
@@ -72,9 +70,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 
 		<clay:content-col>
 			<clay:button
-				additionalProps="<%=
-					layoutLookAndFeelDisplayContext.getClearFaviconButtonAdditionalProps()
-				%>"
+				additionalProps="<%= layoutLookAndFeelDisplayContext.getClearFaviconButtonAdditionalProps() %>"
 				disabled="<%= !layoutLookAndFeelDisplayContext.isClearFaviconButtonEnabled() %>"
 				displayType="secondary"
 				id='<%= liferayPortletResponse.getNamespace() + "clearFaviconButton" %>'

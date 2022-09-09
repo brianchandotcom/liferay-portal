@@ -42,9 +42,7 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 		%>
 
 		<liferay-ui:icon
-			data='<%=
-				Collections.singletonMap("senna-off", "true")
-			%>'
+			data='<%= Collections.singletonMap("senna-off", "true") %>'
 			label="<%= true %>"
 			markupView="lexicon"
 			message="<%= sb.toString() %>"

@@ -45,9 +45,7 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = (SegmentsSim
 								<c:when test="<%= segmentsSimulationDisplayContext.getSegmentsCompanyConfigurationURL() != null %>">
 									<clay:link
 										href="<%= segmentsSimulationDisplayContext.getSegmentsCompanyConfigurationURL() %>"
-										label='<%=
-											LanguageUtil.get(request, "to-enable,-go-to-instance-settings")
-										%>'
+										label='<%= LanguageUtil.get(request, "to-enable,-go-to-instance-settings") %>'
 									/>
 								</c:when>
 								<c:otherwise>

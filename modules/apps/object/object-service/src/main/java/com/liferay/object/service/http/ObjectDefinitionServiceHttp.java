@@ -370,9 +370,10 @@ public class ObjectDefinitionServiceHttp {
 			updateCustomObjectDefinition(
 				HttpPrincipal httpPrincipal, long objectDefinitionId,
 				long accountEntryRestrictedObjectFieldId,
-				long descriptionObjectFieldId, long titleObjectFieldId,
-				boolean accountEntryRestricted, boolean active,
-				boolean enableCategorization, boolean enableComments,
+				long descriptionObjectFieldId, String externalReferenceCode,
+				long titleObjectFieldId, boolean accountEntryRestricted,
+				boolean active, boolean enableCategorization,
+				boolean enableComments,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				String panelAppOrder, String panelCategoryKey, boolean portlet,
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
@@ -388,10 +389,10 @@ public class ObjectDefinitionServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectDefinitionId,
 				accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
-				titleObjectFieldId, accountEntryRestricted, active,
-				enableCategorization, enableComments, labelMap, name,
-				panelAppOrder, panelCategoryKey, portlet, pluralLabelMap,
-				scope);
+				externalReferenceCode, titleObjectFieldId,
+				accountEntryRestricted, active, enableCategorization,
+				enableComments, labelMap, name, panelAppOrder, panelCategoryKey,
+				portlet, pluralLabelMap, scope);
 
 			Object returnObj = null;
 
@@ -490,10 +491,10 @@ public class ObjectDefinitionServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateCustomObjectDefinitionParameterTypes8 = new Class[] {
-			long.class, long.class, long.class, long.class, boolean.class,
-			boolean.class, boolean.class, boolean.class, java.util.Map.class,
-			String.class, String.class, String.class, boolean.class,
-			java.util.Map.class, String.class
+			long.class, long.class, long.class, String.class, long.class,
+			boolean.class, boolean.class, boolean.class, boolean.class,
+			java.util.Map.class, String.class, String.class, String.class,
+			boolean.class, java.util.Map.class, String.class
 		};
 	private static final Class<?>[] _updateTitleObjectFieldIdParameterTypes9 =
 		new Class[] {long.class, long.class};

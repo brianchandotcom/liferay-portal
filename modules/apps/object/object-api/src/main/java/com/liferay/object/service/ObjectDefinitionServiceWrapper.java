@@ -121,9 +121,10 @@ public class ObjectDefinitionServiceWrapper
 			updateCustomObjectDefinition(
 				long objectDefinitionId,
 				long accountEntryRestrictedObjectFieldId,
-				long descriptionObjectFieldId, long titleObjectFieldId,
-				boolean accountEntryRestricted, boolean active,
-				boolean enableCategorization, boolean enableComments,
+				long descriptionObjectFieldId, String externalReferenceCode,
+				long titleObjectFieldId, boolean accountEntryRestricted,
+				boolean active, boolean enableCategorization,
+				boolean enableComments,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				String panelAppOrder, String panelCategoryKey, boolean portlet,
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
@@ -132,7 +133,7 @@ public class ObjectDefinitionServiceWrapper
 
 		return _objectDefinitionService.updateCustomObjectDefinition(
 			objectDefinitionId, accountEntryRestrictedObjectFieldId,
-			descriptionObjectFieldId, titleObjectFieldId,
+			descriptionObjectFieldId, externalReferenceCode, titleObjectFieldId,
 			accountEntryRestricted, active, enableCategorization,
 			enableComments, labelMap, name, panelAppOrder, panelCategoryKey,
 			portlet, pluralLabelMap, scope);

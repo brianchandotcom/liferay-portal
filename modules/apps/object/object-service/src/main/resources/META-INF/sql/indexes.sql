@@ -4,6 +4,7 @@ create index IX_BA9B4A2F on ObjectAction (uuid_[$COLUMN_LENGTH:75$], companyId);
 create index IX_384C6F1F on ObjectDefinition (companyId, active_, status);
 create index IX_5C293E0D on ObjectDefinition (companyId, active_, system_, status);
 create index IX_2A008543 on ObjectDefinition (companyId, className[$COLUMN_LENGTH:75$]);
+create unique index IX_F861636D on ObjectDefinition (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_3E56F38F on ObjectDefinition (companyId, name[$COLUMN_LENGTH:75$]);
 create index IX_55C39BCE on ObjectDefinition (system_, status);
 create index IX_B929D94C on ObjectDefinition (uuid_[$COLUMN_LENGTH:75$], companyId);

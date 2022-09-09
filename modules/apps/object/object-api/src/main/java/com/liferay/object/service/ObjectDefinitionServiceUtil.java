@@ -105,17 +105,18 @@ public class ObjectDefinitionServiceUtil {
 
 	public static ObjectDefinition updateCustomObjectDefinition(
 			long objectDefinitionId, long accountEntryRestrictedObjectFieldId,
-			long descriptionObjectFieldId, long titleObjectFieldId,
-			boolean accountEntryRestricted, boolean active,
-			boolean enableCategorization, boolean enableComments,
-			Map<java.util.Locale, String> labelMap, String name,
-			String panelAppOrder, String panelCategoryKey, boolean portlet,
-			Map<java.util.Locale, String> pluralLabelMap, String scope)
+			long descriptionObjectFieldId, String externalReferenceCode,
+			long titleObjectFieldId, boolean accountEntryRestricted,
+			boolean active, boolean enableCategorization,
+			boolean enableComments, Map<java.util.Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
+			boolean portlet, Map<java.util.Locale, String> pluralLabelMap,
+			String scope)
 		throws PortalException {
 
 		return getService().updateCustomObjectDefinition(
 			objectDefinitionId, accountEntryRestrictedObjectFieldId,
-			descriptionObjectFieldId, titleObjectFieldId,
+			descriptionObjectFieldId, externalReferenceCode, titleObjectFieldId,
 			accountEntryRestricted, active, enableCategorization,
 			enableComments, labelMap, name, panelAppOrder, panelCategoryKey,
 			portlet, pluralLabelMap, scope);

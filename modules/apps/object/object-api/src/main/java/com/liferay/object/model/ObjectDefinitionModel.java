@@ -98,6 +98,21 @@ public interface ObjectDefinitionModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this object definition.
+	 *
+	 * @return the external reference code of this object definition
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this object definition.
+	 *
+	 * @param externalReferenceCode the external reference code of this object definition
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the object definition ID of this object definition.
 	 *
 	 * @return the object definition ID of this object definition

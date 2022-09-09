@@ -13,6 +13,7 @@
  */
 
 export default {
+	'activate': 'Activate',
 	'add': 'Add',
 	'add-another': 'Add Another',
 	'add-case': 'Add Case',
@@ -114,6 +115,7 @@ export default {
 	'date-last-modified': 'Date Last Modified',
 	'date-modified': 'Date Modified',
 	'dates': 'Dates',
+	'deactivate': 'Deactivate',
 	'delete': 'Delete',
 	'delete-build': 'Delete Build',
 	'delete-case': 'Delete Case',
@@ -163,6 +165,8 @@ export default {
 	'jira-components': 'Jira Components',
 	'key': 'Key',
 	'last-name': 'Last Name',
+	'last-used-date': 'LAST USED DATA',
+	'latest-build': 'LATEST BUILD',
 	'link': 'Link',
 	'link-cases': 'Link Cases',
 	'link-requirements': 'Link Requirements',
@@ -272,6 +276,7 @@ export default {
 	'start-test': 'Start Test',
 	'static': 'Static',
 	'status': 'Status',
+	'status-template': 'STATUS',
 	'steps': 'Steps',
 	'steps-type': 'Steps type',
 	'subcomponents': 'SubComponents',
@@ -288,6 +293,10 @@ export default {
 	'team-name': 'Team Name',
 	'teams': 'Teams',
 	'template': 'Template',
+	'template-name': 'TEMPLATE NAME',
+	'template-name-filter': 'Template Name',
+	'template-test': 'TEMPLATE TEST',
+	'templates': 'Templates',
 	'test-fix': 'Test Fix',
 	'test-history': 'Test History',
 	'test-lead-should-only-have-access-to-builds-test-plans-test-suites-and-test-cases-.-this-role-will-be-responsible-for-creating-builds-and-for-creating-test-plans-test-runs-the-people-assigned-to-these-would-be-our-current-product-leads':

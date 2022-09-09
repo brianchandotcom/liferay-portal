@@ -187,6 +187,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		ObjectDefinition objectDefinition = randomObjectDefinition();
 
+		objectDefinition.setExternalReferenceCode(regex);
 		objectDefinition.setName(regex);
 		objectDefinition.setPanelAppOrder(regex);
 		objectDefinition.setPanelCategoryKey(regex);
@@ -199,6 +200,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		objectDefinition = ObjectDefinitionSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, objectDefinition.getExternalReferenceCode());
 		Assert.assertEquals(regex, objectDefinition.getName());
 		Assert.assertEquals(regex, objectDefinition.getPanelAppOrder());
 		Assert.assertEquals(regex, objectDefinition.getPanelCategoryKey());
@@ -994,6 +996,16 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (objectDefinition.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("label", additionalAssertFieldName)) {
 				if (objectDefinition.getLabel() == null) {
 					valid = false;
@@ -1321,6 +1333,19 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectDefinition1.getEnableComments(),
 						objectDefinition2.getEnableComments())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.getExternalReferenceCode(),
+						objectDefinition2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1727,6 +1752,15 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(objectDefinition.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1884,6 +1918,8 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				enableCategorization = RandomTestUtil.randomBoolean();
 				enableComments = RandomTestUtil.randomBoolean();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				panelAppOrder = StringUtil.toLowerCase(

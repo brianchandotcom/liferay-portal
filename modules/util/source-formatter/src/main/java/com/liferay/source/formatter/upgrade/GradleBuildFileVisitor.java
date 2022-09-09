@@ -160,7 +160,7 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 			_inDependencies = false;
 		}
 
-		if (_methodCallLineNumber > _buildScriptDependenciesLastLineNumber) {
+		if (!_inBuildScript || !_inDependencies) {
 			_inBuildScriptDependencies = false;
 		}
 
@@ -181,8 +181,6 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 
 		if (_inBuildScript && _inDependencies && !_inBuildScriptDependencies) {
 			_inBuildScriptDependencies = true;
-			_buildScriptDependenciesLastLineNumber =
-				methodCallExpression.getLastLineNumber();
 		}
 
 		if ((_inBuildScriptDependencies || _inDependencies) &&
@@ -203,7 +201,6 @@ public class GradleBuildFileVisitor extends CodeVisitorSupport {
 	private final Stack<Boolean> _blockStatementStack = new Stack<>();
 	private final List<GradleDependency> _buildScriptDependencies =
 		new ArrayList<>();
-	private int _buildScriptDependenciesLastLineNumber = -1;
 	private int _buildScriptLastLineNumber = -1;
 	private String _configuration;
 	private int _dependenciesLastLineNumber = -1;

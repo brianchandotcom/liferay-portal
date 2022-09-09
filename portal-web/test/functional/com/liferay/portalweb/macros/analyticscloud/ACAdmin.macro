@@ -94,4 +94,10 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
+    macro getUserID {
+        var userID = selenium.getElementValue("UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD");
+
+        return "${userID}";
+	}
+
 }

@@ -255,51 +255,25 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance)"
 	)
-	protected void setDDMDataProviderInstanceStagedModelRepository(
-		StagedModelRepository<DDMDataProviderInstance>
-			ddmDataProviderInstanceStagedModelRepository) {
-
-		_ddmDataProviderInstanceStagedModelRepository =
-			ddmDataProviderInstanceStagedModelRepository;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord)",
-		unbind = "-"
-	)
-	protected void setDDMFormInstanceRecordStagedModelRepository(
-		StagedModelRepository<DDMFormInstanceRecord>
-			formInstanceRecordStagedModelRepository) {
-
-		_formInstanceRecordStagedModelRepository =
-			formInstanceRecordStagedModelRepository;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)",
-		unbind = "-"
-	)
-	protected void setDDMFormInstanceStagedModelRepository(
-		StagedModelRepository<DDMFormInstance>
-			formInstanceStagedModelRepository) {
-
-		_formInstanceStagedModelRepository = formInstanceStagedModelRepository;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private StagedModelRepository<DDMDataProviderInstance>
 		_ddmDataProviderInstanceStagedModelRepository;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord)"
+	)
 	private StagedModelRepository<DDMFormInstanceRecord>
 		_formInstanceRecordStagedModelRepository;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)"
+	)
 	private StagedModelRepository<DDMFormInstance>
 		_formInstanceStagedModelRepository;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private Staging _staging;

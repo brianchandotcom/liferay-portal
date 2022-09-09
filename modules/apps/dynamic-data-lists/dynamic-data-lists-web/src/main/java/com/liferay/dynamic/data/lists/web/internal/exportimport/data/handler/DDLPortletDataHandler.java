@@ -227,33 +227,18 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet)"
 	)
-	protected void setDDLRecordSetStagedModelRepository(
-		StagedModelRepository<DDLRecordSet> ddlRecordSetStagedModelRepository) {
-
-		_ddlRecordSetStagedModelRepository = ddlRecordSetStagedModelRepository;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)",
-		unbind = "-"
-	)
-	protected void setDDLRecordStagedModelRepository(
-		StagedModelRepository<DDLRecord> ddlRecordStagedModelRepository) {
-
-		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private StagedModelRepository<DDLRecordSet>
 		_ddlRecordSetStagedModelRepository;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)"
+	)
 	private StagedModelRepository<DDLRecord> _ddlRecordStagedModelRepository;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private Staging _staging;

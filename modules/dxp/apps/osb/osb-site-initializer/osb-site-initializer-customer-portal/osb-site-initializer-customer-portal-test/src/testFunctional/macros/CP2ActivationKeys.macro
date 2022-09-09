@@ -223,13 +223,9 @@ definition {
 	}
 
 	macro exportAllKeyDetails {
-		Click(
-			key_text = "Actions",
-			locator1 = "Button#ANY");
+		CustomerPortal.clickAtButton(text = "Actions");
 
-		Click(
-			key_action = "Export All Key Details (csv)",
-			locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
+		CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Export All Key Details (csv)");
 
 		Alert.viewSuccessMessage();
 

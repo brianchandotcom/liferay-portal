@@ -1,0 +1,9 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "code",
+  "name": "MDF Claim Details Summary",
+  "type": "component"
+}

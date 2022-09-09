@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -46,14 +47,19 @@ public class FinderPath {
 	}
 
 	public FinderPath(
-		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult) {
+		BasePersistence<?> basePersistence, String cacheName, String methodName,
+		String[] params, String[] columnNames, boolean baseModelResult) {
 
+		_basePersistence = basePersistence;
 		_cacheName = cacheName;
 		_columnNames = columnNames;
 		_baseModelResult = baseModelResult;
 
 		_initCacheKeyPrefix(methodName, params);
+	}
+
+	public BasePersistence<?> getBasePersistence() {
+		return _basePersistence;
 	}
 
 	public String getCacheKeyPrefix() {
@@ -119,6 +125,7 @@ public class FinderPath {
 	private static final Map<String, String> _encodedTypes = _getEncodedTypes();
 
 	private final boolean _baseModelResult;
+	private final BasePersistence<?> _basePersistence;
 	private String _cacheKeyPrefix;
 	private final String _cacheName;
 	private final String[] _columnNames;

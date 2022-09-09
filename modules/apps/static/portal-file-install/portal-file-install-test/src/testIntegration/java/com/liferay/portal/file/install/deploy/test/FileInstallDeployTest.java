@@ -124,7 +124,7 @@ public class FileInstallDeployTest {
 			configuration = _updateConfiguration(
 				_CONFIGURATION_PID, () -> Files.delete(path));
 
-			Assert.assertNull(configuration.getProperties());
+			Assert.assertNull(configuration);
 		}
 		finally {
 			Files.deleteIfExists(path);

@@ -35,9 +35,9 @@ public interface FolderFacetPortletPreferences {
 
 	public int getMaxTerms();
 
-	public String getParameterName();
-
 	public String getOrder();
+
+	public String getParameterName();
 
 	public boolean isFrequenciesVisible();
 

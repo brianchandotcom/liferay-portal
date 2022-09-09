@@ -104,7 +104,8 @@ public class ObjectDefinitionServiceUtil {
 	}
 
 	public static ObjectDefinition updateCustomObjectDefinition(
-			long objectDefinitionId, long accountEntryRestrictedObjectFieldId,
+			String externalReferenceCode, long objectDefinitionId,
+			long accountEntryRestrictedObjectFieldId,
 			long descriptionObjectFieldId, long titleObjectFieldId,
 			boolean accountEntryRestricted, boolean active,
 			boolean enableCategorization, boolean enableComments,
@@ -114,11 +115,11 @@ public class ObjectDefinitionServiceUtil {
 		throws PortalException {
 
 		return getService().updateCustomObjectDefinition(
-			objectDefinitionId, accountEntryRestrictedObjectFieldId,
-			descriptionObjectFieldId, titleObjectFieldId,
-			accountEntryRestricted, active, enableCategorization,
-			enableComments, labelMap, name, panelAppOrder, panelCategoryKey,
-			portlet, pluralLabelMap, scope);
+			externalReferenceCode, objectDefinitionId,
+			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
+			titleObjectFieldId, accountEntryRestricted, active,
+			enableCategorization, enableComments, labelMap, name, panelAppOrder,
+			panelCategoryKey, portlet, pluralLabelMap, scope);
 	}
 
 	public static ObjectDefinition updateTitleObjectFieldId(

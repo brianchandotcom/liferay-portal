@@ -21,6 +21,7 @@ create table ObjectAction (
 create table ObjectDefinition (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
 	objectDefinitionId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

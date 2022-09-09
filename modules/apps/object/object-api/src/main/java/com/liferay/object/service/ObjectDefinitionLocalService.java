@@ -249,6 +249,25 @@ public interface ObjectDefinitionLocalService
 		throws PortalException;
 
 	/**
+	 * Returns the object definition with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the object definition's external reference code
+	 * @return the matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectDefinition fetchObjectDefinitionByExternalReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchObjectDefinitionByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectDefinition fetchObjectDefinitionByReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	/**
 	 * Returns the object definition with the matching UUID and company.
 	 *
 	 * @param uuid the object definition's UUID
@@ -281,6 +300,19 @@ public interface ObjectDefinitionLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectDefinition getObjectDefinition(long objectDefinitionId)
+		throws PortalException;
+
+	/**
+	 * Returns the object definition with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the object definition's external reference code
+	 * @return the matching object definition
+	 * @throws PortalException if a matching object definition could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectDefinition getObjectDefinitionByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	/**
@@ -358,7 +390,8 @@ public interface ObjectDefinitionLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition updateCustomObjectDefinition(
-			long objectDefinitionId, long accountEntryRestrictedObjectFieldId,
+			String externalReferenceCode, long objectDefinitionId,
+			long accountEntryRestrictedObjectFieldId,
 			long descriptionObjectFieldId, long titleObjectFieldId,
 			boolean accountEntryRestricted, boolean active,
 			boolean enableCategorization, boolean enableComments,

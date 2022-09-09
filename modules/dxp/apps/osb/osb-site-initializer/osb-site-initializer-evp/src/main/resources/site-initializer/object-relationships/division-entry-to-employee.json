@@ -1,0 +1,11 @@
+{
+	"deletionType": "prevent",
+	"label": {
+		"en_US": "Subsidiary EVP Division Id"
+	},
+	"name": "subsidiaryEVPDivisionId",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:EVPDivision$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:EVPEmployee$]",
+	"objectDefinitionName2": "EVPEmployee",
+	"type": "oneToMany"
+}

@@ -1,0 +1,11 @@
+{
+	"deletionType": "prevent",
+	"label": {
+		"en_US": "EVP Grant Request Id"
+	},
+	"name": "evpGrantRequestId",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:EVPGrantRequest$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:EVPGrantTransaction$]",
+	"objectDefinitionName2": "EVPGrantTransaction",
+	"type": "oneToMany"
+}

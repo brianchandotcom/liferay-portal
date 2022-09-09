@@ -153,6 +153,19 @@ public class StructuredContentResourceTest
 		assertEquals(completeStructuredContent, structuredContent);
 		assertValid(structuredContent);
 
+		// Different folder
+
+		structuredContent =
+			structuredContentResource.postStructuredContentFolderStructuredContent(
+			_journalFolder.getFolderId(), _randomCompleteStructuredContent());
+
+		structuredContent = structuredContentResource.getStructuredContent(
+			structuredContent.getId());
+
+		Assert.assertEquals(
+			_journalFolder.getFolderId(),
+			(long)structuredContent.getStructuredContentFolderId());
+
 		// Different locale
 
 		structuredContent = structuredContentResource.postSiteStructuredContent(
@@ -711,11 +724,8 @@ public class StructuredContentResourceTest
 	private StructuredContent _randomCompleteStructuredContent()
 		throws Exception {
 
-		JournalFolder journalFolder = JournalTestUtil.addFolder(
-			testGroup.getGroupId(), RandomTestUtil.randomString());
-
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			testGroup.getGroupId(), journalFolder.getFolderId());
+			testGroup.getGroupId(), _journalFolder.getFolderId());
 
 		StructuredContent structuredContent = super.randomStructuredContent();
 

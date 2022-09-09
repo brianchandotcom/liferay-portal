@@ -83,20 +83,15 @@ public class PublicLayoutsItemSelectorView extends BaseLayoutsItemSelectorView {
 		return super.isVisible(itemSelectorCriterion, themeDisplay);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.item.selector.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.item.selector.web)"
+	)
 	private ServletContext _servletContext;
 
 }

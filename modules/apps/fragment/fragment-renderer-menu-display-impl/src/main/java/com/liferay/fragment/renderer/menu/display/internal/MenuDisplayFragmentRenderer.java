@@ -152,14 +152,6 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		}
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.fragment.renderer.menu.display.impl)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private void _configureMenu(
 			MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration,
 			NavigationMenuTag navigationMenuTag)
@@ -330,6 +322,9 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	@Reference
 	private Portal _portal;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.fragment.renderer.menu.display.impl)"
+	)
 	private ServletContext _servletContext;
 
 }

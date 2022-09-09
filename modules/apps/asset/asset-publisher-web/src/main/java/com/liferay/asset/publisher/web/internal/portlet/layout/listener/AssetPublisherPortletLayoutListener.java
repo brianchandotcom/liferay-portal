@@ -34,20 +34,18 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletPreferences;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -97,19 +95,6 @@ public class AssetPublisherPortletLayoutListener
 				_journalArticleLocalService.deleteLayoutArticleReferences(
 					layout.getGroupId(), layout.getUuid());
 			}
-
-			long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
-			int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
-
-			if (PortletIdCodec.hasUserId(portletId)) {
-				ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
-				ownerId = PortletIdCodec.decodeUserId(portletId);
-			}
-
-			_subscriptionLocalService.deleteSubscriptions(
-				layout.getCompanyId(), PortletPreferences.class.getName(),
-				_assetPublisherWebHelper.getSubscriptionClassPK(
-					ownerId, ownerType, plid, portletId));
 
 			_deleteLayoutClassedModelUsages(layout, portletId);
 
@@ -320,6 +305,9 @@ public class AssetPublisherPortletLayoutListener
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

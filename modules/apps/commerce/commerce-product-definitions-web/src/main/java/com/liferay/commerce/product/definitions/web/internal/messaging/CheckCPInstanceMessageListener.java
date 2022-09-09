@@ -76,13 +76,11 @@ public class CheckCPInstanceMessageListener extends BaseMessageListener {
 		_cpInstanceLocalService.checkCPInstances(0);
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

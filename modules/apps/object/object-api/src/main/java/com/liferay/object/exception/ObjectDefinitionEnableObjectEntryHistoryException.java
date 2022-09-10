@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.object.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Marco Leo
  */
-public class ObjectDefinitionEnableObjectEntryHistoryException extends PortalException {
+public class ObjectDefinitionEnableObjectEntryHistoryException
+	extends PortalException {
 
 	public ObjectDefinitionEnableObjectEntryHistoryException() {
 	}
@@ -27,11 +29,15 @@ public class ObjectDefinitionEnableObjectEntryHistoryException extends PortalExc
 		super(msg);
 	}
 
-	public ObjectDefinitionEnableObjectEntryHistoryException(String msg, Throwable throwable) {
+	public ObjectDefinitionEnableObjectEntryHistoryException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public ObjectDefinitionEnableObjectEntryHistoryException(Throwable throwable) {
+	public ObjectDefinitionEnableObjectEntryHistoryException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

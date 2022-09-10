@@ -12,70 +12,60 @@
 import classNames from 'classnames';
 import i18n from '../../../../../../../../../common/I18n';
 import {Skeleton} from '../../../../../../../../../common/components';
+import CardMessage from './components/CardMessage/CardMessage';
 import SlaCard from './components/SlaCard';
 import SwitchSlaCardsButton from './components/SwitchSlaCardButton';
 import useCardPosition from './hooks/useCardPosition';
 import useSlaCards from './hooks/useSlaCards';
 
-const SlaCardsList = ({koroneikiAccount}) => {
+const SlaCardsList = ({koroneikiAccount, loading}) => {
 	const slaCards = useSlaCards(koroneikiAccount);
-	const {changePosition, currentPosition} = useCardPosition();
+	const {changePosition, currentPosition, lastPosition} = useCardPosition(
+		slaCards?.length
+	);
+
+	const getSlaCards = () =>
+		slaCards?.map((slaCard, index) => (
+			<SlaCard
+				{...slaCard}
+				active={currentPosition === index}
+				key={`${slaCard.title}-${index}`}
+				last={lastPosition === index}
+			/>
+		));
+
+	if (loading) {
+		return (
+			<div className="mb-6">
+				<Skeleton className="mb-4" height={22} width={140} />
+
+				<Skeleton height={84} width={215} />
+			</div>
+		);
+	}
 
 	return (
-		<div>
-			{!koroneikiAccount ? (
-				<div className="cp-sla-container position-absolute">
-					<Skeleton height={22} width={201} />
+		<div className="cp-sla-container mb-6">
+			<h5 className="mb-4">{i18n.translate('support-level')}</h5>
 
-					<Skeleton className="mt-3" height={80} width={201} />
-				</div>
-			) : (
-				<div className="cp-sla-container position-absolute">
-					<h5 className="mb-4">{i18n.translate('support-level')}</h5>
+			{slaCards?.length ? (
+				<>
+					<div
+						className={classNames('d-flex', {
+							'ml-3': slaCards.length > 1,
+						})}
+					>
+						{getSlaCards()}
+					</div>
 
-					{slaCards?.length ? (
-						<div>
-							<div
-								className={classNames({
-									'ml-2': slaCards.length > 1,
-								})}
-							>
-								<div
-									className={classNames(
-										'align-items-center d-flex cp-sla-card-holder',
-										{
-											'cp-sla-multiple-card ml-2':
-												slaCards.length > 1,
-										}
-									)}
-								>
-									{slaCards.map((slaCard, index) => (
-										<SlaCard
-											key={slaCard.title}
-											selected={currentPosition === index}
-											{...slaCard}
-											koroneikiAccount={koroneikiAccount}
-										/>
-									))}
-								</div>
-							</div>
-
-							{slaCards.length > 1 && (
-								<SwitchSlaCardsButton
-									handleClick={() => changePosition(slaCards)}
-								/>
-							)}
-						</div>
-					) : (
-						<div className="bg-neutral-1 cp-n-sla-card rounded-lg">
-							<p className="px-3 py-2 text-neutral-7 text-paragraph-sm">
-								{i18n.translate(
-									"the-project's-support-level-is-displayed-here-for-projects-with-ticketing-support"
-								)}
-							</p>
-						</div>
+					{slaCards.length > 1 && (
+						<SwitchSlaCardsButton
+							handleClick={() => changePosition()}
+						/>
 					)}
-				</div>
+				</>
+			) : (
+				<CardMessage />
 			)}
 		</div>
 	);

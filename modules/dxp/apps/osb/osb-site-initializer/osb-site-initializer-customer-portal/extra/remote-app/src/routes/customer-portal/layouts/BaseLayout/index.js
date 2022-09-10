@@ -32,7 +32,7 @@ const Layout = () => {
 			{hasSideMenu && <SideMenu />}
 
 			<div className="d-flex flex-fill pt-4">
-				<div className="w-100">
+				<div className="mx-4 px-2 w-100">
 					<Outlet
 						context={{
 							setHasQuickLinksPanel,

@@ -9,21 +9,31 @@
  * distribution rights of the Software.
  */
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
-export default function useCardPosition() {
+export default function useCardPosition(slaCardsCount) {
 	const [currentPosition, setCurrentPosition] = useState(0);
+	const [lastPosition, setLastPosition] = useState();
 
-	const changePosition = (slaCards) => {
+	useEffect(() => {
+		if (slaCardsCount) {
+			setLastPosition(slaCardsCount - 1);
+		}
+	}, [slaCardsCount]);
+
+	const changePosition = () => {
 		const nextPosition = currentPosition + 1;
 
-		if (slaCards[nextPosition]) {
+		if (nextPosition < slaCardsCount) {
 			setCurrentPosition(nextPosition);
+			setLastPosition(currentPosition);
+
+			return;
 		}
-		else {
-			setCurrentPosition(0);
-		}
+
+		setLastPosition(slaCardsCount - 1);
+		setCurrentPosition(0);
 	};
 
-	return {changePosition, currentPosition};
+	return {changePosition, currentPosition, lastPosition};
 }

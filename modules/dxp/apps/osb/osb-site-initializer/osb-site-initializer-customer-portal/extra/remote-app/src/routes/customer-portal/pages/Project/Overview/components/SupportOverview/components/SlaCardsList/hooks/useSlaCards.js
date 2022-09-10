@@ -13,64 +13,61 @@ import {useMemo} from 'react';
 import {SLA_CARD_NAMES} from '../../../../../../../../../../common/utils/constants/slaCardNames';
 import getSlaCard from '../utils/getSlaCard';
 
-const useSlaCards = (koroneikiAccount) =>
-	useMemo(() => {
-		if (!koroneikiAccount) {
-			return null;
+export default function useSlaCards(koroneikiAccount) {
+	return useMemo(() => {
+		if (koroneikiAccount) {
+			const {
+				slaCurrent,
+				slaCurrentEndDate,
+				slaCurrentStartDate,
+				slaExpired,
+				slaExpiredEndDate,
+				slaExpiredStartDate,
+				slaFuture,
+				slaFutureEndDate,
+				slaFutureStartDate,
+			} = koroneikiAccount;
+
+			const slaCards = [];
+
+			if (slaCurrent) {
+				slaCards.push(
+					getSlaCard(
+						slaCurrent === slaFuture
+							? slaFutureEndDate
+							: slaCurrentEndDate,
+						slaCurrent === slaExpired
+							? slaExpiredStartDate
+							: slaCurrentStartDate,
+						slaCurrent,
+						SLA_CARD_NAMES.current
+					)
+				);
+			}
+
+			if (!!slaExpired && slaExpired !== slaCurrent) {
+				slaCards.push(
+					getSlaCard(
+						slaExpiredEndDate,
+						slaExpiredStartDate,
+						slaExpired,
+						SLA_CARD_NAMES.expired
+					)
+				);
+			}
+
+			if (!!slaFuture && slaFuture !== slaCurrent) {
+				slaCards.push(
+					getSlaCard(
+						slaFutureEndDate,
+						slaFutureStartDate,
+						slaFuture,
+						SLA_CARD_NAMES.future
+					)
+				);
+			}
+
+			return slaCards;
 		}
-
-		const {
-			slaCurrent,
-			slaCurrentEndDate,
-			slaCurrentStartDate,
-			slaExpired,
-			slaExpiredEndDate,
-			slaExpiredStartDate,
-			slaFuture,
-			slaFutureEndDate,
-			slaFutureStartDate,
-		} = koroneikiAccount;
-
-		const slaCards = [];
-
-		if (slaCurrent) {
-			slaCards.push(
-				getSlaCard(
-					slaCurrent === slaFuture
-						? slaFutureEndDate
-						: slaCurrentEndDate,
-					slaCurrent === slaExpired
-						? slaExpiredStartDate
-						: slaCurrentStartDate,
-					slaCurrent.split(' ')[0],
-					SLA_CARD_NAMES.current
-				)
-			);
-		}
-
-		if (!!slaFuture && slaFuture !== slaCurrent) {
-			slaCards.push(
-				getSlaCard(
-					slaFutureEndDate,
-					slaFutureStartDate,
-					slaFuture,
-					SLA_CARD_NAMES.future
-				)
-			);
-		}
-
-		if (!!slaExpired && slaExpired !== slaCurrent) {
-			slaCards.push(
-				getSlaCard(
-					slaExpiredEndDate,
-					slaExpiredStartDate,
-					slaExpired,
-					SLA_CARD_NAMES.expired
-				)
-			);
-		}
-
-		return slaCards;
 	}, [koroneikiAccount]);
-
-export default useSlaCards;
+}

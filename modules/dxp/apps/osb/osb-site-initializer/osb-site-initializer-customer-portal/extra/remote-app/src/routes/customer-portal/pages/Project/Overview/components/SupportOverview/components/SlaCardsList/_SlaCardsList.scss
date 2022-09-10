@@ -1,47 +1,30 @@
-.cp-sla-container:hover {
-	.btn {
-		background-color: white;
-		border-color: rgba(11, 95, 255, 0.25);
-		box-shadow: $elevation-fluffy-1;
-		display: inline-block !important;
-		padding: 0.25rem;
-		transform: translate(12rem, -3rem);
-		width: 2.1rem;
-		z-index: 100;
-	}
-
-	.btn:hover {
-		border-color: white;
-	}
-}
-
-.cp-card {
-	box-shadow: $elevation-fluffy-1;
-}
-
-.cp-sla-card-holder {
-	position: relative;
-}
-
-.cp-sla-card-holder .cp-sla-card {
-	filter: blur(2px);
-	position: absolute;
-	transition: all 0.4s;
-}
-
-.cp-sla-multiple-card .cp-sla-card-active {
-	filter: blur(0);
-	transform: translate(-1rem, 1rem);
-	transition: all 0.4s;
+.cp-sla-container:hover .btn {
+	display: inline-block !important;
+	padding: 0.25rem;
+	transform: translate(11.5rem, -2.5rem);
+	width: 2rem;
+	height: 2rem;
 	z-index: 100;
 }
 
-.cp-sla-min-width {
-	min-width: 215px;
-}
+.cp-sla-card {
+	filter: blur(2px);
+	position: absolute;
+	transition: all 0.4s;
+	width: 215px;
+	z-index: 99;
 
-.cp-sla-label {
-	font-size: 0.75rem;
+	&.active {
+		filter: blur(0);
+		position: initial;
+		transform: translate(-1rem, 1rem);
+		z-index: 100;
+	}
+
+	&.last {
+		z-index: 98;
+		transform: translate(1rem, -1rem);
+	}
 }
 
 .cp-n-sla-card {

@@ -9,15 +9,16 @@
  * distribution rights of the Software.
  */
 
-import ClayIcon from '@clayui/icon';
+import {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 
 const SwitchSlaCardsButton = ({handleClick}) => (
-	<button
-		className="btn btn-outline-primary d-none hide ml-3 position-relative rounded-circle"
+	<ClayButtonWithIcon
+		className="bg-white d-none position-absolute rounded-circle shadow-lg"
+		displayType="primary"
 		onClick={handleClick}
-	>
-		<ClayIcon symbol="angle-right" />
-	</button>
+		outline
+		symbol="angle-right"
+	/>
 );
 export default SwitchSlaCardsButton;

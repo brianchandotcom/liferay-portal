@@ -9,15 +9,4 @@
  * distribution rights of the Software.
  */
 
-import LiferayContact from './components/LiferayContact';
-import SlaCardsList from './components/SlaCardsList';
-
-const SupportOverview = ({koroneikiAccount, loading}) => (
-	<div className="cp-support-overview d-flex flex-column flex-xl-row justify-content-between">
-		<SlaCardsList koroneikiAccount={koroneikiAccount} loading={loading} />
-
-		<LiferayContact koroneikiAccount={koroneikiAccount} loading={loading} />
-	</div>
-);
-
-export default SupportOverview;
+export {default} from './CardMessage';

@@ -9,15 +9,16 @@
  * distribution rights of the Software.
  */
 
-import LiferayContact from './components/LiferayContact';
-import SlaCardsList from './components/SlaCardsList';
+import i18n from '../../../../../../../../../../../common/I18n';
 
-const SupportOverview = ({koroneikiAccount, loading}) => (
-	<div className="cp-support-overview d-flex flex-column flex-xl-row justify-content-between">
-		<SlaCardsList koroneikiAccount={koroneikiAccount} loading={loading} />
-
-		<LiferayContact koroneikiAccount={koroneikiAccount} loading={loading} />
+const CardMessage = () => (
+	<div className="bg-neutral-1 cp-n-sla-card rounded-lg">
+		<p className="px-3 py-2 text-neutral-7 text-paragraph-sm">
+			{i18n.translate(
+				"the-project's-support-level-is-displayed-here-for-projects-with-ticketing-support"
+			)}
+		</p>
 	</div>
 );
 
-export default SupportOverview;
+export default CardMessage;

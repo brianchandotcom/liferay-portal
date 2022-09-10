@@ -11,15 +11,19 @@
 
 import SupportOverview from './components/SupportOverview/';
 import './app.scss';
-import {useCustomerPortal} from '../../../context';
 import SubscriptionsOverview from './components/SubscriptionsOverview';
+import useCurrentKoroneikiAccount from './hooks/useCurrentKoroneikiAccount';
 
 const Overview = () => {
-	const [{project}] = useCustomerPortal();
+	const {data, loading} = useCurrentKoroneikiAccount();
+	const koroneikiAccount = data?.koroneikiAccountByExternalReferenceCode;
 
 	return (
 		<div>
-			<SupportOverview koroneikiAccount={project} />
+			<SupportOverview
+				koroneikiAccount={koroneikiAccount}
+				loading={loading}
+			/>
 
 			<SubscriptionsOverview />
 		</div>

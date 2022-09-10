@@ -118,7 +118,7 @@ const SubscriptionsOverview = () => {
 
 	return (
 		<>
-			<div className="d-flex flex-column mr-4 mt-6">
+			<div className="d-flex flex-column">
 				{!isPartnership && <h3>{i18n.translate('subscriptions')}</h3>}
 
 				{!!subscriptionGroupsWithSubscriptions.length && (

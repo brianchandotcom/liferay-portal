@@ -16,34 +16,34 @@ import React from 'react';
 import i18n from '../../../../../../../../../../../common/I18n';
 import {SLA_TYPES} from '../../../../../../../../../../../common/utils/constants';
 
-const SlaCard = ({endDate, label, selected, startDate, title}) => {
+const SlaCard = ({active, endDate, label, last, startDate, title}) => {
 	const slaDate = `${startDate} - ${endDate}`;
 
 	return (
 		<div
-			className={classNames('align-items-center d-flex', {
-				'cp-sla-card': !selected,
-				'cp-sla-card-active': selected,
-			})}
+			className={classNames(
+				'align-items-center d-flex cp-sla-card mt-3',
+				{
+					active,
+					last,
+				}
+			)}
 		>
 			<ClayCard
-				className={classNames(
-					'm-0 p-3 rounded-lg border cp-sla-min-width',
-					{
-						'bg-brand-secondary-lighten-6 border-brand-secondary-lighten-4':
-							title === SLA_TYPES.gold,
-						'bg-neutral-0 border-brand-primary-darken-2 ':
-							title === SLA_TYPES.limited,
-						'bg-neutral-0 border-neutral-2 ':
-							title === SLA_TYPES.platinum,
-						'border-brand-primary-lighten-3 bg-brand-primary-lighten-5':
-							title === SLA_TYPES.premium,
-					}
-				)}
+				className={classNames('m-0 p-3 rounded-lg border', {
+					'bg-brand-secondary-lighten-6 border-brand-secondary-lighten-4':
+						title === SLA_TYPES.gold,
+					'bg-neutral-0 border-brand-primary-darken-2 ':
+						title === SLA_TYPES.limited,
+					'bg-neutral-0 border-neutral-2 ':
+						title === SLA_TYPES.platinum,
+					'border-brand-primary-lighten-3 bg-brand-primary-lighten-5':
+						title === SLA_TYPES.premium,
+				})}
 			>
 				<ClayCard.Row className="align-items-center d-flex justify-content-between">
-					<div
-						className={classNames('h5 mb-0', {
+					<h5
+						className={classNames('mb-0', {
 							'text-brand-primary-darken-2':
 								title === SLA_TYPES.limited,
 							'text-brand-primary-lighten-1':
@@ -53,14 +53,14 @@ const SlaCard = ({endDate, label, selected, startDate, title}) => {
 							'text-neutral-7': title === SLA_TYPES.platinum,
 						})}
 					>
-						{i18n.translate(title.toLowerCase())}
-					</div>
+						{i18n.translate(title)}
+					</h5>
 
 					<div>
 						<ClayCard.Caption>
 							<ClayLabel
 								className={classNames(
-									'mr-0 p-0 text-small-caps cp-sla-label',
+									'mr-0 p-0 text-small-caps',
 									{
 										'label-borderless-dark text-neutral-7':
 											title === SLA_TYPES.platinum,
@@ -81,7 +81,7 @@ const SlaCard = ({endDate, label, selected, startDate, title}) => {
 				</ClayCard.Row>
 
 				<ClayCard.Description
-					className={classNames('', {
+					className={classNames({
 						'text-brand-primary-darken-2':
 							title === SLA_TYPES.limited,
 						'text-brand-primary-lighten-1':

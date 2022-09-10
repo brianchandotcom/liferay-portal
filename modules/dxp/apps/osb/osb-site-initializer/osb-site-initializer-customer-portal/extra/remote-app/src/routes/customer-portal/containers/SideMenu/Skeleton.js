@@ -14,7 +14,7 @@ import {MENU_TYPES} from '../../utils/constants';
 
 const SideMenuSkeleton = () => {
 	return (
-		<div className="bg-neutral-1 cp-side-menu mr-4 pl-4 pt-4">
+		<div className="bg-neutral-1 cp-side-menu pl-4 pt-4">
 			<ul className="list-unstyled mr-2">
 				{Object.entries(MENU_TYPES).map((menuType) => {
 					const [menuKey, menuName] = menuType;

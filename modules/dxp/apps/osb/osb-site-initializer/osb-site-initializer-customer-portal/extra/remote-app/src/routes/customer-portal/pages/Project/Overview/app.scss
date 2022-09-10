@@ -1,5 +1,6 @@
 @import '../../../../../common/styles/global';
-@import './components/SupportOverview/components/components';
+@import './components/SupportOverview/components/SlaCardsList/SlaCardsList';
+@import './components/SupportOverview/support-overview';
 
 .cp-overview-cards-subscription {
 	gap: 1.5rem;

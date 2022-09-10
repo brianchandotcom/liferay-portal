@@ -10,15 +10,14 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import React from 'react';
 
-const SwitchButton = ({handleClick}) => (
+const SwitchSLACardButton = ({handleClick}) => (
 	<ClayButtonWithIcon
-		className="bg-white d-none position-absolute rounded-circle shadow-lg"
+		className="bg-white cp-switch-sla-card-button d-none p-1 position-absolute rounded-circle shadow-lg"
 		displayType="primary"
 		onClick={handleClick}
 		outline
 		symbol="angle-right"
 	/>
 );
-export default SwitchButton;
+export default SwitchSLACardButton;

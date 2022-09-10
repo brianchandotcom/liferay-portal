@@ -15,7 +15,7 @@ import {Skeleton} from '../../../../../../../../../common/components';
 const LiferayContact = ({koroneikiAccount, loading}) => {
 	if (loading) {
 		return (
-			<div className="mb-5">
+			<div className="mb-6">
 				<Skeleton className="mb-4" height={22} width={250} />
 
 				<Skeleton className="mb-2" height={24} width={215} />

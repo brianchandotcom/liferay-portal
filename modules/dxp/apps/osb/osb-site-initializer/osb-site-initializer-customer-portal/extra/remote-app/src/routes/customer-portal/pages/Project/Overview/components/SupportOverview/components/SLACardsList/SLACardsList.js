@@ -14,7 +14,7 @@ import i18n from '../../../../../../../../../common/I18n';
 import {Skeleton} from '../../../../../../../../../common/components';
 import SLACard from './components/SLACard';
 import SLACardMessage from './components/SLACardMessage/SLACardMessage';
-import SwitchButton from './components/SwitchButton';
+import SwitchSLACardButton from './components/SwitchSLACardButton';
 import useSLACardPosition from './hooks/useSLACardPosition';
 import useSLACards from './hooks/useSLACards';
 
@@ -45,23 +45,23 @@ const SLACardsList = ({koroneikiAccount, loading}) => {
 	}
 
 	return (
-		<div className="cp-sla-container mb-6">
+		<div className="mb-6">
 			<h5 className="mb-4">{i18n.translate('support-level')}</h5>
 
 			{slaCards?.length ? (
-				<>
-					<div
-						className={classNames('d-flex', {
-							'ml-3': slaCards.length > 1,
-						})}
-					>
-						{getSLACards()}
-					</div>
+				<div
+					className={classNames({
+						'cp-sla-container ml-3': slaCards.length > 1,
+					})}
+				>
+					<div className="d-flex">{getSLACards()}</div>
 
 					{slaCards.length > 1 && (
-						<SwitchButton handleClick={() => changePosition()} />
+						<SwitchSLACardButton
+							handleClick={() => changePosition()}
+						/>
 					)}
-				</>
+				</div>
 			) : (
 				<SLACardMessage />
 			)}

@@ -337,6 +337,13 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		while (iterator.hasNext()) {
 			GradleDependency gradleDependency = iterator.next();
 
+			if (Validator.isNull(gradleDependency.getGroup()) ||
+				Validator.isNull(gradleDependency.getName()) ||
+				Validator.isNull(gradleDependency.getVersion())) {
+
+				continue;
+			}
+
 			_checkVulnerabilities(
 				fileName, absolutePath,
 				gradleDependency.getGroup() + StringPool.COLON +

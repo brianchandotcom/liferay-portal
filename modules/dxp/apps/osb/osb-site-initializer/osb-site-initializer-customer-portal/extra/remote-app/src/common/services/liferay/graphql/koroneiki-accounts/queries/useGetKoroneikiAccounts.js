@@ -10,7 +10,7 @@
  */
 
 import {gql, useQuery} from '@apollo/client';
-import { CORE_KORONEIKI_ACCOUNT_FIELDS } from '../fragments/coreKoroneikiAccountFields';
+import {CORE_KORONEIKI_ACCOUNT_FIELDS} from '../fragments/coreKoroneikiAccountFields';
 
 const GET_KORONEIKI_ACCOUNTS = gql`
 	${CORE_KORONEIKI_ACCOUNT_FIELDS}

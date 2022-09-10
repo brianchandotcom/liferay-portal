@@ -12,12 +12,12 @@
 import ClayCard from '@clayui/card';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
-import React from 'react';
 import i18n from '../../../../../../../../../../../common/I18n';
-import {SLA_TYPES} from '../../../../../../../../../../../common/utils/constants';
+import getStyleFromTitle from './utils/getStyleFromTitle';
 
 const SLACard = ({active, endDate, label, last, startDate, title}) => {
-	const slaDate = `${startDate} - ${endDate}`;
+	const displayDate = `${startDate} - ${endDate}`;
+	const currentStyle = getStyleFromTitle(title);
 
 	return (
 		<div
@@ -30,29 +30,13 @@ const SLACard = ({active, endDate, label, last, startDate, title}) => {
 			)}
 		>
 			<ClayCard
-				className={classNames('m-0 p-3 rounded-lg border', {
-					'bg-brand-secondary-lighten-6 border-brand-secondary-lighten-4':
-						title === SLA_TYPES.gold,
-					'bg-neutral-0 border-brand-primary-darken-2 ':
-						title === SLA_TYPES.limited,
-					'bg-neutral-0 border-neutral-2 ':
-						title === SLA_TYPES.platinum,
-					'border-brand-primary-lighten-3 bg-brand-primary-lighten-5':
-						title === SLA_TYPES.premium,
-				})}
+				className={classNames(
+					'm-0 p-3 rounded-lg border',
+					currentStyle.cardStyle
+				)}
 			>
 				<ClayCard.Row className="align-items-center d-flex justify-content-between">
-					<h5
-						className={classNames('mb-0', {
-							'text-brand-primary-darken-2':
-								title === SLA_TYPES.limited,
-							'text-brand-primary-lighten-1':
-								title === SLA_TYPES.premium,
-							'text-brand-secondary-darken-3':
-								title === SLA_TYPES.gold,
-							'text-neutral-7': title === SLA_TYPES.platinum,
-						})}
-					>
+					<h5 className={classNames('mb-0', currentStyle.titleStyle)}>
 						{i18n.translate(title)}
 					</h5>
 
@@ -61,16 +45,7 @@ const SLACard = ({active, endDate, label, last, startDate, title}) => {
 							<ClayLabel
 								className={classNames(
 									'mr-0 p-0 text-small-caps',
-									{
-										'label-borderless-dark text-neutral-7':
-											title === SLA_TYPES.platinum,
-										'label-borderless-primary text-brand-primary-darken-2':
-											title === SLA_TYPES.limited,
-										'label-borderless-secondary text-brand-primary-lighten-1':
-											title === SLA_TYPES.premium,
-										'label-borderless-secondary text-brand-secondary-darken-3':
-											title === SLA_TYPES.gold,
-									}
+									currentStyle.labelStyle
 								)}
 								displayType="secundary"
 							>
@@ -81,19 +56,11 @@ const SLACard = ({active, endDate, label, last, startDate, title}) => {
 				</ClayCard.Row>
 
 				<ClayCard.Description
-					className={classNames({
-						'text-brand-primary-darken-2':
-							title === SLA_TYPES.limited,
-						'text-brand-primary-lighten-1':
-							title === SLA_TYPES.premium,
-						'text-brand-secondary-darken-3':
-							title === SLA_TYPES.gold,
-						'text-neutral-6': title === SLA_TYPES.platinum,
-					})}
+					className={classNames(currentStyle.dateStyle)}
 					displayType="text"
 					truncate={false}
 				>
-					{slaDate}
+					{displayDate}
 				</ClayCard.Description>
 			</ClayCard>
 		</div>

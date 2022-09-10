@@ -10,7 +10,7 @@
  */
 
 import {useMemo} from 'react';
-import {SLA_CARD_NAMES} from '../../../../../../../../../../common/utils/constants/slaCardNames';
+import {SLA_LABELS} from '../utils/constants/slaLabels';
 import getSLACard from '../utils/getSLACard';
 
 export default function useSLACards(koroneikiAccount) {
@@ -40,7 +40,7 @@ export default function useSLACards(koroneikiAccount) {
 							? slaExpiredStartDate
 							: slaCurrentStartDate,
 						slaCurrent,
-						SLA_CARD_NAMES.current
+						SLA_LABELS.current
 					)
 				);
 			}
@@ -51,7 +51,7 @@ export default function useSLACards(koroneikiAccount) {
 						slaExpiredEndDate,
 						slaExpiredStartDate,
 						slaExpired,
-						SLA_CARD_NAMES.expired
+						SLA_LABELS.expired
 					)
 				);
 			}
@@ -62,7 +62,7 @@ export default function useSLACards(koroneikiAccount) {
 						slaFutureEndDate,
 						slaFutureStartDate,
 						slaFuture,
-						SLA_CARD_NAMES.future
+						SLA_LABELS.future
 					)
 				);
 			}

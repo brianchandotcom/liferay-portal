@@ -10,7 +10,7 @@
  */
 
 import {Liferay} from '../../../../../../../../../../common/services/liferay';
-import {FORMAT_DATE_TYPES} from '../../../../../../../../../../common/utils/constants/formatDateTypes';
+import {FORMAT_DATE_TYPES} from '../../../../../../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../../../../../../common/utils/getDateCustomFormat';
 
 export default function getSLACard(endDate, startDate, title, label) {

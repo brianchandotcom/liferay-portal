@@ -267,10 +267,16 @@ public class ObjectDefinitionResourceImpl
 
 		boolean enableCategorization = true;
 		boolean enableComments = false;
+		boolean enableObjectEntryHistory = false;
 
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672"))) {
 			enableCategorization = objectDefinition.getEnableCategorization();
 			enableComments = objectDefinition.getEnableComments();
+		}
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158473"))) {
+			enableObjectEntryHistory =
+				objectDefinition.getEnableObjectEntryHistory();
 		}
 
 		serviceBuilderObjectDefinition =
@@ -282,8 +288,7 @@ public class ObjectDefinitionResourceImpl
 				GetterUtil.getBoolean(
 					objectDefinition.getAccountEntryRestricted()),
 				GetterUtil.getBoolean(objectDefinition.getActive(), true),
-				enableCategorization, enableComments,
-				objectDefinition.getEnableObjectEntryHistory(),
+				enableCategorization, enableComments, enableObjectEntryHistory,
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
 				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
 				objectDefinition.getPanelCategoryKey(),
@@ -550,8 +555,13 @@ public class ObjectDefinitionResourceImpl
 					enableComments = objectDefinition.getEnableComments();
 				}
 
-				enableObjectEntryHistory =
-					objectDefinition.getEnableObjectEntryHistory();
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-158473"))) {
+
+					enableObjectEntryHistory =
+						objectDefinition.getEnableObjectEntryHistory();
+				}
+
 				externalReferenceCode =
 					objectDefinition.getExternalReferenceCode();
 				id = objectDefinition.getObjectDefinitionId();

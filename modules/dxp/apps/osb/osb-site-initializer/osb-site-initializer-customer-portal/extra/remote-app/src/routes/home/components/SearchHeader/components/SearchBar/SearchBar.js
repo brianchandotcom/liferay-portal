@@ -15,7 +15,7 @@ import {memo, useEffect, useState} from 'react';
 import i18n from '../../../../../../common/I18n';
 import useDebounce from '../../../../../../common/hooks/useDebounce';
 
-const SearchBar = ({onSearchSubmit}) => {
+const SearchBar = ({disable, onSearchSubmit}) => {
 	const [term, setTerm] = useState('');
 	const debouncedTerm = useDebounce(term, 500);
 
@@ -25,9 +25,10 @@ const SearchBar = ({onSearchSubmit}) => {
 	]);
 
 	return (
-		<div className="position-relative">
+		<div className="flex-grow-1 mr-5 position-relative">
 			<ClayInput
-				className="border-brand-primary-lighten-4 cp-search-project font-weight-semi-bold h5 rounded-pill shadow-lg"
+				className="border-brand-primary-lighten-4 font-weight-semi-bold px-5 py-3 rounded-pill shadow-lg"
+				disable={disable}
 				onChange={(event) => setTerm(event.target.value)}
 				placeholder={i18n.translate('find-a-project')}
 				type="text"
@@ -35,7 +36,7 @@ const SearchBar = ({onSearchSubmit}) => {
 			/>
 
 			<ClayIcon
-				className="position-absolute text-brand-primary"
+				className="cp-search-icon position-absolute text-brand-primary"
 				symbol="search"
 			/>
 		</div>

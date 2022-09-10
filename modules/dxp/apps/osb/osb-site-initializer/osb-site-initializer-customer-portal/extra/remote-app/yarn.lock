@@ -1226,6 +1226,14 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
+"@clayui/layout@^3.65.1":
+  version "3.65.1"
+  resolved "https://registry.yarnpkg.com/@clayui/layout/-/layout-3.65.1.tgz#98eda4eedcbf5c88615840f3834e16cf708c98ea"
+  integrity sha512-eniWhY5KTHuRlL0svBMpyHdlAFCL08DAWRj7UAyVNhLVhhReUiy/fyHevrxwvAvysBSLQTnoAKxzM6ky5kzCew==
+  dependencies:
+    classnames "^2.2.6"
+    warning "^4.0.3"
+
 "@clayui/link@^3.56.0":
   version "3.56.0"
   resolved "https://registry.yarnpkg.com/@clayui/link/-/link-3.56.0.tgz#89e1b583ba2a8108fbdc37b01609ded5f48efbfd"

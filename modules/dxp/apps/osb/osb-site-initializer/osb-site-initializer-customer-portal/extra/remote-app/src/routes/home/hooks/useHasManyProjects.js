@@ -11,18 +11,14 @@
 
 import {useEffect, useState} from 'react';
 
-const THRESHOLD_COUNT = 4;
-
-export default function useHasManyProjects(koroneikiAccounts) {
+export default function useHasManyProjects(totalCount, limitTotalCount) {
 	const [maxTotalCount, setMaxTotalCount] = useState(0);
 
 	useEffect(() => {
-		const totalCount = koroneikiAccounts?.totalCount;
-
 		if (totalCount > maxTotalCount) {
 			setMaxTotalCount(totalCount);
 		}
-	}, [koroneikiAccounts?.totalCount, maxTotalCount]);
+	}, [totalCount, maxTotalCount]);
 
-	return maxTotalCount > THRESHOLD_COUNT;
+	return maxTotalCount > limitTotalCount;
 }

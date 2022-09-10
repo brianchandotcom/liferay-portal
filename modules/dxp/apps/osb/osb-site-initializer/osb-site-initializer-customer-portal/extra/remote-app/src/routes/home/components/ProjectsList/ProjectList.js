@@ -14,20 +14,15 @@ import classNames from 'classnames';
 import {useEffect} from 'react';
 import i18n from '../../../../common/I18n';
 import ProjectCard from './components/ProjectCard';
+import ProjectCardSkeleton from './components/ProjectCardSkeleton/ProjectCardSkeleton';
 import useIntersectionObserver from './hooks/useIntersectionObserver';
 
-const THRESHOLD_COUNT = 4;
-
-const getLoadingCards = () =>
-	[...new Array(THRESHOLD_COUNT)].map((_, index) => (
-		<ProjectCard key={index} loading />
-	));
-
 const ProjectList = ({
+	compressed,
 	fetching,
-	hasManyProjects,
 	koroneikiAccounts,
 	loading,
+	maxCardsLoading = 4,
 	onIntersect,
 }) => {
 	const [setTrackedRefCurrent, isIntersecting] = useIntersectionObserver();
@@ -41,16 +36,21 @@ const ProjectList = ({
 		}
 	}, [isIntersecting, koroneikiAccounts?.page, onIntersect, allowFetching]);
 
+	const getLoadingCards = () =>
+		[...new Array(maxCardsLoading)].map((_, index) => (
+			<ProjectCardSkeleton key={index} />
+		));
+
 	const getProjects = () =>
 		koroneikiAccounts?.items.map((koroneikiAccount, index) => (
 			<ProjectCard
-				compressed={hasManyProjects}
+				compressed={compressed}
 				key={`${koroneikiAccount.accountKey}-${index}`}
 				{...koroneikiAccount}
 			/>
 		));
 
-	const showResults = () => {
+	const getResults = () => {
 		if (!koroneikiAccounts) {
 			return (
 				<p className="mx-auto">
@@ -81,12 +81,12 @@ const ProjectList = ({
 
 	return (
 		<div
-			className={classNames('d-flex flex-wrap', {
-				'cp-home-projects px-5': !hasManyProjects,
-				'cp-home-projects-sm pt-2': hasManyProjects,
+			className={classNames('d-flex', {
+				'flex-column': compressed,
+				'flex-wrap pl-3': !compressed,
 			})}
 		>
-			{loading ? getLoadingCards() : showResults()}
+			{loading ? getLoadingCards() : getResults()}
 		</div>
 	);
 };

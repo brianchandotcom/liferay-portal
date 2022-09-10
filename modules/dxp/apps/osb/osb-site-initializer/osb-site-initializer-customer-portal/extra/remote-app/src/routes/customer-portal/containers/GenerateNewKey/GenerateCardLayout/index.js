@@ -11,21 +11,16 @@
 
 import ClayCard from '@clayui/card';
 import i18n from '../../../../../common/I18n';
+import {FORMAT_DATE_TYPES} from '../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../common/utils/getDateCustomFormat';
-
-const dateFormat = {
-	day: '2-digit',
-	month: 'short',
-	year: 'numeric',
-};
 
 const GenerateCardLayout = ({infoSelectedKey}) => {
 	const currentDate = `${getDateCustomFormat(
 		infoSelectedKey?.selectedSubscription?.startDate,
-		dateFormat
+		FORMAT_DATE_TYPES.day2DMonthSYearN
 	)} - ${getDateCustomFormat(
 		infoSelectedKey?.selectedSubscription?.endDate,
-		dateFormat
+		FORMAT_DATE_TYPES.day2DMonthSYearN
 	)}`;
 
 	return (

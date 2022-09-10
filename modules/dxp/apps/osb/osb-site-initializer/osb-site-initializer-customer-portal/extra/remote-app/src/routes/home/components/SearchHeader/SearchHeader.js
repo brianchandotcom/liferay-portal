@@ -15,21 +15,22 @@ import Skeleton from '../../../../common/components/Skeleton';
 import SearchBar from './components/SearchBar/SearchBar';
 
 const SearchHeader = ({count, loading, onSearchSubmit}) => {
-	const [searchTerm, setSearchTerm] = useState('');
+	const [hasTerm, setHasTerm] = useState(false);
 
 	const getCounter = () => {
 		return `${count} ${
-			searchTerm
+			hasTerm
 				? i18n.pluralize(count, 'result')
 				: i18n.pluralize(count, 'project')
 		}`;
 	};
 
 	return (
-		<div className="align-items-center d-flex justify-content-between mb-4">
+		<div className="align-items-center d-flex justify-content-between mb-4 pb-2">
 			<SearchBar
+				disable={loading}
 				onSearchSubmit={(term) => {
-					setSearchTerm(term);
+					setHasTerm(!!term);
 					onSearchSubmit(term);
 				}}
 			/>

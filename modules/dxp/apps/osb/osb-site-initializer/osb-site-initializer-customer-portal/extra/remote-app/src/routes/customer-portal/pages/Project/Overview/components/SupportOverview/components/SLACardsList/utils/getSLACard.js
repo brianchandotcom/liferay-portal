@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import {Liferay} from '../../../../../../../../../../common/services/liferay';
 import {FORMAT_DATE_TYPES} from '../../../../../../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../../../../../../common/utils/getDateCustomFormat';
 
@@ -17,14 +16,12 @@ export default function getSLACard(endDate, startDate, title, label) {
 	return {
 		endDate: getDateCustomFormat(
 			endDate,
-			FORMAT_DATE_TYPES.day2DMonth2DYearN,
-			Liferay.ThemeDisplay.getBCP47LanguageId()
+			FORMAT_DATE_TYPES.day2DMonth2DYearN
 		),
 		label,
 		startDate: getDateCustomFormat(
 			startDate,
-			FORMAT_DATE_TYPES.day2DMonth2DYearN,
-			Liferay.ThemeDisplay.getBCP47LanguageId()
+			FORMAT_DATE_TYPES.day2DMonth2DYearN
 		),
 		title: title.split(' ')[0],
 	};

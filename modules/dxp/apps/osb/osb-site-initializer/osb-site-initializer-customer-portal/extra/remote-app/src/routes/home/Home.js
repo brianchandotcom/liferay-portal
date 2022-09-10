@@ -9,55 +9,54 @@
  * distribution rights of the Software.
  */
 
-import classNames from 'classnames';
+import ClayLayout from '@clayui/layout';
 import ProjectList from './components/ProjectsList';
 import SearchHeader from './components/SearchHeader';
 import useHasManyProjects from './hooks/useHasManyProjects';
 import useKoroneikiAccounts from './hooks/useKoroneikiAccounts';
+
 import './app.scss';
+
+const THRESHOLD_COUNT = 4;
 
 const Home = () => {
 	const {data, fetchMore, fetching, loading, search} = useKoroneikiAccounts();
 	const koroneikiAccounts = data?.c?.koroneikiAccounts;
 
-	const hasManyProjects = useHasManyProjects(koroneikiAccounts);
+	const hasManyProjects = useHasManyProjects(
+		koroneikiAccounts?.totalCount,
+		THRESHOLD_COUNT
+	);
 
 	return (
-		<div
-			className={classNames({
-				'cp-project-cards-container': !hasManyProjects,
-				'mx-auto cp-project-cards-container-sm': hasManyProjects,
-			})}
-		>
-			<div
-				className={classNames({
-					'd-flex flex-column w-100': hasManyProjects,
-					'ml-3': !hasManyProjects,
-				})}
-			>
-				{hasManyProjects && (
-					<SearchHeader
-						count={koroneikiAccounts?.totalCount}
-						loading={loading}
-						onSearchSubmit={(term) => search(term)}
-					/>
-				)}
+		<ClayLayout.ContainerFluid size={hasManyProjects ? 'md' : 'xl'}>
+			<ClayLayout.Row>
+				<ClayLayout.Col>
+					{hasManyProjects && (
+						<SearchHeader
+							count={koroneikiAccounts?.totalCount}
+							loading={loading}
+							onSearchSubmit={(term) => search(term)}
+						/>
+					)}
 
-				<ProjectList
-					fetching={fetching}
-					hasManyProjects={hasManyProjects}
-					koroneikiAccounts={koroneikiAccounts}
-					loading={loading}
-					onIntersect={(currentPage) =>
-						fetchMore({
-							variables: {
-								page: currentPage + 1,
-							},
-						})
-					}
-				/>
-			</div>
-		</div>
+					<ProjectList
+						compressed={hasManyProjects}
+						fetching={fetching}
+						koroneikiAccounts={koroneikiAccounts}
+						loading={loading}
+						maxCardsLoading={THRESHOLD_COUNT}
+						onIntersect={(currentPage) =>
+							fetchMore({
+								variables: {
+									page: currentPage + 1,
+								},
+							})
+						}
+					/>
+				</ClayLayout.Col>
+			</ClayLayout.Row>
+		</ClayLayout.ContainerFluid>
 	);
 };
 

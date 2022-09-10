@@ -19,15 +19,12 @@ import {
 	Table,
 } from '../../../../../../../../../../../common/components';
 import {getCommerceOrderItems} from '../../../../../../../../../../../common/services/liferay/graphql/queries';
-import {SLA_STATUS_TYPES} from '../../../../../../../../../../../common/utils/constants';
+import {
+	FORMAT_DATE_TYPES,
+	SLA_STATUS_TYPES,
+} from '../../../../../../../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../../../../../../../common/utils/getDateCustomFormat';
 import getKebabCase from '../../../../../../../../../../../common/utils/getKebabCase';
-
-const dateFormat = {
-	day: '2-digit',
-	month: '2-digit',
-	year: 'numeric',
-};
 
 const provisionedRequiredGroups = [
 	'Commerce',
@@ -137,8 +134,11 @@ const ModalCardSubscriptions = ({
 				'quantity': quantity || '-',
 				'start-end-date': `${getDateCustomFormat(
 					optionsParsed.startDate,
-					dateFormat
-				)} - ${getDateCustomFormat(optionsParsed.endDate, dateFormat)}`,
+					FORMAT_DATE_TYPES.day2DMonth2DYearN
+				)} - ${getDateCustomFormat(
+					optionsParsed.endDate,
+					FORMAT_DATE_TYPES.day2DMonth2DYearN
+				)}`,
 				'subscription-term-status':
 					(fields.status && (
 						<StatusTag

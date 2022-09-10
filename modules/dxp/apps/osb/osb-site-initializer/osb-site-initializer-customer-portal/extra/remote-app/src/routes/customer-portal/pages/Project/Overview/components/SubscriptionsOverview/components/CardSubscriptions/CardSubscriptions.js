@@ -14,15 +14,12 @@ import {useState} from 'react';
 import i18n from '../../../../../../../../../common/I18n';
 import {StatusTag} from '../../../../../../../../../common/components';
 import {useAppPropertiesContext} from '../../../../../../../../../common/contexts/AppPropertiesContext';
-import {SLA_STATUS_TYPES} from '../../../../../../../../../common/utils/constants';
+import {
+	FORMAT_DATE_TYPES,
+	SLA_STATUS_TYPES,
+} from '../../../../../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../../../../../common/utils/getDateCustomFormat';
 import ModalCardSubscriptions from './components/ModalCardSubscriptions/ModalCardSubscriptions';
-
-const dateFormat = {
-	day: '2-digit',
-	month: '2-digit',
-	year: 'numeric',
-};
 
 const SUBSCRIPTION_IMAGE_FILE = {
 	'Analytics': 'analytics_icon.svg',
@@ -93,10 +90,10 @@ const CardSubscriptions = ({
 					<p className="mb-3 text-center">
 						{`${getDateCustomFormat(
 							cardSubscriptionData?.startDate,
-							dateFormat
+							FORMAT_DATE_TYPES.day2DMonth2DYearN
 						)} - ${getDateCustomFormat(
 							cardSubscriptionData?.endDate,
-							dateFormat
+							FORMAT_DATE_TYPES.day2DMonth2DYearN
 						)}`}
 					</p>
 

@@ -9,13 +9,8 @@
  * distribution rights of the Software.
  */
 
+import {FORMAT_DATE_TYPES} from './constants';
 import getDateCustomFormat from './getDateCustomFormat';
-
-const dateFormat = {
-	day: '2-digit',
-	month: 'short',
-	year: 'numeric',
-};
 
 export default function getActivationStatusDateRange(orderItems) {
 	const dates = orderItems.reduce(
@@ -37,8 +32,11 @@ export default function getActivationStatusDateRange(orderItems) {
 	);
 	const activationStatusDateRange = `${getDateCustomFormat(
 		earliestStartDate,
-		dateFormat
-	)} - ${getDateCustomFormat(farthestEndDate, dateFormat)}`;
+		FORMAT_DATE_TYPES.day2DMonthSYearN
+	)} - ${getDateCustomFormat(
+		farthestEndDate,
+		FORMAT_DATE_TYPES.day2DMonthSYearN
+	)}`;
 
 	return activationStatusDateRange;
 }

@@ -13,15 +13,13 @@ import ClayCard from '@clayui/card';
 import classNames from 'classnames';
 import {memo} from 'react';
 import i18n from '../../../../../../common/I18n';
-import {StatusTag} from '../../../../../../common/components';
-import useRouterPath from '../../../../../../common/hooks/useRouterPath';
+import {Skeleton, StatusTag} from '../../../../../../common/components';
 import {
 	FORMAT_DATE_TYPES,
 	SLA_STATUS_TYPES,
 } from '../../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../../common/utils/getDateCustomFormat';
 import getKebabCase from '../../../../../../common/utils/getKebabCase';
-import redirect from './utils/redirect';
 
 const statusReport = {
 	[SLA_STATUS_TYPES.active]: i18n.translate('ends-on'),
@@ -29,65 +27,83 @@ const statusReport = {
 	[SLA_STATUS_TYPES.expired]: i18n.translate('ended-on'),
 };
 
-const ProjectCard = ({compressed, ...koroneikiAccount}) => {
-	const pageRoutes = useRouterPath();
-
-	return (
-		<ClayCard
-			className={classNames(
-				'border border-brand-primary-lighten-4 card-interactive shadow-none',
-				{
-					'card-horizontal mb-3': compressed,
-					'cp-project-card-lg mr-5 mb-4': !compressed,
-				}
-			)}
-			onClick={() =>
-				redirect(pageRoutes.project(koroneikiAccount.accountKey))
+const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => (
+	<ClayCard
+		className={classNames(
+			'border border-brand-primary-lighten-4 card-interactive shadow-none',
+			{
+				'card-horizontal mb-3': compressed,
+				'cp-project-card-lg mr-5 mb-4': !compressed,
 			}
+		)}
+		onClick={onClick}
+	>
+		<ClayCard.Body
+			className={classNames({
+				'mx-2 py-4 my-3': !compressed,
+				'py-4': compressed,
+			})}
 		>
-			<ClayCard.Body
+			<ClayCard.Row
 				className={classNames({
-					'mx-2 py-4 my-3': !compressed,
-					'py-4': compressed,
+					'flex-column': !compressed,
 				})}
 			>
-				<ClayCard.Row
-					className={classNames({
-						'flex-column': !compressed,
+				<div
+					className={classNames('text-truncate-inline', {
+						'autofit-col autofit-col-expand': compressed,
 					})}
 				>
 					<div
-						className={classNames('text-truncate-inline', {
-							'autofit-col autofit-col-expand': compressed,
-						})}
+						className={classNames(
+							'mb-1 text-neutral-7 text-truncate',
+							{
+								h3: !compressed,
+								h4: compressed,
+							}
+						)}
 					>
-						<div
-							className={classNames(
-								'mb-1 text-neutral-7 text-truncate',
-								{
-									h3: !compressed,
-									h4: compressed,
-								}
-							)}
-						>
-							{koroneikiAccount.name}
-						</div>
-
-						{compressed && (
-							<div className="text-neutral-5 text-paragraph text-truncate text-uppercase">
-								{koroneikiAccount.code}
-							</div>
+						{loading ? (
+							<Skeleton
+								className="mb-1"
+								height={34}
+								width={300}
+							/>
+						) : (
+							koroneikiAccount.name
 						)}
 					</div>
 
-					<div
-						className={classNames({
-							'autofit-col d-block text-right': compressed,
-							'mt-6 pt-3': !compressed,
-						})}
-					>
-						<StatusTag currentStatus={koroneikiAccount.status} />
+					{compressed &&
+						(loading ? (
+							<Skeleton
+								className="mb-1"
+								height={24}
+								width={120}
+							/>
+						) : (
+							<div className="text-neutral-5 text-paragraph text-truncate text-uppercase">
+								{koroneikiAccount.code}
+							</div>
+						))}
+				</div>
 
+				<div
+					className={classNames({
+						'autofit-col text-right align-items-end': compressed,
+						'd-block': !loading,
+						'mt-6 pt-3': !compressed,
+					})}
+				>
+					{loading ? (
+						<Skeleton height={20} width={54} />
+					) : (
+						<StatusTag currentStatus={koroneikiAccount.status} />
+					)}
+
+					{loading ? (
+						<Skeleton className="mt-1" height={20} width={100} />
+					) : (
 						<div className="text-neutral-5 text-paragraph-sm">
 							{statusReport[koroneikiAccount.status]}
 
@@ -98,8 +114,16 @@ const ProjectCard = ({compressed, ...koroneikiAccount}) => {
 								)}
 							</span>
 						</div>
+					)}
 
-						{compressed && (
+					{compressed &&
+						(loading ? (
+							<Skeleton
+								className="mt-1"
+								height={20}
+								width={120}
+							/>
+						) : (
 							<div className="text-align-end text-neutral-5 text-paragraph-sm">
 								{i18n.translate('support-region')}
 
@@ -109,12 +133,11 @@ const ProjectCard = ({compressed, ...koroneikiAccount}) => {
 									)}
 								</span>
 							</div>
-						)}
-					</div>
-				</ClayCard.Row>
-			</ClayCard.Body>
-		</ClayCard>
-	);
-};
+						))}
+				</div>
+			</ClayCard.Row>
+		</ClayCard.Body>
+	</ClayCard>
+);
 
 export default memo(ProjectCard);

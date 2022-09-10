@@ -20,7 +20,14 @@ import './app.scss';
 const THRESHOLD_COUNT = 4;
 
 const Home = () => {
-	const {data, fetchMore, fetching, loading, search} = useKoroneikiAccounts();
+	const {
+		data,
+		fetchMore,
+		fetching,
+		loading,
+		search,
+		searching,
+	} = useKoroneikiAccounts();
 	const koroneikiAccounts = data?.c?.koroneikiAccounts;
 
 	const hasManyProjects = useHasManyProjects(
@@ -29,22 +36,24 @@ const Home = () => {
 	);
 
 	return (
-		<ClayLayout.ContainerFluid size={hasManyProjects ? 'md' : 'xl'}>
+		<ClayLayout.ContainerFluid
+			size={hasManyProjects && !loading ? 'md' : 'xl'}
+		>
 			<ClayLayout.Row>
 				<ClayLayout.Col>
-					{hasManyProjects && (
+					{hasManyProjects && !loading && (
 						<SearchHeader
 							count={koroneikiAccounts?.totalCount}
-							loading={loading}
+							loading={searching}
 							onSearchSubmit={(term) => search(term)}
 						/>
 					)}
 
 					<ProjectList
-						compressed={hasManyProjects}
+						compressed={hasManyProjects && !loading}
 						fetching={fetching}
 						koroneikiAccounts={koroneikiAccounts}
-						loading={loading}
+						loading={loading || searching}
 						maxCardsLoading={THRESHOLD_COUNT}
 						onIntersect={(currentPage) =>
 							fetchMore({

@@ -29,11 +29,10 @@ export default function useKoroneikiAccounts() {
 		data,
 		fetchMore,
 		fetching: networkStatus === NetworkStatus.fetchMore,
-		loading:
-			networkStatus === NetworkStatus.loading ||
-			networkStatus === NetworkStatus.setVariables,
+		loading: networkStatus === NetworkStatus.loading,
 		networkStatus,
 		refetch,
 		search,
+		searching: networkStatus === NetworkStatus.setVariables,
 	};
 }

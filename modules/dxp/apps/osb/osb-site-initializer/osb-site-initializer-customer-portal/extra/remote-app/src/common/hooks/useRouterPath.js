@@ -14,19 +14,18 @@ import {Liferay} from '../services/liferay';
 import {ROUTE_TYPES} from '../utils/constants';
 
 export default function useRouterPath() {
-	const liferayURL = useMemo(() => {
-		const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
+	return useMemo(() => {
+		const relativeSiteURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
+		const siteURL = relativeSiteURL.substring(
+			1,
+			relativeSiteURL.lastIndexOf('/')
+		);
 
-		return `${Liferay.ThemeDisplay.getPortalURL()}${siteURL.substring(
-			0,
-			siteURL.lastIndexOf('/')
-		)}`;
+		return {
+			onboarding: (externalReferenceCode) =>
+				`${Liferay.ThemeDisplay.getPortalURL()}/${siteURL}/onboarding/#/${externalReferenceCode}`,
+			project: (externalReferenceCode) =>
+				`${Liferay.ThemeDisplay.getPortalURL()}/${siteURL}/project/#/${externalReferenceCode}`,
+		};
 	}, []);
-
-	return {
-		onboarding: (externalReferenceCode) =>
-			`${liferayURL}/${ROUTE_TYPES.onboarding}/#/${externalReferenceCode}`,
-		project: (externalReferenceCode) =>
-			`${liferayURL}/${ROUTE_TYPES.project}/#/${externalReferenceCode}`,
-	};
 }

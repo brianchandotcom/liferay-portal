@@ -13,8 +13,9 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {useEffect} from 'react';
 import i18n from '../../../../common/I18n';
+import useRouterPath from '../../../../common/hooks/useRouterPath';
+import {Liferay} from '../../../../common/services/liferay';
 import ProjectCard from './components/ProjectCard';
-import ProjectCardSkeleton from './components/ProjectCardSkeleton/ProjectCardSkeleton';
 import useIntersectionObserver from './hooks/useIntersectionObserver';
 
 const ProjectList = ({
@@ -26,6 +27,7 @@ const ProjectList = ({
 	onIntersect,
 }) => {
 	const [setTrackedRefCurrent, isIntersecting] = useIntersectionObserver();
+	const pageRoutes = useRouterPath();
 
 	const isLastPage = koroneikiAccounts?.page === koroneikiAccounts?.lastPage;
 	const allowFetching = !isLastPage && !fetching;
@@ -38,7 +40,7 @@ const ProjectList = ({
 
 	const getLoadingCards = () =>
 		[...new Array(maxCardsLoading)].map((_, index) => (
-			<ProjectCardSkeleton key={index} />
+			<ProjectCard compressed={compressed} key={index} loading />
 		));
 
 	const getProjects = () =>
@@ -46,6 +48,11 @@ const ProjectList = ({
 			<ProjectCard
 				compressed={compressed}
 				key={`${koroneikiAccount.accountKey}-${index}`}
+				onClick={() =>
+					Liferay.Util.navigate(
+						pageRoutes.project(koroneikiAccount.accountKey)
+					)
+				}
 				{...koroneikiAccount}
 			/>
 		));

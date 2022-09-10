@@ -28,7 +28,7 @@ const SearchHeader = ({count, loading, onSearchSubmit}) => {
 	return (
 		<div className="align-items-center d-flex justify-content-between mb-4 pb-2">
 			<SearchBar
-				disable={loading}
+				disabled={loading}
 				onSearchSubmit={(term) => {
 					setHasTerm(!!term);
 					onSearchSubmit(term);

@@ -181,6 +181,13 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 		@Override
 		public void portalInstanceRegistered(Company company) throws Exception {
+			List<Element> templateElements =
+				_templateHandler.getDefaultTemplateElements();
+
+			if (templateElements.isEmpty()) {
+				return;
+			}
+
 			long classNameId = _portal.getClassNameId(
 				_templateHandler.getClassName());
 
@@ -197,9 +204,6 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 				company.getCompanyId());
 
 			serviceContext.setUserId(userId);
-
-			List<Element> templateElements =
-				_templateHandler.getDefaultTemplateElements();
 
 			Map<Long, Map<String, DDMTemplate>> ddmTemplateMaps =
 				_ddmTemplateMapsThreadLocal.get();

@@ -9,5 +9,14 @@
  * distribution rights of the Software.
  */
 
-export * from './queries/useGetKoroneikiAccounts';
-export * from './queries/useGetKoroneikiAccountByExternalReferenceCode';
+import {useMemo} from 'react';
+import useHash from './useHash';
+
+export default function useAccountKey() {
+	const hashLocation = useHash();
+
+	return useMemo(
+		() => hashLocation.replace('#/', '').split('/').filter(Boolean)[0],
+		[hashLocation]
+	);
+}

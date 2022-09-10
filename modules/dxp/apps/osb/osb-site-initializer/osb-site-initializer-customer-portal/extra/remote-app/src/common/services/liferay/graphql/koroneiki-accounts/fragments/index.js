@@ -9,5 +9,4 @@
  * distribution rights of the Software.
  */
 
-export * from './queries/useGetKoroneikiAccounts';
-export * from './queries/useGetKoroneikiAccountByExternalReferenceCode';
+export * from './coreKoroneikiAccountFields';

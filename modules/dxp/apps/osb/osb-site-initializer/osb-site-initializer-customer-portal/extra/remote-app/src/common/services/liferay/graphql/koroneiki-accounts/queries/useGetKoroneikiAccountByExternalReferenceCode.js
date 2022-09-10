@@ -10,51 +10,42 @@
  */
 
 import {gql, useQuery} from '@apollo/client';
-import { CORE_KORONEIKI_ACCOUNT_FIELDS } from '../fragments/coreKoroneikiAccountFields';
+import {CORE_KORONEIKI_ACCOUNT_FIELDS} from '../fragments/coreKoroneikiAccountFields';
 
-const GET_KORONEIKI_ACCOUNTS = gql`
+const GET_KORONEIKI_ACCOUNT_BY_EXTERNAL_REFERENCE_CODE = gql`
 	${CORE_KORONEIKI_ACCOUNT_FIELDS}
-	query getKoroneikiAccounts(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
+	query getKoroneikiAccountByExternalReferenceCode(
+		$externalReferenceCode: String
 	) {
-		c {
-			koroneikiAccounts(
-				filter: $filter
-				page: $page
-				pageSize: $pageSize
+		koroneikiAccountByExternalReferenceCode(
+			externalReferenceCode: $externalReferenceCode
+		)
+			@rest(
+				type: "C_KoroneikiAccount"
+				path: "/c/koroneikiaccounts/by-external-reference-code/{args.externalReferenceCode}"
 			) {
-				items {
-					...CoreKoroneikiAccountFields
-				}
-				lastPage
-				page
-				pageSize
-				totalCount
-			}
+			...CoreKoroneikiAccountFields
 		}
 	}
 `;
 
-export function useGetKoroneikiAccounts(
+export function useGetKoroneikiAccountByExternalReferenceCode(
+	externalReferenceCode,
 	options = {
-		filter: '',
 		notifyOnNetworkStatusChange: false,
-		page: 1,
-		pageSize: 20,
 		skip: false,
 	}
 ) {
-	return useQuery(GET_KORONEIKI_ACCOUNTS, {
+	return useQuery(GET_KORONEIKI_ACCOUNT_BY_EXTERNAL_REFERENCE_CODE, {
+		context: {
+			type: 'liferay-rest',
+		},
 		fetchPolicy: 'cache-and-network',
 		nextFetchPolicy: 'cache-first',
 		notifyOnNetworkStatusChange: options.notifyOnNetworkStatusChange,
 		skip: options.skip,
 		variables: {
-			filter: options.filter || '',
-			page: options.page || 1,
-			pageSize: options.pageSize || 20,
+			externalReferenceCode,
 		},
 	});
 }

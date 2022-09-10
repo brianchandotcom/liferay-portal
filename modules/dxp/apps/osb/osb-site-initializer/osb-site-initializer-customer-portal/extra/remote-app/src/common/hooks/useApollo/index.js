@@ -11,6 +11,7 @@
 
 import {ApolloClient, InMemoryCache} from '@apollo/client';
 import {BatchHttpLink} from '@apollo/client/link/batch-http';
+import {RestLink} from 'apollo-link-rest';
 import {SessionStorageWrapper, persistCache} from 'apollo3-cache-persist';
 import {useEffect, useState} from 'react';
 import {createNetworkStatusNotifier} from 'react-apollo-network-status';
@@ -39,11 +40,18 @@ export default function useApollo() {
 				storage: new SessionStorageWrapper(window.sessionStorage),
 			});
 
-			const batchLink = new BatchHttpLink({
+			const liferaBatchLink = new BatchHttpLink({
 				headers: {
 					'x-csrf-token': Liferay.authToken,
 				},
 				uri: `${LiferayURI}/graphql`,
+			});
+
+			const liferayRestLink = new RestLink({
+				headers: {
+					'x-csrf-token': Liferay.authToken,
+				},
+				uri: LiferayURI,
 			});
 
 			const apolloClient = new ApolloClient({
@@ -53,7 +61,12 @@ export default function useApollo() {
 						fetchPolicy: 'network-only',
 					},
 				},
-				link: link.concat(batchLink),
+				link: link.split(
+					(operation) =>
+						operation.getContext().type === 'liferay-rest',
+					liferayRestLink,
+					liferaBatchLink
+				),
 			});
 
 			setClient(apolloClient);

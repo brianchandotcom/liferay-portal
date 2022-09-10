@@ -9,5 +9,16 @@
  * distribution rights of the Software.
  */
 
-export * from './queries/useGetKoroneikiAccounts';
-export * from './queries/useGetKoroneikiAccountByExternalReferenceCode';
+import useAccountKey from '../../../../../../common/hooks/useAccountKey';
+import {useGetKoroneikiAccountByExternalReferenceCode} from '../../../../../../common/services/liferay/graphql/koroneiki-accounts/queries/useGetKoroneikiAccountByExternalReferenceCode';
+
+export default function useCurrentKoroneikiAccount() {
+	const externalReferenceCode = useAccountKey();
+
+	return useGetKoroneikiAccountByExternalReferenceCode(
+		externalReferenceCode,
+		{
+			skip: !externalReferenceCode,
+		}
+	);
+}

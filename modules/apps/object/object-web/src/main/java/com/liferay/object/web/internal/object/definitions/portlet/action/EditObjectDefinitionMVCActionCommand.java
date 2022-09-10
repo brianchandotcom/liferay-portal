@@ -77,6 +77,8 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "enableCategorization");
 		boolean enableComments = ParamUtil.getBoolean(
 			actionRequest, "enableComments");
+		boolean enableObjectEntryHistory = ParamUtil.getBoolean(
+			actionRequest, "enableObjectEntryHistory");
 		Map<Locale, String> labelMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "label");
 		String name = ParamUtil.getString(actionRequest, "shortName");
@@ -105,9 +107,9 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				externalReferenceCode, objectDefinitionId,
 				accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
 				titleObjectFieldId, accountEntryRestricted, active,
-				enableCategorization, enableComments, labelMap, name,
-				panelCategoryOrder, panelCategoryKey, portlet, pluralLabelMap,
-				scope);
+				enableCategorization, enableComments, enableObjectEntryHistory,
+				labelMap, name, panelCategoryOrder, panelCategoryKey, portlet,
+				pluralLabelMap, scope);
 
 			if (StringUtil.equals(
 					ParamUtil.getString(actionRequest, Constants.CMD),

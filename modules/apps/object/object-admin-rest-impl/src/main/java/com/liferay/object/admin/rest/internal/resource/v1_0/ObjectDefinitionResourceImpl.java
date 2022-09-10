@@ -283,6 +283,7 @@ public class ObjectDefinitionResourceImpl
 					objectDefinition.getAccountEntryRestricted()),
 				GetterUtil.getBoolean(objectDefinition.getActive(), true),
 				enableCategorization, enableComments,
+				objectDefinition.getEnableObjectEntryHistory(),
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
 				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
 				objectDefinition.getPanelCategoryKey(),
@@ -549,6 +550,8 @@ public class ObjectDefinitionResourceImpl
 					enableComments = objectDefinition.getEnableComments();
 				}
 
+				enableObjectEntryHistory =
+					objectDefinition.getEnableObjectEntryHistory();
 				externalReferenceCode =
 					objectDefinition.getExternalReferenceCode();
 				id = objectDefinition.getObjectDefinitionId();

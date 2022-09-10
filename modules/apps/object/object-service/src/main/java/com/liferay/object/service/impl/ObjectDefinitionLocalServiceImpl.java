@@ -30,6 +30,7 @@ import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedObject
 import com.liferay.object.exception.ObjectDefinitionActiveException;
 import com.liferay.object.exception.ObjectDefinitionEnableCategorizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableCommentsException;
+import com.liferay.object.exception.ObjectDefinitionEnableEntryHistoryException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
@@ -1140,6 +1141,10 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinition.isSystem());
 		}
 
+		_validateEnableEntryHistory(
+			objectDefinition.isActive(),
+			objectDefinition.isEnableEntryHistory() != enableEntryHistory,
+			objectDefinition.getStorageType(), objectDefinition.isSystem());
 		_validateLabel(labelMap);
 		_validatePluralLabel(pluralLabelMap);
 
@@ -1342,6 +1347,36 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionEnableCategorizationException(
 				"Enable comments is allowed only for object definitions with " +
 					"the default storage type");
+		}
+	}
+
+	private void _validateEnableEntryHistory(
+			boolean active, boolean enableEntryHistoryChanged,
+			String storageType, boolean system)
+		throws PortalException {
+
+		if (!enableEntryHistoryChanged) {
+			return;
+		}
+
+		if (system) {
+			throw new ObjectDefinitionEnableEntryHistoryException(
+				"Enable entry history is not allowed for system object " +
+					"definitions");
+		}
+
+		if (!StringUtil.equals(
+				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
+
+			throw new ObjectDefinitionEnableEntryHistoryException(
+				"Enable entry history is allowed only for object definitions " +
+					"with the default storage type");
+		}
+
+		if (active) {
+			throw new ObjectDefinitionEnableEntryHistoryException(
+				"It is not allowed to enable or disable entry history after " +
+					"the object definition has been published");
 		}
 	}
 

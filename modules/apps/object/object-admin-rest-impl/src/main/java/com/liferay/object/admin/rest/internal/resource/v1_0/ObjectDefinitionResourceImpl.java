@@ -267,10 +267,15 @@ public class ObjectDefinitionResourceImpl
 
 		boolean enableCategorization = true;
 		boolean enableComments = false;
+		boolean enableEntryHistory = false;
 
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672"))) {
 			enableCategorization = objectDefinition.getEnableCategorization();
 			enableComments = objectDefinition.getEnableComments();
+		}
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158473"))) {
+			enableEntryHistory = objectDefinition.getEnableEntryHistory();
 		}
 
 		serviceBuilderObjectDefinition =
@@ -282,8 +287,7 @@ public class ObjectDefinitionResourceImpl
 				GetterUtil.getBoolean(
 					objectDefinition.getAccountEntryRestricted()),
 				GetterUtil.getBoolean(objectDefinition.getActive(), true),
-				enableCategorization, enableComments,
-				objectDefinition.getEnableEntryHistory(),
+				enableCategorization, enableComments, enableEntryHistory,
 				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
 				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
 				objectDefinition.getPanelCategoryKey(),
@@ -550,7 +554,13 @@ public class ObjectDefinitionResourceImpl
 					enableComments = objectDefinition.getEnableComments();
 				}
 
-				enableEntryHistory = objectDefinition.getEnableEntryHistory();
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-158473"))) {
+
+					enableEntryHistory =
+						objectDefinition.getEnableEntryHistory();
+				}
+
 				externalReferenceCode =
 					objectDefinition.getExternalReferenceCode();
 				id = objectDefinition.getObjectDefinitionId();

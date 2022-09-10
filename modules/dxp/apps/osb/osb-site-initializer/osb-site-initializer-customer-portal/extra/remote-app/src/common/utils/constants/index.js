@@ -16,3 +16,4 @@ export * from './storageKeys';
 export * from './pageRouterTypes';
 export * from './slaTypes';
 export * from './slaStatusTypes';
+export * from './formatDateTypes';

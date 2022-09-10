@@ -16,7 +16,7 @@ import React from 'react';
 import i18n from '../../../../../../../../../../../common/I18n';
 import {SLA_TYPES} from '../../../../../../../../../../../common/utils/constants';
 
-const SlaCard = ({active, endDate, label, last, startDate, title}) => {
+const SLACard = ({active, endDate, label, last, startDate, title}) => {
 	const slaDate = `${startDate} - ${endDate}`;
 
 	return (
@@ -100,4 +100,4 @@ const SlaCard = ({active, endDate, label, last, startDate, title}) => {
 	);
 };
 
-export default SlaCard;
+export default SLACard;

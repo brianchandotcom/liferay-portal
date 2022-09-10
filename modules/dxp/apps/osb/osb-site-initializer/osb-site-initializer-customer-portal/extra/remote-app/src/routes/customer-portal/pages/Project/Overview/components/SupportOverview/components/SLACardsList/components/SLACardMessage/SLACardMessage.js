@@ -9,16 +9,16 @@
  * distribution rights of the Software.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
-import React from 'react';
+import i18n from '../../../../../../../../../../../common/I18n';
 
-const SwitchSlaCardsButton = ({handleClick}) => (
-	<ClayButtonWithIcon
-		className="bg-white d-none position-absolute rounded-circle shadow-lg"
-		displayType="primary"
-		onClick={handleClick}
-		outline
-		symbol="angle-right"
-	/>
+const SLACardMessage = () => (
+	<div className="bg-neutral-1 cp-sla-card-message rounded-lg">
+		<p className="px-3 py-2 text-neutral-7 text-paragraph-sm">
+			{i18n.translate(
+				"the-project's-support-level-is-displayed-here-for-projects-with-ticketing-support"
+			)}
+		</p>
+	</div>
 );
-export default SwitchSlaCardsButton;
+
+export default SLACardMessage;

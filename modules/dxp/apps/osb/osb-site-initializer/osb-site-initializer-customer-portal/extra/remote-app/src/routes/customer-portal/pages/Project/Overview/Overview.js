@@ -9,9 +9,8 @@
  * distribution rights of the Software.
  */
 
-import SupportOverview from './components/SupportOverview/';
-import './app.scss';
 import SubscriptionsOverview from './components/SubscriptionsOverview';
+import SupportOverview from './components/SupportOverview/';
 import useCurrentKoroneikiAccount from './hooks/useCurrentKoroneikiAccount';
 
 const Overview = () => {

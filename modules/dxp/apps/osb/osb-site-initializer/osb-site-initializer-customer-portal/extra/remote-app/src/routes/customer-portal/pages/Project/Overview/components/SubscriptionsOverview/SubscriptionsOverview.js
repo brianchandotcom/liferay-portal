@@ -23,7 +23,6 @@ import {
 import CardSubscription from './components/CardSubscriptions';
 import SubscriptionsFilterByStatus from './components/SubscriptionsFilterByStatus';
 import SubscriptionsNavbar from './components/SubscriptionsNavbar';
-import '../../app.scss';
 
 const SubscriptionsOverview = () => {
 	const [{project, subscriptionGroups}] = useCustomerPortal();

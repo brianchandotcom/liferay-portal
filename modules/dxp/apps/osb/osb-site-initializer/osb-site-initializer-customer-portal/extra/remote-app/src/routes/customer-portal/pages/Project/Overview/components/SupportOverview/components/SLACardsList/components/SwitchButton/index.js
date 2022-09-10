@@ -9,4 +9,4 @@
  * distribution rights of the Software.
  */
 
-export {default} from './SwitchSlaCardsButton';
+export {default} from './SwitchButton';

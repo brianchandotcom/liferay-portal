@@ -11,7 +11,7 @@
 
 import {useEffect, useState} from 'react';
 
-export default function useCardPosition(slaCardsCount) {
+export default function useSLACardPosition(slaCardsCount) {
 	const [currentPosition, setCurrentPosition] = useState(0);
 	const [lastPosition, setLastPosition] = useState();
 

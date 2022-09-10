@@ -9,8 +9,16 @@
  * distribution rights of the Software.
  */
 
-export const FORMAT_DATE = {
-	day: '2-digit',
-	month: '2-digit',
-	year: 'numeric',
-};
+import {ClayButtonWithIcon} from '@clayui/button';
+import React from 'react';
+
+const SwitchButton = ({handleClick}) => (
+	<ClayButtonWithIcon
+		className="bg-white d-none position-absolute rounded-circle shadow-lg"
+		displayType="primary"
+		onClick={handleClick}
+		outline
+		symbol="angle-right"
+	/>
+);
+export default SwitchButton;

@@ -12,21 +12,21 @@
 import classNames from 'classnames';
 import i18n from '../../../../../../../../../common/I18n';
 import {Skeleton} from '../../../../../../../../../common/components';
-import CardMessage from './components/CardMessage/CardMessage';
-import SlaCard from './components/SlaCard';
-import SwitchSlaCardsButton from './components/SwitchSlaCardButton';
-import useCardPosition from './hooks/useCardPosition';
-import useSlaCards from './hooks/useSlaCards';
+import SLACard from './components/SLACard';
+import SLACardMessage from './components/SLACardMessage/SLACardMessage';
+import SwitchButton from './components/SwitchButton';
+import useSLACardPosition from './hooks/useSLACardPosition';
+import useSLACards from './hooks/useSLACards';
 
-const SlaCardsList = ({koroneikiAccount, loading}) => {
-	const slaCards = useSlaCards(koroneikiAccount);
-	const {changePosition, currentPosition, lastPosition} = useCardPosition(
+const SLACardsList = ({koroneikiAccount, loading}) => {
+	const slaCards = useSLACards(koroneikiAccount);
+	const {changePosition, currentPosition, lastPosition} = useSLACardPosition(
 		slaCards?.length
 	);
 
-	const getSlaCards = () =>
+	const getSLACards = () =>
 		slaCards?.map((slaCard, index) => (
-			<SlaCard
+			<SLACard
 				{...slaCard}
 				active={currentPosition === index}
 				key={`${slaCard.title}-${index}`}
@@ -55,20 +55,18 @@ const SlaCardsList = ({koroneikiAccount, loading}) => {
 							'ml-3': slaCards.length > 1,
 						})}
 					>
-						{getSlaCards()}
+						{getSLACards()}
 					</div>
 
 					{slaCards.length > 1 && (
-						<SwitchSlaCardsButton
-							handleClick={() => changePosition()}
-						/>
+						<SwitchButton handleClick={() => changePosition()} />
 					)}
 				</>
 			) : (
-				<CardMessage />
+				<SLACardMessage />
 			)}
 		</div>
 	);
 };
 
-export default SlaCardsList;
+export default SLACardsList;

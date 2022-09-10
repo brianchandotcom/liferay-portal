@@ -11,9 +11,9 @@
 
 import {useMemo} from 'react';
 import {SLA_CARD_NAMES} from '../../../../../../../../../../common/utils/constants/slaCardNames';
-import getSlaCard from '../utils/getSlaCard';
+import getSLACard from '../utils/getSLACard';
 
-export default function useSlaCards(koroneikiAccount) {
+export default function useSLACards(koroneikiAccount) {
 	return useMemo(() => {
 		if (koroneikiAccount) {
 			const {
@@ -32,7 +32,7 @@ export default function useSlaCards(koroneikiAccount) {
 
 			if (slaCurrent) {
 				slaCards.push(
-					getSlaCard(
+					getSLACard(
 						slaCurrent === slaFuture
 							? slaFutureEndDate
 							: slaCurrentEndDate,
@@ -47,7 +47,7 @@ export default function useSlaCards(koroneikiAccount) {
 
 			if (!!slaExpired && slaExpired !== slaCurrent) {
 				slaCards.push(
-					getSlaCard(
+					getSLACard(
 						slaExpiredEndDate,
 						slaExpiredStartDate,
 						slaExpired,
@@ -58,7 +58,7 @@ export default function useSlaCards(koroneikiAccount) {
 
 			if (!!slaFuture && slaFuture !== slaCurrent) {
 				slaCards.push(
-					getSlaCard(
+					getSLACard(
 						slaFutureEndDate,
 						slaFutureStartDate,
 						slaFuture,

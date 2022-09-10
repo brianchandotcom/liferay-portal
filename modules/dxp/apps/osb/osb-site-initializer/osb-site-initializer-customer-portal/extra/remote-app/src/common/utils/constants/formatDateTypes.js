@@ -9,16 +9,10 @@
  * distribution rights of the Software.
  */
 
-import i18n from '../../../../../../../../../../../common/I18n';
-
-const CardMessage = () => (
-	<div className="bg-neutral-1 cp-n-sla-card rounded-lg">
-		<p className="px-3 py-2 text-neutral-7 text-paragraph-sm">
-			{i18n.translate(
-				"the-project's-support-level-is-displayed-here-for-projects-with-ticketing-support"
-			)}
-		</p>
-	</div>
-);
-
-export default CardMessage;
+export const FORMAT_DATE_TYPES = {
+	day2DMonth2DYearN: {
+		day: '2-digit',
+		month: '2-digit',
+		year: 'numeric',
+	},
+};

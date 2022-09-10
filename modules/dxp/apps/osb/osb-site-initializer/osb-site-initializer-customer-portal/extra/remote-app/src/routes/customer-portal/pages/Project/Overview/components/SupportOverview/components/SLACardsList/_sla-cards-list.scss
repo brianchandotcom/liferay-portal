@@ -1,0 +1,11 @@
+@import './components/SLACard/sla-card';
+@import './components/SLACardMessage/sla-card-message';
+
+.cp-sla-container:hover .btn {
+	display: inline-block !important;
+	padding: 0.25rem;
+	transform: translate(11.5rem, -2.5rem);
+	width: 2rem;
+	height: 2rem;
+	z-index: 100;
+}

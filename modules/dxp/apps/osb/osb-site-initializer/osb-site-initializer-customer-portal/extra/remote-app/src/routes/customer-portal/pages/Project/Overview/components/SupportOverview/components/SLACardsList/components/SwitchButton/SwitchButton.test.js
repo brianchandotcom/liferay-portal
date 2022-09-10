@@ -12,14 +12,14 @@
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import SwitchSlaCardButton from '.';
+import SwitchButton from '.';
 
-describe('SwitchSlaCardButton', () => {
+describe('SwitchButton', () => {
 	it('changes SlaCard when clicking the button', async () => {
 		const functionMock = jest.fn();
 		const user = userEvent.setup();
 
-		render(<SwitchSlaCardButton handleClick={functionMock} />);
+		render(<SwitchButton handleClick={functionMock} />);
 
 		expect(screen.getByRole('button')).toBeInTheDocument();
 		await user.click(screen.getByRole('button'));

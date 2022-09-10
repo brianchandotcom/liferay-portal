@@ -10,6 +10,7 @@
  */
 
 import '../../routes/customer-portal/styles/app.scss';
+import './app.scss';
 
 import {AppContextProvider} from './context';
 import Pages from './pages';

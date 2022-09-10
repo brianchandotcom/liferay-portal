@@ -10,11 +10,11 @@
  */
 
 import LiferayContact from './components/LiferayContact';
-import SlaCardsList from './components/SlaCardsList';
+import SLACardsList from './components/SLACardsList';
 
 const SupportOverview = ({koroneikiAccount, loading}) => (
 	<div className="cp-support-overview d-flex flex-column flex-xl-row justify-content-between">
-		<SlaCardsList koroneikiAccount={koroneikiAccount} loading={loading} />
+		<SLACardsList koroneikiAccount={koroneikiAccount} loading={loading} />
 
 		<LiferayContact koroneikiAccount={koroneikiAccount} loading={loading} />
 	</div>

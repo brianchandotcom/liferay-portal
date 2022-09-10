@@ -190,14 +190,14 @@ public class GradleBuildFile {
 	}
 
 	private GradleBuildFileVisitor _walkAST() {
-		AstBuilder astBuilder = new AstBuilder();
-
 		GradleBuildFileVisitor gradleBuildFileVisitor =
 			new GradleBuildFileVisitor();
 
 		if (Validator.isNull(_source)) {
 			return gradleBuildFileVisitor;
 		}
+
+		AstBuilder astBuilder = new AstBuilder();
 
 		for (ASTNode astNode :
 				astBuilder.buildFromString(CompilePhase.CONVERSION, _source)) {

@@ -557,6 +557,9 @@ public interface CommerceOrderLocalService
 	public CommerceOrder resetCommerceOrderShipping(long commerceOrderId)
 		throws PortalException;
 
+	public void resetCommerceOrderShippingByAddressId(long addressId)
+		throws PortalException;
+
 	public CommerceOrder resetTermsAndConditions(
 			long commerceOrderId, boolean resetDeliveryCommerceTerm,
 			boolean resetPaymentCommerceTermEntry)
@@ -623,6 +626,9 @@ public interface CommerceOrderLocalService
 			BigDecimal shippingAmount, String shippingOptionName,
 			BigDecimal subtotal, BigDecimal total,
 			CommerceContext commerceContext)
+		throws PortalException;
+
+	public void updateCommerceOrderAddresses(long addressId)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

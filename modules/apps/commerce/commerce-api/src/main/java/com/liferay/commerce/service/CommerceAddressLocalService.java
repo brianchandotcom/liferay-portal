@@ -96,9 +96,6 @@ public interface CommerceAddressLocalService extends BaseLocalService {
 			CommerceAddress commerceAddress)
 		throws PortalException;
 
-	public CommerceAddress deleteCommerceAddress(long commerceAddressId)
-		throws PortalException;
-
 	public void deleteCommerceAddresses(String className, long classPK)
 		throws PortalException;
 

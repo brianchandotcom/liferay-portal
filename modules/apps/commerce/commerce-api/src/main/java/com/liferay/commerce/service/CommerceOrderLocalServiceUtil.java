@@ -734,6 +734,12 @@ public class CommerceOrderLocalServiceUtil {
 		return getService().resetCommerceOrderShipping(commerceOrderId);
 	}
 
+	public static void resetCommerceOrderShippingByAddressId(long addressId)
+		throws PortalException {
+
+		getService().resetCommerceOrderShippingByAddressId(addressId);
+	}
+
 	public static CommerceOrder resetTermsAndConditions(
 			long commerceOrderId, boolean resetDeliveryCommerceTerm,
 			boolean resetPaymentCommerceTermEntry)
@@ -842,6 +848,12 @@ public class CommerceOrderLocalServiceUtil {
 			commerceShippingMethodId, shippingAddressId, advanceStatus,
 			commercePaymentMethodKey, purchaseOrderNumber, shippingAmount,
 			shippingOptionName, subtotal, total, commerceContext);
+	}
+
+	public static void updateCommerceOrderAddresses(long addressId)
+		throws PortalException {
+
+		getService().updateCommerceOrderAddresses(addressId);
 	}
 
 	public static CommerceOrder updateCommerceOrderExternalReferenceCode(

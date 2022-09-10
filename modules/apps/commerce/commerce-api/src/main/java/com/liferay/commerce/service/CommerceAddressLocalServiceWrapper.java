@@ -113,15 +113,6 @@ public class CommerceAddressLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceAddress deleteCommerceAddress(
-			long commerceAddressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceAddressLocalService.deleteCommerceAddress(
-			commerceAddressId);
-	}
-
-	@Override
 	public void deleteCommerceAddresses(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

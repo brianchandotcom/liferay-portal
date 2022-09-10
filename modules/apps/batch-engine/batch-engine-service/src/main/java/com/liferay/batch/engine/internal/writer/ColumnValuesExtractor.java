@@ -19,6 +19,8 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -142,6 +144,20 @@ public class ColumnValuesExtractor {
 			if (ItemClassIndexUtil.isMap(fieldClass) ||
 				ItemClassIndexUtil.isSingleColumnAdoptableArray(fieldClass) ||
 				ItemClassIndexUtil.isSingleColumnAdoptableValue(fieldClass)) {
+
+				localIndex++;
+
+				continue;
+			}
+
+			if (ItemClassIndexUtil.isIterable(fieldClass)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Mapping collection of ",
+							fieldClass.getDeclaredClasses(),
+							" to single column may not contain all data"));
+				}
 
 				localIndex++;
 
@@ -330,6 +346,9 @@ public class ColumnValuesExtractor {
 			new ArrayList<>(collection),
 			(value1, value2) -> value1.compareToIgnoreCase(value2));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ColumnValuesExtractor.class);
 
 	private final ColumnDescriptor[] _columnDescriptors;
 

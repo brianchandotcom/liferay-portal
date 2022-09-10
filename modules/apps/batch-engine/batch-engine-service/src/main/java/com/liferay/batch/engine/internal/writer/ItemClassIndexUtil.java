@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -87,6 +88,16 @@ public class ItemClassIndexUtil {
 
 				return fieldsMap;
 			});
+	}
+
+	public static boolean isIterable(Class<?> valueClass) {
+		if (valueClass.isArray() ||
+			Collection.class.isAssignableFrom(valueClass)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isListEntry(Object object) {

@@ -14,11 +14,8 @@
 
 package com.liferay.source.formatter.processor;
 
-import com.liferay.source.formatter.SourceFormatterArgs;
-
 import java.io.IOException;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,20 +25,7 @@ public class LibrarySourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws IOException {
-		List<String> fileNames = getFileNames(new String[0], getIncludes());
-
-		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
-
-		if (fileNames.isEmpty() ||
-			((sourceFormatterArgs.getCommitCount() == 0) &&
-			 !sourceFormatterArgs.isFormatCurrentBranch() &&
-			 !sourceFormatterArgs.isFormatLatestAuthor() &&
-			 !sourceFormatterArgs.isFormatLocalChanges())) {
-
-			return Collections.emptyList();
-		}
-
-		return fileNames;
+		return getFileNames(new String[0], getIncludes());
 	}
 
 	@Override

@@ -30,6 +30,7 @@ import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedObject
 import com.liferay.object.exception.ObjectDefinitionActiveException;
 import com.liferay.object.exception.ObjectDefinitionEnableCategorizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableCommentsException;
+import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryHistoryException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
@@ -1140,6 +1141,11 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinition.isSystem());
 		}
 
+		_validateEnableObjectEntryHistory(
+			objectDefinition.isActive(),
+			objectDefinition.isEnableObjectEntryHistory() !=
+				enableObjectEntryHistory,
+			objectDefinition.getStorageType(), objectDefinition.isSystem());
 		_validateLabel(labelMap);
 		_validatePluralLabel(pluralLabelMap);
 
@@ -1342,6 +1348,36 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionEnableCategorizationException(
 				"Enable comments is allowed only for object definitions with " +
 					"the default storage type");
+		}
+	}
+
+	private void _validateEnableObjectEntryHistory(
+			boolean active, boolean enableObjectEntryHistoryChanged,
+			String storageType, boolean system)
+		throws PortalException {
+
+		if (!enableObjectEntryHistoryChanged) {
+			return;
+		}
+
+		if (system) {
+			throw new ObjectDefinitionEnableObjectEntryHistoryException(
+				"Enable entry history is not allowed for system object " +
+					"definitions");
+		}
+
+		if (!StringUtil.equals(
+				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
+
+			throw new ObjectDefinitionEnableObjectEntryHistoryException(
+				"Enable entry history is allowed only for object definitions " +
+					"with the default storage type");
+		}
+
+		if (active) {
+			throw new ObjectDefinitionEnableObjectEntryHistoryException(
+				"It is not allowed to enable or disable entry history after " +
+					"the object definition has been published");
 		}
 	}
 

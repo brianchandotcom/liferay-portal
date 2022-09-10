@@ -12,42 +12,42 @@
 import i18n from '../../../../../../../../../common/I18n';
 import {Skeleton} from '../../../../../../../../../common/components';
 
-const LiferayContact = ({koroneikiAccount, loading}) => {
-	if (loading) {
-		return (
-			<div className="mb-6">
-				<Skeleton className="mb-4" height={22} width={250} />
-
-				<Skeleton className="mb-2" height={24} width={215} />
-
-				<Skeleton className="mb-1" height={24} width={250} />
-
-				<Skeleton height={20} width={280} />
-			</div>
-		);
-	}
-
-	return (
-		<div className="mb-5">
+const LiferayContact = ({koroneikiAccount, loading}) => (
+	<div className="mb-5 ml-xl-9">
+		{loading ? (
+			<Skeleton className="mb-4" height={22} width={140} />
+		) : (
 			<h5 className="mb-4 rounded-sm text-neutral-10">
 				{i18n.translate('liferay-contact')}
 			</h5>
+		)}
 
+		{loading ? (
+			<Skeleton height={24} width={125} />
+		) : (
 			<div className="font-weight-bold rounded-sm text-neutral-8 text-paragraph">
 				{koroneikiAccount.liferayContactName}
 			</div>
+		)}
 
-			{koroneikiAccount.liferayContactRole && (
+		{loading ? (
+			<Skeleton className="mt-1" height={24} width={100} />
+		) : (
+			koroneikiAccount.liferayContactRole && (
 				<div className="mt-1 rounded-sm text-neutral-10 text-paragraph">
 					{koroneikiAccount.liferayContactRole}
 				</div>
-			)}
+			)
+		)}
 
+		{loading ? (
+			<Skeleton className="mt-1" height={20} width={150} />
+		) : (
 			<div className="rounded-sm text-neutral-10 text-paragraph-sm">
 				{koroneikiAccount.liferayContactEmailAddress}
 			</div>
-		</div>
-	);
-};
+		)}
+	</div>
+);
 
 export default LiferayContact;

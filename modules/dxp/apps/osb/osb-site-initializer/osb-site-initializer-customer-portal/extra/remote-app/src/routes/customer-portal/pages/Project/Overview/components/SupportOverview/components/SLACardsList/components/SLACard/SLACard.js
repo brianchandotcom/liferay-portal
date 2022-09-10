@@ -12,6 +12,7 @@
 import ClayCard from '@clayui/card';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
+import {memo} from 'react';
 import i18n from '../../../../../../../../../../../common/I18n';
 import getStyleFromTitle from './utils/getStyleFromTitle';
 
@@ -67,4 +68,4 @@ const SLACard = ({active, endDate, label, last, startDate, title}) => {
 	);
 };
 
-export default SLACard;
+export default memo(SLACard);

@@ -34,21 +34,17 @@ const SLACardsList = ({koroneikiAccount, loading}) => {
 			/>
 		));
 
-	if (loading) {
-		return (
-			<div className="mb-6">
-				<Skeleton className="mb-4" height={22} width={140} />
-
-				<Skeleton height={84} width={215} />
-			</div>
-		);
-	}
-
 	return (
 		<div className="mb-6">
-			<h5 className="mb-4">{i18n.translate('support-level')}</h5>
+			{loading ? (
+				<Skeleton className="mb-4" height={22} width={140} />
+			) : (
+				<h5 className="mb-4">{i18n.translate('support-level')}</h5>
+			)}
 
-			{slaCards?.length ? (
+			{loading ? (
+				<Skeleton height={84} width={200} />
+			) : slaCards?.length ? (
 				<div
 					className={classNames({
 						'cp-sla-container ml-3': slaCards.length > 1,

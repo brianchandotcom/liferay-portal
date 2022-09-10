@@ -13,7 +13,7 @@ import LiferayContact from './components/LiferayContact';
 import SLACardsList from './components/SLACardsList';
 
 const SupportOverview = ({koroneikiAccount, loading}) => (
-	<div className="cp-support-overview d-flex flex-column flex-xl-row justify-content-between">
+	<div className="d-flex flex-column flex-xl-row">
 		<SLACardsList koroneikiAccount={koroneikiAccount} loading={loading} />
 
 		<LiferayContact koroneikiAccount={koroneikiAccount} loading={loading} />

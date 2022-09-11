@@ -250,71 +250,69 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 			int statusCode = statusLine.getStatusCode();
 
-			if (statusCode == HttpStatus.SC_OK) {
-				JSONObject jsonObject = new JSONObjectImpl(
-					EntityUtils.toString(
-						closeableHttpResponse.getEntity(), "UTF-8"));
-
-				JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-				JSONObject securityVulnerabilitiesJSONObject =
-					dataJSONObject.getJSONObject("securityVulnerabilities");
-
-				int totalCount = securityVulnerabilitiesJSONObject.getInt(
-					"totalCount");
-
-				if (totalCount == 0) {
-					return Collections.emptyList();
-				}
-
-				List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
-					new ArrayList<>();
-
-				JSONArray nodesJSONArray =
-					securityVulnerabilitiesJSONObject.getJSONArray("nodes");
-
-				Iterator<JSONObject> iterator = nodesJSONArray.iterator();
-
-				while (iterator.hasNext()) {
-					JSONObject nodeJSONObject = iterator.next();
-
-					SecurityVulnerabilityNode securityVulnerabilityNode =
-						new SecurityVulnerabilityNode();
-
-					JSONObject advisoryJSONObject =
-						nodeJSONObject.getJSONObject("advisory");
-
-					securityVulnerabilityNode.setPermalink(
-						advisoryJSONObject.getString("permalink"));
-					securityVulnerabilityNode.setSummary(
-						advisoryJSONObject.getString("summary"));
-
-					securityVulnerabilityNode.setVersionRange(
-						nodeJSONObject.getString("vulnerableVersionRange"));
-
-					securityVulnerabilityNodes.add(securityVulnerabilityNode);
-				}
-
-				JSONObject pageInfoJSONObject =
-					securityVulnerabilitiesJSONObject.getJSONObject("pageInfo");
-
-				if (pageInfoJSONObject.getBoolean("hasNextPage")) {
-					securityVulnerabilityNodes.addAll(
-						_getSecurityVulnerabilityNodes(
-							packageName,
-							pageInfoJSONObject.getString("endCursor"),
-							securityAdvisoryEcosystemEnum, severities,
-							githubToken));
-				}
-
-				if (!securityVulnerabilityNodes.isEmpty()) {
-					return securityVulnerabilityNodes;
-				}
-			}
-			else if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+			if (statusCode != HttpStatus.SC_OK) {
 				throw new GitException(
-					"Not authorized to access GitHub GraphQL API, check the " +
-						"github token in " + _GITHUB_TOKEN_FILE_PATH);
+					"Unable to access GitHub GraphQL API, check the github " +
+						"token in " + _GITHUB_TOKEN_FILE_PATH);
+			}
+
+			JSONObject jsonObject = new JSONObjectImpl(
+				EntityUtils.toString(
+					closeableHttpResponse.getEntity(), "UTF-8"));
+
+			JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+			JSONObject securityVulnerabilitiesJSONObject =
+				dataJSONObject.getJSONObject("securityVulnerabilities");
+
+			int totalCount = securityVulnerabilitiesJSONObject.getInt(
+				"totalCount");
+
+			if (totalCount == 0) {
+				return Collections.emptyList();
+			}
+
+			List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
+				new ArrayList<>();
+
+			JSONArray nodesJSONArray =
+				securityVulnerabilitiesJSONObject.getJSONArray("nodes");
+
+			Iterator<JSONObject> iterator = nodesJSONArray.iterator();
+
+			while (iterator.hasNext()) {
+				JSONObject nodeJSONObject = iterator.next();
+
+				SecurityVulnerabilityNode securityVulnerabilityNode =
+					new SecurityVulnerabilityNode();
+
+				JSONObject advisoryJSONObject = nodeJSONObject.getJSONObject(
+					"advisory");
+
+				securityVulnerabilityNode.setPermalink(
+					advisoryJSONObject.getString("permalink"));
+				securityVulnerabilityNode.setSummary(
+					advisoryJSONObject.getString("summary"));
+
+				securityVulnerabilityNode.setVersionRange(
+					nodeJSONObject.getString("vulnerableVersionRange"));
+
+				securityVulnerabilityNodes.add(securityVulnerabilityNode);
+			}
+
+			JSONObject pageInfoJSONObject =
+				securityVulnerabilitiesJSONObject.getJSONObject("pageInfo");
+
+			if (pageInfoJSONObject.getBoolean("hasNextPage")) {
+				securityVulnerabilityNodes.addAll(
+					_getSecurityVulnerabilityNodes(
+						packageName, pageInfoJSONObject.getString("endCursor"),
+						securityAdvisoryEcosystemEnum, severities,
+						githubToken));
+			}
+
+			if (!securityVulnerabilityNodes.isEmpty()) {
+				return securityVulnerabilityNodes;
 			}
 		}
 

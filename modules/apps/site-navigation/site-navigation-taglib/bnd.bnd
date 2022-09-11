@@ -1,7 +1,9 @@
 Bundle-Name: Liferay Site Navigation Taglib
 Bundle-SymbolicName: com.liferay.site.navigation.taglib
 Bundle-Version: 6.0.19
-Export-Package: com.liferay.site.navigation.taglib.servlet.taglib
+Export-Package:\
+	com.liferay.site.navigation.taglib.servlet.taglib,\
+	com.liferay.site.navigation.taglib.servlet.taglib.util
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

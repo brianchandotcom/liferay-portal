@@ -74,6 +74,16 @@ class Rest<YupModel = any, ObjectModel = any> {
 		await Promise.allSettled(data.map((item) => this.create(item)));
 	}
 
+	public getAll(
+		filter?: string
+	): Promise<APIResponse<ObjectModel> | undefined> {
+		return this.fetcher(`${this.resource}&filter=${filter}`);
+	}
+
+	public getOne(id: number): Promise<ObjectModel | undefined> {
+		return this.fetcher(this.getResource(id));
+	}
+
 	public getResource(id: number | string) {
 		return `/${this.uri}/${id}?${this.nestedFields}`;
 	}

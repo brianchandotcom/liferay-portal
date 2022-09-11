@@ -61,8 +61,8 @@ const passwordRequiredStructure = {
 const yupSchema = {
 	build: yup.object({
 		caseIds: yup.array().of(yup.number()),
-		categories: yup.mixed(),
 		description: yup.string(),
+		factorStacks: yup.mixed(),
 		gitHash: yup.string(),
 		id: yup.string(),
 		name: yup.string().required(),

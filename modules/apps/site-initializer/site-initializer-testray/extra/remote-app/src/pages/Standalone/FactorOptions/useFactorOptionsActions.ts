@@ -15,7 +15,7 @@
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import {TestrayFactorOptions, deleteResource} from '../../../services/rest';
+import {TestrayFactorOption, deleteResource} from '../../../services/rest';
 import {Action} from '../../../types';
 
 const useFactorOptionsActions = () => {
@@ -23,7 +23,7 @@ const useFactorOptionsActions = () => {
 	const formModal = useFormModal();
 	const modal = formModal.modal;
 
-	const actions: Action<TestrayFactorOptions>[] = [
+	const actions: Action<TestrayFactorOption>[] = [
 		{
 			action: (factorOption) => modal.open(factorOption),
 			icon: 'pencil',

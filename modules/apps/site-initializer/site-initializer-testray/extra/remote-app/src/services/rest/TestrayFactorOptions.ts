@@ -13,55 +13,35 @@
  */
 
 import yupSchema from '../../schema/yup';
-import fetcher from '../fetcher';
-import {APIResponse, TestrayFactorOptions} from './types';
+import Rest from './Rest';
+import {TestrayFactorOption} from './types';
 
 type FactorOption = typeof yupSchema.factorOption.__outputType;
 
-const adapter = ({
-	factorCategoryId: r_factorCategoryToOptions_c_factorCategoryId,
-	name,
-}: FactorOption) => ({
-	name,
-	r_factorCategoryToOptions_c_factorCategoryId,
-});
+class TestrayFactorOptionsImpl extends Rest<FactorOption, TestrayFactorOption> {
+	constructor() {
+		super({
+			adapter: ({
+				factorCategoryId: r_factorCategoryToOptions_c_factorCategoryId,
+				name,
+			}: FactorOption) => ({
+				name,
+				r_factorCategoryToOptions_c_factorCategoryId,
+			}),
+			nestedFields: 'factorCategory',
+			transformData: (testrayFactorOption) => ({
+				...testrayFactorOption,
+				factorCategory: testrayFactorOption?.r_factorCategoryToOptions_c_factorCategory
+					? {
+							...testrayFactorOption.r_factorCategoryToOptions_c_factorCategory,
+					  }
+					: undefined,
+			}),
+			uri: 'factoroptions',
+		});
+	}
+}
 
-const createFactorOption = (factorOption: FactorOption) =>
-	fetcher.post(`/factoroptions`, adapter(factorOption));
+const testrayFactorOptionsImpl = new TestrayFactorOptionsImpl();
 
-const updateFactorOption = (id: number, factorOption: FactorOption) =>
-	fetcher.put(`/factoroptions/${id}`, adapter(factorOption));
-
-const nestedFieldsParam = 'nestedFields=factorCategory';
-
-const factorOptionResource = `/factoroptions?${nestedFieldsParam}`;
-
-const getFactorOptionQuery = (factorCategoryId: number | string) =>
-	`/factoroptions/${factorCategoryId}?${nestedFieldsParam}`;
-
-const getFactorOptionTransformData = (
-	testrayFactorOption: TestrayFactorOptions
-): TestrayFactorOptions => ({
-	...testrayFactorOption,
-	factorCategory: testrayFactorOption?.r_factorCategoryToOptions_c_factorCategory
-		? {...testrayFactorOption.r_factorCategoryToOptions_c_factorCategory}
-		: undefined,
-});
-
-const getFactorOptionsTransformData = (
-	response: APIResponse<TestrayFactorOptions>
-) => ({
-	...response,
-	items: response?.items?.map(getFactorOptionTransformData),
-});
-
-export {
-	factorOptionResource,
-	createFactorOption,
-	updateFactorOption,
-	getFactorOptionQuery,
-	getFactorOptionTransformData,
-	getFactorOptionsTransformData,
-};
-
-export type {TestrayFactorOptions};
+export {testrayFactorOptionsImpl};

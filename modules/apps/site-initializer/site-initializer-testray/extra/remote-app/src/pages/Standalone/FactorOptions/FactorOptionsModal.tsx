@@ -14,10 +14,7 @@
 
 import ListView from '../../../components/ListView';
 import i18n from '../../../i18n';
-import {
-	factorOptionResource,
-	getFactorOptionsTransformData,
-} from '../../../services/rest';
+import {testrayFactorOptionsImpl} from '../../../services/rest';
 import FactorOptionsFormModal from './FactorOptionsFormModal';
 import useFactorOptionsActions from './useFactorOptionsActions';
 
@@ -31,7 +28,7 @@ const FactorOptionsModal = () => {
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
 				}}
-				resource={factorOptionResource}
+				resource={testrayFactorOptionsImpl.resource}
 				tableProps={{
 					actions,
 					columns: [
@@ -46,7 +43,9 @@ const FactorOptionsModal = () => {
 						},
 					],
 				}}
-				transformData={getFactorOptionsTransformData}
+				transformData={(response) =>
+					testrayFactorOptionsImpl.transformDataFromList(response)
+				}
 			/>
 
 			<FactorOptionsFormModal modal={formModal.modal} />

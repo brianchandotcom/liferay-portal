@@ -22,9 +22,10 @@ import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
 import {
-	createFactorOption,
-	getFactorOptionsTransformData,
-	updateFactorOption,
+	APIResponse,
+	TestrayFactorCategory,
+	testrayFactorCategoryRest,
+	testrayFactorOptionsImpl,
 } from '../../../services/rest';
 
 type FactorOptionsForm = {
@@ -56,19 +57,18 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 		resolver: yupResolver(yupSchema.factorOption),
 	});
 
-	const {data} = useFetch('/factorcategories', getFactorOptionsTransformData);
+	const {data} = useFetch<APIResponse<TestrayFactorCategory>>(
+		'/factorcategories',
+		(response) => testrayFactorCategoryRest.transformDataFromList(response)
+	);
 
 	const factorCategories = data?.items || [];
 
 	const _onSubmit = (form: FactorOptionsForm) => {
-		onSubmit(
-			{...form},
-
-			{
-				create: createFactorOption,
-				update: updateFactorOption,
-			}
-		)
+		onSubmit(form, {
+			create: (data) => testrayFactorOptionsImpl.create(data),
+			update: (id, data) => testrayFactorOptionsImpl.update(id, data),
+		})
 			.then(onSave)
 			.catch(onError);
 	};
@@ -87,7 +87,6 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 		<Modal
 			last={
 				<Form.Footer
-					isModal
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
 				/>

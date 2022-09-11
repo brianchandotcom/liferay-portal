@@ -13,7 +13,7 @@
  */
 
 import i18n from '../../i18n';
-import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/BuildFormRun';
+import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/BuildFactorList';
 import yupSchema from '../../schema/yup';
 import {TEST_STATUS} from '../../util/constants';
 import {searchUtil} from '../../util/search';
@@ -68,28 +68,28 @@ class TestrayBuildRest extends Rest<Build, TestrayBuild> {
 		const build = await super.create(data);
 
 		const caseIds = data.caseIds || [];
-		const runs = data.categories || [];
+		const runs = data.factorStacks || [];
 
 		let runIndex = 1;
 
 		for (const run of runs) {
 			const factorOptions = Object.values(run) as CategoryOptions[];
 
-			const factorOptionsList = factorOptions.map(
-				({factorOption}) => factorOption
-			);
+			const factorOptionsList = factorOptions
+				.filter(({factorOption}) => Boolean(factorOption))
+				.map(({factorOption}) => factorOption);
 
 			const testrayRunName = factorOptionsList.join(' | ');
 
 			if (!testrayRunName) {
-				return build;
+				continue;
 			}
 
 			const testrayRun = await testrayRunRest.create({
 				buildId: build.id,
 				description: undefined,
 				environmentHash: undefined,
-				name: factorOptionsList.join(' | '),
+				name: testrayRunName,
 				number: runIndex,
 			});
 

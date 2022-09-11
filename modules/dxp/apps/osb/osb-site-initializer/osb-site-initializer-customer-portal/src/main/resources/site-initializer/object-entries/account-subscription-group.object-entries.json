@@ -5,182 +5,208 @@
 			"hasActivation": true,
 			"menuOrder": 1,
 			"name": "LXC-SM",
-			"tabOrder": 2
+			"tabOrder": 2,
+			"externalReferenceCode": "ERC-001_lxc-sm"
 		},
 		{
 			"accountKey": "ERC-002",
 			"hasActivation": true,
 			"menuOrder": 1,
 			"name": "DXP",
-			"tabOrder": 2
+			"tabOrder": 2,
+			"externalReferenceCode": "ERC-002_dxp"
 		},
 		{
 			"accountKey": "ERC-003",
 			"hasActivation": true,
 			"menuOrder": 1,
 			"name": "Analytics Cloud",
-			"tabOrder": 2
+			"tabOrder": 2,
+			"externalReferenceCode": "ERC-003_analytics-cloud"
 		},
 		{
 			"accountKey": "ERC-004",
 			"hasActivation": true,
 			"menuOrder": 2,
 			"name": "Commerce",
-			"tabOrder": 3
+			"tabOrder": 3,
+			"externalReferenceCode": "ERC-004_commerce"
 		},
 		{
 			"accountKey": "ERC-004",
 			"hasActivation": true,
 			"menuOrder": 1,
 			"name": "LXC-SM",
-			"tabOrder": 2
+			"tabOrder": 2,
+			"externalReferenceCode": "ERC-004_lxc-sm"
 		},
 		{
 			"accountKey": "ERC-004",
 			"hasActivation": true,
 			"menuOrder": 3,
 			"name": "Enterprise Search",
-			"tabOrder": 4
+			"tabOrder": 4,
+			"externalReferenceCode": "ERC-004_enterprise-search"
 		},
 		{
 			"accountKey": "ERC-005",
 			"hasActivation": true,
 			"menuOrder": 1,
 			"name": "Enterprise Search",
-			"tabOrder": 2
+			"tabOrder": 2,
+			"externalReferenceCode": "ERC-005_enterprise-search"
 		},
 		{
 			"accountKey": "ERC-006",
 			"hasActivation": true,
 			"menuOrder": 1,
 			"name": "Portal",
-			"tabOrder": 2
+			"tabOrder": 2,
+			"externalReferenceCode": "ERC-006_portal"
 		},
 		{
 			"accountKey": "ERC-008",
 			"hasActivation": true,
 			"menuOrder": 1,
 			"name": "LXC-SM",
-			"tabOrder": 2
+			"tabOrder": 2,
+			"externalReferenceCode": "ERC-008_lxc-sm"
 		},
 		{
 			"accountKey": "ERC-008",
 			"hasActivation": true,
 			"menuOrder": 2,
 			"name": "DXP",
-			"tabOrder": 3
+			"tabOrder": 3,
+			"externalReferenceCode": "ERC-008_dxp"
 		},
 		{
 			"accountKey": "ERC-008",
 			"hasActivation": true,
 			"menuOrder": 3,
 			"name": "Analytics Cloud",
-			"tabOrder": 4
+			"tabOrder": 4,
+			"externalReferenceCode": "ERC-008_analytics-cloud"
 		},
 		{
 			"accountKey": "ERC-008",
 			"hasActivation": true,
 			"menuOrder": 4,
 			"name": "Commerce",
-			"tabOrder": 5
+			"tabOrder": 5,
+			"externalReferenceCode": "ERC-008_commerce"
 		},
 		{
 			"accountKey": "ERC-008",
 			"hasActivation": true,
 			"menuOrder": 5,
 			"name": "Enterprise Search",
-			"tabOrder": 6
+			"tabOrder": 6,
+			"externalReferenceCode": "ERC-008_enterprise-search"
 		},
 		{
 			"accountKey": "ERC-008",
 			"hasActivation": true,
 			"menuOrder": 6,
 			"name": "Portal",
-			"tabOrder": 7
+			"tabOrder": 7,
+			"externalReferenceCode": "ERC-008_portal"
 		},
 		{
 			"accountKey": "ERC-008",
 			"hasActivation": true,
 			"menuOrder": 7,
 			"name": "Partnership",
-			"tabOrder": 8
+			"tabOrder": 8,
+			"externalReferenceCode": "ERC-008_partnership"
 		},
 		{
 			"accountKey": "ERC-009",
 			"hasActivation": true,
 			"menuOrder": 1,
 			"name": "DXP",
-			"tabOrder": 2
+			"tabOrder": 2,
+			"externalReferenceCode": "ERC-009_dxp"
 		},
 		{
 			"accountKey": "ERC-009",
 			"hasActivation": true,
 			"menuOrder": 5,
 			"name": "Commerce",
-			"tabOrder": 6
+			"tabOrder": 6,
+			"externalReferenceCode": "ERC-009_commerce"
 		},
 		{
 			"accountKey": "ERC-010",
 			"hasActivation": true,
 			"menuOrder": 3,
 			"name": "DXP",
-			"tabOrder": 4
+			"tabOrder": 4,
+			"externalReferenceCode": "ERC-010_dxp"
 		},
 		{
 			"accountKey": "ERC-010",
 			"hasActivation": true,
 			"menuOrder": 5,
 			"name": "Commerce",
-			"tabOrder": 6
+			"tabOrder": 6,
+			"externalReferenceCode": "ERC-010_commerce"
 		},
 		{
 			"accountKey": "ERC-011",
 			"hasActivation": true,
 			"menuOrder": 3,
 			"name": "DXP",
-			"tabOrder": 4
+			"tabOrder": 4,
+			"externalReferenceCode": "ERC-011_dxp"
 		},
 		{
 			"accountKey": "ERC-011",
 			"hasActivation": true,
 			"menuOrder": 5,
 			"name": "Commerce",
-			"tabOrder": 6
+			"tabOrder": 6,
+			"externalReferenceCode": "ERC-011_commerce"
 		},
 		{
 			"accountKey": "ERC-012",
 			"hasActivation": true,
 			"menuOrder": 3,
 			"name": "DXP",
-			"tabOrder": 4
+			"tabOrder": 4,
+			"externalReferenceCode": "ERC-012_dxp"
 		},
 		{
 			"accountKey": "ERC-012",
 			"hasActivation": true,
 			"menuOrder": 5,
 			"name": "Commerce",
-			"tabOrder": 6
+			"tabOrder": 6,
+			"externalReferenceCode": "ERC-012_commerce"
 		},
 		{
 			"accountKey": "ERC-012",
 			"hasActivation": true,
 			"menuOrder": 7,
 			"name": "Portal",
-			"tabOrder": 4
+			"tabOrder": 4,
+			"externalReferenceCode": "ERC-012_portal"
 		},
 		{
 			"accountKey": "ERC-013",
 			"hasActivation": true,
 			"menuOrder": 3,
 			"name": "DXP",
-			"tabOrder": 4
+			"tabOrder": 4,
+			"externalReferenceCode": "ERC-013_dxp"
 		},
 		{
 			"accountKey": "ERC-013",
 			"hasActivation": true,
 			"menuOrder": 5,
 			"name": "Commerce",
-			"tabOrder": 6
+			"tabOrder": 6,
+			"externalReferenceCode": "ERC-013_commerce"
 		}
 	],
 	"objectDefinitionName": "AccountSubscriptionGroup"

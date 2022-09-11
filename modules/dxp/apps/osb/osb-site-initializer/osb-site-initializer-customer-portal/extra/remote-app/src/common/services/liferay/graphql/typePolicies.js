@@ -10,12 +10,22 @@
  */
 
 import {
+	accountSubscriptionGroupsQueryTypePolicy,
+	accountSubscriptionGroupsTypePolicy,
+} from './account-subscription-groups/typePolicy';
+import {
+	accountSubscriptionsQueryTypePolicy,
+	accountSubscriptionsTypePolicy,
+} from './account-subscriptions/typePolicy';
+import {
 	koroneikiAccountsQueryTypePolicy,
 	koroneikiAccountsTypePolicy,
 } from './koroneiki-accounts/typePolicy';
 import {userAccountsTypePolicy} from './user-accounts/typePolicy';
 
 export const liferayTypePolicies = {
+	...accountSubscriptionsTypePolicy,
+	...accountSubscriptionGroupsTypePolicy,
 	...userAccountsTypePolicy,
 	...koroneikiAccountsTypePolicy,
 	Mutationc: {
@@ -23,6 +33,8 @@ export const liferayTypePolicies = {
 	},
 	c: {
 		fields: {
+			...accountSubscriptionsQueryTypePolicy,
+			...accountSubscriptionGroupsQueryTypePolicy,
 			...koroneikiAccountsQueryTypePolicy,
 		},
 		merge: true,

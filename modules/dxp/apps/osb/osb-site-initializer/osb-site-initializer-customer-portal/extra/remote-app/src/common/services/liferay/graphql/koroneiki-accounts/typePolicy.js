@@ -29,7 +29,7 @@ export const koroneikiAccountsTypePolicy = {
 				},
 			},
 		},
-		keyFields: ['accountKey'],
+		keyFields: ['externalReferenceCode'],
 	},
 	C_KoroneikiAccountPage: {
 		fields: {

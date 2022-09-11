@@ -9,52 +9,47 @@
  * distribution rights of the Software.
  */
 
-import {gql, useQuery} from '@apollo/client';
+import {gql, useLazyQuery, useQuery} from '@apollo/client';
 
-const GET_ACCOUNT_SUBSCRIPTION_GROUPS = gql`
-	query getAccountSubscriptionGroups(
+const GET_ACCOUNT_SUBSCRIPTIONS = gql`
+	query getAccountSubscriptions(
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
-		$sort: String
 	) {
 		c {
-			accountSubscriptionGroups(
+			accountSubscriptions(
 				filter: $filter
 				page: $page
 				pageSize: $pageSize
-				sort: $sort
 			) {
 				items {
-					accountSubscriptionGroupId
 					accountKey
-					activationStatus
+					accountSubscriptionGroupERC
+					accountSubscriptionId
+					endDate
 					externalReferenceCode
+					instanceSize
 					name
-					tabOrder
-					menuOrder
+					quantity
+					startDate
+					subscriptionStatus
 				}
-				lastPage
-				page
-				pageSize
-				totalCount
-				hasPartnership @client
 			}
 		}
 	}
 `;
 
-export function useGetAccountSubscriptionGroups(
+export function useGetAccountSubscriptions(
 	options = {
 		filter: '',
 		notifyOnNetworkStatusChange: false,
 		page: 1,
 		pageSize: 20,
 		skip: false,
-		sort: '',
 	}
 ) {
-	return useQuery(GET_ACCOUNT_SUBSCRIPTION_GROUPS, {
+	return useQuery(GET_ACCOUNT_SUBSCRIPTIONS, {
 		fetchPolicy: 'cache-and-network',
 		nextFetchPolicy: 'cache-first',
 		notifyOnNetworkStatusChange: options.notifyOnNetworkStatusChange,
@@ -63,7 +58,18 @@ export function useGetAccountSubscriptionGroups(
 			filter: options.filter || '',
 			page: options.page || 1,
 			pageSize: options.pageSize || 20,
-			sort: options.sort || '',
 		},
+	});
+}
+
+export function useLazyGetAccountSubscriptions(
+	options = {
+		notifyOnNetworkStatusChange: false,
+	}
+) {
+	return useLazyQuery(GET_ACCOUNT_SUBSCRIPTIONS, {
+		fetchPolicy: 'cache-and-network',
+		nextFetchPolicy: 'cache-first',
+		notifyOnNetworkStatusChange: options.notifyOnNetworkStatusChange,
 	});
 }

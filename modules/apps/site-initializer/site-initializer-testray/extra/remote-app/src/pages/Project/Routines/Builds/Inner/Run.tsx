@@ -36,6 +36,8 @@ const Runs = () => {
 					columns: [
 						{
 							key: 'number',
+							render: (number) =>
+								number?.toString().padStart(2, '0'),
 							value: i18n.translate('run'),
 						},
 						{

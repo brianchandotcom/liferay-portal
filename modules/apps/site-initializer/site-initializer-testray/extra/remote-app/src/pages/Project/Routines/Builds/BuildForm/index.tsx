@@ -47,10 +47,8 @@ type OutletContext = {
 
 const BuildForm = () => {
 	const [caseIds, setCaseIds] = useState<number[]>([]);
-
-	const {projectId, routineId} = useParams();
-
 	const {buildId} = useParams();
+	const {projectId, routineId} = useParams();
 
 	useEffect(() => {
 		if (buildId) {
@@ -95,7 +93,7 @@ const BuildForm = () => {
 	const {mutateBuild, testrayBuild}: OutletContext = useOutletContext();
 
 	const {
-		form: {onClose, onError, onSave, onSubmit},
+		form: {onClose, onError, onSave, onSubmit, submitting},
 	} = useFormActions();
 
 	const {
@@ -108,8 +106,8 @@ const BuildForm = () => {
 	} = useForm<BuildFormType>({
 		defaultValues: testrayBuild
 			? {
-					categories: [{}],
 					description: testrayBuild.description,
+					factorStacks: [{}],
 					gitHash: testrayBuild.gitHash,
 					name: testrayBuild.name,
 					productVersionId: String(testrayBuild.productVersion?.id),
@@ -117,14 +115,12 @@ const BuildForm = () => {
 					template: testrayBuild.template,
 			  }
 			: {
-					categories: [{}],
+					factorStacks: [{}],
 					routineId,
 					template: false,
 			  },
 		resolver: yupResolver(yupSchema.build),
 	});
-
-	const categories = watch('categories');
 
 	useHeader({
 		timeout: 150,
@@ -132,12 +128,8 @@ const BuildForm = () => {
 	});
 
 	const productVersionId = watch('productVersionId');
-
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const productVersions = productVersionsData?.items || [];
-
 	const routines = routinesData?.items || [];
-
 	const template = watch('template');
 
 	const inputProps = {
@@ -153,8 +145,8 @@ const BuildForm = () => {
 		}
 
 		const response = await onSubmit(data, {
-			create: (...params) => testrayBuildRest.create(...params),
-			update: (...params) => testrayBuildRest.update(...params),
+			create: (data) => testrayBuildRest.create(data),
+			update: (id, data) => testrayBuildRest.update(id, data),
 		})
 			.then(onSave)
 			.catch(onError);
@@ -230,11 +222,7 @@ const BuildForm = () => {
 					type="textarea"
 				/>
 
-				<BuildFormRun
-					categories={categories}
-					control={control}
-					register={register}
-				/>
+				<BuildFormRun control={control} register={register} />
 
 				<BuildFormCases caseIds={caseIds} setCaseIds={setCaseIds} />
 
@@ -242,6 +230,9 @@ const BuildForm = () => {
 					<Form.Footer
 						onClose={onClose}
 						onSubmit={handleSubmit(_onSubmit)}
+						primaryButtonProps={{
+							loading: submitting,
+						}}
 					/>
 				</div>
 			</ClayForm>

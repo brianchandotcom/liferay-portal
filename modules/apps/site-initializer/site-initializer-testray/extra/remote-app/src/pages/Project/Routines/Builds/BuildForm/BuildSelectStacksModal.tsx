@@ -1,0 +1,184 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import {useEffect, useMemo, useState} from 'react';
+import {useFieldArray, useForm} from 'react-hook-form';
+
+import Form from '../../../../../components/Form';
+import Modal from '../../../../../components/Modal';
+import {withVisibleContent} from '../../../../../hoc/withVisibleContent';
+import {FormModalComponent} from '../../../../../hooks/useFormModal';
+import i18n from '../../../../../i18n';
+import yupSchema, {yupResolver} from '../../../../../schema/yup';
+import {
+	TestrayFactor,
+	TestrayFactorCategory,
+	TestrayFactorOption,
+	testrayFactorCategoryRest,
+	testrayFactorRest,
+} from '../../../../../services/rest';
+import BuildFactorList from './BuildFactorList';
+
+export type FactorStack = {
+	[number: string]: {
+		factorCategory: TestrayFactorCategory;
+		factorOption: TestrayFactorOption;
+	};
+};
+
+type BuildSelectStacksModalForm = {
+	factorStacks: FactorStack[];
+	selectedOptions: string[][];
+};
+
+const BuildSelectStacksModal: React.FC<
+	FormModalComponent & {factorItems: TestrayFactor[]}
+> = ({factorItems, modal: {observer, onClose, onSave}}) => {
+	const [step, setStep] = useState(0);
+
+	const [factorOptionsList, setFactorOptionsList] = useState<
+		TestrayFactorOption[][]
+	>([[] as any]);
+
+	const factorWithOptionsList = useMemo(
+		() =>
+			factorItems.map((factor, index) => ({
+				...factor,
+				options: factorOptionsList[index],
+			})),
+		[factorItems, factorOptionsList]
+	);
+
+	const {
+		control,
+		formState: {errors},
+		handleSubmit,
+		register,
+		watch,
+	} = useForm<BuildSelectStacksModalForm>({
+		defaultValues: {factorStacks: [{}], selectedOptions: []},
+		resolver: yupResolver(yupSchema.option),
+	});
+
+	const {append, fields, remove, update} = useFieldArray({
+		control,
+		name: 'factorStacks',
+	});
+
+	const selectedOptions = watch('selectedOptions').map((values) =>
+		values.map(Number)
+	);
+
+	const onStepNext = (form: BuildSelectStacksModalForm) => {
+		if (step === 0) {
+			const factorCombinations = testrayFactorRest.getTestrayFactorCombinations(
+				factorWithOptionsList,
+				selectedOptions
+			);
+
+			remove();
+
+			factorCombinations.forEach((factorCombination) => {
+				append({...factorCombination, disabled: true} as any);
+			});
+
+			append({disabled: false} as any);
+
+			return setStep(1);
+		}
+
+		onSave(form.factorStacks);
+	};
+
+	const lastStep = step === 1;
+
+	useEffect(() => {
+		if (factorItems.length) {
+			testrayFactorCategoryRest
+				.getFactorCategoryItems(factorItems)
+				.then(setFactorOptionsList as any);
+		}
+	}, [factorItems]);
+
+	const onStepBack = () => {
+		if (step === 0) {
+			return onClose();
+		}
+
+		setStep(0);
+	};
+
+	return (
+		<Modal
+			last={
+				<Form.Footer
+					onClose={onStepBack}
+					onSubmit={handleSubmit(onStepNext)}
+					primaryButtonProps={{
+						title: i18n.translate(lastStep ? 'add' : 'next'),
+					}}
+					secondaryButtonProps={{
+						title: i18n.translate(lastStep ? 'back' : 'cancel'),
+					}}
+				/>
+			}
+			observer={observer}
+			size="full-screen"
+			title={i18n.translate(
+				lastStep ? 'select-stacks' : 'select-options'
+			)}
+			visible
+		>
+			{step === 0 &&
+				factorItems.map((factorItem, index) => {
+					const options = (factorOptionsList[index] || []).map(
+						({id, name}) => ({
+							label: name,
+							value: id,
+						})
+					);
+
+					return (
+						<Form.Select
+							defaultOption={false}
+							defaultValue={factorItem.factorOption?.id}
+							errors={errors}
+							key={index}
+							label={factorItem.factorCategory?.name}
+							multiple
+							name={`selectedOptions.${index}`}
+							options={options}
+							register={register}
+							required
+							size={8}
+						/>
+					);
+				})}
+
+			{lastStep && (
+				<BuildFactorList
+					append={append as any}
+					factorItems={factorItems}
+					factorOptionsList={factorOptionsList}
+					fields={fields}
+					register={register}
+					remove={remove}
+					update={update as any}
+				/>
+			)}
+		</Modal>
+	);
+};
+
+export default withVisibleContent(BuildSelectStacksModal);

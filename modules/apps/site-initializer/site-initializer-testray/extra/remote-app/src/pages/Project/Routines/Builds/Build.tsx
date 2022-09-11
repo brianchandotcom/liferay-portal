@@ -52,7 +52,7 @@ const Build = () => {
 							clickable: true,
 							key: 'priority',
 							render: (
-								_: any,
+								_,
 								{case: testrayCase}: TestrayCaseResult
 							) => testrayCase?.priority,
 							value: i18n.translate('priority'),
@@ -60,7 +60,7 @@ const Build = () => {
 						{
 							key: 'component',
 							render: (
-								_: any,
+								_,
 								{case: testrayCase}: TestrayCaseResult
 							) => testrayCase?.component?.name,
 							value: i18n.translate('component'),
@@ -69,7 +69,7 @@ const Build = () => {
 							clickable: true,
 							key: 'name',
 							render: (
-								_: any,
+								_,
 								{case: testrayCase}: TestrayCaseResult
 							) => testrayCase?.name,
 							value: i18n.translate('case'),

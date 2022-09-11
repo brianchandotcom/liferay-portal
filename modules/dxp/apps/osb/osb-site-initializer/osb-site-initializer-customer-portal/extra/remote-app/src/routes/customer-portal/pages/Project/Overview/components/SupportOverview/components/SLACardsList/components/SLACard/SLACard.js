@@ -16,16 +16,17 @@ import {memo} from 'react';
 import i18n from '../../../../../../../../../../../common/I18n';
 import getStyleFromTitle from './utils/getStyleFromTitle';
 
-const SLACard = ({active, endDate, label, last, startDate, title}) => {
+const SLACard = ({active, endDate, label, last, startDate, title, unique}) => {
 	const displayDate = `${startDate} - ${endDate}`;
 	const currentStyle = getStyleFromTitle(title);
 
 	return (
 		<div
 			className={classNames(
-				'align-items-center d-flex cp-sla-card mt-3',
-				{
+				'align-items-center d-flex',
+				!unique && {
 					active,
+					'cp-sla-card mt-3': true,
 					last,
 				}
 			)}

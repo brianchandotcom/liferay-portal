@@ -31,11 +31,12 @@ const SLACardsList = ({koroneikiAccount, loading}) => {
 				active={currentPosition === index}
 				key={`${slaCard.title}-${index}`}
 				last={lastPosition === index}
+				unique={slaCards.length < 2}
 			/>
 		));
 
 	return (
-		<div className="mb-6">
+		<div className="mb-5">
 			{loading ? (
 				<Skeleton className="mb-4" height={22} width={140} />
 			) : (

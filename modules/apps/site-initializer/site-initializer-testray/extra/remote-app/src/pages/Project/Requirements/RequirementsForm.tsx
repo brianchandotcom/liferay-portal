@@ -185,7 +185,9 @@ const RequirementsForm = () => {
 					type="textarea"
 				/>
 
-				<MarkdownPreview markdown={descriptionType} />
+				{descriptionType && (
+					<MarkdownPreview markdown={descriptionType} />
+				)}
 
 				<Form.Divider />
 

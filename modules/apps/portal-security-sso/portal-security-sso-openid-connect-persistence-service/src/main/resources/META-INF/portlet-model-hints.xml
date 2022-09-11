@@ -10,6 +10,7 @@
 		<field name="accessToken" type="String">
 			<hint name="max-length">3000</hint>
 		</field>
+		<field name="accessTokenExpirationDate" type="Date" />
 		<field name="authServerWellKnownURI" type="String">
 			<hint name="max-length">256</hint>
 		</field>

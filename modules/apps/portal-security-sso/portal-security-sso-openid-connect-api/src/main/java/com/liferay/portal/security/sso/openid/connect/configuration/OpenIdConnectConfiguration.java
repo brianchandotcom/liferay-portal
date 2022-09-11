@@ -52,4 +52,11 @@ public interface OpenIdConnectConfiguration {
 	)
 	public int tokenRefreshOffset();
 
+	@Meta.AD(
+		deflt = "480",
+		description = "token-refresh-scheduled-interval-description",
+		name = "token-refresh-scheduled-interval", required = false
+	)
+	public int tokenRefreshScheduledInterval();
+
 }

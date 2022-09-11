@@ -14,9 +14,14 @@
 
 package com.liferay.portal.security.sso.openid.connect.persistence.service.impl;
 
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSession;
+import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSessionTable;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.base.OpenIdConnectSessionLocalServiceBaseImpl;
+
+import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -49,6 +54,27 @@ public class OpenIdConnectSessionLocalServiceImpl
 
 		return openIdConnectSessionPersistence.fetchByU_A_C(
 			userId, authServerWellKnownURI, clientId);
+	}
+
+	@Override
+	public List<OpenIdConnectSession>
+		getAccessTokenExpirationDateOpenIdConnectSessions(
+			Date beforeDate, int start, int end) {
+
+		return openIdConnectSessionPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				OpenIdConnectSessionTable.INSTANCE
+			).from(
+				OpenIdConnectSessionTable.INSTANCE
+			).where(
+				OpenIdConnectSessionTable.INSTANCE.accessTokenExpirationDate.lt(
+					beforeDate)
+			).orderBy(
+				OpenIdConnectSessionTable.INSTANCE.accessTokenExpirationDate.
+					ascending()
+			).limit(
+				start, end
+			));
 	}
 
 }

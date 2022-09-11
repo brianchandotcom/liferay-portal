@@ -38,7 +38,6 @@ const SuiteFormSelectModal: React.FC<SuiteSelectCasesModalProps> = ({
 		<Modal
 			last={
 				<Form.Footer
-					isModal
 					onClose={onClose}
 					onSubmit={() => onSave(state)}
 					primaryButtonProps={{

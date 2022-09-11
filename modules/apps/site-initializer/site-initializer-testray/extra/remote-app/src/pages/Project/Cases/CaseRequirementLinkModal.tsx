@@ -39,7 +39,6 @@ const CaseRequirementLinkModal: React.FC<CaseRequirementLinkModalProps> = ({
 		<Modal
 			last={
 				<Form.Footer
-					isModal
 					onClose={onClose}
 					onSubmit={() => onSave({items, state})}
 					primaryButtonProps={{

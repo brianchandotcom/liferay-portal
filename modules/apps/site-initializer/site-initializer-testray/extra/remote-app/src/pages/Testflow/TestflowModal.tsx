@@ -139,7 +139,6 @@ const TestflowModal: React.FC<TestflowModalProps> = ({
 		<Modal
 			last={
 				<Form.Footer
-					isModal
 					onClose={onClose}
 					onSubmit={onSubmit}
 					primaryButtonProps={{

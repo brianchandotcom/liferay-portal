@@ -169,7 +169,6 @@ const EnvironmentFactorsModal: React.FC<EnvironmentFactorsModalProps> = ({
 				// eslint-disable-next-line @liferay/portal/no-react-dom-create-portal
 				createPortal(
 					<Form.Footer
-						isModal
 						onClose={() => (lastStep ? setStep(0) : onCloseModal())}
 						onSubmit={handleSubmit(_onSubmit)}
 						primaryButtonProps={{

@@ -86,7 +86,6 @@ const ComponentFormModal: React.FC<ComponentProps> = ({
 		<Modal
 			last={
 				<Form.Footer
-					isModal
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
 				/>

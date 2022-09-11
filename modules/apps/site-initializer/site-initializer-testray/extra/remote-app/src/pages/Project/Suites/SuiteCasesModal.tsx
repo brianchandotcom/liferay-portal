@@ -180,11 +180,7 @@ const SuiteCasesModal: React.FC<SuiteCasesModalProps> = ({
 	return (
 		<Modal
 			last={
-				<Form.Footer
-					isModal
-					onClose={onClose}
-					onSubmit={() => onSave(state)}
-				/>
+				<Form.Footer onClose={onClose} onSubmit={() => onSave(state)} />
 			}
 			observer={observer}
 			size="full-screen"

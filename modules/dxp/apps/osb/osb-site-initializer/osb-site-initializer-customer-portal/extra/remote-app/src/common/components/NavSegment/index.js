@@ -9,8 +9,4 @@
  * distribution rights of the Software.
  */
 
-import {useMemo} from 'react';
-
-export default function useHash() {
-	return useMemo(() => window.location.hash, []);
-}
+export {default} from './NavSegment';

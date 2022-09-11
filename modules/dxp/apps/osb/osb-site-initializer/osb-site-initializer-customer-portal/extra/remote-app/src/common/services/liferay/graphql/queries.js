@@ -18,6 +18,7 @@ export const getDXPCloudPageInfo = gql`
 				items {
 					accountKey
 					hasDisasterDataCenterRegion
+					externalReferenceCode
 					name
 				}
 			}
@@ -95,6 +96,7 @@ export const getAccountSubscriptions = gql`
 					accountSubscriptionId
 					c_accountSubscriptionId
 					endDate
+					externalReferenceCode
 					instanceSize
 					name
 					quantity
@@ -246,6 +248,7 @@ export const getAnalyticsCloudPageInfo = gql`
 			accountSubscriptions(filter: $accountSubscriptionsFilter) {
 				items {
 					accountKey
+					externalReferenceCode
 					hasDisasterDataCenterRegion
 					name
 				}
@@ -380,6 +383,7 @@ export const getAccountSubscriptionGroups = gql`
 					accountSubscriptionGroupId
 					accountKey
 					activationStatus
+					externalReferenceCode
 					hasActivation
 					name
 					tabOrder
@@ -407,6 +411,7 @@ export const getKoroneikiAccounts = gql`
 					acWorkspaceGroupId
 					code
 					dxpVersion
+					externalReferenceCode
 					liferayContactEmailAddress
 					liferayContactName
 					liferayContactRole

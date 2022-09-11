@@ -27,6 +27,7 @@ export const Liferay = window.Liferay || {
 		getUserId: () => 0,
 	},
 	Util: {
+		isTablet: () => false,
 		navigate: (path) => window.location.assign(path),
 		openToast: (options) => alert(options),
 	},

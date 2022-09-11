@@ -10,13 +10,11 @@
  */
 
 import {useMemo} from 'react';
-import useHash from './useHash';
 
 export default function useAccountKey() {
-	const hashLocation = useHash();
+	return useMemo(() => {
+		const hashLocation = window.location.hash;
 
-	return useMemo(
-		() => hashLocation.replace('#/', '').split('/').filter(Boolean)[0],
-		[hashLocation]
-	);
+		return hashLocation.replace('#/', '').split('/').filter(Boolean)[0];
+	}, []);
 }

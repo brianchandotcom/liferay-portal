@@ -1,0 +1,7 @@
+.cp-nav-link {
+	&.active {
+		color: var(--color-action-primary-active) !important;
+		background-color: white !important;
+		border: 1px solid var(--color-brand-primary) !important;
+	}
+}

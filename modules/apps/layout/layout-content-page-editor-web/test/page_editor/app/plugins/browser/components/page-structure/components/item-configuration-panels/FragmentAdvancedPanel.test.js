@@ -24,7 +24,7 @@ import {FragmentAdvancedPanel} from '../../../../../../../../../src/main/resourc
 
 const FRAGMENT_ENTRY_LINK_ID = '1';
 
-const FRAGMENT_ENTRY_LINK_WITH_ADVANCE_CONFIG = {
+const FRAGMENT_ENTRY_LINK_WITH_ADVANCED_CONFIG = {
 	configuration: {
 		fieldSets: [
 			{
@@ -108,7 +108,7 @@ const renderComponent = ({fragmentEntryLink = {}} = {}) =>
 describe('FragmentAdvancedPanel', () => {
 	it('renders fields that are included in fieldsets marked as advanced', () => {
 		renderComponent({
-			fragmentEntryLink: FRAGMENT_ENTRY_LINK_WITH_ADVANCE_CONFIG,
+			fragmentEntryLink: FRAGMENT_ENTRY_LINK_WITH_ADVANCED_CONFIG,
 		});
 
 		expect(screen.getByText('Advanced Config Field')).toBeInTheDocument();
@@ -116,7 +116,7 @@ describe('FragmentAdvancedPanel', () => {
 
 	it('does not render fields that are not included in fieldsets marked as advanced', () => {
 		renderComponent({
-			fragmentEntryLink: FRAGMENT_ENTRY_LINK_WITH_ADVANCE_CONFIG,
+			fragmentEntryLink: FRAGMENT_ENTRY_LINK_WITH_ADVANCED_CONFIG,
 		});
 
 		expect(

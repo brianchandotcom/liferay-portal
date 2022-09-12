@@ -818,7 +818,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_objectFieldLocalService.addSystemObjectField(
 			userId, objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER, dbColumnName,
-			dbTableName, ObjectFieldConstants.DB_TYPE_LONG, null, false, false,
+			dbTableName, ObjectFieldConstants.DB_TYPE_LONG, null, true, true,
 			null,
 			LocalizedMapUtil.getLocalizedMap(
 				_language.get(LocaleUtil.getDefault(), "id")),

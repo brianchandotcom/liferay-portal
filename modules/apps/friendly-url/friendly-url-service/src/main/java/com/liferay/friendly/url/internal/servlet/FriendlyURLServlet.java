@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
 import com.liferay.portal.kernel.servlet.PortalMessages;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -131,6 +133,21 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		String layoutFriendlyURL = null;
 
+		Redirect skippedRedirect = null;
+
+		boolean skipRedirect = false;
+
+		String refererURL = httpServletRequest.getHeader(HttpHeaders.REFERER);
+
+		if (Validator.isNotNull(refererURL)) {
+			if (refererURL.contains(
+					VirtualLayoutConstants.CANONICAL_URL_SEPARATOR +
+						GroupConstants.CONTROL_PANEL_FRIENDLY_URL)) {
+
+				skipRedirect = true;
+			}
+		}
+
 		if ((pos != -1) && ((pos + 1) != path.length())) {
 			layoutFriendlyURL = path.substring(pos);
 
@@ -141,7 +158,10 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			RedirectProvider currentRedirectProvider = redirectProvider;
 
-			if (currentRedirectProvider != null) {
+			if ((currentRedirectProvider != null) &&
+				!LiferayWindowState.isExclusive(httpServletRequest) &&
+				!LiferayWindowState.isPopUp(httpServletRequest)) {
+
 				HttpServletRequest originalHttpServletRequest =
 					portal.getOriginalServletRequest(httpServletRequest);
 
@@ -153,9 +173,13 @@ public class FriendlyURLServlet extends HttpServlet {
 							originalHttpServletRequest.getRequestURI()));
 
 				if (redirectProviderRedirect != null) {
-					return new Redirect(
+					skippedRedirect = new Redirect(
 						redirectProviderRedirect.getDestinationURL(), true,
 						redirectProviderRedirect.isPermanent());
+
+					if (!skipRedirect) {
+						return skippedRedirect;
+					}
 				}
 			}
 		}
@@ -241,6 +265,13 @@ public class FriendlyURLServlet extends HttpServlet {
 					}
 
 					throw new LayoutPermissionException();
+				}
+
+				if ((skippedRedirect != null) &&
+					!LayoutPermissionUtil.containsLayoutUpdatePermission(
+						permissionChecker, layout)) {
+
+					return skippedRedirect;
 				}
 			}
 

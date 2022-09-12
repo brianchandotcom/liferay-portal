@@ -73,9 +73,7 @@ export function LengthField({
 
 	return (
 		<ClayForm.Group
-			className={classNames('page-editor__length-field', {
-				[className]: className,
-			})}
+			className={classNames(className, 'page-editor__length-field')}
 		>
 			<label
 				className={classNames({'sr-only': !showLabel})}

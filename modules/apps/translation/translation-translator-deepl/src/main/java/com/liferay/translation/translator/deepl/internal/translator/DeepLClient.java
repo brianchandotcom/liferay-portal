@@ -85,22 +85,19 @@ public class DeepLClient {
 		options.addPart(DeepLConstants.TEXT, text);
 		options.setMethod(Http.Method.POST);
 
+		String translation = _http.URLtoString(options);
+
 		Http.Response response = options.getResponse();
 
 		Response.Status status = Response.Status.fromStatusCode(
 			response.getResponseCode());
 
 		if (status == Response.Status.OK) {
-			return _http.URLtoString(options);
+			return translation;
 		}
-		else if (status == Response.Status.TOO_MANY_REQUESTS) {
-			throw new TranslatorException(
-				"The status is TOO_MANY_REQUESTS. Please retry after a while.");
-		}
-		else {
-			throw new PortalException(
-				"The status(" + status.toString() + ") is invalid.");
-		}
+
+		throw new TranslatorException(
+			"The status is " + status + ". Please retry after a while.");
 	}
 
 	private String _getSupportedLanguage(
@@ -133,13 +130,9 @@ public class DeepLClient {
 		if (status == Response.Status.OK) {
 			return supportedLanguage;
 		}
-		else if (status == Response.Status.TOO_MANY_REQUESTS) {
-			throw new TranslatorException(
-				"The status is TOO_MANY_REQUESTS. Please retry after a while.");
-		}
-		else {
-			throw new PortalException("The status(" + status + ") is invalid.");
-		}
+
+		throw new TranslatorException(
+			"The status is " + status + ". Please retry after a while.");
 	}
 
 	@Reference

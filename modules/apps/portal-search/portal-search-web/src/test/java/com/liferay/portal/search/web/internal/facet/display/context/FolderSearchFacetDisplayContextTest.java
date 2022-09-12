@@ -61,6 +61,8 @@ public class FolderSearchFacetDisplayContextTest {
 		).when(
 			_facet
 		).getFacetCollector();
+
+		_order = "count:desc";
 	}
 
 	@Test
@@ -250,6 +252,56 @@ public class FolderSearchFacetDisplayContextTest {
 	}
 
 	@Test
+	public void testOrderByTermValueAscending() throws Exception {
+		_order = "key:asc";
+
+		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
+			"zeroFolderId", "alpha", "delta", "beta");
+
+		_setUpMultipleTermCollectors(termCollectors);
+
+		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
+			createDisplayContext(null);
+
+		List<FolderSearchFacetTermDisplayContext>
+			folderSearchFacetTermDisplayContexts =
+				folderSearchFacetDisplayContext.
+					getFolderSearchFacetTermDisplayContexts();
+
+		String nameFrequencyString = _buildNameFrequencyString(
+			folderSearchFacetTermDisplayContexts);
+
+		Assert.assertEquals(
+			folderSearchFacetTermDisplayContexts.toString(),
+			"alpha:2|beta:4|delta:3", nameFrequencyString);
+	}
+
+	@Test
+	public void testOrderByTermValueDescending() throws Exception {
+		_order = "key:desc";
+
+		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
+			"zeroFolderId", "alpha", "delta", "beta");
+
+		_setUpMultipleTermCollectors(termCollectors);
+
+		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
+			createDisplayContext(null);
+
+		List<FolderSearchFacetTermDisplayContext>
+			folderSearchFacetTermDisplayContexts =
+				folderSearchFacetDisplayContext.
+					getFolderSearchFacetTermDisplayContexts();
+
+		String nameFrequencyString = _buildNameFrequencyString(
+			folderSearchFacetTermDisplayContexts);
+
+		Assert.assertEquals(
+			folderSearchFacetTermDisplayContexts.toString(),
+			"delta:3|beta:4|alpha:2", nameFrequencyString);
+	}
+
+	@Test
 	public void testViewPermissionGrantedForSearchResultButDeniedForParentFolder()
 		throws Exception {
 
@@ -297,7 +349,7 @@ public class FolderSearchFacetDisplayContextTest {
 		folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
 		folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
 		folderSearchFacetDisplayContextBuilder.setMaxTerms(0);
-		folderSearchFacetDisplayContextBuilder.setOrder("count:desc");
+		folderSearchFacetDisplayContextBuilder.setOrder(_order);
 		folderSearchFacetDisplayContextBuilder.setParameterName(
 			_facet.getFieldId());
 		folderSearchFacetDisplayContextBuilder.setParameterValue(facetParam);
@@ -468,5 +520,6 @@ public class FolderSearchFacetDisplayContextTest {
 		FacetCollector.class);
 	private final FolderTitleLookup _folderTitleLookup = Mockito.mock(
 		FolderTitleLookup.class);
+	private String _order;
 
 }

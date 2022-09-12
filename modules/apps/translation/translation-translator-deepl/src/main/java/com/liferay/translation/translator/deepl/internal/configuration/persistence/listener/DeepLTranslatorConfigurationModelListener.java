@@ -45,8 +45,8 @@ public class DeepLTranslatorConfigurationModelListener
 			return;
 		}
 
-		String url = GetterUtil.getString(properties.get("url"));
 		String authKey = GetterUtil.getString(properties.get("authKey"));
+		String url = GetterUtil.getString(properties.get("url"));
 
 		if (authKey.isEmpty() || url.isEmpty()) {
 			throw new ConfigurationModelListenerException(

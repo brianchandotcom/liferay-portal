@@ -29,7 +29,6 @@ import com.liferay.translation.exception.TranslatorException;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
 import com.liferay.translation.translator.deepl.internal.configuration.DeepLTranslatorConfiguration;
-import com.liferay.translation.translator.deepl.internal.constants.DeepLConstants;
 import com.liferay.translation.translator.deepl.internal.model.SupportedLanguage;
 import com.liferay.translation.translator.deepl.internal.model.TranslateResponse;
 import com.liferay.translation.translator.deepl.internal.model.Translation;
@@ -81,16 +80,11 @@ public class DeepLTranslator implements Translator {
 			return translatorPacket;
 		}
 
-		DeepLTranslatorConfiguration deepLTranslatorConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				DeepLTranslatorConfiguration.class,
-				translatorPacket.getCompanyId());
+		List<String> supportedLanguages = _getSupportedLanguages(
+			_deepLTranslatorConfiguration);
 
 		String targetLanguageCode = _getLanguageCode(
 			translatorPacket.getTargetLanguageId());
-
-		List<String> supportedLanguages = _getSupportedLanguages(
-			deepLTranslatorConfiguration);
 
 		if (!_verifyLanguage(supportedLanguages, targetLanguageCode)) {
 			_log.error(
@@ -107,14 +101,15 @@ public class DeepLTranslator implements Translator {
 			translatorPacket.getSourceLanguageId());
 
 		Map<String, String> translatedFieldsMap = new HashMap<>();
+
 		Map<String, String> fieldsMap = translatorPacket.getFieldsMap();
 
 		for (Map.Entry<String, String> entry : fieldsMap.entrySet()) {
 			translatedFieldsMap.put(
 				entry.getKey(),
 				_translate(
-					deepLTranslatorConfiguration.url(),
-					deepLTranslatorConfiguration.authKey(), entry.getValue(),
+					_deepLTranslatorConfiguration.url(),
+					_deepLTranslatorConfiguration.authKey(), entry.getValue(),
 					sourceLanguageCode, targetLanguageCode));
 		}
 
@@ -162,12 +157,12 @@ public class DeepLTranslator implements Translator {
 		throws PortalException {
 
 		try {
+			List<String> languages = new ArrayList<>();
+
 			List<SupportedLanguage> supportedLanguages =
 				_deepLClient.getSupportedLanguages(
-					deepLTranslatorConfiguration.authKey(),
-					DeepLConstants.TARGET,
-					DeepLConstants.SUPPORTED_LANGUAGES_URL);
-			List<String> languages = new ArrayList<>();
+					deepLTranslatorConfiguration.authKey(), "target",
+					"https://api-free.deepl.com/v2/languages");
 
 			supportedLanguages.forEach(
 				supportedLanguage -> languages.add(
@@ -180,7 +175,7 @@ public class DeepLTranslator implements Translator {
 				"Failed to call supported language list." +
 					System.lineSeparator() + ioException.getLocalizedMessage());
 
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
 	}
 

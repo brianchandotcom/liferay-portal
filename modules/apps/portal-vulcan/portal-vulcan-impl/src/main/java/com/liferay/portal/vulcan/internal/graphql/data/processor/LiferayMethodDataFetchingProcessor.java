@@ -185,7 +185,7 @@ public class LiferayMethodDataFetchingProcessor {
 				}
 			}
 
-			if (_isMultipartBody(parameter)) {
+			if (MultipartUtil.isMultipartBody(parameter)) {
 				List<Part> parts = (List<Part>)argument;
 
 				if ((parts != null) && !parts.isEmpty()) {
@@ -670,12 +670,6 @@ public class LiferayMethodDataFetchingProcessor {
 
 			return null;
 		}
-	}
-
-	private boolean _isMultipartBody(Parameter parameter) {
-		Class<?> clazz = parameter.getType();
-
-		return StringUtil.contains(clazz.getTypeName(), "MultipartBody");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

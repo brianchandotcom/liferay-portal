@@ -52,6 +52,7 @@ import com.liferay.portal.vulcan.internal.graphql.data.fetcher.LiferayMethodData
 import com.liferay.portal.vulcan.internal.graphql.data.processor.GraphQLDTOContributorDataFetchingProcessor;
 import com.liferay.portal.vulcan.internal.graphql.data.processor.LiferayMethodDataFetchingProcessor;
 import com.liferay.portal.vulcan.internal.graphql.util.GraphQLUtil;
+import com.liferay.portal.vulcan.internal.multipart.MultipartUtil;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import graphql.ExceptionWhileDataFetching;
@@ -1977,7 +1978,7 @@ public class GraphQLServletExtender {
 					parameter.getType())
 			).map(
 				parameter -> {
-					if (_isMultipartBody(parameter)) {
+					if (MultipartUtil.isMultipartBody(parameter)) {
 						GraphQLArgument.Builder graphQLArgumentBuilder =
 							new GraphQLArgument.Builder();
 
@@ -2036,12 +2037,6 @@ public class GraphQLServletExtender {
 					parameter, _processingElementsContainer),
 				_processingElementsContainer.getCodeRegistryBuilder(),
 				graphQLInputType.getName());
-		}
-
-		private boolean _isMultipartBody(Parameter parameter) {
-			Class<?> clazz = parameter.getType();
-
-			return StringUtil.contains(clazz.getTypeName(), "MultipartBody");
 		}
 
 		private final Method _method;

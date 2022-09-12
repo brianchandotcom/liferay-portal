@@ -14,6 +14,10 @@
 
 package com.liferay.portal.vulcan.internal.multipart;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.lang.reflect.Parameter;
+
 import javax.servlet.http.Part;
 
 import javax.ws.rs.core.HttpHeaders;
@@ -39,6 +43,12 @@ public class MultipartUtil {
 		}
 
 		return header.substring(index + string.length(), header.length() - 1);
+	}
+
+	public static boolean isMultipartBody(Parameter parameter) {
+		Class<?> clazz = parameter.getType();
+
+		return StringUtil.contains(clazz.getTypeName(), "MultipartBody");
 	}
 
 }

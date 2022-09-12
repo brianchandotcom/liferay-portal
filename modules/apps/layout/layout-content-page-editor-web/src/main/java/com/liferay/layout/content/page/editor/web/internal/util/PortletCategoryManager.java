@@ -130,7 +130,7 @@ public class PortletCategoryManager {
 		}
 
 		sortedPortletCategoryJSONObjectsList.addAll(
-			portletCategoryJSONObjectsMap.values());
+			0, portletCategoryJSONObjectsMap.values());
 
 		return JSONUtil.toJSONArray(
 			sortedPortletCategoryJSONObjectsList,

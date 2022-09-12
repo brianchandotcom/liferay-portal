@@ -150,6 +150,13 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 			StringFDSTableSchemaField stringFDSTableSchemaField =
 				new StringFDSTableSchemaField();
 
+			if (Objects.equals(
+					businessType,
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				stringFDSTableSchemaField.setContentRenderer("link");
+			}
+
 			stringFDSTableSchemaField.setFieldName(fieldName);
 			stringFDSTableSchemaField.setLabel(label);
 			stringFDSTableSchemaField.setLocalizeLabel(localizeLabel);
@@ -288,8 +295,12 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 	private String _getFieldName(String businessType, String fieldName) {
 		if (Objects.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
-			Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			return fieldName + ".link";
+		}
+
+		if (Objects.equals(
 				businessType, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 			return fieldName + ".name";

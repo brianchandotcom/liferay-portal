@@ -35,6 +35,7 @@ import {
 import {useSelectItem} from '../../contexts/ControlsContext';
 import {useSelectorRef} from '../../contexts/StoreContext';
 import {formIsMapped} from '../formIsMapped';
+import {hasFormParent} from '../hasFormParent';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import {TARGET_POSITIONS} from './constants/targetPositions';
 import defaultComputeHover from './defaultComputeHover';
@@ -357,7 +358,7 @@ export function DragAndDropContextProvider({children}) {
 
 function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 	if (!state.droppable) {
-		let message = Liferay.Language.get('an-unexpected-error-occurred');
+		let message = '';
 
 		if (state.dropTargetItem.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
 			message = Liferay.Language.get(
@@ -386,16 +387,24 @@ function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 				'form-components-can-only-be-placed-inside-a-mapped-form-container'
 			);
 		}
-		else if (state.dropItem.isWidget) {
+		else if (
+			state.dropItem.isWidget &&
+			hasFormParent(state.dropItem, layoutDataRef.current)
+		) {
 			message = Liferay.Language.get(
 				'widgets-cannot-be-placed-inside-a-form-container'
 			);
 		}
+		else if (state.dropItem.parentId !== state.dropTargetItem.itemId) {
+			message = Liferay.Language.get('an-unexpected-error-occurred');
+		}
 
-		openToast({
-			message,
-			type: 'danger',
-		});
+		if (message) {
+			openToast({
+				message,
+				type: 'danger',
+			});
+		}
 
 		dispatch(initialDragDrop.state);
 

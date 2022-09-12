@@ -130,7 +130,9 @@ definition {
 		}
 
 		task ("Then the user can select the Key Type") {
-			CP2ActivationKeys.selectKeyType(key_option = "Production (Virtual Cluster)");
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
 		}
 	}
 
@@ -160,7 +162,9 @@ definition {
 		task ("And when the user goes to generate a new key and selects a Key Type that does not have permanent licenses") {
 			CP2ActivationKeys.generateNewKey();
 
-			CP2ActivationKeys.selectKeyType(key_option = "Production (Virtual Cluster)");
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
 		}
 
 		task ("Then a message will appear after the user selects a subscription with the active dates") {
@@ -299,7 +303,9 @@ definition {
 		}
 
 		task ("Then the user can select the Product Version") {
-			CP2ActivationKeys.selectProductVersion(key_option = "7.3");
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "7.3");
 		}
 	}
 

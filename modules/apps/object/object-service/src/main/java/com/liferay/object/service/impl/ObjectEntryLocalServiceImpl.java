@@ -1444,6 +1444,9 @@ public class ObjectEntryLocalServiceImpl
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId2);
 
+		Column<DynamicObjectDefinitionTable, Long> objectDefinitionPKColumn =
+			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
+
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId1);
 		ObjectDefinition objectDefinition2 =
@@ -1471,16 +1474,16 @@ public class ObjectEntryLocalServiceImpl
 			dynamicObjectDefinitionTable
 		).innerJoinON(
 			ObjectEntryTable.INSTANCE,
-			ObjectEntryTable.INSTANCE.objectEntryId.eq(primaryKeyColumn1)
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(objectDefinitionPKColumn)
 		).innerJoinON(
 			extensionDynamicObjectDefinitionTable,
 			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
 			).eq(
-				primaryKeyColumn1
+				objectDefinitionPKColumn
 			)
 		).leftJoinOn(
 			dynamicObjectRelationshipMappingTable,
-			primaryKeyColumn2.eq(primaryKeyColumn1)
+			primaryKeyColumn2.eq(objectDefinitionPKColumn)
 		).where(
 			ObjectEntryTable.INSTANCE.groupId.eq(
 				groupId
@@ -1497,7 +1500,8 @@ public class ObjectEntryLocalServiceImpl
 					}
 
 					return _inlineSQLHelper.getPermissionWherePredicate(
-						objectDefinition2.getClassName(), primaryKeyColumn1);
+						objectDefinition2.getClassName(),
+						objectDefinitionPKColumn);
 				}
 			).and(
 				() -> {
@@ -1505,7 +1509,7 @@ public class ObjectEntryLocalServiceImpl
 						return primaryKeyColumn1.eq(primaryKey);
 					}
 
-					return primaryKeyColumn1.notIn(
+					return objectDefinitionPKColumn.notIn(
 						DSLQueryFactoryUtil.select(
 							primaryKeyColumn2
 						).from(
@@ -1519,7 +1523,7 @@ public class ObjectEntryLocalServiceImpl
 					if (objectDefinition1.getObjectDefinitionId() ==
 							objectDefinition2.getObjectDefinitionId()) {
 
-						return primaryKeyColumn1.neq(primaryKey);
+						return objectDefinitionPKColumn.neq(primaryKey);
 					}
 
 					return null;

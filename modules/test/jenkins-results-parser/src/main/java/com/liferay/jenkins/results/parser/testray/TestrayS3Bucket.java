@@ -33,7 +33,9 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,10 +47,41 @@ import org.apache.commons.io.FileUtils;
 public class TestrayS3Bucket {
 
 	public static TestrayS3Bucket getInstance() {
-		return _testrayS3Bucket;
+		String name = null;
+
+		try {
+			name = JenkinsResultsParserUtil.getBuildProperty(
+				"testray.s3.bucket");
+		}
+		catch (IOException ioException) {
+			System.out.println(
+				"WARNING: Unable to get bucket name from mirrors.");
+		}
+
+		return getInstance(name);
+	}
+
+	public static TestrayS3Bucket getInstance(String name) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(name)) {
+			name = DEFAULT_BUCKET_NAME;
+		}
+
+		TestrayS3Bucket testrayS3Bucket = _testrayS3Buckets.get(name);
+
+		if (testrayS3Bucket == null) {
+			testrayS3Bucket = new TestrayS3Bucket(name);
+
+			_testrayS3Buckets.put(name, testrayS3Bucket);
+		}
+
+		return testrayS3Bucket;
 	}
 
 	public static boolean googleCredentialsAvailable() {
+		return googleCredentialsAvailable(null);
+	}
+
+	public static boolean googleCredentialsAvailable(String name) {
 		if (_googleCredentialsAvailable != null) {
 			return _googleCredentialsAvailable;
 		}
@@ -82,7 +115,9 @@ public class TestrayS3Bucket {
 		}
 
 		try {
-			_testrayS3Bucket._getBucket();
+			TestrayS3Bucket testrayS3Bucket = getInstance(name);
+
+			testrayS3Bucket._getBucket();
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
@@ -226,13 +261,7 @@ public class TestrayS3Bucket {
 	}
 
 	public String getName() {
-		try {
-			return JenkinsResultsParserUtil.getBuildProperty(
-				"testray.s3.bucket");
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		return _name;
 	}
 
 	public String getTestrayS3BaseURL() {
@@ -279,6 +308,12 @@ public class TestrayS3Bucket {
 		}
 	}
 
+	protected static final String DEFAULT_BUCKET_NAME = "testray-results";
+
+	private TestrayS3Bucket(String name) {
+		_name = name;
+	}
+
 	private Bucket _getBucket() {
 		Storage storage = _getStorage();
 
@@ -294,7 +329,9 @@ public class TestrayS3Bucket {
 	private static final Pattern _fileNamePattern = Pattern.compile(
 		".*\\.(?!gz)(?<fileExtension>([^\\.]+))(?<gzipFileExtension>\\.gz)?");
 	private static Boolean _googleCredentialsAvailable;
-	private static final TestrayS3Bucket _testrayS3Bucket =
-		new TestrayS3Bucket();
+	private static final Map<String, TestrayS3Bucket> _testrayS3Buckets =
+		new HashMap<>();
+
+	private final String _name;
 
 }

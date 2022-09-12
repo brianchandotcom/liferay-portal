@@ -1690,13 +1690,16 @@ public class ObjectEntryLocalServiceImpl
 							objectField.getDBTableName(),
 							dynamicObjectDefinitionTable.getName())) {
 
-						column = dynamicObjectDefinitionTable.getColumn(
-							objectField.getDBColumnName());
+						column =
+							(Column<DynamicObjectDefinitionTable, Long>)
+								dynamicObjectDefinitionTable.getColumn(
+									objectField.getDBColumnName());
 					}
 					else {
 						column =
-							extensionDynamicObjectDefinitionTable.getColumn(
-								objectField.getDBColumnName());
+							(Column<DynamicObjectDefinitionTable, Long>)
+								extensionDynamicObjectDefinitionTable.getColumn(
+									objectField.getDBColumnName());
 					}
 
 					return column.eq(related ? primaryKey : 0L);

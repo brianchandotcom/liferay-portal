@@ -11,6 +11,7 @@ Export-Package:\
 	com.liferay.portal.kernel.test.randomizerbumpers,\
 	com.liferay.portal.kernel.test.rule,\
 	com.liferay.portal.kernel.test.util,\
+	com.liferay.portal.test.function,\
 	com.liferay.portal.test.log,\
 	com.liferay.portal.test.mail,\
 	com.liferay.portal.test.randomizerbumpers,\

@@ -225,11 +225,19 @@ definition {
 			MouseOver.mouseOverNotVisible(locator1 = "//div[contains(@class,'portlet-options')]/a[contains(@id,'AssetPublisher')]");
 		}
 
+		task ("Select Page Design") {
+			Click(locator1 = "PageEditor#EDIT_MODE_SELECTOR");
+
+			MenuItem.click(menuItem = "Page Design");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
+				value1 = "Page Design");
+		}
+
 		task ("Edit Web Content Article and Blogs Entry via Contents panel") {
 			for (var title : list "Web Content Title,Blogs Entry Title") {
-				PageEditor.gotoTab(tabName = "Browser");
-
-				Navigator.gotoNavTab(navTab = "Page Content");
+				PageEditor.gotoTab(tabName = "Page Content");
 
 				LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
 					menuItem = "Edit",
@@ -256,14 +264,6 @@ definition {
 				}
 
 				PageEditor.assertFragmentSidebarLoaded();
-
-				Click(locator1 = "PageEditor#EDIT_MODE_SELECTOR");
-
-				MenuItem.click(menuItem = "Content Editing");
-
-				AssertTextEquals(
-					locator1 = "PageEditor#EDIT_MODE_SELECTOR",
-					value1 = "Content Editing");
 			}
 		}
 

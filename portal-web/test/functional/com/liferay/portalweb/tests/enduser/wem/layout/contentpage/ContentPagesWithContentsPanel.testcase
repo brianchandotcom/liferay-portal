@@ -368,9 +368,7 @@ definition {
 		}
 
 		task ("Access to the inline text editor of Heading via Page Content panel") {
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			PageEditor.editFragmentTextViaPageContentPanel(
 				itemName = "Heading Example",
@@ -398,9 +396,7 @@ definition {
 		}
 
 		task ("Access to the inline text editor of Paragraph via Page Content panel") {
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			PageEditor.editFragmentTextViaPageContentPanel(
 				itemName = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
@@ -567,7 +563,7 @@ definition {
 		}
 
 		task ("Filter the displayed assets by category in Page Content panel") {
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			PageEditor.selectContentFilter(filter = "Inline Text");
 
@@ -684,8 +680,6 @@ definition {
 		}
 
 		task ("Edit the image via the image editor on Page Content panel") {
-			Navigator.gotoNavTab(navTab = "Page Content");
-
 			PageEditor.gotoEllipsisMenuItemInPageContentPanel(
 				itemName = "analytics-cloud-hero-image.png",
 				menuItem = "Edit Image");
@@ -696,7 +690,7 @@ definition {
 		}
 
 		task ("Take down the new naturalWidth and naturalHeight of image") {
-			Navigator.gotoNavTab(navTab = "Page Elements");
+			PageEditor.gotoTab(tabName = "Browser");
 
 			WaitForElementPresent(
 				key_resolutionLabel = "Width",
@@ -785,8 +779,6 @@ definition {
 		}
 
 		task ("Edit the image via the image editor on Page Content panel") {
-			Navigator.gotoNavTab(navTab = "Page Content");
-
 			PageEditor.gotoEllipsisMenuItemInPageContentPanel(
 				itemName = "analytics-cloud-hero-image.png",
 				menuItem = "Edit Image");
@@ -797,7 +789,7 @@ definition {
 		}
 
 		task ("View the version of mapped image") {
-			Navigator.gotoNavTab(navTab = "Page Elements");
+			PageEditor.gotoTab(tabName = "Browser");
 
 			WaitForElementPresent(
 				key_resolutionLabel = "Width",
@@ -974,7 +966,7 @@ definition {
 		}
 
 		task ("Search the displayed assets by keyword when the content filter is All Content") {
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			PageEditor.searchInPageContentPanel(searchTerm = "Heading");
 
@@ -1157,9 +1149,7 @@ definition {
 		}
 
 		task ("View the dashed outline of editable field when hover on inline text items") {
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			MouseOver(
 				key_itemName = "Heading Example",
@@ -1174,7 +1164,7 @@ definition {
 				value1 = "dashed");
 
 			MouseOver(
-				key_sidebarButton = "Browser",
+				key_sidebarButton = "Page Content",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			MouseOver(
@@ -1205,7 +1195,7 @@ definition {
 		}
 
 		task ("View the dashed outline of editable field when hover on inline text items") {
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			MouseOver(
 				key_itemName = "Edit Text",
@@ -1220,7 +1210,7 @@ definition {
 				value1 = "dashed");
 
 			MouseOver(
-				key_sidebarButton = "Browser",
+				key_sidebarButton = "Page Content",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			MouseOver(
@@ -1318,7 +1308,7 @@ definition {
 		}
 
 		task ("View the dashed outline of mapped editable field when hover on assets") {
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			MouseOver(
 				key_itemName = "Web Content Title",
@@ -1333,7 +1323,7 @@ definition {
 				value1 = "dashed");
 
 			MouseOver(
-				key_sidebarButton = "Browser",
+				key_sidebarButton = "Page Content",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			MouseOver(
@@ -1349,7 +1339,7 @@ definition {
 				value1 = "dashed");
 
 			MouseOver(
-				key_sidebarButton = "Browser",
+				key_sidebarButton = "Page Content",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			MouseOver(
@@ -1457,9 +1447,7 @@ definition {
 		}
 
 		task ("View the details of displayed assets in Page Content panel") {
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			AssertVisible(
 				key_category = "Document",

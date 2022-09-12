@@ -598,11 +598,7 @@ definition {
 		}
 
 		task ("Assert that Heading from 1 to 4 are shown for desktop view on preview") {
-			PageEditor.switchViewport(
-				deviceType = "Desktop",
-				modal = "true");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.switchViewport(deviceType = "Desktop");
 
 			for (var n : list "1,2,3,4") {
 				ContentPages.viewFragmentText(
@@ -620,13 +616,9 @@ definition {
 		}
 
 		task ("Assert that Heading from 1 to 3 are shown for tablet view on preview") {
-			SelectFrameTop();
+			PageEditor.switchViewport(deviceType = "Tablet");
 
-			PageEditor.switchViewport(
-				deviceType = "Tablet",
-				modal = "true");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			for (var n : list "1,2,3") {
 				ContentPages.viewFragmentText(
@@ -648,11 +640,9 @@ definition {
 		task ("Assert that Heading from 1 to 2 are shown for landscape phone view on preview") {
 			SelectFrameTop();
 
-			PageEditor.switchViewport(
-				deviceType = "Landscape Phone",
-				modal = "true");
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			for (var n : list "1,2") {
 				ContentPages.viewFragmentText(
@@ -674,11 +664,9 @@ definition {
 		task ("Assert that only Heading 1 is shown for portail phone view on preview") {
 			SelectFrameTop();
 
-			PageEditor.switchViewport(
-				deviceType = "Portrait Phone",
-				modal = "true");
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",

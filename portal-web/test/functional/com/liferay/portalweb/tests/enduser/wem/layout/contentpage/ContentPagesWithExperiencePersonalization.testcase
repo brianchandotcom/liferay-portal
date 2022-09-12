@@ -793,9 +793,7 @@ definition {
 		}
 
 		task ("Select the Inline Text as content filter in Page Content panel") {
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			PageEditor.selectContentFilter(filter = "Inline Text");
 		}

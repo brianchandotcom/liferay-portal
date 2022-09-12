@@ -255,6 +255,12 @@ definition {
 		AssertVisible(locator1 = "CustomerPortalSite#ERROR_MESSAGE");
 	}
 
+	macro assertErrorMessageIsNotVisible {
+		var key_errorMessage = "${errorMessage}";
+
+		AssertElementNotPresent(locator1 = "CustomerPortalSite#ERROR_MESSAGE");
+	}
+
 	macro clickOnCancelButton {
 		var key_text = "Cancel";
 

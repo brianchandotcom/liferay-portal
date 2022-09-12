@@ -326,7 +326,7 @@ const SingleSelectWithIcon = ({
 				id={inputId}
 				onChange={onChange}
 				options={options}
-				value={value}
+				value={value || ''}
 			/>
 
 			<div

@@ -118,6 +118,11 @@ public class WebDriverUtil extends PropsValues {
 
 		_setGenericCapabilities(chromeOptions);
 
+		if (Validator.isNotNull(PropsValues.BROWSER_CHROME_BIN_ARGS)) {
+			chromeOptions.addArguments(
+				PropsValues.BROWSER_CHROME_BIN_ARGS.split("\\s+"));
+		}
+
 		return new RemoteWebDriver(_REMOTE_DRIVER_URL, chromeOptions);
 	}
 

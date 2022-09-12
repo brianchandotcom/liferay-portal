@@ -28,7 +28,7 @@ import {
 	TestrayRoutine,
 	getTasksTransformData,
 	tasksResource,
-	testrayBuildRest,
+	testrayBuildImpl,
 } from '../../../../services/rest';
 import BuildAlertBar from './BuildAlertBar';
 import BuildOverview from './BuildOverview';
@@ -52,8 +52,8 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 	const {
 		data: testrayBuild,
 		mutate: mutateBuild,
-	} = useFetch(testrayBuildRest.getResource(buildId as string), (response) =>
-		testrayBuildRest.transformData(response)
+	} = useFetch(testrayBuildImpl.getResource(buildId as string), (response) =>
+		testrayBuildImpl.transformData(response)
 	);
 
 	const hasOtherParams = !!Object.values(otherParams).length;

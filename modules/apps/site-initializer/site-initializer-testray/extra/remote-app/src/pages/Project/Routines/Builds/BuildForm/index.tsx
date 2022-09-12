@@ -31,7 +31,7 @@ import {
 	TestrayBuild,
 	TestrayProductVersion,
 	TestrayRoutine,
-	testrayBuildRest,
+	testrayBuildImpl,
 } from '../../../../../services/rest';
 import {searchUtil} from '../../../../../util/search';
 import ProductVersionFormModal from '../../../../Standalone/ProductVersions/ProductVersionFormModal';
@@ -52,7 +52,7 @@ const BuildForm = () => {
 
 	useEffect(() => {
 		if (buildId) {
-			testrayBuildRest
+			testrayBuildImpl
 				.getCurrentCaseIds(buildId)
 				.then(setCaseIds)
 				.catch(console.error);
@@ -145,8 +145,8 @@ const BuildForm = () => {
 		}
 
 		const response = await onSubmit(data, {
-			create: (data) => testrayBuildRest.create(data),
-			update: (id, data) => testrayBuildRest.update(id, data),
+			create: (data) => testrayBuildImpl.create(data),
+			update: (id, data) => testrayBuildImpl.update(id, data),
 		})
 			.then(onSave)
 			.catch(onError);

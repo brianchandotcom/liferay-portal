@@ -22,9 +22,9 @@ import Modal from '../../components/Modal';
 import {FormModalOptions} from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 import {
-	testrayBuildRest,
+	testrayBuildImpl,
 	testrayProjectImpl,
-	testrayRoutineRest,
+	testrayRoutineImpl,
 } from '../../services/rest';
 
 type TestflowModalProps = {
@@ -71,16 +71,16 @@ const TestflowForm = () => {
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
 				resource="/routines"
 				transformData={(response) =>
-					testrayRoutineRest.transformDataFromList(response)
+					testrayRoutineImpl.transformDataFromList(response)
 				}
 			/>
 
 			<Form.AutoComplete
 				label="Build"
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
-				resource={testrayBuildRest.resource}
+				resource={testrayBuildImpl.resource}
 				transformData={(response) =>
-					testrayBuildRest.transformDataFromList(response)
+					testrayBuildImpl.transformDataFromList(response)
 				}
 			/>
 			<Form.Input label="Name" name="name" required />

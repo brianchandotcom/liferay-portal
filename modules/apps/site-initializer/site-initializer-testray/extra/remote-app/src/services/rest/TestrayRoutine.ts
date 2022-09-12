@@ -20,7 +20,7 @@ type RoutineFormType = typeof yupSchema.routine.__outputType & {
 	projectId: number;
 };
 
-class TestrayRoutineRest extends Rest<RoutineFormType, TestrayRoutine> {
+class TestrayRoutineImpl extends Rest<RoutineFormType, TestrayRoutine> {
 	constructor() {
 		super({
 			adapter: (routine) => ({
@@ -34,6 +34,6 @@ class TestrayRoutineRest extends Rest<RoutineFormType, TestrayRoutine> {
 	}
 }
 
-const testrayRoutineRest = new TestrayRoutineRest();
+const testrayRoutineImpl = new TestrayRoutineImpl();
 
-export {testrayRoutineRest};
+export {testrayRoutineImpl};

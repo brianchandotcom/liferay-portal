@@ -17,7 +17,7 @@ import {UseFormRegister} from 'react-hook-form';
 
 import Form from '../../../components/Form';
 import yupSchema from '../../../schema/yup';
-import {TestrayFactor} from '../../../services/rest';
+import {TestrayFactor, TestrayFactorOption} from '../../../services/rest';
 import {testrayFactorCategoryRest} from '../../../services/rest/TestrayFactorCategory';
 
 type FactorOptionForm = typeof yupSchema.enviroment.__outputType;
@@ -36,7 +36,7 @@ const FactorsToOptions: React.FC<FactorsToOptionsProps> = ({
 	setValue,
 }) => {
 	const [factorOptionsList, setFactorOptionsList] = useState<
-		TestrayFactor[][]
+		TestrayFactorOption[][]
 	>([[] as any]);
 
 	useEffect(() => {

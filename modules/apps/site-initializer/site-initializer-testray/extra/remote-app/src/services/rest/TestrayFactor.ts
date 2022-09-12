@@ -193,6 +193,29 @@ class TestrayFactorRest extends Rest<TestrayFactorType, TestrayFactor> {
 		return testrayFactors;
 	}
 
+	public async selectEnvironmentFactor(
+		factors: TestrayFactor[],
+		factorOptionIds: number[],
+		runId: number
+	) {
+		let index = 0;
+
+		for (const factor of factors) {
+			const factorOptionId = String(factorOptionIds[index]);
+
+			if (Number(factor?.factorOption?.id) !== Number(factorOptionId)) {
+				await this.update(factor.id, {
+					factorCategoryId: (factor.factorCategory
+						?.id as unknown) as string,
+					factorOptionId,
+					runId,
+				});
+			}
+
+			index++;
+		}
+	}
+
 	public async selectDefaultEnvironmentFactor(
 		factorEnvironment: FactorEnviroment,
 		factors: TestrayFactor[]
@@ -251,7 +274,8 @@ class TestrayFactorRest extends Rest<TestrayFactorType, TestrayFactor> {
 						return _factor;
 					});
 				}
-			} else {
+			}
+			else {
 				const newFactor = await super.create({
 					...form,
 					name: '',

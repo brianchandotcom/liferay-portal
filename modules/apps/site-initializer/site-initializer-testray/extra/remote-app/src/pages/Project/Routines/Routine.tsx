@@ -22,7 +22,7 @@ import ProgressBar from '../../../components/ProgressBar';
 import useBuildHistory from '../../../data/useBuildHistory';
 import i18n from '../../../i18n';
 import {filters} from '../../../schema/filter';
-import {testrayBuildRest} from '../../../services/rest';
+import {testrayBuildImpl} from '../../../services/rest';
 import {BUILD_STATUS} from '../../../util/constants';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
@@ -51,7 +51,7 @@ const Routine = () => {
 					filterFields: filters.build.index as any,
 					title: i18n.translate('build-history'),
 				}}
-				resource={testrayBuildRest.resource}
+				resource={testrayBuildImpl.resource}
 				tableProps={{
 					actions,
 					columns: [
@@ -183,7 +183,7 @@ const Routine = () => {
 					navigateTo: ({id}) => `build/${id}`,
 				}}
 				transformData={(response) =>
-					testrayBuildRest.transformDataFromList(response)
+					testrayBuildImpl.transformDataFromList(response)
 				}
 				variables={{
 					filter: searchUtil.eq('routineId', routineId as string),

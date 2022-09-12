@@ -15,7 +15,7 @@
 import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
 import Rest from './Rest';
-import {testrayBuildRest} from './TestrayBuild';
+import {testrayBuildImpl} from './TestrayBuild';
 import {TestrayProject} from './types';
 
 type Project = typeof yupSchema.project.__outputType;
@@ -28,7 +28,7 @@ class TestrayProjectImpl extends Rest<Project, TestrayProject> {
 	}
 
 	protected async beforeRemove(id: number) {
-		const hasBuildsInProjectId = await testrayBuildRest.hasBuildsInProjectId(
+		const hasBuildsInProjectId = await testrayBuildImpl.hasBuildsInProjectId(
 			id
 		);
 

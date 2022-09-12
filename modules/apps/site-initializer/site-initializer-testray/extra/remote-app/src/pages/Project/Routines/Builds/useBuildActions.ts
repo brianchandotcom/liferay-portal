@@ -21,7 +21,7 @@ import i18n from '../../../../i18n';
 import {
 	TestrayBuild,
 	deleteResource,
-	testrayBuildRest,
+	testrayBuildImpl,
 } from '../../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../../types';
 
@@ -51,7 +51,7 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 		},
 		{
 			action: ({id, promoted}, mutate) => {
-				testrayBuildRest
+				testrayBuildImpl
 					.update(id, {
 						promoted: !promoted,
 					})

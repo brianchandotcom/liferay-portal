@@ -149,6 +149,274 @@ definition {
 			fieldType = "LongText");
 	}
 
+	@description = "LPS-135549 - Verify that it's possible to create an object entry with every field"
+	@priority = "5"
+	test CanCreateObjectEntryWithEveryField {
+		property portal.acceptance = "true";
+
+		task ("Go to Picklist and create new Picklist and item") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Picklists");
+
+			Picklist.addPicklistViaUI(picklistName = "Picklist Test");
+
+			for (var numbers : list "1,2") {
+				Picklist.gotoPicklistView(picklistName = "Picklist Test");
+
+				Picklist.addPicklistItemViaUI(picklistItemName = "Picklist Item Test ${numbers}");
+
+				Picklist.clickSaveButton();
+
+				Refresh();
+			}
+
+			Navigator.openURL();
+		}
+
+		task ("Go to Objects and create Custom Object") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Objects");
+
+			ObjectAdmin.addNewObject(
+				fieldLabelName = "Custom Object 162140",
+				pluralLabelName = "Custom Objects 162140");
+
+			ObjectAdmin.saveCustomObject();
+		}
+
+		task ("Go to Custom Object > Fields") {
+			ObjectPortlet.selectCustomObject(label = "Custom Object 162140");
+
+			ObjectAdmin.goToFieldsTab();
+		}
+
+		task ("Add long integer field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Long Integer",
+				fieldName = "customLongInteger",
+				fieldType = "Long Integer");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Long Integer",
+				fieldType = "LongInteger");
+		}
+
+		task ("Add attachment field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldAttachment = "Upload Directly from the User's Computer",
+				fieldLabel = "Custom Attachment",
+				fieldType = "Attachment");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Attachment",
+				fieldType = "Attachment");
+		}
+
+		task ("Add text field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Simple Text",
+				fieldName = "customSimpleText",
+				fieldType = "Text");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Simple Text",
+				fieldType = "Text");
+		}
+
+		task ("Add picklist field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Picklist",
+				fieldPicklist = "Picklist Test",
+				fieldType = "Picklist");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Picklist",
+				fieldType = "Picklist");
+		}
+
+		task ("Add date field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Date",
+				fieldName = "customDate",
+				fieldType = "Date");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Date",
+				fieldType = "Date");
+		}
+
+		task ("Add integer field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Integer",
+				fieldName = "customInteger",
+				fieldType = "Integer");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Integer",
+				fieldType = "Integer");
+		}
+
+		task ("Add precision decimal field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Precision Decimal",
+				fieldName = "customPrecisionDecimal",
+				fieldType = "Precision Decimal");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Precision Decimal",
+				fieldType = "PrecisionDecimal");
+		}
+
+		task ("Add decimal field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Decimal",
+				fieldName = "customDecimal",
+				fieldType = "Decimal");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Decimal",
+				fieldType = "Decimal");
+		}
+
+		task ("Add rich text field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Rich Text",
+				fieldName = "customRichText",
+				fieldType = "Rich Text");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Rich Text",
+				fieldType = "RichText");
+		}
+
+		task ("Add boolean field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Boolean",
+				fieldName = "customBoolean",
+				fieldType = "Boolean");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Boolean",
+				fieldType = "Boolean");
+		}
+
+		task ("Add long text field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Long Text",
+				fieldName = "customLongText",
+				fieldType = "Long Text");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Long Text",
+				fieldType = "LongText");
+		}
+
+		task ("Publish Custom Object") {
+			ObjectAdmin.goToDetailsTab();
+
+			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+			ObjectAdmin.publishObjectViaUI();
+		}
+
+		task ("Go to Custom Object entries and add an entry") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Custom Objects 162140");
+		}
+
+		task ("Create an entry (fill all fields)") {
+			LexiconEntry.gotoAdd();
+
+			WaitForPageLoad();
+
+			Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Decimal",
+				entry = "12.34");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Integer",
+				entry = "1234");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Long Integer",
+				entry = "1122334455");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Precision Decimal",
+				entry = "1.5");
+
+			FormViewBuilder.editClobText(fieldLong = "Text written on long text");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Simple Text",
+				entry = "Text written on simple text");
+
+			ObjectAutoGenerated.typeAndSelectTextOnRichText(text = "Text written on rich text");
+
+			Type(
+				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
+				value1 = "01/01/2022");
+
+			Click(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTION");
+
+			Click(
+				key_picklistOption = "Picklist Item Test 1",
+				locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
+
+			WaitForPageLoad();
+
+			ObjectAutoGenerated.clickSelectFile();
+
+			var filePath = TestCase.getDependenciesDirPath(fileName = "LiferayLogo.png");
+
+			UploadFile(
+				locator1 = "TextInput#FILE",
+				value1 = "${filePath}");
+
+			Button.clickSave();
+		}
+
+		task ("Assert entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject162140");
+
+			for (var asserts : list "Yes,12.34,1234,1122334455,1.5,Text written on long text,Text written on simple text,Text written on rich text,Picklist Item Test 1,LiferayLogo") {
+				ObjectPortlet.viewEntry(entry = "${asserts}");
+			}
+
+			ObjectPortlet.viewEntry(entry = "Jan 1, 2022");
+		}
+	}
+
 	@description = "LPS-148112 - Verify that File Size and Format defined by admin are working correctly when using the 'Show Files' option"
 	@priority = "4"
 	test CanDefineMaximumFileSizeOnShowFilesOption {

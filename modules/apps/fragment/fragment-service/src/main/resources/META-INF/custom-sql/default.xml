@@ -133,7 +133,8 @@
 						FragmentEntryLink
 					WHERE
 						(FragmentEntryLink.groupId = ?) AND
-						(FragmentEntryLink.fragmentEntryId = ?)
+						(FragmentEntryLink.fragmentEntryId = ?) AND
+						(FragmentEntryLink.deleted = [$FALSE$])
 				) TEMP_TABLE
 		]]>
 	</sql>
@@ -245,6 +246,7 @@
 			WHERE
 				(FragmentEntryLink.groupId = ?) AND
 				(FragmentEntryLink.fragmentEntryId = ?) AND
+				(FragmentEntryLink.deleted = [$FALSE$]) AND
 				(
 					FragmentEntryLink.createDate =
 						(

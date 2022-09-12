@@ -119,7 +119,7 @@
 	</tr>
 	<tr>
 		<td>TYPE_OPTION</td>
-		<td>//button[@class='dropdown-item']//div[contains(text(),"${key_fieldType}")]</td>
+		<td>//button[@class='dropdown-item']//div[(text()="${key_fieldType}")]</td>
 		<td></td>
 	</tr>
 	<tr>

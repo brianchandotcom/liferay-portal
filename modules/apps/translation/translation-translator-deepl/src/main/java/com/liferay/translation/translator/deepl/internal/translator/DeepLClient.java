@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.url.URLBuilder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.translation.exception.TranslatorException;
-import com.liferay.translation.translator.deepl.internal.constants.DeepLConstants;
 import com.liferay.translation.translator.deepl.internal.model.SupportedLanguage;
 import com.liferay.translation.translator.deepl.internal.model.TranslateResponse;
 import com.liferay.translation.translator.deepl.internal.util.JSONUtil;
@@ -73,17 +72,19 @@ public class DeepLClient {
 			URLBuilder.create(
 				url
 			).addParameter(
-				DeepLConstants.AUTH_KEY, authKey
+				"auth_key", authKey
 			).build());
 
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE,
 			ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
-		options.addPart(DeepLConstants.AUTH_KEY, authKey);
-		options.addPart(DeepLConstants.SOURCE_LANG, sourceLanguageId);
-		options.addPart(DeepLConstants.TARGET_LANG, targetLanguageId);
-		options.addPart(DeepLConstants.TEXT, text);
+		options.addPart("auth_key", authKey);
+		options.addPart("source_lang", sourceLanguageId);
+		options.addPart("target_lang", targetLanguageId);
+		options.addPart("text", text);
 		options.setMethod(Http.Method.POST);
+
+		String translation = _http.URLtoString(options);
 
 		Http.Response response = options.getResponse();
 
@@ -91,16 +92,11 @@ public class DeepLClient {
 			response.getResponseCode());
 
 		if (status == Response.Status.OK) {
-			return _http.URLtoString(options);
+			return translation;
 		}
-		else if (status == Response.Status.TOO_MANY_REQUESTS) {
-			throw new TranslatorException(
-				"The status is TOO_MANY_REQUESTS. Please retry after a while.");
-		}
-		else {
-			throw new PortalException(
-				"The status(" + status.toString() + ") is invalid.");
-		}
+
+		throw new TranslatorException(
+			"The status is " + status + ". Please retry after a while.");
 	}
 
 	private String _getSupportedLanguage(
@@ -113,14 +109,14 @@ public class DeepLClient {
 			URLBuilder.create(
 				url
 			).addParameter(
-				DeepLConstants.AUTH_KEY, authKey
+				"auth_key", authKey
 			).build());
 
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE,
 			ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
-		options.addPart(DeepLConstants.AUTH_KEY, authKey);
-		options.addPart(DeepLConstants.TARGET, target);
+		options.addPart("auth_key", authKey);
+		options.addPart("target", target);
 		options.setMethod(Http.Method.POST);
 
 		String supportedLanguage = _http.URLtoString(options);
@@ -133,13 +129,9 @@ public class DeepLClient {
 		if (status == Response.Status.OK) {
 			return supportedLanguage;
 		}
-		else if (status == Response.Status.TOO_MANY_REQUESTS) {
-			throw new TranslatorException(
-				"The status is TOO_MANY_REQUESTS. Please retry after a while.");
-		}
-		else {
-			throw new PortalException("The status(" + status + ") is invalid.");
-		}
+
+		throw new TranslatorException(
+			"The status is " + status + ". Please retry after a while.");
 	}
 
 	@Reference

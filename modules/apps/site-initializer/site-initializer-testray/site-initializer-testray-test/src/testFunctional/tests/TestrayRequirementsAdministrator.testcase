@@ -31,53 +31,51 @@ definition {
 		}
 
 		task ("Go to created project and add a new team") {
-            TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
 
 			Testray.addNewTeam(teamName = "Components_1 Team");
 
-            TestrayManage.closeModalInOptions();
+			TestrayManage.closeModalInOptions();
 		}
 
 		task ("Go to created project and add two new components") {
-            TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
 
-            Testray.addNewComponent(
+			Testray.addNewComponent(
 				componentName = "Components_1 Project 1",
 				teamName = "Components_1 Team");
 
-            Testray.addNewComponent(
+			Testray.addNewComponent(
 				componentName = "Components_1 Project 2",
 				teamName = "Components_1 Team");
 
-            Refresh();
+			Refresh();
 		}
 
 		task ("Go to project page and add a new Requirement") {
-            Testray.goToProjectPage(projectName = "Projects_1 Project");
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-            Testray.projectTabNavigator(navTabName = "Requirements");
+			Testray.projectTabNavigator(navTabName = "Requirements");
 
-            TestrayRequirements.addRequirement(
-                requirementName = "ATF_Requirements Summary",
-                linkURL = "https://www.google.com",
-                linkTitle = "ATF_Requirements Link Title",
-                componentId = "Components_1 Project 1",
-                requirementDescription = "ATF_Requirements Description");
+			TestrayRequirements.addRequirement(
+				componentId = "Components_1 Project 1",
+				linkTitle = "ATF_Requirements Link Title",
+				linkURL = "https://www.google.com",
+				requirementDescription = "ATF_Requirements Description",
+				requirementName = "ATF_Requirements Summary");
 		}
 
-
 		task ("Go to Testray 2 and change the pagination") {
-            ApplicationsMenu.gotoSite(site = "Testray 2");
+			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.changePagination(
 				numberItems = "20",
 				valuePagination = "150");
 		}
-
 	}
 
 	tearDown {
@@ -92,78 +90,11 @@ definition {
 		}
 	}
 
-    @description = "This is a test for LPS-160544 - Verify if as an Administrator, I should be able to link a Case to a Requirement"
-	@priority = "5"
-	test AdminCanLinkCaseToRequirement {
-		task ("Given that the user goes to project page") {
-        	Testray.goToProjectPage(projectName = "Projects_1 Project");
-		}
-
-		task ("And given that the user adds a new Case") {
-			Testray.projectTabNavigator(navTabName = "Cases");
-
-			TestrayCases.typeCasesField(
-				caseName = "ATF_Requirements Case",
-				priority = "5",
-				CaseTypeId = "Automated Functional Test",
-				componentId = "Smoke",
-				duration = "10",
-				description = "ATF_Requirements Case Description",
-				steps = "ATF_Requirements Case Steps");
-		}
-
-		task ("When the user goes to requirements and link a case") {
-			Testray.projectTabNavigator(navTabName = "Requirements");
-
-			TestrayRequirements.goToRequirement(requirementSummary = "ATF_Requirements Summary");
-
-			TestrayRequirements.addRequirementCase(caseName = "ATF_Requirements Case");
-		}
-
-		task ("Then the case should be displayed on Requirement page") {
-			TestrayRequirements.verifyRequirementCase(
-				requirementPriority = "5",
-				requirementComponent = "Components_1 Project 1",
-				requirementCaseName = "ATF_Requirements Case");
-		}
-	}
-
-    @description = "This is a test for LPS-160545 - Verify if as an Administrator, I should be able to edit Requirements"
-	@priority = "5"
-	test AdminCanEditRequirements {
-		task ("Given that the user goes to project page") {
-        	Testray.goToProjectPage(projectName = "Projects_1 Project");
-		}
-
-		task ("When the user goes to edit a requirement") {
-			Testray.projectTabNavigator(navTabName = "Requirements");
-
-			TestrayContextMenu.clickContextMenuProjects(name = "ATF_Requirements Summary");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
-
-			TestrayRequirements.editRequirement(
-				requirementName = "ATF_Requirements Summary Edited",
-				linkURL = "https://reddit.com",
-				linkTitle = "the front page of the internet",
-				componentId = "Components_1 Project 2",
-				requirementDescription = "ATF_Requirements Description Edited");
-		}
-
-		task ("Then the requirement is displayed with the new infos") {
-			TestrayRequirements.verifyRequirement(
-				requirementTeam = "Components_1 Team",
-				requirementComponent = "Components_1 Project 2",
-				key_requirementSummary = "ATF_Requirements Summary Edited",
-				linkTitle = "the front page of the internet");
-		}
-	}
-
-    @description = "This is a test for LPS-160546 - Verify if as an Administrator, I should be able to delete Requirements"
+	@description = "This is a test for LPS-160546 - Verify if as an Administrator, I should be able to delete Requirements"
 	@priority = "5"
 	test AdminCanDeleteRequirements {
 		task ("Given that the user goes to project page") {
-        	Testray.goToProjectPage(projectName = "Projects_1 Project");
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 		}
 
 		task ("When the user goes to delete a requirement") {
@@ -179,7 +110,73 @@ definition {
 		task ("then the requirement should not be displayed anymore") {
 			Testray.assertItemNotPresent(itemName = "ATF_Requirements Summary");
 		}
+	}
 
+	@description = "This is a test for LPS-160545 - Verify if as an Administrator, I should be able to edit Requirements"
+	@priority = "5"
+	test AdminCanEditRequirements {
+		task ("Given that the user goes to project page") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		}
+
+		task ("When the user goes to edit a requirement") {
+			Testray.projectTabNavigator(navTabName = "Requirements");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "ATF_Requirements Summary");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+
+			TestrayRequirements.editRequirement(
+				componentId = "Components_1 Project 2",
+				linkTitle = "the front page of the internet",
+				linkURL = "https://reddit.com",
+				requirementDescription = "ATF_Requirements Description Edited",
+				requirementName = "ATF_Requirements Summary Edited");
+		}
+
+		task ("Then the requirement is displayed with the new infos") {
+			TestrayRequirements.verifyRequirement(
+				key_requirementSummary = "ATF_Requirements Summary Edited",
+				linkTitle = "the front page of the internet",
+				requirementComponent = "Components_1 Project 2",
+				requirementTeam = "Components_1 Team");
+		}
+	}
+
+	@description = "This is a test for LPS-160544 - Verify if as an Administrator, I should be able to link a Case to a Requirement"
+	@priority = "5"
+	test AdminCanLinkCaseToRequirement {
+		task ("Given that the user goes to project page") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		}
+
+		task ("And given that the user adds a new Case") {
+			Testray.projectTabNavigator(navTabName = "Cases");
+
+			TestrayCases.typeCasesField(
+				caseName = "ATF_Requirements Case",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Smoke",
+				description = "ATF_Requirements Case Description",
+				duration = "10",
+				priority = "5",
+				steps = "ATF_Requirements Case Steps");
+		}
+
+		task ("When the user goes to requirements and link a case") {
+			Testray.projectTabNavigator(navTabName = "Requirements");
+
+			TestrayRequirements.goToRequirement(requirementSummary = "ATF_Requirements Summary");
+
+			TestrayRequirements.addRequirementCase(caseName = "ATF_Requirements Case");
+		}
+
+		task ("Then the case should be displayed on Requirement page") {
+			TestrayRequirements.verifyRequirementCase(
+				requirementCaseName = "ATF_Requirements Case",
+				requirementComponent = "Components_1 Project 1",
+				requirementPriority = "5");
+		}
 	}
 
 }

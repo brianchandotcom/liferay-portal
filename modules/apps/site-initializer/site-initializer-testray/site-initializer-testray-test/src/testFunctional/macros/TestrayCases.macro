@@ -13,7 +13,7 @@ definition {
 
 		Select(
 			locator1 = "TestrayCases#CASE_TYPE",
-			value1 = "${CaseTypeId}");
+			value1 = "${caseTypeId}");
 
 		Select(
 			locator1 = "TestrayCases#MAIN_COMPONENT",

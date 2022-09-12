@@ -1,102 +1,101 @@
 definition {
 
 	macro addRequirement {
-        LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAdd();
 
 		Type(
+			key_fieldLabel = "Summary",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-            key_fieldLabel = "Summary",
 			value1 = "${requirementName}");
 
 		Type(
+			key_fieldLabel = "Link URL",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-            key_fieldLabel = "Link URL",
 			value1 = "${linkURL}");
 
-        Type(
+		Type(
+			key_fieldLabel = "Link Title",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-            key_fieldLabel = "Link Title",
 			value1 = "${linkTitle}");
 
-        Select(
+		Select(
 			locator1 = "TestrayCases#MAIN_COMPONENT",
 			value1 = "${componentId}");
 
-        Type(
+		Type(
+			key_text = "description",
 			locator1 = "TextArea#ANY",
-            key_text = "description",
 			value1 = "${requirementDescription}");
 
-        Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-    macro editRequirement {
-        Type(
+	macro addRequirementCase {
+		Click(
+			key_text = "Link Cases",
+			locator1 = "Button#ANY");
+
+		Click.clickAtNotVisible(
+			key_checkboxOption = "${caseName}",
+			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+
+		Click(
+			key_text = "Select Cases",
+			locator1 = "Button#ANY");
+	}
+
+	macro editRequirement {
+		Type(
+			key_fieldLabel = "Summary",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-            key_fieldLabel = "Summary",
 			value1 = "${requirementName}");
 
 		Type(
+			key_fieldLabel = "Link URL",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-            key_fieldLabel = "Link URL",
 			value1 = "${linkURL}");
 
-        Type(
+		Type(
+			key_fieldLabel = "Link Title",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-            key_fieldLabel = "Link Title",
 			value1 = "${linkTitle}");
 
-        Select(
+		Select(
 			locator1 = "TestrayCases#MAIN_COMPONENT",
 			value1 = "${componentId}");
 
-        Type(
+		Type(
+			key_text = "description",
 			locator1 = "TextArea#ANY",
-            key_text = "description",
 			value1 = "${requirementDescription}");
 
-        Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-    macro goToRequirement {
-        var key_requirementSummary = "${requirementSummary}";
+	macro goToRequirement {
+		var key_requirementSummary = "${requirementSummary}";
+		var key = selenium.getText("TestrayRequirements#REQUIREMENT_SUMMARY");
 
-        var key = selenium.getText("TestrayRequirements#REQUIREMENT_SUMMARY");
-
-        Click(
+		Click(
 			key_projectName = "${key}",
 			locator1 = "Testray#ITEM_NAME");
-    }
+	}
 
-    macro addRequirementCase {
-        Click(
-            locator1 = "Button#ANY",
-            key_text = "Link Cases");
+	macro verifyRequirement {
+		AssertElementPresent(
+			key_linkTitle = "${linkTitle}",
+			key_requirementComponent = "${requirementComponent}",
+			key_requirementSummary = "${requirementSummary}",
+			key_requirementTeam = "${requirementTeam}",
+			locator1 = "TestrayRequirements#REQUIREMENT_DETAIL");
+	}
 
-        Click.clickAtNotVisible(
-            locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE",
-            key_checkboxOption = "${caseName}");
-
-        Click(
-            locator1 = "Button#ANY",
-            key_text = "Select Cases");
-    }
-
-    macro verifyRequirementCase {
-        AssertElementPresent(
-            locator1 = "TestrayRequirements#REQUIREMENT_CASE_DETAIL",
-            key_requirementPriority = "${requirementPriority}",
-            key_requirementComponent = "${requirementComponent}",
-            key_requirementCaseName = "${requirementCaseName}");
-    }
-
-     macro verifyRequirement {
-        AssertElementPresent(
-            locator1 = "TestrayRequirements#REQUIREMENT_DETAIL",
-            key_requirementTeam = "${requirementTeam}",
-            key_requirementComponent = "${requirementComponent}",
-            key_requirementSummary = "${requirementSummary}",
-            key_linkTitle = "${linkTitle}");
-    }
+	macro verifyRequirementCase {
+		AssertElementPresent(
+			key_requirementCaseName = "${requirementCaseName}",
+			key_requirementComponent = "${requirementComponent}",
+			key_requirementPriority = "${requirementPriority}",
+			locator1 = "TestrayRequirements#REQUIREMENT_CASE_DETAIL");
+	}
 
 }

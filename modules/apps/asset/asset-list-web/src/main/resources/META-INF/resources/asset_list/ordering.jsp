@@ -31,7 +31,9 @@
 				String orderByColumn1 = editAssetListDisplayContext.getOrderByColumn1();
 				%>
 
-				<aui:select label="order-by" name="TypeSettingsProperties--orderByColumn1--" wrapperCssClass="field-inline w80">
+				<div class="h5"><liferay-ui:message key="order-by" /></div>
+
+				<aui:select label="" name="TypeSettingsProperties--orderByColumn1--" wrapperCssClass="d-inline-flex">
 					<aui:option label="title" selected='<%= Objects.equals(orderByColumn1, "title") %>' value="title" />
 					<aui:option label="create-date" selected='<%= Objects.equals(orderByColumn1, "createDate") %>' value="createDate" />
 					<aui:option label="modified-date" selected='<%= Objects.equals(orderByColumn1, "modifiedDate") %>' value="modifiedDate" />
@@ -44,10 +46,10 @@
 				String orderByType1 = editAssetListDisplayContext.getOrderByType1();
 				%>
 
-				<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
+				<div class="d-inline-flex order-by-type-container">
 					<liferay-ui:icon
-						cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "DESC") ? "order-arrow-up-active hide icon" : "order-arrow-up-active icon" %>'
-						icon="order-arrow"
+						cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "DESC") ? "hide icon" : "icon" %>'
+						icon="order-list-up"
 						linkCssClass="btn btn-outline-borderless btn-outline-secondary"
 						markupView="lexicon"
 						message="descending"
@@ -55,8 +57,8 @@
 					/>
 
 					<liferay-ui:icon
-						cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "ASC") ? "order-arrow-down-active hide icon" : "order-arrow-down-active icon" %>'
-						icon="order-arrow"
+						cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "ASC") ? "hide icon" : "icon" %>'
+						icon="order-list-down"
 						linkCssClass="btn btn-outline-borderless btn-outline-secondary"
 						markupView="lexicon"
 						message="ascending"
@@ -64,7 +66,7 @@
 					/>
 
 					<aui:input cssClass="order-by-type-field" name="TypeSettingsProperties--orderByType1--" type="hidden" value="<%= orderByType1 %>" />
-				</aui:field-wrapper>
+				</div>
 			</clay:col>
 
 			<clay:col
@@ -75,7 +77,9 @@
 				String orderByColumn2 = editAssetListDisplayContext.getOrderByColumn2();
 				%>
 
-				<aui:select label="and-then-by" name="TypeSettingsProperties--orderByColumn2--" wrapperCssClass="field-inline w80">
+				<div class="h5"><liferay-ui:message key="and-then-by" /></div>
+
+				<aui:select label="" name="TypeSettingsProperties--orderByColumn2--" wrapperCssClass="d-inline-flex">
 					<aui:option label="title" selected='<%= Objects.equals(orderByColumn2, "title") %>' value="title" />
 					<aui:option label="create-date" selected='<%= Objects.equals(orderByColumn2, "createDate") %>' value="createDate" />
 					<aui:option label="modified-date" selected='<%= Objects.equals(orderByColumn2, "modifiedDate") %>' value="modifiedDate" />
@@ -88,10 +92,10 @@
 				String orderByType2 = editAssetListDisplayContext.getOrderByType2();
 				%>
 
-				<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
+				<div class="d-inline-flex order-by-type-container">
 					<liferay-ui:icon
-						cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "DESC") ? "order-arrow-up-active hide icon" : "order-arrow-up-active icon" %>'
-						icon="order-arrow"
+						cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "DESC") ? "hide icon" : "icon" %>'
+						icon="order-list-up"
 						linkCssClass="btn btn-outline-borderless btn-outline-secondary"
 						markupView="lexicon"
 						message="descending"
@@ -99,8 +103,8 @@
 					/>
 
 					<liferay-ui:icon
-						cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "ASC") ? "order-arrow-down-active hide icon" : "order-arrow-down-active icon" %>'
-						icon="order-arrow"
+						cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "ASC") ? "hide icon" : "icon" %>'
+						icon="order-list-down"
 						linkCssClass="btn btn-outline-borderless btn-outline-secondary"
 						markupView="lexicon"
 						message="ascending"
@@ -108,7 +112,7 @@
 					/>
 
 					<aui:input cssClass="order-by-type-field" name="TypeSettingsProperties--orderByType2--" type="hidden" value="<%= orderByType2 %>" />
-				</aui:field-wrapper>
+				</div>
 			</clay:col>
 		</clay:row>
 	</liferay-frontend:fieldset>

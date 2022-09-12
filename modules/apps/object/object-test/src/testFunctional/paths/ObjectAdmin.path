@@ -101,6 +101,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>ENTRY_BOOLEAN_CHECKBOX_BY_NAME</td>
+		<td>//input[contains(@class,'custom-control-input') and contains(@name,'${key_checkboxName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ENTRY_DOUBLE_VALUE_FIELD</td>
 		<td>xpath=(//input[contains(@name,'_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_')])[7]</td>
 		<td></td>

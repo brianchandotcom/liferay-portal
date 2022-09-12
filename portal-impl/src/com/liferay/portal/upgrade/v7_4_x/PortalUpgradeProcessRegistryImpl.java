@@ -208,6 +208,11 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(18, 0, 1), new UpgradeVirtualHost());
+
+		upgradeVersionTreeMap.put(
+			new Version(19, 0, 0),
+			UpgradeProcessFactory.alterColumnName(
+				"Phone", "typeId", "listTypeId LONG"));
 	}
 
 }

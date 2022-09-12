@@ -36,8 +36,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -45,32 +43,32 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FileEntry")
+@GraphQLName("Link")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FileEntry")
-public class FileEntry implements Serializable {
+@XmlRootElement(name = "Link")
+public class Link implements Serializable {
 
-	public static FileEntry toDTO(String json) {
-		return ObjectMapperUtil.readValue(FileEntry.class, json);
+	public static Link toDTO(String json) {
+		return ObjectMapperUtil.readValue(Link.class, json);
 	}
 
-	public static FileEntry unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(FileEntry.class, json);
+	public static Link unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Link.class, json);
 	}
 
 	@Schema
-	public Long getId() {
-		return id;
+	public String getHref() {
+		return href;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setHref(String href) {
+		this.href = href;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setHref(UnsafeSupplier<String, Exception> hrefUnsafeSupplier) {
 		try {
-			id = idUnsafeSupplier.get();
+			href = hrefUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -82,48 +80,23 @@ public class FileEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long id;
+	protected String href;
 
 	@Schema
-	@Valid
-	public Link getLink() {
-		return link;
+	public String getLabel() {
+		return label;
 	}
 
-	public void setLink(Link link) {
-		this.link = link;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	@JsonIgnore
-	public void setLink(UnsafeSupplier<Link, Exception> linkUnsafeSupplier) {
+	public void setLabel(
+		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
+
 		try {
-			link = linkUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Link link;
-
-	@Schema
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
+			label = labelUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -135,7 +108,7 @@ public class FileEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected String label;
 
 	@Override
 	public boolean equals(Object object) {
@@ -143,13 +116,13 @@ public class FileEntry implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FileEntry)) {
+		if (!(object instanceof Link)) {
 			return false;
 		}
 
-		FileEntry fileEntry = (FileEntry)object;
+		Link link = (Link)object;
 
-		return Objects.equals(toString(), fileEntry.toString());
+		return Objects.equals(toString(), link.toString());
 	}
 
 	@Override
@@ -164,36 +137,30 @@ public class FileEntry implements Serializable {
 
 		sb.append("{");
 
-		if (id != null) {
+		if (href != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
-
-			sb.append(id);
-		}
-
-		if (link != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"link\": ");
-
-			sb.append(String.valueOf(link));
-		}
-
-		if (name != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
+			sb.append("\"href\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(name));
+			sb.append(_escape(href));
+
+			sb.append("\"");
+		}
+
+		if (label != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(label));
 
 			sb.append("\"");
 		}
@@ -205,7 +172,7 @@ public class FileEntry implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.object.rest.dto.v1_0.FileEntry",
+		defaultValue = "com.liferay.object.rest.dto.v1_0.Link",
 		name = "x-class-name"
 	)
 	public String xClassName;

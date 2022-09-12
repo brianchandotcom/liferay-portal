@@ -174,6 +174,8 @@ public class FragmentEntryLinkPersistenceTest {
 
 		newFragmentEntryLink.setType(RandomTestUtil.nextInt());
 
+		newFragmentEntryLink.setDeleted(RandomTestUtil.randomBoolean());
+
 		newFragmentEntryLink.setLastPropagationDate(RandomTestUtil.nextDate());
 
 		newFragmentEntryLink.setLastPublishDate(RandomTestUtil.nextDate());
@@ -256,6 +258,9 @@ public class FragmentEntryLinkPersistenceTest {
 		Assert.assertEquals(
 			existingFragmentEntryLink.getType(),
 			newFragmentEntryLink.getType());
+		Assert.assertEquals(
+			existingFragmentEntryLink.getDeleted(),
+			newFragmentEntryLink.getDeleted());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingFragmentEntryLink.getLastPropagationDate()),
@@ -447,7 +452,8 @@ public class FragmentEntryLinkPersistenceTest {
 			"fragmentEntryId", true, "segmentsExperienceId", true,
 			"classNameId", true, "classPK", true, "plid", true, "namespace",
 			true, "position", true, "rendererKey", true, "type", true,
-			"lastPropagationDate", true, "lastPublishDate", true);
+			"deleted", true, "lastPropagationDate", true, "lastPublishDate",
+			true);
 	}
 
 	@Test
@@ -788,6 +794,8 @@ public class FragmentEntryLinkPersistenceTest {
 		fragmentEntryLink.setRendererKey(RandomTestUtil.randomString());
 
 		fragmentEntryLink.setType(RandomTestUtil.nextInt());
+
+		fragmentEntryLink.setDeleted(RandomTestUtil.randomBoolean());
 
 		fragmentEntryLink.setLastPropagationDate(RandomTestUtil.nextDate());
 

@@ -71,6 +71,7 @@ public class FragmentEntryLinkWrapper
 		attributes.put("position", getPosition());
 		attributes.put("rendererKey", getRendererKey());
 		attributes.put("type", getType());
+		attributes.put("deleted", getDeleted());
 		attributes.put("lastPropagationDate", getLastPropagationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -231,6 +232,12 @@ public class FragmentEntryLinkWrapper
 			setType(type);
 		}
 
+		Boolean deleted = (Boolean)attributes.get("deleted");
+
+		if (deleted != null) {
+			setDeleted(deleted);
+		}
+
 		Date lastPropagationDate = (Date)attributes.get("lastPropagationDate");
 
 		if (lastPropagationDate != null) {
@@ -327,6 +334,16 @@ public class FragmentEntryLinkWrapper
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
+	}
+
+	/**
+	 * Returns the deleted of this fragment entry link.
+	 *
+	 * @return the deleted of this fragment entry link
+	 */
+	@Override
+	public Boolean getDeleted() {
+		return model.getDeleted();
 	}
 
 	/**
@@ -671,6 +688,16 @@ public class FragmentEntryLinkWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Sets the deleted of this fragment entry link.
+	 *
+	 * @param deleted the deleted of this fragment entry link
+	 */
+	@Override
+	public void setDeleted(Boolean deleted) {
+		model.setDeleted(deleted);
 	}
 
 	/**

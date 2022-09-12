@@ -78,7 +78,7 @@ public class FragmentEntryLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -130,6 +130,8 @@ public class FragmentEntryLinkCacheModel
 		sb.append(rendererKey);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", deleted=");
+		sb.append(deleted);
 		sb.append(", lastPropagationDate=");
 		sb.append(lastPropagationDate);
 		sb.append(", lastPublishDate=");
@@ -240,6 +242,7 @@ public class FragmentEntryLinkCacheModel
 		}
 
 		fragmentEntryLinkImpl.setType(type);
+		fragmentEntryLinkImpl.setDeleted(deleted);
 
 		if (lastPropagationDate == Long.MIN_VALUE) {
 			fragmentEntryLinkImpl.setLastPropagationDate(null);
@@ -303,6 +306,8 @@ public class FragmentEntryLinkCacheModel
 		rendererKey = objectInput.readUTF();
 
 		type = objectInput.readInt();
+
+		deleted = objectInput.readBoolean();
 		lastPropagationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
 	}
@@ -402,6 +407,8 @@ public class FragmentEntryLinkCacheModel
 		}
 
 		objectOutput.writeInt(type);
+
+		objectOutput.writeBoolean(deleted);
 		objectOutput.writeLong(lastPropagationDate);
 		objectOutput.writeLong(lastPublishDate);
 	}
@@ -431,6 +438,7 @@ public class FragmentEntryLinkCacheModel
 	public int position;
 	public String rendererKey;
 	public int type;
+	public boolean deleted;
 	public long lastPropagationDate;
 	public long lastPublishDate;
 

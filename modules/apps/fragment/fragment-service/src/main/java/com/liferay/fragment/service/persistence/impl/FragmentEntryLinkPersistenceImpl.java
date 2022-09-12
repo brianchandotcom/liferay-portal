@@ -10371,6 +10371,7 @@ public class FragmentEntryLinkPersistenceImpl
 		ctStrictColumnNames.add("position");
 		ctStrictColumnNames.add("rendererKey");
 		ctStrictColumnNames.add("type_");
+		ctStrictColumnNames.add("deleted");
 		ctStrictColumnNames.add("lastPropagationDate");
 		ctStrictColumnNames.add("lastPublishDate");
 

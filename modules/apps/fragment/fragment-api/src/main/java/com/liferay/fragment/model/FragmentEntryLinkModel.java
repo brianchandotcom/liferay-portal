@@ -474,6 +474,20 @@ public interface FragmentEntryLinkModel
 	public void setType(int type);
 
 	/**
+	 * Returns the deleted of this fragment entry link.
+	 *
+	 * @return the deleted of this fragment entry link
+	 */
+	public Boolean getDeleted();
+
+	/**
+	 * Sets the deleted of this fragment entry link.
+	 *
+	 * @param deleted the deleted of this fragment entry link
+	 */
+	public void setDeleted(Boolean deleted);
+
+	/**
 	 * Returns the last propagation date of this fragment entry link.
 	 *
 	 * @return the last propagation date of this fragment entry link

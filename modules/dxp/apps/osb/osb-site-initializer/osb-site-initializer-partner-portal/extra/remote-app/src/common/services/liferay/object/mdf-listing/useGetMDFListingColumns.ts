@@ -12,9 +12,9 @@
 import useSWR from 'swr';
 
 import {Liferay} from '../..';
-import TableColumn from '../../../../../routes/MDFRequestList/interfaces/tableColumn';
 import {MDFColumnKey} from '../../../../enums/mdfColumnKey';
 import {MDFRequestListItem} from '../../../../interfaces/mdfRequestListItem';
+import TableColumn from '../../../../interfaces/tableColumn';
 import {LiferayAPIs} from '../../common/enums/apis';
 import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';

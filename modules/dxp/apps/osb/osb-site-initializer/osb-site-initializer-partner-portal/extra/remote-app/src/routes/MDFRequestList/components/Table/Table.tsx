@@ -11,7 +11,7 @@
 
 import ClayTable from '@clayui/table';
 
-import TableColumn from '../../interfaces/tableColumn';
+import TableColumn from '../../../../common/interfaces/tableColumn';
 
 interface TableProps<T> {
 	borderless?: boolean;

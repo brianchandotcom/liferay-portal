@@ -27,12 +27,17 @@ export const currentDateString = currentDate.split('-');
 export const getCurrentMonth = new Date().getMonth();
 export const sixMonthsAgo = getCurrentMonth - 5;
 export const threeMonthsAgo = getCurrentMonth - 2;
+export const lastMonth = getCurrentMonth - 1;
 export const lastYear = currentYear - 1;
 export const january = '01';
 export const december = '12';
 
 export const arrayOfMonthsWith30Days = [3, 5, 8, 10];
 export const arrayOfMonthsWith31Days = [0, 2, 4, 6, 7, 9, 11];
+
+export const lastMonthDate = convertDateToString(
+	new Date(new Date().setMonth(lastMonth))
+).split('-');
 
 export const threeMonthsAgoDate = convertDateToString(
 	new Date(new Date().setMonth(threeMonthsAgo))

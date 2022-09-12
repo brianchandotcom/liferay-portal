@@ -15,60 +15,366 @@
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import LineChart from '../../../common/components/line-chart';
+import {
+	getLastYearSubmissions,
+	getNewSubmissions,
+} from '../../../common/services/Application';
+import {CONSTANTS} from '../../../common/utils/constants';
+import {
+	currentDateString,
+	january,
+	lastMonthDate,
+	lastYear,
+	sixMonthsAgoDate,
+} from '../../../common/utils/dateFormatter';
+
+const PERIOD = {
+	SIX_MONTH: '2',
+	THIS_MONTH: '1',
+	YTD: '3',
+};
 
 export default function () {
 	const [selectedFilterDate, setSelectedFilterDate] = useState('1');
 
+	const [currentMonthData, setCurrentMonthData] = useState([]);
+
+	const [sixMonthData, setSixMonthData] = useState([]);
+
+	const [yearToDateData, setYearToDateData] = useState([]);
+
+	const [sixMonthsTotalSubmissions, setSixMonthsTotalSubmissions] = useState(
+		0
+	);
+
+	const [
+		lastYearSixMonthsTotalSubmissions,
+		setLastYearSixMonthsTotalSubmissions,
+	] = useState(0);
+
+	const [
+		yearToDateTotalOfSubmissions,
+		setYearToDateTotalOfSubmissions,
+	] = useState(0);
+
+	const [
+		lastYearToDateTotalSubmissions,
+		setLastYearToDateTotalSubmissions,
+	] = useState(0);
+
+	function populateSubmissions(applicationResult, applicationsArray) {
+		applicationResult.forEach((policy) => {
+			const month = new Date(policy?.applicationCreateDate)
+				.toGMTString()
+				.split(' ')[2];
+
+			applicationsArray.forEach((applicationElement) => {
+				if (month in applicationElement) {
+					applicationElement[month]++;
+				}
+			});
+		});
+
+		return applicationsArray;
+	}
+
+	const getSubmissionsResult = (response, monthsArray) => {
+		const monthsResult = response?.data?.items;
+		const monthsValue = populateSubmissions(monthsResult, monthsArray);
+
+		return getSubmissionsValues(monthsValue);
+	};
+
+	function getSubmissionsValues(arrayOfObjects) {
+		const valuesArray = arrayOfObjects.map((values) => {
+			return Object.values(values)[0];
+		});
+
+		return valuesArray;
+	}
+
+	function setNewSubmissionsName(finalArray) {
+		return finalArray.unshift('New Submissions');
+	}
+
+	function sumTotalOfSubmissions(totalSubmissionsArray) {
+		const totalValue = totalSubmissionsArray
+			.map((values) => {
+				return Object.values(values)[0];
+			})
+			.reduce(
+				(submissionsSum, submission) => submissionsSum + submission,
+				0
+			);
+
+		return totalValue;
+	}
+
 	const FilterOptions = [
 		{
 			label: 'This Month',
-			value: '1',
+			value: PERIOD.THIS_MONTH,
 		},
 		{
 			label: '6 MO',
-			value: '2',
+			value: PERIOD.SIX_MONTH,
 		},
 		{
 			label: 'YTD',
-			value: '3',
+			value: PERIOD.YTD,
 		},
 	];
 
+	useEffect(() => {
+		const currentAndLastMonthArray = [];
+		const sixMonthsArray = [];
+		const lastYearSixMonthsArray = [];
+		const firstUntilCurrentMonthArray = [];
+		const lastYearFirstUntilCurrentMonthArray = [];
+
+		const numberOfMonths = 12;
+		const maxIndexOfMonthsArray = 11;
+
+		const thisMonthTimePeriod = 1;
+
+		const sixMonthsTimePeriod = 5;
+		const indexOfCurrentMonth = new Date().getMonth();
+
+		let indexBaseMonth = indexOfCurrentMonth - sixMonthsTimePeriod;
+
+		indexBaseMonth =
+			indexBaseMonth < 0
+				? numberOfMonths + indexBaseMonth
+				: indexBaseMonth;
+
+		let month = 0;
+
+		for (let count = 0; count <= sixMonthsTimePeriod; count++) {
+			const currentAndLastMonthFilter = {};
+			const sixMonthsAgoFilter = {};
+			const lastYearSixMonthsAgoFilter = {};
+
+			if (!count) {
+				month = indexBaseMonth;
+			}
+			if (month > maxIndexOfMonthsArray) {
+				month = 0;
+			}
+
+			currentAndLastMonthFilter[CONSTANTS.MONTHS_ABREVIATIONS[month]] = 0;
+			sixMonthsAgoFilter[CONSTANTS.MONTHS_ABREVIATIONS[month]] = 0;
+			lastYearSixMonthsAgoFilter[
+				CONSTANTS.MONTHS_ABREVIATIONS[month]
+			] = 0;
+
+			currentAndLastMonthArray[count] = currentAndLastMonthFilter;
+			sixMonthsArray[count] = sixMonthsAgoFilter;
+			lastYearSixMonthsArray[count] = lastYearSixMonthsAgoFilter;
+			month++;
+		}
+
+		let monthposition = 0;
+
+		for (let count = 0; count <= indexOfCurrentMonth; count++) {
+			const firstUntilCurrentFilter = {};
+			const LastsixMonthsAgoFilter = {};
+
+			firstUntilCurrentFilter[
+				CONSTANTS.MONTHS_ABREVIATIONS[monthposition]
+			] = 0;
+			LastsixMonthsAgoFilter[
+				CONSTANTS.MONTHS_ABREVIATIONS[monthposition]
+			] = 0;
+			firstUntilCurrentMonthArray[count] = firstUntilCurrentFilter;
+			lastYearFirstUntilCurrentMonthArray[count] = LastsixMonthsAgoFilter;
+			monthposition++;
+		}
+
+		if (selectedFilterDate === PERIOD.THIS_MONTH) {
+			getNewSubmissions(
+				currentDateString[0],
+				currentDateString[1],
+				lastMonthDate[0],
+				lastMonthDate[1]
+			).then((results) => {
+				const thisMonthSubmission = getSubmissionsResult(
+					results,
+					currentAndLastMonthArray
+				);
+
+				const currentAndLastMonthsSubmissionsLenght =
+					thisMonthSubmission.length - 1;
+
+				const thisMonthFilterSubmissions = [
+					thisMonthSubmission[
+						currentAndLastMonthsSubmissionsLenght -
+							thisMonthTimePeriod
+					],
+					thisMonthSubmission[currentAndLastMonthsSubmissionsLenght],
+				];
+
+				setNewSubmissionsName(thisMonthFilterSubmissions);
+
+				setCurrentMonthData(thisMonthFilterSubmissions);
+			});
+		}
+
+		if (selectedFilterDate === PERIOD.SIX_MONTH) {
+			getNewSubmissions(
+				currentDateString[0],
+				currentDateString[1],
+				sixMonthsAgoDate[0],
+				sixMonthsAgoDate[1]
+			).then((response) => {
+				const sixMonthsResult = getSubmissionsResult(
+					response,
+					sixMonthsArray
+				);
+
+				const sixMonthsAgoValues = populateSubmissions(
+					sixMonthsResult,
+					sixMonthsArray
+				);
+
+				const sixMonthsSubmission = sumTotalOfSubmissions(
+					sixMonthsAgoValues
+				);
+
+				const sixMonthsArrayOfSubmissions = getSubmissionsValues(
+					sixMonthsAgoValues
+				);
+
+				setSixMonthsTotalSubmissions(sixMonthsSubmission);
+
+				setNewSubmissionsName(sixMonthsArrayOfSubmissions);
+
+				setSixMonthData(sixMonthsArrayOfSubmissions);
+
+				getLastYearSubmissions(
+					lastYear.toString(),
+					currentDateString[1],
+					lastYear.toString(),
+					sixMonthsAgoDate[1]
+				).then((results) => {
+					const lastYearSixMonthsDataResults = getSubmissionsResult(
+						results,
+						lastYearSixMonthsArray
+					);
+
+					const lastYearSixMonthsAgo = populateSubmissions(
+						lastYearSixMonthsDataResults,
+						lastYearSixMonthsArray
+					);
+
+					const lastYearSixMonthsSubmissions = sumTotalOfSubmissions(
+						lastYearSixMonthsAgo
+					);
+
+					setLastYearSixMonthsTotalSubmissions(
+						lastYearSixMonthsSubmissions
+					);
+				});
+			});
+		}
+
+		if (selectedFilterDate === PERIOD.YTD) {
+			getNewSubmissions(
+				currentDateString[0],
+				currentDateString[1],
+				currentDateString[0],
+				january
+			).then((response) => {
+				const yearToDateMonthsResult = getSubmissionsResult(
+					response,
+					firstUntilCurrentMonthArray
+				);
+
+				const yearToDateMonthsAgo = populateSubmissions(
+					yearToDateMonthsResult,
+					firstUntilCurrentMonthArray
+				);
+
+				const yearToDateTotalSubmissions = sumTotalOfSubmissions(
+					yearToDateMonthsAgo
+				);
+
+				const yearToDateArrayOfSubmissions = getSubmissionsValues(
+					yearToDateMonthsAgo
+				);
+
+				setYearToDateTotalOfSubmissions(yearToDateTotalSubmissions);
+
+				setNewSubmissionsName(yearToDateArrayOfSubmissions);
+
+				setYearToDateData(yearToDateArrayOfSubmissions);
+
+				getLastYearSubmissions(
+					lastYear.toString(),
+					currentDateString[1],
+					lastYear.toString(),
+					january
+				).then((results) => {
+					const lastYearToDateDataResults = getSubmissionsResult(
+						results,
+						lastYearFirstUntilCurrentMonthArray
+					);
+
+					const lastYearToDateMonthsAgo = populateSubmissions(
+						lastYearToDateDataResults,
+						lastYearFirstUntilCurrentMonthArray
+					);
+
+					const lastYearToDateSubmissions = sumTotalOfSubmissions(
+						lastYearToDateMonthsAgo
+					);
+
+					setLastYearToDateTotalSubmissions(
+						lastYearToDateSubmissions
+					);
+				});
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selectedFilterDate]);
+
+	const percentThisMonthSubmissions = Math.round(
+		((currentMonthData[2] - currentMonthData[1]) / currentMonthData[1]) *
+			100
+	);
+
+	const percent6MoSubmissions = Math.round(
+		((sixMonthsTotalSubmissions - lastYearSixMonthsTotalSubmissions) /
+			lastYearSixMonthsTotalSubmissions) *
+			100
+	);
+
+	const percentYearToDateSubmissions = Math.round(
+		((yearToDateTotalOfSubmissions - lastYearToDateTotalSubmissions) /
+			lastYearToDateTotalSubmissions) *
+			100
+	);
+
 	const loadData = [
 		{
-			dataColumns: ['New Application', 13, 1],
-			newApplicationsValue: 2,
-			percentNewApplication: 15,
+			dataColumns: currentMonthData,
+			newSubmissionsValue: currentMonthData[2],
+			percentNewApplication: percentThisMonthSubmissions,
 			period: 1,
-			periodDate: 'Sep 2022',
 		},
 		{
-			dataColumns: ['New Application', 60, 20, 70, 10, 30, 50],
-			newApplicationsValue: 15,
-			percentNewApplication: -10,
+			dataColumns: sixMonthData,
+			newSubmissionsValue: sixMonthsTotalSubmissions,
+			percentNewApplication: percent6MoSubmissions,
 			period: 2,
-			periodDate: 'Mar 2022 - Sep 2022',
 		},
 		{
-			dataColumns: [
-				'New Application',
-				60,
-				20,
-				70,
-				10,
-				14,
-				21,
-				30,
-				14,
-				21,
-			],
-			newApplicationsValue: 32,
-			percentNewApplication: 10,
+			dataColumns: yearToDateData,
+			newSubmissionsValue: yearToDateTotalOfSubmissions,
+			percentNewApplication: percentYearToDateSubmissions,
 			period: 3,
-			periodDate: 'Jan - Sep',
 		},
 	];
 
@@ -84,16 +390,11 @@ export default function () {
 	};
 
 	const newSubmissionsPercentual = getData()[0]?.percentNewApplication;
-	const getDataDate = getData()[0]?.periodDate;
-	const newSubmissionsValue = getData()[0]?.newApplicationsValue;
+	const newSubmissionsValue = getData()[0]?.newSubmissionsValue;
 	const getPeriod = getData()[0]?.period;
 
 	const submissionsLegend = () => (
 		<div className="applications-new-submissions-legend d-flex flex-column h-100 justify-content-end mt-5">
-			<div className="font-weight-normal mb-2 text-neutral-8 text-paragraph-sm">
-				{getDataDate}
-			</div>
-
 			<div className="applications-new-submissions-screen font-weight-bolder h5 mb-3">
 				{new Intl.NumberFormat().format(newSubmissionsValue)}
 			</div>
@@ -159,7 +460,6 @@ export default function () {
 				<LineChart
 					LegendElement={submissionsLegend}
 					chartData={chartData}
-					getDataDate={getDataDate}
 					getPeriod={getPeriod}
 					hasPersonalizedTooltip={true}
 					percentual={newSubmissionsPercentual}

@@ -27,3 +27,25 @@ export function getApplicationsStatusTotal() {
 export function getApplications() {
 	return axios.get(`${DeliveryAPI}/`);
 }
+
+export function getNewSubmissions(
+	currentYear,
+	currentMonth,
+	periodYear,
+	periodMonth
+) {
+	return axios.get(
+		`${DeliveryAPI}/?fields=applicationStatus,applicationCreateDate&filter=applicationStatus ne 'Bound' and applicationStatus ne 'Reviewed' and applicationCreateDate le ${currentYear}-${currentMonth}-31 and applicationCreateDate ge ${periodYear}-${periodMonth}-01&pageSize=200`
+	);
+}
+
+export function getLastYearSubmissions(
+	lastYear,
+	lastYearMonth,
+	periodYear,
+	periodMonth
+) {
+	return axios.get(
+		`${DeliveryAPI}/?fields=applicationStatus,applicationCreateDate&filter=applicationStatus ne 'Bound' and applicationStatus ne 'Reviewed' and applicationCreateDate le ${lastYear}-${lastYearMonth}-31 and applicationCreateDate ge ${periodYear}-${periodMonth}-01&pageSize=200`
+	);
+}

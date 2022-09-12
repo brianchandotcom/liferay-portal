@@ -181,6 +181,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMMEDIATE_MESSAGE</td>
+	<td>//li[@class='portlet-msg-info feedback' and contains(text(),'${key_message}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LINK_NAVIGATION</td>
 	<td>//a[contains(.,'To Param page')]|//input[contains(@value,'To Param page')]|//button[contains(.,'To Param page')]</td>
 	<td></td>
@@ -252,7 +257,7 @@
 </tr>
 <tr>
 	<td>RESULT_MESSAGE</td>
-	<td>xpath=(//span | //td | //li)[contains(text(),'${key_message}')]</td>
+	<td>xpath=(//span | //td | //li)[normalize-space()='${key_message}']</td>
 	<td></td>
 </tr>
 <tr>

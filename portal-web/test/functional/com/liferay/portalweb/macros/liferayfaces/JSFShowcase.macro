@@ -64,13 +64,13 @@ definition {
 
 		AssertElementPresent(
 			key_message = "${message1}",
-			locator1 = "JSFShowcase#RESULT_MESSAGE");
+			locator1 = "JSFShowcase#IMMEDIATE_MESSAGE");
 
 		Click(locator1 = "JSFShowcase#GENERAL_BUTTON_2");
 
 		AssertElementPresent(
 			key_message = "${message2}",
-			locator1 = "JSFShowcase#RESULT_MESSAGE");
+			locator1 = "JSFShowcase#IMMEDIATE_MESSAGE");
 	}
 
 	macro clickButtonNavigationParam {
@@ -265,7 +265,7 @@ definition {
 			if ("${immediate}" == "true") {
 				AssertElementPresent(
 					key_message = "${messageImmediate1}",
-					locator1 = "JSFShowcase#RESULT_MESSAGE");
+					locator1 = "JSFShowcase#IMMEDIATE_MESSAGE");
 			}
 		}
 
@@ -290,7 +290,7 @@ definition {
 			if ("${immediate}" == "true") {
 				AssertElementPresent(
 					key_message = "${messageImmediate2}",
-					locator1 = "JSFShowcase#RESULT_MESSAGE");
+					locator1 = "JSFShowcase#IMMEDIATE_MESSAGE");
 			}
 		}
 	}
@@ -350,7 +350,7 @@ definition {
 			if (isSet(messageImmediate1)) {
 				AssertElementPresent(
 					key_message = "${messageImmediate1}",
-					locator1 = "JSFShowcase#RESULT_MESSAGE");
+					locator1 = "JSFShowcase#IMMEDIATE_MESSAGE");
 			}
 
 			if (isSet(textResult)) {
@@ -416,7 +416,7 @@ definition {
 			if (isSet(messageImmediate2)) {
 				AssertElementPresent(
 					key_message = "${messageImmediate2}",
-					locator1 = "JSFShowcase#RESULT_MESSAGE");
+					locator1 = "JSFShowcase#IMMEDIATE_MESSAGE");
 			}
 
 			if (isSet(textResult)) {

@@ -40,6 +40,8 @@ definition {
 	macro addPicklistItemViaUI {
 		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
 
+		WaitForPageLoad();
+
 		Click.javaScriptClick(locator1 = "Picklist#ADD_ITEM_BUTTON");
 
 		if (isSet(picklistItemName)) {
@@ -96,6 +98,10 @@ definition {
 			value1 = "${picklistName}");
 
 		Button.clickSave();
+
+		Refresh();
+
+		WaitForPageLoad();
 	}
 
 	macro assertDisabledPicklistItem {
@@ -289,6 +295,8 @@ definition {
 	}
 
 	macro gotoPicklistView {
+		WaitForPageLoad();
+
 		Click.javaScriptClick(
 			key_picklistName = "${picklistName}",
 			locator1 = "Picklist#SELECT_PICKLIST_VIEW");

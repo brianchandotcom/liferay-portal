@@ -72,7 +72,7 @@ export function EmptyCollectionOptions({
 				</div>
 			}
 
-			{Liferay.FeatureFlags['LPS-160789'] && displayMessage && (
+			{displayMessage && (
 				<ClayForm.Group small>
 					<label htmlFor={collectionEmptyCollectionMessageId}>
 						{Liferay.Language.get('empty-collection-alert')}

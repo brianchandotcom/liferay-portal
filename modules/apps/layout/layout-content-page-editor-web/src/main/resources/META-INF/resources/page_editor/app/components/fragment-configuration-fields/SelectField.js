@@ -42,7 +42,7 @@ export function SelectField({
 		(state) => state.selectedViewportSize
 	);
 
-	const validValues = field.typeOptions?.validValues;
+	const validValues = field.typeOptions?.validValues || [];
 
 	const multiSelect = field.typeOptions?.multiSelect ?? false;
 
@@ -261,7 +261,7 @@ SelectField.propTypes = {
 					label: PropTypes.string.isRequired,
 					value: PropTypes.string.isRequired,
 				})
-			).isRequired,
+			),
 		}),
 	}),
 

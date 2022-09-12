@@ -390,7 +390,7 @@ AdvancedSelectField.propTypes = {
 					label: PropTypes.string.isRequired,
 					value: PropTypes.string.isRequired,
 				})
-			).isRequired,
+			),
 		}),
 	}),
 	onValueSelect: PropTypes.func.isRequired,

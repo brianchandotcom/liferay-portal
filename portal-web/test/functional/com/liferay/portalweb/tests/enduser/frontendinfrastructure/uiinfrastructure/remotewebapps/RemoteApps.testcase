@@ -694,23 +694,6 @@ definition {
 			MenuItem.viewNotPresent(menuItem = "Add Theme CSS");
 		}
 
-		task ("Given a site administrator has a portal with LPS-153457 feature flag enabled") {
-			ServerAdministration.openServerAdmin();
-
-			var script = '''
-import com.liferay.portal.util.PropsUtil;
-import java.util.Properties;
-
-Properties properties = new Properties();
-properties.setProperty("feature.flag.LPS-153457","true");
-PropsUtil.addProperties(properties);
-			''';
-
-			ServerAdministration.executeScript(
-				language = "Groovy",
-				script = "${script}");
-		}
-
 		task ("When the site administrator create a remote app") {
 			RemoteApps.goToRemoteAppsPortlet();
 

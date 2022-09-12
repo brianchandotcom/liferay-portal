@@ -96,7 +96,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 
 	@Override
 	public void onBeforeCreate(T model) throws ModelListenerException {
-		_validateSystemObject(model);
+		_validateSystemObject(null, model);
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 	public void onBeforeUpdate(T originalModel, T model)
 		throws ModelListenerException {
 
-		_validateSystemObject(model);
+		_validateSystemObject(originalModel, model);
 	}
 
 	private void _executeObjectActions(
@@ -311,7 +311,9 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 		return baseModel.getModelAttributes();
 	}
 
-	private void _validateSystemObject(T model) throws ModelListenerException {
+	private void _validateSystemObject(T originalModel, T model)
+		throws ModelListenerException {
+
 		try {
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
@@ -321,8 +323,17 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 				return;
 			}
 
+			long userId = PrincipalThreadLocal.getUserId();
+
+			if (userId == 0) {
+				userId = _getUserId(model);
+			}
+
 			_objectValidationRuleLocalService.validate(
-				model, objectDefinition.getObjectDefinitionId());
+				model, objectDefinition.getObjectDefinitionId(),
+				_getPayloadJSONObject(
+					null, objectDefinition, originalModel, model, userId),
+				userId);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);

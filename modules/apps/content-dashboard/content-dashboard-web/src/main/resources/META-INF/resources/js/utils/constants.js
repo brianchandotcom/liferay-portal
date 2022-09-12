@@ -28,6 +28,8 @@ export const BAR_CHART = {
 	width: 1150,
 };
 
+export const CLOSE_PANEL_VALUE = 'closed';
+
 export const COLORS = [
 	'#4B9FFF',
 	'#FFB46E',
@@ -44,4 +46,3 @@ export const COLORS = [
 export const DEFAULT_COLOR = '#CDCED9';
 
 export const OPEN_PANEL_VALUE = 'open';
-export const CLOSE_PANEL_VALUE = 'closed';

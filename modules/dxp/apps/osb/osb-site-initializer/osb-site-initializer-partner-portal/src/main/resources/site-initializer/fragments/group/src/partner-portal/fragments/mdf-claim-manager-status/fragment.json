@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "MDF Details Status Display",
+	"name": "MDF Claim Manager Status",
 	"type": "component"
 }

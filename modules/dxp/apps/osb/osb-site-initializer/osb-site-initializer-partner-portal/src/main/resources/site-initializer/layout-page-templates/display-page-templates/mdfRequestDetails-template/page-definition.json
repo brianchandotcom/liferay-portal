@@ -362,9 +362,7 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "mdf-details-status-display"
-									},
-									"fragmentConfig": {
+										"key": "mdf-request-details-status-display"
 									},
 									"fragmentFields": [
 									],
@@ -374,6 +372,10 @@
 							},
 							{
 								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0",
+										"textAlign": ""
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -502,7 +504,7 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "mdf-details-summary"
+										"key": "mdf-request-details-summary"
 									},
 									"fragmentConfig": {
 									},

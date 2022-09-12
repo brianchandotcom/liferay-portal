@@ -362,10 +362,9 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "mdf-details-status-display"
+										"key": "mdf-claim-details-status-display"
 									},
 									"fragmentConfig": {
-										"entity": "mdfclaims"
 									},
 									"fragmentFields": [
 									],
@@ -397,7 +396,7 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "mdf-request-details-summary-(copy)"
+												"key": "mdf-claim-manager-status"
 											},
 											"fragmentConfig": {
 											},
@@ -500,6 +499,19 @@
 										"marginTop": "1",
 										"textAlign": ""
 									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "mdf-claim-details-summary"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
 									"indexed": true
 								},
 								"type": "Fragment"

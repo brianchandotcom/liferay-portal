@@ -11,7 +11,7 @@
  */
 
 const currentPath = Liferay.currentURL.split('/');
-const mdfRequestId = +currentPath[currentPath.length - 1];
+const mdfClaimId = +currentPath[currentPath.length - 1];
 
 const updateStatusToApproved = fragmentElement.querySelector(
 	'#status-approved'
@@ -23,22 +23,19 @@ const updateStatusToReject = fragmentElement.querySelector('#status-reject');
 
 const updateStatus = async (status) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const statusManagerResponse = await fetch(
-		`/o/c/mdfrequests/${mdfRequestId}`,
-		{
-			body: `{"requestStatus": "${status}"}`,
-			headers: {
-				'content-type': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-			method: 'PATCH',
-		}
-	);
+	const statusManagerResponse = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
+		body: `{"claimStatus": "${status}"}`,
+		headers: {
+			'content-type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'PATCH',
+	});
 	if (statusManagerResponse.ok) {
 		const data = await statusManagerResponse.json();
 		document.getElementById(
-			'mdfRequestStatusDisplay'
-		).innerHTML = `Status : ${data.requestStatus}`;
+			'mdfClaimStatusDisplay'
+		).innerHTML = `Status : ${data.claimStatus}`;
 
 		return;
 	}

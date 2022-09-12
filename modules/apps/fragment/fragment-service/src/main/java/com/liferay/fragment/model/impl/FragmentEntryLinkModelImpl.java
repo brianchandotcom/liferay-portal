@@ -1040,12 +1040,18 @@ public class FragmentEntryLinkModelImpl
 
 	@JSON
 	@Override
-	public Boolean getDeleted() {
+	public boolean getDeleted() {
+		return _deleted;
+	}
+
+	@JSON
+	@Override
+	public boolean isDeleted() {
 		return _deleted;
 	}
 
 	@Override
-	public void setDeleted(Boolean deleted) {
+	public void setDeleted(boolean deleted) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -1174,7 +1180,7 @@ public class FragmentEntryLinkModelImpl
 		fragmentEntryLinkImpl.setPosition(getPosition());
 		fragmentEntryLinkImpl.setRendererKey(getRendererKey());
 		fragmentEntryLinkImpl.setType(getType());
-		fragmentEntryLinkImpl.setDeleted(getDeleted());
+		fragmentEntryLinkImpl.setDeleted(isDeleted());
 		fragmentEntryLinkImpl.setLastPropagationDate(getLastPropagationDate());
 		fragmentEntryLinkImpl.setLastPublishDate(getLastPublishDate());
 
@@ -1476,11 +1482,7 @@ public class FragmentEntryLinkModelImpl
 
 		fragmentEntryLinkCacheModel.type = getType();
 
-		Boolean deleted = getDeleted();
-
-		if (deleted != null) {
-			fragmentEntryLinkCacheModel.deleted = deleted;
-		}
+		fragmentEntryLinkCacheModel.deleted = isDeleted();
 
 		Date lastPropagationDate = getLastPropagationDate();
 
@@ -1621,7 +1623,7 @@ public class FragmentEntryLinkModelImpl
 	private int _position;
 	private String _rendererKey;
 	private int _type;
-	private Boolean _deleted;
+	private boolean _deleted;
 	private Date _lastPropagationDate;
 	private Date _lastPublishDate;
 

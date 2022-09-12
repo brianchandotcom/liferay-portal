@@ -478,14 +478,21 @@ public interface FragmentEntryLinkModel
 	 *
 	 * @return the deleted of this fragment entry link
 	 */
-	public Boolean getDeleted();
+	public boolean getDeleted();
 
 	/**
-	 * Sets the deleted of this fragment entry link.
+	 * Returns <code>true</code> if this fragment entry link is deleted.
+	 *
+	 * @return <code>true</code> if this fragment entry link is deleted; <code>false</code> otherwise
+	 */
+	public boolean isDeleted();
+
+	/**
+	 * Sets whether this fragment entry link is deleted.
 	 *
 	 * @param deleted the deleted of this fragment entry link
 	 */
-	public void setDeleted(Boolean deleted);
+	public void setDeleted(boolean deleted);
 
 	/**
 	 * Returns the last propagation date of this fragment entry link.

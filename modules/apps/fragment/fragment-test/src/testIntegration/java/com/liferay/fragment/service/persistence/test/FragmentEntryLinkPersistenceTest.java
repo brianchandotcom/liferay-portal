@@ -259,8 +259,8 @@ public class FragmentEntryLinkPersistenceTest {
 			existingFragmentEntryLink.getType(),
 			newFragmentEntryLink.getType());
 		Assert.assertEquals(
-			existingFragmentEntryLink.getDeleted(),
-			newFragmentEntryLink.getDeleted());
+			existingFragmentEntryLink.isDeleted(),
+			newFragmentEntryLink.isDeleted());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingFragmentEntryLink.getLastPropagationDate()),

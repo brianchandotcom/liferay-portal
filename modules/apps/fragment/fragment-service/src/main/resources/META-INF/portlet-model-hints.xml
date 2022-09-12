@@ -129,7 +129,7 @@
 			<hint name="max-length">200</hint>
 		</field>
 		<field name="type" type="int" />
-		<field name="deleted" type="Boolean" />
+		<field name="deleted" type="boolean" />
 		<field name="lastPropagationDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

@@ -71,7 +71,7 @@ public class FragmentEntryLinkWrapper
 		attributes.put("position", getPosition());
 		attributes.put("rendererKey", getRendererKey());
 		attributes.put("type", getType());
-		attributes.put("deleted", getDeleted());
+		attributes.put("deleted", isDeleted());
 		attributes.put("lastPropagationDate", getLastPropagationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -342,7 +342,7 @@ public class FragmentEntryLinkWrapper
 	 * @return the deleted of this fragment entry link
 	 */
 	@Override
-	public Boolean getDeleted() {
+	public boolean getDeleted() {
 		return model.getDeleted();
 	}
 
@@ -571,6 +571,16 @@ public class FragmentEntryLinkWrapper
 		return model.isCacheable();
 	}
 
+	/**
+	 * Returns <code>true</code> if this fragment entry link is deleted.
+	 *
+	 * @return <code>true</code> if this fragment entry link is deleted; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDeleted() {
+		return model.isDeleted();
+	}
+
 	@Override
 	public boolean isLatestVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -691,12 +701,12 @@ public class FragmentEntryLinkWrapper
 	}
 
 	/**
-	 * Sets the deleted of this fragment entry link.
+	 * Sets whether this fragment entry link is deleted.
 	 *
 	 * @param deleted the deleted of this fragment entry link
 	 */
 	@Override
-	public void setDeleted(Boolean deleted) {
+	public void setDeleted(boolean deleted) {
 		model.setDeleted(deleted);
 	}
 

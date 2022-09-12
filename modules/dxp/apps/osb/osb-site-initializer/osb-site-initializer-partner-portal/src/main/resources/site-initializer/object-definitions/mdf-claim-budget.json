@@ -1,6 +1,6 @@
 {
 	"label": {
-		"en_US": "MDF Claim Budgets"
+		"en_US": "MDF Claim Budget"
 	},
 	"name": "MDFClaimBudget",
 	"objectFields": [

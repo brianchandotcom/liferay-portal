@@ -1,9 +1,9 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "MDF Claim Budget To MDF Claim Document"
+		"en-US": "MDF Claim Budget to MDF Claim Documents"
 	},
-	"name": "mdfClaimToMdfClaimDocument",
+	"name": "mdfClaimToMdfClaimDocuments",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:MDFClaimBudget$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:MDFClaimDocument$]",
 	"objectDefinitionName2": "MDFClaimDocument",

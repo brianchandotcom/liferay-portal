@@ -1,9 +1,9 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "Activity To MDF Claim Activity"
+		"en-US": "Activity to MDF Claim Activities"
 	},
-	"name": "activityToMdfClaimActivity",
+	"name": "activityToMDFClaimActivities",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Activity$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
 	"objectDefinitionName2": "MDFClaimActivity",

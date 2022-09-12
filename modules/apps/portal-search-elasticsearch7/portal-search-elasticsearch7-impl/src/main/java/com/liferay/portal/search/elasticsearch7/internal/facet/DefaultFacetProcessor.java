@@ -23,6 +23,7 @@ import java.util.Optional;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.BucketOrder;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -46,6 +47,15 @@ public class DefaultFacetProcessor
 		termsAggregationBuilder.field(facet.getFieldName());
 
 		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
+
+		String order = facetConfiguration.getOrder();
+
+		if (order.equals("count:asc")) {
+			termsAggregationBuilder.order(BucketOrder.count(true));
+		}
+		else if (order.equals("count:desc")) {
+			termsAggregationBuilder.order(BucketOrder.count(false));
+		}
 
 		JSONObject dataJSONObject = facetConfiguration.getData();
 

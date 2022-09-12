@@ -224,6 +224,11 @@ public class ObjectServiceUpgradeStepRegistrator
 		registry.register(
 			"3.23.1", "3.24.0",
 			new ObjectFieldSettingUpgradeProcess(_portalUUID));
+
+		registry.register(
+			"3.24.0", "3.25.0",
+			UpgradeProcessFactory.addColumns(
+				"ObjectDefinition", "enableObjectEntryHistory BOOLEAN"));
 	}
 
 	@Reference

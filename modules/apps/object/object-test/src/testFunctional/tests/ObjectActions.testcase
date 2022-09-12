@@ -385,4 +385,25 @@ definition {
 			actionName = "Update Action Name");
 	}
 
+	@description = "LPS-146871 - Verify that the Action name is required"
+	@priority = "4"
+	test VerifyActionNameIsRequired {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 1",
+			objectName = "CustomObject1",
+			pluralLabelName = "Custom Objects 1");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 1");
+
+		ObjectAdmin.goToActionsTab();
+
+		ObjectAdmin.gotoAddObjectAction();
+
+		Button.clickSave();
+
+		ObjectAdmin.assertRequiredErrorPresent();
+	}
+
 }

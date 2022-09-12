@@ -43,12 +43,12 @@ import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerB
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -69,7 +69,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -95,16 +94,10 @@ public class UserODataRetrieverTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
 		_companyGuestGroup = _groupLocalService.getGroup(
-			_company.getCompanyId(), GroupConstants.GUEST);
-		_companyUser = UserTestUtil.getAdminUser(_company.getCompanyId());
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_companyLocalService.deleteCompany(_company);
+			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+		_companyUser = UserTestUtil.getAdminUser(
+			TestPropsValues.getCompanyId());
 	}
 
 	@Before
@@ -1073,9 +1066,13 @@ public class UserODataRetrieverTest {
 	}
 
 	private Group _addGroup() throws Exception {
-		return GroupTestUtil.addGroup(
-			_company.getCompanyId(), _companyUser.getUserId(),
+		Group group = GroupTestUtil.addGroup(
+			TestPropsValues.getCompanyId(), _companyUser.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		_groups.add(group);
+
+		return group;
 	}
 
 	private Team _addTeam() throws Exception {
@@ -1094,13 +1091,17 @@ public class UserODataRetrieverTest {
 	}
 
 	private User _addUser(String firstName, long... groupIds) throws Exception {
-		return UserTestUtil.addUser(
-			_company.getCompanyId(), _companyUser.getUserId(),
+		User user = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), _companyUser.getUserId(),
 			RandomTestUtil.randomString(
 				NumericStringRandomizerBumper.INSTANCE,
 				UniqueStringRandomizerBumper.INSTANCE),
 			LocaleUtil.getDefault(), firstName, RandomTestUtil.randomString(),
 			groupIds, ServiceContextTestUtil.getServiceContext());
+
+		_users.add(user);
+
+		return user;
 	}
 
 	private String _toISOFormat(Instant instant) {
@@ -1128,7 +1129,6 @@ public class UserODataRetrieverTest {
 	private static final int _MORE_USERS_THAN_ELASTICSEARCH_MAX_RESULT_WINDOW =
 		_ELASTICSEARCH_MAX_RESULT_WINDOW * 3;
 
-	private static Company _company;
 	private static Group _companyGuestGroup;
 
 	@Inject
@@ -1148,11 +1148,11 @@ public class UserODataRetrieverTest {
 	@Inject
 	private ContactLocalService _contactLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group1;
+	private Group _group2;
 
 	@DeleteAfterTestRun
-	private Group _group2;
+	private final List<Group> _groups = new ArrayList<>();
 
 	@Inject(filter = "model.class.name=com.liferay.portal.kernel.model.User")
 	private ODataRetriever<User> _oDataRetriever;
@@ -1172,10 +1172,7 @@ public class UserODataRetrieverTest {
 	@Inject
 	private TeamLocalService _teamLocalService;
 
-	@DeleteAfterTestRun
 	private User _user1;
-
-	@DeleteAfterTestRun
 	private User _user2;
 
 	@DeleteAfterTestRun
@@ -1183,5 +1180,8 @@ public class UserODataRetrieverTest {
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	@DeleteAfterTestRun
+	private final List<User> _users = new ArrayList<>();
 
 }

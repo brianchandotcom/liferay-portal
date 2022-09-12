@@ -24,18 +24,14 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
-import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
-import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.configuration.FFJournalAutoSaveDraftConfiguration;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
@@ -60,7 +56,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -244,9 +239,9 @@ public class JournalEditArticleDisplayContext {
 				_httpServletRequest, ddmStructure.getDDMForm());
 		}
 
-		String content = _article.getContent();
+		DDMFormValues ddmFormValues = _article.getDDMFormValues();
 
-		if (Validator.isNull(content) && _article.isNew() &&
+		if ((ddmFormValues == null) && _article.isNew() &&
 			(getClassNameId() ==
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT)) {
 
@@ -255,27 +250,12 @@ public class JournalEditArticleDisplayContext {
 					ddmStructure.getGroupId(), DDMStructure.class.getName(),
 					ddmStructure.getStructureId());
 
-			content = ddmStructureArticle.getContent();
+			ddmFormValues = ddmStructureArticle.getDDMFormValues();
 		}
 
-		if (Validator.isNull(content)) {
-			return _ddmFormValues;
+		if (ddmFormValues != null) {
+			_ddmFormValues = ddmFormValues;
 		}
-
-		JournalConverter journalConverter = _getJournalConverter();
-
-		Fields fields = journalConverter.getDDMFields(ddmStructure, content);
-
-		if (fields == null) {
-			return _ddmFormValues;
-		}
-
-		FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter =
-			(FieldsToDDMFormValuesConverter)_httpServletRequest.getAttribute(
-				FieldsToDDMFormValuesConverter.class.getName());
-
-		_ddmFormValues = fieldsToDDMFormValuesConverter.convert(
-			ddmStructure, fields);
 
 		return _ddmFormValues;
 	}
@@ -423,8 +403,10 @@ public class JournalEditArticleDisplayContext {
 				siteDefaultLocale);
 		}
 		else {
-			_defaultArticleLanguageId = LocalizationUtil.getDefaultLanguageId(
-				_article.getContent(), siteDefaultLocale);
+			DDMFormValues ddmFormValues = _article.getDDMFormValues();
+
+			_defaultArticleLanguageId = LocaleUtil.toLanguageId(
+				ddmFormValues.getDefaultLocale());
 		}
 
 		return _defaultArticleLanguageId;
@@ -850,11 +832,6 @@ public class JournalEditArticleDisplayContext {
 				getFolderId());
 
 		return _inheritedWorkflowDDMStructuresFolderId;
-	}
-
-	private JournalConverter _getJournalConverter() {
-		return (JournalConverter)_httpServletRequest.getAttribute(
-			JournalWebKeys.JOURNAL_CONVERTER);
 	}
 
 	private String _getTitle() {

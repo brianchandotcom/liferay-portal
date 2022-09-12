@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
@@ -947,8 +948,8 @@ public class StructuredContentResourceImpl
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
-		Fields fields = _journalConverter.getDDMFields(
-			ddmStructure, journalArticle.getContent());
+		Fields fields = _ddmFormValuesToFieldsConverter.convert(
+			ddmStructure, journalArticle.getDDMFormValues());
 
 		if (ArrayUtil.isEmpty(contentFields)) {
 			return fields;
@@ -1219,6 +1220,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private DDM _ddm;
+
+	@Reference
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
 	@Reference
 	private DDMFormValuesValidator _ddmFormValuesValidator;

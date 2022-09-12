@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
@@ -149,7 +150,11 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 
 		Map<Locale, String> titleMap = latestArticle.getTitleMap();
 		Map<Locale, String> descriptionMap = latestArticle.getDescriptionMap();
-		String translatedContent = latestArticle.getContent();
+
+		DDMStructure ddmStructure = latestArticle.getDDMStructure();
+
+		Fields fields = _ddmFormValuesToFieldsConverter.convert(
+			ddmStructure, latestArticle.getDDMFormValues());
 
 		for (Locale targetLocale : translatedLocales) {
 			titleMap.put(
@@ -164,9 +169,8 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 					latestArticle.getDescription(targetLocale),
 					latestArticle.getDescription(),
 					importedLocaleDescriptionMap.get(targetLocale)));
-			translatedContent = _getTranslatedContent(
-				translatedContent, latestArticle.getDDMStructure(),
-				importedLocaleContentMap, targetLocale);
+			fields = _getTranslatedFields(
+				fields, ddmStructure, importedLocaleContentMap, targetLocale);
 		}
 
 		User user = _userLocalService.getUser(latestArticle.getUserId());
@@ -179,6 +183,9 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 			user, latestArticle.getReviewDate());
 
 		ServiceContext serviceContext = _getServiceContext(latestArticle);
+
+		String translatedContent = _journalConverter.getContent(
+			ddmStructure, fields, ddmStructure.getGroupId());
 
 		return _journalArticleLocalService.updateArticle(
 			latestArticle.getUserId(), latestArticle.getGroupId(),
@@ -331,8 +338,8 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		return serviceContext;
 	}
 
-	private String _getTranslatedContent(
-			String content, DDMStructure ddmStructure,
+	private Fields _getTranslatedFields(
+			Fields fields, DDMStructure ddmStructure,
 			Map<Locale, Map<String, List<String>>> importedLocaleContentMap,
 			Locale targetLocale)
 		throws Exception {
@@ -341,16 +348,13 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 			importedLocaleContentMap.get(targetLocale);
 
 		if ((contentFieldMap == null) || contentFieldMap.isEmpty()) {
-			return content;
+			return fields;
 		}
-
-		Fields ddmFields = _journalConverter.getDDMFields(
-			ddmStructure, content);
 
 		for (Map.Entry<String, List<String>> entry :
 				contentFieldMap.entrySet()) {
 
-			Field field = ddmFields.get(entry.getKey());
+			Field field = fields.get(entry.getKey());
 
 			if (field != null) {
 				field.setValues(
@@ -361,13 +365,12 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 			}
 			else if (ddmStructure.hasField(entry.getKey())) {
 				_addNewTranslatedDDMField(
-					ddmStructure, targetLocale, entry.getKey(), ddmFields,
+					ddmStructure, targetLocale, entry.getKey(), fields,
 					entry.getValue());
 			}
 		}
 
-		return _journalConverter.getContent(
-			ddmStructure, ddmFields, ddmStructure.getGroupId());
+		return fields;
 	}
 
 	private String _getTranslatedString(
@@ -420,6 +423,9 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 
 	@Reference
 	private AssetLinkLocalService _assetLinkLocalService;
+
+	@Reference
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

@@ -86,8 +86,7 @@ public class JournalArticleModelDocumentContributor
 			document.addKeyword(
 				Field.CLASS_TYPE_ID, ddmStructure.getStructureId());
 
-			ddmFormValues = _ddmFieldLocalService.getDDMFormValues(
-				ddmStructure.getDDMForm(), journalArticle.getId());
+			ddmFormValues = journalArticle.getDDMFormValues();
 
 			if (ddmFormValues != null) {
 				for (Locale contentAvailableLocale :

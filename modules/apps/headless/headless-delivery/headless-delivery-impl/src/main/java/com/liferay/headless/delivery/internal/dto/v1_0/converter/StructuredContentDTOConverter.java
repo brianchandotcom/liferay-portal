@@ -25,8 +25,6 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.dto.v1_0.RenderedContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
@@ -44,7 +42,6 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
-import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.StringPool;
@@ -138,8 +135,7 @@ public class StructuredContentDTOConverter
 					journalArticle.getAvailableLanguageIds());
 				contentFields = _toContentFields(
 					_dlAppService, _dlURLHelper, dtoConverterContext,
-					_fieldsToDDMFormValuesConverter, journalArticle,
-					_journalArticleService, _journalConverter,
+					journalArticle, _journalArticleService,
 					_layoutLocalService);
 				contentStructureId = ddmStructure.getStructureId();
 				creator = CreatorUtil.toCreator(
@@ -239,20 +235,12 @@ public class StructuredContentDTOConverter
 	private ContentField[] _toContentFields(
 			DLAppService dlAppService, DLURLHelper dlURLHelper,
 			DTOConverterContext dtoConverterContext,
-			FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter,
 			JournalArticle journalArticle,
 			JournalArticleService journalArticleService,
-			JournalConverter journalConverter,
 			LayoutLocalService layoutLocalService)
 		throws Exception {
 
-		DDMStructure ddmStructure = journalArticle.getDDMStructure();
-
-		Fields fields = journalConverter.getDDMFields(
-			ddmStructure, journalArticle.getContent());
-
-		DDMFormValues ddmFormValues = fieldsToDDMFormValuesConverter.convert(
-			ddmStructure, fields);
+		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();
 
 		return TransformUtil.transformToArray(
 			ddmFormValues.getDDMFormFieldValues(),
@@ -377,9 +365,6 @@ public class StructuredContentDTOConverter
 	private DLURLHelper _dlURLHelper;
 
 	@Reference
-	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
-
-	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -390,9 +375,6 @@ public class StructuredContentDTOConverter
 
 	@Reference
 	private JournalContent _journalContent;
-
-	@Reference
-	private JournalConverter _journalConverter;
 
 	@Reference
 	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;

@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
-import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -28,7 +27,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.util.JournalContent;
-import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.asset.JournalArticleDDMFormValuesReader;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.util.JournalHelperUtil;
@@ -135,15 +133,7 @@ public class JournalArticleAssetRenderer
 
 	@Override
 	public DDMFormValuesReader getDDMFormValuesReader() {
-		JournalArticleDDMFormValuesReader journalArticleDDMFormValuesReader =
-			new JournalArticleDDMFormValuesReader(_article);
-
-		journalArticleDDMFormValuesReader.setFieldsToDDMFormValuesConverter(
-			_fieldsToDDMFormValuesConverter);
-		journalArticleDDMFormValuesReader.setJournalConverter(
-			_journalConverter);
-
-		return journalArticleDDMFormValuesReader;
+		return new JournalArticleDDMFormValuesReader(_article);
 	}
 
 	@Override
@@ -519,18 +509,8 @@ public class JournalArticleAssetRenderer
 			assetDisplayPageFriendlyURLProvider;
 	}
 
-	public void setFieldsToDDMFormValuesConverter(
-		FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter) {
-
-		_fieldsToDDMFormValuesConverter = fieldsToDDMFormValuesConverter;
-	}
-
 	public void setJournalContent(JournalContent journalContent) {
 		_journalContent = journalContent;
-	}
-
-	public void setJournalConverter(JournalConverter journalConverter) {
-		_journalConverter = journalConverter;
 	}
 
 	private JournalArticleDisplay _getArticleDisplay(
@@ -672,10 +652,8 @@ public class JournalArticleAssetRenderer
 	private final JournalArticle _article;
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 	private final HtmlParser _htmlParser;
 	private JournalContent _journalContent;
-	private JournalConverter _journalConverter;
 	private JournalServiceConfiguration _journalServiceConfiguration;
 
 }

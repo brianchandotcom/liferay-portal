@@ -15,18 +15,12 @@
 package com.liferay.journal.internal.asset.auto.tagger.text.extractor;
 
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
 
@@ -44,23 +38,10 @@ public class JournalArticleTextExtractor
 
 	@Override
 	public String extract(JournalArticle journalArticle, Locale locale) {
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			_portal.getSiteGroupId(journalArticle.getGroupId()),
-			_portal.getClassNameId(JournalArticle.class),
-			journalArticle.getDDMStructureKey(), true);
-
-		if (ddmStructure == null) {
-			return StringPool.BLANK;
-		}
-
 		DDMFormValues ddmFormValues = null;
 
 		try {
-			Fields fields = _journalConverter.getDDMFields(
-				ddmStructure, journalArticle.getDocument());
-
-			ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
-				ddmStructure, fields);
+			ddmFormValues = journalArticle.getDDMFormValues();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -75,7 +56,7 @@ public class JournalArticleTextExtractor
 		}
 
 		return _ddmIndexer.extractIndexableAttributes(
-			ddmStructure, ddmFormValues, locale);
+			journalArticle.getDDMStructure(), ddmFormValues, locale);
 	}
 
 	@Override
@@ -88,17 +69,5 @@ public class JournalArticleTextExtractor
 
 	@Reference
 	private DDMIndexer _ddmIndexer;
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
-
-	@Reference
-	private JournalConverter _journalConverter;
-
-	@Reference
-	private Portal _portal;
 
 }

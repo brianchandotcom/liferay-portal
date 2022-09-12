@@ -27,3 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 		type="more"
 	/>
 </aui:form>
+
+<a href="<%= HtmlUtil.escapeHREF(entry.getUrl()) %>">
+	HtmlUtil.escape(entry.getTitle())
+</a>

@@ -28,3 +28,11 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 >
 	<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" type="more" />
 </aui:form>
+
+<a
+	href="<%=
+		HtmlUtil.escapeHREF(entry.getUrl())
+	%>"
+>
+	HtmlUtil.escape(entry.getTitle())
+</a>

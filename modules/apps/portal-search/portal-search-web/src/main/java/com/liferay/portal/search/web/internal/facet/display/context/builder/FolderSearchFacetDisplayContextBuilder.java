@@ -293,14 +293,6 @@ public class FolderSearchFacetDisplayContextBuilder {
 		else if (_order.equals("key:desc")) {
 			folderSearchFacetTermDisplayContexts.sort(_DESC_TERM_COMPARATOR);
 		}
-		else if (_order.equals("count:asc")) {
-			folderSearchFacetTermDisplayContexts.sort(
-				_ASC_FREQUENCY_COMPARATOR);
-		}
-		else {
-			folderSearchFacetTermDisplayContexts.sort(
-				_DESC_FREQUENCY_COMPARATOR);
-		}
 
 		return folderSearchFacetTermDisplayContexts;
 	}
@@ -336,22 +328,6 @@ public class FolderSearchFacetDisplayContextBuilder {
 	}
 
 	private static final Comparator<FolderSearchFacetTermDisplayContext>
-		_ASC_FREQUENCY_COMPARATOR =
-			new Comparator<FolderSearchFacetTermDisplayContext>() {
-
-				public int compare(
-					FolderSearchFacetTermDisplayContext
-						folderSearchFacetTermDisplayContext1,
-					FolderSearchFacetTermDisplayContext
-						folderSearchFacetTermDisplayContext2) {
-
-					return folderSearchFacetTermDisplayContext1.getFrequency() -
-						folderSearchFacetTermDisplayContext2.getFrequency();
-				}
-
-			};
-
-	private static final Comparator<FolderSearchFacetTermDisplayContext>
 		_ASC_TERM_COMPARATOR =
 			new Comparator<FolderSearchFacetTermDisplayContext>() {
 
@@ -378,9 +354,6 @@ public class FolderSearchFacetDisplayContextBuilder {
 				}
 
 			};
-
-	private static final Comparator<FolderSearchFacetTermDisplayContext>
-		_DESC_FREQUENCY_COMPARATOR = _ASC_FREQUENCY_COMPARATOR.reversed();
 
 	private static final Comparator<FolderSearchFacetTermDisplayContext>
 		_DESC_TERM_COMPARATOR = _ASC_TERM_COMPARATOR.reversed();

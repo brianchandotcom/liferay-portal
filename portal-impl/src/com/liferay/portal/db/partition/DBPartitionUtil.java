@@ -532,9 +532,13 @@ public class DBPartitionUtil {
 		return false;
 	}
 
-	private static boolean _isObjectsTable(String tableName) {
-		if (tableName.endsWith("_x") || tableName.contains("_x_")) {
-			return true;
+	private static boolean _isObjectsTable(String tableName)
+		throws SQLException {
+
+		for (long companyId : PortalInstances.getCompanyIdsBySQL()) {
+			if (tableName.contains(String.valueOf(companyId))) {
+				return true;
+			}
 		}
 
 		return false;

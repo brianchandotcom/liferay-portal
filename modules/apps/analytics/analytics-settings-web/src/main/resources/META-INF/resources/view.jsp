@@ -16,8 +16,21 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+WorkspaceConnectionDisplayContext workspaceConnectionDisplayContext = new WorkspaceConnectionDisplayContext(request, response);
+%>
+
 <div id="analytics-sync-app">
 	<react:component
 		module="js/index.es"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"connected", workspaceConnectionDisplayContext.isConnected()
+			).put(
+				"liferayAnalyticsURL", workspaceConnectionDisplayContext.getLiferayAnalyticsURL()
+			).put(
+				"token", workspaceConnectionDisplayContext.getToken()
+			).build()
+		%>'
 	/>
 </div>

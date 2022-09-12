@@ -39,10 +39,11 @@ const App = ({connected, liferayAnalyticsURL, token}) => {
 					]}
 				/>
 			)}
-			{connected && 
+			{connected && (
 				<div>
 					Connected {token} {liferayAnalyticsURL}
-				</div>}
+				</div>
+			)}
 		</>
 	);
 };

@@ -44,18 +44,13 @@ const MultiStepNav = ({steps}) => {
 				))}
 			</ClayMultiStepNav>
 
-			{ steps[value] && 
+			{steps[value] && (
 				<div className="container">
-					<h2>
-						{steps[value].title}
-					</h2>
-					
-					<div className="text-muted">
-						{steps[value].description}
-					</div>
-					
+					<h2>{steps[value].title}</h2>
+
+					<div className="text-muted">{steps[value].description}</div>
 				</div>
-			}
+			)}
 		</>
 	);
 };

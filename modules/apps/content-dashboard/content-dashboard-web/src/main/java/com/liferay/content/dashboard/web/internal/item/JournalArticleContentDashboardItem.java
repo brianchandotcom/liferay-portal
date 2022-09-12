@@ -139,7 +139,7 @@ public class JournalArticleContentDashboardItem
 						journalArticle.getStatus())),
 				WorkflowConstants.getStatusStyle(journalArticle.getStatus()),
 				String.valueOf(journalArticle.getVersion()), null,
-				journalArticle.getUserName(), journalArticle.getCreateDate()));
+				journalArticle.getUserName(), journalArticle.getStatusDate()));
 	}
 
 	@Override

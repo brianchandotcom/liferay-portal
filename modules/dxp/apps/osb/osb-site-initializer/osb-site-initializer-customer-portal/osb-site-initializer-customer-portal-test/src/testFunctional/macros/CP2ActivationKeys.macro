@@ -379,6 +379,21 @@ definition {
 			value1 = "${option}");
 	}
 
+	macro fulfillGenerateActivationKeyTextField {
+		var key_index = "1";
+
+		if (isSet(index)) {
+			var key_index = "${index}";
+		}
+
+		var key_label = "${field}";
+
+		Type(
+			locator1 = "CP2ActivationKeys#GENERATE_ACTIVATIONS_KEYS_TEXT_FIELD",
+			value1 = "${content}");
+	}
+
+
 	macro selectFistActiveSubscriptionInput {
 		var key_index = "1";
 

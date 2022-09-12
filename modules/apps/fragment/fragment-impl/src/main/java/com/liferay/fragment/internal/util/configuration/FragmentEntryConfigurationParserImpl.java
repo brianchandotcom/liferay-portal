@@ -286,7 +286,9 @@ public class FragmentEntryConfigurationParserImpl
 			return _getInfoDisplayObjectEntryJSONObject(parsedValue);
 		}
 		else if (StringUtil.equalsIgnoreCase(
-					fragmentConfigurationField.getType(), "select") ||
+					fragmentConfigurationField.getType(), "length") ||
+				 StringUtil.equalsIgnoreCase(
+					 fragmentConfigurationField.getType(), "select") ||
 				 StringUtil.equalsIgnoreCase(
 					 fragmentConfigurationField.getType(), "text")) {
 

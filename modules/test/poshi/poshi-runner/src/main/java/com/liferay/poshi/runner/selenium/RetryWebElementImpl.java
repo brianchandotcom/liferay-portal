@@ -461,7 +461,9 @@ public class RetryWebElementImpl extends RemoteWebElement {
 	private void _clear() {
 		CharSequence controlCharSequence = Keys.CONTROL;
 
-		if (OSDetector.isApple()) {
+		if (OSDetector.isApple() &&
+			!(WebDriverUtil.getWebDriver() instanceof RemoteWebDriver)) {
+
 			controlCharSequence = Keys.COMMAND;
 		}
 

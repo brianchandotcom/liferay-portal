@@ -23,9 +23,9 @@ definition {
 			key_viewHomeFolder = "${viewHomeFolder}",
 			locator1 = "ObjectField#VIEW_HOME_FOLDER");
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "${infoText}");
+		AssertElementPresent(
+			key_infoText = "${infoText}",
+			locator1 = "ObjectPortlet#FILE_ENTRY_OBJECT");
 	}
 
 	macro assertDocumentsAndMediaHomeFolderBySite {

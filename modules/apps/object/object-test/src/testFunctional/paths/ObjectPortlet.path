@@ -205,6 +205,11 @@
 		<td>//div[contains(@data-field-name,'ObjectDefinitionsPortlet') and contains(label,'${key_customField}')]//input[1]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>FILE_ENTRY_OBJECT</td>
+		<td>//div[contains(@class, 'dropzone-wrapper')]//div//..//div[contains(text(), '${key_infoText}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

@@ -70,6 +70,8 @@ public class OrderItemDTOConverter
 				decimalQuantity = commerceOrderItem.getDecimalQuantity();
 				deliveryGroup = commerceOrderItem.getDeliveryGroup();
 				discountAmount = commerceOrderItem.getDiscountAmount();
+				discountManuallyAdjusted =
+					commerceOrderItem.isDiscountManuallyAdjusted();
 				discountPercentageLevel1 =
 					commerceOrderItem.getDiscountPercentageLevel1();
 				discountPercentageLevel1WithTaxAmount =
@@ -106,6 +108,8 @@ public class OrderItemDTOConverter
 				orderExternalReferenceCode =
 					commerceOrder.getExternalReferenceCode();
 				orderId = commerceOrder.getCommerceOrderId();
+				priceManuallyAdjusted =
+					commerceOrderItem.isPriceManuallyAdjusted();
 				printedNote = commerceOrderItem.getPrintedNote();
 				promoPrice = commerceOrderItem.getPromoPrice();
 				promoPriceWithTaxAmount =

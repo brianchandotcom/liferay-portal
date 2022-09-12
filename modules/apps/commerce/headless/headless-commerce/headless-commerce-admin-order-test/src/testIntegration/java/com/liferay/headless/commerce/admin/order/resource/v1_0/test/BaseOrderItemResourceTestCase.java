@@ -1257,6 +1257,16 @@ public abstract class BaseOrderItemResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"discountManuallyAdjusted", additionalAssertFieldName)) {
+
+				if (orderItem.getDiscountManuallyAdjusted() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"discountPercentageLevel1", additionalAssertFieldName)) {
 
 				if (orderItem.getDiscountPercentageLevel1() == null) {
@@ -1424,6 +1434,16 @@ public abstract class BaseOrderItemResourceTestCase {
 
 			if (Objects.equals("orderId", additionalAssertFieldName)) {
 				if (orderItem.getOrderId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"priceManuallyAdjusted", additionalAssertFieldName)) {
+
+				if (orderItem.getPriceManuallyAdjusted() == null) {
 					valid = false;
 				}
 
@@ -1707,6 +1727,19 @@ public abstract class BaseOrderItemResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"discountManuallyAdjusted", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						orderItem1.getDiscountManuallyAdjusted(),
+						orderItem2.getDiscountManuallyAdjusted())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"discountPercentageLevel1", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
@@ -1927,6 +1960,19 @@ public abstract class BaseOrderItemResourceTestCase {
 			if (Objects.equals("orderId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						orderItem1.getOrderId(), orderItem2.getOrderId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"priceManuallyAdjusted", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						orderItem1.getPriceManuallyAdjusted(),
+						orderItem2.getPriceManuallyAdjusted())) {
 
 					return false;
 				}
@@ -2230,6 +2276,11 @@ public abstract class BaseOrderItemResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("discountManuallyAdjusted")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("discountPercentageLevel1")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2329,6 +2380,11 @@ public abstract class BaseOrderItemResourceTestCase {
 		}
 
 		if (entityFieldName.equals("orderId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("priceManuallyAdjusted")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -2498,6 +2554,7 @@ public abstract class BaseOrderItemResourceTestCase {
 				bookedQuantityId = RandomTestUtil.randomLong();
 				deliveryGroup = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				discountManuallyAdjusted = RandomTestUtil.randomBoolean();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				formattedQuantity = StringUtil.toLowerCase(
@@ -2507,6 +2564,7 @@ public abstract class BaseOrderItemResourceTestCase {
 				orderExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				orderId = RandomTestUtil.randomLong();
+				priceManuallyAdjusted = RandomTestUtil.randomBoolean();
 				printedNote = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				quantity = RandomTestUtil.randomInt();

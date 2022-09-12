@@ -341,6 +341,7 @@
 		<column db-name="deliverySubTypeSettings" name="deliverySubscriptionTypeSettings" type="String" />
 		<column name="depth" type="double" />
 		<column name="discountAmount" type="BigDecimal" />
+		<column name="discountManuallyAdjusted" type="boolean" />
 		<column name="discountPercentageLevel1" type="BigDecimal" />
 		<column name="discountPercentageLevel2" type="BigDecimal" />
 		<column name="discountPercentageLevel3" type="BigDecimal" />
@@ -358,6 +359,7 @@
 		<column name="manuallyAdjusted" type="boolean" />
 		<column name="maxSubscriptionCycles" type="long" />
 		<column localized="true" name="name" type="String" />
+		<column name="priceManuallyAdjusted" type="boolean" />
 		<column name="printedNote" type="String" />
 		<column name="promoPrice" type="BigDecimal" />
 		<column name="promoPriceWithTaxAmount" type="BigDecimal" />

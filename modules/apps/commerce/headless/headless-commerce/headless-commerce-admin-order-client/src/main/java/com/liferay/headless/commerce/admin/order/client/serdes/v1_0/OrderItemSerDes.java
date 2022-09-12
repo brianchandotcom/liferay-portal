@@ -127,6 +127,16 @@ public class OrderItemSerDes {
 			sb.append(orderItem.getDiscountAmount());
 		}
 
+		if (orderItem.getDiscountManuallyAdjusted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountManuallyAdjusted\": ");
+
+			sb.append(orderItem.getDiscountManuallyAdjusted());
+		}
+
 		if (orderItem.getDiscountPercentageLevel1() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -321,6 +331,16 @@ public class OrderItemSerDes {
 			sb.append("\"orderId\": ");
 
 			sb.append(orderItem.getOrderId());
+		}
+
+		if (orderItem.getPriceManuallyAdjusted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceManuallyAdjusted\": ");
+
+			sb.append(orderItem.getPriceManuallyAdjusted());
 		}
 
 		if (orderItem.getPrintedNote() != null) {
@@ -559,6 +579,15 @@ public class OrderItemSerDes {
 				String.valueOf(orderItem.getDiscountAmount()));
 		}
 
+		if (orderItem.getDiscountManuallyAdjusted() == null) {
+			map.put("discountManuallyAdjusted", null);
+		}
+		else {
+			map.put(
+				"discountManuallyAdjusted",
+				String.valueOf(orderItem.getDiscountManuallyAdjusted()));
+		}
+
 		if (orderItem.getDiscountPercentageLevel1() == null) {
 			map.put("discountPercentageLevel1", null);
 		}
@@ -713,6 +742,15 @@ public class OrderItemSerDes {
 		}
 		else {
 			map.put("orderId", String.valueOf(orderItem.getOrderId()));
+		}
+
+		if (orderItem.getPriceManuallyAdjusted() == null) {
+			map.put("priceManuallyAdjusted", null);
+		}
+		else {
+			map.put(
+				"priceManuallyAdjusted",
+				String.valueOf(orderItem.getPriceManuallyAdjusted()));
 		}
 
 		if (orderItem.getPrintedNote() == null) {
@@ -893,6 +931,14 @@ public class OrderItemSerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "discountManuallyAdjusted")) {
+
+				if (jsonParserFieldValue != null) {
+					orderItem.setDiscountManuallyAdjusted(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "discountPercentageLevel1")) {
 
 				if (jsonParserFieldValue != null) {
@@ -1025,6 +1071,14 @@ public class OrderItemSerDes {
 				if (jsonParserFieldValue != null) {
 					orderItem.setOrderId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "priceManuallyAdjusted")) {
+
+				if (jsonParserFieldValue != null) {
+					orderItem.setPriceManuallyAdjusted(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "printedNote")) {

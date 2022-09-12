@@ -637,6 +637,10 @@ components:
                     format: bigdecimal
                     minimum: 0
                     type: number
+                discountManuallyAdjusted:
+                    example: true
+                    readOnly: true
+                    type: boolean
                 discountPercentageLevel1:
                     example: 20
                     format: bigdecimal
@@ -721,6 +725,10 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                priceManuallyAdjusted:
+                    example: true
+                    readOnly: true
+                    type: boolean
                 printedNote:
                     example: Order item printed note
                     type: string

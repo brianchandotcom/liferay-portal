@@ -117,6 +117,10 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 		createColumn(
 			"discountAmount", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Boolean>
+		discountManuallyAdjusted = createColumn(
+			"discountManuallyAdjusted", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, BigDecimal>
 		discountPercentageLevel1 = createColumn(
 			"discountPercentageLevel1", BigDecimal.class, Types.DECIMAL,
@@ -177,6 +181,10 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Boolean> priceManuallyAdjusted =
+		createColumn(
+			"priceManuallyAdjusted", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, String> printedNote =
 		createColumn(
 			"printedNote", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

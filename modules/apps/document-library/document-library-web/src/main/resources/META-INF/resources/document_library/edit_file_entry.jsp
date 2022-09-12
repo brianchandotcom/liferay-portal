@@ -205,10 +205,10 @@ renderResponse.setTitle(headerTitle);
 			<liferay-ui:error exception="<%= AntivirusScannerException.class %>">
 
 				<%
-				AntivirusScannerException ase = (AntivirusScannerException)errorException;
+				AntivirusScannerException antivirusScannerException = (AntivirusScannerException)errorException;
 				%>
 
-				<liferay-ui:message key="<%= ase.getMessageKey() %>" />
+				<liferay-ui:message key="<%= antivirusScannerException.getMessageKey() %>" />
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= AntivirusVirusFoundException.class %>">

@@ -5494,12 +5494,12 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.template.velocity.jar!org.apache.velocity.jar</file-name>
-				<version>1.6.4.LIFERAY-PATCHED-1</version>
+				<version>1.6.4-LIFERAY-PATCHED-2</version>
 				<project-name>org.apache.velocity</project-name>
 				<licenses>
 					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 				<current-version-publish-date>2017-06-08 18:20:13</current-version-publish-date>

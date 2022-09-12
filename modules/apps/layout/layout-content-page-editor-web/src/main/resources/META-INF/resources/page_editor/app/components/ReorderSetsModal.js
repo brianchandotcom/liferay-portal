@@ -278,37 +278,41 @@ function CardItem({index, item, numberOfItems, onChangeItemPosition}) {
 
 	return (
 		<div ref={targetRef}>
-			<ClayCard className={classNames('mb-3', {dragging: isDragging})}>
-				<ClayCard.Body className="px-0">
-					<ClayCard.Row className="align-items-center">
-						<ClayLayout.ContentCol gutters ref={handlerRef}>
-							<ClayIcon
-								className="text-secondary"
-								symbol="drag"
-							/>
-						</ClayLayout.ContentCol>
+			<div ref={handlerRef}>
+				<ClayCard
+					className={classNames('mb-3', {dragging: isDragging})}
+				>
+					<ClayCard.Body className="px-0">
+						<ClayCard.Row className="align-items-center">
+							<ClayLayout.ContentCol gutters>
+								<ClayIcon
+									className="text-secondary"
+									symbol="drag"
+								/>
+							</ClayLayout.ContentCol>
 
-						<ClayLayout.ContentCol expand>
-							<ClayCard.Description
-								className="text-uppercase"
-								displayType="title"
-								title={name}
-							>
-								{name}
-							</ClayCard.Description>
-						</ClayLayout.ContentCol>
+							<ClayLayout.ContentCol expand>
+								<ClayCard.Description
+									className="text-uppercase"
+									displayType="title"
+									title={name}
+								>
+									{name}
+								</ClayCard.Description>
+							</ClayLayout.ContentCol>
 
-						<ClayLayout.ContentCol gutters>
-							<ReorderDropdown
-								index={index}
-								item={item}
-								numberOfItems={numberOfItems}
-								onChangeItemPosition={onChangeItemPosition}
-							/>
-						</ClayLayout.ContentCol>
-					</ClayCard.Row>
-				</ClayCard.Body>
-			</ClayCard>
+							<ClayLayout.ContentCol gutters>
+								<ReorderDropdown
+									index={index}
+									item={item}
+									numberOfItems={numberOfItems}
+									onChangeItemPosition={onChangeItemPosition}
+								/>
+							</ClayLayout.ContentCol>
+						</ClayCard.Row>
+					</ClayCard.Body>
+				</ClayCard>
+			</div>
 		</div>
 	);
 }

@@ -127,4 +127,36 @@ definition {
 				requirementCaseName = "ATF_Requirements Case");
 		}
 	}
+
+    @description = "This is a test for LPS-160545 - Verify if as an Administrator, I should be able to edit Requirements"
+	@priority = "5"
+	test AdminCanEditRequirements {
+		task ("Given that the user goes to project page") {
+        	Testray.goToProjectPage(projectName = "Projects_1 Project");
+		}
+
+		task ("When the user goes to edit a requirement") {
+			Testray.projectTabNavigator(navTabName = "Requirements");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "ATF_Requirements Summary");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+
+			TestrayRequirements.editRequirement(
+				requirementName = "ATF_Requirements Summary Edited",
+				linkURL = "https://reddit.com",
+				linkTitle = "the front page of the internet",
+				componentId = "Components_1 Project 2",
+				requirementDescription = "ATF_Requirements Description Edited");
+		}
+
+		task ("Then the requirement is displayed with the new infos") {
+			TestrayRequirements.verifyRequirement(
+				requirementTeam = "Components_1 Team",
+				requirementComponent = "Components_1 Project 2",
+				key_requirementSummary = "ATF_Requirements Summary Edited",
+				linkTitle = "the front page of the internet");
+		}
+	}
+
 }

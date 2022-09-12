@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.CountryA2Exception;
 import com.liferay.portal.kernel.exception.CountryA3Exception;
 import com.liferay.portal.kernel.exception.CountryNameException;
 import com.liferay.portal.kernel.exception.CountryNumberException;
+import com.liferay.portal.kernel.exception.CountryTitleException;
 import com.liferay.portal.kernel.exception.DuplicateCountryException;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.language.Language;
@@ -31,7 +32,9 @@ import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Localization;
@@ -42,10 +45,10 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,15 +68,6 @@ public class EditCountryMVCActionCommand
 	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		return super.processAction(actionRequest, actionResponse);
-	}
-
-	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -83,14 +77,22 @@ public class EditCountryMVCActionCommand
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (cmd.equals(Constants.ADD)) {
-				Country country = _addCountry(actionRequest);
+				Callable<Country> addCountryCallable = new AddCountryCallable(
+					actionRequest);
+
+				Country country = TransactionInvokerUtil.invoke(
+					_transactionConfig, addCountryCallable);
 
 				redirect = HttpComponentsUtil.setParameter(
 					redirect, actionResponse.getNamespace() + "countryId",
 					country.getCountryId());
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				_updateCountry(actionRequest);
+				Callable<Country> countryCallable = new UpdateCountryCallable(
+					actionRequest);
+
+				TransactionInvokerUtil.invoke(
+					_transactionConfig, countryCallable);
 			}
 
 			if (Validator.isNotNull(redirect)) {
@@ -109,6 +111,7 @@ public class EditCountryMVCActionCommand
 					 throwable instanceof CountryA3Exception ||
 					 throwable instanceof CountryNameException ||
 					 throwable instanceof CountryNumberException ||
+					 throwable instanceof CountryTitleException ||
 					 throwable instanceof DuplicateCountryException) {
 
 				hideDefaultErrorMessage(actionRequest);
@@ -194,6 +197,10 @@ public class EditCountryMVCActionCommand
 		_countryLocalService.updateCountryLocalizations(country, map);
 	}
 
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
 	@Reference
 	private CountryLocalService _countryLocalService;
 
@@ -208,5 +215,35 @@ public class EditCountryMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	private class AddCountryCallable implements Callable<Country> {
+
+		@Override
+		public Country call() throws Exception {
+			return _addCountry(_actionRequest);
+		}
+
+		private AddCountryCallable(ActionRequest actionRequest) {
+			_actionRequest = actionRequest;
+		}
+
+		private final ActionRequest _actionRequest;
+
+	}
+
+	private class UpdateCountryCallable implements Callable<Country> {
+
+		@Override
+		public Country call() throws Exception {
+			return _updateCountry(_actionRequest);
+		}
+
+		private UpdateCountryCallable(ActionRequest actionRequest) {
+			_actionRequest = actionRequest;
+		}
+
+		private final ActionRequest _actionRequest;
+
+	}
 
 }

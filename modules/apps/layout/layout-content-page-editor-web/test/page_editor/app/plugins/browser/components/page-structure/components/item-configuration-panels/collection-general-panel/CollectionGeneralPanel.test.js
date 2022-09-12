@@ -120,15 +120,6 @@ const renderComponent = ({
 };
 
 describe('CollectionGeneralPanel', () => {
-	beforeAll(() => {
-		window.Liferay = {
-			...Liferay,
-			FeatureFlags: {
-				'LPS-160789': true,
-			},
-		};
-	});
-
 	it('allows changing the Gutter select', () => {
 		renderComponent({
 			itemConfig: {

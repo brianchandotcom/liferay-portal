@@ -21,8 +21,8 @@ import DefaultContent from './DefaultRenderer';
 function LinkRenderer({value}) {
 	return (
 		<div className="table-list-title">
-			<ClayLink href={value.href}>
-				<DefaultContent value={value.label} />
+			<ClayLink href={value?.href}>
+				<DefaultContent value={value?.label} />
 			</ClayLink>
 		</div>
 	);

@@ -73,7 +73,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -692,44 +691,29 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		String message = LanguageUtil.get(getRequest(), "no-results-found");
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-160789"))) {
-			if ((emptyCollectionOptions != null) &&
-				(emptyCollectionOptions.getMessage() != null)) {
+		if ((emptyCollectionOptions != null) &&
+			(emptyCollectionOptions.getMessage() != null)) {
 
-				HttpServletRequest httpServletRequest = getRequest();
+			HttpServletRequest httpServletRequest = getRequest();
 
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-				Map<String, String> messageMap =
-					emptyCollectionOptions.getMessage();
+			Map<String, String> messageMap =
+				emptyCollectionOptions.getMessage();
 
-				String customMessage = messageMap.get(
-					String.valueOf(themeDisplay.getLocale()));
+			String customMessage = messageMap.get(
+				String.valueOf(themeDisplay.getLocale()));
 
-				if (customMessage != null) {
-					message = customMessage;
-				}
+			if (customMessage != null) {
+				message = customMessage;
 			}
-
-			jspWriter.write("<div class=\"c-empty-state\">");
-			jspWriter.write("<div class=\"c-empty-state-text\">");
-			jspWriter.write(message);
-			jspWriter.write("</div></div>");
-
-			return;
 		}
 
 		jspWriter.write("<div class=\"c-empty-state\">");
-		jspWriter.write("<div class=\"c-empty-state-title mt-0\">");
-		jspWriter.write("<span class=\"text-truncate-inline\">");
-		jspWriter.write("<span class=\"text-truncate\">");
-		jspWriter.write(message);
-		jspWriter.write("</span></span></div>");
 		jspWriter.write("<div class=\"c-empty-state-text\">");
-		jspWriter.write(
-			LanguageUtil.get(getRequest(), "sorry,-no-results-were-found"));
+		jspWriter.write(message);
 		jspWriter.write("</div></div>");
 	}
 

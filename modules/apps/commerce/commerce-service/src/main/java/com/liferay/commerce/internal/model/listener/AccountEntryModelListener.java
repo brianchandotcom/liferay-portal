@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 
@@ -45,6 +46,12 @@ public class AccountEntryModelListener extends BaseModelListener<AccountEntry> {
 		throws ModelListenerException {
 
 		try {
+			if (StringUtil.compare(
+					originalAccountEntry.getName(), accountEntry.getName())) {
+
+				return;
+			}
+
 			List<CommerceOrder> commerceOrders =
 				_commerceOrderLocalService.getCommerceOrdersByCommerceAccountId(
 					accountEntry.getAccountEntryId(), QueryUtil.ALL_POS,

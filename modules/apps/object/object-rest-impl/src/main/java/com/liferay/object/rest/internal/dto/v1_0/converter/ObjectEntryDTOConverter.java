@@ -15,7 +15,7 @@
 package com.liferay.object.rest.internal.dto.v1_0.converter;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -332,33 +333,44 @@ public class ObjectEntryDTOConverter
 						objectField.getBusinessType(),
 						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-				Object value = values.get(objectField.getName());
+				long fileEntryId = GetterUtil.getLong(
+					values.get(objectField.getName()));
 
-				DLFileEntry dlFileEntry =
-					_dLFileEntryLocalService.fetchDLFileEntry(
-						GetterUtil.getLong(value));
-
-				if (dlFileEntry == null) {
+				if (fileEntryId == 0L) {
 					continue;
 				}
 
-				com.liferay.portal.kernel.repository.model.FileEntry fileEntry =
-					_dlAppLocalService.getFileEntry(
-						dlFileEntry.getFileEntryId());
+				DLFileEntry dlFileEntry = _dLFileEntryLocalService.getFileEntry(
+					fileEntryId);
+
+				Link fileEntryLink = new Link() {
+					{
+						href = StringPool.POUND;
+						label = dlFileEntry.getFileName();
+					}
+				};
+
+				try {
+					com.liferay.portal.kernel.repository.model.FileEntry
+						fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+					fileEntryLink.setHref(
+						_dlURLHelper.getDownloadURL(
+							fileEntry, fileEntry.getFileVersion(), null,
+							StringPool.BLANK));
+				}
+				catch (PrincipalException principalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(principalException);
+					}
+				}
 
 				map.put(
 					objectFieldName,
 					new FileEntry() {
 						{
 							id = dlFileEntry.getFileEntryId();
-							link = new Link() {
-								{
-									href = _dlURLHelper.getDownloadURL(
-										fileEntry, fileEntry.getFileVersion(),
-										null, StringPool.BLANK);
-									label = dlFileEntry.getFileName();
-								}
-							};
+							link = fileEntryLink;
 							name = dlFileEntry.getFileName();
 						}
 					});
@@ -506,7 +518,7 @@ public class ObjectEntryDTOConverter
 		ObjectEntryDTOConverter.class);
 
 	@Reference
-	private DLAppLocalService _dlAppLocalService;
+	private DLAppService _dlAppService;
 
 	@Reference
 	private DLFileEntryLocalService _dLFileEntryLocalService;

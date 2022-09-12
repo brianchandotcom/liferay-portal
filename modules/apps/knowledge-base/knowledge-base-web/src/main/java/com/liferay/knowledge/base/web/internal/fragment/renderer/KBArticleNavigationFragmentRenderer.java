@@ -143,6 +143,10 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 	}
 
 	private KBArticle _getKBArticle(AssetEntry assetEntry) {
+		if (assetEntry == null) {
+			return null;
+		}
+
 		AssetRenderer<KBArticle> assetRenderer =
 			(AssetRenderer<KBArticle>)assetEntry.getAssetRenderer();
 

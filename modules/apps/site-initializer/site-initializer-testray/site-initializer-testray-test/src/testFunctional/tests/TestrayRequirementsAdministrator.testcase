@@ -159,4 +159,27 @@ definition {
 		}
 	}
 
+    @description = "This is a test for LPS-160546 - Verify if as an Administrator, I should be able to delete Requirements"
+	@priority = "5"
+	test AdminCanDeleteRequirements {
+		task ("Given that the user goes to project page") {
+        	Testray.goToProjectPage(projectName = "Projects_1 Project");
+		}
+
+		task ("When the user goes to delete a requirement") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			Testray.projectTabNavigator(navTabName = "Requirements");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "ATF_Requirements Summary");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+		}
+
+		task ("then the requirement should not be displayed anymore") {
+			Testray.assertItemNotPresent(itemName = "ATF_Requirements Summary");
+		}
+
+	}
+
 }

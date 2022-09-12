@@ -172,6 +172,10 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 				}
 
 				if (jsSource && !javaSource) {
+					if (line.contains("<%=") && line.contains("%>")) {
+						line = _formatWhitespace(line, javaSource);
+					}
+
 					sb.append(line);
 					sb.append("\n");
 

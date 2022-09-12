@@ -235,7 +235,11 @@ public class JSPStylingCheck extends BaseStylingCheck {
 
 		matcher = _incorrectLineBreakPattern4.matcher(content);
 
-		return matcher.replaceAll("$1\n\t$2$4\n$2$5");
+		content = matcher.replaceAll("$1\n\t$2$4\n$2$5");
+
+		matcher = _incorrectLineBreakPattern5.matcher(content);
+
+		return matcher.replaceAll("$1$3$6");
 	}
 
 	private static final Pattern _adjacentJavaBlocksPattern = Pattern.compile(
@@ -254,6 +258,8 @@ public class JSPStylingCheck extends BaseStylingCheck {
 		"<%= *\\S((?!%>).)*\n");
 	private static final Pattern _incorrectLineBreakPattern4 = Pattern.compile(
 		"(\n(\t*)<(\\w+)>)(<\\w+>.*)(</\\3>\n)");
+	private static final Pattern _incorrectLineBreakPattern5 = Pattern.compile(
+		"(<%=)(\n\t*)(((?!%>).)*)(\n\t*)(%>)");
 	private static final Pattern _incorrectSingleLineJavaSourcePattern =
 		Pattern.compile("(\t*)(<% (.*) %>)\n");
 	private static final Pattern _portletNamespacePattern = Pattern.compile(

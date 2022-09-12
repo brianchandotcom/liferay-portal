@@ -438,6 +438,14 @@ public interface FragmentEntryLinkLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public FragmentEntryLink markForDeleteFragmentEntryLink(
+			long fragmentEntryLinkId)
+		throws PortalException;
+
+	public FragmentEntryLink unmarkForDeleteFragmentEntryLink(
+			long fragmentEntryLinkId)
+		throws PortalException;
+
 	public void updateClassedModel(long plid);
 
 	/**

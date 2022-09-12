@@ -1,0 +1,9 @@
+apiDir: "../analytics-settings-rest-api/src/main/java"
+apiPackagePath: "com.liferay.analytics.settings.rest"
+application:
+    baseURI: "/analytics-settings"
+    className: "HeadlessAnalyticsSettingsApplication"
+    name: "Liferay.Analytyics.Settings"
+author: "Riccardo Ferrari"
+forcePredictableOperationId: true
+generateBatch: false

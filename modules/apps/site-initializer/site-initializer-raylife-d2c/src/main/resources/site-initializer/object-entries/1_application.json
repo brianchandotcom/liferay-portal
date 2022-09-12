@@ -22,7 +22,7 @@
 			"applicationCreateDate": "2022-02-10",
 			"applicationStatus": "reviewed",
 			"email": "test@liferay.com",
-			"externalReferenceCode": "RAYAPP-005",
+			"externalReferenceCode": "RAYAPP-003",
 			"firstName": "Test",
 			"lastName": "Test",
 			"productName": "Life"
@@ -31,7 +31,7 @@
 			"applicationCreateDate": "2022-02-16",
 			"applicationStatus": "incomplete",
 			"email": "matt@liferay.com",
-			"externalReferenceCode": "RAYAPP-003",
+			"externalReferenceCode": "RAYAPP-004",
 			"firstName": "Matt",
 			"lastName": "Test",
 			"productName": "Auto"
@@ -40,7 +40,7 @@
 			"applicationCreateDate": "2022-02-16",
 			"applicationStatus": "quoted",
 			"email": "test@liferay.com",
-			"externalReferenceCode": "RAYAPP-004",
+			"externalReferenceCode": "RAYAPP-005",
 			"firstName": "Test",
 			"lastName": "Test",
 			"productName": "Home"
@@ -53,6 +53,258 @@
 			"firstName": "Scott",
 			"lastName": "Test",
 			"productName": "Home"
+		},
+		{
+			"applicationCreateDate": "2022-09-09",
+			"applicationStatus": "quoted",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-007",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Home"
+		},
+		{
+			"applicationCreateDate": "2022-09-09",
+			"applicationStatus": "open",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-008",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Home"
+		},
+		{
+			"applicationCreateDate": "2022-08-08",
+			"applicationStatus": "quoted",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-009",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Home"
+		},
+		{
+			"applicationCreateDate": "2022-08-08",
+			"applicationStatus": "open",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-010",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Home"
+		},
+		{
+			"applicationCreateDate": "2022-07-06",
+			"applicationStatus": "quoted",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-030",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Professional Liability"
+		},
+		{
+			"applicationCreateDate": "2022-07-05",
+			"applicationStatus": "quoted",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-031",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Professional Liability"
+		},
+		{
+			"applicationCreateDate": "2022-07-04",
+			"applicationStatus": "quoted",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-032",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Professional Liability"
+		},
+		{
+			"applicationCreateDate": "2022-07-07",
+			"applicationStatus": "open",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-012",
+			"firstName": "Joana",
+			"lastName": "Joana",
+			"productName": "Business Owners Policy"
+		},
+		{
+			"applicationCreateDate": "2022-06-06",
+			"applicationStatus": "quoted",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-013",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Auto"
+		},
+		{
+			"applicationCreateDate": "2022-05-05",
+			"applicationStatus": "open",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-014",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Workers Compensation"
+		},
+		{
+			"applicationCreateDate": "2022-05-05",
+			"applicationStatus": "open",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-015",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Auto"
+		},
+		{
+			"applicationCreateDate": "2022-04-04",
+			"applicationStatus": "open",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-016",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Auto"
+		},
+		{
+			"applicationCreateDate": "2022-03-03",
+			"applicationStatus": "incomplete",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-017",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Auto"
+		},
+		{
+			"applicationCreateDate": "2022-02-02",
+			"applicationStatus": "open",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-018",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Business Owners Policy"
+		},
+		{
+			"applicationCreateDate": "2022-01-01",
+			"applicationStatus": "incomplete",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-019",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Home"
+		},
+		{
+			"applicationCreateDate": "2022-06-06",
+			"applicationStatus": "quoted",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-020",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Auto"
+		},
+		{
+			"applicationCreateDate": "2021-05-05",
+			"applicationStatus": "open",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-021",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Workers Compensation"
+		},
+		{
+			"applicationCreateDate": "2021-05-05",
+			"applicationStatus": "open",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-022",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Auto"
+		},
+		{
+			"applicationCreateDate": "2021-04-04",
+			"applicationStatus": "open",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-023",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Auto"
+		},
+		{
+			"applicationCreateDate": "2021-04-04",
+			"applicationStatus": "open",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-024",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Auto"
+		},
+		{
+			"applicationCreateDate": "2021-04-04",
+			"applicationStatus": "open",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-025",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Auto"
+		},
+		{
+			"applicationCreateDate": "2021-03-03",
+			"applicationStatus": "incomplete",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-026",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Auto"
+		},
+		{
+			"applicationCreateDate": "2021-08-08",
+			"applicationStatus": "quoted",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-027",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Auto"
+		},
+		{
+			"applicationCreateDate": "2021-08-09",
+			"applicationStatus": "quoted",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-028",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Business Owners Policy"
+		},
+		{
+			"applicationCreateDate": "2021-09-02",
+			"applicationStatus": "open",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-029",
+			"firstName": "Joana",
+			"lastName": "Test",
+			"productName": "Business Owners Policy"
+		},
+		{
+			"applicationCreateDate": "2022-08-02",
+			"applicationStatus": "incomplete",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-38",
+			"firstName": "Test",
+			"lastName": "Test",
+			"productName": "Professional Liability"
+		},
+		{
+			"applicationCreateDate": "2022-08-03",
+			"applicationStatus": "open",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-37",
+			"firstName": "Test",
+			"lastName": "Test",
+			"productName": "Auto"
+		},
+		{
+			"applicationCreateDate": "2022-08-04",
+			"applicationStatus": "incomplete",
+			"email": "joana@liferay.com",
+			"externalReferenceCode": "RAYAPP-39",
+			"firstName": "Test",
+			"lastName": "Test",
+			"productName": "Auto"
 		}
 	],
 	"objectDefinitionName": "RaylifeApplication"

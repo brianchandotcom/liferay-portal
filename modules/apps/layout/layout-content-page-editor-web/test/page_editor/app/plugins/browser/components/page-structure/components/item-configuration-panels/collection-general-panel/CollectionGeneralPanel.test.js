@@ -124,7 +124,6 @@ describe('CollectionGeneralPanel', () => {
 		window.Liferay = {
 			...Liferay,
 			FeatureFlags: {
-				'LPS-160243': true,
 				'LPS-160789': true,
 			},
 		};

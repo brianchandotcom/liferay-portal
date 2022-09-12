@@ -243,7 +243,7 @@
 		<column name="position" type="int" />
 		<column name="rendererKey" type="String" />
 		<column name="type" type="int" />
-		<column name="deleted" type="Boolean" />
+		<column name="deleted" type="boolean" />
 		<column name="lastPropagationDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
 

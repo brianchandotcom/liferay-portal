@@ -55,9 +55,11 @@ if (name.equals(ddmStructureFieldName)) {
 		initialDDMForm.get('fields').forEach((field) => {
 			if (
 				field.get('name') ===
-				'<%= HtmlUtil.escape(ddmStructureFieldName) %>'
+				'<%= HtmlUtil.escape((String)ddmStructureFieldName) %>'
 			) {
-				field.setValue('<%= HtmlUtil.escape(ddmStructureFieldValue) %>');
+				field.setValue(
+					'<%= HtmlUtil.escape((String)ddmStructureFieldValue) %>'
+				);
 			}
 		});
 	});

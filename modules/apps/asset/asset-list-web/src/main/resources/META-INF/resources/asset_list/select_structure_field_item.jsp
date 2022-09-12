@@ -53,8 +53,8 @@ if (name.equals(ddmStructureFieldName)) {
 		const initialDDMForm = Liferay.component('<portlet:namespace />ddmForm');
 
 		initialDDMForm.get('fields').forEach((field) => {
-			if (field.get('name') === '<%=ddmStructureFieldName %>') {
-				field.setValue('<%=ddmStructureFieldValue %>');
+			if (field.get('name') === '<%= HtmlUtil.escape(ddmStructureFieldName) %>') {
+				field.setValue('<%= HtmlUtil.escape(ddmStructureFieldValue) %>');
 			}
 		});
 	});

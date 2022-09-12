@@ -16,25 +16,34 @@ import React from 'react';
 
 import MultiStepNav from './components/MultiStepNav.es';
 
-const App = () => {
+const App = ({connected, liferayAnalyticsURL, token}) => {
 	return (
-		<MultiStepNav
-			steps={[
-				{
-					description: 'Use the token generated in your Analytics Cloud to connect this workspace.',
-					title: 'Connect AC',
-				},
-				{
-					title: 'Property',
-				},
-				{
-					title: 'People',
-				},
-				{
-					title: 'Data',
-				},
-			]}
-		/>
+		<>
+			{!connected && (
+				<MultiStepNav
+					steps={[
+						{
+							description:
+								'Use the token generated in your Analytics Cloud to connect this workspace.',
+							title: 'Connect AC',
+						},
+						{
+							title: 'Property',
+						},
+						{
+							title: 'People',
+						},
+						{
+							title: 'Data',
+						},
+					]}
+				/>
+			)}
+			{connected && 
+				<div>
+					Connected {token} {liferayAnalyticsURL}
+				</div>}
+		</>
 	);
 };
 

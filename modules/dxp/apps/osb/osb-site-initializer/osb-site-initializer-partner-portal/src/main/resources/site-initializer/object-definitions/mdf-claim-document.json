@@ -25,7 +25,7 @@
 				"en_US": "Type"
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:MDF Document Types$]",
-			"name": "typeDocuments",
+			"name": "type",
 			"required": true,
 			"type": "String"
 		}

@@ -8200,6 +8200,22 @@ war.path=${app.server.portal.dir}/</echo>
 		</sequential>
 	</macrodef>
 
+	<target name="add-hotfix-qualifier">
+		<sequential>
+			<replaceregexp
+				file="${project.dir}/${module.base.dir}/bnd.bnd"
+				match="Bundle-Version: (.*)"
+				replace="Bundle-Version: \1.${hotfix.qualifier}"
+			/>
+
+			<replaceregexp
+				file="${project.dir}/${module.base.dir}/package.json"
+				match="&quot;version&quot;: &quot;(.*)&quot;"
+				replace="&quot;version&quot;: &quot;\1.${hotfix.qualifier}&quot;"
+			/>
+		</sequential>
+	</target>
+
 	<target name="build-service">
 		<gradle-execute dir="${project.dir}/${gradle.file.path}" task="buildService" />
 	</target>

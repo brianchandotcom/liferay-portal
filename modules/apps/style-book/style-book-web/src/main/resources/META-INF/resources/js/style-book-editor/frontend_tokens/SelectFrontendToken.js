@@ -13,11 +13,12 @@
  */
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
-import {useControlledState} from '@liferay/layout-content-page-editor-web';
+import {
+	useControlledState,
+	useId,
+} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
 import React from 'react';
-
-import {useId} from '../useId';
 
 export default function SelectFrontendToken({
 	frontendToken,

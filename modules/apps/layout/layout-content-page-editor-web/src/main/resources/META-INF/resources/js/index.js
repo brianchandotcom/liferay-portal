@@ -20,3 +20,4 @@ export {
 	useHasStyleErrors,
 	StyleErrorsContextProvider,
 } from '../page_editor/app/contexts/StyleErrorsContext';
+export {useId} from '../page_editor/core/hooks/useId';

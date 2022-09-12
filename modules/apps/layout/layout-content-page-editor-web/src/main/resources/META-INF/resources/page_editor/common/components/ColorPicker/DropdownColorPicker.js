@@ -161,7 +161,7 @@ export function DropdownColorPicker({
 				</ClayButton>
 			) : (
 				<ClayButtonWithIcon
-					className="border-0"
+					className="border-0 flex-shrink-0"
 					displayType="secondary"
 					onClick={() => onSetActive(!active)}
 					ref={triggerElementRef}

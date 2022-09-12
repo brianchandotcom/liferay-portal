@@ -223,6 +223,10 @@ public class CommonSearchSourceBuilderAssemblerImpl
 			complexQueryPart
 		);
 
+		if (query == null) {
+			return;
+		}
+
 		String occur = GetterUtil.getString(
 			complexQueryPart.getOccur(), "must");
 

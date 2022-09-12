@@ -53,10 +53,11 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			long primaryKey)
 		throws PortalException {
 
-		int count = getRelatedModelsCount(
-			groupId, objectRelationshipId, primaryKey);
+		List<ObjectEntry> relatedModels = getRelatedModels(
+			groupId, objectRelationshipId, primaryKey, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 
-		if (count == 0) {
+		if (relatedModels.isEmpty()) {
 			return;
 		}
 
@@ -64,27 +65,30 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
-		if (objectRelationship.isReverse() ||
-			Objects.equals(
+		if (Objects.equals(
 				objectRelationship.getDeletionType(),
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE) ||
-			Objects.equals(
-				objectRelationship.getDeletionType(),
-				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE)) {
-
-			_objectRelationshipLocalService.
-				deleteObjectRelationshipMappingTableValues(
-					objectRelationshipId, primaryKey);
-		}
-		else if (Objects.equals(
-					objectRelationship.getDeletionType(),
-					ObjectRelationshipConstants.DELETION_TYPE_PREVENT)) {
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT) &&
+			!objectRelationship.isReverse()) {
 
 			throw new RequiredObjectRelationshipException(
 				StringBundler.concat(
 					"Object relationship ",
 					objectRelationship.getObjectRelationshipId(),
 					" does not allow deletes"));
+		}
+
+		_objectRelationshipLocalService.
+			deleteObjectRelationshipMappingTableValues(
+				objectRelationshipId, primaryKey);
+
+		if (Objects.equals(
+				objectRelationship.getDeletionType(),
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
+
+			for (ObjectEntry objectEntry : relatedModels) {
+				_objectEntryLocalService.deleteObjectEntry(
+					objectEntry.getObjectEntryId());
+			}
 		}
 	}
 

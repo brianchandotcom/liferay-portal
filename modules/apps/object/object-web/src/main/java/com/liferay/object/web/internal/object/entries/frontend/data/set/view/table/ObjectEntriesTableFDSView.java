@@ -35,6 +35,8 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -152,7 +154,9 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 			if (Objects.equals(
 					businessType,
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) &&
+				GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-162245"))) {
 
 				stringFDSTableSchemaField.setContentRenderer("link");
 			}
@@ -297,7 +301,13 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 		if (Objects.equals(
 				businessType, ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-			return fieldName + ".link";
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-162245"))) {
+
+				return fieldName + ".link";
+			}
+
+			return fieldName + ".name";
 		}
 
 		if (Objects.equals(

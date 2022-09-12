@@ -53,6 +53,7 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -113,7 +114,7 @@ public class AssetPublisherPortletLayoutListener
 			return;
 		}
 
-		javax.portlet.PortletPreferences portletPreferences =
+		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 				layout, portletId);
 
@@ -224,8 +225,7 @@ public class AssetPublisherPortletLayoutListener
 	}
 
 	private void _addLayoutClassedModelUsages(
-			long plid, String portletId,
-			javax.portlet.PortletPreferences portletPreferences)
+			long plid, String portletId, PortletPreferences portletPreferences)
 		throws PortletLayoutListenerException {
 
 		try {

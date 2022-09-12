@@ -21,9 +21,9 @@ import React, {useState} from 'react';
 import {useSelector} from '../../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../../app/selectors/selectLanguageId';
 import {getEditableLocalizedValue} from '../../../../../../../app/utils/getEditableLocalizedValue';
-import {useId} from '../../../../../../../app/utils/useId';
 import CurrentLanguageFlag from '../../../../../../../common/components/CurrentLanguageFlag';
 import useControlledState from '../../../../../../../core/hooks/useControlledState';
+import {useId} from '../../../../../../../core/hooks/useId';
 
 export function EmptyCollectionOptions({
 	collectionEmptyCollectionMessageId,

@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {useId} from '../../../core/hooks/useId';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {config} from '../../config/index';
@@ -47,7 +48,6 @@ import {
 	useDropTarget,
 	useIsDroppable,
 } from '../../utils/drag-and-drop/useDragAndDrop';
-import {useId} from '../../utils/useId';
 import TopperItemActions from './TopperItemActions';
 import {TopperLabel} from './TopperLabel';
 

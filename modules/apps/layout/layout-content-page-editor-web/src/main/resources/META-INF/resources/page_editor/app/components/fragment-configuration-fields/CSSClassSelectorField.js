@@ -20,8 +20,8 @@ import {FocusScope} from '@clayui/shared';
 import React, {useMemo, useRef, useState} from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
+import {useId} from '../../../core/hooks/useId';
 import {useSelector} from '../../contexts/StoreContext';
-import {useId} from '../../utils/useId';
 
 const MAX_SUGGESTED_CLASSES = 20;
 

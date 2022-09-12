@@ -19,6 +19,7 @@ import React, {useState} from 'react';
 import {ImageSelector} from '../../../common/components/ImageSelector';
 import {ImageSelectorSize} from '../../../common/components/ImageSelectorSize';
 import MappingSelector from '../../../common/components/MappingSelector';
+import {useId} from '../../../core/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
@@ -26,7 +27,6 @@ import {useSelector} from '../../contexts/StoreContext';
 import isMapped from '../../utils/editable-value/isMapped';
 import isMappedToCollection from '../../utils/editable-value/isMappedToCollection';
 import isMappedToInfoItem from '../../utils/editable-value/isMappedToInfoItem';
-import {useId} from '../../utils/useId';
 
 const IMAGE_SOURCES = {
 	direct: {

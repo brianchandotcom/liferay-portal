@@ -20,8 +20,8 @@ import ClayPopover from '@clayui/popover';
 import React, {useState} from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
+import {useId} from '../../../core/hooks/useId';
 import {FRAGMENT_CLASS_PLACEHOLDER} from '../../config/constants/fragmentClassPlaceholder';
-import {useId} from '../../utils/useId';
 import CodeMirrorEditor from '../CodeMirrorEditor';
 
 const defaultValue = `.${FRAGMENT_CLASS_PLACEHOLDER} {\n\n}`;

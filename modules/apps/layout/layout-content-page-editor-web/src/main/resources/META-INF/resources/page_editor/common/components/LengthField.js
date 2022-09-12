@@ -21,8 +21,8 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import isValidStyleValue from '../../app/utils/isValidStyleValue';
-import {useId} from '../../app/utils/useId';
 import useControlledState from '../../core/hooks/useControlledState';
+import {useId} from '../../core/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../prop-types/index';
 
 import './LengthField.scss';

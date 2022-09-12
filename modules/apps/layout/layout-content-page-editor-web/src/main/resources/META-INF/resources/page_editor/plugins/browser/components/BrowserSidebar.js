@@ -21,8 +21,8 @@ import {
 	useActiveItemId,
 	useActiveItemType,
 } from '../../../app/contexts/ControlsContext';
-import {useId} from '../../../app/utils/useId';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
+import {useId} from '../../../core/hooks/useId';
 import ContentsSidebar from '../../page-content/components/ContentsSidebar';
 import PageStructureSidebar from './page-structure/components/PageStructureSidebar';
 

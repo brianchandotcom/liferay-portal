@@ -23,6 +23,7 @@ import {
 import classNames from 'classnames';
 import React, {useRef} from 'react';
 
+import {useId} from '../../core/hooks/useId';
 import useLazy from '../../core/hooks/useLazy';
 import useLoad from '../../core/hooks/useLoad';
 import usePlugins from '../../core/hooks/usePlugins';
@@ -36,7 +37,6 @@ import selectItemConfigurationOpen from '../selectors/selectItemConfigurationOpe
 import selectSidebarIsOpened from '../selectors/selectSidebarIsOpened';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import {useDropClear} from '../utils/drag-and-drop/useDragAndDrop';
-import {useId} from '../utils/useId';
 
 const {Suspense, useCallback, useEffect} = React;
 

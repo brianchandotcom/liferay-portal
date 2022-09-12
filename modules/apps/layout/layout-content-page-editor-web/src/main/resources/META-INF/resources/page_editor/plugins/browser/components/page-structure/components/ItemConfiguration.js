@@ -29,7 +29,7 @@ import {
 } from '../../../../../app/contexts/StoreContext';
 import selectCanViewItemConfiguration from '../../../../../app/selectors/selectCanViewItemConfiguration';
 import {deepEqual} from '../../../../../app/utils/checkDeepEqual';
-import {useId} from '../../../../../app/utils/useId';
+import {useId} from '../../../../../core/hooks/useId';
 import {PANELS, selectPanels} from '../selectors/selectPanels';
 import PageStructureSidebarSection from './PageStructureSidebarSection';
 

@@ -24,6 +24,7 @@ import CurrentLanguageFlag from '../../../common/components/CurrentLanguageFlag'
 import {LayoutSelector} from '../../../common/components/LayoutSelector';
 import MappingSelector from '../../../common/components/MappingSelector';
 import useControlledState from '../../../core/hooks/useControlledState';
+import {useId} from '../../../core/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {useGetFieldValue} from '../../contexts/CollectionItemContext';
@@ -33,7 +34,6 @@ import isMapped from '../../utils/editable-value/isMapped';
 import isMappedToLayout from '../../utils/editable-value/isMappedToLayout';
 import isMappedToStructure from '../../utils/editable-value/isMappedToStructure';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
-import {useId} from '../../utils/useId';
 
 const SOURCE_OPTION_FROM_CONTENT_FIELD = 'fromContentField';
 const SOURCE_OPTION_FROM_LAYOUT = 'fromLayout';

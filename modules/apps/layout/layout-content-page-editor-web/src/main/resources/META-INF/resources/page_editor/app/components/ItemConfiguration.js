@@ -17,6 +17,7 @@ import ClayTabs from '@clayui/tabs';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import {useId} from '../../core/hooks/useId';
 import {
 	PANELS,
 	selectPanels,
@@ -26,7 +27,6 @@ import {CollectionItemContext} from '../contexts/CollectionItemContext';
 import {useSelector, useSelectorCallback} from '../contexts/StoreContext';
 import selectCanViewItemConfiguration from '../selectors/selectCanViewItemConfiguration';
 import {deepEqual} from '../utils/checkDeepEqual';
-import {useId} from '../utils/useId';
 
 export default function ItemConfiguration({activeItemId, activeItemType}) {
 	const collectionContext = useCollectionActiveItemContext();

@@ -30,7 +30,7 @@ import isMappedToInfoItem from '../../app/utils/editable-value/isMappedToInfoIte
 import isMappedToStructure from '../../app/utils/editable-value/isMappedToStructure';
 import getMappingFieldsKey from '../../app/utils/getMappingFieldsKey';
 import itemSelectorValueToInfoItem from '../../app/utils/item-selector-value/itemSelectorValueToInfoItem';
-import {useId} from '../../app/utils/useId';
+import {useId} from '../../core/hooks/useId';
 import ItemSelector from './ItemSelector';
 import MappingFieldSelector from './MappingFieldSelector';
 

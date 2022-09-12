@@ -18,8 +18,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
+import {useId} from '../../../core/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
-import {useId} from '../../utils/useId';
 
 export function ButtonGroupField({field, onValueSelect, value}) {
 	const helpTextId = useId();

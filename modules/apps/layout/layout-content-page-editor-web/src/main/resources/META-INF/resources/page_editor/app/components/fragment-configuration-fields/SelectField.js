@@ -20,12 +20,12 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
+import {useId} from '../../../core/hooks/useId';
 import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';
 import isNullOrUndefined from '../../utils/isNullOrUndefined';
-import {useId} from '../../utils/useId';
 import {AdvancedSelectField} from './AdvancedSelectField';
 
 export function SelectField({

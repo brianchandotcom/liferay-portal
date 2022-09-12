@@ -428,6 +428,30 @@ public class FragmentEntryLinkLocalServiceImpl
 			groupId, fragmentEntryId, layoutPageTemplateType);
 	}
 
+	public FragmentEntryLink markForDeleteFragmentEntryLink(
+			long fragmentEntryLinkId)
+		throws PortalException {
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
+
+		fragmentEntryLink.setDeleted(true);
+
+		return fragmentEntryLinkPersistence.update(fragmentEntryLink);
+	}
+
+	public FragmentEntryLink unmarkForDeleteFragmentEntryLink(
+			long fragmentEntryLinkId)
+		throws PortalException {
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
+
+		fragmentEntryLink.setDeleted(false);
+
+		return fragmentEntryLinkPersistence.update(fragmentEntryLink);
+	}
+
 	@Override
 	public void updateClassedModel(long plid) {
 		try {

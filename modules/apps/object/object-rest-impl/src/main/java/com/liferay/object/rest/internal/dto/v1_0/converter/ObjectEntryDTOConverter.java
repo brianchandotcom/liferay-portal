@@ -15,7 +15,9 @@
 package com.liferay.object.rest.internal.dto.v1_0.converter;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -24,6 +26,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
+import com.liferay.object.rest.dto.v1_0.Link;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
@@ -339,11 +342,23 @@ public class ObjectEntryDTOConverter
 					continue;
 				}
 
+				com.liferay.portal.kernel.repository.model.FileEntry fileEntry =
+					_dlAppLocalService.getFileEntry(
+						dlFileEntry.getFileEntryId());
+
 				map.put(
 					objectFieldName,
 					new FileEntry() {
 						{
 							id = dlFileEntry.getFileEntryId();
+							link = new Link() {
+								{
+									href = _dlURLHelper.getDownloadURL(
+										fileEntry, fileEntry.getFileVersion(),
+										null, StringPool.BLANK);
+									label = dlFileEntry.getFileName();
+								}
+							};
 							name = dlFileEntry.getFileName();
 						}
 					});
@@ -491,7 +506,13 @@ public class ObjectEntryDTOConverter
 		ObjectEntryDTOConverter.class);
 
 	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private DLFileEntryLocalService _dLFileEntryLocalService;
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

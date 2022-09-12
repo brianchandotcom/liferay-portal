@@ -57,7 +57,7 @@ export default function FragmentEntryLinksWithComments() {
 			<ResolvedCommentsToggle />
 
 			{itemsWithComments.length ? (
-				<nav className="list-group mb-0 overflow-auto">
+				<nav className="list-group mb-0 overflow-auto page-editor__fragments-with-comments">
 					{itemsWithComments.map(([item, fragmentEntryLink]) => (
 						<FragmentEntryLinkWithComments
 							fragmentEntryLink={fragmentEntryLink}

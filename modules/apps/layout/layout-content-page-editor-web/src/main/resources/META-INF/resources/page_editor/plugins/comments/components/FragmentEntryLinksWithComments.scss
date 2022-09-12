@@ -1,0 +1,9 @@
+@import 'cadmin-variables';
+
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__fragments-with-comments {
+			border-top: 1px solid $cadmin-secondary-l3;
+		}
+	}
+}

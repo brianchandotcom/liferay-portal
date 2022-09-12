@@ -212,7 +212,7 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE</td>
-	<td>//div[contains(@class, 'alert-danger')]</td>
+	<td>//*[contains(@class, 'alert-danger')]//*[text()='${key_errorMessage}']</td>
 	<td></td>
 </tr>
 <tr>

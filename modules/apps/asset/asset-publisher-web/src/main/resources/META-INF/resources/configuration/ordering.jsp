@@ -22,7 +22,9 @@
 	<clay:col
 		md="6"
 	>
-		<aui:select label="order-by" name="preferences--orderByColumn1--" value="<%= assetPublisherDisplayContext.getOrderByColumn1() %>" wrapperCssClass="field-inline w80">
+		<div class="h5"><liferay-ui:message key="order-by" /></div>
+
+		<aui:select label="" name="preferences--orderByColumn1--" value="<%= assetPublisherDisplayContext.getOrderByColumn1() %>" wrapperCssClass="d-inline-flex">
 			<c:if test="<%= assetPublisherDisplayContext.isOrderingByTitleEnabled() %>">
 				<aui:option label="title" />
 			</c:if>
@@ -43,7 +45,7 @@
 		String orderByType1 = assetPublisherDisplayContext.getOrderByType1();
 		%>
 
-		<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
+		<div class="d-inline-flex order-by-type-container">
 			<liferay-ui:icon
 				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "DESC") ? "hide icon order-arrow-up-active" : "icon order-arrow-up-active" %>'
 				icon="order-list-up"
@@ -63,7 +65,7 @@
 			/>
 
 			<aui:input cssClass="order-by-type-field" name="preferences--orderByType1--" type="hidden" value="<%= orderByType1 %>" />
-		</aui:field-wrapper>
+		</div>
 	</clay:col>
 
 	<clay:col
@@ -74,7 +76,9 @@
 		String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
 		%>
 
-		<aui:select label="and-then-by" name="preferences--orderByColumn2--" wrapperCssClass="field-inline w80">
+		<div class="h5"><liferay-ui:message key="and-then-by" /></div>
+
+		<aui:select label="" name="preferences--orderByColumn2--" wrapperCssClass="d-inline-flex">
 			<aui:option label="title" selected='<%= orderByColumn2.equals("title") %>' />
 			<aui:option label="create-date" selected='<%= orderByColumn2.equals("createDate") %>' value="createDate" />
 			<aui:option label="modified-date" selected='<%= orderByColumn2.equals("modifiedDate") %>' value="modifiedDate" />
@@ -92,7 +96,7 @@
 		String orderByType2 = assetPublisherDisplayContext.getOrderByType2();
 		%>
 
-		<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
+		<div class="d-inline-flex order-by-type-container">
 			<liferay-ui:icon
 				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "DESC") ? "hide icon order-arrow-up-active" : "icon order-arrow-up-active" %>'
 				icon="order-list-up"
@@ -112,7 +116,7 @@
 			/>
 
 			<aui:input cssClass="order-by-type-field" name="preferences--orderByType2--" type="hidden" value="<%= orderByType2 %>" />
-		</aui:field-wrapper>
+		</div>
 	</clay:col>
 </clay:row>
 

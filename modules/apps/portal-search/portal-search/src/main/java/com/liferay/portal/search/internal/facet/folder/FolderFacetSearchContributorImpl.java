@@ -122,7 +122,7 @@ public class FolderFacetSearchContributorImpl
 
 			facetConfiguration.setFieldName(facet.getFieldName());
 			facetConfiguration.setLabel("any-folder");
-			facetConfiguration.setOrder("OrderHitsDesc");
+			facetConfiguration.setOrder(_order);
 			facetConfiguration.setStatic(false);
 			facetConfiguration.setWeight(1.4);
 

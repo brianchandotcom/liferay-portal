@@ -14,14 +14,15 @@ import {FormikHelpers} from 'formik';
 import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
 import {RequestStatus} from '../../../common/enums/requestStatus';
 import MDFRequest from '../../../common/interfaces/mdfRequest';
+import {Liferay} from '../../../common/services/liferay';
 import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
 import createMDFRequestActivityBudgets from '../../../common/services/liferay/object/budgets/createMDFRequestActivityBudgets';
 import createMDFRequest from '../../../common/services/liferay/object/mdf-requests/createMDFRequest';
-import liferayNavigate from '../../../common/utils/liferayNavigate';
 
 export default async function submitForm(
 	values: MDFRequest,
 	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>,
+	siteURL: string,
 	currentRequestStatus?: RequestStatus
 ) {
 	formikHelpers.setSubmitting(true);
@@ -54,5 +55,5 @@ export default async function submitForm(
 		}
 	}
 
-	liferayNavigate(PRMPageRoute.MDF_REQUESTS_LISTING);
+	Liferay.Util.navigate(`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}`);
 }

@@ -15,8 +15,9 @@ import {useState} from 'react';
 import PRMFormik from '../../common/components/PRMFormik';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import {RequestStatus} from '../../common/enums/requestStatus';
+import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import MDFRequest from '../../common/interfaces/mdfRequest';
-import liferayNavigate from '../../common/utils/liferayNavigate';
+import {Liferay} from '../../common/services/liferay';
 import {StepType} from './enums/stepType';
 import Activities from './steps/Activities';
 import activitiesSchema from './steps/Activities/schema/yup';
@@ -44,8 +45,12 @@ type StepComponent = {
 
 const MDFRequestForm = () => {
 	const [step, setStep] = useState<StepType>(StepType.GOALS);
+	const siteURL = useLiferayNavigate();
 
-	const onCancel = () => liferayNavigate(PRMPageRoute.MDF_REQUESTS_LISTING);
+	const onCancel = () =>
+		Liferay.Util.navigate(
+			`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}`
+		);
 
 	const onContinue = async (
 		formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>,
@@ -75,7 +80,14 @@ const MDFRequestForm = () => {
 						FormikHelpers<MDFRequest>,
 						'setFieldValue'
 					>
-				) => submitForm(values, formikHelpers, RequestStatus.DRAFT)}
+				) =>
+					submitForm(
+						values,
+						formikHelpers,
+						siteURL,
+						RequestStatus.DRAFT
+					)
+				}
 				validationSchema={goalsSchema}
 			/>
 		),
@@ -92,7 +104,14 @@ const MDFRequestForm = () => {
 						FormikHelpers<MDFRequest>,
 						'setFieldValue'
 					>
-				) => submitForm(values, formikHelpers, RequestStatus.DRAFT)}
+				) =>
+					submitForm(
+						values,
+						formikHelpers,
+						siteURL,
+						RequestStatus.DRAFT
+					)
+				}
 				validationSchema={activitiesSchema}
 			/>
 		),
@@ -106,13 +125,25 @@ const MDFRequestForm = () => {
 						FormikHelpers<MDFRequest>,
 						'setFieldValue'
 					>
-				) => submitForm(values, formikHelpers, RequestStatus.DRAFT)}
+				) =>
+					submitForm(
+						values,
+						formikHelpers,
+						siteURL,
+						RequestStatus.DRAFT
+					)
+				}
 			/>
 		),
 	};
 
 	return (
-		<PRMFormik initialValues={initialFormValues} onSubmit={submitForm}>
+		<PRMFormik
+			initialValues={initialFormValues}
+			onSubmit={(values, formikHelpers) =>
+				submitForm(values, formikHelpers, siteURL)
+			}
+		>
 			{StepFormComponent[step]}
 		</PRMFormik>
 	);

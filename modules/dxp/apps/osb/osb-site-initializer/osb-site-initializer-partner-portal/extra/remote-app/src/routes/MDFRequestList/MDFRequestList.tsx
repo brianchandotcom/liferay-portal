@@ -14,9 +14,10 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 
 import {MDFColumnKey} from '../../common/enums/mdfColumnKey';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
+import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import {MDFRequestListItem} from '../../common/interfaces/mdfRequestListItem';
-import liferayNavigate from '../../common/utils/liferayNavigate';
-import DropDown from './components/Dropdown';
+import {Liferay} from '../../common/services/liferay';
+import Dropdown from './components/Dropdown';
 import Table from './components/Table';
 import useGetMDFRequestListData from './hooks/useGetMDFRequestListData';
 import usePagination from './hooks/usePagination';
@@ -28,27 +29,27 @@ const MDFRequestList = () => {
 		pagination.activeDelta
 	);
 
+	const siteURL = useLiferayNavigate();
+
 	data.listColumns?.push({
 		columnKey: MDFColumnKey.ACTION,
 		label: '',
-		render: (_, row) => {
-			return (
-				<DropDown
-					onClick={() =>
-						liferayNavigate(
-							`l/${row[MDFColumnKey.ID]?.split('-')[1]}`
-						)
-					}
-					optionList={[
-						{
-							icon: 'view',
-							key: 'approve',
-							label: ' View',
-						},
-					]}
-				></DropDown>
-			);
-		},
+		render: (_, row) => (
+			<Dropdown
+				onClick={() =>
+					Liferay.Util.navigate(
+						`${siteURL}/l/${row[MDFColumnKey.ID]}`
+					)
+				}
+				options={[
+					{
+						icon: 'view',
+						key: 'approve',
+						label: ' View',
+					},
+				]}
+			></Dropdown>
+		),
 	});
 
 	return (
@@ -58,7 +59,9 @@ const MDFRequestList = () => {
 			<div className="bg-neutral-1 d-flex justify-content-end p-3 rounded">
 				<ClayButton
 					onClick={() =>
-						liferayNavigate(PRMPageRoute.CREATE_MDF_REQUEST)
+						Liferay.Util.navigate(
+							`${siteURL}/${PRMPageRoute.CREATE_MDF_REQUEST}`
+						)
 					}
 				>
 					New Request

@@ -9,16 +9,17 @@
  * distribution rights of the Software.
  */
 
-import {PRMPageRoute} from '../enums/prmPageRoute';
+import {useMemo} from 'react';
+
 import {Liferay} from '../services/liferay';
 
-export default function liferayNavigate(
-	path: PRMPageRoute | string | undefined
-) {
-	const relativeURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
-	const relativePath = relativeURL.split('/').slice(0, 3);
-
-	path && relativePath.push(path);
-
-	Liferay.Util.navigate(relativePath.join('/'));
+export default function useLiferayNavigate() {
+	return useMemo(
+		() =>
+			Liferay.ThemeDisplay.getLayoutRelativeURL()
+				.split('/')
+				.slice(0, 3)
+				.join('/'),
+		[]
+	);
 }

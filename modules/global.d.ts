@@ -4,6 +4,7 @@
 /// <reference path="apps/frontend-js/frontend-js-tabs-support-web/src/main/resources/META-INF/resources/liferay.d.ts" />
 /// <reference path="apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/liferay.d.ts" />
 /// <reference path="apps/frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/js/liferay.d.ts" />
+/// <reference path="apps/oauth2-provider/oauth2-provider-web/src/main/resources/META-INF/resources/js/liferay.d.ts" />
 
 declare module Liferay {
 	export const FeatureFlags: {[key: string]: boolean};

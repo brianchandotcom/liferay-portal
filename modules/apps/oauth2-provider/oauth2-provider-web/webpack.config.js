@@ -12,13 +12,30 @@
  * details.
  */
 
+const path = require('path');
+
+const PUBLIC_PATH = '/o/oauth2-provider-web/';
+
 module.exports = {
-	build: {
-		babel: {
-			ignores: ['**/config.js'],
-		},
-		bundler: {
-			ignore: ['**/config.js'],
-		},
+	context: path.resolve(__dirname),
+	devtool: 'source-map',
+	entry: './src/main/resources/META-INF/resources/js/index.ts',
+	mode: 'production',
+	module: {
+		rules: [
+			{
+				test: /\.ts$/,
+				use: 'ts-loader',
+			},
+		],
+	},
+	output: {
+		filename: 'index.js',
+		libraryTarget: 'window',
+		path: path.resolve('./build/node/packageRunBuild/resources/js'),
+		publicPath: PUBLIC_PATH,
+	},
+	resolve: {
+		extensions: ['.js', '.ts'],
 	},
 };

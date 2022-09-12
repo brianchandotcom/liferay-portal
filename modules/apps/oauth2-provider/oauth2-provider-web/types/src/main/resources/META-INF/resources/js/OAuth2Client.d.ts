@@ -11,32 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-interface IOAuth2 {
-    getAuthorizeURL(): string;
-    getBuiltInRedirectURL(): string;
-    getTokenURL(): string;
-    getUserAgentApplication(externalReferenceCode: string): {
-        clientId: string;
-        homePageURL: string;
-        redirectURIs: Array<string>;
-    };
-}
 interface IOAuth2ClientFromParametersOptions {
+    authorizeURL?: string;
     clientId: string;
     homePageURL: string;
-    authorizeURL?: string;
     redirectURIs?: Array<string>;
     tokenURL?: string;
 }
-interface ILiferay {
-    OAuth2: IOAuth2;
-    OAuth2Client: OAuth2Client;
-    authToken: string;
-}
-declare global {
-    interface Window {
-        Liferay: ILiferay;
-    }
+interface IOAuth2ClientOptions {
+    authorizeURL: string;
+    clientId: string;
+    encodedRedirectURL: string;
+    homePageURL: string;
+    redirectURIs: Array<string>;
+    tokenURL: string;
 }
 declare class OAuth2Client {
     private authorizeURL;
@@ -45,13 +33,14 @@ declare class OAuth2Client {
     private homePageURL;
     private redirectURIs;
     private tokenURL;
-    static FromParameters(options: IOAuth2ClientFromParametersOptions): OAuth2Client;
-    static FromUserAgentApplication(userAgentApplicationName: string): OAuth2Client;
+    constructor(options: IOAuth2ClientOptions);
     fetch(url: RequestInfo, options?: any): Promise<any>;
-    _createIframe(): HTMLIFrameElement;
-    _fetch(resource: RequestInfo | URL, options?: any): Promise<any>;
-    _getOrRequestToken(): Promise<any>;
-    _requestTokenSilently(sessionKey: string): Promise<any>;
-    _requestToken(codeVerifier: string, code: string): Promise<any>;
+    private _createIframe;
+    private _fetch;
+    private _getOrRequestToken;
+    private _requestTokenSilently;
+    private _requestToken;
 }
-export default OAuth2Client;
+export declare function FromParameters(options: IOAuth2ClientFromParametersOptions): OAuth2Client;
+export declare function FromUserAgentApplication(userAgentApplicationName: string): OAuth2Client;
+export {};

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay OAuth2 Provider Web
 Bundle-SymbolicName: com.liferay.oauth2.provider.web
 Bundle-Version: 4.0.37
-Liferay-JS-Config: /META-INF/resources/js/config.js
+Liferay-JS-Resources-Top-Head: /js/index.js
 Web-ContextPath: /oauth2-provider-web
 -dsannotations-options: inherit

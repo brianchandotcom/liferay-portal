@@ -11,5 +11,4 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-import OAuth2Client from './OAuth2Client';
-export default OAuth2Client;
+export {};

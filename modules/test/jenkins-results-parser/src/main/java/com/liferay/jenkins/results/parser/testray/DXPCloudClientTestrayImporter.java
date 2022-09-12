@@ -114,9 +114,12 @@ public class DXPCloudClientTestrayImporter {
 				JenkinsResultsParserUtil.tarGzip(
 					testrayResultsDir, resultsTarGzFile);
 
-				TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+				if (_testrayS3Bucket == null) {
+					throw new RuntimeException(
+						"ERROR: Testray 2 requires GCP to be configured");
+				}
 
-				testrayS3Bucket.createTestrayS3Object(
+				_testrayS3Bucket.createTestrayS3Object(
 					"inbox/" + resultsTarGzFile.getName(), resultsTarGzFile);
 			}
 			catch (Exception exception) {
@@ -162,6 +165,10 @@ public class DXPCloudClientTestrayImporter {
 	}
 
 	private static Element _getOutputLogAttachmentElement() {
+		if (_testrayS3Bucket == null) {
+			return null;
+		}
+
 		File xmlFile = new File(
 			_projectDir,
 			"test-results/TEST-com.liferay.poshi.runner.PoshiRunner.xml");
@@ -174,8 +181,6 @@ public class DXPCloudClientTestrayImporter {
 
 		String key = JenkinsResultsParserUtil.combine(
 			_getRelativeURLPath(), "/", gzipFile.getName());
-
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 
 		if (!gzipFile.exists()) {
 			try {
@@ -210,7 +215,7 @@ public class DXPCloudClientTestrayImporter {
 
 				JenkinsResultsParserUtil.gzip(file, gzipFile);
 
-				testrayS3Bucket.createTestrayS3Object(key, gzipFile);
+				_testrayS3Bucket.createTestrayS3Object(key, gzipFile);
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(exception);
@@ -221,7 +226,8 @@ public class DXPCloudClientTestrayImporter {
 
 		attachmentElement.addAttribute("name", "Output Log");
 		attachmentElement.addAttribute(
-			"url", testrayS3Bucket.getTestrayS3BaseURL() + key + "?authuser=0");
+			"url",
+			_testrayS3Bucket.getTestrayS3BaseURL() + key + "?authuser=0");
 		attachmentElement.addAttribute("value", key + "?authuser=0");
 
 		return attachmentElement;
@@ -268,7 +274,7 @@ public class DXPCloudClientTestrayImporter {
 
 		Element attachmentsElement = Dom4JUtil.getNewElement("attachments");
 
-		if (!_googleCredentialsAvailable) {
+		if (_testrayS3Bucket == null) {
 			return attachmentsElement;
 		}
 
@@ -296,8 +302,6 @@ public class DXPCloudClientTestrayImporter {
 
 		_removeUnreferencedImages(new File(testDir, "index.html"));
 
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
-
 		for (File file : JenkinsResultsParserUtil.findFiles(testDir, ".*")) {
 			String fileName = file.getName();
 
@@ -319,7 +323,7 @@ public class DXPCloudClientTestrayImporter {
 				JenkinsResultsParserUtil.getPathRelativeTo(
 					file, testDir.getParentFile()));
 
-			testrayS3Bucket.createTestrayS3Object(key, file);
+			_testrayS3Bucket.createTestrayS3Object(key, file);
 
 			String attachmentName;
 
@@ -526,9 +530,6 @@ public class DXPCloudClientTestrayImporter {
 			_environmentOperatingSystemName = environmentOperatingSystemName;
 		}
 
-		_googleCredentialsAvailable =
-			TestrayS3Bucket.googleCredentialsAvailable();
-
 		String testrayBuildName = _getEnvVarValue("testrayBuildName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
@@ -571,6 +572,16 @@ public class DXPCloudClientTestrayImporter {
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
 			_testrayRoutineName = testrayRoutineName;
+		}
+
+		String testrayS3BucketName = _getEnvVarValue("testrayS3BucketName");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayS3BucketName)) {
+			testrayS3BucketName = TestrayS3Bucket.DEFAULT_BUCKET_NAME;
+		}
+
+		if (TestrayS3Bucket.googleCredentialsAvailable(testrayS3BucketName)) {
+			_testrayS3Bucket = TestrayS3Bucket.getInstance(testrayS3BucketName);
 		}
 
 		String testrayServerURL = _getEnvVarValue("testrayServerURL");
@@ -630,7 +641,6 @@ public class DXPCloudClientTestrayImporter {
 
 	private static String _environmentBrowserName = "Google Chrome 86";
 	private static String _environmentOperatingSystemName = "CentOS 7";
-	private static boolean _googleCredentialsAvailable;
 	private static final LocalDate _localDate = LocalDate.now();
 	private static final Pattern _pattern = Pattern.compile(
 		"test\\[(?<testName>[^\\]]{1,150})[^\\]]*\\]");
@@ -645,6 +655,7 @@ public class DXPCloudClientTestrayImporter {
 	private static String _testrayProjectName = "DXP Cloud Client";
 	private static String _testrayReleaseName = "production";
 	private static String _testrayRoutineName = "DXP Cloud Client Routine";
+	private static TestrayS3Bucket _testrayS3Bucket;
 	private static String _testrayServerURL = "https://testray.liferay.com";
 	private static String _testrayTeamName = "DXP Cloud Client Team";
 	private static String _testrayUserName;

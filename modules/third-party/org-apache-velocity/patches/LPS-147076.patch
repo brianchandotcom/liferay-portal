@@ -1,0 +1,79 @@
+diff --git a/org/apache/velocity/util/introspection/SecureIntrospectorImpl.java b/org/apache/velocity/util/introspection/SecureIntrospectorImpl.java
+index f317b1c6d8e7..ef687fb47024 100644
+--- a/org/apache/velocity/util/introspection/SecureIntrospectorImpl.java
++++ b/org/apache/velocity/util/introspection/SecureIntrospectorImpl.java
+@@ -87,30 +87,30 @@ public class SecureIntrospectorImpl extends Introspector implements SecureIntros
+      */
+     public boolean checkObjectExecutePermission(Class clazz, String methodName)
+     {
+-		/**
+-		 * check for wait and notify
+-		 */
++        /**
++         * check for wait and notify
++         */
+         if (methodName != null &&
+             (methodName.equals("wait") || methodName.equals("notify")) )
+-		{
+-			return false;
+-		}
++        {
++            return false;
++        }
+ 
+-		/**
+-		 * Always allow the most common classes - Number, Boolean and String
+-		 */
+-		else if (Number.class.isAssignableFrom(clazz))
+-		{
+-			return true;
+-		}
+-		else if (Boolean.class.isAssignableFrom(clazz))
+-		{
+-			return true;
+-		}
+-		else if (String.class.isAssignableFrom(clazz))
+-		{
+-			return true;
+-		}
++        /**
++         * Always allow the most common classes - Number, Boolean and String
++         */
++        else if (Number.class.isAssignableFrom(clazz))
++        {
++            return true;
++        }
++        else if (Boolean.class.isAssignableFrom(clazz))
++        {
++            return true;
++        }
++        else if (String.class.isAssignableFrom(clazz))
++        {
++            return true;
++        }
+ 
+         /**
+          * Always allow Class.getName()
+@@ -121,6 +121,15 @@ public class SecureIntrospectorImpl extends Introspector implements SecureIntros
+             return true;
+         }
+ 
++       /**
++       * Always disallow ClassLoader, Thread and subclasses
++       */
++        if (ClassLoader.class.isAssignableFrom(clazz) ||
++                Thread.class.isAssignableFrom(clazz))
++        {
++            return false;
++        }
++
+         /**
+          * check the classname (minus any array info)
+          * whether it matches disallowed classes or packages
+@@ -153,3 +162,5 @@ public class SecureIntrospectorImpl extends Introspector implements SecureIntros
+         return true;
+     }
+ }
++
++/* @generated */
+\ No newline at end of file

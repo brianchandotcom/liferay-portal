@@ -186,7 +186,12 @@ const useSelectItem = () => {
 				type: SELECT_ITEM,
 			});
 
-			if (itemId && !['browser', 'comments'].includes(sidebarPanelId)) {
+			if (
+				itemId &&
+				!['browser', 'comments', 'page-content'].includes(
+					sidebarPanelId
+				)
+			) {
 				storeDispatch(
 					switchSidebarPanel({
 						sidebarOpen: true,

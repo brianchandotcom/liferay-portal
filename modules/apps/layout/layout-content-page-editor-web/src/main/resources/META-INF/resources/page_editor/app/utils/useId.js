@@ -13,11 +13,12 @@
  */
 
 import {useMemo} from 'react';
+import uuidv4 from 'uuid/v4';
 
-import {config} from '../config/index';
+const DEFAULT_PREFIX = uuidv4();
 
 let nextId = 0;
 
-export function useId() {
-	return useMemo(() => `${config.portletNamespace}_useId_${nextId++}`, []);
+export function useId({prefix = DEFAULT_PREFIX} = {}) {
+	return useMemo(() => `useId_${prefix}_${nextId++}`, [prefix]);
 }

@@ -22,10 +22,8 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	macro goToRoutine {
-		Click(
-			key_projectName = "${routineName}",
-			locator1 = "Testray#ITEM_NAME");
+	macro deleteRoutine {
+		Testray.deleteComponent(itemName = "${itemName}");
 	}
 
 	macro editRoutine {
@@ -35,8 +33,10 @@ definition {
 			valueName = "${routineName}");
 	}
 
-	macro deleteRoutine {
-		Testray.deleteComponent(itemName = "${itemName}");
+	macro goToRoutine {
+		Click(
+			key_projectName = "${routineName}",
+			locator1 = "Testray#ITEM_NAME");
 	}
 
 	macro selectOptionDropdownRoutine {

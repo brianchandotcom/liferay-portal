@@ -1,12 +1,8 @@
 definition {
 
-	macro editBuild {
-		TestrayManage.goToEditPage(valueName = "${valueName}");
+	macro createBuild {
+		Click(locator1 = "Testray#ADD_PROJECT");
 
-		TestrayBuild.typeBuildField();
-	}
-
-	macro typeBuildField {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
 			value1 = "${fieldName}");
@@ -30,9 +26,13 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	macro createBuild {
-		Click(locator1 = "Testray#ADD_PROJECT");
-		
+	macro editBuild {
+		TestrayManage.goToEditPage(valueName = "${valueName}");
+
+		TestrayBuild.typeBuildField();
+	}
+
+	macro typeBuildField {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
 			value1 = "${fieldName}");

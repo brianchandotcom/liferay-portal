@@ -16,12 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:breadcrumb
-	ddmTemplateGroupId="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyleGroupId() %>"
-	ddmTemplateKey="<%= siteNavigationBreadcrumbDisplayContext.getDDMTemplateKey() %>"
-	showCurrentGroup="<%= siteNavigationBreadcrumbDisplayContext.isShowCurrentGroup() %>"
-	showGuestGroup="<%= siteNavigationBreadcrumbDisplayContext.isShowGuestGroup() %>"
-	showLayout="<%= siteNavigationBreadcrumbDisplayContext.isShowLayout() %>"
-	showParentGroups="<%= siteNavigationBreadcrumbDisplayContext.isShowParentGroups() %>"
-	showPortletBreadcrumb="<%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>"
-/>
+<%
+List<BreadcrumbEntry> breadcrumbEntries = siteNavigationBreadcrumbDisplayContext.getBreadcrumbEntries();
+%>
+
+<nav aria-label="<%= HtmlUtil.escapeAttribute(portletDisplay.getTitle()) %>" id="<portlet:namespace />breadcrumbs-defaultScreen">
+	<c:if test="<%= !breadcrumbEntries.isEmpty() %>">
+		<%= siteNavigationBreadcrumbDisplayContext.renderDDMTemplate() %>
+	</c:if>
+</nav>

@@ -21,5 +21,9 @@ html#{$cadmin-selector} {
 			max-height: 70vh;
 			overflow: auto;
 		}
+
+		.nav-underline {
+			border-bottom: 1px solid $secondary-l3;
+		}
 	}
 }

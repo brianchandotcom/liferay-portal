@@ -3924,7 +3924,9 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	macro openPreviewMode {
-		Click(locator1 = "PageEditor#PREVIEW");
+		Click(
+			key_text = "view",
+			locator1 = "Icon#ANY");
 	}
 
 	macro previewInANewTab {

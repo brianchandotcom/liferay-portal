@@ -827,11 +827,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PREVIEW</td>
-	<td>//div[contains(@class,'management-bar')]//button[@*='Preview']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PREVIEW_WITH_DROPDOWN_MENU</td>
 	<td>//span[(text())='-- None --']</td>
 	<td></td>

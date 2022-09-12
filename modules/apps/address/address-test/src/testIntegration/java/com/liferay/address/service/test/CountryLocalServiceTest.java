@@ -16,8 +16,11 @@ package com.liferay.address.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.CountryTitleException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.CountryLocalization;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Region;
@@ -33,6 +36,7 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -248,6 +252,25 @@ public class CountryLocalServiceTest {
 		Assert.assertEquals(
 			!shippingAllowed, updatedCountry.isShippingAllowed());
 		Assert.assertEquals(!subjectToVAT, updatedCountry.isSubjectToVAT());
+	}
+
+	@Test(expected = CountryTitleException.MustNotExceedMaximumLength.class)
+	public void testUpdateCountryLocalizationsValidation() throws Exception {
+		Country country = _addCountry(
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
+
+		int maxTitleLength = ModelHintsUtil.getMaxLength(
+			CountryLocalization.class.getName(), "title");
+
+		HashMapBuilder.HashMapWrapper<String, String> titleMap =
+			new HashMapBuilder.HashMapWrapper<>();
+
+		titleMap.put("de_DE", RandomTestUtil.randomString(maxTitleLength + 1));
+
+		_countryLocalService.updateCountryLocalizations(
+			country, titleMap.build());
 	}
 
 	private Country _addCountry(

@@ -241,6 +241,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_ACTIVE_BUTTON</td>
+	<td>//*[contains(@type, 'button') and text()='${key_text}' and not(@disabled)]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIVATION_STATUS_PAGE</td>
 	<td>//div[contains(@class, 'mb-5') and contains(.,'Activation Status')]</td>
 	<td></td>

@@ -243,6 +243,12 @@ definition {
 		AssertElementPresent(locator1 = "CustomerPortalSite#ANY_DISABLED_BUTTON");
 	}
 
+	macro assertButtonIsActive {
+		var key_text = "${text}";
+
+		AssertElementPresent(locator1 = "CustomerPortalSite#ANY_ACTIVE_BUTTON");
+	}
+
 	macro clickOnCancelButton {
 		var key_text = "Cancel";
 

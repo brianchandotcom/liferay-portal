@@ -1,0 +1,27 @@
+diff --git a/org/eclipse/equinox/http/servlet/internal/context/ContextController.java b/org/eclipse/equinox/http/servlet/internal/context/ContextController.java
+index 8114b303d181..3f4d0d4c7fff 100644
+--- a/org/eclipse/equinox/http/servlet/internal/context/ContextController.java
++++ b/org/eclipse/equinox/http/servlet/internal/context/ContextController.java
+@@ -886,13 +886,6 @@ public class ContextController {
+ 	}
+ 
+ 	public boolean matches(ServiceReference<?> whiteBoardService) {
+-		// make sure the context helper is either one of the built-in ones registered by this http whiteboard implementation;
+-		// or is visible to the whiteboard registering bundle.
+-
+-		if (!visibleContextHelper(whiteBoardService)) {
+-			return false;
+-		}
+-
+ 		String contextSelector = (String) whiteBoardService.getProperty(
+ 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT);
+ 
+@@ -1340,4 +1333,5 @@ public class ContextController {
+ 	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> httpSessionIdListenerServiceTracker;
+ 	private final ServiceTracker<Servlet, AtomicReference<ServletRegistration>> servletServiceTracker;
+ 	private final ServiceTracker<Object, AtomicReference<ResourceRegistration>> resourceServiceTracker;
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file

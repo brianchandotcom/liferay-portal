@@ -886,13 +886,6 @@ public class ContextController {
 	}
 
 	public boolean matches(ServiceReference<?> whiteBoardService) {
-		// make sure the context helper is either one of the built-in ones registered by this http whiteboard implementation;
-		// or is visible to the whiteboard registering bundle.
-
-		if (!visibleContextHelper(whiteBoardService)) {
-			return false;
-		}
-
 		String contextSelector = (String) whiteBoardService.getProperty(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT);
 
@@ -1341,3 +1334,4 @@ public class ContextController {
 	private final ServiceTracker<Servlet, AtomicReference<ServletRegistration>> servletServiceTracker;
 	private final ServiceTracker<Object, AtomicReference<ResourceRegistration>> resourceServiceTracker;
 }
+/* @generated */

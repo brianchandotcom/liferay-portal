@@ -495,8 +495,15 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		throws ModelListenerException {
 
 		try {
+			long userId = PrincipalThreadLocal.getUserId();
+
+			if (userId == 0) {
+				userId = objectEntry.getUserId();
+			}
+
 			_objectValidationRuleLocalService.validate(
-				objectEntry, objectEntry.getObjectDefinitionId());
+				objectEntry, objectEntry.getObjectDefinitionId(),
+				_getPayloadJSONObject(null, null, objectEntry, userId), userId);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);

@@ -27,7 +27,7 @@ import yupSchema, {yupResolver} from '../../../schema/yup';
 import {liferayUserAccountsRest} from '../../../services/rest';
 import {RoleTypes} from '../../../util/constants';
 
-export type UserFormDefault = {
+type UserFormDefault = {
 	alternateName: string;
 	emailAddress: string;
 	familyName: string;
@@ -183,7 +183,7 @@ const UserForm = () => {
 
 				<Form.Divider />
 
-				<ClayLayout.Row justify="start">
+				<ClayLayout.Row className="mb-2" justify="start">
 					<ClayLayout.Col size={12} sm={12} xl={3}>
 						<h5 className="font-weight-normal">
 							{i18n.translate('roles')}
@@ -197,14 +197,12 @@ const UserForm = () => {
 									checked={userRoles.includes(id)}
 									disabled={!userRoles.includes(id)}
 									label={name}
-									onChange={() => {}}
+									onChange={() => null}
 								/>
 							</div>
 						))}
 					</ClayLayout.Col>
 				</ClayLayout.Row>
-
-				<br />
 
 				<Form.Footer
 					onClose={onClose}

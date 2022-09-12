@@ -24,7 +24,6 @@ import {FormModalOptions} from '../../../../hooks/useFormModal';
 import i18n from '../../../../i18n';
 import {filters} from '../../../../schema/filter';
 import {searchUtil} from '../../../../util/search';
-import useSuiteActions from '../../Suites/useSuiteActions';
 
 type BuildSelectSuitesModalProps = {
 	modal: FormModalOptions;
@@ -35,8 +34,6 @@ const BuildSelectSuitesModal: React.FC<BuildSelectSuitesModalProps> = ({
 }) => {
 	const [state, setState] = useState<any>({});
 	const {projectId} = useParams();
-
-	const {actions} = useSuiteActions();
 
 	return (
 		<Modal
@@ -64,7 +61,6 @@ const BuildSelectSuitesModal: React.FC<BuildSelectSuitesModalProps> = ({
 					onContextChange={({selectedRows}) => setState(selectedRows)}
 					resource="/suites"
 					tableProps={{
-						actions,
 						columns: [
 							{
 								clickable: true,

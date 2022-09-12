@@ -95,7 +95,7 @@ const SidebarFooter: React.FC<SidebarProps> = ({expanded, onClick}) => {
 							{
 								icon: 'user',
 								label: i18n.translate('manage-account'),
-								path: '/manage/user/me/update',
+								path: '/manage/user/me',
 							},
 							{
 								icon: 'logout',

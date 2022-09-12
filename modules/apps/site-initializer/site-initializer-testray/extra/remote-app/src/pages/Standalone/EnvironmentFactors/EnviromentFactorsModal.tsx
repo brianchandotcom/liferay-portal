@@ -36,7 +36,7 @@ type FactorCategoryForm = typeof yupSchema.factorCategory.__outputType;
 type FactorEnviroment = typeof yupSchema.enviroment.__outputType;
 
 const onMapAvailable = (factor: FactorCategoryForm) => ({
-	label: factor.name,
+	label: factor?.name,
 	value: String(factor?.id),
 });
 

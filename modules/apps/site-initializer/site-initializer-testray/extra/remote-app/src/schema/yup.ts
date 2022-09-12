@@ -17,20 +17,24 @@ import * as yup from 'yup';
 
 import i18n from '../i18n';
 
+const DEFAULT_REQUIRED_TEXT = i18n.translate('this-field-is-required');
 const MINIMUM_CHARACTERS_PASSWORD = 8;
 
 const userSchema = yup.object({
-	alternateName: yup.string().required(),
-	emailAddress: yup.string().email().required(),
-	familyName: yup.string().required(),
-	givenName: yup.string().required(),
+	alternateName: yup.string().required(i18n.translate(DEFAULT_REQUIRED_TEXT)),
+	emailAddress: yup
+		.string()
+		.email()
+		.required(i18n.translate(DEFAULT_REQUIRED_TEXT)),
+	familyName: yup.string().required(i18n.translate(DEFAULT_REQUIRED_TEXT)),
+	givenName: yup.string().required(i18n.translate(DEFAULT_REQUIRED_TEXT)),
 });
 
 const passwordStructure = {
 	currentPassword: yup.string(),
 	password: yup
 		.string()
-		.required(i18n.translate('this-field-is-required'))
+		.required(i18n.translate(DEFAULT_REQUIRED_TEXT))
 		.min(
 			MINIMUM_CHARACTERS_PASSWORD,
 			i18n.sub(
@@ -44,7 +48,7 @@ const passwordStructure = {
 		),
 	rePassword: yup
 		.string()
-		.required(i18n.translate('this-field-is-required'))
+		.required(i18n.translate(DEFAULT_REQUIRED_TEXT))
 		.oneOf(
 			[yup.ref('password'), null],
 			i18n.translate('passwords-do-not-match')
@@ -55,7 +59,7 @@ const passwordRequiredStructure = {
 	...passwordStructure,
 	currentPassword: yup
 		.string()
-		.required(i18n.translate('this-field-is-required')),
+		.required(i18n.translate(DEFAULT_REQUIRED_TEXT)),
 };
 
 const yupSchema = {
@@ -122,9 +126,9 @@ const yupSchema = {
 	factorOption: yup.object({
 		factorCategoryId: yup
 			.string()
-			.required(i18n.translate('this-field-is-required')),
+			.required(i18n.translate(DEFAULT_REQUIRED_TEXT)),
 		id: yup.string(),
-		name: yup.string().required(i18n.translate('this-field-is-required')),
+		name: yup.string().required(i18n.translate(DEFAULT_REQUIRED_TEXT)),
 	}),
 	option: yup.object({
 		name: yup.string(),

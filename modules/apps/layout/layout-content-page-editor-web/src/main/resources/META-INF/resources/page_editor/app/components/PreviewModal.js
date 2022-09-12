@@ -18,6 +18,7 @@ import {addParams} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
+import {useId} from '../../core/hooks/useId';
 import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
 import {config} from '../config/index';
@@ -25,7 +26,6 @@ import {useDisplayPagePreviewItem} from '../contexts/DisplayPagePreviewItemConte
 import {useSelector} from '../contexts/StoreContext';
 import selectLanguageId from '../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
-import {useId} from '../utils/useId';
 import {DisplayPagePreviewItemSelectorContent} from './DisplayPagePreviewItemSelector';
 import Translation from './Translation';
 import ViewportSizeSelector from './ViewportSizeSelector';

@@ -36,10 +36,10 @@ import isMappedToInfoItem from '../../../../../../app/utils/editable-value/isMap
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
 import {setIn} from '../../../../../../app/utils/setIn';
 import {updateIn} from '../../../../../../app/utils/updateIn';
-import {useId} from '../../../../../../app/utils/useId';
 import {ImageSelector} from '../../../../../../common/components/ImageSelector';
 import {ImageSelectorDescription} from '../../../../../../common/components/ImageSelectorDescription';
 import {ImageSelectorSize} from '../../../../../../common/components/ImageSelectorSize';
+import {useId} from '../../../../../../core/hooks/useId';
 import {getEditableItemPropTypes} from '../../../../../../prop-types/index';
 import {MappingPanel} from './MappingPanel';
 

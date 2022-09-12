@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import InfoItemService from '../../../../../../../app/services/InfoItemService';
-import {useId} from '../../../../../../../app/utils/useId';
+import {useId} from '../../../../../../../core/hooks/useId';
 
 const LIST_STYLE_GRID = '';
 

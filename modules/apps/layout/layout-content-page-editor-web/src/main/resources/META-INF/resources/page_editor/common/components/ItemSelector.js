@@ -22,7 +22,7 @@ import React, {useCallback} from 'react';
 import {config} from '../../app/config/index';
 import {useSelectorCallback} from '../../app/contexts/StoreContext';
 import {selectPageContentDropdownItems} from '../../app/selectors/selectPageContentDropdownItems';
-import {useId} from '../../app/utils/useId';
+import {useId} from '../../core/hooks/useId';
 import {openItemSelector} from '../../core/openItemSelector';
 
 const DEFAULT_PREVENT_ITEM_SELECT = (callback) => callback(false);

@@ -17,8 +17,8 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
+import {useId} from '../../../core/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
-import {useId} from '../../utils/useId';
 
 export function TextField({field, onValueSelect, value}) {
 	const [errorMessage, setErrorMessage] = useState('');

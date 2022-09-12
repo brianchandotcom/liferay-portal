@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
+import {useId} from '../../core/hooks/useId';
 import {openItemSelector} from '../../core/openItemSelector';
 import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {config} from '../config/index';
@@ -28,7 +29,6 @@ import {
 	useSelectDisplayPagePreviewItem,
 } from '../contexts/DisplayPagePreviewItemContext';
 import itemSelectorValueToInfoItem from '../utils/item-selector-value/itemSelectorValueToInfoItem';
-import {useId} from '../utils/useId';
 
 const NO_ITEM_LABEL = `-- ${Liferay.Language.get('none')} --`;
 

@@ -26,8 +26,8 @@ import {config} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import LayoutService from '../../../app/services/LayoutService';
 import changeMasterLayout from '../../../app/thunks/changeMasterLayout';
-import {useId} from '../../../app/utils/useId';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
+import {useId} from '../../../core/hooks/useId';
 import {useSetStyleBook, useStyleBook} from '../hooks/useStyleBook';
 
 const OPTIONS_TYPES = {

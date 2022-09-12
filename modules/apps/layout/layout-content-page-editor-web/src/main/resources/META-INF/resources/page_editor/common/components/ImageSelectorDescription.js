@@ -16,7 +16,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {useId} from '../../app/utils/useId';
+import {useId} from '../../core/hooks/useId';
 import CurrentLanguageFlag from './CurrentLanguageFlag';
 
 export function ImageSelectorDescription({

@@ -29,8 +29,8 @@ import updateRowColumns from '../../../../../../app/thunks/updateRowColumns';
 import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
 import {getResponsiveColumnSize} from '../../../../../../app/utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
-import {useId} from '../../../../../../app/utils/useId';
 import Collapse from '../../../../../../common/components/Collapse';
+import {useId} from '../../../../../../core/hooks/useId';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
 import {CommonStyles} from './CommonStyles';
 

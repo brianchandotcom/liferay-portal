@@ -19,9 +19,9 @@ import React, {useEffect, useState} from 'react';
 
 import {PAGINATION_ERROR_MESSAGES} from '../../../../../../../app/config/constants/paginationErrorMessages';
 import {config} from '../../../../../../../app/config/index';
-import {useId} from '../../../../../../../app/utils/useId';
 import {WarningMessage} from '../../../../../../../common/components/WarningMessage';
 import useControlledState from '../../../../../../../core/hooks/useControlledState';
+import {useId} from '../../../../../../../core/hooks/useId';
 
 export function PaginationOptions({
 	displayAllPages,

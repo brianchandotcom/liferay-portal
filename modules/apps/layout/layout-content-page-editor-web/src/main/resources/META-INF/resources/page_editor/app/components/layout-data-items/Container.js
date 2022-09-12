@@ -16,6 +16,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
+import {useId} from '../../../core/hooks/useId';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplayOptions';
 import {CONTAINER_WIDTH_TYPES} from '../../config/constants/containerWidthTypes';
@@ -29,7 +30,6 @@ import getLayoutDataItemCssClasses from '../../utils/getLayoutDataItemCssClasses
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
-import {useId} from '../../utils/useId';
 
 const Container = React.memo(
 	React.forwardRef(({children, className, data, item}, ref) => {

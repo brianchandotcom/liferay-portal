@@ -18,7 +18,7 @@ import classNames from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {useGlobalContext} from '../../app/contexts/GlobalContext';
-import {useId} from '../../app/utils/useId';
+import {useId} from '../../core/hooks/useId';
 import {useStyleBook} from '../../plugins/page-design-options/hooks/useStyleBook';
 import {Tooltip} from './Tooltip';
 

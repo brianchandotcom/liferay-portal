@@ -23,6 +23,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {getResetLabelByViewport} from '../../../app/utils/getResetLabelByViewport';
 import {LengthField} from '../../../common/components/LengthField';
 import useControlledState from '../../../core/hooks/useControlledState';
+import {useId} from '../../../core/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useActiveItemId} from '../../contexts/ControlsContext';
 import {useGlobalContext} from '../../contexts/GlobalContext';
@@ -30,7 +31,6 @@ import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqu
 import getPreviousResponsiveStyle from '../../utils/getPreviousResponsiveStyle';
 import isNullOrUndefined from '../../utils/isNullOrUndefined';
 import isValidStyleValue from '../../utils/isValidStyleValue';
-import {useId} from '../../utils/useId';
 
 export function AdvancedSelectField({
 	canDetachTokenValues,

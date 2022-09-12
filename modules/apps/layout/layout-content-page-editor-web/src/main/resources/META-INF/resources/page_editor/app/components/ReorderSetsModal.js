@@ -27,10 +27,10 @@ import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import updateSetsOrder from '../../app/thunks/updateSetsOrder';
+import {useId} from '../../core/hooks/useId';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectWidgetFragmentEntryLinks from '../selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../thunks/loadWidgets';
-import {useId} from '../utils/useId';
 
 const FRAGMENTS_ID = 'fragments';
 const WIDGETS_ID = 'widgets';

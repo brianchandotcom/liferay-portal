@@ -379,6 +379,16 @@ definition {
 			value1 = "${option}");
 	}
 
+	macro selectFistActiveSubscriptionInput {
+		var key_index = "1";
+
+		if (isSet(index)) {
+			var key_index = "${index}";
+		}
+
+		Click(locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_AVAILABLE");
+	}
+
 	macro selectProductVersion {
 		var key_label = "Version";
 

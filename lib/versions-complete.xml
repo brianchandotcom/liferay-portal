@@ -307,7 +307,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2006-11-20 19:59:50</current-version-publish-date>
-				<latest-version-publish-date>2012-11-24 08:46:41</latest-version-publish-date>
+				<latest-version-publish-date>2012-11-24 09:46:41</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.comment.sanitizer.jar!checker-qual.jar</file-name>
@@ -321,7 +321,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-01 18:14:40</current-version-publish-date>
-				<latest-version-publish-date>2022-08-03 15:48:43</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-02 04:33:50</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.comment.sanitizer.jar!error_prone_annotations.jar</file-name>
@@ -417,7 +417,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-03-03 00:36:42</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 15:13:24</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:47:03</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.google.merchant.jar!jsch.jar</file-name>
@@ -501,7 +501,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-01-08 22:49:51</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 15:10:08</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:35:50</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.payment.method.mercanet.jar!payment-sdk-common.jar</file-name>
@@ -2066,7 +2066,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2014-06-18 23:24:42</current-version-publish-date>
-				<latest-version-publish-date>2022-04-15 18:46:57</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-04 18:32:07</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.expression.jar!org.abego.treelayout.core.jar</file-name>
@@ -2093,7 +2093,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2014-06-18 23:24:42</current-version-publish-date>
-				<latest-version-publish-date>2022-04-15 18:46:57</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-04 18:32:07</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.form.values.query.jar!org.abego.treelayout.core.jar</file-name>
@@ -2331,7 +2331,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2018-02-05 21:42:33</current-version-publish-date>
-				<latest-version-publish-date>2022-08-09 09:55:42</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-06 20:09:36</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.frontend.js.minifier.jar!yuicompressor.jar</file-name>
@@ -2596,6 +2596,34 @@
 				<latest-version-publish-date>2022-08-19 12:54:45</latest-version-publish-date>
 			</library>
 			<library>
+				<file-name>com.liferay.ip.geocoder.impl.jar!geoip2.jar</file-name>
+				<version>2.16.1</version>
+				<project-name>MaxMind GeoIP2 API</project-name>
+				<project-url>https://dev.maxmind.com/geoip?lang=en</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.html</license-url>
+					</license>
+				</licenses>
+				<current-version-publish-date>2021-11-18 20:11:50</current-version-publish-date>
+				<latest-version-publish-date>2022-03-29 12:59:23</latest-version-publish-date>
+			</library>
+			<library>
+				<file-name>com.liferay.ip.geocoder.impl.jar!maxmind-db.jar</file-name>
+				<version>2.0.0</version>
+				<project-name>MaxMind DB Reader</project-name>
+				<project-url>http://dev.maxmind.com/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.html</license-url>
+					</license>
+				</licenses>
+				<current-version-publish-date>2020-10-13 17:42:40</current-version-publish-date>
+				<latest-version-publish-date>2020-10-13 17:42:40</latest-version-publish-date>
+			</library>
+			<library>
 				<file-name>com.liferay.knowledge.base.markdown.converter.impl.jar!asm-analysis.jar</file-name>
 				<version>4.1</version>
 				<project-name>ASM static code analysis framework</project-name>
@@ -2842,8 +2870,8 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2013-02-13 07:57:33</current-version-publish-date>
-				<latest-version-publish-date>2013-02-13 07:57:33</latest-version-publish-date>
+				<current-version-publish-date>2013-02-13 08:57:33</current-version-publish-date>
+				<latest-version-publish-date>2013-02-13 08:57:33</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.oauth.client.persistence.service.jar!json-smart.jar</file-name>
@@ -2885,7 +2913,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-04-09 07:08:17</current-version-publish-date>
-				<latest-version-publish-date>2022-08-26 03:59:45</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-09 03:50:46</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.oauth.client.persistence.service.jar!oauth2-oidc-sdk.jar</file-name>
@@ -2899,7 +2927,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-05-31 08:45:35</current-version-publish-date>
-				<latest-version-publish-date>2022-08-26 09:25:33</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-09 09:30:52</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.oauth2.provider.rest.jar!javax.annotation-api.jar</file-name>
@@ -3254,7 +3282,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-03-06 16:20:43</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 14:23:48</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 18:56:29</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!jackson-core.jar</file-name>
@@ -3268,7 +3296,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-03-06 16:27:56</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 14:28:36</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:06:44</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!jackson-databind.jar</file-name>
@@ -3282,7 +3310,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-03-28 23:00:51</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 14:45:48</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:18:26</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!jackson-dataformat-yaml.jar</file-name>
@@ -3296,7 +3324,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-03-06 18:07:12</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 14:59:54</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:45:12</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!jackson-datatype-jsr310.jar</file-name>
@@ -3310,7 +3338,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-03-06 18:23:54</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 15:10:08</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:35:50</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-client.jar</file-name>
@@ -3323,7 +3351,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:52:47</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:18:31</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:40:13</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-admissionregistration.jar</file-name>
@@ -3337,7 +3365,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:51:37</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:20:30</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:40:34</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-apiextensions.jar</file-name>
@@ -3351,7 +3379,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:52:15</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:19:18</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:40:09</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-apps.jar</file-name>
@@ -3365,7 +3393,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:51:48</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:20:56</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:38:26</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-autoscaling.jar</file-name>
@@ -3379,7 +3407,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:51:42</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:21:14</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:39:46</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-batch.jar</file-name>
@@ -3393,7 +3421,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:51:58</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:18:45</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:39:39</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-certificates.jar</file-name>
@@ -3407,7 +3435,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:51:33</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:18:43</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:39:30</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-common.jar</file-name>
@@ -3421,7 +3449,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:50:49</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:20:13</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:39:35</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-coordination.jar</file-name>
@@ -3435,7 +3463,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:52:56</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:20:40</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:39:15</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-core.jar</file-name>
@@ -3449,7 +3477,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:53:03</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:19:29</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:38:37</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-discovery.jar</file-name>
@@ -3463,7 +3491,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:51:41</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:19:17</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:38:49</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-events.jar</file-name>
@@ -3477,7 +3505,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:52:05</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:18:29</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:38:21</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-extensions.jar</file-name>
@@ -3491,7 +3519,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:52:14</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:20:26</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:39:32</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-flowcontrol.jar</file-name>
@@ -3505,7 +3533,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:52:29</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:19:24</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:38:46</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-metrics.jar</file-name>
@@ -3519,7 +3547,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:53:04</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:18:54</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:38:08</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-networking.jar</file-name>
@@ -3533,7 +3561,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:52:02</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:20:03</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:40:23</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-node.jar</file-name>
@@ -3547,7 +3575,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:51:47</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:20:55</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:40:12</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-policy.jar</file-name>
@@ -3561,7 +3589,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:51:01</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:20:28</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:39:36</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-rbac.jar</file-name>
@@ -3575,7 +3603,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:52:44</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:18:48</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:40:06</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-scheduling.jar</file-name>
@@ -3589,7 +3617,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:52:15</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:20:27</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:39:48</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-model-storageclass.jar</file-name>
@@ -3603,7 +3631,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-06 06:52:46</current-version-publish-date>
-				<latest-version-publish-date>2022-07-27 10:20:15</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-01 12:40:15</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!logging-interceptor.jar</file-name>
@@ -3877,7 +3905,7 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2013-01-07 10:43:47</current-version-publish-date>
+				<current-version-publish-date>2013-01-07 11:43:47</current-version-publish-date>
 				<latest-version-publish-date>2022-06-09 13:45:41</latest-version-publish-date>
 			</library>
 			<library>
@@ -4185,7 +4213,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-12-15 01:38:09</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 14:56:12</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:42:33</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!jackson-dataformat-smile.jar</file-name>
@@ -4199,7 +4227,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-03-06 18:04:13</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 14:56:15</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:42:34</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!jackson-dataformat-yaml.jar</file-name>
@@ -4213,7 +4241,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-05-02 20:18:12</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 14:59:54</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:45:12</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!joda-time.jar</file-name>
@@ -4456,7 +4484,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-04-24 11:00:40</current-version-publish-date>
-				<latest-version-publish-date>2022-07-16 19:07:14</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-06 19:43:22</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!batik-constants.jar</file-name>
@@ -4727,8 +4755,8 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2013-02-13 07:57:33</current-version-publish-date>
-				<latest-version-publish-date>2013-02-13 07:57:33</latest-version-publish-date>
+				<current-version-publish-date>2013-02-13 08:57:33</current-version-publish-date>
+				<latest-version-publish-date>2013-02-13 08:57:33</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!json-smart.jar</file-name>
@@ -4770,7 +4798,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-04-09 07:08:17</current-version-publish-date>
-				<latest-version-publish-date>2022-08-26 03:59:45</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-09 03:50:46</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!oauth2-oidc-sdk.jar</file-name>
@@ -4784,7 +4812,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-05-31 08:45:35</current-version-publish-date>
-				<latest-version-publish-date>2022-08-26 09:25:33</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-09 09:30:52</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!api-common.jar</file-name>
@@ -4935,7 +4963,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-02-25 19:17:22</current-version-publish-date>
-				<latest-version-publish-date>2022-08-09 15:26:00</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 01:23:33</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!google-auth-library-oauth2-http.jar</file-name>
@@ -4948,7 +4976,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-02-25 19:17:29</current-version-publish-date>
-				<latest-version-publish-date>2022-08-09 15:26:06</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 01:23:37</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!google-cloud-core-http.jar</file-name>
@@ -4962,7 +4990,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-11 00:10:47</current-version-publish-date>
-				<latest-version-publish-date>2022-08-24 19:06:59</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 17:44:02</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!google-cloud-core.jar</file-name>
@@ -4976,7 +5004,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-03-11 00:10:45</current-version-publish-date>
-				<latest-version-publish-date>2022-08-24 19:07:03</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 17:44:11</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!google-cloud-storage.jar</file-name>
@@ -5140,7 +5168,7 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2012-11-06 13:27:13</current-version-publish-date>
+				<current-version-publish-date>2012-11-06 14:27:13</current-version-publish-date>
 				<latest-version-publish-date>2013-07-15 00:07:30</latest-version-publish-date>
 			</library>
 			<library>
@@ -5267,7 +5295,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 17:54:32</current-version-publish-date>
-				<latest-version-publish-date>2022-08-30 19:26:21</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 17:56:16</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-kms.jar</file-name>
@@ -5281,7 +5309,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 17:54:29</current-version-publish-date>
-				<latest-version-publish-date>2022-08-30 19:25:22</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 17:56:01</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-s3.jar</file-name>
@@ -5295,7 +5323,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-07-15 17:53:45</current-version-publish-date>
-				<latest-version-publish-date>2022-08-30 19:25:24</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 17:55:54</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!commons-codec.jar</file-name>
@@ -5421,7 +5449,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2021-12-15 01:38:09</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 14:56:12</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:42:33</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!joda-time.jar</file-name>
@@ -5917,7 +5945,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2018-12-15 19:57:41</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 15:13:24</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:47:03</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.api.jar!snakeyaml.jar</file-name>
@@ -5945,7 +5973,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2017-12-09 17:07:09</current-version-publish-date>
-				<latest-version-publish-date>2022-04-15 18:46:57</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-04 18:32:07</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!classmate.jar</file-name>
@@ -6042,8 +6070,8 @@
 						<license-url>https://github.com/graphql-java/graphql-java/blob/master/LICENSE.md</license-url>
 					</license>
 				</licenses>
-				<current-version-publish-date>2021-07-17 06:36:27</current-version-publish-date>
-				<latest-version-publish-date>2022-08-30 19:25:03</latest-version-publish-date>
+				<current-version-publish-date>2021-07-17 19:08:14</current-version-publish-date>
+				<latest-version-publish-date>2022-09-07 01:15:02</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!guava.jar</file-name>
@@ -6070,7 +6098,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-05-06 11:24:51</current-version-publish-date>
-				<latest-version-publish-date>2022-08-09 12:47:41</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-09 10:33:00</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!jackson-dataformat-xml.jar</file-name>
@@ -6084,7 +6112,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2018-12-15 19:57:41</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 15:13:24</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:47:03</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!jackson-dataformat-yaml.jar</file-name>
@@ -6098,7 +6126,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2018-12-15 19:55:18</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 14:59:54</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:45:12</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!jackson-datatype-jdk8.jar</file-name>
@@ -6112,7 +6140,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2018-12-15 20:06:17</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 15:10:12</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:35:57</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!jackson-jaxrs-xml-provider.jar</file-name>
@@ -6126,7 +6154,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2018-12-15 20:30:34</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 18:02:26</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 20:07:32</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!jackson-module-jaxb-annotations.jar</file-name>
@@ -6140,7 +6168,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2018-12-15 19:06:26</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 15:06:35</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:33:50</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!java-dataloader.jar</file-name>
@@ -6426,7 +6454,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-10-01 21:26:02</current-version-publish-date>
-				<latest-version-publish-date>2022-05-26 15:10:08</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-03 19:35:50</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.sms.jar!jjwt-api.jar</file-name>
@@ -6482,7 +6510,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2020-11-18 20:49:34</current-version-publish-date>
-				<latest-version-publish-date>2022-08-24 17:56:16</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-07 16:33:32</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.segments.content.targeting.upgrade.jar!commons-lang3.jar</file-name>
@@ -6816,7 +6844,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-05-06 04:48:44</current-version-publish-date>
-				<latest-version-publish-date>2022-08-26 09:44:40</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 18:33:38</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-codec-http.jar</file-name>
@@ -6830,7 +6858,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-05-06 04:48:48</current-version-publish-date>
-				<latest-version-publish-date>2022-08-26 09:43:43</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 18:34:16</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-codec-http2.jar</file-name>
@@ -6844,7 +6872,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-05-06 04:23:33</current-version-publish-date>
-				<latest-version-publish-date>2022-08-26 09:20:57</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 17:18:55</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-codec.jar</file-name>
@@ -6858,7 +6886,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-05-06 04:49:17</current-version-publish-date>
-				<latest-version-publish-date>2022-08-26 09:42:41</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 18:32:59</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-common.jar</file-name>
@@ -6872,7 +6900,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-05-06 04:48:55</current-version-publish-date>
-				<latest-version-publish-date>2022-08-26 09:44:35</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 18:33:42</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-handler-proxy.jar</file-name>
@@ -6886,7 +6914,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-05-06 04:24:01</current-version-publish-date>
-				<latest-version-publish-date>2022-08-26 09:21:51</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 17:18:46</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-handler.jar</file-name>
@@ -6900,7 +6928,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-05-06 04:49:42</current-version-publish-date>
-				<latest-version-publish-date>2022-08-26 09:43:37</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 18:33:30</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-resolver-dns.jar</file-name>
@@ -6914,7 +6942,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-05-06 04:48:05</current-version-publish-date>
-				<latest-version-publish-date>2022-08-26 09:44:59</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 18:33:57</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-resolver.jar</file-name>
@@ -6928,7 +6956,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-05-06 04:50:03</current-version-publish-date>
-				<latest-version-publish-date>2022-08-26 09:42:38</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 18:33:48</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-transport.jar</file-name>
@@ -6942,7 +6970,7 @@
 					</license>
 				</licenses>
 				<current-version-publish-date>2022-05-06 04:50:02</current-version-publish-date>
-				<latest-version-publish-date>2022-08-26 09:44:45</latest-version-publish-date>
+				<latest-version-publish-date>2022-09-08 18:32:39</latest-version-publish-date>
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.pdfbox.jar!fontbox.jar</file-name>

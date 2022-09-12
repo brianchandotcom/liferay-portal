@@ -27,15 +27,12 @@ public class CommerceInventoryReplenishmentItemUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			StringBundler.concat(
-				"delete from CIReplenishmentItem where CIReplenishmentItemId ",
-				"in (select ciReplenishmentItemId from (select ",
-				"CIReplenishmentItemId as ciReplenishmentItemId from ",
-				"CIReplenishmentItem left join CIWarehouseItem on ",
-				"CIReplenishmentItem.companyId = CIWarehouseItem.companyId ",
-				"and CIReplenishmentItem.sku = CIWarehouseItem.sku and ",
+				"delete from CIReplenishmentItem where ",
+				"CIReplenishmentItem.sku not in (select CIWarehouseItem.sku ",
+				"from CIWarehouseItem where CIReplenishmentItem.companyid = ",
+				"CIWarehouseItem.companyid and ",
 				"CIReplenishmentItem.commerceInventoryWarehouseId = ",
-				"CIWarehouseItem.commerceInventoryWarehouseId where ",
-				"CIWarehouseItem.sku is null) as ciReplenishmentItemId)"));
+				"CIWarehouseItem.commerceInventoryWarehouseId)"));
 	}
 
 }

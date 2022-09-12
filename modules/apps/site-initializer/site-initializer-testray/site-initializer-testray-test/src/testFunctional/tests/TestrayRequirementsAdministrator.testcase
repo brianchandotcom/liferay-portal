@@ -1,0 +1,130 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Testray.createTestraySite(siteName = "Testray 2");
+
+			Refresh();
+		}
+
+		task ("Go to Testray, Create Project and change pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+
+		task ("Go to created project and add a new team") {
+            TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			Testray.addNewTeam(teamName = "Components_1 Team");
+
+            TestrayManage.closeModalInOptions();
+		}
+
+		task ("Go to created project and add two new components") {
+            TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+            Testray.addNewComponent(
+				componentName = "Components_1 Project 1",
+				teamName = "Components_1 Team");
+
+            Testray.addNewComponent(
+				componentName = "Components_1 Project 2",
+				teamName = "Components_1 Team");
+
+            Refresh();
+		}
+
+		task ("Go to project page and add a new Requirement") {
+            Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+            Testray.projectTabNavigator(navTabName = "Requirements");
+
+            TestrayRequirements.addRequirement(
+                requirementName = "ATF_Requirements Summary",
+                linkURL = "https://www.google.com",
+                linkTitle = "ATF_Requirements Link Title",
+                componentId = "Components_1 Project 1",
+                requirementDescription = "ATF_Requirements Description");
+		}
+
+
+		task ("Go to Testray 2 and change the pagination") {
+            ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.deleteAllProjects();
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+    @description = "This is a test for LPS-160544 - Verify if as an Administrator, I should be able to link a Case to a Requirement"
+	@priority = "5"
+	test AdminCanLinkCaseToRequirement {
+		task ("Given that the user goes to project page") {
+        	Testray.goToProjectPage(projectName = "Projects_1 Project");
+		}
+
+		task ("And given that the user adds a new Case") {
+			Testray.projectTabNavigator(navTabName = "Cases");
+
+			TestrayCases.typeCasesField(
+				caseName = "ATF_Requirements Case",
+				priority = "5",
+				CaseTypeId = "Automated Functional Test",
+				componentId = "Smoke",
+				duration = "10",
+				description = "ATF_Requirements Case Description",
+				steps = "ATF_Requirements Case Steps");
+		}
+
+		task ("When the user goes to requirements and link a case") {
+			Testray.projectTabNavigator(navTabName = "Requirements");
+
+			TestrayRequirements.goToRequirement(requirementSummary = "ATF_Requirements Summary");
+
+			TestrayRequirements.addRequirementCase(caseName = "ATF_Requirements Case");
+		}
+
+		task ("Then the case should be displayed on Requirement page") {
+			TestrayRequirements.verifyRequirementCase(
+				requirementPriority = "5",
+				requirementComponent = "Components_1 Project 1",
+				requirementCaseName = "ATF_Requirements Case");
+		}
+	}
+}

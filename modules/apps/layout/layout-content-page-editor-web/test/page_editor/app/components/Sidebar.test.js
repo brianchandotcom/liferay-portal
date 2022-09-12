@@ -12,7 +12,13 @@
  * details.
  */
 
-import {act, fireEvent, render, screen} from '@testing-library/react';
+import {
+	act,
+	fireEvent,
+	render,
+	screen,
+	waitForElementToBeRemoved,
+} from '@testing-library/react';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -25,7 +31,7 @@ import Sidebar, {
 import {DragAndDropContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/drag-and-drop/useDragAndDrop';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test-utils/StoreMother';
 
-const renderSidebar = () =>
+const renderSidebar = async () => {
 	render(
 		<StoreMother.Component>
 			<DndProvider backend={HTML5Backend}>
@@ -35,6 +41,11 @@ const renderSidebar = () =>
 			</DndProvider>
 		</StoreMother.Component>
 	);
+
+	await waitForElementToBeRemoved(() =>
+		document.querySelector('.loading-animation')
+	);
+};
 
 describe('Sidebar', () => {
 	describe('resize', () => {
@@ -49,13 +60,13 @@ describe('Sidebar', () => {
 		});
 
 		it('can be resized with mouse', async () => {
-			renderSidebar();
+			await renderSidebar();
 
 			const handler = screen.getByRole('separator', {
 				label: 'resize-sidebar',
 			});
 
-			await act(async () => {
+			act(() => {
 				fireEvent(
 					handler,
 					new MouseEvent('mousedown', {
@@ -90,13 +101,13 @@ describe('Sidebar', () => {
 		});
 
 		it('can be resized with arrow keys', async () => {
-			renderSidebar();
+			await renderSidebar();
 
 			const handler = screen.getByRole('separator', {
 				label: 'resize-sidebar',
 			});
 
-			await act(async () => {
+			act(() => {
 				fireEvent(
 					handler,
 					new KeyboardEvent('keydown', {

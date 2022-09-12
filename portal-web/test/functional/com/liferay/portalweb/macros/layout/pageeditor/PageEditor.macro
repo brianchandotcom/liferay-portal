@@ -3732,9 +3732,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	macro gotoEllipsisMenuItemInPageContentPanel {
-		PageEditor.gotoTab(tabName = "Browser");
-
-		Navigator.gotoNavTab(navTab = "Page Content");
+		PageEditor.gotoTab(tabName = "Page Content");
 
 		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
 			menuItem = "${menuItem}",
@@ -3747,8 +3745,6 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 
 		PageEditor.gotoTab(tabName = "Browser");
-
-		Navigator.gotoNavTab(navTab = "Page Elements");
 
 		if (IsElementNotPresent(key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE")) {
 			Click(
@@ -3868,8 +3864,6 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 
 		PageEditor.gotoTab(tabName = "Browser");
-
-		Navigator.gotoNavTab(navTab = "Page Elements");
 
 		if (IsElementNotPresent(key_index = "${index}", key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_INDEX")) {
 			Click(
@@ -4069,8 +4063,6 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 
 		PageEditor.gotoTab(tabName = "Browser");
 
-		Navigator.gotoNavTab(navTab = "Page Elements");
-
 		Click(
 			key_index = "${index}",
 			key_nodeName = "${fragmentName}",
@@ -4098,7 +4090,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	macro searchInPageContentPanel {
-		Navigator.gotoNavTab(navTab = "Page Content");
+		PageEditor.gotoTab(tabName = "Page Content");
 
 		Type(
 			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
@@ -4117,7 +4109,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 
 	macro selectContentFilter {
 		AssertVisible(
-			key_sidebarButton = "Browser",
+			key_sidebarButton = "Page Content",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 		Click(locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE");
@@ -4190,8 +4182,6 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 
 		PageEditor.gotoTab(tabName = "Browser");
 
-		Navigator.gotoNavTab(navTab = "Page Elements");
-
 		Click.clickNoWaitForVisible(
 			key_index = "${index}",
 			key_nodeName = "${fragmentName}",
@@ -4202,8 +4192,6 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 
 	macro unhideFragmentViaPageStyles {
 		PageEditor.gotoTab(tabName = "Browser");
-
-		Navigator.gotoNavTab(navTab = "Page Elements");
 
 		if (IsElementNotPresent(key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE")) {
 			Click(

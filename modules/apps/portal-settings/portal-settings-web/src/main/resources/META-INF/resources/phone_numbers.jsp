@@ -99,7 +99,7 @@
 					</div>
 
 					<div class="form-group-item">
-						<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.PHONE %>" name='<%= "phoneTypeId" + phonesIndex %>' />
+						<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.PHONE %>" name='<%= "phoneListTypeId" + phonesIndex %>' />
 					</div>
 
 					<div class="form-group-item form-group-item-label-spacer">

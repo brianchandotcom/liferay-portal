@@ -177,9 +177,8 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 
 		layoutLocalServiceHelper.validate(
 			groupId, privateLayout, layoutId, parentLayoutId, name, type,
-			layoutLocalServiceHelper.isDraftLayout(
-				layout.getClassNameId(), layout.getClassPK(), type),
-			hidden, layoutFriendlyURLMap, serviceContext);
+			layout.getClassNameId(), layout.getClassPK(), layoutFriendlyURLMap,
+			serviceContext);
 
 		layoutLocalServiceHelper.validateParentLayoutId(
 			groupId, privateLayout, layoutId, parentLayoutId);

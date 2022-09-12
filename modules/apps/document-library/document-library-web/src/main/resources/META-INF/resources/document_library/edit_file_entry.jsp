@@ -211,6 +211,15 @@ renderResponse.setTitle(headerTitle);
 				<liferay-ui:message key="<%= ase.getMessageKey() %>" />
 			</liferay-ui:error>
 
+			<liferay-ui:error exception="<%= AntivirusVirusFoundException.class %>">
+
+				<%
+				AntivirusVirusFoundException antivirusVirusFoundException = (AntivirusVirusFoundException)errorException;
+				%>
+
+				<liferay-ui:message key="<%= antivirusVirusFoundException.getMessageKey() %>" />
+			</liferay-ui:error>
+
 			<liferay-ui:error exception="<%= DLStorageQuotaExceededException.class %>">
 				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(PropsValues.DATA_LIMIT_DL_STORAGE_MAX_SIZE, locale) %>" key="you-have-exceeded-the-x-storage-quota-for-this-instance" />
 			</liferay-ui:error>

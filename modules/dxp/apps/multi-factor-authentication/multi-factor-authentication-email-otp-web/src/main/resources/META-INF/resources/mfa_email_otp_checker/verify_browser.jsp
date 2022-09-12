@@ -51,7 +51,7 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 
 	var configuredResendDuration = <%= mfaEmailOTPConfiguration.resendEmailTimeout() %>;
 
-	var failedAttemptsRetryTimeout = <%=mfaEmailOTPFailedAttemptsRetryTimeout %>;
+	var failedAttemptsRetryTimeout = <%= mfaEmailOTPFailedAttemptsRetryTimeout %>;
 
 	var countdown;
 

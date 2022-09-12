@@ -66,7 +66,7 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 								'<%= HtmlUtil.escapeJS(randomNamespace) %>toggle-label'
 							);
 							var toggleCheckbox = document.getElementById(
-								'<%=HtmlUtil.escapeJS(collapseSwitchId) %>'
+								'<%= HtmlUtil.escapeJS(collapseSwitchId) %>'
 							);
 							var collapseClickable = true;
 							var collapsableElement = document.getElementById(

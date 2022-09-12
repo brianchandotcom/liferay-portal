@@ -682,6 +682,39 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
 	}
 
+	@description = "Verify that it's possible to see the custom field label and system field label"
+	@priority = "5"
+	test CanSeeFieldLabel {
+		property portal.acceptance = "true";
+
+		task ("Add an object, go to the fields tab and state whether the system fields have the label System") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectField.assertSource(
+				fieldLabel = "Create Date",
+				fieldSource = "System");
+		}
+
+		task ("Add a new field and state that custom fields have the label Custom") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Field",
+				fieldType = "Text");
+
+			ObjectField.assertSource(
+				fieldLabel = "Custom Field",
+				fieldSource = "Custom");
+		}
+	}
+
 	@description = "LPS-148112 - Verify if on the side panel the 'Show files' path can be edited"
 	@priority = "4"
 	test CanUpdateShowFilesOptionBeforePublished {

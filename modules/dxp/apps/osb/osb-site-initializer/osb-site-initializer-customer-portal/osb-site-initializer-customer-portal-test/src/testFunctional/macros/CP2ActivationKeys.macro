@@ -349,14 +349,6 @@ definition {
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX_BY_EXPIRATION_DATE");
 	}
 
-	macro selectKeyType {
-		var key_label = "Key Type";
-
-		Select(
-			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
-			value1 = "${key_option}");
-	}
-
 	macro selectPaginationQuantity {
 		if (IsElementPresent(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON")) {
 			Click(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON");
@@ -402,14 +394,6 @@ definition {
 		}
 
 		Click(locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_AVAILABLE");
-	}
-
-	macro selectProductVersion {
-		var key_label = "Version";
-
-		Select(
-			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
-			value1 = "${key_option}");
 	}
 
 	macro selectSubscription {

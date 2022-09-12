@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>HELP_TEXT</td>
-	<td>//div[@class='sidebar-body'] //p[@class='text-secondary']</td>
+	<td>//*[contains(.,'Page Audit')] /p[@class='text-secondary']</td>
 	<td></td>
 </tr>
 <tr>

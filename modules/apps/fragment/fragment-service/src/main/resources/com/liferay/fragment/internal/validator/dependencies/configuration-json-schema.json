@@ -141,6 +141,7 @@
 						"colorPicker",
 						"collectionSelector",
 						"itemSelector",
+						"length",
 						"navigationMenuSelector",
 						"select",
 						"text",

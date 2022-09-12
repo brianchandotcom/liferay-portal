@@ -28,6 +28,17 @@ definition {
 			locator1 = "Testray#ITEM_NAME");
 	}
 
+	macro editRoutine {
+		TestrayManage.editProductVersion(
+			caseName = "${newNameRoutine}",
+			itemManage = "Edit",
+			valueName = "${routineName}");
+	}
+
+	macro deleteRoutine {
+		Testray.deleteComponent(itemName = "${itemName}");
+	}
+
 	macro selectOptionDropdownRoutine {
 		Click(locator1 = "TestrayRoutines#DROPDOWN_ROUTINE");
 

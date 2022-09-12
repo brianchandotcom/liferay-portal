@@ -1,0 +1,169 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			// Testray.createTestraySite(siteName = "Testray 2");
+
+			// Refresh();
+		}
+
+		task ("Go to Testray, Create Project and change pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+	}
+
+	tearDown {
+		// var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.deleteAllProjects();
+
+		// Testray.tearDownCP();
+
+		// if ("${testPortalInstance}" == "true") {
+		// 	PortalInstances.tearDownCP();
+		// }
+	}
+
+	@description = "This is a test for LPS-160582 - Verify if as an Administrator I am able to add a Routine"
+	@priority = "5"
+	test AdminCanAddRoutine {
+		task ("Given that the user add a new Routine") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+		}
+
+		task ("Then the Routine should appear on the list") {
+			Testray.assertItemName(key_name = "Routines_1 Routine");
+		}
+	}
+
+	@description = "This is a test for LPS-160580 - Verify if as an Administrator I am able to edit a Routine"
+	@priority = "5"
+	test AdminCanEditRoutine {
+		task ("Given that the user add a new Routine") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+		}
+
+		task ("When the user goes to edit the Routine and change the name") {
+			SelectFrameTop();
+
+			TestrayRoutines.editRoutine(
+				routineName = "Routines_1 Routine",
+				newNameRoutine = "Routines_1 Routine Edited");
+		}
+
+		task ("Then the Routine should be updated on the list") {
+			Testray.assertItemName(key_name = "Routines_1 Routine Edited");
+		}
+	}
+
+	@description = "This is a test for LPS-160581 - Verify if as an Administrator I am able to delete a Routine"
+	@priority = "5"
+	test AdminCanDeleteRoutine {
+		task ("Given that the user add a new Routine") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+		}
+
+		task ("Then the routine should appear on the list") {
+			Testray.assertItemName(key_name = "Routines_1 Routine");
+		}
+
+		task ("And when a routine is deleted") {
+			TestrayRoutines.deleteRoutine(itemName = "Routines_1 Routine");
+		}
+
+		task ("Then the routine should not appear on the list") {
+			Testray.assertItemNotPresent(itemName = "Routines_1 Routine");
+		}
+	}
+
+	@description = "This is a test for LPS-160583 - Verify if as an Administrator I should be able to add and delete a Routine with Default Environment Factors"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanAddAndDeleteRoutineWithDefaultEnvironmentFactors {
+
+		// TODO LPS-160583 AdminCanAddAndDeleteRoutineWithDefaultEnvironmentFactors
+
+	}
+
+	@description = "This is a test for LPS-160585 - Verify if as an Administrator I should not be able to add a duplicate routine"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanNotAddDuplicateRoutine {
+
+		// TODO LPS-160585 AdminCanNotAddDuplicateRoutine pending implementation
+
+	}
+
+	@description = "This is a test for LPS-160586 - Verify if as an Administrator I should be able to delete a routine that contains builds "
+	@priority = "5"
+	test AdminCanDeleteRoutineWithBuilds {
+		task ("Given that the user add a new Routine") {
+            TestrayManage.createProductVersion(
+				manageOption = "Manage Product Versions",
+				nameOptions = "Projects_1 Project",
+				version = "1.x");
+
+            Click(locator1 = "TestrayManage#CLOSE_MODAL");
+
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+		}
+
+        task ("When the user goes add a new build") {
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.createBuild(
+				description = "Routines_4 Build Description",
+				fieldName = "Routines_4 Build",
+				gitHash = "12345",
+				productVersion = "1.x",
+				routine = "Routines_1 Routine");
+
+			Testray.assertItemName(key_name = "Routines_4 Build");
+
+            TestrayLayout.clickResultsOnSidebar();
+		}
+
+        task ("And when a build is deleted") {
+            Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+            Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.deleteRoutine(itemName = "Routines_1 Routine");
+		}
+
+		task ("Then the routine should not appear on the list") {
+			Testray.assertItemNotPresent(itemName = "Routines_1 Routine");
+		}
+
+	}
+
+}

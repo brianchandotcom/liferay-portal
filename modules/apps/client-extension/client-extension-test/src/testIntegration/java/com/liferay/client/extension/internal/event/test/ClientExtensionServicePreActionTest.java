@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -125,38 +124,29 @@ public class ClientExtensionServicePreActionTest {
 	public void testProcessServicePreActionLayoutSetThemeCSS()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-153457", true)) {
+		_addThemeCSSClientExtensionEntry();
 
-			_addThemeCSSClientExtensionEntry();
+		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
-			LayoutSet layoutSet = _group.getPublicLayoutSet();
+		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+			_user.getUserId(), _portal.getClassNameId(LayoutSet.class),
+			layoutSet.getLayoutSetId(),
+			_clientExtensionEntry.getExternalReferenceCode(),
+			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
 
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				_user.getUserId(), _portal.getClassNameId(LayoutSet.class),
-				layoutSet.getLayoutSetId(),
-				_clientExtensionEntry.getExternalReferenceCode(),
-				ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
-
-			_assertThemeCSSURLs();
-		}
+		_assertThemeCSSURLs();
 	}
 
 	@Test
 	public void testProcessServicePreActionLayoutThemeCSS() throws Exception {
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-153457", true)) {
+		_addThemeCSSClientExtensionEntry();
 
-			_addThemeCSSClientExtensionEntry();
+		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+			_user.getUserId(), _portal.getClassNameId(Layout.class),
+			_layout.getPlid(), _clientExtensionEntry.getExternalReferenceCode(),
+			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
 
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				_user.getUserId(), _portal.getClassNameId(Layout.class),
-				_layout.getPlid(),
-				_clientExtensionEntry.getExternalReferenceCode(),
-				ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
-
-			_assertThemeCSSURLs();
-		}
+		_assertThemeCSSURLs();
 	}
 
 	@Test
@@ -190,33 +180,27 @@ public class ClientExtensionServicePreActionTest {
 	public void testProcessServicePreActionMasterLayoutThemeCSS()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-153457", true)) {
+		_addThemeCSSClientExtensionEntry();
 
-			_addThemeCSSClientExtensionEntry();
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				_user.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-					_user.getUserId(), _group.getGroupId(), 0,
-					RandomTestUtil.randomString(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
-					WorkflowConstants.STATUS_APPROVED,
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId()));
+		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+			_user.getUserId(), _portal.getClassNameId(Layout.class),
+			masterLayoutPageTemplateEntry.getPlid(),
+			_clientExtensionEntry.getExternalReferenceCode(),
+			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
 
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				_user.getUserId(), _portal.getClassNameId(Layout.class),
-				masterLayoutPageTemplateEntry.getPlid(),
-				_clientExtensionEntry.getExternalReferenceCode(),
-				ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
+		_layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
 
-			_layout.setMasterLayoutPlid(
-				masterLayoutPageTemplateEntry.getPlid());
+		_layoutLocalService.updateLayout(_layout);
 
-			_layoutLocalService.updateLayout(_layout);
-
-			_assertThemeCSSURLs();
-		}
+		_assertThemeCSSURLs();
 	}
 
 	private void _addFaviconClientExtensionEntry() throws Exception {

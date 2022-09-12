@@ -46,7 +46,7 @@
 		<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
 			<liferay-ui:icon
 				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "DESC") ? "hide icon order-arrow-up-active" : "icon order-arrow-up-active" %>'
-				icon="order-arrow"
+				icon="order-list-up"
 				linkCssClass="btn btn-outline-borderless btn-outline-secondary"
 				markupView="lexicon"
 				message="descending"
@@ -55,7 +55,7 @@
 
 			<liferay-ui:icon
 				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType1, "ASC") ? "hide icon order-arrow-down-active" : "icon order-arrow-down-active" %>'
-				icon="order-arrow"
+				icon="order-list-down"
 				linkCssClass="btn btn-outline-borderless btn-outline-secondary"
 				markupView="lexicon"
 				message="ascending"
@@ -95,7 +95,7 @@
 		<aui:field-wrapper cssClass="field-label-inline order-by-type-container">
 			<liferay-ui:icon
 				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "DESC") ? "hide icon order-arrow-up-active" : "icon order-arrow-up-active" %>'
-				icon="order-arrow"
+				icon="order-list-up"
 				linkCssClass="btn btn-outline-borderless btn-outline-secondary"
 				markupView="lexicon"
 				message="descending"
@@ -104,7 +104,7 @@
 
 			<liferay-ui:icon
 				cssClass='<%= StringUtil.equalsIgnoreCase(orderByType2, "ASC") ? "hide icon order-arrow-down-active" : "icon order-arrow-down-active" %>'
-				icon="order-arrow"
+				icon="order-list-down"
 				linkCssClass="btn btn-outline-borderless btn-outline-secondary"
 				markupView="lexicon"
 				message="ascending"

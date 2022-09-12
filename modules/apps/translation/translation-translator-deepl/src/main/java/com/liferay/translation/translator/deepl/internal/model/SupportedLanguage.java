@@ -32,7 +32,7 @@ public class SupportedLanguage {
 	}
 
 	@JsonProperty("supports_formality")
-	public boolean getSupportsFormality() {
+	public Boolean getSupportsFormality() {
 		return _supportsFormality;
 	}
 
@@ -44,12 +44,12 @@ public class SupportedLanguage {
 		_name = name;
 	}
 
-	public void setSupportsFormality(boolean supportsFormality) {
+	public void setSupportsFormality(Boolean supportsFormality) {
 		_supportsFormality = supportsFormality;
 	}
 
 	private String _language;
 	private String _name;
-	private boolean _supportsFormality;
+	private Boolean _supportsFormality;
 
 }

@@ -54,7 +54,9 @@ public class JSONUtil {
 	public static <T> void writer(String fullPath, T obj)
 		throws IOException, URISyntaxException {
 
-		ObjectWriter objectWriter = new ObjectMapper().writer();
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		ObjectWriter objectWriter = objectMapper.writer();
 
 		objectWriter = objectWriter.withDefaultPrettyPrinter();
 
@@ -64,7 +66,9 @@ public class JSONUtil {
 	public static <T> String writeValueAsString(T obj)
 		throws JsonProcessingException {
 
-		ObjectWriter objectWriter = new ObjectMapper().writer();
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		ObjectWriter objectWriter = objectMapper.writer();
 
 		objectWriter = objectWriter.withDefaultPrettyPrinter();
 

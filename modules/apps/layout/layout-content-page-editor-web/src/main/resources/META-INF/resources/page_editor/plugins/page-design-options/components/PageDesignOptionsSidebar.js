@@ -153,7 +153,7 @@ export default function PageDesignOptionsSidebar() {
 				</span>
 			</SidebarPanelHeader>
 
-			<ClayTabs className="flex-shrink-0 page-editor__sidebar__page-design-options__tabs">
+			<ClayTabs className="flex-shrink-0 page-editor__sidebar__page-design-options__tabs px-3">
 				{tabs.map((tab, index) => (
 					<ClayTabs.Item
 						active={activeTabId === index}

@@ -12,10 +12,9 @@
  * details.
  */
 
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useParams} from 'react-router-dom';
-import {KeyedMutator} from 'swr';
 
 import Form from '../../../../../../components/Form';
 import Modal from '../../../../../../components/Modal/index';
@@ -27,82 +26,113 @@ import yupSchema, {yupResolver} from '../../../../../../schema/yup';
 import {
 	APIResponse,
 	TestrayFactor,
+	TestrayFactorOption,
+	TestrayRun,
 	testrayFactorCategoryRest,
 	testrayFactorRest,
-	testrayRunRest,
+	testrayRunImpl,
 } from '../../../../../../services/rest';
 import {searchUtil} from '../../../../../../util/search';
 
 type Run = typeof yupSchema.factorToRun.__outputType;
+
 type RunFormModalProps = {
-	RunMutate: KeyedMutator<any>;
 	modal: FormModalOptions;
 };
 
 const RunFormModal: React.FC<RunFormModalProps> = ({
-	RunMutate,
-	modal: {modalState, observer, onClose, onError, onSave, onSubmit},
+	modal: {
+		modalState,
+		observer,
+		onClose,
+		onError,
+		onSave,
+		onSubmit,
+		submitting,
+	},
 }) => {
+	const selectedRun: TestrayRun = modalState;
+
 	const {
 		formState: {errors},
 		handleSubmit,
 		register,
+		setValue,
 	} = useForm<Run>({
-		defaultValues: modalState,
-
+		defaultValues: selectedRun as any,
 		resolver: yupResolver(yupSchema.factorToRun),
 	});
 	const {buildId, routineId} = useParams();
 	const [factorOptionsList, setFactorOptionsList] = useState<
-		TestrayFactor[][]
+		TestrayFactorOption[][]
 	>([[] as any]);
 
+	const filter = selectedRun
+		? searchUtil.eq('runId', selectedRun.id)
+		: searchUtil.eq('routineId', routineId as string);
+
 	const {data: factorsData} = useFetch<APIResponse<TestrayFactor>>(
-		modalState
-			? `${testrayFactorRest.resource}&filter=${searchUtil.eq(
-					'runId',
-					modalState.id as string
-			  )}&pageSize=1000`
-			: `${testrayFactorRest.resource}&filter=${searchUtil.eq(
-					'routineId',
-					routineId as string
-			  )}&pageSize=1000`,
+		`${testrayFactorRest.resource}&filter=${filter}&pageSize=1000`,
 		(response) => testrayFactorRest.transformDataFromList(response)
 	);
 
-	const {data: Runs} = useFetch<APIResponse<Run>>(
-		!modalState
-			? `${testrayRunRest.resource}&filter=${searchUtil.eq(
+	const {data: runResponse} = useFetch<APIResponse<Run>>(
+		selectedRun
+			? null
+			: `${testrayRunImpl.resource}&filter=${searchUtil.eq(
 					'buildId',
 					buildId as string
 			  )}&pageSize=1000`
-			: null
 	);
 
-	const _Number = Runs?.items.map((item) => item.number).slice(-1)[0];
+	const getLastRunNumber = () => {
+		const runs = runResponse?.items.map((item) => item.number) || [];
 
-	const _onSubmit = (Form: Run) => {
+		return runs[runs?.length - 1];
+	};
+
+	const lastRunNumber = getLastRunNumber();
+
+	const factorItems = useMemo(() => factorsData?.items || [], [
+		factorsData?.items,
+	]);
+
+	const _onSubmit = async (form: Run) => {
+		const factorOptionIds: number[] = (
+			((form as any).factorOptionIds as string[]) || []
+		).map(Number);
+
+		const runName = factorOptionsList
+			.map(
+				(factorOptions) =>
+					factorOptions.find(({id}) => factorOptionIds.includes(id))
+						?.name
+			)
+			.filter(Boolean)
+			.join(' | ');
+
 		onSubmit(
 			{
-				buildId: buildId as string,
-				factorCategoryId: Form.factorCategoryId,
-				factorOptionId: Form.factorOptionId,
-				id: Form.id,
-				name: Form.factorOptionName.join(' | '),
-				number: modalState ? Form.number : Number(_Number) + 1,
+				...form,
+				buildId: (buildId as unknown) as number,
+				name: runName,
+				number: (lastRunNumber ?? 0) + 1,
 			},
 			{
-				create: (data) => testrayRunRest.create(data),
-				update: (id, data) => testrayRunRest.update(id, data),
+				create: (data) => testrayRunImpl.create(data),
+				update: (id, data) => testrayRunImpl.update(id, data),
 			}
 		)
-			.then(RunMutate)
+			.then(({id: runId}) =>
+				testrayFactorRest.selectEnvironmentFactor(
+					factorItems,
+					factorOptionIds,
+					runId
+				)
+			)
 			.then(onSave)
 			.catch(onError);
 	};
-
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const factorItems = factorsData?.items || [];
 
 	useEffect(() => {
 		if (factorItems.length) {
@@ -112,13 +142,20 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 		}
 	}, [factorItems]);
 
+	useEffect(() => {
+		setValue(
+			'factorOptionIds' as any,
+			factorItems.map(({factorOption}) => String(factorOption?.id))
+		);
+	}, [factorItems, setValue]);
+
 	return (
 		<Modal
 			last={
 				<Form.Footer
-					isModal
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
+					primaryButtonProps={{loading: submitting}}
 				/>
 			}
 			observer={observer}
@@ -127,32 +164,20 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 			visible
 		>
 			{factorItems.map((factorItem, index) => (
-				<>
-					<input
-						type="hidden"
-						value={factorItem.factorCategory?.id}
-						{...register(`factorCategoryId.${index}`)}
-					/>
-					<input
-						type="hidden"
-						value={factorItem.factorOption?.id}
-						{...register(`factorOptionId.${index}`)}
-					/>
-					<Form.Select
-						defaultValue={factorItem.factorOption?.name}
-						errors={errors}
-						key={index}
-						label={factorItem.factorCategory?.name}
-						name={`factorOptionName.${index}`}
-						options={(factorOptionsList[index] || []).map(
-							({name}: any) => ({
-								label: name,
-								value: name,
-							})
-						)}
-						register={register}
-					/>
-				</>
+				<Form.Select
+					defaultValue={factorItem.factorOption?.id}
+					errors={errors}
+					key={index}
+					label={factorItem.factorCategory?.name}
+					name={`factorOptionIds.${index}`}
+					options={(factorOptionsList[index] || []).map(
+						({id, name}) => ({
+							label: name,
+							value: id,
+						})
+					)}
+					register={register}
+				/>
 			))}
 		</Modal>
 	);

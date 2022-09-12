@@ -15,7 +15,7 @@
 import useFormModal from '../../../../../../hooks/useFormModal';
 import useMutate from '../../../../../../hooks/useMutate';
 import i18n from '../../../../../../i18n';
-import {TestrayRun, deleteResource} from '../../../../../../services/rest';
+import {TestrayRun, testrayRunImpl} from '../../../../../../services/rest';
 import {Action} from '../../../../../../types';
 
 const useRunActions = () => {
@@ -23,24 +23,25 @@ const useRunActions = () => {
 	const formModal = useFormModal();
 	const modal = formModal.modal;
 
-	const actions: Action<TestrayRun>[] = [
+	const actions = [
 		{
-			action: (Run) => modal.open(Run),
+			action: (run) => modal.open(run),
 			icon: 'display',
 			name: i18n.translate('select-environment-factors'),
 			permission: 'UPDATE',
 		},
 		{
 			action: ({id}, mutate) =>
-				deleteResource(`/runs/${id}`)
-					?.then(() => removeItemFromList(mutate, id))
+				testrayRunImpl
+					.remove(id)
+					.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
 					.catch(modal.onError),
 			icon: 'trash',
 			name: i18n.translate('delete'),
 			permission: 'DELETE',
 		},
-	];
+	] as Action<TestrayRun>[];
 
 	return {
 		actions,

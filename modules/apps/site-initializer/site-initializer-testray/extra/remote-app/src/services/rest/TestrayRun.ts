@@ -14,12 +14,11 @@
 
 import yupSchema from '../../schema/yup';
 import Rest from './Rest';
-import {testrayFactorRest} from './TestrayFactor';
 import {TestrayRun} from './types';
 
-type RunForm = typeof yupSchema.run.__outputType;
+type RunForm = Omit<typeof yupSchema.run.__outputType, 'id'>;
 
-class TestrayRunRest extends Rest<RunForm, TestrayRun> {
+class TestrayRunImpl extends Rest<RunForm, TestrayRun> {
 	constructor() {
 		super({
 			adapter: ({
@@ -58,30 +57,6 @@ class TestrayRunRest extends Rest<RunForm, TestrayRun> {
 			uri: 'runs',
 		});
 	}
-	public async create(data: RunForm): Promise<TestrayRun> {
-		const runs = await super.create(data);
-
-		const factorCategoryIds = data.factorCategoryId || [];
-		const factorOptionIds = data.factorOptionId || [];
-
-		let index = 0;
-
-		for (const factorCategory of factorCategoryIds) {
-			const factorOptionId = factorOptionIds[index];
-
-			await testrayFactorRest.create({
-				factorCategoryId: (factorCategory as unknown) as string,
-				factorOptionId,
-				name: data.factorOptionName,
-				routineId: undefined,
-				runId: runs.id,
-			});
-
-			index++;
-		}
-
-		return runs;
-	}
 }
 
-export const testrayRunRest = new TestrayRunRest();
+export const testrayRunImpl = new TestrayRunImpl();

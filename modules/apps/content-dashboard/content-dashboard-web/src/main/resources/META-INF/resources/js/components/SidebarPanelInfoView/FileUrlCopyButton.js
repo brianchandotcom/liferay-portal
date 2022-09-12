@@ -71,6 +71,7 @@ const FileUrlCopyButton = ({url}) => {
 									? 'exclamation-circle'
 									: 'copy'
 							}
+							title={Liferay.Language.get('copy')}
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>

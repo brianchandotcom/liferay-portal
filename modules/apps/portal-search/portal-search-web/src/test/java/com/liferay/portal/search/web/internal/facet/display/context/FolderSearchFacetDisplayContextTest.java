@@ -297,6 +297,7 @@ public class FolderSearchFacetDisplayContextTest {
 		folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
 		folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
 		folderSearchFacetDisplayContextBuilder.setMaxTerms(0);
+		folderSearchFacetDisplayContextBuilder.setOrder("count:desc");
 		folderSearchFacetDisplayContextBuilder.setParameterName(
 			_facet.getFieldId());
 		folderSearchFacetDisplayContextBuilder.setParameterValue(facetParam);

@@ -14,6 +14,7 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -72,7 +73,7 @@ public class BaseRelatedObjectEntryResourceImpl {
 	)
 	@Produces({"application/json", "application/xml"})
 	@PUT
-	public void putObjectRelationshipMappingTableValues(
+	public ObjectEntry putObjectRelationshipMappingTableValues(
 			@NotNull @Parameter(hidden = true) @PathParam("previousPath") String
 				previousPath,
 			@NotNull @Parameter(hidden = true) @PathParam("objectEntryId") Long
@@ -83,6 +84,8 @@ public class BaseRelatedObjectEntryResourceImpl {
 			@PathParam("relatedObjectEntryId") Long relatedObjectEntryId,
 			@Context Pagination pagination)
 		throws Exception {
+
+		return null;
 	}
 
 }

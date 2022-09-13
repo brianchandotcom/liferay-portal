@@ -201,10 +201,7 @@ function SpacingSelectorButton({
 					aria-expanded={active}
 					aria-haspopup={true}
 					aria-label={field?.label}
-					className={classNames(
-						`${BUTTON_CLASSNAME} b-0 flex-grow-1 mb-0 text-center`,
-						{'text-secondary': !active}
-					)}
+					className={`${BUTTON_CLASSNAME} b-0 flex-grow-1 mb-0 text-center`}
 					data-position={position}
 					data-type={type}
 					disabled={disabled}

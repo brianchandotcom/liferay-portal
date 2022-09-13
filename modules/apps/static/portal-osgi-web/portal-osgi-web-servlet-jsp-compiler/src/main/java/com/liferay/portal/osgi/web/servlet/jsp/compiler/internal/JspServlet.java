@@ -32,7 +32,6 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.EventListener;
 import java.util.HashSet;
@@ -67,21 +66,22 @@ import org.apache.jasper.runtime.JspFactoryImpl;
 import org.apache.jasper.runtime.TagHandlerPool;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleReference;
-import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
-import org.osgi.util.tracker.BundleTracker;
 
 /**
  * @author Raymond Augé
  */
 public class JspServlet extends HttpServlet {
+
+	public JspServlet(Set<String> fragmentHosts) {
+		_fragmentHosts = fragmentHosts;
+	}
 
 	@Override
 	public void destroy() {
@@ -216,45 +216,9 @@ public class JspServlet extends HttpServlet {
 			"saveBytecode", "true"
 		).build();
 
-		String symbolicName = _bundle.getSymbolicName();
-
-		BundleTracker<Bundle> bundleTracker = new BundleTracker(
-			_bundle.getBundleContext(), ~Bundle.UNINSTALLED, null) {
-
-			@Override
-			public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-				Dictionary<String, String> dictionary = bundle.getHeaders(
-					StringPool.BLANK);
-
-				String fragmentHost = dictionary.get(Constants.FRAGMENT_HOST);
-
-				if (fragmentHost != null) {
-					int index = fragmentHost.indexOf(StringPool.SEMICOLON);
-
-					if (index != -1) {
-						fragmentHost = fragmentHost.substring(0, index);
-					}
-
-					if (fragmentHost.equals(symbolicName)) {
-						Enumeration<URL> enumeration = bundle.findEntries(
-							"META-INF/resources", "*.jsp*", true);
-
-						if (enumeration != null) {
-							defaults.put("hasFragment", "true");
-
-							close();
-						}
-					}
-				}
-
-				return bundle;
-			}
-
-		};
-
-		bundleTracker.open();
-
-		bundleTracker.close();
+		if (_fragmentHosts.contains(_bundle.getSymbolicName())) {
+			defaults.put("hasFragment", "true");
+		}
 
 		defaults.put(
 			TagHandlerPool.OPTION_TAGPOOL, JspTagHandlerPool.class.getName());
@@ -427,6 +391,7 @@ public class JspServlet extends HttpServlet {
 
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
+	private final Set<String> _fragmentHosts;
 	private JspBundleClassloader _jspBundleClassloader;
 	private final HttpServlet _jspServlet =
 		new org.apache.jasper.servlet.JspServlet();

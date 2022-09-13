@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.internal.search.util;
+package com.liferay.bookmarks.internal.search;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.portal.kernel.dao.orm.Property;

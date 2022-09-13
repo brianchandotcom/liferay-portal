@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.internal.search.util;
+package com.liferay.bookmarks.internal.search;
 
 /**
  * @author Luan Maoski

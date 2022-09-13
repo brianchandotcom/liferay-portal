@@ -250,9 +250,57 @@ public class FolderSearchFacetDisplayContextTest {
 	}
 
 	@Test
+	public void testOrderByTermFrequencyAscending() throws Exception {
+		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
+			new String[] {"alpha", "charlie", "bravo", "delta"},
+			new int[] {4, 5, 5, 6});
+
+		_setUpMultipleTermCollectors(termCollectors);
+
+		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
+			createDisplayContext(null, "count:asc");
+
+		List<FolderSearchFacetTermDisplayContext>
+			folderSearchFacetTermDisplayContexts =
+				folderSearchFacetDisplayContext.
+					getFolderSearchFacetTermDisplayContexts();
+
+		String nameFrequencyString = _buildNameFrequencyString(
+			folderSearchFacetTermDisplayContexts);
+
+		Assert.assertEquals(
+			folderSearchFacetTermDisplayContexts.toString(),
+			"alpha:4|bravo:5|charlie:5|delta:6", nameFrequencyString);
+	}
+
+	@Test
+	public void testOrderByTermFrequencyDescending() throws Exception {
+		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
+			new String[] {"alpha", "charlie", "bravo", "delta"},
+			new int[] {4, 5, 5, 6});
+
+		_setUpMultipleTermCollectors(termCollectors);
+
+		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
+			createDisplayContext(null, "count:desc");
+
+		List<FolderSearchFacetTermDisplayContext>
+			folderSearchFacetTermDisplayContexts =
+				folderSearchFacetDisplayContext.
+					getFolderSearchFacetTermDisplayContexts();
+
+		String nameFrequencyString = _buildNameFrequencyString(
+			folderSearchFacetTermDisplayContexts);
+
+		Assert.assertEquals(
+			folderSearchFacetTermDisplayContexts.toString(),
+			"delta:6|bravo:5|charlie:5|alpha:4", nameFrequencyString);
+	}
+
+	@Test
 	public void testOrderByTermValueAscending() throws Exception {
 		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
-			"zeroFolderId", "alpha", "delta", "beta");
+			"zeroFolderId", "alpha", "bravo", "charlie", "bravo");
 
 		_setUpMultipleTermCollectors(termCollectors);
 
@@ -269,13 +317,13 @@ public class FolderSearchFacetDisplayContextTest {
 
 		Assert.assertEquals(
 			folderSearchFacetTermDisplayContexts.toString(),
-			"alpha:2|beta:4|delta:3", nameFrequencyString);
+			"alpha:2|bravo:5|bravo:3|charlie:4", nameFrequencyString);
 	}
 
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
 		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
-			"zeroFolderId", "alpha", "delta", "beta");
+			"zeroFolderId", "alpha", "bravo", "charlie", "bravo");
 
 		_setUpMultipleTermCollectors(termCollectors);
 
@@ -292,7 +340,7 @@ public class FolderSearchFacetDisplayContextTest {
 
 		Assert.assertEquals(
 			folderSearchFacetTermDisplayContexts.toString(),
-			"delta:3|beta:4|alpha:2", nameFrequencyString);
+			"charlie:4|bravo:5|bravo:3|alpha:2", nameFrequencyString);
 	}
 
 	@Test
@@ -318,7 +366,7 @@ public class FolderSearchFacetDisplayContextTest {
 
 		Assert.assertEquals(
 			folderSearchFacetTermDisplayContexts.toString(),
-			"assert:6|volatile:7|alpha:8", nameFrequencyString);
+			"alpha:8|volatile:7|assert:6", nameFrequencyString);
 
 		Assert.assertEquals(
 			termCollectors.toString(), 36,
@@ -450,6 +498,21 @@ public class FolderSearchFacetDisplayContextTest {
 			termCollectors.add(createTermCollector(folderId, frequency));
 
 			folderId++;
+		}
+
+		return termCollectors;
+	}
+
+	private List<TermCollector> _addFoldersAndCreateTermCollectors(
+			String[] folderNames, int[] frequencies)
+		throws Exception {
+
+		List<TermCollector> termCollectors = new ArrayList<>();
+
+		for (int i = 1; i <= folderNames.length; i++) {
+			_addFolder(i, folderNames[i - 1]);
+
+			termCollectors.add(createTermCollector(i, frequencies[i - 1]));
 		}
 
 		return termCollectors;

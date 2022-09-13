@@ -4399,6 +4399,70 @@ definition {
 		}
 	}
 
+	@description = "LPS-160218: Make the Info Panel Remain Open After a Page Refresh"
+	@priority = "3"
+	test InfoPanelNotOpenAfterNavigation {
+		task ("Given the info panel is open") {
+			task ("Crete an Asset") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Navigate to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+
+			task ("Open info panel") {
+				ContentDashboard.openInfoPanelByDropdownMenu();
+			}
+		}
+
+		task ("When navigates away from the page") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+		}
+
+		task ("And returns to content dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Then the info panel is closed") {
+			AssertElementNotPresent(locator1 = "ContentDashboard#INFO_PANEL");
+		}
+	}
+
+	@description = "LPS-160218: Make the Info Panel Remain Open After a Page Refresh"
+	@priority = "3"
+	test InfoPanelOpenAfterRefresh {
+		task ("Given the info panel is open") {
+			task ("Crete an Asset") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Navigate to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+
+			task ("Open info panel") {
+				ContentDashboard.openInfoPanelByDropdownMenu();
+			}
+		}
+
+		task ("When the page is refreshed") {
+			Refresh();
+		}
+
+		task ("Then the info panel still remains open") {
+			WaitForElementPresent(locator1 = "ContentDashboard#INFO_PANEL");
+
+			AssertVisible(locator1 = "ContentDashboard#INFO_PANEL");
+		}
+	}
+
 	@description = "LPS-122873 When the user add filters need to have only one vocabulary, the relative ordering of the categories remain the same"
 	@priority = "3"
 	test JustAddingAVocabularyThroughTheFilters {

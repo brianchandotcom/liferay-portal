@@ -69,10 +69,7 @@ public class FileExtensionContentDashboardItemFilter
 		).putData(
 			"multiple", Boolean.TRUE.toString()
 		).putData(
-			"redirectURL",
-			() -> HttpComponentsUtil.setParameter(
-				_portal.getCurrentCompleteURL(_httpServletRequest),
-				getParameterName(), (String)null)
+			"redirectURL", _getRedirectURL()
 		).putData(
 			"selectEventName", "selectedFileExtension"
 		).putData(
@@ -85,6 +82,16 @@ public class FileExtensionContentDashboardItemFilter
 			_language.get(_httpServletRequest, "extension") +
 				StringPool.TRIPLE_PERIOD
 		).build();
+	}
+
+	private String _getRedirectURL() {
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		return HttpComponentsUtil.removeParameter(
+			_portal.getCurrentCompleteURL(_httpServletRequest),
+			portletResponse.getNamespace() + getParameterName());
 	}
 
 	@Override

@@ -64,7 +64,7 @@ public class ObjectCodeEditorUtil {
 							 !objectField.compareBusinessType(
 								 ObjectFieldConstants.BUSINESS_TYPE_FORMULA))),
 					objectField -> HashMapBuilder.put(
-						"content", objectField.getDBColumnName()
+						"content", objectField.getName()
 					).put(
 						"helpText", StringPool.BLANK
 					).put(

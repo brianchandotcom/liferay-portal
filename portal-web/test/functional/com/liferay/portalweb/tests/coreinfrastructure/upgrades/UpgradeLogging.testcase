@@ -17,14 +17,14 @@ definition {
 		}
 	}
 
-	@description = "LPS-158090. Ensure no logging is related to pending upgrades when system check is disabled and auto upgrade is enabled."
+	@description = "LPS-158090. Given auto upgrade is enabled. Then all upgrades finish before server startup."
 	@priority = "5"
-	test ViewNoPendingUpgrades {
+	test UpgradeCheckReturnsEmptyOnStartupWithAutoUpgrade {
 		property custom.properties = "initial.system.check.enabled=false${line.separator}upgrade.database.auto.run=true";
 		property database.bare.enabled = "true";
 		property portal.acceptance = "true";
 
-		task ("Then assert pending upgrades are not present in the logs") {
+		task ("Pending upgrades are not found in the logs") {
 			AssertConsoleTextNotPresent(value1 = "Run the upgrade process or type upgrade:checkAll in the Gogo shell to get more information.");
 		}
 	}

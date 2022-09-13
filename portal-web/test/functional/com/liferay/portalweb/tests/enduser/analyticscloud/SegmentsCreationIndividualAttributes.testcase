@@ -650,4 +650,10 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-11460 | Automation ID: LRAC-11634 | Test Summary: Add a dynamic segment using an individual property "email" selecting one of the suggested autocomplete options and assert in the Known Individuals tab search this individual exists"
+	@priority = "3"
+	test CheckIfAutocompleteSuggestionEmailPresentInKnownIndividualsList {
+		
+	}
+
 }

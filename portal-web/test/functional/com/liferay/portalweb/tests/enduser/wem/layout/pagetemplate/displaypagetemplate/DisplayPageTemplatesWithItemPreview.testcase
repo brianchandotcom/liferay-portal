@@ -393,20 +393,17 @@ definition {
 				image = "data:image/png");
 		}
 
-		task ("Open the Preview modal") {
-			PageEditor.togglePreview();
-		}
-
 		task ("Select the category via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Category Name",
-				assetType = "Category",
-				modal = "true");
+				assetType = "Category");
+		}
+
+		task ("Open the Preview modal") {
+			PageEditor.previewInANewTab();
 		}
 
 		task ("View mapped content shown in Card fragment") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			ContentPages.viewFragmentText(
 				fragmentName = "card",
 				id = "link",
@@ -416,19 +413,18 @@ definition {
 				fragmentName = "card",
 				id = "img",
 				image = "/images/");
-
-			SelectFrameTop();
 		}
 
 		task ("Select the None via preview item selector") {
+			Close.closeWindow();
+
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "-- None --",
-				item = "-- None --",
-				modal = "true");
+				item = "-- None --");
 		}
 
 		task ("View Go Somewhere shown in Card fragment") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			ContentPages.viewFragmentText(
 				fragmentName = "card",
@@ -443,11 +439,9 @@ definition {
 				image = "data:image/png");
 		}
 
-		task ("Close the iframe") {
-			IFrame.closeFrame();
-		}
-
 		task ("Select the subcategory via preview item selector") {
+			Close.closeWindow();
+
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Subcategory Name",
 				assetType = "Category");
@@ -487,20 +481,17 @@ definition {
 				image = "data:image/png");
 		}
 
-		task ("Open the Preview modal") {
-			PageEditor.togglePreview();
-		}
-
 		task ("Select the subcategory via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Subcategory Name",
-				assetType = "Category",
-				modal = "true");
+				assetType = "Category");
+		}
+
+		task ("Open the Preview modal") {
+			PageEditor.previewInANewTab();
 		}
 
 		task ("View the subcategory name shown in Card fragment") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			ContentPages.viewFragmentText(
 				fragmentName = "card",
 				id = "link",
@@ -512,19 +503,18 @@ definition {
 				fragmentName = "card",
 				id = "img",
 				image = "data:image/png");
-
-			SelectFrameTop();
 		}
 
 		task ("Select the None via preview item selector") {
+			Close.closeWindow();
+
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "-- None --",
-				item = "-- None --",
-				modal = "true");
+				item = "-- None --");
 		}
 
 		task ("View the subcategory name shown in Card fragment") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			ContentPages.viewFragmentText(
 				fragmentName = "card",
@@ -643,20 +633,17 @@ definition {
 				messageInfo = "There are no items to display.");
 		}
 
-		task ("Open the Preview modal") {
-			PageEditor.togglePreview();
-		}
-
 		task ("Select the category via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Category Name",
-				assetType = "Category",
-				modal = "true");
+				assetType = "Category");
+		}
+
+		task ("Open the Preview modal") {
+			PageEditor.previewInANewTab();
 		}
 
 		task ("View the title of collection items are shown as Bulleted List") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			var n = "1";
 
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
@@ -668,19 +655,18 @@ definition {
 
 				var n = ${n} + 1;
 			}
-
-			SelectFrameTop();
 		}
 
 		task ("Select the None via preview item selector") {
+			Close.closeWindow();
+
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "-- None --",
-				item = "-- None --",
-				modal = "true");
+				item = "-- None --");
 		}
 
 		task ("View the Collection Display is not shown in modal") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			AssertElementNotPresent(
 				key_fragmentName = "Collection Display",
@@ -767,42 +753,40 @@ definition {
 				id = "element-text");
 		}
 
-		task ("Open the Preview modal") {
-			PageEditor.togglePreview();
-		}
-
 		task ("Select the web content via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Web Content Title",
-				assetType = "Web Content Article",
-				modal = "true");
+				assetType = "Web Content Article");
+		}
+
+		task ("Open the Preview modal") {
+			PageEditor.previewInANewTab();
 		}
 
 		task ("View title of web content shown in Heading fragment") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
 				text = "Web Content Title");
-
-			SelectFrameTop();
 		}
 
 		task ("Select the None via preview item selector") {
+			Close.closeWindow();
+
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "-- None --",
-				item = "-- None --",
-				modal = "true");
+				item = "-- None --");
 		}
 
 		task ("View Heading Example shown in Heading fragment") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
 				text = "Heading Example");
+
+			Close.closeWindow();
 		}
 
 		task ("Add the second display page template for Blogs Entry") {
@@ -855,42 +839,40 @@ definition {
 				id = "link");
 		}
 
-		task ("Open the Preview modal") {
-			PageEditor.togglePreview();
-		}
-
 		task ("Select the blogs entry via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Blogs Entry Title",
-				assetType = "Blogs Entry",
-				modal = "true");
+				assetType = "Blogs Entry");
+		}
+
+		task ("Open the Preview modal") {
+			PageEditor.previewInANewTab();
 		}
 
 		task ("View title of blogs entry shown in Button fragment") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			ContentPages.viewFragmentText(
 				fragmentName = "button",
 				id = "link",
 				text = "Blogs Entry Title");
 
-			SelectFrameTop();
+			Close.closeWindow();
 		}
 
 		task ("Select the None via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "-- None --",
-				item = "-- None --",
-				modal = "true");
+				item = "-- None --");
 		}
 
 		task ("View Go Somewhere shown in Button fragment") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			ContentPages.viewFragmentText(
 				fragmentName = "button",
 				id = "link",
 				text = "Go Somewhere");
+
+			Close.closeWindow();
 		}
 
 		task ("Add the third display page template for Document") {
@@ -950,37 +932,33 @@ definition {
 				imageFileName = "data:image/png");
 		}
 
-		task ("Open the Preview modal") {
-			PageEditor.togglePreview();
-		}
-
 		task ("Select the document via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Document Title",
-				assetType = "Document",
-				modal = "true");
+				assetType = "Document");
+		}
+
+		task ("Open the Preview modal") {
+			PageEditor.previewInANewTab();
 		}
 
 		task ("View image of document shown in Image fragment") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
 				imageDescription = "",
 				imageFileName = "Document_1.jpg");
 
-			SelectFrameTop();
+			Close.closeWindow();
 		}
 
 		task ("Select the None via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "-- None --",
-				item = "-- None --",
-				modal = "true");
+				item = "-- None --");
 		}
 
 		task ("View the placeholder shown in Image fragment") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
@@ -1057,36 +1035,6 @@ definition {
 
 		task ("Close the modal") {
 			IFrame.closeFrame();
-		}
-
-		task ("Open the Preview modal") {
-			PageEditor.togglePreview();
-		}
-
-		task ("Open the preview item selector in preview modal") {
-			Click(locator1 = "Modal#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR");
-
-			DropdownMenuItem.click(menuItem = "Select Other Item");
-
-			SelectFrame(
-				key_title = "Select",
-				locator1 = "IFrame#MODAL_ANY");
-
-			Portlet.expandTree();
-		}
-
-		task ("View the category of Topic is present") {
-			AssertVisible(
-				key_nodeName = "Category Name 1",
-				locator1 = "Treeview#NODE_UNSELECTED");
-		}
-
-		task ("View Audience and Stage vocabularies are not present") {
-			for (var vocabularyName : list "Audience(Global),Stage(Global)") {
-				AssertElementNotPresent(
-					key_nodeName = "${vocabularyName}",
-					locator1 = "Treeview#NODE_UNSELECTED");
-			}
 		}
 
 		task ("Delete the global categories") {
@@ -1223,20 +1171,17 @@ definition {
 			PageEditor.viewFragmentMessageInfo(fragmentName = "Content Display");
 		}
 
-		task ("Open the Preview modal") {
-			PageEditor.togglePreview();
-		}
-
 		task ("Select the web content via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Web Content Title",
-				assetType = "Web Content Article",
-				modal = "true");
+				assetType = "Web Content Article");
+		}
+
+		task ("Open the Preview modal") {
+			PageEditor.previewInANewTab();
 		}
 
 		task ("View all three categories name are shown in modal") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
@@ -1247,23 +1192,24 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			SelectFrameTop();
+			Close.closeWindow();
 		}
 
 		task ("Select the None via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "-- None --",
-				item = "-- None --",
-				modal = "true");
+				item = "-- None --");
 		}
 
 		task ("View the Collection Display is not shown in Preview modal") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			AssertElementNotPresent(
 				column = "1",
 				locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
 				row = "1");
+
+			Close.closeWindow();
 		}
 
 		task ("Add a display page template for Blogs Entry") {
@@ -1336,20 +1282,17 @@ definition {
 			PageEditor.viewFragmentMessageInfo(fragmentName = "Content Display");
 		}
 
-		task ("Open the Preview modal") {
-			PageEditor.togglePreview();
-		}
-
 		task ("Select the blogs entry via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Blogs Entry Title",
-				assetType = "Blogs Entry",
-				modal = "true");
+				assetType = "Blogs Entry");
+		}
+
+		task ("Open the Preview modal") {
+			PageEditor.previewInANewTab();
 		}
 
 		task ("View all three categories name are shown in modal") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
@@ -1360,23 +1303,24 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			SelectFrameTop();
+			Close.closeWindow();
 		}
 
 		task ("Select the None via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "-- None --",
-				item = "-- None --",
-				modal = "true");
+				item = "-- None --");
 		}
 
 		task ("View the Collection Display is not shown in Preview modal") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			AssertElementNotPresent(
 				column = "1",
 				locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
 				row = "1");
+
+			Close.closeWindow();
 		}
 
 		task ("Add a display page template for Document") {
@@ -1450,20 +1394,17 @@ definition {
 			PageEditor.viewFragmentMessageInfo(fragmentName = "Content Display");
 		}
 
-		task ("Open the Preview modal") {
-			PageEditor.togglePreview();
-		}
-
 		task ("Select the document via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Document Title",
-				assetType = "Document",
-				modal = "true");
+				assetType = "Document");
+		}
+
+		task ("Open the Preview modal") {
+			PageEditor.previewInANewTab();
 		}
 
 		task ("View all three categories name are shown in modal") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
@@ -1474,18 +1415,17 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			SelectFrameTop();
+			Close.closeWindow();
 		}
 
 		task ("Select the None via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "-- None --",
-				item = "-- None --",
-				modal = "true");
+				item = "-- None --");
 		}
 
 		task ("View the Collection Display is not shown in Preview modal") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			AssertElementNotPresent(
 				column = "1",

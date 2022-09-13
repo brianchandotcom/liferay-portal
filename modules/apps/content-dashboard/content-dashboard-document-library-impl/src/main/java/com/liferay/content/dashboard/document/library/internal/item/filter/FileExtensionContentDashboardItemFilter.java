@@ -84,16 +84,6 @@ public class FileExtensionContentDashboardItemFilter
 		).build();
 	}
 
-	private String _getRedirectURL() {
-		PortletResponse portletResponse =
-			(PortletResponse)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		return HttpComponentsUtil.removeParameter(
-			_portal.getCurrentCompleteURL(_httpServletRequest),
-			portletResponse.getNamespace() + getParameterName());
-	}
-
 	@Override
 	public String getIcon() {
 		return null;
@@ -178,6 +168,16 @@ public class FileExtensionContentDashboardItemFilter
 
 		return Arrays.asList(
 			ParamUtil.getStringValues(httpServletRequest, "fileExtension"));
+	}
+
+	private String _getRedirectURL() {
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		return HttpComponentsUtil.removeParameter(
+			_portal.getCurrentCompleteURL(_httpServletRequest),
+			portletResponse.getNamespace() + getParameterName());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

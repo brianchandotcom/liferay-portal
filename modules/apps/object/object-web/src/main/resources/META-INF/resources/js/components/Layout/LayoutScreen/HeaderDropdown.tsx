@@ -14,21 +14,26 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import React, {FC, MouseEventHandler, useState} from 'react';
+import React, {MouseEventHandler, useState} from 'react';
 
 import {useLayoutContext} from '../objectLayoutContext';
 
-const HeaderDropdown: FC<IHeaderDropdown> = ({
+interface HeaderDropdownProps {
+	addCategorization?: MouseEventHandler;
+	deleteElement: MouseEventHandler;
+	disabled?: boolean;
+}
+
+export function HeaderDropdown({
 	addCategorization,
-	addComments,
 	deleteElement,
 	disabled,
-}) => {
+}: HeaderDropdownProps) {
 	const [active, setActive] = useState<boolean>(false);
 	const [
 		{
+			enabledCategorization,
 			isViewOnly,
-			objectDefinition,
 			objectLayout: {objectLayoutTabs},
 		},
 	] = useLayoutContext();
@@ -65,23 +70,11 @@ const HeaderDropdown: FC<IHeaderDropdown> = ({
 						disabled={
 							isThereFramework('categorization') ||
 							(Liferay.FeatureFlags['LPS-158672'] &&
-								!objectDefinition.enableCategorization)
+								!enabledCategorization)
 						}
 						onClick={() => handleOnClick(addCategorization)}
 					>
 						{Liferay.Language.get('add-categorization')}
-					</ClayDropDown.Item>
-				)}
-
-				{Liferay.FeatureFlags['LPS-158672'] && addComments && (
-					<ClayDropDown.Item
-						disabled={
-							isThereFramework('comments') ||
-							!objectDefinition.enableComments
-						}
-						onClick={() => handleOnClick(addComments)}
-					>
-						{Liferay.Language.get('add-comments')}
 					</ClayDropDown.Item>
 				)}
 
@@ -94,13 +87,4 @@ const HeaderDropdown: FC<IHeaderDropdown> = ({
 			</ClayDropDown.ItemList>
 		</ClayDropDown>
 	);
-};
-
-interface IHeaderDropdown {
-	addCategorization?: MouseEventHandler;
-	addComments?: MouseEventHandler;
-	deleteElement: MouseEventHandler;
-	disabled?: boolean;
 }
-
-export default HeaderDropdown;

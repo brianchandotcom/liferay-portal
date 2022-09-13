@@ -14,10 +14,14 @@
 
 import React from 'react';
 import {TObjectLayoutRow} from '../types';
-interface IObjectLayoutRowsProps extends React.HTMLAttributes<HTMLElement> {
+interface ObjectLayoutRowsProps extends React.HTMLAttributes<HTMLElement> {
 	boxIndex: number;
 	objectLayoutRows: TObjectLayoutRow[];
 	tabIndex: number;
 }
-declare const ObjectLayoutRows: React.FC<IObjectLayoutRowsProps>;
-export default ObjectLayoutRows;
+export declare function ObjectLayoutRows({
+	boxIndex,
+	objectLayoutRows,
+	tabIndex,
+}: ObjectLayoutRowsProps): JSX.Element;
+export {};

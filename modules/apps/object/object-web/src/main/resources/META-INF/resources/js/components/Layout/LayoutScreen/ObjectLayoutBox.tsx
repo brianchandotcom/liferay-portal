@@ -20,11 +20,11 @@ import React, {useState} from 'react';
 
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
 import {BoxType, TObjectLayoutRow} from '../types';
-import HeaderDropdown from './HeaderDropdown';
+import {HeaderDropdown} from './HeaderDropdown';
 import ModalAddObjectLayoutField from './ModalAddObjectLayoutField';
-import ObjectLayoutRows from './ObjectLayoutRows';
+import {ObjectLayoutRows} from './ObjectLayoutRows';
 
-interface IObjectLayoutBoxProps extends React.HTMLAttributes<HTMLElement> {
+interface ObjectLayoutBoxProps extends React.HTMLAttributes<HTMLElement> {
 	boxIndex: number;
 	collapsable: boolean;
 	label: string;
@@ -33,15 +33,15 @@ interface IObjectLayoutBoxProps extends React.HTMLAttributes<HTMLElement> {
 	type: BoxType;
 }
 
-const ObjectLayoutBox: React.FC<IObjectLayoutBoxProps> = ({
+export function ObjectLayoutBox({
 	boxIndex,
 	collapsable,
 	label,
 	objectLayoutRows,
 	tabIndex,
 	type,
-}) => {
-	const [{isViewOnly, objectDefinition}, dispatch] = useLayoutContext();
+}: ObjectLayoutBoxProps) {
+	const [{enabledCategorization, isViewOnly}, dispatch] = useLayoutContext();
 	const [visibleModal, setVisibleModal] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleModal(false),
@@ -49,9 +49,8 @@ const ObjectLayoutBox: React.FC<IObjectLayoutBoxProps> = ({
 
 	const disabled =
 		(Liferay.FeatureFlags['LPS-158672'] &&
-			((type === 'comments' && !objectDefinition.enableComments) ||
-				(type === 'categorization' &&
-					!objectDefinition.enableCategorization))) ||
+			type === 'categorization' &&
+			!enabledCategorization) ||
 		isViewOnly;
 
 	return (
@@ -133,6 +132,4 @@ const ObjectLayoutBox: React.FC<IObjectLayoutBoxProps> = ({
 			)}
 		</>
 	);
-};
-
-export default ObjectLayoutBox;
+}

@@ -66,19 +66,13 @@ export function PanelHeader({
 					{title}
 				</h3>
 
-				{(type === 'categorization' || type === 'comments') && (
+				{type === 'categorization' && (
 					<ClayTooltipProvider>
 						<span
 							className="ml-2"
-							title={
-								type === 'categorization'
-									? Liferay.Language.get(
-											'visibility-and-permissions-can-affect-how-the-categorization-block-will-be-displayed'
-									  )
-									: Liferay.Language.get(
-											'visibility-and-permissions-can-affect-how-the-comments-block-is-displayed'
-									  )
-							}
+							title={Liferay.Language.get(
+								'visibility-and-permissions-can-affect-how-the-categorization-block-will-be-displayed'
+							)}
 						>
 							<ClayIcon
 								className="object-admin-panel__tooltip-icon"

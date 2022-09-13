@@ -15,10 +15,13 @@
 import {Observer} from '@clayui/modal/lib/types';
 import React from 'react';
 import './ModalAddObjectLayoutTab.scss';
-interface IModalAddObjectLayoutTabProps
+interface ModalAddObjectLayoutTabProps
 	extends React.HTMLAttributes<HTMLElement> {
 	observer: Observer;
 	onClose: () => void;
 }
-declare const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps>;
-export default ModalAddObjectLayoutTab;
+export declare function ModalAddObjectLayoutTab({
+	observer,
+	onClose,
+}: ModalAddObjectLayoutTabProps): JSX.Element;
+export {};

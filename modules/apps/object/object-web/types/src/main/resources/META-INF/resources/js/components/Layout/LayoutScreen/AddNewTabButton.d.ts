@@ -12,6 +12,6 @@
  * details.
  */
 
-import React from 'react';
-declare const AddNewTabButton: React.FC<{}>;
-export default AddNewTabButton;
+/// <reference types="react" />
+
+export declare function AddNewTabButton(): JSX.Element;

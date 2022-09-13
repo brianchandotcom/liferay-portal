@@ -15,14 +15,14 @@
 import ClayLabel from '@clayui/label';
 import React from 'react';
 
-interface IRequiredLabelProps extends React.HTMLAttributes<HTMLElement> {
+interface RequiredLabelProps extends React.HTMLAttributes<HTMLElement> {
 	required?: boolean;
 }
 
-const RequiredLabel: React.FC<IRequiredLabelProps> = ({
+export function RequiredLabel({
 	className,
 	required = false,
-}) => {
+}: RequiredLabelProps) {
 	return (
 		<>
 			{required ? (
@@ -36,6 +36,4 @@ const RequiredLabel: React.FC<IRequiredLabelProps> = ({
 			)}
 		</>
 	);
-};
-
-export default RequiredLabel;
+}

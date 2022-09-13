@@ -67,13 +67,13 @@ const types: TTabTypes = {
 	},
 };
 
-interface IModalAddObjectLayoutTabProps
+interface ModalAddObjectLayoutTabProps
 	extends React.HTMLAttributes<HTMLElement> {
 	observer: Observer;
 	onClose: () => void;
 }
 
-interface ITabTypeProps extends React.HTMLAttributes<HTMLElement> {
+interface TabTypeProps extends React.HTMLAttributes<HTMLElement> {
 	description: string;
 	disabled?: boolean;
 	disabledMessage?: string;
@@ -85,14 +85,14 @@ interface ITabTypeProps extends React.HTMLAttributes<HTMLElement> {
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
-const TabType: React.FC<ITabTypeProps> = ({
+function TabType({
 	description,
 	disabled = false,
 	label,
 	onChangeType,
 	selected,
 	type,
-}) => {
+}: TabTypeProps) {
 	const tabProps = {
 		'data-tooltip-align': 'top',
 		'onClick': () => {},
@@ -120,7 +120,7 @@ const TabType: React.FC<ITabTypeProps> = ({
 			</div>
 		</ClayTooltipProvider>
 	);
-};
+}
 
 function getRelationshipInfo(reverse: boolean, type: string): TLabelInfo {
 	if (Liferay.FeatureFlags['LPS-158478']) {
@@ -139,10 +139,10 @@ function getRelationshipInfo(reverse: boolean, type: string): TLabelInfo {
 	}
 }
 
-const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
+export function ModalAddObjectLayoutTab({
 	observer,
 	onClose,
-}) => {
+}: ModalAddObjectLayoutTabProps) {
 	const [
 		{
 			objectLayout: {objectLayoutTabs},
@@ -349,6 +349,4 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 			</ClayForm>
 		</ClayModal>
 	);
-};
-
-export default ModalAddObjectLayoutTab;
+}

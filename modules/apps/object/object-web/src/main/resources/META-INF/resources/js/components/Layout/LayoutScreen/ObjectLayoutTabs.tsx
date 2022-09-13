@@ -20,10 +20,10 @@ import {Panel, PanelBody, PanelHeader} from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
-import HeaderDropdown from './HeaderDropdown';
-import ModalAddObjectLayoutBox from './ModalAddObjectLayoutBox';
-import ObjectLayoutBox from './ObjectLayoutBox';
-import ObjectLayoutRelationship from './ObjectLayoutRelationship';
+import {HeaderDropdown} from './HeaderDropdown';
+import {ModalAddObjectLayoutBox} from './ModalAddObjectLayoutBox';
+import {ObjectLayoutBox} from './ObjectLayoutBox';
+import {ObjectLayoutRelationship} from './ObjectLayoutRelationship';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
@@ -95,21 +95,6 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 														},
 														tabIndex,
 														type: 'categorization',
-													},
-													type:
-														TYPES.ADD_OBJECT_LAYOUT_BOX,
-												});
-											}}
-											addComments={() => {
-												dispatch({
-													payload: {
-														name: {
-															[defaultLanguageId]: Liferay.Language.get(
-																'comments'
-															),
-														},
-														tabIndex,
-														type: 'comments',
 													},
 													type:
 														TYPES.ADD_OBJECT_LAYOUT_BOX,

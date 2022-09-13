@@ -27,7 +27,7 @@ import React, {useMemo, useState} from 'react';
 
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
 import {TObjectField} from '../types';
-import RequiredLabel from './RequiredLabel';
+import {RequiredLabel} from './RequiredLabel';
 
 const objectFieldSizes = [1, 2, 3];
 

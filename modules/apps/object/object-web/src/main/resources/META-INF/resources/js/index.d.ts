@@ -104,8 +104,7 @@ interface ObjectDefinition {
 	active: boolean;
 	dateCreated: string;
 	dateModified: string;
-	enableCategorization: boolean;
-	enableComments: boolean;
+	enabledCategorization: boolean;
 	id: number;
 	label: LocalizedValue<string>;
 	name: string;

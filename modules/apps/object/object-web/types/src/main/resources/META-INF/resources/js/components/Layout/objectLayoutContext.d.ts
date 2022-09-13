@@ -21,8 +21,8 @@ import {
 	TObjectRelationship,
 } from './types';
 declare type TState = {
+	enabledCategorization: boolean;
 	isViewOnly: boolean;
-	objectDefinition: ObjectDefinition;
 	objectFieldTypes: ObjectFieldType[];
 	objectFields: TObjectField[];
 	objectLayout: TObjectLayout;
@@ -32,21 +32,11 @@ declare type TState = {
 declare type TAction =
 	| {
 			payload: {
-				objectDefinition: ObjectDefinition;
-			};
-			type: TYPES.ADD_OBJECT_DEFINITION;
-	  }
-	| {
-			payload: {
+				enabledCategorization: boolean;
 				objectLayout: TObjectLayout;
-			};
-			type: TYPES.ADD_OBJECT_LAYOUT;
-	  }
-	| {
-			payload: {
 				objectRelationships: TObjectRelationship[];
 			};
-			type: TYPES.ADD_OBJECT_RELATIONSHIPS;
+			type: TYPES.ADD_OBJECT_LAYOUT;
 	  }
 	| {
 			payload: {
@@ -129,13 +119,11 @@ interface ILayoutContextProps extends Array<TState | Function> {
 	1: React.Dispatch<React.ReducerAction<React.Reducer<TState, TAction>>>;
 }
 export declare enum TYPES {
-	ADD_OBJECT_DEFINITION = 'ADD_OBJECT_DEFINITION',
 	ADD_OBJECT_FIELDS = 'ADD_OBJECT_FIELDS',
 	ADD_OBJECT_LAYOUT = 'ADD_OBJECT_LAYOUT',
 	ADD_OBJECT_LAYOUT_BOX = 'ADD_OBJECT_LAYOUT_BOX',
 	ADD_OBJECT_LAYOUT_FIELD = 'ADD_OBJECT_LAYOUT_FIELD',
 	ADD_OBJECT_LAYOUT_TAB = 'ADD_OBJECT_LAYOUT_TAB',
-	ADD_OBJECT_RELATIONSHIPS = 'ADD_OBJECT_RELATIONSHIPS',
 	CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE = 'CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE',
 	CHANGE_OBJECT_LAYOUT_NAME = 'CHANGE_OBJECT_LAYOUT_NAME',
 	DELETE_OBJECT_LAYOUT_BOX = 'DELETE_OBJECT_LAYOUT_BOX',

@@ -19,5 +19,9 @@ interface IModalAddObjectLayoutBoxProps
 	observer: Observer;
 	onClose: () => void;
 }
-declare const ModalAddObjectLayoutBox: React.FC<IModalAddObjectLayoutBoxProps>;
-export default ModalAddObjectLayoutBox;
+export declare function ModalAddObjectLayoutBox({
+	observer,
+	onClose,
+	tabIndex,
+}: IModalAddObjectLayoutBoxProps): JSX.Element;
+export {};

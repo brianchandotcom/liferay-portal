@@ -12,7 +12,7 @@
  * details.
  */
 
-export type BoxType = 'regular' | 'categorization' | 'comments';
+export type BoxType = 'regular' | 'categorization';
 
 export type TName = LocalizedValue<string>;
 

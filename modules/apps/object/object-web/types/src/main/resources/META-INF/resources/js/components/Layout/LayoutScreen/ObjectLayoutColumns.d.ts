@@ -14,11 +14,16 @@
 
 import React from 'react';
 import {TObjectLayoutColumn} from '../types';
-interface IObjectLayoutColumnsProps extends React.HTMLAttributes<HTMLElement> {
+interface ObjectLayoutColumnsProps extends React.HTMLAttributes<HTMLElement> {
 	boxIndex: number;
 	objectLayoutColumns?: TObjectLayoutColumn[];
 	rowIndex: number;
 	tabIndex: number;
 }
-declare const ObjectLayoutColumns: React.FC<IObjectLayoutColumnsProps>;
-export default ObjectLayoutColumns;
+export declare function ObjectLayoutColumns({
+	boxIndex,
+	objectLayoutColumns,
+	rowIndex,
+	tabIndex,
+}: ObjectLayoutColumnsProps): JSX.Element;
+export {};

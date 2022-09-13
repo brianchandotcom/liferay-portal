@@ -12,12 +12,15 @@
  * details.
  */
 
-import {FC, MouseEventHandler} from 'react';
-declare const HeaderDropdown: FC<IHeaderDropdown>;
-interface IHeaderDropdown {
+import {MouseEventHandler} from 'react';
+interface HeaderDropdownProps {
 	addCategorization?: MouseEventHandler;
-	addComments?: MouseEventHandler;
 	deleteElement: MouseEventHandler;
 	disabled?: boolean;
 }
-export default HeaderDropdown;
+export declare function HeaderDropdown({
+	addCategorization,
+	deleteElement,
+	disabled,
+}: HeaderDropdownProps): JSX.Element;
+export {};

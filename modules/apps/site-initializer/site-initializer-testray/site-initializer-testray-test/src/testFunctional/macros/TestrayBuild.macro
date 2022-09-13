@@ -1,12 +1,52 @@
 definition {
 
-	macro editBuild {
-		TestrayManage.goToEditPage(valueName = "${valueName}");
+	macro createBuild {
+		Click(locator1 = "Testray#ADD_PROJECT");
 
-		TestrayBuild.typeBuildField();
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${fieldName}");
+
+		Select(
+			locator1 = "TestrayBuild#ROUTINE_ID",
+			value1 = "${routine}");
+
+		Select(
+			locator1 = "TestrayBuild#PRODUCT_VERSION",
+			value1 = "${productVersion}");
+
+		Type(
+			locator1 = "TestrayBuild#GIT_HASH_FIELD",
+			value1 = "${gitHash}");
+
+		Type(
+			locator1 = "TestrayCases#FIELD_DESCRIPTION",
+			value1 = "${description}");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	macro typeBuildField {
+	macro deleteBuild {
+		TestrayLayout.clickResultsOnSidebar();
+
+		Testray.changePagination(
+			numberItems = "20",
+			valuePagination = "150");
+
+		Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+		TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+		while (IsElementPresent(key_projectName = "Builds_", locator1 = "Testray#ITEM_NAME")) {
+			Testray.deleteComponent(itemName = "${itemName}");
+		}
+	}
+
+	macro verifyPromoteBuild {
+		AssertElementPresent(locator1 = "TestrayBuild#PROMOTE_BUILD");
+	}
+
+	macro editBuild {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
 			value1 = "${fieldName}");

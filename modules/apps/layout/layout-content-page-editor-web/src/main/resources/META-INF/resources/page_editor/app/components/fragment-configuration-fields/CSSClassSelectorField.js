@@ -150,11 +150,11 @@ export default function CSSClassSelectorField({
 					/>
 				</div>
 
-				<div className="mt-1 small text-secondary" id={helpTextId}>
+				<p className="m-0 mt-1 small text-secondary" id={helpTextId}>
 					{Liferay.Language.get(
 						'use-a-comma,-line-break,-or-space-to-add-multiple-classes'
 					)}
-				</div>
+				</p>
 			</ClayForm.Group>
 			<CSSClassSelectorDropDown
 				active={dropDownActive}

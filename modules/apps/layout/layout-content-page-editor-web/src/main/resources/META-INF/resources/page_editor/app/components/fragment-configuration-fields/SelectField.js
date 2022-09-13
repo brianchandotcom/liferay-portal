@@ -202,9 +202,9 @@ const MultiSelect = ({
 			</ClayDropDown>
 
 			{field.description ? (
-				<div className="mt-1 small text-secondary" id={helpTextId}>
+				<p className="m-0 mt-1 small text-secondary" id={helpTextId}>
 					{field.description}
-				</div>
+				</p>
 			) : null}
 		</>
 	);
@@ -241,9 +241,9 @@ const SingleSelect = ({disabled, field, onValueSelect, options, value}) => {
 			/>
 
 			{field.description ? (
-				<div className="mt-1 small text-secondary" id={helpTextId}>
+				<p className="m-0 mt-1 small text-secondary" id={helpTextId}>
 					{field.description}
-				</div>
+				</p>
 			) : null}
 		</>
 	);

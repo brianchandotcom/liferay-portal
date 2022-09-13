@@ -105,9 +105,9 @@ export function CheckboxField({
 			</div>
 
 			{field.description ? (
-				<div className="mt-1 small text-secondary" id={helpTextId}>
+				<p className="m-0 mt-1 small text-secondary" id={helpTextId}>
 					{field.description}
-				</div>
+				</p>
 			) : null}
 		</ClayForm.Group>
 	);

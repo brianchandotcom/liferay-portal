@@ -291,11 +291,14 @@ function SuccessMessageOptions({item, onValueSelect}) {
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
 
-					<div className="mt-1 small text-secondary" id={helpTextId}>
+					<p
+						className="m-0 mt-1 small text-secondary"
+						id={helpTextId}
+					>
 						{Liferay.Language.get(
 							'urls-must-have-a-valid-protocol'
 						)}
-					</div>
+					</p>
 				</ClayForm.Group>
 			)}
 		</>

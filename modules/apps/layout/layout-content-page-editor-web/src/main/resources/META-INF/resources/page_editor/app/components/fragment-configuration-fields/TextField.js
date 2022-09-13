@@ -86,9 +86,9 @@ export function TextField({field, onValueSelect, value}) {
 			/>
 
 			{field.description ? (
-				<div className="mt-1 small text-secondary" id={helpTextId}>
+				<p className="m-0 mt-1 small text-secondary" id={helpTextId}>
 					{field.description}
-				</div>
+				</p>
 			) : null}
 
 			{errorMessage && (

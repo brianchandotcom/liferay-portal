@@ -329,7 +329,7 @@ definition {
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
-		LexiconCard.viewCardNotPresent(card = "Document_1.pdf");
+		LexiconCard.viewNoCardThumbnail(card = "Document_1.pdf");
 	}
 
 	@description = "This test ensures that when setting the multiple mime type size limit at site and instance levels, the lower limit from the site will take effect."

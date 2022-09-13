@@ -291,13 +291,9 @@ definition {
 	}
 
 	macro generateNewKey {
-		Click(
-			key_text = "Actions",
-			locator1 = "Button#ANY");
+		CustomerPortal.clickAtButton(text = "Actions");
 
-		Click(
-			key_action = "Generate New",
-			locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
+		CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Generate New");
 
 		AssertElementPresent(locator1 = "CP2ActivationKeys#GENERATE_KEY_FORM");
 	}

@@ -305,11 +305,13 @@ definition {
 	macro deleteEntryInRelationshipTab {
 		ObjectAdmin.gotoRelationshipsTab();
 
-		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+		Click.clickNoMouseOver(
+			key_entryName = "${entryName}",
+			locator1 = "ObjectPortlet#DELETE_RELATIONSHIP_ENTRY");
 
-		Click(
-			key_kebabOption = "${kebabOption}",
-			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+		WaitForPageLoad();
+
+		WaitForPageLoad();
 	}
 
 	macro deleteFieldOnBlock {

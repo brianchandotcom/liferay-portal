@@ -1456,7 +1456,7 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry A");
 
-		CreateObject.deleteEntryInRelationshipTab(kebabOption = "Delete");
+		CreateObject.deleteEntryInRelationshipTab(entryName = "Entry B");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "Entry B");
 

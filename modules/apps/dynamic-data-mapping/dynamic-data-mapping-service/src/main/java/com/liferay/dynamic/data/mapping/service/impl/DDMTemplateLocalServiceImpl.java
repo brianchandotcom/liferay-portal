@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageContentException;
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageNameException;
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageSizeException;
+import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageURLException;
 import com.liferay.dynamic.data.mapping.internal.search.helper.DDMSearchHelper;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
@@ -77,10 +78,14 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -211,8 +216,6 @@ public class DDMTemplateLocalServiceImpl
 			throw new TemplateCreationDisabledException();
 		}
 
-		User user = _userLocalService.getUser(userId);
-
 		if (Validator.isNull(templateKey)) {
 			templateKey = String.valueOf(counterLocalService.increment());
 		}
@@ -232,10 +235,14 @@ public class DDMTemplateLocalServiceImpl
 				}
 			}
 
-			if ((smallImageBytes == null) && !Validator.isUrl(smallImageURL)) {
-				smallImage = false;
+			if ((smallImageBytes == null) &&
+				_isInvalidImageURL(smallImageURL)) {
+
+				throw new TemplateSmallImageURLException();
 			}
 		}
+
+		User user = _userLocalService.getUser(userId);
 
 		validate(
 			groupId, classNameId, templateKey, LocaleUtil.getSiteDefault(),
@@ -1450,12 +1457,7 @@ public class DDMTemplateLocalServiceImpl
 			File smallImageFile, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
 		byte[] smallImageBytes = null;
-
-		DDMTemplate template = ddmTemplateLocalService.getDDMTemplate(
-			templateId);
 
 		if (smallImage) {
 			try {
@@ -1467,12 +1469,17 @@ public class DDMTemplateLocalServiceImpl
 				}
 			}
 
-			if (!template.isSmallImage() && (smallImageBytes == null) &&
-				!Validator.isUrl(smallImageURL)) {
+			if ((smallImageBytes == null) &&
+				_isInvalidImageURL(smallImageURL)) {
 
-				smallImage = false;
+				throw new TemplateSmallImageURLException();
 			}
 		}
+
+		DDMTemplate template = ddmTemplateLocalService.getDDMTemplate(
+			templateId);
+
+		User user = _userLocalService.getUser(userId);
 
 		validate(
 			template.getGroupId(),
@@ -1665,7 +1672,6 @@ public class DDMTemplateLocalServiceImpl
 			throw new TemplateCreationDisabledException();
 		}
 
-		User user = _userLocalService.getUser(userId);
 		String templateKey = String.valueOf(counterLocalService.increment());
 
 		boolean smallImage = template.isSmallImage();
@@ -1674,7 +1680,7 @@ public class DDMTemplateLocalServiceImpl
 
 		byte[] smallImageBytes = null;
 
-		if (template.isSmallImage()) {
+		if (smallImage) {
 			try {
 				smallImageBytes = FileUtil.getBytes(smallImageFile);
 			}
@@ -1685,11 +1691,13 @@ public class DDMTemplateLocalServiceImpl
 			}
 
 			if ((smallImageBytes == null) &&
-				!Validator.isUrl(template.getSmallImageURL())) {
+				_isInvalidImageURL(template.getSmallImageURL())) {
 
-				smallImage = false;
+				throw new TemplateSmallImageURLException();
 			}
 		}
+
+		User user = _userLocalService.getUser(userId);
 
 		validate(
 			template.getGroupId(), template.getClassNameId(), templateKey,
@@ -1917,6 +1925,21 @@ public class DDMTemplateLocalServiceImpl
 
 			return new long[0];
 		}
+	}
+
+	private boolean _isInvalidImageURL(String smallImageURL) {
+		try {
+			ImageIO.read(new URL(smallImageURL));
+
+			return false;
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

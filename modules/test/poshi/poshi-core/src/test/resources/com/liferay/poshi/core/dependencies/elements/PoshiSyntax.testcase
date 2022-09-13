@@ -15,6 +15,7 @@
 	<var static="true" name="integer" method="MathUtil#difference('${endYear}', '${numberOfYears}')"/>
 	<var name="newInteger" value="13"/>
     <var name="testRef" value="test"/>
+    <echo message="${test}"/>
     <var name="reference" value="${testRef}"/>
 
 	<set-up>

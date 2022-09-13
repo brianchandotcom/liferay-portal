@@ -129,13 +129,13 @@ RedirectEntriesManagementToolbarDisplayContext redirectEntriesManagementToolbarD
 					List<DropdownItem> dropdownItems = redirectEntriesDisplayContext.getActionDropdownItems(redirectEntry);
 					%>
 
-					<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
-						<liferay-ui:search-container-column-text>
+					<liferay-ui:search-container-column-text>
+						<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
 							<clay:dropdown-actions
 								dropdownItems="<%= dropdownItems %>"
 							/>
-						</liferay-ui:search-container-column-text>
-					</c:if>
+						</c:if>
+					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator

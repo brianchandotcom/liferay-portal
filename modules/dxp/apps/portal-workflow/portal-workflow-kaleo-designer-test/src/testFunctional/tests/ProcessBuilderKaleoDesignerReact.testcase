@@ -525,10 +525,10 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.addRoleTypeByPositionOnAssignments(
 			assignmentType = "Role Type",
+			newSection = "New Section",
 			roleTypeName = "Account",
 			roleTypeRoleName = "Account Member",
-            newSection = "New Section",
-            sectionOptionList = "3");
+			sectionOptionList = "3");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -538,10 +538,10 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.addRoleTypeByPositionOnAssignments(
 			assignmentType = "Role Type",
+			newSection = "New Section",
 			roleTypeName = "Regular",
 			roleTypeRoleName = "Owner",
-            newSection = "New Section",
-            sectionOptionList = "4");
+			sectionOptionList = "4");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -563,9 +563,6 @@ definition {
 			inputOption = "Role",
 			positonOption = "4",
 			selectedRole = "Organization");
-
-		
-
 	}
 
 	@description = "Verify that the user is able to assign the task node to a single Role Type"

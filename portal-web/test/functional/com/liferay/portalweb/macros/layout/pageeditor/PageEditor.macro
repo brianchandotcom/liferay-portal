@@ -4144,16 +4144,9 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	macro switchViewport {
-		if (isSet(modal)) {
-			Click(
-				key_deviceType = "${deviceType}",
-				locator1 = "Modal#DEVICE_TYPE");
-		}
-		else {
-			Click(
-				key_deviceType = "${deviceType}",
-				locator1 = "PageEditor#DEVICE_TYPE");
-		}
+		Click(
+			key_deviceType = "${deviceType}",
+			locator1 = "PageEditor#DEVICE_TYPE");
 
 		if ("${deviceType}" == "Desktop") {
 			var viewport = "desktop";
@@ -4168,11 +4161,9 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			var viewport = "portraitMobile";
 		}
 
-		if (!(isSet(modal))) {
-			WaitForVisible(
-				key_deviceType = "${viewport}",
-				locator1 = "PageEditor#VIEWPORT");
-		}
+		WaitForVisible(
+			key_deviceType = "${viewport}",
+			locator1 = "PageEditor#VIEWPORT");
 	}
 
 	macro unhideFragmentViaPageStructure {

@@ -19,9 +19,6 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "devices");
 
-String keywords = ParamUtil.getString(request, "keywords");
-
-int delta = ParamUtil.getInteger(request, "delta", SearchContainer.DEFAULT_DELTA);
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
@@ -29,96 +26,54 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 	renderResponse
 ).setTabs1(
 	tabs1
-).setParameter(
-	"delta", delta
 ).buildPortletURL();
+
+SearchContainer<SyncDevice> syncDeviceSearchContainer = new SearchContainer<>(renderRequest, portletURL, null, "no-devices-were-found");
+
+syncDeviceSearchContainer.setOrderByCol(orderByCol);
+
+OrderByComparator<SyncDevice> orderByComparator = null;
+
+if (orderByCol.equals("name")) {
+	orderByComparator = OrderByComparatorFactoryUtil.create("SyncDevice", "userName", orderByType.equals("asc"));
+}
+else if (orderByCol.equals("build")) {
+	orderByComparator = OrderByComparatorFactoryUtil.create("SyncDevice", "buildNumber", orderByType.equals("asc"));
+}
+else if (orderByCol.equals("last-seen")) {
+	orderByComparator = OrderByComparatorFactoryUtil.create("SyncDevice", "modifiedDate", orderByType.equals("asc"));
+}
+else {
+	orderByComparator = OrderByComparatorFactoryUtil.create("SyncDevice", orderByCol, orderByType.equals("asc"));
+}
+
+syncDeviceSearchContainer.setOrderByComparator(orderByComparator);
+
+syncDeviceSearchContainer.setOrderByType(orderByType);
+
+String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
+
+if (portletId.equals(SyncPortletKeys.SYNC_ADMIN_PORTLET)) {
+	String keywords = ParamUtil.getString(request, "keywords");
+
+	syncDeviceSearchContainer.setResultsAndTotal(SyncDeviceLocalServiceUtil.search(themeDisplay.getCompanyId(), keywords, syncDeviceSearchContainer.getStart(), syncDeviceSearchContainer.getEnd(), orderByComparator));
+}
+else {
+	syncDeviceSearchContainer.setResultsAndTotal(SyncDeviceLocalServiceUtil.getSyncDevices(themeDisplay.getUserId(), syncDeviceSearchContainer.getStart(), syncDeviceSearchContainer.getEnd(), orderByComparator));
+}
 %>
 
-<liferay-frontend:management-bar>
-	<c:if test="<%= Validator.isNull(keywords) %>">
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-				selectedDisplayStyle="list"
-			/>
-		</liferay-frontend:management-bar-buttons>
-
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns='<%= new String[] {"build", "last-seen", "name", "type"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
-
-			<li>
-				<aui:form
-					action="<%=
-						PortletURLBuilder.createRenderURL(
-							renderResponse
-						).setTabs1(
-							tabs1
-						).buildString()
-					%>"
-					name="searchFm"
-				>
-					<liferay-ui:input-search
-						markupView="lexicon"
-						placeholder='<%= LanguageUtil.get(request, "search") %>'
-					/>
-				</aui:form>
-			</li>
-		</liferay-frontend:management-bar-filters>
-	</c:if>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new DevicesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, syncDeviceSearchContainer) %>"
+/>
 
 <clay:container-fluid>
 	<aui:form method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<liferay-ui:search-container
-			emptyResultsMessage="no-devices-were-found"
-			iteratorURL="<%= portletURL %>"
+			searchContainer="<%= syncDeviceSearchContainer %>"
 		>
-
-			<%
-			List<SyncDevice> syncDevices = new ArrayList<>();
-
-			OrderByComparator<SyncDevice> orderByComparator = null;
-
-			if (orderByCol.equals("name")) {
-				orderByComparator = OrderByComparatorFactoryUtil.create("SyncDevice", "userName", orderByType.equals("asc"));
-			}
-			else if (orderByCol.equals("build")) {
-				orderByComparator = OrderByComparatorFactoryUtil.create("SyncDevice", "buildNumber", orderByType.equals("asc"));
-			}
-			else if (orderByCol.equals("last-seen")) {
-				orderByComparator = OrderByComparatorFactoryUtil.create("SyncDevice", "modifiedDate", orderByType.equals("asc"));
-			}
-			else {
-				orderByComparator = OrderByComparatorFactoryUtil.create("SyncDevice", orderByCol, orderByType.equals("asc"));
-			}
-
-			String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
-
-			if (portletId.equals(SyncPortletKeys.SYNC_ADMIN_PORTLET)) {
-				syncDevices = SyncDeviceLocalServiceUtil.search(themeDisplay.getCompanyId(), keywords, searchContainer.getStart(), searchContainer.getEnd(), orderByComparator);
-			}
-			else {
-				syncDevices = SyncDeviceLocalServiceUtil.getSyncDevices(themeDisplay.getUserId(), searchContainer.getStart(), searchContainer.getEnd(), orderByComparator);
-			}
-			%>
-
-			<liferay-ui:search-container-results
-				results="<%= syncDevices %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.sync.model.SyncDevice"
 				escapedModel="<%= true %>"

@@ -21,76 +21,32 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "sites");
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-int delta = ParamUtil.getInteger(request, "delta", SearchContainer.DEFAULT_DELTA);
-
 PortletURL portletURL = PortletURLBuilder.createRenderURL(
 	renderResponse
 ).setTabs1(
 	tabs1
-).setParameter(
-	"delta", delta
 ).buildPortletURL();
+
+SearchContainer<Group> groupSearchContainer = new SearchContainer<>(renderRequest, portletURL, null, "no-sites-were-found");
+
+groupSearchContainer.setId("sites");
+groupSearchContainer.setRowChecker(new RowChecker(renderResponse));
+
+List<Group> groups = GroupLocalServiceUtil.search(
+	themeDisplay.getCompanyId(), keywords,
+	LinkedHashMapBuilder.<String, Object>put(
+		"active", true
+	).put(
+		"site", true
+	).build(),
+	QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+groupSearchContainer.setResultsAndTotal(() -> groups, groups.size());
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="sites"
->
-	<c:if test="<%= Validator.isNull(keywords) %>">
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-				selectedDisplayStyle="list"
-			/>
-		</liferay-frontend:management-bar-buttons>
-
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
-
-			<li>
-				<aui:form
-					action="<%=
-						PortletURLBuilder.createRenderURL(
-							renderResponse
-						).setTabs1(
-							tabs1
-						).buildString()
-					%>"
-					name="searchFm"
-				>
-					<liferay-ui:input-search
-						markupView="lexicon"
-						placeholder='<%= LanguageUtil.get(request, "search") %>'
-					/>
-				</aui:form>
-			</li>
-		</liferay-frontend:management-bar-filters>
-	</c:if>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "enableSites();" %>'
-			icon="check"
-			label="enable-sync-sites"
-		/>
-
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "disableSites();" %>'
-			icon="times"
-			label="disable-sync-sites"
-		/>
-
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "editSitesDefaultFilePermissions();" %>'
-			icon="lock"
-			label="default-file-permissions"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new SitesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, groupSearchContainer) %>"
+/>
 
 <clay:container-fluid>
 	<aui:form method="post" name="fm">
@@ -100,15 +56,6 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 		<aui:input name="permissions" type="hidden" />
 
 		<%
-		List<Group> groups = GroupLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), keywords,
-			LinkedHashMapBuilder.<String, Object>put(
-				"active", true
-			).put(
-				"site", true
-			).build(),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
 		List<String> resourceActions = ListUtil.fromArray(SyncPermissionsConstants.getFileResourceActions(SyncPermissionsConstants.PERMISSIONS_FULL_ACCESS));
 
 		List<String> localizedResourceActions = new ArrayList<String>(resourceActions.size());
@@ -135,17 +82,8 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 		%>
 
 		<liferay-ui:search-container
-			emptyResultsMessage="no-sites-were-found"
-			id="sites"
-			iteratorURL="<%= portletURL %>"
-			rowChecker="<%= new RowChecker(renderResponse) %>"
-			total="<%= groups.size() %>"
+			searchContainer="<%= groupSearchContainer %>"
 		>
-			<liferay-ui:search-container-results
-				calculateStartAndEnd="<%= true %>"
-				results="<%= groups %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.model.Group"
 				escapedModel="<%= true %>"
@@ -216,7 +154,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 
 <aui:script>
 	function <portlet:namespace />disableSites() {
-		var form = document.querySelector('#document.<portlet:namespace />fm');
+		var form = document.querySelector('#<portlet:namespace />fm');
 
 		if (form) {
 			var groupIds = Liferay.Util.listCheckedExcept(

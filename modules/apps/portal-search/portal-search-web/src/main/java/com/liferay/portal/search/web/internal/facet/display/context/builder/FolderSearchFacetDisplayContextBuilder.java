@@ -15,7 +15,6 @@
 package com.liferay.portal.search.web.internal.facet.display.context.builder;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
@@ -216,6 +215,12 @@ public class FolderSearchFacetDisplayContextBuilder {
 		return false;
 	}
 
+	private static int _compareDisplayNames(
+		String displayName1, String displayName2) {
+
+		return displayName1.compareTo(displayName2);
+	}
+
 	private FolderSearchFacetTermDisplayContext
 		_buildFolderSearchFacetTermDisplayContext(
 			long folderId, String displayName, int frequency,
@@ -287,7 +292,15 @@ public class FolderSearchFacetDisplayContextBuilder {
 			}
 		}
 
-		if (_order.equals("key:asc")) {
+		if (_order.equals("count:asc")) {
+			folderSearchFacetTermDisplayContexts.sort(
+				_ASC_FREQUENCY_COMPARATOR);
+		}
+		else if (_order.equals("count:desc")) {
+			folderSearchFacetTermDisplayContexts.sort(
+				_DESC_FREQUENCY_COMPARATOR);
+		}
+		else if (_order.equals("key:asc")) {
 			folderSearchFacetTermDisplayContexts.sort(_ASC_TERM_COMPARATOR);
 		}
 		else if (_order.equals("key:desc")) {
@@ -328,35 +341,97 @@ public class FolderSearchFacetDisplayContextBuilder {
 	}
 
 	private static final Comparator<FolderSearchFacetTermDisplayContext>
-		_ASC_TERM_COMPARATOR =
+		_ASC_FREQUENCY_COMPARATOR =
 			new Comparator<FolderSearchFacetTermDisplayContext>() {
 
-				@Override
 				public int compare(
-					FolderSearchFacetTermDisplayContext
-						folderSearchFacetTermDisplayContext1,
-					FolderSearchFacetTermDisplayContext
-						folderSearchFacetTermDisplayContext2) {
+					FolderSearchFacetTermDisplayContext displayContext1,
+					FolderSearchFacetTermDisplayContext displayContext2) {
 
-					try {
-						String displayName1 =
-							folderSearchFacetTermDisplayContext1.
-								getDisplayName();
-						String displayName2 =
-							folderSearchFacetTermDisplayContext2.
-								getDisplayName();
+					int result =
+						displayContext1.getFrequency() -
+							displayContext2.getFrequency();
 
-						return displayName1.compareTo(displayName2);
+					if (result == 0) {
+						return _compareDisplayNames(
+							displayContext1.getDisplayName(),
+							displayContext2.getDisplayName());
 					}
-					catch (PortalException portalException) {
-						throw new RuntimeException(portalException);
-					}
+
+					return result;
 				}
 
 			};
 
 	private static final Comparator<FolderSearchFacetTermDisplayContext>
-		_DESC_TERM_COMPARATOR = _ASC_TERM_COMPARATOR.reversed();
+		_ASC_TERM_COMPARATOR =
+			new Comparator<FolderSearchFacetTermDisplayContext>() {
+
+				@Override
+				public int compare(
+					FolderSearchFacetTermDisplayContext displayContext1,
+					FolderSearchFacetTermDisplayContext displayContext2) {
+
+					int result = _compareDisplayNames(
+						displayContext1.getDisplayName(),
+						displayContext2.getDisplayName());
+
+					if (result == 0) {
+						return displayContext2.getFrequency() -
+							displayContext1.getFrequency();
+					}
+
+					return result;
+				}
+
+			};
+
+	private static final Comparator<FolderSearchFacetTermDisplayContext>
+		_DESC_FREQUENCY_COMPARATOR =
+			new Comparator<FolderSearchFacetTermDisplayContext>() {
+
+				@Override
+				public int compare(
+					FolderSearchFacetTermDisplayContext displayContext1,
+					FolderSearchFacetTermDisplayContext displayContext2) {
+
+					int result =
+						displayContext2.getFrequency() -
+							displayContext1.getFrequency();
+
+					if (result == 0) {
+						return _compareDisplayNames(
+							displayContext1.getDisplayName(),
+							displayContext2.getDisplayName());
+					}
+
+					return result;
+				}
+
+			};
+
+	private static final Comparator<FolderSearchFacetTermDisplayContext>
+		_DESC_TERM_COMPARATOR =
+			new Comparator<FolderSearchFacetTermDisplayContext>() {
+
+				@Override
+				public int compare(
+					FolderSearchFacetTermDisplayContext displayContext1,
+					FolderSearchFacetTermDisplayContext displayContext2) {
+
+					int result = _compareDisplayNames(
+						displayContext2.getDisplayName(),
+						displayContext1.getDisplayName());
+
+					if (result == 0) {
+						return displayContext2.getFrequency() -
+							displayContext1.getFrequency();
+					}
+
+					return result;
+				}
+
+			};
 
 	private Facet _facet;
 	private final FolderFacetPortletInstanceConfiguration

@@ -111,11 +111,9 @@ public class CommerceDiscountRelLocalServiceUtil {
 	 *
 	 * @param commerceDiscountRel the commerce discount rel
 	 * @return the commerce discount rel that was removed
-	 * @throws PortalException
 	 */
 	public static CommerceDiscountRel deleteCommerceDiscountRel(
-			CommerceDiscountRel commerceDiscountRel)
-		throws PortalException {
+		CommerceDiscountRel commerceDiscountRel) {
 
 		return getService().deleteCommerceDiscountRel(commerceDiscountRel);
 	}
@@ -144,12 +142,6 @@ public class CommerceDiscountRelLocalServiceUtil {
 		throws PortalException {
 
 		getService().deleteCommerceDiscountRels(commerceDiscount);
-	}
-
-	public static void deleteCommerceDiscountRels(long commerceDiscountId)
-		throws PortalException {
-
-		getService().deleteCommerceDiscountRels(commerceDiscountId);
 	}
 
 	public static void deleteCommerceDiscountRels(

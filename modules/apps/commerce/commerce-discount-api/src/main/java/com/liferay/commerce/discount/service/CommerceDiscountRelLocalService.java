@@ -116,12 +116,10 @@ public interface CommerceDiscountRelLocalService
 	 *
 	 * @param commerceDiscountRel the commerce discount rel
 	 * @return the commerce discount rel that was removed
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceDiscountRel deleteCommerceDiscountRel(
-			CommerceDiscountRel commerceDiscountRel)
-		throws PortalException;
+		CommerceDiscountRel commerceDiscountRel);
 
 	/**
 	 * Deletes the commerce discount rel with the primary key from the database. Also notifies the appropriate model listeners.
@@ -140,9 +138,6 @@ public interface CommerceDiscountRelLocalService
 		throws PortalException;
 
 	public void deleteCommerceDiscountRels(CommerceDiscount commerceDiscount)
-		throws PortalException;
-
-	public void deleteCommerceDiscountRels(long commerceDiscountId)
 		throws PortalException;
 
 	public void deleteCommerceDiscountRels(String className, long classPK)

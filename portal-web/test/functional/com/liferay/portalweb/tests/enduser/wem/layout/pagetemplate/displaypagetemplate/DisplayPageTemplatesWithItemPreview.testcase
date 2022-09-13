@@ -394,7 +394,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.togglePreview();
 		}
 
 		task ("Select the category via preview item selector") {
@@ -488,7 +488,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.togglePreview();
 		}
 
 		task ("Select the subcategory via preview item selector") {
@@ -644,7 +644,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.togglePreview();
 		}
 
 		task ("Select the category via preview item selector") {
@@ -768,7 +768,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.togglePreview();
 		}
 
 		task ("Select the web content via preview item selector") {
@@ -856,7 +856,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.togglePreview();
 		}
 
 		task ("Select the blogs entry via preview item selector") {
@@ -951,7 +951,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.togglePreview();
 		}
 
 		task ("Select the document via preview item selector") {
@@ -1060,7 +1060,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.togglePreview();
 		}
 
 		task ("Open the preview item selector in preview modal") {
@@ -1224,7 +1224,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.togglePreview();
 		}
 
 		task ("Select the web content via preview item selector") {
@@ -1337,7 +1337,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.togglePreview();
 		}
 
 		task ("Select the blogs entry via preview item selector") {
@@ -1451,7 +1451,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.togglePreview();
 		}
 
 		task ("Select the document via preview item selector") {

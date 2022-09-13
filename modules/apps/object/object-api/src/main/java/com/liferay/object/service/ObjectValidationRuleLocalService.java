@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -336,7 +337,9 @@ public interface ObjectValidationRuleLocalService
 		ObjectValidationRule objectValidationRule);
 
 	@Transactional(readOnly = true)
-	public void validate(BaseModel<?> baseModel, long objectDefinitionId)
+	public void validate(
+			BaseModel<?> baseModel, long objectDefinitionId,
+			JSONObject payloadJSONObject, long userId)
 		throws PortalException;
 
 }

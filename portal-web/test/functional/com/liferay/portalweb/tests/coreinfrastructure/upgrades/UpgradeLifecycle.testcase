@@ -24,6 +24,8 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "UpgradeProcess");
 
+		AssertConsoleTextPresent(value1 = "VerifyProcess");
+
 		task ("Restart portal and cleaning the logs") {
 			Portlet.shutdownServer();
 
@@ -31,6 +33,8 @@ definition {
 		}
 
 		AssertConsoleTextNotPresent(value1 = "UpgradeProcess");
+
+		AssertConsoleTextNotPresent(value1 = "VerifyProcess");
 	}
 
 }

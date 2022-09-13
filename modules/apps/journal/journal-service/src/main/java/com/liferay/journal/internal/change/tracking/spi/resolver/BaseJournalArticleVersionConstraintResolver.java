@@ -80,21 +80,21 @@ public abstract class BaseJournalArticleVersionConstraintResolver
 			ctArticle.getGroupId(), ctArticle.getArticleId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new ArticleVersionComparator());
 
-		List<JournalArticle> sourceArticles = new ArrayList<>();
+		List<JournalArticle> ctCollectionArticles = new ArrayList<>();
 
 		for (JournalArticle article : articles) {
 			if (article.getCtCollectionId() == ctArticle.getCtCollectionId()) {
-				sourceArticles.add(article);
+				ctCollectionArticles.add(article);
 			}
 		}
 
 		double currentVersion = MathUtil.format(
-			latestVersion + (0.1 * sourceArticles.size()), 1, 1);
+			latestVersion + (0.1 * ctCollectionArticles.size()), 1, 1);
 
 		CTPersistence ctPersistence =
 			journalArticleLocalService.getCTPersistence();
 
-		for (JournalArticle article : sourceArticles) {
+		for (JournalArticle article : ctCollectionArticles) {
 			article.setVersion(currentVersion);
 
 			journalArticleLocalService.updateJournalArticle(article);

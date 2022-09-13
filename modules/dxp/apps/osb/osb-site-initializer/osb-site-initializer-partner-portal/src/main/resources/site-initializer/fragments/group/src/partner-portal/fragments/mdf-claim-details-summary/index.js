@@ -25,13 +25,10 @@ const updateMDFClaimSummary = async () => {
 	if (response.ok) {
 		const data = await response.json();
 
-		const type = data.type;
-
 		const amountClaimed = formatCurrency(data.amountClaimed);
-
-		const paymentReceived = formatCurrency(data.paymentReceived);
-
 		const check = formatCurrency(data.check);
+		const paymentReceived = formatCurrency(data.paymentReceived);
+		const type = data.type;
 
 		fragmentElement.querySelector('#ClaimType').innerHTML = `${type}`;
 

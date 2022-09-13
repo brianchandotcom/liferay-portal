@@ -27,7 +27,7 @@ const getMDFRequestStatus = async () => {
 
 		fragmentElement.querySelector(
 			'#mdfRequestStatusDisplay'
-		).innerHTML = `Status : ${data.requestStatus}`;
+		).innerHTML = `Status: ${data.requestStatus}`;
 
 		return;
 	}

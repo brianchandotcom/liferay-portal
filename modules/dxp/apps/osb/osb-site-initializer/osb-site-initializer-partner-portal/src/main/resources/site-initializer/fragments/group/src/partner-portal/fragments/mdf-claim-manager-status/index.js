@@ -31,11 +31,12 @@ const updateStatus = async (status) => {
 		},
 		method: 'PATCH',
 	});
+
 	if (statusManagerResponse.ok) {
 		const data = await statusManagerResponse.json();
 		document.getElementById(
 			'mdfClaimStatusDisplay'
-		).innerHTML = `Status : ${data.claimStatus}`;
+		).innerHTML = `Status: ${data.claimStatus}`;
 
 		return;
 	}

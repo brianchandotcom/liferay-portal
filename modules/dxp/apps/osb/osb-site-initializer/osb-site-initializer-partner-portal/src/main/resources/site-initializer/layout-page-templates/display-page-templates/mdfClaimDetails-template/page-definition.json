@@ -147,19 +147,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Campaign MDF Request",
-																		"ca_ES": "Campaign MDF Request",
-																		"de_DE": "Campaign MDF Request",
+																		"ar_SA": "MDF Claim",
+																		"ca_ES": "MDF Claim",
+																		"de_DE": "MDF Claim",
 																		"en_US": "MDF Claim",
-																		"es_ES": "Campaign MDF Request",
-																		"fi_FI": "Campaign MDF Request",
-																		"fr_FR": "Campaign MDF Request",
-																		"hu_HU": "Campaign MDF Request",
-																		"ja_JP": "Campaign MDF Request",
-																		"nl_NL": "Campaign MDF Request",
-																		"pt_BR": "Campaign MDF Request",
-																		"sv_SE": "Campaign MDF Request",
-																		"zh_CN": "Campaign MDF Request"
+																		"es_ES": "MDF Claim",
+																		"fi_FI": "MDF Claim",
+																		"fr_FR": "MDF Claim",
+																		"hu_HU": "MDF Claim",
+																		"ja_JP": "MDF Claim",
+																		"nl_NL": "MDF Claim",
+																		"pt_BR": "MDF Claim",
+																		"sv_SE": "MDF Claim",
+																		"zh_CN": "MDF Claim"
 																	}
 																}
 															}
@@ -290,19 +290,19 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"ar_SA": ", Last Modified:",
-																				"ca_ES": ", Last Modified:",
-																				"de_DE": ", Last Modified:",
-																				"en_US": ", Last Modified:",
-																				"es_ES": ", Last Modified:",
-																				"fi_FI": ", Last Modified:",
-																				"fr_FR": ", Last Modified:",
-																				"hu_HU": ", Last Modified:",
-																				"ja_JP": ", Last Modified:",
-																				"nl_NL": ", Last Modified:",
-																				"pt_BR": ", Last Modified:",
-																				"sv_SE": ", Last Modified:",
-																				"zh_CN": ", Last Modified:"
+																				"ar_SA": ",Last Modified:",
+																				"ca_ES": ",Last Modified:",
+																				"de_DE": ",Last Modified:",
+																				"en_US": ",Last Modified:",
+																				"es_ES": ",Last Modified:",
+																				"fi_FI": ",Last Modified:",
+																				"fr_FR": ",Last Modified:",
+																				"hu_HU": ",Last Modified:",
+																				"ja_JP": ",Last Modified:",
+																				"nl_NL": ",Last Modified:",
+																				"pt_BR": ",Last Modified:",
+																				"sv_SE": ",Last Modified:",
+																				"zh_CN": ",Last Modified:"
 																			}
 																		}
 																	}
@@ -643,19 +643,19 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"ar_SA": "Insurance Industry Lead Gen",
-																				"ca_ES": "Insurance Industry Lead Gen",
-																				"de_DE": "Insurance Industry Lead Gen",
+																				"ar_SA": "Invoice",
+																				"ca_ES": "Invoice",
+																				"de_DE": "Invoice",
 																				"en_US": "Invoice",
-																				"es_ES": "Insurance Industry Lead Gen",
-																				"fi_FI": "Insurance Industry Lead Gen",
-																				"fr_FR": "Insurance Industry Lead Gen",
-																				"hu_HU": "Insurance Industry Lead Gen",
-																				"ja_JP": "Insurance Industry Lead Gen",
-																				"nl_NL": "Insurance Industry Lead Gen",
-																				"pt_BR": "Insurance Industry Lead Gen",
-																				"sv_SE": "Insurance Industry Lead Gen",
-																				"zh_CN": "Insurance Industry Lead Gen"
+																				"es_ES": "Invoice",
+																				"fi_FI": "Invoice",
+																				"fr_FR": "Invoice",
+																				"hu_HU": "Invoice",
+																				"ja_JP": "Invoice",
+																				"nl_NL": "Invoice",
+																				"pt_BR": "Invoice",
+																				"sv_SE": "Invoice",
+																				"zh_CN": "Invoice"
 																			}
 																		}
 																	}

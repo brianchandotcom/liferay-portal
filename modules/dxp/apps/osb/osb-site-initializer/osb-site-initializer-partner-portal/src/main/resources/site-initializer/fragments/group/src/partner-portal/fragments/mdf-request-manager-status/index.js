@@ -38,7 +38,7 @@ const updateStatus = async (status) => {
 		const data = await statusManagerResponse.json();
 		document.getElementById(
 			'mdfRequestStatusDisplay'
-		).innerHTML = `Status : ${data.requestStatus}`;
+		).innerHTML = `Status:${data.requestStatus}`;
 
 		return;
 	}

@@ -27,7 +27,7 @@ const getMDFClaimStatus = async () => {
 
 		fragmentElement.querySelector(
 			'#mdfClaimStatusDisplay'
-		).innerHTML = `Status : ${data.claimStatus}`;
+		).innerHTML = `Status: ${data.claimStatus}`;
 
 		return;
 	}

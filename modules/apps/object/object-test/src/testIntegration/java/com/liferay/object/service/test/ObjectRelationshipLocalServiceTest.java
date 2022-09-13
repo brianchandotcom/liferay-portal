@@ -178,8 +178,8 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				LocalizedMapUtil.getLocalizedMap("Able"), StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"able", ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		try {
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -189,6 +189,8 @@ public class ObjectRelationshipLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"able", ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+			Assert.fail();
 		}
 		catch (DuplicateObjectRelationshipException
 					duplicateObjectRelationshipException) {
@@ -211,6 +213,8 @@ public class ObjectRelationshipLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+			Assert.fail();
 		}
 		catch (ObjectRelationshipParameterObjectFieldIdException
 					objectRelationshipParameterObjectFieldIdException) {
@@ -232,6 +236,8 @@ public class ObjectRelationshipLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+			Assert.fail();
 		}
 		catch (ObjectRelationshipParameterObjectFieldIdException
 					objectRelationshipParameterObjectFieldIdException) {
@@ -294,6 +300,8 @@ public class ObjectRelationshipLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+			Assert.fail();
 		}
 		catch (ObjectRelationshipTypeException
 					objectRelationshipTypeException) {
@@ -313,6 +321,8 @@ public class ObjectRelationshipLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+			Assert.fail();
 		}
 		catch (ObjectRelationshipParameterObjectFieldIdException
 					objectRelationshipParameterObjectFieldIdException) {
@@ -453,6 +463,8 @@ public class ObjectRelationshipLocalServiceTest {
 		try {
 			_objectRelationshipLocalService.deleteObjectRelationship(
 				reverseObjectRelationship);
+
+			Assert.fail();
 		}
 		catch (ObjectRelationshipReverseException
 					objectRelationshipReverseException) {
@@ -522,6 +534,8 @@ public class ObjectRelationshipLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+			Assert.fail();
 		}
 		catch (ObjectRelationshipParameterObjectFieldIdException
 					objectRelationshipParameterObjectFieldIdException) {
@@ -544,6 +558,8 @@ public class ObjectRelationshipLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+			Assert.fail();
 		}
 		catch (ObjectRelationshipParameterObjectFieldIdException
 					objectRelationshipParameterObjectFieldIdException) {
@@ -570,6 +586,8 @@ public class ObjectRelationshipLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+			Assert.fail();
 		}
 		catch (ObjectRelationshipParameterObjectFieldIdException
 					objectRelationshipParameterObjectFieldIdException) {
@@ -598,6 +616,8 @@ public class ObjectRelationshipLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+			Assert.fail();
 		}
 		catch (ObjectRelationshipParameterObjectFieldIdException
 					objectRelationshipParameterObjectFieldIdException) {

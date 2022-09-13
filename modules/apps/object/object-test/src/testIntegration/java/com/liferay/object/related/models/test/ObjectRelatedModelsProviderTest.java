@@ -497,6 +497,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		try {
 			_objectEntryLocalService.deleteObjectEntry(objectEntry1);
+
+			Assert.fail();
 		}
 		catch (RequiredObjectRelationshipException
 					requiredObjectRelationshipException) {
@@ -597,18 +599,24 @@ public class ObjectRelatedModelsProviderTest {
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 			systemObjectDefinition.getObjectDefinitionId(), userIds[0],
 			HashMapBuilder.<String, Serializable>put(
+				"textField", RandomTestUtil.randomString()
+			).put(
 				objectField.getName(), objectEntry.getObjectEntryId()
 			).build());
 
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 			systemObjectDefinition.getObjectDefinitionId(), userIds[1],
 			HashMapBuilder.<String, Serializable>put(
+				"textField", RandomTestUtil.randomString()
+			).put(
 				objectField.getName(), objectEntry.getObjectEntryId()
 			).build());
 
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 			systemObjectDefinition.getObjectDefinitionId(), userIds[2],
 			HashMapBuilder.<String, Serializable>put(
+				"textField", RandomTestUtil.randomString()
+			).put(
 				objectField.getName(), objectEntry.getObjectEntryId()
 			).build());
 
@@ -632,6 +640,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		try {
 			_objectEntryLocalService.deleteObjectEntry(objectEntry);
+
+			Assert.fail();
 		}
 		catch (RequiredObjectRelationshipException
 					requiredObjectRelationshipException) {
@@ -680,12 +690,16 @@ public class ObjectRelatedModelsProviderTest {
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 			systemObjectDefinition.getObjectDefinitionId(), userIds[0],
 			HashMapBuilder.<String, Serializable>put(
+				"textField", RandomTestUtil.randomString()
+			).put(
 				objectField.getName(), objectEntry.getObjectEntryId()
 			).build());
 
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 			systemObjectDefinition.getObjectDefinitionId(), userIds[1],
 			HashMapBuilder.<String, Serializable>put(
+				"textField", RandomTestUtil.randomString()
+			).put(
 				objectField.getName(), objectEntry.getObjectEntryId()
 			).build());
 
@@ -700,6 +714,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		try {
 			_userLocalService.getUser(userIds[0]);
+
+			Assert.fail();
 		}
 		catch (NoSuchUserException noSuchUserException) {
 			Assert.assertEquals(
@@ -709,6 +725,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		try {
 			_userLocalService.getUser(userIds[1]);
+
+			Assert.fail();
 		}
 		catch (NoSuchUserException noSuchUserException) {
 			Assert.assertEquals(
@@ -808,6 +826,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		try {
 			_objectEntryLocalService.deleteObjectEntry(objectEntry);
+
+			Assert.fail();
 		}
 		catch (RequiredObjectRelationshipException
 					requiredObjectRelationshipException) {

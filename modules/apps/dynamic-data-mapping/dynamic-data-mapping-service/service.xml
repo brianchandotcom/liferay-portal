@@ -833,5 +833,6 @@
 		<exception>TemplateSmallImageContent</exception>
 		<exception>TemplateSmallImageName</exception>
 		<exception>TemplateSmallImageSize</exception>
+		<exception>TemplateSmallImageURL</exception>
 	</exceptions>
 </service-builder>

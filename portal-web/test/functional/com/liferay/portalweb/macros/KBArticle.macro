@@ -936,7 +936,7 @@ definition {
 
 			Click(locator1 = "KnowledgeBase#PAGE_TREE_FOLDERS_AND_ARTICLES");
 
-			if (IsElementNotPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_OPENED")) {
+			if (IsElementNotPresent(key_header = "${section}", locator1 = "KnowledgeBase#PAGE_TREE_PANEL_HEADER")) {
 				Click.javaScriptClick(locator1 = "KnowledgeBase#PAGE_TREE_FOLDERS_AND_ARTICLES");
 			}
 		}
@@ -946,7 +946,7 @@ definition {
 
 			Click(locator1 = "KnowledgeBase#PAGE_TREE_TEMPLATES");
 
-			if (IsElementNotPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_OPENED")) {
+			if (IsElementNotPresent(key_header = "${section}", locator1 = "KnowledgeBase#PAGE_TREE_PANEL_HEADER")) {
 				Click.javaScriptClick(locator1 = "KnowledgeBase#PAGE_TREE_TEMPLATES");
 			}
 		}
@@ -956,7 +956,7 @@ definition {
 
 			Click(locator1 = "KnowledgeBase#PAGE_TREE_SUGGESTIONS");
 
-			if (IsElementNotPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_OPENED")) {
+			if (IsElementNotPresent(key_header = "${section}", locator1 = "KnowledgeBase#PAGE_TREE_PANEL_HEADER")) {
 				Click.javaScriptClick(locator1 = "KnowledgeBase#PAGE_TREE_SUGGESTIONS");
 			}
 		}

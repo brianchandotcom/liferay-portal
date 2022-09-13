@@ -343,21 +343,29 @@ public class ObjectRelationshipLocalServiceTest {
 		objectRelationship =
 			_objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship.getObjectRelationshipId(), 0,
-				objectRelationship.getDeletionType(),
+				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 				LocalizedMapUtil.getLocalizedMap("Baker"));
 
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Baker"),
 			objectRelationship.getLabelMap());
 
-		objectRelationship =
+		ObjectRelationship reverseObjectRelationship =
 			_objectRelationshipLocalService.fetchReverseObjectRelationship(
 				objectRelationship, true);
 
+		Assert.assertEquals(
+			objectRelationship.getDeletionType(),
+			reverseObjectRelationship.getDeletionType());
+
+		Assert.assertEquals(
+			objectRelationship.getLabelMap(),
+			reverseObjectRelationship.getLabelMap());
+
 		try {
 			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getObjectRelationshipId(), 0,
-				objectRelationship.getDeletionType(),
+				reverseObjectRelationship.getObjectRelationshipId(), 0,
+				reverseObjectRelationship.getDeletionType(),
 				LocalizedMapUtil.getLocalizedMap(
 					RandomTestUtil.randomString()));
 

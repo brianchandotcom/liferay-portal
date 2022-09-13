@@ -17,15 +17,22 @@ package com.liferay.account.validator;
 /**
  * @author Drew Brokke
  */
-public interface AccountEntryEmailValidatorFactory {
+public interface AccountEntryEmailAddressValidator {
 
-	public AccountEntryEmailValidator create(long companyId);
+	public String[] getBlockedDomains();
 
-	public AccountEntryEmailValidator create(
-		long companyId, String[] validDomains);
+	public String[] getValidDomains();
 
-	public AccountEntryEmailValidator create(
-		String[] blockedDomains, long companyId, String[] customTLDs,
-		boolean emailDomainValidationEnabled, String[] validDomains);
+	public boolean isBlockedDomain(String domainOrEmailAddress);
+
+	public boolean isEmailAddressDomainValidationEnabled();
+
+	public boolean isValidDomain(String domainOrEmailAddress);
+
+	public boolean isValidDomainFormat(String domain);
+
+	public boolean isValidDomainStrict(String domainOrEmailAddress);
+
+	public boolean isValidEmailAddressFormat(String emailAddress);
 
 }

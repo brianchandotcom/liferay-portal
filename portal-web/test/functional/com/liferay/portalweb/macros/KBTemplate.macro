@@ -70,4 +70,14 @@ definition {
 			value1 = "${kbTemplateContent}");
 	}
 
+	macro viewNoTemplates {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No templates were found.");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No templates were found.");
+	}
+
 }

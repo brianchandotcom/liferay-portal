@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 import java.io.Serializable;
 
 /**
@@ -23,7 +21,7 @@ import java.io.Serializable;
  */
 public class FolderSearchFacetTermDisplayContext implements Serializable {
 
-	public String getDisplayName() throws PortalException {
+	public String getDisplayName() {
 		return _displayName;
 	}
 

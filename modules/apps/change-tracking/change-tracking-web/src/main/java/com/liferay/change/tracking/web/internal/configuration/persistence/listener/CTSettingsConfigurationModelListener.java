@@ -121,11 +121,16 @@ public class CTSettingsConfigurationModelListener
 							).or(
 								GroupTable.INSTANCE.typeSettings.like(
 									"%staged=true%")
+							).or(
+								GroupTable.INSTANCE.remoteStagingGroupCount.gt(
+									0)
 							).withParentheses()
 						)
 					))) {
 
-			if (group.isStaged() || group.isStagingGroup()) {
+			if (group.isStaged() || group.isStagingGroup() ||
+				group.hasRemoteStagingGroup()) {
+
 				throw new CTStagingEnabledException();
 			}
 		}

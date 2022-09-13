@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.segments.asah.connector.internal.configuration.provider.SegmentsAsahConfigurationProvider;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -56,11 +58,16 @@ public class AsahInterestTermCache {
 			_generateCacheKey(userId), terms, interestTermsTimeToLiveInSeconds);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMultiVMPool(MultiVMPool multiVMPool) {
+	@Activate
+	protected void activate() {
 		_portalCache =
-			(PortalCache<String, String[]>)multiVMPool.getPortalCache(
+			(PortalCache<String, String[]>)_multiVMPool.getPortalCache(
 				AsahInterestTermCache.class.getName());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_multiVMPool.removePortalCache(AsahInterestTermCache.class.getName());
 	}
 
 	private String _generateCacheKey(String userId) {
@@ -71,6 +78,9 @@ public class AsahInterestTermCache {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AsahInterestTermCache.class);
+
+	@Reference
+	private MultiVMPool _multiVMPool;
 
 	private PortalCache<String, String[]> _portalCache;
 

@@ -168,11 +168,6 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 		actionableDynamicQuery.performCount();
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private ActionableDynamicQuery _getRoleActionableDynamicQuery(
 		PortletDataContext portletDataContext, boolean export) {
 
@@ -226,6 +221,9 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	private final Set<String> _allSystemRoleNames = new HashSet<>();
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private Portal _portal;

@@ -25,6 +25,7 @@ import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtension;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtensionTypeConfigurer;
+import com.liferay.gradle.plugins.workspace.internal.client.extension.CustomElementTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeCSSTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.task.CreateClientExtensionConfigTask;
@@ -42,9 +43,11 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -85,7 +88,11 @@ public class ClientExtensionProjectConfigurator
 		super(settings);
 
 		_clientExtensionConfigurers.put(
-			"themeCSS", new ThemeCSSTypeConfigurer());
+			"customElement",
+			Collections.singletonList(new CustomElementTypeConfigurer()));
+		_clientExtensionConfigurers.put(
+			"themeCSS",
+			Collections.singletonList(new ThemeCSSTypeConfigurer()));
 
 		_defaultRepositoryEnabled = GradleUtil.getProperty(
 			settings,
@@ -136,15 +143,16 @@ public class ClientExtensionProjectConfigurator
 								createClientExtensionConfigTask.
 									addClientExtension(clientExtension));
 
-						ClientExtensionTypeConfigurer
-							clientExtensionTypeConfigurer =
-								_clientExtensionConfigurers.get(
-									clientExtension.type);
+						List<ClientExtensionTypeConfigurer>
+							clientExtensionTypeConfigurers =
+								_clientExtensionConfigurers.getOrDefault(
+									clientExtension.type,
+									Collections.emptyList());
 
-						if (clientExtensionTypeConfigurer != null) {
-							clientExtensionTypeConfigurer.apply(
-								project, clientExtension, zipTaskProvider);
-						}
+						clientExtensionTypeConfigurers.forEach(
+							clientExtensionTypeConfigurer ->
+								clientExtensionTypeConfigurer.apply(
+									project, clientExtension, zipTaskProvider));
 					}
 					catch (JsonProcessingException jsonProcessingException) {
 						throw new GradleException(
@@ -374,7 +382,7 @@ public class ClientExtensionProjectConfigurator
 
 					@SuppressWarnings("unused")
 					public void doCall(CopySpec copySpec) {
-						copySpec.from(project.file("src"));
+						copySpec.from(project.file("assets"));
 						copySpec.include("**/*");
 						copySpec.setIncludeEmptyDirs(false);
 					}
@@ -408,7 +416,7 @@ public class ClientExtensionProjectConfigurator
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
 
-	private final Map<String, ClientExtensionTypeConfigurer>
+	private final Map<String, List<ClientExtensionTypeConfigurer>>
 		_clientExtensionConfigurers = new HashMap<>();
 	private final boolean _defaultRepositoryEnabled;
 

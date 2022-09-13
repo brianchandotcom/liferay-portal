@@ -178,9 +178,11 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			jarSourcePath = jar;
 		}
 		else {
+			File clientExtensionYamlFile = project.file(
+				"client-extension.yaml");
 			File packageJsonFile = project.file("package.json");
 
-			if (packageJsonFile.exists() &&
+			if (!clientExtensionYamlFile.exists() && packageJsonFile.exists() &&
 				_hasJsPortletBuildScript(packageJsonFile.toPath())) {
 
 				GradleUtil.applyPlugin(project, FrontendPlugin.class);
@@ -290,9 +292,12 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
+					Path clientExtensionYamlPath = dirPath.resolve(
+						"client-extension.yaml");
 					Path packageJsonPath = dirPath.resolve("package.json");
 
-					if (Files.exists(packageJsonPath) &&
+					if (!Files.exists(clientExtensionYamlPath) &&
+						Files.exists(packageJsonPath) &&
 						_hasJsPortletBuildScript(packageJsonPath)) {
 
 						projectDirs.add(dirPath.toFile());

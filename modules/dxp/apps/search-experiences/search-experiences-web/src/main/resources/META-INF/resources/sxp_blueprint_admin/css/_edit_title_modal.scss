@@ -1,4 +1,4 @@
-.sxp-blueprint-edit-title-modal .modal-body {
+.sxp-edit-title-modal .modal-body {
 	.form-check-card {
 		height: calc(100% - 1.5rem);
 
@@ -47,6 +47,16 @@
 
 	.edit-title,
 	.edit-description {
+		&.disabled {
+			.input-group-item-shrink {
+				display: none;
+			}
+
+			textarea {
+				resize: none;
+			}
+		}
+
 		.form-text {
 			display: none;
 		}

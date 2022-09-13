@@ -105,6 +105,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
 			<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
 			<liferay-ui:error exception="<%= TemplateSmallImageContentException.class %>" message="the-small-image-file-could-not-be-saved" />
+			<liferay-ui:error exception="<%= TemplateSmallImageURLException.class %>" message="invalid-url-or-file" />
 
 			<liferay-ui:error exception="<%= TemplateSmallImageNameException.class %>">
 

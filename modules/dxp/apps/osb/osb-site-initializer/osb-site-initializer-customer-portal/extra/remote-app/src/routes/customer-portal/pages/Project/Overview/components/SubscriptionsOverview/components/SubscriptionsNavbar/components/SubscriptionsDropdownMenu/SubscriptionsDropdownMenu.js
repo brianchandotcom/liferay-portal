@@ -9,7 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {ClayButton, DropDown} from '@clayui/core';
+import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useState} from 'react';
 import i18n from '../../../../../../../../../../../common/I18n';
@@ -23,9 +24,9 @@ const SubscriptionsDropdownMenu = ({
 
 	return (
 		<div className="align-items-center d-flex mt-4 pb-3">
-			<h6>{i18n.translate('type')}:</h6>
+			<h6 className="mr-2 my-auto">{i18n.translate('type')}:</h6>
 
-			<DropDown
+			<ClayDropDown
 				active={active}
 				closeOnClickOutside
 				menuElementAttrs={{
@@ -34,7 +35,7 @@ const SubscriptionsDropdownMenu = ({
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton
-						className="font-weight-semi-bold ml-2 pb-2 shadow-none text-brand-primary"
+						className="font-weight-semi-bold shadow-none text-brand-primary"
 						displayType="unstyled"
 					>
 						{selectedSubscriptionGroup}
@@ -44,7 +45,7 @@ const SubscriptionsDropdownMenu = ({
 				}
 			>
 				{subscriptionGroups.map((subscriptionGroup) => (
-					<DropDown.Item
+					<ClayDropDown.Item
 						key={subscriptionGroup.name}
 						onClick={(event) => {
 							setSelectedSubscriptionGroup(event.target.value);
@@ -58,9 +59,9 @@ const SubscriptionsDropdownMenu = ({
 						value={subscriptionGroup.name}
 					>
 						{subscriptionGroup.name}
-					</DropDown.Item>
+					</ClayDropDown.Item>
 				))}
-			</DropDown>
+			</ClayDropDown>
 		</div>
 	);
 };

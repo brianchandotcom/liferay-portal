@@ -49,9 +49,11 @@ definition {
 	@description = "LPS-155309. Assert all filters can be removed."
 	@priority = "4"
 	test AllFiltersCanBeRemoved {
+		property custom.properties = "upgrade.database.auto.run=false";
+
 		task ("When there is a filter already established") {
 			AssertElementPresent(
-				key_filter = "Status: Approved, Draft",
+				key_filter = "Color: Blue, Green, Yellow",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 		}
 
@@ -67,7 +69,7 @@ definition {
 
 		task ("And the Filters Summary boxes will be updated accordingly to it") {
 			AssertElementNotPresent(
-				key_filter = "Status: Approved, Draft",
+				key_filter = "Color: Blue, Green, Yellow",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 		}
 	}
@@ -84,7 +86,7 @@ definition {
 
 			FDSFilters.enableStatusFilters(key_status = "Pending");
 
-			Click(locator1 = "FrontendDataSet#EDIT_FILTER_BUTTON");
+			Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
 		}
 
 		task ("Then the results will be displayed accordingly to the filter selected") {
@@ -112,7 +114,7 @@ definition {
 		task ("And When the exclude option is active") {
 			Check.checkToggleSwitch(locator1 = "FrontendDataSet#EXCLUDE_TOGGLE");
 
-			Click(locator1 = "FrontendDataSet#EDIT_FILTER_BUTTON");
+			Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
 		}
 
 		task ("Then the filter will be added to the Filters Summary") {
@@ -131,31 +133,45 @@ definition {
 	test FilterCanBeEdited {
 		task ("When there is a filter already established") {
 			AssertElementPresent(
-				key_filter = "Status: Approved, Draft",
+				key_filter = "Color: Blue, Green, Yellow",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 		}
 
 		task ("And clicking on the Filters Summary") {
 			ClickNoError(
-				key_filter = "Status: Approved, Draft",
+				key_filter = "Color: Blue, Green, Yellow",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 		}
 
 		task ("And the filter is edited") {
-			FDSFilters.disableStatusFilters(key_status = "Approved,Draft");
+			FDSFilters.disableStatusFilters(key_status = "Blue,Green");
 
-			FDSFilters.enableStatusFilters(key_status = "Pending");
+			FDSFilters.enableStatusFilters(key_status = "Red");
 
 			Click(locator1 = "FrontendDataSet#EDIT_FILTER_BUTTON");
 		}
 
 		task ("Then the results will be displayed updated accordingly to it") {
-			AssertElementPresent(locator1 = "FrontendDataSet#EMPTY_FDS_TABLE_MESSAGE");
+			AssertElementNotPresent(
+				key_itemName = "Green",
+				locator1 = "FrontendDataSet#TABLE_ITEM_ROW");
+
+			AssertElementNotPresent(
+				key_itemName = "Blue",
+				locator1 = "FrontendDataSet#TABLE_ITEM_ROW");
+
+			AssertElementPresent(
+				key_itemName = "Red",
+				locator1 = "FrontendDataSet#TABLE_ITEM_ROW");
+
+			AssertElementPresent(
+				key_itemName = "Yellow",
+				locator1 = "FrontendDataSet#TABLE_ITEM_ROW");
 		}
 
 		task ("And the Filters Summary boxes will be updated accordingly to it") {
 			AssertElementPresent(
-				key_filter = "Status: Pending",
+				key_filter = "Color: Yellow, Red",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 		}
 	}
@@ -180,12 +196,12 @@ definition {
 		task ("Then the results will be displayed updated accordingly to it") {
 			FDSFilters.enableStatusFilters(key_status = "Pending");
 
-			Click(locator1 = "FrontendDataSet#EDIT_FILTER_BUTTON");
+			Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
 		}
 
 		task ("And Then the Filters Summary boxes will be updated accordingly to it") {
 			AssertElementPresent(
-				key_filter = "Status: Approved, Draft, Pending",
+				key_filter = "Status: Pending",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 		}
 	}
@@ -233,7 +249,7 @@ definition {
 				key_toDate = "02/02/2021");
 
 			VerifyElementPresent(
-				key_filter = "Status: Approved, Draft",
+				key_filter = "Color: Blue, Green, Yellow",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 
 			VerifyElementPresent(
@@ -244,7 +260,7 @@ definition {
 		task ("Then it can be removed one by one") {
 			FDSFilters.closeFilters();
 
-			FDSFilters.removeFilter(key_filter = "Status");
+			FDSFilters.removeFilter(key_filter = "Color");
 
 			FDSFilters.removeFilter(key_filter = "Date Range");
 		}
@@ -257,7 +273,7 @@ definition {
 
 		task ("And the Filters Summary boxes will be updated accordingly to it") {
 			AssertElementNotPresent(
-				key_filter = "Status",
+				key_filter = "Color",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 
 			AssertElementNotPresent(
@@ -278,7 +294,7 @@ definition {
 
 			FDSFilters.disableStatusFilters(key_status = "Approved");
 
-			Click(locator1 = "FrontendDataSet#EDIT_FILTER_BUTTON");
+			Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
 		}
 
 		task ("Then the filter will be added to the Filters Summary") {
@@ -318,12 +334,12 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "FrontendDataSet#PAGINATION_RESULTS",
-				value1 = "Showing 1 to 10 of 100");
+				value1 = "Showing 1 to 10 of 75");
 		}
 
 		task ("And Then the Filters Summary boxes will be displayed accordingly to it") {
 			AssertElementPresent(
-				key_filter = "Status: Approved, Draft",
+				key_filter = "Color: Blue, Green, Yellow",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 		}
 	}

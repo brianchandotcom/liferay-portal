@@ -51,6 +51,8 @@ definition {
 	@description = "LPS-147914: Verify alert message is present when action button is clicked"
 	@priority = "4"
 	test ActionsCanBeCustomized {
+		property custom.properties = "upgrade.database.auto.run=false";
+
 		task ("When Click on 1st action button in FDS sample") {
 			MouseOver(
 				key_itemName = "Sample1",
@@ -65,18 +67,18 @@ definition {
 			AssertConfirm.assertConfirmationNoError(value1 = "Hello Sample1!");
 		}
 
-		task ("When Click on 2st action button in FDS sample") {
+		task ("When Click on 3rd action button in FDS sample") {
 			MouseOver(
-				key_itemName = "Sample2",
+				key_itemName = "Sample3",
 				locator1 = "FrontendDataSet#TABLE_ITEM_ROW");
 
 			ClickNoError(
-				key_title = "Sample2",
+				key_title = "Sample3",
 				locator1 = "FrontendDataSet#VIEW_ACTION_BUTTON");
 		}
 
-		task ("Then 2st alert message is present") {
-			AssertConfirm.assertConfirmationNoError(value1 = "Hello Sample2!");
+		task ("Then 3rd alert message is present") {
+			AssertConfirm.assertConfirmationNoError(value1 = "Hello Sample3!");
 		}
 	}
 

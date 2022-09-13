@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>PAGINATION_RESULTS</td>
-	<td>//div[contains(@class,'pagination-results') and contains(.,'Showing 1 to 10 of 100')]</td>
+	<td>//*[contains(@class,'pagination-results')]</td>
 	<td></td>
 </tr>
 
@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>MANAGEMENT_BAR</td>
-	<td>//div[contains(@class,'data-set-management-bar')]</td>
+	<td>//nav[contains(@class,'management-bar')]</td>
 	<td></td>
 </tr>
 <tr>

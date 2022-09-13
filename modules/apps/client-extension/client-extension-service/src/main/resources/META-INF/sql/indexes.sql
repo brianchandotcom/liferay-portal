@@ -11,3 +11,4 @@ create index IX_834A3D74 on ClientExtensionEntryRel (companyId, cetExternalRefer
 create unique index IX_465286B4 on ClientExtensionEntryRel (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_D55E5093 on ClientExtensionEntryRel (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_74D35671 on ClientExtensionEntryRel (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_E6F09C55 on ClientExtensionEntryRel (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);

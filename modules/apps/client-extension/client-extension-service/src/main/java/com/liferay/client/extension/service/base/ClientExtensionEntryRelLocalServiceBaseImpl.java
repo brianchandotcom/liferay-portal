@@ -275,19 +275,17 @@ public abstract class ClientExtensionEntryRelLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the client extension entry rel with the matching UUID and company.
+	 * Returns the client extension entry rel matching the UUID and group.
 	 *
 	 * @param uuid the client extension entry rel's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
 	 */
 	@Override
-	public ClientExtensionEntryRel
-		fetchClientExtensionEntryRelByUuidAndCompanyId(
-			String uuid, long companyId) {
+	public ClientExtensionEntryRel fetchClientExtensionEntryRelByUuidAndGroupId(
+		String uuid, long groupId) {
 
-		return clientExtensionEntryRelPersistence.fetchByUuid_C_First(
-			uuid, companyId, null);
+		return clientExtensionEntryRelPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -470,6 +468,9 @@ public abstract class ClientExtensionEntryRelLocalServiceBaseImpl
 		exportActionableDynamicQuery.setCompanyId(
 			portletDataContext.getCompanyId());
 
+		exportActionableDynamicQuery.setGroupId(
+			portletDataContext.getScopeGroupId());
+
 		exportActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod
 				<ClientExtensionEntryRel>() {
@@ -538,20 +539,54 @@ public abstract class ClientExtensionEntryRelLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the client extension entry rel with the matching UUID and company.
+	 * Returns all the client extension entry rels matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the client extension entry rels
+	 * @param companyId the primary key of the company
+	 * @return the matching client extension entry rels, or an empty list if no matches were found
+	 */
+	@Override
+	public List<ClientExtensionEntryRel>
+		getClientExtensionEntryRelsByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+		return clientExtensionEntryRelPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of client extension entry rels matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the client extension entry rels
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of client extension entry rels
+	 * @param end the upper bound of the range of client extension entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching client extension entry rels, or an empty list if no matches were found
+	 */
+	@Override
+	public List<ClientExtensionEntryRel>
+		getClientExtensionEntryRelsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
+
+		return clientExtensionEntryRelPersistence.findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the client extension entry rel matching the UUID and group.
 	 *
 	 * @param uuid the client extension entry rel's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching client extension entry rel
 	 * @throws PortalException if a matching client extension entry rel could not be found
 	 */
 	@Override
-	public ClientExtensionEntryRel getClientExtensionEntryRelByUuidAndCompanyId(
-			String uuid, long companyId)
+	public ClientExtensionEntryRel getClientExtensionEntryRelByUuidAndGroupId(
+			String uuid, long groupId)
 		throws PortalException {
 
-		return clientExtensionEntryRelPersistence.findByUuid_C_First(
-			uuid, companyId, null);
+		return clientExtensionEntryRelPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

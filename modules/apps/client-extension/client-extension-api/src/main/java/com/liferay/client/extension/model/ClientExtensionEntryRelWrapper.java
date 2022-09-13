@@ -53,6 +53,7 @@ public class ClientExtensionEntryRelWrapper
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put(
 			"clientExtensionEntryRelId", getClientExtensionEntryRelId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -64,6 +65,7 @@ public class ClientExtensionEntryRelWrapper
 			"cetExternalReferenceCode", getCETExternalReferenceCode());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -100,6 +102,12 @@ public class ClientExtensionEntryRelWrapper
 
 		if (clientExtensionEntryRelId != null) {
 			setClientExtensionEntryRelId(clientExtensionEntryRelId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -161,6 +169,12 @@ public class ClientExtensionEntryRelWrapper
 
 		if (typeSettings != null) {
 			setTypeSettings(typeSettings);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -277,6 +291,26 @@ public class ClientExtensionEntryRelWrapper
 	@Override
 	public String getExternalReferenceCode() {
 		return model.getExternalReferenceCode();
+	}
+
+	/**
+	 * Returns the group ID of this client extension entry rel.
+	 *
+	 * @return the group ID of this client extension entry rel
+	 */
+	@Override
+	public long getGroupId() {
+		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the last publish date of this client extension entry rel.
+	 *
+	 * @return the last publish date of this client extension entry rel
+	 */
+	@Override
+	public Date getLastPublishDate() {
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -477,6 +511,26 @@ public class ClientExtensionEntryRelWrapper
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		model.setExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	 * Sets the group ID of this client extension entry rel.
+	 *
+	 * @param groupId the group ID of this client extension entry rel
+	 */
+	@Override
+	public void setGroupId(long groupId) {
+		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the last publish date of this client extension entry rel.
+	 *
+	 * @param lastPublishDate the last publish date of this client extension entry rel
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

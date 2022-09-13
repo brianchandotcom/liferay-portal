@@ -85,7 +85,7 @@ public interface ClientExtensionEntryRelLocalService
 		ClientExtensionEntryRel clientExtensionEntryRel);
 
 	public ClientExtensionEntryRel addClientExtensionEntryRel(
-			long userId, long classNameId, long classPK,
+			long userId, long groupId, long classNameId, long classPK,
 			String cetExternalReferenceCode, String type, String typeSettings)
 		throws PortalException;
 
@@ -251,16 +251,15 @@ public interface ClientExtensionEntryRelLocalService
 		long companyId, String externalReferenceCode);
 
 	/**
-	 * Returns the client extension entry rel with the matching UUID and company.
+	 * Returns the client extension entry rel matching the UUID and group.
 	 *
 	 * @param uuid the client extension entry rel's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching client extension entry rel, or <code>null</code> if a matching client extension entry rel could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntryRel
-		fetchClientExtensionEntryRelByUuidAndCompanyId(
-			String uuid, long companyId);
+	public ClientExtensionEntryRel fetchClientExtensionEntryRelByUuidAndGroupId(
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -292,16 +291,16 @@ public interface ClientExtensionEntryRelLocalService
 		throws PortalException;
 
 	/**
-	 * Returns the client extension entry rel with the matching UUID and company.
+	 * Returns the client extension entry rel matching the UUID and group.
 	 *
 	 * @param uuid the client extension entry rel's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching client extension entry rel
 	 * @throws PortalException if a matching client extension entry rel could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntryRel getClientExtensionEntryRelByUuidAndCompanyId(
-			String uuid, long companyId)
+	public ClientExtensionEntryRel getClientExtensionEntryRelByUuidAndGroupId(
+			String uuid, long groupId)
 		throws PortalException;
 
 	/**
@@ -330,6 +329,34 @@ public interface ClientExtensionEntryRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ClientExtensionEntryRel> getClientExtensionEntryRels(
 		long classNameId, long classPK, String type, int start, int end);
+
+	/**
+	 * Returns all the client extension entry rels matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the client extension entry rels
+	 * @param companyId the primary key of the company
+	 * @return the matching client extension entry rels, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ClientExtensionEntryRel>
+		getClientExtensionEntryRelsByUuidAndCompanyId(
+			String uuid, long companyId);
+
+	/**
+	 * Returns a range of client extension entry rels matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the client extension entry rels
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of client extension entry rels
+	 * @param end the upper bound of the range of client extension entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching client extension entry rels, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ClientExtensionEntryRel>
+		getClientExtensionEntryRelsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<ClientExtensionEntryRel> orderByComparator);
 
 	/**
 	 * Returns the number of client extension entry rels.

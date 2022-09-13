@@ -51,6 +51,8 @@ public class ClientExtensionEntryRelTable
 		clientExtensionEntryRelId = createColumn(
 			"clientExtensionEntryRelId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
+	public final Column<ClientExtensionEntryRelTable, Long> groupId =
+		createColumn("groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryRelTable, Long> companyId =
 		createColumn(
 			"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
@@ -79,6 +81,10 @@ public class ClientExtensionEntryRelTable
 	public final Column<ClientExtensionEntryRelTable, Clob> typeSettings =
 		createColumn(
 			"typeSettings", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<ClientExtensionEntryRelTable, Date> lastPublishDate =
+		createColumn(
+			"lastPublishDate", Date.class, Types.TIMESTAMP,
+			Column.FLAG_DEFAULT);
 
 	private ClientExtensionEntryRelTable() {
 		super("ClientExtensionEntryRel", ClientExtensionEntryRelTable::new);

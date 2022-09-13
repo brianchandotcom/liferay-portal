@@ -78,7 +78,7 @@ public class ClientExtensionEntryRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -90,6 +90,8 @@ public class ClientExtensionEntryRelCacheModel
 		sb.append(externalReferenceCode);
 		sb.append(", clientExtensionEntryRelId=");
 		sb.append(clientExtensionEntryRelId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -110,6 +112,8 @@ public class ClientExtensionEntryRelCacheModel
 		sb.append(type);
 		sb.append(", typeSettings=");
 		sb.append(typeSettings);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -140,6 +144,7 @@ public class ClientExtensionEntryRelCacheModel
 
 		clientExtensionEntryRelImpl.setClientExtensionEntryRelId(
 			clientExtensionEntryRelId);
+		clientExtensionEntryRelImpl.setGroupId(groupId);
 		clientExtensionEntryRelImpl.setCompanyId(companyId);
 		clientExtensionEntryRelImpl.setUserId(userId);
 
@@ -189,6 +194,14 @@ public class ClientExtensionEntryRelCacheModel
 			clientExtensionEntryRelImpl.setTypeSettings(typeSettings);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			clientExtensionEntryRelImpl.setLastPublishDate(null);
+		}
+		else {
+			clientExtensionEntryRelImpl.setLastPublishDate(
+				new Date(lastPublishDate));
+		}
+
 		clientExtensionEntryRelImpl.resetOriginalValues();
 
 		return clientExtensionEntryRelImpl;
@@ -206,6 +219,8 @@ public class ClientExtensionEntryRelCacheModel
 
 		clientExtensionEntryRelId = objectInput.readLong();
 
+		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
 
 		userId = objectInput.readLong();
@@ -219,6 +234,7 @@ public class ClientExtensionEntryRelCacheModel
 		cetExternalReferenceCode = objectInput.readUTF();
 		type = objectInput.readUTF();
 		typeSettings = (String)objectInput.readObject();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -242,6 +258,8 @@ public class ClientExtensionEntryRelCacheModel
 		}
 
 		objectOutput.writeLong(clientExtensionEntryRelId);
+
+		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(companyId);
 
@@ -281,6 +299,8 @@ public class ClientExtensionEntryRelCacheModel
 		else {
 			objectOutput.writeObject(typeSettings);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
@@ -288,6 +308,7 @@ public class ClientExtensionEntryRelCacheModel
 	public String uuid;
 	public String externalReferenceCode;
 	public long clientExtensionEntryRelId;
+	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
@@ -298,5 +319,6 @@ public class ClientExtensionEntryRelCacheModel
 	public String cetExternalReferenceCode;
 	public String type;
 	public String typeSettings;
+	public long lastPublishDate;
 
 }

@@ -50,94 +50,50 @@ definition {
 	}
 
 	macro selectPreviewItem {
-		if (isSet(modal)) {
-			Click(locator1 = "Modal#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR");
+		WaitForLiferayEvent.initializeLiferayEventLog();
 
-			if (isSet(item)) {
-				DropdownMenuItem.click(menuItem = "${item}");
-			}
-			else {
-				DropdownMenuItem.click(menuItem = "Select Other Item");
+		Click(locator1 = "ControlMenu#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR");
 
-				SelectFrame(
-					key_title = "Select",
-					locator1 = "IFrame#MODAL_ANY");
-
-				if ("${assetType}" == "Web Content Article") {
-					Click(
-						key_listEntry = "${assetTitle}",
-						locator1 = "LexiconList#LIST_ENTRY_TITLE");
-				}
-				else if (("${assetType}" == "Blogs Entry") || ("${assetType}" == "Document")) {
-					Click(
-						key_card = "${assetTitle}",
-						locator1 = "Card#CARD_TITLE");
-				}
-				else if ("${assetType}" == "Category") {
-					Portlet.expandTree();
-
-					AssertVisible(
-						key_nodeName = "${assetTitle}",
-						locator1 = "Treeview#NODE_ITEM");
-
-					Click(
-						key_nodeName = "${assetTitle}",
-						locator1 = "Treeview#NODE_UNSELECTED");
-				}
-
-				SelectFrameTop();
-			}
-
-			AssertTextEquals(
-				locator1 = "Modal#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR",
-				value1 = "${assetTitle}");
+		if (isSet(item)) {
+			DropdownMenuItem.click(menuItem = "${item}");
 		}
 		else {
-			WaitForLiferayEvent.initializeLiferayEventLog();
+			DropdownMenuItem.click(menuItem = "Select Other Item");
 
-			Click(locator1 = "ControlMenu#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			if (isSet(item)) {
-				DropdownMenuItem.click(menuItem = "${item}");
+			if ("${assetType}" == "Web Content Article") {
+				if (isSet(searchTerm)) {
+					Search.searchCP(
+						modal = "true",
+						searchTerm = "${searchTerm}");
+
+					AssertTextEquals(
+						locator1 = "Search#SEARCH_INFO",
+						value1 = "1 Result for &quot;${searchTerm}&quot;");
+				}
+
+				Click(
+					key_listEntry = "${assetTitle}",
+					locator1 = "LexiconList#LIST_ENTRY_TITLE");
 			}
-			else {
-				DropdownMenuItem.click(menuItem = "Select Other Item");
+			else if (("${assetType}" == "Blogs Entry") || ("${assetType}" == "Document")) {
+				LexiconCard.clickCardTitle(card = "${assetTitle}");
+			}
+			else if ("${assetType}" == "Category") {
+				Portlet.expandTree();
 
-				SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-				if ("${assetType}" == "Web Content Article") {
-					if (isSet(searchTerm)) {
-						Search.searchCP(
-							modal = "true",
-							searchTerm = "${searchTerm}");
-
-						AssertTextEquals(
-							locator1 = "Search#SEARCH_INFO",
-							value1 = "1 Result for &quot;${searchTerm}&quot;");
-					}
-
-					Click(
-						key_listEntry = "${assetTitle}",
-						locator1 = "LexiconList#LIST_ENTRY_TITLE");
-				}
-				else if (("${assetType}" == "Blogs Entry") || ("${assetType}" == "Document")) {
-					LexiconCard.clickCardTitle(card = "${assetTitle}");
-				}
-				else if ("${assetType}" == "Category") {
-					Portlet.expandTree();
-
-					Click(
-						key_nodeName = "${assetTitle}",
-						locator1 = "Treeview#NODE_UNSELECTED");
-				}
-
-				SelectFrameTop();
+				Click(
+					key_nodeName = "${assetTitle}",
+					locator1 = "Treeview#NODE_UNSELECTED");
 			}
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR",
-				value1 = "${assetTitle}");
+			SelectFrameTop();
 		}
+
+		AssertTextEquals(
+			locator1 = "ControlMenu#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR",
+			value1 = "${assetTitle}");
 	}
 
 }

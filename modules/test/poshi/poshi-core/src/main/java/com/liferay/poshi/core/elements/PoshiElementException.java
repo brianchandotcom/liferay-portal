@@ -25,10 +25,6 @@ import java.net.URL;
 public class PoshiElementException extends Exception {
 
 	public static PoshiElement getRootPoshiElement(PoshiNode<?, ?> poshiNode) {
-		if (poshiNode == null) {
-			System.out.println("poshi node is null");
-		}
-
 		if (Validator.isNotNull(poshiNode.getParent())) {
 			PoshiElement parentPoshiElement =
 				(PoshiElement)poshiNode.getParent();

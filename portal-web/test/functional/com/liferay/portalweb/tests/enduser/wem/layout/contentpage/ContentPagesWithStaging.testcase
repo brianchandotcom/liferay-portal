@@ -1230,7 +1230,7 @@ definition {
 		}
 
 		task ("Take down the new naturalWidth and naturalHeight of image") {
-			Navigator.gotoNavTab(navTab = "Page Elements");
+			PageEditor.gotoTab(tabName = "Browser");
 
 			WaitForElementPresent(
 				key_resolutionLabel = "Width",
@@ -1369,7 +1369,7 @@ definition {
 		}
 
 		task ("View the version of mapped image") {
-			Navigator.gotoNavTab(navTab = "Page Elements");
+			PageEditor.gotoTab(tabName = "Browser");
 
 			WaitForElementPresent(
 				key_resolutionLabel = "Width",
@@ -1659,8 +1659,6 @@ definition {
 			ContentPages.gotoPageEditor();
 
 			PageEditor.previewInANewTab();
-
-			ContentPages.viewCurrentExperience(experienceName = "New Experience");
 		}
 
 		task ("View the Heading and Button fragments are shown in preview modal") {

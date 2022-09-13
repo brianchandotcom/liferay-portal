@@ -130,7 +130,7 @@ definition {
 				DragAndDrop.dragAndDrop(
 					key_position = "3",
 					locator1 = "PageEditor#GRID_COLUMN_RESIZER",
-					value1 = "100,0");
+					value1 = "50,0");
 
 				var n = ${n} + 1;
 			}

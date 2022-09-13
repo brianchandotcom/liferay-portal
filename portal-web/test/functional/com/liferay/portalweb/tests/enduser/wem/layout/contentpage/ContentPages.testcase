@@ -319,9 +319,13 @@ definition {
 
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
+			SelectWindow.selectPopUp(locator1 = "null");
+
 			PortletEntry.inputName(name = "Test Page Name Edited");
 
 			PortletEntry.save();
+
+			Close.closeWindow();
 		}
 
 		task ("Then the page designer can see new page name in pages admin") {

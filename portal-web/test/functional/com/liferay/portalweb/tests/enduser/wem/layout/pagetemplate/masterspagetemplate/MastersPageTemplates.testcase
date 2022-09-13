@@ -548,6 +548,8 @@ definition {
 		task ("Type content in the HTML Title field") {
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
+			SelectWindow.selectPopUp(locator1 = "null");
+
 			Navigator.gotoNavTab(navTab = "SEO");
 
 			PortletEntry.inputText(
@@ -1636,8 +1638,6 @@ definition {
 				text = "Heading Example 2");
 
 			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Elements");
 
 			Click.clickNoWaitForVisible(
 				key_index = "1",

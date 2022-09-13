@@ -645,11 +645,15 @@ definition {
 
 			PageEditor.previewInANewTab();
 
-			Click(
-				key_fieldLabel = "Experience",
-				locator1 = "Select#GENERIC_SELECT_FIELD");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
 
-			MenuItem.viewPresent(menuItem = "New Experience");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
 		}
 
 		task ("Back to view page mode and view the new experience still shown in experience selector") {
@@ -734,11 +738,21 @@ definition {
 
 			PageEditor.previewInANewTab();
 
-			ContentPages.viewCurrentExperience(experienceName = "New Experience");
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Edited Heading Example");
 		}
 
 		task ("Back to view page mode and view the new experience still selected in experience selector") {
 			Close.closeWindow();
+
+			SelectWindow.selectPopUp(locator1 = "null");
 
 			PageEditor.clickBack();
 

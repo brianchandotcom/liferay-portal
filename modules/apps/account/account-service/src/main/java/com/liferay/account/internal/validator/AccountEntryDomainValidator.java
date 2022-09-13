@@ -27,13 +27,14 @@ public class AccountEntryDomainValidator {
 
 	public AccountEntryDomainValidator(
 		String[] blockedDomains, DomainValidator domainValidator,
-		boolean emailDomainValidationEnabled, String[] validDomains) {
+		boolean emailAddressDomainValidationEnabled, String[] validDomains) {
 
 		Objects.requireNonNull(domainValidator);
 
 		_blockedDomains = blockedDomains;
 		_domainValidator = domainValidator;
-		_emailDomainValidationEnabled = emailDomainValidationEnabled;
+		_emailAddressDomainValidationEnabled =
+			emailAddressDomainValidationEnabled;
 		_validDomains = validDomains;
 	}
 
@@ -53,13 +54,13 @@ public class AccountEntryDomainValidator {
 		return false;
 	}
 
-	public boolean isEmailDomainValidationEnabled() {
-		return _emailDomainValidationEnabled;
+	public boolean isEmailAddressDomainValidationEnabled() {
+		return _emailAddressDomainValidationEnabled;
 	}
 
 	public boolean isValidDomain(String domain) {
 		if (!isBlockedDomain(domain) &&
-			(!_emailDomainValidationEnabled ||
+			(!_emailAddressDomainValidationEnabled ||
 			 ArrayUtil.isEmpty(_validDomains) ||
 			 ArrayUtil.contains(_validDomains, domain))) {
 
@@ -74,7 +75,7 @@ public class AccountEntryDomainValidator {
 	}
 
 	public boolean isValidDomainStrict(String domain) {
-		if (!isBlockedDomain(domain) && _emailDomainValidationEnabled &&
+		if (!isBlockedDomain(domain) && _emailAddressDomainValidationEnabled &&
 			ArrayUtil.contains(_validDomains, domain)) {
 
 			return true;
@@ -85,7 +86,7 @@ public class AccountEntryDomainValidator {
 
 	private final String[] _blockedDomains;
 	private final DomainValidator _domainValidator;
-	private final boolean _emailDomainValidationEnabled;
+	private final boolean _emailAddressDomainValidationEnabled;
 	private final String[] _validDomains;
 
 }

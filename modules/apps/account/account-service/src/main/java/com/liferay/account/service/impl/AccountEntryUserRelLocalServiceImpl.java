@@ -23,8 +23,8 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.base.AccountEntryUserRelLocalServiceBaseImpl;
-import com.liferay.account.validator.AccountEntryEmailValidator;
-import com.liferay.account.validator.AccountEntryEmailValidatorFactory;
+import com.liferay.account.validator.AccountEntryEmailAddressValidator;
+import com.liferay.account.validator.AccountEntryEmailAddressValidatorFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -91,7 +91,7 @@ public class AccountEntryUserRelLocalServiceImpl
 		User accountUser = _userLocalService.getUser(accountUserId);
 
 		_validateEmailAddress(
-			_accountEntryEmailValidatorFactory.create(
+			_accountEntryEmailAddressValidatorFactory.create(
 				accountUser.getCompanyId(), _getAccountDomains(accountEntryId)),
 			accountUser.getEmailAddress());
 
@@ -122,7 +122,7 @@ public class AccountEntryUserRelLocalServiceImpl
 		}
 
 		_validateEmailAddress(
-			_accountEntryEmailValidatorFactory.create(
+			_accountEntryEmailAddressValidatorFactory.create(
 				companyId, _getAccountDomains(accountEntryId)),
 			emailAddress);
 
@@ -457,22 +457,23 @@ public class AccountEntryUserRelLocalServiceImpl
 	}
 
 	private void _validateEmailAddress(
-			AccountEntryEmailValidator accountEntryEmailValidator,
+			AccountEntryEmailAddressValidator accountEntryEmailAddressValidator,
 			String emailAddress)
 		throws PortalException {
 
-		if (accountEntryEmailValidator.isBlockedDomain(emailAddress)) {
+		if (accountEntryEmailAddressValidator.isBlockedDomain(emailAddress)) {
 			throw new UserEmailAddressException.MustNotUseBlockedDomain(
 				emailAddress,
 				StringUtil.merge(
-					accountEntryEmailValidator.getBlockedDomains(),
+					accountEntryEmailAddressValidator.getBlockedDomains(),
 					StringPool.COMMA_AND_SPACE));
 		}
 
-		if (!accountEntryEmailValidator.isValidDomain(emailAddress)) {
+		if (!accountEntryEmailAddressValidator.isValidDomain(emailAddress)) {
 			throw new UserEmailAddressException.MustHaveValidDomain(
 				emailAddress,
-				StringUtil.merge(accountEntryEmailValidator.getValidDomains()));
+				StringUtil.merge(
+					accountEntryEmailAddressValidator.getValidDomains()));
 		}
 	}
 
@@ -480,8 +481,8 @@ public class AccountEntryUserRelLocalServiceImpl
 		AccountEntryUserRelLocalServiceImpl.class);
 
 	@Reference
-	private AccountEntryEmailValidatorFactory
-		_accountEntryEmailValidatorFactory;
+	private AccountEntryEmailAddressValidatorFactory
+		_accountEntryEmailAddressValidatorFactory;
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;

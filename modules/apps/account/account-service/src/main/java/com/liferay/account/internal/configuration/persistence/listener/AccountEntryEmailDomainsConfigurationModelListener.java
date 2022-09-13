@@ -63,9 +63,10 @@ public class AccountEntryEmailDomainsConfigurationModelListener
 			return;
 		}
 
-		String[] blockedEmailDomains = _getBlockedEmailDomains(properties);
+		String[] blockedEmailAddressDomains = _getBlockedEmailAddressDomains(
+			properties);
 
-		if (ArrayUtil.isEmpty(blockedEmailDomains)) {
+		if (ArrayUtil.isEmpty(blockedEmailAddressDomains)) {
 			return;
 		}
 
@@ -73,7 +74,8 @@ public class AccountEntryEmailDomainsConfigurationModelListener
 			_accountEntryLocalService.searchAccountEntries(
 				companyId, null,
 				new LinkedHashMap<>(
-					Collections.singletonMap("domains", blockedEmailDomains)),
+					Collections.singletonMap(
+						"domains", blockedEmailAddressDomains)),
 				-1, -1, null, false);
 
 		for (AccountEntry accountEntry :
@@ -81,8 +83,10 @@ public class AccountEntryEmailDomainsConfigurationModelListener
 
 			String[] domains = accountEntry.getDomainsArray();
 
-			for (String blockedEmailDomain : blockedEmailDomains) {
-				domains = ArrayUtil.remove(domains, blockedEmailDomain);
+			for (String blockedEmailAddressDomain :
+					blockedEmailAddressDomains) {
+
+				domains = ArrayUtil.remove(domains, blockedEmailAddressDomain);
 			}
 
 			accountEntry.setDomains(StringUtil.merge(domains));
@@ -99,15 +103,17 @@ public class AccountEntryEmailDomainsConfigurationModelListener
 			return;
 		}
 
-		String[] blockedEmailDomains = _getBlockedEmailDomains(properties);
+		String[] blockedEmailAddressDomains = _getBlockedEmailAddressDomains(
+			properties);
 
-		if (ArrayUtil.isEmpty(blockedEmailDomains)) {
+		if (ArrayUtil.isEmpty(blockedEmailAddressDomains)) {
 			return;
 		}
 
 		Arrays.setAll(
-			blockedEmailDomains,
-			i -> StringUtil.lowerCase(StringUtil.trim(blockedEmailDomains[i])));
+			blockedEmailAddressDomains,
+			i -> StringUtil.lowerCase(
+				StringUtil.trim(blockedEmailAddressDomains[i])));
 
 		DomainValidator domainValidator = _domainValidatorFactory.create(
 			GetterUtil.getStringValues(
@@ -115,9 +121,9 @@ public class AccountEntryEmailDomainsConfigurationModelListener
 
 		List<String> invalidDomains = new ArrayList<>();
 
-		for (String blockedEmailDomain : blockedEmailDomains) {
-			if (!domainValidator.isValid(blockedEmailDomain)) {
-				invalidDomains.add(blockedEmailDomain);
+		for (String blockedEmailAddressDomain : blockedEmailAddressDomains) {
+			if (!domainValidator.isValid(blockedEmailAddressDomain)) {
+				invalidDomains.add(blockedEmailAddressDomain);
 			}
 		}
 
@@ -137,10 +143,10 @@ public class AccountEntryEmailDomainsConfigurationModelListener
 
 		properties.put(
 			"blockedEmailDomains",
-			StringUtil.merge(blockedEmailDomains, StringPool.NEW_LINE));
+			StringUtil.merge(blockedEmailAddressDomains, StringPool.NEW_LINE));
 	}
 
-	private String[] _getBlockedEmailDomains(
+	private String[] _getBlockedEmailAddressDomains(
 		Dictionary<String, Object> properties) {
 
 		return StringUtil.split(

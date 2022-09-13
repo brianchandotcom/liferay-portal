@@ -14,7 +14,7 @@
 
 package com.liferay.account.internal.validator;
 
-import com.liferay.account.validator.AccountEntryEmailValidator;
+import com.liferay.account.validator.AccountEntryEmailAddressValidator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,10 +25,10 @@ import org.apache.commons.validator.routines.EmailValidator;
 /**
  * @author Drew Brokke
  */
-public class AccountEntryEmailValidatorImpl
-	implements AccountEntryEmailValidator {
+public class AccountEntryEmailAddressValidatorImpl
+	implements AccountEntryEmailAddressValidator {
 
-	public AccountEntryEmailValidatorImpl(
+	public AccountEntryEmailAddressValidatorImpl(
 		AccountEntryDomainValidator accountEntryDomainValidator, long companyId,
 		EmailAddressValidator emailAddressValidator,
 		EmailValidator emailValidator) {
@@ -50,20 +50,21 @@ public class AccountEntryEmailValidatorImpl
 	}
 
 	@Override
-	public boolean isBlockedDomain(String domainOrEmail) {
+	public boolean isBlockedDomain(String domainOrEmailAddress) {
 		return _accountEntryDomainValidator.isBlockedDomain(
-			_toDomain(domainOrEmail));
+			_toDomain(domainOrEmailAddress));
 	}
 
 	@Override
-	public boolean isEmailDomainValidationEnabled() {
-		return _accountEntryDomainValidator.isEmailDomainValidationEnabled();
+	public boolean isEmailAddressDomainValidationEnabled() {
+		return _accountEntryDomainValidator.
+			isEmailAddressDomainValidationEnabled();
 	}
 
 	@Override
-	public boolean isValidDomain(String domainOrEmail) {
+	public boolean isValidDomain(String domainOrEmailAddress) {
 		return _accountEntryDomainValidator.isValidDomain(
-			_toDomain(domainOrEmail));
+			_toDomain(domainOrEmailAddress));
 	}
 
 	@Override
@@ -72,15 +73,15 @@ public class AccountEntryEmailValidatorImpl
 	}
 
 	@Override
-	public boolean isValidDomainStrict(String domainOrEmail) {
+	public boolean isValidDomainStrict(String domainOrEmailAddress) {
 		return _accountEntryDomainValidator.isValidDomainStrict(
-			_toDomain(domainOrEmail));
+			_toDomain(domainOrEmailAddress));
 	}
 
 	@Override
-	public boolean isValidEmailFormat(String email) {
-		if (_emailValidator.isValid(email) &&
-			_emailAddressValidator.validate(_companyId, email)) {
+	public boolean isValidEmailAddressFormat(String emailAddress) {
+		if (_emailValidator.isValid(emailAddress) &&
+			_emailAddressValidator.validate(_companyId, emailAddress)) {
 
 			return true;
 		}
@@ -88,17 +89,18 @@ public class AccountEntryEmailValidatorImpl
 		return false;
 	}
 
-	private String _toDomain(String email) {
-		if (Validator.isDomain(email)) {
-			return email;
+	private String _toDomain(String emailAddress) {
+		if (Validator.isDomain(emailAddress)) {
+			return emailAddress;
 		}
 
-		String normalized = StringUtil.toLowerCase(StringUtil.trim(email));
+		String normalized = StringUtil.toLowerCase(
+			StringUtil.trim(emailAddress));
 
 		int index = normalized.indexOf(CharPool.AT);
 
 		if (index <= 0) {
-			return email;
+			return emailAddress;
 		}
 
 		return normalized.substring(index + 1);

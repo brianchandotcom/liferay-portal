@@ -15,8 +15,8 @@
 package com.liferay.account.internal.validator;
 
 import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
-import com.liferay.account.validator.AccountEntryEmailValidator;
-import com.liferay.account.validator.AccountEntryEmailValidatorFactory;
+import com.liferay.account.validator.AccountEntryEmailAddressValidator;
+import com.liferay.account.validator.AccountEntryEmailAddressValidatorFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -37,17 +37,17 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(service = AccountEntryEmailValidatorFactory.class)
-public class AccountEntryEmailValidatorFactoryImpl
-	implements AccountEntryEmailValidatorFactory {
+@Component(service = AccountEntryEmailAddressValidatorFactory.class)
+public class AccountEntryEmailAddressValidatorFactoryImpl
+	implements AccountEntryEmailAddressValidatorFactory {
 
 	@Override
-	public AccountEntryEmailValidator create(long companyId) {
+	public AccountEntryEmailAddressValidator create(long companyId) {
 		return create(companyId, _EMPTY_STRING_ARRAY);
 	}
 
 	@Override
-	public AccountEntryEmailValidator create(
+	public AccountEntryEmailAddressValidator create(
 		long companyId, String[] validDomains) {
 
 		AccountEntryEmailDomainsConfiguration
@@ -64,17 +64,17 @@ public class AccountEntryEmailValidatorFactoryImpl
 	}
 
 	@Override
-	public AccountEntryEmailValidator create(
+	public AccountEntryEmailAddressValidator create(
 		String[] blockedDomains, long companyId, String[] customTLDs,
-		boolean emailDomainValidationEnabled, String[] validDomains) {
+		boolean emailAddressDomainValidationEnabled, String[] validDomains) {
 
 		DomainValidator domainValidator = _domainValidatorFactory.create(
 			customTLDs);
 
-		return new AccountEntryEmailValidatorImpl(
+		return new AccountEntryEmailAddressValidatorImpl(
 			new AccountEntryDomainValidator(
-				blockedDomains, domainValidator, emailDomainValidationEnabled,
-				validDomains),
+				blockedDomains, domainValidator,
+				emailAddressDomainValidationEnabled, validDomains),
 			companyId, _emailAddressValidator,
 			new EmailValidator(false, false, domainValidator));
 	}
@@ -98,7 +98,7 @@ public class AccountEntryEmailValidatorFactoryImpl
 	private static final String[] _EMPTY_STRING_ARRAY = new String[0];
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AccountEntryEmailValidatorFactoryImpl.class);
+		AccountEntryEmailAddressValidatorFactoryImpl.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

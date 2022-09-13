@@ -26,8 +26,8 @@ import com.liferay.account.model.AccountEntryTable;
 import com.liferay.account.model.AccountEntryUserRelTable;
 import com.liferay.account.model.impl.AccountEntryImpl;
 import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
-import com.liferay.account.validator.AccountEntryEmailValidator;
-import com.liferay.account.validator.AccountEntryEmailValidatorFactory;
+import com.liferay.account.validator.AccountEntryEmailAddressValidator;
+import com.liferay.account.validator.AccountEntryEmailAddressValidatorFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
@@ -171,14 +171,15 @@ public class AccountEntryLocalServiceImpl
 
 		accountEntry.setDescription(description);
 
-		AccountEntryEmailValidator accountEntryEmailValidator =
-			_accountEntryEmailValidatorFactory.create(user.getCompanyId());
+		AccountEntryEmailAddressValidator accountEntryEmailAddressValidator =
+			_accountEntryEmailAddressValidatorFactory.create(
+				user.getCompanyId());
 
-		domains = _validateDomains(accountEntryEmailValidator, domains);
+		domains = _validateDomains(accountEntryEmailAddressValidator, domains);
 
 		accountEntry.setDomains(StringUtil.merge(domains, StringPool.COMMA));
 
-		_validateEmailAddress(accountEntryEmailValidator, emailAddress);
+		_validateEmailAddress(accountEntryEmailAddressValidator, emailAddress);
 
 		accountEntry.setEmailAddress(emailAddress);
 
@@ -592,15 +593,15 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setDescription(description);
 		accountEntry.setName(name);
 
-		AccountEntryEmailValidator accountEntryEmailValidator =
-			_accountEntryEmailValidatorFactory.create(
+		AccountEntryEmailAddressValidator accountEntryEmailAddressValidator =
+			_accountEntryEmailAddressValidatorFactory.create(
 				accountEntry.getCompanyId());
 
-		domains = _validateDomains(accountEntryEmailValidator, domains);
+		domains = _validateDomains(accountEntryEmailAddressValidator, domains);
 
 		accountEntry.setDomains(StringUtil.merge(domains, StringPool.COMMA));
 
-		_validateEmailAddress(accountEntryEmailValidator, emailAddress);
+		_validateEmailAddress(accountEntryEmailAddressValidator, emailAddress);
 
 		accountEntry.setEmailAddress(emailAddress);
 
@@ -1015,7 +1016,7 @@ public class AccountEntryLocalServiceImpl
 	}
 
 	private String[] _validateDomains(
-			AccountEntryEmailValidator accountEntryEmailValidator,
+			AccountEntryEmailAddressValidator accountEntryEmailAddressValidator,
 			String[] domains)
 		throws PortalException {
 
@@ -1027,8 +1028,9 @@ public class AccountEntryLocalServiceImpl
 			domains, i -> StringUtil.lowerCase(StringUtil.trim(domains[i])));
 
 		for (String domain : domains) {
-			if (!accountEntryEmailValidator.isValidDomainFormat(domain) ||
-				accountEntryEmailValidator.isBlockedDomain(domain)) {
+			if (!accountEntryEmailAddressValidator.isValidDomainFormat(
+					domain) ||
+				accountEntryEmailAddressValidator.isBlockedDomain(domain)) {
 
 				throw new AccountEntryDomainsException();
 			}
@@ -1038,7 +1040,7 @@ public class AccountEntryLocalServiceImpl
 	}
 
 	private void _validateEmailAddress(
-			AccountEntryEmailValidator accountEntryEmailValidator,
+			AccountEntryEmailAddressValidator accountEntryEmailAddressValidator,
 			String emailAddress)
 		throws AccountEntryEmailAddressException {
 
@@ -1046,7 +1048,9 @@ public class AccountEntryLocalServiceImpl
 			return;
 		}
 
-		if (!accountEntryEmailValidator.isValidEmailFormat(emailAddress)) {
+		if (!accountEntryEmailAddressValidator.isValidEmailAddressFormat(
+				emailAddress)) {
+
 			throw new AccountEntryEmailAddressException();
 		}
 	}
@@ -1090,8 +1094,8 @@ public class AccountEntryLocalServiceImpl
 	}
 
 	@Reference
-	private AccountEntryEmailValidatorFactory
-		_accountEntryEmailValidatorFactory;
+	private AccountEntryEmailAddressValidatorFactory
+		_accountEntryEmailAddressValidatorFactory;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

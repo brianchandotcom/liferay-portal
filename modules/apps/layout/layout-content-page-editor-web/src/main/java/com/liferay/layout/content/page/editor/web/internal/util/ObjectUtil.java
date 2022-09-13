@@ -14,16 +14,36 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util;
 
+import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
  */
 public class ObjectUtil {
+
+	public static Map<String, List<Map<String, Object>>>
+		getLayoutElementMapsListMap(long companyId) {
+
+		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
+			new HashMap<>(ContentPageEditorConstants.layoutElementMapsListMap);
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-150277")) ||
+			hideInputFragments(companyId)) {
+
+			layoutElementMapsListMap.remove("INPUTS");
+		}
+
+		return layoutElementMapsListMap;
+	}
 
 	public static Boolean hideInputFragments(long companyId) {
 		List<ObjectDefinition> objectDefinitions =

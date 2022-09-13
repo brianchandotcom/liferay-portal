@@ -523,9 +523,11 @@ public class FragmentCollectionManager {
 				httpServletRequest, masterDropZoneLayoutStructureItem,
 				themeDisplay));
 
+		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
+			ObjectUtil.getLayoutElementMapsListMap(themeDisplay.getCompanyId());
+
 		for (Map.Entry<String, List<Map<String, Object>>> entry :
-				ContentPageEditorConstants.layoutElementMapsListMap.
-					entrySet()) {
+				layoutElementMapsListMap.entrySet()) {
 
 			List<Map<String, Object>> layoutElementMapsList =
 				new LinkedList<>();

@@ -14,11 +14,9 @@
 
 package com.liferay.layout.content.page.editor.web.internal.constants;
 
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -65,24 +63,16 @@ public class ContentPageEditorConstants {
 				}
 			).put(
 				"INPUTS",
-				() -> {
-					if (!GetterUtil.getBoolean(
-							PropsUtil.get("feature.flag.LPS-150277"))) {
-
-						return null;
-					}
-
-					return ListUtil.fromArray(
-						HashMapBuilder.<String, Object>put(
-							"fragmentEntryKey", "form"
-						).put(
-							"icon", "container"
-						).put(
-							"itemType", "form"
-						).put(
-							"languageKey", "form-container"
-						).build());
-				}
+				ListUtil.fromArray(
+					HashMapBuilder.<String, Object>put(
+						"fragmentEntryKey", "form"
+					).put(
+						"icon", "container"
+					).put(
+						"itemType", "form"
+					).put(
+						"languageKey", "form-container"
+					).build())
 			).put(
 				"content-display",
 				ListUtil.fromArray(

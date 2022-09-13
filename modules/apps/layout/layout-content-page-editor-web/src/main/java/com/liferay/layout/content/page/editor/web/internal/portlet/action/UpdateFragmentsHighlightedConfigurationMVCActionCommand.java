@@ -25,6 +25,7 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
+import com.liferay.layout.content.page.editor.web.internal.util.ObjectUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -102,8 +103,11 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 			return null;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		Map<String, Map<String, Object>> layoutElementMaps =
-			_getLayoutElementMaps();
+			_getLayoutElementMaps(themeDisplay.getCompanyId());
 
 		if (layoutElementMaps.containsKey(fragmentEntryKey)) {
 			return fragmentEntryKey;
@@ -203,7 +207,7 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 			}
 
 			Map<String, Map<String, Object>> layoutElementMaps =
-				_getLayoutElementMaps();
+				_getLayoutElementMaps(themeDisplay.getCompanyId());
 
 			if (layoutElementMaps.containsKey(key)) {
 				Map<String, Object> layoutElementMap = layoutElementMaps.get(
@@ -323,16 +327,20 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 			sortedHighlightedFragments.toArray(new JSONObject[0]));
 	}
 
-	private Map<String, Map<String, Object>> _getLayoutElementMaps() {
+	private Map<String, Map<String, Object>> _getLayoutElementMaps(
+		long companyId) {
+
 		if (_layoutElementMaps != null) {
 			return _layoutElementMaps;
 		}
 
 		Map<String, Map<String, Object>> layoutElementMaps = new HashMap<>();
 
+		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
+			ObjectUtil.getLayoutElementMapsListMap(companyId);
+
 		for (Map.Entry<String, List<Map<String, Object>>> entry :
-				ContentPageEditorConstants.layoutElementMapsListMap.
-					entrySet()) {
+				layoutElementMapsListMap.entrySet()) {
 
 			for (Map<String, Object> layoutElementMap : entry.getValue()) {
 				String fragmentEntryKey = (String)layoutElementMap.get(

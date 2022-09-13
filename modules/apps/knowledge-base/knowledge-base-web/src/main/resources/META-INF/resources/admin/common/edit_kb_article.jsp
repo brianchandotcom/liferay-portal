@@ -57,6 +57,88 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 
 	<div class="contextual-sidebar contextual-sidebar-visible sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
 		<div class="sidebar-body">
+			<liferay-ui:tabs
+				names="properties"
+				param="tabs1"
+				refresh="<%= false %>"
+			>
+				<liferay-ui:section>
+					<liferay-expando:custom-attributes-available
+						className="<%= KBArticle.class.getName() %>"
+					>
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+							<liferay-expando:custom-attribute-list
+								className="<%= KBArticle.class.getName() %>"
+								classPK="<%= editKBArticleDisplayContext.getKBArticleId() %>"
+								editable="<%= true %>"
+								label="<%= true %>"
+							/>
+						</aui:fieldset>
+					</liferay-expando:custom-attributes-available>
+
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+						<liferay-asset:asset-categories-selector
+							className="<%= KBArticle.class.getName() %>"
+							classPK="<%= editKBArticleDisplayContext.getKBArticleClassPK() %>"
+							visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
+						/>
+
+						<liferay-asset:asset-tags-selector
+							className="<%= KBArticle.class.getName() %>"
+							classPK="<%= editKBArticleDisplayContext.getKBArticleClassPK() %>"
+						/>
+					</aui:fieldset>
+
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+						<liferay-asset:input-asset-links
+							className="<%= KBArticle.class.getName() %>"
+							classPK="<%= editKBArticleDisplayContext.getKBArticleClassPK() %>"
+						/>
+					</aui:fieldset>
+
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+						<aui:input cssClass="input-medium" data-custom-url="<%= false %>" disabled="<%= editKBArticleDisplayContext.isURLTitleDisabled() %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder="sample-article-url-title" prefix="<%= editKBArticleDisplayContext.getURLTitlePrefix() %>" type="text" value="<%= editKBArticleDisplayContext.getKBArticleURLTitle() %>" />
+
+						<c:if test="<%= editKBArticleDisplayContext.isKBArticleDescriptionEnabled() %>">
+							<aui:input name="description" />
+						</c:if>
+
+						<c:if test="<%= editKBArticleDisplayContext.isSourceURLEnabled() %>">
+							<aui:input label="source-url" name="sourceURL" />
+						</c:if>
+
+						<c:if test="<%= editKBArticleDisplayContext.hasKBArticleSections() %>">
+							<aui:model-context bean="<%= null %>" model="<%= KBArticle.class %>" />
+
+							<aui:select ignoreRequestValue="<%= true %>" multiple="<%= true %>" name="sections">
+
+								<%
+								Map<String, String> availableSections = editKBArticleDisplayContext.getAvailableKBArticleSections();
+
+								for (Map.Entry<String, String> entry : availableSections.entrySet()) {
+								%>
+
+									<aui:option label="<%= HtmlUtil.escape(entry.getKey()) %>" selected="<%= editKBArticleDisplayContext.isKBArticleSectionSelected(entry.getValue()) %>" value="<%= HtmlUtil.escape(entry.getValue()) %>" />
+
+								<%
+								}
+								%>
+
+							</aui:select>
+
+							<aui:model-context bean="<%= editKBArticleDisplayContext.getKBArticle() %>" model="<%= KBArticle.class %>" />
+						</c:if>
+					</aui:fieldset>
+
+					<c:if test="<%= editKBArticleDisplayContext.getKBArticle() == null %>">
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+							<liferay-ui:input-permissions
+								modelName="<%= KBArticle.class.getName() %>"
+							/>
+						</aui:fieldset>
+					</c:if>
+				</liferay-ui:section>
+			</liferay-ui:tabs>
 		</div>
 	</div>
 
@@ -155,81 +237,6 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 							<liferay-util:include page="/admin/common/attachments.jsp" servletContext="<%= application %>" />
 						</div>
 					</aui:fieldset>
-
-					<liferay-expando:custom-attributes-available
-						className="<%= KBArticle.class.getName() %>"
-					>
-						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
-							<liferay-expando:custom-attribute-list
-								className="<%= KBArticle.class.getName() %>"
-								classPK="<%= editKBArticleDisplayContext.getKBArticleId() %>"
-								editable="<%= true %>"
-								label="<%= true %>"
-							/>
-						</aui:fieldset>
-					</liferay-expando:custom-attributes-available>
-
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-						<liferay-asset:asset-categories-selector
-							className="<%= KBArticle.class.getName() %>"
-							classPK="<%= editKBArticleDisplayContext.getKBArticleClassPK() %>"
-							visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
-						/>
-
-						<liferay-asset:asset-tags-selector
-							className="<%= KBArticle.class.getName() %>"
-							classPK="<%= editKBArticleDisplayContext.getKBArticleClassPK() %>"
-						/>
-					</aui:fieldset>
-
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
-						<liferay-asset:input-asset-links
-							className="<%= KBArticle.class.getName() %>"
-							classPK="<%= editKBArticleDisplayContext.getKBArticleClassPK() %>"
-						/>
-					</aui:fieldset>
-
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
-						<aui:input cssClass="input-medium" data-custom-url="<%= false %>" disabled="<%= editKBArticleDisplayContext.isURLTitleDisabled() %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder="sample-article-url-title" prefix="<%= editKBArticleDisplayContext.getURLTitlePrefix() %>" type="text" value="<%= editKBArticleDisplayContext.getKBArticleURLTitle() %>" />
-
-						<c:if test="<%= editKBArticleDisplayContext.isKBArticleDescriptionEnabled() %>">
-							<aui:input name="description" />
-						</c:if>
-
-						<c:if test="<%= editKBArticleDisplayContext.isSourceURLEnabled() %>">
-							<aui:input label="source-url" name="sourceURL" />
-						</c:if>
-
-						<c:if test="<%= editKBArticleDisplayContext.hasKBArticleSections() %>">
-							<aui:model-context bean="<%= null %>" model="<%= KBArticle.class %>" />
-
-							<aui:select ignoreRequestValue="<%= true %>" multiple="<%= true %>" name="sections">
-
-								<%
-								Map<String, String> availableSections = editKBArticleDisplayContext.getAvailableKBArticleSections();
-
-								for (Map.Entry<String, String> entry : availableSections.entrySet()) {
-								%>
-
-									<aui:option label="<%= HtmlUtil.escape(entry.getKey()) %>" selected="<%= editKBArticleDisplayContext.isKBArticleSectionSelected(entry.getValue()) %>" value="<%= HtmlUtil.escape(entry.getValue()) %>" />
-
-								<%
-								}
-								%>
-
-							</aui:select>
-
-							<aui:model-context bean="<%= editKBArticleDisplayContext.getKBArticle() %>" model="<%= KBArticle.class %>" />
-						</c:if>
-					</aui:fieldset>
-
-					<c:if test="<%= editKBArticleDisplayContext.getKBArticle() == null %>">
-						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-							<liferay-ui:input-permissions
-								modelName="<%= KBArticle.class.getName() %>"
-							/>
-						</aui:fieldset>
-					</c:if>
 
 					<div class="kb-submit-buttons sheet-footer">
 						<aui:button disabled="<%= editKBArticleDisplayContext.isPending() %>" name="publishButton" type="submit" value="<%= editKBArticleDisplayContext.getPublishButtonLabel() %>" />

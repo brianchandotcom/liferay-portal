@@ -113,6 +113,12 @@ definition {
 		}
 
 		task ("Then only the AM Organization displays in the Organizations list for AM Account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AM Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Organizations");
+
 			LexiconEntry.viewNoEntry(rowEntry = "Account Org1");
 
 			LexiconEntry.viewEntryName(rowEntry = "AM Organization");

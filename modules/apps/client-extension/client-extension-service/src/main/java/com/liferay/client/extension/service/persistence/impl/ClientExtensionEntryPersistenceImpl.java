@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
@@ -4701,11 +4700,11 @@ public class ClientExtensionEntryPersistenceImpl
 
 			try {
 				clientExtensionEntry.setDescription(
-					SanitizerUtil.sanitize(
-						companyId, groupId, userId,
+					sanitize(
+						_sanitizers, companyId, groupId, userId,
 						ClientExtensionEntry.class.getName(),
 						clientExtensionEntryId, ContentTypes.TEXT_HTML,
-						Sanitizer.MODE_ALL,
+						new String[] {Sanitizer.MODE_ALL},
 						clientExtensionEntry.getDescription(), null));
 			}
 			catch (SanitizerException sanitizerException) {
@@ -5402,6 +5401,9 @@ public class ClientExtensionEntryPersistenceImpl
 
 	@Reference
 	protected FinderCache finderCache;
+
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
 
 	private static final String _SQL_SELECT_CLIENTEXTENSIONENTRY =
 		"SELECT clientExtensionEntry FROM ClientExtensionEntry clientExtensionEntry";

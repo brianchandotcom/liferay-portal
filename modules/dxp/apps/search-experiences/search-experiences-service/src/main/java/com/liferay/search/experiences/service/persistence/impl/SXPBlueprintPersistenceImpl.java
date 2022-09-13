@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
@@ -3505,10 +3504,11 @@ public class SXPBlueprintPersistenceImpl
 
 			try {
 				sxpBlueprint.setTitle(
-					SanitizerUtil.sanitize(
-						companyId, groupId, userId,
+					sanitize(
+						_sanitizers, companyId, groupId, userId,
 						SXPBlueprint.class.getName(), sxpBlueprintId,
-						ContentTypes.TEXT_PLAIN, Sanitizer.MODE_ALL,
+						ContentTypes.TEXT_PLAIN,
+						new String[] {Sanitizer.MODE_ALL},
 						sxpBlueprint.getTitle(), null));
 			}
 			catch (SanitizerException sanitizerException) {
@@ -3945,6 +3945,9 @@ public class SXPBlueprintPersistenceImpl
 
 	@Reference
 	protected FinderCache finderCache;
+
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
 
 	private static final String _SQL_SELECT_SXPBLUEPRINT =
 		"SELECT sxpBlueprint FROM SXPBlueprint sxpBlueprint";

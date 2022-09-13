@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -2316,10 +2315,12 @@ public class PLOEntryPersistenceImpl
 
 			try {
 				ploEntry.setValue(
-					SanitizerUtil.sanitize(
-						companyId, groupId, userId, PLOEntry.class.getName(),
-						ploEntryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-						ploEntry.getValue(), null));
+					sanitize(
+						_sanitizers, companyId, groupId, userId,
+						PLOEntry.class.getName(), ploEntryId,
+						ContentTypes.TEXT_HTML,
+						new String[] {Sanitizer.MODE_ALL}, ploEntry.getValue(),
+						null));
 			}
 			catch (SanitizerException sanitizerException) {
 				throw new SystemException(sanitizerException);
@@ -2761,6 +2762,9 @@ public class PLOEntryPersistenceImpl
 
 	@Reference
 	protected FinderCache finderCache;
+
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
 
 	private static final String _SQL_SELECT_PLOENTRY =
 		"SELECT ploEntry FROM PLOEntry ploEntry";

@@ -94,7 +94,7 @@ String unsubscribeActionName = StringPool.BLANK;
 						</portlet:actionURL>
 
 						<liferay-ui:icon
-							icon="star"
+							icon="bell-off"
 							linkCssClass="icon-monospaced"
 							markupView="lexicon"
 							message="unsubscribe"
@@ -103,7 +103,7 @@ String unsubscribeActionName = StringPool.BLANK;
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:icon
-							icon="star"
+							icon="bell-off"
 							linkCssClass="icon-monospaced"
 							markupView="lexicon"
 							message="subscribed-to-a-parent-folder"
@@ -129,7 +129,7 @@ String unsubscribeActionName = StringPool.BLANK;
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					icon="star-o"
+					icon="bell-on"
 					linkCssClass="icon-monospaced"
 					markupView="lexicon"
 					message="subscribe"

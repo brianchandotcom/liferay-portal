@@ -221,7 +221,17 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 	}
 
 	private Properties _getPortalTestProperties() {
-		return getProperties("portal.test.properties");
+		Properties testProperties = getProperties("portal.test.properties");
+
+		String companyDefaultLocale = System.getenv(
+			"TEST_COMPANY_DEFAULT_LOCALE");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(companyDefaultLocale)) {
+			testProperties.setProperty(
+				"test.company.default.locale", companyDefaultLocale);
+		}
+
+		return testProperties;
 	}
 
 	private void _writeAppServerPropertiesFile() {

@@ -122,8 +122,12 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			_writeCss(
-				fragmentRendererContext.getFragmentElementId(), printWriter);
+			String fragmentElementId =
+				fragmentRendererContext.getFragmentElementId();
+
+			printWriter.write("<div id=\"" + fragmentElementId + "\">");
+
+			_writeCss(fragmentElementId, printWriter);
 
 			httpServletRequest.setAttribute(
 				KBArticleNavigationFragmentDisplayContext.class.getName(),
@@ -134,6 +138,8 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 				_servletContext.getRequestDispatcher("/navigation/view.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
+
+			printWriter.write("</div>");
 		}
 		catch (ServletException servletException) {
 			_log.error(

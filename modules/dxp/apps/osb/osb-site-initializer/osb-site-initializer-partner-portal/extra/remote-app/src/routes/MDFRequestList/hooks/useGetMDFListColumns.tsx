@@ -18,35 +18,35 @@ import Dropdown from '../components/Dropdown';
 export default function useGetMDFListColumns(
 	data?: TableColumn<MDFRequestListItem>[],
 	siteURL?: string
-) {
-	const columns: TableColumn<MDFRequestListItem>[] | undefined = data && [
-		{
-			columnKey: MDFColumnKey.ID,
-			label: 'Request ID',
-			render: (data) => <>{`Request-${data}`}</>,
-		},
-		...data,
-		{
-			columnKey: MDFColumnKey.ACTION,
-			label: '',
-			render: (_, row) => (
-				<Dropdown
-					onClick={() =>
-						Liferay.Util.navigate(
-							`${siteURL}/l/${row[MDFColumnKey.ID]}`
-						)
-					}
-					options={[
-						{
-							icon: 'view',
-							key: 'approve',
-							label: ' View',
-						},
-					]}
-				></Dropdown>
-			),
-		},
-	];
-
-	return columns;
+): TableColumn<MDFRequestListItem>[] | undefined {
+	return (
+		data && [
+			{
+				columnKey: MDFColumnKey.ID,
+				label: 'Request ID',
+				render: (data) => <>{`Request-${data}`}</>,
+			},
+			...data,
+			{
+				columnKey: MDFColumnKey.ACTION,
+				label: '',
+				render: (_, row) => (
+					<Dropdown
+						onClick={() =>
+							Liferay.Util.navigate(
+								`${siteURL}/l/${row[MDFColumnKey.ID]}`
+							)
+						}
+						options={[
+							{
+								icon: 'view',
+								key: 'approve',
+								label: ' View',
+							},
+						]}
+					></Dropdown>
+				),
+			},
+		]
+	);
 }

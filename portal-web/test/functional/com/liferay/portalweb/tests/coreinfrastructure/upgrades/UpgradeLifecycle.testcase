@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Upgrades Core";
+	property testray.main.component.name = "Database Upgrade Framework";
 
 	setUp {
 		TestCase.setUpPortalInstance();

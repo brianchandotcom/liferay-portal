@@ -1,5 +1,24 @@
 definition {
 
+	macro activateOrDeactivateAction {
+		ObjectAdmin.goToActionDetails(viewEntry = "${viewEntry}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "ObjectAction#IFRAME_SIDE_PANEL");
+
+		if ("${active}" == "true") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Active",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if ("${active}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Active",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		Button.clickSave();
+	}
+
 	macro addCategorizationOnLayoutTab {
 		Click(locator1 = "ObjectAdmin#DROPDOWN_CATEGORIZATION_OPTION");
 

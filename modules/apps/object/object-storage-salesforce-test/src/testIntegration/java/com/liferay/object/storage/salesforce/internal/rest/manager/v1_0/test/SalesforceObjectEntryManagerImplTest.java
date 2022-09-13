@@ -140,6 +140,7 @@ public class SalesforceObjectEntryManagerImplTest {
 			false, null, objectField.getLabelMap(), objectField.getName(),
 			false, false, objectField.getObjectFieldSettings());
 
+		_objectDefinition.setExternalReferenceCode("Ticket__c");
 		_objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
 
 		_objectDefinition =

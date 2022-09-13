@@ -235,12 +235,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
-	@Override
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	public void setQuerySuggester(QuerySuggester querySuggester) {
-		super.setQuerySuggester(querySuggester);
-	}
-
 	protected SearchSearchRequest createSearchSearchRequest(
 		SearchRequest searchRequest, SearchContext searchContext, Query query,
 		int start, int end) {
@@ -307,6 +301,11 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			_elasticsearchConfigurationWrapper.trackTotalHits());
 
 		return searchSearchRequest;
+	}
+
+	@Override
+	protected QuerySuggester getQuerySuggester() {
+		return _querySuggester;
 	}
 
 	protected boolean handle(Exception exception) {
@@ -547,6 +546,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		_elasticsearchConfigurationWrapper;
 	private IndexNameBuilder _indexNameBuilder;
 	private Props _props;
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	private QuerySuggester _querySuggester;
+
 	private SearchEngineAdapter _searchEngineAdapter;
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private SearchResponseBuilderFactory _searchResponseBuilderFactory;

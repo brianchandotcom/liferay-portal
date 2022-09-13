@@ -21,10 +21,10 @@ definition {
 	}
 
 	@priority = "5"
-	test CanUpgradePartitionedDatabase741 {
+	test CanUpgradePartitionedDatabase7413U33 {
 		property data.archive.type = "data-archive-portal-partition";
 		property portal.upgrades = "true";
-		property portal.version = "7.4.1";
+		property portal.version = "7.4.13.u33";
 
 		Upgrade.viewUpgradeDBPartition();
 	}

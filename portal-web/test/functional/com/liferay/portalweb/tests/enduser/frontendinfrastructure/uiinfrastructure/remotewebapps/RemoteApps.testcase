@@ -677,48 +677,37 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-162031. The Theme CSS Extension is hidden by default."
+	@description = "This is a test for LPS-162031. The site administrator could add a Theme CSS remote app."
 	@priority = "3"
-	test ThemeCSSHiddenByDefault {
-		property test.name.skip.portal.instance = "RemoteApps#ThemeCSSHiddenByDefault";
+	test ThemeCSSCanBeCreated {
+		task ("Given a site administrator accesses to the Remote Apps admin") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
 
-		task ("Given a site administrator has a default portal") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Font Family",
+				groupName = "Test Site Name",
+				mimeType = "text/css",
+				sourceFileName = "font_family.css");
+
+			var url = JSONDocument.getLatestVersionURL(
+				dmDocumentTitle = "Font Family",
+				groupName = "Test Site Name");
+
 			RemoteApps.goToRemoteAppsPortlet();
 		}
 
-		task ("When the site administrator create a remote app") {
-			LexiconEntry.gotoAdd();
+		task ("When the site administrator create a Theme CSS remote app") {
+			RemoteApps.addType(type = "Add Theme CSS");
+
+			RemoteApps.addApp(
+				entryName = "Font Family",
+				mainURL = "${url}");
 		}
 
-		task ("Then the site administrator cannot see the Theme CSS option") {
-			MenuItem.viewNotPresent(menuItem = "Add Theme CSS");
-		}
+		task ("Then the site administrator sees the created Theme CSS remote app") {
+			RemoteApps.viewTableEntryName(entryName = "Font Family");
 
-		task ("Given a site administrator has a portal with LPS-153457 feature flag enabled") {
-			ServerAdministration.openServerAdmin();
-
-			var script = '''
-import com.liferay.portal.util.PropsUtil;
-import java.util.Properties;
-
-Properties properties = new Properties();
-properties.setProperty("feature.flag.LPS-153457","true");
-PropsUtil.addProperties(properties);
-			''';
-
-			ServerAdministration.executeScript(
-				language = "Groovy",
-				script = "${script}");
-		}
-
-		task ("When the site administrator create a remote app") {
-			RemoteApps.goToRemoteAppsPortlet();
-
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("Then the site administrator sees the Theme CSS option") {
-			MenuItem.viewPresent(menuItem = "Add Theme CSS");
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 

@@ -13,7 +13,8 @@ definition {
 	macro addApp {
 		RemoteAppsEntry.addEntry(
 			entryName = "${entryName}",
-			entryURL = "${entryURL}");
+			entryURL = "${entryURL}",
+			mainURL = "${mainURL}");
 
 		PortletEntry.publish();
 	}

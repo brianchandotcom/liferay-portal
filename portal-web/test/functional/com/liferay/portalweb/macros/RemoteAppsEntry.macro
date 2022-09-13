@@ -95,10 +95,18 @@ definition {
 			locator1 = "TextInput#ANY",
 			value1 = "${entryName}");
 
-		Type(
-			key_id = "ClientExtensionAdminPortlet_url",
-			locator1 = "RemoteAppsEntry#URL",
-			value1 = "${entryURL}");
+		if (isSet(mainURL)) {
+			Type(
+				key_id = "ClientExtensionAdminPortlet_mainURL",
+				locator1 = "RemoteAppsEntry#URL",
+				value1 = "${mainURL}");
+		}
+		else {
+			Type(
+				key_id = "ClientExtensionAdminPortlet_url",
+				locator1 = "RemoteAppsEntry#URL",
+				value1 = "${entryURL}");
+		}
 	}
 
 	macro addPortletCategory {

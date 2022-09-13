@@ -151,9 +151,9 @@ else {
 	</div>
 </clay:sheet-section>
 
-<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153457")) %>'>
+<div class="mt-5">
 	<liferay-util:include page="/look_and_feel_theme_css.jsp" servletContext="<%= application %>" />
-</c:if>
+</div>
 
 <clay:sheet-section
 	cssClass="mt-5"

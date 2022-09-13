@@ -1152,6 +1152,13 @@ public class ServiceBuilder {
 		return getDimensions(GetterUtil.getInteger(dims));
 	}
 
+	public String getDuplicateEntityExternalReferenceCodeException(
+		Entity entity) {
+
+		return "Duplicate" + _getEntityExceptionName(entity) +
+			"ExternalReferenceCode";
+	}
+
 	public Entity getEntity(String name) throws Exception {
 		Entity entity = _entityPool.get(name);
 
@@ -1398,21 +1405,7 @@ public class ServiceBuilder {
 	}
 
 	public String getNoSuchEntityException(Entity entity) {
-		String noSuchEntityException = entity.getName();
-
-		if (_shortNoSuchExceptionEnabled) {
-			String portletShortName = entity.getPortletShortName();
-
-			if (Validator.isNull(portletShortName) ||
-				(noSuchEntityException.startsWith(portletShortName) &&
-				 !noSuchEntityException.equals(portletShortName))) {
-
-				noSuchEntityException = noSuchEntityException.substring(
-					portletShortName.length());
-			}
-		}
-
-		return "NoSuch" + noSuchEntityException;
+		return "NoSuch" + _getEntityExceptionName(entity);
 	}
 
 	public String getParameterType(JavaParameter parameter) {
@@ -2607,6 +2600,12 @@ public class ServiceBuilder {
 			}
 
 			if (entity.hasEntityColumns()) {
+				if (entity.hasExternalReferenceCode()) {
+					exceptions.add(
+						getDuplicateEntityExternalReferenceCodeException(
+							entity));
+				}
+
 				exceptions.add(getNoSuchEntityException(entity));
 			}
 		}
@@ -2672,7 +2671,13 @@ public class ServiceBuilder {
 
 				String content = _processTemplate(_tplException, context);
 
-				if (exception.startsWith("NoSuch")) {
+				if (exception.startsWith("Duplicate") &&
+					exception.endsWith("ExternalReferenceCode")) {
+
+					content = StringUtil.replace(
+						content, "PortalException", "SystemException");
+				}
+				else if (exception.startsWith("NoSuch")) {
 					content = StringUtil.replace(
 						content, "PortalException", "NoSuchModelException");
 				}
@@ -5373,6 +5378,23 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				"No entity column exist with column database name ",
 				columnDBName, " for entity ", entity.getName()));
+	}
+
+	private String _getEntityExceptionName(Entity entity) {
+		String name = entity.getName();
+
+		if (_shortNoSuchExceptionEnabled) {
+			String portletShortName = entity.getPortletShortName();
+
+			if (Validator.isNull(portletShortName) ||
+				(name.startsWith(portletShortName) &&
+				 !name.equals(portletShortName))) {
+
+				name = name.substring(portletShortName.length());
+			}
+		}
+
+		return name;
 	}
 
 	private List<String> _getEntityMappingPKEntityColumnDBNames(

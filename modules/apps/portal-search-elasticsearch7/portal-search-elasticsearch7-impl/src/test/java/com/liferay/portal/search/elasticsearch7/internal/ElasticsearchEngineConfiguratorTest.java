@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.elasticsearch7.internal.BaseSearchEngineConfigurator.DestinationServiceRegistrarHelper;
@@ -111,13 +112,16 @@ public class ElasticsearchEngineConfiguratorTest {
 			{
 				setDestinationServiceRegistrarHelper(
 					_createDestinationServiceRegistrarHelper());
-				setMessageBus(Mockito.mock(MessageBus.class));
+				ReflectionTestUtil.setFieldValue(
+					this, "messageBus", Mockito.mock(MessageBus.class));
 				setSearchDestinationHelper(searchDestinationHelper);
 				setSearchEngine(
 					Mockito.mock(SearchEngine.class),
 					Collections.singletonMap(
 						"search.engine.id", "SYSTEM_ENGINE"));
-				setSearchEngineHelper(Mockito.mock(SearchEngineHelper.class));
+				ReflectionTestUtil.setFieldValue(
+					this, "searchEngineHelper",
+					Mockito.mock(SearchEngineHelper.class));
 			}
 		};
 	}

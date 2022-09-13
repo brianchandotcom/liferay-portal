@@ -1924,4 +1924,51 @@ definition {
 			value1 = "${coordinateY}");
 	}
 
+	macro addRoleTypeByPositionOnAssignments {
+        Click(
+            key_buttonName = "${newSection}",
+            locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
+
+        if (isSet(sectionOptionList)) {
+            for (var sectionOption : list "${sectionOptionList}") {
+                if ("${assignmentType}" == "Role Type") {
+					Type(
+						key_inputOption = "Role",
+						key_sectionOption = "${sectionOption}",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
+						value1 = "${roleTypeName}");
+
+					Click.mouseOverClick(
+						key_sectionOption = "${sectionOption}",
+						key_optionRoleName = "${roleTypeName}",
+						locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
+
+					Type(
+						key_inputOption = "Role Name",
+						key_sectionOption = "${sectionOption}",
+						locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT_ACTIONS_BY_POSITION",
+						value1 = "${roleTypeRoleName}");
+
+					Click.mouseOverClick(
+						key_sectionOption = "${sectionOption}",
+						key_optionRoleName = "${roleTypeRoleName}",
+						locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
+
+				if ("${autoCreate}" == "true") {
+					Click(
+						key_sectionOption = "${sectionOption}",
+						locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_RECIPIENT_ROLE_TYPE_AUTOCREATE");
+				}
+
+			}
+
+            if (isSet(newSection)) {
+                Click(
+                    key_buttonName = "${newSection}",
+                    key_sectionOption = "${sectionOption}",
+                    locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC_BY_POSITION");
+				}
+            }
+        }
+    }
 }

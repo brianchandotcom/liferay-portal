@@ -498,11 +498,73 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign the task node to multiple Role Types"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAssignMultipleRoleTypesToTaskNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignMultipleRoleTypesToTaskNode";
 
-		// TODO CanAssignMultipleRoleTypesToTaskNode pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "0,0");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+			assignmentType = "Role Type",
+			roleTypeName = "Organization",
+			roleTypeRoleName = "Organization User");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Assignments",
+			propertyValue = "Role Type:Organization User");
+
+		ProcessBuilderKaleoDesignerReact.addRoleTypeByPositionOnAssignments(
+			assignmentType = "Role Type",
+			roleTypeName = "Account",
+			roleTypeRoleName = "Account Member",
+            newSection = "New Section",
+            sectionOptionList = "3");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Assignments",
+			propertyValue = "Role Type:Organization User");
+
+		ProcessBuilderKaleoDesignerReact.addRoleTypeByPositionOnAssignments(
+			assignmentType = "Role Type",
+			roleTypeName = "Regular",
+			roleTypeRoleName = "Owner",
+            newSection = "New Section",
+            sectionOptionList = "4");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Assignments",
+			propertyValue = "Role Type:Organization User");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			positonOption = "2",
+			selectedRole = "Organization");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			positonOption = "3",
+			selectedRole = "Account");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedRoleAssignmentsByPosition(
+			inputOption = "Role",
+			positonOption = "4",
+			selectedRole = "Organization");
+
+		
 
 	}
 

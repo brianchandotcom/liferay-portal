@@ -408,31 +408,17 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		return _spellCheckIndexWriter;
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchConfigurationWrapper(
-		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper) {
-
-		_elasticsearchConfigurationWrapper = elasticsearchConfigurationWrapper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setIndexNameBuilder(IndexNameBuilder indexNameBuilder) {
-		_indexNameBuilder = indexNameBuilder;
-	}
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setSearchEngineAdapter(
-		SearchEngineAdapter searchEngineAdapter) {
-
-		_searchEngineAdapter = searchEngineAdapter;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchIndexWriter.class);
 
+	@Reference
 	private volatile ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper;
+
+	@Reference
 	private IndexNameBuilder _indexNameBuilder;
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")

@@ -12,5 +12,6 @@
 		<suppress checks="JavaInternalPackageCheck" files=".*" />
 		<suppress checks="JavaPackagePathCheck" files=".*" />
 		<suppress checks="JavaXMLSecurityCheck" files="xsl-content-web/src/main/java/com/liferay/xsl/content/web/internal/util/XSLContentUtil\.java" />
+		<suppress checks="JavaUpgradeVersionCheck" files="sync-web/src/main/java/com/liferay/sync/web/internal/upgrade/SyncWebUpgrade\.java" />
 	</source-check>
 </suppressions>

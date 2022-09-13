@@ -1218,7 +1218,7 @@ definition {
 		}
 
 		task ("Edit the image via the image editor on Page Content panel") {
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			PageEditor.gotoEllipsisMenuItemInPageContentPanel(
 				itemName = "analytics-cloud-hero-image.png",
@@ -1357,7 +1357,7 @@ definition {
 		}
 
 		task ("Edit the image via the image editor on Page Content panel") {
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			PageEditor.gotoEllipsisMenuItemInPageContentPanel(
 				itemName = "analytics-cloud-hero-image.png",

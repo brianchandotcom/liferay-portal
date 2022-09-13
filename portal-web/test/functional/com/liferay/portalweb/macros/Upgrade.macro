@@ -4702,9 +4702,7 @@ definition {
 		}
 
 		task ("Edit the inline text of the Card fragment") {
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			PageEditor.editFragmentTextViaPageContentPanel(
 				itemName = "Test Title",

@@ -177,9 +177,7 @@ definition {
 
 			ContentPages.gotoPageEditor();
 
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 		}
 
 		task ("Assert cannot access to web content editor via Contents panel") {
@@ -378,9 +376,7 @@ definition {
 
 			ContentPages.gotoPageEditor();
 
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 		}
 
 		task ("View access to blogs entry editor via Contents panel") {
@@ -548,9 +544,7 @@ definition {
 			ContentPages.gotoPageEditor();
 
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
-				PageEditor.gotoTab(tabName = "Browser");
-
-				Navigator.gotoNavTab(navTab = "Page Content");
+				PageEditor.gotoTab(tabName = "Page Content");
 
 				LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
 					menuItem = "Edit",
@@ -698,9 +692,7 @@ definition {
 			ContentPages.gotoPageEditor();
 
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
-				PageEditor.gotoTab(tabName = "Browser");
-
-				Navigator.gotoNavTab(navTab = "Page Content");
+				PageEditor.gotoTab(tabName = "Page Content");
 
 				LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
 					menuItem = "Edit",
@@ -803,9 +795,7 @@ definition {
 				siteName = "Test Site Name");
 
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2") {
-				PageEditor.gotoTab(tabName = "Browser");
-
-				Navigator.gotoNavTab(navTab = "Page Content");
+				PageEditor.gotoTab(tabName = "Page Content");
 
 				LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
 					menuItem = "Edit",
@@ -1280,9 +1270,7 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			AssertVisible(
 				key_itemName = "WC WebContent Title",

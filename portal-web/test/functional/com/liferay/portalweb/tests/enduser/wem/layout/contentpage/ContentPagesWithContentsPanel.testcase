@@ -233,9 +233,7 @@ definition {
 		task ("View the edited title is shown in Page Content panel") {
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			AssertVisible(
 				key_itemName = "Document Title",
@@ -1551,9 +1549,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
 				menuItem = "Permissions",
@@ -1572,9 +1568,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
 				menuItem = "View Usages",

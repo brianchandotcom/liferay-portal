@@ -262,9 +262,7 @@ definition {
 		}
 
 		task ("Edit the inline content of Paragraph") {
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			PageEditor.editFragmentTextViaPageContentPanel(
 				itemName = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",

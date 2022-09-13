@@ -324,9 +324,7 @@ definition {
 		}
 
 		task ("View the inline texts in Page Content tab") {
-			PageEditor.gotoTab(tabName = "Browser");
-
-			Navigator.gotoNavTab(navTab = "Page Content");
+			PageEditor.gotoTab(tabName = "Page Content");
 
 			for (var itemName : list "Edited Text,Edited Title,Edited Subtitle") {
 				AssertVisible(

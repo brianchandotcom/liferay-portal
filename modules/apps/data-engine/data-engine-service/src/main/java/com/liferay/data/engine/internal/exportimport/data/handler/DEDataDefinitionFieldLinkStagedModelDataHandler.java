@@ -149,29 +149,42 @@ public class DEDataDefinitionFieldLinkStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(
 				deDataDefinitionFieldLink);
 
+		String className = deDataDefinitionFieldLinkElement.attributeValue(
+			"link-class-name");
+
 		importedDEDataDefinitionFieldLink.setGroupId(
 			portletDataContext.getScopeGroupId());
 		importedDEDataDefinitionFieldLink.setCompanyId(
 			portletDataContext.getCompanyId());
 		importedDEDataDefinitionFieldLink.setClassNameId(
-			_portal.getClassNameId(
-				deDataDefinitionFieldLinkElement.attributeValue(
-					"link-class-name")));
+			_portal.getClassNameId(className));
 		importedDEDataDefinitionFieldLink.setDdmStructureId(ddmStructureId);
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
-			ddmStructureId);
+		if (className.equals(DDMStructureLayout.class.getName())) {
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
 
-		DDMStructureVersion structureVersion =
-			ddmStructure.getStructureVersion();
+			DDMStructureVersion structureVersion =
+				ddmStructure.getStructureVersion();
 
-		DDMStructureLayout structureLayout =
-			_ddmStructureLayoutLocalService.
-				getStructureLayoutByStructureVersionId(
-					structureVersion.getStructureVersionId());
+			DDMStructureLayout structureLayout =
+				_ddmStructureLayoutLocalService.
+					getStructureLayoutByStructureVersionId(
+						structureVersion.getStructureVersionId());
 
-		importedDEDataDefinitionFieldLink.setClassPK(
-			structureLayout.getStructureLayoutId());
+			importedDEDataDefinitionFieldLink.setClassPK(
+				structureLayout.getStructureLayoutId());
+		}
+		else {
+			Map<Long, Long> newPrimaryKeysMap =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					className);
+
+			importedDEDataDefinitionFieldLink.setClassPK(
+				MapUtil.getLong(
+					newPrimaryKeysMap, deDataDefinitionFieldLink.getClassPK(),
+					deDataDefinitionFieldLink.getClassPK()));
+		}
 
 		DEDataDefinitionFieldLink existingDEDataDefinitionFieldLink =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(

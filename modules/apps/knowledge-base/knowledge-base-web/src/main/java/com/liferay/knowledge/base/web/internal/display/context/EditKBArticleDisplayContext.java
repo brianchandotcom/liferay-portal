@@ -116,7 +116,7 @@ public class EditKBArticleDisplayContext {
 		}
 
 		return "class=\"container-fluid container-fluid-max-xl " +
-			"container-form-lg contextual-sidebar-content\"";
+			"container-form-lg\"";
 	}
 
 	public String getHeaderTitle() {

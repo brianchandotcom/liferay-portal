@@ -8,15 +8,103 @@ definition {
 	property testray.main.component.name = "Site Initializer Testray";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
 
-		Testray.createTestraySite(siteName = "Testray 2");
+			Testray.createTestraySite(siteName = "Testray 2");
+
+			Refresh();
+		}
+
+		task ("Go to Testray, Create Project and change pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+
+		task ("Go to created project and add a new team") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			Testray.addNewTeam(teamName = "Components_1 Team");
+
+			TestrayManage.closeModalInOptions();
+		}
+
+		task ("Go to created project and add two new components") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(
+				componentName = "Components_1 Project 1",
+				teamName = "Components_1 Team");
+
+			Testray.addNewComponent(
+				componentName = "Components_1 Project 2",
+				teamName = "Components_1 Team");
+
+			Refresh();
+		}
+
+		task ("Change pagination, create two new Product Version") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			TestrayManage.createProductVersion(
+				manageOption = "Manage Product Versions",
+				nameOptions = "Projects_1 Project",
+				version = "1.0");
+
+			Refresh();
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			TestrayManage.createProductVersion(
+				manageOption = "Manage Product Versions",
+				nameOptions = "Projects_1 Project",
+				version = "1.1");
+
+			Refresh();
+		}
+
+		task ("Go to project page and add a new routine") {
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+		}
+
+		task ("Go to Testray 2 and change the pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		TestrayBuild.deleteBuild(itemName = "Builds_1 Project");
+
+		Testray.deleteAllProjects();
 
 		Testray.tearDownCP();
 
@@ -26,11 +114,24 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156438 - Verify if as an Administrator can Add a Build"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanAddBuild {
+		task ("Given that the user add a new build") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-		// TODO LPS-156438 AdminCanAddBuild pending implementation
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.createBuild(
+				description = "Builds_1 Project Description",
+				fieldName = "Builds_1 Project",
+				gitHash = "12345",
+				productVersion = "1.0",
+				routine = "Routines_1 Routine");
+		}
+
+		task ("Then the Routine should appear on the list") {
+			Testray.assertItemName(key_name = "Builds_1 Project");
+		}
 
 	}
 
@@ -53,11 +154,28 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156513 - Verify if as an Administrator I can delete Builds"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanDeleteBuild {
+		task ("Given that the user add a new build") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-		// TODO LPS-156513 AdminCanDeleteBuild pending implementation
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.createBuild(
+				description = "Builds_1 Project Description",
+				fieldName = "Builds_1 Project",
+				gitHash = "12345",
+				productVersion = "1.0",
+				routine = "Routines_1 Routine");
+		}
+
+		task ("When a build is deleted") {
+			TestrayBuild.deleteBuild(itemName = "Builds_1 Project");
+		}
+
+		task ("Then the build should not appear on the list") {
+			Testray.assertItemNotPresent(itemName = "Builds_1 Project");
+		}
 
 	}
 
@@ -71,20 +189,68 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156543 - Verify if as an Administrator I am able to edit Builds"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanEditBuild {
+		task ("Given that the user add a new build") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-		// TODO LPS-156543 AdminCanEditRoutine pending implementation
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.createBuild(
+				description = "Builds_1 Project Description",
+				fieldName = "Builds_1 Project",
+				gitHash = "12345",
+				productVersion = "1.0",
+				routine = "Routines_1 Routine");
+		}
+
+		task ("When a build is edited") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Builds_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+
+			TestrayBuild.editBuild(
+				description = "Builds_1 Project Description Edited",
+				fieldName = "Builds_1 Project Edited",
+				gitHash = "12345",
+				productVersion = "1.1",
+				routine = "Routines_1 Routine");
+		}
+
+		task ("Then the build should appear on the list with name edited") {
+			Testray.assertItemName(key_name = "Builds_1 Project Edited");
+		}
 
 	}
 
 	@description = "This is a test for LPS-156546 - Verify if as an Administrator I should not be able to add a duplicate build"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanNotAddDuplicateBuild {
+		task ("Given that the user add a new build") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-		// TODO LPS-156546 AdminCanNotAddDuplicateBuild pending implementation
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.createBuild(
+				description = "Builds_1 Project Description",
+				fieldName = "Builds_1 Project",
+				gitHash = "12345",
+				productVersion = "1.0",
+				routine = "Routines_1 Routine");
+		}
+
+		task ("When add a build with duplicated name") {
+			TestrayBuild.createBuild(
+				description = "Builds_1 Project Description",
+				fieldName = "Builds_1 Project",
+				gitHash = "12345",
+				productVersion = "1.0",
+				routine = "Routines_1 Routine");
+		}
+
+		task ("Then an error message is displayed") {
+			Alert.viewErrorMessage(errorMessage = "An unexpected error ocurred");
+		}
 
 	}
 
@@ -107,11 +273,30 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156583 - Verify if as an Administrator I should be able to promote a build"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanPromoteBuild {
+		task ("Given that the user add a new build") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-		// TODO LPS-156583 AdminCanPromoteBuild pending implementation
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.createBuild(
+				description = "Builds_1 Project Description",
+				fieldName = "Builds_1 Project",
+				gitHash = "12345",
+				productVersion = "1.0",
+				routine = "Routines_1 Routine");
+		}
+
+		task ("When a build is promoted") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Builds_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Promote");
+		}
+
+		task ("Then the promoted build should appear on the list") {
+			TestrayBuild.verifyPromoteBuild();
+		}
 
 	}
 

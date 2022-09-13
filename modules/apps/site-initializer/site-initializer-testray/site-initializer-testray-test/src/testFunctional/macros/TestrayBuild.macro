@@ -26,13 +26,27 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	macro editBuild {
-		TestrayManage.goToEditPage(valueName = "${valueName}");
+	macro deleteBuild {
+		TestrayLayout.clickResultsOnSidebar();
 
-		TestrayBuild.typeBuildField();
+		Testray.changePagination(
+			numberItems = "20",
+			valuePagination = "150");
+
+		Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+		TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+		while (IsElementPresent(key_projectName = "Builds_", locator1 = "Testray#ITEM_NAME")) {
+			Testray.deleteComponent(itemName = "${itemName}");
+		}
 	}
 
-	macro typeBuildField {
+	macro verifyPromoteBuild {
+		AssertElementPresent(locator1 = "TestrayBuild#PROMOTE_BUILD");
+	}
+
+	macro editBuild {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
 			value1 = "${fieldName}");

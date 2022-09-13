@@ -50,8 +50,6 @@ definition {
 	@description = "This is a test for LPS-149984. The page editor cannot add fragment into Form Container without mapping entity."
 	@priority = "4"
 	test CannotAddFragmentToFormContainerWithoutMappingEntity {
-		property test.name.skip.portal.instance = "FormContainer#CannotAddFragmentToFormContainerWithoutMappingEntity";
-
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -127,8 +125,6 @@ definition {
 	@description = "This is a test for LPS-157740. The page creator can only drop Form fragments inside a mapped Form Container on content page."
 	@priority = "4"
 	test CannotAddFragmentToOutsideFormContainerOnContentPage {
-		property test.name.skip.portal.instance = "FormContainer#CannotAddFragmentToOutsideFormContainerOnContentPage";
-
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -160,7 +156,6 @@ definition {
 	@description = "This is a test for LPS-157740. The page creator can only drop Form fragments inside a mapped Form Container on display page template."
 	@priority = "4"
 	test CannotAddFragmentToOutsideFormContainerOnDisplayPageTemplate {
-		property test.name.skip.portal.instance = "FormContainer#CannotAddFragmentToOutsideFormContainerOnDisplayPageTemplate";
 		property testray.component.names = "Display Pages,Fragments";
 
 		task ("Given a page creator has a display page template for Web Content Article and Basic Web Content") {
@@ -196,7 +191,6 @@ definition {
 	@priority = "5"
 	test MapEntityToFormContainerInContentPage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormContainer#MapEntityToFormContainerInContentPage";
 
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -247,7 +241,6 @@ definition {
 	@priority = "5"
 	test MapEntityToFormContainerInDisplayPageTemplate {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormContainer#MapEntityToFormContainerInDisplayPageTemplate";
 		property testray.component.names = "Display Pages,Fragments";
 
 		task ("Given a page creator has a display page template for Web Content Article and Basic Web Content") {
@@ -303,8 +296,6 @@ definition {
 	@description = "This is a test for LPS-157739. The page creator could map new field to new input fragment after mapping Form Container to object."
 	@priority = "4"
 	test MapNewFieldToNewInputFragmentInMappedFormContainer {
-		property test.name.skip.portal.instance = "FormContainer#MapNewFieldToNewInputFragmentInMappedFormContainer";
-
 		task ("Given a page creator has a mapped Form Container on a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -358,8 +349,6 @@ definition {
 	@description = "This is a test for LPS-157739. The page creator could remove automatically added input fragments and change mapping fields."
 	@priority = "4"
 	test RemoveAutomaticallyAddedInputFragmentsThenChangeMappingField {
-		property test.name.skip.portal.instance = "FormContainer#RemoveAutomaticallyAddedInputFragmentsThenChangeMappingField";
-
 		task ("Given a page creator has a Form Container on a content page") {
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "LongText",
@@ -442,7 +431,6 @@ definition {
 	@priority = "5"
 	test SubmitFormContainerWithEmbeddedSuccessMessage {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormContainer#SubmitFormContainerWithEmbeddedSuccessMessage";
 
 		task ("Given a page designer has a Form Container on content page") {
 			JSONLayout.addPublicLayout(
@@ -569,8 +557,6 @@ definition {
 	@description = "This is a test for LPS-155529. The page designer can submit a Form Container with External URL success message."
 	@priority = "4"
 	test SubmitFormContainerWithExternalURLSuccessMessage {
-		property test.name.skip.portal.instance = "FormContainer#SubmitFormContainerWithExternalURLSuccessMessage";
-
 		task ("Given a page designer has mapped Form Container with URL as success message") {
 			task ("Add Form Container to content page") {
 				JSONLayout.addPublicLayout(
@@ -638,8 +624,6 @@ definition {
 	@description = "This is a test for LPS-155529. The page designer can submit a Form Container with page success message."
 	@priority = "4"
 	test SubmitFormContainerWithPageSuccessMessage {
-		property test.name.skip.portal.instance = "FormContainer#SubmitFormContainerWithPageSuccessMessage";
-
 		task ("Given a page designer has mapped Form Container with Page as success message") {
 			task ("Add two content pages") {
 				for (var pageName : list "Test Page Name,Thank you page") {
@@ -782,8 +766,6 @@ definition {
 	@description = "This is a test for LPS-155529. The pages designer can add custom translations on Thank you message."
 	@priority = "4"
 	test SubmitFormContainerWithTranslatedSuccessText {
-		property test.name.skip.portal.instance = "FormContainer#SubmitFormContainerWithTranslatedSuccessText";
-
 		task ("Given a page designer has a mapped Form Container and Language Selector on content page") {
 			task ("Add Form Container and Language Selector to content page") {
 				JSONLayout.addPublicLayout(
@@ -935,8 +917,6 @@ definition {
 	@description = "This is a test for LPS-149984. The Form Container has all capabilities of Container."
 	@priority = "4"
 	test ViewCapabilitiesOfFormContainer {
-		property test.name.skip.portal.instance = "FormContainer#ViewCapabilitiesOfFormContainer";
-
 		task ("Given a page creator has a content page with a Form Container fragment") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -999,7 +979,6 @@ definition {
 	@priority = "5"
 	test ViewCreatedObjectEntryAfterSubmitForm {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FormContainer#ViewCreatedObjectEntryAfterSubmitForm";
 
 		task ("Given a page creator has a Form Container on a content page") {
 			task ("Add a picklist with two items") {
@@ -1331,8 +1310,6 @@ definition {
 	@description = "This is a test for LPS-158143. The page creator could see error message after mapping the Form Container to object when multiple OOTB input fragments are unavailable. The page creator could see error message after mapping the Form Container to object when some OOTB input fragments are disabled from master page."
 	@priority = "4"
 	test ViewErrorMessageAfterMappingFormContainerToEntityWhenMultipleInputFragmentsDisabledFromMasterPage {
-		property test.name.skip.portal.instance = "FormContainer#ViewErrorMessageAfterMappingFormContainerToEntityWhenMultipleInputFragmentsDisabledFromMasterPage";
-
 		task ("Given a page creator has a Form Container on a content page based on a master page") {
 			task ("Add Date and Integer fields to the object") {
 				ObjectAdmin.addObjectFieldViaAPI(
@@ -1408,8 +1385,6 @@ definition {
 	@description = "This is a test for LPS-157998. No warning message shown when hide a layout element with whole form and required input fragments or when publish a content page where a hidden layout element contains a whole form with required input fragments."
 	@priority = "4"
 	test ViewNoWarningMessageShownWhenHideFormOrPublishHiddenFormWithRequiredInputFragments {
-		property test.name.skip.portal.instance = "FormContainer#ViewNoWarningMessageShownWhenHideFormOrPublishHiddenFormWithRequiredInputFragments";
-
 		task ("Given a page designer has a Form Container with an input fragment mapped to a required field inside a Container") {
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Date",
@@ -1527,8 +1502,6 @@ definition {
 	@description = "This is a test for LPS-157998. When publish a form content page with multiple warning messages, the page creator should see them in one modal."
 	@priority = "4"
 	test ViewOnlyOneModalShownWhenPublishContentPageWithMultipleWarningMessages {
-		property test.name.skip.portal.instance = "FormContainer#ViewOnlyOneModalShownWhenPublishContentPageWithMultipleWarningMessages";
-
 		task ("Given a page designer has a Form Container with an unmapped Text Input fragment on content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1572,8 +1545,6 @@ definition {
 	@description = "This is a test for LPS-151402. The user could only see the first error message when multiple validation issues happen on submitting a form."
 	@priority = "4"
 	test ViewOnlyTheFirstErrorMessageShownWhenMultipleValidationIssuesHappen {
-		property test.name.skip.portal.instance = "FormContainer#ViewOnlyTheFirstErrorMessageShownWhenMultipleValidationIssuesHappen";
-
 		task ("Given a user has a content page where a required Checkbox, Date, Text Input and Submit Button fragments are inside a Form Container") {
 			task ("Change the Maximum Number of Characters of Region field to 20") {
 				ObjectAdmin.openObjectAdmin();
@@ -1762,8 +1733,6 @@ definition {
 	@description = "This is a test for LPS-158143. The page creator could see success message after mapping the Form Container to object when all OOTB input fragments are available."
 	@priority = "4"
 	test ViewSuccessMessageAfterMappingFormContainerToEntity {
-		property test.name.skip.portal.instance = "FormContainer#ViewSuccessMessageAfterMappingFormContainerToEntity";
-
 		task ("Given a page creator has a Form Container on a content page") {
 			task ("Add Date and Integer fields to the object") {
 				ObjectAdmin.addObjectFieldViaAPI(
@@ -1813,7 +1782,6 @@ definition {
 	@description = "This is a test for LPS-157998. The page creator should see warning message when delete a required input fragment."
 	@priority = "4"
 	test ViewWarningMessageWhenDeleteRequiredInputFragments {
-		property test.name.skip.portal.instance = "FormContainer#ViewWarningMessageWhenDeleteRequiredInputFragments";
 
 		task ("Given a page designer has a Form Container with a required input fragment on content page") {
 			ObjectAdmin.addObjectFieldViaAPI(
@@ -1881,8 +1849,6 @@ definition {
 	@description = "This is a test for LPS-150278 and LPS-157998. The page creator should see warning message when hide a layout element that doesn't contain the whole form and with required input fragment."
 	@priority = "4"
 	test ViewWarningMessageWhenHideLayoutElementWithPartialFormAndRequiredInputFragments {
-		property test.name.skip.portal.instance = "FormContainer#ViewWarningMessageWhenHideLayoutElementWithPartialFormAndRequiredInputFragments";
-
 		task ("Given a page designer has a Form Container with a Container containing a required input fragment on content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -2059,8 +2025,6 @@ definition {
 	@description = "This is a test for LPS-157998. The page creator should see warning message when publish the content page with hidden required input fragment."
 	@priority = "4"
 	test ViewWarningMessageWhenPublishContentPageWithHiddenRequiredInputFragments {
-		property test.name.skip.portal.instance = "FormContainer#ViewWarningMessageWhenPublishContentPageWithHiddenRequiredInputFragments";
-
 		task ("Given a page designer has a Form Container with a hidden Container containing a required input fragment on content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -2294,8 +2258,6 @@ definition {
 	@description = "This is a test for LPS-157998. The page creator should see warning message when publish the content page without the Submit Button fragment or with a hidden Submit Button fragment."
 	@priority = "4"
 	test ViewWarningMessageWhenPublishContentPageWithoutSubmitButtonOrWithHiddenSubmitButton {
-		property test.name.skip.portal.instance = "FormContainer#ViewWarningMessageWhenPublishContentPageWithoutSubmitButtonOrWithHiddenSubmitButton";
-
 		task ("Given a page creator has a Form Container without Submit Button on content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -2367,8 +2329,6 @@ definition {
 	@description = "This is a test for LPS-157998. The page creator should see warning message when publish the content page with unmapped input fragments."
 	@priority = "4"
 	test ViewWarningMessageWhenPublishContentPageWithUnmappedInputFragments {
-		property test.name.skip.portal.instance = "FormContainer#ViewWarningMessageWhenPublishContentPageWithUnmappedInputFragments";
-
 		task ("Given a page creator has a Form Container with unmapped input fragment on content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -2413,8 +2373,6 @@ definition {
 	@description = "This is a test for LPS-157998. The page creator should see warning message when publish the content page with unmapped required fields."
 	@priority = "4"
 	test ViewWarningMessageWhenPublishContentPageWithUnmappedRequiredFields {
-		property test.name.skip.portal.instance = "FormContainer#ViewWarningMessageWhenPublishContentPageWithUnmappedRequiredFields";
-
 		task ("Given a page creator has a Form Container with unmapped required fields on content page") {
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Date",

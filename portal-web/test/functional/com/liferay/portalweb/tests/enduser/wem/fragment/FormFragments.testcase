@@ -31,8 +31,6 @@ definition {
 	@description = "This is a test for LPS-151157. The fragment admin could see the supported field types in read-only mode."
 	@priority = "4"
 	test ViewSupportedFieldTypesInReadOnlyMode {
-		property test.name.skip.portal.instance = "FormFragments#ViewSupportedFieldTypesInReadOnlyMode";
-
 		task ("Given a fragment admin has a read-only fragment with field type") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 

@@ -328,6 +328,10 @@ definition {
 				locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
 
 			AssertVisible(locator1 = "//li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='Blogs'][contains(@class,'disabled')]");
+
+			Refresh();
+
+			PageEditor.assertFragmentSidebarLoaded();
 		}
 
 		task ("Change to card display style") {

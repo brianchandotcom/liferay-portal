@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -269,8 +270,11 @@ public class LayoutActionsDisplayContext {
 
 		// LPS-131416
 
-		long segmentsExperienceId = GetterUtil.getLong(
-			unicodeProperties.getProperty("segmentsExperienceId"), -1);
+		long segmentsExperienceId = ParamUtil.getLong(
+			PortalUtil.getOriginalServletRequest(_httpServletRequest),
+			"segmentsExperienceId",
+			GetterUtil.getLong(
+				unicodeProperties.getProperty("segmentsExperienceId"), -1));
 
 		if (segmentsExperienceId != -1) {
 			segmentsExperienceId = Optional.ofNullable(

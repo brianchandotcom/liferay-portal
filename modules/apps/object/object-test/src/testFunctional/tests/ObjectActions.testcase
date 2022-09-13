@@ -241,6 +241,80 @@ definition {
 		}
 	}
 
+	@description = "LPS-145665 - Verify that the admin user is able to enable and disable Condition"
+	@priority = "5"
+	test CanEnableAndDisableCondition {
+		property portal.acceptance = "true";
+
+		task ("Add object, field, and publish then") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("Add a Action and enable condition") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionName = "Custom Action",
+				active = "true",
+				inputExpression = "customObjectField == 'Entry with condition'",
+				inputMethod = "true",
+				inputValue = "Condition works",
+				objectLabel = "Custom Object",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Add");
+
+			ObjectAdmin.assertObjectActions(actionActive = "Custom Action");
+
+			ObjectAdmin.assertObjectActions(actionActive = "Yes");
+		}
+
+		task ("Add entry and assert that condition it's works") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject",
+				value = "Entry with condition");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectPortlet.viewEntry(entry = "Entry with condition");
+
+			ObjectPortlet.viewEntry(entry = "Condition works");
+		}
+
+		task ("Assert that condition is disabled") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.goToActionDetails(viewEntry = "Custom Action");
+
+			ObjectAdmin.disableCondition();
+
+			ObjectAdmin.assertObjectActions(actionActive = "Custom Action");
+
+			ObjectAdmin.assertObjectActions(actionActive = "Yes");
+		}
+	}
+
 	@description = "LPS-139008 - Verify that it is possible to inactivate an Action"
 	@priority = "4"
 	test CanInactivateAction {

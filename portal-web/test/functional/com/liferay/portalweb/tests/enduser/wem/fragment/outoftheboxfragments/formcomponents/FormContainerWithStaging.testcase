@@ -21,16 +21,6 @@ definition {
 				labelName = "Purchase Order",
 				objectName = "PurchaseOrder",
 				pluralLabelName = "Purchase Orders");
-
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Text",
-				fieldLabelName = "Region",
-				fieldName = "region",
-				fieldType = "String",
-				isRequired = "false",
-				objectName = "PurchaseOrder");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 		}
 
 		task ("Activate local live staging") {
@@ -58,6 +48,16 @@ definition {
 	@priority = "4"
 	test CannotAddFragmentToOutsideFormContainerOnContentPageInStagingSite {
 		task ("Given a page creator has a content page in staging site") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
@@ -90,6 +90,16 @@ definition {
 	@priority = "4"
 	test SubmitFormContainerOnContentPageInStagingSite {
 		task ("Given a page designer has a Form Container on content page in staging site") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
@@ -109,9 +119,15 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				panel = "General");
+
+			for (var fragmentName : list "Text Input,Submit Button") {
+				PageEditor.removeFragment(fragmentName = "${fragmentName}");
+			}
 		}
 
 		task ("Then the page designer can see default fields on form options in staging site") {
+			PageEditor.gotoConfiguration(fragmentName = "Form Container");
+
 			AssertSelectedLabel(
 				key_fieldLabel = "Success Message",
 				locator1 = "Select#GENERIC_SELECT_FIELD",

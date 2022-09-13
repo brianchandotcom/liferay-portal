@@ -21,16 +21,6 @@ definition {
 				labelName = "Purchase Order",
 				objectName = "PurchaseOrder",
 				pluralLabelName = "Purchase Orders");
-
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Text",
-				fieldLabelName = "Region",
-				fieldName = "region",
-				fieldType = "String",
-				isRequired = "false",
-				objectName = "PurchaseOrder");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 		}
 	}
 
@@ -43,7 +33,9 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
-			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+			Picklist.deleteAllPicklistsViaAPI();
 		}
 	}
 
@@ -51,6 +43,16 @@ definition {
 	@priority = "4"
 	test CannotAddFragmentToFormContainerWithoutMappingEntity {
 		task ("Given a page creator has a content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -102,6 +104,10 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
+			for (var fragmentName : list "Text Input,Submit Button") {
+				PageEditor.removeFragment(fragmentName = "${fragmentName}");
+			}
+
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
@@ -126,6 +132,16 @@ definition {
 	@priority = "4"
 	test CannotAddFragmentToOutsideFormContainerOnContentPage {
 		task ("Given a page creator has a content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -159,6 +175,16 @@ definition {
 		property testray.component.names = "Display Pages,Fragments";
 
 		task ("Given a page creator has a display page template for Web Content Article and Basic Web Content") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -193,6 +219,16 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a page creator has a content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -244,6 +280,16 @@ definition {
 		property testray.component.names = "Display Pages,Fragments";
 
 		task ("Given a page creator has a display page template for Web Content Article and Basic Web Content") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -297,6 +343,16 @@ definition {
 	@priority = "4"
 	test MapNewFieldToNewInputFragmentInMappedFormContainer {
 		task ("Given a page creator has a mapped Form Container on a content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -351,12 +407,22 @@ definition {
 	test RemoveAutomaticallyAddedInputFragmentsThenChangeMappingField {
 		task ("Given a page creator has a Form Container on a content page") {
 			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "LongText",
 				fieldLabelName = "Address",
 				fieldName = "address",
 				fieldType = "Clob",
 				isRequired = "false",
 				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -396,11 +462,13 @@ definition {
 		}
 
 		task ("Then the page creator could remove automatically added input fragments") {
-			PageEditor.removeFragment(fragmentName = "Text Input");
+			PageEditor.removeFragment(
+				fragmentName = "Text Input",
+				index = "2");
 
-			PageEditor.removeFragment(fragmentName = "Text Input");
-
-			PageEditor.removeFragment(fragmentName = "Submit Button");
+			for (var fragmentName : list "Text Input,Submit Button") {
+				PageEditor.removeFragment(fragmentName = "${fragmentName}");
+			}
 
 			AssertVisible(
 				key_fragmentName = "Form Container",
@@ -433,6 +501,16 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a page designer has a Form Container on content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -451,9 +529,15 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				panel = "General");
+
+			for (var fragmentName : list "Text Input,Submit Button") {
+				PageEditor.removeFragment(fragmentName = "${fragmentName}");
+			}
 		}
 
 		task ("Then the page designer can see default fields on form options") {
+			PageEditor.gotoConfiguration(fragmentName = "Form Container");
+
 			AssertSelectedLabel(
 				key_fieldLabel = "Success Message",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -558,6 +642,18 @@ definition {
 	@priority = "4"
 	test SubmitFormContainerWithExternalURLSuccessMessage {
 		task ("Given a page designer has mapped Form Container with URL as success message") {
+			task ("Add a Text field to object") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Region",
+					fieldName = "region",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+			}
+
 			task ("Add Form Container to content page") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
@@ -579,21 +675,6 @@ definition {
 					panel = "General",
 					successMessage = "External URL",
 					url = "https://www.liferay.com");
-			}
-
-			task ("Add Text Input and Submit Button inside Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Text Input");
-
-				PageEditor.editInput(
-					field = "Region",
-					fragmentName = "Text Input");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Submit Button",
-					targetFragmentName = "Text Input");
 
 				PageEditor.publish();
 			}
@@ -625,6 +706,18 @@ definition {
 	@priority = "4"
 	test SubmitFormContainerWithPageSuccessMessage {
 		task ("Given a page designer has mapped Form Container with Page as success message") {
+			task ("Add a Text field to object") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Region",
+					fieldName = "region",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+			}
+
 			task ("Add two content pages") {
 				for (var pageName : list "Test Page Name,Thank you page") {
 					JSONLayout.addPublicLayout(
@@ -658,21 +751,6 @@ definition {
 				PageEditor.viewItemSelectorText(
 					fieldLabel = "Page",
 					text = "Thank you page");
-			}
-
-			task ("Add Text Input and Submit Button inside Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Text Input");
-
-				PageEditor.editInput(
-					field = "Region",
-					fragmentName = "Text Input");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Submit Button",
-					targetFragmentName = "Text Input");
 
 				PageEditor.publish();
 			}
@@ -723,6 +801,10 @@ definition {
 		}
 
 		task ("When the page designer selects a page from another site as success message on page editor") {
+			Navigator.openURL();
+
+			var siteName = selenium.getText("Home#SITE_NAME");
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -731,7 +813,7 @@ definition {
 				changePage = "true",
 				pageName = "Home",
 				panel = "General",
-				siteName = "Liferay DXP",
+				siteName = "${siteName}",
 				successMessage = "Page");
 
 			PageEditor.viewItemSelectorText(
@@ -759,7 +841,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Home#SITE_NAME",
-				value1 = "Liferay DXP");
+				value1 = "${siteName}");
 		}
 	}
 
@@ -767,6 +849,18 @@ definition {
 	@priority = "4"
 	test SubmitFormContainerWithTranslatedSuccessText {
 		task ("Given a page designer has a mapped Form Container and Language Selector on content page") {
+			task ("Add a Text field to object") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Region",
+					fieldName = "region",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+			}
+
 			task ("Add Form Container and Language Selector to content page") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
@@ -786,21 +880,6 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General");
-			}
-
-			task ("Add Text Input and Submit Button inside Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Text Input");
-
-				PageEditor.editInput(
-					field = "Region",
-					fragmentName = "Text Input");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Submit Button",
-					targetFragmentName = "Text Input");
 			}
 
 			task ("Add a Language Selector below Form Container") {
@@ -918,6 +997,16 @@ definition {
 	@priority = "4"
 	test ViewCapabilitiesOfFormContainer {
 		task ("Given a page creator has a content page with a Form Container fragment") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -981,6 +1070,18 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a page creator has a Form Container on a content page") {
+			task ("Add a Text field to object") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Region",
+					fieldName = "region",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+			}
+
 			task ("Add a picklist with two items") {
 				Picklist.addPicklistViaAPI(picklistName = "Ticket Type");
 
@@ -1311,7 +1412,15 @@ definition {
 	@priority = "4"
 	test ViewErrorMessageAfterMappingFormContainerToEntityWhenMultipleInputFragmentsDisabledFromMasterPage {
 		task ("Given a page creator has a Form Container on a content page based on a master page") {
-			task ("Add Date and Integer fields to the object") {
+			task ("Add Text, Date and Integer fields to the object") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Region",
+					fieldName = "region",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
 				ObjectAdmin.addObjectFieldViaAPI(
 					fieldBusinessType = "Integer",
 					fieldLabelName = "Age",
@@ -1327,6 +1436,8 @@ definition {
 					fieldType = "Date",
 					isRequired = "false",
 					objectName = "PurchaseOrder");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 			}
 
 			task ("Add a master page then remove Text Input, Numeric Input, Date and Submit Button fragments from allowed fragments") {
@@ -1394,6 +1505,8 @@ definition {
 				isRequired = "true",
 				objectName = "PurchaseOrder");
 
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name 1",
@@ -1415,14 +1528,6 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				panel = "General");
-
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Date");
-
-			PageEditor.editInput(
-				field = "Purchase Date*",
-				fragmentName = "Date");
 		}
 
 		task ("When the page designer hides the Container") {
@@ -1468,14 +1573,6 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				panel = "General");
-
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Date");
-
-			PageEditor.editInput(
-				field = "Purchase Date*",
-				fragmentName = "Date");
 		}
 
 		task ("When the page designer hides the Grid") {
@@ -1503,6 +1600,16 @@ definition {
 	@priority = "4"
 	test ViewOnlyOneModalShownWhenPublishContentPageWithMultipleWarningMessages {
 		task ("Given a page designer has a Form Container with an unmapped Text Input fragment on content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -1520,8 +1627,10 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
+			PageEditor.removeFragment(fragmentName = "Submit Button");
+
+			PageEditor.editInput(
+				field = "-- Unmapped --",
 				fragmentName = "Text Input");
 		}
 
@@ -1546,6 +1655,18 @@ definition {
 	@priority = "4"
 	test ViewOnlyTheFirstErrorMessageShownWhenMultipleValidationIssuesHappen {
 		task ("Given a user has a content page where a required Checkbox, Date, Text Input and Submit Button fragments are inside a Form Container") {
+			task ("Add a Text field to object") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Region",
+					fieldName = "region",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+			}
+
 			task ("Change the Maximum Number of Characters of Region field to 20") {
 				ObjectAdmin.openObjectAdmin();
 
@@ -1602,40 +1723,10 @@ definition {
 					panel = "General");
 			}
 
-			task ("Add a Checkbox, Date, Text Input and Submit Button fragment into Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Checkbox");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Date",
-					targetFragmentName = "Checkbox");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Text Input",
-					targetFragmentName = "Date");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Submit Button",
-					targetFragmentName = "Text Input");
-			}
-
-			task ("Map fragments to suitable fields") {
+			task ("Mark the Checkbox as required") {
 				PageEditor.editInput(
-					field = "I accept the terms of use and Privacy Policy",
 					fragmentName = "Checkbox",
 					markAsRequired = "true");
-
-				PageEditor.editInput(
-					field = "Purchase Date",
-					fragmentName = "Date");
-
-				PageEditor.editInput(
-					field = "Region",
-					fragmentName = "Text Input");
 
 				PageEditor.publish();
 			}
@@ -1734,7 +1825,15 @@ definition {
 	@priority = "4"
 	test ViewSuccessMessageAfterMappingFormContainerToEntity {
 		task ("Given a page creator has a Form Container on a content page") {
-			task ("Add Date and Integer fields to the object") {
+			task ("Add Text, Date and Integer fields to the object") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Region",
+					fieldName = "region",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
 				ObjectAdmin.addObjectFieldViaAPI(
 					fieldBusinessType = "Integer",
 					fieldLabelName = "Age",
@@ -1750,6 +1849,8 @@ definition {
 					fieldType = "Date",
 					isRequired = "false",
 					objectName = "PurchaseOrder");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 			}
 
 			task ("Add a Form Container to a content page") {
@@ -1782,8 +1883,15 @@ definition {
 	@description = "This is a test for LPS-157998. The page creator should see warning message when delete a required input fragment."
 	@priority = "4"
 	test ViewWarningMessageWhenDeleteRequiredInputFragments {
+		task ("Given a page designer has a Form Container with required input fragments on content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
 
-		task ("Given a page designer has a Form Container with a required input fragment on content page") {
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Date",
 				fieldLabelName = "Purchase Date",
@@ -1791,6 +1899,8 @@ definition {
 				fieldType = "Date",
 				isRequired = "true",
 				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1809,12 +1919,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Text Input");
-
 			PageEditor.editInput(
-				field = "Region",
 				fragmentName = "Text Input",
 				markAsRequired = "true");
 		}
@@ -1825,16 +1930,6 @@ definition {
 
 		task ("Then the page designer could see a warning message") {
 			Alert.viewWarningSpecific(warningMessage = "The deleted fragment was marked as required. A form with missing required fields may not generate a valid entry.");
-		}
-
-		task ("Given a page designer has a Form Container with an input fragment mapped to a required field on content page") {
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Date");
-
-			PageEditor.editInput(
-				field = "Purchase Date*",
-				fragmentName = "Date");
 		}
 
 		task ("When the page designer removes the Date fragment") {
@@ -1850,6 +1945,16 @@ definition {
 	@priority = "4"
 	test ViewWarningMessageWhenHideLayoutElementWithPartialFormAndRequiredInputFragments {
 		task ("Given a page designer has a Form Container with a Container containing a required input fragment on content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name 1",
@@ -1866,6 +1971,10 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				panel = "General");
+
+			for (var fragmentName : list "Text Input,Submit Button") {
+				PageEditor.removeFragment(fragmentName = "${fragmentName}");
+			}
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Layout Elements",
@@ -1916,6 +2025,10 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
+			for (var fragmentName : list "Text Input,Date,Submit Button") {
+				PageEditor.removeFragment(fragmentName = "${fragmentName}");
+			}
+
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Layout Elements",
 				fragmentName = "Container");
@@ -1955,6 +2068,10 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				panel = "General");
+
+			for (var fragmentName : list "Text Input,Date,Submit Button") {
+				PageEditor.removeFragment(fragmentName = "${fragmentName}");
+			}
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Layout Elements",
@@ -1998,6 +2115,10 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
+			for (var fragmentName : list "Text Input,Date,Submit Button") {
+				PageEditor.removeFragment(fragmentName = "${fragmentName}");
+			}
+
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Layout Elements",
 				fragmentName = "Grid");
@@ -2026,6 +2147,16 @@ definition {
 	@priority = "4"
 	test ViewWarningMessageWhenPublishContentPageWithHiddenRequiredInputFragments {
 		task ("Given a page designer has a Form Container with a hidden Container containing a required input fragment on content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name 1",
@@ -2042,6 +2173,10 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				panel = "General");
+
+			for (var fragmentName : list "Text Input,Submit Button") {
+				PageEditor.removeFragment(fragmentName = "${fragmentName}");
+			}
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Layout Elements",
@@ -2104,6 +2239,14 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
+			PageEditor.removeFragment(
+				fragmentName = "Text Input",
+				index = "2");
+
+			for (var fragmentName : list "Text Input,Submit Button") {
+				PageEditor.removeFragment(fragmentName = "${fragmentName}");
+			}
+
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Layout Elements",
 				fragmentName = "Container");
@@ -2155,6 +2298,14 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				panel = "General");
+
+			PageEditor.removeFragment(
+				fragmentName = "Text Input",
+				index = "2");
+
+			for (var fragmentName : list "Text Input,Submit Button") {
+				PageEditor.removeFragment(fragmentName = "${fragmentName}");
+			}
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Layout Elements",
@@ -2219,6 +2370,14 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
+			PageEditor.removeFragment(
+				fragmentName = "Text Input",
+				index = "2");
+
+			for (var fragmentName : list "Text Input,Submit Button") {
+				PageEditor.removeFragment(fragmentName = "${fragmentName}");
+			}
+
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Layout Elements",
 				fragmentName = "Grid");
@@ -2259,6 +2418,16 @@ definition {
 	@priority = "4"
 	test ViewWarningMessageWhenPublishContentPageWithoutSubmitButtonOrWithHiddenSubmitButton {
 		task ("Given a page creator has a Form Container without Submit Button on content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -2276,13 +2445,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Text Input");
-
-			PageEditor.editInput(
-				field = "Region",
-				fragmentName = "Text Input");
+			PageEditor.removeFragment(fragmentName = "Submit Button");
 		}
 
 		task ("When the page creator publishes the content page") {
@@ -2330,6 +2493,16 @@ definition {
 	@priority = "4"
 	test ViewWarningMessageWhenPublishContentPageWithUnmappedInputFragments {
 		task ("Given a page creator has a Form Container with unmapped input fragment on content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -2347,14 +2520,9 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
+			PageEditor.editInput(
+				field = "-- Unmapped --",
 				fragmentName = "Text Input");
-
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Submit Button",
-				targetFragmentName = "Text Input");
 		}
 
 		task ("When the page creator publishes the content page") {
@@ -2375,12 +2543,22 @@ definition {
 	test ViewWarningMessageWhenPublishContentPageWithUnmappedRequiredFields {
 		task ("Given a page creator has a Form Container with unmapped required fields on content page") {
 			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Date",
 				fieldLabelName = "Purchase Date",
 				fieldName = "purchaseDate",
 				fieldType = "Date",
 				isRequired = "true",
 				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -2399,18 +2577,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Text Input");
-
-			PageEditor.editInput(
-				field = "Region",
-				fragmentName = "Text Input");
-
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Submit Button",
-				targetFragmentName = "Text Input");
+			PageEditor.removeFragment(fragmentName = "Date");
 		}
 
 		task ("When the page creator publishes the content page") {

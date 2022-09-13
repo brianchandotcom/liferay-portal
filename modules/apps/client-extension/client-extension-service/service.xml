@@ -81,6 +81,5 @@
 	<exceptions>
 		<exception>ClientExtensionEntryType</exception>
 		<exception>ClientExtensionEntryTypeSettings</exception>
-		<exception>DuplicateClientExtensionEntryExternalReferenceCode</exception>
 	</exceptions>
 </service-builder>

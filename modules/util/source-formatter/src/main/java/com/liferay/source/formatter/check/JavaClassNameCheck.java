@@ -123,9 +123,9 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			String trimmedEnforceExtendedClassName = "";
+			String trimmedEnforceExtendedClassName = enforceExtendedClassName;
 
-			if (enforceExtendedClassName.startsWith("Base")) {
+			if (trimmedEnforceExtendedClassName.startsWith("Base")) {
 				trimmedEnforceExtendedClassName =
 					enforceExtendedClassName.substring(4);
 			}

@@ -476,16 +476,6 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			getCookieName(commerceOrder.getGroupId()), commerceOrder.getUuid());
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<CommerceOrder> modelResourcePermission) {
-
-		_commerceOrderModelResourcePermission = modelResourcePermission;
-	}
-
 	private CommerceOrder _checkGuestOrder(
 			CommerceContext commerceContext, CommerceOrder commerceOrder,
 			HttpServletRequest httpServletRequest)
@@ -773,8 +763,6 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderHttpHelperImpl.class);
 
-	private ModelResourcePermission<CommerceOrder>
-		_commerceOrderModelResourcePermission;
 	private static final ThreadLocal<CommerceOrder> _commerceOrderThreadLocal =
 		new CentralizedThreadLocal<>(
 			CommerceOrderHttpHelperImpl.class.getName());
@@ -800,6 +788,12 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

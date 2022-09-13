@@ -11279,6 +11279,15 @@ include-and-override=${liferay.home}/portal-setup-wizard.properties</echo>
 		</if>
 
 		<if>
+			<isset property="test.company.default.locale" />
+			<then>
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+					company.default.locale=${test.company.default.locale}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="test.set.default.portal.properties" />
 			<then>
 				<echo file="portal-impl/src/portal-ext.properties">liferay.home=${liferay.home}</echo>
@@ -12125,6 +12134,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					test.base.dir.name=${test.base.dir.name}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="test.company.default.locale" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.company.default.locale=${test.company.default.locale}
 				</echo>
 			</then>
 		</if>

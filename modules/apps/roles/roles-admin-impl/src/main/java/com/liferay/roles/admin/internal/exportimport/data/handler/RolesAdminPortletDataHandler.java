@@ -84,6 +84,10 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 						NAMESPACE, "system-roles", true, false)
 				},
 				Role.class.getName(), StagedModelType.REFERRER_CLASS_NAME_ALL));
+		Collections.addAll(
+			_allSystemRoleNames, _portal.getSystemOrganizationRoles());
+		Collections.addAll(_allSystemRoleNames, _portal.getSystemRoles());
+		Collections.addAll(_allSystemRoleNames, _portal.getSystemSiteRoles());
 	}
 
 	@Override
@@ -167,14 +171,6 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		Collections.addAll(
-			_allSystemRoleNames, portal.getSystemOrganizationRoles());
-		Collections.addAll(_allSystemRoleNames, portal.getSystemRoles());
-		Collections.addAll(_allSystemRoleNames, portal.getSystemSiteRoles());
 	}
 
 	private ActionableDynamicQuery _getRoleActionableDynamicQuery(

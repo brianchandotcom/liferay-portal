@@ -17,6 +17,7 @@ package com.liferay.object.rest.internal.resource.v1_0;
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -89,7 +90,7 @@ public class RelatedObjectEntryResourceImpl
 	}
 
 	@Override
-	public void putObjectRelationshipMappingTableValues(
+	public ObjectEntry putObjectRelationshipMappingTableValues(
 			String previousPath, Long objectEntryId,
 			String objectRelationshipName, Long relatedObjectEntryId,
 			Pagination pagination)
@@ -114,6 +115,18 @@ public class RelatedObjectEntryResourceImpl
 				currentObjectDefinition, objectDefinition, objectEntryId,
 				relatedObjectEntryId),
 			new ServiceContext());
+
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerTracker.getObjectEntryManager(
+				currentObjectDefinition.getStorageType());
+
+		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
+			currentObjectDefinition, objectRelationship);
+
+		return objectEntryManager.getObjectEntry(
+			_getDefaultDTOConverterContext(
+				relatedObjectDefinition, relatedObjectEntryId, _uriInfo),
+			relatedObjectDefinition, relatedObjectEntryId);
 	}
 
 	private ObjectDefinition _getCurrentObjectDefinition(

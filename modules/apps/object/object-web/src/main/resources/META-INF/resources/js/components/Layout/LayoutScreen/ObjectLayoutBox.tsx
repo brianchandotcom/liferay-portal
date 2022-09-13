@@ -15,9 +15,9 @@
 import ClayButton from '@clayui/button';
 import {ClayToggle} from '@clayui/form';
 import {useModal} from '@clayui/modal';
+import {Panel, PanelBody, PanelHeader} from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
-import Panel from '../../Panel/Panel';
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
 import {BoxType, TObjectLayoutRow} from '../types';
 import HeaderDropdown from './HeaderDropdown';
@@ -57,7 +57,7 @@ const ObjectLayoutBox: React.FC<IObjectLayoutBoxProps> = ({
 	return (
 		<>
 			<Panel>
-				<Panel.Header
+				<PanelHeader
 					contentRight={
 						<>
 							<ClayToggle
@@ -113,13 +113,13 @@ const ObjectLayoutBox: React.FC<IObjectLayoutBoxProps> = ({
 				/>
 
 				{!!objectLayoutRows?.length && (
-					<Panel.Body>
+					<PanelBody>
 						<ObjectLayoutRows
 							boxIndex={boxIndex}
 							objectLayoutRows={objectLayoutRows}
 							tabIndex={tabIndex}
 						/>
-					</Panel.Body>
+					</PanelBody>
 				)}
 			</Panel>
 

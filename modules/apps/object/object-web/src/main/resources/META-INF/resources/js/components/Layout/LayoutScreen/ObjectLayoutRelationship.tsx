@@ -13,9 +13,9 @@
  */
 
 import ClayLabel from '@clayui/label';
+import {Panel, PanelSimpleBody} from '@liferay/object-js-components-web';
 import React from 'react';
 
-import Panel from '../../Panel/Panel';
 import {useLayoutContext} from '../objectLayoutContext';
 
 interface IObjectLayoutRelationshipProps
@@ -36,7 +36,7 @@ const ObjectLayoutRelationship: React.FC<IObjectLayoutRelationshipProps> = ({
 	return (
 		<>
 			<Panel key={`field_${objectRelationshipId}`}>
-				<Panel.SimpleBody
+				<PanelSimpleBody
 					title={objectRelationship?.label[defaultLanguageId]!}
 				>
 					<small className="text-secondary">
@@ -58,7 +58,7 @@ const ObjectLayoutRelationship: React.FC<IObjectLayoutRelationshipProps> = ({
 								: Liferay.Language.get('parent')
 							: objectRelationship?.type}
 					</ClayLabel>
-				</Panel.SimpleBody>
+				</PanelSimpleBody>
 			</Panel>
 		</>
 	);

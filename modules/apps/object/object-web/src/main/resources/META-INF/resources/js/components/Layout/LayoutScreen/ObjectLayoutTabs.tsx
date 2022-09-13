@@ -16,9 +16,9 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import {useModal} from '@clayui/modal';
+import {Panel, PanelBody, PanelHeader} from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
-import Panel from '../../Panel/Panel';
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
 import HeaderDropdown from './HeaderDropdown';
 import ModalAddObjectLayoutBox from './ModalAddObjectLayoutBox';
@@ -50,7 +50,7 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 							className="layout-tab__tab"
 							key={`layout_${tabIndex}`}
 						>
-							<Panel.Header
+							<PanelHeader
 								contentLeft={
 									<ClayLabel displayType={labelDisplayType}>
 										{isRelationshipType
@@ -133,7 +133,7 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 							{!!objectLayoutBoxes?.length &&
 								!isRelationshipType && (
-									<Panel.Body>
+									<PanelBody>
 										{objectLayoutBoxes.map(
 											(
 												{
@@ -159,17 +159,17 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 												/>
 											)
 										)}
-									</Panel.Body>
+									</PanelBody>
 								)}
 
 							{isRelationshipType && (
-								<Panel.Body>
+								<PanelBody>
 									<ObjectLayoutRelationship
 										objectRelationshipId={
 											objectRelationshipId
 										}
 									/>
-								</Panel.Body>
+								</PanelBody>
 							)}
 						</Panel>
 					);

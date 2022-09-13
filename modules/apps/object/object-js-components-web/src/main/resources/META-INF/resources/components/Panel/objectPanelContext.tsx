@@ -57,9 +57,9 @@ const reducer = (state: TState, action: TAction) => {
 	}
 };
 
-const PanelContextProvider: React.FC<React.HTMLAttributes<HTMLElement>> = ({
+export function PanelContextProvider({
 	children,
-}) => {
+}: React.HTMLAttributes<HTMLElement>) {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	return (
@@ -67,9 +67,7 @@ const PanelContextProvider: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 			{children}
 		</PanelContext.Provider>
 	);
-};
-
-export default PanelContextProvider;
+}
 
 export function usePanelContext() {
 	return useContext(PanelContext);

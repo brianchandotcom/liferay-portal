@@ -12,9 +12,9 @@
  * details.
  */
 
+import {Panel, PanelSimpleBody} from '@liferay/object-js-components-web';
 import React from 'react';
 
-import Panel from '../../Panel/Panel';
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
 import HeaderDropdown from './HeaderDropdown';
 import RequiredLabel from './RequiredLabel';
@@ -49,7 +49,7 @@ const ObjectLayoutField: React.FC<IObjectLayoutFieldProps> = ({
 	return (
 		<>
 			<Panel key={`field_${objectFieldName}`}>
-				<Panel.SimpleBody
+				<PanelSimpleBody
 					contentRight={
 						<HeaderDropdown
 							deleteElement={() => {
@@ -73,7 +73,7 @@ const ObjectLayoutField: React.FC<IObjectLayoutFieldProps> = ({
 					</small>
 
 					<RequiredLabel required={objectField?.required} />
-				</Panel.SimpleBody>
+				</PanelSimpleBody>
 			</Panel>
 		</>
 	);

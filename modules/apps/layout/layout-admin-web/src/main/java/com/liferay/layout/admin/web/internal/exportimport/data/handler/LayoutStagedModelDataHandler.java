@@ -16,6 +16,8 @@ package com.liferay.layout.admin.web.internal.exportimport.data.handler;
 
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.client.extension.model.ClientExtensionEntryRel;
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
@@ -437,6 +439,8 @@ public class LayoutStagedModelDataHandler
 		}
 
 		_exportFaviconFileEntry(layout, layoutElement, portletDataContext);
+
+		_exportClientExtensionEntryRels(layout, portletDataContext);
 
 		_fixExportTypeSettings(layout);
 
@@ -987,6 +991,8 @@ public class LayoutStagedModelDataHandler
 		_importFaviconFileEntry(
 			portletDataContext, layout, layoutElement, importedLayout);
 
+		_importClientExtensionEntryRels(portletDataContext, layout);
+
 		_staging.updateLastImportSettings(
 			layoutElement, importedLayout, portletDataContext);
 
@@ -1339,6 +1345,23 @@ public class LayoutStagedModelDataHandler
 				_layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(
 					layoutFriendlyURL);
 			}
+		}
+	}
+
+	private void _exportClientExtensionEntryRels(
+			Layout layout, PortletDataContext portletDataContext)
+		throws Exception {
+
+		List<ClientExtensionEntryRel> clientExtensionEntryRels =
+			_clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
+				_portal.getClassNameId(Layout.class), layout.getPlid());
+
+		for (ClientExtensionEntryRel clientExtensionEntryRel :
+				clientExtensionEntryRels) {
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, clientExtensionEntryRel,
+				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 	}
 
@@ -2031,6 +2054,22 @@ public class LayoutStagedModelDataHandler
 				Layout.class, layout.getPlid()),
 			portletDataContext.getAssetTagNames(
 				Layout.class, layout.getPlid()));
+	}
+
+	private void _importClientExtensionEntryRels(
+			PortletDataContext portletDataContext, Layout layout)
+		throws Exception {
+
+		List<Element> clientExtensionEntryRelsElements =
+			portletDataContext.getReferenceDataElements(
+				layout, ClientExtensionEntryRel.class);
+
+		for (Element clientExtensionEntryRelsElement :
+				clientExtensionEntryRelsElements) {
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, clientExtensionEntryRelsElement);
+		}
 	}
 
 	private void _importFaviconFileEntry(
@@ -2931,6 +2970,10 @@ public class LayoutStagedModelDataHandler
 
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Reference
+	private ClientExtensionEntryRelLocalService
+		_clientExtensionEntryRelLocalService;
 
 	private ConfigurationProvider _configurationProvider;
 	private CounterLocalService _counterLocalService;

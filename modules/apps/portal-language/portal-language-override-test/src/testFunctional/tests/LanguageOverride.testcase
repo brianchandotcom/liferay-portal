@@ -563,7 +563,7 @@ definition {
 				currentTranslationOverride = "Nieuwe Sleutel",
 				languageKey = "new-key",
 				selectedLanguage = "nl_NL");
-			
+
 			LanguageOverride.assertLanguageKeyWithOverrideInListView(
 				languageKey = "text-not-bold",
 				languagesWithOverride = "en_US");

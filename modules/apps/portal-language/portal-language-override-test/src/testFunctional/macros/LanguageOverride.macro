@@ -36,7 +36,7 @@ definition {
 			key_filterScope = "${filterScope}",
 			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
 	}
-	
+
 	@description = "Assert values for existing language keys"
 	macro assertLanguageKeyWithoutOverride {
 		LexiconList.viewListEntryPresent(listEntry = "${languageKey}");

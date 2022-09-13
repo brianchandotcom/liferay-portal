@@ -19,6 +19,28 @@ definition {
 		PortalInstances.tearDownCP();
 	}
 
+	@description = "LPS-159838. Can enable walkthrough in System Settings."
+	@priority = "5"
+	test CanBeEnabled {
+		property portal.acceptance = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given Walkthrough in System Settings") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			ApplicationsMenu.gotoSite(site = "Site Name");
+		}
+
+		task ("When walkthrough is enabled") {
+			Walkthrough.enableWalkthrough(fileName = "walkthrough_configuration.json");
+		}
+
+		task ("TThen success message appears") {
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	@description = "LPS-159836. Walkthrough displays when defined for a site."
 	@priority = "5"
 	test WillDisplayWhenDefinedForSite {
@@ -55,6 +77,39 @@ definition {
 			AssertElementPresent(
 				key_title = "Step 1 of 2: Click the Button",
 				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+	}
+
+	@description = "LPS-159837. Walkthrough will not display when not defined for a site."
+	@priority = "5"
+	test WillNotDisplayWhenNotDefinedForSite {
+		property portal.acceptance = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given there is no site-level JSON defined for current site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			ApplicationsMenu.gotoSite(site = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 1");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 1",
+				widgetName = "JS Walkthrough Sample");
+		}
+
+		task ("When instantiate the walkthrough") {
+			Navigator.openSitePage(
+				pageName = "Walkthrough Page 1",
+				siteName = "Site Name");
+		}
+
+		task ("Then walkthrough is not instantiated on the site") {
+			AssertElementNotPresent(locator1 = "Walkthrough#POPOVER");
 		}
 	}
 

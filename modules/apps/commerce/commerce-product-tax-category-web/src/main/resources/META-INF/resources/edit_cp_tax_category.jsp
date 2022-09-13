@@ -35,31 +35,40 @@ else {
 
 <portlet:actionURL name="/cp_tax_category/edit_cp_tax_category" var="editCPTaxCategoryActionURL" />
 
-<aui:form action="<%= editCPTaxCategoryActionURL %>" cssClass="container-fluid container-fluid-max-xl mt-4" method="post" name="fm">
+<liferay-portlet:renderURL var="editCPTaxCategoryExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/cp_tax_category/edit_cp_tax_category_external_reference_code" />
+	<portlet:param name="cpTaxCategoryId" value="<%= String.valueOf(cpTaxCategory.getCPTaxCategoryId()) %>" />
+</liferay-portlet:renderURL>
+
+<commerce-ui:header
+	actions="<%= cpTaxCategoryDisplayContext.getHeaderActionModels() %>"
+	bean="<%= cpTaxCategory %>"
+	beanIdLabel="id"
+	externalReferenceCode="<%= cpTaxCategory.getExternalReferenceCode() %>"
+	externalReferenceCodeEditUrl="<%= editCPTaxCategoryExternalReferenceCodeURL %>"
+	model="<%= CPTaxCategory.class %>"
+	title="<%= cpTaxCategory.getName(locale) %>"
+	wrapperCssClasses="side-panel-top-anchor"
+/>
+
+<aui:form action="<%= editCPTaxCategoryActionURL %>" cssClass="col pt-4" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpTaxCategory == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpTaxCategoryId" type="hidden" value="<%= (cpTaxCategory == null) ? 0 : cpTaxCategory.getCPTaxCategoryId() %>" />
 
-	<div class="lfr-form-content">
-		<liferay-ui:error exception="<%= CPTaxCategoryNameException.class %>" message="please-enter-a-valid-name" />
-		<liferay-ui:error exception="<%= DuplicateCPTaxCategoryException.class %>" message="please-enter-a-unique-external-reference-code" />
+	<div class="container">
+		<commerce-ui:panel
+			title='<%= LanguageUtil.get(request, "details") %>'
+		>
+			<liferay-ui:error exception="<%= CPTaxCategoryNameException.class %>" message="please-enter-a-valid-name" />
 
-		<aui:model-context bean="<%= cpTaxCategory %>" model="<%= CPTaxCategory.class %>" />
+			<aui:model-context bean="<%= cpTaxCategory %>" model="<%= CPTaxCategory.class %>" />
 
-		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input name="externalReferenceCode" />
-
-				<aui:input name="name" />
+				<aui:input autoFocus="<%= true %>" name="name" />
 
 				<aui:input name="description" />
 			</aui:fieldset>
-
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" />
-
-				<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-			</aui:button-row>
-		</aui:fieldset-group>
+		</commerce-ui:panel>
 	</div>
 </aui:form>

@@ -76,7 +76,7 @@ public class CPTaxCategoryManagementToolbarDisplayContext
 				dropdownItem.setHref(
 					liferayPortletResponse.createRenderURL(),
 					"mvcRenderCommandName",
-					"/cp_tax_category/edit_cp_tax_category", "redirect",
+					"/cp_tax_category/add_cp_tax_category", "redirect",
 					currentURLObj.toString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "add-tax-category"));

@@ -14,8 +14,10 @@
 
 package com.liferay.commerce.product.tax.category.web.internal.display.context;
 
+import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.util.comparator.CPTaxCategoryCreateDateComparator;
@@ -31,8 +33,12 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -54,6 +60,9 @@ public class CPTaxCategoryDisplayContext {
 		_portletResourcePermission = portletResourcePermission;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		cpRequestHelper = new CPRequestHelper(
+			PortalUtil.getHttpServletRequest(renderRequest));
 	}
 
 	public CommerceTaxMethod getCommerceTaxMethod() throws PortalException {
@@ -96,6 +105,20 @@ public class CPTaxCategoryDisplayContext {
 		}
 
 		return _cpTaxCategory;
+	}
+
+	public List<HeaderActionModel> getHeaderActionModels() {
+		List<HeaderActionModel> headerActionModels = new ArrayList<>();
+
+		RenderResponse renderResponse = cpRequestHelper.getRenderResponse();
+
+		HeaderActionModel publishHeaderActionModel = new HeaderActionModel(
+			"btn-primary", renderResponse.getNamespace() + "fm", null, null,
+			"save");
+
+		headerActionModels.add(publishHeaderActionModel);
+
+		return headerActionModels;
 	}
 
 	public String getOrderByCol() {
@@ -169,6 +192,8 @@ public class CPTaxCategoryDisplayContext {
 			themeDisplay.getPermissionChecker(), null,
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
 	}
+
+	protected final CPRequestHelper cpRequestHelper;
 
 	private OrderByComparator<CPTaxCategory> _getCPTaxCategoryOrderByComparator(
 		String orderByCol, String orderByType) {

@@ -67,7 +67,7 @@ public class EditCPTaxCategoryMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				_updateCPTaxCategory(actionRequest);
+				_addOrUpdateCPTaxCategory(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -86,13 +86,52 @@ public class EditCPTaxCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, exception.getClass());
 
-				actionResponse.setRenderParameter(
-					"mvcRenderCommandName",
-					"/cp_tax_category/edit_cp_tax_category");
+				if (cmd.equals(Constants.ADD)) {
+					actionResponse.setRenderParameter(
+						"mvcRenderCommandName",
+						"/cp_tax_category/add_cp_tax_category");
+				}
+				else {
+					actionResponse.setRenderParameter(
+						"mvcRenderCommandName",
+						"/cp_tax_category/edit_cp_tax_category");
+				}
 			}
 			else {
 				throw exception;
 			}
+		}
+	}
+
+	private void _addOrUpdateCPTaxCategory(ActionRequest actionRequest)
+		throws PortalException {
+
+		long cpTaxCategoryId = ParamUtil.getLong(
+			actionRequest, "cpTaxCategoryId");
+
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+
+		if (cpTaxCategoryId <= 0) {
+			String externalReferenceCode = ParamUtil.getString(
+				actionRequest, "externalReferenceCode");
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CPTaxCategory.class.getName(), actionRequest);
+
+			_cpTaxCategoryService.addCPTaxCategory(
+				externalReferenceCode, nameMap, descriptionMap, serviceContext);
+		}
+		else {
+			CPTaxCategory cpTaxCategory =
+				_cpTaxCategoryService.getCPTaxCategory(cpTaxCategoryId);
+
+			_cpTaxCategoryService.updateCPTaxCategory(
+				cpTaxCategory.getExternalReferenceCode(), cpTaxCategoryId,
+				nameMap, descriptionMap);
 		}
 	}
 
@@ -114,35 +153,6 @@ public class EditCPTaxCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long deleteCPTaxCategoryId : deleteCPTaxCategoryIds) {
 			_cpTaxCategoryService.deleteCPTaxCategory(deleteCPTaxCategoryId);
-		}
-	}
-
-	private void _updateCPTaxCategory(ActionRequest actionRequest)
-		throws PortalException {
-
-		long cpTaxCategoryId = ParamUtil.getLong(
-			actionRequest, "cpTaxCategoryId");
-
-		String externalReferenceCode = ParamUtil.getString(
-			actionRequest, "externalReferenceCode");
-
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "name");
-
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-
-		if (cpTaxCategoryId <= 0) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CPTaxCategory.class.getName(), actionRequest);
-
-			_cpTaxCategoryService.addCPTaxCategory(
-				externalReferenceCode, nameMap, descriptionMap, serviceContext);
-		}
-		else {
-			_cpTaxCategoryService.updateCPTaxCategory(
-				externalReferenceCode, cpTaxCategoryId, nameMap,
-				descriptionMap);
 		}
 	}
 

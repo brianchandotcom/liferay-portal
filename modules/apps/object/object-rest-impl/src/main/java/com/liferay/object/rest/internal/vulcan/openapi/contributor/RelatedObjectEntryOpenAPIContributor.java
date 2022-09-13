@@ -119,9 +119,8 @@ public class RelatedObjectEntryOpenAPIContributor
 			ObjectRelationship systemObjectRelationship, UriInfo uriInfo)
 		throws Exception {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				systemObjectRelationship.getObjectDefinitionId2());
+		ObjectDefinition objectDefinition = _getRelatedObjectDefinition(
+			systemObjectDefinitionMetadata, systemObjectRelationship);
 
 		OpenAPI objectEntryOpenAPI = _getObjectEntryOpenAPI(objectDefinition);
 
@@ -326,6 +325,27 @@ public class RelatedObjectEntryOpenAPIContributor
 						_getContentType(systemObjectDefinitionMetadata)));
 			}
 		};
+	}
+
+	private ObjectDefinition _getRelatedObjectDefinition(
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata,
+			ObjectRelationship objectRelationship)
+		throws Exception {
+
+		ObjectDefinition systemObjectDefinition = _getSystemObjectDefinition(
+			systemObjectDefinitionMetadata);
+
+		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
+
+		if (objectDefinitionId1 !=
+				systemObjectDefinition.getObjectDefinitionId()) {
+
+			return _objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+		}
+
+		return _objectDefinitionLocalService.getObjectDefinition(
+			objectRelationship.getObjectDefinitionId2());
 	}
 
 	private String _getSchemaName(ObjectDefinition objectDefinition) {

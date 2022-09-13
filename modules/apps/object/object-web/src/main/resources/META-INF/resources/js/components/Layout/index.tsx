@@ -147,7 +147,13 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 			dispatch({
 				payload: {
+					enabledCategorization:
+						objectDefinition.enabledCategorization,
 					objectLayout,
+					objectRelationships: normalizeObjectRelationships({
+						objectLayoutTabs,
+						objectRelationships,
+					}),
 				},
 				type: TYPES.ADD_OBJECT_LAYOUT,
 			});
@@ -157,11 +163,6 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			);
 
 			dispatch({
-				payload: {objectDefinition},
-				type: TYPES.ADD_OBJECT_DEFINITION,
-			});
-
-			dispatch({
 				payload: {
 					objectFields: normalizeObjectFields({
 						objectFields: filteredObjectFields,
@@ -169,16 +170,6 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 					}),
 				},
 				type: TYPES.ADD_OBJECT_FIELDS,
-			});
-
-			dispatch({
-				payload: {
-					objectRelationships: normalizeObjectRelationships({
-						objectLayoutTabs,
-						objectRelationships,
-					}),
-				},
-				type: TYPES.ADD_OBJECT_RELATIONSHIPS,
 			});
 
 			setLoading(false);
@@ -273,11 +264,11 @@ interface ILayoutWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	objectLayoutId: string;
 }
 
-const LayoutWrapper: React.FC<ILayoutWrapperProps> = ({
+export default function LayoutWrapper({
 	isViewOnly,
 	objectFieldTypes,
 	objectLayoutId,
-}) => {
+}: ILayoutWrapperProps) {
 	return (
 		<LayoutContextProvider
 			value={{
@@ -289,6 +280,4 @@ const LayoutWrapper: React.FC<ILayoutWrapperProps> = ({
 			<Layout />
 		</LayoutContextProvider>
 	);
-};
-
-export default LayoutWrapper;
+}

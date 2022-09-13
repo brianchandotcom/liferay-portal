@@ -29,8 +29,8 @@ import {
 } from './types';
 
 type TState = {
+	enabledCategorization: boolean;
 	isViewOnly: boolean;
-	objectDefinition: ObjectDefinition;
 	objectFieldTypes: ObjectFieldType[];
 	objectFields: TObjectField[];
 	objectLayout: TObjectLayout;
@@ -40,16 +40,12 @@ type TState = {
 
 type TAction =
 	| {
-			payload: {objectDefinition: ObjectDefinition};
-			type: TYPES.ADD_OBJECT_DEFINITION;
-	  }
-	| {
-			payload: {objectLayout: TObjectLayout};
+			payload: {
+				enabledCategorization: boolean;
+				objectLayout: TObjectLayout;
+				objectRelationships: TObjectRelationship[];
+			};
 			type: TYPES.ADD_OBJECT_LAYOUT;
-	  }
-	| {
-			payload: {objectRelationships: TObjectRelationship[]};
-			type: TYPES.ADD_OBJECT_RELATIONSHIPS;
 	  }
 	| {
 			payload: {
@@ -126,13 +122,11 @@ interface ILayoutContextProps extends Array<TState | Function> {
 const LayoutContext = createContext({} as ILayoutContextProps);
 
 export enum TYPES {
-	ADD_OBJECT_DEFINITION = 'ADD_OBJECT_DEFINITION',
 	ADD_OBJECT_FIELDS = 'ADD_OBJECT_FIELDS',
 	ADD_OBJECT_LAYOUT = 'ADD_OBJECT_LAYOUT',
 	ADD_OBJECT_LAYOUT_BOX = 'ADD_OBJECT_LAYOUT_BOX',
 	ADD_OBJECT_LAYOUT_FIELD = 'ADD_OBJECT_LAYOUT_FIELD',
 	ADD_OBJECT_LAYOUT_TAB = 'ADD_OBJECT_LAYOUT_TAB',
-	ADD_OBJECT_RELATIONSHIPS = 'ADD_OBJECT_RELATIONSHIPS',
 	CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE = 'CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE',
 	CHANGE_OBJECT_LAYOUT_NAME = 'CHANGE_OBJECT_LAYOUT_NAME',
 	DELETE_OBJECT_LAYOUT_BOX = 'DELETE_OBJECT_LAYOUT_BOX',
@@ -149,27 +143,17 @@ const initialState = {
 
 const layoutReducer = (state: TState, action: TAction) => {
 	switch (action.type) {
-		case TYPES.ADD_OBJECT_DEFINITION: {
-			const {objectDefinition} = action.payload;
-
-			return {
-				...state,
-				objectDefinition,
-			};
-		}
 		case TYPES.ADD_OBJECT_LAYOUT: {
-			const {objectLayout} = action.payload;
-
-			return {
-				...state,
+			const {
+				enabledCategorization,
 				objectLayout,
-			};
-		}
-		case TYPES.ADD_OBJECT_RELATIONSHIPS: {
-			const {objectRelationships} = action.payload;
+				objectRelationships,
+			} = action.payload;
 
 			return {
 				...state,
+				enabledCategorization,
+				objectLayout,
 				objectRelationships,
 			};
 		}

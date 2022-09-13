@@ -31,11 +31,11 @@ interface IModalAddObjectLayoutBoxProps
 	onClose: () => void;
 }
 
-const ModalAddObjectLayoutBox: React.FC<IModalAddObjectLayoutBoxProps> = ({
+export function ModalAddObjectLayoutBox({
 	observer,
 	onClose,
 	tabIndex,
-}) => {
+}: IModalAddObjectLayoutBoxProps) {
 	const [, dispatch] = useLayoutContext();
 
 	const initialValues: TInitialValues = {
@@ -111,6 +111,4 @@ const ModalAddObjectLayoutBox: React.FC<IModalAddObjectLayoutBoxProps> = ({
 			</ClayForm>
 		</ClayModal>
 	);
-};
-
-export default ModalAddObjectLayoutBox;
+}

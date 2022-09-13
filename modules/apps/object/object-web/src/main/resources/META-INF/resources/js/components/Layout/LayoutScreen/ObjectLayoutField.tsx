@@ -16,10 +16,10 @@ import {Panel, PanelSimpleBody} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
-import HeaderDropdown from './HeaderDropdown';
-import RequiredLabel from './RequiredLabel';
+import {HeaderDropdown} from './HeaderDropdown';
+import {RequiredLabel} from './RequiredLabel';
 
-interface IObjectLayoutFieldProps extends React.HTMLAttributes<HTMLElement> {
+interface ObjectLayoutFieldProps extends React.HTMLAttributes<HTMLElement> {
 	boxIndex: number;
 	columnIndex: number;
 	objectFieldName: string;
@@ -29,13 +29,13 @@ interface IObjectLayoutFieldProps extends React.HTMLAttributes<HTMLElement> {
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
-const ObjectLayoutField: React.FC<IObjectLayoutFieldProps> = ({
+export function ObjectLayoutField({
 	boxIndex,
 	columnIndex,
 	objectFieldName,
 	rowIndex,
 	tabIndex,
-}) => {
+}: ObjectLayoutFieldProps) {
 	const [{objectFieldTypes, objectFields}, dispatch] = useLayoutContext();
 
 	const objectField = objectFields.find(
@@ -77,6 +77,4 @@ const ObjectLayoutField: React.FC<IObjectLayoutFieldProps> = ({
 			</Panel>
 		</>
 	);
-};
-
-export default ObjectLayoutField;
+}

@@ -13,8 +13,11 @@
  */
 
 import React from 'react';
-interface IRequiredLabelProps extends React.HTMLAttributes<HTMLElement> {
+interface RequiredLabelProps extends React.HTMLAttributes<HTMLElement> {
 	required?: boolean;
 }
-declare const RequiredLabel: React.FC<IRequiredLabelProps>;
-export default RequiredLabel;
+export declare function RequiredLabel({
+	className,
+	required,
+}: RequiredLabelProps): JSX.Element;
+export {};

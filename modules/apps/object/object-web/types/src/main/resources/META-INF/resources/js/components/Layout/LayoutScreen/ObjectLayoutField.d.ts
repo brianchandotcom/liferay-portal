@@ -13,12 +13,18 @@
  */
 
 import React from 'react';
-interface IObjectLayoutFieldProps extends React.HTMLAttributes<HTMLElement> {
+interface ObjectLayoutFieldProps extends React.HTMLAttributes<HTMLElement> {
 	boxIndex: number;
 	columnIndex: number;
 	objectFieldName: string;
 	rowIndex: number;
 	tabIndex: number;
 }
-declare const ObjectLayoutField: React.FC<IObjectLayoutFieldProps>;
-export default ObjectLayoutField;
+export declare function ObjectLayoutField({
+	boxIndex,
+	columnIndex,
+	objectFieldName,
+	rowIndex,
+	tabIndex,
+}: ObjectLayoutFieldProps): JSX.Element;
+export {};

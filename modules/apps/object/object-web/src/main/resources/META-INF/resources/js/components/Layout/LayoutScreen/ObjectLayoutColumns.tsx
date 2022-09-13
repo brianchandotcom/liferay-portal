@@ -16,21 +16,21 @@ import classNames from 'classnames';
 import React from 'react';
 
 import {TObjectLayoutColumn} from '../types';
-import ObjectLayoutField from './ObjectLayoutField';
+import {ObjectLayoutField} from './ObjectLayoutField';
 
-interface IObjectLayoutColumnsProps extends React.HTMLAttributes<HTMLElement> {
+interface ObjectLayoutColumnsProps extends React.HTMLAttributes<HTMLElement> {
 	boxIndex: number;
 	objectLayoutColumns?: TObjectLayoutColumn[];
 	rowIndex: number;
 	tabIndex: number;
 }
 
-const ObjectLayoutColumns: React.FC<IObjectLayoutColumnsProps> = ({
+export function ObjectLayoutColumns({
 	boxIndex,
 	objectLayoutColumns,
 	rowIndex,
 	tabIndex,
-}) => {
+}: ObjectLayoutColumnsProps) {
 	return (
 		<>
 			{objectLayoutColumns?.map(
@@ -55,6 +55,4 @@ const ObjectLayoutColumns: React.FC<IObjectLayoutColumnsProps> = ({
 			)}
 		</>
 	);
-};
-
-export default ObjectLayoutColumns;
+}

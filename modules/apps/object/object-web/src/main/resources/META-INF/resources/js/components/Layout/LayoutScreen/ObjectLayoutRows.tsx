@@ -15,19 +15,19 @@
 import React from 'react';
 
 import {TObjectLayoutRow} from '../types';
-import ObjectLayoutColumns from './ObjectLayoutColumns';
+import {ObjectLayoutColumns} from './ObjectLayoutColumns';
 
-interface IObjectLayoutRowsProps extends React.HTMLAttributes<HTMLElement> {
+interface ObjectLayoutRowsProps extends React.HTMLAttributes<HTMLElement> {
 	boxIndex: number;
 	objectLayoutRows: TObjectLayoutRow[];
 	tabIndex: number;
 }
 
-const ObjectLayoutRows: React.FC<IObjectLayoutRowsProps> = ({
+export function ObjectLayoutRows({
 	boxIndex,
 	objectLayoutRows,
 	tabIndex,
-}) => {
+}: ObjectLayoutRowsProps) {
 	return (
 		<>
 			{objectLayoutRows?.map(({objectLayoutColumns}, rowIndex) => {
@@ -47,6 +47,4 @@ const ObjectLayoutRows: React.FC<IObjectLayoutRowsProps> = ({
 			})}
 		</>
 	);
-};
-
-export default ObjectLayoutRows;
+}

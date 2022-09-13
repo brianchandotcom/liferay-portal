@@ -13,9 +13,11 @@
  */
 
 import React from 'react';
-interface IObjectLayoutRelationshipProps
+interface ObjectLayoutRelationshipProps
 	extends React.HTMLAttributes<HTMLElement> {
 	objectRelationshipId: number;
 }
-declare const ObjectLayoutRelationship: React.FC<IObjectLayoutRelationshipProps>;
-export default ObjectLayoutRelationship;
+export declare function ObjectLayoutRelationship({
+	objectRelationshipId,
+}: ObjectLayoutRelationshipProps): JSX.Element;
+export {};

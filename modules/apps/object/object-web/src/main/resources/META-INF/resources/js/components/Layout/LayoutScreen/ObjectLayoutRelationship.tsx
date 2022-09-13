@@ -18,15 +18,15 @@ import React from 'react';
 
 import {useLayoutContext} from '../objectLayoutContext';
 
-interface IObjectLayoutRelationshipProps
+interface ObjectLayoutRelationshipProps
 	extends React.HTMLAttributes<HTMLElement> {
 	objectRelationshipId: number;
 }
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
-const ObjectLayoutRelationship: React.FC<IObjectLayoutRelationshipProps> = ({
+export function ObjectLayoutRelationship({
 	objectRelationshipId,
-}) => {
+}: ObjectLayoutRelationshipProps) {
 	const [{objectRelationships}] = useLayoutContext();
 
 	const objectRelationship = objectRelationships.find(
@@ -62,6 +62,4 @@ const ObjectLayoutRelationship: React.FC<IObjectLayoutRelationshipProps> = ({
 			</Panel>
 		</>
 	);
-};
-
-export default ObjectLayoutRelationship;
+}

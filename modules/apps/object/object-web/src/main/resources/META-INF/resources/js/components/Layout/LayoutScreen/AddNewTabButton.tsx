@@ -18,9 +18,9 @@ import {useModal} from '@clayui/modal';
 import React, {useState} from 'react';
 
 import {useLayoutContext} from '../objectLayoutContext';
-import ModalAddObjectLayoutTab from './ModalAddObjectLayoutTab';
+import {ModalAddObjectLayoutTab} from './ModalAddObjectLayoutTab';
 
-const AddNewTabButton: React.FC<{}> = () => {
+export function AddNewTabButton() {
 	const [{isViewOnly}] = useLayoutContext();
 	const [visibleModal, setVisibleModal] = useState(false);
 	const {observer, onClose} = useModal({
@@ -51,6 +51,4 @@ const AddNewTabButton: React.FC<{}> = () => {
 			)}
 		</>
 	);
-};
-
-export default AddNewTabButton;
+}

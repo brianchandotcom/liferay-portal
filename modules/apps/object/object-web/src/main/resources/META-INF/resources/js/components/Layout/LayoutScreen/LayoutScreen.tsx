@@ -15,7 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import React from 'react';
 
-import AddNewTabButton from './AddNewTabButton';
+import {AddNewTabButton} from './AddNewTabButton';
 import ObjectLayoutTabs from './ObjectLayoutTabs';
 
 import './LayoutScreen.scss';

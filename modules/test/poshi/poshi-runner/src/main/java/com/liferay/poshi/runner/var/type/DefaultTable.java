@@ -55,36 +55,36 @@ public class DefaultTable implements Table {
 
 	@Override
 	public List<String> getColumnByIndex(int index) {
-		List<String> columnList = new ArrayList<>();
+		List<String> columnCellValues = new ArrayList<>();
 
-		for (List<String> row : _table) {
-			String column = row.get(index);
+		for (List<String> cellValues : _table) {
+			String cellValue = cellValues.get(index);
 
-			columnList.add(column);
+			columnCellValues.add(cellValue);
 		}
 
-		return columnList;
+		return columnCellValues;
 	}
 
 	@Override
 	public List<String> getColumnByName(String columnName) {
 		if (_hasColumnNames) {
-			List<String> columnList = new ArrayList<>();
+			List<String> columnCellValues = new ArrayList<>();
 			int columnIndex = -1;
 
-			for (List<String> row : _table) {
-				for (String column : row) {
-					if (column.equals(columnName)) {
-						columnIndex = row.indexOf(column);
+			for (List<String> cellValues : _table) {
+				for (String cellValue : cellValues) {
+					if (cellValue.equals(columnName)) {
+						columnIndex = cellValues.indexOf(cellValue);
 					}
 				}
 
-				columnList.add(row.get(columnIndex));
+				columnCellValues.add(cellValues.get(columnIndex));
 			}
 
-			columnList.remove(0);
+			columnCellValues.remove(0);
 
-			return columnList;
+			return columnCellValues;
 		}
 
 		throw new RuntimeException("Table does not contain column names");
@@ -98,13 +98,13 @@ public class DefaultTable implements Table {
 	@Override
 	public List<String> getRowByName(String rowName) {
 		if (_hasRowNames) {
-			for (List<String> row : _table) {
-				if (row.get(0) == rowName) {
-					List<String> newList = row;
+			for (List<String> cellValues : _table) {
+				if (cellValues.get(0) == rowName) {
+					List<String> newCellValues = new ArrayList<>(cellValues);
 
-					newList.remove(0);
+					newCellValues.remove(0);
 
-					return newList;
+					return newCellValues;
 				}
 			}
 		}
@@ -113,14 +113,14 @@ public class DefaultTable implements Table {
 	}
 
 	@Override
-	public int getTableRowWidth(List<List<String>> rawTable) {
-		if (ListUtil.isEmpty(rawTable)) {
+	public int getTableRowWidth(List<List<String>> table) {
+		if (ListUtil.isEmpty(table)) {
 			return 0;
 		}
 
-		List<String> firstRow = rawTable.get(0);
+		List<String> cellValues = table.get(0);
 
-		return firstRow.size();
+		return cellValues.size();
 	}
 
 	public int getTableSize() {
@@ -128,20 +128,20 @@ public class DefaultTable implements Table {
 	}
 
 	@Override
-	public Table getTransposedTable(List<List<String>> rawTable) {
-		List<List<String>> transposedRawTableList = new ArrayList<>();
+	public Table getTransposedTable(List<List<String>> table) {
+		List<List<String>> transposedTable = new ArrayList<>();
 
-		for (int i = 0; i < getTableRowWidth(rawTable); i++) {
-			List<String> column = new ArrayList<>();
+		for (int i = 0; i < getTableRowWidth(table); i++) {
+			List<String> transposedCellValues = new ArrayList<>();
 
-			for (List<String> row : rawTable) {
-				column.add(row.get(i));
+			for (List<String> cellValues : table) {
+				transposedCellValues.add(cellValues.get(i));
 			}
 
-			transposedRawTableList.add(column);
+			transposedTable.add(transposedCellValues);
 		}
 
-		return new DefaultTable(transposedRawTableList);
+		return new DefaultTable(transposedTable);
 	}
 
 	private static List<List<String>> _parse(String tableString) {
@@ -154,23 +154,25 @@ public class DefaultTable implements Table {
 
 		rowMatcher.reset();
 
-		List<List<String>> tableDataList = new ArrayList<>();
+		List<List<String>> table = new ArrayList<>();
 
 		while (rowMatcher.find()) {
-			String row = rowMatcher.group("row");
+			String rowValue = rowMatcher.group("row");
 
-			Matcher entryMatcher = _entryPattern.matcher(row);
+			Matcher entryMatcher = _entryPattern.matcher(rowValue);
 
-			List<String> rowList = new ArrayList<>();
+			List<String> cellValues = new ArrayList<>();
 
 			while (entryMatcher.find()) {
-				String entry = entryMatcher.group("entry");
+				String cellValue = entryMatcher.group("entry");
 
-				rowList.add(entry.trim());
+				cellValues.add(cellValue.trim());
 			}
+
+			table.add(cellValues);
 		}
 
-		return tableDataList;
+		return table;
 	}
 
 	private static final Pattern _entryPattern = Pattern.compile(

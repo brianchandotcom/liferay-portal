@@ -718,25 +718,25 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		}
 
 		for (int i = 0; i < htmlTable.getTableSize(); i++) {
-			List<String> htmlRows = htmlTable.getRowByIndex(i);
+			List<String> htmlCellValues = htmlTable.getRowByIndex(i);
 
-			List<String> rows = table.getRowByIndex(i);
+			List<String> cellValues = table.getRowByIndex(i);
 
-			if (htmlRows.size() != rows.size()) {
+			if (htmlCellValues.size() != cellValues.size()) {
 				throw new Exception(
-					"Expected " + rows.size() + " columns but found " +
-						htmlRows.size() + " columns");
+					"Expected " + cellValues.size() + " columns but found " +
+						htmlCellValues.size() + " columns");
 			}
 
-			for (int j = 0; j < htmlRows.size(); j++) {
-				String htmlEntry = htmlRows.get(j);
+			for (int j = 0; j < htmlCellValues.size(); j++) {
+				String htmlCellValue = htmlCellValues.get(j);
 
-				String entry = rows.get(j);
+				String cellValue = cellValues.get(j);
 
-				if (!htmlEntry.equals(entry)) {
+				if (!htmlCellValue.equals(cellValue)) {
 					throw new Exception(
-						"Expected text \"" + entry +
-							"\" does not match actual text \"" + htmlEntry +
+						"Expected text \"" + cellValue +
+							"\" does not match actual text \"" + htmlCellValue +
 								"\"");
 				}
 			}

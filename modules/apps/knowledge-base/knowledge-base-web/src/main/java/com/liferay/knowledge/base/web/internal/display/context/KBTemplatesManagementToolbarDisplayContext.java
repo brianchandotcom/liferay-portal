@@ -126,6 +126,30 @@ public class KBTemplatesManagementToolbarDisplayContext {
 		).build();
 	}
 
+	public List<DropdownItem> getEmptyStateActionDropdownItems() {
+		return DropdownItemListBuilder.add(
+			() ->
+				Validator.isNull(_getKeywords()) &&
+				AdminPermission.contains(
+					_themeDisplay.getPermissionChecker(),
+					_themeDisplay.getScopeGroupId(),
+					KBActionKeys.ADD_KB_TEMPLATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/admin/common/edit_kb_template.jsp"
+					).setRedirect(
+						PortalUtil.getCurrentURL(_httpServletRequest)
+					).buildPortletURL());
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "new"));
+			}
+		).build();
+	}
+
 	public List<DropdownItem> getFilterDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {

@@ -64,76 +64,90 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 		<liferay-portlet:renderURLParams varImpl="searchURL" />
 		<aui:input name="kbTemplateIds" type="hidden" />
 
-		<aui:fieldset>
-			<liferay-ui:search-container
-				id="kbTemplates"
-				rowChecker="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.DELETE_KB_TEMPLATES) ? new RowChecker(renderResponse) : null %>"
-				searchContainer="<%= kbTemplatesManagementToolbarDisplayContext.getSearchContainer() %>"
-			>
-				<liferay-ui:search-container-row
-					className="com.liferay.knowledge.base.model.KBTemplate"
-					keyProperty="kbTemplateId"
-					modelVar="kbTemplate"
+		<%
+		SearchContainer<KBTemplate> kbTemplatesManagementToolbarDisplayContextSearchContainer = kbTemplatesManagementToolbarDisplayContext.getSearchContainer();
+		%>
+
+		<c:choose>
+			<c:when test='<%= !GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) || kbTemplatesManagementToolbarDisplayContextSearchContainer.hasResults() || kbTemplatesManagementToolbarDisplayContextSearchContainer.isSearch() %>'>
+				<liferay-ui:search-container
+					id="kbTemplates"
+					rowChecker="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.DELETE_KB_TEMPLATES) ? new RowChecker(renderResponse) : null %>"
+					searchContainer="<%= kbTemplatesManagementToolbarDisplayContextSearchContainer %>"
 				>
-
-					<%
-					row.setData(
-						HashMapBuilder.<String, Object>put(
-							"actions", StringUtil.merge(kbTemplatesManagementToolbarDisplayContext.getAvailableActions(kbTemplate))
-						).build());
-					%>
-
-					<liferay-ui:search-container-column-user
-						showDetails="<%= false %>"
-						userId="<%= kbTemplate.getUserId() %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
+					<liferay-ui:search-container-row
+						className="com.liferay.knowledge.base.model.KBTemplate"
+						keyProperty="kbTemplateId"
+						modelVar="kbTemplate"
 					>
 
 						<%
-						Date modifiedDate = kbTemplate.getModifiedDate();
-
-						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+						row.setData(
+							HashMapBuilder.<String, Object>put(
+								"actions", StringUtil.merge(kbTemplatesManagementToolbarDisplayContext.getAvailableActions(kbTemplate))
+							).build());
 						%>
 
-						<span class="text-default">
+						<liferay-ui:search-container-column-user
+							showDetails="<%= false %>"
+							userId="<%= kbTemplate.getUserId() %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							colspan="<%= 2 %>"
+						>
+
+							<%
+							Date modifiedDate = kbTemplate.getModifiedDate();
+
+							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+							%>
+
+							<span class="text-default">
 							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbTemplate.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 						</span>
 
-						<liferay-portlet:renderURL var="editURL">
-							<portlet:param name="mvcPath" value="/admin/common/edit_kb_template.jsp" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
-						</liferay-portlet:renderURL>
+							<liferay-portlet:renderURL var="editURL">
+								<portlet:param name="mvcPath" value="/admin/common/edit_kb_template.jsp" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
+							</liferay-portlet:renderURL>
 
-						<h2 class="h5">
-							<aui:a href="<%= editURL.toString() %>">
-								<%= HtmlUtil.escape(kbTemplate.getTitle()) %>
-							</aui:a>
-						</h2>
-					</liferay-ui:search-container-column-text>
+							<h2 class="h5">
+								<aui:a href="<%= editURL.toString() %>">
+									<%= HtmlUtil.escape(kbTemplate.getTitle()) %>
+								</aui:a>
+							</h2>
+						</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-text>
+						<liferay-ui:search-container-column-text>
 
-						<%
-						KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse);
-						%>
+							<%
+							KBDropdownItemsProvider kbDropdownItemsProvider = new KBDropdownItemsProvider(liferayPortletRequest, liferayPortletResponse);
+							%>
 
-						<clay:dropdown-actions
-							dropdownItems="<%= kbDropdownItemsProvider.getKBTemplateDropdownItems(kbTemplate) %>"
-							propsTransformer="admin/js/KBDropdownPropsTransformer"
-						/>
-					</liferay-ui:search-container-column-text>
-				</liferay-ui:search-container-row>
+							<clay:dropdown-actions
+								dropdownItems="<%= kbDropdownItemsProvider.getKBTemplateDropdownItems(kbTemplate) %>"
+								propsTransformer="admin/js/KBDropdownPropsTransformer"
+							/>
+						</liferay-ui:search-container-column-text>
+					</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator
-					displayStyle="descriptive"
-					markupView="lexicon"
+					<liferay-ui:search-iterator
+						displayStyle="descriptive"
+						markupView="lexicon"
+					/>
+				</liferay-ui:search-container>
+			</c:when>
+			<c:otherwise>
+				<liferay-frontend:empty-result-message
+					actionDropdownItems="<%= kbTemplatesManagementToolbarDisplayContext.getEmptyStateActionDropdownItems() %>"
+					animationType="<%= EmptyResultMessageKeys.AnimationType.EMPTY %>"
+					buttonCssClass="secondary"
+					title='<%= LanguageUtil.get(request, "there-are-no-article-templates") %>'
 				/>
-			</liferay-ui:search-container>
-		</aui:fieldset>
+			</c:otherwise>
+		</c:choose>
 	</aui:form>
 </clay:container-fluid>
 

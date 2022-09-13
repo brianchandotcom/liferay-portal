@@ -26,6 +26,7 @@ exports[`FileUrlCopyButton matches the snapshot 1`] = `
         >
           <button
             class="btn btn-monospaced btn-secondary"
+            title="copy"
             type="button"
           >
             <svg

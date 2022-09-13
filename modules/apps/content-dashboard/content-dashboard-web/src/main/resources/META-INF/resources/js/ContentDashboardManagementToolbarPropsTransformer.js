@@ -184,30 +184,6 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		});
 	};
 
-	const selectFileExtension = (itemData) => {
-		openSelectionModal({
-			buttonAddLabel: Liferay.Language.get('select'),
-			height: '70vh',
-			multiple: true,
-			onSelect: (selectedItems) => {
-				let redirectURL = itemData?.redirectURL;
-
-				selectedItems.forEach((item) => {
-					redirectURL = addParams(
-						`${portletNamespace}fileExtension=${item}`,
-						redirectURL
-					);
-				});
-
-				navigate(redirectURL);
-			},
-			selectEventName: `${portletNamespace}selectedFileExtension`,
-			size: 'md',
-			title: itemData?.dialogTitle,
-			url: itemData?.selectFileExtensionURL,
-		});
-	};
-
 	const selectScope = (itemData) => {
 		openSelectionModal({
 			height: '70vh',
@@ -259,9 +235,6 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			}
 			else if (action === 'selectScope') {
 				selectScope(data);
-			}
-			else if (action === 'selectFileExtension') {
-				selectFileExtension(data);
 			}
 			else {
 				openSelectionModal({

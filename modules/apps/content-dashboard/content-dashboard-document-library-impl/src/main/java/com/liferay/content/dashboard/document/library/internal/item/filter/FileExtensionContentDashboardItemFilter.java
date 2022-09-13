@@ -62,17 +62,23 @@ public class FileExtensionContentDashboardItemFilter
 	@Override
 	public DropdownItem getDropdownItem() {
 		return DropdownItemBuilder.putData(
-			"action", "selectFileExtension"
-		).putData(
 			"dialogTitle",
 			() -> getLabel(_portal.getLocale(_httpServletRequest))
+		).putData(
+			"itemValueKey", (String)null
+		).putData(
+			"multiple", Boolean.TRUE.toString()
 		).putData(
 			"redirectURL",
 			() -> HttpComponentsUtil.setParameter(
 				_portal.getCurrentCompleteURL(_httpServletRequest),
 				getParameterName(), (String)null)
 		).putData(
-			"selectFileExtensionURL", getURL()
+			"selectEventName", "selectedFileExtension"
+		).putData(
+			"selectItemURL", getURL()
+		).putData(
+			"urlParamName", getParameterName()
 		).setActive(
 			ListUtil.isNotEmpty(getParameterValues())
 		).setLabel(

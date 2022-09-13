@@ -124,8 +124,12 @@ public class RelatedObjectEntryOpenAPIContributor
 				systemObjectRelationship.getObjectDefinitionId2());
 
 		openAPI.schema(
-			objectDefinition.getShortName(),
-			_getObjectDefinitionSchema(objectDefinition));
+			_getSchemaName(objectDefinition, false),
+			_getObjectDefinitionSchema(objectDefinition, false));
+
+		openAPI.schema(
+			_getSchemaName(objectDefinition, true),
+			_getObjectDefinitionSchema(objectDefinition, true));
 
 		Paths paths = openAPI.getPaths();
 
@@ -161,7 +165,8 @@ public class RelatedObjectEntryOpenAPIContributor
 			});
 	}
 
-	private Content _getContent(ObjectRelationship objectRelationship)
+	private Content _getContent(
+			ObjectRelationship objectRelationship, boolean page)
 		throws Exception {
 
 		Content content = new Content();
@@ -170,11 +175,11 @@ public class RelatedObjectEntryOpenAPIContributor
 
 		Schema schema = new Schema();
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId2());
-
-		schema.set$ref(objectDefinition.getShortName());
+		schema.set$ref(
+			_getSchemaName(
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId2()),
+				page));
 
 		mediaType.setSchema(schema);
 
@@ -224,7 +229,8 @@ public class RelatedObjectEntryOpenAPIContributor
 								new ApiResponse() {
 									{
 										setContent(
-											_getContent(objectRelationship));
+											_getContent(
+												objectRelationship, true));
 									}
 								});
 						}
@@ -251,7 +257,8 @@ public class RelatedObjectEntryOpenAPIContributor
 		return path.split(StringPool.SLASH)[0];
 	}
 
-	private Schema _getObjectDefinitionSchema(ObjectDefinition objectDefinition)
+	private Schema _getObjectDefinitionSchema(
+			ObjectDefinition objectDefinition, boolean page)
 		throws Exception {
 
 		Response response = _objectEntryOpenAPIResource.getOpenAPI(
@@ -263,7 +270,7 @@ public class RelatedObjectEntryOpenAPIContributor
 
 		Map<String, Schema> schemas = components.getSchemas();
 
-		return schemas.get(objectDefinition.getShortName());
+		return schemas.get(_getSchemaName(objectDefinition, page));
 	}
 
 	private Operation _getPutOperation(
@@ -308,7 +315,8 @@ public class RelatedObjectEntryOpenAPIContributor
 								new ApiResponse() {
 									{
 										setContent(
-											_getContent(objectRelationship));
+											_getContent(
+												objectRelationship, false));
 									}
 								});
 						}
@@ -318,6 +326,18 @@ public class RelatedObjectEntryOpenAPIContributor
 						_getContentType(systemObjectDefinitionMetadata)));
 			}
 		};
+	}
+
+	private String _getSchemaName(
+		ObjectDefinition objectDefinition, boolean page) {
+
+		String schemaName = objectDefinition.getShortName();
+
+		if (page) {
+			schemaName = "Page" + schemaName;
+		}
+
+		return schemaName;
 	}
 
 	private String _getSystemObjectBasePath(

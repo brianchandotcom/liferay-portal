@@ -80,4 +80,12 @@ definition {
 			value1 = "No templates were found.");
 	}
 
+	macro viewTemplatesThroughPageTreePanel {
+		for (var kbTemplateTitle : list "${kbTemplatesList}") {
+			AssertVisible(
+				key_itemLinkName = "${kbTemplateTitle}",
+				locator1 = "KnowledgeBase#PAGE_TREE_ITEM_LINK");
+		}
+	}
+
 }

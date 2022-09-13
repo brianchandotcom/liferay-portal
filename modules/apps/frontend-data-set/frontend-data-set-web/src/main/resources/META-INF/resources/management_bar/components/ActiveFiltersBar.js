@@ -16,20 +16,22 @@ import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import FrontendDataSetContext from '../../FrontendDataSetContext';
+import ViewsContext from '../../views/ViewsContext';
+import {VIEWS_ACTION_TYPES} from '../../views/viewsReducer';
 import FilterResume from './FilterResume';
 
 function ActiveFiltersBar({disabled}) {
-	const {filters, setFilters} = useContext(FrontendDataSetContext);
+	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const resetFiltersValue = () => {
-		setFilters((filters) => {
-			return filters.map((filter) => ({
+		viewsDispatch({
+			type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
+			value: filters.map((filter) => ({
 				...filter,
 				active: false,
 				odataFilterString: undefined,
 				selectedData: undefined,
-			}));
+			})),
 		});
 	};
 

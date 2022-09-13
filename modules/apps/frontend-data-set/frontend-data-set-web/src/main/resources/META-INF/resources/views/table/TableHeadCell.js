@@ -16,8 +16,10 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
+import ViewsContext from '../ViewsContext';
+import {VIEWS_ACTION_TYPES} from '../viewsReducer';
 import Cell from './dnd_table/Cell';
 
 function TableHeadCell({
@@ -27,10 +29,10 @@ function TableHeadCell({
 	hideColumnLabel,
 	label,
 	sortable,
-	sorting,
 	sortingKey: sortingKeyProp,
-	updateSorting,
 }) {
+	const [{sorting}, viewsDispatch] = useContext(ViewsContext);
+
 	const [sortingKey, setSortingKey] = useState(null);
 	const [sortingMatch, setSortingMatch] = useState(null);
 
@@ -68,7 +70,10 @@ function TableHeadCell({
 					},
 			  ];
 
-		updateSorting(updatedSortedElements);
+		viewsDispatch({
+			type: VIEWS_ACTION_TYPES.UPDATE_SORTING,
+			value: updatedSortedElements,
+		});
 	}
 
 	return (
@@ -128,14 +133,7 @@ TableHeadCell.proptypes = {
 	hideColumnLabel: PropTypes.bool,
 	label: PropTypes.string,
 	sortable: PropTypes.bool,
-	sorting: PropTypes.arrayOf(
-		PropTypes.shape({
-			direction: PropTypes.oneOf(['asc', 'desc']).isRequired,
-			fieldName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-		})
-	),
 	sortingKey: PropTypes.string,
-	updateSorting: PropTypes.func.isRequired,
 };
 
 export default TableHeadCell;

@@ -15,8 +15,13 @@
 import React from 'react';
 
 export default React.createContext({
+	activeCustomViewId: null,
 	activeView: null,
+	customViews: {},
 	customViewsEnabled: false,
+	filters: [],
+	paginationDelta: null,
+	sorting: [],
 	views: [],
 	visibleFieldNames: {},
 });

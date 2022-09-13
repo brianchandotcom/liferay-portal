@@ -19,11 +19,12 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import FrontendDataSetContext from '../../FrontendDataSetContext';
+import ViewsContext from '../../views/ViewsContext';
+import {VIEWS_ACTION_TYPES} from '../../views/viewsReducer';
 import Filter from './filters/Filter';
 
 function FilterResume(props) {
-	const {setFilters} = useContext(FrontendDataSetContext);
+	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const [open, setOpen] = useState(false);
 
@@ -38,8 +39,9 @@ function FilterResume(props) {
 				className: 'filter-resume-close',
 				disabled: props.disabled,
 				onClick: () => {
-					setFilters((filters) => {
-						return filters.map((filter) => ({
+					viewsDispatch({
+						type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
+						value: filters.map((filter) => ({
 							...filter,
 							...(filter.id === props.id
 								? {
@@ -48,7 +50,7 @@ function FilterResume(props) {
 										selectedData: undefined,
 								  }
 								: {}),
-						}));
+						})),
 					});
 				},
 			}}

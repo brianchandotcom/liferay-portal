@@ -15,8 +15,9 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useContext, useEffect, useState} from 'react';
 
-import FrontendDataSetContext from '../../../FrontendDataSetContext';
 import {getComponentByModuleURL} from '../../../utils/modules';
+import ViewsContext from '../../../views/ViewsContext';
+import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
 import AutocompleteFilter, {
 	getOdataString as getAutocompleteFilterOdataString,
 	getSelectedItemsLabel as getAutocompleteFilterSelectedItemsLabel,
@@ -63,7 +64,7 @@ const getOdataFilterString = (filter) => {
 };
 
 const Filter = ({moduleURL, type, ...otherProps}) => {
-	const {setFilters} = useContext(FrontendDataSetContext);
+	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const [Component, setComponent] = useState(() => {
 		if (!moduleURL) {
@@ -89,11 +90,12 @@ const Filter = ({moduleURL, type, ...otherProps}) => {
 	}, [moduleURL]);
 
 	const setFilter = ({id, ...otherProps}) => {
-		setFilters((filters) => {
-			return filters.map((filter) => ({
+		viewsDispatch({
+			type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
+			value: filters.map((filter) => ({
 				...filter,
 				...(filter.id === id ? {...otherProps} : {}),
-			}));
+			})),
 		});
 	};
 

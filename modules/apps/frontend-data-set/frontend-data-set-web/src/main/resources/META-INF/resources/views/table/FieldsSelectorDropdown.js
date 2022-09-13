@@ -23,7 +23,7 @@ import ViewsContext from '../ViewsContext';
 
 const FieldsSelectorDropdown = ({fields}) => {
 	const {appURL, id, portletId} = useContext(FrontendDataSetContext);
-	const [{visibleFieldNames}, dispatch] = useContext(ViewsContext);
+	const [{visibleFieldNames}, viewsDispatch] = useContext(ViewsContext);
 
 	const [active, setActive] = useState(false);
 	const [filteredFields, setFilteredFields] = useState(fields);
@@ -91,7 +91,7 @@ const FieldsSelectorDropdown = ({fields}) => {
 								);
 
 								if (isVisible) {
-									dispatch(
+									viewsDispatch(
 										persistVisibleFieldNames({
 											appURL,
 											id,

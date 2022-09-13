@@ -29,8 +29,6 @@ function TableHead({
 	selectedItemsKey,
 	selectedItemsValue,
 	selectionType,
-	sorting,
-	updateSorting,
 }) {
 	const expandableColumns = fields.some((field) => field.expand);
 
@@ -70,8 +68,6 @@ function TableHead({
 						{...field}
 						expandableColumns={expandableColumns}
 						key={field.label}
-						sorting={sorting}
-						updateSorting={updateSorting}
 					/>
 				))}
 
@@ -104,8 +100,6 @@ TableHead.propTypes = {
 		PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 	),
 	selectionType: PropTypes.oneOf(['single', 'multiple']),
-	sorting: PropTypes.any,
-	updateSorting: PropTypes.func.isRequired,
 };
 
 export default TableHead;

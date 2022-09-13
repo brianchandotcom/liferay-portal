@@ -31,8 +31,6 @@ const FrontendDataSetContext = React.createContext({
 	selectable: false,
 	selectedItemsValue: [],
 	sidePanelId: null,
-	sorting: [],
-	updateSorting: () => {},
 });
 
 export default FrontendDataSetContext;

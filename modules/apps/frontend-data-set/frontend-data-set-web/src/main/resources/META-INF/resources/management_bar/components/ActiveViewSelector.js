@@ -23,7 +23,7 @@ import ViewsContext from '../../views/ViewsContext';
 
 function ActiveViewSelector({views}) {
 	const [active, setActive] = useState(false);
-	const [{activeView}, dispatch] = useContext(ViewsContext);
+	const [{activeView}, viewsDispatch] = useContext(ViewsContext);
 	const {appURL, id, portletId} = useContext(FrontendDataSetContext);
 
 	return (
@@ -45,7 +45,7 @@ function ActiveViewSelector({views}) {
 						onClick={(event) => {
 							event.preventDefault();
 							setActive(false);
-							dispatch(
+							viewsDispatch(
 								persistActiveView({
 									activeViewName: name,
 									appURL,

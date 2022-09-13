@@ -14,36 +14,33 @@
 
 import getViewComponent from './getViewComponent';
 
-export const ACTION_UPDATE_ACTIVE_VIEW = 'ACTION_UPDATE_ACTIVE_VIEW';
-export const ACTION_UPDATE_VIEW_COMPONENT = 'ACTION_UPDATE_VIEW_COMPONENT';
-export const ACTION_UPDATE_VISIBLE_FIELD_NAMES =
-	'ACTION_UPDATE_VISIBLE_FIELD_NAMES';
-
-export function updateActiveView(activeViewName) {
-	return {
-		type: ACTION_UPDATE_ACTIVE_VIEW,
-		value: activeViewName,
-	};
-}
-
-export function updateViewComponent(name, component) {
-	return {
-		type: ACTION_UPDATE_VIEW_COMPONENT,
-		value: {component, name},
-	};
-}
-
-export function updateVisibleFieldNames(visibleFieldNames) {
-	return {
-		type: ACTION_UPDATE_VISIBLE_FIELD_NAMES,
-		value: visibleFieldNames,
-	};
-}
+export const VIEWS_ACTION_TYPES = {
+	ADD_OR_UPDATE_CUSTOM_VIEW: 'ADD_OR_UPDATE_CUSTOM_VIEW',
+	UPDATE_ACTIVE_VIEW: 'UPDATE_ACTIVE_VIEW',
+	UPDATE_FILTERS: 'UPDATE_FILTERS',
+	UPDATE_PAGINATION_DELTA: 'UPDATE_PAGINATION_DELTA',
+	UPDATE_SORTING: 'UPDATE_SORTING',
+	UPDATE_VIEW_COMPONENT: 'UPDATE_VIEW_COMPONENT',
+	UPDATE_VISIBLE_FIELD_NAMES: 'UPDATE_VISIBLE_FIELD_NAMES',
+};
 
 export function viewsReducer(state, {type, value}) {
-	const {activeView, views} = state;
+	const {activeView, customViews, views} = state;
 
-	if (type === ACTION_UPDATE_ACTIVE_VIEW) {
+	if (type === VIEWS_ACTION_TYPES.ADD_OR_UPDATE_CUSTOM_VIEW) {
+		const {id, viewState} = value;
+
+		return {
+			...state,
+			activeCustomViewId: id,
+			customViews: {
+				...customViews,
+				[id]: viewState,
+			},
+			viewUpdated: false,
+		};
+	}
+	else if (type === VIEWS_ACTION_TYPES.UPDATE_ACTIVE_VIEW) {
 		const activeView = views.find(({name}) => name === value);
 
 		if (activeView) {
@@ -53,9 +50,31 @@ export function viewsReducer(state, {type, value}) {
 		return {
 			...state,
 			activeView,
+			viewUpdated: true,
 		};
 	}
-	else if (type === ACTION_UPDATE_VIEW_COMPONENT) {
+	else if (type === VIEWS_ACTION_TYPES.UPDATE_FILTERS) {
+		return {
+			...state,
+			filters: value,
+			viewUpdated: true,
+		};
+	}
+	else if (type === VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA) {
+		return {
+			...state,
+			paginationDelta: value,
+			viewUpdated: true,
+		};
+	}
+	else if (type === VIEWS_ACTION_TYPES.UPDATE_SORTING) {
+		return {
+			...state,
+			sorting: value,
+			viewUpdated: true,
+		};
+	}
+	else if (type === VIEWS_ACTION_TYPES.UPDATE_VIEW_COMPONENT) {
 		const {component, name} = value;
 
 		return {
@@ -77,9 +96,10 @@ export function viewsReducer(state, {type, value}) {
 			),
 		};
 	}
-	else if (type === ACTION_UPDATE_VISIBLE_FIELD_NAMES) {
+	else if (type === VIEWS_ACTION_TYPES.UPDATE_VISIBLE_FIELD_NAMES) {
 		return {
 			...state,
+			viewUpdated: true,
 			visibleFieldNames: value,
 		};
 	}

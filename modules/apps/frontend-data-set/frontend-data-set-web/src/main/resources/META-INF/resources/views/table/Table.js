@@ -81,8 +81,6 @@ function Table({items, itemsActions, schema, style}) {
 		selectedItemsKey,
 		selectedItemsValue,
 		selectionType,
-		sorting,
-		updateSorting,
 	} = useContext(FrontendDataSetContext);
 	const [
 		{
@@ -136,8 +134,6 @@ function Table({items, itemsActions, schema, style}) {
 						selectedItemsKey={selectedItemsKey}
 						selectedItemsValue={selectedItemsValue}
 						selectionType={selectionType}
-						sorting={sorting}
-						updateSorting={updateSorting}
 					/>
 
 					<DndTable.Body>

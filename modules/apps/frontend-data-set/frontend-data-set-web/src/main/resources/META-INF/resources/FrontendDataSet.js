@@ -55,7 +55,7 @@ import {logError} from './utils/logError';
 import getJsModule from './utils/modules';
 import ViewsContext from './views/ViewsContext';
 import getViewComponent from './views/getViewComponent';
-import {updateViewComponent, viewsReducer} from './views/viewsReducer';
+import {VIEWS_ACTION_TYPES, viewsReducer} from './views/viewsReducer';
 
 const DEFAULT_PAGINATION_DELTA = 20;
 const DEFAULT_PAGINATION_PAGE_NUMBER = 1;
@@ -69,6 +69,7 @@ const FrontendDataSet = ({
 	creationMenu,
 	currentURL,
 	customDataRenderers,
+	customViews,
 	customViewsEnabled,
 	filters: initialFilters,
 	formId,
@@ -104,25 +105,6 @@ const FrontendDataSet = ({
 	const [dataSetSupportSidePanelId] = useState(
 		sidePanelId || `support-side-panel-${getRandomId()}`
 	);
-	const [delta, setDelta] = useState(
-		showPagination && (pagination?.initialDelta || DEFAULT_PAGINATION_DELTA)
-	);
-
-	const [filters, setFilters] = useState(() => {
-		return initialFilters.map((filter) => {
-			const preloadedData = filter.preloadedData;
-
-			if (preloadedData) {
-				filter.active = true;
-				filter.selectedData = preloadedData;
-
-				filter.odataFilterString = getOdataFilterString(filter);
-				filter.selectedItemsLabel = getFilterSelectedItemsLabel(filter);
-			}
-
-			return filter;
-		});
-	});
 
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
 	const [items, setItems] = useState(itemsProp || []);
@@ -136,7 +118,6 @@ const FrontendDataSet = ({
 		initialSelectedItemsValues || []
 	);
 	const [selectedItems, setSelectedItems] = useState([]);
-	const [sorting, setSorting] = useState(sortingProp);
 	const [total, setTotal] = useState(0);
 
 	const getInitialViewsState = () => {
@@ -161,27 +142,49 @@ const FrontendDataSet = ({
 			}
 		}
 
+		const filters = initialFilters.map((filter) => {
+			const preloadedData = filter.preloadedData;
+
+			if (preloadedData) {
+				filter.active = true;
+				filter.selectedData = preloadedData;
+
+				filter.odataFilterString = getOdataFilterString(filter);
+				filter.selectedItemsLabel = getFilterSelectedItemsLabel(filter);
+			}
+
+			return filter;
+		});
+
 		return {
 			activeView: {
 				component: getViewComponent(initialActiveView.contentRenderer),
 				...initialActiveView,
 			},
+			customViews,
 			customViewsEnabled,
+			filters,
+			paginationDelta:
+				showPagination &&
+				(pagination?.initialDelta || DEFAULT_PAGINATION_DELTA),
+			sorting: sortingProp,
 			views,
 			visibleFieldNames: initialVisibleFieldNames,
 		};
 	};
 
-	const [viewsState, dispatch] = useThunk(
+	const [viewsState, viewsDispatch] = useThunk(
 		useReducer(viewsReducer, getInitialViewsState())
 	);
+
+	const {activeView, filters, paginationDelta, sorting} = viewsState;
 
 	const {
 		component: View,
 		contentRendererModuleURL,
 		name: activeViewName,
 		...currentViewProps
-	} = viewsState.activeView;
+	} = activeView;
 
 	const selectable = !!(bulkActions?.length && selectedItemsKey);
 
@@ -199,11 +202,19 @@ const FrontendDataSet = ({
 			currentURL,
 			activeFiltersOdataStrings,
 			searchParam,
-			delta,
+			paginationDelta,
 			pageNumber,
 			sorting
 		);
-	}, [apiURL, currentURL, delta, filters, pageNumber, searchParam, sorting]);
+	}, [
+		apiURL,
+		currentURL,
+		paginationDelta,
+		filters,
+		pageNumber,
+		searchParam,
+		sorting,
+	]);
 
 	const isMounted = useIsMounted();
 
@@ -335,7 +346,10 @@ const FrontendDataSet = ({
 		getJsModule(contentRendererModuleURL)
 			.then((component) => {
 				if (isMounted()) {
-					dispatch(updateViewComponent(activeViewName, component));
+					viewsDispatch({
+						type: VIEWS_ACTION_TYPES.UPDATE_VIEW_COMPONENT,
+						value: {component, name: activeViewName},
+					});
 
 					setComponentLoading(false);
 				}
@@ -350,7 +364,7 @@ const FrontendDataSet = ({
 		View,
 		activeViewName,
 		contentRendererModuleURL,
-		dispatch,
+		viewsDispatch,
 		isMounted,
 		setComponentLoading,
 	]);
@@ -478,13 +492,17 @@ const FrontendDataSet = ({
 		showPagination && pagination && items?.length && total ? (
 			<div className="data-set-pagination-wrapper">
 				<ClayPaginationBarWithBasicItems
-					activeDelta={delta}
+					activeDelta={paginationDelta}
 					activePage={pageNumber}
-					deltas={pagination.deltas}
+					deltas={pagination.paginationDeltas}
 					ellipsisBuffer={3}
-					onDeltaChange={(deltaVal) => {
+					onDeltaChange={(delta) => {
 						setPageNumber(1);
-						setDelta(deltaVal);
+
+						viewsDispatch({
+							type: VIEWS_ACTION_TYPES.UPDATE_PAGINATION_DELTA,
+							value: delta,
+						});
 					}}
 					onPageChange={setPageNumber}
 					totalItems={total}
@@ -678,7 +696,6 @@ const FrontendDataSet = ({
 				createInlineItem,
 				customDataRenderers,
 				executeAsyncItemAction,
-				filters,
 				formId,
 				formName,
 				highlightItems,
@@ -704,7 +721,6 @@ const FrontendDataSet = ({
 				selectedItemsKey,
 				selectedItemsValue,
 				selectionType,
-				setFilters,
 				sidePanelId: dataSetSupportSidePanelId,
 				sorting,
 				style,
@@ -712,10 +728,9 @@ const FrontendDataSet = ({
 				updateDataSetItems,
 				updateItem,
 				updateSearchParam: setSearchParam,
-				updateSorting: setSorting,
 			}}
 		>
-			<ViewsContext.Provider value={[viewsState, dispatch]}>
+			<ViewsContext.Provider value={[viewsState, viewsDispatch]}>
 				<div className="fds">
 					<Modal id={dataSetSupportModalId} onClose={refreshData} />
 
@@ -767,6 +782,7 @@ const FrontendDataSet = ({
 
 FrontendDataSet.defaultProps = {
 	bulkActions: [],
+	customViews: {},
 	filters: [],
 	inlineEditingSettings: null,
 	items: null,

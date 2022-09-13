@@ -267,9 +267,10 @@ public class RelatedObjectEntryOpenAPIContributor
 	}
 
 	private Operation _getPutOperation(
-		ObjectDefinition objectDefinition,
-		ObjectRelationship objectRelationship,
-		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship,
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata)
+		throws Exception {
 
 		String upperCaseFirstLetterObjectRelationshipName =
 			StringUtil.upperCaseFirstLetter(objectRelationship.getName());
@@ -303,7 +304,13 @@ public class RelatedObjectEntryOpenAPIContributor
 				responses(
 					new ApiResponses() {
 						{
-							setDefault(new ApiResponse());
+							setDefault(
+								new ApiResponse() {
+									{
+										setContent(
+											_getContent(objectRelationship));
+									}
+								});
 						}
 					});
 				tags(

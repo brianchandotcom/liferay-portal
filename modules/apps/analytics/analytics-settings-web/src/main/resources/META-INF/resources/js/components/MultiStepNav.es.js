@@ -15,8 +15,10 @@
 import ClayMultiStepNav from '@clayui/multi-step-nav';
 import React, {useState} from 'react';
 
+import Sheet from './Sheet.es';
+
 const MultiStepNav = ({steps}) => {
-	const [value, setValue] = useState(0);
+	const [value] = useState(0);
 
 	const isActive = (index) => value === index;
 
@@ -45,11 +47,12 @@ const MultiStepNav = ({steps}) => {
 			</ClayMultiStepNav>
 
 			{steps[value] && (
-				<div className="container">
-					<h2>{steps[value].title}</h2>
-
-					<div className="text-muted">{steps[value].description}</div>
-				</div>
+				<Sheet
+					content={steps[value].content}
+					description={steps[value].description}
+					footer={steps[value].footer}
+					title={steps[value].title}
+				/>
 			)}
 		</>
 	);

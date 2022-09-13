@@ -169,10 +169,10 @@ const BuildSelectStacksModal: React.FC<
 			{lastStep && (
 				<BuildFactorList
 					append={append as any}
+					displayVertical
 					factorItems={factorItems}
 					factorOptionsList={factorOptionsList}
 					fields={fields}
-					isModal={true}
 					register={register}
 					remove={remove}
 					update={update as any}

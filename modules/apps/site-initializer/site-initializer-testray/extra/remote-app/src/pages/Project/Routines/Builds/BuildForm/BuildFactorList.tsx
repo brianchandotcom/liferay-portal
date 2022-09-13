@@ -45,10 +45,10 @@ type Fields = {
 
 type BuildFactorListProps = {
 	append: UseFieldArrayAppend<any>;
+	displayVertical?: boolean;
 	factorItems: TestrayFactor[];
 	factorOptionsList: TestrayFactorOption[][];
 	fields: Fields[];
-	isModal?: boolean;
 	register: UseFormRegister<any>;
 	remove: UseFieldArrayRemove;
 	update: UseFieldArrayUpdate<any>;
@@ -94,10 +94,10 @@ const BuildFactorActions: React.FC<BuildFactorActionsProps> = ({
 
 const BuildFactorList: React.FC<BuildFactorListProps> = ({
 	append,
+	displayVertical,
 	factorItems,
 	factorOptionsList,
 	fields,
-	isModal,
 	register,
 	remove,
 	update,
@@ -114,8 +114,8 @@ const BuildFactorList: React.FC<BuildFactorListProps> = ({
 					<ClayLayout.Col size={12}>
 						<ClayLayout.Row
 							className={classNames({
-								' align-items-center d-flex justify-content-space-between': !isModal,
-								' flex-column justify-content-space-between': isModal,
+								'align-items-center d-flex justify-content-space-between': !displayVertical,
+								'flex-column justify-content-space-between': displayVertical,
 							})}
 						>
 							{factorItems.map((factorItem, factorIndex) => {
@@ -136,7 +136,11 @@ const BuildFactorList: React.FC<BuildFactorListProps> = ({
 								return (
 									<ClayLayout.Col
 										key={factorIndex}
-										size={isModal && index === 0 ? 6 : 3}
+										size={
+											displayVertical && index === 0
+												? 6
+												: 3
+										}
 									>
 										<Form.Select
 											defaultValue={currentFactorOptionId}

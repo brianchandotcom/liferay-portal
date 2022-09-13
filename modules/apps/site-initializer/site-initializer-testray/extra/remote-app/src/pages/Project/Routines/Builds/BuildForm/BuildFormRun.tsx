@@ -138,7 +138,6 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({control, register}) => {
 				factorItems={factorItems}
 				factorOptionsList={factorOptionsList}
 				fields={fields}
-				isModal={false}
 				register={register}
 				remove={remove}
 				update={update as any}

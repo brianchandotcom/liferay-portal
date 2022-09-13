@@ -34,6 +34,7 @@ import com.liferay.poshi.runner.util.ArchiveUtil;
 import com.liferay.poshi.runner.util.EmailCommands;
 import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.var.type.DefaultTable;
+import com.liferay.poshi.runner.var.type.Table;
 
 import com.testautomationguru.ocular.Ocular;
 import com.testautomationguru.ocular.OcularConfiguration;
@@ -706,27 +707,27 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void assertTable(String locator, String tableString)
 		throws Exception {
 
-		DefaultTable htmlTable = getHTMLTable(locator);
+		Table htmlTable = getHTMLTable(locator);
 
-		DefaultTable defaultTable = new DefaultTable(tableString);
+		Table table = new DefaultTable(tableString);
 
-		if (htmlTable.getTableSize() != defaultTable.getTableSize()) {
+		if (htmlTable.getTableSize() != table.getTableSize()) {
 			throw new Exception("Table row numbers do not match");
 		}
 
 		for (int i = 0; i < htmlTable.getTableSize(); i++) {
-			List<String> htmlRow = htmlTable.getRowByIndex(i);
+			List<String> htmlRows = htmlTable.getRowByIndex(i);
 
-			List<String> defaultRow = defaultTable.getRowByIndex(i);
+			List<String> rows = table.getRowByIndex(i);
 
-			if (htmlRow.size() != defaultRow.size()) {
+			if (htmlRows.size() != rows.size()) {
 				throw new Exception("Table entry numbers do not match");
 			}
 
-			for (int j = 0; j < htmlRow.size(); j++) {
-				String htmlEntry = htmlRow.get(j);
+			for (int j = 0; j < htmlRows.size(); j++) {
+				String htmlEntry = htmlRows.get(j);
 
-				String entry = defaultRow.get(j);
+				String entry = rows.get(j);
 
 				if (!htmlEntry.equals(entry)) {
 					throw new Exception(
@@ -3801,29 +3802,29 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		return _frameWebElements;
 	}
 
-	protected DefaultTable getHTMLTable(String locator) {
-		List<List<String>> htmlTableDataList = new ArrayList<>();
+	protected Table getHTMLTable(String locator) {
+		List<List<String>> table = new ArrayList<>();
 
-		List<WebElement> htmlRowElements = findElements(
+		List<WebElement> rowWebElements = findElements(
 			By.xpath(locator + "//tr"));
-		List<WebElement> htmlColumnElements;
 
-		for (int i = 2; i <= htmlRowElements.size(); i++) {
-			List<String> htmlRowList = new ArrayList<>();
-			htmlColumnElements = findElements(
+		for (int i = 2; i <= rowWebElements.size(); i++) {
+			List<String> webElementTexts = new ArrayList<>();
+
+			List<WebElement> columnWebElements = findElements(
 				By.xpath(locator + "//tr[" + i + "]//td"));
 
-			for (int j = 1; j <= htmlColumnElements.size(); j++) {
-				WebElement entryContent = findElement(
+			for (int j = 1; j <= columnWebElements.size(); j++) {
+				WebElement webElement = findElement(
 					By.xpath(locator + "//tr[" + i + "]//td[" + j + "]"));
 
-				htmlRowList.add(entryContent.getText());
+				webElementTexts.add(webElement.getText());
 			}
 
-			htmlTableDataList.add(htmlRowList);
+			table.add(webElementTexts);
 		}
 
-		return new DefaultTable(htmlTableDataList);
+		return new DefaultTable(table);
 	}
 
 	protected ImageTarget getImageTarget(String image) throws Exception {

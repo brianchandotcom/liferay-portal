@@ -31,6 +31,8 @@ public interface Table {
 
 	public int getTableRowWidth(List<List<String>> rawTable);
 
+	public int getTableSize();
+
 	public Table getTransposedTable(List<List<String>> rawTable);
 
 }

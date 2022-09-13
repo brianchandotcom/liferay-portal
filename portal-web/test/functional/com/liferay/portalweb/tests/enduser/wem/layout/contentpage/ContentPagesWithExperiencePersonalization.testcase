@@ -635,9 +635,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			ContentPages.openExperienceMenu();
-
-			MenuItem.viewPresent(menuItem = "New Experience");
+			ContentPages.changeExperience(experienceName = "New Experience");
 		}
 
 		task ("Open the preview modal and View the new experience shown in experience selector") {

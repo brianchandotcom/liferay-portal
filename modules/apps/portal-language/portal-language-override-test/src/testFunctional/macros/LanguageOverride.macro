@@ -30,6 +30,51 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "Assert the filter scope label in management toolbar"
+	macro assertFilterScope {
+		AssertElementPresent(
+			key_filterScope = "${filterScope}",
+			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
+	}
+	
+	@description = "Assert values for existing language keys"
+	macro assertLanguageKeyWithoutOverride {
+		LexiconList.viewListEntryPresent(listEntry = "${languageKey}");
+
+		LexiconList.viewListEntrySubtitle(
+			listEntry = "${languageKey}",
+			listEntrySubtitle = "${translation}");
+	}
+
+	@description = "Assert the following values for language key with override when a language is NOT selected: language key, languages with override but not highlighted"
+	macro assertLanguageKeyWithOverrideInListView {
+		LexiconList.viewListEntryPresent(listEntry = "${languageKey}");
+
+		LexiconList.viewListEntrySubtitle(
+			listEntry = "${languageKey}",
+			listEntrySubtitle = "Languages With Override: ${languagesWithOverride}");
+	}
+
+	@description = "Assert the following values for language key with override when a language is selected: language key, current translation, and the highlighted language with override"
+	macro assertSelectedLanguageInListView {
+		LexiconList.viewListEntryPresent(listEntry = "${languageKey}");
+
+		LexiconList.viewListEntrySubtitle(
+			listEntry = "${languageKey}",
+			listEntrySubtitle = "${currentTranslationOverride}");
+
+		if (isSet(languagesWithOverride)) {
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "${languageKey}",
+				listEntrySubtitle = "Languages With Override: ${languagesWithOverride}");
+		}
+
+		AssertElementPresent(
+			key_language = "${selectedLanguage}",
+			key_languageKey = "${languageKey}",
+			locator1 = "LanguageOverride#FILTER_BY_OVERRIDE_BOLD_LANGUAGE_WITH_OVERRIDE");
+	}
+
 	macro clearAllOverridesViaEditPage {
 		ClickNoError(
 			key_text = "Clear All Overrides",
@@ -57,11 +102,7 @@ definition {
 	}
 
 	macro goToLanguageKey {
-		var key_languageKey = "${languageKey}";
-
-		AssertClick(
-			locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY",
-			value1 = "${languageKey}");
+		LexiconList.clickListEntryTitle(listEntry = "${languageKey}");
 	}
 
 	macro openLanguageOverridePortlet {

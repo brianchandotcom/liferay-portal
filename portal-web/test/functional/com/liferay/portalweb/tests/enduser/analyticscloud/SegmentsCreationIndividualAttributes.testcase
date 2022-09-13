@@ -10,13 +10,14 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
+
 		task ("Copy the token from AC") {
 			ACUtils.launchAC();
-
 			ACSettings.takeTokenFromAnalyticsCloud();
 		}
 
 		task ("Set up instance and sign in DXP") {
+
 			TestCase.setUpPortalInstance();
 
 			ACUtils.launchDXP();
@@ -24,26 +25,23 @@ definition {
 
 		task ("Add a new site and blog") {
 			ACUtils.addSiteAndPage();
-
 			ACUtils.createBlogsAndAddToPage();
 		}
-
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
-
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",
 				userFirstName = "ac",
 				userLastName = "ac",
 				userScreenName = "ac");
-
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
 				userEmailAddress = "ac@liferay.com");
 		}
+
 	}
 
 	tearDown {
@@ -653,7 +651,72 @@ definition {
 	@description = "Bug: LRAC-11460 | Automation ID: LRAC-11634 | Test Summary: Add a dynamic segment using an individual property "email" selecting one of the suggested autocomplete options and assert in the Known Individuals tab search this individual exists"
 	@priority = "3"
 	test CheckIfAutocompleteSuggestionEmailPresentInKnownIndividualsList {
-		
+		property analytics.cloud.upstream = "false";
+		property portal.upstream = "manu";
+
+		var username = "ac ac";
+		var individualEmail = "ac@liferay.com";
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Go to DXP and see a page with the new user") {
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				emailList = "${individualEmail}",
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Go to AC > Go to segments") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToSegments();
+		}
+
+		task ("Create a dynamic segment with the individual attribute: email") {
+			ACSegments.createDynamicSegment();
+
+			ACUtils.setItemName(itemName = "Individual Attribute Segment");
+
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+
+			ACSegments.addSegmentField(segmentField = "email");
+		}
+
+		task ("See that there's only one user email suggested by the autocomplete") {
+			ACSegments.viewAutocompleteSuggestions(autocompleteText = "${individualEmail}");
+
+			AssertElementNotPresent(
+				key_index = "2",
+				locator1 = "ACSegments#SEGMENT_AUTOCOMPLETE_DROPDOWN_BY_INDEX");
+		}
+
+		task ("Select the user email suggested by the autocomplete and see in the preview icon there's one user matching that email") {
+			ACSegments.editTextCriterion(textInput = "${individualEmail}");
+
+			ACSegments.previewSegmentMembership();
+
+			ACUtils.viewNameList(nameList = "${username}");
+
+			ACSegments.cancelSegment();
+		}
+
+		task ("Go to Individuals > Know individuals tab") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+		}
+
+		task ("Go to the search bar and see that the individual was returned") {
+			ACUtils.viewNameList(nameList = "${username}");
+		}
 	}
 
 }

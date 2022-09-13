@@ -291,6 +291,8 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
+						"paddingBottom": "5",
+						"paddingTop": "5",
 						"textAlign": ""
 					},
 					"fragmentViewports": [
@@ -329,10 +331,10 @@
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
-						"paddingBottom": 0,
+						"paddingBottom": 4,
 						"paddingLeft": 0,
 						"paddingRight": 0,
-						"paddingTop": 0,
+						"paddingTop": 4,
 						"widthType": "Fixed"
 					}
 				},
@@ -352,7 +354,7 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"backgroundColor": "colorNeutral0",
+						"backgroundColor": "colorBrandPrimaryLighten6",
 						"borderWidth": "0",
 						"paddingBottom": "2",
 						"paddingTop": "4",
@@ -376,6 +378,10 @@
 				"pageElements": [
 					{
 						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0",
+								"textAlign": ""
+							},
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -794,7 +800,7 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"css": "/*Source Serif Pro*/\n@font-face {\n\tfont-display: swap;\n\tfont-family: 'Source Sans Pro';\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: url(/documents/d/evp/sourcesanspro-regular-ttf);\n}",
+		"css": "/*Source Serif Pro*/\n@font-face {\n\tfont-display: swap;\n\tfont-family: 'Source Sans Pro';\n\tfont-style: normal;\n\tfont-weight: 400;\n\tsrc: url(/documents/d/daleboy/sourcesanspro-regular-ttf);\n}",
 		"themeName": "Dialect",
 		"themeSettings": {
 			"lfr-theme:regular:show-footer": "false",

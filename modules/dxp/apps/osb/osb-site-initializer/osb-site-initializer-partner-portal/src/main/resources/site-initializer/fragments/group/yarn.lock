@@ -954,10 +954,10 @@
     "@babel/helper-validator-identifier" "^7.18.6"
     to-fast-properties "^2.0.0"
 
-"@clayui/button@^3.65.0":
-  version "3.65.0"
-  resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.65.0.tgz#56a1da250b1e9a5e50fe1813e75e0593a5446fef"
-  integrity sha512-ujWccD6aarnQKG4bnk0z/OgfHAwF1N+a+Q9U7zn1mgYekqK5m6/wZ1W/HBh+4GYAXP5BJj9y67vXmeMM7rlGFQ==
+"@clayui/button@^3.73.0":
+  version "3.73.0"
+  resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.73.0.tgz#6e4240b18785b1a5db41578be0960d7170479980"
+  integrity sha512-KfG9Mnq7MmA/Ve+BB8JFsHZXJDfjXsWNlJeCNJITfPjNHqWI+SR3Z64fAHNcM5ZkWDFf12CQNXa/0IoW7ghkTA==
   dependencies:
     "@clayui/icon" "^3.56.0"
     classnames "^2.2.6"
@@ -977,14 +977,14 @@
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/panel@3.71.0":
-  version "3.71.0"
-  resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.71.0.tgz#dce3d1c97940b8fcc9c1384330a52081e013538d"
-  integrity sha512-79+h9YLdwJZFtQPSxoyNXnRqyKozZePU97IHN1q942X+0fYlAju1W6dLr24asFmR9w62usap9g+KGjkq667Azg==
+"@clayui/panel@3.73.0":
+  version "3.73.0"
+  resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.73.0.tgz#1c116479f02780aa992d057705b185600404a01d"
+  integrity sha512-5mnStbg2qrVHg0xdk/hK6AS6h/1LFB6KRmizB8SBf239OPzTISWd2JklCGIo/4dgUT7UrXvF1cKP9pmgNupYKw==
   dependencies:
-    "@clayui/button" "^3.65.0"
+    "@clayui/button" "^3.73.0"
     "@clayui/icon" "^3.56.0"
-    "@clayui/shared" "^3.71.0"
+    "@clayui/shared" "^3.73.0"
     classnames "^2.2.6"
     react-transition-group "^4.4.1"
 
@@ -995,12 +995,12 @@
   dependencies:
     "@clayui/icon" "^3.56.0"
 
-"@clayui/shared@^3.71.0":
-  version "3.71.0"
-  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.71.0.tgz#848081448081179e8d277b3847ded069dde916ce"
-  integrity sha512-XthBQuvPF8hlS+X4220oV0BHUI7KP5lG1F8TJBJT5dFRRD4tYXrLgXr8Fchx2U7KwYn2UftGymlqa1CX9w+9uQ==
+"@clayui/shared@^3.73.0":
+  version "3.73.0"
+  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.73.0.tgz#3f5ad63b1c814149117788cc1dc1ddff13550cea"
+  integrity sha512-hjKkE3L6+OtcMtX3q3puIa6e6VdXygK+1MbR7E3Sg2kqPESGTHpSco7hl7oWchooRADrm6Y0Re71mX5iEJ/d8w==
   dependencies:
-    "@clayui/button" "^3.65.0"
+    "@clayui/button" "^3.73.0"
     "@clayui/link" "^3.56.0"
     "@clayui/provider" "^3.71.0"
     classnames "^2.2.6"

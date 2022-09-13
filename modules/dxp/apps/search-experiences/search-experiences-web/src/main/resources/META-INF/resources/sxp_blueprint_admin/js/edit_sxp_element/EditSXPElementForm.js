@@ -14,7 +14,6 @@ import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import ClayLink from '@clayui/link';
 import ClayToolbar from '@clayui/toolbar';
 import getCN from 'classnames';
 import {fetch, navigate} from 'frontend-js-web';
@@ -28,11 +27,13 @@ import React, {
 } from 'react';
 
 import sxpElementSchema from '../../schemas/sxp-query-element.schema.json';
+import useDebounceCallback from '../hooks/useDebounceCallback';
 import useShouldConfirmBeforeNavigate from '../hooks/useShouldConfirmBeforeNavigate';
 import CodeMirrorEditor from '../shared/CodeMirrorEditor';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import JSONSXPElement from '../shared/JSONSXPElement';
 import LearnMessage from '../shared/LearnMessage';
+import PageToolbar from '../shared/PageToolbar';
 import PreviewModal from '../shared/PreviewModal';
 import SearchInput from '../shared/SearchInput';
 import Sidebar from '../shared/Sidebar';
@@ -40,25 +41,51 @@ import SubmitWarningModal from '../shared/SubmitWarningModal';
 import ThemeContext from '../shared/ThemeContext';
 import SXPElement from '../shared/sxp_element/index';
 import {CONFIG_PREFIX, DEFAULT_ERROR} from '../utils/constants';
-import {sub} from '../utils/language';
+import {
+	formatLocaleWithDashes,
+	formatLocaleWithUnderscores,
+	renameKeys,
+	sub,
+} from '../utils/language';
 import {openErrorToast, setInitialSuccessToast} from '../utils/toasts';
 import {getUIConfigurationValues, isCustomJSONSXPElement} from '../utils/utils';
 import SidebarPanel from './SidebarPanel';
 
 /**
- * Converts a JSON string to an object.
- * @param {string} jsonString The JSON to parse.
- * @param {string} fieldName The name of the field to specify where the error.
- * 	ocurred.
- * @returns {object}
+ * When updating element using the editor, this checks that the i18n title or
+ * description is a valid object. This prevents errors with displaying
+ * title/description in the preview and toolbar.
+ * @param {*} sxpElementJSONObject The SXP element as an object
+ * @param {*} property Property to check ('title_i18n' or 'description_i18n')
  */
-const parseJSONString = (jsonString, fieldName) => {
-	try {
-		return JSON.parse(jsonString);
-	}
-	catch {
-		throw sub(Liferay.Language.get('x-is-invalid'), [fieldName]);
-	}
+const isPropertyValid = (sxpElementJSONObject, property) =>
+	typeof sxpElementJSONObject[property] === 'object' &&
+	!Array.isArray(sxpElementJSONObject[property]);
+
+/**
+ * When updating using the language selector, this reassigns the values
+ * of title_i18n and description_i18n, in order to maintain current order of
+ * properties and use the correct format ('en_US').
+ * @param {*} sxpElementJSONObject
+ * @param {*} title_i18n
+ * @param {*} description_i18n
+ * @returns
+ */
+const replaceTitleAndDescription = (
+	sxpElementJSONObject,
+	title_i18n,
+	description_i18n
+) => {
+	sxpElementJSONObject.description_i18n = renameKeys(
+		description_i18n,
+		formatLocaleWithUnderscores
+	);
+	sxpElementJSONObject.title_i18n = renameKeys(
+		title_i18n,
+		formatLocaleWithUnderscores
+	);
+
+	return sxpElementJSONObject;
 };
 
 /**
@@ -115,9 +142,7 @@ const validateConfigKeys = (
 };
 
 function EditSXPElementForm({
-	initialDescription = {},
 	initialElementJSONEditorValue = {},
-	initialTitle = {},
 	predefinedVariables = [],
 	readOnly,
 	type,
@@ -140,8 +165,15 @@ function EditSXPElementForm({
 	const [showInfoSidebar, setShowInfoSidebar] = useState(false);
 	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);
 	const [showVariablesSidebar, setShowVariablesSidebar] = useState(false);
+
+	const [isSXPElementJSONInvalid, setIsSXPElementJSONInvalid] = useState(
+		false
+	);
 	const [elementJSONEditorValue, setElementJSONEditorValue] = useState(
 		initialElementJSONEditorValueString
+	);
+	const [sxpElementJSONObject, setSXPElementJSONObject] = useState(
+		initialElementJSONEditorValue
 	);
 
 	const filteredCategories = {};
@@ -171,6 +203,34 @@ function EditSXPElementForm({
 			setShowVariablesSidebar(true);
 		}
 	}, [readOnly]);
+
+	const _handleJSONEditorValueChange = (value) => {
+		setElementJSONEditorValue(value);
+
+		try {
+			const sxpElement = JSON.parse(value);
+
+			setIsSXPElementJSONInvalid(false);
+
+			if (!isPropertyValid(sxpElement, 'title_i18n')) {
+				sxpElement.title_i18n = {};
+			}
+
+			if (!isPropertyValid(sxpElement, 'description_i18n')) {
+				sxpElement.description_i18n = {};
+			}
+
+			setSXPElementJSONObject(sxpElement);
+		}
+		catch {
+			setIsSXPElementJSONInvalid(true);
+		}
+	};
+
+	const [handleJSONEditorValueChangeDebounced] = useDebounceCallback(
+		_handleJSONEditorValueChange,
+		500
+	);
 
 	const _handleSearchFilter = useCallback(
 		(value) => {
@@ -202,23 +262,19 @@ function EditSXPElementForm({
 
 		setIsSubmitting(true);
 
-		let sxpElementJSONObject;
-
 		try {
-			sxpElementJSONObject = parseJSONString(
-				elementJSONEditorValue,
-				Liferay.Language.get('element-source-json')
-			);
+			if (isSXPElementJSONInvalid) {
+				throw sub(Liferay.Language.get('x-is-invalid'), [
+					Liferay.Language.get('element-source-json'),
+				]);
+			}
 
 			validateConfigKeys(
-				sxpElementJSONObject?.elementDefinition?.configuration,
-				sxpElementJSONObject?.elementDefinition?.uiConfiguration
+				sxpElementJSONObject.elementDefinition?.configuration,
+				sxpElementJSONObject.elementDefinition?.uiConfiguration
 			);
 
-			if (
-				!sxpElementJSONObject.title &&
-				!sxpElementJSONObject.title_i18n
-			) {
+			if (!Object.keys(sxpElementJSONObject.title_i18n).length) {
 				throw Liferay.Language.get('error.title-empty');
 			}
 
@@ -329,6 +385,27 @@ function EditSXPElementForm({
 		}
 	};
 
+	const _handleTitleAndDescriptionChange = ({description, title}) => {
+		if (!isSXPElementJSONInvalid) {
+			const doc = elementJSONEditorRef.current.getDoc();
+
+			// This will trigger JSON editor onChange function, which
+			// updates all involved states.
+
+			doc.setValue(
+				JSON.stringify(
+					replaceTitleAndDescription(
+						sxpElementJSONObject,
+						title,
+						description
+					),
+					null,
+					'\t'
+				)
+			);
+		}
+	};
+
 	function _handleVariableClick(variable) {
 		const doc = elementJSONEditorRef.current.getDoc();
 		const cursor = doc.getCursor();
@@ -337,17 +414,38 @@ function EditSXPElementForm({
 	}
 
 	function _renderPreviewBody() {
-		let previewSXPElementJSON = {};
-		let uiConfigurationValues = {};
+		if (!isSXPElementJSONInvalid) {
+			const previewSXPElementJSON = {
+				elementDefinition: {}, // Define elementDefinition to prevent error
+				...sxpElementJSONObject,
+			};
 
-		try {
-			previewSXPElementJSON = JSON.parse(elementJSONEditorValue);
-
-			uiConfigurationValues = getUIConfigurationValues(
+			const uiConfigurationValues = getUIConfigurationValues(
 				previewSXPElementJSON
 			);
+
+			return (
+				<div className="portlet-sxp-blueprint-admin">
+					<ErrorBoundary>
+						{isCustomJSONSXPElement(uiConfigurationValues) ? (
+							<JSONSXPElement
+								collapseAll={false}
+								readOnly={true}
+								sxpElement={previewSXPElementJSON}
+								uiConfigurationValues={uiConfigurationValues}
+							/>
+						) : (
+							<SXPElement
+								collapseAll={false}
+								sxpElement={previewSXPElementJSON}
+								uiConfigurationValues={uiConfigurationValues}
+							/>
+						)}
+					</ErrorBoundary>
+				</div>
+			);
 		}
-		catch (error) {
+		else {
 			return (
 				<ClayEmptyState
 					description={Liferay.Language.get(
@@ -358,27 +456,6 @@ function EditSXPElementForm({
 				/>
 			);
 		}
-
-		return (
-			<div className="portlet-sxp-blueprint-admin">
-				<ErrorBoundary>
-					{isCustomJSONSXPElement(uiConfigurationValues) ? (
-						<JSONSXPElement
-							collapseAll={false}
-							readOnly={true}
-							sxpElement={previewSXPElementJSON}
-							uiConfigurationValues={uiConfigurationValues}
-						/>
-					) : (
-						<SXPElement
-							collapseAll={false}
-							sxpElement={previewSXPElementJSON}
-							uiConfigurationValues={uiConfigurationValues}
-						/>
-					)}
-				</ErrorBoundary>
-			</div>
-		);
 	}
 
 	return (
@@ -395,103 +472,53 @@ function EditSXPElementForm({
 					visible={showSubmitWarningModal}
 				/>
 
-				<div className="page-toolbar-root">
-					<ClayToolbar light>
-						<ClayLayout.ContainerFluid>
-							<ClayToolbar.Nav>
-								<ClayToolbar.Item className="text-left" expand>
-									<div>
-										<div className="entry-title text-truncate">
-											{initialTitle[defaultLocale]}
-										</div>
+				<PageToolbar
+					description={renameKeys(
+						sxpElementJSONObject.description_i18n,
+						formatLocaleWithDashes
+					)}
+					disableModal={isSXPElementJSONInvalid}
+					isSubmitting={isSubmitting}
+					onCancel={redirectURL}
+					onChangeTitleAndDescription={
+						_handleTitleAndDescriptionChange
+					}
+					onSubmit={_handleSubmit}
+					readOnly={readOnly}
+					title={renameKeys(
+						sxpElementJSONObject.title_i18n,
+						formatLocaleWithDashes
+					)}
+				>
+					{readOnly && (
+						<ClayToolbar.Item>
+							<ClayAlert
+								className="m-0"
+								displayType="info"
+								title={Liferay.Language.get('read-only')}
+								variant="feedback"
+							/>
+						</ClayToolbar.Item>
+					)}
 
-										<div className="entry-description text-truncate">
-											{initialDescription[
-												defaultLocale
-											] || (
-												<span className="entry-description-blank">
-													{Liferay.Language.get(
-														'no-description'
-													)}
-												</span>
-											)}
-										</div>
-									</div>
-								</ClayToolbar.Item>
-
-								{readOnly && (
-									<ClayToolbar.Item>
-										<ClayAlert
-											className="m-0"
-											displayType="info"
-											title={Liferay.Language.get(
-												'read-only'
-											)}
-											variant="feedback"
-										/>
-									</ClayToolbar.Item>
-								)}
-
-								<ClayToolbar.Item>
-									<PreviewModal
-										body={_renderPreviewBody()}
-										size="lg"
-										title={Liferay.Language.get(
-											'preview-configuration'
-										)}
-									>
-										<ClayButton
-											borderless
-											displayType="secondary"
-											small
-										>
-											{Liferay.Language.get('preview')}
-										</ClayButton>
-									</PreviewModal>
-								</ClayToolbar.Item>
-
-								<ClayToolbar.Item>
-									<div className="tbar-divider" />
-								</ClayToolbar.Item>
-
-								{readOnly ? (
-									<ClayToolbar.Item>
-										<ClayLink
-											displayType="secondary"
-											href={redirectURL}
-											outline="secondary"
-										>
-											{Liferay.Language.get('close')}
-										</ClayLink>
-									</ClayToolbar.Item>
-								) : (
-									<>
-										<ClayToolbar.Item>
-											<ClayLink
-												displayType="secondary"
-												href={redirectURL}
-												outline="secondary"
-											>
-												{Liferay.Language.get('cancel')}
-											</ClayLink>
-										</ClayToolbar.Item>
-
-										<ClayToolbar.Item>
-											<ClayButton
-												disabled={isSubmitting}
-												onClick={_handleSubmit}
-												small
-												type="submit"
-											>
-												{Liferay.Language.get('save')}
-											</ClayButton>
-										</ClayToolbar.Item>
-									</>
-								)}
-							</ClayToolbar.Nav>
-						</ClayLayout.ContainerFluid>
-					</ClayToolbar>
-				</div>
+					<ClayToolbar.Item>
+						<PreviewModal
+							body={_renderPreviewBody()}
+							size="lg"
+							title={Liferay.Language.get(
+								'preview-configuration'
+							)}
+						>
+							<ClayButton
+								borderless
+								displayType="secondary"
+								small
+							>
+								{Liferay.Language.get('preview')}
+							</ClayButton>
+						</PreviewModal>
+					</ClayToolbar.Item>
+				</PageToolbar>
 			</form>
 
 			<Sidebar
@@ -672,8 +699,8 @@ function EditSXPElementForm({
 								>
 									<CodeMirrorEditor
 										autocompleteSchema={sxpElementSchema}
-										onChange={(value) =>
-											setElementJSONEditorValue(value)
+										onChange={
+											handleJSONEditorValueChangeDebounced
 										}
 										readOnly={readOnly}
 										ref={elementJSONEditorRef}
@@ -690,9 +717,7 @@ function EditSXPElementForm({
 }
 
 EditSXPElementForm.propTypes = {
-	initialConfiguration: PropTypes.object,
-	initialDescription: PropTypes.object,
-	initialTitle: PropTypes.object,
+	initialElementJSONEditorValue: PropTypes.object,
 	predefinedVariables: PropTypes.arrayOf(PropTypes.object),
 	readOnly: PropTypes.bool,
 	sxpElementId: PropTypes.string,

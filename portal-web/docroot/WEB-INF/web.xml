@@ -83,8 +83,14 @@
 			<url-pattern>/en_GB/c/portal/protected</url-pattern>
 			<url-pattern>/en_US/c/portal/protected</url-pattern>
 			<url-pattern>/es/c/portal/protected</url-pattern>
+			<url-pattern>/es-AR/c/portal/protected</url-pattern>
+			<url-pattern>/es_AR/c/portal/protected</url-pattern>
+			<url-pattern>/es-CO/c/portal/protected</url-pattern>
+			<url-pattern>/es_CO/c/portal/protected</url-pattern>
 			<url-pattern>/es-ES/c/portal/protected</url-pattern>
 			<url-pattern>/es_ES/c/portal/protected</url-pattern>
+			<url-pattern>/es-MX/c/portal/protected</url-pattern>
+			<url-pattern>/es_MX/c/portal/protected</url-pattern>
 			<url-pattern>/et/c/portal/protected</url-pattern>
 			<url-pattern>/et-EE/c/portal/protected</url-pattern>
 			<url-pattern>/et_EE/c/portal/protected</url-pattern>

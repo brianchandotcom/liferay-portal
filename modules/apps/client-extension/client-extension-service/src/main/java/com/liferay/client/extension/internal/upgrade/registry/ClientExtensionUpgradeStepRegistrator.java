@@ -101,6 +101,12 @@ public class ClientExtensionUpgradeStepRegistrator
 			"3.3.0", "3.4.0",
 			UpgradeProcessFactory.addColumns(
 				"ClientExtensionEntryRel", "typeSettings TEXT null"));
+
+		registry.register(
+			"3.4.0", "3.5.0",
+			UpgradeProcessFactory.addColumns(
+				"ClientExtensionEntryRel", "groupId LONG",
+				"lastPublishDate DATE null"));
 	}
 
 }

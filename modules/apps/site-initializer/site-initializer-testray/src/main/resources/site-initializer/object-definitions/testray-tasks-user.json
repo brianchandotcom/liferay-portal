@@ -1,0 +1,23 @@
+{
+	"label": {
+		"en_US": "Testray Tasks User"
+	},
+	"name": "TasksUsers",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": true,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Testray Tasks Users"
+	},
+	"scope": "company"
+}

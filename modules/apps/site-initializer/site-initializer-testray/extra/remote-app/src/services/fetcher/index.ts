@@ -19,7 +19,7 @@ import FetcherError from './FetchError';
 const liferayHost = window.location.origin;
 
 function changeResource(resource: RequestInfo) {
-	const headlessAdminUserAPIs = ['account', 'roles'];
+	const headlessAdminUserAPIs = ['account', 'roles', 'user-groups'];
 
 	const isHeadlessAdminUserAPI = headlessAdminUserAPIs.some(
 		(headlessAdminUserAPI) =>

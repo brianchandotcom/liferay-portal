@@ -1321,8 +1321,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 				JSONUtil.toStringArray(
 					jsonObject.getJSONArray("assetTagNames")));
 
-			JournalArticle journalArticle =
-				_journalArticleLocalService.addArticle(
+			JournalArticle existingJournalArticle =
+				_journalArticleLocalService.fetchArticle(
+					serviceContext.getScopeGroupId(),
+					jsonObject.getString("articleId"));
+
+			if (existingJournalArticle == null) {
+				existingJournalArticle = _journalArticleLocalService.addArticle(
 					null, serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), journalFolderId,
 					JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
@@ -1341,9 +1346,34 @@ public class BundleSiteInitializer implements SiteInitializer {
 					calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0,
 					0, 0, true, true, false, null, null, null, null,
 					serviceContext);
+			}
+			else {
+				existingJournalArticle =
+					_journalArticleLocalService.updateArticle(
+						serviceContext.getUserId(),
+						serviceContext.getScopeGroupId(), journalFolderId,
+						jsonObject.getString("articleId"),
+						existingJournalArticle.getVersion(), titleMap, null,
+						titleMap,
+						_replace(
+							SiteInitializerUtil.read(
+								_replace(resourcePath, ".json", ".xml"),
+								_servletContext),
+							"[$", "$]", documentsStringUtilReplaceValues),
+						ddmStructureKey, ddmTemplateKey, null,
+						calendar.get(Calendar.MONTH),
+						calendar.get(Calendar.DAY_OF_MONTH),
+						calendar.get(Calendar.YEAR),
+						calendar.get(Calendar.HOUR_OF_DAY),
+						calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0,
+						0, 0, 0, 0, true, true, false, null, null, null, null,
+						serviceContext);
+			}
 
 			serviceContext.setAssetCategoryIds(null);
 			serviceContext.setAssetTagNames(null);
+
+			JournalArticle journalArticle = existingJournalArticle;
 
 			DDMStructure ddmStructure = journalArticle.getDDMStructure();
 

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-WorkspaceConnectionDisplayContext workspaceConnectionDisplayContext = new WorkspaceConnectionDisplayContext(request, response);
+AnalyticsSettingsDisplayContext analyticsSettingsDisplayContext = new AnalyticsSettingsDisplayContext(request, response);
 %>
 
 <div id="analytics-sync-app">
@@ -25,11 +25,11 @@ WorkspaceConnectionDisplayContext workspaceConnectionDisplayContext = new Worksp
 		module="js/index.es"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"connected", workspaceConnectionDisplayContext.isConnected()
+				"connected", analyticsSettingsDisplayContext.isConnected()
 			).put(
-				"liferayAnalyticsURL", workspaceConnectionDisplayContext.getLiferayAnalyticsURL()
+				"liferayAnalyticsURL", analyticsSettingsDisplayContext.getLiferayAnalyticsURL()
 			).put(
-				"token", workspaceConnectionDisplayContext.getToken()
+				"token", analyticsSettingsDisplayContext.getToken()
 			).build()
 		%>'
 	/>

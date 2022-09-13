@@ -24,9 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Riccardo Ferrari
  */
-public class WorkspaceConnectionDisplayContext extends BaseDisplayContext {
+public class AnalyticsSettingsDisplayContext extends BaseDisplayContext {
 
-	public WorkspaceConnectionDisplayContext(
+	public AnalyticsSettingsDisplayContext(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 

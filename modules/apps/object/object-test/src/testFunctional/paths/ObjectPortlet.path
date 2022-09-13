@@ -27,12 +27,12 @@
 	</tr>
 	<tr>
 		<td>COLUMN_ICON_SEARCH</td>
-		<td>//div[contains(@class,'dropdown-menu show')]//input[contains(@class,'form-control input-group-inset input-group-inset-after')]</td>
+		<td>//div[contains(@class,'dropdown-menu')]//span[contains(@class, 'input-group-inset-item')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>COLUMN_SEARCH_FIELD</td>
-		<td>//div[contains(@class,'dropdown-menu show')]//input[contains(@class,'form-control input-group-inset input-group-inset-after')]</td>
+		<td>//div[contains(@class,'dropdown-menu')]//input[contains(@class,'form-control input-group-inset input-group-inset-after')]</td>
 		<td></td>
 	</tr>
 	<tr>

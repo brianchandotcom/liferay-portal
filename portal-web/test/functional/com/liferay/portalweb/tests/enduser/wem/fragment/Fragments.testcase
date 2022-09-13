@@ -186,19 +186,10 @@ NO CSS
 		}
 
 		task ("Add an Asset Publisher below Image inside the Container") {
-			Navigator.gotoNavTab(navTab = "Widgets");
-
-			Type.sendKeysApplicationSearch(
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
-				value1 = "Asset Publisher");
-
-			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
-				key_indexItem = "1",
-				key_portletName = "Asset Publisher",
-				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-				locator2 = "//div[@aria-label='Image']//div[contains(@class,'page-editor__topper__content')]",
-				value1 = "Asset Publisher");
+			PageEditor.addElementToContainer(
+				navTab = "Widgets",
+				portletName = "Asset Publisher",
+				targetElementName = "Image");
 
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Asset Publisher']",

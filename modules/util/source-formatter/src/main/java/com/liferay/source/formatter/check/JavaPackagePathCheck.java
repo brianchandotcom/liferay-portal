@@ -381,17 +381,18 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 							"' should be in package ending with '", array[1],
 							"'"));
 				}
-			}
-			else {
-				if (!packageName.endsWith("." + expectedPackagePath) &&
-					!packageName.contains("." + expectedPackagePath + ".")) {
 
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Class '", className, "' should be in package .",
-							array[1], "'"));
-				}
+				continue;
+			}
+
+			if (!packageName.endsWith("." + expectedPackagePath) &&
+				!packageName.contains("." + expectedPackagePath + ".")) {
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Class '", className, "' should be in package .",
+						array[1], "'"));
 			}
 		}
 	}

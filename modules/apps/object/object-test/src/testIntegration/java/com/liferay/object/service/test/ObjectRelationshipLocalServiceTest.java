@@ -334,7 +334,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap("Able"), StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Able"),
@@ -349,6 +349,27 @@ public class ObjectRelationshipLocalServiceTest {
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Baker"),
 			objectRelationship.getLabelMap());
+
+		objectRelationship =
+			_objectRelationshipLocalService.fetchReverseObjectRelationship(
+				objectRelationship, true);
+
+		try {
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship.getObjectRelationshipId(), 0,
+				objectRelationship.getDeletionType(),
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString()));
+
+			Assert.fail();
+		}
+		catch (ObjectRelationshipReverseException
+					objectRelationshipReverseException) {
+
+			Assert.assertEquals(
+				"Reverse object relationships cannot be updated",
+				objectRelationshipReverseException.getMessage());
+		}
 	}
 
 	private boolean _hasColumn(String tableName, String columnName)

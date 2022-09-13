@@ -266,6 +266,147 @@ definition {
 			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
 	}
 
+	@description = "LPS-146754 - Verify that it's possible to delete a relationship between a Custom Object entry and Native Object entry (Many-to-Many)"
+	@priority = "4"
+	test CanDeleteManyToManyRelationshipBetweenCustomObjectEntryAndNativeObjectEntry {
+		task ("Add 2 users entries to relate to custom object entries") {
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "userfn_1",
+				userLastName = "userln_1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+
+			JSONUser.addUser(
+				userEmailAddress = "user2@liferay.com",
+				userFirstName = "userfn_2",
+				userLastName = "userln_2",
+				userScreenName = "usersn2");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user2@liferay.com");
+		}
+
+		task ("Add a custom object, a field, and create a many-to-many relationship with the User object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject",
+				objectName_2 = "User",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "manyToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("Add layout with relationship tab") {
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Custom Layout",
+				objectName = "CustomObject");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectSpecificKebabMenuOption(
+				kebabOption = "View",
+				objectLabel = "Custom Layout");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = "1",
+				fieldLabelName = "Custom Field",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addTabRelationshipsOnLayout(
+				relationshipsLabelName = "Relationship",
+				tabName = "Relationship Tab");
+
+			Button.clickSave();
+		}
+
+		task ("Define First Name as a title field on the native object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "User");
+
+			CreateObject.selectTitleField(fieldLabel = "First Name");
+
+			CreateObject.saveObject();
+		}
+
+		task ("Add 2 entries by API to relate to user entries") {
+			for (var entryName : list "A,B") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customObjectField",
+					objectName = "CustomObject",
+					value = "Entry ${entryName}");
+			}
+		}
+
+		task ("Relates custom object entries to user object entries") {
+			Navigator.openURL();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			for (var entryName : list "A,B") {
+				ObjectPortlet.viewEntryDetails(entry = "Entry ${entryName}");
+
+				ObjectAdmin.gotoRelationshipsTab();
+
+				CreateObject.addRelationshipAndSelectEntry(titleFieldName = "userfn_1");
+
+				CreateObject.addRelationshipAndSelectEntry(titleFieldName = "userfn_2");
+
+				ObjectPortlet.viewEntry(entry = "userfn_1");
+
+				ObjectPortlet.viewEntry(entry = "userfn_2");
+
+				Navigator.gotoBack();
+			}
+		}
+
+		task ("Delete relationship between a custom object entry to native object entry") {
+			for (var entryName : list "A,B") {
+				ObjectPortlet.viewEntryDetails(entry = "Entry ${entryName}");
+
+				CreateObject.deleteEntryInRelationshipTab(entryName = "userfn_1");
+
+				CreateObject.deleteEntryInRelationshipTab(entryName = "userfn_2");
+
+				ObjectPortlet.assertEntryNotPresent(entry = "userfn_1");
+
+				ObjectPortlet.assertEntryNotPresent(entry = "userfn_2");
+
+				Navigator.gotoBack();
+			}
+		}
+	}
+
 	@description = "LPS-152508 - Verify that it's possible to delete a Many-to-Many relationship from the parent side"
 	@priority = "5"
 	test CanDeleteManyToManyRelationshipFromParentSide {

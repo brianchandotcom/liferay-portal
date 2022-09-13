@@ -1,0 +1,42 @@
+{
+	"label": {
+		"en_US": "Raylife Authentication"
+	},
+	"name": "RaylifeAuthentication",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Client Id"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "clientId",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Client Secret"
+			},
+			"listTypeDefinitionId": 0,
+			"name": "clientSecret",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Raylife Authentications"
+	},
+	"scope": "company"
+}

@@ -14,6 +14,7 @@
 
 import {LiferayAdapt} from '../../../common/services/liferay/adapter';
 import {axios} from '../../../common/services/liferay/api';
+import {getGuestPermissionToken} from '../../../common/services/token';
 
 const RaylifeApplicationAPI = 'o/c/raylifeapplications';
 
@@ -26,24 +27,37 @@ export function getRaylifeApplicationById(raylifeApplicationId) {
  * @returns {Promise<any>}  Status code
  */
 
+const updateRaylifeApplication = async (applicationId, payload = null) => {
+	const {access_token} = await getGuestPermissionToken();
+
+	sessionStorage.setItem('raylife-guest-permission-token', access_token);
+
+	return axios.patch(`${RaylifeApplicationAPI}/${applicationId}`, payload, {
+		headers: {
+			'Authorization': `Bearer ${access_token}`,
+			'Content-Type': 'application/json',
+		},
+	});
+};
+
 export function createOrUpdateRaylifeApplication(form, status) {
 	const payload = LiferayAdapt.adaptToFormApplicationRequest(form, status);
+	const applicationId = form?.basics?.applicationId;
 
-	if (form?.basics?.applicationId) {
-		return axios.patch(
-			`${RaylifeApplicationAPI}/${form.basics.applicationId}`,
-			payload
-		);
+	if (applicationId) {
+		return updateRaylifeApplication(applicationId, payload);
 	}
 
 	return axios.post(`${RaylifeApplicationAPI}/`, payload);
 }
 
 export function updateRaylifeApplicationStatus(applicationId, status) {
-	return axios.patch(`${RaylifeApplicationAPI}/${applicationId}`, {
+	const payload = {
 		applicationStatus: {
 			key: status?.key,
 			name: status?.name,
 		},
-	});
+	};
+
+	return updateRaylifeApplication(applicationId, payload);
 }

@@ -27,9 +27,21 @@ const fetchHeadless = async (url, options) => {
 		},
 	});
 
-	const data = await response.json();
+	return await response.json();
+};
 
-	return data;
+const fetchHeadlessWithToken = async (url) => {
+	const token = sessionStorage.getItem('raylife-guest-permission-token');
+
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(`${window.location.origin}/${url}`, {
+		headers: {
+			'Authorization': `Bearer ${token}`,
+			'Content-Type': 'application/json',
+		},
+	});
+
+	return await response.json();
 };
 
 const addQuoteEntryData = async (payload) => {
@@ -42,9 +54,9 @@ const addQuoteEntryData = async (payload) => {
 const main = async () => {
 	const [quote, quoteComparison] = await Promise.all([
 		fetchHeadless(
-			`o/c/raylifequotes/?search=r_applicationToQuotes_c_raylifeApplicationId eq ${applicationId}&fields=id`
+			`o/c/raylifequotes/?filter=r_applicationToQuotes_c_raylifeApplicationId eq '${applicationId}'&fields=id`
 		),
-		fetchHeadless(
+		fetchHeadlessWithToken(
 			`o/c/quotecomparisons/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`
 		),
 	]);

@@ -12,12 +12,10 @@
  * details.
  */
 
-import {axios} from '../../../common/services/liferay/api';
+import {axios} from './liferay/api';
 
-const DeliveryAPI = 'o/headless-commerce-delivery-catalog';
+const headlessAPI = '/o/c/raylifeauthentications';
 
-export function getSku(channelId, productId) {
-	return axios.get(
-		`${DeliveryAPI}/v1.0/channels/${channelId}/products/${productId}/skus`
-	);
+export function getRaylifeAuthentication() {
+	return axios.get(`${headlessAPI}`).then(({data}) => data.items[0]);
 }

@@ -172,18 +172,21 @@ const SelectedQuoteContextProvider = ({children}) => {
 			basics: {productId},
 		} = JSON.parse(Storage.getItem(STORAGE_KEYS.APPLICATION_FORM));
 
-		const [channel, sku, product] = await Promise.allSettled([
+		const [channel, product] = await Promise.allSettled([
 			getChannel(),
-			getSku(productId),
 			getQuoteById(quoteId),
 		]);
 
-		dispatch({
-			payload: {
-				channel: channel.value.data.items[0],
-				skus: sku.value.data.items,
-			},
-			type: ACTIONS.SET_COMMERCE,
+		const channelId = channel.value.data.items[0].id;
+
+		getSku(channelId, productId).then((sku) => {
+			dispatch({
+				payload: {
+					channel: channel.value.data.items[0],
+					skus: sku.data.items,
+				},
+				type: ACTIONS.SET_COMMERCE,
+			});
 		});
 
 		dispatch({

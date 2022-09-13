@@ -28,6 +28,20 @@ const fetchHeadless = async (url, options) => {
 	return data;
 };
 
+const fetchHeadlessWithToken = async (url, options) => {
+	const token = sessionStorage.getItem('raylife-guest-permission-token');
+
+	const response = await fetch(`${window.location.origin}/${url}`, {
+		...options,
+		headers: {
+			'Authorization': `Bearer ${token}`,
+			'Content-Type': 'application/json',
+		},
+	});
+
+	return await response.json();
+};
+
 const businessEmailDeliveredContainer = fragmentElement.querySelector(
 	'#business-email-delivered'
 );
@@ -123,7 +137,7 @@ continueQuoteButton.onclick = async function () {
 	newQuoteFormContainer.classList.remove('d-flex', 'invisible');
 	newQuoteFormContainer.classList.add('d-none', 'invisible');
 
-	await fetchHeadless(`o/c/quoteretrieves/scopes/${scopeGroupId}`, {
+	await fetchHeadlessWithToken(`o/c/quoteretrieves/scopes/${scopeGroupId}`, {
 		body: JSON.stringify({
 			productName: 'Business Home Cover',
 			quoteRetrieveLink: `${origin}${window.location.pathname}/get-a-quote?applicationId=${raylifeApplication.id}`,

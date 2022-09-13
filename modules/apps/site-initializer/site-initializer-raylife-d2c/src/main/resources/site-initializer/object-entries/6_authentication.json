@@ -1,0 +1,10 @@
+{
+	"object-entries": [
+		{
+			"clientId": "GUEST-PERMISSION-RAYLIFE-CLIENT-ID",
+			"clientSecret": "GUEST-PERMISSION-RAYLIFE-CLIENT-SECRET",
+			"externalReferenceCode": "RAYOAUTH-001"
+		}
+	],
+	"objectDefinitionName": "RaylifeAuthentication"
+}

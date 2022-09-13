@@ -39,14 +39,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -971,6 +977,54 @@ public class WikiPageLocalServiceTest {
 		Assert.assertNotNull(renamedPage);
 
 		checkPopulatedServiceContext(serviceContext, renamedPage, false);
+	}
+
+	@Test
+	public void testRenamePagePermissions() throws Exception {
+		WikiPage pageA = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			"A", true);
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		Assert.assertTrue(
+			permissionChecker.hasPermission(
+				_group.getGroupId(), WikiPage.class.getName(),
+				String.valueOf(pageA.getResourcePrimKey()), ActionKeys.VIEW));
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, WikiPage.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(pageA.getResourcePrimKey()), ActionKeys.VIEW);
+
+		Assert.assertFalse(
+			permissionChecker.hasPermission(
+				_group.getGroupId(), WikiPage.class.getName(),
+				String.valueOf(pageA.getResourcePrimKey()), ActionKeys.VIEW));
+
+		WikiPageLocalServiceUtil.renamePage(
+			TestPropsValues.getUserId(), _node.getNodeId(), "A", "B", true,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		WikiPage originalPageA = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "A");
+
+		WikiPage pageB = WikiPageLocalServiceUtil.getPage(
+			_node.getNodeId(), "B");
+
+		Assert.assertFalse(
+			permissionChecker.hasPermission(
+				_group.getGroupId(), WikiPage.class.getName(),
+				String.valueOf(pageB.getResourcePrimKey()), ActionKeys.VIEW));
+
+		Assert.assertFalse(
+			permissionChecker.hasPermission(
+				_group.getGroupId(), WikiPage.class.getName(),
+				String.valueOf(originalPageA.getResourcePrimKey()),
+				ActionKeys.VIEW));
 	}
 
 	@Test(expected = DuplicatePageException.class)

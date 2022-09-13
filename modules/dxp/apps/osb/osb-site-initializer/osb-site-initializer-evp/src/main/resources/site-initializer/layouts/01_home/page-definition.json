@@ -4,14 +4,12 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0"
+						"borderWidth": "0",
+						"textAlign": ""
 					},
 					"indexed": true,
 					"layout": {
-						"align": "Center",
 						"borderWidth": 0,
-						"contentDisplay": "FlexRow",
-						"justify": "SpaceBetween",
 						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
@@ -21,170 +19,545 @@
 						"paddingRight": 0,
 						"paddingTop": 0,
 						"widthType": "Fluid"
-					}
+					},
+					"name": "Home Container"
 				},
 				"pageElements": [
 					{
 						"definition": {
+							"fragment": {
+								"key": "home-welcome-banner"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
 							"fragmentStyle": {
-								"backgroundColor": "colorNeutral1",
-								"borderWidth": "",
-								"height": "180px",
-								"maxHeight": "180px",
-								"maxWidth": "208px",
-								"paddingTop": "4",
-								"textAlign": "",
-								"width": "208px"
+								"marginBottom": "5",
+								"textAlign": ""
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0",
+								"marginBottom": "5",
+								"textAlign": ""
 							},
 							"indexed": true,
 							"layout": {
-								"align": "Center",
-								"contentDisplay": "FlexColumn",
-								"marginBottom": 0,
+								"borderWidth": 0,
+								"marginBottom": 4,
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
 								"paddingBottom": 0,
 								"paddingLeft": 0,
 								"paddingRight": 0,
-								"paddingTop": 2,
+								"paddingTop": 0,
 								"widthType": "Fluid"
-							}
+							},
+							"name": "News Section"
 						},
 						"pageElements": [
 							{
 								"definition": {
-									"fragment": {
-										"key": "BASIC_COMPONENT-image"
-									},
-									"fragmentConfig": {
-										"imageSize": "w-0"
-									},
-									"fragmentFields": [
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
 										{
-											"id": "image-square",
-											"value": {
-												"fragmentImage": {
-													"description": {
-														"value_i18n": {
-															"en_US": ""
-														}
-													},
-													"fragmentImageClassPKReference": {
-														"classPKReferences": {
-															"en_US": {
-																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/calendar_icon.svg$]"
-															}
-														},
-														"fragmentImageConfiguration": {
-															"landscapeMobile": "auto",
-															"portraitMobile": "auto",
-															"tablet": "auto"
-														}
-													},
-													"title": {
-														"value": "calendar_icon"
-													}
-												},
-												"fragmentLink": {
-												}
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
 											}
 										}
 									],
-									"fragmentStyle": {
-										"marginBottom": "3",
-										"textAlign": ""
-									},
-									"indexed": true
-								},
-								"type": "Fragment"
-							},
-							{
-								"definition": {
-									"fragmentStyle": {
-										"borderWidth": "0",
-										"textAlign": ""
-									},
-									"indexed": true,
-									"layout": {
-										"borderWidth": 0,
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
-										"widthType": "Fixed"
-									}
+									"verticalAlignment": "top"
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"fragment": {
-												"key": "DIALECT-dialect-text"
-											},
-											"fragmentConfig": {
-												"textType": "h2"
-											},
-											"fragmentFields": [
+											"columnViewports": [
 												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "12"
-															}
-														}
-													}
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
 												}
 											],
-											"fragmentStyle": {
-												"borderWidth": "0",
-												"fontWeight": "fontWeightBold",
-												"marginBottom": "2",
-												"textAlign": "center",
-												"textColor": "colorNeutral10"
-											},
-											"indexed": true
+											"size": 8
 										},
-										"type": "Fragment"
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "DIALECT-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h3"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "News"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold",
+														"marginBottom": "3",
+														"textAlign": "",
+														"textColor": "colorNeutral10"
+													},
+													"indexed": true,
+													"name": "News Title"
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"height": "320px",
+														"textAlign": ""
+													},
+													"indexed": true,
+													"layout": {
+														"borderWidth": 0,
+														"contentDisplay": "FlexColumn",
+														"justify": "SpaceBetween",
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													},
+													"name": "News Container"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "news"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "news-content",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "news-title",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "news-profile",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "news-profile-picture",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"value_i18n": {
+																				}
+																			}
+																		},
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "news-data",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "news"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "news-content",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "news-title",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "news-profile",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "news-profile-picture",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"value_i18n": {
+																				}
+																			}
+																		},
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "news-data",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "news"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "news-content",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "news-title",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "news-profile",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "news-profile-picture",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"value_i18n": {
+																				}
+																			}
+																		},
+																		"fragmentLink": {
+																		}
+																	}
+																},
+																{
+																	"id": "news-data",
+																	"value": {
+																		"fragmentLink": {
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"marginTop": "4",
+														"textAlign": ""
+													},
+													"indexed": true,
+													"layout": {
+														"borderWidth": 0,
+														"contentDisplay": "FlexRow",
+														"justify": "Center",
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 2,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													},
+													"name": "Button Container"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-button"
+															},
+															"fragmentConfig": {
+																"buttonSize": "btn-sm",
+																"inverted": false,
+																"style": "primary",
+																"type": "borderless",
+																"uppercase": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "link",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "View all News"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true,
+															"name": "Button News"
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
 									},
 									{
 										"definition": {
-											"fragment": {
-												"key": "DIALECT-dialect-text"
-											},
-											"fragmentConfig": {
-												"textType": "text-paragraph"
-											},
-											"fragmentFields": [
+											"columnViewports": [
 												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Years EVP has been active"
-															}
-														}
-													}
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
 												}
 											],
-											"fragmentStyle": {
-												"textAlign": "center"
-											},
-											"indexed": true
+											"size": 4
 										},
-										"type": "Fragment"
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "DIALECT-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h3"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Gallery"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold",
+														"marginBottom": "3",
+														"textAlign": "",
+														"textColor": "colorNeutral10"
+													},
+													"indexed": true,
+													"name": "Gallery Title"
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"height": "345px",
+														"textAlign": ""
+													},
+													"indexed": true,
+													"layout": {
+														"align": "Start",
+														"borderWidth": 0,
+														"contentDisplay": "FlexColumn",
+														"justify": "Center",
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													},
+													"name": "Slider Container"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "slider-evp"
+															},
+															"fragmentConfig": {
+																"numberOfSlides": 3
+															},
+															"fragmentFields": [
+																{
+																	"id": "01-image",
+																	"value": {
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"value_i18n": {
+																						"en_US": ""
+																					}
+																				}
+																			}
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "FileEntry_previewImage",
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																					"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/gallery/evp_photo1.jpeg$]"
+																				}
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "02-image",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "FileEntry_previewImage",
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																					"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/gallery/evp_photo2.jpeg$]"
+																				}
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "03-image",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "FileEntry_previewImage",
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																					"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/gallery/evp_photo3.jpeg$]"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
 									}
 								],
-								"type": "Section"
+								"type": "Row"
 							}
 						],
 						"type": "Section"
@@ -192,19 +565,12 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"backgroundColor": "colorNeutral1",
-								"borderWidth": "",
-								"height": "180px",
-								"maxHeight": "180px",
-								"maxWidth": "208px",
-								"paddingTop": "4",
-								"textAlign": "",
-								"width": "208px"
+								"borderWidth": "0",
+								"textAlign": ""
 							},
 							"indexed": true,
 							"layout": {
-								"align": "Center",
-								"contentDisplay": "FlexColumn",
+								"borderWidth": 0,
 								"marginBottom": 0,
 								"marginLeft": 0,
 								"marginRight": 0,
@@ -212,56 +578,42 @@
 								"paddingBottom": 0,
 								"paddingLeft": 0,
 								"paddingRight": 0,
-								"paddingTop": 2,
+								"paddingTop": 0,
 								"widthType": "Fluid"
-							}
+							},
+							"name": "Data on EVP Section"
 						},
 						"pageElements": [
 							{
 								"definition": {
 									"fragment": {
-										"key": "BASIC_COMPONENT-image"
+										"key": "DIALECT-dialect-text"
 									},
 									"fragmentConfig": {
-										"imageSize": "w-0"
+										"textType": "h3"
 									},
 									"fragmentFields": [
 										{
-											"id": "image-square",
+											"id": "element-text",
 											"value": {
-												"fragmentImage": {
-													"description": {
-														"value_i18n": {
-															"en_US": ""
-														}
-													},
-													"fragmentImageClassPKReference": {
-														"classPKReferences": {
-															"en_US": {
-																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/watch_icon.svg$]"
-															}
-														},
-														"fragmentImageConfiguration": {
-															"landscapeMobile": "auto",
-															"portraitMobile": "auto",
-															"tablet": "auto"
-														}
-													},
-													"title": {
-														"value": "watch_icon"
-													}
-												},
 												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Data on EVP"
+													}
 												}
 											}
 										}
 									],
 									"fragmentStyle": {
+										"fontWeight": "fontWeightBold",
 										"marginBottom": "3",
-										"textAlign": ""
+										"textAlign": "",
+										"textColor": "colorNeutral10"
 									},
-									"indexed": true
+									"indexed": true,
+									"name": "Data Title"
 								},
 								"type": "Fragment"
 							},
@@ -273,7 +625,10 @@
 									},
 									"indexed": true,
 									"layout": {
+										"align": "Center",
 										"borderWidth": 0,
+										"contentDisplay": "FlexRow",
+										"justify": "SpaceBetween",
 										"marginBottom": 0,
 										"marginLeft": 0,
 										"marginRight": 0,
@@ -282,566 +637,840 @@
 										"paddingLeft": 0,
 										"paddingRight": 0,
 										"paddingTop": 0,
-										"widthType": "Fixed"
-									}
+										"widthType": "Fluid"
+									},
+									"name": "Data Container"
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"fragment": {
-												"key": "DIALECT-dialect-text"
-											},
-											"fragmentConfig": {
-												"textType": "h2"
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "28676"
-															}
-														}
-													}
-												}
-											],
 											"fragmentStyle": {
-												"borderWidth": "0",
-												"fontWeight": "fontWeightBold",
-												"marginBottom": "2",
-												"textAlign": "center",
-												"textColor": "colorNeutral10"
+												"backgroundColor": "colorNeutral1",
+												"borderWidth": "",
+												"height": "180px",
+												"maxHeight": "180px",
+												"maxWidth": "208px",
+												"paddingTop": "4",
+												"textAlign": "",
+												"width": "208px"
 											},
-											"indexed": true
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"contentDisplay": "FlexColumn",
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 2,
+												"widthType": "Fluid"
+											},
+											"name": "Data Card"
 										},
-										"type": "Fragment"
-									},
-									{
-										"definition": {
-											"fragment": {
-												"key": "DIALECT-dialect-text"
-											},
-											"fragmentConfig": {
-												"textType": "text-paragraph"
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Service Hours Completed"
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-0"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"description": {
+																		"value_i18n": {
+																			"en_US": ""
+																		}
+																	},
+																	"fragmentImageClassPKReference": {
+																		"classPKReferences": {
+																			"en_US": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/calendar_icon.svg$]"
+																			}
+																		},
+																		"fragmentImageConfiguration": {
+																			"landscapeMobile": "auto",
+																			"portraitMobile": "auto",
+																			"tablet": "auto"
+																		}
+																	},
+																	"title": {
+																		"value": "calendar_icon"
+																	}
+																},
+																"fragmentLink": {
+																}
 															}
 														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"textAlign": "center"
+													],
+													"fragmentStyle": {
+														"marginBottom": "3",
+														"textAlign": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
 											},
-											"indexed": true
-										},
-										"type": "Fragment"
-									}
-								],
-								"type": "Section"
-							}
-						],
-						"type": "Section"
-					},
-					{
-						"definition": {
-							"fragmentStyle": {
-								"backgroundColor": "colorNeutral1",
-								"borderWidth": "",
-								"height": "180px",
-								"maxHeight": "180px",
-								"maxWidth": "208px",
-								"paddingTop": "4",
-								"textAlign": "",
-								"width": "208px"
-							},
-							"indexed": true,
-							"layout": {
-								"align": "Center",
-								"contentDisplay": "FlexColumn",
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 2,
-								"widthType": "Fluid"
-							}
-						},
-						"pageElements": [
-							{
-								"definition": {
-									"fragment": {
-										"key": "BASIC_COMPONENT-image"
-									},
-									"fragmentConfig": {
-										"imageSize": "w-0"
-									},
-									"fragmentFields": [
-										{
-											"id": "image-square",
-											"value": {
-												"fragmentImage": {
-													"description": {
-														"value_i18n": {
-															"en_US": ""
-														}
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"textAlign": ""
 													},
-													"fragmentImageClassPKReference": {
-														"classPKReferences": {
-															"en_US": {
-																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/money_icon.svg$]"
-															}
-														},
-														"fragmentImageConfiguration": {
-															"landscapeMobile": "auto",
-															"portraitMobile": "auto",
-															"tablet": "auto"
-														}
-													},
-													"title": {
-														"value": "money_icon"
+													"indexed": true,
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fixed"
 													}
 												},
-												"fragmentLink": {
-												}
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "h2"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "12"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"fontWeight": "fontWeightBold",
+																"marginBottom": "2",
+																"textAlign": "center",
+																"textColor": "colorNeutral10"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "text-paragraph"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Years EVP has been active"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"textAlign": "center"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
 											}
-										}
-									],
-									"fragmentStyle": {
-										"marginBottom": "3",
-										"textAlign": ""
-									},
-									"indexed": true
-								},
-								"type": "Fragment"
-							},
-							{
-								"definition": {
-									"fragmentStyle": {
-										"borderWidth": "0",
-										"textAlign": ""
-									},
-									"indexed": true,
-									"layout": {
-										"borderWidth": 0,
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
-										"widthType": "Fixed"
-									}
-								},
-								"pageElements": [
-									{
-										"definition": {
-											"fragment": {
-												"key": "DIALECT-dialect-text"
-											},
-											"fragmentConfig": {
-												"textType": "h2"
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "6.09M BRL"
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"borderWidth": "0",
-												"fontWeight": "fontWeightBold",
-												"marginBottom": "2",
-												"textAlign": "center",
-												"textColor": "colorNeutral10"
-											},
-											"indexed": true
-										},
-										"type": "Fragment"
+										],
+										"type": "Section"
 									},
 									{
 										"definition": {
-											"fragment": {
-												"key": "DIALECT-dialect-text"
-											},
-											"fragmentConfig": {
-												"textType": "text-paragraph"
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Grant Money Distributed"
-															}
-														}
-													}
-												}
-											],
 											"fragmentStyle": {
-												"textAlign": "center"
+												"backgroundColor": "colorNeutral1",
+												"borderWidth": "",
+												"height": "180px",
+												"maxHeight": "180px",
+												"maxWidth": "208px",
+												"paddingTop": "4",
+												"textAlign": "",
+												"width": "208px"
 											},
-											"indexed": true
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"contentDisplay": "FlexColumn",
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 2,
+												"widthType": "Fluid"
+											},
+											"name": "Data Card"
 										},
-										"type": "Fragment"
-									}
-								],
-								"type": "Section"
-							}
-						],
-						"type": "Section"
-					},
-					{
-						"definition": {
-							"fragmentStyle": {
-								"backgroundColor": "colorNeutral1",
-								"borderWidth": "",
-								"height": "180px",
-								"maxHeight": "180px",
-								"maxWidth": "208px",
-								"paddingTop": "4",
-								"textAlign": "",
-								"width": "208px"
-							},
-							"indexed": true,
-							"layout": {
-								"align": "Center",
-								"contentDisplay": "FlexColumn",
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 2,
-								"widthType": "Fluid"
-							}
-						},
-						"pageElements": [
-							{
-								"definition": {
-									"fragment": {
-										"key": "BASIC_COMPONENT-image"
-									},
-									"fragmentConfig": {
-										"imageSize": "w-0"
-									},
-									"fragmentFields": [
-										{
-											"id": "image-square",
-											"value": {
-												"fragmentImage": {
-													"description": {
-														"value_i18n": {
-															"en_US": ""
-														}
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
 													},
-													"fragmentImageClassPKReference": {
-														"classPKReferences": {
-															"en_US": {
-																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/heart_icon.svg$]"
+													"fragmentConfig": {
+														"imageSize": "w-0"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"description": {
+																		"value_i18n": {
+																			"en_US": ""
+																		}
+																	},
+																	"fragmentImageClassPKReference": {
+																		"classPKReferences": {
+																			"en_US": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/watch_icon.svg$]"
+																			}
+																		},
+																		"fragmentImageConfiguration": {
+																			"landscapeMobile": "auto",
+																			"portraitMobile": "auto",
+																			"tablet": "auto"
+																		}
+																	},
+																	"title": {
+																		"value": "watch_icon"
+																	}
+																},
+																"fragmentLink": {
+																}
 															}
-														},
-														"fragmentImageConfiguration": {
-															"landscapeMobile": "auto",
-															"portraitMobile": "auto",
-															"tablet": "auto"
 														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "3",
+														"textAlign": ""
 													},
-													"title": {
-														"value": "heart_icon"
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"textAlign": ""
+													},
+													"indexed": true,
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fixed"
 													}
 												},
-												"fragmentLink": {
-												}
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "h2"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "28676"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"fontWeight": "fontWeightBold",
+																"marginBottom": "2",
+																"textAlign": "center",
+																"textColor": "colorNeutral10"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "text-paragraph"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Service Hours Completed"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"textAlign": "center"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
 											}
-										}
-									],
-									"fragmentStyle": {
-										"marginBottom": "3",
-										"textAlign": ""
-									},
-									"indexed": true
-								},
-								"type": "Fragment"
-							},
-							{
-								"definition": {
-									"fragmentStyle": {
-										"borderWidth": "0",
-										"textAlign": ""
-									},
-									"indexed": true,
-									"layout": {
-										"borderWidth": 0,
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
-										"widthType": "Fixed"
-									}
-								},
-								"pageElements": [
-									{
-										"definition": {
-											"fragment": {
-												"key": "DIALECT-dialect-text"
-											},
-											"fragmentConfig": {
-												"textType": "h2"
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "1064"
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"borderWidth": "0",
-												"fontWeight": "fontWeightBold",
-												"marginBottom": "2",
-												"textAlign": "center",
-												"textColor": "colorNeutral10"
-											},
-											"indexed": true
-										},
-										"type": "Fragment"
+										],
+										"type": "Section"
 									},
 									{
 										"definition": {
-											"fragment": {
-												"key": "DIALECT-dialect-text"
-											},
-											"fragmentConfig": {
-												"textType": "text-paragraph"
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Number of nonprofits served"
-															}
-														}
-													}
-												}
-											],
 											"fragmentStyle": {
-												"textAlign": "center"
+												"backgroundColor": "colorNeutral1",
+												"borderWidth": "",
+												"height": "180px",
+												"maxHeight": "180px",
+												"maxWidth": "208px",
+												"paddingTop": "4",
+												"textAlign": "",
+												"width": "208px"
 											},
-											"indexed": true
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"contentDisplay": "FlexColumn",
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 2,
+												"widthType": "Fluid"
+											},
+											"name": "Data Card"
 										},
-										"type": "Fragment"
-									}
-								],
-								"type": "Section"
-							}
-						],
-						"type": "Section"
-					},
-					{
-						"definition": {
-							"fragmentStyle": {
-								"backgroundColor": "colorNeutral1",
-								"borderWidth": "",
-								"height": "180px",
-								"maxHeight": "180px",
-								"maxWidth": "208px",
-								"paddingTop": "4",
-								"textAlign": "",
-								"width": "208px"
-							},
-							"indexed": true,
-							"layout": {
-								"align": "Center",
-								"contentDisplay": "FlexColumn",
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 2,
-								"widthType": "Fluid"
-							}
-						},
-						"pageElements": [
-							{
-								"definition": {
-									"fragment": {
-										"key": "BASIC_COMPONENT-image"
-									},
-									"fragmentConfig": {
-										"imageSize": "w-0"
-									},
-									"fragmentFields": [
-										{
-											"id": "image-square",
-											"value": {
-												"fragmentImage": {
-													"description": {
-														"value_i18n": {
-															"en_US": ""
-														}
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
 													},
-													"fragmentImageClassPKReference": {
-														"classPKReferences": {
-															"en_US": {
-																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/community_icon.svg$]"
+													"fragmentConfig": {
+														"imageSize": "w-0"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"description": {
+																		"value_i18n": {
+																			"en_US": ""
+																		}
+																	},
+																	"fragmentImageClassPKReference": {
+																		"classPKReferences": {
+																			"en_US": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/money_icon.svg$]"
+																			}
+																		},
+																		"fragmentImageConfiguration": {
+																			"landscapeMobile": "auto",
+																			"portraitMobile": "auto",
+																			"tablet": "auto"
+																		}
+																	},
+																	"title": {
+																		"value": "money_icon"
+																	}
+																},
+																"fragmentLink": {
+																}
 															}
-														},
-														"fragmentImageConfiguration": {
-															"landscapeMobile": "auto",
-															"portraitMobile": "auto",
-															"tablet": "auto"
 														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "3",
+														"textAlign": ""
 													},
-													"title": {
-														"value": "community_icon"
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"textAlign": ""
+													},
+													"indexed": true,
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fixed"
 													}
 												},
-												"fragmentLink": {
-												}
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "h2"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "6.09M BRL"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"fontWeight": "fontWeightBold",
+																"marginBottom": "2",
+																"textAlign": "center",
+																"textColor": "colorNeutral10"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "text-paragraph"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Grant Money Distributed"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"textAlign": "center"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
 											}
-										}
-									],
-									"fragmentStyle": {
-										"marginBottom": "3",
-										"textAlign": ""
-									},
-									"indexed": true
-								},
-								"type": "Fragment"
-							},
-							{
-								"definition": {
-									"fragmentStyle": {
-										"borderWidth": "0",
-										"textAlign": ""
-									},
-									"indexed": true,
-									"layout": {
-										"borderWidth": 0,
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
-										"widthType": "Fixed"
-									}
-								},
-								"pageElements": [
-									{
-										"definition": {
-											"fragment": {
-												"key": "DIALECT-dialect-text"
-											},
-											"fragmentConfig": {
-												"textType": "h2"
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "1229"
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"borderWidth": "0",
-												"fontWeight": "fontWeightBold",
-												"marginBottom": "2",
-												"textAlign": "center",
-												"textColor": "colorNeutral10"
-											},
-											"indexed": true
-										},
-										"type": "Fragment"
+										],
+										"type": "Section"
 									},
 									{
 										"definition": {
-											"fragment": {
-												"key": "DIALECT-dialect-text"
+											"fragmentStyle": {
+												"backgroundColor": "colorNeutral1",
+												"borderWidth": "",
+												"height": "180px",
+												"maxHeight": "180px",
+												"maxWidth": "208px",
+												"paddingTop": "4",
+												"textAlign": "",
+												"width": "208px"
 											},
-											"fragmentConfig": {
-												"textType": "text-paragraph"
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"contentDisplay": "FlexColumn",
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 2,
+												"widthType": "Fluid"
 											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Employees that participated on EVP"
+											"name": "Data Card"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-0"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"description": {
+																		"value_i18n": {
+																			"en_US": ""
+																		}
+																	},
+																	"fragmentImageClassPKReference": {
+																		"classPKReferences": {
+																			"en_US": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/heart_icon.svg$]"
+																			}
+																		},
+																		"fragmentImageConfiguration": {
+																			"landscapeMobile": "auto",
+																			"portraitMobile": "auto",
+																			"tablet": "auto"
+																		}
+																	},
+																	"title": {
+																		"value": "heart_icon"
+																	}
+																},
+																"fragmentLink": {
+																}
 															}
 														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"textAlign": "center"
+													],
+													"fragmentStyle": {
+														"marginBottom": "3",
+														"textAlign": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
 											},
-											"indexed": true
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"textAlign": ""
+													},
+													"indexed": true,
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fixed"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "h2"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "1064"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"fontWeight": "fontWeightBold",
+																"marginBottom": "2",
+																"textAlign": "center",
+																"textColor": "colorNeutral10"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "text-paragraph"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Number of nonprofits served"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"textAlign": "center"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"backgroundColor": "colorNeutral1",
+												"borderWidth": "",
+												"height": "180px",
+												"maxHeight": "180px",
+												"maxWidth": "208px",
+												"paddingTop": "4",
+												"textAlign": "",
+												"width": "208px"
+											},
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"contentDisplay": "FlexColumn",
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 2,
+												"widthType": "Fluid"
+											},
+											"name": "Data Card"
 										},
-										"type": "Fragment"
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-0"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"description": {
+																		"value_i18n": {
+																			"en_US": ""
+																		}
+																	},
+																	"fragmentImageClassPKReference": {
+																		"classPKReferences": {
+																			"en_US": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/community_icon.svg$]"
+																			}
+																		},
+																		"fragmentImageConfiguration": {
+																			"landscapeMobile": "auto",
+																			"portraitMobile": "auto",
+																			"tablet": "auto"
+																		}
+																	},
+																	"title": {
+																		"value": "community_icon"
+																	}
+																},
+																"fragmentLink": {
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "3",
+														"textAlign": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"textAlign": ""
+													},
+													"indexed": true,
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fixed"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "h2"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "1229"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"fontWeight": "fontWeightBold",
+																"marginBottom": "2",
+																"textAlign": "center",
+																"textColor": "colorNeutral10"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "text-paragraph"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Employees that participated on EVP"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"textAlign": "center"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
 									}
 								],
 								"type": "Section"

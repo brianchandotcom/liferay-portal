@@ -1,0 +1,27 @@
+.evp-welcome-banner {
+	height: 176px;
+}
+
+.evp-welcome-img {
+	border-bottom-left-radius: var(--border-radius-xl);
+	border-top-left-radius: var(--border-radius-xl);
+	object-fit: cover;
+	right: 0;
+}
+
+.evp-welcome-text {
+	font-size: var(--h2-font-size);
+	z-index: 1;
+}
+
+@media (min-width: 768px) {
+	.evp-welcome-text {
+		font-size: var(--h1-font-size);
+	}
+}
+
+@media (min-width: 992px) {
+	.evp-welcome-text {
+		font-size: var(--display4-size);
+	}
+}

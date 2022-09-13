@@ -61,8 +61,6 @@ public class FolderSearchFacetDisplayContextTest {
 		).when(
 			_facet
 		).getFacetCollector();
-
-		_order = "count:desc";
 	}
 
 	@Test
@@ -253,15 +251,13 @@ public class FolderSearchFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermValueAscending() throws Exception {
-		_order = "key:asc";
-
 		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
 			"zeroFolderId", "alpha", "delta", "beta");
 
 		_setUpMultipleTermCollectors(termCollectors);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			createDisplayContext(null);
+			createDisplayContext(null, "key:asc");
 
 		List<FolderSearchFacetTermDisplayContext>
 			folderSearchFacetTermDisplayContexts =
@@ -278,15 +274,13 @@ public class FolderSearchFacetDisplayContextTest {
 
 	@Test
 	public void testOrderByTermValueDescending() throws Exception {
-		_order = "key:desc";
-
 		List<TermCollector> termCollectors = _addFoldersAndCreateTermCollectors(
 			"zeroFolderId", "alpha", "delta", "beta");
 
 		_setUpMultipleTermCollectors(termCollectors);
 
 		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
-			createDisplayContext(null);
+			createDisplayContext(null, "key:desc");
 
 		List<FolderSearchFacetTermDisplayContext>
 			folderSearchFacetTermDisplayContexts =
@@ -339,6 +333,13 @@ public class FolderSearchFacetDisplayContextTest {
 			String facetParam)
 		throws Exception {
 
+		return createDisplayContext(facetParam, "count:desc");
+	}
+
+	protected FolderSearchFacetDisplayContext createDisplayContext(
+			String facetParam, String order)
+		throws Exception {
+
 		FolderSearchFacetDisplayContextBuilder
 			folderSearchFacetDisplayContextBuilder =
 				new FolderSearchFacetDisplayContextBuilder(getRenderRequest());
@@ -349,7 +350,7 @@ public class FolderSearchFacetDisplayContextTest {
 		folderSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);
 		folderSearchFacetDisplayContextBuilder.setFrequencyThreshold(0);
 		folderSearchFacetDisplayContextBuilder.setMaxTerms(0);
-		folderSearchFacetDisplayContextBuilder.setOrder(_order);
+		folderSearchFacetDisplayContextBuilder.setOrder(order);
 		folderSearchFacetDisplayContextBuilder.setParameterName(
 			_facet.getFieldId());
 		folderSearchFacetDisplayContextBuilder.setParameterValue(facetParam);
@@ -520,6 +521,5 @@ public class FolderSearchFacetDisplayContextTest {
 		FacetCollector.class);
 	private final FolderTitleLookup _folderTitleLookup = Mockito.mock(
 		FolderTitleLookup.class);
-	private String _order;
 
 }

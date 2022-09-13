@@ -439,6 +439,17 @@ public class ObjectRelationshipLocalServiceTest {
 
 		Assert.assertNotNull(reverseObjectRelationship);
 
+		Assert.assertEquals(
+			objectRelationship.getDBTableName(),
+			reverseObjectRelationship.getDBTableName());
+
+		Assert.assertEquals(
+			objectRelationship.getDeletionType(),
+			reverseObjectRelationship.getDeletionType());
+
+		Assert.assertEquals(
+			objectRelationship.getType(), reverseObjectRelationship.getType());
+
 		try {
 			_objectRelationshipLocalService.deleteObjectRelationship(
 				reverseObjectRelationship);

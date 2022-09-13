@@ -30,15 +30,13 @@ type FooterProps = {
 const Footer: React.FC<FooterProps> = ({
 	onClose,
 	onSubmit,
-	primaryButtonProps,
+	primaryButtonProps: {loading, ...primaryButtonProps} = {},
 	secondaryButtonProps,
 }) => (
 	<ClayButton.Group spaced>
 		<ClayButton
 			{...primaryButtonProps}
-			disabled={
-				primaryButtonProps?.disabled || primaryButtonProps?.loading
-			}
+			disabled={primaryButtonProps?.disabled || loading}
 			displayType="primary"
 			onClick={onSubmit}
 		>

@@ -94,17 +94,25 @@ const useFormActions = (): Form => {
 	): Promise<T> => {
 		setSubmitting(true);
 
-		const form = {...data};
+		try {
+			const form = {...data};
 
-		delete form.id;
+			delete form.id;
 
-		const fn = data.id ? () => update(data.id, form) : () => create(form);
+			const fn = data.id
+				? () => update(data.id, form)
+				: () => create(form);
 
-		const response = await fn();
+			const response = await fn();
 
-		setSubmitting(false);
+			setSubmitting(false);
 
-		return response;
+			return response;
+		} catch (error) {
+			setSubmitting(false);
+
+			throw error;
+		}
 	};
 
 	const onSubmitAndSave = async (

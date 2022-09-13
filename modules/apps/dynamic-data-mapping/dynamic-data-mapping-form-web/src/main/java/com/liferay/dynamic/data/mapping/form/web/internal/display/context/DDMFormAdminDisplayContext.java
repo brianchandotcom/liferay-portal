@@ -947,6 +947,13 @@ public class DDMFormAdminDisplayContext {
 		).build();
 	}
 
+	public ObjectDefinition getObjectDefinition(DDMFormInstance ddmFormInstance)
+		throws PortalException {
+
+		return _objectDefinitionLocalService.fetchObjectDefinition(
+			ddmFormInstance.getObjectDefinitionId());
+	}
+
 	public String getObjectDefinitionLabel(
 			DDMFormInstance ddmFormInstance, Locale locale)
 		throws PortalException {
@@ -1227,16 +1234,17 @@ public class DDMFormAdminDisplayContext {
 		return false;
 	}
 
-	public boolean hasValidMappedObject(DDMFormInstance ddmFormInstance)
+	public boolean hasValidMappedObject(
+			DDMFormInstance ddmFormInstance, ObjectDefinition objectDefinition)
 		throws PortalException {
 
 		if (!Objects.equals(ddmFormInstance.getStorageType(), "object")) {
 			return true;
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				ddmFormInstance.getObjectDefinitionId());
+		if (objectDefinition == null) {
+			return false;
+		}
 
 		return objectDefinition.isActive();
 	}

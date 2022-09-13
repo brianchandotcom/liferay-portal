@@ -71,6 +71,8 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
 import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -935,6 +937,21 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	 */
 	protected T removeImpl(T model) {
 		throw new UnsupportedOperationException();
+	}
+
+	protected String sanitize(
+			List<Sanitizer> sanitizers, long companyId, long groupId,
+			long userId, String className, long classPK, String contentType,
+			String[] modes, String content, Map<String, Object> options)
+		throws SanitizerException {
+
+		for (Sanitizer sanitizer : sanitizers) {
+			content = sanitizer.sanitize(
+				companyId, groupId, userId, className, classPK, contentType,
+				modes, content, options);
+		}
+
+		return content;
 	}
 
 	protected void setDBColumnNames(Map<String, String> dbColumnNames) {

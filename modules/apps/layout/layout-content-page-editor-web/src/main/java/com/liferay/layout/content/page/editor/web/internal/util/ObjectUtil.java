@@ -17,6 +17,13 @@ package com.liferay.layout.content.page.editor.web.internal.util;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -54,7 +61,37 @@ public class ObjectUtil {
 			return true;
 		}
 
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			if (_hasPermissions(objectDefinition)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private static boolean _hasPermissions(ObjectDefinition objectDefinition) {
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			objectDefinition.getCompanyId(), objectDefinition.getPortletId());
+
+		if (!portlet.isActive()) {
+			return false;
+		}
+
+		try {
+			return PortletPermissionUtil.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				portlet.getRootPortletId(), ActionKeys.VIEW);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(ObjectUtil.class);
 
 }

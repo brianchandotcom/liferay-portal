@@ -118,32 +118,6 @@ public class CommerceDiscountRelLocalServiceImpl
 	}
 
 	@Override
-	public CommerceDiscountRel deleteCommerceDiscountRel(
-			CommerceDiscountRel commerceDiscountRel)
-		throws PortalException {
-
-		CommerceDiscount commerceDiscount =
-			_commerceDiscountPersistence.findByPrimaryKey(
-				commerceDiscountRel.getCommerceDiscountId());
-
-		return commerceDiscountRelLocalService.deleteCommerceDiscountRel(
-			commerceDiscount, commerceDiscountRel);
-	}
-
-	@Override
-	public CommerceDiscountRel deleteCommerceDiscountRel(
-			long commerceDiscountRelId)
-		throws PortalException {
-
-		CommerceDiscountRel commerceDiscountRel =
-			commerceDiscountRelPersistence.findByPrimaryKey(
-				commerceDiscountRelId);
-
-		return commerceDiscountRelLocalService.deleteCommerceDiscountRel(
-			commerceDiscountRel);
-	}
-
-	@Override
 	public void deleteCommerceDiscountRels(CommerceDiscount commerceDiscount)
 		throws PortalException {
 
@@ -158,20 +132,6 @@ public class CommerceDiscountRelLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommerceDiscountRels(long commerceDiscountId)
-		throws PortalException {
-
-		List<CommerceDiscountRel> commerceDiscountRels =
-			commerceDiscountRelPersistence.findByCommerceDiscountId(
-				commerceDiscountId);
-
-		for (CommerceDiscountRel commerceDiscountRel : commerceDiscountRels) {
-			commerceDiscountRelLocalService.deleteCommerceDiscountRel(
-				commerceDiscountRel);
-		}
-	}
-
-	@Override
 	public void deleteCommerceDiscountRels(String className, long classPK)
 		throws PortalException {
 
@@ -181,7 +141,7 @@ public class CommerceDiscountRelLocalServiceImpl
 
 		for (CommerceDiscountRel commerceDiscountRel : commerceDiscountRels) {
 			commerceDiscountRelLocalService.deleteCommerceDiscountRel(
-				commerceDiscountRel);
+				commerceDiscountRel.getCommerceDiscount(), commerceDiscountRel);
 		}
 	}
 

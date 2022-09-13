@@ -14,16 +14,15 @@
 
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayPopover from '@clayui/popover';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React from 'react';
 
 import {useSelector} from '../../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../../app/selectors/selectLanguageId';
 import {getEditableLocalizedValue} from '../../../../../../../app/utils/getEditableLocalizedValue';
 import CurrentLanguageFlag from '../../../../../../../common/components/CurrentLanguageFlag';
+import {PopoverTooltip} from '../../../../../../../common/components/PopoverTooltip';
 import useControlledState from '../../../../../../../core/hooks/useControlledState';
-import {useId} from '../../../../../../../core/hooks/useId';
 
 export function EmptyCollectionOptions({
 	collectionEmptyCollectionMessageId,
@@ -55,22 +54,28 @@ export function EmptyCollectionOptions({
 
 	return (
 		<>
-			{
-				<div className="align-items-center d-flex mb-2 pt-1">
-					<div>
-						<ClayCheckbox
-							checked={displayMessage}
-							className="mb-0"
-							label={Liferay.Language.get(
-								'show-empty-collection-alert'
-							)}
-							onChange={handleDisplayMessageChanged}
-						/>
-					</div>
+			<div className="align-items-center d-flex mb-2 pt-1">
+				<ClayCheckbox
+					checked={displayMessage}
+					containerProps={{className: 'mb-0'}}
+					label={Liferay.Language.get('show-empty-collection-alert')}
+					onChange={handleDisplayMessageChanged}
+				/>
 
-					<EmptyCollectionHelp />
-				</div>
-			}
+				<PopoverTooltip
+					alignPosition="left"
+					content={Liferay.Language.get(
+						'information-message-displayed-in-view-mode-when-the-collection-is-empty-or-no-results-match-the-applied-filters'
+					)}
+					header={Liferay.Language.get('empty-collection-alert')}
+					trigger={
+						<ClayIcon
+							className="ml-2 text-secondary"
+							symbol="question-circle-full"
+						/>
+					}
+				/>
+			</div>
 
 			{displayMessage && (
 				<ClayForm.Group small>
@@ -110,44 +115,6 @@ export function EmptyCollectionOptions({
 				</ClayForm.Group>
 			)}
 		</>
-	);
-}
-
-function EmptyCollectionHelp() {
-	const id = useId();
-
-	const [showPopover, setShowPopover] = useState(false);
-
-	return (
-		<ClayPopover
-			alignPosition="top-right"
-			className="position-fixed"
-			disableScroll
-			header={Liferay.Language.get('empty-collection-alert')}
-			id={id}
-			onShowChange={setShowPopover}
-			role="tooltip"
-			show={showPopover}
-			trigger={
-				<span
-					aria-describedby={id}
-					onBlur={() => setShowPopover(false)}
-					onFocus={() => setShowPopover(true)}
-					onMouseEnter={() => setShowPopover(true)}
-					onMouseLeave={() => setShowPopover(false)}
-					tabIndex="0"
-				>
-					<ClayIcon
-						className="ml-2 text-secondary"
-						symbol="question-circle-full"
-					/>
-				</span>
-			}
-		>
-			{Liferay.Language.get(
-				'information-message-displayed-in-view-mode-when-the-collection-is-empty-or-no-results-match-the-applied-filters'
-			)}
-		</ClayPopover>
 	);
 }
 

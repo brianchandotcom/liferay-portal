@@ -178,6 +178,15 @@ export function getLocalizedText(value, locale) {
 	else if (value[Liferay.ThemeDisplay.getDefaultLanguageId()]) {
 		return value[Liferay.ThemeDisplay.getDefaultLanguageId()];
 	}
+	else if (
+		value[
+			formatLocaleWithDashes(Liferay.ThemeDisplay.getDefaultLanguageId())
+		]
+	) {
+		return value[
+			formatLocaleWithDashes(Liferay.ThemeDisplay.getDefaultLanguageId())
+		];
+	}
 	else if (Object.keys(value).length) {
 		return value[Object.keys(value)[0]];
 	}

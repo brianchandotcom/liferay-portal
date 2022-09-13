@@ -16,7 +16,11 @@ import ErrorBoundary from '../shared/ErrorBoundary';
 import ThemeContext from '../shared/ThemeContext';
 import {COPY_BUTTON_CSS_CLASS} from '../utils/constants';
 import {fetchData} from '../utils/fetch';
-import {renameKeys} from '../utils/language';
+import {
+	formatLocaleWithUnderscores,
+	renameKeys,
+	transformLocale,
+} from '../utils/language';
 import {openInitialSuccessToast} from '../utils/toasts';
 import EditSXPElementForm from './EditSXPElementForm';
 
@@ -33,30 +37,31 @@ import EditSXPElementForm from './EditSXPElementForm';
  * @returns {object}
  */
 const getDescriptionI18n = (sxpElementResponse, defaultLocale) => {
-	let descriptionObject = sxpElementResponse.description_i18n || {
-		[defaultLocale]: sxpElementResponse.description,
-	};
+	let descriptionObject = renameKeys(
+		sxpElementResponse.description_i18n,
+		transformLocale
+	);
 
 	if (!Object.keys(descriptionObject).length) {
 		descriptionObject = {[defaultLocale]: ''};
 	}
 
-	return renameKeys(descriptionObject, (str) => str.replace('-', '_'));
+	return renameKeys(descriptionObject, formatLocaleWithUnderscores);
 };
 
 /**
  * See `getDescriptionI18n`.
  * @param {object} sxpElementResponse The response object from the GET
  * 	sxp-elements
- * @param {string} defaultLocale The default locale
  * @returns {object}
  */
-const getTitleI18n = (sxpElementResponse, defaultLocale) => {
-	const titleObject = sxpElementResponse.title_i18n || {
-		[defaultLocale]: sxpElementResponse.title,
-	};
+const getTitleI18n = (sxpElementResponse) => {
+	const titleObject = renameKeys(
+		sxpElementResponse.title_i18n,
+		transformLocale
+	);
 
-	return renameKeys(titleObject, (str) => str.replace('-', '_'));
+	return renameKeys(titleObject, formatLocaleWithUnderscores);
 };
 
 /**
@@ -72,7 +77,7 @@ const transformToSXPElementExportFormat = (
 	return {
 		description_i18n: getDescriptionI18n(sxpElementResponse, defaultLocale),
 		elementDefinition: sxpElementResponse.elementDefinition,
-		title_i18n: getTitleI18n(sxpElementResponse, defaultLocale),
+		title_i18n: getTitleI18n(sxpElementResponse),
 		type: sxpElementResponse.type,
 	};
 };
@@ -126,15 +131,7 @@ export default function ({
 			<div className="edit-sxp-element-root">
 				<ErrorBoundary>
 					<EditSXPElementForm
-						initialDescription={getDescriptionI18n(
-							sxpElementResponse,
-							defaultLocale
-						)}
 						initialElementJSONEditorValue={transformToSXPElementExportFormat(
-							sxpElementResponse,
-							defaultLocale
-						)}
-						initialTitle={getTitleI18n(
 							sxpElementResponse,
 							defaultLocale
 						)}

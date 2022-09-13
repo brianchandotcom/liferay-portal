@@ -119,7 +119,6 @@ public class KBTemplatesManagementToolbarDisplayContext {
 					).setRedirect(
 						PortalUtil.getCurrentURL(_httpServletRequest)
 					).buildPortletURL());
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "add-template"));
 			}
@@ -143,7 +142,6 @@ public class KBTemplatesManagementToolbarDisplayContext {
 					).setRedirect(
 						PortalUtil.getCurrentURL(_httpServletRequest)
 					).buildPortletURL());
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "new"));
 			}

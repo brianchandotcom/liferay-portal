@@ -10,7 +10,7 @@
 	},
 	"devDependencies": {
 		"css-loader": "^5.0.0",
-		"generator-liferay-fragments": "2.0.0-rc3",
+		"generator-liferay-fragments": "2.0.2",
 		"style-loader": "^2.0.0"
 	},
 	"name": "@liferay/site-initializer-ap-fragments",

@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import classNames from 'classnames';
 import React, {Fragment} from 'react';
 
 import Form from '../../../../../components/Form';
@@ -47,6 +48,7 @@ type BuildFactorListProps = {
 	factorItems: TestrayFactor[];
 	factorOptionsList: TestrayFactorOption[][];
 	fields: Fields[];
+	isModal?: boolean;
 	register: UseFormRegister<any>;
 	remove: UseFieldArrayRemove;
 	update: UseFieldArrayUpdate<any>;
@@ -95,6 +97,7 @@ const BuildFactorList: React.FC<BuildFactorListProps> = ({
 	factorItems,
 	factorOptionsList,
 	fields,
+	isModal,
 	register,
 	remove,
 	update,
@@ -109,7 +112,12 @@ const BuildFactorList: React.FC<BuildFactorListProps> = ({
 			{fields.map((field, index) => (
 				<Fragment key={field.id}>
 					<ClayLayout.Col size={12}>
-						<ClayLayout.Row className="align-items-center d-flex justify-content-space-between">
+						<ClayLayout.Row
+							className={classNames({
+								' align-items-center d-flex justify-content-space-between': !isModal,
+								' flex-column justify-content-space-between': isModal,
+							})}
+						>
 							{factorItems.map((factorItem, factorIndex) => {
 								const factorOptions: TestrayFactorOption[] =
 									factorOptionsList[factorIndex] || [];
@@ -126,7 +134,10 @@ const BuildFactorList: React.FC<BuildFactorListProps> = ({
 									) || 0;
 
 								return (
-									<ClayLayout.Col key={factorIndex} size={3}>
+									<ClayLayout.Col
+										key={factorIndex}
+										size={isModal && index === 0 ? 6 : 3}
+									>
 										<Form.Select
 											defaultValue={currentFactorOptionId}
 											disabled={field.disabled}

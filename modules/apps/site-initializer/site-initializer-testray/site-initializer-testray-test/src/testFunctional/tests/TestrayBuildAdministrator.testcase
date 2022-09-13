@@ -132,7 +132,6 @@ definition {
 		task ("Then the Routine should appear on the list") {
 			Testray.assertItemName(key_name = "Builds_1 Project");
 		}
-
 	}
 
 	@description = "This is a test for LPS-157540 - Verify if as an Administrator I should be able to archive a build "
@@ -176,7 +175,6 @@ definition {
 		task ("Then the build should not appear on the list") {
 			Testray.assertItemNotPresent(itemName = "Builds_1 Project");
 		}
-
 	}
 
 	@description = "This is a test for LPS-156575 - Verify if as an Administrator I should be able to delete a build that contains runs"
@@ -220,7 +218,6 @@ definition {
 		task ("Then the build should appear on the list with name edited") {
 			Testray.assertItemName(key_name = "Builds_1 Project Edited");
 		}
-
 	}
 
 	@description = "This is a test for LPS-156546 - Verify if as an Administrator I should not be able to add a duplicate build"
@@ -251,7 +248,6 @@ definition {
 		task ("Then an error message is displayed") {
 			Alert.viewErrorMessage(errorMessage = "An unexpected error ocurred");
 		}
-
 	}
 
 	@description = "This is a test for LPS-156455 - Verify if as an Administrator cannot archive Build"
@@ -297,7 +293,6 @@ definition {
 		task ("Then the promoted build should appear on the list") {
 			TestrayBuild.verifyPromoteBuild();
 		}
-
 	}
 
 	@description = "This is a test for LPS-156585 - Verify if as an Administrator I should be able to sort the Builds Index"
@@ -306,6 +301,15 @@ definition {
 	test AdminCanSortBuildByName {
 
 		// TODO LPS-156585 AdminCanSortCompilationBuildName pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156586 - Verify if as an Administrator I should be able to sort the Builds Promoted"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AdminCanSortBuildPromoted {
+
+		// TODO LPS-156586 AdminCanSortBuildPromoted pending implementation
 
 	}
 

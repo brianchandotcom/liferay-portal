@@ -1,9 +1,13 @@
+import java.util.regex.Pattern
+
 task runGradleTest
 
 runGradleTest {
-	dependsOn ":sample-iframe:buildClientExtension"
-	dependsOn ":sample-theme-css:buildClientExtension"
-	dependsOn ":sample-theme-favicon:buildClientExtension"
+	dependsOn ":sample-custom-element:build"
+	dependsOn ":sample-iframe:build"
+	dependsOn ":sample-react-app:build"
+	dependsOn ":sample-theme-css:build"
+	dependsOn ":sample-theme-favicon:build"
 
 	doLast {
 		Project sampleIFrameProject = project(":sample-iframe")
@@ -38,5 +42,23 @@ runGradleTest {
 		File clientExtensionYamlFile = sampleThemeFaviconProject.file("client-extension.yaml")
 
 		assert createClientExtensionConfigTask.inputs.files.asPath == clientExtensionYamlFile.path
+
+		Project sampleCustomElementProject = project(":sample-custom-element")
+
+		assert sampleCustomElementProject.file("dist/sample-custom-element.zip").exists()
+
+		Project sampleReactAppProject = project(":sample-react-app")
+
+		FileTree sampleReactAppZipFileTree = zipTree(sampleReactAppProject.file("dist/sample-react-app.zip"))
+
+		File mainJSFile = sampleReactAppZipFileTree.files.find {
+			it.name.matches("main.*.js")
+		}
+
+		assert mainJSFile.exists()
+
+		File sampleReactAppConfigFile = new File(sampleReactAppProject.buildDir, "sample-react-app.client-extension-config.json")
+
+		assert Pattern.compile(".*static/js/main.[0-9a-z]+.js.*", Pattern.DOTALL).matcher(sampleReactAppConfigFile.text).matches()
 	}
 }

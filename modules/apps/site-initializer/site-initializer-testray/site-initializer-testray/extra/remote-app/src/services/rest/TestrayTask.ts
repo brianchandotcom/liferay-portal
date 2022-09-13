@@ -12,42 +12,48 @@
  * details.
  */
 
-import {APIResponse, TestrayTask} from './types';
+import yupSchema from '../../schema/yup';
+import Rest from './Rest';
+import {TestrayTask} from './types';
 
-const nestedFieldsParam =
-	'nestedFields=build.project,build.routine&nestedFieldsDepth=2';
+type TaskForm = typeof yupSchema.task.__outputType & {projectId: number};
 
-const tasksResource = `/tasks?${nestedFieldsParam}`;
-
-const getTaskQuery = (taskId: number | string | undefined) =>
-	`/tasks/${taskId}?${nestedFieldsParam}`;
-
-const getTaskTransformData = (testrayTask: TestrayTask): TestrayTask => ({
-	...testrayTask,
-	build: testrayTask.r_buildToTasks_c_build
-		? {
-				...testrayTask.r_buildToTasks_c_build,
-				productVersion:
-					testrayTask.r_buildToTasks_c_build
-						.r_productVersionToBuilds_c_productVersion,
-				project:
-					testrayTask.r_buildToTasks_c_build
-						.r_projectToBuilds_c_project,
-				routine:
-					testrayTask.r_buildToTasks_c_build
-						.r_routineToBuilds_c_routine,
-		  }
-		: undefined,
-});
-
-const getTasksTransformData = (response: APIResponse<TestrayTask>) => ({
-	...response,
-	items: response?.items?.map(getTaskTransformData),
-});
-
-export {
-	tasksResource,
-	getTaskQuery,
-	getTaskTransformData,
-	getTasksTransformData,
-};
+class TestrayTaskImpl extends Rest<TaskForm, TestrayTask> {
+	constructor() {
+		super({
+			adapter: ({
+				build: r_buildToTasks_c_buildId,
+				caseTypes: taskToTasksCaseTypes,
+				dueStatus,
+				name,
+				userToTasks,
+			}) => ({
+				dueStatus,
+				name,
+				r_buildToTasks_c_buildId,
+				taskToTasksCaseTypes,
+				userToTasks,
+			}),
+			nestedFields: 'build.project,build.routine',
+			transformData: (testrayTask) => ({
+				...testrayTask,
+				build: testrayTask.r_buildToTasks_c_build
+					? {
+							...testrayTask.r_buildToTasks_c_build,
+							productVersion:
+								testrayTask.r_buildToTasks_c_build
+									.r_productVersionToBuilds_c_productVersion,
+							project:
+								testrayTask.r_buildToTasks_c_build
+									.r_projectToBuilds_c_project,
+							routine:
+								testrayTask.r_buildToTasks_c_build
+									.r_routineToBuilds_c_routine,
+					  }
+					: undefined,
+			}),
+			uri: 'tasks',
+		});
+	}
+}
+export const testrayTaskImpl = new TestrayTaskImpl();

@@ -31,3 +31,4 @@ Import-Package:\
 	!org.springframework.web.*,\
 	\
 	*
+-dsannotations-options: inherit

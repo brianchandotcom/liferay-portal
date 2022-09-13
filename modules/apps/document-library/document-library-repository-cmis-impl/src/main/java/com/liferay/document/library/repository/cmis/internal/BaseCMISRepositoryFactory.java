@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
@@ -83,15 +85,12 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 
 		T baseRepository = createBaseRepository();
 
-		RepositoryLocalService repositoryLocalService =
-			getRepositoryLocalService();
-
 		com.liferay.portal.kernel.model.Repository repository =
 			repositoryLocalService.getRepository(repositoryId);
 
 		CMISRepository cmisRepository = new CMISRepository(
 			_cmisRepositoryConfiguration, baseRepository,
-			_cmisSearchQueryBuilder, getCMISSessionCache(), getLockManager());
+			_cmisSearchQueryBuilder, cmisSessionCache, lockManager);
 
 		baseRepository.setCmisRepository(cmisRepository);
 
@@ -106,48 +105,56 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 		return baseRepository;
 	}
 
-	protected abstract AssetEntryLocalService getAssetEntryLocalService();
-
-	protected abstract CMISSessionCache getCMISSessionCache();
-
-	protected abstract CompanyLocalService getCompanyLocalService();
-
-	protected abstract DLAppHelperLocalService getDLAppHelperLocalService();
-
-	protected abstract DLFolderLocalService getDLFolderLocalService();
-
-	protected abstract LockManager getLockManager();
-
-	protected abstract RepositoryEntryLocalService
-		getRepositoryEntryLocalService();
-
-	protected abstract RepositoryLocalService getRepositoryLocalService();
-
-	protected abstract UserLocalService getUserLocalService();
-
 	protected void setCMISRepositoryConfiguration(
 		CMISRepositoryConfiguration cmisRepositoryConfiguration) {
 
 		_cmisRepositoryConfiguration = cmisRepositoryConfiguration;
 	}
 
+	@Reference
+	protected AssetEntryLocalService assetEntryLocalService;
+
+	@Reference
+	protected CMISSessionCache cmisSessionCache;
+
+	@Reference
+	protected CompanyLocalService companyLocalService;
+
+	@Reference
+	protected DLAppHelperLocalService dlAppHelperLocalService;
+
+	@Reference
+	protected DLFolderLocalService dlFolderLocalService;
+
+	@Reference
+	protected LockManager lockManager;
+
+	@Reference
+	protected RepositoryEntryLocalService repositoryEntryLocalService;
+
+	@Reference
+	protected RepositoryLocalService repositoryLocalService;
+
+	@Reference
+	protected UserLocalService userLocalService;
+
 	private void _setupRepository(
 		long repositoryId,
 		com.liferay.portal.kernel.model.Repository repository,
 		BaseRepository baseRepository) {
 
-		baseRepository.setAssetEntryLocalService(getAssetEntryLocalService());
+		baseRepository.setAssetEntryLocalService(assetEntryLocalService);
 		baseRepository.setCompanyId(repository.getCompanyId());
-		baseRepository.setCompanyLocalService(getCompanyLocalService());
-		baseRepository.setDLAppHelperLocalService(getDLAppHelperLocalService());
-		baseRepository.setDLFolderLocalService(getDLFolderLocalService());
+		baseRepository.setCompanyLocalService(companyLocalService);
+		baseRepository.setDLAppHelperLocalService(dlAppHelperLocalService);
+		baseRepository.setDLFolderLocalService(dlFolderLocalService);
 		baseRepository.setGroupId(repository.getGroupId());
 		baseRepository.setRepositoryEntryLocalService(
-			getRepositoryEntryLocalService());
+			repositoryEntryLocalService);
 		baseRepository.setRepositoryId(repositoryId);
 		baseRepository.setTypeSettingsProperties(
 			repository.getTypeSettingsProperties());
-		baseRepository.setUserLocalService(getUserLocalService());
+		baseRepository.setUserLocalService(userLocalService);
 	}
 
 	private CMISRepositoryConfiguration _cmisRepositoryConfiguration;

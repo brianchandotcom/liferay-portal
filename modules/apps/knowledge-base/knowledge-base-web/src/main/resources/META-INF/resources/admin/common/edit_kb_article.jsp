@@ -51,7 +51,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 	/>
 </c:if>
 
-<aui:form action="<%= editKBArticleDisplayContext.getUpdateKBArticleURL() %>" method="post" name="fm">
+<aui:form action="<%= editKBArticleDisplayContext.getUpdateKBArticleURL() %>" cssClass="edit-knowledge-base-article-form" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= editKBArticleDisplayContext.getRedirect() %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 

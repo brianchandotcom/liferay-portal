@@ -70,4 +70,31 @@ $controlMenuHeight: 56px;
 		+ .knowledge-base-admin-content {
 		transition: none;
 	}
+
+	.edit-knowledge-base-article-form {
+		.contextual-sidebar {
+			border-left: 1px $gray-300 solid;
+			box-shadow: none;
+			overflow-y: scroll;
+		}
+
+		.sidebar-body {
+			.collapse-icon {
+				border-bottom: 1px solid $light;
+				color: $secondary;
+
+				&:hover {
+					color: $dark;
+				}
+
+				.collapse-icon-open {
+					color: $dark;
+				}
+			}
+
+			.panel {
+				margin-bottom: 0;
+			}
+		}
+	}
 }

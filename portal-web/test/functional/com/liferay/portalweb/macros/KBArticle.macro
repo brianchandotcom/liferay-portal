@@ -331,6 +331,28 @@ definition {
 		Button.clickCancel();
 	}
 
+	macro closePageTreePanel {
+		if ("${section}" == "Folders and Articles") {
+			if (IsElementPresent(key_header = "${section}", locator1 = "KnowledgeBase#PAGE_TREE_PANEL_HEADER")) {
+				Click.javaScriptClick(locator1 = "KnowledgeBase#PAGE_TREE_FOLDERS_AND_ARTICLES");
+			}
+		}
+
+		if ("${section}" == "Templates") {
+			if (IsElementPresent(key_header = "${section}", locator1 = "KnowledgeBase#PAGE_TREE_PANEL_HEADER")) {
+				Click.javaScriptClick(locator1 = "KnowledgeBase#PAGE_TREE_TEMPLATES");
+			}
+		}
+
+		if ("${section}" == "Suggestions") {
+			if (IsElementPresent(key_header = "${section}", locator1 = "KnowledgeBase#PAGE_TREE_PANEL_HEADER")) {
+				Click.javaScriptClick(locator1 = "KnowledgeBase#PAGE_TREE_SUGGESTIONS");
+			}
+		}
+
+		WaitForVisible(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
+	}
+
 	macro configureEmailCP {
 		Click(locator1 = "Portlet#OPTIONS_ICON");
 

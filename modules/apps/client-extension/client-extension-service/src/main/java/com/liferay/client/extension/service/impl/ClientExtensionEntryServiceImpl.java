@@ -76,8 +76,8 @@ public class ClientExtensionEntryServiceImpl
 		throws PortalException {
 
 		ClientExtensionEntry clientExtensionEntry =
-			clientExtensionEntryPersistence.findByC_ERC(
-				companyId, externalReferenceCode);
+			clientExtensionEntryPersistence.findByERC_C(
+				externalReferenceCode, companyId);
 
 		return deleteClientExtensionEntry(
 			clientExtensionEntry.getClientExtensionEntryId());
@@ -90,8 +90,8 @@ public class ClientExtensionEntryServiceImpl
 		throws PortalException {
 
 		ClientExtensionEntry clientExtensionEntry =
-			clientExtensionEntryPersistence.fetchByC_ERC(
-				companyId, externalReferenceCode);
+			clientExtensionEntryPersistence.fetchByERC_C(
+				externalReferenceCode, companyId);
 
 		if (clientExtensionEntry != null) {
 			_clientExtensionEntryModelResourcePermission.check(

@@ -14,7 +14,6 @@
 
 package com.liferay.client.extension.service.impl;
 
-import com.liferay.client.extension.exception.DuplicateClientExtensionEntryExternalReferenceCodeException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.service.base.ClientExtensionEntryLocalServiceBaseImpl;
@@ -95,9 +94,6 @@ public class ClientExtensionEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		_validateExternalReferenceCode(
-			user.getCompanyId(), externalReferenceCode);
-
 		_validateTypeSettings(typeSettings, null, type);
 
 		clientExtensionEntry.setExternalReferenceCode(externalReferenceCode);
@@ -135,7 +131,7 @@ public class ClientExtensionEntryLocalServiceImpl
 		ClientExtensionEntry clientExtensionEntry =
 			clientExtensionEntryLocalService.
 				fetchClientExtensionEntryByExternalReferenceCode(
-					user.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, user.getCompanyId());
 
 		if (clientExtensionEntry != null) {
 			return clientExtensionEntryLocalService.updateClientExtensionEntry(
@@ -464,24 +460,6 @@ public class ClientExtensionEntryLocalServiceImpl
 			ClientExtensionEntry.class.getName(),
 			clientExtensionEntry.getClientExtensionEntryId(),
 			clientExtensionEntry, serviceContext, new HashMap<>());
-	}
-
-	private void _validateExternalReferenceCode(
-			long companyId, String externalReferenceCode)
-		throws DuplicateClientExtensionEntryExternalReferenceCodeException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		ClientExtensionEntry clientExtensionEntry =
-			clientExtensionEntryLocalService.
-				fetchClientExtensionEntryByExternalReferenceCode(
-					companyId, externalReferenceCode);
-
-		if (clientExtensionEntry != null) {
-			throw new DuplicateClientExtensionEntryExternalReferenceCodeException();
-		}
 	}
 
 	private void _validateTypeSettings(

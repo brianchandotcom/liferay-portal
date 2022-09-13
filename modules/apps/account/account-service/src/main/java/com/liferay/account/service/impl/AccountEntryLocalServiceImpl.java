@@ -19,7 +19,6 @@ import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.exception.AccountEntryEmailAddressException;
 import com.liferay.account.exception.AccountEntryNameException;
 import com.liferay.account.exception.AccountEntryTypeException;
-import com.liferay.account.exception.DuplicateAccountEntryExternalReferenceCodeException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRelTable;
 import com.liferay.account.model.AccountEntryTable;
@@ -266,7 +265,7 @@ public class AccountEntryLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		AccountEntry accountEntry = fetchAccountEntryByExternalReferenceCode(
-			user.getCompanyId(), externalReferenceCode);
+			externalReferenceCode, user.getCompanyId());
 
 		if (accountEntry != null) {
 			return updateAccountEntry(
@@ -738,9 +737,6 @@ public class AccountEntryLocalServiceImpl
 
 			return accountEntry;
 		}
-
-		_validateExternalReferenceCode(
-			accountEntry.getAccountEntryId(), externalReferenceCode);
 
 		accountEntry.setExternalReferenceCode(externalReferenceCode);
 
@@ -1232,28 +1228,6 @@ public class AccountEntryLocalServiceImpl
 				emailAddress)) {
 
 			throw new AccountEntryEmailAddressException();
-		}
-	}
-
-	private void _validateExternalReferenceCode(
-			long accountEntryId, String externalReferenceCode)
-		throws PortalException {
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return;
-		}
-
-		AccountEntry accountEntry = getAccountEntry(accountEntryId);
-
-		accountEntry = fetchAccountEntryByExternalReferenceCode(
-			accountEntry.getCompanyId(), externalReferenceCode);
-
-		if (accountEntry == null) {
-			return;
-		}
-
-		if (accountEntry.getAccountEntryId() != accountEntryId) {
-			throw new DuplicateAccountEntryExternalReferenceCodeException();
 		}
 	}
 

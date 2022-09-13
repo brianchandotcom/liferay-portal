@@ -43,5 +43,8 @@ export {
 export {Toggle} from './components/Toggle';
 export {invalidateRequired, useForm, FormError} from './hooks/useForm';
 export {onActionDropdownItemClick} from './utils/fdsUtil';
+export {Panel} from './components/Panel/Panel';
+export {PanelBody, PanelSimpleBody} from './components/Panel/PanelBody';
+export {PanelHeader} from './components/Panel/PanelHeader';
 export * as API from './utils/api';
 export * from './utils/string';

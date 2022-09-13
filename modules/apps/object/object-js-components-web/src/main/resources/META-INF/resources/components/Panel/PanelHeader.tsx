@@ -18,67 +18,25 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import React from 'react';
 
-import {BoxType} from '../Layout/types';
-import PanelContextProvider, {
-	TYPES,
-	usePanelContext,
-} from './objectPanelContext';
+import {TYPES, usePanelContext} from './objectPanelContext';
 
 import './Panel.scss';
-
-const Panel: React.FC<React.HTMLAttributes<HTMLElement>> & {
-	Body: React.FC<IPanelBodyProps>;
-	Header: React.FC<IPanelHeaderProps>;
-	SimpleBody: React.FC<IPanelSimpleBodyProps>;
-} = ({children, className, ...otherProps}) => {
-	return (
-		<PanelContextProvider>
-			<div
-				{...otherProps}
-				className={classNames(className, 'object-admin-panel')}
-			>
-				{children}
-			</div>
-		</PanelContextProvider>
-	);
-};
-
-interface IPanelBodyProps extends React.HTMLAttributes<HTMLElement> {}
-
-const PanelBody: React.FC<IPanelBodyProps> = ({children, className}) => {
-	const [{expanded}] = usePanelContext();
-
-	return (
-		<>
-			{expanded && (
-				<div
-					className={classNames(
-						className,
-						'object-admin-panel__body'
-					)}
-				>
-					{children}
-				</div>
-			)}
-		</>
-	);
-};
 
 interface IPanelHeaderProps extends React.HTMLAttributes<HTMLElement> {
 	contentLeft?: React.ReactNode;
 	contentRight?: React.ReactNode;
 	disabled?: boolean;
 	title: string;
-	type: BoxType;
+	type: string;
 }
 
-const PanelHeader: React.FC<IPanelHeaderProps> = ({
+export function PanelHeader({
 	contentLeft,
 	contentRight,
 	disabled = false,
 	title,
 	type,
-}) => {
+}: IPanelHeaderProps) {
 	const [{expanded}, dispatch] = usePanelContext();
 
 	return (
@@ -159,39 +117,4 @@ const PanelHeader: React.FC<IPanelHeaderProps> = ({
 			</div>
 		</div>
 	);
-};
-
-interface IPanelSimpleBodyProps extends React.HTMLAttributes<HTMLElement> {
-	contentRight?: React.ReactNode;
-	title: string;
 }
-
-const PanelSimpleBody: React.FC<IPanelSimpleBodyProps> = ({
-	children,
-	contentRight,
-	title,
-}) => {
-	return (
-		<div className="object-admin-panel__simple-body">
-			<div className="object-admin-panel__simple-body__content-left">
-				<ClayButtonWithIcon displayType="unstyled" symbol="drag" />
-
-				<div>
-					<h5 className="object-admin-panel__title">{title}</h5>
-
-					<div>{children}</div>
-				</div>
-			</div>
-
-			<div className="object-admin-panel__simple-body__content-right">
-				{contentRight}
-			</div>
-		</div>
-	);
-};
-
-Panel.Body = PanelBody;
-Panel.Header = PanelHeader;
-Panel.SimpleBody = PanelSimpleBody;
-
-export default Panel;

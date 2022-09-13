@@ -51,6 +51,11 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 	/>
 </c:if>
 
+<div class="contextual-sidebar contextual-sidebar-visible sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
+	<div class="sidebar-body">
+	</div>
+</div>
+
 <div <%= editKBArticleDisplayContext.getFormCssClass() %>>
 	<aui:form action="<%= editKBArticleDisplayContext.getUpdateKBArticleURL() %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= editKBArticleDisplayContext.getRedirect() %>" />

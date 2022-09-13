@@ -205,6 +205,19 @@
 	<td></td>
 </tr>
 
+<!--ORDER_DEFAULTS-->
+
+<tr>
+	<td>DEFAULT_ACCOUNT_ADDRESS_HEADING</td>
+	<td>//div[contains(@class,'section')]//span[normalize-space(text())='${key_addressType} Addresses']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
 <!--USER-->
 
 <tr>

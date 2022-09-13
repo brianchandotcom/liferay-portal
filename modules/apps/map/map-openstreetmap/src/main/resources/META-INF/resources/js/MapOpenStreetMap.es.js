@@ -48,13 +48,13 @@ class MapOpenStreetMap extends MapBase {
 
 		super(args);
 
-		const {boundingBox, tileURI = defaultTileURI} = args;
+		const {tileURI = defaultTileURI} = args;
 
 		this._STATE_ = {
+			...this._STATE_,
 			tileURI,
 		};
 
-		this.boundingBox = boundingBox;
 		this._map = null;
 	}
 

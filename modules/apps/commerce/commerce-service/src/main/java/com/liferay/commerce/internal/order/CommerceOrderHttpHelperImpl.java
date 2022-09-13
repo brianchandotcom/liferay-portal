@@ -773,7 +773,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderHttpHelperImpl.class);
 
-	private static ModelResourcePermission<CommerceOrder>
+	private ModelResourcePermission<CommerceOrder>
 		_commerceOrderModelResourcePermission;
 	private static final ThreadLocal<CommerceOrder> _commerceOrderThreadLocal =
 		new CentralizedThreadLocal<>(

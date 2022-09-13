@@ -334,14 +334,14 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testAddAccountEntryWithInvalidDomains() throws Exception {
-		String blockedEmailDomain = "blocked.com";
+		String blockedEmailAddressDomain = "blocked.com";
 
 		String[] invalidDomains = {
 			"invalid", ".invalid", "-invalid", "invalid-", "_invalid",
 			"invalid_", "@invalid.com", "invalid#domain", "invalid&domain",
 			"invalid!.com", "invalid$domain.com", "invalid%.com", "*invalid",
 			"invalid*", "invalid.*.com", "invalid+domain", ">", "<",
-			"invalid@domain.com", blockedEmailDomain
+			"invalid@domain.com", blockedEmailAddressDomain
 		};
 
 		try (CompanyConfigurationTemporarySwapper
@@ -350,7 +350,7 @@ public class AccountEntryLocalServiceTest {
 						TestPropsValues.getCompanyId(),
 						AccountEntryEmailDomainsConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
-							"blockedEmailDomains", blockedEmailDomain
+							"blockedEmailDomains", blockedEmailAddressDomain
 						).build(),
 						SettingsFactoryUtil.getSettingsFactory())) {
 

@@ -83,12 +83,12 @@ public class AccountEntryEmailDomainsConfigurationModelListenerTest {
 
 	@Test
 	public void testOnBeforeSave() throws Exception {
-		String[] blockedDomains = {
+		String[] blockedEmailAddressDomains = {
 			"  blocked1.com  ", " blocked2.com", "BLOCKED3.COM", "blocked4.com"
 		};
 
 		Dictionary<String, Object> properties = _getProperties(
-			blockedDomains, new String[0]);
+			blockedEmailAddressDomains, new String[0]);
 
 		_configurationModelListener.onBeforeSave(StringPool.BLANK, properties);
 
@@ -96,7 +96,7 @@ public class AccountEntryEmailDomainsConfigurationModelListenerTest {
 			new String[] {
 				"blocked1.com", "blocked2.com", "blocked3.com", "blocked4.com"
 			},
-			_getBlockedDomainsArray(
+			_getBlockedEmailAddressDomains(
 				GetterUtil.getString(properties.get("blockedEmailDomains"))));
 
 		String[] invalidDomains = {"invalid", "foo.invalid"};
@@ -124,16 +124,19 @@ public class AccountEntryEmailDomainsConfigurationModelListenerTest {
 		}
 	}
 
-	private String[] _getBlockedDomainsArray(String blockedDomainsString) {
-		return StringUtil.split(blockedDomainsString, StringPool.NEW_LINE);
+	private String[] _getBlockedEmailAddressDomains(
+		String blockedEmailAddressDomainsString) {
+
+		return StringUtil.split(
+			blockedEmailAddressDomainsString, StringPool.NEW_LINE);
 	}
 
 	private Dictionary<String, Object> _getProperties(
-		String[] blockedDomains, String[] customTLDs) {
+		String[] blockedEmailAddressDomains, String[] customTLDs) {
 
 		return HashMapDictionaryBuilder.<String, Object>put(
 			"blockedEmailDomains",
-			StringUtil.merge(blockedDomains, StringPool.NEW_LINE)
+			StringUtil.merge(blockedEmailAddressDomains, StringPool.NEW_LINE)
 		).put(
 			"companyId", _companyId
 		).put(

@@ -15,8 +15,8 @@
 package com.liferay.account.validator.test;
 
 import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
-import com.liferay.account.validator.AccountEntryEmailValidator;
-import com.liferay.account.validator.AccountEntryEmailValidatorFactory;
+import com.liferay.account.validator.AccountEntryEmailAddressValidator;
+import com.liferay.account.validator.AccountEntryEmailAddressValidatorFactory;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
@@ -41,7 +41,7 @@ import org.junit.runner.RunWith;
  * @author Drew Brokke
  */
 @RunWith(Arquillian.class)
-public class AccountEntryEmailValidatorTest {
+public class AccountEntryEmailAddressValidatorTest {
 
 	@ClassRule
 	@Rule
@@ -85,7 +85,8 @@ public class AccountEntryEmailValidatorTest {
 				Assert.assertFalse(
 					validator.isBlockedDomain(_BLOCKED_DOMAINS[0]));
 				Assert.assertFalse(
-					validator.isBlockedDomain(_toEmail(_BLOCKED_DOMAINS[0])));
+					validator.isBlockedDomain(
+						_toEmailAddress(_BLOCKED_DOMAINS[0])));
 			});
 		_withValidator(
 			validatorArgs -> validatorArgs.blockedDomains = _BLOCKED_DOMAINS,
@@ -94,15 +95,17 @@ public class AccountEntryEmailValidatorTest {
 	}
 
 	@Test
-	public void testIsEmailDomainValidationEnabled() throws Exception {
+	public void testIsEmailAddressDomainValidationEnabled() throws Exception {
 		_withValidator(
-			validatorArgs -> validatorArgs.emailDomainValidationEnabled = true,
+			validatorArgs ->
+				validatorArgs.emailAddressDomainValidationEnabled = true,
 			validator -> Assert.assertTrue(
-				validator.isEmailDomainValidationEnabled()));
+				validator.isEmailAddressDomainValidationEnabled()));
 		_withValidator(
-			validatorArgs -> validatorArgs.emailDomainValidationEnabled = false,
+			validatorArgs ->
+				validatorArgs.emailAddressDomainValidationEnabled = false,
 			validator -> Assert.assertFalse(
-				validator.isEmailDomainValidationEnabled()));
+				validator.isEmailAddressDomainValidationEnabled()));
 	}
 
 	@Test
@@ -113,18 +116,19 @@ public class AccountEntryEmailValidatorTest {
 				validator.isValidDomain(_BLOCKED_DOMAINS[0])));
 		_withValidator(
 			validatorArgs -> {
-				validatorArgs.emailDomainValidationEnabled = false;
+				validatorArgs.emailAddressDomainValidationEnabled = false;
 				validatorArgs.validDomains = _VALID_DOMAINS;
 			},
 			validator -> {
 				Assert.assertTrue(validator.isValidDomain(_VALID_DOMAINS[0]));
 				Assert.assertTrue(
-					validator.isValidDomain(_toEmail(_VALID_DOMAINS[0])));
+					validator.isValidDomain(
+						_toEmailAddress(_VALID_DOMAINS[0])));
 				Assert.assertTrue(validator.isValidDomain("whatever.com"));
 			});
 		_withValidator(
 			validatorArgs -> {
-				validatorArgs.emailDomainValidationEnabled = true;
+				validatorArgs.emailAddressDomainValidationEnabled = true;
 				validatorArgs.validDomains = _EMPTY_STRING_ARRAY;
 			},
 			validator -> {
@@ -133,7 +137,7 @@ public class AccountEntryEmailValidatorTest {
 			});
 		_withValidator(
 			validatorArgs -> {
-				validatorArgs.emailDomainValidationEnabled = true;
+				validatorArgs.emailAddressDomainValidationEnabled = true;
 				validatorArgs.validDomains = _VALID_DOMAINS;
 			},
 			validator -> {
@@ -168,7 +172,7 @@ public class AccountEntryEmailValidatorTest {
 				validator.isValidDomainStrict(_BLOCKED_DOMAINS[0])));
 		_withValidator(
 			validatorArgs -> {
-				validatorArgs.emailDomainValidationEnabled = false;
+				validatorArgs.emailAddressDomainValidationEnabled = false;
 				validatorArgs.validDomains = _VALID_DOMAINS;
 			},
 			validator -> {
@@ -179,7 +183,7 @@ public class AccountEntryEmailValidatorTest {
 			});
 		_withValidator(
 			validatorArgs -> {
-				validatorArgs.emailDomainValidationEnabled = true;
+				validatorArgs.emailAddressDomainValidationEnabled = true;
 				validatorArgs.validDomains = _EMPTY_STRING_ARRAY;
 			},
 			validator -> {
@@ -190,59 +194,62 @@ public class AccountEntryEmailValidatorTest {
 			});
 		_withValidator(
 			validatorArgs -> {
-				validatorArgs.emailDomainValidationEnabled = true;
+				validatorArgs.emailAddressDomainValidationEnabled = true;
 				validatorArgs.validDomains = _VALID_DOMAINS;
 			},
 			validator -> {
 				Assert.assertTrue(
 					validator.isValidDomainStrict(_VALID_DOMAINS[0]));
 				Assert.assertTrue(
-					validator.isValidDomainStrict(_toEmail(_VALID_DOMAINS[0])));
+					validator.isValidDomainStrict(
+						_toEmailAddress(_VALID_DOMAINS[0])));
 				Assert.assertFalse(
 					validator.isValidDomainStrict("whatever.com"));
 			});
 	}
 
 	@Test
-	public void testIsValidEmailFormat() throws Exception {
+	public void testIsValidEmailAddressFormat() throws Exception {
 		_withValidator(
 			validatorArgs -> validatorArgs.customTLDs = _EMPTY_STRING_ARRAY,
 			validator -> {
 				Assert.assertTrue(
-					validator.isValidEmailFormat("user@valid.com"));
+					validator.isValidEmailAddressFormat("user@valid.com"));
 				Assert.assertFalse(
-					validator.isValidEmailFormat("user@invalid"));
+					validator.isValidEmailAddressFormat("user@invalid"));
 				Assert.assertFalse(
-					validator.isValidEmailFormat("user@invalid.unknowntld"));
+					validator.isValidEmailAddressFormat(
+						"user@invalid.unknowntld"));
 				Assert.assertFalse(
-					validator.isValidEmailFormat("user@invalid.demo"));
-				Assert.assertFalse(validator.isValidEmailFormat("invalid.com"));
+					validator.isValidEmailAddressFormat("user@invalid.demo"));
+				Assert.assertFalse(
+					validator.isValidEmailAddressFormat("invalid.com"));
 			});
 		_withValidator(
 			validatorArgs -> validatorArgs.customTLDs = _CUSTOM_TLDS,
 			validator -> Assert.assertTrue(
-				validator.isValidEmailFormat("user@valid.demo")));
+				validator.isValidEmailAddressFormat("user@valid.demo")));
 	}
 
-	private String _toEmail(String domain) {
+	private String _toEmailAddress(String domain) {
 		return "user@" + domain;
 	}
 
 	private void _withValidator(
 			Consumer<ValidatorArgs> validatorArgsConsumer,
-			UnsafeConsumer<AccountEntryEmailValidator, Exception>
-				accountEntryEmailValidatorExceptionUnsafeConsumer)
+			UnsafeConsumer<AccountEntryEmailAddressValidator, Exception>
+				accountEntryEmailAddressValidatorExceptionUnsafeConsumer)
 		throws Exception {
 
 		ValidatorArgs validatorArgs = new ValidatorArgs();
 
 		validatorArgsConsumer.accept(validatorArgs);
 
-		accountEntryEmailValidatorExceptionUnsafeConsumer.accept(
-			_accountEntryEmailValidatorFactory.create(
+		accountEntryEmailAddressValidatorExceptionUnsafeConsumer.accept(
+			_accountEntryEmailAddressValidatorFactory.create(
 				validatorArgs.blockedDomains, _companyId,
 				validatorArgs.customTLDs,
-				validatorArgs.emailDomainValidationEnabled,
+				validatorArgs.emailAddressDomainValidationEnabled,
 				validatorArgs.validDomains));
 
 		try (CompanyConfigurationTemporarySwapper
@@ -261,12 +268,12 @@ public class AccountEntryEmailValidatorTest {
 							"customTLDs", validatorArgs.customTLDs
 						).put(
 							"enableEmailDomainValidation",
-							validatorArgs.emailDomainValidationEnabled
+							validatorArgs.emailAddressDomainValidationEnabled
 						).build(),
 						SettingsFactoryUtil.getSettingsFactory())) {
 
-			accountEntryEmailValidatorExceptionUnsafeConsumer.accept(
-				_accountEntryEmailValidatorFactory.create(
+			accountEntryEmailAddressValidatorExceptionUnsafeConsumer.accept(
+				_accountEntryEmailAddressValidatorFactory.create(
 					_companyId, validatorArgs.validDomains));
 		}
 	}
@@ -280,8 +287,8 @@ public class AccountEntryEmailValidatorTest {
 	private static final String[] _VALID_DOMAINS = {"valid.com"};
 
 	@Inject
-	private AccountEntryEmailValidatorFactory
-		_accountEntryEmailValidatorFactory;
+	private AccountEntryEmailAddressValidatorFactory
+		_accountEntryEmailAddressValidatorFactory;
 
 	private long _companyId;
 
@@ -289,7 +296,7 @@ public class AccountEntryEmailValidatorTest {
 
 		public String[] blockedDomains = _EMPTY_STRING_ARRAY;
 		public String[] customTLDs = _EMPTY_STRING_ARRAY;
-		public boolean emailDomainValidationEnabled = false;
+		public boolean emailAddressDomainValidationEnabled = false;
 		public String[] validDomains = _EMPTY_STRING_ARRAY;
 
 	}

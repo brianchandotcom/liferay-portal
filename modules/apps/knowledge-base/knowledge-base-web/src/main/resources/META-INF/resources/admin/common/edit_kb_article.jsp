@@ -51,16 +51,16 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 	/>
 </c:if>
 
-<div class="contextual-sidebar contextual-sidebar-visible sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
-	<div class="sidebar-body">
+<aui:form action="<%= editKBArticleDisplayContext.getUpdateKBArticleURL() %>" method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= editKBArticleDisplayContext.getRedirect() %>" />
+	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
+
+	<div class="contextual-sidebar contextual-sidebar-visible sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
+		<div class="sidebar-body">
+		</div>
 	</div>
-</div>
 
-<div <%= editKBArticleDisplayContext.getFormCssClass() %>>
-	<aui:form action="<%= editKBArticleDisplayContext.getUpdateKBArticleURL() %>" method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= editKBArticleDisplayContext.getRedirect() %>" />
-		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
-
+	<div <%= editKBArticleDisplayContext.getFormCssClass() %>>
 		<div class="lfr-form-content">
 			<c:if test="<%= editKBArticleDisplayContext.isWorkflowStatusVisible() %>">
 				<div class="text-center">
@@ -239,8 +239,8 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 				</div>
 			</aui:fieldset-group>
 		</div>
-	</aui:form>
-</div>
+	</div>
+</aui:form>
 
 <script>
 	<c:if test="<%= editKBArticleDisplayContext.getKBArticle() == null %>">

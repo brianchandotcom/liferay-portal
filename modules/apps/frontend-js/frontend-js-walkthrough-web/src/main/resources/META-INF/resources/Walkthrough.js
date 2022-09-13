@@ -159,10 +159,6 @@ function removeStartingSlash(path) {
  * @returns {String} a string containg the path without the page URL
  */
 function getSitePrefix(currentPage) {
-	if (!currentPage) {
-		return currentPage;
-	}
-
 	const currentDXPLayoutRelativeURL = removeStartingSlash(
 		themeDisplay.getLayoutRelativeURL()
 	).split('/');

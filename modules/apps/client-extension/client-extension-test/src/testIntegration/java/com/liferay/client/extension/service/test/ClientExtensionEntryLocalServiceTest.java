@@ -89,7 +89,7 @@ public class ClientExtensionEntryLocalServiceTest {
 			).build();
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			TestPropsValues.getUserId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(LayoutSet.class),
 			publicLayoutSet.getLayoutSetId(),
 			clientExtensionEntry.getExternalReferenceCode(),

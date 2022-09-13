@@ -98,8 +98,9 @@ public class ClientExtensionServicePreActionTest {
 		_addFaviconClientExtensionEntry();
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			_user.getUserId(), _portal.getClassNameId(Layout.class),
-			_layout.getPlid(), _clientExtensionEntry.getExternalReferenceCode(),
+			_user.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(Layout.class), _layout.getPlid(),
+			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
 
 		_assertFaviconURL();
@@ -112,8 +113,8 @@ public class ClientExtensionServicePreActionTest {
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			_user.getUserId(), _portal.getClassNameId(LayoutSet.class),
-			layoutSet.getLayoutSetId(),
+			_user.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
 
@@ -129,8 +130,8 @@ public class ClientExtensionServicePreActionTest {
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			_user.getUserId(), _portal.getClassNameId(LayoutSet.class),
-			layoutSet.getLayoutSetId(),
+			_user.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
 
@@ -142,8 +143,9 @@ public class ClientExtensionServicePreActionTest {
 		_addThemeCSSClientExtensionEntry();
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			_user.getUserId(), _portal.getClassNameId(Layout.class),
-			_layout.getPlid(), _clientExtensionEntry.getExternalReferenceCode(),
+			_user.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(Layout.class), _layout.getPlid(),
+			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);
 
 		_assertThemeCSSURLs();
@@ -164,7 +166,8 @@ public class ClientExtensionServicePreActionTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			_user.getUserId(), _portal.getClassNameId(Layout.class),
+			_user.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(Layout.class),
 			masterLayoutPageTemplateEntry.getPlid(),
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
@@ -191,7 +194,8 @@ public class ClientExtensionServicePreActionTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			_user.getUserId(), _portal.getClassNameId(Layout.class),
+			_user.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(Layout.class),
 			masterLayoutPageTemplateEntry.getPlid(),
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK);

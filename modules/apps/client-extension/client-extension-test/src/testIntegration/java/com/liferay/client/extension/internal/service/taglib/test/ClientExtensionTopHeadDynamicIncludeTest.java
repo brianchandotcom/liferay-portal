@@ -86,7 +86,7 @@ public class ClientExtensionTopHeadDynamicIncludeTest {
 		LayoutSet publicLayoutSet = _group.getPublicLayoutSet();
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			TestPropsValues.getUserId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			_portal.getClassNameId(LayoutSet.class),
 			publicLayoutSet.getLayoutSetId(),
 			layoutSetGlobalCSSClientExtensionEntry.getExternalReferenceCode(),
@@ -106,7 +106,8 @@ public class ClientExtensionTopHeadDynamicIncludeTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			TestPropsValues.getUserId(), _portal.getClassNameId(Layout.class),
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(Layout.class),
 			masterLayoutPageTemplateEntry.getPlid(),
 			masterLayoutGlobalCSSClientExtensionEntry.
 				getExternalReferenceCode(),
@@ -124,8 +125,8 @@ public class ClientExtensionTopHeadDynamicIncludeTest {
 		_layoutLocalService.updateLayout(layout);
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-			TestPropsValues.getUserId(), _portal.getClassNameId(Layout.class),
-			layout.getPlid(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(Layout.class), layout.getPlid(),
 			layoutGlobalCSSClientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, StringPool.BLANK);
 

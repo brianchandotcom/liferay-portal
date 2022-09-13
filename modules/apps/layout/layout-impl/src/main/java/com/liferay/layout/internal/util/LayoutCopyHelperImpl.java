@@ -1003,8 +1003,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					clientExtensionEntryRels) {
 
 				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-					targetLayout.getUserId(), classNameId,
-					targetLayout.getPlid(),
+					targetLayout.getUserId(), targetLayout.getGroupId(),
+					classNameId, targetLayout.getPlid(),
 					clientExtensionEntryRel.getCETExternalReferenceCode(),
 					clientExtensionEntryRel.getType(),
 					clientExtensionEntryRel.getTypeSettings());

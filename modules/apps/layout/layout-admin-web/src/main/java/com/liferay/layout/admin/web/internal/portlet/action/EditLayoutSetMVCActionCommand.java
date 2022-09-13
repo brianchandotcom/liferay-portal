@@ -141,7 +141,8 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 						layoutSet.getLayoutSetId(), type);
 
 				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-					userId, _portal.getClassNameId(LayoutSet.class),
+					userId, layoutSet.getGroupId(),
+					_portal.getClassNameId(LayoutSet.class),
 					layoutSet.getLayoutSetId(), cetExternalReferenceCode, type,
 					StringPool.BLANK);
 			}
@@ -181,7 +182,7 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				globalCSSCETExternalReferenceCodes) {
 
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				themeDisplay.getUserId(),
+				themeDisplay.getUserId(), layoutSet.getGroupId(),
 				_portal.getClassNameId(LayoutSet.class),
 				layoutSet.getLayoutSetId(), globalCSSCETExternalReferenceCode,
 				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
@@ -211,7 +212,7 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				).build();
 
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				themeDisplay.getUserId(),
+				themeDisplay.getUserId(), layoutSet.getGroupId(),
 				_portal.getClassNameId(LayoutSet.class),
 				layoutSet.getLayoutSetId(), typeSettings[0],
 				ClientExtensionEntryConstants.TYPE_GLOBAL_JS,

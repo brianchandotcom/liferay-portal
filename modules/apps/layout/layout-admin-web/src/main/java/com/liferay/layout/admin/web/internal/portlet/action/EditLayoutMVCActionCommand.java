@@ -303,9 +303,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 						type);
 
 				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-					userId, _portal.getClassNameId(Layout.class),
-					layout.getPlid(), cetExternalReferenceCode, type,
-					StringPool.BLANK);
+					userId, layout.getGroupId(),
+					_portal.getClassNameId(Layout.class), layout.getPlid(),
+					cetExternalReferenceCode, type, StringPool.BLANK);
 			}
 		}
 		else {
@@ -336,7 +336,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				globalCSSCETExternalReferenceCodes) {
 
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				userId, _portal.getClassNameId(Layout.class), layout.getPlid(),
+				userId, layout.getGroupId(),
+				_portal.getClassNameId(Layout.class), layout.getPlid(),
 				globalCSSCETExternalReferenceCode,
 				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
 				StringPool.BLANK);
@@ -365,7 +366,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				).build();
 
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				userId, _portal.getClassNameId(Layout.class), layout.getPlid(),
+				userId, layout.getGroupId(),
+				_portal.getClassNameId(Layout.class), layout.getPlid(),
 				typeSettings[0], ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
 				typeSettingsUnicodeProperties.toString());
 		}

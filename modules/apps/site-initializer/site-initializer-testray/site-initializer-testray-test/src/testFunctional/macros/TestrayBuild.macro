@@ -42,10 +42,6 @@ definition {
 		}
 	}
 
-	macro verifyPromoteBuild {
-		AssertElementPresent(locator1 = "TestrayBuild#PROMOTE_BUILD");
-	}
-
 	macro editBuild {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
@@ -68,6 +64,10 @@ definition {
 			value1 = "${description}");
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+	}
+
+	macro verifyPromoteBuild {
+		AssertElementPresent(locator1 = "TestrayBuild#PROMOTE_BUILD");
 	}
 
 	macro viewBuildDetails {

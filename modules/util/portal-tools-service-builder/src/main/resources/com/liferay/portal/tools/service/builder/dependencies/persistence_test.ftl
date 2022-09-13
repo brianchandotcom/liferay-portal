@@ -16,8 +16,12 @@
 
 package ${packagePath}.service.persistence.test;
 
-<#assign noSuchEntity = serviceBuilder.getNoSuchEntityException(entity) />
+<#assign
+	duplicateEntityExternalReferenceCode = serviceBuilder.getDuplicateEntityExternalReferenceCodeException(entity)
+	noSuchEntity = serviceBuilder.getNoSuchEntityException(entity)
+/>
 
+import ${apiPackagePath}.exception.${duplicateEntityExternalReferenceCode}Exception;
 import ${apiPackagePath}.exception.${noSuchEntity}Exception;
 import ${apiPackagePath}.model.${entity.name};
 import ${apiPackagePath}.service.${entity.name}LocalServiceUtil;
@@ -324,6 +328,27 @@ public class ${entity.name}PersistenceTest {
 			</#if>
 		</#list>
 	}
+
+	<#if entity.hasExternalReferenceCode()>
+		@Test(expected = ${duplicateEntityExternalReferenceCode}Exception.class)
+		public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+			${entity.name} ${entity.variableName} = add${entity.name}();
+
+			${entity.name} new${entity.name} = add${entity.name}();
+
+			new${entity.name}.set${entity.externalReferenceCode?cap_first}Id(${entity.variableName}.get${entity.externalReferenceCode?cap_first}Id());
+
+			new${entity.name} = _persistence.update(new${entity.name});
+
+			Session session = _persistence.getCurrentSession();
+
+			session.evict(new${entity.name});
+
+			new${entity.name}.setExternalReferenceCode(${entity.variableName}.getExternalReferenceCode());
+
+			_persistence.update(new${entity.name});
+		}
+	</#if>
 
 	<#list entity.entityFinders as entityFinder>
 		@Test

@@ -1152,6 +1152,13 @@ public class ServiceBuilder {
 		return getDimensions(GetterUtil.getInteger(dims));
 	}
 
+	public String getDuplicateEntityExternalReferenceCodeException(
+		Entity entity) {
+
+		return "Duplicate" + _getEntityExceptionName(entity, false) +
+			"ExternalReferenceCode";
+	}
+
 	public Entity getEntity(String name) throws Exception {
 		Entity entity = _entityPool.get(name);
 
@@ -1398,21 +1405,8 @@ public class ServiceBuilder {
 	}
 
 	public String getNoSuchEntityException(Entity entity) {
-		String noSuchEntityException = entity.getName();
-
-		if (_shortNoSuchExceptionEnabled) {
-			String portletShortName = entity.getPortletShortName();
-
-			if (Validator.isNull(portletShortName) ||
-				(noSuchEntityException.startsWith(portletShortName) &&
-				 !noSuchEntityException.equals(portletShortName))) {
-
-				noSuchEntityException = noSuchEntityException.substring(
-					portletShortName.length());
-			}
-		}
-
-		return "NoSuch" + noSuchEntityException;
+		return "NoSuch" +
+			_getEntityExceptionName(entity, _shortNoSuchExceptionEnabled);
 	}
 
 	public String getParameterType(JavaParameter parameter) {
@@ -2607,6 +2601,12 @@ public class ServiceBuilder {
 			}
 
 			if (entity.hasEntityColumns()) {
+				if (entity.hasExternalReferenceCode()) {
+					exceptions.add(
+						getDuplicateEntityExternalReferenceCodeException(
+							entity));
+				}
+
 				exceptions.add(getNoSuchEntityException(entity));
 			}
 		}
@@ -2672,7 +2672,13 @@ public class ServiceBuilder {
 
 				String content = _processTemplate(_tplException, context);
 
-				if (exception.startsWith("NoSuch")) {
+				if (exception.startsWith("Duplicate") &&
+					exception.endsWith("ExternalReferenceCode")) {
+
+					content = StringUtil.replace(
+						content, "PortalException", "SystemException");
+				}
+				else if (exception.startsWith("NoSuch")) {
 					content = StringUtil.replace(
 						content, "PortalException", "NoSuchModelException");
 				}
@@ -2683,7 +2689,20 @@ public class ServiceBuilder {
 					exceptionFile, content, _modifiedFileNames);
 			}
 
-			if (exception.startsWith("NoSuch")) {
+			if (exception.startsWith("Duplicate") &&
+				exception.endsWith("ExternalReferenceCode")) {
+
+				String content = _read(exceptionFile);
+
+				if (!content.contains("SystemException")) {
+					content = StringUtil.replace(
+						content, "PortalException", "SystemException");
+
+					ToolsUtil.writeFileRaw(
+						exceptionFile, content, _modifiedFileNames);
+				}
+			}
+			else if (exception.startsWith("NoSuch")) {
 				String content = _read(exceptionFile);
 
 				if (!content.contains("NoSuchModelException")) {
@@ -5390,6 +5409,25 @@ public class ServiceBuilder {
 				columnDBName, " for entity ", entity.getName()));
 	}
 
+	private String _getEntityExceptionName(
+		Entity entity, boolean shortExceptionName) {
+
+		String name = entity.getName();
+
+		if (shortExceptionName) {
+			String portletShortName = entity.getPortletShortName();
+
+			if (Validator.isNull(portletShortName) ||
+				(name.startsWith(portletShortName) &&
+				 !name.equals(portletShortName))) {
+
+				name = name.substring(portletShortName.length());
+			}
+		}
+
+		return name;
+	}
+
 	private List<String> _getEntityMappingPKEntityColumnDBNames(
 			EntityMapping entityMapping)
 		throws Exception {
@@ -6566,8 +6604,14 @@ public class ServiceBuilder {
 			String externalReferenceCodeUpperCase = StringUtil.toUpperCase(
 				externalReferenceCode);
 
-			finderElement.addAttribute(
-				"name", externalReferenceCodeUpperCase.charAt(0) + "_ERC");
+			if (isVersionGTE_7_4_0()) {
+				finderElement.addAttribute(
+					"name", "ERC_" + externalReferenceCodeUpperCase.charAt(0));
+			}
+			else {
+				finderElement.addAttribute(
+					"name", externalReferenceCodeUpperCase.charAt(0) + "_ERC");
+			}
 
 			finderElement.addAttribute("return-type", entityName);
 
@@ -6578,12 +6622,24 @@ public class ServiceBuilder {
 			Element finderColumnElement = finderElement.addElement(
 				"finder-column");
 
-			finderColumnElement.addAttribute(
-				"name", externalReferenceCode + "Id");
+			if (isVersionGTE_7_4_0()) {
+				finderColumnElement.addAttribute(
+					"name", "externalReferenceCode");
 
-			finderColumnElement = finderElement.addElement("finder-column");
+				finderColumnElement = finderElement.addElement("finder-column");
 
-			finderColumnElement.addAttribute("name", "externalReferenceCode");
+				finderColumnElement.addAttribute(
+					"name", externalReferenceCode + "Id");
+			}
+			else {
+				finderColumnElement.addAttribute(
+					"name", externalReferenceCode + "Id");
+
+				finderColumnElement = finderElement.addElement("finder-column");
+
+				finderColumnElement.addAttribute(
+					"name", "externalReferenceCode");
+			}
 
 			finderElements.add(finderElement);
 		}

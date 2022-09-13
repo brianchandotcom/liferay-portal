@@ -125,7 +125,7 @@ definition {
 
 		KBArticle.openPageTreePanel(section = "Folders and Articles");
 
-		KBArticle.openPageTreePanel(section = "Folders and Articles");
+		KBArticle.closePageTreePanel(section = "Folders and Articles");
 
 		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
 
@@ -137,7 +137,7 @@ definition {
 
 		KBArticle.openPageTreePanel(section = "Templates");
 
-		KBArticle.openPageTreePanel(section = "Templates");
+		KBArticle.closePageTreePanel(section = "Templates");
 
 		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
 
@@ -149,7 +149,7 @@ definition {
 
 		KBArticle.openPageTreePanel(section = "Suggestions");
 
-		KBArticle.openPageTreePanel(section = "Suggestions");
+		KBArticle.closePageTreePanel(section = "Suggestions");
 
 		AssertElementPresent(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
 	}

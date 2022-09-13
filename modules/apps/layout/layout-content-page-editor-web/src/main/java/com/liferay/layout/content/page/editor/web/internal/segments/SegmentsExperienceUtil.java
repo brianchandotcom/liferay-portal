@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.PortletPreferenceValueLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -80,10 +81,22 @@ public class SegmentsExperienceUtil {
 			long userId)
 		throws PortalException {
 
-		_copyLayoutData(
-			plid, commentManager, groupId, portletRegistry,
-			sourceSegmentsExperienceId, targetSegmentsExperienceId,
-			serviceContextFunction, userId);
+		boolean copyLayout = CopyLayoutThreadLocal.isCopyLayout();
+
+		try {
+			CopyLayoutThreadLocal.setCopyLayout(true);
+
+			_copyLayoutData(
+				plid, commentManager, groupId, portletRegistry,
+				sourceSegmentsExperienceId, targetSegmentsExperienceId,
+				serviceContextFunction, userId);
+		}
+		catch (Throwable throwable) {
+			throw new PortalException(throwable);
+		}
+		finally {
+			CopyLayoutThreadLocal.setCopyLayout(copyLayout);
+		}
 	}
 
 	public static Map<String, Object> getAvailableSegmentsExperiences(

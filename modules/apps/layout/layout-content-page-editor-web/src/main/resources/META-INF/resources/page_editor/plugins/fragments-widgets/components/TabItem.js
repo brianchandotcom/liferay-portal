@@ -249,6 +249,11 @@ const HighlightButton = ({item, onToggleHighlighted}) => {
 			displayType="secondary"
 			onClick={onToggleHighlighted}
 			symbol={highlighted ? 'star' : 'star-o'}
+			title={
+				highlighted
+					? Liferay.Language.get('unmark-favorite')
+					: Liferay.Language.get('mark-favorite')
+			}
 		/>
 	);
 };

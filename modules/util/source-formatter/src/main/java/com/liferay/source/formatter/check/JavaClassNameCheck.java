@@ -123,12 +123,20 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			if (!className.endsWith(enforceExtendedClassName)) {
+			String trimmedEnforceExtendedClassName = "";
+
+			if (enforceExtendedClassName.startsWith("Base")) {
+				trimmedEnforceExtendedClassName =
+					enforceExtendedClassName.substring(4);
+			}
+
+			if (!className.endsWith(trimmedEnforceExtendedClassName)) {
 				addMessage(
 					fileName,
 					StringBundler.concat(
 						"Name of class extending '", enforceExtendedClassName,
-						"' should end with '", enforceExtendedClassName, "'"));
+						"' should end with '", trimmedEnforceExtendedClassName,
+						"'"));
 
 				break;
 			}

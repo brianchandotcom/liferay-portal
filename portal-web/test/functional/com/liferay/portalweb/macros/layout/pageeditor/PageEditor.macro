@@ -3917,12 +3917,6 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			locator1 = "Button#ANY");
 	}
 
-	macro openPreviewMode {
-		Click(
-			key_text = "view",
-			locator1 = "Icon#ANY");
-	}
-
 	macro previewInANewTab {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Preview in a New Tab");
 
@@ -4164,6 +4158,12 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		WaitForVisible(
 			key_deviceType = "${viewport}",
 			locator1 = "PageEditor#VIEWPORT");
+	}
+
+	macro togglePreview {
+		Click(
+			key_text = "view",
+			locator1 = "Icon#ANY");
 	}
 
 	macro unhideFragmentViaPageStructure {

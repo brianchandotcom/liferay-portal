@@ -55,6 +55,8 @@ public interface Job {
 
 	public BuildProfile getBuildProfile();
 
+	public String getCompanyDefaultLocale();
+
 	public List<AxisTestClassGroup> getDependentAxisTestClassGroups();
 
 	public Set<String> getDependentBatchNames();

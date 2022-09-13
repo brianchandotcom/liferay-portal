@@ -203,6 +203,28 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public String getCompanyDefaultLocale() {
+		if (_companyDefaultLocale != null) {
+			return _companyDefaultLocale;
+		}
+
+		JobProperty jobProperty = getJobProperty(
+			"test.batch.company.default.locale");
+
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (jobPropertyValue != null) {
+			recordJobProperty(jobProperty);
+
+			_companyDefaultLocale = jobPropertyValue;
+
+			return _companyDefaultLocale;
+		}
+
+		return null;
+	}
+
+	@Override
 	public List<AxisTestClassGroup> getDependentAxisTestClassGroups() {
 		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>();
 
@@ -421,6 +443,7 @@ public abstract class BaseJob implements Job {
 		}
 
 		jsonObject.put("build_profile", String.valueOf(getBuildProfile()));
+		jsonObject.put("company_default_locale", getCompanyDefaultLocale());
 		jsonObject.put("job_name", getJobName());
 		jsonObject.put("job_properties", _getJobPropertiesMap());
 		jsonObject.put("job_property_options", getJobPropertyOptions());
@@ -678,6 +701,7 @@ public abstract class BaseJob implements Job {
 
 		_buildProfile = BuildProfile.getByString(
 			jsonObject.getString("build_profile"));
+		_companyDefaultLocale = jsonObject.optString("company_default_locale");
 		_jobName = jsonObject.getString("job_name");
 	}
 
@@ -1140,6 +1164,7 @@ public abstract class BaseJob implements Job {
 	private JSONObject _averageDurationJSONObject;
 	private List<BatchTestClassGroup> _batchTestClassGroups;
 	private final BuildProfile _buildProfile;
+	private String _companyDefaultLocale;
 	private List<BatchTestClassGroup> _dependentBatchTestClassGroups;
 	private boolean _initializeJobProperties;
 	private final String _jobName;

@@ -12,6 +12,7 @@ dependencies {
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:client-extension:client-extension-api")
 	compileOnly project(":apps:client-extension:client-extension-type-api")
+	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:frontend-data-set:frontend-data-set-api")
 	compileOnly project(":apps:frontend-data-set:frontend-data-set-taglib")
 	compileOnly project(":apps:frontend-editor:frontend-editor-taglib")

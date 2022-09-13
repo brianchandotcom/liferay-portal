@@ -636,7 +636,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.previewInANewTab();
 		}
 
 		task ("Assert only html fragment is shown") {
@@ -663,9 +663,7 @@ definition {
 		}
 
 		task ("Publish and enter view mode") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+			Close.closeWindow();
 
 			PageEditor.publish();
 
@@ -1002,9 +1000,7 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 		}
 
 		task ("Assert both Heading Example 1 and Heading Example 2 are shown") {

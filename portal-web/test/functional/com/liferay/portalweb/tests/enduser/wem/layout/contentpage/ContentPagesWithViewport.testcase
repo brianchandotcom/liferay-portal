@@ -361,14 +361,8 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
-		task ("View the Text Align of Heading in different viewports at preview mode") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Desktop",
-				modal = "true");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		task ("View the Text Align of Heading at preview mode") {
+			PageEditor.previewInANewTab();
 
 			AssertCssValue(
 				fragmentName = "heading",
@@ -376,51 +370,6 @@ definition {
 				locator1 = "Fragment#FRAGMENT_BODY",
 				locator2 = "text-align",
 				value1 = "start");
-
-			SelectFrame(value1 = "relative=top");
-
-			PageEditor.switchViewport(
-				deviceType = "Tablet",
-				modal = "true");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-			AssertCssValue(
-				fragmentName = "heading",
-				index = "1",
-				locator1 = "Fragment#FRAGMENT_BODY",
-				locator2 = "text-align",
-				value1 = "center");
-
-			SelectFrame(value1 = "relative=top");
-
-			PageEditor.switchViewport(
-				deviceType = "Landscape Phone",
-				modal = "true");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-			AssertCssValue(
-				fragmentName = "heading",
-				index = "1",
-				locator1 = "Fragment#FRAGMENT_BODY",
-				locator2 = "text-align",
-				value1 = "right");
-
-			SelectFrame(value1 = "relative=top");
-
-			PageEditor.switchViewport(
-				deviceType = "Portrait Phone",
-				modal = "true");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-			AssertCssValue(
-				fragmentName = "heading",
-				index = "1",
-				locator1 = "Fragment#FRAGMENT_BODY",
-				locator2 = "text-align",
-				value1 = "justify");
 		}
 	}
 
@@ -594,12 +543,10 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.previewInANewTab();
 		}
 
-		task ("Assert that Heading from 1 to 4 are shown for desktop view on preview") {
-			PageEditor.switchViewport(deviceType = "Desktop");
-
+		task ("Assert that Heading from 1 to 4 are shown on preview") {
 			for (var n : list "1,2,3,4") {
 				ContentPages.viewFragmentText(
 					fragmentName = "heading",
@@ -613,73 +560,6 @@ definition {
 				id = "element-text",
 				index = "5",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
-		}
-
-		task ("Assert that Heading from 1 to 3 are shown for tablet view on preview") {
-			PageEditor.switchViewport(deviceType = "Tablet");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
-
-			for (var n : list "1,2,3") {
-				ContentPages.viewFragmentText(
-					fragmentName = "heading",
-					id = "element-text",
-					position = "${n}",
-					text = "Heading Example ${n}");
-			}
-
-			for (var n : list "4,5") {
-				AssertNotVisible(
-					fragmentName = "heading",
-					id = "element-text",
-					index = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
-			}
-		}
-
-		task ("Assert that Heading from 1 to 2 are shown for landscape phone view on preview") {
-			SelectFrameTop();
-
-			PageEditor.switchViewport(deviceType = "Landscape Phone");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
-
-			for (var n : list "1,2") {
-				ContentPages.viewFragmentText(
-					fragmentName = "heading",
-					id = "element-text",
-					position = "${n}",
-					text = "Heading Example ${n}");
-			}
-
-			for (var n : list "3,4,5") {
-				AssertNotVisible(
-					fragmentName = "heading",
-					id = "element-text",
-					index = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
-			}
-		}
-
-		task ("Assert that only Heading 1 is shown for portail phone view on preview") {
-			SelectFrameTop();
-
-			PageEditor.switchViewport(deviceType = "Portrait Phone");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
-
-			ContentPages.viewFragmentText(
-				fragmentName = "heading",
-				id = "element-text",
-				text = "Heading Example 1");
-
-			for (var n : list "2,3,4,5") {
-				AssertNotVisible(
-					fragmentName = "heading",
-					id = "element-text",
-					index = "${n}",
-					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
-			}
 		}
 	}
 

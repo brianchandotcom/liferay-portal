@@ -548,12 +548,10 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.previewInANewTab();
 		}
 
 		task ("View only the 5 documents shown in current page of Collection Display") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
@@ -624,7 +622,7 @@ definition {
 				key_rowPosition = "6",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 
-			IFrame.closeFrame();
+			Close.closeWindow();
 
 			PageEditor.publish();
 		}
@@ -933,12 +931,10 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.previewInANewTab();
 		}
 
 		task ("View only the 5 documents shown in current page of Collection Display") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
 			var n = "1";
 
 			for (var i : list "5,4,3,2,1") {
@@ -1009,7 +1005,7 @@ definition {
 				key_rowPosition = "6",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY");
 
-			IFrame.closeFrame();
+			Close.closeWindow();
 
 			PageEditor.publish();
 		}

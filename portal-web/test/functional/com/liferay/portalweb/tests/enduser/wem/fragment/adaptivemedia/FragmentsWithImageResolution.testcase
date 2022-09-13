@@ -511,12 +511,10 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.previewInANewTab();
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
 			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
 		}
 
@@ -525,29 +523,8 @@ definition {
 				adaptiveMediaName = "/documents/",
 				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
 				type = "backgroundImage");
-		}
 
-		task ("Change to the Portrait Phone viewport") {
-			SelectFrameTop();
-
-			PageEditor.switchViewport(
-				deviceType = "Portrait Phone",
-				modal = "true");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-		}
-
-		task ("Assert the mapping image is shown in Preview modal") {
-			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
-		}
-
-		task ("Assert the Preview-1000x0 is selected automatically") {
-			PageEditor.assertAutoImageResolution(
-				adaptiveMediaName = "/Preview-1000x0/",
-				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
-				type = "backgroundImage");
-
-			IFrame.closeFrame();
+			Close.closeWindow();
 
 			PageEditor.publish();
 		}
@@ -694,12 +671,10 @@ definition {
 		}
 
 		task ("Open the Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.previewInANewTab();
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
 			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
 		}
 
@@ -708,29 +683,8 @@ definition {
 				adaptiveMediaName = "/documents/",
 				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
 				type = "backgroundImage");
-		}
 
-		task ("Change to the Tablet viewport") {
-			SelectFrameTop();
-
-			PageEditor.switchViewport(
-				deviceType = "Tablet",
-				modal = "true");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-		}
-
-		task ("Assert the mapping image is shown in Preview modal") {
-			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
-		}
-
-		task ("Assert the Preview-1000x0 is selected automatically") {
-			PageEditor.assertAutoImageResolution(
-				adaptiveMediaName = "/Preview-1000x0/",
-				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
-				type = "backgroundImage");
-
-			IFrame.closeFrame();
+			Close.closeWindow();
 
 			PageEditor.publish();
 		}

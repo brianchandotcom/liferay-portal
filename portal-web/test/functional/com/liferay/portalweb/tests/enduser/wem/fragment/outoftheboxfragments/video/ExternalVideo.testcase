@@ -81,13 +81,13 @@ definition {
 		}
 
 		task ("View the video displayed in Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.previewInANewTab();
 
 			WaitForElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
 
 			YoutubePortlet.assertVideoTitle(videoTitle = "Liferay Digital Experience Platform");
 
-			IFrame.closeFrame();
+			Close.closeWindow();
 
 			WaitForElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
 		}
@@ -148,13 +148,13 @@ definition {
 		}
 
 		task ("View the video displayed in Preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.previewInANewTab();
 
 			WaitForElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
 
 			YoutubePortlet.assertVideoTitle(videoTitle = "Liferay Digital Experience Platform");
 
-			IFrame.closeFrame();
+			Close.closeWindow();
 
 			WaitForElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
 		}

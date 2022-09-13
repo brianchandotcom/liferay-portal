@@ -101,17 +101,7 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Blog Entry");
 		}
 
-		task ("Go to Preview Mode in Landscape Phone") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Desktop",
-				modal = "true");
-		}
-
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
 			for (var fragmentName : list "navbar,header,card,footer") {
 				AssertVisible(
 					fragmentName = "${fragmentName}",
@@ -140,16 +130,12 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Blog Entry");
 		}
 
-		task ("Go to Preview Mode in Landscape Phone") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Landscape Phone",
-				modal = "true");
+		task ("Go to Landscape Phone") {
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
 		}
 
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			for (var fragmentName : list "navbar,header,card,footer") {
 				AssertVisible(
@@ -179,16 +165,12 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Blog Entry");
 		}
 
-		task ("Go to Preview Mode in Portrait Phone") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Portrait Phone",
-				modal = "true");
+		task ("Go to Portrait Phone") {
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
 		}
 
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			for (var fragmentName : list "navbar,header,card,footer") {
 				AssertVisible(
@@ -218,16 +200,12 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Blog Entry");
 		}
 
-		task ("Go to Preview Mode in Tablet") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Tablet",
-				modal = "true");
+		task ("Go to Tablet") {
+			PageEditor.switchViewport(deviceType = "Tablet");
 		}
 
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			for (var fragmentName : list "navbar,header,card,footer") {
 				AssertVisible(
@@ -286,9 +264,7 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
 
-			PageEditor.openPreviewMode();
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			AssertElementPresent(
 				key_fragmentName = "entry-card",
@@ -424,9 +400,7 @@ definition {
 		}
 
 		task ("Preview the Page and Assert the list of Blog Entries") {
-			PageEditor.openPreviewMode();
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			for (var title : list "25 management tips from top industry experts,00 20 gifts you can give to your marketing boss,What the best Management pros do (and you should too),Great people doing a great job in the design industry,When professionals run into problems with marketing") {
 				AssertElementPresent(
@@ -446,6 +420,8 @@ definition {
 		}
 
 		task ("Edit the Collection Page") {
+			Close.closeWindow();
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Collection Page Name",
 				siteName = "${testSiteName}");
@@ -457,9 +433,7 @@ definition {
 		}
 
 		task ("Preview the Page and Assert the list of Members") {
-			PageEditor.openPreviewMode();
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			for (var title : list "Jerome Bell,Jane Cooper,Esther Howard,Kristin Watson,Jacob Jones") {
 				AssertElementPresent(
@@ -478,17 +452,7 @@ definition {
 				siteName = "${testSiteName}");
 		}
 
-		task ("Go to Preview Mode in Desktop") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Desktop",
-				modal = "true");
-		}
-
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
 			for (var fragmentName : list "navbar,header,video,footer") {
 				AssertVisible(
 					fragmentName = "${fragmentName}",
@@ -507,16 +471,12 @@ definition {
 				siteName = "${testSiteName}");
 		}
 
-		task ("Go to Preview Mode in Landscape Phone") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Landscape Phone",
-				modal = "true");
+		task ("Go to Landscape Phone") {
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
 		}
 
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			for (var fragmentName : list "navbar,header,video,footer") {
 				AssertVisible(
@@ -536,16 +496,12 @@ definition {
 				siteName = "${testSiteName}");
 		}
 
-		task ("Go to Preview Mode in Desktop") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Portrait Phone",
-				modal = "true");
+		task ("Go to Portrait Phone") {
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
 		}
 
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			for (var fragmentName : list "navbar,header,video,footer") {
 				AssertVisible(
@@ -565,16 +521,12 @@ definition {
 				siteName = "${testSiteName}");
 		}
 
-		task ("Go to Preview Mode in Tablet") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Tablet",
-				modal = "true");
+		task ("Go to Tablet") {
+			PageEditor.switchViewport(deviceType = "Tablet");
 		}
 
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			for (var fragmentName : list "navbar,header,video,footer") {
 				AssertVisible(
@@ -604,17 +556,7 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Job Position");
 		}
 
-		task ("Go to Preview Mode in Desktop") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Desktop",
-				modal = "true");
-		}
-
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
 			for (var fragmentName : list "navbar,heading,card,footer") {
 				AssertVisible(
 					fragmentName = "${fragmentName}",
@@ -644,15 +586,11 @@ definition {
 		}
 
 		task ("Go to Preview Mode in Landscape Phone") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Landscape Phone",
-				modal = "true");
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
 		}
 
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			for (var fragmentName : list "navbar,heading,card,footer") {
 				AssertVisible(
@@ -682,16 +620,12 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Job Position");
 		}
 
-		task ("Go to Preview Mode in Portrait Phone") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Portrait Phone",
-				modal = "true");
+		task ("Go to Portrait Phone") {
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
 		}
 
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			for (var fragmentName : list "navbar,heading,card,footer") {
 				AssertVisible(
@@ -721,16 +655,12 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Job Position");
 		}
 
-		task ("Go to Preview Mode in Tablet") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Tablet",
-				modal = "true");
+		task ("Go to Tablet") {
+			PageEditor.switchViewport(deviceType = "Tablet");
 		}
 
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			for (var fragmentName : list "navbar,heading,card,footer") {
 				AssertVisible(
@@ -776,17 +706,7 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Team Member");
 		}
 
-		task ("Go to Preview Mode in Desktop") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Desktop",
-				modal = "true");
-		}
-
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
 			for (var fragmentName : list "navbar,member-header,heading,card,footer") {
 				AssertVisible(
 					fragmentName = "${fragmentName}",
@@ -815,16 +735,12 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Team Member");
 		}
 
-		task ("Go to Preview Mode in Landscape Phone") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Landscape Phone",
-				modal = "true");
+		task ("Go to Landscape Phone") {
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
 		}
 
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			for (var fragmentName : list "navbar,member-header,heading,card,footer") {
 				AssertVisible(
@@ -855,15 +771,11 @@ definition {
 		}
 
 		task ("Go to Preview Mode in Portrait Phone") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Portrait Phone",
-				modal = "true");
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
 		}
 
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			for (var fragmentName : list "navbar,member-header,heading,card,footer") {
 				AssertVisible(
@@ -893,16 +805,12 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Team Member");
 		}
 
-		task ("Go to Preview Mode in Tablet") {
-			PageEditor.openPreviewMode();
-
-			PageEditor.switchViewport(
-				deviceType = "Tablet",
-				modal = "true");
+		task ("Go to Tablet") {
+			PageEditor.switchViewport(deviceType = "Tablet");
 		}
 
 		task ("Assert the Elements are Visible in Frame") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 			for (var fragmentName : list "navbar,member-header,heading,card,footer") {
 				AssertVisible(
@@ -987,7 +895,7 @@ definition {
 			collectionName = "Collection Name",
 			fragmentName = "Fragment Name");
 
-		PageEditor.openPreviewMode();
+		PageEditor.previewInANewTab();
 
 		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 	}

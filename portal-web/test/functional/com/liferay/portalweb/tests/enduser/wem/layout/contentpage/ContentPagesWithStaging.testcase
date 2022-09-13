@@ -1658,14 +1658,12 @@ definition {
 		task ("Open the preview modal and View the new experience selected in experience selector") {
 			ContentPages.gotoPageEditor();
 
-			PageEditor.openPreviewMode();
+			PageEditor.previewInANewTab();
 
 			ContentPages.viewCurrentExperience(experienceName = "New Experience");
 		}
 
 		task ("View the Heading and Button fragments are shown in preview modal") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
 			ContentPages.viewFragmentText(
 				fragmentName = "button",
 				id = "link",
@@ -1678,7 +1676,7 @@ definition {
 		}
 
 		task ("Back to view page mode and view the new experience still selected in experience selector") {
-			IFrame.closeFrame();
+			Close.closeWindow();
 
 			PageEditor.clickBack();
 
@@ -1761,13 +1759,13 @@ definition {
 		task ("Open the preview modal and View the new experience selected in experience selector") {
 			ContentPages.gotoPageEditor();
 
-			PageEditor.openPreviewMode();
+			PageEditor.previewInANewTab();
 
 			ContentPages.viewCurrentExperience(experienceName = "New Experience");
 		}
 
 		task ("Back to view page mode and view the new experience still selected in experience selector") {
-			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
+			Close.closeWindow();
 
 			PageEditor.clickBack();
 

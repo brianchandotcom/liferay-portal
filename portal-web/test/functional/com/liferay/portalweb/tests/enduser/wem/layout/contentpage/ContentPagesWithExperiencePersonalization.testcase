@@ -643,9 +643,7 @@ definition {
 		task ("Open the preview modal and View the new experience shown in experience selector") {
 			ContentPages.gotoPageEditor();
 
-			PageEditor.openPreviewMode();
-
-			SelectFrame.selectFrameNoLoading(locator1 = "WCPreview#PREVIEW_TITLE");
+			PageEditor.previewInANewTab();
 
 			Click(
 				key_fieldLabel = "Experience",
@@ -655,7 +653,7 @@ definition {
 		}
 
 		task ("Back to view page mode and view the new experience still shown in experience selector") {
-			IFrame.closeFrame();
+			Close.closeWindow();
 
 			PageEditor.clickBack();
 
@@ -734,13 +732,13 @@ definition {
 		task ("Open the preview modal and View the new experience selected in experience selector") {
 			ContentPages.gotoPageEditor();
 
-			PageEditor.openPreviewMode();
+			PageEditor.previewInANewTab();
 
 			ContentPages.viewCurrentExperience(experienceName = "New Experience");
 		}
 
 		task ("Back to view page mode and view the new experience still selected in experience selector") {
-			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
+			Close.closeWindow();
 
 			PageEditor.clickBack();
 

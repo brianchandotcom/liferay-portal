@@ -140,9 +140,7 @@ definition {
 		}
 
 		task ("Reset applied filters at Preview mode") {
-			PageEditor.openPreviewMode();
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			var n = "1";
 
@@ -190,7 +188,7 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			IFrame.closeFrame();
+			Close.closeWindow();
 
 			PageEditor.publish();
 		}
@@ -366,9 +364,7 @@ definition {
 		}
 
 		task ("View the Applied Filters doesn't present when no applied filter at Preview mode") {
-			PageEditor.openPreviewMode();
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			AssertElementNotPresent(locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_PLACEHOLDER");
 		}
@@ -402,7 +398,7 @@ definition {
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
 
-			IFrame.closeFrame();
+			Close.closeWindow();
 
 			PageEditor.publish();
 		}
@@ -497,9 +493,7 @@ definition {
 		}
 
 		task ("View applied category filter at Preview mode") {
-			PageEditor.openPreviewMode();
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			var n = "1";
 
@@ -525,7 +519,7 @@ definition {
 				key_position = "1",
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
 
-			IFrame.closeFrame();
+			Close.closeWindow();
 
 			PageEditor.publish();
 		}
@@ -749,9 +743,7 @@ definition {
 		}
 
 		task ("View the Show More button when the number of applied filters more than limitation at Preview mode") {
-			PageEditor.openPreviewMode();
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			var n = "1";
 
@@ -858,7 +850,7 @@ definition {
 					locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_FILTER_ITEM");
 			}
 
-			IFrame.closeFrame();
+			Close.closeWindow();
 
 			PageEditor.publish();
 		}

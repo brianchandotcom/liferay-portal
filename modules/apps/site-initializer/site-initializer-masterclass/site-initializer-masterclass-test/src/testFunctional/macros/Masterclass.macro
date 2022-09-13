@@ -87,7 +87,7 @@ definition {
 	}
 
 	macro previewPageandAssertFragment {
-		PageEditor.openPreviewMode();
+		PageEditor.previewInANewTab();
 
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",

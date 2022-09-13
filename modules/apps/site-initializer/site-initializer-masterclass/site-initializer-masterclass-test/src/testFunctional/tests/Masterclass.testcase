@@ -625,9 +625,7 @@ definition {
 		}
 
 		task ("On Preview Mode Assert the Number of Blogs in the List") {
-			PageEditor.openPreviewMode();
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			for (var n : list "1,2,3,4,5") {
 				AssertVisible(
@@ -1498,9 +1496,7 @@ definition {
 		task ("Go to Blog Entry and Assert the List of Blogs Presence") {
 			LexiconEntry.gotoEntry(rowEntry = "Blog Entry");
 
-			PageEditor.openPreviewMode();
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			PageEditor.previewInANewTab();
 
 			for (var n : list "1,2,3") {
 				AssertVisible(

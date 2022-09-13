@@ -97,18 +97,16 @@ definition {
 		}
 
 		task ("When the page creator opens the preview modal") {
-			PageEditor.openPreviewMode();
+			PageEditor.previewInANewTab();
 		}
 
 		task ("Then the common styles of new fragment shown on preview modal") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "Fragment Name",
 				styleName = "color",
 				styleValue = "success");
 
-			IFrame.closeFrame();
+			Close.closeWindow();
 
 			PageEditor.publish();
 		}

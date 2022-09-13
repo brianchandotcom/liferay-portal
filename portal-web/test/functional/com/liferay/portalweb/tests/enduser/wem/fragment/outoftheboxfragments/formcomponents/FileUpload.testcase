@@ -151,16 +151,14 @@ definition {
 			}
 
 			task ("View custom text is shown at preview") {
-				PageEditor.openPreviewMode();
-
-				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+				PageEditor.previewInANewTab();
 
 				ContentPages.viewFragmentText(
 					fragmentName = "button",
 					id = "submit-button-text",
 					text = "Custom Text");
 
-				IFrame.closeFrame();
+				Close.closeWindow();
 			}
 
 			task ("View custom text is shown at view mode") {
@@ -255,16 +253,14 @@ definition {
 			}
 
 			task ("View custom text is shown at preview") {
-				PageEditor.openPreviewMode();
-
-				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+				PageEditor.previewInANewTab();
 
 				ContentPages.viewFragmentText(
 					fragmentName = "button",
 					id = "submit-button-text",
 					text = "Custom Text");
 
-				IFrame.closeFrame();
+				Close.closeWindow();
 			}
 
 			task ("Publish the display page template and mark it as default") {

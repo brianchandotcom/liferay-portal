@@ -48,6 +48,14 @@ public class DefaultFacetProcessor
 
 		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
+		JSONObject dataJSONObject = facetConfiguration.getData();
+
+		int minDocCount = dataJSONObject.getInt("frequencyThreshold");
+
+		if (minDocCount > 0) {
+			termsAggregationBuilder.minDocCount(minDocCount);
+		}
+
 		String order = facetConfiguration.getOrder();
 
 		if (order.equals("count:asc")) {
@@ -55,14 +63,6 @@ public class DefaultFacetProcessor
 		}
 		else if (order.equals("count:desc")) {
 			termsAggregationBuilder.order(BucketOrder.count(false));
-		}
-
-		JSONObject dataJSONObject = facetConfiguration.getData();
-
-		int minDocCount = dataJSONObject.getInt("frequencyThreshold");
-
-		if (minDocCount > 0) {
-			termsAggregationBuilder.minDocCount(minDocCount);
 		}
 
 		int size = dataJSONObject.getInt("maxTerms");

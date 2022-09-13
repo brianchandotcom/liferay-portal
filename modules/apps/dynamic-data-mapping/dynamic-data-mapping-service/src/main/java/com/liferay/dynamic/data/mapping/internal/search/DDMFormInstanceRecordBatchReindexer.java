@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.search.util;
+package com.liferay.dynamic.data.mapping.internal.search;
 
 /**
  * @author Rafael Praxedes

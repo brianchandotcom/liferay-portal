@@ -896,8 +896,6 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Is Empty' to text fields"
 	@priority = "4"
 	test CanDefineExpressionIsEmpty {
-		property portal.upstream = "quarantine";
-
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156695",

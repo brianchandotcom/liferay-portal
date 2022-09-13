@@ -285,6 +285,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TREE_PANEL_HEADER</td>
+	<td>//div[contains(@class,'knowledge-base-vertical-bar') and contains(@class,'expanded')]//div[contains(@class,'sidebar-header') and contains(.,'${key_header}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TREE_PANEL_OPENED</td>
 	<td>//div[contains(@class,'knowledge-base-vertical-bar') and contains(@class,'expanded')]</td>
 	<td></td>

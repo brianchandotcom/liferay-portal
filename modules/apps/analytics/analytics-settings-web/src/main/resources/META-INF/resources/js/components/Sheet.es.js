@@ -14,24 +14,23 @@
 
 import React from 'react';
 
-const Sheet = ({content, description, footer, title}) => (
+const Sheet = ({children, description, title}) => (
 	<div className="sheet sheet-lg">
 		<div className="sheet-header">
 			<h2 className="sheet-title">{title}</h2>
-			
-			<div className="sheet-text">
-				{description}
-			</div>
+
+			<div className="sheet-text">{description}</div>
 		</div>
-		
-		{content && <div className="sheet-section">
-			{content}
-		</div>}
-		
-		{footer && <div className="sheet-footer">
-			{footer}
-		</div>}
+
+		{children}
 	</div>
 );
+
+const Content = ({children}) => <div className="sheet-section">{children}</div>;
+
+const Footer = ({children}) => <div className="sheet-footer">{children}</div>;
+
+Sheet.Content = Content;
+Sheet.Footer = Footer;
 
 export default Sheet;

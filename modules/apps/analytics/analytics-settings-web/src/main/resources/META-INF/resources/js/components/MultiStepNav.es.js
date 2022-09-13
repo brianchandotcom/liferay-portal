@@ -48,11 +48,13 @@ const MultiStepNav = ({steps}) => {
 
 			{steps[value] && (
 				<Sheet
-					content={steps[value].content}
 					description={steps[value].description}
-					footer={steps[value].footer}
 					title={steps[value].title}
-				/>
+				>
+					<Sheet.Content>{steps[value].content}</Sheet.Content>
+
+					<Sheet.Footer>{steps[value].footer}</Sheet.Footer>
+				</Sheet>
 			)}
 		</>
 	);

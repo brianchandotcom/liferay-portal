@@ -24,42 +24,17 @@ long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", O
 if (parentOrganizationId > 0) {
 	portletURL.setParameter("parentOrganizationId", String.valueOf(parentOrganizationId));
 }
+
+SearchContainer<Organization> organizationSearchContainer = new OrganizationSearch(renderRequest, portletURL);
 %>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="list"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol='<%= ParamUtil.getString(request, "orderByCol", "name") %>'
-			orderByType='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
-			orderColumns='<%= new String[] {"name", "type"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<c:if test='<%= ParamUtil.getBoolean(request, "showSearch", true) %>'>
-			<li>
-				<liferay-util:include page="/organization_search.jsp" servletContext="<%= application %>" />
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new OrganizationManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, organizationSearchContainer) %>"
+/>
 
 <div class="container-fluid container-fluid-max-xl">
 	<liferay-ui:search-container
-		searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
-		var="organizationSearchContainer"
+		searchContainer="<%= organizationSearchContainer %>"
 	>
 		<aui:input disabled="<%= true %>" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
@@ -122,13 +97,11 @@ if (parentOrganizationId > 0) {
 				<c:otherwise>
 
 					<%
-					SearchContainer<Organization> searchContainer = organizationSearchContainer;
-
 					if (searchTerms.isAdvancedSearch()) {
-						organizationSearchContainer.setResultsAndTotal(() -> OrganizationLocalServiceUtil.search(companyId, organizationParenOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()), OrganizationLocalServiceUtil.searchCount(companyId, organizationParenOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchTerms.isAndOperator()));
+						organizationSearchContainer.setResultsAndTotal(() -> OrganizationLocalServiceUtil.search(companyId, organizationParenOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchTerms.isAndOperator(), organizationSearchContainer.getStart(), organizationSearchContainer.getEnd(), organizationSearchContainer.getOrderByComparator()), OrganizationLocalServiceUtil.searchCount(companyId, organizationParenOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchTerms.isAndOperator()));
 					}
 					else {
-						organizationSearchContainer.setResultsAndTotal(() -> OrganizationLocalServiceUtil.search(companyId, organizationParenOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()), OrganizationLocalServiceUtil.searchCount(companyId, organizationParenOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams));
+						organizationSearchContainer.setResultsAndTotal(() -> OrganizationLocalServiceUtil.search(companyId, organizationParenOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, organizationSearchContainer.getStart(), organizationSearchContainer.getEnd(), organizationSearchContainer.getOrderByComparator()), OrganizationLocalServiceUtil.searchCount(companyId, organizationParenOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams));
 					}
 					%>
 

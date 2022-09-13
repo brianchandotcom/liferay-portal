@@ -27,7 +27,10 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
+<%@ page import="com.liferay.directory.web.internal.display.context.OrganizationManagementToolbarDisplayContext" %><%@
+page import="com.liferay.directory.web.internal.display.context.UserGroupManagementToolbarDisplayContext" %><%@
+page import="com.liferay.directory.web.internal.display.context.UserManagementToolbarDisplayContext" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.message.boards.util.MBUtil" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -86,7 +89,6 @@ page import="com.liferay.portal.service.persistence.constants.UserGroupFinderCon
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserDisplayTerms" %><%@

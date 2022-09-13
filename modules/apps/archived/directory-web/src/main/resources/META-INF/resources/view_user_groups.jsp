@@ -56,37 +56,9 @@ userGroupSearch.setResultsAndTotal(() -> UserGroupServiceUtil.search(companyId, 
 
 <aui:input disabled="<%= true %>" name="userGroupsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="list"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= userGroupSearch.getOrderByCol() %>"
-			orderByType="<%= userGroupSearch.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<c:if test='<%= ParamUtil.getBoolean(request, "showSearch", true) %>'>
-			<li>
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new UserGroupManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, userGroupSearch) %>"
+/>
 
 <div class="container-fluid container-fluid-max-xl">
 	<liferay-ui:search-container

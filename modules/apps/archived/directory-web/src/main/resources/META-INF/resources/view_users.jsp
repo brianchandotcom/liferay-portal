@@ -24,46 +24,21 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 if (Validator.isNotNull(viewUsersRedirect)) {
 	portletURL.setParameter("viewUsersRedirect", viewUsersRedirect);
 }
+
+SearchContainer<User> userSearchContainer = new UserSearch(renderRequest, portletURL);
 %>
 
 <c:if test="<%= Validator.isNotNull(viewUsersRedirect) %>">
 	<aui:input name="viewUsersRedirect" type="hidden" value="<%= viewUsersRedirect %>" />
 </c:if>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="list"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol='<%= ParamUtil.getString(request, "orderByCol", "first-name") %>'
-			orderByType='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
-			orderColumns='<%= new String[] {"first-name", "last-name", "screen-name", "job-title"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<c:if test='<%= ParamUtil.getBoolean(request, "showSearch", true) %>'>
-			<li>
-				<liferay-util:include page="/user_search.jsp" servletContext="<%= application %>" />
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new UserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, userSearchContainer) %>"
+/>
 
 <div class="container-fluid container-fluid-max-xl">
 	<liferay-ui:search-container
-		searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
-		var="userSearchContainer"
+		searchContainer="<%= userSearchContainer %>"
 	>
 		<aui:input disabled="<%= true %>" name="usersRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
@@ -143,13 +118,12 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 
 			<%
 			long companyId = company.getCompanyId();
-			SearchContainer<User> searchContainer = userSearchContainer;
 
 			if (searchTerms.isAdvancedSearch()) {
-				userSearchContainer.setResultsAndTotal(() -> UserLocalServiceUtil.search(companyId, searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()), UserLocalServiceUtil.searchCount(companyId, searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator()));
+				userSearchContainer.setResultsAndTotal(() -> UserLocalServiceUtil.search(companyId, searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator(), userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator()), UserLocalServiceUtil.searchCount(companyId, searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator()));
 			}
 			else {
-				userSearchContainer.setResultsAndTotal(() -> UserLocalServiceUtil.search(companyId, searchTerms.getKeywords(), searchTerms.getStatus(), userParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()), UserLocalServiceUtil.searchCount(companyId, searchTerms.getKeywords(), searchTerms.getStatus(), userParams));
+				userSearchContainer.setResultsAndTotal(() -> UserLocalServiceUtil.search(companyId, searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator()), UserLocalServiceUtil.searchCount(companyId, searchTerms.getKeywords(), searchTerms.getStatus(), userParams));
 			}
 			%>
 

@@ -99,7 +99,6 @@ definition {
 				casePriority = "5",
 				key_caseComponent = "Components_1 Project 1");
 		}
-
 	}
 
 	@description = "This is a test for LPS-156933 - Verify if as an Administrator I should not be able to add a duplicate case"
@@ -190,7 +189,6 @@ definition {
 				casePriority = "4",
 				key_caseComponent = "Smoke");
 		}
-
 	}
 
 	@description = "This is a test for LPS-156916 - Verify if as an Administrator I am able to Import Cases from another Project"

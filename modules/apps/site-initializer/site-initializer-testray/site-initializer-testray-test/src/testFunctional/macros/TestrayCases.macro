@@ -1,5 +1,37 @@
 definition {
 
+	macro editCases {
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "${caseName}");
+
+		Select(
+			locator1 = "TestrayCases#CASE_PRIORITY",
+			value1 = "${priority}");
+
+		Select(
+			locator1 = "TestrayCases#CASE_TYPE",
+			value1 = "${caseTypeId}");
+
+		Select(
+			locator1 = "TestrayCases#MAIN_COMPONENT",
+			value1 = "${componentId}");
+
+		Type(
+			locator1 = "TestrayCases#ESTIMATED_DURATION",
+			value1 = "${duration}");
+
+		Type(
+			locator1 = "TestrayCases#FIELD_DESCRIPTION",
+			value1 = "${description}");
+
+		Type(
+			locator1 = "TestrayCases#FIELD_STEPS",
+			value1 = "${steps}");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+	}
+
 	macro typeCasesField {
 		LexiconEntry.gotoAdd();
 
@@ -34,36 +66,12 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	macro editCases {
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "${caseName}");
-
-		Select(
-			locator1 = "TestrayCases#CASE_PRIORITY",
-			value1 = "${priority}");
-
-		Select(
-			locator1 = "TestrayCases#CASE_TYPE",
-			value1 = "${caseTypeId}");
-
-		Select(
-			locator1 = "TestrayCases#MAIN_COMPONENT",
-			value1 = "${componentId}");
-
-		Type(
-			locator1 = "TestrayCases#ESTIMATED_DURATION",
-			value1 = "${duration}");
-
-		Type(
-			locator1 = "TestrayCases#FIELD_DESCRIPTION",
-			value1 = "${description}");
-
-		Type(
-			locator1 = "TestrayCases#FIELD_STEPS",
-			value1 = "${steps}");
-
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+	macro verifyCase {
+		AssertElementPresent(
+			key_caseComponent = "${caseComponent}",
+			key_caseName = "${caseName}",
+			key_casePriority = "${casePriority}",
+			locator1 = "TestrayCases#CASE_DETAIL");
 	}
 
 	macro viewCaseDetails {
@@ -90,14 +98,6 @@ definition {
 		AssertElementPresent(
 			locator1 = "TestrayCases#CASE_DETAILS_STEPS",
 			value1 = "${steps}");
-	}
-
-	macro verifyCase {
-		AssertElementPresent(
-			key_caseName = "${caseName}",
-			key_casePriority = "${casePriority}",
-			key_caseComponent = "${caseComponent}",
-			locator1 = "TestrayCases#CASE_DETAIL");
 	}
 
 }

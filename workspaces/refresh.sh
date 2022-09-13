@@ -63,6 +63,8 @@ function refresh_sample_default_workspace {
 
 	echo -e "\nliferay.workspace.docker.image.liferay=liferay/7.4.13.nightly-d4.1.4-20220707214146" >> gradle.properties
 
+	sed -i'.bak' "s/\(.*name: \"com.liferay.gradle.plugins.workspace\", version: \"\)\(.*\)\(\") {.*\)/\14.0.17\3/g" settings.gradle
+
 	sort -o gradle.properties gradle.properties
 
 	touch modules/.touch

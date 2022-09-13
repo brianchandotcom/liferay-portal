@@ -133,6 +133,41 @@ definition {
 			actionName = "Action Name");
 	}
 
+	@description = "LPS-145665 - Verify that you can edit the Action name"
+	@priority = "4"
+	test CanEditActionName {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 145",
+			objectName = "CustomObject145",
+			pluralLabelName = "Custom Objects 145");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 145");
+
+		ObjectAdmin.goToActionsTab();
+
+		ObjectAdmin.addObjectActionViaUI(
+			actionName = "Custom Action",
+			active = "true",
+			thenAction = "Webhook",
+			urlAction = "www.liferay.com",
+			whenAction = "On After Add");
+
+		ObjectAdmin.assertObjectActions(actionActive = "Custom Action");
+
+		ObjectAdmin.assertObjectActions(actionActive = "Yes");
+
+		ObjectAdmin.editObjectAction(
+			actionName = "New Action Update",
+			active = "false",
+			viewEntry = "Custom Action");
+
+		ObjectAdmin.assertObjectActions(actionActive = "No");
+
+		ObjectAdmin.assertObjectActions(actionActive = "New Action Update");
+	}
+
 	@description = "LPS-139008 - Verify that it is possible to inactivate an Action"
 	@priority = "4"
 	test CanInactivateAction {

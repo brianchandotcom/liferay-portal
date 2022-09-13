@@ -22,6 +22,36 @@
 		<td>//button[contains(.,'${key_tabName}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>INPUT_VALUE</td>
+		<td>//input[(@placeholder='Input a value.')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>INPUT_EXPRESSION</td>
+		<td>//input[(@placeholder="Create an expression.")]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>INPUT_NEW_VALUE</td>
+		<td>//input[(@placeholder="Input a value or create an expression.")]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>INPUT_METHOD</td>
+		<td>//input[contains(@class, 'custom-control-input') and contains(@type,'checkbox')]/..//span[contains(text(),'Input as a value.')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>IFRAME_SIDE_PANEL</td>
+		<td>//div[contains(@class,'side-panel') and contains(@class,'is-visible')]//iframe</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ENABLE_DISABLE_CONDITION</td>
+		<td>//span[contains(., 'Enable Condition')]/..//span[contains(@class, 'toggle-switch-check-bar')]//input[contains(@type, 'checkbox')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

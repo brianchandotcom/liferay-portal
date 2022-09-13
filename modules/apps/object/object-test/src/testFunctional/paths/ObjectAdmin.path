@@ -452,7 +452,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_ACTIONS_TAB</td>
-		<td>//div[contains(@class,'dnd-tr') and contains (.,'${key_actionName}') and contains (.,'${key_actionActive}')]</td>
+		<td>//div[contains(@class, 'dnd-td') and contains(., '${key_actionActive}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -538,6 +538,21 @@
 	<tr>
 		<td>VIEW_STATE_NAME</td>
 		<td>//h3[(@class='lfr-objects__card-title') and text()='Select the State Flow']//..//..//div[contains(@class,'lfr-objects__card-title--with-padding') and contains(.,'${key_stateName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_CHOOSE_OPTION</td>
+		<td>//option[contains(text(),'${chooseOption}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>CHOOSE_AN_OBJECT</td>
+		<td>//select[@class="form-control"]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>CHOOSE_OBJECT_LABEL</td>
+		<td>//*[contains(@label,'Unrelated Objects')]//..//option[contains(.,'${key_objectLabel}')]</td>
 		<td></td>
 	</tr>
 </tbody>

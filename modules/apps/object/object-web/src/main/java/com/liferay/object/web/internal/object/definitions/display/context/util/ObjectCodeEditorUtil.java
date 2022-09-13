@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
@@ -56,9 +55,7 @@ public class ObjectCodeEditorUtil {
 							objectField.getBusinessType(),
 							ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)),
 					objectField -> HashMapBuilder.put(
-						"content",
-						StringUtil.removeSubstring(
-							objectField.getDBColumnName(), StringPool.UNDERLINE)
+						"content", objectField.getName()
 					).put(
 						"helpText", StringPool.BLANK
 					).put(

@@ -138,11 +138,16 @@ public class RelatedObjectEntryResourceImpl
 		ObjectDefinition objectDefinition, Long objectEntryId,
 		UriInfo uriInfo) {
 
-		return new DefaultDTOConverterContext(
-			_dtoConverterRegistry, objectEntryId,
-			LocaleUtil.fromLanguageId(
-				objectDefinition.getDefaultLanguageId(), true, false),
-			uriInfo, null);
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				_dtoConverterRegistry, objectEntryId,
+				LocaleUtil.fromLanguageId(
+					objectDefinition.getDefaultLanguageId(), true, false),
+				uriInfo, null);
+
+		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
+
+		return defaultDTOConverterContext;
 	}
 
 	private ObjectRelationship _getObjectRelationship(

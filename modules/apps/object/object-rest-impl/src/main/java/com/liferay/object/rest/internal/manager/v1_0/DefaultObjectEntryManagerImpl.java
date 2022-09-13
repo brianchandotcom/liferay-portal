@@ -825,60 +825,64 @@ public class DefaultObjectEntryManagerImpl
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
-		DefaultDTOConverterContext defaultDTOConverterContext =
-			new DefaultDTOConverterContext(
-				dtoConverterContext.isAcceptAllLanguages(),
-				HashMapBuilder.put(
-					"delete",
-					() -> {
-						if (_hasRelatedObjectEntries(
-								ObjectRelationshipConstants.
-									DELETION_TYPE_PREVENT,
-								objectDefinition, objectEntry)) {
+		HashMap<String, Map<String, String>> actions = new HashMap<>();
 
-							return null;
-						}
+		Boolean addActions = (Boolean)dtoConverterContext.getAttribute(
+			"addActions");
 
-						return ActionUtil.addAction(
-							ActionKeys.DELETE, ObjectEntryResourceImpl.class,
-							objectEntry.getObjectEntryId(), "deleteObjectEntry",
-							null, objectEntry.getUserId(),
-							_getObjectEntryPermissionName(
-								objectEntry.getObjectDefinitionId()),
-							objectEntry.getGroupId(),
-							dtoConverterContext.getUriInfo());
+		if ((addActions == null) || addActions) {
+			actions = HashMapBuilder.<String, Map<String, String>>put(
+				"delete",
+				() -> {
+					if (_hasRelatedObjectEntries(
+							ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+							objectDefinition, objectEntry)) {
+
+						return null;
 					}
-				).put(
-					"get",
-					ActionUtil.addAction(
-						ActionKeys.VIEW, ObjectEntryResourceImpl.class,
-						objectEntry.getObjectEntryId(), "getObjectEntry", null,
-						objectEntry.getUserId(),
-						_getObjectEntryPermissionName(
-							objectEntry.getObjectDefinitionId()),
-						objectEntry.getGroupId(),
-						dtoConverterContext.getUriInfo())
-				).put(
-					"permissions",
-					ActionUtil.addAction(
-						ActionKeys.PERMISSIONS, ObjectEntryResourceImpl.class,
-						objectEntry.getObjectEntryId(), "patchObjectEntry",
+
+					return ActionUtil.addAction(
+						ActionKeys.DELETE, ObjectEntryResourceImpl.class,
+						objectEntry.getObjectEntryId(), "deleteObjectEntry",
 						null, objectEntry.getUserId(),
 						_getObjectEntryPermissionName(
 							objectEntry.getObjectDefinitionId()),
 						objectEntry.getGroupId(),
-						dtoConverterContext.getUriInfo())
-				).put(
-					"update",
-					ActionUtil.addAction(
-						ActionKeys.UPDATE, ObjectEntryResourceImpl.class,
-						objectEntry.getObjectEntryId(), "putObjectEntry", null,
-						objectEntry.getUserId(),
-						_getObjectEntryPermissionName(
-							objectEntry.getObjectDefinitionId()),
-						objectEntry.getGroupId(),
-						dtoConverterContext.getUriInfo())
-				).build(),
+						dtoConverterContext.getUriInfo());
+				}
+			).put(
+				"get",
+				ActionUtil.addAction(
+					ActionKeys.VIEW, ObjectEntryResourceImpl.class,
+					objectEntry.getObjectEntryId(), "getObjectEntry", null,
+					objectEntry.getUserId(),
+					_getObjectEntryPermissionName(
+						objectEntry.getObjectDefinitionId()),
+					objectEntry.getGroupId(), dtoConverterContext.getUriInfo())
+			).put(
+				"permissions",
+				ActionUtil.addAction(
+					ActionKeys.PERMISSIONS, ObjectEntryResourceImpl.class,
+					objectEntry.getObjectEntryId(), "patchObjectEntry", null,
+					objectEntry.getUserId(),
+					_getObjectEntryPermissionName(
+						objectEntry.getObjectDefinitionId()),
+					objectEntry.getGroupId(), dtoConverterContext.getUriInfo())
+			).put(
+				"update",
+				ActionUtil.addAction(
+					ActionKeys.UPDATE, ObjectEntryResourceImpl.class,
+					objectEntry.getObjectEntryId(), "putObjectEntry", null,
+					objectEntry.getUserId(),
+					_getObjectEntryPermissionName(
+						objectEntry.getObjectDefinitionId()),
+					objectEntry.getGroupId(), dtoConverterContext.getUriInfo())
+			).build();
+		}
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				dtoConverterContext.isAcceptAllLanguages(), actions,
 				dtoConverterContext.getDTOConverterRegistry(),
 				dtoConverterContext.getHttpServletRequest(),
 				objectEntry.getObjectEntryId(), dtoConverterContext.getLocale(),

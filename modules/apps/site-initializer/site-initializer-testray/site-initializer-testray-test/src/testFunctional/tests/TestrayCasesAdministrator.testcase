@@ -8,15 +8,63 @@ definition {
 	property testray.main.component.name = "Site Initializer Testray";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
 
-		Testray.createTestraySite(siteName = "Testray 2");
+			Testray.createTestraySite(siteName = "Testray 2");
+
+			Refresh();
+		}
+
+		task ("Go to Testray, Create Project and change pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+
+		task ("Go to created project and add a new team") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			Testray.addNewTeam(teamName = "Components_1 Team");
+
+			TestrayManage.closeModalInOptions();
+		}
+
+		task ("Go to created project and add a component") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(
+				componentName = "Components_1 Project 1",
+				teamName = "Components_1 Team");
+
+			Refresh();
+		}
+
+		task ("Go to Testray 2 and change the pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.deleteAllProjects();
 
 		Testray.tearDownCP();
 
@@ -26,11 +74,31 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156790 - Verify if as an Administrator I am able to add Cases without Subcomponents"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanAddCase {
+		task ("Given that the user goes to project page") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		}
 
-		// TODO LPS-156790 AdminCanAddCase pending implementation
+		task ("And given that the user adds a new Case") {
+			Testray.projectTabNavigator(navTabName = "Cases");
+
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Components_1 Project 1",
+				description = "Cases_1 Case Description",
+				duration = "60",
+				priority = "5",
+				steps = "Auto Test Steps");
+		}
+
+		task ("Then the case is displayed with the new infos") {
+			TestrayCases.verifyCase(
+				caseName = "Cases_1 Case",
+				casePriority = "5",
+				key_caseComponent = "Components_1 Project 1");
+		}
 
 	}
 
@@ -44,20 +112,84 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156791 - Verify if as an Administrator I am able to delete Cases without Subcomponents"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanDeleteCase {
+		task ("Given that the user goes to project page") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		}
 
-		// TODO LPS-156791 AdminCanDeleteCase pending implementation
+		task ("When given that the user adds a new Case") {
+			Testray.projectTabNavigator(navTabName = "Cases");
 
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Components_1 Project 1",
+				description = "Cases_1 Case Description",
+				duration = "60",
+				priority = "5",
+				steps = "Auto Test Steps");
+		}
+
+		task ("When the user goes to delete a case") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Cases_1 Case");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+		}
+
+		task ("then the Case should not be displayed anymore") {
+			Testray.assertItemNotPresent(itemName = "Cases_1 Case");
+		}
 	}
 
 	@description = "This is a test for LPS-156793 - Verify if as an Administrator I am able to edit Cases without Subcomponents"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanEditCasee {
+		task ("Given that the user goes to project page") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		}
 
-		// TODO LPS-156793 AdminCanEditCase pending implementation
+		task ("When given that the user adds a new Case") {
+			Testray.projectTabNavigator(navTabName = "Cases");
+
+			TestrayCases.typeCasesField(
+				caseName = "Cases_1 Case",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Components_1 Project 1",
+				description = "Cases_1 Case Description",
+				duration = "60",
+				priority = "5",
+				steps = "Auto Test Steps");
+
+			TestrayCases.verifyCase(
+				caseName = "Cases_1 Case",
+				casePriority = "5",
+				key_caseComponent = "Components_1 Project 1");
+		}
+
+		task ("And the user goes to edit a case") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Cases_1 Case");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+
+			TestrayCases.editCases(
+				caseName = "Cases_1 Case Edited",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Smoke",
+				description = "Cases_1 Case Description Edited",
+				duration = "30",
+				priority = "4",
+				steps = "http://test.edit.com");
+		}
+
+		task ("Then the case is displayed with the new infos") {
+			TestrayCases.verifyCase(
+				caseName = "Cases_1 Case Edited",
+				casePriority = "4",
+				key_caseComponent = "Smoke");
+		}
 
 	}
 

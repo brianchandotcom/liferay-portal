@@ -58,11 +58,11 @@ definition {
 				value1 = "${basePrice}");
 		}
 
-		if (isSet(salePrice)) {
+		if (isSet(promoPrice)) {
 			Type(
-				key_text = "Sale Price",
+				key_text = "Promotion Price",
 				locator1 = "TextInput#ANY",
-				value1 = "${salePrice}");
+				value1 = "${promoPrice}");
 		}
 
 		if (isSet(cost)) {

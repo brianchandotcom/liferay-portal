@@ -1678,7 +1678,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-6157. Verify buyers can see the barred list price and a sale price of a product if a promotion is set."
+	@description = "COMMERCE-6157. Verify buyers can see the barred list price and a promo price of a product if a promotion is set."
 	@priority = "3"
 	test ViewProductCardPriceWithPromotion {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";

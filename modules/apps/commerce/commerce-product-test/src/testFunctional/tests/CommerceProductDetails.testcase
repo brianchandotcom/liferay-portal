@@ -847,7 +847,7 @@ definition {
 
 			CommerceSKUs.editSkuPricing(
 				basePrice = "55.00",
-				salePrice = "50.00");
+				promoPrice = "50.00");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Media");
 
@@ -1052,7 +1052,7 @@ definition {
 
 			CommerceSKUs.editSkuPricing(
 				basePrice = "55.00",
-				salePrice = "50.00");
+				promoPrice = "50.00");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Media");
 
@@ -1782,7 +1782,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-6358. As a buyer, I want to see the barred list price and a sale price of a product in Product Details, if a promotion is set"
+	@description = "COMMERCE-6358. As a buyer, I want to see the barred list price and a promo price of a product in Product Details, if a promotion is set"
 	@priority = "3"
 	test ViewProductDetailsPriceWithPromotion {
 		property portal.acceptance = "false";

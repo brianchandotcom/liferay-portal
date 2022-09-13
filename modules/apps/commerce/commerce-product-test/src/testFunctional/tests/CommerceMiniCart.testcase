@@ -1999,7 +1999,7 @@ definition {
 			value1 = "$ 40.00");
 	}
 
-	@description = "COMMERCE-6336. As a buyer, I want to see the barred list price and a sale price of an item in the mini-cart, if a promotion is set"
+	@description = "COMMERCE-6336. As a buyer, I want to see the barred list price and a promo price of an item in the mini-cart, if a promotion is set"
 	@priority = "3"
 	test ViewMiniCartItemWithPromotion {
 		property portal.acceptance = "true";
@@ -2033,7 +2033,7 @@ definition {
 			value1 = "90.00");
 	}
 
-	@description = "COMMERCE-6342. As a buyer, I want to see the barred list price and the sale price on the mini-cart item and I want to be able to see tier price in the mini-cart summary"
+	@description = "COMMERCE-6342. As a buyer, I want to see the barred list price and the promo price on the mini-cart item and I want to be able to see tier price in the mini-cart summary"
 	@priority = "3"
 	test ViewMiniCartItemWithTierPrice {
 		property portal.acceptance = "false";

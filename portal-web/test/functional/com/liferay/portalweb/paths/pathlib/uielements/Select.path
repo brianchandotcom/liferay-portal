@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ADDRESS_TYPE</td>
-	<td>//div[label[contains(.,'Type')]]/select[contains(@name,'addressType')]</td>
+	<td>//div[label[contains(.,'Type')]]/select[contains(@name,'addressListTypeId0')]</td>
 	<td></td>
 </tr>
 <tr>

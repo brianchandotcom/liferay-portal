@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 import javax.ws.rs.client.Entity;
@@ -61,19 +63,19 @@ public abstract class BaseAuthorizationGrantTestCase
 	public void testClientAuthentications() {
 		Assert.assertTrue(
 			Validator.isNotNull(
-				getToken(
-					getDefaultAuthorizationGrant(),
-					_testClientPasswordClientAuthentication)));
+				getAccessToken(
+					getAuthorizationGrant(TEST_CLIENT_ID_1),
+					testClientAuthentications.get(TEST_CLIENT_ID_1))));
 		Assert.assertTrue(
 			Validator.isNotNull(
-				getToken(
-					getDefaultAuthorizationGrant(),
-					_testJWTAssertionClientAuthentication1)));
+				getAccessToken(
+					getAuthorizationGrant(TEST_CLIENT_ID_2),
+					testClientAuthentications.get(TEST_CLIENT_ID_2))));
 		Assert.assertTrue(
 			Validator.isNotNull(
-				getToken(
-					getDefaultAuthorizationGrant(),
-					_testJWTAssertionClientAuthentication2)));
+				getAccessToken(
+					getAuthorizationGrant(TEST_CLIENT_ID_3),
+					testClientAuthentications.get(TEST_CLIENT_ID_3))));
 	}
 
 	public abstract static class TestPreparatorBundleActivator
@@ -84,37 +86,63 @@ public abstract class BaseAuthorizationGrantTestCase
 			User user = UserTestUtil.getAdminUser(
 				PortalUtil.getDefaultCompanyId());
 
+			testClientAuthentications.put(
+				TEST_CLIENT_ID_1,
+				new TestClientPasswordClientAuthentication(
+					TEST_CLIENT_ID_1, TEST_CLIENT_SECRET));
+			testClientAuthentications.put(
+				TEST_CLIENT_ID_2,
+				new TestJWTAssertionClientAuthentication(
+					getTokenWebTarget(), TEST_CLIENT_ID_2, false,
+					TEST_CLIENT_ID_2, TEST_CLIENT_SECRET, true));
+			testClientAuthentications.put(
+				TEST_CLIENT_ID_3,
+				new TestJWTAssertionClientAuthentication(
+					getTokenWebTarget(), TEST_CLIENT_ID_3, false,
+					TEST_CLIENT_ID_3, JWTAssertionUtil.JWKS, false));
+
 			createOAuth2ApplicationWithClientSecretPost(
 				user.getCompanyId(), user, TEST_CLIENT_ID_1, TEST_CLIENT_SECRET,
-				Arrays.asList(GrantType.JWT_BEARER),
+				Arrays.asList(
+					GrantType.RESOURCE_OWNER_PASSWORD, GrantType.REFRESH_TOKEN,
+					GrantType.JWT_BEARER),
 				Arrays.asList(
 					"everything", "everything.read", "everything.write"));
 			createOAuth2ApplicationWithClientSecretJWT(
 				user.getCompanyId(), user, TEST_CLIENT_ID_2, TEST_CLIENT_SECRET,
-				Arrays.asList(GrantType.JWT_BEARER),
+				Arrays.asList(
+					GrantType.RESOURCE_OWNER_PASSWORD, GrantType.REFRESH_TOKEN,
+					GrantType.JWT_BEARER),
 				Arrays.asList(
 					"everything", "everything.read", "everything.write"));
 			createOAuth2ApplicationWithPrivateKeyJWT(
 				user.getCompanyId(), user, TEST_CLIENT_ID_3,
-				Arrays.asList(GrantType.JWT_BEARER), JWTAssertionUtil.JWKS,
+				Arrays.asList(
+					GrantType.RESOURCE_OWNER_PASSWORD, GrantType.REFRESH_TOKEN,
+					GrantType.JWT_BEARER),
+				JWTAssertionUtil.JWKS,
 				Arrays.asList(
 					"everything", "everything.read", "everything.write"));
 		}
 
 	}
 
-	protected abstract TestAuthorizationGrant getDefaultAuthorizationGrant();
-
-	protected String getToken(TestAuthorizationGrant testAuthorizationGrant) {
-		return getToken(
-			testAuthorizationGrant, _testClientPasswordClientAuthentication);
-	}
-
-	protected String getToken(
+	protected String getAccessToken(
 		TestAuthorizationGrant testAuthorizationGrant,
 		TestClientAuthentication testClientAuthentication) {
 
-		return parseTokenString(
+		return parseAccessTokenString(
+			getTokenResponse(testAuthorizationGrant, testClientAuthentication));
+	}
+
+	protected abstract TestAuthorizationGrant getAuthorizationGrant(
+		String clientId);
+
+	protected String getRefreshToken(
+		TestAuthorizationGrant testAuthorizationGrant,
+		TestClientAuthentication testClientAuthentication) {
+
+		return parseRefreshTokenString(
 			getTokenResponse(testAuthorizationGrant, testClientAuthentication));
 	}
 
@@ -133,6 +161,14 @@ public abstract class BaseAuthorizationGrantTestCase
 		return _invocationBuilder.post(Entity.form(multivaluedMap));
 	}
 
+	protected String parseAccessTokenString(Response response) {
+		return parseJsonField(response, "access_token");
+	}
+
+	protected String parseRefreshTokenString(Response response) {
+		return parseJsonField(response, "refresh_token");
+	}
+
 	protected static final String TEST_CLIENT_ID_1 = "test_client_id_1";
 
 	protected static final String TEST_CLIENT_ID_2 = "test_client_id_2";
@@ -142,6 +178,9 @@ public abstract class BaseAuthorizationGrantTestCase
 	protected static final String TEST_CLIENT_SECRET =
 		"oauthTestApplicationSecret";
 
+	protected static final Map<String, TestClientAuthentication>
+		testClientAuthentications = new HashMap<>();
+
 	private static Invocation.Builder _getInvocationBuilder() {
 		return getInvocationBuilder(
 			null, getTokenWebTarget(), Function.identity());
@@ -149,20 +188,5 @@ public abstract class BaseAuthorizationGrantTestCase
 
 	private static final Invocation.Builder _invocationBuilder =
 		_getInvocationBuilder();
-
-	private final TestClientPasswordClientAuthentication
-		_testClientPasswordClientAuthentication =
-			new TestClientPasswordClientAuthentication(
-				TEST_CLIENT_ID_1, TEST_CLIENT_SECRET);
-	private final TestJWTAssertionClientAuthentication
-		_testJWTAssertionClientAuthentication1 =
-			new TestJWTAssertionClientAuthentication(
-				getTokenWebTarget(), TEST_CLIENT_ID_2, false, TEST_CLIENT_ID_2,
-				TEST_CLIENT_SECRET, true);
-	private final TestJWTAssertionClientAuthentication
-		_testJWTAssertionClientAuthentication2 =
-			new TestJWTAssertionClientAuthentication(
-				getTokenWebTarget(), TEST_CLIENT_ID_3, false, TEST_CLIENT_ID_3,
-				JWTAssertionUtil.JWKS, false);
 
 }

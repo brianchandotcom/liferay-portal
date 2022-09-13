@@ -55,7 +55,10 @@ public class JWTAssertAuthorizationGrantTest
 				TEST_CLIENT_ID_1, null, user.getUuid(), getTokenWebTarget());
 
 		Assert.assertTrue(
-			Validator.isNotNull(getToken(testJWTAssertionAuthorizationGrant)));
+			Validator.isNotNull(
+				getAccessToken(
+					testJWTAssertionAuthorizationGrant,
+					testClientAuthentications.get(TEST_CLIENT_ID_1))));
 	}
 
 	@Test
@@ -68,15 +71,14 @@ public class JWTAssertAuthorizationGrantTest
 				getJsonWebTarget("wrongPath"));
 
 		Assert.assertTrue(
-			Validator.isNull(getToken(testJWTAssertionAuthorizationGrant)));
+			Validator.isNull(
+				getAccessToken(
+					testJWTAssertionAuthorizationGrant,
+					testClientAuthentications.get(TEST_CLIENT_ID_1))));
 	}
 
 	@Override
-	protected BundleActivator getBundleActivator() {
-		return new JWTBearerGrantTestPreparatorBundleActivator();
-	}
-
-	protected TestAuthorizationGrant getDefaultAuthorizationGrant() {
+	protected TestAuthorizationGrant getAuthorizationGrant(String clientId) {
 		User user = null;
 
 		try {
@@ -88,6 +90,11 @@ public class JWTAssertAuthorizationGrantTest
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
+	}
+
+	@Override
+	protected BundleActivator getBundleActivator() {
+		return new JWTBearerGrantTestPreparatorBundleActivator();
 	}
 
 	private static class JWTBearerGrantTestPreparatorBundleActivator

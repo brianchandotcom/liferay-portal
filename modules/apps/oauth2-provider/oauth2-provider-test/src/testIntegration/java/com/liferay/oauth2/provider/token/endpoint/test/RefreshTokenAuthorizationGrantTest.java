@@ -18,6 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.internal.test.TestAnnotatedApplication;
 import com.liferay.oauth2.provider.internal.test.TestAuthorizationGrant;
+import com.liferay.oauth2.provider.internal.test.TestPasswordAuthorizationGrant;
+import com.liferay.oauth2.provider.internal.test.TestRefreshTokenAuthorizationGrant;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -135,26 +137,16 @@ public class RefreshTokenAuthorizationGrantTest
 
 	}
 
-	@Override
-	protected BundleActivator getBundleActivator() {
-		return new TokenExpeditionTestPreparatorBundleActivator();
+	protected TestAuthorizationGrant getAuthorizationGrant(String clientId) {
+		return new TestRefreshTokenAuthorizationGrant(
+			getRefreshToken(
+				new TestPasswordAuthorizationGrant("test@liferay.com", "test"),
+				testClientAuthentications.get(clientId)));
 	}
 
 	@Override
-	protected TestAuthorizationGrant getDefaultAuthorizationGrant() {
-		JSONObject jsonObject = getToken(
-			"oauthTestApplication", null,
-			getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
-			this::parseJSONObject);
-
-		WebTarget webTarget = getWebTarget("/annotated");
-
-		String accessTokenString = jsonObject.getString("access_token");
-
-		Invocation.Builder invocationBuilder = authorize(
-			webTarget.request(), accessTokenString);
-
-		return null;
+	protected BundleActivator getBundleActivator() {
+		return new TokenExpeditionTestPreparatorBundleActivator();
 	}
 
 }

@@ -208,12 +208,19 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 				themeDisplay.getScopeGroup());
 
 		for (PanelCategory panelCategory : applicationsMenuPanelCategories) {
+			JSONArray childCategoriesJSONArray =
+				_getChildPanelCategoriesJSONArray(
+					httpServletRequest, panelCategory.getKey(), themeDisplay);
+
+			if ((childCategoriesJSONArray == null) ||
+				(childCategoriesJSONArray.length() <= 0)) {
+
+				continue;
+			}
+
 			panelCategoriesJSONArray.put(
 				JSONUtil.put(
-					"childCategories",
-					_getChildPanelCategoriesJSONArray(
-						httpServletRequest, panelCategory.getKey(),
-						themeDisplay)
+					"childCategories", childCategoriesJSONArray
 				).put(
 					"key", panelCategory.getKey()
 				).put(

@@ -4,13 +4,13 @@ import './index.css';
 import App from './App';
 
 class WebComponent extends HTMLElement {
-  connectedCallback() {
-    ReactDOM.render(<App />,this);
-  }
+	connectedCallback() {
+		ReactDOM.render(<App />, this);
+	}
 }
 
 const ELEMENT_ID = 'sample-react-app';
 
 if (!customElements.get(ELEMENT_ID)) {
-  customElements.define(ELEMENT_ID, WebComponent);
+	customElements.define(ELEMENT_ID, WebComponent);
 }

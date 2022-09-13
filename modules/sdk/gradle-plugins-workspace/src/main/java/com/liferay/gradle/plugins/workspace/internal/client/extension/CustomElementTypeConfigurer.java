@@ -31,7 +31,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -65,13 +64,16 @@ public class CustomElementTypeConfigurer
 		Project project, ClientExtension clientExtension,
 		TaskProvider<Zip> zipTaskProvider) {
 
-		if (!_hasFrontendBuild(project)) {
+		if (!_hasFrontendBuildScript(project)) {
 			return;
 		}
 
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 
-		_configureNodeAndNpmVersion(project);
+		NodeExtension nodeExtension = GradleUtil.getExtension(
+			project, NodeExtension.class);
+
+		_configureExtensionNode(nodeExtension);
 
 		TaskProvider<CreateClientExtensionConfigTask>
 			createClientExtensionConfigTaskProvider =
@@ -161,10 +163,7 @@ public class CustomElementTypeConfigurer
 			});
 	}
 
-	private void _configureNodeAndNpmVersion(Project project) {
-		NodeExtension nodeExtension = GradleUtil.getExtension(
-			project, NodeExtension.class);
-
+	private void _configureExtensionNode(NodeExtension nodeExtension) {
 		String nodeVersion = nodeExtension.getNodeVersion();
 
 		try {
@@ -206,19 +205,19 @@ public class CustomElementTypeConfigurer
 
 		JsonSlurper jsonSlurper = new JsonSlurper();
 
-		Map<String, Object> clientExtensionConfig =
+		Map<String, Object> clientExtensionConfigMap =
 			(Map<String, Object>)jsonSlurper.parse(
 				originalConfigFileContent.getBytes());
 
 		AtomicReference<String> configData = new AtomicReference<>(
 			originalConfigFileContent);
 
-		Set<String> keySet = clientExtensionConfig.keySet();
+		Set<String> keySet = clientExtensionConfigMap.keySet();
 
 		keySet.forEach(
 			key -> {
 				Map<String, Object> configMap =
-					(Map<String, Object>)clientExtensionConfig.get(key);
+					(Map<String, Object>)clientExtensionConfigMap.get(key);
 
 				List<String> typeSettings = (List<String>)configMap.get(
 					"typeSettings");
@@ -297,40 +296,25 @@ public class CustomElementTypeConfigurer
 	}
 
 	@SuppressWarnings("unchecked")
-	private Map<String, Object> _getPackageJsonMap(File packageJsonFile) {
+	private boolean _hasFrontendBuildScript(Project project) {
+		File packageJsonFile = project.file("package.json");
+
 		if (!packageJsonFile.exists()) {
-			return Collections.emptyMap();
+			return false;
 		}
 
 		JsonSlurper jsonSlurper = new JsonSlurper();
 
-		return (Map<String, Object>)jsonSlurper.parse(packageJsonFile);
-	}
+		Map<String, Object> packageJsonMap =
+			(Map<String, Object>)jsonSlurper.parse(packageJsonFile);
 
-	@SuppressWarnings("unchecked")
-	private boolean _hasBuildScript(Path packageJsonPath) {
-		Map<String, Object> packageJsonMap = _getPackageJsonMap(
-			packageJsonPath.toFile());
-
-		Map<String, Object> liferayTheme =
+		Map<String, Object> liferayThemeMap =
 			(Map<String, Object>)packageJsonMap.get("liferayTheme");
-		Map<String, Object> scripts = (Map<String, Object>)packageJsonMap.get(
-			"scripts");
+		Map<String, Object> scriptsMap =
+			(Map<String, Object>)packageJsonMap.get("scripts");
 
-		if ((liferayTheme == null) && (scripts != null) &&
-			(scripts.get("build") != null)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _hasFrontendBuild(Project project) {
-		File packageJsonFile = project.file("package.json");
-
-		if (packageJsonFile.exists() &&
-			_hasBuildScript(packageJsonFile.toPath())) {
+		if ((liferayThemeMap == null) && (scriptsMap != null) &&
+			(scriptsMap.get("build") != null)) {
 
 			return true;
 		}

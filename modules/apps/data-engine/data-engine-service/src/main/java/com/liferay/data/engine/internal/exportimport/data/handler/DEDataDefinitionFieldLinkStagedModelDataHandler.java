@@ -27,6 +27,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
@@ -161,8 +162,15 @@ public class DEDataDefinitionFieldLinkStagedModelDataHandler
 		importedDEDataDefinitionFieldLink.setDdmStructureId(ddmStructureId);
 
 		if (className.equals(DDMStructureLayout.class.getName())) {
+			long layoutDDMStructureId = GetterUtil.getLong(
+				deDataDefinitionFieldLinkElement.attributeValue(
+					"layout-ddm-structure-id"));
+
+			layoutDDMStructureId = MapUtil.getLong(
+				ddmStructureIds, layoutDDMStructureId, layoutDDMStructureId);
+
 			DDMStructure ddmStructure =
-				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
+				_ddmStructureLocalService.getDDMStructure(layoutDDMStructureId);
 
 			DDMStructureVersion structureVersion =
 				ddmStructure.getStructureVersion();

@@ -14,16 +14,12 @@
 
 package com.liferay.portal.search.web.internal.type.facet.portlet;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -38,9 +34,7 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRe
 import java.io.IOException;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.portlet.Portlet;
@@ -164,9 +158,6 @@ public class TypeFacetPortlet extends MVCPortlet {
 		assetEntriesSearchFacetDisplayContextBuilder.setParameterName(
 			parameterName);
 
-		assetEntriesSearchFacetDisplayContextBuilder.setTypeNames(
-			_getAssetTypesTypeNames(typeFacetPortletPreferences, themeDisplay));
-
 		SearchOptionalUtil.copy(
 			() -> _getParameterValuesOptional(
 				parameterName, portletSharedSearchResponse, renderRequest),
@@ -198,44 +189,6 @@ public class TypeFacetPortlet extends MVCPortlet {
 
 		return typeFacetPortletPreferences.getCurrentAssetTypesArray(
 			themeDisplay.getCompanyId());
-	}
-
-	private Map<String, String> _getAssetTypesTypeNames(
-		TypeFacetPortletPreferences typeFacetPortletPreferences,
-		ThemeDisplay themeDisplay) {
-
-		Map<String, String> assetTypesTypeNames = new HashMap<>();
-
-		String[] classNames = _getAssetTypesClassNames(
-			typeFacetPortletPreferences, themeDisplay);
-
-		for (String className : classNames) {
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
-
-			String typeName = className;
-
-			if (assetRendererFactory != null) {
-				typeName = assetRendererFactory.getTypeName(
-					themeDisplay.getLocale());
-			}
-			else if (className.startsWith(
-						ObjectDefinition.class.getName() + "#")) {
-
-				String[] parts = StringUtil.split(className, "#");
-
-				ObjectDefinition objectDefinition =
-					objectDefinitionLocalService.fetchObjectDefinition(
-						Long.valueOf(parts[1]));
-
-				typeName = objectDefinition.getLabel(themeDisplay.getLocale());
-			}
-
-			assetTypesTypeNames.put(className, typeName);
-		}
-
-		return assetTypesTypeNames;
 	}
 
 	private String _getPaginationStartParameterName(

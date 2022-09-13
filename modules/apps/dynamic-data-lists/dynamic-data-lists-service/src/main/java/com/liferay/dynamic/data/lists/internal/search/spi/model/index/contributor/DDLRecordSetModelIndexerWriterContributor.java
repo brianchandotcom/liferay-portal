@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.lists.internal.search.spi.model.index.contributor;
 
-import com.liferay.dynamic.data.lists.internal.search.util.DDLRecordBatchReindexer;
+import com.liferay.dynamic.data.lists.internal.search.DDLRecordBatchReindexer;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.portal.search.batch.BatchIndexingActionable;

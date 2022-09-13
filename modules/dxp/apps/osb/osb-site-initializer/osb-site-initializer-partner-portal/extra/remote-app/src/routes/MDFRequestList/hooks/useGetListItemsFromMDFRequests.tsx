@@ -32,6 +32,7 @@ export default function useGetListItemsFromMDFRequests(
 						item.minDateActivity,
 						item.maxDateActivity
 					),
+					[MDFColumnKey.STATUS]: item.requestStatus,
 					[MDFColumnKey.PARTNER]:
 						item.r_accountToMDFRequests_accountEntry?.name,
 					...getMDFDates(item.dateCreated, item.dateModified),

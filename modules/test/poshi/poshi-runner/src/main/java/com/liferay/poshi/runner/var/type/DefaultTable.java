@@ -34,8 +34,8 @@ public class DefaultTable implements Table {
 		List<List<String>> table, boolean hasRowNames, boolean hasColumnNames) {
 
 		if (hasColumnNames && hasRowNames) {
-			throw new RuntimeException(
-				"Table has both row names and column names. Unsupported table.");
+			throw new IllegalArgumentException(
+				"Table must contain either row names or column names");
 		}
 
 		_table = table;
@@ -146,6 +146,13 @@ public class DefaultTable implements Table {
 
 	private static List<List<String>> _parse(String tableString) {
 		Matcher rowMatcher = _rowPattern.matcher(tableString);
+
+		if (!rowMatcher.find()) {
+			throw new IllegalArgumentException(
+				"Invalid table string:\n" + tableString);
+		}
+
+		rowMatcher.reset();
 
 		List<List<String>> tableDataList = new ArrayList<>();
 

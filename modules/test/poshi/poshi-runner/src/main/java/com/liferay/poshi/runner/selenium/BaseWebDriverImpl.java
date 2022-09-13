@@ -712,7 +712,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		Table table = new DefaultTable(tableString);
 
 		if (htmlTable.getTableSize() != table.getTableSize()) {
-			throw new Exception("Table row numbers do not match");
+			throw new Exception(
+				"Expected " + table.getTableSize() + " rows but found " +
+					htmlTable.getTableSize() + " rows");
 		}
 
 		for (int i = 0; i < htmlTable.getTableSize(); i++) {
@@ -721,7 +723,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			List<String> rows = table.getRowByIndex(i);
 
 			if (htmlRows.size() != rows.size()) {
-				throw new Exception("Table entry numbers do not match");
+				throw new Exception(
+					"Expected " + rows.size() + " columns but found " +
+						htmlRows.size() + " columns");
 			}
 
 			for (int j = 0; j < htmlRows.size(); j++) {
@@ -731,8 +735,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 				if (!htmlEntry.equals(entry)) {
 					throw new Exception(
-						"Expected text: " + entry + "\nActual Text: " +
-							htmlEntry);
+						"Expected text \"" + entry +
+							"\" does not match actual text \"" + htmlEntry +
+								"\"");
 				}
 			}
 		}

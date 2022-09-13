@@ -118,18 +118,21 @@ String introKey = StringPool.BLANK;
 </c:choose>
 
 <aui:script>
-	window['<portlet:namespace />handleDeleteCertificatePrompt'] = function (event) {
+	window['<portlet:namespace />handleDeleteCertificatePrompt'] = function (
+		event
+	) {
 		event.preventDefault();
 
 		const form = event.target.closest('form');
 
 		Liferay.Util.openConfirmModal({
-			message: '<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-certificate-from-the-keystore") %>',
+			message:
+				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-certificate-from-the-keystore") %>',
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
 					form.submit();
 				}
 			},
 		});
-	}
+	};
 </aui:script>

@@ -19,6 +19,7 @@ import {
 	getAnalyticsCloudWorkspace,
 	getDXPCloudEnvironment,
 	getKoroneikiAccounts,
+	getLiferayExperienceCloudEnvironments,
 	getUserAccount,
 } from '../../../common/services/liferay/graphql/queries';
 import {getCurrentSession} from '../../../common/services/okta/rest/sessions';
@@ -38,6 +39,7 @@ const AppContextProvider = ({children}) => {
 		analyticsCloudActivationSubmittedStatus: undefined,
 		dxpCloudActivationSubmittedStatus: undefined,
 		koroneikiAccount: {},
+		liferayExperienceCloudActivationSubmittedStatus: undefined,
 		project: undefined,
 		sessionId: '',
 		step: ONBOARDING_STEP_TYPES.welcome,
@@ -226,6 +228,28 @@ const AppContextProvider = ({children}) => {
 			}
 		};
 
+		const getLiferayExperienceCloudActivationStatus = async (
+			accountKey
+		) => {
+			const {data} = await client.query({
+				query: getLiferayExperienceCloudEnvironments,
+				variables: {
+					filter: `accountKey eq '${accountKey}'`,
+				},
+			});
+
+			if (data) {
+				const status = !!data.c?.liferayExperienceCloudEnvironments
+					?.items?.length;
+
+				dispatch({
+					payload: status,
+					type:
+						actionTypes.UPDATE_LIFERAY_EXPERIENCE_CLOUD_ACTIVATION_SUBMITTED_STATUS,
+				});
+			}
+		};
+
 		const fetchData = async () => {
 			const projectExternalReferenceCode = getAccountKey();
 
@@ -254,6 +278,9 @@ const AppContextProvider = ({children}) => {
 					getSubscriptionGroups(projectExternalReferenceCode);
 					getDXPCloudActivationStatus(projectExternalReferenceCode);
 					getAnalyticsCloudActivationStatus(
+						projectExternalReferenceCode
+					);
+					getLiferayExperienceCloudActivationStatus(
 						projectExternalReferenceCode
 					);
 					getSessionId();

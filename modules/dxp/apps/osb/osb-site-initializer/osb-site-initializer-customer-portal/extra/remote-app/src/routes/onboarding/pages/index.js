@@ -15,6 +15,8 @@ import SetupAnalyticsCloudForm from '../../../common/containers/setup-forms/Setu
 import SetupDXPCloudForm from '../../../common/containers/setup-forms/SetupDXPCloudForm';
 import {useAppPropertiesContext} from '../../../common/contexts/AppPropertiesContext';
 import {PAGE_ROUTER_TYPES} from '../../../common/utils/constants';
+import ConfirmationMessageModal from '../../customer-portal/components/ActivationStatus/LiferayExperienceCloud/components/ConfirmationMessageModal';
+import SetupLiferayExperienceCloudForm from '../../customer-portal/components/ActivationStatus/LiferayExperienceCloud/components/SetupLXCModal/components/SetupLXCForm/';
 import {PRODUCT_TYPES} from '../../customer-portal/utils/constants';
 import {useOnboarding} from '../context';
 import {actionTypes} from '../context/reducer';
@@ -27,6 +29,7 @@ const Pages = () => {
 		{
 			analyticsCloudActivationSubmittedStatus,
 			dxpCloudActivationSubmittedStatus,
+			liferayExperienceCloudActivationSubmittedStatus,
 			project,
 			sessionId,
 			step,
@@ -35,10 +38,13 @@ const Pages = () => {
 		},
 		dispatch,
 	] = useOnboarding();
+
 	const {client} = useAppPropertiesContext();
 
 	const subscriptionDXPCloud = subscriptionGroups?.find(
-		(subscriptionGroup) => subscriptionGroup.name === PRODUCT_TYPES.dxpCloud
+		(subscriptionGroup) =>
+			subscriptionGroup.name.replaceAll(' ', '') ===
+			PRODUCT_TYPES.dxpCloud
 	);
 
 	const subscriptionAnalyticsCloud = subscriptionGroups?.find(
@@ -46,23 +52,44 @@ const Pages = () => {
 			subscriptionGroup.name === PRODUCT_TYPES.analyticsCloud
 	);
 
+	const subscriptionLiferayExperienceCloud = subscriptionGroups?.find(
+		(subscriptionGroup) =>
+			subscriptionGroup.name === PRODUCT_TYPES.liferayExperienceCloud
+	);
+
+	const pageHandle = () => {
+		window.location.href = PAGE_ROUTER_TYPES.project(project.accountKey);
+	};
+
 	const invitesPageHandle = () => {
-		if (subscriptionDXPCloud && !dxpCloudActivationSubmittedStatus) {
-			return dispatch({
-				payload: ONBOARDING_STEP_TYPES.dxpCloud,
-				type: actionTypes.CHANGE_STEP,
-			});
-		}
 		if (
-			subscriptionAnalyticsCloud &&
-			!analyticsCloudActivationSubmittedStatus
+			subscriptionLiferayExperienceCloud &&
+			!liferayExperienceCloudActivationSubmittedStatus
 		) {
 			return dispatch({
-				payload: ONBOARDING_STEP_TYPES.analyticsCloud,
+				payload: ONBOARDING_STEP_TYPES.liferayExperienceCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
+		} else {
+			if (subscriptionDXPCloud && !dxpCloudActivationSubmittedStatus) {
+				return dispatch({
+					payload: ONBOARDING_STEP_TYPES.dxpCloud,
+					type: actionTypes.CHANGE_STEP,
+				});
+			}
+
+			if (
+				subscriptionAnalyticsCloud &&
+				!analyticsCloudActivationSubmittedStatus
+			) {
+				return dispatch({
+					payload: ONBOARDING_STEP_TYPES.analyticsCloud,
+					type: actionTypes.CHANGE_STEP,
+				});
+			}
 		}
-		window.location.href = PAGE_ROUTER_TYPES.project(project.accountKey);
+
+		pageHandle();
 	};
 
 	const dxpCloudPageHandle = () => {
@@ -75,11 +102,8 @@ const Pages = () => {
 				type: actionTypes.CHANGE_STEP,
 			});
 		}
-		window.location.href = PAGE_ROUTER_TYPES.project(project.accountKey);
-	};
 
-	const analyticsCloudPageHandle = () => {
-		window.location.href = PAGE_ROUTER_TYPES.project(project.accountKey);
+		pageHandle();
 	};
 
 	const availableAdministratorAssets =
@@ -94,6 +118,29 @@ const Pages = () => {
 					leftButton={i18n.translate('skip-for-now')}
 					project={project}
 					sessionId={sessionId}
+				/>
+			),
+		},
+
+		[ONBOARDING_STEP_TYPES.liferayExperienceCloud]: {
+			Component: (
+				<SetupLiferayExperienceCloudForm
+					client={client}
+					handleChangeForm={() => pageHandle()}
+					handleOnLeftButtonClick={() => pageHandle()}
+					leftButton={i18n.translate('skip-for-now')}
+					project={project}
+					subscriptionGroupLxcId={
+						subscriptionLiferayExperienceCloud?.accountSubscriptionGroupId
+					}
+				/>
+			),
+		},
+		[ONBOARDING_STEP_TYPES.successliferayExperienceCloud]: {
+			Component: (
+				<ConfirmationMessageModal
+					handleChangeForm={() => pageHandle()}
+					productType={PRODUCT_TYPES.liferayExperienceCloud}
 				/>
 			),
 		},
@@ -142,7 +189,7 @@ const Pages = () => {
 								type: actionTypes.CHANGE_STEP,
 							});
 						}
-						analyticsCloudPageHandle();
+						pageHandle();
 					}}
 					leftButton={i18n.translate('skip-for-now')}
 					project={project}
@@ -155,7 +202,7 @@ const Pages = () => {
 		[ONBOARDING_STEP_TYPES.successAnalyticsCloud]: {
 			Component: (
 				<SuccessCloud
-					handlePage={analyticsCloudPageHandle}
+					handlePage={pageHandle}
 					productType={PRODUCT_TYPES.analyticsCloud}
 				/>
 			),

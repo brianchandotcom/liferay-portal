@@ -64,22 +64,22 @@ public class ElasticsearchEngineConfigurator
 
 	@Override
 	protected DestinationFactory getDestinationFactory() {
-		return _destinationFactory;
+		return destinationFactory;
 	}
 
 	@Override
 	protected IndexSearcher getIndexSearcher() {
-		return _indexSearcher;
+		return indexSearcher;
 	}
 
 	@Override
 	protected IndexWriter getIndexWriter() {
-		return _indexWriter;
+		return indexWriter;
 	}
 
 	@Override
 	protected MessageBus getMessageBus() {
-		return _messageBus;
+		return messageBus;
 	}
 
 	@Override
@@ -91,29 +91,7 @@ public class ElasticsearchEngineConfigurator
 
 	@Override
 	protected SearchEngineHelper getSearchEngineHelper() {
-		return _searchEngineHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDestinationFactory(
-		DestinationFactory destinationFactory) {
-
-		_destinationFactory = destinationFactory;
-	}
-
-	@Reference(target = "(!(search.engine.impl=*))", unbind = "-")
-	protected void setIndexSearcher(IndexSearcher indexSearcher) {
-		_indexSearcher = indexSearcher;
-	}
-
-	@Reference(target = "(!(search.engine.impl=*))", unbind = "-")
-	protected void setIndexWriter(IndexWriter indexWriter) {
-		_indexWriter = indexWriter;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMessageBus(MessageBus messageBus) {
-		_messageBus = messageBus;
+		return searchEngineHelper;
 	}
 
 	@Reference(
@@ -126,13 +104,6 @@ public class ElasticsearchEngineConfigurator
 			properties, "search.engine.id");
 
 		_searchEngines.put(searchEngineId, searchEngine);
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchEngineHelper(
-		SearchEngineHelper searchEngineHelper) {
-
-		_searchEngineHelper = searchEngineHelper;
 	}
 
 	protected void unsetSearchEngine(
@@ -148,12 +119,22 @@ public class ElasticsearchEngineConfigurator
 		_searchEngines.remove(searchEngineId);
 	}
 
+	@Reference
+	protected DestinationFactory destinationFactory;
+
+	@Reference(target = "(!(search.engine.impl=*))")
+	protected IndexSearcher indexSearcher;
+
+	@Reference(target = "(!(search.engine.impl=*))")
+	protected IndexWriter indexWriter;
+
+	@Reference
+	protected MessageBus messageBus;
+
+	@Reference
+	protected SearchEngineHelper searchEngineHelper;
+
 	private BundleContext _bundleContext;
-	private DestinationFactory _destinationFactory;
-	private IndexSearcher _indexSearcher;
-	private IndexWriter _indexWriter;
-	private MessageBus _messageBus;
-	private SearchEngineHelper _searchEngineHelper;
 	private final Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<>();
 

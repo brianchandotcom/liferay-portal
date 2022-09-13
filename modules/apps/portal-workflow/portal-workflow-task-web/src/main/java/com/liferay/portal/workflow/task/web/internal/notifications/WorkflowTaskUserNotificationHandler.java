@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.task.web.internal.notifications;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.petra.lang.SafeCloseable;
@@ -232,6 +233,12 @@ public class WorkflowTaskUserNotificationHandler
 
 	private String _getCTCollectionBody(
 		long ctCollectionId, String languageId) {
+
+		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			return _language.get(
+				LocaleUtil.fromLanguageId(languageId),
+				"select-production-to-review-the-change");
+		}
 
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);

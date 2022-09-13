@@ -26,6 +26,8 @@ definition {
 
 		task ("Pending upgrades are not found in the logs") {
 			AssertConsoleTextNotPresent(value1 = "Run the upgrade process or type upgrade:checkAll in the Gogo shell to get more information.");
+
+			AssertConsoleTextNotPresent(value1 = "Unable to get pending upgrade information for the portal");
 		}
 	}
 

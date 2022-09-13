@@ -18,6 +18,8 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
+import com.liferay.poshi.core.elements.PoshiElementAttribute;
+import com.liferay.poshi.core.elements.PoshiElementException;
 import com.liferay.poshi.core.pql.PQLEntity;
 import com.liferay.poshi.core.pql.PQLEntityFactory;
 import com.liferay.poshi.core.prose.PoshiProseMatcher;
@@ -72,6 +74,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
+import org.dom4j.Attribute;
 import org.dom4j.Element;
 
 /**
@@ -1552,9 +1555,19 @@ public class PoshiContext {
 					defaultClassCommandName, namespace);
 
 				if (defaultCommandElement == null) {
-					throw new Exception(
-						"Default function does not exist: " +
-							rootElement.attributeValue("default"));
+					String message =
+						"Unable to find default function \"" +
+							rootElement.attributeValue("default") + "\"";
+
+					Attribute defaultAttribute = rootElement.attribute(
+						"default");
+
+					if (defaultAttribute instanceof PoshiElementAttribute) {
+						throw new PoshiElementException(
+							message, (PoshiElementAttribute)defaultAttribute);
+					}
+
+					throw new Exception(message);
 				}
 
 				_commandElements.put(
@@ -2010,9 +2023,14 @@ public class PoshiContext {
 			}
 			catch (Exception exception) {
 				if (!(exception instanceof PoshiScriptParserException)) {
-					_exceptions.add(
-						new Exception(
-							"Unable to read: " + filePath, exception));
+					if (exception instanceof PoshiElementException) {
+						_exceptions.add(exception);
+					}
+					else {
+						_exceptions.add(
+							new Exception(
+								"Unable to read: " + filePath, exception));
+					}
 				}
 			}
 

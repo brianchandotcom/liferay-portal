@@ -53,7 +53,10 @@ public interface PoshiNode<A extends Node, B extends PoshiNode<A, B>>
 	public default int getPoshiScriptLineNumber() {
 		PoshiElement parentPoshiElement = (PoshiElement)getParent();
 
-		if (parentPoshiElement == null) {
+		if ((parentPoshiElement == null) ||
+			((this instanceof PoshiElementAttribute) &&
+			 (parentPoshiElement instanceof DefinitionPoshiElement))) {
+
 			return 1;
 		}
 

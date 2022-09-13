@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.internal.search.util;
+package com.liferay.dynamic.data.lists.internal.search;
 
 /**
  * @author Marcela Cunha

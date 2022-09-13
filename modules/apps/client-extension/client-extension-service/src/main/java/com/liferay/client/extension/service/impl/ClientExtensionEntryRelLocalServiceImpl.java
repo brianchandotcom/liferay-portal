@@ -38,7 +38,7 @@ public class ClientExtensionEntryRelLocalServiceImpl
 
 	@Override
 	public ClientExtensionEntryRel addClientExtensionEntryRel(
-			long userId, long classNameId, long classPK,
+			long userId, long groupId, long classNameId, long classPK,
 			String cetExternalReferenceCode, String type, String typeSettings)
 		throws PortalException {
 
@@ -48,6 +48,7 @@ public class ClientExtensionEntryRelLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
+		clientExtensionEntryRel.setGroupId(groupId);
 		clientExtensionEntryRel.setCompanyId(user.getCompanyId());
 		clientExtensionEntryRel.setUserId(user.getUserId());
 		clientExtensionEntryRel.setUserName(user.getFullName());

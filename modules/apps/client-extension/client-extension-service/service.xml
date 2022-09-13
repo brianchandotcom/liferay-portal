@@ -46,6 +46,10 @@
 
 		<column container-model="true" name="clientExtensionEntryRelId" primary="true" type="long" />
 
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />

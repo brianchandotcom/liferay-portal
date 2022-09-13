@@ -285,6 +285,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_PANEL</td>
+	<td>//*[contains(@class,'content-dashboard') and contains(@class,'sidebar')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_PANEL_SECTION_TITLE</td>
 	<td>//*[contains(@class,'panel-title') and contains(text(),'${sectionName}')]</td>
 	<td></td>

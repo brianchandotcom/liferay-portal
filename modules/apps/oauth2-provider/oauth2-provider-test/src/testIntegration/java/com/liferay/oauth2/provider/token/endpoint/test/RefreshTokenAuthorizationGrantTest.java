@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.client.test;
+package com.liferay.oauth2.provider.token.endpoint.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.internal.test.TestAnnotatedApplication;
+import com.liferay.oauth2.provider.internal.test.TestAuthorizationGrant;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -49,7 +50,8 @@ import org.osgi.framework.BundleActivator;
  * @author Carlos Sierra Andrés
  */
 @RunWith(Arquillian.class)
-public class RefreshTokenTest extends BaseClientTestCase {
+public class RefreshTokenAuthorizationGrantTest
+	extends BaseAuthorizationGrantTestCase {
 
 	@ClassRule
 	@Rule
@@ -106,7 +108,7 @@ public class RefreshTokenTest extends BaseClientTestCase {
 	}
 
 	public static class TokenExpeditionTestPreparatorBundleActivator
-		extends BaseTestPreparatorBundleActivator {
+		extends BaseAuthorizationGrantTestCase.TestPreparatorBundleActivator {
 
 		@Override
 		protected void prepareTest() throws Exception {
@@ -127,6 +129,8 @@ public class RefreshTokenTest extends BaseClientTestCase {
 				Arrays.asList(
 					GrantType.RESOURCE_OWNER_PASSWORD, GrantType.REFRESH_TOKEN),
 				Collections.singletonList("everything"));
+
+			super.prepareTest();
 		}
 
 	}
@@ -134,6 +138,23 @@ public class RefreshTokenTest extends BaseClientTestCase {
 	@Override
 	protected BundleActivator getBundleActivator() {
 		return new TokenExpeditionTestPreparatorBundleActivator();
+	}
+
+	@Override
+	protected TestAuthorizationGrant getDefaultAuthorizationGrant() {
+		JSONObject jsonObject = getToken(
+			"oauthTestApplication", null,
+			getResourceOwnerPasswordBiFunction("test@liferay.com", "test"),
+			this::parseJSONObject);
+
+		WebTarget webTarget = getWebTarget("/annotated");
+
+		String accessTokenString = jsonObject.getString("access_token");
+
+		Invocation.Builder invocationBuilder = authorize(
+			webTarget.request(), accessTokenString);
+
+		return null;
 	}
 
 }

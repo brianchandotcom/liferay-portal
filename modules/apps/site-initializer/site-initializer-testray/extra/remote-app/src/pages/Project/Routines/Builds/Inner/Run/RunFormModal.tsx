@@ -34,7 +34,7 @@ import {
 } from '../../../../../../services/rest';
 import {searchUtil} from '../../../../../../util/search';
 
-type Run = typeof yupSchema.factorToRun.__outputType;
+type RunForm = Omit<typeof yupSchema.run.__outputType, 'id'>;
 
 type RunFormModalProps = {
 	modal: FormModalOptions;
@@ -58,7 +58,7 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 		handleSubmit,
 		register,
 		setValue,
-	} = useForm<Run>({
+	} = useForm<RunForm>({
 		defaultValues: selectedRun as any,
 		resolver: yupResolver(yupSchema.factorToRun),
 	});
@@ -76,7 +76,7 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 		(response) => testrayFactorRest.transformDataFromList(response)
 	);
 
-	const {data: runResponse} = useFetch<APIResponse<Run>>(
+	const {data: runResponse} = useFetch<APIResponse<RunForm>>(
 		selectedRun
 			? null
 			: `${testrayRunImpl.resource}&filter=${searchUtil.eq(
@@ -97,8 +97,8 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 		factorsData?.items,
 	]);
 
-	const _onSubmit = async (form: Run) => {
-		const factorOptionIds: number[] = (
+	const _onSubmit = (form: RunForm) => {
+		const factorOptionIds = (
 			((form as any).factorOptionIds as string[]) || []
 		).map(Number);
 
@@ -110,6 +110,8 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 			)
 			.filter(Boolean)
 			.join(' | ');
+
+		const newRun = !(form as any)?.id;
 
 		onSubmit(
 			{
@@ -123,11 +125,12 @@ const RunFormModal: React.FC<RunFormModalProps> = ({
 				update: (id, data) => testrayRunImpl.update(id, data),
 			}
 		)
-			.then(({id: runId}) =>
+			.then((run) =>
 				testrayFactorRest.selectEnvironmentFactor(
 					factorItems,
 					factorOptionIds,
-					runId
+					run.id,
+					newRun
 				)
 			)
 			.then(onSave)

@@ -46,8 +46,12 @@ const EnvironmentFactorsModal: React.FC<EnvironmentFactorsModalProps> = ({
 	onCloseModal,
 	routineId,
 }) => {
+	const [shouldRequestCategories, setShouldRequestCategories] = useState(
+		false
+	);
+
 	const {
-		form: {onSuccess},
+		form: {onSuccess, submitting},
 	} = useFormActions();
 
 	const {handleSubmit, register, setValue} = useForm<FactorEnviroment>({
@@ -107,9 +111,12 @@ const EnvironmentFactorsModal: React.FC<EnvironmentFactorsModalProps> = ({
 			);
 
 			setValue('factorCategoryIds', factorCategoryIds);
+			setShouldRequestCategories(true);
 
 			return setStep(1);
 		}
+
+		setShouldRequestCategories(false);
 
 		const _factors = await testrayFactorRest.selectDefaultEnvironmentFactor(
 			{
@@ -162,6 +169,7 @@ const EnvironmentFactorsModal: React.FC<EnvironmentFactorsModalProps> = ({
 						selectedEnvironmentFactors as any
 					}
 					setValue={setValue}
+					shouldRequestCategories={shouldRequestCategories}
 				/>
 			)}
 
@@ -172,7 +180,9 @@ const EnvironmentFactorsModal: React.FC<EnvironmentFactorsModalProps> = ({
 						onClose={() => (lastStep ? setStep(0) : onCloseModal())}
 						onSubmit={handleSubmit(_onSubmit)}
 						primaryButtonProps={{
-							disabled: !selectedEnvironmentFactors.length,
+							disabled: lastStep
+								? submitting
+								: !selectedEnvironmentFactors.length,
 							title: i18n.translate(lastStep ? 'save' : 'next'),
 						}}
 						secondaryButtonProps={{

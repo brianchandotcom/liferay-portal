@@ -18,9 +18,9 @@ import Rest from './Rest';
 import {TestrayFactor, TestrayFactorOption} from './types';
 
 type FactorEnviroment = typeof yupSchema.enviroment.__outputType;
-type TestrayFactorType = Omit<typeof yupSchema.factor.__outputType, 'id'>;
+type TestrayFactorForm = Omit<typeof yupSchema.factor.__outputType, 'id'>;
 
-class TestrayFactorRest extends Rest<TestrayFactorType, TestrayFactor> {
+class TestrayFactorRest extends Rest<TestrayFactorForm, TestrayFactor> {
 	constructor() {
 		super({
 			adapter: ({
@@ -196,20 +196,29 @@ class TestrayFactorRest extends Rest<TestrayFactorType, TestrayFactor> {
 	public async selectEnvironmentFactor(
 		factors: TestrayFactor[],
 		factorOptionIds: number[],
-		runId: number
+		runId: number,
+		newRun: boolean
 	) {
 		let index = 0;
 
-		for (const factor of factors) {
-			const factorOptionId = String(factorOptionIds[index]);
+		for (const factor of factors as TestrayFactor[]) {
+			const factorOptionId = factorOptionIds[index];
+			const factorCategoryId = factor?.factorCategory?.id;
 
-			if (Number(factor?.factorOption?.id) !== Number(factorOptionId)) {
-				await this.update(factor.id, {
-					factorCategoryId: (factor.factorCategory
-						?.id as unknown) as string,
-					factorOptionId,
+			if (factorCategoryId && factorOptionId) {
+				const data: TestrayFactorForm = {
+					factorCategoryId: factorCategoryId.toString(),
+					factorOptionId: factorOptionId.toString(),
+					name: '',
+					routineId: undefined,
 					runId,
-				});
+				};
+
+				if (newRun) {
+					await this.create(data);
+				} else {
+					await this.update(factor.id, data);
+				}
 			}
 
 			index++;
@@ -274,8 +283,7 @@ class TestrayFactorRest extends Rest<TestrayFactorType, TestrayFactor> {
 						return _factor;
 					});
 				}
-			}
-			else {
+			} else {
 				const newFactor = await super.create({
 					...form,
 					name: '',

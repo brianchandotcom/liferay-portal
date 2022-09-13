@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {UseFormRegister} from 'react-hook-form';
 
 import Form from '../../../components/Form';
@@ -27,6 +27,7 @@ type FactorsToOptionsProps = {
 	register: UseFormRegister<FactorOptionForm>;
 	selectedEnvironmentFactors: {label: string; value: number}[];
 	setValue: any;
+	shouldRequestCategories: boolean;
 };
 
 const FactorsToOptions: React.FC<FactorsToOptionsProps> = ({
@@ -34,28 +35,42 @@ const FactorsToOptions: React.FC<FactorsToOptionsProps> = ({
 	register,
 	selectedEnvironmentFactors,
 	setValue,
+	shouldRequestCategories,
 }) => {
 	const [factorOptionsList, setFactorOptionsList] = useState<
 		TestrayFactorOption[][]
 	>([[] as any]);
 
-	useEffect(() => {
-		const factorOptionIds = factors.map(
-			(factor) => factor.factorOption?.id
-		);
-
-		setValue('factorOptionIds', factorOptionIds);
-	}, [factors, setValue]);
+	const factorOptionIds = useMemo(
+		() => factors.map((factor) => factor.factorOption?.id),
+		[factors]
+	);
 
 	useEffect(() => {
-		testrayFactorCategoryRest
-			.getFactorCategoryItems(
-				selectedEnvironmentFactors.map(({value}) => ({
-					factorCategory: {id: value},
-				})) as TestrayFactor[]
-			)
-			.then(setFactorOptionsList);
-	}, [selectedEnvironmentFactors]);
+		if (shouldRequestCategories) {
+			testrayFactorCategoryRest
+				.getFactorCategoryItems(
+					selectedEnvironmentFactors.map(({value}) => ({
+						factorCategory: {id: value},
+					})) as TestrayFactor[]
+				)
+				.then((factorOptionsList) => {
+					const factorOptionIdsWithDefault = factorOptionsList.map(
+						(factorOptionList, index) =>
+							factorOptionIds[index] ??
+							(factorOptionList || [])[0]?.id
+					);
+
+					setFactorOptionsList(factorOptionsList);
+					setValue('factorOptionIds', factorOptionIdsWithDefault);
+				});
+		}
+	}, [
+		selectedEnvironmentFactors,
+		setValue,
+		factorOptionIds,
+		shouldRequestCategories,
+	]);
 
 	return (
 		<>

@@ -217,11 +217,6 @@ public class GroupSearchProvider {
 		return true;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
@@ -234,6 +229,8 @@ public class GroupSearchProvider {
 	}
 
 	private long[] _classNameIds;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference

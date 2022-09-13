@@ -1,0 +1,36 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Upgrades Core";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-162455: Given A user starts the portal with a database created previously When property upgrade.database.auto.run is set to false Then must not print any trace that contains UpgradeProcess or VerifyProcess"
+	@priority = "4"
+	test CompareNonFreshDatabaseAfterStartup {
+		property database.types = "db2,mariadb,mysql,oracle,postgresql";
+
+		AssertConsoleTextPresent(value1 = "UpgradeProcess");
+
+		task ("Restart portal and cleaning the logs") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(keepOsGiState = "true");
+		}
+
+		AssertConsoleTextNotPresent(value1 = "UpgradeProcess");
+	}
+
+}

@@ -96,7 +96,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110247. The user can select the specific display page template in category editor."
+	@description = "This is a test for LPS-110247 and LPS-158711. The user can select the specific display page template in category editor."
 	@priority = "5"
 	test SelectSpecificDisplayPageTemplateInCategoryEditor {
 		property portal.acceptance = "true";
@@ -177,6 +177,19 @@ definition {
 				displayPageTemplateType = "Specific",
 				selectedDisplayPageName = "Display Page Name 1",
 				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View mapped content in associated display page template") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "View Display Page",
+				rowEntry = "Category Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Category Name");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "This is a description");
 		}
 	}
 

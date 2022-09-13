@@ -299,13 +299,9 @@ definition {
 	}
 
 	macro gotoKeyDeactivation {
-		Click(
-			key_text = "Actions",
-			locator1 = "Button#ANY");
+		CustomerPortal.clickAtButton(text = "Actions");
 
-		Click(
-			key_action = "Deactivate",
-			locator1 = "CP2ActivationKeys#ACTIONS_DROPDOWN");
+		CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Deactivate");
 
 		AssertElementPresent(locator1 = "CP2ActivationKeys#DEACTIVATE_KEY_PAGE");
 	}

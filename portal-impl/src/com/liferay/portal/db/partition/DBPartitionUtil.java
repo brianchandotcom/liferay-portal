@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -54,6 +55,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -111,6 +113,8 @@ public class DBPartitionUtil {
 			throw new PortalException(exception);
 		}
 
+		_companyIds.add(companyId);
+
 		return true;
 	}
 
@@ -136,7 +140,7 @@ public class DBPartitionUtil {
 			return;
 		}
 
-		for (long companyId : PortalInstances.getCompanyIdsBySQL()) {
+		for (long companyId : _getCompanyIds()) {
 			try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
 					companyId)) {
 
@@ -273,6 +277,8 @@ public class DBPartitionUtil {
 				"Unable to drop database partition", exception);
 		}
 
+		_companyIds.remove(companyId);
+
 		return true;
 	}
 
@@ -287,7 +293,7 @@ public class DBPartitionUtil {
 		ThrowableCollector throwableCollector = new ThrowableCollector();
 
 		try {
-			for (long companyId : PortalInstances.getCompanyIdsBySQL()) {
+			for (long companyId : _getCompanyIds()) {
 				if (companyId == _defaultCompanyId) {
 					try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
 							companyId)) {
@@ -327,6 +333,16 @@ public class DBPartitionUtil {
 		if (throwable != null) {
 			ReflectionUtil.throwException(throwable);
 		}
+	}
+
+	private static long[] _getCompanyIds() throws SQLException {
+		if (_companyIds.isEmpty()) {
+			for (long companyId : PortalInstances.getCompanyIdsBySQL()) {
+				_companyIds.add(companyId);
+			}
+		}
+
+		return ArrayUtil.toArray(_companyIds.toArray(new Long[0]));
 	}
 
 	private static Connection _getConnectionWrapper(Connection connection) {
@@ -535,7 +551,7 @@ public class DBPartitionUtil {
 	private static boolean _isObjectsTable(String tableName)
 		throws SQLException {
 
-		for (long companyId : PortalInstances.getCompanyIdsBySQL()) {
+		for (long companyId : _getCompanyIds()) {
 			if (tableName.contains(String.valueOf(companyId))) {
 				return true;
 			}
@@ -716,9 +732,7 @@ public class DBPartitionUtil {
 						return returnValue;
 					}
 
-					long[] companyIds = PortalInstances.getCompanyIdsBySQL();
-
-					for (long companyId : companyIds) {
+					for (long companyId : _getCompanyIds()) {
 						if (companyId == _defaultCompanyId) {
 							continue;
 						}
@@ -755,6 +769,8 @@ public class DBPartitionUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DBPartitionUtil.class);
 
+	private static final CopyOnWriteArrayList<Long> _companyIds =
+		new CopyOnWriteArrayList<>();
 	private static final Set<String> _controlTableNames = new HashSet<>(
 		Arrays.asList("company", "virtualhost"));
 	private static volatile long _defaultCompanyId;

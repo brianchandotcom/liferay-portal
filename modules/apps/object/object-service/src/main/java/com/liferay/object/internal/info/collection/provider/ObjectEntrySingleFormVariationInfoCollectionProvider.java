@@ -171,7 +171,16 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		).infoFieldSetEntries(
 			_getInfoFieldSetEntries()
 		).infoFieldSetEntry(
-			_getInfoField()
+			InfoFieldSet.builder(
+			).infoFieldSetEntry(
+				unsafeConsumer -> {
+					InfoField<?> infoField = _getInfoField();
+
+					if (infoField != null) {
+						unsafeConsumer.accept(infoField);
+					}
+				}
+			).build()
 		).infoFieldSetEntry(
 			InfoFieldSet.builder(
 			).infoFieldSetEntry(

@@ -16,7 +16,6 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
-	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")
 	compileOnly project(":apps:ratings:ratings-taglib")
 	compileOnly project(":apps:rss:rss-api")

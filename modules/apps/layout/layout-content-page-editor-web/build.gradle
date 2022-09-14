@@ -46,7 +46,6 @@ dependencies {
 	compileOnly project(":apps:layout:layout-taglib")
 	compileOnly project(":apps:mentions:mentions-api")
 	compileOnly project(":apps:object:object-api")
-	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
 	compileOnly project(":apps:product-navigation:product-navigation-control-menu-api")

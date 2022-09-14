@@ -93,7 +93,6 @@ dependencies {
 	compileOnly group: "org.springframework", name: "spring-beans", version: "5.2.22.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-context", version: "5.2.22.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-core", version: "5.2.22.RELEASE"
-	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:petra:petra-xml")
 	compileOnly project(":apps:portal:portal-log4j")
 	compileOnly project(":core:jaxws-osgi-bridge")

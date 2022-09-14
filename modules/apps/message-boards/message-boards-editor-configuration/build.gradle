@@ -6,6 +6,5 @@ dependencies {
 	compileOnly project(":apps:item-selector:item-selector-api")
 	compileOnly project(":apps:item-selector:item-selector-criteria-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
-	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":core:petra:petra-function")
 }

@@ -18,7 +18,6 @@ dependencies {
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-taglib")
 	compileOnly project(":apps:layout:layout-type-controller:layout-type-controller-api")
-	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:product-navigation:product-navigation-control-menu-api")
 	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":core:petra:petra-io")

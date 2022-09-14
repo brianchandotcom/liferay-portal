@@ -12,7 +12,6 @@ dependencies {
 	compileOnly project(":apps:archived:oauth-service")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
-	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:portal-security:portal-security-service-access-policy-api")
 	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")

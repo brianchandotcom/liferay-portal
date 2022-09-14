@@ -26,7 +26,6 @@ dependencies {
 	compileOnly project(":apps:commerce:headless:headless-commerce:headless-commerce-delivery-cart-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-liferay-api")
-	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")

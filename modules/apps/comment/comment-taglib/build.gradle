@@ -13,7 +13,6 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:message-boards:message-boards-api")
-	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:ratings:ratings-taglib")
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:subscription:subscription-api")

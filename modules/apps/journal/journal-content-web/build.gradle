@@ -26,7 +26,6 @@ dependencies {
 	compileOnly project(":apps:journal:journal-taglib")
 	compileOnly project(":apps:journal:journal-web")
 	compileOnly project(":apps:layout:layout-api")
-	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")

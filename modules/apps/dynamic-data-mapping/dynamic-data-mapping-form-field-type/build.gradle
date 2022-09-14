@@ -21,7 +21,6 @@ dependencies {
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:journal:journal-item-selector-api")
 	compileOnly project(":apps:map:map-api")
-	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:trash:trash-api")
 	compileOnly project(":core:osgi-service-tracker-collections")

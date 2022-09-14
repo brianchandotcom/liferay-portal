@@ -16,7 +16,6 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:layout:layout-api")
-	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:product-navigation:product-navigation-applications-menu-api")
 	compileOnly project(":apps:product-navigation:product-navigation-control-menu-api")
 	compileOnly project(":apps:product-navigation:product-navigation-taglib")

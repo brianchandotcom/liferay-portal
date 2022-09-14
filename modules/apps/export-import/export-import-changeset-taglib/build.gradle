@@ -13,7 +13,6 @@ dependencies {
 	compileOnly project(":apps:export-import:export-import-changeset-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:layout:layout-taglib")
-	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:staging:staging-taglib")
 	compileOnly project(":core:petra:petra-lang")

@@ -20,7 +20,6 @@ dependencies {
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-liferay-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-liferay-spi")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-spi")
-	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:product-navigation:product-navigation-personal-menu-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:osgi-service-tracker-collections")

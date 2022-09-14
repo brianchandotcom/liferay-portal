@@ -76,7 +76,11 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		JSONPublications.selectPublication(publicationName = "Publication Name");
+		if (IsElementPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE", key_publicationName = "Production")) {
+			Publications.selectPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+		}
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

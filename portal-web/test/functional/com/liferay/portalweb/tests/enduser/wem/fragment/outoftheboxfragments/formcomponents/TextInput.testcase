@@ -69,12 +69,6 @@ definition {
 					contentType = "Purchase Order",
 					panel = "General");
 			}
-
-			task ("Add a Text Input inside Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Text Input");
-			}
 		}
 
 		task ("When the pages designer adds a custom name in Text Input fields") {
@@ -174,12 +168,6 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General");
-			}
-
-			task ("Add a Text Input inside Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Text Input");
 			}
 
 			task ("Add a Language Selector below Form Container") {
@@ -287,10 +275,6 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				panel = "General");
-
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Text Input");
 		}
 
 		task ("When the page designer opens the browser panel on page editor") {
@@ -348,10 +332,6 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				panel = "General");
-
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Text Input");
 		}
 
 		task ("When the page designer opens the browser panel on page editor") {
@@ -411,10 +391,6 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Text Input");
-
 			PageEditor.publish();
 		}
 
@@ -424,14 +400,14 @@ definition {
 				siteName = "Test Site Name");
 
 			Type.sendKeys(
-				key_text = "Text Input",
+				key_text = "Region",
 				locator1 = "TextInput#ANY",
 				value1 = "${inputText}");
 		}
 
 		task ("Then the pages designer can see just 280 characters in Text Input field") {
 			AssertTextEquals(
-				key_text = "Text Input",
+				key_text = "Region",
 				locator1 = "TextInput#ANY",
 				value1 = "${modifiedText}");
 		}
@@ -442,14 +418,14 @@ definition {
 				siteName = "Test Site Name");
 
 			Type.sendKeys(
-				key_text = "Text Input",
+				key_text = "Region",
 				locator1 = "TextInput#ANY",
 				value1 = "${actualText}");
 		}
 
 		task ("Then the pages designer can see 280 characters in Text Input field") {
 			AssertTextEquals(
-				key_text = "Text Input",
+				key_text = "Region",
 				locator1 = "TextInput#ANY",
 				value1 = "${actualText}");
 		}
@@ -487,12 +463,6 @@ definition {
 					contentType = "Purchase Order",
 					panel = "General");
 			}
-
-			task ("Add a Text Input into Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Text Input");
-			}
 		}
 
 		task ("When the page creator accesses to the General panel of Text Input") {
@@ -528,17 +498,6 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General");
-			}
-
-			task ("Add a Text Input and Submit Button fragment into Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Text Input");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Submit Button",
-					targetFragmentName = "Text Input");
 			}
 
 			task ("Mark the Text Input fragment as required") {
@@ -616,17 +575,6 @@ definition {
 					panel = "General");
 			}
 
-			task ("Add a Text Input and Submit Button fragment into Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Text Input");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Submit Button",
-					targetFragmentName = "Text Input");
-			}
-
 			task ("Map the Text Input fragment to Region field") {
 				PageEditor.editInput(
 					field = "Region",
@@ -680,18 +628,15 @@ definition {
 					panel = "General");
 			}
 
+			task ("Remove the automatically added Text Input fragment") {
+				PageEditor.removeFragment(fragmentName = "Text Input");
+			}
+
 			task ("Add a Grid inside Form Container") {
 				PageEditor.addFragmentToFormContainer(
 					collectionName = "Layout Elements",
-					fragmentName = "Grid");
-			}
-
-			task ("Add a Submit Button fragment below Grid inside Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Submit Button",
-					height = "Tall",
-					targetFragmentName = "Grid");
+					fragmentName = "Grid",
+					targetFragmentName = "Submit Button");
 			}
 
 			task ("Mark the Text Input fragment as required after added to Grid") {

@@ -77,12 +77,6 @@ definition {
 					contentType = "Purchase Order",
 					panel = "General");
 			}
-
-			task ("Add a Text Input inside Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Text Input");
-			}
 		}
 
 		task ("When the pages designer adds a custom name in Text Input fields") {

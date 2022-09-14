@@ -16,22 +16,20 @@ import React from 'react';
 
 import MultiStepNav from './components/MultiStepNav.es';
 
-const App = ({connected}) => {
-	return (
-		<>
-			{!connected && (
-				<MultiStepNav
-					steps={[
-						{
-							description:
-								'Use the token generated in your Analytics Cloud to connect this workspace.',
-							title: 'Connect AC',
-						}
-					]}
-				/>
-			)}
-		</>
-	);
-};
+const App = ({connected}) => (
+	<>
+		{!connected && (
+			<MultiStepNav
+				steps={[
+					{
+						description:
+							'Use the token generated in your Analytics Cloud to connect this workspace.',
+						title: 'Connect AC',
+					},
+				]}
+			/>
+		)}
+	</>
+);
 
 export default App;

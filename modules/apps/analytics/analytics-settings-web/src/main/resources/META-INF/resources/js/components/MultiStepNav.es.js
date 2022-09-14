@@ -18,9 +18,6 @@ import React from 'react';
 import Sheet from './Sheet.es';
 
 const MultiStepNav = ({steps}) => {
-	const isActive = (index) => value === index;
-
-	const isComplete = (index) => value > index;
 	const currentStep = 0;
 
 	return (
@@ -28,8 +25,8 @@ const MultiStepNav = ({steps}) => {
 			<ClayMultiStepNav>
 				{steps.map(({title}, index) => (
 					<ClayMultiStepNav.Item
-						active={isActive(i)}
-						complete={isComplete(i)}
+						active={currentStep === index}
+						complete={currentStep > index}
 						expand={index + 1 !== steps.length}
 						key={index}
 					>
@@ -38,7 +35,7 @@ const MultiStepNav = ({steps}) => {
 						<ClayMultiStepNav.Divider />
 
 						<ClayMultiStepNav.Indicator
-							complete={isComplete(i)}
+							complete={currentStep > index}
 							label={1 + index}
 						/>
 					</ClayMultiStepNav.Item>

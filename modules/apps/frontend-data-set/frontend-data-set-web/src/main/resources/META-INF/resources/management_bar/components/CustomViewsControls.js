@@ -211,6 +211,7 @@ const CustomViewsControls = () => {
 				<ClayDropDown
 					active={actionsDropdownActive}
 					className="custom-views-actions"
+					hasLeftSymbols
 					onActiveChange={setActionsDropdownActive}
 					trigger={
 						<ClayButton displayType="unstyled">
@@ -228,12 +229,16 @@ const CustomViewsControls = () => {
 
 									setActionsDropdownActive(false);
 								}}
+								symbolLeft="disk"
 							>
 								{Liferay.Language.get('save-view')}
 							</ClayDropDown.Item>
 						)}
 
-						<ClayDropDown.Item onClick={openSaveCustomViewModal}>
+						<ClayDropDown.Item
+							onClick={openSaveCustomViewModal}
+							symbolLeft="disk"
+						>
 							{Liferay.Language.get('save-view-as')}
 						</ClayDropDown.Item>
 					</ClayDropDown.ItemList>

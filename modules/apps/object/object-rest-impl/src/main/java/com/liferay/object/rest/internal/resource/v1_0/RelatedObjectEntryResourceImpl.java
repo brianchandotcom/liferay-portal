@@ -17,6 +17,7 @@ package com.liferay.object.rest.internal.resource.v1_0;
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.model.ObjectRelationshipTable;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
@@ -26,10 +27,10 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -63,11 +64,13 @@ public class RelatedObjectEntryResourceImpl
 			String objectRelationshipName, Pagination pagination)
 		throws Exception {
 
-		ObjectRelationship objectRelationship = _getObjectRelationship(
-			objectRelationshipName);
+		ObjectDefinition currentObjectDefinition = _getSystemObjectDefinition(
+			_getSystemObjectDefinitionMetadata(
+				_getRESTContextPath(previousPath)));
 
-		ObjectDefinition currentObjectDefinition = _getCurrentObjectDefinition(
-			objectRelationship, _getRESTContextPath(previousPath));
+		ObjectRelationship objectRelationship = _getObjectRelationship(
+			currentObjectDefinition.getObjectDefinitionId(),
+			objectRelationshipName);
 
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
 			currentObjectDefinition, objectRelationship);
@@ -96,11 +99,13 @@ public class RelatedObjectEntryResourceImpl
 			Pagination pagination)
 		throws Exception {
 
-		ObjectRelationship objectRelationship = _getObjectRelationship(
-			objectRelationshipName);
+		ObjectDefinition currentObjectDefinition = _getSystemObjectDefinition(
+			_getSystemObjectDefinitionMetadata(
+				_getRESTContextPath(previousPath)));
 
-		ObjectDefinition currentObjectDefinition = _getCurrentObjectDefinition(
-			objectRelationship, _getRESTContextPath(previousPath));
+		ObjectRelationship objectRelationship = _getObjectRelationship(
+			currentObjectDefinition.getObjectDefinitionId(),
+			objectRelationshipName);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -129,24 +134,6 @@ public class RelatedObjectEntryResourceImpl
 			relatedObjectDefinition, relatedObjectEntryId);
 	}
 
-	private ObjectDefinition _getCurrentObjectDefinition(
-			ObjectRelationship objectRelationship, String restContextPath)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-
-		if (Objects.equals(
-				_getRESTContextPath(objectDefinition), restContextPath)) {
-
-			return objectDefinition;
-		}
-
-		return _objectDefinitionLocalService.getObjectDefinition(
-			objectRelationship.getObjectDefinitionId2());
-	}
-
 	private DefaultDTOConverterContext _getDefaultDTOConverterContext(
 		ObjectDefinition objectDefinition, Long objectEntryId,
 		UriInfo uriInfo) {
@@ -164,17 +151,31 @@ public class RelatedObjectEntryResourceImpl
 	}
 
 	private ObjectRelationship _getObjectRelationship(
-			String objectRelationshipName)
+			long currentObjectDefinitionId, String objectRelationshipName)
 		throws Exception {
 
-		List<ObjectRelationship> objectRelationships = ListUtil.filter(
-			_objectRelationshipLocalService.getObjectRelationships(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			objectRelationship ->
-				!objectRelationship.isReverse() &&
-				objectRelationship.getName(
-				).equals(
-					objectRelationshipName
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+				).from(
+					ObjectRelationshipTable.INSTANCE
+				).where(
+					ObjectRelationshipTable.INSTANCE.reverse.eq(
+						false
+					).and(
+						ObjectRelationshipTable.INSTANCE.name.eq(
+							objectRelationshipName
+						).and(
+							ObjectRelationshipTable.INSTANCE.
+								objectDefinitionId1.eq(
+									currentObjectDefinitionId
+								).or(
+									ObjectRelationshipTable.INSTANCE.
+										objectDefinitionId2.eq(
+											currentObjectDefinitionId)
+								)
+						)
+					)
 				));
 
 		if (objectRelationships.isEmpty()) {
@@ -249,6 +250,48 @@ public class RelatedObjectEntryResourceImpl
 		String path = uri.getPath();
 
 		return path.split("/")[2] + "/v1.0/" + previousPath;
+	}
+
+	private ObjectDefinition _getSystemObjectDefinition(
+		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
+
+		List<ObjectDefinition> systemObjectDefinitions =
+			_objectDefinitionLocalService.getSystemObjectDefinitions();
+
+		for (ObjectDefinition systemObjectDefinition :
+				systemObjectDefinitions) {
+
+			if (Objects.equals(
+					systemObjectDefinition.getName(),
+					systemObjectDefinitionMetadata.getName())) {
+
+				return systemObjectDefinition;
+			}
+		}
+
+		return null;
+	}
+
+	private SystemObjectDefinitionMetadata _getSystemObjectDefinitionMetadata(
+		String restContextPath) {
+
+		for (ObjectDefinition systemObjectDefinition :
+				_objectDefinitionLocalService.getSystemObjectDefinitions()) {
+
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+				_systemObjectDefinitionMetadataTracker.
+					getSystemObjectDefinitionMetadata(
+						systemObjectDefinition.getName());
+
+			if (StringUtil.equals(
+					systemObjectDefinitionMetadata.getRESTContextPath(),
+					restContextPath)) {
+
+				return systemObjectDefinitionMetadata;
+			}
+		}
+
+		return null;
 	}
 
 	@Reference

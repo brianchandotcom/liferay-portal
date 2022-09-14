@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -83,6 +84,11 @@ public interface LayoutUtilityPageEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
 		LayoutUtilityPageEntry layoutUtilityPageEntry);
+
+	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
+			String externalReferenceCode, long userId, long groupId,
+			String name, long plid, int type, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Creates a new layout utility page entry with the primary key. Does not add the layout utility page entry to the database.
@@ -248,6 +254,11 @@ public interface LayoutUtilityPageEntryLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
+			long groupId, int type)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -268,6 +279,20 @@ public interface LayoutUtilityPageEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, int type, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator);
 
 	/**
 	 * Returns all the layout utility page entries matching the UUID and company.
@@ -304,6 +329,9 @@ public interface LayoutUtilityPageEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutUtilityPageEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutUtilityPageEntriesCount(long groupId);
 
 	/**
 	 * Returns the layout utility page entry with the primary key.
@@ -359,6 +387,10 @@ public interface LayoutUtilityPageEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public LayoutUtilityPageEntry setDefaultLayoutUtilityPageEntry(
+			long layoutUtilityPageEntryId)
+		throws PortalException;
+
 	/**
 	 * Updates the layout utility page entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -372,6 +404,11 @@ public interface LayoutUtilityPageEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
 		LayoutUtilityPageEntry layoutUtilityPageEntry);
+
+	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
+			long layoutUtilityPageEntryId, String name, long plid, int type,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	@Override
 	@Transactional(enabled = false)

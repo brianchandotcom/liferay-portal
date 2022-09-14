@@ -696,6 +696,75 @@ public class LayoutUtilityPageEntryUtil {
 	}
 
 	/**
+	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByGroupId(
+		long groupId) {
+
+		return getPersistence().filterFindByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @return the range of matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().filterFindByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout utility page entries that the user has permissions to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return getPersistence().filterFindByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the layout utility page entries before and after the current layout utility page entry in the ordered set of layout utility page entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param LayoutUtilityPageEntryId the primary key of the current layout utility page entry
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout utility page entry
+	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 */
+	public static LayoutUtilityPageEntry[] filterFindByGroupId_PrevAndNext(
+			long LayoutUtilityPageEntryId, long groupId,
+			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
+		throws com.liferay.layout.utility.page.exception.NoSuchEntryException {
+
+		return getPersistence().filterFindByGroupId_PrevAndNext(
+			LayoutUtilityPageEntryId, groupId, orderByComparator);
+	}
+
+	/**
 	 * Removes all the layout utility page entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -712,6 +781,16 @@ public class LayoutUtilityPageEntryUtil {
 	 */
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
+	}
+
+	/**
+	 * Returns the number of layout utility page entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the number of matching layout utility page entries that the user has permission to view
+	 */
+	public static int filterCountByGroupId(long groupId) {
+		return getPersistence().filterCountByGroupId(groupId);
 	}
 
 	/**
@@ -880,6 +959,79 @@ public class LayoutUtilityPageEntryUtil {
 	}
 
 	/**
+	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @return the matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByG_T(
+		long groupId, int type) {
+
+		return getPersistence().filterFindByG_T(groupId, type);
+	}
+
+	/**
+	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @return the range of matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByG_T(
+		long groupId, int type, int start, int end) {
+
+		return getPersistence().filterFindByG_T(groupId, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout utility page entries that the user has permissions to view where groupId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByG_T(
+		long groupId, int type, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return getPersistence().filterFindByG_T(
+			groupId, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the layout utility page entries before and after the current layout utility page entry in the ordered set of layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * @param LayoutUtilityPageEntryId the primary key of the current layout utility page entry
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout utility page entry
+	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 */
+	public static LayoutUtilityPageEntry[] filterFindByG_T_PrevAndNext(
+			long LayoutUtilityPageEntryId, long groupId, int type,
+			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
+		throws com.liferay.layout.utility.page.exception.NoSuchEntryException {
+
+		return getPersistence().filterFindByG_T_PrevAndNext(
+			LayoutUtilityPageEntryId, groupId, type, orderByComparator);
+	}
+
+	/**
 	 * Removes all the layout utility page entries where groupId = &#63; and type = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -898,6 +1050,17 @@ public class LayoutUtilityPageEntryUtil {
 	 */
 	public static int countByG_T(long groupId, int type) {
 		return getPersistence().countByG_T(groupId, type);
+	}
+
+	/**
+	 * Returns the number of layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @return the number of matching layout utility page entries that the user has permission to view
+	 */
+	public static int filterCountByG_T(long groupId, int type) {
+		return getPersistence().filterCountByG_T(groupId, type);
 	}
 
 	/**
@@ -1084,6 +1247,90 @@ public class LayoutUtilityPageEntryUtil {
 	}
 
 	/**
+	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63; and defaultLayoutUtilityPageEntry = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
+	 * @return the matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByG_T_D(
+		long groupId, int type, boolean defaultLayoutUtilityPageEntry) {
+
+		return getPersistence().filterFindByG_T_D(
+			groupId, type, defaultLayoutUtilityPageEntry);
+	}
+
+	/**
+	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63; and defaultLayoutUtilityPageEntry = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @return the range of matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByG_T_D(
+		long groupId, int type, boolean defaultLayoutUtilityPageEntry,
+		int start, int end) {
+
+		return getPersistence().filterFindByG_T_D(
+			groupId, type, defaultLayoutUtilityPageEntry, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout utility page entries that the user has permissions to view where groupId = &#63; and type = &#63; and defaultLayoutUtilityPageEntry = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByG_T_D(
+		long groupId, int type, boolean defaultLayoutUtilityPageEntry,
+		int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return getPersistence().filterFindByG_T_D(
+			groupId, type, defaultLayoutUtilityPageEntry, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the layout utility page entries before and after the current layout utility page entry in the ordered set of layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63; and defaultLayoutUtilityPageEntry = &#63;.
+	 *
+	 * @param LayoutUtilityPageEntryId the primary key of the current layout utility page entry
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout utility page entry
+	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 */
+	public static LayoutUtilityPageEntry[] filterFindByG_T_D_PrevAndNext(
+			long LayoutUtilityPageEntryId, long groupId, int type,
+			boolean defaultLayoutUtilityPageEntry,
+			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
+		throws com.liferay.layout.utility.page.exception.NoSuchEntryException {
+
+		return getPersistence().filterFindByG_T_D_PrevAndNext(
+			LayoutUtilityPageEntryId, groupId, type,
+			defaultLayoutUtilityPageEntry, orderByComparator);
+	}
+
+	/**
 	 * Removes all the layout utility page entries where groupId = &#63; and type = &#63; and defaultLayoutUtilityPageEntry = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1109,6 +1356,21 @@ public class LayoutUtilityPageEntryUtil {
 		long groupId, int type, boolean defaultLayoutUtilityPageEntry) {
 
 		return getPersistence().countByG_T_D(
+			groupId, type, defaultLayoutUtilityPageEntry);
+	}
+
+	/**
+	 * Returns the number of layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63; and defaultLayoutUtilityPageEntry = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
+	 * @return the number of matching layout utility page entries that the user has permission to view
+	 */
+	public static int filterCountByG_T_D(
+		long groupId, int type, boolean defaultLayoutUtilityPageEntry) {
+
+		return getPersistence().filterCountByG_T_D(
 			groupId, type, defaultLayoutUtilityPageEntry);
 	}
 

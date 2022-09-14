@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.internal.index.updater;
+package com.liferay.portal.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;

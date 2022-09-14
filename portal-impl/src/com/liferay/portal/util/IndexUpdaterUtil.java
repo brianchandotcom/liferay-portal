@@ -14,78 +14,28 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.net.URL;
 
 import java.sql.Connection;
 
-import java.util.Dictionary;
-
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 
 /**
  * @author Ricardo Couso
  */
 public class IndexUpdaterUtil {
 
-	public static Bundle getBundle(
-		BundleContext bundleContext, String bundleSymbolicName) {
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (bundleSymbolicName.equals(bundle.getSymbolicName())) {
-				return bundle;
-			}
-		}
-
-		throw new IllegalArgumentException(
-			"Module with symbolic name " + bundleSymbolicName +
-				" does not exist");
-	}
-
-	public static String getSQLTemplateString(
-		Bundle bundle, String templateName) {
-
-		URL resource = bundle.getResource("/META-INF/sql/" + templateName);
-
-		if (resource == null) {
-			return null;
-		}
-
-		try (InputStream inputStream = resource.openStream()) {
-			return StringUtil.read(inputStream);
-		}
-		catch (IOException ioException) {
-			_log.error(
-				"Unable to read SQL template " + templateName, ioException);
-
-			return null;
-		}
-	}
-
-	public static boolean isLiferayServiceBundle(Bundle bundle) {
-		Dictionary<String, String> headers = bundle.getHeaders(
-			StringPool.BLANK);
-
-		return GetterUtil.getBoolean(headers.get("Liferay-Service"));
-	}
-
 	public static void updateIndexes(Bundle bundle) throws Exception {
-		String indexesSQL = getSQLTemplateString(bundle, "indexes.sql");
-		String tablesSQL = getSQLTemplateString(bundle, "tables.sql");
+		String indexesSQL = BundleUtil.getSQLTemplateString(
+			bundle, "indexes.sql");
+		String tablesSQL = BundleUtil.getSQLTemplateString(
+			bundle, "tables.sql");
 
 		if ((indexesSQL == null) || (tablesSQL == null)) {
 			return;

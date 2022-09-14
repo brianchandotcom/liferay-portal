@@ -160,6 +160,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INLINE_PERMISSIONS_ASSIGN_MEMBERS_CHECKBOX</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ASSIGN_MEMBERS']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX</td>
 	<td>//input[@id='${key_roleTitle}_ACTION_PERMISSIONS']</td>
 	<td></td>

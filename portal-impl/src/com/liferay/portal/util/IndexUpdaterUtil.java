@@ -17,8 +17,10 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -27,6 +29,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Ricardo Couso
@@ -63,6 +66,21 @@ public class IndexUpdaterUtil {
 			});
 	}
 
+	public static void updateModulesIndexes(boolean onStartup) {
+		if (!onStartup) {
+			_updateModulesIndexes();
+
+			return;
+		}
+
+		DependencyManagerSyncUtil.registerSyncCallable(
+			() -> {
+				_updateModulesIndexes();
+
+				return null;
+			});
+	}
+
 	public static void updatePortalIndexes(boolean dropIndexes) {
 		DB db = DBManagerUtil.getDB();
 
@@ -93,6 +111,21 @@ public class IndexUpdaterUtil {
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception);
+			}
+		}
+	}
+
+	private static void _updateModulesIndexes() {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			if (BundleUtil.isLiferayServiceBundle(bundle)) {
+				try {
+					updateIndexes(bundle);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
 			}
 		}
 	}

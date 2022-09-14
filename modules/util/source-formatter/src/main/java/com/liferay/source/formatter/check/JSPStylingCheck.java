@@ -19,7 +19,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.JSPSourceUtil;
+import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +45,8 @@ public class JSPStylingCheck extends BaseStylingCheck {
 		content = _fixIncorrectClosingTag(content);
 
 		content = _fixIncorrectSingleLineJavaSource(content);
+
+		content = _replaceLiferayTag(content);
 
 		content = StringUtil.replace(
 			content,
@@ -242,6 +246,51 @@ public class JSPStylingCheck extends BaseStylingCheck {
 		return matcher.replaceAll("$1$3$6");
 	}
 
+	private String _replaceLiferayTag(String content) {
+		Matcher matcher = _javaSourcePattern.matcher(content);
+
+		StringBuffer sb = new StringBuffer();
+
+		while (matcher.find()) {
+			String expression = matcher.group();
+
+			expression = expression.replaceAll("\n\t*", StringPool.BLANK);
+
+			Matcher expMatcher = _languageUtilGetPattern.matcher(expression);
+
+			if (expMatcher.find()) {
+				String javaSource = expMatcher.group(1);
+
+				List<String> parameters = JavaSourceUtil.getParameterList(
+					javaSource);
+
+				if (parameters.size() != 2) {
+					continue;
+				}
+
+				String secondParameter = parameters.get(1);
+
+				if (!secondParameter.startsWith("\"") ||
+					!secondParameter.endsWith("\"") ||
+					(StringUtil.count(secondParameter, "\"") > 2)) {
+
+					continue;
+				}
+
+				matcher.appendReplacement(
+					sb, "<liferay-ui:message key=" + secondParameter + " />");
+			}
+		}
+
+		if (sb.length() > 0) {
+			matcher.appendTail(sb);
+
+			return sb.toString();
+		}
+
+		return content;
+	}
+
 	private static final Pattern _adjacentJavaBlocksPattern = Pattern.compile(
 		"\n\t*%>\n+\t*<%\n");
 	private static final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
@@ -262,6 +311,10 @@ public class JSPStylingCheck extends BaseStylingCheck {
 		"(<%=)(\n\t*)(((?!%>).)*)(\n\t*)(%>)");
 	private static final Pattern _incorrectSingleLineJavaSourcePattern =
 		Pattern.compile("(\t*)(<% (.*) %>)\n");
+	private static final Pattern _javaSourcePattern = Pattern.compile(
+		"(?<!['\"])<%=((?!%>)[\\s\\S])*%>");
+	private static final Pattern _languageUtilGetPattern = Pattern.compile(
+		"<%= ?(LanguageUtil\\.get\\(request, ((?!\\)).)+\\)) ?%>");
 	private static final Pattern _portletNamespacePattern = Pattern.compile(
 		"=([\"'])<portlet:namespace />(\\w+\\(.*?)\\1");
 

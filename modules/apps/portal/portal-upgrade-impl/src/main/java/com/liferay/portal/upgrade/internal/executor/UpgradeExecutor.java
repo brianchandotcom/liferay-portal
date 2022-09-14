@@ -32,6 +32,7 @@ import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.registry.UpgradeStepRegistratorTracker;
 import com.liferay.portal.upgrade.internal.release.ReleasePublisher;
+import com.liferay.portal.util.BundleUtil;
 import com.liferay.portal.util.IndexUpdaterUtil;
 
 import java.io.OutputStream;
@@ -241,7 +242,7 @@ public class UpgradeExecutor {
 			}
 		}
 
-		Bundle bundle = IndexUpdaterUtil.getBundle(
+		Bundle bundle = BundleUtil.getBundle(
 			_bundleContext, bundleSymbolicName);
 
 		if (_requiresUpdateIndexes(bundle, upgradeInfos)) {
@@ -275,7 +276,7 @@ public class UpgradeExecutor {
 	private boolean _requiresUpdateIndexes(
 		Bundle bundle, List<UpgradeInfo> upgradeInfos) {
 
-		if (!IndexUpdaterUtil.isLiferayServiceBundle(bundle)) {
+		if (!BundleUtil.isLiferayServiceBundle(bundle)) {
 			return false;
 		}
 

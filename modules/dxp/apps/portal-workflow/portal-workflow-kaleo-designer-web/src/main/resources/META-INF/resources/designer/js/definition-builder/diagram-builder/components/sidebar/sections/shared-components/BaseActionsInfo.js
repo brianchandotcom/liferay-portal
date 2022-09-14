@@ -26,14 +26,15 @@ const BaseActionsInfo = ({
 	placeholderScript,
 	priority,
 	script,
-	scriptLabel,
-	scriptLabelSecondary,
+	scriptLanguage,
+	scriptLanguageOptions,
 	setDescription,
 	setExecutionType,
 	setExecutionTypeOptions,
 	setName,
 	setPriority,
 	setScript,
+	setScriptLanguage,
 	updateActionInfo,
 }) => {
 	useEffect(() => {
@@ -69,6 +70,7 @@ const BaseActionsInfo = ({
 							name,
 							priority,
 							script,
+							scriptLanguage,
 						})
 					}
 					onChange={({target}) => {
@@ -93,6 +95,7 @@ const BaseActionsInfo = ({
 							name,
 							priority,
 							script,
+							scriptLanguage,
 						})
 					}
 					onChange={({target}) => {
@@ -102,9 +105,44 @@ const BaseActionsInfo = ({
 					value={description}
 				/>
 			</ClayForm.Group>
+
+			<ClayForm.Group>
+				<label htmlFor="script-language">
+					{Liferay.Language.get('script-language')}
+				</label>
+
+				<ClaySelect
+					aria-label="Select"
+					defaultValue={scriptLanguage}
+					id="script-language"
+					onChange={({target}) => {
+						setScriptLanguage(target.value);
+					}}
+					onClickCapture={() =>
+						updateActionInfo({
+							description,
+							executionType,
+							name,
+							priority,
+							script,
+							scriptLanguage,
+						})
+					}
+				>
+					{scriptLanguageOptions &&
+						scriptLanguageOptions.map((item) => (
+							<ClaySelect.Option
+								key={item.value}
+								label={item.label}
+								value={item.value}
+							/>
+						))}
+				</ClaySelect>
+			</ClayForm.Group>
+
 			<ClayForm.Group>
 				<label htmlFor="script">
-					{`${scriptLabel} (${scriptLabelSecondary})`}
+					{Liferay.Language.get('script')}
 
 					<span className="ml-1 mr-1 text-warning">*</span>
 				</label>
@@ -119,6 +157,7 @@ const BaseActionsInfo = ({
 							name,
 							priority,
 							script,
+							scriptLanguage,
 						})
 					}
 					onChange={({target}) => {
@@ -150,6 +189,7 @@ const BaseActionsInfo = ({
 								name,
 								priority,
 								script,
+								scriptLanguage,
 							})
 						}
 					>
@@ -195,6 +235,7 @@ const BaseActionsInfo = ({
 							name,
 							priority,
 							script,
+							scriptLanguage,
 						});
 					}}
 					onChange={({target}) => {
@@ -220,8 +261,7 @@ BaseActionsInfo.propTypes = {
 	placeholderScript: PropTypes.string,
 	priority: PropTypes.number,
 	script: PropTypes.string,
-	scriptLabel: PropTypes.string,
-	scriptLabelSecondary: PropTypes.string,
+	scriptLanguage: PropTypes.string,
 	selectedItem: PropTypes.object,
 	setDescription: PropTypes.func,
 	setExecutionType: PropTypes.func,
@@ -229,6 +269,7 @@ BaseActionsInfo.propTypes = {
 	setName: PropTypes.func,
 	setPriority: PropTypes.func,
 	setScript: PropTypes.func,
+	setScriptLanguage: PropTypes.func,
 	updateActionInfo: PropTypes.func,
 };
 

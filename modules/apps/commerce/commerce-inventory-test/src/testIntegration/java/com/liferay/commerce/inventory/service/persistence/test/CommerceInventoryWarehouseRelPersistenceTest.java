@@ -218,12 +218,12 @@ public class CommerceInventoryWarehouseRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_C_C() throws Exception {
-		_persistence.countByC_C_C(
+	public void testCountByC_C_CIWI() throws Exception {
+		_persistence.countByC_C_CIWI(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByC_C_C(0L, 0L, 0L);
+		_persistence.countByC_C_CIWI(0L, 0L, 0L);
 	}
 
 	@Test

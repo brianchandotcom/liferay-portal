@@ -172,15 +172,28 @@ export default function Sidebar() {
 	useEffect(() => {
 		setBlockingErrors((prev) => {
 			if (errors?.label === true || errors?.id?.empty === true) {
-				return {...prev, errorType: 'emptyField'};
+				return {
+					...prev,
+					errorMessage: Liferay.Language.get(
+						'please-fill-out-the-fields-before-saving-or-publishing'
+					),
+					errorType: 'emptyField',
+				};
 			}
-			if (errors?.id?.duplicated === true) {
-				return {...prev, errorType: 'duplicated'};
+			else if (errors?.id?.duplicated === true) {
+				return {
+					...prev,
+					errorMessage: Liferay.Language.get(
+						'please-rename-this-with-another-words'
+					),
+					errorType: 'duplicated',
+				};
 			}
 			else {
 				return {...prev, errorType: ''};
 			}
 		});
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [errors]);
 

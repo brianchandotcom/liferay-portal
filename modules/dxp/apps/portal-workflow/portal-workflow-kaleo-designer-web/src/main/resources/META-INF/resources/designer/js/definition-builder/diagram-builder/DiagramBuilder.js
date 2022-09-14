@@ -49,6 +49,7 @@ export default function DiagramBuilder() {
 		elements,
 		selectedLanguageId,
 		setActive,
+		setBlockingErrors,
 		setDefinitionDescription,
 		setDefinitionInfo,
 		setDefinitionName,
@@ -327,7 +328,7 @@ export default function DiagramBuilder() {
 
 			setElements(elements);
 
-			populateAssignmentsData(elements, setElements);
+			populateAssignmentsData(elements, setElements, setBlockingErrors);
 			populateNotificationsData(elements, setElements);
 
 			setDeserialize(false);

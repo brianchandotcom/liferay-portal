@@ -14,7 +14,11 @@ import {isNode} from 'react-flow-renderer';
 import {retrieveRolesBy, retrieveUsersBy} from '../../util/fetchUtil';
 import {getAssignmentType} from '../components/sidebar/sections/assignments/utils';
 
-const populateAssignmentsData = (initialElements, setElements) => {
+const populateAssignmentsData = (
+	initialElements,
+	setElements,
+	setBlockingErrors
+) => {
 	for (let index = 0; index < initialElements.length; index++) {
 		const element = initialElements[index];
 
@@ -34,6 +38,53 @@ const populateAssignmentsData = (initialElements, setElements) => {
 				const keywordRetrieveUsersBy = Object.values(
 					element.data.assignments
 				)[1];
+
+				const verifySectionsData = () => {
+					if (sectionsData.length) {
+						element.data.assignments.sectionsData = sectionsData;
+						setElements([...initialElements]);
+					}
+					else {
+						delete element.data.assignments.sectionsData;
+
+						if (element.data.assignments.emailAddress) {
+							delete element.data.assignments.emailAddress;
+							setBlockingErrors((prev) => {
+								return {
+									...prev,
+									errorMessage: Liferay.Language.get(
+										'please-enter-a-valid-email-address'
+									),
+									errorType: 'assignment',
+								};
+							});
+						}
+						else if (element.data.assignments.screenName) {
+							delete element.data.assignments.screenName;
+							setBlockingErrors((prev) => {
+								return {
+									...prev,
+									errorMessage: Liferay.Language.get(
+										'please-enter-a-valid-screen-name'
+									),
+									errorType: 'assignment',
+								};
+							});
+						}
+						else if (element.data.assignments.userId) {
+							delete element.data.assignments.userId;
+							setBlockingErrors((prev) => {
+								return {
+									...prev,
+									errorMessage: Liferay.Language.get(
+										'please-enter-a-valid-user-id'
+									),
+									errorType: 'assignment',
+								};
+							});
+						}
+					}
+				};
 
 				if (filterTypeRetrieveUsersBy === 'screenName') {
 					filterTypeRetrieveUsersBy = 'alternateName';
@@ -60,12 +111,7 @@ const populateAssignmentsData = (initialElements, setElements) => {
 							});
 						});
 					})
-					.then(() => {
-						initialElements[
-							index
-						].data.assignments.sectionsData = sectionsData;
-						setElements([...initialElements]);
-					});
+					.then(() => verifySectionsData());
 			}
 			else if (assignmentType === 'roleId') {
 				retrieveRolesBy('roleId', element.data.assignments.roleId)

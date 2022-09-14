@@ -52,6 +52,7 @@ export default function UpperToolbar({
 		selectedLanguageId,
 		setAlertMessage,
 		setAlertType,
+		setBlockingErrors,
 		setDefinitionDescription,
 		setDefinitionId,
 		setDefinitionName,
@@ -83,17 +84,27 @@ export default function UpperToolbar({
 		displayNames,
 		languageIds
 	);
+
 	const errorTitle = () => {
 		if (blockingErrors.errorType === 'duplicated') {
-			return Liferay.Language.get('you-have-the-same-id-in-two-nodes');
+			return Liferay.Language.get(
+				'you-have-the-same-id-in-two-nodes'
+			).slice(0, -1);
 		}
-		if (blockingErrors.errorType === 'emptyField') {
-			return Liferay.Language.get('some-fields-need-to-be-filled');
+		else if (blockingErrors.errorType === 'emptyField') {
+			return Liferay.Language.get('some-fields-need-to-be-filled').slice(
+				0,
+				-1
+			);
+		}
+		else if (blockingErrors.errorType === 'assignment') {
+			return Liferay.Language.get('warning');
 		}
 		else {
 			return Liferay.Language.get('error');
 		}
 	};
+
 	const getXMLContent = (exporting) => {
 		let currentDescription;
 		let currentElements;
@@ -175,30 +186,19 @@ export default function UpperToolbar({
 	};
 
 	const publishDefinition = () => {
-		let alertMessage;
-
 		if (!definitionTitle) {
-			alertMessage = Liferay.Language.get('name-workflow-before-publish');
-			setAlert(alertMessage, 'danger', true);
+			setAlert(
+				Liferay.Language.get('name-workflow-before-publish'),
+				'danger',
+				true
+			);
 		}
 		else if (blockingErrors.errorType !== '') {
-			switch (blockingErrors.errorType) {
-				case 'emptyField':
-					alertMessage = Liferay.Language.get(
-						'please-fill-out-the-fields-before-saving-or-publishing'
-					);
-					break;
-				case 'duplicated':
-					alertMessage = Liferay.Language.get(
-						'please-rename-this-with-another-words'
-					);
-					break;
-				default:
-					alertMessage = Liferay.Language.get('error');
-			}
-			setAlert(alertMessage, 'danger', true);
+			setAlert(blockingErrors.errorMessage, 'danger', true);
 		}
 		else {
+			let alertMessage;
+
 			if (definitionNotPublished) {
 				alertMessage = Liferay.Language.get(
 					'workflow-published-successfully'
@@ -241,23 +241,10 @@ export default function UpperToolbar({
 	};
 
 	const saveDefinition = () => {
-		const successMessage = Liferay.Language.get('workflow-saved');
-		const duplicatedAlertMessage = Liferay.Language.get(
-			'please-rename-this-with-another-words'
-		);
-		const emptyFieldAlertMessage = Liferay.Language.get(
-			'please-fill-out-the-fields-before-saving-or-publishing'
-		);
-
-		if (blockingErrors.errorType === 'emptyField') {
-			setAlert(emptyFieldAlertMessage, 'danger', true);
+		if (blockingErrors.errorType !== '') {
+			setAlert(blockingErrors.errorMessage, 'danger', true);
 		}
-
-		if (blockingErrors.errorType === 'duplicated') {
-			setAlert(duplicatedAlertMessage, 'danger', true);
-		}
-
-		if (blockingErrors.errorType === '') {
+		else {
 			saveDefinitionRequest({
 				active,
 				content: getXMLContent(true),
@@ -275,7 +262,11 @@ export default function UpperToolbar({
 							redirectToSavedDefinition(name, version);
 						}
 						else {
-							setAlert(successMessage, 'success', true);
+							setAlert(
+								Liferay.Language.get('workflow-saved'),
+								'success',
+								true
+							);
 						}
 					});
 				}
@@ -310,6 +301,20 @@ export default function UpperToolbar({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		if (blockingErrors.errorType === 'assignment') {
+			setAlert(blockingErrors.errorMessage, 'warning', true);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [blockingErrors]);
+
+	const resetAlert = () => {
+		setShowAlert(false);
+		if (blockingErrors.errorType === 'assignment') {
+			setBlockingErrors({errorType: ''});
+		}
+	};
 
 	return (
 		<>
@@ -435,11 +440,11 @@ export default function UpperToolbar({
 					<ClayAlert
 						autoClose={5000}
 						displayType={alertType}
-						onClose={() => setShowAlert(false)}
+						onClose={() => resetAlert()}
 						title={
 							alertType === 'success'
 								? `${Liferay.Language.get('success')}:`
-								: `${errorTitle().slice(0, -1)}:`
+								: `${errorTitle()}:`
 						}
 					>
 						{alertMessage}

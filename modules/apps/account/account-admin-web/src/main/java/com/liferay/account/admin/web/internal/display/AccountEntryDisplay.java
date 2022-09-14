@@ -14,7 +14,7 @@
 
 package com.liferay.account.admin.web.internal.display;
 
-import com.liferay.account.admin.web.internal.util.AccountEntryEmailValidatorFactoryUtil;
+import com.liferay.account.admin.web.internal.util.AccountEntryEmailAddressValidatorFactoryUtil;
 import com.liferay.account.admin.web.internal.util.CurrentAccountEntryManagerUtil;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
@@ -24,7 +24,7 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalServiceUtil;
 import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
-import com.liferay.account.validator.AccountEntryEmailValidator;
+import com.liferay.account.validator.AccountEntryEmailAddressValidator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -160,8 +160,8 @@ public class AccountEntryDisplay {
 		return _active;
 	}
 
-	public boolean isEmailDomainValidationEnabled() {
-		return _emailDomainValidationEnabled;
+	public boolean isEmailAddressDomainValidationEnabled() {
+		return _emailAddressDomainValidationEnabled;
 	}
 
 	public boolean isSelectedAccountEntry(long groupId, long userId)
@@ -179,7 +179,9 @@ public class AccountEntryDisplay {
 	}
 
 	public boolean isValidateUserEmailAddress() {
-		if (_emailDomainValidationEnabled && ListUtil.isNotEmpty(_domains)) {
+		if (_emailAddressDomainValidationEnabled &&
+			ListUtil.isNotEmpty(_domains)) {
+
 			return true;
 		}
 
@@ -188,8 +190,8 @@ public class AccountEntryDisplay {
 
 	private AccountEntryDisplay() {
 		_accountEntry = null;
-		_accountEntryEmailValidator =
-			AccountEntryEmailValidatorFactoryUtil.create(
+		_accountEntryEmailAddressValidator =
+			AccountEntryEmailAddressValidatorFactoryUtil.create(
 				CompanyThreadLocal.getCompanyId(), new String[0]);
 		_accountEntryId = 0;
 		_active = true;
@@ -197,8 +199,9 @@ public class AccountEntryDisplay {
 		_defaultShippingAddress = null;
 		_description = StringPool.BLANK;
 		_domains = Collections.emptyList();
-		_emailDomainValidationEnabled =
-			_accountEntryEmailValidator.isEmailDomainValidationEnabled();
+		_emailAddressDomainValidationEnabled =
+			_accountEntryEmailAddressValidator.
+				isEmailAddressDomainValidationEnabled();
 		_externalReferenceCode = StringPool.BLANK;
 		_logoId = 0;
 		_name = StringPool.BLANK;
@@ -213,8 +216,8 @@ public class AccountEntryDisplay {
 	private AccountEntryDisplay(AccountEntry accountEntry) {
 		_accountEntry = accountEntry;
 
-		_accountEntryEmailValidator =
-			AccountEntryEmailValidatorFactoryUtil.create(
+		_accountEntryEmailAddressValidator =
+			AccountEntryEmailAddressValidatorFactoryUtil.create(
 				accountEntry.getCompanyId(), _accountEntry.getDomainsArray());
 
 		_accountEntryId = accountEntry.getAccountEntryId();
@@ -223,8 +226,9 @@ public class AccountEntryDisplay {
 		_defaultShippingAddress = accountEntry.getDefaultShippingAddress();
 		_description = accountEntry.getDescription();
 		_domains = _getDomains(accountEntry);
-		_emailDomainValidationEnabled =
-			_accountEntryEmailValidator.isEmailDomainValidationEnabled();
+		_emailAddressDomainValidationEnabled =
+			_accountEntryEmailAddressValidator.
+				isEmailAddressDomainValidationEnabled();
 		_externalReferenceCode = accountEntry.getExternalReferenceCode();
 		_logoId = accountEntry.getLogoId();
 		_name = accountEntry.getName();
@@ -360,14 +364,15 @@ public class AccountEntryDisplay {
 	private static final int _ORGANIZATION_NAMES_LIMIT = 5;
 
 	private final AccountEntry _accountEntry;
-	private final AccountEntryEmailValidator _accountEntryEmailValidator;
+	private final AccountEntryEmailAddressValidator
+		_accountEntryEmailAddressValidator;
 	private final long _accountEntryId;
 	private final boolean _active;
 	private final Address _defaultBillingAddress;
 	private final Address _defaultShippingAddress;
 	private final String _description;
 	private final List<String> _domains;
-	private final boolean _emailDomainValidationEnabled;
+	private final boolean _emailAddressDomainValidationEnabled;
 	private final String _externalReferenceCode;
 	private final long _logoId;
 	private final String _name;

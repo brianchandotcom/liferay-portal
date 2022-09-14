@@ -14,10 +14,10 @@
 
 package com.liferay.account.admin.web.internal.security.permission.resource;
 
-import com.liferay.account.admin.web.internal.util.AccountEntryEmailValidatorFactoryUtil;
+import com.liferay.account.admin.web.internal.util.AccountEntryEmailAddressValidatorFactoryUtil;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.validator.AccountEntryEmailValidator;
+import com.liferay.account.validator.AccountEntryEmailAddressValidator;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -61,11 +61,11 @@ public class AccountUserPermission {
 			return true;
 		}
 
-		AccountEntryEmailValidator accountEntryEmailValidator =
-			AccountEntryEmailValidatorFactoryUtil.create(
+		AccountEntryEmailAddressValidator accountEntryEmailAddressValidator =
+			AccountEntryEmailAddressValidatorFactoryUtil.create(
 				accountEntry.getCompanyId(), accountEntry.getDomainsArray());
 
-		if (accountEntryEmailValidator.isValidDomainStrict(
+		if (accountEntryEmailAddressValidator.isValidDomainStrict(
 				accountUser.getEmailAddress()) &&
 			AccountEntryPermission.contains(
 				permissionChecker, accountEntry.getAccountEntryId(),

@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import React from 'react';
 
 import {ImageSelectorDescription} from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/ImageSelectorDescription';
@@ -21,7 +21,7 @@ import StoreMother from '../../../../src/main/resources/META-INF/resources/page_
 
 describe('ImageSelectorDescription', () => {
 	it('synchronizes imageDescription prop with input value', () => {
-		const {getByLabelText} = render(
+		render(
 			<StoreMother.Component>
 				<ImageSelectorDescription
 					imageDescription="Random description"
@@ -30,7 +30,7 @@ describe('ImageSelectorDescription', () => {
 			</StoreMother.Component>
 		);
 
-		expect(getByLabelText('image-description').value).toBe(
+		expect(screen.getByLabelText('image-description').value).toBe(
 			'Random description'
 		);
 	});
@@ -38,7 +38,7 @@ describe('ImageSelectorDescription', () => {
 	it('call onImageDescriptionChanged on blur', () => {
 		const onImageDescriptionChanged = jest.fn();
 
-		const {getByLabelText} = render(
+		render(
 			<StoreMother.Component>
 				<ImageSelectorDescription
 					imageDescription=""
@@ -47,7 +47,7 @@ describe('ImageSelectorDescription', () => {
 			</StoreMother.Component>
 		);
 
-		const input = getByLabelText('image-description');
+		const input = screen.getByLabelText('image-description');
 
 		input.value = 'Some other thing';
 		input.dispatchEvent(new FocusEvent('blur'));

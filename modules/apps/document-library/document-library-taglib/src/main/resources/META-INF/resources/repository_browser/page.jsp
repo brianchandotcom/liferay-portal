@@ -14,4 +14,4 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/repository_browser/init.jsp" %>

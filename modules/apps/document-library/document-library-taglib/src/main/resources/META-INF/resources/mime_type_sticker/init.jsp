@@ -14,7 +14,6 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<%@ include file="/init.jsp" %>
 
-<liferay-theme:defineObjects />
+<%@ page import="com.liferay.document.library.display.context.DLViewFileVersionDisplayContext" %>

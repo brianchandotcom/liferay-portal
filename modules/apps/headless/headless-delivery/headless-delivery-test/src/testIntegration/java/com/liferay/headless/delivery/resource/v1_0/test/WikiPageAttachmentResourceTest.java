@@ -77,29 +77,23 @@ public class WikiPageAttachmentResourceTest
 		super.
 			testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
-				LoggerTestUtil.ERROR)) {
+		WikiPageAttachment wikiPageAttachment =
+			testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment();
 
-			WikiPageAttachment wikiPageAttachment =
-				testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment();
+		// Nonexistent wiki page
 
-			// Nonexistent wiki page
-
-			assertHttpResponseStatusCode(
-				404,
-				wikiPageAttachmentResource.
-					deleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCodeHttpResponse(
-						testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId(),
-						RandomTestUtil.randomString(),
-						wikiPageAttachment.getExternalReferenceCode()));
-		}
+		assertHttpResponseStatusCode(
+			404,
+			wikiPageAttachmentResource.
+				deleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId(),
+					RandomTestUtil.randomString(),
+					wikiPageAttachment.getExternalReferenceCode()));
 
 		// Nonexistent wiki page attachment
 
 		assertHttpResponseStatusCode(
-			204,
+			404,
 			wikiPageAttachmentResource.
 				deleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId(),
@@ -110,7 +104,7 @@ public class WikiPageAttachmentResourceTest
 
 		WikiPage previousWikiPage = _wikiPage;
 
-		WikiPageAttachment wikiPageAttachment =
+		WikiPageAttachment newWikiPageAttachment =
 			testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment();
 
 		assertHttpResponseStatusCode(
@@ -119,7 +113,7 @@ public class WikiPageAttachmentResourceTest
 				deleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId(),
 					previousWikiPage.getExternalReferenceCode(),
-					wikiPageAttachment.getExternalReferenceCode()));
+					newWikiPageAttachment.getExternalReferenceCode()));
 	}
 
 	@Override

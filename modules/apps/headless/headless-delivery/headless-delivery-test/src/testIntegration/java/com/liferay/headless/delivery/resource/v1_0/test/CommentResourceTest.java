@@ -52,29 +52,23 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 		super.
 			testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
-				LoggerTestUtil.ERROR)) {
+		Comment comment =
+			testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
-			Comment comment =
-				testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment();
+		// Nonexistent blogs entry
 
-			// Nonexistent blogs entry
-
-			assertHttpResponseStatusCode(
-				404,
-				commentResource.
-					deleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
-						testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-						RandomTestUtil.randomString(),
-						comment.getExternalReferenceCode()));
-		}
+		assertHttpResponseStatusCode(
+			404,
+			commentResource.
+				deleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
+					RandomTestUtil.randomString(),
+					comment.getExternalReferenceCode()));
 
 		// Nonexistent comment
 
 		assertHttpResponseStatusCode(
-			204,
+			404,
 			commentResource.
 				deleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
@@ -85,16 +79,16 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 
 		BlogsEntry prevBlogsEntry = _blogsEntry;
 
-		Comment comment =
+		Comment newComment =
 			testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
 		assertHttpResponseStatusCode(
-			204,
+			404,
 			commentResource.
 				deleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					prevBlogsEntry.getExternalReferenceCode(),
-					comment.getExternalReferenceCode()));
+					newComment.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -108,7 +102,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
 					"WebApplicationExceptionMapper",
-				LoggerTestUtil.ERROR)) {
+				LoggerTestUtil.WARN)) {
 
 			Comment comment1 =
 				testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
@@ -143,7 +137,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 		// Nonexistent comment
 
 		assertHttpResponseStatusCode(
-			204,
+			404,
 			commentResource.
 				deleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
@@ -154,16 +148,16 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 
 		Comment prevParentComment = _parentComment;
 
-		Comment comment =
+		Comment comment4 =
 			testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
 		assertHttpResponseStatusCode(
-			204,
+			404,
 			commentResource.
 				deleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					prevParentComment.getExternalReferenceCode(),
-					comment.getExternalReferenceCode()));
+					comment4.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -174,29 +168,23 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 		super.
 			testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
-				LoggerTestUtil.ERROR)) {
+		Comment comment =
+			testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
-			Comment comment =
-				testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
+		// Nonexistent document
 
-			// Nonexistent document
-
-			assertHttpResponseStatusCode(
-				404,
-				commentResource.
-					deleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
-						testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-						RandomTestUtil.randomString(),
-						comment.getExternalReferenceCode()));
-		}
+		assertHttpResponseStatusCode(
+			404,
+			commentResource.
+				deleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
+					RandomTestUtil.randomString(),
+					comment.getExternalReferenceCode()));
 
 		// Nonexistent comment
 
 		assertHttpResponseStatusCode(
-			204,
+			404,
 			commentResource.
 				deleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
@@ -207,16 +195,16 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 
 		FileEntry prevFileEntry = _fileEntry;
 
-		Comment comment =
+		Comment newComment =
 			testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
 		assertHttpResponseStatusCode(
-			204,
+			404,
 			commentResource.
 				deleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					prevFileEntry.getExternalReferenceCode(),
-					comment.getExternalReferenceCode()));
+					newComment.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -227,29 +215,23 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 		super.
 			testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
-				LoggerTestUtil.ERROR)) {
+		Comment comment =
+			testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
-			Comment comment =
-				testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
+		// Nonexistent journal article
 
-			// Nonexistent journal article
-
-			assertHttpResponseStatusCode(
-				404,
-				commentResource.
-					deleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
-						testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-						RandomTestUtil.randomString(),
-						comment.getExternalReferenceCode()));
-		}
+		assertHttpResponseStatusCode(
+			404,
+			commentResource.
+				deleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
+					RandomTestUtil.randomString(),
+					comment.getExternalReferenceCode()));
 
 		// Nonexistent comment
 
 		assertHttpResponseStatusCode(
-			204,
+			404,
 			commentResource.
 				deleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
@@ -260,16 +242,16 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 
 		JournalArticle prevJournalArticle = _journalArticle;
 
-		Comment comment =
+		Comment newComment =
 			testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
 		assertHttpResponseStatusCode(
-			204,
+			404,
 			commentResource.
 				deleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					prevJournalArticle.getExternalReferenceCode(),
-					comment.getExternalReferenceCode()));
+					newComment.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -280,24 +262,18 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 		super.
 			testGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
-				LoggerTestUtil.ERROR)) {
+		Comment comment =
+			testGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
-			Comment comment =
-				testGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment();
+		// Nonexistent blogs entry
 
-			// Nonexistent blogs entry
-
-			assertHttpResponseStatusCode(
-				404,
-				commentResource.
-					getSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
-						testGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-						RandomTestUtil.randomString(),
-						comment.getExternalReferenceCode()));
-		}
+		assertHttpResponseStatusCode(
+			404,
+			commentResource.
+				getSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
+					testGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
+					RandomTestUtil.randomString(),
+					comment.getExternalReferenceCode()));
 
 		// Nonexistent comment
 
@@ -313,7 +289,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 
 		BlogsEntry prevBlogsEntry = _blogsEntry;
 
-		Comment comment =
+		Comment newComment =
 			testGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
 		assertHttpResponseStatusCode(
@@ -322,7 +298,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 				getSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					prevBlogsEntry.getExternalReferenceCode(),
-					comment.getExternalReferenceCode()));
+					newComment.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -336,7 +312,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
 					"WebApplicationExceptionMapper",
-				LoggerTestUtil.ERROR)) {
+				LoggerTestUtil.WARN)) {
 
 			Comment comment1 =
 				testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
@@ -382,7 +358,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 
 		Comment prevParentComment = _parentComment;
 
-		Comment comment =
+		Comment comment4 =
 			testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
 		assertHttpResponseStatusCode(
@@ -391,7 +367,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 				getSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					prevParentComment.getExternalReferenceCode(),
-					comment.getExternalReferenceCode()));
+					comment4.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -402,24 +378,18 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 		super.
 			testGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
-				LoggerTestUtil.ERROR)) {
+		Comment comment =
+			testGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
-			Comment comment =
-				testGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
+		// Nonexistent document
 
-			// Nonexistent document
-
-			assertHttpResponseStatusCode(
-				404,
-				commentResource.
-					getSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
-						testGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-						RandomTestUtil.randomString(),
-						comment.getExternalReferenceCode()));
-		}
+		assertHttpResponseStatusCode(
+			404,
+			commentResource.
+				getSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
+					testGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
+					RandomTestUtil.randomString(),
+					comment.getExternalReferenceCode()));
 
 		// Nonexistent comment
 
@@ -435,7 +405,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 
 		FileEntry prevFileEntry = _fileEntry;
 
-		Comment comment =
+		Comment newComment =
 			testGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
 		assertHttpResponseStatusCode(
@@ -444,7 +414,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 				getSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					prevFileEntry.getExternalReferenceCode(),
-					comment.getExternalReferenceCode()));
+					newComment.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -455,24 +425,18 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 		super.
 			testGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
-				LoggerTestUtil.ERROR)) {
+		Comment comment =
+			testGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
-			Comment comment =
-				testGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
+		// Nonexistent structured content
 
-			// Nonexistent structured content
-
-			assertHttpResponseStatusCode(
-				404,
-				commentResource.
-					getSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
-						testGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
-						RandomTestUtil.randomString(),
-						comment.getExternalReferenceCode()));
-		}
+		assertHttpResponseStatusCode(
+			404,
+			commentResource.
+				getSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
+					testGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
+					RandomTestUtil.randomString(),
+					comment.getExternalReferenceCode()));
 
 		// Nonexistent comment
 
@@ -488,7 +452,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 
 		JournalArticle prevJournalArticle = _journalArticle;
 
-		Comment comment =
+		Comment newComment =
 			testGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
 		assertHttpResponseStatusCode(
@@ -497,7 +461,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 				getSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCodeHttpResponse(
 					testGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					prevJournalArticle.getExternalReferenceCode(),
-					comment.getExternalReferenceCode()));
+					newComment.getExternalReferenceCode()));
 	}
 
 	@Override

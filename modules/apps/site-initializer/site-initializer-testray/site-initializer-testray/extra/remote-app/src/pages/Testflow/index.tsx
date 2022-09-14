@@ -13,29 +13,24 @@
  * details.
  */
 
-import {useEffect} from 'react';
-import {useOutletContext} from 'react-router-dom';
-
 import Avatar from '../../components/Avatar';
 import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView';
 import ProgressBar from '../../components/ProgressBar';
 import StatusBadge from '../../components/StatusBadge';
-import useFormModal from '../../hooks/useFormModal';
+import {useHeader} from '../../hooks';
 import i18n from '../../i18n';
-import {getTasksTransformData, tasksResource} from '../../services/rest';
+import {testrayTaskImpl} from '../../services/rest';
 import {SUBTASK_STATUS} from '../../util/constants';
 import {getTimeFromNow} from '../../util/date';
 import {routines} from '../../util/mock';
 import TestflowModal from './TestflowModal';
+import useTestflowActions from './useTestflowActions';
 
 const TestFlow = () => {
-	const {modal} = useFormModal();
-	const {setDropdownIcon}: any = useOutletContext();
+	const {actions, modal} = useTestflowActions();
 
-	useEffect(() => {
-		setDropdownIcon('merge');
-	}, [setDropdownIcon]);
+	useHeader({useIcon: 'merge'});
 
 	return (
 		<Container>
@@ -44,8 +39,9 @@ const TestFlow = () => {
 					addButton: () => modal.open(),
 					title: i18n.translate('tasks'),
 				}}
-				resource={tasksResource}
+				resource={testrayTaskImpl.resource}
 				tableProps={{
+					actions,
 					columns: [
 						{
 							clickable: true,
@@ -124,7 +120,9 @@ const TestFlow = () => {
 					],
 					navigateTo: (item) => `/testflow/${item.id}`,
 				}}
-				transformData={getTasksTransformData}
+				transformData={(response) =>
+					testrayTaskImpl.transformDataFromList(response)
+				}
 			/>
 
 			<TestflowModal modal={modal} />

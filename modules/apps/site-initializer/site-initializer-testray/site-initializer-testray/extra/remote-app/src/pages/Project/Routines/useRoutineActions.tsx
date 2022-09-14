@@ -38,7 +38,10 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			permission: 'UPDATE',
 		},
 		{
-			action: () => navigate('templates'),
+			action: (routine) =>
+				navigate(
+					isHeaderActions ? 'templates' : `${routine.id}/templates`
+				),
 			icon: 'cog',
 			name: i18n.translate('manage-templates'),
 		},

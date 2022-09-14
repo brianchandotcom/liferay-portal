@@ -15,25 +15,38 @@
 import {useRef} from 'react';
 
 import useFormModal from '../../../../../hooks/useFormModal';
+import useMutate from '../../../../../hooks/useMutate';
 import i18n from '../../../../../i18n';
-import {TestrayBuild} from '../../../../../services/rest';
+import {TestrayBuild, testrayBuildImpl} from '../../../../../services/rest';
 import {Action} from '../../../../../types';
 
 const useBuildTemplateActions = () => {
 	const formModal = useFormModal();
+	const {removeItemFromList, updateItemFromList} = useMutate();
 
 	const actionsRef = useRef([
 		{
-			action: () => {
-				alert('activated');
+			action: (build, mutate) => {
+				testrayBuildImpl
+					.update(build.id, {active: !build.active})
+					.then(() =>
+						updateItemFromList(mutate, build.id, {
+							active: !build.active,
+						})
+					);
 			},
 			icon: 'logout',
-			name: () => i18n.translate('activate'),
+			name: (build) =>
+				build.active
+					? i18n.translate('deactivate')
+					: i18n.translate('activate'),
 			permission: 'UPDATE',
 		},
 		{
-			action: () => {
-				alert('deleted');
+			action: (build, mutate) => {
+				testrayBuildImpl
+					.remove(build.id)
+					.then(() => removeItemFromList(mutate, build.id));
 			},
 			icon: 'trash',
 			name: i18n.translate('delete'),

@@ -53,6 +53,7 @@ export type UserAccount = {
 };
 
 export type TestrayBuild = {
+	active: boolean;
 	creator: {
 		name: string;
 	};

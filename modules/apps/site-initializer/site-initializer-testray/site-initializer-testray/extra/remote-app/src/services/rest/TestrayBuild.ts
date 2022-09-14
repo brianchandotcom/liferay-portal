@@ -35,6 +35,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 	constructor() {
 		super({
 			adapter: ({
+				active,
 				description,
 				gitHash,
 				name,
@@ -44,6 +45,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 				routineId: r_routineToBuilds_c_routineId,
 				template,
 			}) => ({
+				active,
 				description,
 				gitHash,
 				name,

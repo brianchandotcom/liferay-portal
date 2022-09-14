@@ -13,7 +13,7 @@
  */
 
 type Key = string;
-type Value = string | number;
+type Value = string | number | boolean;
 type Filter = {
 	[key: string]: string | number | string[] | number[];
 };
@@ -37,7 +37,8 @@ export const searchUtil = {
 	 * @example addressLocality eq 'Redmond'
 	 */
 
-	eq: (key: Key, value: Value) => `${key} eq '${value}'`,
+	eq: (key: Key, value: Value) =>
+		`${key} eq ${typeof value === 'boolean' ? value : `'${value}'`}`,
 
 	/**
 	 * @description In [values]

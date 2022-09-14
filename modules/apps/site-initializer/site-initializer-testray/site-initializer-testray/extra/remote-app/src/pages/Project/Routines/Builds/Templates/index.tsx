@@ -12,23 +12,25 @@
  * details.
  */
 
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 
 import Container from '../../../../../components/Layout/Container';
 import ListViewRest from '../../../../../components/ListView';
 import {useHeader} from '../../../../../hooks';
 import i18n from '../../../../../i18n';
 import {filters} from '../../../../../schema/filter';
-import {getTimeFromNow} from '../../../../../util/date';
+import dayjs from '../../../../../util/date';
 import {searchUtil} from '../../../../../util/search';
 import useBuildTemplateActions from './useBuildTemplateActions';
 
 const BuildTemplates = () => {
-	const {projectId} = useParams();
+	const navigate = useNavigate();
+	const {projectId, routineId} = useParams();
 	const {actions} = useBuildTemplateActions();
 
 	useHeader({
 		timeout: 110,
+		useHeaderActions: {actions: []},
 		useTabs: [],
 	});
 
@@ -36,7 +38,7 @@ const BuildTemplates = () => {
 		<Container>
 			<ListViewRest
 				managementToolbarProps={{
-					addButton: () => alert('created'),
+					addButton: () => navigate('../create'),
 					filterFields: filters.template as any,
 					title: i18n.translate('templates'),
 				}}
@@ -46,33 +48,35 @@ const BuildTemplates = () => {
 					columns: [
 						{
 							clickable: true,
-							key: 'name',
-							render: () => 'Active',
+							key: 'active',
+							render: (active) =>
+								active
+									? i18n.translate('active')
+									: i18n.translate('deactive'),
+
 							sorteable: true,
 							value: i18n.translate('status'),
 						},
 						{
 							clickable: true,
-							key: 'templateName',
-							render: () => 'Test Name',
+							key: 'name',
 							value: i18n.translate('template-name'),
 						},
 						{
 							clickable: true,
-							key: 'templateTest',
-							render: () => 0,
+							key: 'templateTestrayBuildId',
 							value: i18n.translate('template-test'),
 						},
 						{
 							clickable: true,
-							key: 'latestBuild',
-							render: () => 0,
+							key: 'templateTestrayBuildId',
 							value: i18n.translate('latest-build'),
 						},
 						{
 							clickable: true,
-							key: 'lastUsedDate',
-							render: getTimeFromNow,
+							key: 'modifiedDate',
+							render: (modifiedDate) =>
+								dayjs(modifiedDate).format('lll'),
 							value: i18n.translate('last-used-date'),
 						},
 					],
@@ -81,8 +85,11 @@ const BuildTemplates = () => {
 				variables={{
 					filter: `${searchUtil.eq(
 						'projectId',
-						Number(projectId)
-					)} and ${searchUtil.eq('template', 'true')}`,
+						projectId as string
+					)} and ${searchUtil.eq(
+						'routineId',
+						routineId as string
+					)} and ${searchUtil.eq('template', true)}`,
 				}}
 			/>
 		</Container>

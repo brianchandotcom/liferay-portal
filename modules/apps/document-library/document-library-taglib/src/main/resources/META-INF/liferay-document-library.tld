@@ -28,4 +28,9 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<name>repository-browser</name>
+		<tag-class>com.liferay.document.library.taglib.servlet.taglib.RepositoryBrowserTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
 </taglib>

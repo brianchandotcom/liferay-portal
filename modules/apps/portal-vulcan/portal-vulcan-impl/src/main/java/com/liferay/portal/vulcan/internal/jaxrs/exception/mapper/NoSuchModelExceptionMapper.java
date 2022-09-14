@@ -15,39 +15,20 @@
 package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
-import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.servlet.http.HttpServletRequest;
-
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 /**
  * Converts any {@code NoSuchModelException} to a {@code 404} error.
  *
- * <p>In the case of a DELETE request a {@code 204} (NO-CONTENT) response is
- * returned so the request is idempotent.
  *
  * @author Alejandro Hernández
  * @review
  */
 public class NoSuchModelExceptionMapper
 	extends BaseExceptionMapper<NoSuchModelException> {
-
-	@Override
-	public Response toResponse(NoSuchModelException noSuchModelException) {
-		String method = _httpServletRequest.getMethod();
-
-		if (method.equals(HttpMethods.DELETE)) {
-			return Response.status(
-				Response.Status.NO_CONTENT
-			).build();
-		}
-
-		return super.toResponse(noSuchModelException);
-	}
 
 	@Override
 	protected Problem getProblem(NoSuchModelException noSuchModelException) {
@@ -59,8 +40,5 @@ public class NoSuchModelExceptionMapper
 	protected boolean isSanitize() {
 		return false;
 	}
-
-	@Context
-	private HttpServletRequest _httpServletRequest;
 
 }

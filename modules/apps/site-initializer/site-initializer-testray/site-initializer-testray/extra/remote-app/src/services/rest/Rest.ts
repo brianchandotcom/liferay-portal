@@ -39,6 +39,7 @@ interface RestContructor<YupModel = any, ObjectModel = any> {
 
 class Rest<YupModel = any, ObjectModel = any> {
 	private batchMinimumThreshold = 10;
+	private nestedFieldsDepth = 1;
 	protected adapter: Adapter = (data) => data;
 	public fetcher = fetcher;
 	public nestedFields: string = '';
@@ -54,9 +55,8 @@ class Rest<YupModel = any, ObjectModel = any> {
 	}: RestContructor<YupModel, ObjectModel>) {
 		this.nestedFields = `nestedFields=${nestedFields}`;
 		this.uri = uri;
-		this.resource = `/${uri}?${
-			this.nestedFields
-		}&nestedFieldsDepth=${getNestedFieldDepth(nestedFields)}`;
+		this.nestedFieldsDepth = getNestedFieldDepth(nestedFields);
+		this.resource = `/${uri}?${this.nestedFields}&nestedFieldsDepth=${this.nestedFieldsDepth}`;
 
 		if (adapter) {
 			this.adapter = adapter;
@@ -99,7 +99,7 @@ class Rest<YupModel = any, ObjectModel = any> {
 	}
 
 	public getResource(id: number | string) {
-		return `/${this.uri}/${id}?${this.nestedFields}`;
+		return `/${this.uri}/${id}?${this.nestedFields}&nestedFieldsDepth=${this.nestedFieldsDepth}`;
 	}
 
 	public async remove(id: number): Promise<void> {

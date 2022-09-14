@@ -141,7 +141,9 @@ const Build = () => {
 						{
 							key: 'errors',
 							render: (errors: string) =>
-								errors && <Code>{errors}</Code>,
+								errors && (
+									<Code>{errors.substring(0, 250)}</Code>
+								),
 							value: i18n.translate('errors'),
 						},
 					],

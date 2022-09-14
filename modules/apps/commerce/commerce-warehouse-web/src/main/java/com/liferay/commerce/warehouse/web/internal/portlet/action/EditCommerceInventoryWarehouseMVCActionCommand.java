@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Collections;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
@@ -244,6 +245,7 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
+
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		String street1 = ParamUtil.getString(actionRequest, "street1");
 		String street2 = ParamUtil.getString(actionRequest, "street2");
@@ -267,10 +269,14 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 			commerceInventoryWarehouse =
 				_commerceInventoryWarehouseService.
 					addCommerceInventoryWarehouse(
-						null, name, description, active, street1, street2,
-						street3, city, zip, commerceRegionCode,
-						commerceCountryCode, latitude, longitude,
-						serviceContext);
+						null,
+						Collections.singletonMap(
+							serviceContext.getLocale(), name),
+						Collections.singletonMap(
+							serviceContext.getLocale(), description),
+						active, street1, street2, street3, city, zip,
+						commerceRegionCode, commerceCountryCode, latitude,
+						longitude, serviceContext);
 
 			actionRequest.setAttribute(
 				"commerceInventoryWarehouseId",
@@ -280,8 +286,12 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 			commerceInventoryWarehouse =
 				_commerceInventoryWarehouseService.
 					updateCommerceInventoryWarehouse(
-						commerceInventoryWarehouseId, name, description, active,
-						street1, street2, street3, city, zip,
+						commerceInventoryWarehouseId,
+						Collections.singletonMap(
+							serviceContext.getLocale(), name),
+						Collections.singletonMap(
+							serviceContext.getLocale(), description),
+						active, street1, street2, street3, city, zip,
 						commerceRegionCode, commerceCountryCode, latitude,
 						longitude, mvccVersion, serviceContext);
 		}

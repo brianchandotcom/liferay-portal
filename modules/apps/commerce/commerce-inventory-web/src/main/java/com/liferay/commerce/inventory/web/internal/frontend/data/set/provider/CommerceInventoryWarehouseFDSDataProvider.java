@@ -75,7 +75,8 @@ public class CommerceInventoryWarehouseFDSDataProvider
 				new Warehouse(
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseItemId(),
-					commerceInventoryWarehouse.getName(),
+					commerceInventoryWarehouse.getName(
+						_portal.getLocale(httpServletRequest)),
 					commerceInventoryWarehouseItem.getQuantity(),
 					commerceInventoryWarehouseItem.getReservedQuantity(),
 					_commerceInventoryReplenishmentItemService.

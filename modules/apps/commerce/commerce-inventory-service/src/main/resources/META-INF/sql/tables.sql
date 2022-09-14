@@ -52,8 +52,8 @@ create table CIWarehouse (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	name VARCHAR(75) null,
-	description VARCHAR(75) null,
+	name STRING null,
+	description STRING null,
 	active_ BOOLEAN,
 	street1 VARCHAR(75) null,
 	street2 VARCHAR(75) null,
@@ -93,4 +93,17 @@ create table CIWarehouseItem (
 	sku VARCHAR(75) null,
 	quantity INTEGER,
 	reservedQuantity INTEGER
+);
+
+create table CIWarehouseRel (
+	mvccVersion LONG default 0 not null,
+	CIWarehouseRelId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	CIWarehouseId LONG
 );

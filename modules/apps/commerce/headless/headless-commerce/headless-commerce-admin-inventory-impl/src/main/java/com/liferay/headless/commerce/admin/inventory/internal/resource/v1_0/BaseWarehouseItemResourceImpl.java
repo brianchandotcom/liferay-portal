@@ -220,6 +220,53 @@ public abstract class BaseWarehouseItemResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-inventory/v1.0/warehouseItems/updated'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "end"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "start"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "page"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "pageSize"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "WarehouseItem")
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/warehouseItems/updated")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<WarehouseItem> getWarehouseItemsUpdatedPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("end")
+			java.util.Date end,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("start")
+			java.util.Date start,
+			@javax.ws.rs.core.Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-inventory/v1.0/warehouseItems/{id}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -402,7 +449,7 @@ public abstract class BaseWarehouseItemResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<WarehouseItem>
-			getWarehousByExternalReferenceCodeWarehouseItemsPage(
+			getWarehouseByExternalReferenceCodeWarehouseItemsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
 				@javax.ws.rs.PathParam("externalReferenceCode")
@@ -438,7 +485,7 @@ public abstract class BaseWarehouseItemResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public WarehouseItem postWarehousByExternalReferenceCodeWarehouseItem(
+	public WarehouseItem postWarehouseByExternalReferenceCodeWarehouseItem(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
@@ -479,7 +526,7 @@ public abstract class BaseWarehouseItemResourceImpl
 	@javax.ws.rs.Path("/warehouses/{id}/warehouseItems")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<WarehouseItem> getWarehousIdWarehouseItemsPage(
+	public Page<WarehouseItem> getWarehouseIdWarehouseItemsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
 			Long id,
@@ -512,7 +559,7 @@ public abstract class BaseWarehouseItemResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public WarehouseItem postWarehousIdWarehouseItem(
+	public WarehouseItem postWarehouseIdWarehouseItem(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
 			Long id,
@@ -525,25 +572,17 @@ public abstract class BaseWarehouseItemResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-inventory/v1.0/warehouseItems/updated'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-inventory/v1.0/warehouses/warehouseItems/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "end"
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "id"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "start"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
+				name = "callbackURL"
 			)
 		}
 	)
@@ -552,21 +591,35 @@ public abstract class BaseWarehouseItemResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "WarehouseItem")
 		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/warehouseItems/updated")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/warehouses/warehouseItems/batch")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Page<WarehouseItem> getWarehouseItemsUpdatedPage(
+	public Response postWarehouseIdWarehouseItemBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("end")
-			java.util.Date end,
+			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
+			Long id,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("start")
-			java.util.Date start,
-			@javax.ws.rs.core.Context Pagination pagination)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.postImportTask(
+				WarehouseItem.class.getName(), callbackURL, null, object)
+		).build();
 	}
 
 	@Override

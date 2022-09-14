@@ -132,8 +132,8 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
-		<column name="description" type="String" />
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
 		<column name="active" type="boolean" />
 		<column name="street1" type="String" />
 		<column name="street2" type="String" />
@@ -209,6 +209,47 @@
 			<finder-column name="sku" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="CommerceInventoryWarehouseRel" remote-service="true" table="CIWarehouseRel">
+
+		<!-- PK fields -->
+
+		<column db-name="CIWarehouseRelId" name="commerceInventoryWarehouseRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column db-name="CIWarehouseId" name="commerceInventoryWarehouseId" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceInventoryWarehouseId" return-type="Collection">
+			<finder-column name="commerceInventoryWarehouseId" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="commerceInventoryWarehouseId" />
+		</finder>
+		<finder name="C_C_CIWI" return-type="CommerceInventoryWarehouseRel" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="commerceInventoryWarehouseId" />
+		</finder>
+	</entity>
 	<exceptions>
 		<exception>CommerceInventoryReplenishmentQuantity</exception>
 		<exception>CommerceInventoryReplenishmentSku</exception>
@@ -217,6 +258,7 @@
 		<exception>CommerceInventoryWarehouseName</exception>
 		<exception>DuplicateCommerceInventoryReplenishmentItem</exception>
 		<exception>DuplicateCommerceInventoryWarehouseItem</exception>
+		<exception>DuplicateCommerceInventoryWarehouseRel</exception>
 		<exception>MVCC</exception>
 	</exceptions>
 </service-builder>

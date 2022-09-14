@@ -1047,7 +1047,7 @@ definition {
 
 	@description = "This test changes password through the API Explorer GUI."
 	@priority = "3"
-	test ChangeUserPasswordViaAPIExplorerAPI {
+	test ChangeUserPasswordViaAPIExplorerGUI {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Given a user logs in") {
@@ -1094,7 +1094,7 @@ definition {
 
 			Masterclass.goBackUsingBrowserButton();
 
-			Navigator.openSpecificURL(url = "http://localhost:8080");
+			Refresh();
 		}
 
 		task ("Then user is not logged out and assert no NPE message") {

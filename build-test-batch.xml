@@ -1602,6 +1602,7 @@ app.server.type=@{app.server.type}]]></echo>
 	<macrodef name="run-functional-test">
 		<attribute name="app.server.type" />
 		<attribute default="${app.server.@{app.server.type}.version}" name="app.server.version" />
+		<attribute default="${browser.type}" name="browser.type" />
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
 		<attribute default="poshi" name="functional.test.type" />
@@ -1631,6 +1632,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<sequential>
 			<var name="app.server.type" value="@{app.server.type}" />
 			<var name="app.server.version" value="@{app.server.version}" />
+			<var name="browser.type" value="@{browser.type}" />
 			<var name="database.type" value="@{database.type}" />
 
 			<condition else="${run.test.case.method.group}_${axis.variable}" property="test.class" value="${axis.variable}">
@@ -4684,6 +4686,10 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" test.portal.log.assert="true" />
 	</target>
 
+	<target name="functional-smoke-tomcat90-mysql57-chrome100-jdk8">
+		<run-functional-test app.server.type="tomcat" browser.type="chrome" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
+	</target>
+
 	<target name="functional-smoke-tomcat90-mysql57-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
@@ -4882,6 +4888,10 @@ log.sanitizer.enabled=false</echo>
 
 	<target name="functional-tomcat90-mariadb106-jdk11_open">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
+	</target>
+
+	<target name="functional-tomcat90-mysql57-chrome100-jdk8">
+		<run-functional-test app.server.type="tomcat" browser.type="chrome" database.type="mysql" database.version="5.7" />
 	</target>
 
 	<target name="functional-tomcat90-mysql57-jdk8">

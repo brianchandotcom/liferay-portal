@@ -41,7 +41,7 @@ public class FrequentPatternCommerceMLRecommendationIndexer
 
 	@Override
 	public String getDocumentType() {
-		return "FrequentPatternCommerceMLRecommendationDocumentType";
+		return "_doc";
 	}
 
 	@Override

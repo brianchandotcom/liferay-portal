@@ -109,6 +109,20 @@ public class DLFileVersionLocalServiceImpl
 	}
 
 	@Override
+	public List<DLFileVersion> getFileVersions(
+		long fileEntryId, int status, int start, int end) {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return dlFileVersionPersistence.findByFileEntryId(
+				fileEntryId, start, end, new DLFileVersionVersionComparator());
+		}
+
+		return dlFileVersionPersistence.findByF_S(
+			fileEntryId, status, start, end,
+			new DLFileVersionVersionComparator());
+	}
+
+	@Override
 	public int getFileVersionsCount(long fileEntryId, int status) {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return dlFileVersionPersistence.countByFileEntryId(fileEntryId);

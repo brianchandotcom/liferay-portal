@@ -28,7 +28,7 @@ import useCaseResultGroupBy from '../../data/useCaseResultGroupBy';
 import {useFetch} from '../../hooks/useFetch';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
-import {getTaskQuery, getTaskTransformData} from '../../services/rest';
+import {TestrayTask, testrayTaskImpl} from '../../services/rest';
 import {
 	SUBTASK_STATUS,
 	StatusesProgressScore,
@@ -61,9 +61,9 @@ const ShortcutIcon = () => (
 const TestFlowTasks = () => {
 	const {testrayTaskId} = useParams();
 
-	const {data: testrayTask, loading} = useFetch(
-		getTaskQuery(testrayTaskId),
-		getTaskTransformData
+	const {data: testrayTask, loading} = useFetch<TestrayTask>(
+		testrayTaskImpl.getResource(testrayTaskId as string),
+		(response) => testrayTaskImpl.transformData(response)
 	);
 
 	const {

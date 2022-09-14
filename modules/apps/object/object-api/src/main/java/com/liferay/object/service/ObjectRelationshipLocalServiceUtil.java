@@ -328,6 +328,14 @@ public class ObjectRelationshipLocalServiceUtil {
 		return getService().getObjectRelationship(objectDefinitionId1, name);
 	}
 
+	public static ObjectRelationship getObjectRelationshipByObjectDefinitionId(
+			long objectDefinitionId, String objectRelationshipName)
+		throws Exception {
+
+		return getService().getObjectRelationshipByObjectDefinitionId(
+			objectDefinitionId, objectRelationshipName);
+	}
+
 	/**
 	 * Returns the object relationship with the matching UUID and company.
 	 *

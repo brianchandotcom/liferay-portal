@@ -32,14 +32,6 @@ definition {
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 		}
-
-		task ("Enable Inputs Fragment collection in Gogo Shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
-
-			GogoShell.viewOutput(outputContent = "true");
-		}
 	}
 
 	tearDown {
@@ -49,14 +41,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			task ("Disable Inputs Fragment collection in Gogo Shell") {
-				GogoShell.openGogoShellAdmin();
-
-				GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
-
-				GogoShell.viewOutput(outputContent = "true");
-			}
-
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
 			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
@@ -67,7 +51,6 @@ definition {
 	@priority = "5"
 	test ConfigureCheckbox {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "Checkbox#ConfigureCheckbox";
 
 		task ("Given a page creator has a Form Container mapped to an entity with boolean field") {
 			task ("Add a Form Container framgment to content page") {
@@ -89,6 +72,12 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General");
+			}
+
+			task ("Remove the automatic added fragments") {
+				for (var fragmentName : list "Checkbox,Submit Button") {
+					PageEditor.removeFragment(fragmentName = "${fragmentName}");
+				}
 			}
 		}
 

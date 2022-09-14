@@ -149,6 +149,52 @@ definition {
 			fieldType = "LongText");
 	}
 
+	@description = "LPS-149625 - Verify that it's possible to create an object entry with aggregation field"
+	@ignore = "true"
+	@priority = "5"
+	test CanCreateEntryWithAggregationField {
+		property portal.acceptance = "true";
+
+		task ("Create Custom Object and Custom Relationship itself (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161890",
+				objectName = "CustomObject161890",
+				pluralLabelName = "Custom Objects 161890");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject161890",
+				objectName_2 = "CustomObject161890",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161890");
+		}
+
+		task ("Go to Custom Object > Fields tab and add Custom Aggregation Field (via UI)") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161890");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				field = "ID",
+				fieldLabel = "Custom Aggregation",
+				fieldType = "Aggregation",
+				function = "Max",
+				relationship = "Relationship");
+		}
+
+		task ("Assert that there is Custom Aggregation Field") {
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Aggregation",
+				fieldType = "Aggregation");
+		}
+	}
+
 	@description = "LPS-135549 - Verify that it's possible to create an object entry with every field"
 	@priority = "5"
 	test CanCreateObjectEntryWithEveryField {

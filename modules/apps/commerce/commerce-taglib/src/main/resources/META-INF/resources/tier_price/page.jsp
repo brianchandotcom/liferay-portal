@@ -31,11 +31,11 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 		<div class="table-responsive">
 			<table class="table table-hover table-nowrap">
 				<thead>
-					<th class="price-point-column"><%= LanguageUtil.get(request, "quantity") %></th>
-					<th class="price-column table-cell-expand"><%= LanguageUtil.get(request, "price") %></th>
-					<th class="discount-column table-cell-expand"><%= LanguageUtil.get(request, "discount") %></th>
-					<th class="savings-column table-cell-expand"><%= LanguageUtil.get(request, "savings") %></th>
-					<th class="table-cell-expand total-column"><%= LanguageUtil.get(request, "total") %></th>
+					<th class="price-point-column"><liferay-ui:message key="quantity" /></th>
+					<th class="price-column table-cell-expand"><liferay-ui:message key="price" /></th>
+					<th class="discount-column table-cell-expand"><liferay-ui:message key="discount" /></th>
+					<th class="savings-column table-cell-expand"><liferay-ui:message key="savings" /></th>
+					<th class="table-cell-expand total-column"><liferay-ui:message key="total" /></th>
 				</thead>
 
 				<tbody>

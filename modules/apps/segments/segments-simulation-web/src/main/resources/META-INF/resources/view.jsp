@@ -39,7 +39,7 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = (SegmentsSim
 							dismissible="<%= true %>"
 							displayType="warning"
 						>
-							<strong><%= LanguageUtil.get(request, "experiences-cannot-be-displayed-because-segmentation-is-disabled") %></strong>
+							<strong><liferay-ui:message key="experiences-cannot-be-displayed-because-segmentation-is-disabled" /></strong>
 
 							<c:choose>
 								<c:when test="<%= segmentsSimulationDisplayContext.getSegmentsCompanyConfigurationURL() != null %>">
@@ -49,7 +49,7 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = (SegmentsSim
 									/>
 								</c:when>
 								<c:otherwise>
-									<span><%= LanguageUtil.get(request, "contact-your-system-administrator-to-enable-it") %></span>
+									<span><liferay-ui:message key="contact-your-system-administrator-to-enable-it" /></span>
 								</c:otherwise>
 							</c:choose>
 						</clay:alert>

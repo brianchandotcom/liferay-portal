@@ -62,8 +62,8 @@ ViewPortalPropertiesDisplayContext viewPortalPropertiesDisplayContext = new View
 						name="value"
 					>
 						<select name="<%= liferayPortletResponse.getNamespace() %>portalProperty<%= HtmlUtil.escapeAttribute(property) %>">
-							<option <%= Objects.equals("true", value) ? "selected" : StringPool.BLANK %> value="true"><%= LanguageUtil.get(request, "true") %></option>
-							<option <%= Objects.equals("false", value) ? "selected" : StringPool.BLANK %> value="false"><%= LanguageUtil.get(request, "false") %></option>
+							<option <%= Objects.equals("true", value) ? "selected" : StringPool.BLANK %> value="true"><liferay-ui:message key="true" /></option>
+							<option <%= Objects.equals("false", value) ? "selected" : StringPool.BLANK %> value="false"><liferay-ui:message key="false" /></option>
 						</select>
 					</liferay-ui:search-container-column-text>
 

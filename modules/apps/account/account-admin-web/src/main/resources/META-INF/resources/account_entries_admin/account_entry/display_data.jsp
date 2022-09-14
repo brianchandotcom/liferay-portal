@@ -24,7 +24,7 @@ String[] types = GetterUtil.getStringValues(request.getAttribute(AccountWebKeys.
 
 <clay:sheet-section>
 	<h3 class="sheet-subtitle">
-		<%= LanguageUtil.get(request, "account-display-data") %>
+		<liferay-ui:message key="account-display-data" />
 	</h3>
 
 	<clay:row>

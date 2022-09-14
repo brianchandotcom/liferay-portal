@@ -40,7 +40,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 		<div class="row">
 			<div class="col-lg-6 d-flex flex-column">
 				<div class="card flex-fill">
-					<h4 class="card-header"><%= LanguageUtil.get(request, "import-settings") %></h4>
+					<h4 class="card-header"><liferay-ui:message key="import-settings" /></h4>
 
 					<div class="card-body">
 						<liferay-frontend:edit-form-body>
@@ -141,7 +141,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 
 			<div class="col-lg-6 d-flex flex-column">
 				<div class="card flex-fill">
-					<h4 class="card-header"><%= LanguageUtil.get(request, "file-settings") %></h4>
+					<h4 class="card-header"><liferay-ui:message key="file-settings" /></h4>
 
 					<div class="card-body">
 						<liferay-frontend:edit-form-body>

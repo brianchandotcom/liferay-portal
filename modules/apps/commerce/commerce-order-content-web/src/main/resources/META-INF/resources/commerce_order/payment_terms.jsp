@@ -26,13 +26,13 @@ long paymentCommerceTermEntryId = commerceOrder.getPaymentCommerceTermEntryId();
 	showSubmitButton="<%= false %>"
 	title='<%= LanguageUtil.get(request, "payment-terms") %>'
 >
-	<label class="control-label <%= (paymentCommerceTermEntryId == 0) ? " d-none" : "" %>" id="name-label"><%= LanguageUtil.get(request, "name") %></label>
+	<label class="control-label <%= (paymentCommerceTermEntryId == 0) ? " d-none" : "" %>" id="name-label"><liferay-ui:message key="name" /></label>
 
 	<div>
 		<%= commerceOrder.getPaymentCommerceTermEntryName() %>
 	</div>
 
-	<label class="control-label <%= (paymentCommerceTermEntryId == 0) ? " d-none" : "" %>" id="description-label"><%= LanguageUtil.get(request, "description") %></label>
+	<label class="control-label <%= (paymentCommerceTermEntryId == 0) ? " d-none" : "" %>" id="description-label"><liferay-ui:message key="description" /></label>
 
 	<div id="description-container">
 		<%= commerceOrder.getPaymentCommerceTermEntryDescription() %>

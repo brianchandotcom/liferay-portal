@@ -39,7 +39,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 		dismissible="<%= true %>"
 		displayType="warning"
 	>
-		<strong><%= LanguageUtil.get(request, "personalized-variations-cannot-be-displayed-because-segmentation-is-disabled") %></strong>
+		<strong><liferay-ui:message key="personalized-variations-cannot-be-displayed-because-segmentation-is-disabled" /></strong>
 
 		<%
 		String segmentsConfigurationURL = editAssetListDisplayContext.getSegmentsCompanyConfigurationURL();

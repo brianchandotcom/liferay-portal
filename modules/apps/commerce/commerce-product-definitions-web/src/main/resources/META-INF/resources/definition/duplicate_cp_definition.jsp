@@ -30,7 +30,7 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 
 		<aui:input name="name" required="<%= true %>" type="text" value='<%= LanguageUtil.format(locale, "copy-of-x", cpDefinition.getName(languageId)) %>' />
 
-		<label class="control-label" for="catalogId"><%= LanguageUtil.get(request, "catalog") %></label>
+		<label class="control-label" for="catalogId"><liferay-ui:message key="catalog" /></label>
 
 		<div id="autocomplete-root"></div>
 	</aui:form>

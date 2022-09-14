@@ -54,7 +54,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 						<span class="text-truncate" data-text-cp-instance-stock-quantity>
 							<span class="<%= ((cpSku != null) && cpSku.isDiscontinued()) ? StringPool.BLANK : "hide" %>">
 								<span class="text-danger">
-									<%= LanguageUtil.get(request, "discontinued") %>
+									<liferay-ui:message key="discontinued" />
 								</span>
 								-
 							</span>
@@ -68,7 +68,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 				%>
 
 				<c:if test="<%= hasReplacement %>">
-					<p class="product-description"><%= LanguageUtil.get(request, "this-product-is-discontinued.-you-can-see-the-replacement-product-by-clicking-on-the-button-below") %></p>
+					<p class="product-description"><liferay-ui:message key="this-product-is-discontinued.-you-can-see-the-replacement-product-by-clicking-on-the-button-below" /></p>
 
 					<aui:button cssClass="btn-sm my-2" href="<%= cpContentHelper.getReplacementCommerceProductFriendlyURL(cpSku, themeDisplay) %>" primary="<%= true %>" value="replacement-product" />
 				</c:if>
@@ -81,7 +81,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 					<p class="my-2">
 						<span class="font-weight-semi-bold">
-							<%= LanguageUtil.get(request, "end-of-life") %>
+							<liferay-ui:message key="end-of-life" />
 						</span>
 						<span>
 							<%= dateFormat.format(cpSku.getDiscontinuedDate()) %>
@@ -121,7 +121,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 				<p class="my-2 <%= hideCssClass %>" data-text-cp-instance-manufacturer-part-number>
 					<span class="font-weight-semi-bold">
-						<%= LanguageUtil.get(request, "mpn-colon") %>
+						<liferay-ui:message key="mpn-colon" />
 					</span>
 					<span>
 						<%= (cpSku == null) ? StringPool.BLANK : HtmlUtil.escape(cpSku.getManufacturerPartNumber()) %>

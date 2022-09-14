@@ -42,7 +42,7 @@ renderResponse.setTitle((accountGroupDisplay.getAccountGroupId() == 0) ? Languag
 
 	<liferay-frontend:edit-form-body>
 		<h2 class="sheet-title">
-			<%= LanguageUtil.get(request, "information") %>
+			<liferay-ui:message key="information" />
 		</h2>
 
 		<aui:input label="account-group-name" name="name" />

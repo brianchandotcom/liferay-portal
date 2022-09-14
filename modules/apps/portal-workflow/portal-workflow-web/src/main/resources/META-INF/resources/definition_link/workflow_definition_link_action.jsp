@@ -24,15 +24,15 @@ String randomNamespace = (String)row.getParameter("randomNamespace");
 
 <div class="btn-group btn-group-nowrap d-none" id="<%= randomNamespace %>saveCancelGroup">
 	<div class="btn-group-item">
-		<button class="btn btn-primary btn-sm" id="<%= randomNamespace %>saveButton" type="button")><%= LanguageUtil.get(request, "save") %></button>
+		<button class="btn btn-primary btn-sm" id="<%= randomNamespace %>saveButton" type="button")><liferay-ui:message key="save" /></button>
 	</div>
 
 	<div class="btn-group-item">
-		<button class="btn btn-secondary btn-sm" id="<%= randomNamespace %>cancelButton" type="button"><%= LanguageUtil.get(request, "cancel") %></button>
+		<button class="btn btn-secondary btn-sm" id="<%= randomNamespace %>cancelButton" type="button"><liferay-ui:message key="cancel" /></button>
 	</div>
 </div>
 
-<button class="btn btn-secondary btn-sm" id="<%= randomNamespace %>editButton" type="button"><%= LanguageUtil.get(request, "edit") %></button>
+<button class="btn btn-secondary btn-sm" id="<%= randomNamespace %>editButton" type="button"><liferay-ui:message key="edit" /></button>
 
 <aui:script use="liferay-workflow-web">
 	var saveWorkflowDefinitionLink = A.rbind(

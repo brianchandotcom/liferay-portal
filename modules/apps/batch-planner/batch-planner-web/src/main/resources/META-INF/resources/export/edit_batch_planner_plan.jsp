@@ -36,7 +36,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 		<input id="<portlet:namespace />taskItemDelegateName" name="<portlet:namespace />taskItemDelegateName" type="hidden" value="DEFAULT" />
 
 		<div class="card">
-			<h4 class="card-header"><%= LanguageUtil.get(request, "export-settings") %></h4>
+			<h4 class="card-header"><liferay-ui:message key="export-settings" /></h4>
 
 			<div class="card-body">
 				<liferay-frontend:edit-form-body>

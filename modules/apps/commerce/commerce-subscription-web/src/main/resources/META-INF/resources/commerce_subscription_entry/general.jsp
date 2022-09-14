@@ -178,7 +178,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 				</div>
 
 				<div class="col-6">
-					<label for="<portlet:namespace />nextIterationDate"><%= LanguageUtil.get(request, "next-iteration-date") %></label>
+					<label for="<portlet:namespace />nextIterationDate"><liferay-ui:message key="next-iteration-date" /></label>
 
 					<%
 					Date nextIterationDate = commerceSubscriptionEntry.getNextIterationDate();
@@ -303,7 +303,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 				</div>
 
 				<div class="col-6">
-					<label for="<portlet:namespace />deliveryNextIterationDate"><%= LanguageUtil.get(request, "next-iteration-date") %></label>
+					<label for="<portlet:namespace />deliveryNextIterationDate"><liferay-ui:message key="next-iteration-date" /></label>
 
 					<%
 					Date deliveryNextIterationDate = commerceSubscriptionEntry.getDeliveryNextIterationDate();

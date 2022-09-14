@@ -39,7 +39,7 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatCons
 						<clay:col
 							md="2"
 						>
-							<%= LanguageUtil.get(request, "start-date") %>
+							<liferay-ui:message key="start-date" />
 						</clay:col>
 
 						<clay:col
@@ -53,7 +53,7 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatCons
 						<clay:col
 							md="2"
 						>
-							<%= LanguageUtil.get(request, "scheduled-start-date") %>
+							<liferay-ui:message key="scheduled-start-date" />
 						</clay:col>
 
 						<clay:col
@@ -67,7 +67,7 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatCons
 						<clay:col
 							md="2"
 						>
-							<%= LanguageUtil.get(request, "status") %>
+							<liferay-ui:message key="status" />
 						</clay:col>
 
 						<%
@@ -86,7 +86,7 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatCons
 						<clay:col
 							md="2"
 						>
-							<%= LanguageUtil.get(request, "runtime") %>
+							<liferay-ui:message key="runtime" />
 						</clay:col>
 
 						<clay:col
@@ -101,7 +101,7 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatCons
 							<clay:col
 								md="2"
 							>
-								<%= LanguageUtil.get(request, "error") %>
+								<liferay-ui:message key="error" />
 							</clay:col>
 
 							<clay:col
@@ -117,7 +117,7 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatCons
 							<clay:col
 								md="2"
 							>
-								<%= LanguageUtil.get(request, "output") %>
+								<liferay-ui:message key="output" />
 							</clay:col>
 
 							<clay:col

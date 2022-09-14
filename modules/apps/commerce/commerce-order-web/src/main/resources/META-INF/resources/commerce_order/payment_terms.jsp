@@ -77,7 +77,7 @@ long paymentCommerceTermEntryId = commerceOrder.getPaymentCommerceTermEntryId();
 				</aui:select>
 			</aui:form>
 
-			<label class="control-label <%= (paymentCommerceTermEntryId == 0) ? " d-none" : "" %>" id="description-label"><%= LanguageUtil.get(request, "description") %></label>
+			<label class="control-label <%= (paymentCommerceTermEntryId == 0) ? " d-none" : "" %>" id="description-label"><liferay-ui:message key="description" /></label>
 
 			<div id="description-container">
 				<%= commerceOrder.getPaymentCommerceTermEntryDescription() %>

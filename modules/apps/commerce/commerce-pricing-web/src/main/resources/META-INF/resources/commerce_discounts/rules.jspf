@@ -23,7 +23,7 @@
 			>
 				<aui:fieldset helpMessage="select-whether-rules-should-be-evaluated-in-and-or-or">
 					<div class="d-flex justify-content-end p-3">
-						<div class="font-weight-bold mr-3 small"><%= LanguageUtil.get(request, "rules-connector") %></div>
+						<div class="font-weight-bold mr-3 small"><liferay-ui:message key="rules-connector" /></div>
 						<div class="mr-3">
 							<aui:input checked="<%= commerceDiscount.isRulesConjunction() %>" label='<%= LanguageUtil.get(request, "and") %>' name="rulesConjunction" type="radio" value="<%= true %>" />
 						</div>

@@ -29,7 +29,7 @@ renderResponse.setTitle((commerceAccountDisplayContext.getAccountEntryId() == 0)
 <liferay-frontend:edit-form>
 	<liferay-frontend:edit-form-body>
 		<h2 class="sheet-title">
-			<%= LanguageUtil.get(request, "order-defaults") %>
+			<liferay-ui:message key="order-defaults" />
 		</h2>
 
 		<liferay-frontend:fieldset-group>

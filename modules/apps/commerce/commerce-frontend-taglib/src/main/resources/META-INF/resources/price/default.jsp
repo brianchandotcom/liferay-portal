@@ -25,7 +25,7 @@ if (Validator.isNotNull(priceModel.getDiscount()) || Validator.isNotNull(priceMo
 %>
 
 <span class="price-label">
-	<%= LanguageUtil.get(request, "list-price") %>
+	<liferay-ui:message key="list-price" />
 </span>
 <span class="price-value<%= inactivePriceCssClass %>">
 	<%= priceModel.getPrice() %>

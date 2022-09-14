@@ -30,7 +30,7 @@ else {
 <button class="<%= buttonCssClasses %> skeleton" type="button">
 	<span class="text-truncate-inline">
 		<span class="font-weight-normal text-truncate">
-			<%= LanguageUtil.get(request, "add-to-list") %>
+			<liferay-ui:message key="add-to-list" />
 		</span>
 	</span>
 	<span class="wish-list-icon">

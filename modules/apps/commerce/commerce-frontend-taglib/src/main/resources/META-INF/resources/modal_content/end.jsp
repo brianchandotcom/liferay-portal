@@ -21,7 +21,7 @@
 	<c:if test="<%= Validator.isNotNull(submitButtonLabel) || showCancelButton || showSubmitButton %>">
 		<div class="modal-iframe-footer">
 			<c:if test="<%= showCancelButton %>">
-				<div class="btn btn-secondary ml-3 modal-closer"><%= LanguageUtil.get(request, "cancel") %></div>
+				<div class="btn btn-secondary ml-3 modal-closer"><liferay-ui:message key="cancel" /></div>
 			</c:if>
 
 			<c:if test="<%= showSubmitButton || Validator.isNotNull(submitButtonLabel) %>">

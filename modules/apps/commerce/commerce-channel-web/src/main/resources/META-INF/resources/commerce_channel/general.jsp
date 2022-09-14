@@ -127,7 +127,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="fileEntryId" type="hidden" />
 
-				<label><%= LanguageUtil.get(request, "print-order-template") %></label>
+				<label><liferay-ui:message key="print-order-template" /></label>
 
 				<p class="text-default">
 					<span class="<%= (fileEntry != null) ? "" : "hide" %>" id="<portlet:namespace />fileEntryRemoveIcon" role="button">
@@ -147,7 +147,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 				bodyClasses="flex-fill"
 				title='<%= LanguageUtil.get(request, "prices") %>'
 			>
-				<label class="control-label" for="shippingTaxSettings--taxCategoryId--"><%= LanguageUtil.get(request, "shipping-tax-category") %></label>
+				<label class="control-label" for="shippingTaxSettings--taxCategoryId--"><liferay-ui:message key="shipping-tax-category" /></label>
 
 				<div class="mb-4" id="autocomplete-root"></div>
 

@@ -214,7 +214,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 		%>
 
 		<div class="<%= replacementAutocompleteWrapperCssClasses %>" id="<portlet:namespace />replacementAutocompleteWrapper">
-			<label class="control-label" for="replacementCPInstanceId"><%= LanguageUtil.get(request, "replacement") %></label>
+			<label class="control-label" for="replacementCPInstanceId"><liferay-ui:message key="replacement" /></label>
 
 			<div id="autocomplete-root"></div>
 		</div>

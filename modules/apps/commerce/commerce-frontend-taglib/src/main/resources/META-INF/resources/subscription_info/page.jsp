@@ -19,7 +19,7 @@
 <c:if test="<%= Validator.isNotNull(subscriptionPeriod) || Validator.isNotNull(durationPeriod) %>">
 	<div class="row">
 		<div>
-			<%= LanguageUtil.get(request, "payment-subscription") %>
+			<liferay-ui:message key="payment-subscription" />
 		</div>
 
 		<div>
@@ -37,7 +37,7 @@
 <c:if test="<%= Validator.isNotNull(deliverySubscriptionPeriod) || Validator.isNotNull(deliveryDurationPeriod) %>">
 	<div class="row">
 		<div>
-			<%= LanguageUtil.get(request, "delivery-subscription") %>
+			<liferay-ui:message key="delivery-subscription" />
 		</div>
 
 		<div>

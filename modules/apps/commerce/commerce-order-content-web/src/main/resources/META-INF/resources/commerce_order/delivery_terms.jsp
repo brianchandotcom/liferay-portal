@@ -26,13 +26,13 @@ long deliveryCommerceTermEntryId = commerceOrder.getDeliveryCommerceTermEntryId(
 	showSubmitButton="<%= false %>"
 	title='<%= LanguageUtil.get(request, "delivery-terms") %>'
 >
-	<label class="control-label <%= (deliveryCommerceTermEntryId == 0) ? " d-none" : "" %>" id="name-label"><%= LanguageUtil.get(request, "name") %></label>
+	<label class="control-label <%= (deliveryCommerceTermEntryId == 0) ? " d-none" : "" %>" id="name-label"><liferay-ui:message key="name" /></label>
 
 	<div>
 		<%= commerceOrder.getDeliveryCommerceTermEntryName() %>
 	</div>
 
-	<label class="control-label <%= (deliveryCommerceTermEntryId == 0) ? " d-none" : "" %>" id="description-label"><%= LanguageUtil.get(request, "description") %></label>
+	<label class="control-label <%= (deliveryCommerceTermEntryId == 0) ? " d-none" : "" %>" id="description-label"><liferay-ui:message key="description" /></label>
 
 	<div id="description-container">
 		<%= commerceOrder.getDeliveryCommerceTermEntryDescription() %>

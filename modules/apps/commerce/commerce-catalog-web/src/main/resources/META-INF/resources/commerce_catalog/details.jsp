@@ -90,7 +90,7 @@ boolean isViewOnly = !commerceCatalogDisplayContext.hasPermission(commerceCatalo
 					</aui:select>
 
 					<c:if test="<%= commerceCatalogDisplayContext.showBasePriceListInputs() %>">
-						<label class="control-label" for="baseCommercePriceListId"><%= LanguageUtil.get(request, "base-price-list") %></label>
+						<label class="control-label" for="baseCommercePriceListId"><liferay-ui:message key="base-price-list" /></label>
 
 						<div class="mb-4" id="base-price-list-autocomplete-root"></div>
 
@@ -123,7 +123,7 @@ boolean isViewOnly = !commerceCatalogDisplayContext.hasPermission(commerceCatalo
 							});
 						</aui:script>
 
-						<label class="control-label" for="basePromotionCommercePriceListId"><%= LanguageUtil.get(request, "base-promotion") %></label>
+						<label class="control-label" for="basePromotionCommercePriceListId"><liferay-ui:message key="base-promotion" /></label>
 
 						<div class="mb-4" id="base-promotion-autocomplete-root"></div>
 

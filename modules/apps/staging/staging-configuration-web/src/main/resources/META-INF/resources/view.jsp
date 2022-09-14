@@ -95,7 +95,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 								<div class="btn-group-item">
 									<button class="btn btn-primary">
 										<span class="lfr-btn-label">
-											<%= LanguageUtil.get(request, "save") %>
+											<liferay-ui:message key="save" />
 										</span>
 									</button>
 								</div>

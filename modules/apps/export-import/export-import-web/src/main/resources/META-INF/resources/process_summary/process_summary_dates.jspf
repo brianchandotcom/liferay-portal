@@ -25,10 +25,10 @@ String range = MapUtil.getString(parameterMap, "range");
 
 	<c:choose>
 		<c:when test="<%= range.equals(ExportImportDateUtil.RANGE_ALL) %>">
-			<div><%= LanguageUtil.get(request, "without-restriction") %></div>
+			<div><liferay-ui:message key="without-restriction" /></div>
 		</c:when>
 		<c:when test="<%= range.equals(ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE) %>">
-			<div><%= LanguageUtil.get(request, "from-last-publish-date") %></div>
+			<div><liferay-ui:message key="from-last-publish-date" /></div>
 		</c:when>
 		<c:when test="<%= range.equals(ExportImportDateUtil.RANGE_LAST) %>">
 
@@ -54,7 +54,7 @@ String range = MapUtil.getString(parameterMap, "range");
 			String startDateString = displayFormatDate.format(dateRange.getStartDate());
 			%>
 
-			<div><%= LanguageUtil.get(request, "modified-or-created-between") %>:</div>
+			<div><liferay-ui:message key="modified-or-created-between" />:</div>
 
 			<div>
 				<%= startDateString + StringPool.SPACE + LanguageUtil.get(request, "and") %><br />

@@ -29,7 +29,7 @@ String alertTitle = (String)request.getAttribute("liferay-ui:error:alertTitle");
 			<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" data-dismiss="liferay-alert" type="button">
 				<aui:icon image="times" markupView="lexicon" />
 
-				<span class="sr-only"><%= LanguageUtil.get(request, "close") %></span>
+				<span class="sr-only"><liferay-ui:message key="close" /></span>
 			</button>
 
 			<span class="alert-indicator">

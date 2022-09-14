@@ -24,7 +24,7 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 <form action="javascript:void(0);" onSubmit="<%= liferayPortletResponse.getNamespace() %>editListTypeEntry();">
 	<div class="modal-header">
 		<div class="modal-title">
-			<%= LanguageUtil.get(request, "edit-item") %>
+			<liferay-ui:message key="edit-item" />
 		</div>
 
 		<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="btn btn-unstyled close modal-closer" type="button">

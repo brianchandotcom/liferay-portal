@@ -153,7 +153,7 @@ if (fixedHeader) {
 						<c:choose>
 							<c:when test="<%= (rowChecker != null) && (i == 0) %>">
 								<span class="sr-only">
-									<%= LanguageUtil.get(request, "selected-item") %>
+									<liferay-ui:message key="selected-item" />
 								</span>
 							</c:when>
 							<c:when test="<%= truncate %>">

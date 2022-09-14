@@ -35,7 +35,7 @@ portletDisplay.setURLBack(backURL);
 
 	<clay:sheet>
 		<h2 class="sheet-title">
-			<%= LanguageUtil.get(request, "accounts") %>
+			<liferay-ui:message key="accounts" />
 		</h2>
 
 		<liferay-util:include page="/common/common_user_account_entries.jsp" servletContext="<%= application %>" />

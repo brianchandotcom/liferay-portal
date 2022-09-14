@@ -25,9 +25,10 @@ boolean exportIndividualDeletions = MapUtil.getBoolean(parameterMap, PortletData
 
 		<c:if test="<%= deletePortletData %>">
 			<div class="process-summary-subsection">
-				<label class="process-summary-label"><%= LanguageUtil.get(request, "delete-application-data-before-importing") %>:</label>
-				<%= LanguageUtil.get(request, "delete-content-before-importing-warning") %>
-				<%= LanguageUtil.get(request, "delete-content-before-importing-suggestion") %>
+				<label class="process-summary-label"><liferay-ui:message key="delete-application-data-before-importing" />:</label>
+
+				<liferay-ui:message key="delete-content-before-importing-warning" />
+				<liferay-ui:message key="delete-content-before-importing-suggestion" />
 			</div>
 		</c:if>
 

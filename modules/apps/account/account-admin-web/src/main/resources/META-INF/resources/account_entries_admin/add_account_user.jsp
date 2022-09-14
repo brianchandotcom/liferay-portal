@@ -53,12 +53,12 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 		<aui:input name="accountEntryId" type="hidden" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
 
 		<h2 class="sheet-title">
-			<%= LanguageUtil.get(request, "information") %>
+			<liferay-ui:message key="information" />
 		</h2>
 
 		<clay:sheet-section>
 			<h3 class="sheet-subtitle">
-				<%= LanguageUtil.get(request, "user-display-data") %>
+				<liferay-ui:message key="user-display-data" />
 			</h3>
 
 			<clay:row>

@@ -77,7 +77,7 @@ UADInfoPanelDisplay uadInfoPanelDisplay = (UADInfoPanelDisplay)request.getAttrib
 
 			<div class="sidebar-body">
 				<dl class="sidebar-dl sidebar-section">
-					<dt class="sidebar-dt"><%= LanguageUtil.get(request, "primary-key") %></dt>
+					<dt class="sidebar-dt"><liferay-ui:message key="primary-key" /></dt>
 					<dd class="sidebar-dd"><%= primaryKey %></dd>
 
 					<%

@@ -24,7 +24,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)reque
 
 <div class="container pt-4">
 	<div class="card">
-		<h4 class="card-header"><%= LanguageUtil.get(request, "batch-engine-task-details") %></h4>
+		<h4 class="card-header"><liferay-ui:message key="batch-engine-task-details" /></h4>
 
 		<div class="card-body">
 			<clay:content-row>
@@ -35,7 +35,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)reque
 						<clay:col
 							md="2"
 						>
-							<%= LanguageUtil.get(request, "name") %>
+							<liferay-ui:message key="name" />
 						</clay:col>
 
 						<clay:col
@@ -49,7 +49,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)reque
 						<clay:col
 							md="2"
 						>
-							<%= LanguageUtil.get(request, "type") %>
+							<liferay-ui:message key="type" />
 						</clay:col>
 
 						<clay:col
@@ -76,7 +76,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)reque
 						<clay:col
 							md="4"
 						>
-							<%= LanguageUtil.get(request, "id") %>
+							<liferay-ui:message key="id" />
 						</clay:col>
 
 						<clay:col
@@ -90,7 +90,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)reque
 						<clay:col
 							md="4"
 						>
-							<%= LanguageUtil.get(request, "create-date") %>
+							<liferay-ui:message key="create-date" />
 						</clay:col>
 
 						<clay:col
@@ -104,7 +104,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)reque
 						<clay:col
 							md="4"
 						>
-							<%= LanguageUtil.get(request, "modified-date") %>
+							<liferay-ui:message key="modified-date" />
 						</clay:col>
 
 						<clay:col
@@ -118,7 +118,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)reque
 						<clay:col
 							md="4"
 						>
-							<%= LanguageUtil.get(request, "count") %>
+							<liferay-ui:message key="count" />
 						</clay:col>
 
 						<clay:col
@@ -132,7 +132,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)reque
 						<clay:col
 							md="4"
 						>
-							<%= LanguageUtil.get(request, "status") %>
+							<liferay-ui:message key="status" />
 						</clay:col>
 
 						<clay:col

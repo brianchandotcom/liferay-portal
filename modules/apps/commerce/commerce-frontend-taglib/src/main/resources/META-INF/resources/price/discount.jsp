@@ -22,7 +22,7 @@ String[] discountPercentages = priceModel.getDiscountPercentages();
 
 <c:if test="<%= !compact %>">
 	<span class="price-label">
-		<%= LanguageUtil.get(request, "discount") %>
+		<liferay-ui:message key="discount" />
 	</span>
 	<span class="price-value price-value-discount">
 		<c:choose>
@@ -41,10 +41,10 @@ String[] discountPercentages = priceModel.getDiscountPercentages();
 <span class="price-label">
 	<c:choose>
 		<c:when test="<%= netPrice %>">
-			<%= LanguageUtil.get(request, "net-price") %>
+			<liferay-ui:message key="net-price" />
 		</c:when>
 		<c:otherwise>
-			<%= LanguageUtil.get(request, "gross-price") %>
+			<liferay-ui:message key="gross-price" />
 		</c:otherwise>
 	</c:choose>
 </span>

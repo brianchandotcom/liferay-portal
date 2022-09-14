@@ -72,7 +72,7 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 					<%= LanguageUtil.get(request, "completion-date") + ": " + dateFormat.format(backgroundTask.getCompletionDate()) %>
 				</c:when>
 				<c:otherwise>
-					<%= LanguageUtil.get(request, "in-progress") %>
+					<liferay-ui:message key="in-progress" />
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-column-text>

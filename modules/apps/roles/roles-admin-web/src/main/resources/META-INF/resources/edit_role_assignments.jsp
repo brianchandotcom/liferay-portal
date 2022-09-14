@@ -106,7 +106,7 @@ renderResponse.setTitle(role.getTitle(locale));
 	<clay:stripe
 		displayType="warning"
 	>
-		<strong class="lead"><%= LanguageUtil.get(request, "assigning-roles-by-segment-is-disabled") %></strong>
+		<strong class="lead"><liferay-ui:message key="assigning-roles-by-segment-is-disabled" /></strong>
 
 		<%
 		String segmentsConfigurationURL = SegmentsEntryDisplayContext.getSegmentsCompanyConfigurationURL(request);
@@ -121,9 +121,7 @@ renderResponse.setTitle(role.getTitle(locale));
 				/>
 			</c:when>
 			<c:otherwise>
-				<span><%=
-				LanguageUtil.get(
-					request, "contact-your-system-administrator-to-enable-it") %></span>
+				<span><liferay-ui:message key="contact-your-system-administrator-to-enable-it" /></span>
 			</c:otherwise>
 		</c:choose>
 	</clay:stripe>

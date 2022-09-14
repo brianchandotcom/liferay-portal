@@ -96,7 +96,7 @@ if ((commercePriceList != null) && (commercePriceList.getExpirationDate() != nul
 					<aui:validator name="number" />
 				</aui:input>
 
-				<label class="control-label" for="parentCommercePriceListId"><%= LanguageUtil.get(request, "parent-price-list") %></label>
+				<label class="control-label" for="parentCommercePriceListId"><liferay-ui:message key="parent-price-list" /></label>
 
 				<div class="mb-4" id="autocomplete-root"></div>
 

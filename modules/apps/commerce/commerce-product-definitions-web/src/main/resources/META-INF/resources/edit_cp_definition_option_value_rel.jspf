@@ -62,11 +62,11 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 
 	<c:if test="<%= cpDefinitionOptionRel.isPriceContributor() %>">
 		<div class="sheet-section">
-			<h3 class="sheet-subtitle"><%= LanguageUtil.get(request, "product") %></h3>
+			<h3 class="sheet-subtitle"><liferay-ui:message key="product" /></h3>
 
 			<div class="row">
 				<div class="col">
-					<label class="control-label" for="skuId"><%= LanguageUtil.get(request, "sku") %></label>
+					<label class="control-label" for="skuId"><liferay-ui:message key="sku" /></label>
 
 					<div id="autocomplete-root"></div>
 				</div>

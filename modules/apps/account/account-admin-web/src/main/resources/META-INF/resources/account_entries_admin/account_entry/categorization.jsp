@@ -26,7 +26,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 
 <clay:sheet-section>
 	<h3 class="sheet-subtitle">
-		<%= LanguageUtil.get(request, "more-information") %>
+		<liferay-ui:message key="more-information" />
 	</h3>
 
 	<%

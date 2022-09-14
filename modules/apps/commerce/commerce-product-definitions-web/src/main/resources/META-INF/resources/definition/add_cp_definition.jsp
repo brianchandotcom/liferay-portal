@@ -22,7 +22,7 @@
 	<aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit();" %>'>
 		<aui:input autoFocus="<%= true %>" name="name" required="<%= true %>" type="text" />
 
-		<label class="control-label" for="catalogId"><%= LanguageUtil.get(request, "catalog") %></label>
+		<label class="control-label" for="catalogId"><liferay-ui:message key="catalog" /></label>
 
 		<div id="autocomplete-root"></div>
 	</aui:form>

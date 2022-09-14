@@ -1,0 +1,94 @@
+@component-name = "antivirus"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Antivirus";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+		}
+	}
+
+	@description = "LPS-157927 Verify Clamd Antivirus will block a document that contains a virus even if the document is submitted twice."
+	@priority = "3"
+	test ClamdAntivirusSmoke {
+		property custom.properties = "dl.store.antivirus.enabled=true";
+		property osgi.module.configuration.file.names = "com.liferay.antivirus.clamd.scanner.internal.configuration.ClamdAntivirusScannerConfiguration.config";
+		property osgi.module.configurations = "hostname=\"clamd\"${line.separator}port=I\"3310\"";
+		property test.name.skip.portal.instance = "ClamdScanner#ClamdAntivirusSmoke";
+
+		task ("When the user tries uploading a normal document") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.addCP(
+				dmDocumentFile = "Document_1.docx",
+				dmDocumentTitle = "Document_1.docx");
+		}
+
+		task ("Then the document is uploaded without issue") {
+			Alert.viewSuccessMessage();
+
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+
+			DMNavigator.openToEntryInAdmin(
+				dmDocumentTitle = "Document_1.docx",
+				groupName = "Guest",
+				siteURLKey = "guest");
+
+			DMDocument.viewCP(dmDocumentTitle = "Document_1.docx");
+		}
+
+		task ("When the user tries uploading a document that contains a virus") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.addCP(
+				dmDocumentFile = "eicar.com",
+				dmDocumentTitle = "eicar.com");
+		}
+
+		task ("Then the document upload is blocked") {
+			Alert.viewErrorMessage(errorMessage = "A virus was detected in the file.");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_2",
+				value1 = "Please select the file again.");
+		}
+
+		task ("When the user clicks Publish again after the blocked upload") {
+			Button.clickPublish();
+		}
+
+		task ("Then an empty document of the same name is uploaded") {
+			Alert.viewSuccessMessage();
+
+			DMNavigator.openToEntryInAdmin(
+				dmDocumentTitle = "eicar.com",
+				groupName = "Guest",
+				siteURLKey = "guest");
+
+			Button.click(button = "Download");
+
+			DownloadTempFile();
+
+			var fileContent = TestCase.getTempFileContent(fileName = "eicar.com");
+
+			TestUtils.assertEquals(
+				actual = "${fileContent}",
+				expected = "");
+		}
+	}
+
+}

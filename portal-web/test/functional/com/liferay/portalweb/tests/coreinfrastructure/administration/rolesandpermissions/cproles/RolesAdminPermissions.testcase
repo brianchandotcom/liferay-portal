@@ -31,6 +31,129 @@ definition {
 		}
 	}
 
+	@description = "This test automates LPS-144566 and asserts that revoke the User's View permission on Administrator role, you still can assign new roles."
+	@priority = "3"
+	test RevokeUserViewPermissionONAdminroleCanStillAssignNewRoles {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given add a regular role and grant Users and Orgs permissions") {
+			JSONRole.addRegularRole(
+				roleKey = "Roles Regrole Name",
+				roleTitle = "Roles Regrole Name");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "Roles Regrole Name");
+
+			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com_liferay_users_admin_web_portlet_UsersAdminPortlet",
+					roleTitle = "Roles Regrole Name");
+			}
+
+			for (var resourceActionIndex : list "UPDATE,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.portal.kernel.model.User",
+					roleTitle = "Roles Regrole Name");
+			}
+
+			for (var resourceActionIndex : list "VIEW_MEMBERS,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.portal.kernel.model.Organization",
+					roleTitle = "Roles Regrole Name");
+			}
+		}
+
+		task ("And add two users grant test1 new role") {
+			for (var userNum : list "1,2") {
+				JSONUser.addUser(
+					userEmailAddress = "user${userNum}@liferay.com",
+					userFirstName = "user${userNum}",
+					userLastName = "user${userNum}",
+					userScreenName = "user${userNum}");
+			}
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Roles Regrole Name",
+				userEmailAddress = "user1@liferay.com");
+		}
+
+		task ("And through Portal content reviewer kabab grant new role permissions to View and Assign members") {
+			Role.openRolesAdmin();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Permissions",
+				rowEntry = "Portal Content Reviewer");
+
+			for (var resourceActionIndex : list "INLINE_PERMISSIONS_ASSIGN_MEMBERS_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX") {
+				PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+					addOrRemoveViewPermission = "Add",
+					permissionsKeyList = "${resourceActionIndex}",
+					roleTitle = "Roles Regrole Name");
+			}
+		}
+
+		task ("When as test1 can grant Portal content reviewer role to user test2") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+
+			User.openUsersAdmin();
+
+			User.assignRegularRoleCP(
+				roleTitle = "Portal Content Reviewer",
+				userScreenName = "user2");
+
+			User.openUsersAdmin();
+
+			User.unassignRegularRoleCP(
+				regularRoleName = "Portal Content Reviewer",
+				userScreenName = "user2");
+		}
+
+		task ("And as test user under Administrator roles permission revoke View role from default User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Role.openRolesAdmin();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Permissions",
+				rowEntry = "Administrator");
+
+			PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+				addOrRemoveViewPermission = "Remove",
+				permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "User");
+		}
+
+		task ("Then as test1 still can grant role to user test2") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+
+			User.openUsersAdmin();
+
+			User.assignRegularRoleCP(
+				roleTitle = "Portal Content Reviewer",
+				userScreenName = "user2");
+
+			AssertElementPresent(
+				key_regularRoleName = "Portal Content Reviewer",
+				locator1 = "UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_TABLE_TITLE");
+		}
+	}
+
 	@description = "This test adds a user with a regular role that has view and add permissions for Roles. It then asserts that a user assigned to this role can successfully add different kinds of roles (Regular, Site, and Organization)"
 	@priority = "4"
 	test UserWithAddRolePermissionCanAdd {

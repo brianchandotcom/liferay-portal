@@ -2121,6 +2121,77 @@ definition {
 		}
 	}
 
+	@description = "LPS-151671 - Verify that it's possible to use data validations with expression builder on System Objects"
+	@priority = "5"
+	test CanValidateSystemObjectWithExpressionBuilder {
+		property portal.acceptance = "true";
+
+		task ("Go to Objects, select System Object User and click on validations tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "User");
+
+			ObjectAdmin.goToValidationsTab();
+		}
+
+		task ("Add a Custom Validation using an expression 'is Equal To' with system fields") {
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Expression Builder");
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.activeValidation();
+
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "firstName == 'Approved'");
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
+
+			Button.clickSave();
+		}
+
+		task ("Assert that Custom Validation has been added'") {
+			Refresh();
+
+			ObjectCustomValidation.assertValidationPresent(
+				validationActive = "Yes",
+				validationName = "Custom Validation",
+				validationType = "Expression Builder");
+		}
+
+		task ("Assert that is not possible to add User with first name different of the Approved") {
+			User.openUsersAdmin();
+
+			LexiconEntry.gotoAdd();
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+				value1 = "Usersn");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+				value1 = "userea@liferay.com");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+				value1 = "Userfn");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+				value1 = "Userln");
+
+			Button.clickSave();
+
+			User.openUsersAdmin();
+
+			AssertElementNotPresent(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+				value1 = "Userfn Userln");
+		}
+	}
+
 	@description = "LPS-144474 - Verify that, when there is no Validations added, the empty state view is displayed"
 	@priority = "4"
 	test CanViewDefaultViewWhenEmptyValidation {

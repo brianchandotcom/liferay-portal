@@ -19,7 +19,6 @@
 		<orderEntry type="module" module-name="petra-lang" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-memory" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-nio" scope="PROVIDED" />
-		<orderEntry type="module" module-name="petra-portlet-url-builder" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-process" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-reflect" scope="PROVIDED" />
 		<orderEntry type="module" module-name="petra-sql-dsl-api" scope="PROVIDED" />

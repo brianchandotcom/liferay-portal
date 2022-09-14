@@ -598,6 +598,89 @@ definition {
 		ObjectField.save();
 	}
 
+	@description = "LPS-149625 - Verify that it's possible to edit an aggregation field"
+	@ignore = "true"
+	@priority = "4"
+	test CanEditAggregationField {
+		task ("Create Custom Object and Custom Relationship itself (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161891",
+				objectName = "CustomObject161891",
+				pluralLabelName = "Custom Objects 161891");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject161891",
+				objectName_2 = "CustomObject161891",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject161891",
+				objectName_2 = "CommerceOrder",
+				relationshipLabel = "RelationshipCommerce",
+				relationshipName = "relationshipCommerce",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161891");
+		}
+
+		task ("Go to Custom Object > Fields tab and add Custom Aggregation Field (via UI)") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161891");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				field = "Order Status",
+				fieldLabel = "Custom Aggregation",
+				fieldType = "Aggregation",
+				function = "Max",
+				relationship = "RelationshipCommerce");
+		}
+
+		task ("Edit Custom Aggregation Field") {
+			ObjectAdmin.goToFieldsDetails(label = "Custom Aggregation");
+
+			ObjectField.typeLabel(content = "Custom Aggregation Update");
+
+			ObjectField.assertNameDisabled();
+
+			ObjectField.assertTypeDisabled();
+
+			Click(locator1 = "ObjectField#LABEL_RELATIONSHIP");
+
+			Click(
+				key_dropdownItem = "RelationshipCommerce",
+				locator1 = "ObjectAdmin#SELECT_DROPDOWN_ITEM_DEFAULT_VALUE");
+
+			Click(
+				key_filterLabel = "Function",
+				locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");
+
+			Click(
+				key_fieldType = "Min",
+				locator1 = "ObjectField#TYPE_OPTION");
+
+			Click(locator1 = "ObjectField#LABEL_FIELD");
+
+			Click(
+				key_dropdownItem = "ID",
+				locator1 = "ObjectAdmin#SELECT_DROPDOWN_ITEM_DEFAULT_VALUE");
+
+			ObjectField.save();
+		}
+
+		task ("Assert that Custom Aggregation Field is updated") {
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Aggregation Update",
+				fieldType = "Aggregation");
+		}
+	}
+
 	@description = "LPS-148112 - Verify that admin can edit the Storage Folder path in Published objects"
 	@priority = "4"
 	test CanEditPublishedObjectStorageFolder {

@@ -212,11 +212,7 @@ definition {
 		}
 
 		if ("${kbArticleInvalidContent}" == "true") {
-			Alert.viewRequestFailedToComplete();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_1",
-				value1 = "Please enter valid content.");
+			Alert.viewRequiredField();
 		}
 		else if ("${kbArticleDuplicateFriendlyURL}" == "true") {
 			Alert.viewRequestFailedToComplete();

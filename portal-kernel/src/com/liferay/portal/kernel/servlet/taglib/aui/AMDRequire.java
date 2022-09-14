@@ -62,9 +62,9 @@ public final class AMDRequire {
 			return false;
 		}
 
-		AMDRequire that = (AMDRequire)object;
+		AMDRequire amdRequire = (AMDRequire)object;
 
-		return _module.equals(that._module);
+		return _module.equals(amdRequire._module);
 	}
 
 	public String getAlias() {

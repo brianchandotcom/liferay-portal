@@ -87,7 +87,8 @@ public class ObjectValidationRuleModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"objectDefinitionId", Types.BIGINT}, {"active_", Types.BOOLEAN},
 		{"engine", Types.VARCHAR}, {"errorLabel", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"script", Types.CLOB}
+		{"name", Types.VARCHAR}, {"script", Types.CLOB},
+		{"scriptSyntaxVersion", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -108,10 +109,11 @@ public class ObjectValidationRuleModelImpl
 		TABLE_COLUMNS_MAP.put("errorLabel", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("script", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("scriptSyntaxVersion", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectValidationRule (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectValidationRuleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,active_ BOOLEAN,engine VARCHAR(75) null,errorLabel STRING null,name STRING null,script TEXT null)";
+		"create table ObjectValidationRule (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectValidationRuleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,active_ BOOLEAN,engine VARCHAR(75) null,errorLabel STRING null,name STRING null,script TEXT null,scriptSyntaxVersion INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table ObjectValidationRule";
@@ -352,6 +354,13 @@ public class ObjectValidationRuleModelImpl
 			"script",
 			(BiConsumer<ObjectValidationRule, String>)
 				ObjectValidationRule::setScript);
+		attributeGetterFunctions.put(
+			"scriptSyntaxVersion",
+			ObjectValidationRule::getScriptSyntaxVersion);
+		attributeSetterBiConsumers.put(
+			"scriptSyntaxVersion",
+			(BiConsumer<ObjectValidationRule, Integer>)
+				ObjectValidationRule::setScriptSyntaxVersion);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -845,6 +854,21 @@ public class ObjectValidationRuleModelImpl
 		_script = script;
 	}
 
+	@JSON
+	@Override
+	public int getScriptSyntaxVersion() {
+		return _scriptSyntaxVersion;
+	}
+
+	@Override
+	public void setScriptSyntaxVersion(int scriptSyntaxVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_scriptSyntaxVersion = scriptSyntaxVersion;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1011,6 +1035,8 @@ public class ObjectValidationRuleModelImpl
 		objectValidationRuleImpl.setErrorLabel(getErrorLabel());
 		objectValidationRuleImpl.setName(getName());
 		objectValidationRuleImpl.setScript(getScript());
+		objectValidationRuleImpl.setScriptSyntaxVersion(
+			getScriptSyntaxVersion());
 
 		objectValidationRuleImpl.resetOriginalValues();
 
@@ -1050,6 +1076,8 @@ public class ObjectValidationRuleModelImpl
 			this.<String>getColumnOriginalValue("name"));
 		objectValidationRuleImpl.setScript(
 			this.<String>getColumnOriginalValue("script"));
+		objectValidationRuleImpl.setScriptSyntaxVersion(
+			this.<Integer>getColumnOriginalValue("scriptSyntaxVersion"));
 
 		return objectValidationRuleImpl;
 	}
@@ -1210,6 +1238,9 @@ public class ObjectValidationRuleModelImpl
 			objectValidationRuleCacheModel.script = null;
 		}
 
+		objectValidationRuleCacheModel.scriptSyntaxVersion =
+			getScriptSyntaxVersion();
+
 		return objectValidationRuleCacheModel;
 	}
 
@@ -1321,6 +1352,7 @@ public class ObjectValidationRuleModelImpl
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _script;
+	private int _scriptSyntaxVersion;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1366,6 +1398,7 @@ public class ObjectValidationRuleModelImpl
 		_columnOriginalValues.put("errorLabel", _errorLabel);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("script", _script);
+		_columnOriginalValues.put("scriptSyntaxVersion", _scriptSyntaxVersion);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1417,6 +1450,8 @@ public class ObjectValidationRuleModelImpl
 		columnBitmasks.put("name", 4096L);
 
 		columnBitmasks.put("script", 8192L);
+
+		columnBitmasks.put("scriptSyntaxVersion", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

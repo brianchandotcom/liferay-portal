@@ -77,7 +77,7 @@ public class ObjectActionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -111,6 +111,8 @@ public class ObjectActionCacheModel
 		sb.append(objectActionTriggerKey);
 		sb.append(", parameters=");
 		sb.append(parameters);
+		sb.append(", scriptSyntaxVersion=");
+		sb.append(scriptSyntaxVersion);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -202,6 +204,7 @@ public class ObjectActionCacheModel
 			objectActionImpl.setParameters(parameters);
 		}
 
+		objectActionImpl.setScriptSyntaxVersion(scriptSyntaxVersion);
 		objectActionImpl.setStatus(status);
 
 		objectActionImpl.resetOriginalValues();
@@ -234,6 +237,8 @@ public class ObjectActionCacheModel
 		objectActionExecutorKey = objectInput.readUTF();
 		objectActionTriggerKey = objectInput.readUTF();
 		parameters = (String)objectInput.readObject();
+
+		scriptSyntaxVersion = objectInput.readInt();
 
 		status = objectInput.readInt();
 	}
@@ -311,6 +316,8 @@ public class ObjectActionCacheModel
 			objectOutput.writeObject(parameters);
 		}
 
+		objectOutput.writeInt(scriptSyntaxVersion);
+
 		objectOutput.writeInt(status);
 	}
 
@@ -330,6 +337,7 @@ public class ObjectActionCacheModel
 	public String objectActionExecutorKey;
 	public String objectActionTriggerKey;
 	public String parameters;
+	public int scriptSyntaxVersion;
 	public int status;
 
 }

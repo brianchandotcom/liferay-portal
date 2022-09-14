@@ -6,3 +6,4 @@ Import-Package:\
 	\
 	*
 Web-ContextPath: /portal-settings-authentication-ldap-web
+-dsannotations-options: inherit

@@ -27,6 +27,8 @@ import javax.portlet.RenderResponse;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Tomas Polesovsky
  */
@@ -60,6 +62,9 @@ public abstract class BasePortalSettingsMVCRenderCommand
 
 	protected abstract String getJspPath();
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.ldap.web)"
+	)
 	protected volatile ServletContext servletContext;
 
 	private static final Log _log = LogFactoryUtil.getLog(

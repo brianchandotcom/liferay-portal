@@ -309,6 +309,12 @@ public class LayoutUtilityPageEntryPersistenceTest {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		_persistence.filterFindByGroupId(
+			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+	}
+
 	protected OrderByComparator<LayoutUtilityPageEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"LayoutUtilityPageEntry", "mvccVersion", true, "ctCollectionId",

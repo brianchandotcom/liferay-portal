@@ -61,6 +61,17 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 		return getService().addLayoutUtilityPageEntry(layoutUtilityPageEntry);
 	}
 
+	public static LayoutUtilityPageEntry addLayoutUtilityPageEntry(
+			String externalReferenceCode, long userId, long groupId,
+			String name, long plid, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addLayoutUtilityPageEntry(
+			externalReferenceCode, userId, groupId, name, plid, type,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new layout utility page entry with the primary key. Does not add the layout utility page entry to the database.
 	 *
@@ -269,6 +280,13 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
+			long groupId, int type)
+		throws PortalException {
+
+		return getService().getDefaultLayoutUtilityPageEntry(groupId, type);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -299,6 +317,28 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getLayoutUtilityPageEntries(start, end);
+	}
+
+	public static List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId) {
+
+		return getService().getLayoutUtilityPageEntries(groupId);
+	}
+
+	public static List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, int type, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return getService().getLayoutUtilityPageEntries(
+			groupId, type, start, end, orderByComparator);
+	}
+
+	public static List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return getService().getLayoutUtilityPageEntries(
+			groupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -342,6 +382,10 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 	 */
 	public static int getLayoutUtilityPageEntriesCount() {
 		return getService().getLayoutUtilityPageEntriesCount();
+	}
+
+	public static int getLayoutUtilityPageEntriesCount(long groupId) {
+		return getService().getLayoutUtilityPageEntriesCount(groupId);
 	}
 
 	/**
@@ -409,6 +453,14 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static LayoutUtilityPageEntry setDefaultLayoutUtilityPageEntry(
+			long layoutUtilityPageEntryId)
+		throws PortalException {
+
+		return getService().setDefaultLayoutUtilityPageEntry(
+			layoutUtilityPageEntryId);
+	}
+
 	/**
 	 * Updates the layout utility page entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -424,6 +476,15 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 
 		return getService().updateLayoutUtilityPageEntry(
 			layoutUtilityPageEntry);
+	}
+
+	public static LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
+			long layoutUtilityPageEntryId, String name, long plid, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateLayoutUtilityPageEntry(
+			layoutUtilityPageEntryId, name, plid, type, serviceContext);
 	}
 
 	public static LayoutUtilityPageEntryLocalService getService() {

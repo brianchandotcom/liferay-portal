@@ -598,11 +598,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setSingleVMPool(SingleVMPool singleVMPool) {
-		_singleVMPool = singleVMPool;
-	}
-
 	@Activate
 	protected void activate() {
 		_companySecurityAuthType = GetterUtil.getString(
@@ -907,79 +902,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 		_userLocalService.deleteUserGroupUsers(
 			userGroupId, ArrayUtil.toLongArray(deletedUserIds));
-	}
-
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setExpandoValueLocalService(
-		ExpandoValueLocalService expandoValueLocalService) {
-
-		_expandoValueLocalService = expandoValueLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration)",
-		unbind = "-"
-	)
-	protected void setLDAPImportConfigurationProvider(
-		ConfigurationProvider<LDAPImportConfiguration>
-			ldapImportConfigurationProvider) {
-
-		_ldapImportConfigurationProvider = ldapImportConfigurationProvider;
-	}
-
-	@Reference(
-		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration)",
-		unbind = "-"
-	)
-	protected void setLDAPServerConfigurationProvider(
-		ConfigurationProvider<LDAPServerConfiguration>
-			ldapServerConfigurationProvider) {
-
-		_ldapServerConfigurationProvider = ldapServerConfigurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLdapSettings(LDAPSettings ldapSettings) {
-		_ldapSettings = ldapSettings;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLockManager(LockManager lockManager) {
-		_lockManager = lockManager;
-	}
-
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRoleLocalService(RoleLocalService roleLocalService) {
-		_roleLocalService = roleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserGroupLocalService(
-		UserGroupLocalService userGroupLocalService) {
-
-		_userGroupLocalService = userGroupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	private void _addRole(
@@ -1979,19 +1901,35 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	@Reference
 	private BeanProperties _beanProperties;
 
+	@Reference
 	private CompanyLocalService _companyLocalService;
+
 	private String _companySecurityAuthType;
+
+	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
 	private long _lastImportTime;
 
 	@Reference
 	private LDAPFilterValidator _ldapFilterValidator;
 
+	@Reference(
+		target = "(factoryPid=com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration)"
+	)
 	private ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
+
+	@Reference(
+		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration)"
+	)
 	private ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
+
+	@Reference
 	private LDAPSettings _ldapSettings;
 
 	@Reference(
@@ -2000,9 +1938,15 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	)
 	private volatile LDAPToPortalConverter _ldapToPortalConverter;
 
+	@Reference
 	private LockManager _lockManager;
+
 	private PortalCache<String, Long> _portalCache;
+
+	@Reference
 	private Props _props;
+
+	@Reference
 	private RoleLocalService _roleLocalService;
 
 	@Reference(
@@ -2011,8 +1955,13 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	)
 	private volatile SafePortalLDAP _safePortalLDAP;
 
+	@Reference
 	private SingleVMPool _singleVMPool;
+
+	@Reference
 	private UserGroupLocalService _userGroupLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

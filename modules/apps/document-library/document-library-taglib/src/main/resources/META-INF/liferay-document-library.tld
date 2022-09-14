@@ -32,5 +32,11 @@
 		<name>repository-browser</name>
 		<tag-class>com.liferay.document.library.taglib.servlet.taglib.RepositoryBrowserTag</tag-class>
 		<body-content>empty</body-content>
+		<attribute>
+			<description>The repository that will be displayed by the tag.</description>
+			<name>repositoryId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 </taglib>

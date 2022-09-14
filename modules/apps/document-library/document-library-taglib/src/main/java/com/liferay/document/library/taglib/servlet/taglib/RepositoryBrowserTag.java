@@ -14,7 +14,20 @@
 
 package com.liferay.document.library.taglib.servlet.taglib;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.taglib.internal.display.context.RepositoryBrowserTagDisplayContext;
+import com.liferay.document.library.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Adolfo Pérez
@@ -26,11 +39,60 @@ public class RepositoryBrowserTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public long getRepositoryId() {
+		return _repositoryId;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
+	}
+
+	public void setRepositoryId(long repositoryId) {
+		_repositoryId = repositoryId;
+	}
+
 	@Override
 	protected String getPage() {
 		return _PAGE;
 	}
 
+	@Override
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		httpServletRequest.setAttribute(
+			RepositoryBrowserTagDisplayContext.class.getName(),
+			new RepositoryBrowserTagDisplayContext(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, httpServletRequest,
+				PortalUtil.getLiferayPortletResponse(portletResponse),
+				portletRequest, _getRepositoryId()));
+	}
+
+	private long _getRepositoryId() {
+		if (_repositoryId != 0) {
+			return _repositoryId;
+		}
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getSiteGroupId();
+	}
+
 	private static final String _PAGE = "/repository_browser/page.jsp";
+
+	private long _repositoryId;
 
 }

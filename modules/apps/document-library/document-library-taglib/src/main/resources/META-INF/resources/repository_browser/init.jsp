@@ -15,3 +15,7 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
+<%@ page import="com.liferay.document.library.taglib.internal.display.context.RepositoryBrowserTagDisplayContext" %>

@@ -15,3 +15,29 @@
 --%>
 
 <%@ include file="/repository_browser/init.jsp" %>
+
+<%
+RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (RepositoryBrowserTagDisplayContext)request.getAttribute(RepositoryBrowserTagDisplayContext.class.getName());
+%>
+
+<clay:container-fluid>
+	<liferay-ui:search-container
+		searchContainer="<%= repositoryBrowserTagDisplayContext.getSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.repository.model.RepositoryEntry"
+			modelVar="repositoryEntry"
+		>
+			<liferay-ui:search-container-column-text>
+				<clay:vertical-card
+					verticalCard="<%= repositoryBrowserTagDisplayContext.getVerticalCard(repositoryEntry) %>"
+				/>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			displayStyle="icon"
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
+</clay:container-fluid>

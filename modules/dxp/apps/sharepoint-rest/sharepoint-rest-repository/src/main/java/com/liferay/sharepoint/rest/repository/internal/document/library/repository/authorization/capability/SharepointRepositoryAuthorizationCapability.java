@@ -162,8 +162,7 @@ public class SharepointRepositoryAuthorizationCapability
 	private String _getRedirectURI(HttpServletRequest httpServletRequest) {
 		return PortalUtil.getAbsoluteURL(
 			httpServletRequest,
-			PortalUtil.getPathContext() + PortalUtil.getPathMain() +
-				"/document_library/sharepoint/oauth2");
+			PortalUtil.getPathMain() + "/document_library/sharepoint/oauth2");
 	}
 
 	private boolean _hasAuthorizationGrant(

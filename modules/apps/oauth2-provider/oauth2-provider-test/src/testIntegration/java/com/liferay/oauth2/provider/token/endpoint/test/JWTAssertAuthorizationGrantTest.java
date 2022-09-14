@@ -19,16 +19,12 @@ import com.liferay.oauth2.provider.internal.test.TestAuthorizationGrant;
 import com.liferay.oauth2.provider.internal.test.TestJWTAssertionAuthorizationGrant;
 import com.liferay.oauth2.provider.internal.test.util.JWTAssertionUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,11 +36,6 @@ import org.osgi.framework.BundleActivator;
 @RunWith(Arquillian.class)
 public class JWTAssertAuthorizationGrantTest
 	extends BaseAuthorizationGrantTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testGrantWithCorrectAudience() throws Exception {
@@ -98,7 +89,7 @@ public class JWTAssertAuthorizationGrantTest
 	}
 
 	private static class JWTBearerGrantTestPreparatorBundleActivator
-		extends BaseAuthorizationGrantTestCase.TestPreparatorBundleActivator {
+		extends BaseTokenEndpointTestCase.TestPreparatorBundleActivator {
 
 		@Override
 		protected void prepareTest() throws Exception {

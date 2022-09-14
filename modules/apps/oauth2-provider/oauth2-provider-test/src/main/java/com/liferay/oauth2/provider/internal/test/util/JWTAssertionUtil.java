@@ -36,6 +36,9 @@ import org.apache.cxf.rt.security.crypto.CryptoUtils;
  */
 public class JWTAssertionUtil {
 
+	public static final String JWK =
+		_createTestRSAKeyPairJSONWebKey01().toString();
+
 	public static final String JWKS = JSONUtil.put(
 		"keys", JSONUtil.put(_createTestRSAKeyPairJSONWebKey01())
 	).toString();

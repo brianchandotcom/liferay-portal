@@ -22,13 +22,11 @@ import com.liferay.oauth2.provider.internal.test.TestPasswordAuthorizationGrant;
 import com.liferay.oauth2.provider.internal.test.TestRefreshTokenAuthorizationGrant;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,8 +39,6 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -54,11 +50,6 @@ import org.osgi.framework.BundleActivator;
 @RunWith(Arquillian.class)
 public class RefreshTokenAuthorizationGrantTest
 	extends BaseAuthorizationGrantTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
 
 	@Test
 	public void test() throws Exception {
@@ -110,7 +101,7 @@ public class RefreshTokenAuthorizationGrantTest
 	}
 
 	public static class TokenExpeditionTestPreparatorBundleActivator
-		extends BaseAuthorizationGrantTestCase.TestPreparatorBundleActivator {
+		extends BaseTokenEndpointTestCase.TestPreparatorBundleActivator {
 
 		@Override
 		protected void prepareTest() throws Exception {

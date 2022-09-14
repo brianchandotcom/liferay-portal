@@ -9,174 +9,66 @@
  * distribution rights of the Software.
  */
 
-import classNames from 'classnames';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import i18n from '../../../../../../../common/I18n';
-import {useAppPropertiesContext} from '../../../../../../../common/contexts/AppPropertiesContext';
-import {getAccountSubscriptions} from '../../../../../../../common/services/liferay/graphql/queries';
-import {useCustomerPortal} from '../../../../../context';
-import {
-	PRODUCT_TYPES,
-	SUBSCRIPTIONS_STATUS,
-} from '../../../../../utils/constants';
-import CardSubscription from './components/CardSubscriptions';
-import SubscriptionsFilterByStatus from './components/SubscriptionsFilterByStatus';
-import SubscriptionsNavbar from './components/SubscriptionsNavbar';
+import Skeleton from '../../../../../../../common/components/Skeleton';
+import SubscriptionsNavbar from './components/SubscriptionsNavbar/SubscriptionsNavbar';
+import useSubscriptions from './hooks/useSubscriptions';
 
-const SubscriptionsOverview = () => {
-	const [{project, subscriptionGroups}] = useCustomerPortal();
+const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
-	const {client} = useAppPropertiesContext();
-
-	const [accountSubscriptions, setAccountSubscriptions] = useState([]);
-	const [selectedSubscriptionGroup, setSelectedSubscriptionGroup] = useState(
-		''
-	);
-	const [selectedStatus, setSelectedStatus] = useState([
-		SUBSCRIPTIONS_STATUS.active,
-		SUBSCRIPTIONS_STATUS.expired,
-		SUBSCRIPTIONS_STATUS.future,
-	]);
-
-	const [
-		subscriptionGroupsWithSubscriptions,
-		setSubscriptionGroupsWithSubscriptions,
-	] = useState([]);
-
-	const parseAccountSubscriptionGroupERC = (subscriptionName) => {
-		return subscriptionName.toLowerCase().replaceAll(' ', '-');
-	};
-
-	const subscriptionsCards = accountSubscriptions.filter(
-		(subscription) =>
-			subscription.accountSubscriptionGroupERC.replace(
-				`${project?.accountKey}_`,
-				''
-			) === parseAccountSubscriptionGroupERC(selectedSubscriptionGroup) &&
-			selectedStatus.includes(subscription.subscriptionStatus)
-	);
+	const {
+		accountSubcriptionsResult: [
+			{onSelectAccountSubscriptionGroup, onSelectSubscriptionStatus},
+			{loading: accountSubscriptionsLoading},
+		],
+		accountSubscriptionGroupsResult: {
+			data: accountSubscriptionGroupsData,
+			loading: accountSubscriptionGroupsLoading,
+		},
+	} = useSubscriptions(koroneikiAccount?.accountKey, loading);
 
 	useEffect(() => {
 		setHasQuickLinksPanel(true);
 		setHasSideMenu(true);
 	}, [setHasSideMenu, setHasQuickLinksPanel]);
 
-	useEffect(() => {
-		const getAllSubscriptions = async (accountKey) => {
-			const {data: dataAccountSubscriptions} = await client.query({
-				fetchPolicy: 'network-only',
-				query: getAccountSubscriptions,
-				variables: {
-					filter: `accountKey eq '${accountKey}'`,
-				},
-			});
+	const handleDropdownOnClick = (selectedStatus) => {
+		if (selectedStatus) {
+			onSelectSubscriptionStatus(`'${selectedStatus.join("', '")}'`);
 
-			if (dataAccountSubscriptions) {
-				const dataAllSubscriptions =
-					dataAccountSubscriptions?.c?.accountSubscriptions?.items;
-
-				const accountSubscriptionGroups = subscriptionGroups.filter(
-					(subscriptionGroup) =>
-						dataAllSubscriptions.some(
-							(subscription) =>
-								subscription.accountSubscriptionGroupERC.replace(
-									`${accountKey}_`,
-									''
-								) ===
-								parseAccountSubscriptionGroupERC(
-									subscriptionGroup.name
-								)
-						)
-				);
-
-				setAccountSubscriptions(dataAllSubscriptions);
-
-				setSubscriptionGroupsWithSubscriptions(
-					accountSubscriptionGroups.sort(
-						(
-							previousAccountSubscriptionGroup,
-							nextAccountSubscriptionGroup
-						) =>
-							previousAccountSubscriptionGroup?.tabOrder -
-							nextAccountSubscriptionGroup?.tabOrder
-					)
-				);
-			}
-		};
-
-		if (subscriptionGroups && project) {
-			getAllSubscriptions(project.accountKey);
+			return;
 		}
-	}, [client, project, subscriptionGroups]);
 
-	const isPartnership =
-		selectedSubscriptionGroup === PRODUCT_TYPES.partnership ||
-		(subscriptionGroups &&
-			subscriptionGroups[0]?.name === PRODUCT_TYPES.partnership);
+		onSelectSubscriptionStatus();
+	};
+
+	const accountSubscriptionGroups =
+		accountSubscriptionGroupsData?.c.accountSubscriptionGroups;
 
 	return (
-		<>
-			<div className="d-flex flex-column">
-				{!isPartnership && <h3>{i18n.translate('subscriptions')}</h3>}
+		<div>
+			{accountSubscriptionGroupsLoading ? (
+				<Skeleton className="mb-4 pb-2" height={35} width={200} />
+			) : (
+				!accountSubscriptionGroups?.hasPartnership && (
+					<h3 className="mb-4 pb-2">
+						{i18n.translate('subscriptions')}
+					</h3>
+				)
+			)}
 
-				{!!subscriptionGroupsWithSubscriptions.length && (
-					<>
-						<div
-							className={classNames('align-items-center d-flex', {
-								'justify-content-between':
-									subscriptionGroupsWithSubscriptions.length <
-									5,
-								'justify-content-evenly':
-									subscriptionGroupsWithSubscriptions.length >
-									4,
-							})}
-						>
-							<SubscriptionsNavbar
-								selectedSubscriptionGroup={
-									selectedSubscriptionGroup
-								}
-								setSelectedSubscriptionGroup={
-									setSelectedSubscriptionGroup
-								}
-								subscriptionGroups={
-									subscriptionGroupsWithSubscriptions
-								}
-							/>
-
-							<SubscriptionsFilterByStatus
-								selectedStatus={selectedStatus}
-								setSelectedStatus={setSelectedStatus}
-							/>
-						</div>
-
-						<div className="cp-overview-cards-subscription d-flex flex-wrap mt-4">
-							{subscriptionsCards.length ? (
-								subscriptionsCards.map(
-									(accountSubscription, index) => (
-										<CardSubscription
-											cardSubscriptionData={
-												accountSubscription
-											}
-											key={index}
-											selectedSubscriptionGroup={
-												selectedSubscriptionGroup
-											}
-										/>
-									)
-								)
-							) : (
-								<p className="mx-auto pt-5">
-									{i18n.translate(
-										'no-subscriptions-match-these-criteria'
-									)}
-								</p>
-							)}
-						</div>
-					</>
-				)}
-			</div>
-		</>
+			<SubscriptionsNavbar
+				accountSubscriptionGroups={accountSubscriptionGroups?.items}
+				disabled={accountSubscriptionsLoading}
+				loading={accountSubscriptionGroupsLoading}
+				onClickDropdownItem={handleDropdownOnClick}
+				onSelectNavItem={(accountSubscriptionGroup) => {
+					onSelectAccountSubscriptionGroup(accountSubscriptionGroup);
+				}}
+			/>
+		</div>
 	);
 };
 

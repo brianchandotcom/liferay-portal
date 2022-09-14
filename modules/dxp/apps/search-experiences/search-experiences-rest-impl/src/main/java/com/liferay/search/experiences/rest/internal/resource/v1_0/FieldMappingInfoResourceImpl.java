@@ -127,7 +127,8 @@ public class FieldMappingInfoResourceImpl
 				int languageIdPosition = -1;
 
 				if (!Validator.isBlank(languageId)) {
-					languageIdPosition = fieldName.lastIndexOf(languageId);
+					languageIdPosition = fieldPath.lastIndexOf(languageId);
+
 					fieldPath = StringUtil.removeSubstring(
 						fieldPath, languageId);
 				}

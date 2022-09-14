@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.planner.internal.jaxrs.uri;
+package com.liferay.batch.engine.jaxrs.uri;
 
 import java.net.URI;
 

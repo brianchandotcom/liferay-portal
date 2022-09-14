@@ -49,7 +49,7 @@ describe('GlobalJSCETsConfiguration', () => {
 			/>
 		);
 
-		await screen.findByText('no-javascript-extensions-were-loaded');
+		await screen.findByText('no-javascript-client-extensions-were-loaded');
 	});
 
 	it('renders the given list of global extensions', async () => {
@@ -119,7 +119,7 @@ describe('GlobalJSCETsConfiguration', () => {
 
 		fireEvent.click(
 			await screen.findByRole('button', {
-				name: 'add-javascript-extensions',
+				name: 'add-javascript-client-extensions',
 			})
 		);
 
@@ -153,7 +153,7 @@ describe('GlobalJSCETsConfiguration', () => {
 
 		fireEvent.click(
 			await screen.findByRole('button', {
-				name: 'add-javascript-extensions',
+				name: 'add-javascript-client-extensions',
 			})
 		);
 
@@ -251,7 +251,7 @@ describe('GlobalJSCETsConfiguration', () => {
 
 		fireEvent.click(
 			await screen.findByRole('button', {
-				name: 'add-javascript-extensions',
+				name: 'add-javascript-client-extensions',
 			})
 		);
 
@@ -328,6 +328,6 @@ describe('GlobalJSCETsConfiguration', () => {
 
 		fireEvent.click(item.firstChild!);
 
-		await screen.findByText('no-javascript-extensions-were-loaded');
+		await screen.findByText('no-javascript-client-extensions-were-loaded');
 	});
 });

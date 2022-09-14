@@ -107,7 +107,7 @@ export default function GlobalCSSCETsConfiguration({
 						openToast({
 							autoClose: true,
 							message: `${Liferay.Language.get(
-								'some-extensions-were-not-added-because-they-are-already-applied-to-this-page'
+								'some-client-extensions-were-not-added-because-they-are-already-applied-to-this-page'
 							)} (${duplicatedGlobalCSSCETs
 								.map((globalCSSCET) => globalCSSCET.name)
 								.join(', ')})`,
@@ -129,7 +129,7 @@ export default function GlobalCSSCETsConfiguration({
 				});
 			},
 			selectEventName: selectGlobalCSSCETsEventName,
-			title: Liferay.Language.get('select-css-extensions'),
+			title: Liferay.Language.get('select-css-client-extensions'),
 			url: globalCSSCETSelectorURL,
 		});
 	};
@@ -146,7 +146,7 @@ export default function GlobalCSSCETsConfiguration({
 			))}
 
 			<h3 className="sheet-subtitle">
-				{Liferay.Language.get('css-extensions')}
+				{Liferay.Language.get('css-client-extensions')}
 			</h3>
 
 			<ClayButton
@@ -156,7 +156,7 @@ export default function GlobalCSSCETsConfiguration({
 				small
 				type="button"
 			>
-				{Liferay.Language.get('add-css-extensions')}
+				{Liferay.Language.get('add-css-client-extensions')}
 			</ClayButton>
 
 			{allGlobalCSSCETs.length ? (
@@ -175,7 +175,7 @@ export default function GlobalCSSCETsConfiguration({
 											'numbers-indicate-the-order-in-which-client-extensions-are-loaded'
 										),
 										Liferay.Language.get(
-											'extensions-inherited-from-master-will-always-be-loaded-first'
+											'client-extensions-inherited-from-master-will-always-be-loaded-first'
 										),
 									].join(' ')}
 								</GlobalCETOrderHelpIcon>
@@ -235,7 +235,9 @@ export default function GlobalCSSCETsConfiguration({
 				</ClayTable>
 			) : (
 				<p className="text-secondary">
-					{Liferay.Language.get('no-css-extensions-were-loaded')}
+					{Liferay.Language.get(
+						'no-css-client-extensions-were-loaded'
+					)}
 				</p>
 			)}
 		</div>

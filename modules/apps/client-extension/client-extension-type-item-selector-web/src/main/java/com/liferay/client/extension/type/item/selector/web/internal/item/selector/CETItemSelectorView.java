@@ -59,7 +59,7 @@ public class CETItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _language.get(locale, "extensions");
+		return _language.get(locale, "client-extension");
 	}
 
 	@Override

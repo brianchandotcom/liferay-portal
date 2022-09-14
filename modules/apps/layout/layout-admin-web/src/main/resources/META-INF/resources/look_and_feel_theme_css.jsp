@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:sheet-section>
-	<h3 class="sheet-subtitle"><liferay-ui:message key="theme-css-replacement" /></h3>
+	<h3 class="sheet-subtitle"><liferay-ui:message key="theme-css-client-extension" /></h3>
 
 	<clay:alert
 		displayType="info"

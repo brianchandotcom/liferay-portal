@@ -39,7 +39,7 @@ export default function ThemeCSSReplacementSelector({
 				setExtensionName(item.name);
 			},
 			selectEventName: selectThemeCSSClientExtensionEventName,
-			title: Liferay.Language.get('select-theme-css-extension'),
+			title: Liferay.Language.get('select-theme-css-client-extension'),
 			url: selectThemeCSSClientExtensionURL,
 		});
 	};
@@ -55,7 +55,7 @@ export default function ThemeCSSReplacementSelector({
 				<label
 					htmlFor={`${portletNamespace}themeCSSReplacementExtension`}
 				>
-					{Liferay.Language.get('extension')}
+					{Liferay.Language.get('client-extension')}
 				</label>
 
 				<ClayInput.Group className="w-50" small>

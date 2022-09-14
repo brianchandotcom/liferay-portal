@@ -2123,7 +2123,8 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return LanguageUtil.get(
-			themeDisplay.getLocale(), "no-theme-css-extension-was-loaded");
+			themeDisplay.getLocale(),
+			"no-theme-css-client-extension-was-loaded");
 	}
 
 	private String _getStrictRobots() {

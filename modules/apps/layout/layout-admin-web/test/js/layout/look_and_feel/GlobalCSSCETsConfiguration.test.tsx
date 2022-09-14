@@ -50,7 +50,7 @@ describe('GlobalCSSCETsConfiguration', () => {
 			/>
 		);
 
-		await screen.findByText('no-css-extensions-were-loaded');
+		await screen.findByText('no-css-client-extensions-were-loaded');
 	});
 
 	it('renders the given list of global extensions', async () => {
@@ -118,7 +118,9 @@ describe('GlobalCSSCETsConfiguration', () => {
 		);
 
 		userEvent.click(
-			await screen.findByRole('button', {name: 'add-css-extensions'})
+			await screen.findByRole('button', {
+				name: 'add-css-client-extensions',
+			})
 		);
 
 		expect(openSelectionModal).toHaveBeenCalled();
@@ -144,7 +146,9 @@ describe('GlobalCSSCETsConfiguration', () => {
 		);
 
 		userEvent.click(
-			await screen.findByRole('button', {name: 'add-css-extensions'})
+			await screen.findByRole('button', {
+				name: 'add-css-client-extensions',
+			})
 		);
 
 		expect(openSelectionModal).toHaveBeenCalledTimes(1);
@@ -209,6 +213,6 @@ describe('GlobalCSSCETsConfiguration', () => {
 
 		fireEvent.click(item.firstChild!);
 
-		await screen.findByText('no-css-extensions-were-loaded');
+		await screen.findByText('no-css-client-extensions-were-loaded');
 	});
 });

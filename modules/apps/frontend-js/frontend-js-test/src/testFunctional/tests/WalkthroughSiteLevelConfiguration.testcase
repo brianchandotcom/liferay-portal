@@ -114,4 +114,26 @@ definition {
 		}
 	}
 
+	@description = "LPS-159839. JSON can be configured on System Settings."
+	@priority = "5"
+	test JSONCanBeConfigured {
+		property portal.acceptance = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given Walkthrough in System Settings") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			ApplicationsMenu.gotoSite(site = "Site Name");
+		}
+
+		task ("When JSON description is configured") {
+			Walkthrough.configureJSON(fileName = "walkthrough_configuration.json");
+		}
+
+		task ("Then success message appears") {
+			Alert.viewSuccessMessage();
+		}
+	}
+
 }

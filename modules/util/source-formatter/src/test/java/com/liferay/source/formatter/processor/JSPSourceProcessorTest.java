@@ -109,6 +109,11 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testReplaceLiferayTag() throws Exception {
+		test("ReplaceLiferayTag.testjsp");
+	}
+
+	@Test
 	public void testSortTagAttributes() throws Exception {
 		test("SortTagAttributes.testjsp");
 	}

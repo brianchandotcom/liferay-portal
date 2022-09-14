@@ -16,7 +16,7 @@ import React from 'react';
 
 import MultiStepNav from './components/MultiStepNav.es';
 
-const App = ({connected, liferayAnalyticsURL, token}) => {
+const App = ({connected}) => {
 	return (
 		<>
 			{!connected && (
@@ -26,23 +26,9 @@ const App = ({connected, liferayAnalyticsURL, token}) => {
 							description:
 								'Use the token generated in your Analytics Cloud to connect this workspace.',
 							title: 'Connect AC',
-						},
-						{
-							title: 'Property',
-						},
-						{
-							title: 'People',
-						},
-						{
-							title: 'Data',
-						},
+						}
 					]}
 				/>
-			)}
-			{connected && (
-				<div>
-					Connected {token} {liferayAnalyticsURL}
-				</div>
 			)}
 		</>
 	);

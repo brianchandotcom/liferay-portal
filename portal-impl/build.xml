@@ -190,6 +190,8 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			/>
 		</path>
 
+		<property name="hbm.file" value="portal-hbm.xml" />
+
 		<java
 			classname="com.liferay.portal.tools.service.builder.ServiceBuilder"
 			classpathref="service.builder.classpath"
@@ -211,7 +213,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="service.bean.locator.util=com.liferay.portal.kernel.bean.PortalBeanLocatorUtil" />
 			<arg value="service.build.number=1" />
 			<arg value="service.build.number.increment=true" />
-			<arg value="service.hbm.file=${basedir}/src/META-INF/portal-hbm.xml" />
+			<arg value="service.hbm.file=${basedir}/src/META-INF/${hbm.file}" />
 			<arg value="service.impl.dir=${basedir}/src" />
 			<arg value="service.incubation.features=${service.builder.incubation.features}" />
 			<arg value="service.input.file=${service.file}" />
@@ -247,6 +249,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="build-service-counter">
 		<antcall target="build-service">
+			<param name="hbm.file" value="counter-hbm.xml" />
 			<param name="service.file" value="${basedir}/src/com/liferay/counter/service.xml" />
 		</antcall>
 	</target>

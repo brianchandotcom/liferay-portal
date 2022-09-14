@@ -21,6 +21,7 @@ export function FrontendDataSet({
 	creationMenu,
 	currentURL,
 	customDataRenderers,
+	customViews,
 	customViewsEnabled,
 	filters,
 	formId,
@@ -62,6 +63,7 @@ interface IFrontendDataSetProps {
 	};
 	currentURL?: string;
 	customDataRenderers?: any;
+	customViews?: string;
 	customViewsEnabled?: boolean;
 	enableInlineAddModeSetting?: {
 		defaultBodyContent?: object;

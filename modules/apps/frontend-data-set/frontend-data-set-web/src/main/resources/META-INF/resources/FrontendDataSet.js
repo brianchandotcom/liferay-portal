@@ -142,6 +142,11 @@ const FrontendDataSet = ({
 			}
 		}
 
+		const activeView = {
+			component: getViewComponent(initialActiveView.contentRenderer),
+			...initialActiveView,
+		};
+
 		const filters = initialFilters.map((filter) => {
 			const preloadedData = filter.preloadedData;
 
@@ -156,17 +161,23 @@ const FrontendDataSet = ({
 			return filter;
 		});
 
+		const paginationDelta =
+			showPagination &&
+			(pagination?.initialDelta || DEFAULT_PAGINATION_DELTA);
+
 		return {
-			activeView: {
-				component: getViewComponent(initialActiveView.contentRenderer),
-				...initialActiveView,
-			},
-			customViews,
+			activeView,
+			customViews: JSON.parse(customViews),
 			customViewsEnabled,
+			defaultView: {
+				activeView,
+				filters,
+				paginationDelta,
+				sorting: sortingProp,
+				visibleFieldNames: initialVisibleFieldNames,
+			},
 			filters,
-			paginationDelta:
-				showPagination &&
-				(pagination?.initialDelta || DEFAULT_PAGINATION_DELTA),
+			paginationDelta,
 			sorting: sortingProp,
 			views,
 			visibleFieldNames: initialVisibleFieldNames,
@@ -782,7 +793,7 @@ const FrontendDataSet = ({
 
 FrontendDataSet.defaultProps = {
 	bulkActions: [],
-	customViews: {},
+	customViews: '{}',
 	filters: [],
 	inlineEditingSettings: null,
 	items: null,

@@ -16,6 +16,8 @@ import getViewComponent from './getViewComponent';
 
 export const VIEWS_ACTION_TYPES = {
 	ADD_OR_UPDATE_CUSTOM_VIEW: 'ADD_OR_UPDATE_CUSTOM_VIEW',
+	RESET_TO_DEFAULT_VIEW: 'RESET_TO_DEFAULT_VIEW',
+	UPDATE_ACTIVE_CUSTOM_VIEW: 'UPDATE_ACTIVE_CUSTOM_VIEW',
 	UPDATE_ACTIVE_VIEW: 'UPDATE_ACTIVE_VIEW',
 	UPDATE_FILTERS: 'UPDATE_FILTERS',
 	UPDATE_PAGINATION_DELTA: 'UPDATE_PAGINATION_DELTA',
@@ -25,7 +27,7 @@ export const VIEWS_ACTION_TYPES = {
 };
 
 export function viewsReducer(state, {type, value}) {
-	const {activeView, customViews, views} = state;
+	const {activeView, customViews, defaultView, views} = state;
 
 	if (type === VIEWS_ACTION_TYPES.ADD_OR_UPDATE_CUSTOM_VIEW) {
 		const {id, viewState} = value;
@@ -37,6 +39,36 @@ export function viewsReducer(state, {type, value}) {
 				...customViews,
 				[id]: viewState,
 			},
+			viewUpdated: false,
+		};
+	}
+	else if (type === VIEWS_ACTION_TYPES.RESET_TO_DEFAULT_VIEW) {
+		return {
+			...state,
+			...defaultView,
+			activeCustomViewId: null,
+			viewUpdated: false,
+		};
+	}
+	else if (type === VIEWS_ACTION_TYPES.UPDATE_ACTIVE_CUSTOM_VIEW) {
+		const activeCustomView = customViews[value];
+
+		if (!activeCustomView) {
+			return state;
+		}
+
+		if (!activeCustomView.activeView) {
+			activeCustomView.activeView = defaultView.activeView;
+		}
+
+		activeCustomView.activeView.component =
+			getViewComponent(activeCustomView.activeView.contentRenderer) ??
+			getViewComponent(defaultView.activeView.contentRenderer);
+
+		return {
+			...state,
+			...activeCustomView,
+			activeCustomViewId: value,
 			viewUpdated: false,
 		};
 	}

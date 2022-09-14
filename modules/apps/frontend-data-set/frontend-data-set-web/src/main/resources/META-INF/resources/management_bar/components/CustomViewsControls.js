@@ -66,6 +66,34 @@ const CustomViewsControls = () => {
 		);
 	};
 
+	const ActionsItemList = () => {
+		return (
+			<ClayDropDown.ItemList>
+				{activeCustomViewId && (
+					<ClayDropDown.Item
+						onClick={() => {
+							saveCustomView({
+								id: activeCustomViewId,
+							});
+
+							setActionsDropdownActive(false);
+						}}
+						symbolLeft="disk"
+					>
+						{Liferay.Language.get('save-view')}
+					</ClayDropDown.Item>
+				)}
+
+				<ClayDropDown.Item
+					onClick={openSaveCustomViewModal}
+					symbolLeft="disk"
+				>
+					{Liferay.Language.get('save-view-as')}
+				</ClayDropDown.Item>
+			</ClayDropDown.ItemList>
+		);
+	};
+
 	const getNextCustomViewId = () => {
 		const ids = Object.keys(customViews);
 
@@ -84,7 +112,7 @@ const CustomViewsControls = () => {
 		url.searchParams.append('portletId', portletId);
 
 		const viewState = {
-			baseView: activeView,
+			activeView,
 			customViewLabel: label ?? customViews[id].customViewLabel,
 			filters,
 			paginationDelta,
@@ -173,6 +201,7 @@ const CustomViewsControls = () => {
 				<ClayDropDown
 					active={viewsDropdownActive}
 					className="custom-views-selection"
+					hasLeftSymbols
 					onActiveChange={setViewsDropdownActive}
 					trigger={
 						<ClayButton displayType="unstyled">
@@ -194,16 +223,44 @@ const CustomViewsControls = () => {
 					}
 				>
 					<ClayDropDown.ItemList>
-						<ClayDropDown.Item>
-							{Liferay.Language.get('default-view')}
-						</ClayDropDown.Item>
-
 						{Object.keys(customViews).map((id) => (
-							<ClayDropDown.Item key={id}>
+							<ClayDropDown.Item
+								key={id}
+								onClick={() => {
+									viewsDispatch({
+										type:
+											VIEWS_ACTION_TYPES.UPDATE_ACTIVE_CUSTOM_VIEW,
+										value: id,
+									});
+
+									setViewsDropdownActive(false);
+								}}
+								symbolLeft={
+									id === activeCustomViewId && 'check'
+								}
+							>
 								{customViews[id].customViewLabel}
 							</ClayDropDown.Item>
 						))}
+
+						<ClayDropDown.Item
+							onClick={() => {
+								viewsDispatch({
+									type:
+										VIEWS_ACTION_TYPES.RESET_TO_DEFAULT_VIEW,
+								});
+
+								setViewsDropdownActive(false);
+							}}
+							symbolLeft={!activeCustomViewId && 'check'}
+						>
+							{Liferay.Language.get('default-view')}
+						</ClayDropDown.Item>
 					</ClayDropDown.ItemList>
+
+					<ClayDropDown.Divider />
+
+					<ActionsItemList />
 				</ClayDropDown>
 			</ManagementToolbar.Item>
 
@@ -219,29 +276,7 @@ const CustomViewsControls = () => {
 						</ClayButton>
 					}
 				>
-					<ClayDropDown.ItemList>
-						{activeCustomViewId && (
-							<ClayDropDown.Item
-								onClick={() => {
-									saveCustomView({
-										id: activeCustomViewId,
-									});
-
-									setActionsDropdownActive(false);
-								}}
-								symbolLeft="disk"
-							>
-								{Liferay.Language.get('save-view')}
-							</ClayDropDown.Item>
-						)}
-
-						<ClayDropDown.Item
-							onClick={openSaveCustomViewModal}
-							symbolLeft="disk"
-						>
-							{Liferay.Language.get('save-view-as')}
-						</ClayDropDown.Item>
-					</ClayDropDown.ItemList>
+					<ActionsItemList />
 				</ClayDropDown>
 			</ManagementToolbar.Item>
 		</>

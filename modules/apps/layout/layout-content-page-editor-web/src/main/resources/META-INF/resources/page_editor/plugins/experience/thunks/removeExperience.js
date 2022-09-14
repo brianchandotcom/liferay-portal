@@ -21,35 +21,44 @@ export default function removeExperience({
 	segmentsExperienceId,
 	selectedExperienceId,
 }) {
-	return (dispatch) => {
+	return (dispatch, getState) => {
 		if (segmentsExperienceId === selectedExperienceId) {
+			const loadedSegmentsExperiences = getState()
+				.loadedSegmentsExperiences;
+
 			return ExperienceService.selectExperience({
 				body: {
+					loadFragmentEntryLinks: !loadedSegmentsExperiences.includes(
+						config.defaultSegmentsExperienceId
+					),
 					segmentsExperienceId: config.defaultSegmentsExperienceId,
 				},
 				dispatch,
-			}).then((portletIds) => {
-				dispatch(
-					selectExperienceAction({
-						portletIds,
-						segmentsExperienceId:
-							config.defaultSegmentsExperienceId,
-					})
-				);
-
-				ExperienceService.removeExperience({
-					body: {
-						segmentsExperienceId,
-					},
-					dispatch,
-				}).then(() => {
+			})
+				.then(({fragmentEntryLinks, portletIds}) => {
 					return dispatch(
-						deleteExperienceAction({
-							segmentsExperienceId,
+						selectExperienceAction({
+							fragmentEntryLinks,
+							portletIds,
+							segmentsExperienceId:
+								config.defaultSegmentsExperienceId,
 						})
 					);
+				})
+				.then(() => {
+					ExperienceService.removeExperience({
+						body: {
+							segmentsExperienceId,
+						},
+						dispatch,
+					}).then(() => {
+						return dispatch(
+							deleteExperienceAction({
+								segmentsExperienceId,
+							})
+						);
+					});
 				});
-			});
 		}
 		else {
 			return ExperienceService.removeExperience({

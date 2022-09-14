@@ -37,6 +37,11 @@
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.spring.hibernate.PortalHibernateConfiguration" id="counterHibernateSessionFactory">
+		<property name="configurationResources">
+			<array>
+				<value>META-INF/counter-hbm.xml</value>
+			</array>
+		</property>
 		<property name="dataSource" ref="counterDataSource" />
 		<property name="hibernateProperties">
 			<props>

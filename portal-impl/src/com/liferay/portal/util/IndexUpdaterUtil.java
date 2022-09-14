@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.osgi.framework.Bundle;
 
@@ -59,6 +61,59 @@ public class IndexUpdaterUtil {
 					db.updateIndexes(connection, tablesSQL, indexesSQL, true);
 				}
 			});
+	}
+
+	public static void updatePortalIndexes(boolean dropIndexes) {
+		DB db = DBManagerUtil.getDB();
+
+		try {
+			db.process(
+				companyId -> {
+					String message = new String(
+						"Updating portal database indexes");
+
+					if (Validator.isNotNull(companyId) &&
+						_log.isInfoEnabled()) {
+
+						message += " for company " + companyId;
+					}
+
+					try (Connection connection = DataAccess.getConnection();
+						LoggingTimer loggingTimer = new LoggingTimer(message)) {
+
+						_updatePortalIndexes(db, connection, dropIndexes);
+					}
+					catch (SQLException sqlException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(sqlException);
+						}
+					}
+				});
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+	}
+
+	private static void _updatePortalIndexes(
+			DB db, Connection connection, boolean dropIndexes)
+		throws Exception {
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
+		String tablesSQL = StringUtil.read(
+			classLoader,
+			"com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
+
+		String indexesSQL = StringUtil.read(
+			classLoader,
+			"com/liferay/portal/tools/sql/dependencies/indexes.sql");
+
+		db.updateIndexes(connection, tablesSQL, indexesSQL, dropIndexes);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

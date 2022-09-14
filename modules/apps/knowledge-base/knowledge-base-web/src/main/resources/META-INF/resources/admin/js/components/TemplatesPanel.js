@@ -42,7 +42,7 @@ export default function TemplatesPanel({items}) {
 			description=""
 			imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
 			small
-			title={Liferay.Language.get('no-templates-were-found')}
+			title={Liferay.Language.get('there-are-no-article-templates')}
 		/>
 	);
 }

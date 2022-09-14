@@ -19,7 +19,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import TemplatesPanel from '../../../../src/main/resources/META-INF/resources/admin/js/components/TemplatesPanel';
 
-const EMPTY_STATE_TEXT = 'no-templates-were-found';
+const EMPTY_STATE_TEXT = 'there-are-no-article-templates';
 
 describe('Templates Panel', () => {
 	beforeEach(() => {

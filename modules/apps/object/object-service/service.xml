@@ -28,6 +28,7 @@
 		<column name="objectActionExecutorKey" type="String" />
 		<column name="objectActionTriggerKey" type="String" />
 		<column name="parameters" type="String" />
+		<column name="scriptSyntaxVersion" type="int" />
 		<column name="status" type="int" />
 
 		<!-- Finder methods -->
@@ -636,6 +637,7 @@
 		<column localized="true" name="errorLabel" type="String" />
 		<column localized="true" name="name" type="String" />
 		<column name="script" type="String" />
+		<column name="scriptSyntaxVersion" type="int" />
 
 		<!-- Finder methods -->
 

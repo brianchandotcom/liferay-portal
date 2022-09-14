@@ -629,13 +629,11 @@ definition {
 
 		Button.clickPublish();
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
-
-		Navigator.gotoNavNested(navNested = "Open Graph");
+		DisplayPageTemplatesAdmin.openToDisplayPageTemplateConfiguration(
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name",
+			navItem = "Open Graph",
+			siteURLKey = "test-site-name");
 
 		OpenGraph.mapEditableTextToField(
 			field = "File Name",
@@ -743,11 +741,11 @@ definition {
 			groupName = "Test Site Name",
 			subType = "DM Document Type Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
+		DisplayPageTemplatesAdmin.openToDisplayPageTemplateConfiguration(
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name",
+			navItem = "SEO",
+			siteURLKey = "test-site-name");
 
 		OpenGraph.mapEditableTextToField(
 			field = "File Name",
@@ -815,8 +813,8 @@ definition {
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
-			depotDocumentType = "true",
 			depotName = "Test Depot Name",
+			depotStructure = "true",
 			displayPageTemplateEntryName = "Display Page Template Name",
 			groupName = "Test Site Name",
 			subType = "WC Structure Name");
@@ -831,13 +829,11 @@ definition {
 
 		Button.clickPublish();
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
-
-		Navigator.gotoNavNested(navNested = "Open Graph");
+		DisplayPageTemplatesAdmin.openToDisplayPageTemplateConfiguration(
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name",
+			navItem = "Open Graph",
+			siteURLKey = "test-site-name");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Text",
@@ -965,17 +961,17 @@ definition {
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
-			depotDocumentType = "true",
 			depotName = "Test Depot Name",
+			depotStructure = "true",
 			displayPageTemplateEntryName = "Display Page Template Name",
 			groupName = "Test Site Name",
 			subType = "WC Structure Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
+		DisplayPageTemplatesAdmin.openToDisplayPageTemplateConfiguration(
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name",
+			navItem = "SEO",
+			siteURLKey = "test-site-name");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Text",
@@ -1123,8 +1119,8 @@ definition {
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
-			depotDocumentType = "true",
 			depotName = "Test Depot Name",
+			depotStructure = "true",
 			displayPageTemplateEntryName = "Display Page Template Name",
 			groupName = "Test Site Name",
 			subType = "WC Structure Name");

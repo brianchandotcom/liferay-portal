@@ -143,4 +143,97 @@ definition {
 		Publications.viewConflictingChangesWarning(warningMessage = "This publication contains unapproved changes that must be approved before publishing");
 	}
 
+	@description = "This is a use case for LPS-159649. Need to show proper notification message for changes in production while in a publication."
+	@priority = "4"
+	test NotificationCanInformUserToSwitchToRelevantPublication {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title 1");
+
+		PortletEntry.submitForPublication();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		WorkflowAsset.viewNotification(contentBody = "Test Test sent you a Web Content Article for review in the workflow.");
+
+		JSONPublications.addPublication(publicationName = "Publication 1 Name");
+
+		JSONPublications.addPublication(publicationName = "Publication 2 Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		WorkflowAsset.viewNotification(contentBody = "Test Test sent you a Web Content Article for review in the workflow. Select production to review the change.");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content 2",
+			webContentTitle = "WC WebContent Title 2");
+
+		PortletEntry.submitForPublication();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test");
+
+		if (IsElementPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE", key_publicationName = "Production")) {
+			Publications.selectPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication 1 Name");
+		}
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		WorkflowAsset.viewNotification(contentBody = "userfn userln sent you a Web Content Article for review in the workflow.");
+	
+		Publications.selectPublication(publicationName = "Publication 2 Name");
+
+		WorkflowAsset.viewNotification(contentBody = "userfn userln sent you a Web Content Article for review in the workflow. Select the publication Publication 1 Name to review the change.");
+
+		Publications.workOnProduction();
+
+		WorkflowAsset.viewNotification(contentBody = "userfn userln sent you a Web Content Article for review in the workflow. Select the publication Publication 1 Name to review the change.");
+	}
+
 }

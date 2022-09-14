@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.transaction.TransactionsUtil;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
+import com.liferay.portal.util.IndexUpdaterUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
@@ -245,7 +246,7 @@ public class DBUpgrader {
 				}
 			}
 
-			StartupHelperUtil.updateIndexes(true);
+			IndexUpdaterUtil.updatePortalIndexes(true);
 
 			_updateReleaseBuildInfo();
 

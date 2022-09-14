@@ -134,6 +134,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 							<liferay-ui:input-permissions
 								modelName="<%= KBArticle.class.getName() %>"
+								reverse="<%= true %>"
 							/>
 						</aui:fieldset>
 					</c:if>

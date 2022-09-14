@@ -735,6 +735,10 @@ public class PortletTracker
 			GetterUtil.getString(
 				get(serviceReference, "friendly-url-mapping"),
 				portletModel.getFriendlyURLMapping()));
+		portletModel.setFriendlyURLMapperClass(
+			GetterUtil.getString(
+				get(serviceReference, "friendly-url-mapper-class"),
+				portletModel.getFriendlyURLMapperClass()));
 		portletModel.setFriendlyURLRoutes(
 			GetterUtil.getString(
 				get(serviceReference, "friendly-url-routes"),

@@ -221,7 +221,7 @@ const SetupAnalyticsCloudPage = ({
 							<Input
 								groupStyle="pb-1"
 								helper={i18n.translate(
-									'this-user-will-create-and-manage-the-analytics-cloud-workspace-and-must-have-a-liferay-com-account-the-owner-email-can-be-updated-vis-support-ticket-if-needed'
+									'this-user-will-create-and-manage-the-analytics-cloud-workspace-and-must-have-a-liferay-com-account-the-owner-email-can-be-updated-via-a-support-ticket-if-needed'
 								)}
 								label={i18n.translate('owner-email')}
 								name="activations.ownerEmailAddress"
@@ -240,7 +240,7 @@ const SetupAnalyticsCloudPage = ({
 							<Input
 								groupStyle="pb-1"
 								helper={i18n.translate(
-									'lowercase-letters-and-numbers-only-projec-ids-cannot-be-changed'
+									'lowercase-letters-and-numbers-only-project-ids-cannot-be-changed'
 								)}
 								label={i18n.translate('workspace-name')}
 								name="activations.workspaceName"

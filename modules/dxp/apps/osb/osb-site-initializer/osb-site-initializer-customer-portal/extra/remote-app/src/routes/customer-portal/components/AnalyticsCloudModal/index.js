@@ -22,7 +22,7 @@ const submittedModalTexts = {
 		'return-to-the-product-activation-page-to-view-the-current-activation-status'
 	),
 	subtitle: i18n.translate(
-		'we-ll-need-a-few-details-to-finish-building-your-analytics-cloud-workspaces'
+		'we-ll-need-a-few-details-to-finish-building-your-analytics-cloud-workspace'
 	),
 	text: i18n.translate(
 		'another-user-already-submitted-the-analytics-cloud-activation-request'

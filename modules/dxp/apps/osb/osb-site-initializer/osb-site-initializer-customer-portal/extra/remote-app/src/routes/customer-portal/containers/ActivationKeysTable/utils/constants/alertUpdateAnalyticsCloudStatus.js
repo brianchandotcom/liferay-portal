@@ -14,6 +14,6 @@ import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType
 
 export const ALERT_UPDATE_ANALYTICS_CLOUD_STATUS = {
 	[ALERT_DOWNLOAD_TYPE.success]: i18n.translate(
-		'your-analytic-s-cloud-environments-are-ready'
+		'your-analytics-cloud-environments-are-ready'
 	),
 };

@@ -28,11 +28,11 @@ const maxLength = (value, max) => {
 
 const isValidEmail = (value, bannedEmailDomains) => {
 	if (value && !EMAIL_REGEX.test(value)) {
-		return i18n.translate('please-insert-a-valid-e-mail');
+		return i18n.translate('please-insert-a-valid-email');
 	}
 
 	if (bannedEmailDomains.length) {
-		return i18n.translate('e-mail-domain-not-allowed');
+		return i18n.translate('email-domain-not-allowed');
 	}
 };
 
@@ -54,7 +54,7 @@ const isValidFriendlyURL = (value) => {
 	}
 
 	if (value && value.indexOf(' ') > 0) {
-		return i18n.translate('the-workspace-url-most-not-have-spaces');
+		return i18n.translate('the-workspace-url-must-not-have-spaces');
 	}
 
 	if (value && !FRIENDLY_URL_REGEX.test(value)) {
@@ -64,7 +64,7 @@ const isValidFriendlyURL = (value) => {
 
 const isValidHost = (value) => {
 	if (value.indexOf(' ') > 0) {
-		return i18n.translate('the-workspace-host-most-not-have-spaces');
+		return i18n.translate('the-workspace-host-must-not-have-spaces');
 	}
 };
 
@@ -77,7 +77,7 @@ const isValidIp = (value) => {
 
 	for (let i = 0; i < ipArray.length; i++) {
 		if (ipArray[i].indexOf(' ') > 0) {
-			return i18n.translate('the-ip-most-not-have-spaces');
+			return i18n.translate('the-ip-must-not-have-spaces');
 		}
 
 		if (
@@ -97,7 +97,7 @@ const isValidMac = (value) => {
 
 	for (let i = 0; i < macArray.length; i++) {
 		if (macArray[i].indexOf(' ') > 0) {
-			return i18n.translate('the-mac-most-not-have-spaces');
+			return i18n.translate('the-mac-must-not-have-spaces');
 		}
 
 		if (!/^([0-9A-F]{2}[.:-]){5}[0-9A-F]{2}$/i.test(macArray[i])) {

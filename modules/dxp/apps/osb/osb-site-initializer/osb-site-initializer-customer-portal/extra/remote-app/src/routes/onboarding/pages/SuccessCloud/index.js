@@ -17,7 +17,7 @@ import {PRODUCT_TYPES} from '../../../customer-portal/utils/constants/productTyp
 const successTexts = {
 	[PRODUCT_TYPES.analyticsCloud]: {
 		helper: i18n.translate(
-			'we-ll-need-a-few-details-to-finish-building-your-analytics-cloud-workspaces'
+			'we-ll-need-a-few-details-to-finish-building-your-analytics-cloud-workspace'
 		),
 		paragraph: i18n.translate(
 			'thank-you-for-submitting-this-request-your-analytics-cloud-workspace-will-be-provisioned-in-1-2-business-days-an-email-will-be-sent-once-your-workspace-is-ready'

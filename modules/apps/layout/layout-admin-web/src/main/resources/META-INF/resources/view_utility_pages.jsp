@@ -15,3 +15,34 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+LayoutUtilityPageEntryDisplayContext layoutUtilityPageEntryDisplayContext = new LayoutUtilityPageEntryDisplayContext(renderRequest, renderResponse);
+%>
+
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new LayoutUtilityPageEntryManagementToolbarDisplayContext(request, layoutUtilityPageEntryDisplayContext, liferayPortletRequest, liferayPortletResponse) %>"
+/>
+
+<div cssClass="container-fluid container-fluid-max-xl">
+	<liferay-ui:search-container
+		id="entries"
+		searchContainer="<%= layoutUtilityPageEntryDisplayContext.getLayoutUtilityPageEntrySearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.layout.utility.page.model.LayoutUtilityPageEntry"
+			keyProperty="layoutUtilityPageEntryId"
+			modelVar="layoutUtilityPageEntry"
+		>
+			<liferay-ui:search-container-column-text>
+				<clay:vertical-card
+					verticalCard="<%= new LayoutUtilityPageEntryVerticalCard(layoutUtilityPageEntry, renderRequest) %>"
+				/>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
+</div>

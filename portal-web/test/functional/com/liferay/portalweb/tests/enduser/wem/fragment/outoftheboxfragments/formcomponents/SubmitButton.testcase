@@ -50,8 +50,6 @@ definition {
 	@description = "This is a test for LPS-151754. The page designer can configure and map the Submit Button on content page."
 	@priority = "4"
 	test ConfigureSubmitButtonOnContentPage {
-		property test.name.skip.portal.instance = "SubmitButton#ConfigureSubmitButtonOnContentPage";
-
 		task ("Given a page designer has a Form Container mapped to an entity with text field") {
 			task ("Add a web content") {
 				JSONWebcontent.addWebContent(
@@ -147,7 +145,6 @@ definition {
 	@description = "This is a test for LPS-151754. The page designer can configure and map the Submit Button on display page template."
 	@priority = "4"
 	test ConfigureSubmitButtonOnDisplayPageTemplate {
-		property test.name.skip.portal.instance = "SubmitButton#ConfigureSubmitButtonOnDisplayPageTemplate";
 		property testray.component.names = "Display Pages,Fragments";
 
 		task ("Given a page designer has a Form Container mapped to an entity with text field") {
@@ -248,8 +245,6 @@ definition {
 	@description = "This is a test for LPS-151754. View warning message when publish content page with hidden Submit Button."
 	@priority = "4"
 	test ViewWarningMessageWhenPublishContentPageWithHiddenSubmitButton {
-		property test.name.skip.portal.instance = "SubmitButton#ViewWarningMessageWhenPublishContentPageWithHiddenSubmitButton";
-
 		task ("Given a page designer has a Form Container with hidden Submit Button") {
 			task ("Add a Form Container framgment to content page") {
 				JSONLayout.addPublicLayout(

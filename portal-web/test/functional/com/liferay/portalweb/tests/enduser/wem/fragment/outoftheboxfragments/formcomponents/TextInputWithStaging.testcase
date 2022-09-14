@@ -57,8 +57,6 @@ definition {
 	@description = "This is a test for LPS-149725. The pages designer can map the Text Input fragment entities text fields in staging site."
 	@priority = "4"
 	test AddCustomTextInputFieldsOnContentPageInStagingSite {
-		property test.name.skip.portal.instance = "TextInputWithStaging#AddCustomTextInputFieldsOnContentPageInStagingSite";
-
 		task ("Given a pages designer has a Text Input fragment inside a mapped Form Container in staging site") {
 			task ("Add a Form Container framgment to content page") {
 				JSONLayout.addPublicLayout(

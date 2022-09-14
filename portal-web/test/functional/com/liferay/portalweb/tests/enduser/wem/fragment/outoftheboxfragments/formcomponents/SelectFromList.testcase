@@ -66,8 +66,6 @@ definition {
 	@description = "This is a test for LPS-151159. The page designer map the Select from List fragment to objects fields on content pages."
 	@priority = "4"
 	test MapPicklistFieldOnContentPage {
-		property test.name.skip.portal.instance = "SelectFromList#MapPicklistFieldOnContentPage";
-
 		task ("Given a page designer has a mapped Form Container on content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -145,7 +143,6 @@ definition {
 	@description = "This is a test for LPS-151159. The page designer map the Select from List fragment to objects fields on display page template."
 	@priority = "4"
 	test MapPicklistFieldOnDisplayPageTemplate {
-		property test.name.skip.portal.instance = "SelectFromList#MapPicklistFieldOnDisplayPageTemplate";
 		property testray.component.names = "Display Pages,Fragments";
 
 		task ("Given a page designer has a mapped Form Container on display page template") {
@@ -238,7 +235,6 @@ definition {
 	@priority = "5"
 	test MapRelationshipWithCustomObject {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SelectFromList#MapRelationshipWithCustomObject";
 
 		task ("Given a page designer has a mapped Form Container to an Object with relationship on custom object") {
 			task ("Add a second company Object with Text field") {
@@ -381,8 +377,6 @@ definition {
 	@description = "This is a test for LPS-154568. The page designer can map a Form Container to Object field with relationship on system object"
 	@priority = "4"
 	test MapRelationshipWithSystemObject {
-		property test.name.skip.portal.instance = "SelectFromList#MapRelationshipWithSystemObject";
-
 		task ("Given a page designer has a mapped Form Container to an Object with relationship on system object") {
 			task ("Add relationship with Account object") {
 				ObjectAdmin.addObjectRelationshipViaAPI(
@@ -497,8 +491,6 @@ definition {
 	@description = "This is a test for LPS-151402. The user could see error message when submit a form with invalid field."
 	@priority = "4"
 	test ViewErrorMessageWhenSubmitFormWithInvalidField {
-		property test.name.skip.portal.instance = "SelectFromList#ViewErrorMessageWhenSubmitFormWithInvalidField";
-
 		task ("Given a user has a content page where a Select from List and Submit Button fragments are inside a Form Container") {
 			task ("Add a Form Container fragment to content page") {
 				JSONLayout.addPublicLayout(

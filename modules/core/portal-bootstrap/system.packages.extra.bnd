@@ -288,7 +288,6 @@ Provide-Capability:\
 	@lib/com.liferay.petra.lang.jar,\
 	@lib/com.liferay.petra.memory.jar,\
 	@lib/com.liferay.petra.nio.jar,\
-	@lib/com.liferay.petra.portlet.url.builder.jar,\
 	@lib/com.liferay.petra.process.jar,\
 	@lib/com.liferay.petra.reflect.jar,\
 	@lib/com.liferay.petra.sql.dsl.api.jar,\

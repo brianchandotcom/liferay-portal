@@ -14,7 +14,6 @@ tmp/lib-pre/com.liferay.petra.io.jar
 tmp/lib-pre/com.liferay.petra.lang.jar
 tmp/lib-pre/com.liferay.petra.memory.jar
 tmp/lib-pre/com.liferay.petra.nio.jar
-tmp/lib-pre/com.liferay.petra.portlet.url.builder.jar
 tmp/lib-pre/com.liferay.petra.process.jar
 tmp/lib-pre/com.liferay.petra.reflect.jar
 tmp/lib-pre/com.liferay.petra.sql.dsl.api.jar

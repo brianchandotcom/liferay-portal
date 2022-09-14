@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.util.AssetRendererFactoryLookup;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -46,8 +47,7 @@ public class SearchResultContentDisplayContextBuilder {
 		searchResultContentDisplayContext.setAssetRendererFactory(
 			getAssetRendererFactoryByType(_type));
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getAssetEntry(
-			_assetEntryId);
+		AssetEntry assetEntry = getAssetEntry();
 
 		searchResultContentDisplayContext.setAssetEntry(assetEntry);
 
@@ -150,6 +150,10 @@ public class SearchResultContentDisplayContextBuilder {
 
 	public void setType(String type) {
 		_type = type;
+	}
+
+	protected AssetEntry getAssetEntry() throws PortalException {
+		return AssetEntryLocalServiceUtil.getAssetEntry(_assetEntryId);
 	}
 
 	protected AssetRendererFactory<?> getAssetRendererFactoryByType(

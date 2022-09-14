@@ -39,6 +39,7 @@ import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.registry.UpgradeStepRegistratorThreadLocal;
+import com.liferay.portal.util.BundleUtil;
 import com.liferay.portal.util.IndexUpdaterUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -204,7 +205,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 			DependencyManagerSyncUtil.registerSyncCallable(
 				() -> {
 					for (Bundle bundle : _bundleContext.getBundles()) {
-						if (IndexUpdaterUtil.isLiferayServiceBundle(bundle)) {
+						if (BundleUtil.isLiferayServiceBundle(bundle)) {
 							try {
 								IndexUpdaterUtil.updateIndexes(bundle);
 							}

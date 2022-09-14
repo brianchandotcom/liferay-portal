@@ -3207,17 +3207,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 		StructuredContentFolder structuredContentFolder =
 			StructuredContentFolder.toDTO(json);
 
-		if (documentFolderId != null) {
-			structuredContentFolder =
-				structuredContentFolderResource.
-					postStructuredContentFolderStructuredContentFolder(
-						documentFolderId, structuredContentFolder);
-		}
-		else {
-			structuredContentFolder =
-				structuredContentFolderResource.postSiteStructuredContentFolder(
-					serviceContext.getScopeGroupId(), structuredContentFolder);
-		}
+		structuredContentFolder.setParentStructuredContentFolderId(
+			documentFolderId);
+
+		structuredContentFolder =
+			structuredContentFolderResource.
+				putSiteStructuredContentFolderByExternalReferenceCode(
+					serviceContext.getScopeGroupId(),
+					structuredContentFolder.getExternalReferenceCode(),
+					structuredContentFolder);
 
 		return structuredContentFolder.getId();
 	}

@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -45,7 +46,8 @@ public class MBMessageBBCodeFormatUploadHandlerTest {
 
 	@Before
 	public void setUp() {
-		_mbMessageBBCodeFormatUploadHandler.setPortletFileRepository(
+		ReflectionTestUtil.setFieldValue(
+			_mbMessageBBCodeFormatUploadHandler, "_portletFileRepository",
 			_portletFileRepository);
 	}
 

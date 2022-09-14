@@ -1,5 +1,28 @@
 # Poshi Runner Change Log
 
+## 1.0.371
+
+### Other
+
+* [LRCI-3233](https://issues.liferay.com/browse/LRCI-3233) - Add ability to set the testray bucket name through Poshi Standalone
+
+### Runner
+
+* [POSHI-350](https://issues.liferay.com/browse/POSHI-350) - For poshi tests that don't use any webdriver methods, don't open the browser
+
+### Script
+
+* [POSHI-396](https://issues.liferay.com/browse/POSHI-396) - Change escape character &quot; with " in Poshi Script
+* [POSHI-397](https://issues.liferay.com/browse/POSHI-397) - Ensure that PoshiElementException classes provide necessary information to throw an error
+
+### Utils
+
+* [POSHI-390](https://issues.liferay.com/browse/POSHI-390) - The request URL for JSONCurlUtil should be single quoted to avoid using an & character in /bin/sh
+
+### Validation
+
+* [POSHI-360](https://issues.liferay.com/browse/POSHI-360) - Fix validation for missing comma in function usage
+
 ## 1.0.369
 
 ### Gradle

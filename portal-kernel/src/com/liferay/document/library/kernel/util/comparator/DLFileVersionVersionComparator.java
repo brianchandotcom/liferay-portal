@@ -15,21 +15,22 @@
 package com.liferay.document.library.kernel.util.comparator;
 
 import com.liferay.document.library.kernel.model.DLFileVersion;
-
-import java.util.Comparator;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Bruno Farache
  */
 public class DLFileVersionVersionComparator
-	implements Comparator<DLFileVersion> {
+	extends OrderByComparator<DLFileVersion> {
 
 	public DLFileVersionVersionComparator() {
 		this(false);
 	}
 
 	public DLFileVersionVersionComparator(boolean ascending) {
-		_versionNumberComparator = new VersionNumberComparator(ascending);
+		_ascending = ascending;
+
+		_versionNumberComparator = new VersionNumberComparator(_ascending);
 	}
 
 	@Override
@@ -40,10 +41,31 @@ public class DLFileVersionVersionComparator
 			dlFileVersion1.getVersion(), dlFileVersion2.getVersion());
 	}
 
+	@Override
+	public String getOrderBy() {
+		if (_ascending) {
+			return _ORDER_BY_ASC;
+		}
+
+		return _ORDER_BY_DESC;
+	}
+
+	@Override
+	public String[] getOrderByFields() {
+		return _ORDER_BY_FIELDS;
+	}
+
 	public boolean isAscending() {
 		return _versionNumberComparator.isAscending();
 	}
 
+	private static final String _ORDER_BY_ASC = "DLFileVersion.version ASC";
+
+	private static final String _ORDER_BY_DESC = "DLFileVersion.version DESC";
+
+	private static final String[] _ORDER_BY_FIELDS = {"version"};
+
+	private final boolean _ascending;
 	private final VersionNumberComparator _versionNumberComparator;
 
 }

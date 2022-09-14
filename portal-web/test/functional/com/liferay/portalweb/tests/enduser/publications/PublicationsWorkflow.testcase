@@ -76,11 +76,13 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		if (IsElementPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE", key_publicationName = "Production")) {
+		if (IsElementPresent(key_publicationName = "Production", locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE")) {
 			Publications.selectPublication(
 				gotoPublicationsAdmin = "true",
 				publicationName = "Publication Name");
 		}
+
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -102,6 +104,12 @@ definition {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
+
+		if (IsElementPresent(key_publicationName = "Production", locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE")) {
+			Publications.selectPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+		}
 
 		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
 
@@ -194,11 +202,15 @@ definition {
 
 		JSONPublications.addPublication(publicationName = "Publication 2 Name");
 
-		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
+		Publications.selectPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication 1 Name");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
 
 		WorkflowAsset.viewNotification(contentBody = "Test Test sent you a Web Content Article for review in the workflow. Select production to review the change.");
+
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -217,7 +229,7 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "test test");
 
-		if (IsElementPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE", key_publicationName = "Production")) {
+		if (IsElementPresent(key_publicationName = "Production", locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE")) {
 			Publications.selectPublication(
 				gotoPublicationsAdmin = "true",
 				publicationName = "Publication 1 Name");
@@ -226,7 +238,7 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
 
 		WorkflowAsset.viewNotification(contentBody = "userfn userln sent you a Web Content Article for review in the workflow.");
-	
+
 		Publications.selectPublication(publicationName = "Publication 2 Name");
 
 		WorkflowAsset.viewNotification(contentBody = "userfn userln sent you a Web Content Article for review in the workflow. Select the publication Publication 1 Name to review the change.");

@@ -15,6 +15,7 @@ create table ObjectAction (
 	objectActionExecutorKey VARCHAR(75) null,
 	objectActionTriggerKey VARCHAR(75) null,
 	parameters TEXT null,
+	scriptSyntaxVersion INTEGER,
 	status INTEGER
 );
 
@@ -276,7 +277,8 @@ create table ObjectValidationRule (
 	engine VARCHAR(75) null,
 	errorLabel STRING null,
 	name STRING null,
-	script TEXT null
+	script TEXT null,
+	scriptSyntaxVersion INTEGER
 );
 
 create table ObjectView (

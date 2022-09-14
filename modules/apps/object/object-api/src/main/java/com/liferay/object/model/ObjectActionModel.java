@@ -330,6 +330,20 @@ public interface ObjectActionModel
 	public void setParameters(String parameters);
 
 	/**
+	 * Returns the script syntax version of this object action.
+	 *
+	 * @return the script syntax version of this object action
+	 */
+	public int getScriptSyntaxVersion();
+
+	/**
+	 * Sets the script syntax version of this object action.
+	 *
+	 * @param scriptSyntaxVersion the script syntax version of this object action
+	 */
+	public void setScriptSyntaxVersion(int scriptSyntaxVersion);
+
+	/**
 	 * Returns the status of this object action.
 	 *
 	 * @return the status of this object action

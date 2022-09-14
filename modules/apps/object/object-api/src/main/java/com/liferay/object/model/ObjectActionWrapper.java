@@ -59,6 +59,7 @@ public class ObjectActionWrapper
 		attributes.put("objectActionExecutorKey", getObjectActionExecutorKey());
 		attributes.put("objectActionTriggerKey", getObjectActionTriggerKey());
 		attributes.put("parameters", getParameters());
+		attributes.put("scriptSyntaxVersion", getScriptSyntaxVersion());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -163,6 +164,13 @@ public class ObjectActionWrapper
 
 		if (parameters != null) {
 			setParameters(parameters);
+		}
+
+		Integer scriptSyntaxVersion = (Integer)attributes.get(
+			"scriptSyntaxVersion");
+
+		if (scriptSyntaxVersion != null) {
+			setScriptSyntaxVersion(scriptSyntaxVersion);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -322,6 +330,16 @@ public class ObjectActionWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the script syntax version of this object action.
+	 *
+	 * @return the script syntax version of this object action
+	 */
+	@Override
+	public int getScriptSyntaxVersion() {
+		return model.getScriptSyntaxVersion();
 	}
 
 	/**
@@ -527,6 +545,16 @@ public class ObjectActionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the script syntax version of this object action.
+	 *
+	 * @param scriptSyntaxVersion the script syntax version of this object action
+	 */
+	@Override
+	public void setScriptSyntaxVersion(int scriptSyntaxVersion) {
+		model.setScriptSyntaxVersion(scriptSyntaxVersion);
 	}
 
 	/**

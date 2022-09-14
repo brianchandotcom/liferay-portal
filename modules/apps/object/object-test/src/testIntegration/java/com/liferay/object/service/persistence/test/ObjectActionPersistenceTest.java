@@ -154,6 +154,8 @@ public class ObjectActionPersistenceTest {
 
 		newObjectAction.setParameters(RandomTestUtil.randomString());
 
+		newObjectAction.setScriptSyntaxVersion(RandomTestUtil.nextInt());
+
 		newObjectAction.setStatus(RandomTestUtil.nextInt());
 
 		_objectActions.add(_persistence.update(newObjectAction));
@@ -204,6 +206,9 @@ public class ObjectActionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectAction.getParameters(),
 			newObjectAction.getParameters());
+		Assert.assertEquals(
+			existingObjectAction.getScriptSyntaxVersion(),
+			newObjectAction.getScriptSyntaxVersion());
 		Assert.assertEquals(
 			existingObjectAction.getStatus(), newObjectAction.getStatus());
 	}
@@ -275,7 +280,7 @@ public class ObjectActionPersistenceTest {
 			"createDate", true, "modifiedDate", true, "objectDefinitionId",
 			true, "active", true, "description", true, "name", true,
 			"objectActionExecutorKey", true, "objectActionTriggerKey", true,
-			"status", true);
+			"scriptSyntaxVersion", true, "status", true);
 	}
 
 	@Test
@@ -525,6 +530,8 @@ public class ObjectActionPersistenceTest {
 		objectAction.setObjectActionTriggerKey(RandomTestUtil.randomString());
 
 		objectAction.setParameters(RandomTestUtil.randomString());
+
+		objectAction.setScriptSyntaxVersion(RandomTestUtil.nextInt());
 
 		objectAction.setStatus(RandomTestUtil.nextInt());
 

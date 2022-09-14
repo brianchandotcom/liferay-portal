@@ -81,7 +81,7 @@ public class ObjectActionModelImpl
 		{"conditionExpression", Types.CLOB}, {"description", Types.VARCHAR},
 		{"name", Types.VARCHAR}, {"objectActionExecutorKey", Types.VARCHAR},
 		{"objectActionTriggerKey", Types.VARCHAR}, {"parameters", Types.CLOB},
-		{"status", Types.INTEGER}
+		{"scriptSyntaxVersion", Types.INTEGER}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -104,11 +104,12 @@ public class ObjectActionModelImpl
 		TABLE_COLUMNS_MAP.put("objectActionExecutorKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("objectActionTriggerKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("parameters", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("scriptSyntaxVersion", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectAction (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectActionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,active_ BOOLEAN,conditionExpression TEXT null,description VARCHAR(75) null,name VARCHAR(75) null,objectActionExecutorKey VARCHAR(75) null,objectActionTriggerKey VARCHAR(75) null,parameters TEXT null,status INTEGER)";
+		"create table ObjectAction (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectActionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,active_ BOOLEAN,conditionExpression TEXT null,description VARCHAR(75) null,name VARCHAR(75) null,objectActionExecutorKey VARCHAR(75) null,objectActionTriggerKey VARCHAR(75) null,parameters TEXT null,scriptSyntaxVersion INTEGER,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectAction";
 
@@ -345,6 +346,12 @@ public class ObjectActionModelImpl
 		attributeSetterBiConsumers.put(
 			"parameters",
 			(BiConsumer<ObjectAction, String>)ObjectAction::setParameters);
+		attributeGetterFunctions.put(
+			"scriptSyntaxVersion", ObjectAction::getScriptSyntaxVersion);
+		attributeSetterBiConsumers.put(
+			"scriptSyntaxVersion",
+			(BiConsumer<ObjectAction, Integer>)
+				ObjectAction::setScriptSyntaxVersion);
 		attributeGetterFunctions.put("status", ObjectAction::getStatus);
 		attributeSetterBiConsumers.put(
 			"status",
@@ -714,6 +721,21 @@ public class ObjectActionModelImpl
 
 	@JSON
 	@Override
+	public int getScriptSyntaxVersion() {
+		return _scriptSyntaxVersion;
+	}
+
+	@Override
+	public void setScriptSyntaxVersion(int scriptSyntaxVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_scriptSyntaxVersion = scriptSyntaxVersion;
+	}
+
+	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -806,6 +828,7 @@ public class ObjectActionModelImpl
 			getObjectActionExecutorKey());
 		objectActionImpl.setObjectActionTriggerKey(getObjectActionTriggerKey());
 		objectActionImpl.setParameters(getParameters());
+		objectActionImpl.setScriptSyntaxVersion(getScriptSyntaxVersion());
 		objectActionImpl.setStatus(getStatus());
 
 		objectActionImpl.resetOriginalValues();
@@ -846,6 +869,8 @@ public class ObjectActionModelImpl
 			this.<String>getColumnOriginalValue("objectActionTriggerKey"));
 		objectActionImpl.setParameters(
 			this.<String>getColumnOriginalValue("parameters"));
+		objectActionImpl.setScriptSyntaxVersion(
+			this.<Integer>getColumnOriginalValue("scriptSyntaxVersion"));
 		objectActionImpl.setStatus(
 			this.<Integer>getColumnOriginalValue("status"));
 
@@ -1030,6 +1055,8 @@ public class ObjectActionModelImpl
 			objectActionCacheModel.parameters = null;
 		}
 
+		objectActionCacheModel.scriptSyntaxVersion = getScriptSyntaxVersion();
+
 		objectActionCacheModel.status = getStatus();
 
 		return objectActionCacheModel;
@@ -1141,6 +1168,7 @@ public class ObjectActionModelImpl
 	private String _objectActionExecutorKey;
 	private String _objectActionTriggerKey;
 	private String _parameters;
+	private int _scriptSyntaxVersion;
 	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1190,6 +1218,7 @@ public class ObjectActionModelImpl
 		_columnOriginalValues.put(
 			"objectActionTriggerKey", _objectActionTriggerKey);
 		_columnOriginalValues.put("parameters", _parameters);
+		_columnOriginalValues.put("scriptSyntaxVersion", _scriptSyntaxVersion);
 		_columnOriginalValues.put("status", _status);
 	}
 
@@ -1247,7 +1276,9 @@ public class ObjectActionModelImpl
 
 		columnBitmasks.put("parameters", 32768L);
 
-		columnBitmasks.put("status", 65536L);
+		columnBitmasks.put("scriptSyntaxVersion", 65536L);
+
+		columnBitmasks.put("status", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

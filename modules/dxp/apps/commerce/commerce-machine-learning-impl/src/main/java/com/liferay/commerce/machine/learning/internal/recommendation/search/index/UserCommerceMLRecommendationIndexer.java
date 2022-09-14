@@ -40,7 +40,7 @@ public class UserCommerceMLRecommendationIndexer implements CommerceMLIndexer {
 
 	@Override
 	public String getDocumentType() {
-		return "UserCommerceMLRecommendationDocumentType";
+		return "_doc";
 	}
 
 	@Override

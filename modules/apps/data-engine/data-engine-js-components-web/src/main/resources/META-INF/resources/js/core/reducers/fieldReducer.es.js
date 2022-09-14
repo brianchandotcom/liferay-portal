@@ -63,6 +63,12 @@ export function updateNestedFieldNames(parentFieldName, nestedFields) {
 
 		return {
 			...nestedField,
+			...(nestedField.editorConfig && {
+				editorConfig: updateEditorConfigFieldName(
+					nestedField.editorConfig,
+					newNestedFieldName
+				),
+			}),
 			name: newNestedFieldName,
 			nestedFields: updateNestedFieldNames(
 				newNestedFieldName,
@@ -71,6 +77,28 @@ export function updateNestedFieldNames(parentFieldName, nestedFields) {
 			...parseNestedFieldName(newNestedFieldName),
 		};
 	});
+}
+
+function updateEditorConfigFieldName(editorConfig, name) {
+	const updatedEditorConfig = {...editorConfig};
+	for (const [key, value] of Object.entries(updatedEditorConfig)) {
+		if (typeof value === 'string') {
+			const parsedName = parseName(decodeURIComponent(value));
+
+			if (Object.keys(parsedName).length) {
+				const currentName = encodeURIComponent(
+					generateName(null, parsedName)
+				);
+
+				updatedEditorConfig[key] = value.replace(
+					currentName,
+					encodeURIComponent(name) + 'selectItem'
+				);
+			}
+		}
+	}
+
+	return updatedEditorConfig;
 }
 
 export default function fieldReducer(state, action) {
@@ -224,6 +252,12 @@ export default function fieldReducer(state, action) {
 
 									return {
 										...currentField,
+										...(currentField.editorConfig && {
+											editorConfig: updateEditorConfigFieldName(
+												currentField.editorConfig,
+												name
+											),
+										}),
 										name,
 										nestedFields: updateNestedFieldNames(
 											name,

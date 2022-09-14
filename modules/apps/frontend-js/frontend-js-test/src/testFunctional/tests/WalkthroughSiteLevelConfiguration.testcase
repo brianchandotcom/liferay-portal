@@ -72,6 +72,47 @@ definition {
 		}
 	}
 
+	@description = "LPS-159840. JSON can be updated."
+	@priority = "5"
+	test JSONCanBeUpdated {
+		property portal.acceptance = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given walkthrough enabled site-level") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			ApplicationsMenu.gotoSite(site = "Site Name");
+
+			Walkthrough.enableWalkthrough(fileName = "walkthrough_configuration.json");
+		}
+
+		task ("When step 1 title is modified") {
+			Walkthrough.configureJSON(fileName = "edit_walkthrough_configuration.json");
+		}
+
+		task ("Then step 1 title is updated") {
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 1");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 1",
+				widgetName = "JS Walkthrough Sample");
+
+			Navigator.openSitePage(
+				pageName = "Walkthrough Page 1",
+				siteName = "Site Name");
+
+			Walkthrough.enablePopoverMode();
+
+			AssertElementPresent(
+				key_title = "Step 1 of 2: EDIT: Click the Button",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+	}
+
 	@description = "LPS-159836. Walkthrough displays when defined for a site."
 	@priority = "5"
 	test WillDisplayWhenDefinedForSite {

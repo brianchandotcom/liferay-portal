@@ -1,5 +1,5 @@
 {
-	"main": "js/index.es.js",
+	"main": "js/index.js",
 	"name": "@liferay/analytics-settings-web",
 	"private": true,
 	"scripts": {

@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import MultiStepNav from './components/MultiStepNav.es';
+import MultiStepNav from './components/MultiStepNav';
 
 const App = ({connected}) => (
 	<>

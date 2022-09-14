@@ -15,7 +15,7 @@
 import ClayMultiStepNav from '@clayui/multi-step-nav';
 import React from 'react';
 
-import Sheet from './Sheet.es';
+import Sheet from './Sheet';
 
 const MultiStepNav = ({steps}) => {
 	const currentStep = 0;

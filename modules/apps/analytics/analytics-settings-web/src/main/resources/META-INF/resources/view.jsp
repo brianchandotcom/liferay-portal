@@ -22,7 +22,7 @@ AnalyticsSettingsDisplayContext analyticsSettingsDisplayContext = new AnalyticsS
 
 <div id="analytics-sync-app">
 	<react:component
-		module="js/index.es"
+		module="js/index"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"connected", analyticsSettingsDisplayContext.isConnected()

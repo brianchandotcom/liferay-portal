@@ -1,5 +1,6 @@
 {
 	"description": "Tip folder",
+	"externalReferenceCode": "JOURNALFOLDER002",
 	"name": "Tip",
 	"viewableBy": "Anyone"
 }

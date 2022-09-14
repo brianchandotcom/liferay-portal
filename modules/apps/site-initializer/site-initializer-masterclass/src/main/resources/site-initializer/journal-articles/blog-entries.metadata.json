@@ -1,5 +1,6 @@
 {
 	"description": "Blog Entries folder",
+	"externalReferenceCode": "JOURNALFOLDER001",
 	"name": "Blog Entries",
 	"viewableBy": "Anyone"
 }

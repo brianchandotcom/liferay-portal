@@ -1,5 +1,6 @@
 {
 	"description": "Courses folder",
+	"externalReferenceCode": "JOURNALFOLDER003",
 	"name": "Courses",
 	"viewableBy": "Anyone"
 }

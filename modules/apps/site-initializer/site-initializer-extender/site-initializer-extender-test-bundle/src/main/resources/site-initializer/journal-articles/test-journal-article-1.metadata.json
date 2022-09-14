@@ -1,5 +1,6 @@
 {
-	"description": "This is the description for Test Journal Article 1.",
-	"name": "Test Journal Article 1",
+	"description": "This is the description for Test Journal Folder 1.",
+	"externalReferenceCode": "JOURNALFOLDER001",
+	"name": "Test Journal Folder 1",
 	"viewableBy": "Anyone"
 }

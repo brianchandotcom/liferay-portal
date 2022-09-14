@@ -108,12 +108,10 @@ definition {
 			AssertElementNotPresent(locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE");
 		}
 
-		// Workaround COMMERCE-7285
-
-		/*ClassicSearch.viewAssetTypeFacetPG(
+		ClassicSearch.viewAssetTypeFacetPG(
 			facetFrequency = "1",
 			searchAssetTitle = "Wiki Page2 Title",
-			searchAssetType = "Wiki Page");*/
+			searchAssetType = "Wiki Page");
 
 		ClassicSearch.unscopeAssetFacetPG();
 

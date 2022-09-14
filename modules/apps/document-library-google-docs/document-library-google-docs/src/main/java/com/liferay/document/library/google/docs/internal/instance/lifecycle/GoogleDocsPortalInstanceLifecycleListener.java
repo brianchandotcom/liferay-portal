@@ -70,7 +70,7 @@ public class GoogleDocsPortalInstanceLifecycleListener
 		Field field = ReflectionUtil.getDeclaredField(
 			DDMStructureManagerUtil.class, "_ddmStructureManager");
 
-		field.set(null, ddmStructureManager);
+		field.set(null, _ddmStructureManager);
 	}
 
 	@Reference
@@ -78,6 +78,9 @@ public class GoogleDocsPortalInstanceLifecycleListener
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DDMStructureManager _ddmStructureManager;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntryMetadata)"

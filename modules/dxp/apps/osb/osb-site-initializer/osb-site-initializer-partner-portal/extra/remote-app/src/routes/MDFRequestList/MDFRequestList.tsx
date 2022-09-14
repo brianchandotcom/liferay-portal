@@ -17,9 +17,9 @@ import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import {MDFRequestListItem} from '../../common/interfaces/mdfRequestListItem';
 import {Liferay} from '../../common/services/liferay';
 import Table from './components/Table';
-import getMDFListColumns from './utils/getMDFListColumns';
 import useGetMDFRequestListData from './hooks/useGetMDFRequestListData';
 import usePagination from './hooks/usePagination';
+import getMDFListColumns from './utils/getMDFListColumns';
 
 const MDFRequestList = () => {
 	const pagination = usePagination();

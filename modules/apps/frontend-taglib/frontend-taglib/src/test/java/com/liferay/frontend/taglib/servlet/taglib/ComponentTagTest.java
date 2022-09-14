@@ -19,6 +19,7 @@ import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.frontend.js.web.internal.servlet.taglib.aui.PortletDataRendererImpl;
 import com.liferay.frontend.taglib.internal.util.ServicesProvider;
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -77,12 +78,8 @@ public class ComponentTagTest {
 
 		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
 
-		Class<ScriptData> clazz = ScriptData.class;
-
-		Field portletDataRendererField = clazz.getDeclaredField(
-			"_portletDataRenderer");
-
-		portletDataRendererField.setAccessible(true);
+		Field portletDataRendererField = ReflectionUtil.getDeclaredField(
+			ScriptData.class, "_portletDataRenderer");
 
 		portletDataRendererField.set(null, new PortletDataRendererImpl());
 	}

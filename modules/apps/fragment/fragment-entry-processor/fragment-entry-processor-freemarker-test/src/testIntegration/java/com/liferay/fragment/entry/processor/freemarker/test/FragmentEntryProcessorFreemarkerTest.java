@@ -31,6 +31,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -422,6 +423,9 @@ public class FragmentEntryProcessorFreemarkerTest {
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, defaultFragmentEntryProcessorContext));
 
+		journalArticle = _journalArticleLocalService.getArticle(
+			journalArticle.getId());
+
 		String expectedProcessedHTML = _getProcessedHTML(
 			_readFileToString(
 				"expected_processed_fragment_entry_with_configuration_" +
@@ -715,6 +719,9 @@ public class FragmentEntryProcessorFreemarkerTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@DeleteAfterTestRun
 	private Layout _layout;

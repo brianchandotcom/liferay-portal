@@ -61,11 +61,11 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 
 		Map<String, Integer> usedVariables = new HashMap<>();
 
-		Map<ESImport, ESImport> esImportMap = _computeESImportMap(
+		Map<ESImport, ESImport> esImportsMap = _computeESImportsMap(
 			portletDatas, usedVariables);
 
-		if (!esImportMap.isEmpty()) {
-			for (ESImport esImport : esImportMap.values()) {
+		if (!esImportsMap.isEmpty()) {
+			for (ESImport esImport : esImportsMap.values()) {
 				writer.write("import {");
 				writer.write(esImport.getSymbol());
 
@@ -84,13 +84,13 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 
 		// Write AMD prolog
 
-		Map<AMDRequire, AMDRequire> amdRequireMap = _computeAMDRequireMap(
+		Map<AMDRequire, AMDRequire> amdRequiresMap = _computeAMDRequiresMap(
 			portletDatas, usedVariables);
 
-		if (!amdRequireMap.isEmpty()) {
+		if (!amdRequiresMap.isEmpty()) {
 			writer.write("Liferay.Loader.require(\n");
 
-			for (AMDRequire amdRequire : amdRequireMap.values()) {
+			for (AMDRequire amdRequire : amdRequiresMap.values()) {
 				writer.write(StringPool.APOSTROPHE);
 				writer.write(amdRequire.getModule());
 				writer.write("',\n");
@@ -100,7 +100,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 
 			String delimiter = StringPool.BLANK;
 
-			for (AMDRequire amdRequire : amdRequireMap.values()) {
+			for (AMDRequire amdRequire : amdRequiresMap.values()) {
 				writer.write(delimiter);
 				writer.write(amdRequire.getAlias());
 
@@ -130,7 +130,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 		// Write actual JS code
 
 		writer.write(
-			_computeNonrawCode(amdRequireMap, esImportMap, portletDatas));
+			_computeNonrawCode(amdRequiresMap, esImportsMap, portletDatas));
 
 		// Write AUI epilog
 
@@ -140,7 +140,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 
 		// Write AMD epilog
 
-		if (!amdRequireMap.isEmpty()) {
+		if (!amdRequiresMap.isEmpty()) {
 			writer.write("} catch (err) {\n");
 			writer.write("\tconsole.error(err);\n");
 			writer.write("}\n");
@@ -151,11 +151,11 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 		writer.write("\n</script>");
 	}
 
-	private Map<AMDRequire, AMDRequire> _computeAMDRequireMap(
+	private Map<AMDRequire, AMDRequire> _computeAMDRequiresMap(
 		Collection<PortletData> portletDatas,
 		Map<String, Integer> usedVariables) {
 
-		Map<AMDRequire, AMDRequire> amdRequireMap = new HashMap<>();
+		Map<AMDRequire, AMDRequire> amdRequiresMap = new HashMap<>();
 
 		for (PortletData portletData : portletDatas) {
 			for (JSFragment jsFragment : portletData.getJSFragments()) {
@@ -167,7 +167,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 				}
 
 				for (AMDRequire amdRequire : amdRequires) {
-					if (amdRequireMap.containsKey(amdRequire)) {
+					if (amdRequiresMap.containsKey(amdRequire)) {
 						continue;
 					}
 
@@ -184,14 +184,14 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 						usedVariables.put(variable, 1);
 					}
 
-					amdRequireMap.put(
+					amdRequiresMap.put(
 						amdRequire,
 						new AMDRequire(amdRequire.getModule(), variable));
 				}
 			}
 		}
 
-		return amdRequireMap;
+		return amdRequiresMap;
 	}
 
 	private Set<String> _computeAUIUseSet(
@@ -208,11 +208,11 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 		return auiUseSet;
 	}
 
-	private Map<ESImport, ESImport> _computeESImportMap(
+	private Map<ESImport, ESImport> _computeESImportsMap(
 		Collection<PortletData> portletDatas,
 		Map<String, Integer> usedVariables) {
 
-		Map<ESImport, ESImport> esImportMap = new HashMap<>();
+		Map<ESImport, ESImport> esImportsMap = new HashMap<>();
 
 		for (PortletData portletData : portletDatas) {
 			for (JSFragment jsFragment : portletData.getJSFragments()) {
@@ -223,7 +223,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 				}
 
 				for (ESImport esImport : esImports) {
-					if (esImportMap.containsKey(esImport)) {
+					if (esImportsMap.containsKey(esImport)) {
 						continue;
 					}
 
@@ -240,7 +240,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 						usedVariables.put(variable, 0);
 					}
 
-					esImportMap.put(
+					esImportsMap.put(
 						esImport,
 						new ESImport(
 							esImport.getSymbol(), variable,
@@ -249,12 +249,12 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 			}
 		}
 
-		return esImportMap;
+		return esImportsMap;
 	}
 
 	private String _computeNonrawCode(
-		Map<AMDRequire, AMDRequire> amdRequireMap,
-		Map<ESImport, ESImport> esImportMap,
+		Map<AMDRequire, AMDRequire> amdRequiresMap,
+		Map<ESImport, ESImport> esImportsMap,
 		Collection<PortletData> portletDatas) {
 
 		StringBuilder sb = new StringBuilder();
@@ -289,7 +289,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 					jsFragment.getAMDRequires();
 
 				for (AMDRequire fragmentAMDRequire : fragmentAMDRequires) {
-					AMDRequire amdRequire = amdRequireMap.get(
+					AMDRequire amdRequire = amdRequiresMap.get(
 						fragmentAMDRequire);
 
 					if (!Objects.equals(
@@ -309,7 +309,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 				List<ESImport> fragmentESImports = jsFragment.getESImports();
 
 				for (ESImport fragmentESImport : fragmentESImports) {
-					ESImport esImport = esImportMap.get(fragmentESImport);
+					ESImport esImport = esImportsMap.get(fragmentESImport);
 
 					if (!Objects.equals(
 							esImport.getAlias(), fragmentESImport.getAlias())) {

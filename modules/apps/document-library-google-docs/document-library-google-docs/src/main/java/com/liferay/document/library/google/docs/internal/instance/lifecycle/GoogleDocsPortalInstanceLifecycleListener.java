@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.lang.reflect.Field;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -62,11 +63,8 @@ public class GoogleDocsPortalInstanceLifecycleListener
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureManager(
-			DDMStructureManager ddmStructureManager)
-		throws Exception {
-
+	@Activate
+	protected void activate() throws Exception {
 		Field field = ReflectionUtil.getDeclaredField(
 			DDMStructureManagerUtil.class, "_ddmStructureManager");
 

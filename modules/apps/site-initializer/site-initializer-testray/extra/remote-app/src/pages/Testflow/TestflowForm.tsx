@@ -12,59 +12,197 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import {useState} from 'react';
+import {ClayInput} from '@clayui/form';
+import {useEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
+import {useParams} from 'react-router-dom';
 
 import Form from '../../components/Form';
 import Container from '../../components/Layout/Container';
+import {useHeader} from '../../hooks';
 import {useFetch} from '../../hooks/useFetch';
+import useFormActions from '../../hooks/useFormActions';
 import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
-import {TestrayCaseType} from '../../services/rest';
+import yupSchema, {yupResolver} from '../../schema/yup';
+import {
+	TestrayBuild,
+	TestrayCaseType,
+	testrayBuildImpl,
+	testrayTaskImpl,
+} from '../../services/rest';
 import {searchUtil} from '../../util/search';
 import {UserListView} from '../Manage/User';
+import useTestFlowAssign from './TestflowFormAssignUserActions';
 import TestflowAssignUserModal from './modal';
 
+type TestflowFormType = typeof yupSchema.task.__outputType;
+
 const TestflowForm = () => {
-	const [users, setUsers] = useState([]);
+	const {
+		form: {onClose, onError, onSave, onSubmit},
+	} = useFormActions();
+
 	const [modalType, setModalType] = useState('assign-users');
+	const [users, setUsers] = useState<number[]>([]);
+	const {modal} = useFormModal({
+		onSave: (selectedUsers) => {
+			setUsers(selectedUsers);
+		},
+	});
+	const {buildId} = useParams();
+	const {actions} = useTestFlowAssign({setUsers});
 
 	const {data} = useFetch('/casetypes');
+	const {data: testrayBuild} = useFetch<TestrayBuild>(
+		testrayBuildImpl.getResource(buildId as string)
+	);
+
+	const {
+		formState: {errors},
+		handleSubmit,
+		register,
+		setValue,
+		watch,
+	} = useForm<TestflowFormType>({
+		defaultValues: buildId
+			? {
+					build: Number(buildId),
+					caseTypes: [],
+					dueStatus: 1,
+			  }
+			: {
+					caseTypes: [],
+					dueStatus: 1,
+			  },
+		resolver: yupResolver(yupSchema.task),
+	});
+
+	useHeader({
+		useHeading: [
+			{
+				category: i18n.translate('task'),
+				title: i18n.translate('testflow'),
+			},
+		],
+	});
 
 	const caseTypes = data?.items || [];
 
-	const {modal} = useFormModal({
-		onSave: setUsers,
-	});
-
-	const onOpenModal = (option: 'assign-users' | 'assign-user-groups') => {
+	const onOpenModal = (option: 'select-users' | 'select-user-groups') => {
 		setModalType(option);
 
-		modal.open();
+		modal.open(users);
 	};
+
+	const _onSubmit = (form: TestflowFormType) => {
+		let hasError = false;
+
+		if (!form.caseTypes?.length) {
+			hasError = true;
+
+			onError({
+				message: i18n.translate(
+					'please-mark-at-last-one-case-type-for-processing'
+				),
+			});
+		}
+
+		if (!form.userToTasks?.length) {
+			hasError = true;
+
+			onError({
+				message: i18n.translate(
+					'please-mark-at-last-one-user-or-user-group-for-assignment'
+				),
+			});
+		}
+
+		if (hasError) {
+			return;
+		}
+
+		onSubmit(form, {
+			create: (data) => testrayTaskImpl.create(data),
+			update: (id, data) => testrayTaskImpl.update(id, data),
+		})
+			.then(onSave)
+			.catch(onError);
+	};
+
+	const inputProps = {
+		errors,
+		register,
+	};
+
+	const caseTypesWatch = watch('caseTypes') as number[];
+
+	const onClickCaseType = (event: any) => {
+		const value = Number(event.target.value);
+
+		const caseTypesFiltered = caseTypesWatch.includes(value)
+			? caseTypesWatch.filter((caseTypeId) => caseTypeId !== value)
+			: [...caseTypesWatch, value];
+
+		setValue('caseTypes', caseTypesFiltered);
+	};
+
+	useEffect(() => {
+		setValue('name', testrayBuild?.name);
+	}, [testrayBuild, setValue]);
+
+	useEffect(() => {
+		setValue('userToTasks', users);
+	}, [setValue, users]);
 
 	return (
 		<Container>
-			<Form.Input label={i18n.translate('name')} name="name" required />
+			<ClayInput.GroupItem shrink>
+				<Form.Input
+					{...inputProps}
+					label={i18n.translate('name')}
+					name="name"
+					required
+					size={100}
+				/>
+			</ClayInput.GroupItem>
 
 			<Form.Clay.Group>
-				<label className="mb-2">{i18n.translate('case-type')}</label>
+				<label className="mb-2 required">
+					{i18n.translate('case-type')}
+				</label>
 
-				{caseTypes
-					.slice(0, 10)
-					.map((caseType: TestrayCaseType, index: number) => (
-						<Form.Checkbox key={index} label={caseType.name} />
-					))}
+				<div className="d-flex flex-wrap">
+					{caseTypes.map(
+						(caseType: TestrayCaseType, index: number) => (
+							<div className="col-4" key={index}>
+								<Form.Checkbox
+									checked={caseTypesWatch.includes(
+										caseType.id
+									)}
+									label={caseType.name}
+									name={caseType.name}
+									onChange={onClickCaseType}
+									value={caseType.id}
+								/>
+							</div>
+						)
+					)}
+				</div>
 			</Form.Clay.Group>
 
-			<h3>{i18n.translate('users')}</h3>
+			<label className="mb-2 required">
+				<h5>{i18n.translate('users')}</h5>
+			</label>
 
 			<Form.Divider />
 
 			<Form.Clay.Group>
 				<ClayButton
 					displayType="secondary"
-					onClick={() => onOpenModal('assign-users')}
+					onClick={() => onOpenModal('select-users')}
 				>
 					{i18n.translate('assign-users')}
 				</ClayButton>
@@ -72,22 +210,36 @@ const TestflowForm = () => {
 				<ClayButton
 					className="ml-2"
 					displayType="secondary"
-					onClick={() => onOpenModal('assign-user-groups')}
+					onClick={() => onOpenModal('select-user-groups')}
 				>
 					{i18n.translate('assign-user-groups')}
 				</ClayButton>
 			</Form.Clay.Group>
 
+			{!users.length && (
+				<ClayAlert>
+					{i18n.translate('there-are-no-linked-users')}
+				</ClayAlert>
+			)}
+
 			{!!users.length && (
 				<UserListView
+					actions={actions}
 					listViewProps={{
-						managementToolbarProps: {visible: false},
+						managementToolbarProps: {
+							visible: false,
+						},
 						variables: {filter: searchUtil.in('id', users)},
 					}}
 				/>
 			)}
 
-			<Form.Footer onClose={() => null} onSubmit={() => null} />
+			<Form.Divider />
+
+			<Form.Footer
+				onClose={() => onClose()}
+				onSubmit={handleSubmit(_onSubmit)}
+			/>
 
 			<TestflowAssignUserModal modal={modal} type={modalType as any} />
 		</Container>

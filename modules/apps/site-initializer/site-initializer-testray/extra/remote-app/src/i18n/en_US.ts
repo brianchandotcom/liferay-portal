@@ -78,6 +78,7 @@ export default {
 	'change-password': 'Change Password',
 	'choose-an-option': 'Choose an Option',
 	'clear': 'Clear',
+	'clear-history': 'Clear History',
 	'clicking-save-will-assign-you-to-this-case-result':
 		'Clicking save will assign you to this case result.',
 	'close': 'Close',
@@ -317,6 +318,7 @@ export default {
 	'type-is-a-required-field': 'Type is a required field',
 	'unassign-myself': 'Unassign Myself',
 	'unassigned': 'Unassigned',
+	'undo-x': 'Undo ({0})',
 	'untested': 'Untested',
 	'update-x': 'Update {0}',
 	'updated': 'Updated',

@@ -17,6 +17,7 @@ import {useNavigate} from 'react-router-dom';
 import Container from '../../../components/Layout/Container';
 import ListView, {ListViewProps} from '../../../components/ListView';
 import {TableProps} from '../../../components/Table';
+import {ListViewContextProviderProps} from '../../../context/ListViewContext';
 import {FormModal} from '../../../hooks/useFormModal';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
@@ -27,7 +28,12 @@ type UserListViewProps = {
 	actions?: Action[];
 	formModal?: FormModal;
 	variables?: any;
-} & {listViewProps?: Partial<ListViewProps>; tableProps?: Partial<TableProps>};
+} & {
+	listViewProps?: Partial<
+		ListViewProps & {initialContext?: Partial<ListViewContextProviderProps>}
+	>;
+	tableProps?: Partial<TableProps>;
+};
 
 const UserListView: React.FC<UserListViewProps> = ({
 	actions,

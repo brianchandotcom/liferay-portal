@@ -907,6 +907,10 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.HIBERNATE_GENERATE_STATISTICS));
 
+	public static final boolean HIBERNATE_HBM_JAXB_CACHE =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.HIBERNATE_HBM_JAXB_CACHE));
+
 	public static final int HIBERNATE_JDBC_BATCH_SIZE = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE));
 

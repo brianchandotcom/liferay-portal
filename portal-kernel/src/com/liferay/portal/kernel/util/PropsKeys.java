@@ -1059,6 +1059,9 @@ public interface PropsKeys {
 	public static final String HIBERNATE_GENERATE_STATISTICS =
 		"hibernate.generate_statistics";
 
+	public static final String HIBERNATE_HBM_JAXB_CACHE =
+		"hibernate.hbm.jaxb.cache";
+
 	public static final String HIBERNATE_JDBC_BATCH_SIZE =
 		"hibernate.jdbc.batch_size";
 

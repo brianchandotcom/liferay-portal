@@ -14,28 +14,43 @@
 
 package com.liferay.portal.spring.hibernate;
 
+import com.liferay.petra.io.Deserializer;
+import com.liferay.petra.io.Serializer;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.internal.change.tracking.hibernate.CTSQLInterceptor;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import java.lang.reflect.Field;
 
 import java.net.URL;
+import java.net.URLConnection;
+
+import java.nio.ByteBuffer;
 
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -46,6 +61,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.jaxb.Origin;
 import org.hibernate.boot.jaxb.SourceType;
 import org.hibernate.boot.jaxb.internal.InputStreamXmlSource;
+import org.hibernate.boot.jaxb.spi.Binding;
 import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder;
 import org.hibernate.boot.spi.XmlMappingBinderAccess;
 import org.hibernate.cfg.Configuration;
@@ -54,6 +70,9 @@ import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.metamodel.spi.MetamodelImplementor;
 import org.hibernate.type.spi.TypeConfiguration;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
@@ -268,13 +287,92 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 			return;
 		}
 
+		configuration.addXmlMapping(_loadBinding(configuration, url));
+	}
+
+	private File _getCacheFile(URL url) {
+		long bundleId = 0;
+
+		if (Objects.equals("bundleresource", url.getProtocol())) {
+			String host = url.getHost();
+
+			int index = host.indexOf(CharPool.PERIOD);
+
+			if (index != -1) {
+				bundleId = GetterUtil.getLong(host.substring(0, index));
+			}
+		}
+
+		Bundle bundle = _bundleContext.getBundle(bundleId);
+
+		return bundle.getDataFile(
+			StringUtil.replace(
+				url.getPath(),
+				new char[] {
+					CharPool.COLON, CharPool.EXCLAMATION, CharPool.SLASH
+				},
+				new char[] {
+					CharPool.UNDERLINE, CharPool.UNDERLINE, CharPool.UNDERLINE
+				}));
+	}
+
+	private Binding<?> _loadBinding(Configuration configuration, URL url)
+		throws Exception {
+
+		URLConnection urlConnection = url.openConnection();
+
+		File cacheFile = null;
+
+		long lastModifiedTime = 0;
+
+		if (PropsValues.HIBERNATE_HBM_JAXB_CACHE) {
+			cacheFile = _getCacheFile(url);
+
+			lastModifiedTime = urlConnection.getLastModified();
+
+			try {
+				if (cacheFile.exists() &&
+					(cacheFile.lastModified() == lastModifiedTime)) {
+
+					Deserializer deserializer = new Deserializer(
+						ByteBuffer.wrap(FileUtil.getBytes(cacheFile)));
+
+					Binding<?> binding = deserializer.readObject();
+
+					InputStream inputStream = urlConnection.getInputStream();
+
+					inputStream.close();
+
+					return binding;
+				}
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to load hbm cache file for " + url, exception);
+			}
+		}
+
 		XmlMappingBinderAccess xmlMappingBinderAccess =
 			configuration.getXmlMappingBinderAccess();
 
-		configuration.addXmlMapping(
-			InputStreamXmlSource.doBind(
-				xmlMappingBinderAccess.getMappingBinder(), url.openStream(),
-				new Origin(SourceType.URL, url.toExternalForm()), true));
+		Binding<?> binding = InputStreamXmlSource.doBind(
+			xmlMappingBinderAccess.getMappingBinder(),
+			urlConnection.getInputStream(),
+			new Origin(SourceType.URL, url.toExternalForm()), true);
+
+		if (PropsValues.HIBERNATE_HBM_JAXB_CACHE) {
+			Serializer serializer = new Serializer();
+
+			serializer.writeObject(binding);
+
+			try (OutputStream outputStream = new FileOutputStream(cacheFile)) {
+				serializer.writeTo(outputStream);
+			}
+
+			cacheFile.setLastModified(lastModifiedTime);
+		}
+
+		return binding;
 	}
 
 	private static final Field _META_MODEL_FIELD;
@@ -286,7 +384,11 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalHibernateConfiguration.class);
 
+	private static final BundleContext _bundleContext;
+
 	static {
+		_bundleContext = SystemBundleUtil.getBundleContext();
+
 		try {
 			_META_MODEL_FIELD = ReflectionUtil.getDeclaredField(
 				SessionFactoryImpl.class, "metamodel");

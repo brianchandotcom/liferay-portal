@@ -14,20 +14,28 @@
 
 import React from 'react';
 
+import {getUniqueList} from '../../../util';
 import {UserListView} from '../../Manage/User';
 
-type SelectCaseParametersProps = {
+type TestflowAssignUsersProps = {
+	modalState: any;
 	setState: any;
 };
 
-const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
+const TestflowAssignUsers: React.FC<TestflowAssignUsersProps> = ({
+	modalState,
 	setState,
 }) => (
 	<UserListView
 		listViewProps={{
-			onContextChange: ({selectedRows}) => setState(selectedRows),
+			initialContext: {selectedRows: modalState},
+			onContextChange: ({selectedRows}) =>
+				setState((state: any) =>
+					getUniqueList([...state, ...selectedRows])
+				),
 		}}
 		tableProps={{rowSelectable: true}}
 	/>
 );
-export default SelectCaseParameters;
+
+export default TestflowAssignUsers;

@@ -63,7 +63,7 @@ const UserForm = () => {
 
 	const _onSubmit = (form: UserFormDefault) => {
 		onSubmit(
-			{...form, userId: userAccount.id},
+			{...form, userId: userAccount?.id},
 			{
 				create: (...params) =>
 					liferayUserAccountsRest.create(...params),
@@ -77,7 +77,7 @@ const UserForm = () => {
 	};
 
 	const userRoles =
-		userAccount.roleBriefs.map(({id}: {id: number}) => id) || [];
+		userAccount?.roleBriefs.map(({id}: {id: number}) => id) || [];
 	const roles = data?.items || [];
 
 	const inputProps = {

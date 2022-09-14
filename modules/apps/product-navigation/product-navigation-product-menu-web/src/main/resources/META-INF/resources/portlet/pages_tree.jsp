@@ -54,7 +54,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext
 				<clay:content-row
 					containerElement="span"
 				>
-					<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" title="{title}">
+					<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" target="{target}" title="{title}">
 						<span class="c-inner" tabindex="-1">
 							<span class="mr-1 list-icon {type}-layout">
 								<aui:icon image="list" markupView="lexicon" />

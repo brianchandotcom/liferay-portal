@@ -113,6 +113,9 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"path", layoutPathJSONArray
 				).put(
+					"target",
+					HtmlUtil.escape(layout.getTypeSettingsProperty("target"))
+				).put(
 					"url", _portal.getLayoutFullURL(layout, themeDisplay)
 				));
 		}

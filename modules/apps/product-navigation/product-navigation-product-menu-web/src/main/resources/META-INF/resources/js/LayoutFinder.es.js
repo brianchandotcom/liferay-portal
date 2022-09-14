@@ -200,6 +200,7 @@ function LayoutFinder(props) {
 													className="d-block font-weight-bold mb-2 text-break"
 													href={layout.url}
 													key={layout.url}
+													target={layout.target}
 												>
 													{layout.name}
 												</a>

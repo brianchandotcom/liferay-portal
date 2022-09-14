@@ -24,4 +24,5 @@ dependencies {
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompile project(":apps:frontend-js:frontend-js-web")
+	testCompile project(":core:petra:petra-reflect")
 }

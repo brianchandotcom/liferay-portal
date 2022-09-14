@@ -138,6 +138,8 @@ public class JournalArticleModelPreFilterContributor
 
 		boolean head = GetterUtil.getBoolean(
 			searchContext.getAttribute("head"), Boolean.TRUE);
+		boolean headOrShowNonIndexable = GetterUtil.getBoolean(
+			searchContext.getAttribute("headOrShowNonIndexable"));
 		boolean latest = GetterUtil.getBoolean(
 			searchContext.getAttribute("latest"));
 		boolean relatedClassName = GetterUtil.getBoolean(
@@ -148,7 +150,9 @@ public class JournalArticleModelPreFilterContributor
 		if (latest && !relatedClassName && !showNonindexable) {
 			booleanFilter.addRequiredTerm("latest", Boolean.TRUE);
 		}
-		else if (head && !relatedClassName && !showNonindexable) {
+		else if (head && !headOrShowNonIndexable && !relatedClassName &&
+				 !showNonindexable) {
+
 			booleanFilter.addRequiredTerm("head", Boolean.TRUE);
 		}
 
@@ -157,6 +161,10 @@ public class JournalArticleModelPreFilterContributor
 		}
 		else if (!relatedClassName && showNonindexable) {
 			booleanFilter.addRequiredTerm("headListable", Boolean.TRUE);
+		}
+		else if (headOrShowNonIndexable && !relatedClassName) {
+			booleanFilter.addTerm("head", Boolean.TRUE);
+			booleanFilter.addTerm("headListable", Boolean.TRUE);
 		}
 
 		boolean filterExpired = GetterUtil.getBoolean(

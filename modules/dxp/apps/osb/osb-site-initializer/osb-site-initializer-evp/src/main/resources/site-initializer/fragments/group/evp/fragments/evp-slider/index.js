@@ -95,7 +95,7 @@ function createInterval() {
 	return intervalId;
 }
 
-(function main() {
+function main() {
 	let intervalId = createInterval();
 
 	if (this.nextItemIndex && this.nextItemIndex < items.length) {
@@ -127,4 +127,6 @@ function createInterval() {
 			intervalId = createInterval();
 		});
 	});
-})();
+}
+
+main();

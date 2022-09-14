@@ -4,7 +4,7 @@
 	"htmlPath": "index.html",
 	"icon": "slideshow",
 	"jsPath": "index.js",
-	"name": "Slider EVP",
+	"name": "EVP Slider",
 	"thumbnailPath": "thumbnail.png",
 	"type": "component"
 }

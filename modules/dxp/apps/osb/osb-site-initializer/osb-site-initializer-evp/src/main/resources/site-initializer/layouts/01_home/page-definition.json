@@ -484,7 +484,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "slider-evp"
+																"key": "evp-slider"
 															},
 															"fragmentConfig": {
 																"numberOfSlides": 3

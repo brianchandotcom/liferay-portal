@@ -1,14 +1,14 @@
-.evp_news_container {
+.evp-news-container {
 	border: 1px solid;
 	border-radius: 8px;
 }
 
-.evp_news_container img {
+.evp-news-container img {
 	height: 24px;
 	width: 24px;
 }
 
-.evp_news_container .news-content .news-text {
+.evp-news-container .news-content .news-text {
 	display: -webkit-box;
 	overflow: hidden;
 	-webkit-line-clamp: 2;

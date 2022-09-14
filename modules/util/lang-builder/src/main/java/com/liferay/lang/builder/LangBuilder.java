@@ -192,7 +192,7 @@ public class LangBuilder {
 		_createProperties(content, "sk"); // Slovak
 		_createProperties(content, "sl"); // Slovene
 		_createProperties(content, "es_AR"); // Spanish (Argentina)
-		_createProperties(content, "es_CO"); // Spanish (Columbia)
+		_createProperties(content, "es_CO"); // Spanish (Colombia)
 		_createProperties(content, "es"); // Spanish
 		_createProperties(content, "es_MX"); // Spanish (Mexico)
 		_createProperties(content, "sv"); // Swedish

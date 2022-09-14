@@ -16,41 +16,49 @@ import React, {useState} from 'react';
 
 import Form from '../../../components/Form';
 import Modal from '../../../components/Modal';
+import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
-import TestflowAssignUserGroups from './TestflowAssignUserGroups';
+import UserGroups from './TestflowAssignUserGroups';
 import TestflowAssignUsers from './TestflowAssignUsers';
 
 type SuiteSelectCasesModalProps = {
 	modal: FormModalOptions;
-	type: 'assign-users' | 'assign-user-groups';
+	type: 'select-users' | 'select-user-groups';
 };
 
 const TestflowAssignUserModal: React.FC<SuiteSelectCasesModalProps> = ({
-	modal: {observer, onClose, onSave, visible},
+	modal: {modalState, observer, onClose, onSave, visible},
 	type,
 }) => {
-	const [state, setState] = useState<any>({});
+	const [state, setState] = useState<any>([]);
 
 	return (
 		<Modal
 			last={
-				<Form.Footer onClose={onClose} onSubmit={() => onSave(state)} />
+				<Form.Footer
+					onClose={onClose}
+					onSubmit={() => onSave(state)}
+					primaryButtonProps={{title: type}}
+				/>
 			}
 			observer={observer}
 			size="full-screen"
 			title={i18n.translate(type)}
 			visible={visible}
 		>
-			{type === 'assign-user-groups' && (
-				<TestflowAssignUserGroups setState={setState} state={state} />
+			{type === 'select-user-groups' && (
+				<UserGroups setState={setState} state={modalState} />
 			)}
 
-			{type === 'assign-users' && (
-				<TestflowAssignUsers setState={setState} />
+			{type === 'select-users' && (
+				<TestflowAssignUsers
+					modalState={modalState}
+					setState={setState}
+				/>
 			)}
 		</Modal>
 	);
 };
 
-export default TestflowAssignUserModal;
+export default withVisibleContent(TestflowAssignUserModal);

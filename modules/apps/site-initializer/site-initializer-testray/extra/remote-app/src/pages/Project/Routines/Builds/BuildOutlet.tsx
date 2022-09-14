@@ -24,11 +24,12 @@ import {useFetch} from '../../../../hooks/useFetch';
 import useHeader from '../../../../hooks/useHeader';
 import i18n from '../../../../i18n';
 import {
+	APIResponse,
 	TestrayProject,
 	TestrayRoutine,
-	getTasksTransformData,
-	tasksResource,
+	TestrayTask,
 	testrayBuildImpl,
+	testrayTaskImpl,
 } from '../../../../services/rest';
 import BuildAlertBar from './BuildAlertBar';
 import BuildOverview from './BuildOverview';
@@ -63,9 +64,9 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 		timeout: 200,
 	});
 
-	const {data: testrayTasksData} = useFetch(
-		tasksResource,
-		getTasksTransformData
+	const {data: testrayTasksData} = useFetch<APIResponse<TestrayTask>>(
+		testrayTaskImpl.resource,
+		(response) => testrayTaskImpl.transformDataFromList(response)
 	);
 
 	const testrayTasks = testrayTasksData?.items || [];

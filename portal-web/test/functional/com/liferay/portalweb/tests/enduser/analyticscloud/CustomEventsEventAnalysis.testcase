@@ -178,6 +178,108 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-11669 | Automation ID: LRAC-11923 | Test Summary: Pagination for the result of the event analysis"
+	@priority = "3"
+	test CanPaginationEventAnalysisResult {
+		var defaultEventName = "pageViewed";
+		var attributeName = "pageTitle";
+		var layoutNameList = "Custom 1,Custom 2,Custom 3,Custom 4,Custom 5";
+		var firstPageList = "ac page,custom 2,custom 3,custom 4,custom 5";
+		var secondPageList = "custom 1";
+		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+		}
+
+		task ("Create new pages and put the web content in the pages") {
+			for (var layoutName : list "${layoutNameList}") {
+				ACUtils.addPage(layoutName = "${layoutName}");
+
+				ACCustomEvents.addWCWithCustomEventToPage(layoutName = "${layoutName}");
+			}
+		}
+
+		task ("View the pages") {
+			for (var pageName : list "AC Page,${layoutNameList}") {
+				ACUtils.navigateToSitePage(
+					actionType = "View WC",
+					pageName = "${pageName}",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the default event to analysis") {
+			ACEventAnalysis.addEvent(customEventName = "${defaultEventName}");
+		}
+
+		task ("Add the breakdown to analysis") {
+			ACEventAnalysis.addBreakdown(attributeNameList = "${attributeName}");
+		}
+
+		task ("Change the time filter to 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Check pagination for "20" items filter") {
+			ACUtils.viewResultsMessage(results = "Showing 1 to 6 of 6 entries.");
+
+			ACUtils.viewResultsPages(pageNumber = "1");
+		}
+
+		task ("Change the pagination to "5" items") {
+			ACUtils.changePagination(itemsPerPage = "5");
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
+
+			ACUtils.viewResultsPages(pageNumber = "1");
+
+			ACUtils.viewResultsPages(pageNumber = "2");
+		}
+
+		task ("Check the pages that appear in the pagination") {
+			for (var pageName : list "${firstPageList}") {
+				ACEventAnalysis.viewAnalysisInformation(informationValueList = "${pageName} - site name - ${dataSource}");
+			}
+		}
+
+		task ("Check that the page on the second page does not appear on the first") {
+			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "${secondPageList} - site name - ${dataSource}");
+		}
+
+		task ("Navigate to the next page") {
+			ACUtils.checkPreviousNextButton(nextButton = "true");
+
+			ACUtils.viewResultsMessage(results = "Showing 6 to 6 of 6 entries.");
+		}
+
+		task ("Check the page that appear in the pagination") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "${secondPageList} - site name - ${dataSource}");
+		}
+
+		task ("Check that the pages on the first page do not appear on the second") {
+			for (var pageName : list "${firstPageList}") {
+				ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "${pageName} - site name - ${dataSource}");
+			}
+		}
+	}
+
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10307 | Test Summary: Total Chart, Unique Chart and Average Chart data shown"
 	@priority = "5"
 	test CheckTotalAndUniqueAndAverageChartDataIsShown {

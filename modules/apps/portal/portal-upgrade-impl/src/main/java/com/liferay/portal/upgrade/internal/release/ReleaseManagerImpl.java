@@ -20,7 +20,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -38,7 +37,6 @@ import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.registry.UpgradeStepRegistratorThreadLocal;
-import com.liferay.portal.util.IndexUpdaterUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
@@ -194,12 +192,6 @@ public class ReleaseManagerImpl implements ReleaseManager {
 			}
 
 			_activated = true;
-		}
-
-		if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP &&
-			!StartupHelperUtil.isDBNew()) {
-
-			IndexUpdaterUtil.updateModulesIndexes(true);
 		}
 	}
 

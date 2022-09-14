@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Petra Portlet URL Builder
-Bundle-SymbolicName: com.liferay.petra.portlet.url.builder
-Bundle-Version: 6.0.1
-Export-Package: com.liferay.petra.portlet.url.builder

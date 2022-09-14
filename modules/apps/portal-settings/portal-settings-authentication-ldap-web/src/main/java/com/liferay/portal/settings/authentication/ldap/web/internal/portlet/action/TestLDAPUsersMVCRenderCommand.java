@@ -27,8 +27,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -78,14 +76,6 @@ public class TestLDAPUsersMVCRenderCommand
 	@Override
 	protected String getJspPath() {
 		return _JSP_PATH;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.ldap.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.servletContext = servletContext;
 	}
 
 	private static final String _JSP_PATH =

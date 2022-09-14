@@ -17,10 +17,7 @@ package com.liferay.portal.settings.authentication.ldap.web.internal.portlet.act
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Philip Jones
@@ -38,14 +35,6 @@ public class EditLDAPServerMVCRenderCommand
 	@Override
 	protected String getJspPath() {
 		return _JSP_PATH;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.ldap.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.servletContext = servletContext;
 	}
 
 	private static final String _JSP_PATH =

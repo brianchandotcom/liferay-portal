@@ -18,6 +18,18 @@ import {APIResponse} from './types';
 type Adapter<T = any> = (data: T) => Partial<T>;
 type TransformData<T = any> = (data: T) => T;
 
+const getNestedFieldDepth = (nestedFields: string | undefined) => {
+	if (!nestedFields) {
+		return 1;
+	}
+
+	const nestedFieldsDepthCount = nestedFields
+		.split(',')
+		.map((item) => item.split('.').length);
+
+	return Math.max(...nestedFieldsDepthCount);
+};
+
 interface RestContructor<YupModel = any, ObjectModel = any> {
 	adapter?: Adapter<YupModel>;
 	nestedFields?: string;
@@ -42,7 +54,9 @@ class Rest<YupModel = any, ObjectModel = any> {
 	}: RestContructor<YupModel, ObjectModel>) {
 		this.nestedFields = `nestedFields=${nestedFields}`;
 		this.uri = uri;
-		this.resource = `/${uri}?${this.nestedFields}`;
+		this.resource = `/${uri}?${
+			this.nestedFields
+		}&nestedFieldsDepth=${getNestedFieldDepth(nestedFields)}`;
 
 		if (adapter) {
 			this.adapter = adapter;

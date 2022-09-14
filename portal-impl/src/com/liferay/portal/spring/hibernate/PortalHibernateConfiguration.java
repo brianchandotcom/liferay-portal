@@ -28,7 +28,6 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.lang.reflect.Field;
 
@@ -44,7 +43,11 @@ import javax.sql.DataSource;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.jaxb.Origin;
+import org.hibernate.boot.jaxb.SourceType;
+import org.hibernate.boot.jaxb.internal.InputStreamXmlSource;
 import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder;
+import org.hibernate.boot.spi.XmlMappingBinderAccess;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
@@ -233,19 +236,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		return _configurationResources;
 	}
 
-	protected void readResource(
-			Configuration configuration, InputStream inputStream)
-		throws Exception {
-
-		if (inputStream == null) {
-			return;
-		}
-
-		configuration.addInputStream(inputStream);
-
-		inputStream.close();
-	}
-
 	protected void readResource(Configuration configuration, String resource)
 		throws Exception {
 
@@ -263,16 +253,28 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				InputStream inputStream = url.openStream();
-
-				readResource(configuration, inputStream);
+				readResource(configuration, url);
 			}
 		}
 		else {
-			InputStream inputStream = classLoader.getResourceAsStream(resource);
-
-			readResource(configuration, inputStream);
+			readResource(configuration, classLoader.getResource(resource));
 		}
+	}
+
+	protected void readResource(Configuration configuration, URL url)
+		throws Exception {
+
+		if (url == null) {
+			return;
+		}
+
+		XmlMappingBinderAccess xmlMappingBinderAccess =
+			configuration.getXmlMappingBinderAccess();
+
+		configuration.addXmlMapping(
+			InputStreamXmlSource.doBind(
+				xmlMappingBinderAccess.getMappingBinder(), url.openStream(),
+				new Origin(SourceType.URL, url.toExternalForm()), true));
 	}
 
 	private static final Field _META_MODEL_FIELD;

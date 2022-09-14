@@ -167,6 +167,12 @@ public class ExtRepositoryFileEntryAdapter
 	}
 
 	@Override
+	@SuppressWarnings("rawtypes")
+	public List<FileVersion> getFileVersions(int status, int start, int end) {
+		return getFileVersions(status);
+	}
+
+	@Override
 	public int getFileVersionsCount(int status) {
 		List<FileVersion> fileVersions = getFileVersions(status);
 

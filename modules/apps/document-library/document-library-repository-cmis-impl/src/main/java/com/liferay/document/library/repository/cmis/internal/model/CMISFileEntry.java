@@ -273,6 +273,11 @@ public class CMISFileEntry extends BaseCMISModel implements FileEntry {
 	}
 
 	@Override
+	public List<FileVersion> getFileVersions(int status, int start, int end) {
+		return getFileVersions(status);
+	}
+
+	@Override
 	public int getFileVersionsCount(int status) {
 		try {
 			List<Document> documents = getAllVersions();

@@ -223,8 +223,14 @@ public class SearchResultContentDisplayContextBuilderTest {
 		throws Exception {
 
 		SearchResultContentDisplayContextBuilder
-			searchResultContentDisplayContextBuilder =
-				new SearchResultContentDisplayContextBuilder();
+			searchResultContentDisplayContextBuilder = Mockito.spy(
+				new SearchResultContentDisplayContextBuilder());
+
+		Mockito.doReturn(
+			_assetEntry
+		).when(
+			searchResultContentDisplayContextBuilder
+		).getAssetEntry();
 
 		searchResultContentDisplayContextBuilder.setAssetEntryId(
 			RandomTestUtil.randomLong());

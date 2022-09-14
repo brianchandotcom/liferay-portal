@@ -5,39 +5,48 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
-	<name>Single Approver</name>
 	<description>A single approver can approve a workflow content.</description>
 	<version>1</version>
 	<state>
-		<name>created</name>
+		<id>created</id>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						36,
-						51
+						165,
+						76
 					]
 				}
 			]]>
 		</metadata>
 		<initial>true</initial>
+		<labels>
+			<label language-id="en_US">
+				created
+			</label>
+		</labels>
 		<transitions>
 			<transition>
-				<name>review</name>
-				<target>review2</target>
+				<labels>
+					<label language-id="en_US">
+						review
+					</label>
+				</labels>
+				<id>created_review_review</id>
+				<target>review</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<name>approved</name>
+		<id>approved</id>
 		<metadata>
 			<![CDATA[
 				{
 					"terminal": true,
 					"xy": [
-						380,
-						51
+						539,
+						74
 					]
 				}
 			]]>
@@ -57,25 +66,21 @@
 				<execution-type>onEntry</execution-type>
 			</action>
 		</actions>
+		<labels>
+			<label language-id="en_US">
+				approved
+			</label>
+		</labels>
 	</state>
 	<task>
-		<name>update2</name>
+		<id>update</id>
+		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
 				{
-					"transitions": {
-						"resubmit": {
-							"bendpoints": [
-								[
-									303,
-									140
-								]
-							]
-						}
-					},
 					"xy": [
-						328,
-						199
+						164,
+						533
 					]
 				}
 			]]>
@@ -95,39 +100,37 @@
 				<script-language>groovy</script-language>
 				<execution-type>onAssignment</execution-type>
 			</action>
-			<notification>
-				<name>Creator Modification Notification</name>
-				<template>
-					<![CDATA[Your submission was rejected by ${userName}, please modify and resubmit.]]>
-				</template>
-				<template-language>freemarker</template-language>
-				<notification-type>email</notification-type>
-				<notification-type>user-notification</notification-type>
-				<recipients receptionType="to">
-					<user />
-				</recipients>
-				<execution-type>onAssignment</execution-type>
-			</notification>
 		</actions>
 		<assignments>
 			<user />
 		</assignments>
+		<labels>
+			<label language-id="en_US">
+				update2
+			</label>
+		</labels>
 		<transitions>
 			<transition>
-				<name>resubmit</name>
-				<target>review2</target>
+				<labels>
+					<label language-id="en_US">
+						resubmit
+					</label>
+				</labels>
+				<id>resubmit</id>
+				<target>review</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>review2</name>
+		<id>review</id>
+		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						168,
-						36
+						165,
+						292
 					]
 				}
 			]]>
@@ -170,15 +173,15 @@
 					<name>Account Member</name>
 				</role>
 				<role>
-					<role-type>depot</role-type>
+					<role-type>asset library</role-type>
 					<name>Asset Library Administrator</name>
 				</role>
 				<role>
-					<role-type>depot</role-type>
+					<role-type>asset library</role-type>
 					<name>Asset Library Content Reviewer</name>
 				</role>
 				<role>
-					<role-type>depot</role-type>
+					<role-type>asset library</role-type>
 					<name>Asset Library Owner</name>
 				</role>
 				<role>
@@ -215,15 +218,30 @@
 				</role>
 			</roles>
 		</assignments>
+		<labels>
+			<label language-id="en_US">
+				review2
+			</label>
+		</labels>
 		<transitions>
 			<transition>
-				<name>approve</name>
+				<labels>
+					<label language-id="en_US">
+						approve
+					</label>
+				</labels>
+				<id>approve</id>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 			<transition>
-				<name>reject</name>
-				<target>update2</target>
+				<labels>
+					<label language-id="en_US">
+						reject
+					</label>
+				</labels>
+				<id>reject</id>
+				<target>update</target>
 				<default>false</default>
 			</transition>
 		</transitions>

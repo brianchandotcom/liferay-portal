@@ -241,17 +241,21 @@ definition {
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		WorkflowMetricsAllItemsList.selectAndChangeNodeID(
-			nodeID = "review2",
+		WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
+			newNodeLabel = "review2",
 			nodeLabel = "review",
 			nodeType = "task",
 			update = "true");
 
-		WorkflowMetricsAllItemsList.selectAndChangeNodeID(
-			nodeID = "update2",
+		WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
+			newNodeLabel = "update2",
 			nodeLabel = "update",
 			nodeType = "task",
 			update = "true");
+
+		ProcessBuilderKaleoDesignerReact.editConnector(
+			connectorLabel = "APPROVE",
+			newConnectorLabel = "Approve");
 
 		Button.clickUpdate();
 
@@ -518,14 +522,14 @@ definition {
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		WorkflowMetricsAllItemsList.selectAndChangeNodeID(
-			nodeID = "review2",
+		WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
+			newNodeLabel = "review2",
 			nodeLabel = "review",
 			nodeType = "task",
 			update = "true");
 
-		WorkflowMetricsAllItemsList.selectAndChangeNodeID(
-			nodeID = "update2",
+		WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
+			newNodeLabel = "update2",
 			nodeLabel = "update",
 			nodeType = "task",
 			update = "true");
@@ -592,17 +596,21 @@ definition {
 
 			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-			WorkflowMetricsAllItemsList.selectAndChangeNodeID(
-				nodeID = "review2",
+			WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
+				newNodeLabel = "review2",
 				nodeLabel = "review",
 				nodeType = "task",
 				update = "true");
 
-			WorkflowMetricsAllItemsList.selectAndChangeNodeID(
-				nodeID = "update2",
+			WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
+				newNodeLabel = "update2",
 				nodeLabel = "update",
 				nodeType = "task",
 				update = "true");
+
+			ProcessBuilderKaleoDesignerReact.editConnector(
+				connectorLabel = "APPROVE",
+				newConnectorLabel = "Approve");
 
 			Button.clickUpdate();
 		}
@@ -894,13 +902,23 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(workflowDefinitionTitle = "Single Approver Updated");
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "single-approver-updated-workflow-definition.xml");
+		WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
+			newNodeLabel = "review2",
+			nodeLabel = "review",
+			nodeType = "task");
 
-		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+		WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
+			newNodeLabel = "update2",
+			nodeLabel = "update",
+			nodeType = "task");
 
-		PortletEntry.publish();
+		ProcessBuilderKaleoDesignerReact.editConnector(
+			connectorLabel = "APPROVE",
+			newConnectorLabel = "Approve");
+
+		Button.clickUpdate();
 
 		Navigator.openURL();
 
@@ -924,7 +942,7 @@ definition {
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "review2");
 
-		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver Updated");
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Navigator.gotoNavItem(navItem = "Performance");
 

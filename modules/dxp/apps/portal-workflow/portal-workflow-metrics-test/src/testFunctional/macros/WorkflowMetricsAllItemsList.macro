@@ -56,15 +56,15 @@ definition {
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_CREATION_DATE");
 	}
 
-	macro selectAndChangeNodeID {
+	macro selectAndChangeNodeLabel {
 		Click(
 			key_nodeLabel = "${nodeLabel}",
 			key_nodeType = "${nodeType}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL_SPECIFIC");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
-			infoValue = "${nodeID}");
+			infoOption = "Label",
+			infoValue = "${newNodeLabel}");
 
 		if (isSet(update)) {
 			Button.click(button = "Update");

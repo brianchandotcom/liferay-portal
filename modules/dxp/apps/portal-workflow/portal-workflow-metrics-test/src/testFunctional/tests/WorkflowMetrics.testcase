@@ -1731,6 +1731,12 @@ definition {
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver Edited");
 
+		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "review");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Review");
+
 		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "update");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Task Node");

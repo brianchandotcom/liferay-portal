@@ -22,9 +22,10 @@ const App = ({connected}) => (
 			<MultiStepNav
 				steps={[
 					{
-						description:
-							'Use the token generated in your Analytics Cloud to connect this workspace.',
-						title: 'Connect AC',
+						description: Liferay.Language.get(
+							'use-the-token-genereted-in-your-analytics-cloud-to-connect-this-workspace'
+						),
+						title: Liferay.Language.get('connect-analytics-cloud'),
 					},
 				]}
 			/>

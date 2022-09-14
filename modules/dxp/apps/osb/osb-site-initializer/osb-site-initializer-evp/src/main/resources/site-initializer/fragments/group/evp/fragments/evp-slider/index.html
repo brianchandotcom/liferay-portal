@@ -1,0 +1,21 @@
+<div class="evp-component-slider pb-4">
+	<div class="carousel">
+		<ol class="carousel-navigation">
+			[#list 0..configuration.numberOfSlides-1 as i]
+			<li>
+			<button aria-controls="${fragmentEntryLinkNamespace}-carousel-item-${i+1}" aria-label="Focus slide ${i+1}" class="[#if i == 0]active[/#if]" type="button"></button>
+			</li>
+			[/#list]
+		</ol>
+
+		<div class="carousel-inner text-break" id="${fragmentEntryLinkNamespace}-carouselInner" role="group">
+			[#list 0..configuration.numberOfSlides-1 as i] [#assign index =
+			"${i+1}" /] [#if i lt 9] [#assign index = "0${i+1}" /] [/#if]
+
+		<div class="[#if i == 0]active[/#if] carousel-item" id="${fragmentEntryLinkNamespace}-carousel-item-${i+1}">
+			<img alt="" class="w-100" data-lfr-editable-id="${index}-image" data-lfr-editable-type="image" src="" />
+			</div>
+			[/#list]
+		</div>
+	</div>
+</div>

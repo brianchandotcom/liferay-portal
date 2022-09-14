@@ -484,7 +484,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "slider-evp"
+																"key": "evp-slider"
 															},
 															"fragmentConfig": {
 																"numberOfSlides": 3
@@ -507,7 +507,7 @@
 																				"fieldKey": "FileEntry_previewImage",
 																				"itemReference": {
 																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																					"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/gallery/evp_photo1.jpeg$]"
+																					"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/gallery/evp_photo1.jpg$]"
 																				}
 																			}
 																		}
@@ -523,7 +523,7 @@
 																				"fieldKey": "FileEntry_previewImage",
 																				"itemReference": {
 																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																					"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/gallery/evp_photo2.jpeg$]"
+																					"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/gallery/evp_photo2.jpg$]"
 																				}
 																			}
 																		}
@@ -539,7 +539,7 @@
 																				"fieldKey": "FileEntry_previewImage",
 																				"itemReference": {
 																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																					"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/gallery/evp_photo3.jpeg$]"
+																					"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/gallery/evp_photo3.jpg$]"
 																				}
 																			}
 																		}

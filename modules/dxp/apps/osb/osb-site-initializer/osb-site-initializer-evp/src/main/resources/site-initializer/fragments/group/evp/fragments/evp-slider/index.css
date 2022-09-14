@@ -34,48 +34,48 @@
 	}
 }
 
-.component-slider .carousel {
+.evp-component-slider .carousel {
 	position: relative;
 }
 
-.component-slider .carousel-item {
+.evp-component-slider .carousel-item {
 	opacity: 0;
 }
 
-.component-slider .carousel-item.move-right,
-.component-slider .carousel-item.move-left {
+.evp-component-slider .carousel-item.move-right,
+.evp-component-slider .carousel-item.move-left {
 	animation-duration: 0.6s;
 	animation-iteration-count: 1;
 	display: block;
 }
 
-.component-slider .carousel-item.active,
-.component-slider .carousel-item.move-left,
-.component-slider .carousel-item.move-right {
+.evp-component-slider .carousel-item.active,
+.evp-component-slider .carousel-item.move-left,
+.evp-component-slider .carousel-item.move-right {
 	opacity: 1;
 }
 
-.component-slider .carousel-item.active {
+.evp-component-slider .carousel-item.active {
 	transform: translateX(0);
 }
 
-.component-slider .carousel-item.active.move-left {
+.evp-component-slider .carousel-item.active.move-left {
 	animation-name: moveLeftActive;
 }
 
-.component-slider .carousel-item.move-left {
+.evp-component-slider .carousel-item.move-left {
 	animation-name: moveLeft;
 }
 
-.component-slider .carousel-item.active.move-right {
+.evp-component-slider .carousel-item.active.move-right {
 	animation-name: moveRightActive;
 }
 
-.component-slider .carousel-item.move-right {
+.evp-component-slider .carousel-item.move-right {
 	animation-name: moveRight;
 }
 
-.component-slider .carousel-navigation {
+.evp-component-slider .carousel-navigation {
 	bottom: 10px;
 	display: flex;
 	justify-content: center;
@@ -87,7 +87,7 @@
 	z-index: 15;
 }
 
-.component-slider .carousel-navigation button {
+.evp-component-slider .carousel-navigation button {
 	background-color: rgba(255, 255, 255, 0.5);
 	border: 0;
 	flex: 0 1 auto;
@@ -98,11 +98,11 @@
 	width: 30px;
 }
 
-.component-slider .carousel-navigation button:focus {
+.evp-component-slider .carousel-navigation button:focus {
 	outline: 0;
 	text-decoration: none;
 }
 
-.component-slider .carousel-navigation button.active {
+.evp-component-slider .carousel-navigation button.active {
 	background-color: rgba(255, 255, 255, 1);
 }

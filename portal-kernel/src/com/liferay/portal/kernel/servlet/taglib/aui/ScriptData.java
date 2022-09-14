@@ -65,10 +65,6 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		portletData.add(jsFragment);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link ScriptData#append(String, JSFragment)}
-	 */
-	@Deprecated
 	public void append(
 		String portletId, String content, String modules,
 		ModulesType modulesType) {
@@ -96,10 +92,6 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		}
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link ScriptData#append(String, JSFragment)}
-	 */
-	@Deprecated
 	public void append(
 		String portletId, StringBundler contentSB, String modules,
 		ModulesType modulesType) {

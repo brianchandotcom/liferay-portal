@@ -609,11 +609,9 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
 		DMDocument.checkoutCP(dmDocumentTitle = "Check in as major version");
 
-		Refresh();
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Draft",
@@ -624,6 +622,8 @@ definition {
 			revision = "Major");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertElementNotPresent(
 			key_dmDocumentTitle = "Check in as major version",

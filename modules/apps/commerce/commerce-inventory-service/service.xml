@@ -244,7 +244,7 @@
 			<finder-column name="classNameId" />
 			<finder-column name="commerceInventoryWarehouseId" />
 		</finder>
-		<finder name="C_C_C" return-type="CommerceInventoryWarehouseRel" unique="true">
+		<finder name="C_C_CIWI" return-type="CommerceInventoryWarehouseRel" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="commerceInventoryWarehouseId" />

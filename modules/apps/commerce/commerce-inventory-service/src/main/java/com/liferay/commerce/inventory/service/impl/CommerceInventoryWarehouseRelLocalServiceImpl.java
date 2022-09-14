@@ -163,7 +163,7 @@ public class CommerceInventoryWarehouseRelLocalServiceImpl
 	public CommerceInventoryWarehouseRel fetchCommerceInventoryWarehouseRel(
 		String className, long classPK, long commerceInventoryWarehouseId) {
 
-		return commerceInventoryWarehouseRelPersistence.fetchByC_C_C(
+		return commerceInventoryWarehouseRelPersistence.fetchByC_C_CIWI(
 			_classNameLocalService.getClassNameId(className), classPK,
 			commerceInventoryWarehouseId);
 	}
@@ -290,7 +290,7 @@ public class CommerceInventoryWarehouseRelLocalServiceImpl
 		throws PortalException {
 
 		CommerceInventoryWarehouseRel commerceInventoryWarehouseRel =
-			commerceInventoryWarehouseRelPersistence.fetchByC_C_C(
+			commerceInventoryWarehouseRelPersistence.fetchByC_C_CIWI(
 				classNameId, classPK, commerceInventoryWarehouseId);
 
 		if (commerceInventoryWarehouseRel != null) {

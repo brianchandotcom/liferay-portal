@@ -3,6 +3,7 @@ dependencies {
 
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationCompile project(":apps:account:account-api")
+	testIntegrationCompile project(":apps:document-library:document-library-api")
 	testIntegrationCompile project(":apps:headless:headless-admin-user:headless-admin-user-api")
 	testIntegrationCompile project(":apps:list-type:list-type-api")
 	testIntegrationCompile project(":apps:object:object-api")

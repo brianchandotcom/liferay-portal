@@ -106,7 +106,7 @@ const Header = () => {
 										}
 									}}
 								>
-									<small className="text-paragraph-xs text-secondary">
+									<small className="pr-2 text-paragraph-xs text-secondary">
 										{header.category ? (
 											header.category.toUpperCase()
 										) : (

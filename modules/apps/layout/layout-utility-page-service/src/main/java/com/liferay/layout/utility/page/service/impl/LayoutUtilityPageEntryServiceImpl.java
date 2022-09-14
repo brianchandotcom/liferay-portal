@@ -14,10 +14,21 @@
 
 package com.liferay.layout.utility.page.service.impl;
 
+import com.liferay.layout.utility.page.constants.LayoutUtilityPageActionKeys;
+import com.liferay.layout.utility.page.constants.LayoutUtilityPageConstants;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.base.LayoutUtilityPageEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -31,4 +42,108 @@ import org.osgi.service.component.annotations.Component;
 )
 public class LayoutUtilityPageEntryServiceImpl
 	extends LayoutUtilityPageEntryServiceBaseImpl {
+
+	@Override
+	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
+			String externalReferenceCode, long groupId, String name, long plid,
+			int type, ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			LayoutUtilityPageActionKeys.ADD_LAYOUT_UTILITY_PAGE_ENTRY);
+
+		return layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+			externalReferenceCode, getUserId(), groupId, name, plid, type,
+			serviceContext);
+	}
+
+	@Override
+	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
+			long layoutUtilityPageEntryId)
+		throws PortalException {
+
+		return layoutUtilityPageEntryLocalService.deleteLayoutUtilityPageEntry(
+			layoutUtilityPageEntryId);
+	}
+
+	@Override
+	public LayoutUtilityPageEntry fetchLayoutUtilityPageEntry(
+		long layoutUtilityPageEntryId) {
+
+		return layoutUtilityPageEntryLocalService.fetchLayoutUtilityPageEntry(
+			layoutUtilityPageEntryId);
+	}
+
+	@Override
+	public LayoutUtilityPageEntry getDefaultLayoutUtilityPageEntry(
+			long groupId, int type)
+		throws PortalException {
+
+		return layoutUtilityPageEntryLocalService.
+			getDefaultLayoutUtilityPageEntry(groupId, type);
+	}
+
+	@Override
+	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId) {
+
+		return layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
+			groupId);
+	}
+
+	@Override
+	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, int type, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
+			groupId, type, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getLayoutUtilityPageEntriesCount(long groupId) {
+		return layoutUtilityPageEntryLocalService.
+			getLayoutUtilityPageEntriesCount(groupId);
+	}
+
+	@Override
+	public LayoutUtilityPageEntry setDefaultLayoutUtilityPageEntry(
+			long layoutUtilityPageEntryId)
+		throws PortalException {
+
+		return layoutUtilityPageEntryLocalService.
+			setDefaultLayoutUtilityPageEntry(layoutUtilityPageEntryId);
+	}
+
+	@Override
+	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
+			long layoutUtilityPageEntryId, String name, long plid, int type,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
+			layoutUtilityPageEntryId, name, plid, type, serviceContext);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.layout.utility.page.model.LayoutUtilityPageEntry)"
+	)
+	private ModelResourcePermission<LayoutUtilityPageEntry>
+		_layoutUtilityPageEntryModelResourcePermission;
+
+	@Reference(
+		target = "(resource.name=" + LayoutUtilityPageConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
+
 }

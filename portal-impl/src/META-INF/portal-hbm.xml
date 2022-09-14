@@ -10,7 +10,6 @@
 	<import class="com.liferay.asset.kernel.model.AssetLink" />
 	<import class="com.liferay.asset.kernel.model.AssetTag" />
 	<import class="com.liferay.asset.kernel.model.AssetVocabulary" />
-	<import class="com.liferay.counter.kernel.model.Counter" />
 	<import class="com.liferay.document.library.kernel.model.DLFileEntry" />
 	<import class="com.liferay.document.library.kernel.model.DLFileEntryMetadata" />
 	<import class="com.liferay.document.library.kernel.model.DLFileEntryType" />
@@ -22,9 +21,6 @@
 	<import class="com.liferay.expando.kernel.model.ExpandoTable" />
 	<import class="com.liferay.expando.kernel.model.ExpandoValue" />
 	<import class="com.liferay.exportimport.kernel.model.ExportImportConfiguration" />
-	<import class="com.liferay.message.boards.kernel.model.MBCategory" />
-	<import class="com.liferay.message.boards.kernel.model.MBMessage" />
-	<import class="com.liferay.message.boards.kernel.model.MBThread" />
 	<import class="com.liferay.portal.kernel.model.Address" />
 	<import class="com.liferay.portal.kernel.model.BrowserTracker" />
 	<import class="com.liferay.portal.kernel.model.ClassName" />
@@ -88,7 +84,6 @@
 	<import class="com.liferay.portal.kernel.model.Website" />
 	<import class="com.liferay.portal.kernel.model.WorkflowDefinitionLink" />
 	<import class="com.liferay.portal.kernel.model.WorkflowInstanceLink" />
-	<import class="com.liferay.portlet.flags.model.FlagsEntry" />
 	<import class="com.liferay.ratings.kernel.model.RatingsEntry" />
 	<import class="com.liferay.ratings.kernel.model.RatingsStats" />
 	<import class="com.liferay.social.kernel.model.SocialActivity" />
@@ -99,12 +94,6 @@
 	<import class="com.liferay.social.kernel.model.SocialActivitySetting" />
 	<import class="com.liferay.social.kernel.model.SocialRelation" />
 	<import class="com.liferay.social.kernel.model.SocialRequest" />
-	<class name="com.liferay.counter.model.impl.CounterImpl" table="Counter">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="java.lang.String">
-			<generator class="assigned" />
-		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="currentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-	</class>
 	<class dynamic-update="true" name="com.liferay.portal.model.impl.AddressImpl" table="Address">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="addressId" type="long">
 			<generator class="assigned" />

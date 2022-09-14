@@ -20,7 +20,7 @@ definition {
 				vocabularyName = "${vocabularyName}");
 		}
 
-		Button.clickAdd();
+		Button.click(button = "Add");
 
 		SelectFrame.selectFrameTop();
 
@@ -464,7 +464,7 @@ definition {
 
 		PortletEntry.inputName(name = "${pageName}");
 
-		Button.clickAdd();
+		Button.click(button = "Add");
 
 		SelectFrame.selectFrameTop();
 
@@ -595,7 +595,7 @@ definition {
 
 		PortletEntry.inputName(name = "${pageName}");
 
-		Button.clickAdd();
+		Button.click(button = "Add");
 
 		SelectFrame.selectFrameTop();
 

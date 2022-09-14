@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
@@ -72,7 +72,7 @@ public class DepotAdminGroupSearchProvider {
 	@Activate
 	protected void activate() {
 		_classNameIds = new long[] {
-			PortalUtil.getClassNameId(DepotEntry.class.getName())
+			_portal.getClassNameId(DepotEntry.class.getName())
 		};
 	}
 
@@ -176,5 +176,8 @@ public class DepotAdminGroupSearchProvider {
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
+	private Portal _portal;
 
 }

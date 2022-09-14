@@ -28,6 +28,10 @@ portletDisplay.setShowStagingIcon(false);
 
 <liferay-ui:error embed="<%= false %>" exception="<%= GroupInheritContentException.class %>" message="this-page-cannot-be-deleted-and-cannot-have-child-pages-because-it-is-associated-with-a-site-template" />
 
+<clay:navigation-bar
+	navigationItems="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
+/>
+
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new LayoutsAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutsAdminDisplayContext) %>"
 	propsTransformer="js/LayoutsManagementToolbarPropsTransformer"

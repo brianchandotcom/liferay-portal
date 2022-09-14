@@ -611,18 +611,23 @@ definition {
 			siteName = "Test Site Name",
 			tableEntryText = "Yes");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.addDisplayPage(
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Document",
-			displayPageName = "Display Page Template Name",
+			depotDocumentType = "true",
+			depotName = "Test Depot Name",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name",
 			subType = "DM Document Type Name");
 
-		DisplayPageTemplate.addFragment(
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		PageEditor.addFragment(
 			collectionName = "Content Display",
-			displayPageName = "Display Page Template Name",
-			fragmentName = "Display Page Content",
-			siteURLKey = "test-site-name");
+			fragmentName = "Display Page Content");
+
+		Button.clickPublish();
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
@@ -730,11 +735,12 @@ definition {
 			siteName = "Test Site Name",
 			tableEntryText = "Yes");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.addDisplayPage(
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Document",
-			displayPageName = "Display Page Template Name",
+			depotDocumentType = "true",
+			depotName = "Test Depot Name",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name",
 			subType = "DM Document Type Name");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
@@ -807,18 +813,23 @@ definition {
 			siteName = "Test Site Name",
 			tableEntryText = "Yes");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.addDisplayPage(
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
-			displayPageName = "Display Page Template Name",
+			depotDocumentType = "true",
+			depotName = "Test Depot Name",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name",
 			subType = "WC Structure Name");
 
-		DisplayPageTemplate.addFragment(
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		PageEditor.addFragment(
 			collectionName = "Content Display",
-			displayPageName = "Display Page Template Name",
-			fragmentName = "Display Page Content",
-			siteURLKey = "test-site-name");
+			fragmentName = "Display Page Content");
+
+		Button.clickPublish();
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
@@ -952,11 +963,12 @@ definition {
 			siteName = "Test Site Name",
 			tableEntryText = "Yes");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.addDisplayPage(
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
-			displayPageName = "Display Page Template Name",
+			depotDocumentType = "true",
+			depotName = "Test Depot Name",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name",
 			subType = "WC Structure Name");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
@@ -1025,18 +1037,23 @@ definition {
 			siteName = "Test Site Name",
 			tableEntryText = "Yes");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.addDisplayPage(
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Document",
-			displayPageName = "Display Page Template Name",
+			depotDocumentType = "true",
+			depotName = "Test Depot Name",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name",
 			subType = "DM Document Type Name");
 
-		DisplayPageTemplate.addFragment(
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		PageEditor.addFragment(
 			collectionName = "Content Display",
-			displayPageName = "Display Page Template Name",
-			fragmentName = "Display Page Content",
-			siteURLKey = "test-site-name");
+			fragmentName = "Display Page Content");
+
+		Button.clickPublish();
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
@@ -1104,18 +1121,23 @@ definition {
 			siteName = "Test Site Name",
 			tableEntryText = "Yes");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.addDisplayPage(
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
-			displayPageName = "Display Page Template Name",
+			depotDocumentType = "true",
+			depotName = "Test Depot Name",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Test Site Name",
 			subType = "WC Structure Name");
 
-		DisplayPageTemplate.addFragment(
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		PageEditor.addFragment(
 			collectionName = "Content Display",
-			displayPageName = "Display Page Template Name",
-			fragmentName = "Display Page Content",
-			siteURLKey = "test-site-name");
+			fragmentName = "Display Page Content");
+
+		Button.clickPublish();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

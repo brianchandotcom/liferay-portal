@@ -85,7 +85,7 @@ public class EditClientExtensionEntryDisplayContext<T extends CET> {
 	public String getHelpLabel() {
 		return LanguageUtil.get(
 			_getHttpServletRequest(),
-			CETLabelUtil.getHelpNameLabel(_getHttpServletRequest(), getType()));
+			CETLabelUtil.getHelpLabel(_getHttpServletRequest(), getType()));
 	}
 
 	public String getName() {

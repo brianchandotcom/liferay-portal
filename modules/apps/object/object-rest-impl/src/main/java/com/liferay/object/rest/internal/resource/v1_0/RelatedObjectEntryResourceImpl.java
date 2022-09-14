@@ -14,10 +14,8 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
-import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.model.ObjectRelationshipTable;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
@@ -27,7 +25,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -68,9 +65,11 @@ public class RelatedObjectEntryResourceImpl
 			_getSystemObjectDefinitionMetadata(
 				_getRESTContextPath(previousPath)));
 
-		ObjectRelationship objectRelationship = _getObjectRelationship(
-			currentObjectDefinition.getObjectDefinitionId(),
-			objectRelationshipName);
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.
+				getObjectRelationshipByObjectDefinitionId(
+					currentObjectDefinition.getObjectDefinitionId(),
+					objectRelationshipName);
 
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
 			currentObjectDefinition, objectRelationship);
@@ -103,9 +102,11 @@ public class RelatedObjectEntryResourceImpl
 			_getSystemObjectDefinitionMetadata(
 				_getRESTContextPath(previousPath)));
 
-		ObjectRelationship objectRelationship = _getObjectRelationship(
-			currentObjectDefinition.getObjectDefinitionId(),
-			objectRelationshipName);
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.
+				getObjectRelationshipByObjectDefinitionId(
+					currentObjectDefinition.getObjectDefinitionId(),
+					objectRelationshipName);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -148,43 +149,6 @@ public class RelatedObjectEntryResourceImpl
 		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
 
 		return defaultDTOConverterContext;
-	}
-
-	private ObjectRelationship _getObjectRelationship(
-			long currentObjectDefinitionId, String objectRelationshipName)
-		throws Exception {
-
-		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipLocalService.dslQuery(
-				DSLQueryFactoryUtil.select(
-				).from(
-					ObjectRelationshipTable.INSTANCE
-				).where(
-					ObjectRelationshipTable.INSTANCE.reverse.eq(
-						false
-					).and(
-						ObjectRelationshipTable.INSTANCE.name.eq(
-							objectRelationshipName
-						).and(
-							ObjectRelationshipTable.INSTANCE.
-								objectDefinitionId1.eq(
-									currentObjectDefinitionId
-								).or(
-									ObjectRelationshipTable.INSTANCE.
-										objectDefinitionId2.eq(
-											currentObjectDefinitionId)
-								)
-						)
-					)
-				));
-
-		if (objectRelationships.isEmpty()) {
-			throw new NoSuchObjectRelationshipException(
-				"No ObjectRelationship exists with the name " +
-					objectRelationshipName);
-		}
-
-		return objectRelationships.get(0);
 	}
 
 	private long _getPrimaryKey1(

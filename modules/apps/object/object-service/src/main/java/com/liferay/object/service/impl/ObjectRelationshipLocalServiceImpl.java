@@ -17,6 +17,7 @@ package com.liferay.object.service.impl;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
+import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectRelationshipNameException;
 import com.liferay.object.exception.ObjectRelationshipParameterObjectFieldIdException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
@@ -26,6 +27,7 @@ import com.liferay.object.internal.petra.sql.dsl.DynamicObjectRelationshipMappin
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.model.ObjectRelationshipTable;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -323,6 +325,41 @@ public class ObjectRelationshipLocalServiceImpl
 		return ObjectRelationshipUtil.getObjectRelationship(
 			objectRelationshipPersistence.findByODI1_N(
 				objectDefinitionId1, name));
+	}
+
+	@Override
+	public ObjectRelationship getObjectRelationshipByObjectDefinitionId(
+			long objectDefinitionId, String objectRelationshipName)
+		throws Exception {
+
+		List<ObjectRelationship> objectRelationships = dslQuery(
+			DSLQueryFactoryUtil.select(
+			).from(
+				ObjectRelationshipTable.INSTANCE
+			).where(
+				ObjectRelationshipTable.INSTANCE.reverse.eq(
+					false
+				).and(
+					ObjectRelationshipTable.INSTANCE.name.eq(
+						objectRelationshipName
+					).and(
+						ObjectRelationshipTable.INSTANCE.objectDefinitionId1.eq(
+							objectDefinitionId
+						).or(
+							ObjectRelationshipTable.INSTANCE.
+								objectDefinitionId2.eq(objectDefinitionId)
+						)
+					)
+				)
+			));
+
+		if (objectRelationships.isEmpty()) {
+			throw new NoSuchObjectRelationshipException(
+				"No ObjectRelationship exists with the name " +
+					objectRelationshipName);
+		}
+
+		return objectRelationships.get(0);
 	}
 
 	@Override

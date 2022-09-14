@@ -17,6 +17,7 @@ package com.liferay.object.service.impl;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
+import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectRelationshipNameException;
 import com.liferay.object.exception.ObjectRelationshipParameterObjectFieldIdException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
@@ -320,9 +321,21 @@ public class ObjectRelationshipLocalServiceImpl
 			long objectDefinitionId1, String name)
 		throws PortalException {
 
-		return ObjectRelationshipUtil.getObjectRelationship(
-			objectRelationshipPersistence.findByODI1_N(
-				objectDefinitionId1, name));
+		try {
+			return ObjectRelationshipUtil.getObjectRelationship(
+				objectRelationshipPersistence.findByODI1_N(
+					objectDefinitionId1, name));
+		}
+		catch (NoSuchObjectRelationshipException
+					noSuchObjectRelationshipException) {
+
+			throw new NoSuchObjectRelationshipException(
+				String.format(
+					"No ObjectRelationship exists with the key " +
+						"{objectDefinitionId1=%s, name=%s}",
+					objectDefinitionId1, name),
+				noSuchObjectRelationshipException);
+		}
 	}
 
 	@Override

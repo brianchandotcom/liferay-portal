@@ -64,7 +64,7 @@ describe('SidebarPanelInfoView', () => {
 	});
 
 	it('renders sidebar panel with proper info for a basic web content', () => {
-		const {container, getByText, getByTitle} = render(
+		const {container, getByLabelText, getByText} = render(
 			_getSidebarComponent(mockedProps)
 		);
 
@@ -85,7 +85,7 @@ describe('SidebarPanelInfoView', () => {
 		expect(getByText('38070')).toBeInTheDocument();
 
 		expect(getByText('categorization')).toBeInTheDocument();
-		expect(getByTitle('details')).toBeInTheDocument();
+		expect(getByLabelText(/^(view Details)$/i)).toBeInTheDocument();
 	});
 
 	it('renders sidebar panel with proper dates for a basic web content', () => {

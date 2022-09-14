@@ -83,13 +83,13 @@ public class UpgradeProcessFactoryTest {
 	@Test
 	public void testAddColumn() throws Exception {
 		UpgradeProcess upgradeProcess = UpgradeProcessFactory.addColumns(
-			_TABLE_NAME, "addedColumn LONG NOT NULL");
+			_TABLE_NAME, "addedColumn LONG default 0 NOT NULL");
 
 		upgradeProcess.upgrade();
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
-				_TABLE_NAME, "addedColumn", "LONG NOT NULL"));
+				_TABLE_NAME, "addedColumn", "LONG default 0 NOT NULL"));
 	}
 
 	@Test

@@ -120,7 +120,7 @@ const yupSchema = {
 		runId: yup.number(),
 	}),
 	factorCategory: yup.object({
-		id: yup.string(),
+		id: yup.string().required(),
 		name: yup.string().required(),
 	}),
 	factorOption: yup.object({
@@ -180,6 +180,20 @@ const yupSchema = {
 		id: yup.string(),
 		name: yup.string().required(),
 		smartSuite: yup.string(),
+	}),
+	task: yup.object({
+		build: yup.number().required(),
+		caseTypes: yup.array(yup.number()).required(),
+		dueStatus: yup.number(),
+		name: yup.string(),
+		project: yup.number(),
+		routine: yup.number(),
+		userToTasks: yup.array().of(yup.number()),
+	}),
+	taskToUser: yup.object({
+		name: yup.string(),
+		taskId: yup.number(),
+		userId: yup.number(),
 	}),
 	team: yup.object({
 		id: yup.string(),

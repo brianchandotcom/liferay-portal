@@ -26,7 +26,7 @@ const Checkbox: React.FC<CheckboxProps> = (props) => {
 	return (
 		<ClayCheckbox
 			checked={value}
-			onChange={() => setValue((value) => !value)}
+			onChange={() => setValue(!value)}
 			{...props}
 		/>
 	);

@@ -1298,8 +1298,8 @@ public class ObjectEntryLocalServiceImpl
 			return predicate;
 		}
 
-		Predicate searchPredicate =
-			ObjectEntryTable.INSTANCE.objectEntryId.eq(Long.valueOf(search));
+		Predicate searchPredicate = ObjectEntryTable.INSTANCE.objectEntryId.eq(
+			Long.valueOf(search));
 
 		List<ObjectField> objectFields =
 			_objectFieldPersistence.findByODI_DBT_I(

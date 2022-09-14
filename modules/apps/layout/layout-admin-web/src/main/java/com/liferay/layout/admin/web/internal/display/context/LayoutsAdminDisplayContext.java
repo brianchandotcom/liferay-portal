@@ -29,6 +29,8 @@ import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
@@ -752,6 +754,31 @@ public class LayoutsAdminDisplayContext {
 		).setRedirect(
 			themeDisplay.getURLCurrent()
 		).buildString();
+	}
+
+	public List<NavigationItem> getNavigationItems() {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-162765"))) {
+			return Collections.emptyList();
+		}
+
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(
+					!Objects.equals(getTabs1(), "utility-pages"));
+				navigationItem.setHref(getPortletURL(), "tabs1", "");
+				navigationItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "static-pages"));
+			}
+		).add(
+			navigationItem -> {
+				navigationItem.setActive(
+					Objects.equals(getTabs1(), "utility-pages"));
+				navigationItem.setHref(
+					getPortletURL(), "tabs1", "utility-pages");
+				navigationItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "utility-pages"));
+			}
+		).build();
 	}
 
 	public String getOrphanPortletsURL(Layout layout) {

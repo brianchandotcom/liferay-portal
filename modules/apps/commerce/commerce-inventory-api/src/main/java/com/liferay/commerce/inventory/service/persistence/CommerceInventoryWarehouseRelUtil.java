@@ -538,12 +538,12 @@ public class CommerceInventoryWarehouseRelUtil {
 	 * @return the matching commerce inventory warehouse rel
 	 * @throws NoSuchInventoryWarehouseRelException if a matching commerce inventory warehouse rel could not be found
 	 */
-	public static CommerceInventoryWarehouseRel findByC_C_C(
+	public static CommerceInventoryWarehouseRel findByC_C_CIWI(
 			long classNameId, long classPK, long commerceInventoryWarehouseId)
 		throws com.liferay.commerce.inventory.exception.
 			NoSuchInventoryWarehouseRelException {
 
-		return getPersistence().findByC_C_C(
+		return getPersistence().findByC_C_CIWI(
 			classNameId, classPK, commerceInventoryWarehouseId);
 	}
 
@@ -555,10 +555,10 @@ public class CommerceInventoryWarehouseRelUtil {
 	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	 * @return the matching commerce inventory warehouse rel, or <code>null</code> if a matching commerce inventory warehouse rel could not be found
 	 */
-	public static CommerceInventoryWarehouseRel fetchByC_C_C(
+	public static CommerceInventoryWarehouseRel fetchByC_C_CIWI(
 		long classNameId, long classPK, long commerceInventoryWarehouseId) {
 
-		return getPersistence().fetchByC_C_C(
+		return getPersistence().fetchByC_C_CIWI(
 			classNameId, classPK, commerceInventoryWarehouseId);
 	}
 
@@ -571,11 +571,11 @@ public class CommerceInventoryWarehouseRelUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce inventory warehouse rel, or <code>null</code> if a matching commerce inventory warehouse rel could not be found
 	 */
-	public static CommerceInventoryWarehouseRel fetchByC_C_C(
+	public static CommerceInventoryWarehouseRel fetchByC_C_CIWI(
 		long classNameId, long classPK, long commerceInventoryWarehouseId,
 		boolean useFinderCache) {
 
-		return getPersistence().fetchByC_C_C(
+		return getPersistence().fetchByC_C_CIWI(
 			classNameId, classPK, commerceInventoryWarehouseId, useFinderCache);
 	}
 
@@ -587,12 +587,12 @@ public class CommerceInventoryWarehouseRelUtil {
 	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	 * @return the commerce inventory warehouse rel that was removed
 	 */
-	public static CommerceInventoryWarehouseRel removeByC_C_C(
+	public static CommerceInventoryWarehouseRel removeByC_C_CIWI(
 			long classNameId, long classPK, long commerceInventoryWarehouseId)
 		throws com.liferay.commerce.inventory.exception.
 			NoSuchInventoryWarehouseRelException {
 
-		return getPersistence().removeByC_C_C(
+		return getPersistence().removeByC_C_CIWI(
 			classNameId, classPK, commerceInventoryWarehouseId);
 	}
 
@@ -604,10 +604,10 @@ public class CommerceInventoryWarehouseRelUtil {
 	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	 * @return the number of matching commerce inventory warehouse rels
 	 */
-	public static int countByC_C_C(
+	public static int countByC_C_CIWI(
 		long classNameId, long classPK, long commerceInventoryWarehouseId) {
 
-		return getPersistence().countByC_C_C(
+		return getPersistence().countByC_C_CIWI(
 			classNameId, classPK, commerceInventoryWarehouseId);
 	}
 

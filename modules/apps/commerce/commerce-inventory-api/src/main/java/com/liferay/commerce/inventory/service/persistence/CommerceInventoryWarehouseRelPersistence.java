@@ -363,7 +363,7 @@ public interface CommerceInventoryWarehouseRelPersistence
 	 * @return the matching commerce inventory warehouse rel
 	 * @throws NoSuchInventoryWarehouseRelException if a matching commerce inventory warehouse rel could not be found
 	 */
-	public CommerceInventoryWarehouseRel findByC_C_C(
+	public CommerceInventoryWarehouseRel findByC_C_CIWI(
 			long classNameId, long classPK, long commerceInventoryWarehouseId)
 		throws NoSuchInventoryWarehouseRelException;
 
@@ -375,7 +375,7 @@ public interface CommerceInventoryWarehouseRelPersistence
 	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	 * @return the matching commerce inventory warehouse rel, or <code>null</code> if a matching commerce inventory warehouse rel could not be found
 	 */
-	public CommerceInventoryWarehouseRel fetchByC_C_C(
+	public CommerceInventoryWarehouseRel fetchByC_C_CIWI(
 		long classNameId, long classPK, long commerceInventoryWarehouseId);
 
 	/**
@@ -387,7 +387,7 @@ public interface CommerceInventoryWarehouseRelPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce inventory warehouse rel, or <code>null</code> if a matching commerce inventory warehouse rel could not be found
 	 */
-	public CommerceInventoryWarehouseRel fetchByC_C_C(
+	public CommerceInventoryWarehouseRel fetchByC_C_CIWI(
 		long classNameId, long classPK, long commerceInventoryWarehouseId,
 		boolean useFinderCache);
 
@@ -399,7 +399,7 @@ public interface CommerceInventoryWarehouseRelPersistence
 	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	 * @return the commerce inventory warehouse rel that was removed
 	 */
-	public CommerceInventoryWarehouseRel removeByC_C_C(
+	public CommerceInventoryWarehouseRel removeByC_C_CIWI(
 			long classNameId, long classPK, long commerceInventoryWarehouseId)
 		throws NoSuchInventoryWarehouseRelException;
 
@@ -411,7 +411,7 @@ public interface CommerceInventoryWarehouseRelPersistence
 	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
 	 * @return the number of matching commerce inventory warehouse rels
 	 */
-	public int countByC_C_C(
+	public int countByC_C_CIWI(
 		long classNameId, long classPK, long commerceInventoryWarehouseId);
 
 	/**

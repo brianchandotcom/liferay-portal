@@ -164,12 +164,6 @@ definition {
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
 			}
-
-			task ("Map the Form Container to new Object") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
-			}
 		}
 
 		task ("When the page designer maps the Form Container to an entity with text field") {

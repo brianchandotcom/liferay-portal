@@ -569,16 +569,12 @@ definition {
 				PageEditor.addFragment(
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
-
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
 			}
 
 			task ("Map the Text Input fragment to Region field") {
-				PageEditor.editInput(
-					field = "Region",
-					fragmentName = "Text Input");
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
 
 				PageEditor.publish();
 			}

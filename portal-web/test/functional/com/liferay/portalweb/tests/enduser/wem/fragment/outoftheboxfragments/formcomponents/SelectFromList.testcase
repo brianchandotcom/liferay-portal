@@ -79,13 +79,13 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
-
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
 		}
 
 		task ("When the page designer maps Select from list fragment") {
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
 			PageEditor.editInput(
 				field = "Type",
 				fragmentName = "Select from List",
@@ -155,13 +155,13 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
-
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
 		}
 
 		task ("When the page designer maps Select from list fragment") {
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
 			PageEditor.editInput(
 				field = "Type",
 				fragmentName = "Select from List",
@@ -287,16 +287,15 @@ definition {
 				PageEditor.addFragment(
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
-
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
 			}
 		}
 
 		task ("When the page designer maps Select from list fragment to relationship") {
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
 			PageEditor.editInput(
-				field = "Lunch Menu",
 				fragmentName = "Select from List",
 				label = "Select your lunch");
 		}
@@ -404,16 +403,15 @@ definition {
 				PageEditor.addFragment(
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
-
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
 			}
 		}
 
 		task ("When the page designer maps Select from list fragment to relationship") {
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+
 			PageEditor.editInput(
-				field = "Account Name",
 				fragmentName = "Select from List",
 				label = "Select your account");
 		}
@@ -485,16 +483,12 @@ definition {
 				PageEditor.addFragment(
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
-
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
 			}
 
 			task ("Map the Select from List fragment to Type field") {
-				PageEditor.editInput(
-					field = "Type",
-					fragmentName = "Select from List");
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
 
 				PageEditor.publish(objectName = "Purchase Order");
 			}

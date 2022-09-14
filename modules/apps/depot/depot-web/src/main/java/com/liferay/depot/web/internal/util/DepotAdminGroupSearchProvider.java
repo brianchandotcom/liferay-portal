@@ -76,11 +76,6 @@ public class DepotAdminGroupSearchProvider {
 		};
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private GroupSearch _getGroupConnectedDepotGroupsGroupSearch(
 			PortletRequest portletRequest, PortletURL portletURL)
 		throws PortalException {
@@ -178,5 +173,8 @@ public class DepotAdminGroupSearchProvider {
 
 	@Reference
 	private Language _language;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 }

@@ -32,8 +32,9 @@ import {
 } from '../../../../../services/rest';
 import {searchUtil} from '../../../../../util/search';
 import FactorOptionsFormModal from '../../../../Standalone/FactorOptions/FactorOptionsFormModal';
-import BuildFactorList, {Category} from './BuildFactorList';
 import BuildSelectStacksModal, {FactorStack} from './BuildSelectStacksModal';
+import StackList from './Stack';
+import {Category} from './Stack/StackList';
 
 export type BuildFormType = typeof yupSchema.build.__outputType;
 
@@ -133,7 +134,7 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({control, register}) => {
 				</ClayButton.Group>
 			)}
 
-			<BuildFactorList
+			<StackList
 				append={append as any}
 				factorItems={factorItems}
 				factorOptionsList={factorOptionsList}

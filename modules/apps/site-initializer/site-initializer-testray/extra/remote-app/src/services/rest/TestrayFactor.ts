@@ -12,7 +12,7 @@
  * details.
  */
 
-import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/BuildFactorList';
+import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/Stack/StackList';
 import yupSchema from '../../schema/yup';
 import Rest from './Rest';
 import {TestrayFactor, TestrayFactorOption} from './types';
@@ -216,8 +216,7 @@ class TestrayFactorRest extends Rest<TestrayFactorForm, TestrayFactor> {
 
 				if (newRun) {
 					await this.create(data);
-				}
-				else {
+				} else {
 					await this.update(factor.id, data);
 				}
 			}
@@ -284,8 +283,7 @@ class TestrayFactorRest extends Rest<TestrayFactorForm, TestrayFactor> {
 						return _factor;
 					});
 				}
-			}
-			else {
+			} else {
 				const newFactor = await super.create({
 					...form,
 					name: '',

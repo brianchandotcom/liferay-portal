@@ -28,7 +28,7 @@ import {
 	testrayFactorCategoryRest,
 	testrayFactorRest,
 } from '../../../../../services/rest';
-import BuildFactorList from './BuildFactorList';
+import StackList from './Stack';
 
 export type FactorStack = {
 	[number: string]: {
@@ -167,7 +167,7 @@ const BuildSelectStacksModal: React.FC<
 				})}
 
 			{lastStep && (
-				<BuildFactorList
+				<StackList
 					append={append as any}
 					displayVertical
 					factorItems={factorItems}

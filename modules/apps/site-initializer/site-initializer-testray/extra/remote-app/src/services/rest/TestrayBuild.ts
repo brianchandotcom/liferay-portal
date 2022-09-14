@@ -13,7 +13,7 @@
  */
 
 import i18n from '../../i18n';
-import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/BuildFactorList';
+import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/Stack/StackList';
 import yupSchema from '../../schema/yup';
 import {TEST_STATUS} from '../../util/constants';
 import {searchUtil} from '../../util/search';

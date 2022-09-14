@@ -14,9 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -82,9 +79,6 @@ public class AggregateResourceBundle extends ResourceBundle {
 				return resourceBundle.getObject(key);
 			}
 			catch (MissingResourceException missingResourceException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(missingResourceException);
-				}
 			}
 		}
 
@@ -105,9 +99,6 @@ public class AggregateResourceBundle extends ResourceBundle {
 
 		return _keys;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AggregateResourceBundle.class);
 
 	private volatile Set<String> _keys;
 	private final ResourceBundle[] _resourceBundles;

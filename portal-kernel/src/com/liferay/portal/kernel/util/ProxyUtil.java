@@ -19,8 +19,6 @@ import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
@@ -180,8 +178,6 @@ public class ProxyUtil {
 		InvocationHandler.class
 	};
 
-	private static final Log _log = LogFactoryUtil.getLog(ProxyUtil.class);
-
 	private static final ConcurrentMap
 		<ClassLoader, ConcurrentMap<LookupKey, Class<?>>> _classReferences =
 			new ConcurrentReferenceKeyHashMap<>(
@@ -279,9 +275,6 @@ public class ProxyUtil {
 						delegateMethods.put(interfaceMethod, delegateMethod);
 					}
 					catch (NoSuchMethodException noSuchMethodException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(noSuchMethodException);
-						}
 					}
 				}
 				else {

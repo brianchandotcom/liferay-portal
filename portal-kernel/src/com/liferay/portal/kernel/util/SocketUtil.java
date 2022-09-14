@@ -14,9 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import java.io.IOException;
 
 import java.net.InetAddress;
@@ -56,10 +53,6 @@ public class SocketUtil {
 				return serverSocketChannel;
 			}
 			catch (IOException ioException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(ioException);
-				}
-
 				port++;
 			}
 		}
@@ -91,9 +84,6 @@ public class SocketUtil {
 					socket.close();
 				}
 				catch (IOException ioException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(ioException);
-					}
 				}
 			}
 		}
@@ -127,7 +117,5 @@ public class SocketUtil {
 		public void configure(ServerSocket serverSocket) throws SocketException;
 
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(SocketUtil.class);
 
 }

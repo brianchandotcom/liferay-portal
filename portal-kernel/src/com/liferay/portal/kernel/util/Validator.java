@@ -17,8 +17,6 @@ package com.liferay.portal.kernel.util;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -1033,9 +1031,6 @@ public class Validator {
 				return true;
 			}
 			catch (URISyntaxException uriSyntaxException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(uriSyntaxException);
-				}
 			}
 		}
 
@@ -1079,9 +1074,6 @@ public class Validator {
 				return true;
 			}
 			catch (MalformedURLException malformedURLException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(malformedURLException);
-				}
 			}
 		}
 
@@ -1205,8 +1197,6 @@ public class Validator {
 	private static final String _XML_BEGIN = "<?xml";
 
 	private static final String _XML_EMPTY = "<root />";
-
-	private static final Log _log = LogFactoryUtil.getLog(Validator.class);
 
 	private static final Pattern _emailAddressPattern = Pattern.compile(
 		"^[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@" +

@@ -14,9 +14,6 @@
 
 package com.liferay.portal.kernel.internal.util;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import java.lang.reflect.Method;
 
 import java.net.URL;
@@ -76,15 +73,8 @@ public class ContextResourcePathsUtil {
 					bundle, path, filePattern, true));
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(reflectiveOperationException);
-			}
-
 			return null;
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ContextResourcePathsUtil.class);
 
 }

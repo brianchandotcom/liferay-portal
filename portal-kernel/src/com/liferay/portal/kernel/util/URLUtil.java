@@ -14,9 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -44,14 +41,9 @@ public class URLUtil {
 					inputStream.close();
 				}
 				catch (IOException ioException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(ioException);
-					}
 				}
 			}
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(URLUtil.class);
 
 }

@@ -1640,7 +1640,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 						else {
 							verifyProductTask.setErrorMessage(
 								"The product key is invalid. Please provide " +
-									"a valid product key");
+									"a valid product key.");
 						}
 					}
 					else {

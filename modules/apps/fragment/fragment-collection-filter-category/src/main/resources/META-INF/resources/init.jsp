@@ -14,7 +14,8 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
+<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.fragment.collection.filter.category.display.context.FragmentCollectionFilterCategoryDisplayContext" %>
 

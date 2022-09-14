@@ -109,12 +109,16 @@ public class StartupHelperUtil {
 	public static void updateIndexes() {
 		if (!_dbNew) {
 			IndexUpdaterUtil.updatePortalIndexes(_dropIndexes);
+
+			IndexUpdaterUtil.updateModulesIndexes(true);
 		}
 	}
 
 	public static void updateIndexes(boolean dropIndexes) {
 		if (!_dbNew) {
 			IndexUpdaterUtil.updatePortalIndexes(dropIndexes);
+
+			IndexUpdaterUtil.updateModulesIndexes(true);
 		}
 	}
 

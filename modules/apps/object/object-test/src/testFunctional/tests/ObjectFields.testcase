@@ -528,6 +528,47 @@ definition {
 		}
 	}
 
+	@description = "LPS-149625 - Verify that it's possible to delete an aggregation field"
+	@ignore = "true"
+	@priority = "4"
+	test CanDeleteAggregationField {
+		task ("Create Custom Object and Custom Relationship itself (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161892",
+				objectName = "CustomObject161892",
+				pluralLabelName = "Custom Objects 161892");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject161892",
+				objectName_2 = "CustomObject161892",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161892");
+		}
+
+		task ("Go to Custom Object > Fields tab and add Custom Aggregation Field (via UI)") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161892");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Aggregation",
+				fieldType = "Aggregation",
+				function = "Count",
+				relationship = "Relationship");
+		}
+
+		task ("Assert that is possible to delete Custom Aggregation Field") {
+			ObjectAdmin.deleteObjectField(fieldName = "Custom Aggregation");
+
+			ObjectAdmin.assertObjectFieldNotPresent(fieldLabel = "Custom Aggregation");
+		}
+	}
+
 	@description = "LPS-148112 - Verify if turn off the 'Show files' option on field settings"
 	@priority = "4"
 	test CanDisableShowFilesOptionOnFieldSettings {

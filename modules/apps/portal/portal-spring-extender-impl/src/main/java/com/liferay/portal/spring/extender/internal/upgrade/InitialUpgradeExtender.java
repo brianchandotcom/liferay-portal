@@ -27,16 +27,11 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.internal.configuration.ConfigurationUtil;
 import com.liferay.portal.spring.extender.internal.upgrade.InitialUpgradeExtender.InitialUpgradeExtension;
 import com.liferay.portal.spring.hibernate.DialectDetector;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.net.URL;
+import com.liferay.portal.util.BundleUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -244,32 +239,13 @@ public class InitialUpgradeExtender
 			_bundle = bundle;
 		}
 
-		private String _getSQLTemplateString(String templateName)
-			throws UpgradeException {
-
-			URL resource = _bundle.getResource("/META-INF/sql/" + templateName);
-
-			if (resource == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to locate SQL template " + templateName);
-				}
-
-				return null;
-			}
-
-			try (InputStream inputStream = resource.openStream()) {
-				return StringUtil.read(inputStream);
-			}
-			catch (IOException ioException) {
-				throw new UpgradeException(
-					"Unable to read SQL template " + templateName, ioException);
-			}
-		}
-
 		private void _upgrade() throws UpgradeException {
-			String tablesSQL = _getSQLTemplateString("tables.sql");
-			String sequencesSQL = _getSQLTemplateString("sequences.sql");
-			String indexesSQL = _getSQLTemplateString("indexes.sql");
+			String tablesSQL = BundleUtil.getSQLTemplateString(
+				_bundle, "tables.sql");
+			String sequencesSQL = BundleUtil.getSQLTemplateString(
+				_bundle, "sequences.sql");
+			String indexesSQL = BundleUtil.getSQLTemplateString(
+				_bundle, "indexes.sql");
 
 			try (Connection connection = _dataSource.getConnection()) {
 				if (tablesSQL != null) {

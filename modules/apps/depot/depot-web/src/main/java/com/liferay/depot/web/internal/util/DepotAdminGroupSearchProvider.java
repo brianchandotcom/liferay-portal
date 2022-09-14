@@ -39,6 +39,7 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -68,13 +69,16 @@ public class DepotAdminGroupSearchProvider {
 		return _getGroupSearch(portletRequest, portletURL);
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-
+	@Activate
+	protected void activate() {
 		_classNameIds = new long[] {
 			PortalUtil.getClassNameId(DepotEntry.class.getName())
 		};
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	private GroupSearch _getGroupConnectedDepotGroupsGroupSearch(

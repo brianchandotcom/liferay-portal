@@ -62,6 +62,7 @@ import javax.naming.ldap.PagedResultsControl;
 import javax.naming.ldap.PagedResultsResponseControl;
 import javax.naming.ldap.Rdn;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -984,6 +985,12 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		return null;
 	}
 
+	@Activate
+	protected void activate() {
+		_companySecurityAuthType = GetterUtil.getString(
+			_props.get(PropsKeys.COMPANY_SECURITY_AUTH_TYPE));
+	}
+
 	@Reference(
 		target = "(factoryPid=com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration)",
 		unbind = "-"
@@ -1002,8 +1009,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	@Reference(unbind = "-")
 	protected void setProps(Props props) {
-		_companySecurityAuthType = GetterUtil.getString(
-			props.get(PropsKeys.COMPANY_SECURITY_AUTH_TYPE));
+		_props = props;
 	}
 
 	@Reference(
@@ -1141,6 +1147,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 	private ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
 	private LDAPSettings _ldapSettings;
+	private Props _props;
 	private ConfigurationProvider<SystemLDAPConfiguration>
 		_systemLDAPConfigurationProvider;
 

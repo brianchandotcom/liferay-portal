@@ -113,6 +113,7 @@ import javax.naming.ldap.LdapContext;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -599,7 +600,15 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	@Reference(unbind = "-")
 	public void setSingleVMPool(SingleVMPool singleVMPool) {
-		_portalCache = (PortalCache<String, Long>)singleVMPool.getPortalCache(
+		_singleVMPool = singleVMPool;
+	}
+
+	@Activate
+	protected void activate() {
+		_companySecurityAuthType = GetterUtil.getString(
+			_props.get(PropsKeys.COMPANY_SECURITY_AUTH_TYPE));
+
+		_portalCache = (PortalCache<String, Long>)_singleVMPool.getPortalCache(
 			UserImporter.class.getName());
 	}
 
@@ -953,8 +962,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	@Reference(unbind = "-")
 	protected void setProps(Props props) {
-		_companySecurityAuthType = GetterUtil.getString(
-			props.get(PropsKeys.COMPANY_SECURITY_AUTH_TYPE));
+		_props = props;
 	}
 
 	@Reference(unbind = "-")
@@ -1994,6 +2002,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 	private LockManager _lockManager;
 	private PortalCache<String, Long> _portalCache;
+	private Props _props;
 	private RoleLocalService _roleLocalService;
 
 	@Reference(
@@ -2002,6 +2011,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	)
 	private volatile SafePortalLDAP _safePortalLDAP;
 
+	private SingleVMPool _singleVMPool;
 	private UserGroupLocalService _userGroupLocalService;
 	private UserLocalService _userLocalService;
 

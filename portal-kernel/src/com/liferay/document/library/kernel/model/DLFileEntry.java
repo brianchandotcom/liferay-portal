@@ -95,6 +95,9 @@ public interface DLFileEntry
 
 	public java.util.List<DLFileVersion> getFileVersions(int status);
 
+	public java.util.List<DLFileVersion> getFileVersions(
+		int status, int start, int end);
+
 	public int getFileVersionsCount(int status);
 
 	public DLFolder getFolder()

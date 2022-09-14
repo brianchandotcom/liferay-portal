@@ -536,6 +536,13 @@ public class DLFileEntryWrapper
 	}
 
 	@Override
+	public java.util.List<DLFileVersion> getFileVersions(
+		int status, int start, int end) {
+
+		return model.getFileVersions(status, start, end);
+	}
+
+	@Override
 	public int getFileVersionsCount(int status) {
 		return model.getFileVersionsCount(status);
 	}

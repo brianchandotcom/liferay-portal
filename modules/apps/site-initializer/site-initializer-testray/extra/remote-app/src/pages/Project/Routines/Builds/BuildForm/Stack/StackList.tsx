@@ -12,17 +12,19 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import React, {Fragment} from 'react';
 
-import Form from '../../../../../components/Form';
-import {TestrayFactor, TestrayFactorOption} from '../../../../../services/rest';
+import Form from '../../../../../../components/Form';
+import {
+	TestrayFactor,
+	TestrayFactorOption,
+} from '../../../../../../services/rest';
+import StackActions from './StackActions';
 
 import type {
 	UseFieldArrayAppend,
-	UseFieldArrayRemove,
 	UseFieldArrayUpdate,
 	UseFormRegister,
 } from 'react-hook-form';
@@ -38,61 +40,26 @@ export type Category = {
 	[key: number]: CategoryOptions;
 };
 
-type Fields = {
+export type Fields = {
 	disabled?: boolean;
 	id: string;
 };
 
-type BuildFactorListProps = {
+export type StackListProps = {
 	append: UseFieldArrayAppend<any>;
 	displayVertical?: boolean;
 	factorItems: TestrayFactor[];
 	factorOptionsList: TestrayFactorOption[][];
 	fields: Fields[];
 	register: UseFormRegister<any>;
-	remove: UseFieldArrayRemove;
+	remove: (index: number) => void;
 	update: UseFieldArrayUpdate<any>;
 };
 
-type BuildFactorActionsProps = {
-	append: UseFieldArrayAppend<any>;
-	defaultItem: {
-		[index: string]: {
-			factorCategory: string;
-			factorCategoryId: string;
-		};
-	};
-	field: Fields;
-	index: number;
-	remove: UseFieldArrayRemove;
-};
+const COLUMN_SIZE_MEDIUM = 6;
+const COLUMN_SIZE_SMALL = 3;
 
-const BuildFactorActions: React.FC<BuildFactorActionsProps> = ({
-	append,
-	defaultItem,
-	field,
-	index,
-	remove,
-}) => (
-	<ClayLayout.Col className="d-flex justify-content-end">
-		{!field.disabled && (
-			<ClayButtonWithIcon
-				displayType="secondary"
-				onClick={() => append(defaultItem as any)}
-				symbol="plus"
-			/>
-		)}
-
-		<ClayButtonWithIcon
-			className="ml-1"
-			displayType="secondary"
-			onClick={() => remove(index)}
-			symbol="hr"
-		/>
-	</ClayLayout.Col>
-);
-
-const BuildFactorList: React.FC<BuildFactorListProps> = ({
+const StackList: React.FC<StackListProps> = ({
 	append,
 	displayVertical,
 	factorItems,
@@ -138,8 +105,8 @@ const BuildFactorList: React.FC<BuildFactorListProps> = ({
 										key={factorIndex}
 										size={
 											displayVertical && index === 0
-												? 6
-												: 3
+												? COLUMN_SIZE_MEDIUM
+												: COLUMN_SIZE_SMALL
 										}
 									>
 										<Form.Select
@@ -193,7 +160,7 @@ const BuildFactorList: React.FC<BuildFactorListProps> = ({
 								);
 							})}
 
-							<BuildFactorActions
+							<StackActions
 								append={append}
 								defaultItem={{...factorCategories} as any}
 								field={field}
@@ -210,4 +177,4 @@ const BuildFactorList: React.FC<BuildFactorListProps> = ({
 	);
 };
 
-export default BuildFactorList;
+export default StackList;

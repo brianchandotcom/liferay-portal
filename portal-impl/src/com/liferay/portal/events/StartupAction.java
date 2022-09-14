@@ -175,7 +175,7 @@ public class StartupAction extends SimpleAction {
 		}
 
 		if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP) {
-			StartupHelperUtil.updateIndexes(true);
+			StartupHelperUtil.updateIndexes();
 		}
 	}
 

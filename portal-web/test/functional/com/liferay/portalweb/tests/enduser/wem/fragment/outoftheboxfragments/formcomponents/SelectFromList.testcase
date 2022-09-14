@@ -85,11 +85,7 @@ definition {
 				panel = "General");
 		}
 
-		task ("When the page designer maps Select from list fragment after added to Form Container") {
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Select from List");
-
+		task ("When the page designer maps Select from list fragment") {
 			PageEditor.editInput(
 				field = "Type",
 				fragmentName = "Select from List",
@@ -165,11 +161,7 @@ definition {
 				panel = "General");
 		}
 
-		task ("When the page designer maps Select from list fragment after added to Form Container") {
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Select from List");
-
+		task ("When the page designer maps Select from list fragment") {
 			PageEditor.editInput(
 				field = "Type",
 				fragmentName = "Select from List",
@@ -300,12 +292,6 @@ definition {
 					contentType = "Purchase Order",
 					panel = "General");
 			}
-
-			task ("Add Select from List inside Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Select from List");
-			}
 		}
 
 		task ("When the page designer maps Select from list fragment to relationship") {
@@ -423,12 +409,6 @@ definition {
 					contentType = "Purchase Order",
 					panel = "General");
 			}
-
-			task ("Add Select from List inside Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Select from List");
-			}
 		}
 
 		task ("When the page designer maps Select from list fragment to relationship") {
@@ -509,17 +489,6 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General");
-			}
-
-			task ("Add a Select from List and Submit Button fragment into Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Select from List");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Submit Button",
-					targetFragmentName = "Select from List");
 			}
 
 			task ("Map the Select from List fragment to Type field") {

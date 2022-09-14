@@ -15,14 +15,23 @@
 package com.liferay.data.cleanup.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoValue;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -34,6 +43,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 
 import java.io.InputStream;
 
@@ -81,28 +91,28 @@ public class DataCleanupTest {
 	public void testDeprecatedModulesUpgradeChat() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpChatModuleData", "com.liferay.chat.service",
-			"dependencies/chat-tables.sql", null);
+			"dependencies/chat-tables.sql", null, null);
 	}
 
 	@Test
 	public void testDeprecatedModulesUpgradeDictionary() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpDictionaryModuleData", "com.liferay.dictionary.web", null,
-			"com_liferay_dictionary_web_portlet_DictionaryPortlet");
+			"com_liferay_dictionary_web_portlet_DictionaryPortlet", null);
 	}
 
 	@Test
 	public void testDeprecatedModulesUpgradeDirectory() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpDirectoryModuleData", "com.liferay.directory.web", null,
-			"com_liferay_directory_web_portlet_DirectoryPortlet");
+			"com_liferay_directory_web_portlet_DirectoryPortlet", null);
 	}
 
 	@Test
 	public void testDeprecatedModulesUpgradeHelloWorld() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpHelloWorldModuleData", "com.liferay.hello.world.web", null,
-			"com_liferay_hello_world_web_portlet_HelloWorldPortlet");
+			"com_liferay_hello_world_web_portlet_HelloWorldPortlet", null);
 	}
 
 	@Test
@@ -110,14 +120,14 @@ public class DataCleanupTest {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpImageEditorModuleData",
 			"com.liferay.frontend.image.editor.web", null,
-			"com_liferay_image_editor_web_portlet_ImageEditorPortlet");
+			"com_liferay_image_editor_web_portlet_ImageEditorPortlet", null);
 	}
 
 	@Test
 	public void testDeprecatedModulesUpgradeInvitation() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpInvitationModuleData", "com.liferay.invitation.web", null,
-			"com_liferay_invitation_web_portlet_InvitationPortlet");
+			"com_liferay_invitation_web_portlet_InvitationPortlet", null);
 	}
 
 	@Test
@@ -125,14 +135,15 @@ public class DataCleanupTest {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpMailReaderModuleData", "com.liferay.mail.reader.service",
 			"dependencies/mail-reader-tables.sql",
-			"com_liferay_mail_reader_web_portlet_MailPortlet");
+			"com_liferay_mail_reader_web_portlet_MailPortlet", null);
 	}
 
 	@Test
 	public void testDeprecatedModulesUpgradeOpenSocial() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpOpenSocialModuleData", "opensocial-portlet",
-			"dependencies/opensocial-tables.sql", "3_WAR_opensocialportlet");
+			"dependencies/opensocial-tables.sql", "3_WAR_opensocialportlet",
+			"OPEN_SOCIAL_DATA_");
 	}
 
 	@Test
@@ -144,7 +155,8 @@ public class DataCleanupTest {
 			"com.liferay.social.privatemessaging.service",
 			"dependencies/private-messaging-tables.sql",
 			"com_liferay_social_privatemessaging_web_portlet_" +
-				"PrivateMessagingPortlet");
+				"PrivateMessagingPortlet",
+			null);
 	}
 
 	@Test
@@ -152,7 +164,7 @@ public class DataCleanupTest {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpShoppingModuleData", "com.liferay.shopping.service",
 			"dependencies/shopping-tables.sql",
-			"com_liferay_shopping_web_portlet_ShoppingPortlet");
+			"com_liferay_shopping_web_portlet_ShoppingPortlet", null);
 	}
 
 	@Test
@@ -161,7 +173,7 @@ public class DataCleanupTest {
 			"cleanUpSoftwareCatalogModuleData",
 			"com.liferay.softwarecatalog.service",
 			"dependencies/software-catalog-tables.sql",
-			"com.liferay.portlet.softwarecatalog");
+			"com.liferay.portlet.softwarecatalog", null);
 	}
 
 	@Test
@@ -169,12 +181,12 @@ public class DataCleanupTest {
 		_testDeprecatedModulesUpgrade(
 			"cleanUpTwitterModuleData", "com.liferay.twitter.service",
 			"dependencies/twitter-tables.sql",
-			"com_liferay_twitter_web_portlet_TwitterPortlet");
+			"com_liferay_twitter_web_portlet_TwitterPortlet", null);
 	}
 
 	private void _testDeprecatedModulesUpgrade(
 			String propertyKey, String servletContextName, String sqlFilePath,
-			String portletPreferencePortletId)
+			String portletPreferencePortletId, String expandoName)
 		throws Exception {
 
 		if (Validator.isNotNull(sqlFilePath)) {
@@ -185,6 +197,30 @@ public class DataCleanupTest {
 
 				db.runSQLTemplateString(StringUtil.read(inputStream), true);
 			}
+		}
+
+		long tableId = 0;
+		long valueId = 0;
+
+		String columnName = "testColumn";
+
+		if (Validator.isNotNull(expandoName)) {
+			ClassName className = ClassNameLocalServiceUtil.addClassName(
+				expandoName + "test");
+
+			ExpandoTable expandoTable = ExpandoTestUtil.addTable(
+				className.getClassNameId(), expandoName);
+
+			tableId = expandoTable.getTableId();
+
+			ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+				expandoTable, columnName, ExpandoColumnConstants.STRING);
+
+			ExpandoValue expandoValue = ExpandoTestUtil.addValue(
+				expandoTable, expandoColumn, className.getClassNameId(),
+				"testValue");
+
+			valueId = expandoValue.getValueId();
 		}
 
 		if (portletPreferencePortletId != null) {
@@ -252,6 +288,18 @@ public class DataCleanupTest {
 				"def", unicodeProperties.getProperty("test-property-4"));
 			Assert.assertEquals(
 				"abc,def", unicodeProperties.getProperty("test-property-5"));
+		}
+
+		if (Validator.isNotNull(expandoName)) {
+			Assert.assertEquals(
+				null,
+				ExpandoColumnLocalServiceUtil.getColumn(tableId, columnName));
+
+			Assert.assertEquals(
+				null, ExpandoTableLocalServiceUtil.fetchExpandoTable(tableId));
+
+			Assert.assertEquals(
+				null, ExpandoValueLocalServiceUtil.fetchExpandoValue(valueId));
 		}
 	}
 

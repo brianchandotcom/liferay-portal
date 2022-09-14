@@ -50,7 +50,7 @@ definition {
 	@description = "This is a test for LPS-151754. The page designer can configure and map the Submit Button on content page."
 	@priority = "4"
 	test ConfigureSubmitButtonOnContentPage {
-		task ("Given a page designer has a Form Container mapped to an entity with text field") {
+		task ("Given a page designer has a Form Container on content page") {
 			task ("Add a web content") {
 				JSONWebcontent.addWebContent(
 					content = "Continue",
@@ -72,18 +72,12 @@ definition {
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
 			}
-
-			task ("Map the Form Container to new Object") {
-				PageEditor.editFormContainer(
-					contentType = "Purchase Order",
-					panel = "General");
-			}
 		}
 
-		task ("When the page designer adds a Submit Button fragment into the Form Container") {
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Submit Button");
+		task ("When the page designer maps the Form Container to an entity with text field") {
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
 		}
 
 		task ("Then the page designer could configure the Submit Button fragment") {
@@ -147,7 +141,7 @@ definition {
 	test ConfigureSubmitButtonOnDisplayPageTemplate {
 		property testray.component.names = "Display Pages,Fragments";
 
-		task ("Given a page designer has a Form Container mapped to an entity with text field") {
+		task ("Given a page designer has a Form Container on display page template") {
 			task ("Add a web content") {
 				JSONWebcontent.addWebContent(
 					content = "Continue",
@@ -178,10 +172,10 @@ definition {
 			}
 		}
 
-		task ("When the page designer adds a Submit Button fragment into the Form Container") {
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Submit Button");
+		task ("When the page designer maps the Form Container to an entity with text field") {
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
 		}
 
 		task ("Then the page designer could configure the Submit Button fragment") {
@@ -265,10 +259,8 @@ definition {
 					panel = "General");
 			}
 
-			task ("Add a Submit Button fragment inside Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Submit Button");
+			task ("Delete the Text Input fragment") {
+				PageEditor.removeFragment(fragmentName = "Text Input");
 			}
 
 			task ("Hide the Submit Button") {

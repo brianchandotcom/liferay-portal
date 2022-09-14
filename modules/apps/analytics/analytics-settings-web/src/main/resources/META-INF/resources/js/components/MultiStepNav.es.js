@@ -26,12 +26,12 @@ const MultiStepNav = ({steps}) => {
 	return (
 		<>
 			<ClayMultiStepNav>
-				{steps.map(({title}, i) => (
+				{steps.map(({title}, index) => (
 					<ClayMultiStepNav.Item
 						active={isActive(i)}
 						complete={isComplete(i)}
-						expand={i + 1 !== steps.length}
-						key={i}
+						expand={index + 1 !== steps.length}
+						key={index}
 					>
 						<ClayMultiStepNav.Title>{title}</ClayMultiStepNav.Title>
 
@@ -39,7 +39,7 @@ const MultiStepNav = ({steps}) => {
 
 						<ClayMultiStepNav.Indicator
 							complete={isComplete(i)}
-							label={1 + i}
+							label={1 + index}
 						/>
 					</ClayMultiStepNav.Item>
 				))}

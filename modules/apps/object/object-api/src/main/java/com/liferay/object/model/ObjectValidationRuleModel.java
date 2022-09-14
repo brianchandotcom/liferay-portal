@@ -473,6 +473,20 @@ public interface ObjectValidationRuleModel
 	 */
 	public void setScript(String script);
 
+	/**
+	 * Returns the script syntax version of this object validation rule.
+	 *
+	 * @return the script syntax version of this object validation rule
+	 */
+	public int getScriptSyntaxVersion();
+
+	/**
+	 * Sets the script syntax version of this object validation rule.
+	 *
+	 * @param scriptSyntaxVersion the script syntax version of this object validation rule
+	 */
+	public void setScriptSyntaxVersion(int scriptSyntaxVersion);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

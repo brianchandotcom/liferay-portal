@@ -59,6 +59,7 @@ public class ObjectValidationRuleWrapper
 		attributes.put("errorLabel", getErrorLabel());
 		attributes.put("name", getName());
 		attributes.put("script", getScript());
+		attributes.put("scriptSyntaxVersion", getScriptSyntaxVersion());
 
 		return attributes;
 	}
@@ -148,6 +149,13 @@ public class ObjectValidationRuleWrapper
 
 		if (script != null) {
 			setScript(script);
+		}
+
+		Integer scriptSyntaxVersion = (Integer)attributes.get(
+			"scriptSyntaxVersion");
+
+		if (scriptSyntaxVersion != null) {
+			setScriptSyntaxVersion(scriptSyntaxVersion);
 		}
 	}
 
@@ -416,6 +424,16 @@ public class ObjectValidationRuleWrapper
 	@Override
 	public String getScript() {
 		return model.getScript();
+	}
+
+	/**
+	 * Returns the script syntax version of this object validation rule.
+	 *
+	 * @return the script syntax version of this object validation rule
+	 */
+	@Override
+	public int getScriptSyntaxVersion() {
+		return model.getScriptSyntaxVersion();
 	}
 
 	/**
@@ -714,6 +732,16 @@ public class ObjectValidationRuleWrapper
 	@Override
 	public void setScript(String script) {
 		model.setScript(script);
+	}
+
+	/**
+	 * Sets the script syntax version of this object validation rule.
+	 *
+	 * @param scriptSyntaxVersion the script syntax version of this object validation rule
+	 */
+	@Override
+	public void setScriptSyntaxVersion(int scriptSyntaxVersion) {
+		model.setScriptSyntaxVersion(scriptSyntaxVersion);
 	}
 
 	/**

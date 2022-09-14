@@ -75,6 +75,10 @@ public class ObjectValidationRuleTable
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectValidationRuleTable, Clob> script = createColumn(
 		"script", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<ObjectValidationRuleTable, Integer>
+		scriptSyntaxVersion = createColumn(
+			"scriptSyntaxVersion", Integer.class, Types.INTEGER,
+			Column.FLAG_DEFAULT);
 
 	private ObjectValidationRuleTable() {
 		super("ObjectValidationRule", ObjectValidationRuleTable::new);

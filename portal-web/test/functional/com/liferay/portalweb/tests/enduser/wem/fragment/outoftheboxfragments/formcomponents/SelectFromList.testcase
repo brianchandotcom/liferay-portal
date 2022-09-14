@@ -44,14 +44,6 @@ definition {
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 		}
-
-		task ("Enable Inputs Fragment collection in Gogo Shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
-
-			GogoShell.viewOutput(outputContent = "true");
-		}
 	}
 
 	tearDown {
@@ -61,14 +53,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			task ("Disable Inputs Fragment collection in Gogo Shell") {
-				GogoShell.openGogoShellAdmin();
-
-				GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
-
-				GogoShell.viewOutput(outputContent = "true");
-			}
-
 			JSONAccountEntryAPI._deleteAllAccountEntries();
 
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");

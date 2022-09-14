@@ -13,16 +13,15 @@
  */
 
 import ClayMultiStepNav from '@clayui/multi-step-nav';
-import React, {useState} from 'react';
+import React from 'react';
 
 import Sheet from './Sheet.es';
 
 const MultiStepNav = ({steps}) => {
-	const [value] = useState(0);
-
 	const isActive = (index) => value === index;
 
 	const isComplete = (index) => value > index;
+	const currentStep = 0;
 
 	return (
 		<>
@@ -46,14 +45,14 @@ const MultiStepNav = ({steps}) => {
 				))}
 			</ClayMultiStepNav>
 
-			{steps[value] && (
+			{steps[currentStep] && (
 				<Sheet
-					description={steps[value].description}
-					title={steps[value].title}
+					description={steps[currentStep].description}
+					title={steps[currentStep].title}
 				>
-					<Sheet.Content>{steps[value].content}</Sheet.Content>
+					<Sheet.Content>{steps[currentStep].content}</Sheet.Content>
 
-					<Sheet.Footer>{steps[value].footer}</Sheet.Footer>
+					<Sheet.Footer>{steps[currentStep].footer}</Sheet.Footer>
 				</Sheet>
 			)}
 		</>

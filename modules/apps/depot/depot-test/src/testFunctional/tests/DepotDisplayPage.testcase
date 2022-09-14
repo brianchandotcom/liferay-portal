@@ -34,7 +34,7 @@ definition {
 
 	@description = "This test ensures that a user can map the display page with Open Graph when using the DM type from AL on a connect site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanMapDMWithOpenGraph {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -158,7 +158,7 @@ definition {
 
 	@description = "This test ensures that a user can map the display page with SEO when using the DM type from AL on a connect site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanMapDMWithSEO {
 		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
 
@@ -220,7 +220,7 @@ definition {
 
 	@description = "This test ensures that a user can map the display page with Open Graph when using the WC structure from AL on a connect site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanMapWCWithOpenGraph {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -370,7 +370,7 @@ definition {
 
 	@description = "This test ensures that a user can map the display page with SEO when using the WC structure from AL on a connect site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanMapWCWithSEO {
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
@@ -454,7 +454,7 @@ definition {
 
 	@description = "This test ensures that a user can view the image using display page template with DM type from AL on a connect site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanViewCustomizeDMFromConnectedSite {
 		property portal.acceptance = "true";
 
@@ -525,7 +525,7 @@ definition {
 
 	@description = "This test ensures that a user can view the web content using display page template with WC structure from AL on a connect site."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanViewCustomizeWCFromConnectedSite {
 		property portal.acceptance = "true";
 

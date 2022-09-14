@@ -52,26 +52,25 @@ import {getUIConfigurationValues, isCustomJSONSXPElement} from '../utils/utils';
 import SidebarPanel from './SidebarPanel';
 
 /**
- * When updating element using the editor, this checks that the i18n title or
- * description is a valid object. This prevents errors with displaying
- * title/description in the preview and toolbar.
+ * Checks that property of object is a valid non-Array object. Prevents errors
+ * in displaying title and description for the preview and toolbar.
  * @param {*} sxpElementJSONObject The SXP element as an object
- * @param {*} property Property to check ('title_i18n' or 'description_i18n')
+ * @param {*} property Property to check (`title_i18n` or `description_i18n`)
  */
 const isPropertyValid = (sxpElementJSONObject, property) =>
 	typeof sxpElementJSONObject[property] === 'object' &&
 	!Array.isArray(sxpElementJSONObject[property]);
 
 /**
- * When updating using the language selector, this reassigns the values
- * of title_i18n and description_i18n, in order to maintain current order of
- * properties and use the correct format ('en_US').
+ * Reassigns the values of `title_i18n` and `description_i18n` in current
+ * JSON object after editing them through the modal. Maintains current order
+ * of properties and uses the expected locale format.
  * @param {*} sxpElementJSONObject
  * @param {*} title_i18n
  * @param {*} description_i18n
  * @returns
  */
-const replaceTitleAndDescription = (
+const reassignTitleAndDescription = (
 	sxpElementJSONObject,
 	title_i18n,
 	description_i18n
@@ -165,13 +164,22 @@ function EditSXPElementForm({
 	const [showInfoSidebar, setShowInfoSidebar] = useState(false);
 	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);
 	const [showVariablesSidebar, setShowVariablesSidebar] = useState(false);
-
-	const [isSXPElementJSONInvalid, setIsSXPElementJSONInvalid] = useState(
-		false
-	);
 	const [elementJSONEditorValue, setElementJSONEditorValue] = useState(
 		initialElementJSONEditorValueString
 	);
+
+	/**
+	 * Set to true, `isSXPElementJSONInvalid` prevents saving, rendering
+	 * preview, and editing on the title/description modal.
+	 */
+	const [isSXPElementJSONInvalid, setIsSXPElementJSONInvalid] = useState(
+		false
+	);
+
+	/**
+	 * Saves the most recent valid version of sxpElement as an object.
+	 * Contains `title_i18n`, `description_i18n`, and `elementDefinition`.
+	 */
 	const [sxpElementJSONObject, setSXPElementJSONObject] = useState(
 		initialElementJSONEditorValue
 	);
@@ -204,6 +212,12 @@ function EditSXPElementForm({
 		}
 	}, [readOnly]);
 
+	/**
+	 * Parses CodeMirror text after user types into it or submits changes
+	 * on title and description modal. Validates `title_i18n` and
+	 * `description_i18n` and updates `sxpElementJSONObject` if parsing
+	 * succeeds.
+	 */
 	const _handleJSONEditorValueChange = (value) => {
 		setElementJSONEditorValue(value);
 
@@ -292,19 +306,15 @@ function EditSXPElementForm({
 			return;
 		}
 
-		const {
-			description_i18n,
-			elementDefinition,
-			title_i18n,
-		} = sxpElementJSONObject;
-
 		try {
 
-			// If the warning modal is already open, assume the form was submitted
-			// using the "Continue To Save" action and should skip the schema
-			// validation step.
-
-			// TODO: Update this once a validation REST endpoint is decided
+			/**
+			 * If the warning modal is already open, assume the form was submitted
+			 * using the "Continue To Save" action and should skip the schema
+			 * validation step.
+			 *
+			 * TODO: Update this once a validation REST endpoint is decided
+			 */
 
 			if (!showSubmitWarningModal) {
 				const validateErrors = {errors: []};
@@ -314,9 +324,9 @@ function EditSXPElementForm({
 					'/o/search-experiences-rest/v1.0/sxp-elements/validate',
 					{
 						body: JSON.stringify({
-							description_i18n,
-							elementDefinition,
-							title_i18n,
+							description_i18n: sxpElementJSONObject.description_i18n,
+							elementDefinition: sxpElementJSONObject.elementDefinition,
+							title_i18n: sxpElementJSONObject.title_i18n,
 							type,
 						}),
 						method: 'POST',
@@ -337,9 +347,10 @@ function EditSXPElementForm({
 				`/o/search-experiences-rest/v1.0/sxp-elements/${sxpElementId}`,
 				{
 					body: JSON.stringify({
-						description_i18n,
-						elementDefinition,
-						title_i18n,
+						description_i18n: sxpElementJSONObject.description_i18n,
+						elementDefinition:
+							sxpElementJSONObject.elementDefinition,
+						title_i18n: sxpElementJSONObject.title_i18n,
 						type,
 					}),
 					headers: new Headers({
@@ -385,16 +396,18 @@ function EditSXPElementForm({
 		}
 	};
 
+	/**
+	 * Called after clicking 'Done' in title and description edit modal.
+	 * Updates `title_i18n`, `description_i18n` inside CodeMirror editor,
+	 * which triggers `_handleJSONEditorValueChange`.
+	 */
 	const _handleTitleAndDescriptionChange = ({description, title}) => {
 		if (!isSXPElementJSONInvalid) {
 			const doc = elementJSONEditorRef.current.getDoc();
 
-			// This will trigger JSON editor onChange function, which
-			// updates all involved states.
-
 			doc.setValue(
 				JSON.stringify(
-					replaceTitleAndDescription(
+					reassignTitleAndDescription(
 						sxpElementJSONObject,
 						title,
 						description
@@ -406,14 +419,14 @@ function EditSXPElementForm({
 		}
 	};
 
-	function _handleVariableClick(variable) {
+	const _handleVariableClick = (variable) => {
 		const doc = elementJSONEditorRef.current.getDoc();
 		const cursor = doc.getCursor();
 
 		doc.replaceRange(variable, cursor);
-	}
+	};
 
-	function _renderPreviewBody() {
+	const _renderPreviewBody = () => {
 		if (!isSXPElementJSONInvalid) {
 			const previewSXPElementJSON = {
 				elementDefinition: {}, // Define elementDefinition to prevent error
@@ -456,7 +469,7 @@ function EditSXPElementForm({
 				/>
 			);
 		}
-	}
+	};
 
 	return (
 		<>

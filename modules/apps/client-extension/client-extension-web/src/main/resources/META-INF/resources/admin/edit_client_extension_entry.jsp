@@ -70,7 +70,6 @@ renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 						<liferay-ui:input-localized
 							autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 							name="name"
-							required="<%= true %>"
 							xml="<%= editClientExtensionEntryDisplayContext.getName() %>"
 						/>
 					</aui:field-wrapper>

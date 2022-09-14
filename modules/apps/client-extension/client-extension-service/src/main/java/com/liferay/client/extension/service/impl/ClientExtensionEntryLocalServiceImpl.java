@@ -14,6 +14,8 @@
 
 package com.liferay.client.extension.service.impl;
 
+import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
+import com.liferay.client.extension.exception.DuplicateClientExtensionEntryExternalReferenceCodeException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.service.base.ClientExtensionEntryLocalServiceBaseImpl;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -93,6 +96,11 @@ public class ClientExtensionEntryLocalServiceImpl
 		}
 
 		User user = _userLocalService.getUser(userId);
+
+		_validateExternalReferenceCode(
+			user.getCompanyId(), externalReferenceCode);
+
+		_validateName(nameMap);
 
 		_validateTypeSettings(typeSettings, null, type);
 
@@ -460,6 +468,33 @@ public class ClientExtensionEntryLocalServiceImpl
 			ClientExtensionEntry.class.getName(),
 			clientExtensionEntry.getClientExtensionEntryId(),
 			clientExtensionEntry, serviceContext, new HashMap<>());
+	}
+
+	private void _validateExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws DuplicateClientExtensionEntryExternalReferenceCodeException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		ClientExtensionEntry clientExtensionEntry =
+			clientExtensionEntryLocalService.
+				fetchClientExtensionEntryByExternalReferenceCode(
+					companyId, externalReferenceCode);
+
+		if (clientExtensionEntry != null) {
+			throw new DuplicateClientExtensionEntryExternalReferenceCodeException();
+		}
+	}
+
+	private void _validateName(Map<Locale, String> nameMap)
+		throws ClientExtensionEntryTypeSettingsException {
+
+		if (Validator.isBlank(nameMap.get(LocaleUtil.getDefault()))) {
+			throw new ClientExtensionEntryTypeSettingsException(
+				"name-is-required");
+		}
 	}
 
 	private void _validateTypeSettings(

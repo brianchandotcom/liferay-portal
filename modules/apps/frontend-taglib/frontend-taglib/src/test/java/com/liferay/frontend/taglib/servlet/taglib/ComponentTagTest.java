@@ -16,8 +16,10 @@ package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
 import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
+import com.liferay.frontend.js.web.internal.servlet.taglib.aui.PortletDataRendererImpl;
 import com.liferay.frontend.taglib.internal.util.ServicesProvider;
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -31,6 +33,8 @@ import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.uuid.PortalUUIDImpl;
 
 import java.io.StringWriter;
+
+import java.lang.reflect.Field;
 
 import java.net.URL;
 
@@ -62,7 +66,7 @@ public class ComponentTagTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws Exception {
 		ClassLoaderPool.register(
 			"ShieldedContainerClassLoader", PortalImpl.class.getClassLoader());
 
@@ -73,6 +77,11 @@ public class ComponentTagTest {
 		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
 
 		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
+
+		Field portletDataRendererField = ReflectionUtil.getDeclaredField(
+			ScriptData.class, "_portletDataRenderer");
+
+		portletDataRendererField.set(null, new PortletDataRendererImpl());
 	}
 
 	@Test

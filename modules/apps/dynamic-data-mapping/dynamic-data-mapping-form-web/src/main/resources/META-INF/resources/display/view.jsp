@@ -288,6 +288,8 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 				</div>
 
 				<aui:script use="aui-base">
+					var <portlet:namespace />form;
+
 					function <portlet:namespace />clearInterval(intervalId) {
 						if (intervalId) {
 							clearInterval(intervalId);
@@ -318,8 +320,6 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 
 					<c:choose>
 						<c:when test="<%= ddmFormDisplayContext.isAutosaveEnabled() %>">
-							var <portlet:namespace />form;
-
 							<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/dynamic_data_mapping_form/add_form_instance_record" var="autoSaveFormInstanceRecordURL">
 								<portlet:param name="autoSave" value="<%= Boolean.TRUE.toString() %>" />
 								<portlet:param name="languageId" value="<%= languageId %>" />
@@ -349,7 +349,7 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 							function <portlet:namespace />startAutoSave() {
 								<portlet:namespace />clearInterval(<portlet:namespace />intervalId);
 
-								<portlet:namespace />intervalId = setInterval(
+								window.<portlet:namespace />intervalId = setInterval(
 									<portlet:namespace />autoSave,
 									<%= ddmFormDisplayContext.getAutosaveInterval() %>
 								);
@@ -363,7 +363,7 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 
 								var time = Liferay.Session.get('sessionLength') || tenSeconds;
 
-								<portlet:namespace />intervalId = setInterval(
+								window.<portlet:namespace />intervalId = setInterval(
 									<portlet:namespace />extendSession,
 									time / 2
 								);
@@ -417,7 +417,7 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 						var rememberMe = true;
 					</c:if>
 
-					<portlet:namespace />sessionIntervalId = setInterval(() => {
+					window.<portlet:namespace />sessionIntervalId = setInterval(() => {
 						if (Liferay.Session || rememberMe) {
 							clearInterval(<portlet:namespace />sessionIntervalId);
 

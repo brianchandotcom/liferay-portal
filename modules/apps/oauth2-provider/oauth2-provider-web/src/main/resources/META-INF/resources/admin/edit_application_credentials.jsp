@@ -238,7 +238,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 </div>
 
 <aui:script use="aui-modal,liferay-form,node,node-event-simulate">
-	<portlet:namespace />areAdminApplicationSectionsRequired = function () {
+	window.<portlet:namespace />areAdminApplicationSectionsRequired = function () {
 		var selectedClientProfile = <portlet:namespace />getSelectedClientProfile();
 		return (
 			A.all(
@@ -254,7 +254,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		);
 	};
 
-	<portlet:namespace />generateRandomSecret = function () {
+	window.<portlet:namespace />generateRandomSecret = function () {
 		Liferay.Util.fetch(
 			'<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/oauth2_provider/generate_random_secret" />',
 			{
@@ -276,11 +276,11 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			});
 	};
 
-	<portlet:namespace />getSelectedClientProfile = function () {
+	window.<portlet:namespace />getSelectedClientProfile = function () {
 		return A.one('#<portlet:namespace />clientProfile option:selected');
 	};
 
-	<portlet:namespace />isClientCredentialsSectionRequired = function () {
+	window.<portlet:namespace />isClientCredentialsSectionRequired = function () {
 		var selectedClientProfile = <portlet:namespace />getSelectedClientProfile();
 
 		return (
@@ -292,7 +292,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		);
 	};
 
-	<portlet:namespace />isConfidentialClientRequired = function () {
+	window.<portlet:namespace />isConfidentialClientRequired = function () {
 		var selectedClientProfile = <portlet:namespace />getSelectedClientProfile();
 
 		return (
@@ -304,7 +304,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		);
 	};
 
-	<portlet:namespace />isRedirectURIRequired = function () {
+	window.<portlet:namespace />isRedirectURIRequired = function () {
 		var selectedClientProfile = <portlet:namespace />getSelectedClientProfile();
 
 		return (
@@ -316,7 +316,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		);
 	};
 
-	<portlet:namespace />requiredRedirectURIs = function () {
+	window.<portlet:namespace />requiredRedirectURIs = function () {
 		var grantTypesNodeList = A.all(
 			'#<portlet:namespace />allowedGrantTypes .allowedGrantType'
 		)._nodes;
@@ -350,7 +350,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		<portlet:namespace />updateRedirectURIs(redirectURIs);
 	};
 
-	<portlet:namespace />setControlEqualTo = function (
+	window.<portlet:namespace />setControlEqualTo = function (
 		targetControlId,
 		srcControlId
 	) {
@@ -360,7 +360,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		<portlet:namespace />updateComponent(targetControl, srcControl.val());
 	};
 
-	<portlet:namespace />showEditClientIdModal = function () {
+	window.<portlet:namespace />showEditClientIdModal = function () {
 		var bodyContentDiv = A.one('#<portlet:namespace />edit-client-id-modal');
 		var clientIdPadlock = A.one('#<portlet:namespace />clientIdPadlock');
 		var applyField = A.one('#<portlet:namespace />newClientId');
@@ -375,7 +375,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		);
 	};
 
-	<portlet:namespace />showEditClientSecretModal = function () {
+	window.<portlet:namespace />showEditClientSecretModal = function () {
 		var bodyContentDiv = A.one(
 			'#<portlet:namespace />edit-client-secret-modal'
 		);
@@ -394,7 +394,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		);
 	};
 
-	<portlet:namespace />showModal = function (
+	window.<portlet:namespace />showModal = function (
 		title,
 		bodyContent,
 		footerContent,
@@ -449,7 +449,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		modal.show();
 	};
 
-	<portlet:namespace />updateAdminOptionsApplicationSection = function () {
+	window.<portlet:namespace />updateAdminOptionsApplicationSection = function () {
 		var rememberApplicationSection = A.one(
 			'#<portlet:namespace />rememberDeviceSection'
 		);
@@ -478,7 +478,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		}
 	};
 
-	<portlet:namespace />updateAllowedGrantTypes = function (clientProfile) {
+	window.<portlet:namespace />updateAllowedGrantTypes = function (clientProfile) {
 		A.all('#<portlet:namespace />allowedGrantTypes .allowedGrantType').hide();
 		A.all(
 			'#<portlet:namespace />allowedGrantTypes .allowedGrantType.client-profile-' +
@@ -490,7 +490,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		<portlet:namespace />updateClientCredentialsSection();
 	};
 
-	<portlet:namespace />updateClientCredentialsSection = function () {
+	window.<portlet:namespace />updateClientCredentialsSection = function () {
 		var clientCredentialsSection = A.one(
 			'#<portlet:namespace />clientCredentialsSection'
 		);
@@ -510,13 +510,13 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		}
 	};
 
-	<portlet:namespace />updateComponent = function (component, newValue) {
+	window.<portlet:namespace />updateComponent = function (component, newValue) {
 		component.val(newValue);
 		component.simulate('keyup');
 		component.simulate('change');
 	};
 
-	<portlet:namespace />updatePadlock = function (
+	window.<portlet:namespace />updatePadlock = function (
 		padlockId,
 		newValue,
 		originalValue
@@ -532,7 +532,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		}
 	};
 
-	<portlet:namespace />updateRedirectURIs = function (required) {
+	window.<portlet:namespace />updateRedirectURIs = function (required) {
 		var redirectURIsNode = document.getElementById(
 			'<portlet:namespace />redirectURIs'
 		);

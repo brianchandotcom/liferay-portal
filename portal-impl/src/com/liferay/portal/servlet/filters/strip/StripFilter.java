@@ -192,8 +192,17 @@ public class StripFilter extends BasePortalFilter {
 						charBuffer, startPos, length, _MARKER_TYPE_JAVASCRIPT,
 						_MARKER_TYPE_JAVASCRIPT_NEXTS);
 
-					if ((length < _MARKER_TYPE_JAVASCRIPT.length()) ||
-						(searchValue == -1)) {
+					int expectedLength = _MARKER_TYPE_JAVASCRIPT.length();
+
+					if (searchValue == -1) {
+						searchValue = KMPSearch.search(
+							charBuffer, startPos, length, _MARKER_TYPE_MODULE,
+							_MARKER_TYPE_MODULE_NEXTS);
+
+						expectedLength = _MARKER_TYPE_MODULE.length();
+					}
+
+					if ((length < expectedLength) || (searchValue == -1)) {
 
 						// We have just determined that this is an open script
 						// tag that does not have the attribute
@@ -765,6 +774,11 @@ public class StripFilter extends BasePortalFilter {
 
 	private static final int[] _MARKER_TYPE_JAVASCRIPT_NEXTS =
 		KMPSearch.generateNexts(_MARKER_TYPE_JAVASCRIPT);
+
+	private static final String _MARKER_TYPE_MODULE = "type=\"module\"";
+
+	private static final int[] _MARKER_TYPE_MODULE_NEXTS =
+		KMPSearch.generateNexts(_MARKER_TYPE_MODULE);
 
 	private static final String _STRIP = "strip";
 

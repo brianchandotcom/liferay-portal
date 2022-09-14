@@ -98,7 +98,7 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 </aui:fieldset>
 
 <script>
-	<portlet:namespace />evaluateAttributeMappingRows = function () {
+	function <portlet:namespace />evaluateAttributeMappingRows() {
 		document.querySelector(
 			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
 		).value = '';
@@ -113,8 +113,9 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 					).checked
 				)
 			);
-	};
-	<portlet:namespace />evaluateAttributeMappingRow = function (
+	}
+
+	function <portlet:namespace />evaluateAttributeMappingRow(
 		row,
 		userIdentifierExpressionIsAttributeMapping,
 		event
@@ -147,7 +148,7 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 				radioTarget.closest('label').classList.toggle('disabled', true);
 			}
 		}
-	};
+	}
 
 	var userAttributeMappings = document.getElementById(
 		'<portlet:namespace />userAttributeMappings'

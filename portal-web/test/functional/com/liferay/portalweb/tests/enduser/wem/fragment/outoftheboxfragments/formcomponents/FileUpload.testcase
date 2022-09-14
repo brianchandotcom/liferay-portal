@@ -75,8 +75,6 @@ definition {
 	@description = "This is a test for LPS-157806. Add custom text on Button Text field of File Upload fragment on content page."
 	@priority = "4"
 	test AddCustomTextOnButtonTextFieldOnContentPage {
-		property test.name.skip.portal.instance = "FileUpload#AddCustomTextOnButtonTextFieldOnContentPage";
-
 		task ("Given a content page has a File Upload fragment mapped to Attachment field with Show Files in Documents and Media") {
 			task ("Add a Form Container framgment to content page") {
 				ContentPagesNavigator.openEditContentPage(
@@ -158,8 +156,6 @@ definition {
 	@description = "This is a test for LPS-157806. Add custom text on Button Text field of File Upload fragment on display page template."
 	@priority = "4"
 	test AddCustomTextOnButtonTextFieldOnDisplayPage {
-		property test.name.skip.portal.instance = "FileUpload#AddCustomTextOnButtonTextFieldOnDisplayPage";
-
 		task ("Given a display page has a File Upload fragment mapped to Attachment field with Show Files in Documents and Media") {
 			task ("Add a web content based on Basic Web Content") {
 				JSONWebcontent.addWebContent(
@@ -268,8 +264,6 @@ definition {
 	@description = "This is a test for LPS-155170. File Upload fragment could add file from computer."
 	@priority = "3"
 	test AddFileFromComputerDiectly {
-		property test.name.skip.portal.instance = "FileUpload#AddFileFromComputerDiectly";
-
 		task ("Given a page creator has a File Upload fragment") {
 			task ("Add a File Upload fragment to content page") {
 				ContentPagesNavigator.openEditContentPage(
@@ -317,7 +311,6 @@ definition {
 	@priority = "5"
 	test CanAddFileFromComputerAndDMInMappedObject {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "FileUpload#CanAddFileFromComputerAndDMInMappedObject";
 
 		task ("Given a content page has a File Upload fragment mapped to Attachment field") {
 			task ("Add a Form Container framgment to content page") {
@@ -469,8 +462,6 @@ definition {
 	@description = "This is a test for LPS-155170. File Upload fragment could add file from computer to DM when enable Show Files in Documents and Media."
 	@priority = "3"
 	test CanAddFileFromComputerToDMWhenEnableShowFilesInDocumentsAndMedia {
-		property test.name.skip.portal.instance = "FileUpload#CanAddFileFromComputerToDMWhenEnableShowFilesInDocumentsAndMedia";
-
 		task ("Given a content page has a File Upload fragment mapped to Attachment field with Show Files in Documents and Media") {
 			task ("Add a Form Container framgment to content page") {
 				ContentPagesNavigator.openEditContentPage(
@@ -532,8 +523,6 @@ definition {
 	@description = "This is a test for LPS-151402. The user could see error message when submit a form with attached file size larger than allowed maximum upload size."
 	@priority = "4"
 	test ViewErrorMessageWhenSubmitFormWithAttachedFileSizeLargerThanAllowedMaximumUploadSize {
-		property test.name.skip.portal.instance = "FileUpload#ViewErrorMessageWhenSubmitFormWithAttachedFileSizeLargerThanAllowedMaximumUploadSize";
-
 		task ("Given a user has a content page where a File Upload and Submit Button fragments are inside a Form Container") {
 			task ("Change the Maximum File Size to 2 MB") {
 				ObjectAdmin.openObjectAdmin();
@@ -609,8 +598,6 @@ definition {
 	@description = "This is a test for LPS-151402. The user could see error message when submit a form with invalid extension of attached file."
 	@priority = "4"
 	test ViewErrorMessageWhenSubmitFormWithInvalidExtensionOfAttachedFile {
-		property test.name.skip.portal.instance = "FileUpload#ViewErrorMessageWhenSubmitFormWithInvalidExtensionOfAttachedFile";
-
 		task ("Given a user has a content page where a File Upload and Submit Button fragments are inside a Form Container") {
 			task ("Add a Form Container framgment to content page") {
 				JSONLayout.addPublicLayout(

@@ -51,8 +51,6 @@ definition {
 	@description = "This is a test for LPS-155168. The page creator cannot input Text Verification and reload the Simple Captcha in page editor."
 	@priority = "4"
 	test CannotInputTextVerificationAndReloadSimpleCaptchaInPageEditor {
-		property test.name.skip.portal.instance = "CaptchaFragment#CannotInputTextVerificationAndReloadSimpleCaptchaInPageEditor";
-
 		task ("Given a page creator has a content page with a Form Container") {
 			task ("Add a Form Container framgment to content page") {
 				JSONLayout.addPublicLayout(
@@ -94,8 +92,6 @@ definition {
 	@description = "This is a test for LPS-155168 and LPS-151402. The user could submit Text verification of Simple Captcha via clicking submit at view mode. The user could see error message when submit a form with wrong catpcha verification codes."
 	@priority = "4"
 	test SubmitTextVerificationViaClickingSubmit {
-		property test.name.skip.portal.instance = "CaptchaFragment#SubmitTextVerificationViaClickingSubmit";
-
 		task ("Given a site member has a content page with a Captcha and a Submit Button inside Form Container") {
 			task ("Add a Form Container framgment to content page") {
 				JSONLayout.addPublicLayout(
@@ -155,7 +151,6 @@ definition {
 	@priority = "5"
 	test SubmitTextVerificationViaPressingEnter {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CaptchaFragment#SubmitTextVerificationViaPressingEnter";
 
 		task ("Given a site member has a content page with a Captcha inside Form Container") {
 			task ("Add a Form Container framgment to content page") {

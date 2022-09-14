@@ -24,8 +24,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
-page import="com.liferay.petra.string.StringPool" %><%@
+<%@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil" %><%@
 page import="com.liferay.portal.instances.web.internal.constants.PortalInstancesWebKeys" %><%@
 page import="com.liferay.portal.instances.web.internal.display.context.PortalInstancesManagementToolbarDisplayContext" %><%@
@@ -39,6 +38,7 @@ page import="com.liferay.portal.kernel.exception.RequiredCompanyException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Company" %><%@
 page import="com.liferay.portal.kernel.model.VirtualHost" %><%@
+page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.portal.kernel.service.CompanyLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil" %><%@

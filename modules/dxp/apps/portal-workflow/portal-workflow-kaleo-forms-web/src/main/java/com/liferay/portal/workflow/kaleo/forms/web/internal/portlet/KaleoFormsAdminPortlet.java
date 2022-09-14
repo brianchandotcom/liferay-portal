@@ -108,7 +108,8 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/admin/view.jsp",
 		"javax.portlet.name=" + KaleoFormsPortletKeys.KALEO_FORMS_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=administrator,power-user"
+		"javax.portlet.security-role-ref=administrator,power-user",
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )

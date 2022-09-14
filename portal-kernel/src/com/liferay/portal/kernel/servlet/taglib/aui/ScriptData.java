@@ -85,13 +85,13 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 				}
 
 				append(
-					portletId, new JSFragment(auiModules, null, null, content));
+					portletId, new JSFragment(null, auiModules, content, null));
 			}
 			else {
 				append(
 					portletId,
 					new JSFragment(
-						null, _parseAMDRequires(modules), null, content));
+						_parseAMDRequires(modules), null, content, null));
 			}
 		}
 	}

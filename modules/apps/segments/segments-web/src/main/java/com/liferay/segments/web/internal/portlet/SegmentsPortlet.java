@@ -15,9 +15,12 @@
 package com.liferay.segments.web.internal.portlet;
 
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
@@ -76,8 +79,8 @@ public class SegmentsPortlet extends MVCPortlet {
 
 		SegmentsDisplayContext segmentsDisplayContext =
 			new SegmentsDisplayContext(
-				_portal.getHttpServletRequest(renderRequest), renderRequest,
-				renderResponse, _segmentsConfigurationProvider,
+				_groupLocalService, _language, _portal, _prefsProps,
+				renderRequest, renderResponse, _segmentsConfigurationProvider,
 				_segmentsEntryService);
 
 		renderRequest.setAttribute(
@@ -99,10 +102,19 @@ public class SegmentsPortlet extends MVCPortlet {
 	}
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private ItemSelector _itemSelector;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PrefsProps _prefsProps;
 
 	@Reference
 	private RoleTypeContributorProvider _roleTypeContributorProvider;

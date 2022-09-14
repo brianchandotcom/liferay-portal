@@ -428,6 +428,7 @@ public class FragmentEntryLinkLocalServiceImpl
 			groupId, fragmentEntryId, layoutPageTemplateType);
 	}
 
+	@Override
 	public FragmentEntryLink markForDeleteFragmentEntryLink(
 			long fragmentEntryLinkId)
 		throws PortalException {
@@ -440,6 +441,7 @@ public class FragmentEntryLinkLocalServiceImpl
 		return fragmentEntryLinkPersistence.update(fragmentEntryLink);
 	}
 
+	@Override
 	public FragmentEntryLink unmarkForDeleteFragmentEntryLink(
 			long fragmentEntryLinkId)
 		throws PortalException {

@@ -18,14 +18,17 @@ const Overview = () => {
 	const koroneikiAccount = data?.koroneikiAccountByExternalReferenceCode;
 
 	return (
-		<div>
+		<>
 			<SupportOverview
 				koroneikiAccount={koroneikiAccount}
 				loading={loading}
 			/>
 
-			<SubscriptionsOverview />
-		</div>
+			<SubscriptionsOverview
+				koroneikiAccount={koroneikiAccount}
+				loading={loading}
+			/>
+		</>
 	);
 };
 

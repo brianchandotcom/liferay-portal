@@ -14,7 +14,7 @@ import {memo, useState} from 'react';
 import Skeleton from '../Skeleton';
 
 const NavSegment = ({
-	fetching,
+	disabled,
 	items,
 	loading,
 	maxItemsLoading = 3,
@@ -26,7 +26,14 @@ const NavSegment = ({
 	const handleOnClick = (index) => {
 		if (index !== currentIndex) {
 			setCurrentIndex(index);
-			onSelect(selectedIndex !== undefined ? index : items[index]);
+
+			if (selectedIndex) {
+				onSelect(index);
+
+				return;
+			}
+
+			onSelect(items[index]);
 		}
 	};
 
@@ -48,7 +55,7 @@ const NavSegment = ({
 				<Nav.Link
 					active={index === currentIndex}
 					className="cp-nav-link text-neutral-10"
-					disabled={fetching}
+					disabled={disabled}
 				>
 					{item.label}
 				</Nav.Link>

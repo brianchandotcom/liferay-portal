@@ -9,84 +9,30 @@
  * distribution rights of the Software.
  */
 
-import React, {useEffect, useRef} from 'react';
-import RoundedGroupButtons from '../../../../../../../../../common/components/RoundedGroupButtons';
-import SubscriptionsDropDownMenu from './components/SubscriptionsDropdownMenu';
-import useUpdateShowDropDown from './hooks/useUpdateShowDropDown';
+import AccountSubscriptionGroupsNav from './components/AccountSubscriptionGroupsNav/AccountSubscriptionGroupsNav';
+import SubscriptionStatusDropdown from './components/SubscriptionStatusDropdown/SubscriptionStatusDropdown';
 
 const SubscriptionsNavbar = ({
-	selectedSubscriptionGroup,
-	setSelectedSubscriptionGroup,
-	subscriptionGroups,
-}) => {
-	const subscriptionNavbarRef = useRef();
+	accountSubscriptionGroups,
+	disabled,
+	loading,
+	onClickDropdownItem,
+	onSelectNavItem,
+}) => (
+	<div>
+		<AccountSubscriptionGroupsNav
+			accountSubscriptionGroups={accountSubscriptionGroups}
+			disabled={disabled}
+			loading={loading}
+			onSelect={onSelectNavItem}
+		/>
 
-	const showDropDown = useUpdateShowDropDown();
-
-	useEffect(() => {
-		setSelectedSubscriptionGroup(subscriptionGroups[0]?.name);
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [subscriptionGroups]);
-
-	return (
-		<div className="d-flex rounded-pill w-100" ref={subscriptionNavbarRef}>
-			<nav className="mb-2 mt-4 pt-2">
-				{subscriptionGroups.length === 1 &&
-					subscriptionGroups.map((subscriptionGroup) => (
-						<h5
-							className="text-brand-primary"
-							key={subscriptionGroup.name}
-						>
-							{subscriptionGroup.name}
-						</h5>
-					))}
-
-				{subscriptionGroups.length > 1 &&
-					subscriptionGroups.length < 5 && (
-						<>
-							{showDropDown && (
-								<SubscriptionsDropDownMenu
-									selectedSubscriptionGroup={
-										selectedSubscriptionGroup
-									}
-									setSelectedSubscriptionGroup={
-										setSelectedSubscriptionGroup
-									}
-									subscriptionGroups={subscriptionGroups}
-								/>
-							)}
-
-							{!showDropDown && (
-								<RoundedGroupButtons
-									groupButtons={subscriptionGroups.map(
-										(subscriptionGroup) => ({
-											label: subscriptionGroup.name,
-
-											value: subscriptionGroup.name,
-										})
-									)}
-									handleOnChange={(value) => {
-										setSelectedSubscriptionGroup(value);
-									}}
-									id="subscription-navbar"
-								/>
-							)}
-						</>
-					)}
-
-				{subscriptionGroups.length > 4 && (
-					<SubscriptionsDropDownMenu
-						selectedSubscriptionGroup={selectedSubscriptionGroup}
-						setSelectedSubscriptionGroup={
-							setSelectedSubscriptionGroup
-						}
-						subscriptionGroups={subscriptionGroups}
-					/>
-				)}
-			</nav>
-		</div>
-	);
-};
+		<SubscriptionStatusDropdown
+			disabled={disabled}
+			loading={loading}
+			onClick={onClickDropdownItem}
+		/>
+	</div>
+);
 
 export default SubscriptionsNavbar;

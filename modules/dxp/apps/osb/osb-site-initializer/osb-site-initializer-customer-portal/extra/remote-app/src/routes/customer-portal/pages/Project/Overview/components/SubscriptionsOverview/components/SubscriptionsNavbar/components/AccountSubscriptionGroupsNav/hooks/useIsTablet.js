@@ -9,4 +9,19 @@
  * distribution rights of the Software.
  */
 
-export {default} from './SubscriptionNavbar';
+import {useEffect, useState} from 'react';
+import {Liferay} from '../../../../../../../../../../../../common/services/liferay';
+
+export default function useIsTablet() {
+	const [isTablet, setIsTablet] = useState(Liferay.Util.isTablet());
+
+	useEffect(() => {
+		const handleResize = () => setIsTablet(Liferay.Util.isTablet());
+
+		window.addEventListener('resize', handleResize);
+
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
+	return isTablet;
+}

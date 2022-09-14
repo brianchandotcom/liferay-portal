@@ -26,6 +26,7 @@ import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
 import com.liferay.oauth2.provider.scope.spi.scope.matcher.ScopeMatcherFactory;
 import com.liferay.osgi.service.tracker.collections.ServiceReferenceServiceTuple;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
@@ -554,7 +555,8 @@ public class ScopeLocatorImplTest {
 				scopeMatcherFactoriesServiceTrackerMap = Mockito.mock(
 					ServiceTrackerMap.class);
 
-			_scopeLocatorImpl.setDefaultScopeMatcherFactory(
+			ReflectionTestUtil.setFieldValue(
+				_scopeLocatorImpl, "_defaultScopeMatcherFactory",
 				defaultScopeMatcherFactory);
 
 			_scopeLocatorImpl.setScopeMatcherFactoriesServiceTrackerMap(

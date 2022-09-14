@@ -201,6 +201,12 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	}
 
 	@Override
+	public List<DLFileVersion> getFileVersions(int status, int start, int end) {
+		return DLFileVersionLocalServiceUtil.getFileVersions(
+			getFileEntryId(), status, start, end);
+	}
+
+	@Override
 	public int getFileVersionsCount(int status) {
 		return DLFileVersionLocalServiceUtil.getFileVersionsCount(
 			getFileEntryId(), status);

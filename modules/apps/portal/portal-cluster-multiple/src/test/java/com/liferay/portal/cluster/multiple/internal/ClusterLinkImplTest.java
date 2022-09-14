@@ -262,7 +262,8 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				"test-channel-properties-transport-" + i);
 		}
 
-		clusterLinkImpl.setProps(
+		ReflectionTestUtil.setFieldValue(
+			clusterLinkImpl, "_props",
 			PropsTestUtil.setProps(
 				HashMapBuilder.<String, Object>put(
 					PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT,
@@ -274,10 +275,11 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT,
 					channelPropertiesProperties
 				).build()));
-
-		clusterLinkImpl.setClusterChannelFactory(
+		ReflectionTestUtil.setFieldValue(
+			clusterLinkImpl, "_clusterChannelFactory",
 			new TestClusterChannelFactory());
-		clusterLinkImpl.setPortalExecutorManager(
+		ReflectionTestUtil.setFieldValue(
+			clusterLinkImpl, "_portalExecutorManager",
 			new MockPortalExecutorManager());
 
 		clusterLinkImpl.activate();

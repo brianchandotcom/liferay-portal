@@ -86,7 +86,9 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		MockClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
 
-		clusterMasterExecutorImpl.setClusterExecutorImpl(mockClusterExecutor);
+		ReflectionTestUtil.setFieldValue(
+			clusterMasterExecutorImpl, "_clusterExecutorImpl",
+			mockClusterExecutor);
 
 		clusterMasterExecutorImpl.activate();
 
@@ -146,7 +148,9 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		MockClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
 
-		clusterMasterExecutorImpl.setClusterExecutorImpl(mockClusterExecutor);
+		ReflectionTestUtil.setFieldValue(
+			clusterMasterExecutorImpl, "_clusterExecutorImpl",
+			mockClusterExecutor);
 
 		clusterMasterExecutorImpl.activate();
 
@@ -196,7 +200,9 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		MockClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
 
-		clusterMasterExecutorImpl.setClusterExecutorImpl(mockClusterExecutor);
+		ReflectionTestUtil.setFieldValue(
+			clusterMasterExecutorImpl, "_clusterExecutorImpl",
+			mockClusterExecutor);
 
 		clusterMasterExecutorImpl.activate();
 
@@ -215,7 +221,8 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		clusterMasterExecutorImpl = new ClusterMasterExecutorImpl();
 
-		clusterMasterExecutorImpl.setClusterExecutorImpl(
+		ReflectionTestUtil.setFieldValue(
+			clusterMasterExecutorImpl, "_clusterExecutorImpl",
 			new MockClusterExecutor(false));
 
 		clusterMasterExecutorImpl.activate();
@@ -231,7 +238,8 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		ClusterMasterExecutorImpl clusterMasterExecutorImpl =
 			new ClusterMasterExecutorImpl();
 
-		clusterMasterExecutorImpl.setClusterExecutorImpl(
+		ReflectionTestUtil.setFieldValue(
+			clusterMasterExecutorImpl, "_clusterExecutorImpl",
 			new MockClusterExecutor(false));
 
 		clusterMasterExecutorImpl.activate();
@@ -319,7 +327,9 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		MockClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
 
-		clusterMasterExecutorImpl.setClusterExecutorImpl(mockClusterExecutor);
+		ReflectionTestUtil.setFieldValue(
+			clusterMasterExecutorImpl, "_clusterExecutorImpl",
+			mockClusterExecutor);
 
 		clusterMasterExecutorImpl.activate();
 
@@ -358,7 +368,9 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		MockClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
 
-		clusterMasterExecutorImpl.setClusterExecutorImpl(mockClusterExecutor);
+		ReflectionTestUtil.setFieldValue(
+			clusterMasterExecutorImpl, "_clusterExecutorImpl",
+			mockClusterExecutor);
 
 		clusterMasterExecutorImpl.activate();
 
@@ -416,7 +428,9 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		MockClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
 
-		clusterMasterExecutorImpl.setClusterExecutorImpl(mockClusterExecutor);
+		ReflectionTestUtil.setFieldValue(
+			clusterMasterExecutorImpl, "_clusterExecutorImpl",
+			mockClusterExecutor);
 
 		clusterMasterExecutorImpl.activate();
 
@@ -532,7 +546,8 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		ClusterMasterExecutorImpl clusterMasterExecutorImpl =
 			new ClusterMasterExecutorImpl();
 
-		clusterMasterExecutorImpl.setClusterExecutorImpl(
+		ReflectionTestUtil.setFieldValue(
+			clusterMasterExecutorImpl, "_clusterExecutorImpl",
 			new MockClusterExecutor(false));
 
 		clusterMasterExecutorImpl.activate();
@@ -544,7 +559,8 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		clusterMasterExecutorImpl = new ClusterMasterExecutorImpl();
 
-		clusterMasterExecutorImpl.setClusterExecutorImpl(
+		ReflectionTestUtil.setFieldValue(
+			clusterMasterExecutorImpl, "_clusterExecutorImpl",
 			new MockClusterExecutor(true));
 
 		clusterMasterExecutorImpl.activate();
@@ -565,7 +581,9 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		clusterMasterExecutorImpl = new ClusterMasterExecutorImpl();
 
-		clusterMasterExecutorImpl.setClusterExecutorImpl(mockClusterExecutor);
+		ReflectionTestUtil.setFieldValue(
+			clusterMasterExecutorImpl, "_clusterExecutorImpl",
+			mockClusterExecutor);
 
 		clusterMasterExecutorImpl.activate();
 
@@ -579,12 +597,14 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		ClusterMasterExecutorImpl clusterMasterExecutorImpl =
 			new ClusterMasterExecutorImpl();
 
-		clusterMasterExecutorImpl.setClusterExecutorImpl(
+		ReflectionTestUtil.setFieldValue(
+			clusterMasterExecutorImpl, "_clusterExecutorImpl",
 			new MockClusterExecutor(false));
 
 		clusterMasterExecutorImpl.activate();
 
-		clusterMasterExecutorImpl.setClusterExecutorImpl(
+		ReflectionTestUtil.setFieldValue(
+			clusterMasterExecutorImpl, "_clusterExecutorImpl",
 			new MockClusterExecutor(true));
 
 		clusterMasterExecutorImpl.activate();

@@ -48,12 +48,6 @@ jest.mock(
 );
 
 function renderCollection(itemConfig = {}) {
-	Liferay.Util.sub.mockImplementation((langKey, args) => {
-		const nextArgs = Array.isArray(args) ? args : [args];
-
-		return [langKey, ...nextArgs].join('-');
-	});
-
 	const state = {
 		permissions: {
 			UPDATE: true,
@@ -190,7 +184,7 @@ describe('Collection', () => {
 		});
 
 		expect(
-			screen.getByText('showing-x-to-x-of-x-entries-1-2-2')
+			screen.getByText('showing-1-to-2-of-2-entries')
 		).toBeInTheDocument();
 	});
 
@@ -242,7 +236,7 @@ describe('Collection', () => {
 
 		expect(
 			screen.getByText(
-				'in-edit-mode,-the-number-of-elements-displayed-is-limited-to-x-due-to-performance-2'
+				'in-edit-mode,-the-number-of-elements-displayed-is-limited-to-2-due-to-performance'
 			)
 		).toBeInTheDocument();
 	});

@@ -213,10 +213,6 @@ describe('FragmentStylesPanel', () => {
 	});
 
 	it('allows changing custom styles for a given viewport', async () => {
-		Liferay.Util.sub.mockImplementation((key, args) =>
-			args.reduce((key, arg) => key.replace('x', arg), key)
-		);
-
 		renderComponent({
 			selectedViewportSize: VIEWPORT_SIZES.tablet,
 		});

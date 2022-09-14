@@ -46,10 +46,6 @@ function renderItemSelector({
 		pageContents,
 	};
 
-	Liferay.Util.sub.mockImplementation((langKey, args) =>
-		langKey.replace('x', args)
-	);
-
 	return render(
 		<StoreAPIContextProvider dispatch={() => {}} getState={() => state}>
 			<ItemSelector

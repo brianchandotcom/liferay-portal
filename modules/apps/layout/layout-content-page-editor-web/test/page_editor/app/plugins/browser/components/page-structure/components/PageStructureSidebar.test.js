@@ -41,12 +41,6 @@ const renderComponent = ({
 	rootItemChildren = ['01-container'],
 	viewportSize = VIEWPORT_SIZES.desktop,
 } = {}) => {
-	Liferay.Util.sub.mockImplementation((langKey, args) => {
-		const nextArgs = Array.isArray(args) ? args : [args];
-
-		return [langKey, ...nextArgs].join('-');
-	});
-
 	const mockDispatch = jest.fn((a) => {
 		if (typeof a === 'function') {
 			return a(mockDispatch);
@@ -267,7 +261,7 @@ describe('PageStructureSidebar', () => {
 
 	it('disables items that are in masterLayout', () => {
 		renderComponent();
-		const button = screen.getByLabelText('select-x-container');
+		const button = screen.getByLabelText('select-container');
 		expect(button.parentElement).toHaveAttribute('aria-disabled', 'true');
 	});
 
@@ -278,16 +272,16 @@ describe('PageStructureSidebar', () => {
 		});
 
 		expect(
-			screen.queryByLabelText('select-x-05-editable')
+			screen.queryByLabelText('select-05-editable')
 		).toBeInTheDocument();
-		expect(screen.queryByLabelText('remove-x-05-editable')).toBe(null);
+		expect(screen.queryByLabelText('remove-05-editable')).toBe(null);
 	});
 
 	it('sets element as active item', () => {
 		renderComponent({
 			activeItemId: '03-column',
 		});
-		const button = screen.getByLabelText('select-x-grid');
+		const button = screen.getByLabelText('select-grid');
 
 		userEvent.click(button);
 
@@ -298,7 +292,7 @@ describe('PageStructureSidebar', () => {
 		renderComponent({
 			activeItemId: '03-column',
 		});
-		const button = screen.getByLabelText('select-x-Fragment 1');
+		const button = screen.getByLabelText('select-Fragment 1');
 
 		userEvent.click(button);
 
@@ -309,7 +303,7 @@ describe('PageStructureSidebar', () => {
 		renderComponent({
 			activeItemId: '02-row',
 		});
-		const button = screen.getByLabelText('select-x-module');
+		const button = screen.getByLabelText('select-module');
 
 		userEvent.click(button);
 
@@ -322,9 +316,9 @@ describe('PageStructureSidebar', () => {
 			rootItemChildren: ['01-container', '02-row', '04-fragment'],
 		});
 
-		expect(screen.queryByLabelText('remove-x-container')).toBe(null);
-		expect(screen.queryByLabelText('remove-x-grid')).toBe(null);
-		expect(screen.queryByLabelText('remove-x-Fragment 1')).toBe(null);
+		expect(screen.queryByLabelText('remove-container')).toBe(null);
+		expect(screen.queryByLabelText('remove-grid')).toBe(null);
+		expect(screen.queryByLabelText('remove-Fragment 1')).toBe(null);
 	});
 
 	it('does not allow removing items if viewport is not desktop', () => {
@@ -334,9 +328,9 @@ describe('PageStructureSidebar', () => {
 			viewportSize: VIEWPORT_SIZES.portraitMobile,
 		});
 
-		expect(screen.queryByLabelText('remove-x-container')).toBe(null);
-		expect(screen.queryByLabelText('remove-x-grid')).toBe(null);
-		expect(screen.queryByLabelText('remove-x-Fragment 1')).toBe(null);
+		expect(screen.queryByLabelText('remove-container')).toBe(null);
+		expect(screen.queryByLabelText('remove-grid')).toBe(null);
+		expect(screen.queryByLabelText('remove-Fragment 1')).toBe(null);
 	});
 
 	it('uses field label for mapped editables', () => {
@@ -363,7 +357,7 @@ describe('PageStructureSidebar', () => {
 			rootItemChildren: ['04-fragment'],
 		});
 
-		userEvent.dblClick(screen.getByLabelText('select-x-Fragment 1'));
+		userEvent.dblClick(screen.getByLabelText('select-Fragment 1'));
 
 		const input = baseElement.querySelector('input');
 

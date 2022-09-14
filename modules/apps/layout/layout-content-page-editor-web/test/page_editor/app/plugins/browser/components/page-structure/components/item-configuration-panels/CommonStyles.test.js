@@ -170,10 +170,6 @@ describe('CommonStyles', () => {
 	});
 
 	it('allows changing common styles for a given viewport', async () => {
-		Liferay.Util.sub.mockImplementation((key, args) =>
-			args.reduce((key, arg) => key.replace('x', arg), key)
-		);
-
 		const {getByLabelText} = renderComponent({
 			state: {selectedViewportSize: 'tablet'},
 		});

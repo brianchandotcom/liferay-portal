@@ -229,15 +229,9 @@ describe('FormInputGeneralPanel', () => {
 	});
 
 	it('shows configuration fieldset when fragment is mapped', () => {
-		Liferay.Util.sub.mockImplementation((langKey, args) =>
-			[langKey, args].join('-')
-		);
-
 		renderComponent({mappedFieldId: 'requiredField'});
 
-		expect(
-			screen.getByText('x-configuration-fragment')
-		).toBeInTheDocument();
+		expect(screen.getByText('fragment-configuration')).toBeInTheDocument();
 	});
 
 	it('shows checkbox to set field as required disabled when fragment is mapped to a required field', () => {

@@ -24,19 +24,8 @@ import java.util.List;
 public class JSFragment {
 
 	public JSFragment(
-		Collection<AMDRequire> amdRequires, Collection<ESImport> esImports,
-		String code) {
-
-		this(null, amdRequires, esImports, code);
-	}
-
-	public JSFragment(Collection<ESImport> esImports, String code) {
-		this(null, null, esImports, code);
-	}
-
-	public JSFragment(
-		Collection<String> auiUses, Collection<AMDRequire> amdRequires,
-		Collection<ESImport> esImports, String code) {
+		Collection<AMDRequire> amdRequires, Collection<String> auiUses,
+		String code, Collection<ESImport> esImports) {
 
 		if (esImports != null) {
 			_esImports.addAll(esImports);
@@ -53,8 +42,19 @@ public class JSFragment {
 		_code = code;
 	}
 
+	public JSFragment(
+		Collection<AMDRequire> amdRequires, String code,
+		Collection<ESImport> esImports) {
+
+		this(amdRequires, null, code, esImports);
+	}
+
 	public JSFragment(String code) {
-		this(null, null, null, code);
+		this(null, null, code, null);
+	}
+
+	public JSFragment(String code, Collection<ESImport> esImports) {
+		this(null, null, code, esImports);
 	}
 
 	public List<AMDRequire> getAMDRequires() {

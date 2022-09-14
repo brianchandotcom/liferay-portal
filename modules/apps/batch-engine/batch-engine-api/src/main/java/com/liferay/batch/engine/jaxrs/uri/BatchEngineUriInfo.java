@@ -27,7 +27,7 @@ import javax.ws.rs.core.UriInfo;
 /**
  * @author Igor Beslic
  */
-public class BatchPlannerUriInfo implements UriInfo {
+public class BatchEngineUriInfo implements UriInfo {
 
 	@Override
 	public URI getAbsolutePath() {
@@ -126,8 +126,8 @@ public class BatchPlannerUriInfo implements UriInfo {
 
 	public static class Builder {
 
-		public BatchPlannerUriInfo build() {
-			return new BatchPlannerUriInfo(this);
+		public BatchEngineUriInfo build() {
+			return new BatchEngineUriInfo(this);
 		}
 
 		public Builder pathParameter(String name, String value) {
@@ -156,7 +156,7 @@ public class BatchPlannerUriInfo implements UriInfo {
 
 	}
 
-	private BatchPlannerUriInfo(Builder builder) {
+	private BatchEngineUriInfo(Builder builder) {
 		_pathParameters = builder._pathParameters;
 		_queryParameters = builder._queryParameters;
 	}

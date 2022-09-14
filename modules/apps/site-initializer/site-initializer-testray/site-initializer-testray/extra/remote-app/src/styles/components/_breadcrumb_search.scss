@@ -11,10 +11,10 @@
 
 	.breadcrumb-search-content,
 	.breadcrumb-search-input-edit {
+		background: none !important;
 		display: inline-block;
 		font-size: 1em;
 		font-weight: $font-header-weight;
-		background: none !important;
 		&:focus-visible {
 			border: none !important;
 			outline: none !important;

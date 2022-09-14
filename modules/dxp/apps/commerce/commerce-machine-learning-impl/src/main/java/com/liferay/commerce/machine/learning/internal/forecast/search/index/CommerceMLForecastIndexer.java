@@ -40,7 +40,7 @@ public class CommerceMLForecastIndexer implements CommerceMLIndexer {
 
 	@Override
 	public String getDocumentType() {
-		return "CommerceMLForecastDocumentType";
+		return "_doc";
 	}
 
 	@Override

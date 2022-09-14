@@ -118,7 +118,7 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 					CKEditorConstants.ATTRIBUTE_NAMESPACE +
 						":resizeDirection"));
 
-			jsonObject.put("resizeDirection", resizeDirection);
+			jsonObject.put("resize_dir", resizeDirection);
 		}
 
 		jsonObject.put("resize_enabled", resizable);

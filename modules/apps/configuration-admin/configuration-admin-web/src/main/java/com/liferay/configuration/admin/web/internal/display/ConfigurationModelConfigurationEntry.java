@@ -16,8 +16,8 @@ package com.liferay.configuration.admin.web.internal.display;
 
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 
 import java.util.Locale;

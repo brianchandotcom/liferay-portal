@@ -16,7 +16,7 @@ package com.liferay.configuration.admin.web.internal.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 
 import java.util.Locale;
 import java.util.Objects;

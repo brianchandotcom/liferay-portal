@@ -14,10 +14,10 @@
 
 package com.liferay.site.memberships.web.internal.portlet;
 
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 
 import javax.portlet.PortletURL;

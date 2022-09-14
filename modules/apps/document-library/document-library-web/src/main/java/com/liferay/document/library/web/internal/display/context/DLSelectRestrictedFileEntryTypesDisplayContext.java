@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;

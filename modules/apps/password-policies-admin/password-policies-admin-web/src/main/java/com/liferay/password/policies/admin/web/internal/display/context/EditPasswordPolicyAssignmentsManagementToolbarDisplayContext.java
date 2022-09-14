@@ -26,7 +26,6 @@ import com.liferay.password.policies.admin.web.internal.search.AddOrganizationPa
 import com.liferay.password.policies.admin.web.internal.search.AddUserPasswordPolicyChecker;
 import com.liferay.password.policies.admin.web.internal.search.DeleteOrganizationPasswordPolicyChecker;
 import com.liferay.password.policies.admin.web.internal.search.DeleteUserPasswordPolicyChecker;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;

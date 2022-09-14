@@ -32,13 +32,13 @@ import com.liferay.knowledge.base.web.internal.security.permission.resource.KBAr
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBCommentPermission;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBFolderPermission;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBTemplatePermission;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;

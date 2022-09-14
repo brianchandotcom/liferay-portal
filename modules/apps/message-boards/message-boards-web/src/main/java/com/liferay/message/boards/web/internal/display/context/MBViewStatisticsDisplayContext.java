@@ -18,7 +18,7 @@ import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.web.internal.display.MBCategoryDisplay;
 import com.liferay.message.boards.web.internal.util.MBUtil;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;

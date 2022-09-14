@@ -14,9 +14,9 @@
 
 package com.liferay.translation.web.internal.url.provider;
 
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.url.provider.TranslationURLProvider;

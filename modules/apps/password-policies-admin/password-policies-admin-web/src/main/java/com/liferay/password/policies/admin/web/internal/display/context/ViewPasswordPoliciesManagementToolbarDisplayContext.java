@@ -24,13 +24,13 @@ import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortle
 import com.liferay.password.policies.admin.web.internal.search.PasswordPolicyChecker;
 import com.liferay.password.policies.admin.web.internal.search.PasswordPolicyDisplayTerms;
 import com.liferay.password.policies.admin.web.internal.search.PasswordPolicySearch;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PasswordPolicyServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;

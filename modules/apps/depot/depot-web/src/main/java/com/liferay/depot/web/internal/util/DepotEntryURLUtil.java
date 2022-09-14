@@ -16,12 +16,12 @@ package com.liferay.depot.web.internal.util;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 

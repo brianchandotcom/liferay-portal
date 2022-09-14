@@ -15,10 +15,10 @@
 package com.liferay.asset.list.web.internal.portlet;
 
 import com.liferay.asset.list.constants.AssetListPortletKeys;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.BrowsePortletProvider;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 
 import javax.portlet.PortletURL;
 

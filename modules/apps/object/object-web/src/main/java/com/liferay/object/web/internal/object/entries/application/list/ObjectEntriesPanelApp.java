@@ -16,10 +16,10 @@ package com.liferay.object.web.internal.object.entries.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.Locale;

@@ -318,6 +318,10 @@ public interface DLFileVersionLocalService
 	public List<DLFileVersion> getFileVersions(long fileEntryId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileVersion> getFileVersions(
+		long fileEntryId, int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileVersionsCount(long fileEntryId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

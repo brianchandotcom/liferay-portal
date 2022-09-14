@@ -391,6 +391,14 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<DLFileVersion> getFileVersions(
+		long fileEntryId, int status, int start, int end) {
+
+		return _dlFileVersionLocalService.getFileVersions(
+			fileEntryId, status, start, end);
+	}
+
+	@Override
 	public int getFileVersionsCount(long fileEntryId, int status) {
 		return _dlFileVersionLocalService.getFileVersionsCount(
 			fileEntryId, status);

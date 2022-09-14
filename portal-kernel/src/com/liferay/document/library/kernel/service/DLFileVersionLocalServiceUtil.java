@@ -353,6 +353,12 @@ public class DLFileVersionLocalServiceUtil {
 		return getService().getFileVersions(fileEntryId, status);
 	}
 
+	public static List<DLFileVersion> getFileVersions(
+		long fileEntryId, int status, int start, int end) {
+
+		return getService().getFileVersions(fileEntryId, status, start, end);
+	}
+
 	public static int getFileVersionsCount(long fileEntryId, int status) {
 		return getService().getFileVersionsCount(fileEntryId, status);
 	}

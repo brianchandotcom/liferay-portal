@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.util;
 
-import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -111,16 +110,12 @@ public abstract class BaseUpgradeTableImpl extends Table {
 
 			String[] indexesSQL = getIndexesSQL();
 
-			boolean dropIndexes = false;
-
 			for (String indexSQL : indexesSQL) {
 				if (!isAllowUniqueIndexes() &&
 					indexSQL.contains("create unique index")) {
 
 					indexSQL = StringUtil.replace(
 						indexSQL, "create unique index ", "create index ");
-
-					dropIndexes = true;
 				}
 
 				try {
@@ -131,10 +126,6 @@ public abstract class BaseUpgradeTableImpl extends Table {
 						_log.warn(exception.getMessage() + ": " + indexSQL);
 					}
 				}
-			}
-
-			if (dropIndexes) {
-				StartupHelperUtil.setDropIndexes(true);
 			}
 		}
 		finally {

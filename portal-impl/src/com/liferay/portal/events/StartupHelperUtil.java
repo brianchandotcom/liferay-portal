@@ -94,10 +94,6 @@ public class StartupHelperUtil {
 		_dbNew = dbNew;
 	}
 
-	public static void setDropIndexes(boolean dropIndexes) {
-		_dropIndexes = dropIndexes;
-	}
-
 	public static void setStartupFinished(boolean startupFinished) {
 		_startupFinished = startupFinished;
 	}
@@ -108,15 +104,7 @@ public class StartupHelperUtil {
 
 	public static void updateIndexes() {
 		if (!_dbNew) {
-			IndexUpdaterUtil.updatePortalIndexes(_dropIndexes);
-
-			IndexUpdaterUtil.updateModulesIndexes(true);
-		}
-	}
-
-	public static void updateIndexes(boolean dropIndexes) {
-		if (!_dbNew) {
-			IndexUpdaterUtil.updatePortalIndexes(dropIndexes);
+			IndexUpdaterUtil.updatePortalIndexes(true);
 
 			IndexUpdaterUtil.updateModulesIndexes(true);
 		}
@@ -190,7 +178,6 @@ public class StartupHelperUtil {
 		StartupHelperUtil.class);
 
 	private static boolean _dbNew;
-	private static boolean _dropIndexes;
 	private static boolean _startupFinished;
 	private static boolean _upgraded;
 	private static boolean _upgrading;

@@ -15,7 +15,7 @@ import TableColumn from '../../../common/interfaces/tableColumn';
 import {Liferay} from '../../../common/services/liferay';
 import Dropdown from '../components/Dropdown';
 
-export default function useGetMDFListColumns(
+export default function getMDFListColumns(
 	data?: TableColumn<MDFRequestListItem>[],
 	siteURL?: string
 ): TableColumn<MDFRequestListItem>[] | undefined {

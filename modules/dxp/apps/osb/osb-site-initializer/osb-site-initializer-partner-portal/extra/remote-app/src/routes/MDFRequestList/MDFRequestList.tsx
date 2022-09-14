@@ -17,7 +17,7 @@ import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import {MDFRequestListItem} from '../../common/interfaces/mdfRequestListItem';
 import {Liferay} from '../../common/services/liferay';
 import Table from './components/Table';
-import useGetMDFListColumns from './hooks/useGetMDFListColumns';
+import getMDFListColumns from './utils/getMDFListColumns';
 import useGetMDFRequestListData from './hooks/useGetMDFRequestListData';
 import usePagination from './hooks/usePagination';
 
@@ -29,8 +29,7 @@ const MDFRequestList = () => {
 	);
 
 	const siteURL = useLiferayNavigate();
-
-	const columns = useGetMDFListColumns(data.listColumns, siteURL);
+	const columns = getMDFListColumns(data.listColumns, siteURL);
 
 	return (
 		<div className="border-0 pb-3 pt-5 px-6 sheet">

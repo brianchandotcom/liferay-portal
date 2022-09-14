@@ -262,11 +262,12 @@ const TestrayRoute = () => (
 					<Route element={<TestflowOutlet />} path="testflow">
 						<Route element={<Testflow />} index />
 
-						<Route element={<TestflowForm />} path="newtask" />
-
 						<Route element={<TestflowArchived />} path="archived" />
 
-						<Route element={<TestflowForm />} path="create" />
+						<Route
+							element={<TestflowForm />}
+							path=":buildId/create"
+						/>
 
 						<Route element={<Subtasks />} path="subtasks" />
 

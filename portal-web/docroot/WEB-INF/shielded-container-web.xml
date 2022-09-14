@@ -398,15 +398,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
-		<url-pattern>/es_AR/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>I18n Servlet</servlet-name>
 		<url-pattern>/es-CO/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>I18n Servlet</servlet-name>
-		<url-pattern>/es_CO/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
@@ -414,11 +406,19 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
-		<url-pattern>/es_ES/*</url-pattern>
+		<url-pattern>/es-MX/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
-		<url-pattern>/es-MX/*</url-pattern>
+		<url-pattern>/es_AR/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>I18n Servlet</servlet-name>
+		<url-pattern>/es_CO/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>I18n Servlet</servlet-name>
+		<url-pattern>/es_ES/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>

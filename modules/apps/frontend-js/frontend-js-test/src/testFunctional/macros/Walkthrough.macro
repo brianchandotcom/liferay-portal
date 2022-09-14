@@ -24,6 +24,25 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
+	macro configureJSON {
+		var jsonSnippet = Walkthrough.getWalkthroughSteps(fileName = "${fileName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Walkthrough",
+			configurationName = "Walkthrough",
+			configurationScope = "Site Scope");
+
+		SystemSettings.editTextAreaSetting(
+			settingName = "Steps",
+			settingValue = "${jsonSnippet}");
+
+		SystemSettings.saveConfiguration();
+	}
+
 	macro enablePopoverMode {
 		if (IsElementNotPresent(locator1 = "Walkthrough#POPOVER")) {
 			if (IsElementPresent(key_portletName = "JS Walkthrough Sample", locator1 = "Portlet#TITLE")) {

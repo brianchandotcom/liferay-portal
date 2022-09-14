@@ -3527,19 +3527,20 @@ public class PortalPreferenceValuePersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByPortalPreferencesId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPortalPreferencesId",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByPortalPreferencesId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3547,17 +3548,17 @@ public class PortalPreferenceValuePersistenceImpl
 			new String[] {"portalPreferencesId"}, true);
 
 		_finderPathWithoutPaginationFindByPortalPreferencesId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByPortalPreferencesId", new String[] {Long.class.getName()},
 			new String[] {"portalPreferencesId"}, true);
 
 		_finderPathCountByPortalPreferencesId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByPortalPreferencesId", new String[] {Long.class.getName()},
 			new String[] {"portalPreferencesId"}, false);
 
 		_finderPathWithPaginationFindByP_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_N",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_N",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -3566,17 +3567,17 @@ public class PortalPreferenceValuePersistenceImpl
 			new String[] {"portalPreferencesId", "namespace"}, true);
 
 		_finderPathWithoutPaginationFindByP_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_N",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"portalPreferencesId", "namespace"}, true);
 
 		_finderPathCountByP_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"portalPreferencesId", "namespace"}, false);
 
 		_finderPathWithPaginationFindByP_K_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_K_N",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_K_N",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName(), Integer.class.getName(),
@@ -3585,7 +3586,7 @@ public class PortalPreferenceValuePersistenceImpl
 			new String[] {"portalPreferencesId", "key_", "namespace"}, true);
 
 		_finderPathWithoutPaginationFindByP_K_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_K_N",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_K_N",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
@@ -3593,7 +3594,7 @@ public class PortalPreferenceValuePersistenceImpl
 			new String[] {"portalPreferencesId", "key_", "namespace"}, true);
 
 		_finderPathCountByP_K_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_K_N",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_K_N",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
@@ -3601,7 +3602,7 @@ public class PortalPreferenceValuePersistenceImpl
 			new String[] {"portalPreferencesId", "key_", "namespace"}, false);
 
 		_finderPathFetchByP_I_K_N = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByP_I_K_N",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByP_I_K_N",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				String.class.getName(), String.class.getName()
@@ -3610,7 +3611,7 @@ public class PortalPreferenceValuePersistenceImpl
 			true);
 
 		_finderPathCountByP_I_K_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_I_K_N",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_I_K_N",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				String.class.getName(), String.class.getName()
@@ -3619,7 +3620,7 @@ public class PortalPreferenceValuePersistenceImpl
 			false);
 
 		_finderPathWithPaginationFindByP_K_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_K_N_SV",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_K_N_SV",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName(), String.class.getName(),
@@ -3632,7 +3633,7 @@ public class PortalPreferenceValuePersistenceImpl
 			true);
 
 		_finderPathWithoutPaginationFindByP_K_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_K_N_SV",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_K_N_SV",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName(), String.class.getName()
@@ -3643,7 +3644,7 @@ public class PortalPreferenceValuePersistenceImpl
 			true);
 
 		_finderPathCountByP_K_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_K_N_SV",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_K_N_SV",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName(), String.class.getName()

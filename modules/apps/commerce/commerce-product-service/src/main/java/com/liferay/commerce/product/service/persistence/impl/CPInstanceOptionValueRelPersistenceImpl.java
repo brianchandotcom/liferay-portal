@@ -4620,19 +4620,19 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -4640,27 +4640,27 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			new String[] {"uuid_"}, true);
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			true);
 
 		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false);
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -4669,17 +4669,17 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			new String[] {"uuid_", "companyId"}, true);
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, true);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
 		_finderPathWithPaginationFindByCPDefinitionOptionRelId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCPDefinitionOptionRelId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -4689,19 +4689,19 @@ public class CPInstanceOptionValueRelPersistenceImpl
 
 		_finderPathWithoutPaginationFindByCPDefinitionOptionRelId =
 			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCPDefinitionOptionRelId",
 				new String[] {Long.class.getName()},
 				new String[] {"CPDefinitionOptionRelId"}, true);
 
 		_finderPathCountByCPDefinitionOptionRelId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCPDefinitionOptionRelId",
 			new String[] {Long.class.getName()},
 			new String[] {"CPDefinitionOptionRelId"}, false);
 
 		_finderPathWithPaginationFindByCPInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPInstanceId",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPInstanceId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -4709,17 +4709,17 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			new String[] {"CPInstanceId"}, true);
 
 		_finderPathWithoutPaginationFindByCPInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPInstanceId",
-			new String[] {Long.class.getName()}, new String[] {"CPInstanceId"},
-			true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCPInstanceId", new String[] {Long.class.getName()},
+			new String[] {"CPInstanceId"}, true);
 
 		_finderPathCountByCPInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPInstanceId",
-			new String[] {Long.class.getName()}, new String[] {"CPInstanceId"},
-			false);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCPInstanceId", new String[] {Long.class.getName()},
+			new String[] {"CPInstanceId"}, false);
 
 		_finderPathWithPaginationFindByCDORI_CII = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCDORI_CII",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCDORI_CII",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -4728,29 +4728,30 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			new String[] {"CPDefinitionOptionRelId", "CPInstanceId"}, true);
 
 		_finderPathWithoutPaginationFindByCDORI_CII = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCDORI_CII",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCDORI_CII",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"CPDefinitionOptionRelId", "CPInstanceId"}, true);
 
 		_finderPathCountByCDORI_CII = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCDORI_CII",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCDORI_CII",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"CPDefinitionOptionRelId", "CPInstanceId"}, false);
 
 		_finderPathFetchByCDOVRI_CII = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCDOVRI_CII",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByCDOVRI_CII",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"CPDefinitionOptionValueRelId", "CPInstanceId"},
 			true);
 
 		_finderPathCountByCDOVRI_CII = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCDOVRI_CII",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCDOVRI_CII",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"CPDefinitionOptionValueRelId", "CPInstanceId"},
 			false);
 
 		_finderPathFetchByCDORI_CDOVRI_CII = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCDORI_CDOVRI_CII",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByCDORI_CDOVRI_CII",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
@@ -4761,7 +4762,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			true);
 
 		_finderPathCountByCDORI_CDOVRI_CII = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCDORI_CDOVRI_CII",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()

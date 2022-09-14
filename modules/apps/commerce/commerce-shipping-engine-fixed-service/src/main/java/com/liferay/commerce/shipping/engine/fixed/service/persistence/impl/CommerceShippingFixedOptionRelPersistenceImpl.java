@@ -1787,20 +1787,20 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByCommerceShippingMethodId =
 			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByCommerceShippingMethodId",
 				new String[] {
 					Long.class.getName(), Integer.class.getName(),
@@ -1810,20 +1810,20 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 
 		_finderPathWithoutPaginationFindByCommerceShippingMethodId =
 			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceShippingMethodId",
 				new String[] {Long.class.getName()},
 				new String[] {"commerceShippingMethodId"}, true);
 
 		_finderPathCountByCommerceShippingMethodId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceShippingMethodId",
 			new String[] {Long.class.getName()},
 			new String[] {"commerceShippingMethodId"}, false);
 
 		_finderPathWithPaginationFindByCommerceShippingFixedOptionId =
 			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByCommerceShippingFixedOptionId",
 				new String[] {
 					Long.class.getName(), Integer.class.getName(),
@@ -1833,13 +1833,13 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 
 		_finderPathWithoutPaginationFindByCommerceShippingFixedOptionId =
 			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceShippingFixedOptionId",
 				new String[] {Long.class.getName()},
 				new String[] {"commerceShippingFixedOptionId"}, true);
 
 		_finderPathCountByCommerceShippingFixedOptionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceShippingFixedOptionId",
 			new String[] {Long.class.getName()},
 			new String[] {"commerceShippingFixedOptionId"}, false);

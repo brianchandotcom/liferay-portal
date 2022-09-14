@@ -3903,19 +3903,19 @@ public class ModulePersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3923,17 +3923,17 @@ public class ModulePersistenceImpl
 			new String[] {"uuid_"}, true);
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			true);
 
 		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -3942,17 +3942,17 @@ public class ModulePersistenceImpl
 			new String[] {"uuid_", "companyId"}, true);
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, true);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
 		_finderPathWithPaginationFindByAppId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAppId",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAppId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3960,15 +3960,16 @@ public class ModulePersistenceImpl
 			new String[] {"appId"}, true);
 
 		_finderPathWithoutPaginationFindByAppId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAppId",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAppId",
 			new String[] {Long.class.getName()}, new String[] {"appId"}, true);
 
 		_finderPathCountByAppId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAppId",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAppId",
 			new String[] {Long.class.getName()}, new String[] {"appId"}, false);
 
 		_finderPathWithPaginationFindByBundleSymbolicName = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByBundleSymbolicName",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByBundleSymbolicName",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3976,17 +3977,17 @@ public class ModulePersistenceImpl
 			new String[] {"bundleSymbolicName"}, true);
 
 		_finderPathWithoutPaginationFindByBundleSymbolicName = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByBundleSymbolicName", new String[] {String.class.getName()},
 			new String[] {"bundleSymbolicName"}, true);
 
 		_finderPathCountByBundleSymbolicName = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByBundleSymbolicName", new String[] {String.class.getName()},
 			new String[] {"bundleSymbolicName"}, false);
 
 		_finderPathWithPaginationFindByContextName = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByContextName",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByContextName",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3994,27 +3995,27 @@ public class ModulePersistenceImpl
 			new String[] {"contextName"}, true);
 
 		_finderPathWithoutPaginationFindByContextName = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByContextName",
-			new String[] {String.class.getName()}, new String[] {"contextName"},
-			true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByContextName", new String[] {String.class.getName()},
+			new String[] {"contextName"}, true);
 
 		_finderPathCountByContextName = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContextName",
-			new String[] {String.class.getName()}, new String[] {"contextName"},
-			false);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByContextName", new String[] {String.class.getName()},
+			new String[] {"contextName"}, false);
 
 		_finderPathFetchByA_CN = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_CN",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByA_CN",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"appId", "contextName"}, true);
 
 		_finderPathCountByA_CN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_CN",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_CN",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"appId", "contextName"}, false);
 
 		_finderPathFetchByA_BSN_BV = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_BSN_BV",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByA_BSN_BV",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
@@ -4023,7 +4024,7 @@ public class ModulePersistenceImpl
 			true);
 
 		_finderPathCountByA_BSN_BV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_BSN_BV",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_BSN_BV",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()

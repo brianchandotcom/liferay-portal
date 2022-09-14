@@ -2961,19 +2961,19 @@ public class DDMFieldAttributePersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByStorageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStorageId",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStorageId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -2981,17 +2981,17 @@ public class DDMFieldAttributePersistenceImpl
 			new String[] {"storageId"}, true);
 
 		_finderPathWithoutPaginationFindByStorageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStorageId",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStorageId",
 			new String[] {Long.class.getName()}, new String[] {"storageId"},
 			true);
 
 		_finderPathCountByStorageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStorageId",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStorageId",
 			new String[] {Long.class.getName()}, new String[] {"storageId"},
 			false);
 
 		_finderPathWithPaginationFindByS_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_L",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_L",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -3000,17 +3000,17 @@ public class DDMFieldAttributePersistenceImpl
 			new String[] {"storageId", "languageId"}, true);
 
 		_finderPathWithoutPaginationFindByS_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_L",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_L",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"storageId", "languageId"}, true);
 
 		_finderPathCountByS_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_L",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_L",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"storageId", "languageId"}, false);
 
 		_finderPathWithPaginationFindByAN_SAV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAN_SAV",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAN_SAV",
 			new String[] {
 				String.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -3019,17 +3019,17 @@ public class DDMFieldAttributePersistenceImpl
 			new String[] {"attributeName", "smallAttributeValue"}, true);
 
 		_finderPathWithoutPaginationFindByAN_SAV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAN_SAV",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAN_SAV",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"attributeName", "smallAttributeValue"}, true);
 
 		_finderPathCountByAN_SAV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAN_SAV",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAN_SAV",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"attributeName", "smallAttributeValue"}, false);
 
 		_finderPathFetchByF_AN_L = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByF_AN_L",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByF_AN_L",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
@@ -3037,7 +3037,7 @@ public class DDMFieldAttributePersistenceImpl
 			new String[] {"fieldId", "attributeName", "languageId"}, true);
 
 		_finderPathCountByF_AN_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_AN_L",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_AN_L",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()

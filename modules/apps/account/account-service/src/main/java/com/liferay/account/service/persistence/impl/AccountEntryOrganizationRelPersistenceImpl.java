@@ -1953,19 +1953,20 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountEntryId",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByAccountEntryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -1973,17 +1974,18 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			new String[] {"accountEntryId"}, true);
 
 		_finderPathWithoutPaginationFindByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountEntryId",
-			new String[] {Long.class.getName()},
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByAccountEntryId", new String[] {Long.class.getName()},
 			new String[] {"accountEntryId"}, true);
 
 		_finderPathCountByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountEntryId",
-			new String[] {Long.class.getName()},
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByAccountEntryId", new String[] {Long.class.getName()},
 			new String[] {"accountEntryId"}, false);
 
 		_finderPathWithPaginationFindByOrganizationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOrganizationId",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByOrganizationId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -1991,22 +1993,22 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			new String[] {"organizationId"}, true);
 
 		_finderPathWithoutPaginationFindByOrganizationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOrganizationId",
-			new String[] {Long.class.getName()},
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByOrganizationId", new String[] {Long.class.getName()},
 			new String[] {"organizationId"}, true);
 
 		_finderPathCountByOrganizationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOrganizationId",
-			new String[] {Long.class.getName()},
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByOrganizationId", new String[] {Long.class.getName()},
 			new String[] {"organizationId"}, false);
 
 		_finderPathFetchByA_O = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_O",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByA_O",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"accountEntryId", "organizationId"}, true);
 
 		_finderPathCountByA_O = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_O",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_O",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"accountEntryId", "organizationId"}, false);
 

@@ -2802,19 +2802,20 @@ public class CTEntryPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCtCollectionId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -2822,17 +2823,17 @@ public class CTEntryPersistenceImpl
 			new String[] {"ctCollectionId"}, true);
 
 		_finderPathWithoutPaginationFindByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCtCollectionId",
-			new String[] {Long.class.getName()},
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCtCollectionId", new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, true);
 
 		_finderPathCountByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtCollectionId",
-			new String[] {Long.class.getName()},
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCtCollectionId", new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, false);
 
 		_finderPathWithPaginationFindByC_MCNI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_MCNI",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_MCNI",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -2841,17 +2842,17 @@ public class CTEntryPersistenceImpl
 			new String[] {"ctCollectionId", "modelClassNameId"}, true);
 
 		_finderPathWithoutPaginationFindByC_MCNI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_MCNI",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_MCNI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"ctCollectionId", "modelClassNameId"}, true);
 
 		_finderPathCountByC_MCNI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_MCNI",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_MCNI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"ctCollectionId", "modelClassNameId"}, false);
 
 		_finderPathFetchByC_MCNI_MCPK = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_MCNI_MCPK",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByC_MCNI_MCPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
@@ -2859,7 +2860,8 @@ public class CTEntryPersistenceImpl
 			true);
 
 		_finderPathCountByC_MCNI_MCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_MCNI_MCPK",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_MCNI_MCPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
@@ -2867,7 +2869,8 @@ public class CTEntryPersistenceImpl
 			false);
 
 		_finderPathWithPaginationFindByNotC_MCNI_MCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByNotC_MCNI_MCPK",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByNotC_MCNI_MCPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Integer.class.getName(),
@@ -2877,7 +2880,8 @@ public class CTEntryPersistenceImpl
 			true);
 
 		_finderPathWithPaginationCountByNotC_MCNI_MCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByNotC_MCNI_MCPK",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"countByNotC_MCNI_MCPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},

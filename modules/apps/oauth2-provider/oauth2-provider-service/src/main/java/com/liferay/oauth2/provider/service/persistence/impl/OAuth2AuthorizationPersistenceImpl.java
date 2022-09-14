@@ -3749,19 +3749,19 @@ public class OAuth2AuthorizationPersistenceImpl
 				"oAuth2ScopeGrantId", this, OAuth2ScopeGrant.class);
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3769,16 +3769,17 @@ public class OAuth2AuthorizationPersistenceImpl
 			new String[] {"userId"}, true);
 
 		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
 
 		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
 
 		_finderPathWithPaginationFindByOAuth2ApplicationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOAuth2ApplicationId",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByOAuth2ApplicationId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3786,17 +3787,17 @@ public class OAuth2AuthorizationPersistenceImpl
 			new String[] {"oAuth2ApplicationId"}, true);
 
 		_finderPathWithoutPaginationFindByOAuth2ApplicationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByOAuth2ApplicationId", new String[] {Long.class.getName()},
 			new String[] {"oAuth2ApplicationId"}, true);
 
 		_finderPathCountByOAuth2ApplicationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByOAuth2ApplicationId", new String[] {Long.class.getName()},
 			new String[] {"oAuth2ApplicationId"}, false);
 
 		_finderPathWithPaginationFindByC_ATCH = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_ATCH",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_ATCH",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -3805,17 +3806,17 @@ public class OAuth2AuthorizationPersistenceImpl
 			new String[] {"companyId", "accessTokenContentHash"}, true);
 
 		_finderPathWithoutPaginationFindByC_ATCH = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_ATCH",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_ATCH",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "accessTokenContentHash"}, true);
 
 		_finderPathCountByC_ATCH = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ATCH",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ATCH",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "accessTokenContentHash"}, false);
 
 		_finderPathWithPaginationFindByC_RTCH = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_RTCH",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_RTCH",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -3824,17 +3825,17 @@ public class OAuth2AuthorizationPersistenceImpl
 			new String[] {"companyId", "refreshTokenContentHash"}, true);
 
 		_finderPathWithoutPaginationFindByC_RTCH = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_RTCH",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_RTCH",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "refreshTokenContentHash"}, true);
 
 		_finderPathCountByC_RTCH = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_RTCH",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_RTCH",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "refreshTokenContentHash"}, false);
 
 		_finderPathWithPaginationFindByU_O_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_O_R",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_O_R",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Integer.class.getName(),
@@ -3846,7 +3847,7 @@ public class OAuth2AuthorizationPersistenceImpl
 			true);
 
 		_finderPathWithoutPaginationFindByU_O_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_O_R",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_O_R",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -3857,7 +3858,7 @@ public class OAuth2AuthorizationPersistenceImpl
 			true);
 
 		_finderPathCountByU_O_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_O_R",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_O_R",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()

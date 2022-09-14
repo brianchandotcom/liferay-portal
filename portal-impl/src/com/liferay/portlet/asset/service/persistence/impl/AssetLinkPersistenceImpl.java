@@ -3778,19 +3778,19 @@ public class AssetLinkPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByEntryId1 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId1",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId1",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3798,17 +3798,17 @@ public class AssetLinkPersistenceImpl
 			new String[] {"entryId1"}, true);
 
 		_finderPathWithoutPaginationFindByEntryId1 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId1",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId1",
 			new String[] {Long.class.getName()}, new String[] {"entryId1"},
 			true);
 
 		_finderPathCountByEntryId1 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEntryId1",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEntryId1",
 			new String[] {Long.class.getName()}, new String[] {"entryId1"},
 			false);
 
 		_finderPathWithPaginationFindByEntryId2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId2",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId2",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3816,17 +3816,17 @@ public class AssetLinkPersistenceImpl
 			new String[] {"entryId2"}, true);
 
 		_finderPathWithoutPaginationFindByEntryId2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId2",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId2",
 			new String[] {Long.class.getName()}, new String[] {"entryId2"},
 			true);
 
 		_finderPathCountByEntryId2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEntryId2",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEntryId2",
 			new String[] {Long.class.getName()}, new String[] {"entryId2"},
 			false);
 
 		_finderPathWithPaginationFindByE_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE_E",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE_E",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -3835,17 +3835,17 @@ public class AssetLinkPersistenceImpl
 			new String[] {"entryId1", "entryId2"}, true);
 
 		_finderPathWithoutPaginationFindByE_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE_E",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE_E",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"entryId1", "entryId2"}, true);
 
 		_finderPathCountByE_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_E",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_E",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"entryId1", "entryId2"}, false);
 
 		_finderPathWithPaginationFindByE1_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE1_T",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE1_T",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -3854,17 +3854,17 @@ public class AssetLinkPersistenceImpl
 			new String[] {"entryId1", "type_"}, true);
 
 		_finderPathWithoutPaginationFindByE1_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE1_T",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE1_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"entryId1", "type_"}, true);
 
 		_finderPathCountByE1_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE1_T",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE1_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"entryId1", "type_"}, false);
 
 		_finderPathWithPaginationFindByE2_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE2_T",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE2_T",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -3873,17 +3873,17 @@ public class AssetLinkPersistenceImpl
 			new String[] {"entryId2", "type_"}, true);
 
 		_finderPathWithoutPaginationFindByE2_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE2_T",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE2_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"entryId2", "type_"}, true);
 
 		_finderPathCountByE2_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE2_T",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE2_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"entryId2", "type_"}, false);
 
 		_finderPathFetchByE_E_T = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByE_E_T",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByE_E_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
@@ -3891,7 +3891,7 @@ public class AssetLinkPersistenceImpl
 			new String[] {"entryId1", "entryId2", "type_"}, true);
 
 		_finderPathCountByE_E_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_E_T",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_E_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()

@@ -2660,19 +2660,19 @@ public class JournalArticleLocalizationPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByArticlePK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByArticlePK",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByArticlePK",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -2680,37 +2680,37 @@ public class JournalArticleLocalizationPersistenceImpl
 			new String[] {"articlePK"}, true);
 
 		_finderPathWithoutPaginationFindByArticlePK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByArticlePK",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByArticlePK",
 			new String[] {Long.class.getName()}, new String[] {"articlePK"},
 			true);
 
 		_finderPathCountByArticlePK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByArticlePK",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByArticlePK",
 			new String[] {Long.class.getName()}, new String[] {"articlePK"},
 			false);
 
 		_finderPathFetchByC_A = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_A",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByC_A",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "articlePK"}, true);
 
 		_finderPathCountByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "articlePK"}, false);
 
 		_finderPathFetchByA_L = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_L",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByA_L",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"articlePK", "languageId"}, true);
 
 		_finderPathCountByA_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_L",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_L",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"articlePK", "languageId"}, false);
 
 		_finderPathFetchByC_A_L = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_A_L",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByC_A_L",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -2718,7 +2718,7 @@ public class JournalArticleLocalizationPersistenceImpl
 			new String[] {"companyId", "articlePK", "languageId"}, true);
 
 		_finderPathCountByC_A_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_L",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_L",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -2726,7 +2726,7 @@ public class JournalArticleLocalizationPersistenceImpl
 			new String[] {"companyId", "articlePK", "languageId"}, false);
 
 		_finderPathFetchByC_A_T_L = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_A_T_L",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByC_A_T_L",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
@@ -2735,7 +2735,7 @@ public class JournalArticleLocalizationPersistenceImpl
 			true);
 
 		_finderPathCountByC_A_T_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_T_L",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_T_L",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()

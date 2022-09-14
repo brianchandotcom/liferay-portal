@@ -6759,19 +6759,19 @@ public class SyncDLObjectPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByLikeTreePath = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLikeTreePath",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLikeTreePath",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -6779,12 +6779,12 @@ public class SyncDLObjectPersistenceImpl
 			new String[] {"treePath"}, true);
 
 		_finderPathWithPaginationCountByLikeTreePath = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLikeTreePath",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLikeTreePath",
 			new String[] {String.class.getName()}, new String[] {"treePath"},
 			false);
 
 		_finderPathWithPaginationFindByGtM_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtM_R",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtM_R",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -6793,12 +6793,12 @@ public class SyncDLObjectPersistenceImpl
 			new String[] {"modifiedTime", "repositoryId"}, true);
 
 		_finderPathWithPaginationCountByGtM_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtM_R",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtM_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"modifiedTime", "repositoryId"}, false);
 
 		_finderPathWithPaginationFindByR_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_P",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -6807,17 +6807,17 @@ public class SyncDLObjectPersistenceImpl
 			new String[] {"repositoryId", "parentFolderId"}, true);
 
 		_finderPathWithoutPaginationFindByR_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_P",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"repositoryId", "parentFolderId"}, true);
 
 		_finderPathCountByR_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_P",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"repositoryId", "parentFolderId"}, false);
 
 		_finderPathWithPaginationFindByR_NotE = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_NotE",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_NotE",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -6826,12 +6826,12 @@ public class SyncDLObjectPersistenceImpl
 			new String[] {"repositoryId", "event"}, true);
 
 		_finderPathWithPaginationCountByR_NotE = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_NotE",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_NotE",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"repositoryId", "event"}, false);
 
 		_finderPathWithPaginationFindByR_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_T",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_T",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -6840,17 +6840,17 @@ public class SyncDLObjectPersistenceImpl
 			new String[] {"repositoryId", "type_"}, true);
 
 		_finderPathWithoutPaginationFindByR_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_T",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_T",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"repositoryId", "type_"}, true);
 
 		_finderPathCountByR_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_T",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_T",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"repositoryId", "type_"}, false);
 
 		_finderPathWithPaginationFindByLikeT_NotE = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLikeT_NotE",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLikeT_NotE",
 			new String[] {
 				String.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -6859,12 +6859,12 @@ public class SyncDLObjectPersistenceImpl
 			new String[] {"treePath", "event"}, true);
 
 		_finderPathWithPaginationCountByLikeT_NotE = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLikeT_NotE",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLikeT_NotE",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"treePath", "event"}, false);
 
 		_finderPathWithPaginationFindByV_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByV_T",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByV_T",
 			new String[] {
 				String.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -6873,27 +6873,27 @@ public class SyncDLObjectPersistenceImpl
 			new String[] {"version", "type_"}, true);
 
 		_finderPathWithoutPaginationFindByV_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByV_T",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByV_T",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"version", "type_"}, true);
 
 		_finderPathCountByV_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByV_T",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByV_T",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"version", "type_"}, false);
 
 		_finderPathFetchByT_T = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByT_T",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByT_T",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"type_", "typePK"}, true);
 
 		_finderPathCountByT_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_T",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_T",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"type_", "typePK"}, false);
 
 		_finderPathWithPaginationFindByGtM_R_NotE = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtM_R_NotE",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtM_R_NotE",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Integer.class.getName(),
@@ -6902,7 +6902,7 @@ public class SyncDLObjectPersistenceImpl
 			new String[] {"modifiedTime", "repositoryId", "event"}, true);
 
 		_finderPathWithPaginationCountByGtM_R_NotE = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtM_R_NotE",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtM_R_NotE",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -6910,7 +6910,7 @@ public class SyncDLObjectPersistenceImpl
 			new String[] {"modifiedTime", "repositoryId", "event"}, false);
 
 		_finderPathWithPaginationFindByR_P_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_P_T",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_P_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Integer.class.getName(),
@@ -6919,7 +6919,7 @@ public class SyncDLObjectPersistenceImpl
 			new String[] {"repositoryId", "parentFolderId", "type_"}, true);
 
 		_finderPathWithoutPaginationFindByR_P_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_P_T",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_P_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -6927,7 +6927,7 @@ public class SyncDLObjectPersistenceImpl
 			new String[] {"repositoryId", "parentFolderId", "type_"}, true);
 
 		_finderPathCountByR_P_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_P_T",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_P_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -6935,7 +6935,7 @@ public class SyncDLObjectPersistenceImpl
 			new String[] {"repositoryId", "parentFolderId", "type_"}, false);
 
 		_finderPathWithPaginationCountByR_P_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_P_T",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_P_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()

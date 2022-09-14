@@ -2874,19 +2874,19 @@ public class CommercePriceModifierRelPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByCommercePriceModifierId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCommercePriceModifierId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -2896,19 +2896,19 @@ public class CommercePriceModifierRelPersistenceImpl
 
 		_finderPathWithoutPaginationFindByCommercePriceModifierId =
 			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommercePriceModifierId",
 				new String[] {Long.class.getName()},
 				new String[] {"commercePriceModifierId"}, true);
 
 		_finderPathCountByCommercePriceModifierId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommercePriceModifierId",
 			new String[] {Long.class.getName()},
 			new String[] {"commercePriceModifierId"}, false);
 
 		_finderPathWithPaginationFindByCPM_CN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPM_CN",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPM_CN",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -2917,17 +2917,17 @@ public class CommercePriceModifierRelPersistenceImpl
 			new String[] {"commercePriceModifierId", "classNameId"}, true);
 
 		_finderPathWithoutPaginationFindByCPM_CN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPM_CN",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPM_CN",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commercePriceModifierId", "classNameId"}, true);
 
 		_finderPathCountByCPM_CN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPM_CN",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPM_CN",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commercePriceModifierId", "classNameId"}, false);
 
 		_finderPathWithPaginationFindByCN_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCN_CPK",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCN_CPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -2936,17 +2936,17 @@ public class CommercePriceModifierRelPersistenceImpl
 			new String[] {"classNameId", "classPK"}, true);
 
 		_finderPathWithoutPaginationFindByCN_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCN_CPK",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCN_CPK",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, true);
 
 		_finderPathCountByCN_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCN_CPK",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCN_CPK",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, false);
 
 		_finderPathFetchByCPM_CN_CPK = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCPM_CN_CPK",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByCPM_CN_CPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
@@ -2954,7 +2954,8 @@ public class CommercePriceModifierRelPersistenceImpl
 			true);
 
 		_finderPathCountByCPM_CN_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPM_CN_CPK",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCPM_CN_CPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},

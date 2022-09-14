@@ -2411,19 +2411,19 @@ public class SamlPeerBindingPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByC_U_D_SNIF_SNINQ_SPEI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_U_D_SNIF_SNINQ_SPEI",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2440,7 +2440,7 @@ public class SamlPeerBindingPersistenceImpl
 
 		_finderPathWithoutPaginationFindByC_U_D_SNIF_SNINQ_SPEI =
 			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByC_U_D_SNIF_SNINQ_SPEI",
 				new String[] {
 					Long.class.getName(), Long.class.getName(),
@@ -2454,7 +2454,7 @@ public class SamlPeerBindingPersistenceImpl
 				true);
 
 		_finderPathCountByC_U_D_SNIF_SNINQ_SPEI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByC_U_D_SNIF_SNINQ_SPEI",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2469,7 +2469,7 @@ public class SamlPeerBindingPersistenceImpl
 
 		_finderPathWithPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI =
 			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByC_D_SNIF_SNINQ_SNIV_SPEI",
 				new String[] {
 					Long.class.getName(), Boolean.class.getName(),
@@ -2487,7 +2487,7 @@ public class SamlPeerBindingPersistenceImpl
 
 		_finderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI =
 			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByC_D_SNIF_SNINQ_SNIV_SPEI",
 				new String[] {
 					Long.class.getName(), Boolean.class.getName(),
@@ -2502,7 +2502,7 @@ public class SamlPeerBindingPersistenceImpl
 				true);
 
 		_finderPathCountByC_D_SNIF_SNINQ_SNIV_SPEI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByC_D_SNIF_SNINQ_SNIV_SPEI",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),

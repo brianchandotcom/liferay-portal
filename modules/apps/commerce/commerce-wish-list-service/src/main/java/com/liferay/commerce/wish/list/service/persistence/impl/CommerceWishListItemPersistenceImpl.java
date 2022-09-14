@@ -3699,19 +3699,20 @@ public class CommerceWishListItemPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByCommerceWishListId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceWishListId",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCommerceWishListId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3719,17 +3720,18 @@ public class CommerceWishListItemPersistenceImpl
 			new String[] {"commerceWishListId"}, true);
 
 		_finderPathWithoutPaginationFindByCommerceWishListId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceWishListId", new String[] {Long.class.getName()},
 			new String[] {"commerceWishListId"}, true);
 
 		_finderPathCountByCommerceWishListId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceWishListId", new String[] {Long.class.getName()},
 			new String[] {"commerceWishListId"}, false);
 
 		_finderPathWithPaginationFindByCPInstanceUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPInstanceUuid",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCPInstanceUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3737,17 +3739,17 @@ public class CommerceWishListItemPersistenceImpl
 			new String[] {"CPInstanceUuid"}, true);
 
 		_finderPathWithoutPaginationFindByCPInstanceUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPInstanceUuid",
-			new String[] {String.class.getName()},
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCPInstanceUuid", new String[] {String.class.getName()},
 			new String[] {"CPInstanceUuid"}, true);
 
 		_finderPathCountByCPInstanceUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPInstanceUuid",
-			new String[] {String.class.getName()},
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCPInstanceUuid", new String[] {String.class.getName()},
 			new String[] {"CPInstanceUuid"}, false);
 
 		_finderPathWithPaginationFindByCProductId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCProductId",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCProductId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3755,17 +3757,17 @@ public class CommerceWishListItemPersistenceImpl
 			new String[] {"CProductId"}, true);
 
 		_finderPathWithoutPaginationFindByCProductId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCProductId",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCProductId",
 			new String[] {Long.class.getName()}, new String[] {"CProductId"},
 			true);
 
 		_finderPathCountByCProductId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCProductId",
-			new String[] {Long.class.getName()}, new String[] {"CProductId"},
-			false);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCProductId", new String[] {Long.class.getName()},
+			new String[] {"CProductId"}, false);
 
 		_finderPathWithPaginationFindByCW_CPI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCW_CPI",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCW_CPI",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -3774,17 +3776,17 @@ public class CommerceWishListItemPersistenceImpl
 			new String[] {"commerceWishListId", "CPInstanceUuid"}, true);
 
 		_finderPathWithoutPaginationFindByCW_CPI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCW_CPI",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCW_CPI",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"commerceWishListId", "CPInstanceUuid"}, true);
 
 		_finderPathCountByCW_CPI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCW_CPI",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCW_CPI",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"commerceWishListId", "CPInstanceUuid"}, false);
 
 		_finderPathWithPaginationFindByCW_CP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCW_CP",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCW_CP",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -3793,17 +3795,17 @@ public class CommerceWishListItemPersistenceImpl
 			new String[] {"commerceWishListId", "CProductId"}, true);
 
 		_finderPathWithoutPaginationFindByCW_CP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCW_CP",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCW_CP",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceWishListId", "CProductId"}, true);
 
 		_finderPathCountByCW_CP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCW_CP",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCW_CP",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceWishListId", "CProductId"}, false);
 
 		_finderPathFetchByCW_CPI_CP = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCW_CPI_CP",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByCW_CPI_CP",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
@@ -3812,7 +3814,7 @@ public class CommerceWishListItemPersistenceImpl
 			true);
 
 		_finderPathCountByCW_CPI_CP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCW_CPI_CP",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCW_CPI_CP",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()

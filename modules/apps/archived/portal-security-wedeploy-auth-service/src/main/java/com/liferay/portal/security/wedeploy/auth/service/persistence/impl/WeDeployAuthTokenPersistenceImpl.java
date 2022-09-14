@@ -1273,29 +1273,29 @@ public class WeDeployAuthTokenPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathFetchByT_T = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByT_T",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByT_T",
 			new String[] {String.class.getName(), Integer.class.getName()},
 			new String[] {"token", "type_"}, true);
 
 		_finderPathCountByT_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_T",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_T",
 			new String[] {String.class.getName(), Integer.class.getName()},
 			new String[] {"token", "type_"}, false);
 
 		_finderPathFetchByCI_T_T = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCI_T_T",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByCI_T_T",
 			new String[] {
 				String.class.getName(), String.class.getName(),
 				Integer.class.getName()
@@ -1303,7 +1303,7 @@ public class WeDeployAuthTokenPersistenceImpl
 			new String[] {"clientId", "token", "type_"}, true);
 
 		_finderPathCountByCI_T_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCI_T_T",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCI_T_T",
 			new String[] {
 				String.class.getName(), String.class.getName(),
 				Integer.class.getName()

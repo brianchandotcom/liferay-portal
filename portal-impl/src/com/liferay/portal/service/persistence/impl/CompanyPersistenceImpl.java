@@ -1328,41 +1328,41 @@ public class CompanyPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathFetchByWebId = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByWebId",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByWebId",
 			new String[] {String.class.getName()}, new String[] {"webId"},
 			true);
 
 		_finderPathCountByWebId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByWebId",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByWebId",
 			new String[] {String.class.getName()}, new String[] {"webId"},
 			false);
 
 		_finderPathFetchByMx = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByMx",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByMx",
 			new String[] {String.class.getName()}, new String[] {"mx"}, true);
 
 		_finderPathCountByMx = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByMx",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByMx",
 			new String[] {String.class.getName()}, new String[] {"mx"}, false);
 
 		_finderPathFetchByLogoId = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByLogoId",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByLogoId",
 			new String[] {Long.class.getName()}, new String[] {"logoId"}, true);
 
 		_finderPathCountByLogoId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLogoId",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLogoId",
 			new String[] {Long.class.getName()}, new String[] {"logoId"},
 			false);
 

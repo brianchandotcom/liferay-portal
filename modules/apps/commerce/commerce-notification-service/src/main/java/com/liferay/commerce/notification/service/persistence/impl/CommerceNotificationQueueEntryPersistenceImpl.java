@@ -3450,19 +3450,19 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3470,18 +3470,18 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			new String[] {"groupId"}, true);
 
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			true);
 
 		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
 		_finderPathWithPaginationFindByCommerceNotificationTemplateId =
 			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByCommerceNotificationTemplateId",
 				new String[] {
 					Long.class.getName(), Integer.class.getName(),
@@ -3491,19 +3491,19 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 
 		_finderPathWithoutPaginationFindByCommerceNotificationTemplateId =
 			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceNotificationTemplateId",
 				new String[] {Long.class.getName()},
 				new String[] {"commerceNotificationTemplateId"}, true);
 
 		_finderPathCountByCommerceNotificationTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceNotificationTemplateId",
 			new String[] {Long.class.getName()},
 			new String[] {"commerceNotificationTemplateId"}, false);
 
 		_finderPathWithPaginationFindBySent = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySent",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySent",
 			new String[] {
 				Boolean.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3511,17 +3511,17 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			new String[] {"sent"}, true);
 
 		_finderPathWithoutPaginationFindBySent = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySent",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySent",
 			new String[] {Boolean.class.getName()}, new String[] {"sent"},
 			true);
 
 		_finderPathCountBySent = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySent",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySent",
 			new String[] {Boolean.class.getName()}, new String[] {"sent"},
 			false);
 
 		_finderPathWithPaginationFindByLtSentDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtSentDate",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtSentDate",
 			new String[] {
 				Date.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -3529,12 +3529,12 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			new String[] {"sentDate"}, true);
 
 		_finderPathWithPaginationCountByLtSentDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtSentDate",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtSentDate",
 			new String[] {Date.class.getName()}, new String[] {"sentDate"},
 			false);
 
 		_finderPathWithPaginationFindByG_C_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_S",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Boolean.class.getName(),
@@ -3544,7 +3544,7 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			new String[] {"groupId", "classNameId", "classPK", "sent"}, true);
 
 		_finderPathWithoutPaginationFindByG_C_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_S",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Boolean.class.getName()
@@ -3552,7 +3552,7 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			new String[] {"groupId", "classNameId", "classPK", "sent"}, true);
 
 		_finderPathCountByG_C_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_S",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Boolean.class.getName()

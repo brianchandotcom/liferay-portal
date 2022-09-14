@@ -1157,19 +1157,19 @@ public class FinderWhereClauseEntryPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByName_Nickname = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName_Nickname",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName_Nickname",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
@@ -1177,13 +1177,14 @@ public class FinderWhereClauseEntryPersistenceImpl
 			new String[] {"name"}, true);
 
 		_finderPathWithoutPaginationFindByName_Nickname = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName_Nickname",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByName_Nickname", new String[] {String.class.getName()},
+			new String[] {"name"}, true);
 
 		_finderPathCountByName_Nickname = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName_Nickname",
-			new String[] {String.class.getName()}, new String[] {"name"},
-			false);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByName_Nickname", new String[] {String.class.getName()},
+			new String[] {"name"}, false);
 
 		_setFinderWhereClauseEntryUtilPersistence(this);
 	}

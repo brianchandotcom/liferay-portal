@@ -1461,19 +1461,19 @@ public class NotificationTemplateAttachmentPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByNotificationTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByNotificationTemplateId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -1483,24 +1483,24 @@ public class NotificationTemplateAttachmentPersistenceImpl
 
 		_finderPathWithoutPaginationFindByNotificationTemplateId =
 			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByNotificationTemplateId",
 				new String[] {Long.class.getName()},
 				new String[] {"notificationTemplateId"}, true);
 
 		_finderPathCountByNotificationTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByNotificationTemplateId",
 			new String[] {Long.class.getName()},
 			new String[] {"notificationTemplateId"}, false);
 
 		_finderPathFetchByNTI_OFI = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByNTI_OFI",
+			this, FINDER_CLASS_NAME_ENTITY, "fetchByNTI_OFI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"notificationTemplateId", "objectFieldId"}, true);
 
 		_finderPathCountByNTI_OFI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByNTI_OFI",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByNTI_OFI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"notificationTemplateId", "objectFieldId"}, false);
 

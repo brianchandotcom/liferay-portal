@@ -2550,19 +2550,19 @@ public class AnalyticsAssociationPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -2571,17 +2571,17 @@ public class AnalyticsAssociationPersistenceImpl
 			new String[] {"companyId", "associationClassName"}, true);
 
 		_finderPathWithoutPaginationFindByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "associationClassName"}, true);
 
 		_finderPathCountByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "associationClassName"}, false);
 
 		_finderPathWithPaginationFindByC_GtM_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_GtM_A",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_GtM_A",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
 				String.class.getName(), Integer.class.getName(),
@@ -2591,7 +2591,7 @@ public class AnalyticsAssociationPersistenceImpl
 			true);
 
 		_finderPathWithPaginationCountByC_GtM_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_GtM_A",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_GtM_A",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
 				String.class.getName()
@@ -2600,7 +2600,7 @@ public class AnalyticsAssociationPersistenceImpl
 			false);
 
 		_finderPathWithPaginationFindByC_A_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_A",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_A",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName(), Integer.class.getName(),
@@ -2612,7 +2612,7 @@ public class AnalyticsAssociationPersistenceImpl
 			true);
 
 		_finderPathWithoutPaginationFindByC_A_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_A",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_A",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
@@ -2623,7 +2623,7 @@ public class AnalyticsAssociationPersistenceImpl
 			true);
 
 		_finderPathCountByC_A_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_A",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_A",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()

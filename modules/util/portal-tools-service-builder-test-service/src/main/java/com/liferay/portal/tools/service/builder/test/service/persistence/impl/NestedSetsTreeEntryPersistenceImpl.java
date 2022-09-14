@@ -916,19 +916,19 @@ public class NestedSetsTreeEntryPersistenceImpl
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0], new String[0], true);
 
 		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			this, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
 		_finderPathWithPaginationCountAncestors = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countAncestors",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countAncestors",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
@@ -939,7 +939,7 @@ public class NestedSetsTreeEntryPersistenceImpl
 			false);
 
 		_finderPathWithPaginationCountDescendants = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countDescendants",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countDescendants",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
@@ -950,7 +950,7 @@ public class NestedSetsTreeEntryPersistenceImpl
 			false);
 
 		_finderPathWithPaginationGetAncestors = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "getAncestors",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "getAncestors",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
@@ -961,7 +961,7 @@ public class NestedSetsTreeEntryPersistenceImpl
 			true);
 
 		_finderPathWithPaginationGetDescendants = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "getDescendants",
+			this, FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "getDescendants",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},

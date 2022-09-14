@@ -109,10 +109,16 @@ public class StartupHelperUtil {
 	}
 
 	public static void updateIndexes() {
-		updateIndexes(_dropIndexes);
+		if (!_dbNew) {
+			updateIndexes(_dropIndexes);
+		}
 	}
 
 	public static void updateIndexes(boolean dropIndexes) {
+		if (_dbNew) {
+			return;
+		}
+
 		DB db = DBManagerUtil.getDB();
 
 		try {

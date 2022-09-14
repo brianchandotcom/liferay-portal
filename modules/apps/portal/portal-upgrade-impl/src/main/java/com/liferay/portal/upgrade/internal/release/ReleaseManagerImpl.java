@@ -20,6 +20,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
@@ -197,7 +198,9 @@ public class ReleaseManagerImpl implements ReleaseManager {
 			_activated = true;
 		}
 
-		if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP) {
+		if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP &&
+			!StartupHelperUtil.isDBNew()) {
+
 			DependencyManagerSyncUtil.registerSyncCallable(
 				() -> {
 					for (Bundle bundle : _bundleContext.getBundles()) {

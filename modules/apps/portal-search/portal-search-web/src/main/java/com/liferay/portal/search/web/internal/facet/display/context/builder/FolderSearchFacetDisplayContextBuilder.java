@@ -88,10 +88,6 @@ public class FolderSearchFacetDisplayContextBuilder {
 		return folderSearchFacetDisplayContext;
 	}
 
-	public String getOrder() {
-		return _order;
-	}
-
 	public void setFacet(Facet facet) {
 		_facet = facet;
 	}

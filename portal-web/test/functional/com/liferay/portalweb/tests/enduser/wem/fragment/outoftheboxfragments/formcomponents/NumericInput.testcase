@@ -56,14 +56,6 @@ definition {
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 		}
-
-		task ("Enable Inputs Fragment collection in Gogo Shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
-
-			GogoShell.viewOutput(outputContent = "true");
-		}
 	}
 
 	tearDown {
@@ -73,14 +65,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			task ("Disable Inputs Fragment collection in Gogo Shell") {
-				GogoShell.openGogoShellAdmin();
-
-				GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
-
-				GogoShell.viewOutput(outputContent = "true");
-			}
-
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
 			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
@@ -90,8 +74,6 @@ definition {
 	@description = "This is a test for LPS-155169. The page creator could configure the Numeric Input framgent."
 	@priority = "4"
 	test ConfigureNumericInput {
-		property test.name.skip.portal.instance = "NumericInput#ConfigureNumericInput";
-
 		task ("Given a page creator has a Form Container mapped to an entity with Integer field") {
 			task ("Add a Form Container framgment to content page") {
 				JSONLayout.addPublicLayout(
@@ -112,6 +94,18 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General");
+			}
+
+			task ("Remove the automatic added fragments") {
+				for (var index : list "4,3,2") {
+					PageEditor.removeFragment(
+						fragmentName = "Numeric Input",
+						index = "${index}");
+				}
+
+				for (var fragmentName : list "Numeric Input,Submit Button") {
+					PageEditor.removeFragment(fragmentName = "${fragmentName}");
+				}
 			}
 		}
 
@@ -192,8 +186,6 @@ definition {
 	@description = "This is a test for LPS-155169. The user could submit successfully when a Form Container has Numeric Input fragments"
 	@priority = "4"
 	test SubmitFormWithNumericInput {
-		property test.name.skip.portal.instance = "NumericInput#SubmitFormWithNumericInput";
-
 		task ("Given a user has a content page with Numeric Input fragments inside Form Container") {
 			task ("Add a Form Container framgment to content page") {
 				JSONLayout.addPublicLayout(
@@ -214,6 +206,18 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General");
+			}
+
+			task ("Remove the automatic added fragments") {
+				for (var index : list "4,3,2") {
+					PageEditor.removeFragment(
+						fragmentName = "Numeric Input",
+						index = "${index}");
+				}
+
+				for (var fragmentName : list "Numeric Input,Submit Button") {
+					PageEditor.removeFragment(fragmentName = "${fragmentName}");
+				}
 			}
 
 			task ("Add four Numeric Input and a Submit Button fragments into the Form Container") {
@@ -328,7 +332,6 @@ definition {
 	@priority = "5"
 	test ViewAllowedCharacters {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "NumericInput#ViewAllowedCharacters";
 
 		task ("Given a user has a content page with a Numeric Input inside Form Container") {
 			task ("Add a Form Container framgment to content page") {
@@ -350,6 +353,18 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General");
+			}
+
+			task ("Remove the automatic added fragments") {
+				for (var index : list "4,3,2") {
+					PageEditor.removeFragment(
+						fragmentName = "Numeric Input",
+						index = "${index}");
+				}
+
+				for (var fragmentName : list "Numeric Input,Submit Button") {
+					PageEditor.removeFragment(fragmentName = "${fragmentName}");
+				}
 			}
 
 			task ("Add a Numeric Input fragment into the Form Container") {
@@ -471,8 +486,6 @@ definition {
 	@description = "This is a test for LPS-151402. The user could see error message when submit a form with value exceeding the maximum or minimum value of field."
 	@priority = "4"
 	test ViewErrorMessageWhenSubmitFormWithValueExceedingTheMaxOrMinValueOfField {
-		property test.name.skip.portal.instance = "NumericInput#ViewErrorMessageWhenSubmitFormWithValueExceedingTheMaxOrMinValueOfField";
-
 		task ("Given a user has a content page where a Numeric Input and Submit Button fragments are inside a Form Container") {
 			task ("Add a Form Container framgment to content page") {
 				JSONLayout.addPublicLayout(
@@ -491,6 +504,18 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General");
+			}
+
+			task ("Remove the automatic added fragments") {
+				for (var index : list "4,3,2") {
+					PageEditor.removeFragment(
+						fragmentName = "Numeric Input",
+						index = "${index}");
+				}
+
+				for (var fragmentName : list "Numeric Input,Submit Button") {
+					PageEditor.removeFragment(fragmentName = "${fragmentName}");
+				}
 			}
 
 			task ("Add a Numeric Input and Submit Button fragment into Form Container") {
@@ -560,7 +585,6 @@ definition {
 	@priority = "5"
 	test ViewMappableFields {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "NumericInput#ViewMappableFields";
 
 		task ("Given a page creator has a content page with a Numeric Input inside Form Container") {
 			task ("Add a Form Container framgment to content page") {
@@ -582,6 +606,18 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General");
+			}
+
+			task ("Remove the automatic added fragments") {
+				for (var index : list "4,3,2") {
+					PageEditor.removeFragment(
+						fragmentName = "Numeric Input",
+						index = "${index}");
+				}
+
+				for (var fragmentName : list "Numeric Input,Submit Button") {
+					PageEditor.removeFragment(fragmentName = "${fragmentName}");
+				}
 			}
 
 			task ("Add a Numeric Input fragment into the Form Container") {

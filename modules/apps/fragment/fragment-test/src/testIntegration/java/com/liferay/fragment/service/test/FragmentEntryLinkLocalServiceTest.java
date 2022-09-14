@@ -343,6 +343,51 @@ public class FragmentEntryLinkLocalServiceTest {
 	}
 
 	@Test
+	public void testDeletedFragmentEntryLinkInDraftPages()
+		throws PortalException {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				_fragmentEntry.getFragmentEntryId(),
+				_defaultSegmentsExperienceId, _layout.getPlid(),
+				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
+				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
+				StringPool.BLANK, StringPool.BLANK, 0, null,
+				_fragmentEntry.getType(), _serviceContext);
+
+		List<FragmentEntryLink> fragmentEntryLinks1 =
+			_fragmentEntryLinkLocalService.
+				getAllFragmentEntryLinksByFragmentEntryId(
+					_group.getGroupId(), _fragmentEntry.getFragmentEntryId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(fragmentEntryLinks1.contains(fragmentEntryLink));
+
+		_fragmentEntryLinkLocalService.updateDeleted(
+			fragmentEntryLink.getFragmentEntryLinkId(), true);
+
+		fragmentEntryLinks1 =
+			_fragmentEntryLinkLocalService.
+				getAllFragmentEntryLinksByFragmentEntryId(
+					_group.getGroupId(), _fragmentEntry.getFragmentEntryId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertFalse(fragmentEntryLinks1.contains(fragmentEntryLink));
+
+		_fragmentEntryLinkLocalService.updateDeleted(
+			fragmentEntryLink.getFragmentEntryLinkId(), false);
+
+		List<FragmentEntryLink> fragmentEntryLinks2 =
+			_fragmentEntryLinkLocalService.
+				getAllFragmentEntryLinksByFragmentEntryId(
+					_group.getGroupId(), _fragmentEntry.getFragmentEntryId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertNotEquals(fragmentEntryLinks1, fragmentEntryLinks2);
+	}
+
+	@Test
 	public void testDeleteFragmentEntryLink() throws PortalException {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(

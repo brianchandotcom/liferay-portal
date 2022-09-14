@@ -146,6 +146,12 @@ public class FileEntryProxyBean
 	}
 
 	@Override
+	public List<FileVersion> getFileVersions(int status, int start, int end) {
+		return toFileVersionProxyBeans(
+			_fileEntry.getFileVersions(status, start, end));
+	}
+
+	@Override
 	public int getFileVersionsCount(int status) {
 		return _fileEntry.getFileVersionsCount(status);
 	}

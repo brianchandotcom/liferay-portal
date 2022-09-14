@@ -226,6 +226,12 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	@Override
+	public List<FileVersion> getFileVersions(int status, int start, int end) {
+		return RepositoryModelUtil.toFileVersions(
+			_dlFileEntry.getFileVersions(status, start, end));
+	}
+
+	@Override
 	public int getFileVersionsCount(int status) {
 		return _dlFileEntry.getFileVersionsCount(status);
 	}

@@ -146,6 +146,11 @@ public class TestFileEntry implements FileEntry {
 	}
 
 	@Override
+	public List<FileVersion> getFileVersions(int status, int start, int end) {
+		return Collections.emptyList();
+	}
+
+	@Override
 	public int getFileVersionsCount(int status) {
 		return 0;
 	}

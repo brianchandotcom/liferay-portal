@@ -15,13 +15,21 @@
 --%>
 
 <%
-String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
-
 Locale[] availableLocales = {LocaleUtil.getSiteDefault()};
+String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+boolean hasDDMDocumentLibraryDataType = false;
 
 if (Validator.isNotNull(script)) {
 	try {
 		DDMForm ddmForm = DDMUtil.getDDMForm(script);
+
+		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+			String dataType = ddmFormField.getType();
+
+			if (dataType.equals("ddm-documentlibrary")) {
+				hasDDMDocumentLibraryDataType = true;
+			}
+		}
 
 		String ddmFormDefaultLanguageId = LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
 
@@ -48,6 +56,10 @@ if (Validator.isNotNull(script)) {
 	names='<%= LanguageUtil.get(request, "view[action]") + "," + LanguageUtil.get(request, "source") %>'
 	refresh="<%= false %>"
 >
+	<div class="alert alert-info ddm-documents-and-media-field lfr-message-response <%= hasDDMDocumentLibraryDataType ? StringPool.BLANK : "hide" %>">
+		<liferay-ui:message key="document-permissions-are-not-inherited-from-the-dynamic-data-list-record" />
+	</div>
+
 	<liferay-ui:section>
 		<div id="<portlet:namespace />formBuilderTab">
 			<aui:translation-manager availableLocales="<%= availableLocales %>" changeableDefaultLanguage="<%= changeableDefaultLanguage %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" initialize="<%= false %>" readOnly="<%= false %>" />

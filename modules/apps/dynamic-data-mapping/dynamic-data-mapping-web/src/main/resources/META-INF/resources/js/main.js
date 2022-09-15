@@ -334,6 +334,8 @@ AUI.add(
 					if (activeTabIndex === SETTINGS_TAB_INDEX) {
 						instance.editField(event.newVal.item(0));
 					}
+
+					this._handleAlertMessages(instance.get('fields'));
 				},
 
 				_beforeGetEditor(record, column) {
@@ -512,6 +514,24 @@ AUI.add(
 					});
 
 					return fields;
+				},
+
+				_handleAlertMessages(fields) {
+					const hasDocumentLibrary = fields.some(
+						(field) => field.name === 'ddm-documentlibrary'
+					);
+					const documentsAndMediaField = document.querySelector(
+						'.ddm-documents-and-media-field'
+					);
+					const isHidden = documentsAndMediaField.classList.contains(
+						'hide'
+					);
+					if (hasDocumentLibrary && isHidden) {
+						documentsAndMediaField.classList.remove('hide');
+					}
+					else if (!hasDocumentLibrary) {
+						documentsAndMediaField.classList.add('hide');
+					}
 				},
 
 				_onDataTableRender(event) {

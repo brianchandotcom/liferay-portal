@@ -104,6 +104,7 @@ if (iteratorURL != null) {
 					}
 
 					String cssClass = StringPool.BLANK;
+					String sortedActionMessageKey = StringPool.BLANK;
 
 					if (headerNames.size() == 1) {
 						cssClass = "only";
@@ -125,9 +126,11 @@ if (iteratorURL != null) {
 
 					if (Objects.equals(orderByType, "asc")) {
 						orderByType = "desc";
+						sortedActionMessageKey = "descending";
 					}
 					else {
 						orderByType = "asc";
+						sortedActionMessageKey = "ascending";
 					}
 				%>
 
@@ -145,12 +148,22 @@ if (iteratorURL != null) {
 						<c:if test="<%= (rowChecker != null) && (i == 0) %>">
 							width="1%"
 						</c:if>
+
+						<c:if test="<%= (orderKey != null) && orderCurrentHeader %>">
+							aria-live="assertive" aria-sort="<%= LanguageUtil.get(resourceBundle, sortedActionMessageKey) %>"
+						</c:if>
 					>
 						<c:if test="<%= orderKey != null %>">
 							<div class="table-sort-liner">
 
 								<%
 								String orderByJS = searchContainer.getOrderByJS();
+
+								String sortLinkTitle = LanguageUtil.format(resourceBundle, "sort-by-x", new Object[] {headerName});
+
+								if (orderCurrentHeader) {
+									sortLinkTitle = LanguageUtil.get(resourceBundle, sortedActionMessageKey);
+								}
 								%>
 
 								<c:choose>
@@ -161,10 +174,10 @@ if (iteratorURL != null) {
 										url = HttpComponentsUtil.setParameter(url, namespace + searchContainer.getOrderByTypeParam(), orderByType);
 										%>
 
-										<a href="<%= url %>">
+										<a href="<%= url %>" title="<%= sortLinkTitle %>">
 									</c:when>
 									<c:otherwise>
-										<a href="<%= StringUtil.replace(orderByJS, new String[] {"orderKey", "orderByType"}, new String[] {orderKey, orderByType}) %>">
+										<a href="<%= StringUtil.replace(orderByJS, new String[] {"orderKey", "orderByType"}, new String[] {orderKey, orderByType}) %>" title="<%= sortLinkTitle %>">
 									</c:otherwise>
 								</c:choose>
 						</c:if>

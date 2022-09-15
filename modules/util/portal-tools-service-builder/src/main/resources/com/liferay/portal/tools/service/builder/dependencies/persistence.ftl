@@ -7,11 +7,11 @@ import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 import ${apiPackagePath}.exception.${noSuchEntity}Exception;
 import ${apiPackagePath}.model.${entity.name};
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
@@ -100,5 +100,11 @@ public interface ${entity.name}Persistence extends BasePersistence<${entity.name
 			;
 		</#if>
 	</#list>
+
+	<#if !entity.hasUpdateImplThrowsPortalException()>
+		public ${entity.name} update(${entity.name} ${entity.variableName});
+
+		public ${entity.name} update(${entity.name} ${entity.variableName}, ServiceContext serviceContext);
+	</#if>
 
 }

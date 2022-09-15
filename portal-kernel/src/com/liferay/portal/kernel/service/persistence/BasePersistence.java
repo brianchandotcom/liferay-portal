@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -291,7 +292,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @param  model the model instance to update
 	 * @return the model instance that was updated
 	 */
-	public T update(T model);
+	public T update(T model) throws PortalException;
 
 	/**
 	 * Updates the model instance in the database or adds it if it does not yet
@@ -302,6 +303,6 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @param  serviceContext the service context to be applied
 	 * @return the model instance that was updated
 	 */
-	public T update(T model, ServiceContext serviceContext);
+	public T update(T model, ServiceContext serviceContext) throws PortalException;
 
 }

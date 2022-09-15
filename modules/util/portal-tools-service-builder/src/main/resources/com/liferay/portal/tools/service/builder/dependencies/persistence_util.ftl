@@ -5,6 +5,11 @@ import ${apiPackagePath}.model.${entity.name};
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+
+<#if entity.hasUpdateImplThrowsPortalException()>
+	import com.liferay.portal.kernel.exception.PortalException;
+</#if>
+
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -92,19 +97,21 @@ public class ${entity.name}Util {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
-	/**
-	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
-	 */
-	public static ${entity.name} update(${entity.name} ${entity.variableName}) {
-		return getPersistence().update(${entity.variableName});
-	}
+	<#if !entity.hasUpdateImplThrowsPortalException()>
+		/**
+		* @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
+		*/
+		public static ${entity.name} update(${entity.name} ${entity.variableName}) {
+			return getPersistence().update(${entity.variableName});
+		}
 
-	/**
-	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
-	 */
-	public static ${entity.name} update(${entity.name} ${entity.variableName}, ServiceContext serviceContext) {
-		return getPersistence().update(${entity.variableName}, serviceContext);
-	}
+		/**
+		* @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
+		*/
+		public static ${entity.name} update(${entity.name} ${entity.variableName}, ServiceContext serviceContext) {
+			return getPersistence().update(${entity.variableName}, serviceContext);
+		}
+	</#if>
 
 	<#list methods as method>
 		<#if method.isPublic() && serviceBuilder.isCustomMethod(method) && !serviceBuilder.isBasePersistenceMethod(method)>

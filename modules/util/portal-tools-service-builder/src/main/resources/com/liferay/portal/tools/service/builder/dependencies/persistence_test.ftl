@@ -16,7 +16,14 @@
 
 package ${packagePath}.service.persistence.test;
 
-<#assign noSuchEntity = serviceBuilder.getNoSuchEntityException(entity) />
+<#assign
+	duplicateEntityExternalReferenceCode = serviceBuilder.getDuplicateEntityExternalReferenceCodeException(entity)
+	noSuchEntity = serviceBuilder.getNoSuchEntityException(entity)
+/>
+
+<#if entity.hasUpdateImplThrowsPortalException()>
+	import ${apiPackagePath}.exception.${duplicateEntityExternalReferenceCode}Exception;
+</#if>
 
 import ${apiPackagePath}.exception.${noSuchEntity}Exception;
 import ${apiPackagePath}.model.${entity.name};
@@ -181,6 +188,19 @@ public class ${entity.name}PersistenceTest {
 
 		Assert.assertEquals(${entity.variableName}.getPrimaryKey(), pk);
 	}
+
+	<#if entity.hasUpdateImplThrowsPortalException()>
+		@Test(expected = ${duplicateEntityExternalReferenceCode}Exception.class)
+		public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+			${entity.name} ${entity.variableName} = add${entity.name}();
+
+			${entity.name} new${entity.name} = add${entity.name}();
+
+			new${entity.name}.setExternalReferenceCode(${entity.variableName}.getExternalReferenceCode());
+
+			_persistence.update(new${entity.name});
+		}
+	</#if>
 
 	@Test
 	public void testRemove() throws Exception {

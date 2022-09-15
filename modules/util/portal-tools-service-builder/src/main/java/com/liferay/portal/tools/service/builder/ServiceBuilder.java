@@ -716,6 +716,12 @@ public class ServiceBuilder {
 
 			_mvccEnabled = GetterUtil.getBoolean(
 				rootElement.attributeValue("mvcc-enabled"));
+			_shortDuplicateExternalReferenceCodeExceptionEnabled =
+				GetterUtil.getBoolean(
+					rootElement.attributeValue(
+						"short-duplicate-external-reference-code-exception-" +
+							"enabled"),
+					true);
 			_shortNoSuchExceptionEnabled = GetterUtil.getBoolean(
 				rootElement.attributeValue("short-no-such-exception-enabled"),
 				true);
@@ -1157,7 +1163,7 @@ public class ServiceBuilder {
 
 		String name = entity.getName();
 
-		if (_shortNoSuchExceptionEnabled) {
+		if (_shortDuplicateExternalReferenceCodeExceptionEnabled) {
 			String portletShortName = entity.getPortletShortName();
 
 			if (Validator.isNull(portletShortName) ||
@@ -8032,6 +8038,7 @@ public class ServiceBuilder {
 	private Set<String> _resourceActionModels = new HashSet<>();
 	private String _resourcesDirName;
 	private String _serviceOutputPath;
+	private boolean _shortDuplicateExternalReferenceCodeExceptionEnabled;
 	private boolean _shortNoSuchExceptionEnabled;
 	private String _springFileName;
 	private String[] _springNamespaces;

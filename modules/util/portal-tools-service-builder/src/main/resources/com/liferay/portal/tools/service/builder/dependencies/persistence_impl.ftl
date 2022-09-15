@@ -54,8 +54,12 @@ package ${packagePath}.service.persistence.impl;
 
 import ${serviceBuilder.getCompatJavaClassName("StringBundler")};
 
-<#assign noSuchEntity = serviceBuilder.getNoSuchEntityException(entity) />
+<#assign
+	duplicateEntityExternalReferenceCode = serviceBuilder.getDuplicateEntityExternalReferenceCodeException(entity)
+	noSuchEntity = serviceBuilder.getNoSuchEntityException(entity)
+/>
 
+import ${apiPackagePath}.exception.${duplicateEntityExternalReferenceCode}Exception;
 import ${apiPackagePath}.exception.${noSuchEntity}Exception;
 import ${apiPackagePath}.model.${entity.name};
 
@@ -92,6 +96,11 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+
+<#if entity.hasUpdateImplThrowsPortalException()>
+	import com.liferay.portal.kernel.exception.PortalException;
+</#if>
+
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -783,7 +792,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	}
 
 	@Override
-	public ${entity.name} updateImpl(${apiPackagePath}.model.${entity.name} ${entity.variableName}) {
+	<#if entity.hasUpdateImplThrowsPortalException()>
+		public ${entity.name} updateImpl(${apiPackagePath}.model.${entity.name} ${entity.variableName}) throws PortalException {
+	<#else>
+		public ${entity.name} updateImpl(${apiPackagePath}.model.${entity.name} ${entity.variableName}) {
+	</#if>
 		boolean isNew = ${entity.variableName}.isNew();
 
 		<#if entity.isHierarchicalTree() || (entity.collectionEntityFinders?size != 0) || (entity.uniqueEntityFinders?size &gt; 0) || entity.hasEntityColumn("createDate", "Date") || entity.hasEntityColumn("modifiedDate", "Date")>
@@ -818,22 +831,24 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${entity.variableName}.setExternalReferenceCode(String.valueOf(${entity.variableName}.getPrimaryKey()));
 				</#if>
 			}
-			else {
-				${entity.name} erc${entity.name} = ${entity.variableName}Persistence.fetchBy${entity.externalReferenceCode?cap_first[0..0]}_ERC(${entity.variableName}.get${entity.externalReferenceCode?cap_first}Id(), ${entity.variableName}.getExternalReferenceCode());
-
-				if (isNew) {
-					if (erc${entity.name} != null) {
-						throw new ${serviceBuilder.getDuplicateEntityExternalReferenceCodeException(entity)}Exception();
-					}
-				}
+			<#if entity.hasUpdateImplThrowsPortalException()>
 				else {
-					if ((erc${entity.name} != null) &&
-						(${entity.variableName}.get${entity.PKMethodName}() != erc${entity.name}.get${entity.PKMethodName}())) {
+					${entity.name} erc${entity.name} = fetchBy${entity.externalReferenceCode?cap_first[0..0]}_ERC(${entity.variableName}.get${entity.externalReferenceCode?cap_first}Id(), ${entity.variableName}.getExternalReferenceCode());
 
-						throw new ${serviceBuilder.getDuplicateEntityExternalReferenceCodeException(entity)}Exception();
+					if (isNew) {
+						if (erc${entity.name} != null) {
+							throw new ${serviceBuilder.getDuplicateEntityExternalReferenceCodeException(entity)}Exception();
+						}
+					}
+					else {
+						if ((erc${entity.name} != null) &&
+							(${entity.variableName}.get${entity.PKMethodName}() != erc${entity.name}.get${entity.PKMethodName}())) {
+
+							throw new ${serviceBuilder.getDuplicateEntityExternalReferenceCodeException(entity)}Exception();
+						}
 					}
 				}
-			}
+			</#if>
 		</#if>
 
 		<#if entity.hasEntityColumn("createDate", "Date") && entity.hasEntityColumn("modifiedDate", "Date")>

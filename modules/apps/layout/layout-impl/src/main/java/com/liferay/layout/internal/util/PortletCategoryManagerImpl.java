@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.util;
+package com.liferay.layout.internal.util;
 
-import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.util.PortalPreferencesUtil;
+import com.liferay.layout.util.PortletCategoryManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -75,7 +76,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lourdes Fernández Besada
  */
 @Component(immediate = true, service = PortletCategoryManager.class)
-public class PortletCategoryManager {
+public class PortletCategoryManagerImpl implements PortletCategoryManager {
 
 	public JSONArray getPortletsJSONArray(
 			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
@@ -137,13 +138,13 @@ public class PortletCategoryManager {
 			portletCategoryJSONObject -> portletCategoryJSONObject);
 	}
 
+	@Override
 	public void updateSortedPortletCategoryKeys(
 		PortalPreferences portalPreferences,
 		String[] sortedPortletCategoryKeys) {
 
 		PortalPreferencesUtil.updateSortedPortalPreferencesValues(
-			portalPreferences,
-			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+			portalPreferences, _CONTENT_PAGE_EDITOR_PORTLET_KEY,
 			"sortedPortletCategoryKeys", sortedPortletCategoryKeys);
 	}
 
@@ -160,12 +161,13 @@ public class PortletCategoryManager {
 		highlightedPortletIds.addAll(
 			SetUtil.fromArray(
 				portalPreferences.getValues(
-					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-					"highlightedPortletIds", new String[0])));
+					_CONTENT_PAGE_EDITOR_PORTLET_KEY, "highlightedPortletIds",
+					new String[0])));
+
 		highlightedPortletIds.removeAll(
 			SetUtil.fromArray(
 				portalPreferences.getValues(
-					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+					_CONTENT_PAGE_EDITOR_PORTLET_KEY,
 					"nonhighlightedPortletIds", new String[0])));
 
 		return highlightedPortletIds;
@@ -265,8 +267,7 @@ public class PortletCategoryManager {
 	}
 
 	private JSONArray _getPortletItemsJSONArray(
-			Portlet portlet, ThemeDisplay themeDisplay)
-		throws Exception {
+		Portlet portlet, ThemeDisplay themeDisplay) {
 
 		List<PortletItem> portletItems =
 			_portletItemLocalService.getPortletItems(
@@ -386,17 +387,20 @@ public class PortletCategoryManager {
 		PortalPreferences portalPreferences) {
 
 		return PortalPreferencesUtil.getSortedPortalPreferencesValues(
-			portalPreferences,
-			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+			portalPreferences, _CONTENT_PAGE_EDITOR_PORTLET_KEY,
 			"sortedPortletCategoryKeys");
 	}
+
+	private static final String _CONTENT_PAGE_EDITOR_PORTLET_KEY =
+		"com_liferay_layout_content_page_editor_web_internal_portlet_" +
+			"ContentPageEditorPortlet";
 
 	private static final String[] _UNSUPPORTED_PORTLETS_NAMES = {
 		"com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet"
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortletCategoryManager.class);
+		PortletCategoryManagerImpl.class);
 
 	@Reference
 	private Language _language;

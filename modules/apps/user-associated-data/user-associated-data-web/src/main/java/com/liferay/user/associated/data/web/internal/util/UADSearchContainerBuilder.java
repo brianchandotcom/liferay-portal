@@ -34,10 +34,12 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.constants.UADConstants;
+import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADEntity;
 import com.liferay.user.associated.data.web.internal.display.UADHierarchyDisplay;
@@ -326,7 +328,15 @@ public class UADSearchContainerBuilder {
 			SearchContainer.DEFAULT_DELTA, currentURL, null,
 			"no-entities-remain-of-this-type", null);
 
-		searchContainer.setId("UADEntities_" + StringUtil.randomId());
+		String uniqueSearchContainerId = (String)renderRequest.getAttribute(
+			UADWebKeys.UNIQUE_SEARCH_CONTAINER_ID);
+
+		if (Validator.isNull(uniqueSearchContainerId)) {
+			uniqueSearchContainerId = StringUtil.randomId();
+		}
+
+		searchContainer.setId("UADEntities_" + uniqueSearchContainerId);
+
 		searchContainer.setOrderableHeaders(
 			new LinkedHashMap<String, String>() {
 				{

@@ -38,6 +38,9 @@ public class UADWebKeys {
 	public static final String UAD_INFO_PANEL_DISPLAY =
 		"UAD_INFO_PANEL_DISPLAY";
 
+	public static final String UNIQUE_SEARCH_CONTAINER_ID =
+		"UNIQUE_SEARCH_CONTAINER_ID";
+
 	public static final String VIEW_UAD_ENTITIES_DISPLAY =
 		"VIEW_UAD_ENTITIES_DISPLAY";
 

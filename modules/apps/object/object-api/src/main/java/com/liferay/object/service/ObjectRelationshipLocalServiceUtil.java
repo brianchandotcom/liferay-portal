@@ -157,6 +157,12 @@ public class ObjectRelationshipLocalServiceUtil {
 			objectRelationshipId, primaryKey1, primaryKey2);
 	}
 
+	public static void deleteObjectRelationships(long objectDefinitionId)
+		throws PortalException {
+
+		getService().deleteObjectRelationships(objectDefinitionId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

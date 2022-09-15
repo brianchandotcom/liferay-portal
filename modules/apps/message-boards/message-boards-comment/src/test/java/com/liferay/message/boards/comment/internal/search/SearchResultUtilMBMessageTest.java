@@ -185,9 +185,11 @@ public class SearchResultUtilMBMessageTest
 			mbMessageCommentSearchResultContributor =
 				new MBMessageCommentSearchResultContributor();
 
-		mbMessageCommentSearchResultContributor.setCommentManager(
+		ReflectionTestUtil.setFieldValue(
+			mbMessageCommentSearchResultContributor, "_commentManager",
 			_commentManager);
-		mbMessageCommentSearchResultContributor.setMBMessageLocalService(
+		ReflectionTestUtil.setFieldValue(
+			mbMessageCommentSearchResultContributor, "_mbMessageLocalService",
 			_mbMessageLocalService);
 
 		return mbMessageCommentSearchResultContributor;

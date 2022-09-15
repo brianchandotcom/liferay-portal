@@ -429,6 +429,72 @@ definition {
 			AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
 		}
 	}
+
+	@description = "This is a test for the ticket COMMERCE-9941"
+	@priority = "3"
+	test CanDeleteVersionableProductsOneByOne {
+		property portal.acceptance = "false";
+
+		task ("Given the admin has already created a new simple product and When the admin opens the product that was created before") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+		}
+
+		task ("And click on 'Save as Draft'") {
+			Click(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+		}
+
+		task ("And go back and open the first approved product again") {
+			Navigator.gotoBack();
+
+			Click(
+				key_productName = "Simple T-Shirt",
+				key_status = "Approved",
+				locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+		}
+
+		task ("And click on 'Save as Draft'") {
+			ClickNoError(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+		}
+
+		task ("And the admin click on 'OK'") {
+			AssertConfirm(value1 = "There is already a draft version of this product. Continuing will replace that draft version with this draft version. Do you wish to proceed?");
+		}
+
+		task ("And the admin now will see 3 products, one is approved, one is draft and the last one is incomplete") {
+			Navigator.gotoBack();
+
+			CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft,Simple T-Shirt:Incomplete");
+		}
+
+		task ("Then the admin can delete all the products one by one") {
+			for (var status : list "Approved,Incomplete,Draft") {
+				Click(
+					key_productName = "Simple T-Shirt",
+					key_status = "${status}",
+					locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS_ELLIPSIS");
+
+				CommerceEntry.clickNoError(menuItem = "Delete");
+
+				WaitForElementNotPresent(
+					key_productName = "Simple T-Shirt",
+					key_status = "${status}",
+					locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS_ELLIPSIS");
+			}
+
+			AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
+		}
+	}
 	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9539"
 	@priority = "3"
 	test CanOnlyHaveOneVersionableProductDraftVersion {

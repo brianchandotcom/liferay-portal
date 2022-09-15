@@ -56,6 +56,7 @@ import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -991,6 +992,50 @@ public class ObjectEntryLocalServiceTest {
 
 		_accountEntryLocalService.deleteAccountEntry(accountEntry1);
 		_accountEntryLocalService.deleteAccountEntry(accountEntry2);
+	}
+
+	@Test
+	public void testCachedValues() throws Exception {
+		ObjectEntry objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "peter@liferay.com"
+			).put(
+				"firstName", "Peter"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		FinderCacheUtil.clearDSLQueryCache(_objectDefinition.getDBTableName());
+		FinderCacheUtil.clearDSLQueryCache(
+			_objectDefinition.getExtensionDBTableName());
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"org.hibernate.SQL", LoggerTestUtil.DEBUG)) {
+
+			objectEntry = _objectEntryLocalService.getObjectEntry(
+				objectEntry.getObjectEntryId());
+
+			Assert.assertNull(
+				ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
+
+			objectEntry.getValues();
+
+			Assert.assertNotNull(
+				ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
+
+			Assert.assertTrue(_containsObjectEntryValuesSQLQuery(logCapture));
+		}
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"org.hibernate.SQL", LoggerTestUtil.DEBUG)) {
+
+			objectEntry = _objectEntryLocalService.getObjectEntry(
+				objectEntry.getObjectEntryId());
+
+			objectEntry.getValues();
+
+			Assert.assertFalse(_containsObjectEntryValuesSQLQuery(logCapture));
+		}
 	}
 
 	@Test
@@ -2156,6 +2201,23 @@ public class ObjectEntryLocalServiceTest {
 				0, _objectDefinition.getObjectDefinitionId(), keywords, 0, 20);
 
 		Assert.assertEquals(count, baseModelSearchResult.getLength());
+	}
+
+	private boolean _containsObjectEntryValuesSQLQuery(LogCapture logCapture) {
+		List<LogEntry> logEntries = logCapture.getLogEntries();
+
+		for (LogEntry logEntry : logEntries) {
+			String message = logEntry.getMessage();
+
+			if (message.startsWith("select") &&
+				message.contains(_objectDefinition.getDBTableName()) &&
+				message.contains(_objectDefinition.getExtensionDBTableName())) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private int _count() throws Exception {

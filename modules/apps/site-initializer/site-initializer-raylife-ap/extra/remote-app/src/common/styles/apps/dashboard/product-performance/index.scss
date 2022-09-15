@@ -51,3 +51,10 @@ $product-performance-border-config: 1px solid hsl(209, 36%, 85%);
 		}
 	}
 }
+
+.bb-legend-item,
+.bb-legend-item-achieved {
+	color: black;
+	font-size: 12px;
+	font-weight: 700;
+}

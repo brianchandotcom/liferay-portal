@@ -25,7 +25,6 @@ import i18n from '../../../../i18n';
 import {filters} from '../../../../schema/filter';
 import {
 	TestrayCaseResult,
-	caseResultResource,
 	testrayCaseResultRest,
 } from '../../../../services/rest';
 import {getStatusLabel} from '../../../../util/constants';
@@ -44,7 +43,7 @@ const Build = () => {
 					filterFields: filters.build.results as any,
 					title: i18n.translate('tests'),
 				}}
-				resource={caseResultResource}
+				resource={testrayCaseResultRest.resource}
 				tableProps={{
 					actions,
 					columns: [

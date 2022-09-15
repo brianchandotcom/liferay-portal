@@ -42,6 +42,8 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 				r_userToCaseResults_userId,
 				startDate,
 			}),
+			nestedFields:
+				'/nestedFields=case,component.team,build.productVersion,build.routine,run,user&nestedFieldsDepth=3',
 			transformData: (caseResult) =>
 				({
 					...caseResult,
@@ -152,7 +154,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 		return this.fetcher.put(`/caseresults/${caseResult.id}`, data);
 	}
 
-	removeAssign(caseResult: TestrayCaseResult) {
+	public removeAssign(caseResult: TestrayCaseResult) {
 		const data = {
 			dueStatus: TEST_STATUS.Untested,
 			r_userToCaseResults_userId: 0,
@@ -163,9 +165,6 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 	}
 }
 
-const caseResultResource =
-	'/caseresults?nestedFields=case,component.team,build.productVersion,build.routine,run,user&nestedFieldsDepth=3';
-
 const nestedFieldsParam =
 	'nestedFields=case.caseType,component,build.productVersion,build.routine,run,user&nestedFieldsDepth=3';
 
@@ -173,4 +172,4 @@ const caseResultsResource = `/caseresults?${nestedFieldsParam}`;
 
 export const testrayCaseResultRest = new TestrayCaseResultRest();
 
-export {caseResultResource, caseResultsResource};
+export {caseResultsResource};

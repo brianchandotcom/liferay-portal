@@ -71,14 +71,12 @@ const useBuildTestActions = () => {
 		},
 		{
 			action: (caseResult, mutate) => {
-				const fn =
-					caseResult.user &&
-					caseResult.user.id.toString() ===
-						Liferay.ThemeDisplay.getUserId()
-						? testrayCaseResultRest.removeAssign
-						: testrayCaseResultRest.assignToMe;
-
-				fn(caseResult).then((user) =>
+				(caseResult.user &&
+				caseResult.user.id.toString() ===
+					Liferay.ThemeDisplay.getUserId()
+					? testrayCaseResultRest.removeAssign(caseResult)
+					: testrayCaseResultRest.assignToMe(caseResult)
+				).then((user) =>
 					updateItemFromList(
 						mutate,
 						caseResult.id,

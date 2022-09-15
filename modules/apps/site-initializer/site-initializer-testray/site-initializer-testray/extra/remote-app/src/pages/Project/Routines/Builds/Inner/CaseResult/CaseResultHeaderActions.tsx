@@ -80,13 +80,12 @@ const CaseResultHeaderActions: React.FC<{
 
 				<ClayButton
 					displayType="secondary"
-					onClick={() => {
-						const fn = isCaseResultAssignedToMe
-							? testrayCaseResultRest.removeAssign
-							: testrayCaseResultRest.assignToMe;
-
-						fn(caseResult).then(mutateCaseResult);
-					}}
+					onClick={() =>
+						(isCaseResultAssignedToMe
+							? testrayCaseResultRest.removeAssign(caseResult)
+							: testrayCaseResultRest.assignToMe(caseResult)
+						).then(mutateCaseResult)
+					}
 				>
 					{i18n.translate(
 						isCaseResultAssignedToMe
@@ -144,7 +143,9 @@ const CaseResultHeaderActions: React.FC<{
 					<ClayButton
 						displayType="secondary"
 						onClick={() =>
-							testrayCaseResultRest.removeAssign(caseResult)
+							testrayCaseResultRest
+								.removeAssign(caseResult)
+								.then(mutateCaseResult)
 						}
 					>
 						{i18n.translate('reset-test')}

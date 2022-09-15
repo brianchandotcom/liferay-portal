@@ -15,6 +15,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
@@ -527,7 +528,8 @@ public class ObjectRelationshipLocalServiceImpl
 
 		_objectFieldSettingLocalService.addObjectFieldSetting(
 			user.getUserId(), objectField.getObjectFieldId(),
-			"objectDefinition1ShortName", objectDefinition1.getShortName());
+			ObjectFieldSettingConstants.OBJECT_DEFINITION1_SHORT_NAME,
+			objectDefinition1.getShortName());
 
 		return objectField;
 	}

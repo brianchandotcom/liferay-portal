@@ -195,23 +195,21 @@ const CardItem = React.forwardRef(
 										title={item.label}
 										truncate={false}
 									>
-										<span className="align-items-center d-flex justify-content-between">
-											<span
-												className="lfr-portal-tooltip text-truncate"
-												data-tooltip-align="center"
-											>
-												{item.label}
-											</span>
-
-											<HighlightButton
-												item={item}
-												onToggleHighlighted={
-													onToggleHighlighted
-												}
-											/>
+										<span
+											className="lfr-portal-tooltip text-truncate"
+											data-tooltip-align="center"
+										>
+											{item.label}
 										</span>
 									</ClayCard.Description>
 								</section>
+							</div>
+
+							<div className="autofit-col">
+								<HighlightButton
+									item={item}
+									onToggleHighlighted={onToggleHighlighted}
+								/>
 							</div>
 						</ClayCard.Row>
 					</ClayCard.Body>

@@ -25,7 +25,7 @@ if (Validator.isNotNull(priceModel.getDiscount())) {
 %>
 
 <span class="price-label">
-	<%= LanguageUtil.get(request, "promotion-price") %>
+	<liferay-ui:message key="promotion-price" />
 </span>
 <span class="price-value price-value-promo<%= inactivePriceCssClass %>">
 	<%= priceModel.getPromoPrice() %>

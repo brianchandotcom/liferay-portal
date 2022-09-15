@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -309,6 +310,17 @@ public class RedirectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddRedirectEntryNotNormalizedSourceURL() throws Exception {
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false, "attaché",
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			_friendlyURLNormalizer.normalizeWithEncoding("attaché"),
+			_redirectEntry.getSourceURL());
+	}
+
+	@Test
 	public void testAddRedirectEntryWithTwoStepRedirectLoop() throws Exception {
 		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
 			_group.getGroupId(), "groupBaseURL/intermediateURL", null, false,
@@ -586,8 +598,26 @@ public class RedirectEntryLocalServiceTest {
 			"finalDestinationURL", _redirectEntry.getDestinationURL());
 	}
 
+	@Test
+	public void testUpdateRedirectEntryNormalizedSourceURL() throws Exception {
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false, "sourceURL",
+			ServiceContextTestUtil.getServiceContext());
+
+		_redirectEntry = _redirectEntryLocalService.updateRedirectEntry(
+			_redirectEntry.getRedirectEntryId(), "destinationURL", null,
+			false, "attaché");
+
+		Assert.assertEquals(
+			_friendlyURLNormalizer.normalizeWithEncoding("attaché"),
+			_redirectEntry.getSourceURL());
+	}
+
 	@DeleteAfterTestRun
 	private RedirectEntry _chainedRedirectEntry;
+
+	@Inject
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@DeleteAfterTestRun
 	private Group _group;

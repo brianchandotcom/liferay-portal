@@ -87,12 +87,10 @@ definition {
 				panel = "General");
 
 			PageEditor.editInput(
-				field = "Type",
 				fragmentName = "Select from List",
 				helpText = "Just one type of ticket can be selected",
 				hideHelpText = "false",
-				label = "Select your ticket",
-				markAsRequired = "false");
+				label = "Select your ticket");
 		}
 
 		task ("Then the page designer can see available options on select from list fragment at edit mode") {
@@ -163,12 +161,10 @@ definition {
 				panel = "General");
 
 			PageEditor.editInput(
-				field = "Type",
 				fragmentName = "Select from List",
 				helpText = "Just one type of ticket can be selected",
 				hideHelpText = "false",
-				label = "Select your ticket",
-				markAsRequired = "false");
+				label = "Select your ticket");
 		}
 
 		task ("Then the page designer can see available options on select from list fragment at edit mode") {

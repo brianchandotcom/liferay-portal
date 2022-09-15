@@ -73,7 +73,6 @@ definition {
 
 		task ("When the pages designer adds a custom name in Text Input fields") {
 			PageEditor.editInput(
-				field = "Region",
 				fragmentName = "Text Input",
 				helpText = "Custom Help Text",
 				hideHelpText = "false",
@@ -180,7 +179,6 @@ definition {
 
 		task ("When the pages designer adds a custom name in Text Input fields") {
 			PageEditor.editInput(
-				field = "Region",
 				fragmentName = "Text Input",
 				helpText = "Custom Help Text",
 				hideHelpText = "false",
@@ -502,7 +500,6 @@ definition {
 
 			task ("Mark the Text Input fragment as required") {
 				PageEditor.editInput(
-					field = "Region",
 					fragmentName = "Text Input",
 					markAsRequired = "true");
 

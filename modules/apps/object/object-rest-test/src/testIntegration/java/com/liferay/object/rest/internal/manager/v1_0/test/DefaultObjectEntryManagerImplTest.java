@@ -347,6 +347,16 @@ public class DefaultObjectEntryManagerImplTest {
 			objectEntry2);
 		_testGetObjectEntries(
 			HashMapBuilder.put(
+				"search", String.valueOf(objectEntry1.getId())
+			).build(),
+			objectEntry1);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"search", String.valueOf(objectEntry2.getId())
+			).build(),
+			objectEntry2);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
 				"search", picklistObjectFieldValue1
 			).build(),
 			objectEntry1);

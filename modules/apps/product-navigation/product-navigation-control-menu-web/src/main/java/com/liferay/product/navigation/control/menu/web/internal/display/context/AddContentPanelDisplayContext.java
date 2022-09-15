@@ -24,7 +24,9 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
+import com.liferay.layout.util.PortletCategoryManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -66,7 +68,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.PortletCategoryComparator;
 import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
 import com.liferay.portal.util.PortletCategoryUtil;
-import com.liferay.portal.util.WebAppPool;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -103,6 +104,9 @@ public class AddContentPanelDisplayContext {
 
 		_assetHelper = (AssetHelper)_httpServletRequest.getAttribute(
 			AssetWebKeys.ASSET_HELPER);
+		_portletCategoryManager =
+			(PortletCategoryManager)_httpServletRequest.getAttribute(
+				PortletCategoryManager.class.getName());
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -149,7 +153,7 @@ public class AddContentPanelDisplayContext {
 			"widgets",
 			() -> {
 				if (hasAddApplicationsPermission()) {
-					return _getWidgets();
+					return _getWidgetsJSONArray();
 				}
 
 				return Collections.emptyList();
@@ -631,16 +635,9 @@ public class AddContentPanelDisplayContext {
 		);
 	}
 
-	private List<Map<String, Object>> _getWidgets() throws Exception {
-		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
-			_themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
-
-		portletCategory = PortletCategoryUtil.getRelevantPortletCategory(
-			_themeDisplay.getPermissionChecker(), _themeDisplay.getCompanyId(),
-			_themeDisplay.getLayout(), portletCategory,
-			_themeDisplay.getLayoutTypePortlet());
-
-		return _getWidgetCategories(portletCategory);
+	private JSONArray _getWidgetsJSONArray() throws Exception {
+		return _portletCategoryManager.getPortletsJSONArray(
+			_httpServletRequest, _themeDisplay);
 	}
 
 	private boolean _isUsed(Portlet portlet) {
@@ -675,6 +672,7 @@ public class AddContentPanelDisplayContext {
 	private Set<String> _layoutDecodedPortletNames;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final PortletCategoryManager _portletCategoryManager;
 	private final ThemeDisplay _themeDisplay;
 
 }

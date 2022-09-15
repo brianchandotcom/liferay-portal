@@ -163,13 +163,20 @@ export function ModalAddFilter({
 			} as IItem;
 
 			if (systemField && titleFieldName === 'creator') {
-				const {
-					creator: {name},
-				} = entry;
+				const {name} = entry.creator;
 
 				item = {
 					...item,
 					label: name,
+				};
+			}
+
+			if (systemField && titleFieldName === 'status') {
+				const {label_i18n} = entry.status;
+
+				item = {
+					...item,
+					label: label_i18n,
 				};
 			}
 			else {
@@ -266,23 +273,37 @@ export function ModalAddFilter({
 					}
 					else {
 						const newItems = relatedEntries.map((entry) => {
+							const newItemsObject = {
+								value: entry.externalReferenceCode,
+							} as LabelValueObject;
+
 							if (
 								titleField.system &&
 								titleField.name === 'creator'
 							) {
-								const {
-									creator: {name},
-								} = entry;
+								const {name} = entry.creator;
 
 								return {
+									...newItemsObject,
 									label: name,
-									value: entry.externalReferenceCode,
+								};
+							}
+
+							if (
+								titleField.system &&
+								titleField.name === 'status'
+							) {
+								const {label_i18n} = entry.status;
+
+								return {
+									...newItemsObject,
+									label: label_i18n,
 								};
 							}
 
 							return {
+								...newItemsObject,
 								label: entry[titleField?.name] as string,
-								value: entry.externalReferenceCode,
 							};
 						});
 

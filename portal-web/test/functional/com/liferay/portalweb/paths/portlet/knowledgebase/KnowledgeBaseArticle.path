@@ -148,6 +148,29 @@
 	<td></td>
 </tr>
 
+<!--INFO_PANEL-->
+
+<tr>
+	<td>INFO_TITLE</td>
+	<td>//div[@class='sidebar-header']//h4[@class='component-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_VERSION_SUBTITLE</td>
+	<td>//li[contains(.,'${key_entryVersion}')]//div[@class='list-group-subtitle']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_VERSION_TITLE</td>
+	<td>//li[contains(.,'${key_entryVersion}')]//div[@class='list-group-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
 <!--HISTORY-->
 
 <tr>

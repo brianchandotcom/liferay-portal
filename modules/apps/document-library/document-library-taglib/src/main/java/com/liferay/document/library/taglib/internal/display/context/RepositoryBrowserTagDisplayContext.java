@@ -15,8 +15,10 @@
 package com.liferay.document.library.taglib.internal.display.context;
 
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
@@ -25,8 +27,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
@@ -113,17 +118,63 @@ public class RepositoryBrowserTagDisplayContext {
 		return searchContainer;
 	}
 
-	public VerticalCard getVerticalCard(RepositoryEntry repositoryEntry) {
+	public VerticalCard getVerticalCard(RepositoryEntry repositoryEntry)
+		throws PortalException {
+
 		if (repositoryEntry instanceof FileEntry) {
 			FileEntry fileEntry = (FileEntry)repositoryEntry;
 
-			return fileEntry::getTitle;
+			FileVersion fileVersion = fileEntry.getFileVersion();
+
+			return new VerticalCard() {
+
+				@Override
+				public String getImageSrc() {
+					try {
+						return DLURLHelperUtil.getThumbnailSrc(
+							fileEntry, fileVersion,
+							(ThemeDisplay)_httpServletRequest.getAttribute(
+								WebKeys.THEME_DISPLAY));
+					}
+					catch (Exception exception) {
+						return ReflectionUtil.throwException(exception);
+					}
+				}
+
+				@Override
+				public String getTitle() {
+					return fileEntry.getTitle();
+				}
+
+			};
 		}
 
 		if (repositoryEntry instanceof FileShortcut) {
 			FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
 
-			return fileShortcut::getToTitle;
+			FileVersion fileVersion = fileShortcut.getFileVersion();
+
+			return new VerticalCard() {
+
+				@Override
+				public String getImageSrc() {
+					try {
+						return DLURLHelperUtil.getThumbnailSrc(
+							fileVersion.getFileEntry(), fileVersion,
+							(ThemeDisplay)_httpServletRequest.getAttribute(
+								WebKeys.THEME_DISPLAY));
+					}
+					catch (Exception exception) {
+						return ReflectionUtil.throwException(exception);
+					}
+				}
+
+				@Override
+				public String getTitle() {
+					return fileShortcut.getToTitle();
+				}
+
+			};
 		}
 
 		throw new IllegalArgumentException(

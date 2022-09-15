@@ -129,8 +129,8 @@ definition {
 	@priority = "4"
 	@ignore = "true"
 	test AdminCanEditSmartSuite {
-		// This issue is blocked by LPS-163214
-		
+		// This test is blocked by LPS-163214
+
 		task ("Given that the user goes to add a new component") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
 

@@ -382,10 +382,6 @@ definition {
 
 				CreateObject.addRelationshipAndSelectEntry(titleFieldName = "userfn_2");
 
-				ObjectPortlet.viewEntry(entry = "userfn_1");
-
-				ObjectPortlet.viewEntry(entry = "userfn_2");
-
 				Navigator.gotoBack();
 			}
 		}
@@ -396,9 +392,9 @@ definition {
 
 				CreateObject.deleteEntryInRelationshipTab(entryName = "userfn_1");
 
-				CreateObject.deleteEntryInRelationshipTab(entryName = "userfn_2");
-
 				ObjectPortlet.assertEntryNotPresent(entry = "userfn_1");
+
+				CreateObject.deleteEntryInRelationshipTab(entryName = "userfn_2");
 
 				ObjectPortlet.assertEntryNotPresent(entry = "userfn_2");
 

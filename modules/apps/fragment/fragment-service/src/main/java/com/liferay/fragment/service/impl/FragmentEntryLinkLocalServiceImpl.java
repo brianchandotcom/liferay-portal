@@ -329,8 +329,17 @@ public class FragmentEntryLinkLocalServiceImpl
 		int type, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		return fragmentEntryLinkFinder.findByType(
-			type, start, end, orderByComparator);
+		List<FragmentEntry> fragmentEntries =
+			_fragmentEntryPersistence.findByType(type);
+
+		if (fragmentEntries.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		return fragmentEntryLinkPersistence.findByFragmentEntryId(
+			ListUtil.toLongArray(
+				fragmentEntries, FragmentEntry.FRAGMENT_ENTRY_ID_ACCESSOR),
+			start, end, orderByComparator);
 	}
 
 	/**

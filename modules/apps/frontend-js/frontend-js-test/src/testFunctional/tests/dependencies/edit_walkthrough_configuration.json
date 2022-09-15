@@ -1,0 +1,29 @@
+{
+	"closeOnClickOutside": false,
+	"closeable": true,
+	"pages": {
+		"/walkthrough-page-1": [
+			"step-1"
+		],
+		"/walkthrough-page-2": [
+			"step-2"
+		]
+	},
+	"skippable": false,
+	"steps": [
+		{
+			"darkbg": true,
+			"id": "step-1",
+			"next": "/walkthrough-page-2",
+			"nodeToHighlight": "#step-1",
+			"title": "EDIT: Click the Button"
+		},
+		{
+			"darkbg": true,
+			"id": "step-2",
+			"nodeToHighlight": "#step-2",
+			"previous": "/walkthrough-page-1",
+			"title": "Enter Your Name"
+		}
+	]
+}

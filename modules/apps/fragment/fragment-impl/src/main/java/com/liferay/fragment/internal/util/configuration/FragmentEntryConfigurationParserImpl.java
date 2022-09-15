@@ -40,12 +40,15 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.site.navigation.taglib.servlet.taglib.util.NavItemUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,6 +60,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -216,6 +221,19 @@ public class FragmentEntryConfigurationParserImpl
 				if (contextListObject != null) {
 					contextObjects.put(
 						name + _CONTEXT_OBJECT_LIST_SUFFIX, contextListObject);
+				}
+			}
+
+			if (StringUtil.equalsIgnoreCase(
+					fragmentConfigurationField.getType(),
+					"navigationMenuSelector")) {
+
+				Object contextObject = _getNavItemsContextObject(
+					configurationValuesJSONObject.getString(name));
+
+				if (contextObject != null) {
+					contextObjects.put(
+						name + _CONTEXT_OBJECT_SUFFIX, contextObject);
 				}
 			}
 		}
@@ -759,6 +777,61 @@ public class FragmentEntryConfigurationParserImpl
 		}
 
 		return null;
+	}
+
+	private Object _getNavItemsContextObject(String value) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		HashMap<String, List<NavItem>> navItemsObject = null;
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		MenuDisplayFragmentConfiguration menuDisplayFragmentConfiguration =
+			new MenuDisplayFragmentConfiguration(value);
+
+		try {
+			List<NavItem> branchNavItems = null;
+			List<NavItem> navItems = null;
+
+			if (menuDisplayFragmentConfiguration.getSiteNavigationMenuId() >
+					0) {
+
+				branchNavItems = NavItemUtil.getBranchNavItems(
+					httpServletRequest,
+					menuDisplayFragmentConfiguration.getSiteNavigationMenuId());
+
+				navItems = NavItemUtil.getMenuNavItems(
+					httpServletRequest, branchNavItems,
+					menuDisplayFragmentConfiguration.getRootLayoutType(),
+					menuDisplayFragmentConfiguration.getRootLayoutLevel(),
+					menuDisplayFragmentConfiguration.getSiteNavigationMenuId(),
+					menuDisplayFragmentConfiguration.getRootLayoutUUID());
+			}
+			else {
+				branchNavItems = NavItemUtil.getBranchNavItems(
+					httpServletRequest);
+
+				navItems = NavItemUtil.getNavItems(
+					menuDisplayFragmentConfiguration.getNavigationMenuMode(),
+					httpServletRequest,
+					menuDisplayFragmentConfiguration.getRootLayoutType(),
+					menuDisplayFragmentConfiguration.getRootLayoutLevel(),
+					menuDisplayFragmentConfiguration.getRootLayoutUUID(),
+					branchNavItems);
+			}
+
+			navItemsObject = HashMapBuilder.<String, List<NavItem>>put(
+				"branchNavItems", branchNavItems
+			).put(
+				"navItems", navItems
+			).build();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return navItemsObject;
 	}
 
 	private Object _getURLValue(String value) {

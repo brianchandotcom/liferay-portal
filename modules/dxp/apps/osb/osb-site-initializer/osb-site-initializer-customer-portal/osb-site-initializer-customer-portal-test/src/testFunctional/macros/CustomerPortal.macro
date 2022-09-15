@@ -137,6 +137,20 @@ definition {
 			typeCard = "${typeCard}");
 	}
 
+	macro addUserToAllAccounts {
+		var accountList = "LXC-SM,DXP,Analytics Cloud,Commerce,Enterprise Search,Portal,Partnership,Others,QA 7.4,QA 7.3,QA 7.2,QA 7.1,QA 7.0";
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		for (var account : list "${accountList}") {
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Test Account ${account}",
+				userEmailAddress = "${userEmailAddress}");
+		}
+	}
+
 	macro assignUserToOrganization {
 		if (!(isSet(organizationName))) {
 			var organizationName = "Liferay Staff";

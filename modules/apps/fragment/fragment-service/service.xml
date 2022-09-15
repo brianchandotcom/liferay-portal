@@ -172,6 +172,9 @@
 		<finder name="FragmentCollectionId" return-type="Collection">
 			<finder-column name="fragmentCollectionId" />
 		</finder>
+		<finder name="Type" return-type="Collection">
+			<finder-column name="type" />
+		</finder>
 		<finder name="G_FCI" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="fragmentCollectionId" />
@@ -261,7 +264,7 @@
 			<finder-column name="groupId" />
 		</finder>
 		<finder name="FragmentEntryId" return-type="Collection">
-			<finder-column name="fragmentEntryId" />
+			<finder-column arrayable-operator="true" name="fragmentEntryId" />
 		</finder>
 		<finder name="RendererKey" return-type="Collection">
 			<finder-column name="rendererKey" />

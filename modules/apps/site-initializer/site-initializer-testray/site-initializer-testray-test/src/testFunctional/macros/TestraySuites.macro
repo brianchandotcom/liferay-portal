@@ -11,7 +11,146 @@ definition {
 			value1 = "${suiteDescription}");
 	}
 
-		Click(locator1 = "TestraySuites#ADD_SUITE");
+	macro verifySuite {
+		AssertElementPresent(
+			locator1 = "TestraySuites#SUITE_ON_LIST",
+			key_suiteName = "${suiteName}",
+			key_suiteDescription = "${suiteDescription}",
+			key_suiteType = "${suiteType}");
+	}
+
+	macro addSuite {
+		LexiconEntry.gotoAdd();
+
+		TestraySuites.typeSuiteField(
+			suiteName = "${suiteName}",
+			suiteDescription = "${suiteDescription}");
+
+		if (isSet(smartSuite)) {
+            Click.clickAtNotVisible(
+                locator1 = "Checkbox#ANY_CHECKBOX",
+                checkboxName = "Smart Suite");
+
+            Click(
+                locator1 = "Button#BUTTON_WITH_VALUE",
+                value = "Select Case Parameters");
+
+			if (isSet(teamName)) {
+				Click(
+					locator1 = "TestraySuites#SMART_SUITE_PARAMTER_TYPE",
+					key_paramterType = "Available Teams",
+					value1 = "${teamName}");
+
+				Click(
+					locator1 = "TestraySuites#SMART_SUITE_ARROW",
+					key_arrowDirection = "Right",
+					key_paramterType = "Available Teams");
+			}
+
+			if (isSet(caseType)) {
+				Click(
+					locator1 = "TestraySuites#SMART_SUITE_PARAMTER_TYPE",
+					key_paramterType = "Available Case Types",
+					value1 = "${caseType}");
+
+				Click(
+					locator1 = "TestraySuites#SMART_SUITE_ARROW",
+					key_arrowDirection = "Right",
+					key_paramterType = "Available Case Types");
+			}
+
+			if (isSet(mainComponent)) {
+				Click(
+					locator1 = "TestraySuites#SMART_SUITE_PARAMTER_TYPE",
+					key_paramterType = "Available Main Components",
+					value1 = "${mainComponent}");
+
+				Click(
+					locator1 = "TestraySuites#SMART_SUITE_ARROW",
+					key_arrowDirection = "Right",
+					key_paramterType = "Available Main Components");
+			}
+
+			if (isSet(subComponent)) {
+				Click(
+					locator1 = "TestraySuites#SMART_SUITE_PARAMTER_TYPE",
+					key_paramterType = "Available Sub Components",
+					value1 = "${subComponent}");
+
+				Click(
+					locator1 = "TestraySuites#SMART_SUITE_ARROW",
+					key_arrowDirection = "Right",
+					key_paramterType = "Available Sub Components");
+			}
+
+			if (isSet(priorityNumber)) {
+				Click(
+					locator1 = "TestraySuites#SMART_SUITE_PARAMTER_TYPE",
+					key_paramterType = "Available Priorities",
+					value1 = "${priorityNumber}");
+
+				Click(
+					locator1 = "TestraySuites#SMART_SUITE_ARROW",
+					key_arrowDirection = "Right",
+					key_paramterType = "Available Priorities");
+			}
+
+			if (isSet(requirementName)) {
+				Click(
+					locator1 = "TestraySuites#SMART_SUITE_PARAMTER_TYPE",
+					key_paramterType = "Available Requirements",
+					value1 = "${requirementName}");
+
+				Click(
+					locator1 = "TestraySuites#SMART_SUITE_ARROW",
+					key_arrowDirection = "Right",
+					key_paramterType = "Available Requirements");
+			}
+
+            Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
+        }
+
+		if (isSet(caseName)) {
+			Click(
+				locator1 = "Button#BUTTON_WITH_VALUE",
+				value = "Select Case");
+
+			Click.clickAtNotVisible(
+				locator1 = "TestraySuites#CASE_CHECKBOX",
+				key_caseName = "${caseName}");
+
+			Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
+		}
+
+		Button.clickSave();
+	}
+
+	macro editSuite {
+		TestrayContextMenu.clickContextMenuProjects(name = "${suiteName}");
+
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+
+		TestraySuites.typeSuiteField(
+			suiteName = "${newName}",
+			suiteDescription = "${newDescription}");
+
+		Button.clickSave();
+	}
+
+	macro deleteSuite {
+		TestrayContextMenu.clickContextMenuProjects(name = "${suiteName}");
+
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this item?");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro goToSuiteDetails {
+		Click(
+			key_projectName = "${suiteName}",
+			locator1 = "Testray#ITEM_NAME");
 	}
 
 }

@@ -474,7 +474,7 @@ public class DXPCloudClientTestrayImporter {
 
 		_testrayBuild = testrayRoutine.createTestrayBuild(
 			testrayProductVersion, _getTestrayBuildName(),
-			new Date(_START_TIME), null, _getTestrayBuildSHA());
+			new Date(_START_TIME), null, _testrayBuildSHA);
 
 		return _testrayBuild;
 	}
@@ -485,10 +485,6 @@ public class DXPCloudClientTestrayImporter {
 			JenkinsResultsParserUtil.toDateString(
 				new Date(_START_TIME), "yyyy-MM-dd[HH:mm:ss]",
 				"America/Los_Angeles"));
-	}
-
-	private static String _getTestrayBuildSHA() {
-		return _testrayBuildSHA;
 	}
 
 	private static Element _getTestSuiteEnvironmentsElement() {

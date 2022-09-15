@@ -389,13 +389,13 @@ definition {
 	@priority = "4"
 	test VerifyActionNameIsRequired {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 1",
+			labelName = "Custom Object 156562",
 			objectName = "CustomObject1",
-			pluralLabelName = "Custom Objects 1");
+			pluralLabelName = "Custom Objects 156562");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object 1");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 156562");
 
 		ObjectAdmin.goToActionsTab();
 

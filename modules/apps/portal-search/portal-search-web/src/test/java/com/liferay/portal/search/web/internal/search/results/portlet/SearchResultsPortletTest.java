@@ -16,6 +16,7 @@ package com.liferay.portal.search.web.internal.search.results.portlet;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetRendererFactoryLookup;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -79,6 +81,7 @@ public class SearchResultsPortletTest {
 		_setUpPortletSharedSearchResponse();
 		_setUpPropsUtil();
 		_setUpSearchSettings();
+		_setUpUserLocalService();
 
 		_portletURLFactory = _createPortletURLFactory();
 		_renderRequest = _createRenderRequest();
@@ -230,6 +233,7 @@ public class SearchResultsPortletTest {
 					_createPortletSharedSearchRequest();
 				resourceActions = Mockito.mock(ResourceActions.class);
 				summaryBuilderFactory = _createSummaryBuilderFactory();
+				userLocalService = _userLocalService;
 			}
 
 			@Override
@@ -384,6 +388,16 @@ public class SearchResultsPortletTest {
 		);
 	}
 
+	private void _setUpUserLocalService() {
+		Mockito.doReturn(
+			Mockito.mock(User.class)
+		).when(
+			_userLocalService
+		).fetchUser(
+			Mockito.anyLong()
+		);
+	}
+
 	private final IndexerRegistry _indexerRegistry = Mockito.mock(
 		IndexerRegistry.class);
 	private final PortletSharedSearchResponse _portletSharedSearchResponse =
@@ -400,5 +414,7 @@ public class SearchResultsPortletTest {
 	private SearchResultsPortlet _searchResultsPortlet;
 	private final SearchSettings _searchSettings = Mockito.mock(
 		SearchSettings.class);
+	private final UserLocalService _userLocalService = Mockito.mock(
+		UserLocalService.class);
 
 }

@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+	<state>
+		<id>c8e69f2f-35cf-4293-8ebe-aeb67c0300cb</id>
+		<description>Begin a workflow.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						23,
+						38
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<labels>
+			<label language-id="en_US">
+				Start 1
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						Transition Label
+					</label>
+				</labels>
+				<id>79815f50-bc17-4ac9-8423-04fd028c7536</id>
+				<target>95068fdb-bb1d-4449-b6a5-05777f432b6f</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<id>95068fdb-bb1d-4449-b6a5-05777f432b6f</id>
+		<description>Conclude the workflow.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						300,
+						400
+					],
+					"terminal": true
+				}
+			]]>
+		</metadata>
+		<labels>
+			<label language-id="en_US">
+				End
+			</label>
+		</labels>
+	</state>
+	<state>
+		<id>df0c6790-fbd4-4202-820d-3b782dfc4a4d</id>
+		<description>Begin a workflow.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						476.734375,
+						32
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<labels>
+			<label language-id="en_US">
+				Start 2
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						Transition Label
+					</label>
+				</labels>
+				<id>65510664-4678-4ee4-a70b-e18a41e13c0d</id>
+				<target>95068fdb-bb1d-4449-b6a5-05777f432b6f</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+</workflow-definition>

@@ -2082,12 +2082,25 @@ definition {
 	}
 
 	@description = "Verify that is not possible to have multiple Start nodes"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanNotHaveMultipleStartNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotHaveMultipleStartNode";
 
-		// TODO LRQA-72940 CanNotHaveMultipleStartNode pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "invalid-start-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		Button.clickPublish();
+
+		Alert.viewErrorMessage(errorMessage = "The workflow has too many start nodes (state nodes Start 1 and Start 2 )");
+
+		Navigator.gotoBack();
+
+		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
 	@description = "LPS-139388 - Verify that nodes behave correctly when we import a workflow with the same names for different elements"
@@ -3774,7 +3787,6 @@ definition {
 	}
 
 	@description = "Publish workflow definition with no start node and view error message"
-	@ignore = "true"
 	@priority = "4"
 	test DefinitionRequiresStartNodeToPublish {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefinitionRequiresStartNodeToPublish";
@@ -3790,6 +3802,10 @@ definition {
 		Button.clickPublish();
 
 		Alert.viewErrorMessage(errorMessage = "You must define a start node");
+
+		Navigator.gotoBack();
+
+		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
 	@description = "Verify that, when the user deletes a translation, the action reflects in the language selector"

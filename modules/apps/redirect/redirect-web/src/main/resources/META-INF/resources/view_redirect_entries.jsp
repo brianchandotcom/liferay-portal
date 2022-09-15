@@ -79,7 +79,7 @@ RedirectEntriesManagementToolbarDisplayContext redirectEntriesManagementToolbarD
 					>
 
 						<%
-						String sourceURL = HtmlUtil.escape(RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectEntry.getSourceURL());
+						String sourceURL = URLCodec.decodeURL(HtmlUtil.escape(RedirectUtil.getGroupBaseURL(themeDisplay) + StringPool.SLASH + redirectEntry.getSourceURL()));
 						%>
 
 						<bdi data-title="<%= HtmlUtil.escapeAttribute(sourceURL) %>">

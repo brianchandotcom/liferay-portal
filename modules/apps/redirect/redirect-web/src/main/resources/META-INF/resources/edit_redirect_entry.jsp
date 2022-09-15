@@ -107,7 +107,7 @@ else {
 				</div>
 
 				<div class="input-group-item">
-					<aui:input autoFocus="<%= Validator.isNull(sourceURL) || Validator.isNotNull(destinationURL) %>" label="" name="sourceURL" required="<%= true %>" type="text" value="<%= sourceURL %>" />
+					<aui:input autoFocus="<%= Validator.isNull(sourceURL) || Validator.isNotNull(destinationURL) %>" label="" name="sourceURL" required="<%= true %>" type="text" value="<%= URLCodec.decodeURL(sourceURL) %>" />
 				</div>
 			</div>
 		</aui:field-wrapper>

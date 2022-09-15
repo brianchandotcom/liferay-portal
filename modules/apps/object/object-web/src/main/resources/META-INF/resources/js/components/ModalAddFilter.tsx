@@ -245,8 +245,10 @@ export function ModalAddFilter({
 						`filter=name eq '${value}'`
 					);
 
-					const titleField = objectFields.find(
-						(objectField) => objectField.id === titleObjectFieldId
+					const titleField = objectFields.find((objectField) =>
+						titleObjectFieldId === 0
+							? objectField.system && objectField.name === 'id'
+							: objectField.id === titleObjectFieldId
 					) as ObjectField;
 
 					const relatedEntries = await API.getList<ObjectEntry>(

@@ -584,7 +584,14 @@ public class ObjectDefinitionResourceImpl
 				pluralLabel = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getPluralLabelMap());
 				portlet = objectDefinition.getPortlet();
-				restContextPath = "/o" + objectDefinition.getRESTContextPath();
+
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-152650"))) {
+
+					restContextPath =
+						"/o" + objectDefinition.getRESTContextPath();
+				}
+
 				scope = objectDefinition.getScope();
 				status = new Status() {
 					{

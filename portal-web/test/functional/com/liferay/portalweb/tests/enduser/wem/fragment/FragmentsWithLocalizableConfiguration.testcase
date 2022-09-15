@@ -99,25 +99,25 @@ definition {
 					value1 = "0");
 			}
 
-			AssertSelectedLabel(
-				key_fieldLabel = "Familia de fuentes",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Valor por defecto");
+			AssertTextEquals(
+				key_text = "bold",
+				locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON_TEXT",
+				value1 = "Heredado · 400");
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Origen de la imagen",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Directo");
 
-			AssertSelectedLabel(
-				key_fieldLabel = "Radio del borde",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Valor por defecto");
+			AssertTextEquals(
+				key_text = "corner-radius",
+				locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON_TEXT",
+				value1 = "Valor por defecto · 0px");
 
-			AssertSelectedLabel(
-				key_fieldLabel = "Sombra",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Valor por defecto");
+			AssertTextEquals(
+				key_text = "shadow",
+				locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON_TEXT",
+				value1 = "Valor por defecto · none");
 		}
 	}
 

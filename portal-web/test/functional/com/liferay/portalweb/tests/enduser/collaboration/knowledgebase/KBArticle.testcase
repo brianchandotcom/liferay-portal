@@ -286,6 +286,10 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CannotAddArticleWithoutContent {
+		KBArticle.viewFieldRequiredAsterisk(fieldLabel = "Title,Content");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
 		KBArticle.addCP(
 			kbArticleContent = "",
 			kbArticleInvalidContent = "true",

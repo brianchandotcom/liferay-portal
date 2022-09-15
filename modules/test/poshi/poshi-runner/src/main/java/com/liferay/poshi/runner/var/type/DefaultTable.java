@@ -14,8 +14,6 @@
 
 package com.liferay.poshi.runner.var.type;
 
-import com.liferay.poshi.core.util.ListUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -58,9 +56,7 @@ public class DefaultTable implements Table {
 		List<String> columnCellValues = new ArrayList<>();
 
 		for (List<String> cellValues : _table) {
-			String cellValue = cellValues.get(index);
-
-			columnCellValues.add(cellValue);
+			columnCellValues.add(cellValues.get(index));
 		}
 
 		return columnCellValues;
@@ -69,22 +65,17 @@ public class DefaultTable implements Table {
 	@Override
 	public List<String> getColumnByName(String columnName) {
 		if (_hasColumnNames) {
-			List<String> columnCellValues = new ArrayList<>();
-			int columnIndex = -1;
+			List<String> columnNames = _table.get(0);
 
-			for (List<String> cellValues : _table) {
-				for (String cellValue : cellValues) {
-					if (cellValue.equals(columnName)) {
-						columnIndex = cellValues.indexOf(cellValue);
-					}
-				}
-
-				columnCellValues.add(cellValues.get(columnIndex));
+			if (!columnNames.contains(columnName)) {
+				throw new RuntimeException(
+					"Table does not contain column name: " + columnName);
 			}
 
-			columnCellValues.remove(0);
+			int columnIndex = columnNames.indexOf(columnName);
 
-			return columnCellValues;
+			return _getListWithoutTitle(
+				getColumnByIndex(columnIndex), columnName);
 		}
 
 		throw new RuntimeException("Table does not contain column names");
@@ -98,15 +89,18 @@ public class DefaultTable implements Table {
 	@Override
 	public List<String> getRowByName(String rowName) {
 		if (_hasRowNames) {
+			int index = 0;
+
 			for (List<String> cellValues : _table) {
-				if (cellValues.get(0) == rowName) {
-					List<String> newCellValues = new ArrayList<>(cellValues);
-
-					newCellValues.remove(0);
-
-					return newCellValues;
+				if (rowName.equals(cellValues.get(0))) {
+					return _getListWithoutTitle(getRowByIndex(index), rowName);
 				}
+
+				index++;
 			}
+
+			throw new RuntimeException(
+				"Table does not contain row name: " + rowName);
 		}
 
 		throw new RuntimeException("Table does not contain row names");
@@ -114,7 +108,7 @@ public class DefaultTable implements Table {
 
 	@Override
 	public int getTableRowWidth(List<List<String>> table) {
-		if (ListUtil.isEmpty(table)) {
+		if (table.isEmpty()) {
 			return 0;
 		}
 
@@ -173,6 +167,18 @@ public class DefaultTable implements Table {
 		}
 
 		return table;
+	}
+
+	private List<String> _getListWithoutTitle(List<String> list, String title) {
+		if (title.equals(list.get(0))) {
+			List<String> newList = new ArrayList<>(list);
+
+			newList.remove(0);
+
+			return newList;
+		}
+
+		return list;
 	}
 
 	private static final Pattern _entryPattern = Pattern.compile(

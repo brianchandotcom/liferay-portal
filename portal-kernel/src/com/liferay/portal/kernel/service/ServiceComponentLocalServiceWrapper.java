@@ -131,16 +131,6 @@ public class ServiceComponentLocalServiceWrapper
 	}
 
 	@Override
-	public void destroyServiceComponent(
-		com.liferay.portal.kernel.service.configuration.
-			ServiceComponentConfiguration serviceComponentConfiguration,
-		java.lang.ClassLoader classLoader) {
-
-		_serviceComponentLocalService.destroyServiceComponent(
-			serviceComponentConfiguration, classLoader);
-	}
-
-	@Override
 	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 		return _serviceComponentLocalService.dslQuery(dslQuery);
 	}

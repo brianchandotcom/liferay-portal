@@ -115,6 +115,10 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		return _portletURL;
 	}
 
+	public String getPublishedDateString() {
+		return _publishedDateString;
+	}
+
 	public String getThumbnailURLString() {
 		return _thumbnailURLString;
 	}
@@ -185,6 +189,10 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 
 	public boolean isModifiedDateVisible() {
 		return _modifiedDateVisible;
+	}
+
+	public boolean isPublishedDateVisible() {
+		return _publishedDateVisible;
 	}
 
 	public boolean isTemporarilyUnavailable() {
@@ -362,6 +370,14 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		_portletURL = portletURL;
 	}
 
+	public void setPublishedDateString(String publishedDateString) {
+		_publishedDateString = publishedDateString;
+	}
+
+	public void setPublishedDateVisible(boolean publishedDateVisible) {
+		_publishedDateVisible = publishedDateVisible;
+	}
+
 	public void setTemporarilyUnavailable(boolean temporarilyUnavailable) {
 		_temporarilyUnavailable = temporarilyUnavailable;
 	}
@@ -427,6 +443,8 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 	private boolean _modifiedDateVisible;
 	private String _pathThemeImages;
 	private PortletURL _portletURL;
+	private String _publishedDateString;
+	private boolean _publishedDateVisible;
 	private boolean _temporarilyUnavailable;
 	private String _thumbnailURLString;
 	private boolean _thumbnailVisible;

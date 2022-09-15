@@ -1,0 +1,125 @@
+definition {
+
+	macro _assertResponseIncludeCorrectDetailsOfContentURL {
+		if (isSet(responseToParseFromSiteId)) {
+			var responseToParse = "${responseToParseFromSiteId}";
+
+			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.items..navigationMenuItems..contentURL");
+		}
+		else {
+			var responseToParse = "${responseToParseFromNavigationMenuId}";
+
+			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.navigationMenuItems..contentURL");
+		}
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${expectedURL}");
+	}
+
+	macro _assertResponseIncludeCorrectDetailsOfType {
+		if (isSet(responseToParseFromSiteId)) {
+			var responseToParse = "${responseToParseFromSiteId}";
+
+			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.items..navigationMenuItems..type");
+		}
+		else {
+			var responseToParse = "${responseToParseFromNavigationMenuId}";
+
+			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.navigationMenuItems..type");
+		}
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${expectedType}");
+	}
+
+	macro _assertResponseIncludeCorrectDetailsOfUseCustomName {
+		if (isSet(responseToParseFromSiteId)) {
+			var responseToParse = "${responseToParseFromSiteId}";
+
+			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.items..navigationMenuItems..useCustomName");
+		}
+		else {
+			var responseToParse = "${responseToParseFromNavigationMenuId}";
+
+			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.navigationMenuItems..useCustomName");
+		}
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${expectedUseCustomName}");
+	}
+
+	macro _curlNavigationMenu {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(navigationMenuId)) {
+			var api = "navigation-menus/${navigationMenuId}";
+		}
+		else {
+			var api = "sites/${siteId}/navigation-menus/";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/${api} \
+			-u test@liferay.com:test \
+			-H accept: application/json
+		''';
+
+		return "${curl}";
+	}
+
+	macro assertResponseHasCorrectDetailsFromNavigationMenuId {
+		Variables.assertDefined(parameterList = "${expectedURL},${expectedType},${expectedUseCustomName},${responseToParse}");
+
+		NavigationMenuAPI._assertResponseIncludeCorrectDetailsOfContentURL(
+			expectedURL = "${expectedURL}",
+			responseToParseFromNavigationMenuId = "${responseToParse}");
+
+		NavigationMenuAPI._assertResponseIncludeCorrectDetailsOfType(
+			expectedType = "${expectedType}",
+			responseToParseFromNavigationMenuId = "${responseToParse}");
+
+		NavigationMenuAPI._assertResponseIncludeCorrectDetailsOfUseCustomName(
+			expectedUseCustomName = "${expectedUseCustomName}",
+			responseToParseFromNavigationMenuId = "${responseToParse}");
+	}
+
+	macro assertResponseHasCorrectDetailsFromSiteId {
+		Variables.assertDefined(parameterList = "${expectedURL},${expectedType},${expectedUseCustomName},${responseToParse}");
+
+		NavigationMenuAPI._assertResponseIncludeCorrectDetailsOfContentURL(
+			expectedURL = "${expectedURL}",
+			responseToParseFromSiteId = "${responseToParse}");
+
+		NavigationMenuAPI._assertResponseIncludeCorrectDetailsOfType(
+			expectedType = "${expectedType}",
+			responseToParseFromSiteId = "${responseToParse}");
+
+		NavigationMenuAPI._assertResponseIncludeCorrectDetailsOfUseCustomName(
+			expectedUseCustomName = "${expectedUseCustomName}",
+			responseToParseFromSiteId = "${responseToParse}");
+	}
+
+	macro getNavigationMenuByNavigationMenuId {
+		Variables.assertDefined(parameterList = "${navigationMenuId}");
+
+		var curl = NavigationMenuAPI._curlNavigationMenu(navigationMenuId = "${navigationMenuId}");
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
+	}
+
+	macro getNavigationMenuBySiteId {
+		Variables.assertDefined(parameterList = "${siteId}");
+
+		var curl = NavigationMenuAPI._curlNavigationMenu(siteId = "${siteId}");
+
+		var response = JSONCurlUtil.get("${curl}");
+
+		return "${response}";
+	}
+
+}

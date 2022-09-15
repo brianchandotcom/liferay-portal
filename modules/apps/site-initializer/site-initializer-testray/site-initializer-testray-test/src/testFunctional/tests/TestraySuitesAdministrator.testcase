@@ -1,0 +1,73 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Testray.createTestraySite(siteName = "Testray 2");
+
+			Refresh();
+		}
+
+		task ("Go to Testray, Create Project and change pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(key_name = "Projects_1 Project");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		TestrayManage.deleteAllCasesTypes();
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-160627 - Verify if as an Administrator I am able to edit suites"
+	@priority = "4"
+	test AdminCanEditSuite {
+		task ("Given that the user goes to add a new suite") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			Testray.projectTabNavigator(navTabName = "Suites");
+
+			TestraySuites.addSuite(
+				suiteName = "ATF_Suites_1 Suite",
+				suiteDescription = "ATF_Suites_1 Suite Description");
+		}
+
+		task ("When the user edits the created suite") {
+			TestraySuites.editSuite(
+				suiteName = "ATF_Suites_1 Suite",
+				newName = "ATF_Suites_1 Suite Edited",
+				newDescription = "ATF_Suites_1 Suite Description Edited");
+		}
+
+		task ("then the suite should appear on the list with the new informations") {
+			TestraySuites.verifySuite(
+				suiteName = "ATF_Suites_1 Suite Edited",
+				suiteDescription = "ATF_Suites_1 Suite Description Edited",
+				suiteType = "Static");
+		}
+
+	}
+
+}

@@ -97,7 +97,11 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 					</aui:fieldset>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
-						<aui:input cssClass="input-medium" data-custom-url="<%= false %>" disabled="<%= editKBArticleDisplayContext.isURLTitleDisabled() %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder="sample-article-url-title" prefix="<%= editKBArticleDisplayContext.getURLTitlePrefix() %>" type="text" value="<%= editKBArticleDisplayContext.getKBArticleURLTitle() %>" />
+						<aui:field-wrapper cssClass="form-group" disabled="<%= editKBArticleDisplayContext.isURLTitleDisabled() %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' label="friendly-url" name="urlTitle">
+							<span class="form-text"><%= editKBArticleDisplayContext.getURLTitlePrefix() %></span>
+
+							<aui:input cssClass="input-medium" data-custom-url="<%= false %>" disabled="<%= editKBArticleDisplayContext.isURLTitleDisabled() %>" ignoreRequestValue="<%= true %>" label="" name="urlTitle" placeholder="sample-article-url-title" type="text" value="<%= editKBArticleDisplayContext.getKBArticleURLTitle() %>" />
+						</aui:field-wrapper>
 
 						<c:if test="<%= editKBArticleDisplayContext.isKBArticleDescriptionEnabled() %>">
 							<aui:input name="description" />

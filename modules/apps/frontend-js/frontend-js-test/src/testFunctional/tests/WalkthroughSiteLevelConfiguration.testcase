@@ -36,7 +36,7 @@ definition {
 			Walkthrough.enableWalkthrough(fileName = "walkthrough_configuration.json");
 		}
 
-		task ("TThen success message appears") {
+		task ("Then success message appears") {
 			Alert.viewSuccessMessage();
 		}
 	}

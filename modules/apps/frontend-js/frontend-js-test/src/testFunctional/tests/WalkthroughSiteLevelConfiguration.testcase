@@ -41,6 +41,47 @@ definition {
 		}
 	}
 
+	@description = "LPS-159841. Walkthrough does not show when disabled."
+	@priority = "5"
+	test CanBeDisabled {
+		property portal.acceptance = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given walkthrough enabled site-level") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			ApplicationsMenu.gotoSite(site = "Site Name");
+
+			Walkthrough.enableWalkthrough(fileName = "walkthrough_configuration.json");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 1");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page 1",
+				widgetName = "JS Walkthrough Sample");
+		}
+
+		task ("When walkthrough is disabled") {
+			SystemSettings.configureSystemSetting(
+				enableSetting = "false",
+				settingFieldName = "Enable Walkthrough");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Then hotspot element is not present on site") {
+			Navigator.openSitePage(
+				pageName = "Walkthrough Page 1",
+				siteName = "Site Name");
+
+			AssertElementNotPresent(locator1 = "Walkthrough#POPOVER");
+		}
+	}
+
 	@description = "LPS-159838. Can enable walkthrough in System Settings."
 	@priority = "5"
 	test CanBeEnabled {

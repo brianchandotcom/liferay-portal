@@ -237,6 +237,18 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 
 				});
 
+			if (binaryData.isEmpty() && data.isEmpty()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Config map does not exist and no data was ",
+							"supplied for ", configMapName,
+							" resulting in no change."));
+				}
+
+				return Result.UNCHANGED;
+			}
+
 			_validateLabels(configMapName, labels);
 
 			ConfigMapBuilder configMapBuilder = new ConfigMapBuilder();

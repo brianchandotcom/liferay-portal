@@ -169,4 +169,52 @@ definition {
 		// Missing the edit steps
 	}
 
+	@description = "This is a test for LPS-162816 - Verify that as an Administrator I can delete a smart suite"
+	@priority = "4"
+	test AdminCanDeleteSmartSuite {
+		task ("Given that the user goes to add a new component") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(componentName = "Components_1 Project");	
+
+			TestrayManage.closeModalInOptions();
+		}
+
+		task ("And given that the user adds a new requirement") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			Testray.projectTabNavigator(navTabName = "Requirements");
+
+			TestrayRequirements.addRequirement(
+				componentId = "Components_1 Project",
+				linkTitle = "ATF_Requirements Link Title",
+				linkURL = "https://www.google.com",
+				requirementDescription = "ATF_Requirements Description",
+				requirementName = "ATF_Requirements Summary");
+		}
+
+		task ("And given that the user adds a Smart Suite") {
+			Testray.projectTabNavigator(navTabName = "Suites");
+
+			TestraySuites.addSuite(
+				suiteName = "ATF_Suites_1 Suite",
+				suiteDescription = "ATF_Suites_1 Suite Description",
+				smartSuite = "true",
+				caseType = "Automated Functional Test",
+				mainComponent = "Tags",
+				priorityNumber = "3");
+		}
+
+		task ("When the smart suite is deleted") {
+			TestraySuites.deleteSuite(suiteName = "ATF_Suites_1 Suite");
+		}
+
+		task ("Then the suite is not displayed anymore") {
+			Testray.assertItemNotPresent(itemName = "ATF_Suites_1 Suite");
+		}
+
+	}
+
 }

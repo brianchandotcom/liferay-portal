@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -406,22 +405,8 @@ public class AddContentPanelDisplayContext {
 	}
 
 	private long[] _getAvailableClassNameIds() {
-		long[] availableClassNameIds =
-			AssetRendererFactoryRegistryUtil.getClassNameIds(
-				_themeDisplay.getCompanyId());
-
-		for (long classNameId : availableClassNameIds) {
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassNameId(classNameId);
-
-			if (!assetRendererFactory.isSelectable()) {
-				availableClassNameIds = ArrayUtil.remove(
-					availableClassNameIds, classNameId);
-			}
-		}
-
-		return availableClassNameIds;
+		return AssetRendererFactoryRegistryUtil.getClassNameIds(
+			_themeDisplay.getCompanyId(), true);
 	}
 
 	private long[] _getClassNameIds() {

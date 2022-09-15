@@ -92,4 +92,37 @@ definition {
 		}
 
 	}
+
+	@description = "This is a test for LPS-160574 - Verify if as an Administrator I am able to design Suites"
+	@priority = "4"
+	test AdminCanDesignSuite {
+		task ("Given that the user goes to add a new case") {
+			Testray.projectTabNavigator(navTabName = "Cases");
+
+			TestrayCases.typeCasesField(
+				caseName = "ATF_Suites Case",
+				caseTypeId = "Automated Functional Test",
+				componentId = "Smoke",
+				description = "ATF_Suites Case Description",
+				duration = "10",
+				priority = "5",
+				steps = "ATF_Suites Case Steps");
+		}
+
+		task ("When the user add a new suite with the created case") {
+			Testray.projectTabNavigator(navTabName = "Suites");
+
+			TestraySuites.addSuite(
+				suiteName = "ATF_Suites_1 Suite",
+				suiteDescription = "ATF_Suites_1 Suite Description",
+				caseName = "ATF_Suites Case");
+		}
+
+		task ("Then the selected case is displayed on suite details") {
+			TestraySuites.goToSuiteDetails(suiteName = "ATF_Suites_1 Suite");
+
+			Testray.assertItemName(key_name = "ATF_Suites Case");
+		}
+	}
+
 }

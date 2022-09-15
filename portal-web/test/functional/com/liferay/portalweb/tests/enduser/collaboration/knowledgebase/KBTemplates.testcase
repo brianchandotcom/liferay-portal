@@ -74,6 +74,28 @@ definition {
 			kbTemplateTitle = "Knowledge Base Template Title");
 	}
 
+	@description = "This test ensures that the template can be added by center new button."	
+	@priority = "5"
+	@uitest
+	test CanAddTemplateThroughCenterNewButton {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Templates");
+
+		KBTemplate.addCP(
+			addByCenterButton = "true",
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = "Knowledge Base Template Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Templates");
+
+		KBTemplate.viewTemplatesThroughPageTreePanel(kbTemplatesList = "Knowledge Base Template Title");
+	}
+
 	@description = "This test ensures that the empty message can be displayed in the pane."	
 	@priority = "3"
 	test CanViewEmptyMessage {

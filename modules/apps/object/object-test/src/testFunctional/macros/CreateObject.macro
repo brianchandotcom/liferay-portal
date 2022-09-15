@@ -309,7 +309,7 @@ definition {
 			key_entryName = "${entryName}",
 			locator1 = "ObjectPortlet#DELETE_RELATIONSHIP_ENTRY");
 
-		WaitForPageLoad();
+		WaitForSPARefresh();
 
 		WaitForPageLoad();
 	}

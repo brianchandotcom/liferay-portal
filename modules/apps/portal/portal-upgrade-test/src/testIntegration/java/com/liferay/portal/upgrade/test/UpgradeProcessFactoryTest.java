@@ -83,24 +83,25 @@ public class UpgradeProcessFactoryTest {
 	@Test
 	public void testAddColumn() throws Exception {
 		UpgradeProcess upgradeProcess = UpgradeProcessFactory.addColumns(
-			_TABLE_NAME, "addedColumn LONG default 0 NOT NULL");
+			_TABLE_NAME, "newColumn LONG default 0 NOT NULL");
 
 		upgradeProcess.upgrade();
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
-				_TABLE_NAME, "addedColumn", "LONG default 0 NOT NULL"));
+				_TABLE_NAME, "newColumn", "LONG default 0 NOT NULL"));
 	}
 
 	@Test
 	public void testAlterColumnName() throws Exception {
 		UpgradeProcess upgradeProcess = UpgradeProcessFactory.alterColumnName(
-			_TABLE_NAME, "typeLong", "newLong LONG null");
+			_TABLE_NAME, "typeLong", "newTypeLong LONG null");
 
 		upgradeProcess.upgrade();
 
 		Assert.assertTrue(
-			_dbInspector.hasColumnType(_TABLE_NAME, "newLong", "LONG null"));
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "newTypeLong", "LONG null"));
 		Assert.assertFalse(_dbInspector.hasColumn(_TABLE_NAME, "typeLong"));
 	}
 

@@ -382,6 +382,11 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public String getViewVersionsURL(HttpServletRequest httpServletRequest) {
+		return null;
+	}
+
+	@Override
 	public boolean isViewable(HttpServletRequest httpServletRequest) {
 		if (!_journalArticle.hasApprovedVersion()) {
 			return false;

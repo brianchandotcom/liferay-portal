@@ -396,6 +396,11 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
+	public String getViewVersionsURL(HttpServletRequest httpServletRequest) {
+		return null;
+	}
+
+	@Override
 	public boolean isViewable(HttpServletRequest httpServletRequest) {
 		if (ListUtil.isEmpty(
 				_fileEntry.getFileVersions(

@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Jürgen Kappler
  */
@@ -26,5 +28,7 @@ public interface VersionableContentDashboardItem<T>
 
 	public List<ContentDashboardItem.Version> getAllVersions(
 		ThemeDisplay themeDisplay);
+
+	public String getViewVersionsURL(HttpServletRequest httpServletRequest);
 
 }

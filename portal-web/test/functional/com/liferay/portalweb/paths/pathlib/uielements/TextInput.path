@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_WITH_AIRA_LABEL</td>
+	<td>//input[@aria-label='${ariaLabel}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_PRIORITY</td>
 	<td>//input[contains(@id,'assetPriority')]</td>
 	<td></td>

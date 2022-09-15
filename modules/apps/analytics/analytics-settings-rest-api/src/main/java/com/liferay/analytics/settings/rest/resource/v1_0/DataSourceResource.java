@@ -34,6 +34,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -41,7 +42,7 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/analytics-settings/v1.0
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/analytics-settings-rest/v1.0
  *
  * @author Riccardo Ferrari
  * @generated
@@ -56,7 +57,14 @@ public interface DataSourceResource {
 
 	public void deleteDataSource() throws Exception;
 
+	public Response deleteDataSourceBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public void postDataSource(DataSourceToken dataSourceToken)
+		throws Exception;
+
+	public Response postDataSourceBatch(
+			DataSourceToken dataSourceToken, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

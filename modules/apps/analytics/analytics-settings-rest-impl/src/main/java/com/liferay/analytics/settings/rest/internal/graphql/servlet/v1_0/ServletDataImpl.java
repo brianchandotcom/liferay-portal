@@ -43,7 +43,7 @@ public class ServletDataImpl implements ServletData {
 
 	@Override
 	public String getPath() {
-		return "/analytics-settings-graphql/v1_0";
+		return "/analytics-settings-rest-graphql/v1_0";
 	}
 
 	@Override

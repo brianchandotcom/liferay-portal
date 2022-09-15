@@ -27,12 +27,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"liferay.jackson=false",
-		"osgi.jaxrs.application.base=/analytics-settings",
+		"osgi.jaxrs.application.base=/analytics-settings-rest",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=Liferay.Analytyics.Settings"
+		"osgi.jaxrs.name=Liferay.Analytyics.Settings.REST"
 	},
 	service = Application.class
 )
 @Generated("")
-public class HeadlessAnalyticsSettingsApplication extends Application {
+public class AnalyticsSettingsRESTApplication extends Application {
 }

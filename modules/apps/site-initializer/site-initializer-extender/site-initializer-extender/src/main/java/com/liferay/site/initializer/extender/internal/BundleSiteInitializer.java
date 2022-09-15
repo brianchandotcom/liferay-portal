@@ -1267,7 +1267,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (resourcePath.endsWith("/")) {
 				_addJournalArticles(
 					ddmStructureLocalService, ddmTemplateLocalService,
-					_addStructuredContentFolders(
+					_addOrUpdateStructuredContentFolders(
 						documentFolderId, parentResourcePath, serviceContext),
 					documentsStringUtilReplaceValues, resourcePath,
 					serviceContext, siteNavigationMenuItemSettingsBuilder);
@@ -2679,6 +2679,45 @@ public class BundleSiteInitializer implements SiteInitializer {
 			true, knowledgeBaseFolder.getId(), resourcePath, serviceContext);
 	}
 
+	private Long _addOrUpdateStructuredContentFolders(
+			Long documentFolderId, String parentResourcePath,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		StructuredContentFolderResource.Builder
+			structuredContentFolderResourceBuilder =
+				_structuredContentFolderResourceFactory.create();
+
+		StructuredContentFolderResource structuredContentFolderResource =
+			structuredContentFolderResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		String json = SiteInitializerUtil.read(
+			parentResourcePath + ".metadata.json", _servletContext);
+
+		if (json == null) {
+			json = JSONUtil.put(
+				"name", FileUtil.getShortFileName(parentResourcePath)
+			).toString();
+		}
+
+		StructuredContentFolder structuredContentFolder =
+			StructuredContentFolder.toDTO(json);
+
+		structuredContentFolder.setParentStructuredContentFolderId(
+			documentFolderId);
+
+		structuredContentFolder =
+			structuredContentFolderResource.
+				putSiteStructuredContentFolderByExternalReferenceCode(
+					serviceContext.getScopeGroupId(),
+					structuredContentFolder.getExternalReferenceCode(),
+					structuredContentFolder);
+
+		return structuredContentFolder.getId();
+	}
+
 	private void _addPermissions(
 			Map<String, String>
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
@@ -3179,45 +3218,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getScopeGroupId(), jsonObject.getString("pid"),
 				properties);
 		}
-	}
-
-	private Long _addStructuredContentFolders(
-			Long documentFolderId, String parentResourcePath,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		StructuredContentFolderResource.Builder
-			structuredContentFolderResourceBuilder =
-				_structuredContentFolderResourceFactory.create();
-
-		StructuredContentFolderResource structuredContentFolderResource =
-			structuredContentFolderResourceBuilder.user(
-				serviceContext.fetchUser()
-			).build();
-
-		String json = SiteInitializerUtil.read(
-			parentResourcePath + ".metadata.json", _servletContext);
-
-		if (json == null) {
-			json = JSONUtil.put(
-				"name", FileUtil.getShortFileName(parentResourcePath)
-			).toString();
-		}
-
-		StructuredContentFolder structuredContentFolder =
-			StructuredContentFolder.toDTO(json);
-
-		structuredContentFolder.setParentStructuredContentFolderId(
-			documentFolderId);
-
-		structuredContentFolder =
-			structuredContentFolderResource.
-				putSiteStructuredContentFolderByExternalReferenceCode(
-					serviceContext.getScopeGroupId(),
-					structuredContentFolder.getExternalReferenceCode(),
-					structuredContentFolder);
-
-		return structuredContentFolder.getId();
 	}
 
 	private void _addStyleBookEntries(ServiceContext serviceContext)

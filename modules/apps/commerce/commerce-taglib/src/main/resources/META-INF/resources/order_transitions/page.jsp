@@ -33,7 +33,7 @@ String cssClass = (String)request.getAttribute("liferay-commerce:order-transitio
 		%>
 
 			<button class="<%= HtmlUtil.escapeAttribute(cssClass) %> transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= HtmlUtil.escapeAttribute(transitionName) %>" data-workflowTaskId="<%= transitionOVP.getKey() %>" type="button">
-				<%= LanguageUtil.get(request, HtmlUtil.escape(transitionName)) %>
+				<liferay-ui:message key="<%= HtmlUtil.escape(transitionName) %>" />
 			</button>
 
 		<%

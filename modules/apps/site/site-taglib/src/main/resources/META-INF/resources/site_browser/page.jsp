@@ -78,7 +78,7 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 						</h5>
 
 						<h6 class="text-default">
-							<span><%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %></span>
+							<span><liferay-ui:message key="<%= group.getScopeLabel(themeDisplay) %>" /></span>
 						</h6>
 					</liferay-ui:search-container-column-text>
 				</c:when>

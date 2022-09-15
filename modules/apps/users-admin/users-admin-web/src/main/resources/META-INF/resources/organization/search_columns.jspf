@@ -33,7 +33,7 @@
 			</h6>
 
 			<h6 class="text-default">
-				<%= LanguageUtil.get(request, organization.getType()) %>
+				<liferay-ui:message key="<%= organization.getType() %>" />
 			</h6>
 
 			<h6 class="text-default">

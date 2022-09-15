@@ -59,7 +59,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 			</h4>
 
 			<h6>
-				<%= LanguageUtil.get(request, organization.getType()) %>
+				<liferay-ui:message key="<%= organization.getType() %>" />
 			</h6>
 
 			<%

@@ -75,7 +75,7 @@ for (int i = 0; i < organizations.size(); i++) {
 				<liferay-ui:message key="gender" />
 			</dt>
 			<dd>
-				<%= LanguageUtil.get(request, selUser.isMale() ? "male" : "female") %>
+				<liferay-ui:message key='<%= selUser.isMale() ? "male" : "female" %>' />
 			</dd>
 		</c:if>
 

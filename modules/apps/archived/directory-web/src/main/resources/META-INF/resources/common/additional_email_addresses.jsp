@@ -39,7 +39,7 @@ if (classPK > 0) {
 			<li class="<%= (emailAddress.isPrimary() && !emailAddresses.isEmpty()) ? "icon-star" : StringPool.BLANK %>">
 				<a href="mailto:<%= emailAddress.getAddress() %>"><%= emailAddress.getAddress() %></a>
 
-				<%= LanguageUtil.get(request, emailAddress.getType().getName()) %>
+				<liferay-ui:message key="<%= emailAddress.getType().getName() %>" />
 			</li>
 
 		<%

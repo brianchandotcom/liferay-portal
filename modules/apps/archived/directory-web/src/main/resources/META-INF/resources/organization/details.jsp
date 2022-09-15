@@ -32,7 +32,7 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 			<liferay-ui:message key="type" />
 		</dt>
 		<dd>
-			<%= LanguageUtil.get(request, organization.getType()) %>
+			<liferay-ui:message key="<%= organization.getType() %>" />
 		</dd>
 
 		<c:if test="<%= PropsValues.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_ORGANIZATION_STATUS %>">
@@ -40,7 +40,7 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 				<liferay-ui:message key="status" />
 			</dt>
 			<dd>
-				<%= LanguageUtil.get(request, ListTypeServiceUtil.getListType(organization.getStatusId()).getName()) %>
+				<liferay-ui:message key="<%= ListTypeServiceUtil.getListType(organization.getStatusId()).getName() %>" />
 			</dd>
 		</c:if>
 
@@ -49,7 +49,7 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 				<liferay-ui:message key="country" />
 			</dt>
 			<dd>
-				<%= LanguageUtil.get(request, CountryServiceUtil.getCountry(organization.getCountryId()).getName()) %>
+				<liferay-ui:message key="<%= CountryServiceUtil.getCountry(organization.getCountryId()).getName() %>" />
 			</dd>
 		</c:if>
 
@@ -58,7 +58,7 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 				<liferay-ui:message key="region" />
 			</dt>
 			<dd>
-				<%= LanguageUtil.get(request, RegionServiceUtil.getRegion(organization.getRegionId()).getName()) %>
+				<liferay-ui:message key="<%= RegionServiceUtil.getRegion(organization.getRegionId()).getName() %>" />
 			</dd>
 		</c:if>
 

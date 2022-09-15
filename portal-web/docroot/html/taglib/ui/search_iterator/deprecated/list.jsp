@@ -47,7 +47,7 @@ if (iteratorURL != null) {
 
 <c:if test="<%= emptyResultsMessage != null %>">
 	<div class="alert alert-info <%= resultRows.isEmpty() ? StringPool.BLANK : "hide" %>" id="<%= namespace + id %>EmptyResultsMessage">
-		<%= LanguageUtil.get(resourceBundle, emptyResultsMessage) %>
+		<liferay-ui:message key="<%= emptyResultsMessage %>" />
 	</div>
 </c:if>
 

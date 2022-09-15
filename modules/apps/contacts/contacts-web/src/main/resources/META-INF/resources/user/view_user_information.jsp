@@ -89,7 +89,7 @@ if (phones.isEmpty()) {
 			%>
 
 				<li class="<%= phone.isPrimary() ? "primary" : "" %>">
-					<span class="property-type"><%= LanguageUtil.get(request, phone.getType().getName()) %></span>
+					<span class="property-type"><liferay-ui:message key="<%= phone.getType().getName() %>" /></span>
 					<span class="property"><%= HtmlUtil.escape(phone.getNumber()) %> <%= phone.getExtension() %></span>
 				</li>
 
@@ -138,7 +138,7 @@ if (emailAddresses.isEmpty()) {
 			%>
 
 				<li class="<%= emailAddress.isPrimary() ? "primary" : "" %>">
-					<span class="property-type"><%= LanguageUtil.get(request, emailAddress.getType().getName()) %></span>
+					<span class="property-type"><liferay-ui:message key="<%= emailAddress.getType().getName() %>" /></span>
 					<span class="property"><a href="mailto:<%= emailAddress.getAddress() %>"><%= emailAddress.getAddress() %></a></span>
 				</li>
 
@@ -232,7 +232,7 @@ if (addresses.isEmpty()) {
 			%>
 
 				<li class="<%= address.isPrimary() ? "primary" : "" %>">
-					<span class="property-type"><%= LanguageUtil.get(request, listType.getName()) %></span><br />
+					<span class="property-type"><liferay-ui:message key="<%= listType.getName() %>" /></span><br />
 
 					<liferay-text-localizer:address-display
 						address="<%= address %>"
@@ -286,7 +286,7 @@ if (websites.isEmpty()) {
 			%>
 
 				<li class="<%= website.isPrimary() ? "primary" : "" %>">
-					<span class="property-type"><%= LanguageUtil.get(request, website.getType().getName()) %></span>
+					<span class="property-type"><liferay-ui:message key="<%= website.getType().getName() %>" /></span>
 
 					<span class="property"><a href="<%= website.getUrl() %>"><%= website.getUrl() %></a></span>
 				</li>

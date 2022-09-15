@@ -78,7 +78,7 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatCons
 							cssClass='<%= String.format("background-task-status-row background-task-status-%s %s", dispatchTaskStatus.getLabel(), dispatchTaskStatus.getCssClass()) %>'
 							md="8"
 						>
-							<h6><%= LanguageUtil.get(request, dispatchTaskStatus.getLabel()) %></h6>
+							<h6><liferay-ui:message key="<%= dispatchTaskStatus.getLabel() %>" /></h6>
 						</clay:col>
 					</clay:row>
 

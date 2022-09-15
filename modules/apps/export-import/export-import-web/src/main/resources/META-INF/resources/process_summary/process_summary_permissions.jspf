@@ -48,8 +48,8 @@ boolean global = currentScopeGroup.isCompany();
 		<div class="sheet-subtitle"><liferay-ui:message key="permissions" /></div>
 
 		<div class="process-summary-subsection">
-			<label class="process-summary-label"><%= LanguageUtil.get(request, permissionsTitle) %></label>:
-			<%= LanguageUtil.get(request, inputDescription) %>
+			<label class="process-summary-label"><liferay-ui:message key="<%= permissionsTitle %>" /></label>:
+			<liferay-ui:message key="<%= inputDescription %>" />
 		</div>
 	</div>
 </c:if>

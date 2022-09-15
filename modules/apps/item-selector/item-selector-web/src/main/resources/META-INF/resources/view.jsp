@@ -34,7 +34,7 @@ List<NavigationItem> navigationItems = localizedItemSelectorRendering.getNavigat
 		%>
 
 		<div class="alert alert-info">
-			<%= LanguageUtil.get(resourceBundle, "selection-is-not-available") %>
+			<liferay-ui:message key="selection-is-not-available" />
 		</div>
 	</c:when>
 	<c:otherwise>

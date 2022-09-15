@@ -18,7 +18,7 @@
 ListType addressListType = address.getListType();
 %>
 
-<em class="mailing-name"><%= LanguageUtil.get(request, addressListType.getName()) %></em><br />
+<em class="mailing-name"><liferay-ui:message key="<%= addressListType.getName() %>" /></em><br />
 
 <liferay-text-localizer:address-display
 	address="<%= address %>"

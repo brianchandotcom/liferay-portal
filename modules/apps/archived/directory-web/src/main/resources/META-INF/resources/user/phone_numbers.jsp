@@ -51,7 +51,7 @@ for (Organization organization : organizations) {
 			%>
 
 				<li class="<%= (phone.isPrimary() && !organizationPhones.isEmpty()) ? "icon-star" : StringPool.BLANK %>">
-					<%= HtmlUtil.escape(phone.getNumber()) %> <%= phone.getExtension() %> <%= LanguageUtil.get(request, phone.getType().getName()) %>
+					<%= HtmlUtil.escape(phone.getNumber()) %> <%= phone.getExtension() %> <liferay-ui:message key="<%= phone.getType().getName() %>" />
 				</li>
 
 			<%
@@ -71,7 +71,7 @@ for (Organization organization : organizations) {
 			%>
 
 				<li class="<%= (phone.isPrimary() && !personalPhones.isEmpty()) ? "icon-star" : StringPool.BLANK %>">
-					<%= HtmlUtil.escape(phone.getNumber()) %> <%= phone.getExtension() %> <%= LanguageUtil.get(request, phone.getType().getName()) %>
+					<%= HtmlUtil.escape(phone.getNumber()) %> <%= phone.getExtension() %> <liferay-ui:message key="<%= phone.getType().getName() %>" />
 				</li>
 
 			<%

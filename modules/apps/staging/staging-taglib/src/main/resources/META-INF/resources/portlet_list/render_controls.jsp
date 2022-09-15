@@ -113,7 +113,7 @@ for (int i = 0; i < controls.length; i++) {
 			</c:when>
 			<c:when test="<%= controls[i] instanceof PortletDataHandlerChoice %>">
 				<label>
-					<%= LanguageUtil.get(request, resourceBundle, controls[i].getControlLabel()) %>
+					<liferay-ui:message key="<%= controls[i].getControlLabel() %>" />
 
 					<%
 					PortletDataHandlerChoice control = (PortletDataHandlerChoice)controls[i];

@@ -65,7 +65,7 @@ SelectRolesDisplayContext selectRolesDisplayContext = new SelectRolesDisplayCont
 						</h6>
 
 						<h6 class="text-default">
-							<%= LanguageUtil.get(request, role.getTypeLabel()) %>
+							<liferay-ui:message key="<%= role.getTypeLabel() %>" />
 						</h6>
 					</liferay-ui:search-container-column-text>
 				</c:when>

@@ -42,7 +42,7 @@ String range = MapUtil.getString(parameterMap, "range");
 			}
 			%>
 
-			<div><%= LanguageUtil.get(request, "last") + StringPool.SPACE + LanguageUtil.format(request, languageKey, last, false) %></div>
+			<div><liferay-ui:message key="last" /><%= StringPool.SPACE + LanguageUtil.format(request, languageKey, last, false) %></div>
 		</c:when>
 		<c:when test="<%= range.equals(ExportImportDateUtil.RANGE_DATE_RANGE) %>">
 

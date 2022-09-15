@@ -40,7 +40,7 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 				</h5>
 
 				<div class="text-secondary">
-					<%= LanguageUtil.get(request, layoutClassedModelUsagesDisplayContext.getLayoutClassedModelUsageTypeLabel(layoutClassedModelUsage)) %>
+					<liferay-ui:message key="<%= layoutClassedModelUsagesDisplayContext.getLayoutClassedModelUsageTypeLabel(layoutClassedModelUsage) %>" />
 				</div>
 			</liferay-ui:search-container-column-text>
 

@@ -37,7 +37,7 @@ if (classPK > 0) {
 		%>
 
 			<li class="<%= (phone.isPrimary() && !phones.isEmpty()) ? "icon-star" : StringPool.BLANK %>">
-				<%= HtmlUtil.escape(phone.getNumber()) %> <%= phone.getExtension() %> <%= LanguageUtil.get(request, phone.getType().getName()) %>
+				<%= HtmlUtil.escape(phone.getNumber()) %> <%= phone.getExtension() %> <liferay-ui:message key="<%= phone.getType().getName() %>" />
 			</li>
 
 		<%

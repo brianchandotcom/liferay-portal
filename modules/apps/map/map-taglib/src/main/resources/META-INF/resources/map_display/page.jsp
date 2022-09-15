@@ -28,7 +28,7 @@
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-danger">
-			<%= LanguageUtil.get(resourceBundle, "a-map-should-be-shown-here") %>
+			<liferay-ui:message key="a-map-should-be-shown-here" />
 		</div>
 	</c:otherwise>
 </c:choose>

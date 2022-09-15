@@ -100,7 +100,7 @@ if (commerceNotificationTemplate != null) {
 		>
 			<div class="row">
 				<div class="col-12">
-					<label for="<portlet:namespace />toFieldWrapper"><%= LanguageUtil.get(resourceBundle, "to") %></label>
+					<label for="<portlet:namespace />toFieldWrapper"><liferay-ui:message key="to" /></label>
 
 					<aui:field-wrapper label="" name="toFieldWrapper">
 						<liferay-ui:input-localized
@@ -152,7 +152,7 @@ if (commerceNotificationTemplate != null) {
 		<commerce-ui:panel
 			title='<%= LanguageUtil.get(resourceBundle, "email-content") %>'
 		>
-			<label for="<portlet:namespace />subjectFieldWrapper"><%= LanguageUtil.get(resourceBundle, "subject") %></label>
+			<label for="<portlet:namespace />subjectFieldWrapper"><liferay-ui:message key="subject" /></label>
 
 			<aui:field-wrapper label="" name="subjectFieldWrapper">
 				<liferay-ui:input-localized
@@ -167,7 +167,7 @@ if (commerceNotificationTemplate != null) {
 			}
 			%>
 
-			<label for="<portlet:namespace />bodyFieldWrapper"><%= LanguageUtil.get(resourceBundle, "body") %></label>
+			<label for="<portlet:namespace />bodyFieldWrapper"><liferay-ui:message key="body" /></label>
 
 			<aui:field-wrapper label="" name="bodyFieldWrapper">
 				<liferay-ui:input-localized

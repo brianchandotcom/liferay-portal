@@ -24,7 +24,7 @@
 					<span class="c-inner" tabindex="-1">
 						<span class="sr-only"><liferay-ui:message key="toggle-navigation" /></span>
 
-						<span class="navbar-text-truncate page-name"><%= LanguageUtil.get(resourceBundle, selectedItemName) %></span>
+						<span class="navbar-text-truncate page-name"><liferay-ui:message key="<%= selectedItemName %>" /></span>
 
 						<aui:icon image="caret-bottom" markupView="lexicon" />
 					</span>

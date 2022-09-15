@@ -76,7 +76,7 @@ if (portletTitleBasedNavigation) {
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl container-form-lg\"" : StringPool.BLANK %>>
 	<c:if test="<%= !portletTitleBasedNavigation %>">
-		<h3><%= LanguageUtil.get(request, mbHomeDisplayContext.getTitle()) %></h3>
+		<h3><liferay-ui:message key="<%= mbHomeDisplayContext.getTitle() %>" /></h3>
 	</c:if>
 
 	<portlet:actionURL name="/message_boards/edit_category" var="editCategoryURL">

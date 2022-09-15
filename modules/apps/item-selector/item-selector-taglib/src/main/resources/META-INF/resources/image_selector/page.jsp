@@ -107,7 +107,7 @@ if (isDraggable) {
 							</c:choose>
 						</c:when>
 						<c:otherwise>
-							<%= LanguageUtil.get(resourceBundle, "drag-and-drop-to-upload") %>
+							<liferay-ui:message key="drag-and-drop-to-upload" />
 						</c:otherwise>
 					</c:choose>
 				</div>

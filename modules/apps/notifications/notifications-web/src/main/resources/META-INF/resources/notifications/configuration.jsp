@@ -91,7 +91,7 @@
 												%>
 
 													<th class="lfr-<%= userNotificationDeliveryType.getName() %>-column">
-														<%= LanguageUtil.get(request, userNotificationDeliveryType.getName()) %>
+														<liferay-ui:message key="<%= userNotificationDeliveryType.getName() %>" />
 													</th>
 
 												<%

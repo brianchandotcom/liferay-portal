@@ -64,7 +64,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)reque
 							}
 							%>
 
-							<%= LanguageUtil.get(request, exportImportLabel) %>
+							<liferay-ui:message key="<%= exportImportLabel %>" />
 						</clay:col>
 					</clay:row>
 				</clay:content-col>
@@ -138,7 +138,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)reque
 						<clay:col
 							md="6"
 						>
-							<%= LanguageUtil.get(request, BatchPlannerPlanConstants.getStatusLabel(batchPlannerPlanDisplay.getStatus())) %>
+							<liferay-ui:message key="<%= BatchPlannerPlanConstants.getStatusLabel(batchPlannerPlanDisplay.getStatus()) %>" />
 						</clay:col>
 					</clay:row>
 				</clay:content-col>

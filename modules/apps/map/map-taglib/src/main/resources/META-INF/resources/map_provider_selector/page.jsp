@@ -19,11 +19,11 @@
 <c:choose>
 	<c:when test="<%= mapProviders.isEmpty() %>">
 		<div class="alert alert-danger">
-			<%= LanguageUtil.get(resourceBundle, "a-list-of-map-providers-should-be-shown-here") %>
+			<liferay-ui:message key="a-list-of-map-providers-should-be-shown-here" />
 		</div>
 	</c:when>
 	<c:otherwise>
-		<p class="small text-secondary"><%= LanguageUtil.get(resourceBundle, "select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets") %></p>
+		<p class="small text-secondary"><liferay-ui:message key="select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets" /></p>
 
 		<%
 		for (MapProvider mapProvider : mapProviders) {

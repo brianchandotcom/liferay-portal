@@ -46,7 +46,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 			<strong><liferay-ui:message key="uptime" /></strong>:
 
 			<c:if test="<%= days > 0 %>">
-				<%= days %> <%= LanguageUtil.get(request, ((days > 1) ? "days" : "day")) %>,
+				<%= days %> <liferay-ui:message key='<%= (days > 1) ? "days" : "day" %>' />,
 			</c:if>
 
 			<%

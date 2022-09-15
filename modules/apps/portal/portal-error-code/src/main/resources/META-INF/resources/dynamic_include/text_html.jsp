@@ -79,11 +79,11 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 		</c:when>
 		<c:otherwise>
 			<head>
-				<title>Http Status <%= code %> - <%= LanguageUtil.get(request, "http-status-code[" + code + "]") %></title>
+				<title>Http Status <%= code %> - <liferay-ui:message key='<%= "http-status-code[" + code + "]" %>' /></title>
 			</head>
 
 			<body>
-				<h1>Http Status <%= code %> - <%= LanguageUtil.get(request, "http-status-code[" + code + "]") %></h1>
+				<h1>Http Status <%= code %> - <liferay-ui:message key='<%= "http-status-code[" + code + "]" %>' /></h1>
 
 				<p>
 					<liferay-ui:message key="message" />: <%= HtmlUtil.escape(msg) %>

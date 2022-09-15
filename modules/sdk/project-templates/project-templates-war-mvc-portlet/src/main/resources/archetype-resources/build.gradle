@@ -14,13 +14,8 @@ buildscript {
 apply plugin: "com.liferay.css.builder"
 
 dependencies {
-#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
-	compileOnly group: "javax.portlet", name: "portlet-api"
-	compileOnly group: "javax.servlet", name: "javax.servlet-api"
-#else
 	compileOnly group: "com.liferay.portal", name: "release.${product}.api"
-#end
+
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "@com.liferay.css.builder.version@"
 
 	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common"

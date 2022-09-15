@@ -498,6 +498,21 @@ public class FragmentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByType() throws Exception {
+		_persistence.countByType(RandomTestUtil.nextInt());
+
+		_persistence.countByType(0);
+	}
+
+	@Test
+	public void testCountByType_Head() throws Exception {
+		_persistence.countByType_Head(
+			RandomTestUtil.nextInt(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByType_Head(0, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByHeadId() throws Exception {
 		_persistence.countByHeadId(RandomTestUtil.nextLong());
 

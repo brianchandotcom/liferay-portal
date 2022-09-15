@@ -199,30 +199,6 @@ public class DataCleanupTest {
 			}
 		}
 
-		long tableId = 0;
-		long valueId = 0;
-
-		String columnName = "testColumn";
-
-		if (Validator.isNotNull(expandoName)) {
-			ClassName className = _classNameLocalService.addClassName(
-				expandoName + "test");
-
-			ExpandoTable expandoTable = ExpandoTestUtil.addTable(
-				className.getClassNameId(), expandoName);
-
-			tableId = expandoTable.getTableId();
-
-			ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
-				expandoTable, columnName, ExpandoColumnConstants.STRING);
-
-			ExpandoValue expandoValue = ExpandoTestUtil.addValue(
-				expandoTable, expandoColumn, className.getClassNameId(),
-				"testValue");
-
-			valueId = expandoValue.getValueId();
-		}
-
 		if (portletPreferencePortletId != null) {
 			_layout = LayoutTestUtil.addTypePortletLayout(
 				TestPropsValues.getGroupId());
@@ -246,6 +222,30 @@ public class DataCleanupTest {
 			_layout.setTypeSettings(unicodeProperties.toString());
 
 			_layout = _layoutLocalService.updateLayout(_layout);
+		}
+
+		long tableId = 0;
+		long valueId = 0;
+
+		String columnName = "testColumn";
+
+		if (Validator.isNotNull(expandoName)) {
+			ClassName className = _classNameLocalService.addClassName(
+				expandoName + "test");
+
+			ExpandoTable expandoTable = ExpandoTestUtil.addTable(
+				className.getClassNameId(), expandoName);
+
+			tableId = expandoTable.getTableId();
+
+			ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+				expandoTable, columnName, ExpandoColumnConstants.STRING);
+
+			ExpandoValue expandoValue = ExpandoTestUtil.addValue(
+				expandoTable, expandoColumn, className.getClassNameId(),
+				"testValue");
+
+			valueId = expandoValue.getValueId();
 		}
 
 		Dictionary<String, Object> properties =

@@ -19,7 +19,6 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
 

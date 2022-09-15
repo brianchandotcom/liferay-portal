@@ -782,11 +782,15 @@ public class BundleSiteInitializerTest {
 
 		JournalFolder journalFolder1 = journalFolders.get(0);
 
-		Assert.assertEquals("Test Journal Article 1", journalFolder1.getName());
+		Assert.assertEquals(
+			"JOURNALFOLDER001", journalFolder1.getExternalReferenceCode());
+		Assert.assertEquals("Test Journal Folder 1", journalFolder1.getName());
 
 		JournalFolder journalFolder2 = journalFolders.get(1);
 
-		Assert.assertEquals("Test Journal Article 2", journalFolder2.getName());
+		Assert.assertEquals(
+			"JOURNALFOLDER002", journalFolder2.getExternalReferenceCode());
+		Assert.assertEquals("Test Journal Folder 2", journalFolder2.getName());
 	}
 
 	private void _assertKBArticles(Group group) throws Exception {

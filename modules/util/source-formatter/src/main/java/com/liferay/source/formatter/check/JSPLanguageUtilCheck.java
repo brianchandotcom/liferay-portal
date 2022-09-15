@@ -29,7 +29,7 @@ public class JSPLanguageUtilCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher = _languageUtilPattern.matcher(content);
+		Matcher matcher = _languageUtilPattern1.matcher(content);
 
 		while (matcher.find()) {
 			if (isJavaSource(content, matcher.start(), true)) {
@@ -39,7 +39,7 @@ public class JSPLanguageUtilCheck extends BaseFileCheck {
 			}
 		}
 
-		matcher = _languageUtilGetCallPattern.matcher(content);
+		matcher = _languageUtilPattern2.matcher(content);
 
 		while (matcher.find()) {
 			if (!ToolsUtil.isInsideQuotes(content, matcher.start())) {
@@ -53,9 +53,9 @@ public class JSPLanguageUtilCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final Pattern _languageUtilGetCallPattern = Pattern.compile(
-		"<%= LanguageUtil\\.get\\(");
-	private static final Pattern _languageUtilPattern = Pattern.compile(
+	private static final Pattern _languageUtilPattern1 = Pattern.compile(
 		"LanguageUtil\\.get\\(locale,");
+	private static final Pattern _languageUtilPattern2 = Pattern.compile(
+		"<%= LanguageUtil\\.get\\(");
 
 }

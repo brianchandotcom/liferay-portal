@@ -12,22 +12,17 @@
  * details.
  */
 
-import State from 'metal-state';
-
 /**
  * GoogleMapsGeocoder
  * @review
  */
-class GoogleMapsGeocoder extends State {
+class GoogleMapsGeocoder {
 
 	/**
 	 * Creates a new geocoder using Google Map's API
-	 * @param  {Array} args List of arguments to be passed to State
 	 * @review
 	 */
-	constructor(...args) {
-		super(...args);
-
+	constructor() {
 		this._geocoder = new google.maps.Geocoder();
 	}
 

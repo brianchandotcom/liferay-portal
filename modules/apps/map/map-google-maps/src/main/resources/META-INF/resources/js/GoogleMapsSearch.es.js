@@ -12,26 +12,39 @@
  * details.
  */
 
-import {isInputNode} from '@liferay/map-common/js/validators';
-import State, {Config} from 'metal-state';
+import {EventEmitter} from 'frontend-js-web';
 
 /**
  * GoogleMapsSearch
  * @review
  */
-class GoogleMapsSearch extends State {
+class GoogleMapsSearch extends EventEmitter {
+	get inputNode() {
+		return this._STATE_.inputNode;
+	}
+
+	set inputNode(inputNode) {
+		this._STATE_.inputNode = inputNode;
+	}
 
 	/**
 	 * Creates a new search handler using Google Map's API
 	 * @param  {Array} args List of arguments to be passed to State
 	 * @review
 	 */
-	constructor(...args) {
-		super(...args);
-		const inputNode = this.inputNode;
+	constructor(args) {
+		super(args);
+
+		const {inputNode} = args;
+
+		this._STATE_ = {
+			inputNode,
+		};
+
 		this._handlePlaceChanged = this._handlePlaceChanged.bind(this);
 
 		this._autocomplete = new google.maps.places.Autocomplete(inputNode);
+
 		this._bindUI();
 	}
 
@@ -95,22 +108,6 @@ class GoogleMapsSearch extends State {
 		}
 	}
 }
-
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-GoogleMapsSearch.STATE = {
-
-	/**
-	 * Input element that will be used for searching addresses.
-	 * @review
-	 * @type {HTMLInputElement}
-	 */
-	inputNode: Config.validator(isInputNode).value(null),
-};
 
 export default GoogleMapsSearch;
 export {GoogleMapsSearch};

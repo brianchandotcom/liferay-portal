@@ -192,10 +192,15 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		for (File modifiedFile :
 				portalGitWorkingDirectory.getModifiedFilesList()) {
 
-			includesJobProperties.addAll(
-				_getJobProperties(
-					modifiedFile, "test.batch.class.names.includes.modules",
-					JobProperty.Type.MODULE_INCLUDE_GLOB, null));
+			String modifiedFileAbsolutePath =
+				JenkinsResultsParserUtil.getCanonicalPath(modifiedFile);
+
+			if (modifiedFileAbsolutePath.contains("modules")) {
+				includesJobProperties.addAll(
+					_getJobProperties(
+						modifiedFile, "test.batch.class.names.includes.modules",
+						JobProperty.Type.MODULE_INCLUDE_GLOB, null));
+			}
 
 			includesJobProperties.addAll(
 				_getJobProperties(

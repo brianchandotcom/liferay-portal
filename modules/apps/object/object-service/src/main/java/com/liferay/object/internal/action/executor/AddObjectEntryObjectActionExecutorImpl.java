@@ -21,18 +21,20 @@ import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.internal.action.util.ObjectActionVariablesUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerTracker;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -41,9 +43,11 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -74,21 +78,32 @@ public class AddObjectEntryObjectActionExecutorImpl
 			throw new UnsupportedOperationException();
 		}
 
-		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 		ObjectDefinition sourceObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			defaultUserId,
-			_getGroupId(
-				companyId, payloadJSONObject, sourceObjectDefinition,
-				targetObjectDefinition),
-			targetObjectDefinition.getObjectDefinitionId(),
-			_getValues(
-				sourceObjectDefinition, parametersUnicodeProperties,
-				payloadJSONObject),
-			_getServiceContext(companyId, defaultUserId));
+		User user = _userLocalService.getUser(userId);
+
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerTracker.getObjectEntryManager(
+				targetObjectDefinition.getStorageType());
+
+		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), _dtoConverterRegistry, null,
+				user.getLocale(), null, user),
+			targetObjectDefinition,
+			new ObjectEntry() {
+				{
+					properties = _getValues(
+						sourceObjectDefinition, parametersUnicodeProperties,
+						payloadJSONObject);
+				}
+			},
+			String.valueOf(
+				_getGroupId(
+					companyId, payloadJSONObject, sourceObjectDefinition,
+					targetObjectDefinition)));
 
 		if (!GetterUtil.getBoolean(
 				parametersUnicodeProperties.get("relatedObjectEntries"))) {
@@ -110,8 +125,7 @@ public class AddObjectEntryObjectActionExecutorImpl
 			_objectRelationshipLocalService.
 				addObjectRelationshipMappingTableValues(
 					userId, objectRelationship.getObjectRelationshipId(),
-					payloadJSONObject.getLong("classPK"),
-					objectEntry.getObjectEntryId(),
+					payloadJSONObject.getLong("classPK"), objectEntry.getId(),
 					_getServiceContext(companyId, userId));
 		}
 	}
@@ -182,13 +196,13 @@ public class AddObjectEntryObjectActionExecutorImpl
 		};
 	}
 
-	private Map<String, Serializable> _getValues(
+	private Map<String, Object> _getValues(
 			ObjectDefinition objectDefinition,
 			UnicodeProperties parametersUnicodeProperties,
 			JSONObject payloadJSONObject)
 		throws Exception {
 
-		Map<String, Serializable> values = new HashMap<>();
+		Map<String, Object> values = new HashMap<>();
 
 		Map<String, Object> variables = ObjectActionVariablesUtil.toVariables(
 			_dtoConverterRegistry, objectDefinition, payloadJSONObject,
@@ -200,7 +214,7 @@ public class AddObjectEntryObjectActionExecutorImpl
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			Serializable value = (Serializable)jsonObject.get("value");
+			Object value = jsonObject.get("value");
 
 			if (Validator.isNull(value)) {
 				continue;
@@ -232,7 +246,7 @@ public class AddObjectEntryObjectActionExecutorImpl
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
+	private ObjectEntryManagerTracker _objectEntryManagerTracker;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

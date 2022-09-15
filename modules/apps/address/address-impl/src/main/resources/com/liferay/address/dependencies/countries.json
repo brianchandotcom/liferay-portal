@@ -312,14 +312,6 @@
 		"zipRequired": false
 	},
 	{
-		"a2": "CV",
-		"a3": "CPV",
-		"idd": 238,
-		"name": "cabo-verde",
-		"number": 132,
-		"zipRequired": false
-	},
-	{
 		"a2": "KH",
 		"a3": "KHM",
 		"idd": 855,
@@ -1421,6 +1413,14 @@
 		"idd": 242,
 		"name": "republic-of-congo",
 		"number": 178,
+		"zipRequired": false
+	},
+	{
+		"a2": "CV",
+		"a3": "CPV",
+		"idd": 238,
+		"name": "republic-of-cabo-verde",
+		"number": 132,
 		"zipRequired": false
 	},
 	{

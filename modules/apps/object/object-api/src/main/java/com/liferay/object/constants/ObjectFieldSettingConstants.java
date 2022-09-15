@@ -23,4 +23,7 @@ public class ObjectFieldSettingConstants {
 
 	public static final String NAME_STATE_FLOW = "stateFlow";
 
+	public static final String OBJECT_DEFINITION1_SHORT_NAME =
+		"objectDefinition1ShortName";
+
 }

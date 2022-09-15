@@ -46,6 +46,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -518,8 +519,12 @@ public class DDMStructureStagedModelDataHandler
 
 		structureElement.addAttribute("ddm-form-path", ddmFormPath);
 
+		DDMForm ddmForm = structure.getDDMForm();
+
+		_exportReferencedDDMStructures(ddmForm, structure, portletDataContext);
+
 		portletDataContext.addZipEntry(
-			ddmFormPath, _ddm.getDDMFormJSONString(structure.getDDMForm()));
+			ddmFormPath, _ddm.getDDMFormJSONString(ddmForm));
 	}
 
 	private void _exportDDMFormLayout(
@@ -542,6 +547,58 @@ public class DDMStructureStagedModelDataHandler
 
 		portletDataContext.addZipEntry(
 			ddmFormLayoutPath, structureLayout.getDefinition());
+	}
+
+	private void _exportReferencedDDMStructure(
+		DDMFormField ddmFormField, DDMStructure ddmStructure,
+		PortletDataContext portletDataContext) {
+
+		long ddmStructureId = GetterUtil.getLong(
+			ddmFormField.getProperty("ddmStructureId"));
+
+		DDMStructure referencedDDMStructure =
+			_ddmStructureLocalService.fetchDDMStructure(ddmStructureId);
+
+		if (referencedDDMStructure == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to find structure ", ddmStructureId,
+						" referenced in definition of structure ",
+						ddmStructure.getStructureId()));
+			}
+
+			return;
+		}
+
+		try {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, ddmStructure, referencedDDMStructure,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+		catch (PortletDataException portletDataException) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to export structure ",
+					referencedDDMStructure.getStructureId(), " as a reference ",
+					"of structure ", ddmStructure.getStructureId()),
+				portletDataException);
+		}
+	}
+
+	private void _exportReferencedDDMStructures(
+		DDMForm ddmForm, DDMStructure ddmStructure,
+		PortletDataContext portletDataContext) {
+
+		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+			long referencedDDMStructureId = GetterUtil.getLong(
+				ddmFormField.getProperty("ddmStructureId"));
+
+			if (referencedDDMStructureId != 0) {
+				_exportReferencedDDMStructure(
+					ddmFormField, ddmStructure, portletDataContext);
+			}
+		}
 	}
 
 	private DDMStructure _fetchExistingStructure(

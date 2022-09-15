@@ -159,6 +159,37 @@
 
 		<column name="companyId" type="long" />
 	</entity>
+	<entity local-service="true" name="LoadFinderCacheEntry" remote-service="false" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="loadFinderCacheEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="uniqueName" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="UniqueName" return-type="LoadFinderCacheEntry" unique="true">
+			<finder-column name="uniqueName" />
+		</finder>
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="C_G" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="groupId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="FinderWhereClauseEntry" remote-service="false">
 
 		<!-- PK fields -->

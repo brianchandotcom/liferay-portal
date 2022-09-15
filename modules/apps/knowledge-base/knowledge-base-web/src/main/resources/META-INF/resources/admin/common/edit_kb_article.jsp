@@ -63,11 +63,34 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 				</li>
 				<li class="tbar-item">
 					<div class="tbar-section text-right">
-						<aui:button disabled="<%= editKBArticleDisplayContext.isPending() %>" name="publishButton" type="submit" value="<%= editKBArticleDisplayContext.getPublishButtonLabel() %>" />
+						<clay:link
+							borderless="<%= true %>"
+							cssClass="mr-3"
+							displayType="secondary"
+							href="<%= editKBArticleDisplayContext.getRedirect() %>"
+							label="cancel"
+							small="<%= true %>"
+							type="button"
+						/>
 
-						<aui:button primary="<%= false %>" type="submit" value="<%= editKBArticleDisplayContext.getSaveButtonLabel() %>" />
+						<clay:button
+							cssClass="mr-3"
+							displayType="secondary"
+							label="<%= editKBArticleDisplayContext.getSaveButtonLabel() %>"
+							small="<%= true %>"
+							type="submit"
+						/>
 
-						<aui:button href="<%= editKBArticleDisplayContext.getRedirect() %>" type="cancel" />
+						<clay:button
+							cssClass="mr-3"
+							disabled="<%= editKBArticleDisplayContext.isPending() %>"
+							displayType="primary"
+							id='<%= liferayPortletResponse.getNamespace() + "publishButton" %>'
+							label="<%= editKBArticleDisplayContext.getPublishButtonLabel() %>"
+							name="publishButton"
+							small="<%= true %>"
+							type="submit"
+						/>
 					</div>
 				</li>
 			</ul>

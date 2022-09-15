@@ -425,7 +425,7 @@ definition {
 			Type(
 				ariaLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-				value1 = "2rem");
+				value1 = "2");
 
 			StyleBooks.clickManagementBar();
 
@@ -584,7 +584,7 @@ definition {
 			Type(
 				ariaLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-				value1 = "2rem");
+				value1 = "2");
 
 			StyleBooks.clickManagementBar();
 
@@ -1446,7 +1446,7 @@ definition {
 			Type(
 				ariaLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-				value1 = "2rem");
+				value1 = "2");
 
 			StyleBooks.clickManagementBar();
 

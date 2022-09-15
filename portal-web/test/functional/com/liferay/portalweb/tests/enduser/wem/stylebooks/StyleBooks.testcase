@@ -162,7 +162,7 @@ definition {
 			Type(
 				ariaLabel = "Heading 5 Font Size",
 				locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-				value1 = "2rem");
+				value1 = "2");
 
 			StyleBooks.clickManagementBar();
 

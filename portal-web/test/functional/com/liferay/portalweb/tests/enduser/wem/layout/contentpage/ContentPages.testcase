@@ -50,10 +50,14 @@ definition {
 
 				StyleBooks.expandSection(sectionName = "Spacing");
 
+				StyleBooks.configureUnit(
+					fieldLabel = "Spacer 1",
+					unit = "PX");
+
 				Type(
 					ariaLabel = "Spacer 1",
 					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
-					value1 = "-32px");
+					value1 = "-32");
 
 				StyleBooks.clickManagementBar();
 
@@ -1701,9 +1705,17 @@ definition {
 
 				StyleBooks.expandSection(sectionName = "Spacing");
 
+				StyleBooks.configureUnit(
+					fieldLabel = "Spacer 1",
+					unit = "EM");
+
 				var i = "0";
 
-				for (var tokenValue : list "1em,2em,3em,Auto") {
+				for (var tokenValue : list "1,2,3") {
+					StyleBooks.configureUnit(
+						fieldLabel = "Spacer ${i}",
+						unit = "EM");
+
 					Type(
 						ariaLabel = "Spacer ${i}",
 						locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
@@ -1715,6 +1727,19 @@ definition {
 
 					var i = ${i} + 1;
 				}
+
+				StyleBooks.configureUnit(
+					fieldLabel = "Spacer 3",
+					unit = "CUSTOM");
+
+				Type(
+					ariaLabel = "Spacer 3",
+					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
+					value1 = "Auto");
+
+				StyleBooks.clickManagementBar();
+
+				StyleBooks.waitForAutoSave();
 
 				StyleBooks.clickPublish();
 			}

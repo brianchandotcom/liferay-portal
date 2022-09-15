@@ -145,12 +145,7 @@ definition {
 		}
 
 		task ("When the page designer changes the Border Radius style of Heading") {
-			Select(
-				key_text = "corner-radius",
-				locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON",
-				value1 = "Border Radius Large");
-
-			PageEditor.waitForAutoSave();
+			PageEditor.configureFragment(borderRadius = "Border Radius Large");
 		}
 
 		task ("Then the page designer could detach the linked border radius") {

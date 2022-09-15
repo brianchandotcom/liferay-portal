@@ -3024,7 +3024,7 @@ definition {
 		}
 
 		task ("Filter by author Me and assert asset displayed") {
-			ContentDashboard.filterByAuthorCard(filterOption = "Author");
+			ContentDashboard.filterByAuthor();
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -3262,7 +3262,7 @@ definition {
 		ContentDashboard.goToContentDashboard();
 
 		task ("Filter author using table") {
-			ContentDashboard.filterByAuthorTable(filterOption = "Author");
+			ContentDashboard.filterByAuthor();
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -3272,7 +3272,7 @@ definition {
 		task ("Filter author using list") {
 			ContentDashboard.clearFilters();
 
-			ContentDashboard.filterByAuthorList(filterOption = "Author");
+			ContentDashboard.filterByAuthor(viewOption = "List");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -3282,7 +3282,7 @@ definition {
 		task ("Filter author using cards") {
 			ContentDashboard.clearFilters();
 
-			ContentDashboard.filterByAuthorCard(filterOption = "Author");
+			ContentDashboard.filterByAuthor(viewOption = "Cards");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -3356,7 +3356,7 @@ definition {
 		}
 
 		task ("Filter by Author: Test test") {
-			ContentDashboard.filterByAuthorList(filterOption = "Author");
+			ContentDashboard.filterByAuthor();
 		}
 
 		task ("Assert if only one asset is displayed") {
@@ -3475,7 +3475,7 @@ definition {
 		}
 
 		task ("Filter by Author: Test test") {
-			ContentDashboard.filterByAuthorList(filterOption = "Author");
+			ContentDashboard.filterByAuthor();
 		}
 
 		task ("Assert if only one asset is displayed") {
@@ -3551,9 +3551,7 @@ definition {
 		}
 
 		task ("Filter by Author: Test test and userfn userln") {
-			ContentDashboard.filterByAuthorTable(
-				authorNameList = "Test,userfn",
-				filterOption = "Author");
+			ContentDashboard.filterByAuthor(authorNameList = "Test,userfn");
 		}
 
 		task ("Assert if both assets are displayed") {
@@ -5372,7 +5370,7 @@ definition {
 		task ("Edit Web Content") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByAuthorTable(filterOption = "Author");
+			ContentDashboard.filterByAuthor();
 
 			ContentDashboard.editAsset(assetTitle = "WC Title Edited");
 
@@ -5666,9 +5664,7 @@ definition {
 		}
 
 		task ("Filter by both authors and assert both assets are displayed") {
-			ContentDashboard.filterByAuthorTable(
-				authorNameList = "Test,userfn",
-				filterOption = "Author");
+			ContentDashboard.filterByAuthor(authorNameList = "Test,userfn");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",

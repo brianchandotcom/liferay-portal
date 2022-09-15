@@ -466,7 +466,7 @@ definition {
 		}
 
 		task ("Apply filter") {
-			ContentDashboard.filterByAuthorTable(filterOption = "Author");
+			ContentDashboard.filterByAuthor();
 		}
 
 		task ("Swap vocabularies") {

@@ -24,7 +24,11 @@ import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useRef, useState} from 'react';
 
-import {formatLocaleWithDashes, sub} from '../utils/language';
+import {
+	formatLocaleWithDashes,
+	formatLocaleWithUnderscores,
+	sub,
+} from '../utils/language';
 import {removeDuplicates} from '../utils/utils';
 import ThemeContext from './ThemeContext';
 
@@ -48,9 +52,10 @@ const convertLocaleStringToObject = (locale) => ({
  * @param {Object} title Titles in all available locales
  * @param {string} locale
  * @param {string} defaultLocale
+ * @param {Object} availableLanguages
  * @returns {string}
  */
-const getDisplayLocale = (title, locale, defaultLocale) => {
+const getDisplayLocale = (title, locale, defaultLocale, availableLanguages) => {
 	if (title[formatLocaleWithDashes(locale)]) {
 		return formatLocaleWithDashes(locale);
 	}
@@ -59,7 +64,12 @@ const getDisplayLocale = (title, locale, defaultLocale) => {
 		return formatLocaleWithDashes(defaultLocale);
 	}
 
-	if (Object.keys(title).length) {
+	if (
+		Object.keys(title).length &&
+		Object.keys(availableLanguages).includes(
+			formatLocaleWithUnderscores(Object.keys(title)[0])
+		)
+	) {
 		return Object.keys(title)[0];
 	}
 
@@ -90,7 +100,12 @@ function EditTitleModal({
 
 	const [selectedLocale, setSelectedLocale] = useState(
 		convertLocaleStringToObject(
-			getDisplayLocale(initialTitle, locale, defaultLocale)
+			getDisplayLocale(
+				initialTitle,
+				locale,
+				defaultLocale,
+				availableLanguages
+			)
 		)
 	);
 
@@ -268,7 +283,9 @@ export default function PageToolbar({
 	tabs,
 	title,
 }) {
-	const {defaultLocale, locale} = useContext(ThemeContext);
+	const {availableLanguages, defaultLocale, locale} = useContext(
+		ThemeContext
+	);
 
 	const [modalFieldFocus, setModalFieldFocus] = useState('title');
 	const [modalVisible, setModalVisible] = useState(false);
@@ -277,7 +294,12 @@ export default function PageToolbar({
 		onClose: () => setModalVisible(false),
 	});
 
-	const displayLocale = getDisplayLocale(title, locale, defaultLocale);
+	const displayLocale = getDisplayLocale(
+		title,
+		locale,
+		defaultLocale,
+		availableLanguages
+	);
 
 	const _handleClickEdit = (fieldFocus) => () => {
 		setModalFieldFocus(fieldFocus);

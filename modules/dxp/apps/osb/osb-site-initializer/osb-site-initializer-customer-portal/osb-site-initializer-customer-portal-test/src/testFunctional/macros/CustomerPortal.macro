@@ -4,19 +4,6 @@ definition {
 		Click(locator1 = "CustomerPortalSite#ACCOUNTS_PROJECTS");
 	}
 
-	macro assignUserToOrganization {
-		if(!(isSet(organizationName))) {
-			var organizationName = "Liferay Staff";
-		}
-
-		if(!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
-		}
-		JSONOrganization.assignUserToOrganization(
-			organizationName = "${organizationName}",
-			userEmailAddress = "${userEmailAddress}");
-	}
-
 	macro activeContactRole {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
@@ -148,6 +135,20 @@ definition {
 		AssertElementNotPresent(
 			locator1 = "CustomerPortalSite#SLA_CARD",
 			typeCard = "${typeCard}");
+	}
+
+	macro assignUserToOrganization {
+		if (!(isSet(organizationName))) {
+			var organizationName = "Liferay Staff";
+		}
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "${organizationName}",
+			userEmailAddress = "${userEmailAddress}");
 	}
 
 	macro cannotAppearsQuickLinksPanelInfo {

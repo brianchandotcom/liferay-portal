@@ -220,7 +220,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		FinderCache finderCache = getFinderCache();
 
 		FinderPath finderPath = new FinderPath(
-			FinderPath.encodeDSLQueryCacheName(tableNames), "dslQuery",
+			this, FinderPath.encodeDSLQueryCacheName(tableNames), "dslQuery",
 			sb.getStrings(), new String[0],
 			projectionType == ProjectionType.MODELS);
 

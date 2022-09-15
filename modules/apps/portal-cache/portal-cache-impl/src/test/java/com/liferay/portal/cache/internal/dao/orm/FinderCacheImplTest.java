@@ -14,7 +14,6 @@
 
 package com.liferay.portal.cache.internal.dao.orm;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.key.HashCodeHexStringCacheKeyGenerator;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -90,7 +89,7 @@ public class FinderCacheImplTest {
 	@Before
 	public void setUp() {
 		_finderPath = new FinderPath(
-			FinderCacheImplTest.class.getName(), "test", new String[0],
+			null, FinderCacheImplTest.class.getName(), "test", new String[0],
 			new String[0], true);
 	}
 
@@ -135,7 +134,7 @@ public class FinderCacheImplTest {
 	@Test
 	public void testPutNonbaseModelList() {
 		FinderPath finderPath = new FinderPath(
-			FinderCacheImplTest.class.getName(), "test-nonbase-model",
+			null, FinderCacheImplTest.class.getName(), "test-nonbase-model",
 			new String[0], new String[0], false);
 
 		FinderCache finderCache = _activateFinderCache(
@@ -179,20 +178,8 @@ public class FinderCacheImplTest {
 				"b", new TestBaseModel("b")
 			).build();
 
-		TestBasePersistence testBasePersistence = new TestBasePersistence(map);
-
 		ReflectionTestUtil.setFieldValue(
-			finderCache, "_basePersistenceServiceTrackerMap",
-			ProxyUtil.newProxyInstance(
-				ServiceTrackerMap.class.getClassLoader(),
-				new Class<?>[] {ServiceTrackerMap.class},
-				(proxy, method, args) -> {
-					if (Objects.equals(method.getName(), "getService")) {
-						return testBasePersistence;
-					}
-
-					return null;
-				}));
+			_finderPath, "_basePersistence", new TestBasePersistence(map));
 
 		List<TestBaseModel> values = new ArrayList<>(map.values());
 

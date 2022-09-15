@@ -105,12 +105,6 @@ public class GroupFinderImpl
 	public static final String FIND_BY_C_PG_N_D =
 		GroupFinder.class.getName() + ".findByC_PG_N_D";
 
-	public static final FinderPath FINDER_PATH_FIND_BY_C_A = new FinderPath(
-		GroupPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-		"GroupFinderImpl_findByC_A",
-		new String[] {Long.class.getName(), Boolean.class.getName()},
-		new String[] {"companyId", "active_"}, false);
-
 	public static final String JOIN_BY_ACTION_ID =
 		GroupFinder.class.getName() + ".joinByActionId";
 
@@ -688,7 +682,7 @@ public class GroupFinderImpl
 		Object[] finderArgs = {companyId, active};
 
 		List<Long> list = (List<Long>)FinderCacheUtil.getResult(
-			FINDER_PATH_FIND_BY_C_A, finderArgs, null);
+			_getFinderPathFindByC_A(), finderArgs, null);
 
 		if (list != null) {
 			return list;
@@ -713,7 +707,7 @@ public class GroupFinderImpl
 			list = sqlQuery.list(true);
 
 			FinderCacheUtil.putResult(
-				FINDER_PATH_FIND_BY_C_A, finderArgs, list);
+				_getFinderPathFindByC_A(), finderArgs, list);
 
 			return list;
 		}
@@ -1390,6 +1384,23 @@ public class GroupFinderImpl
 		return join;
 	}
 
+	private FinderPath _getFinderPathFindByC_A() {
+		FinderPath finderPath = _finderPathFindByC_A;
+
+		if (finderPath == null) {
+			finderPath = new FinderPath(
+				groupPersistence,
+				GroupPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"GroupFinderImpl_findByC_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "active_"}, false);
+
+			_finderPathFindByC_A = finderPath;
+		}
+
+		return finderPath;
+	}
+
 	private long[] _getGroupOrganizationClassNameIds() {
 		if (_groupOrganizationClassNameIds == null) {
 			_groupOrganizationClassNameIds = new long[] {
@@ -1588,6 +1599,7 @@ public class GroupFinderImpl
 		new ConcurrentHashMap<>();
 	private final Map<String, String> _findByC_C_PG_N_DSQLCache =
 		new ConcurrentHashMap<>();
+	private volatile FinderPath _finderPathFindByC_A;
 	private volatile long[] _groupOrganizationClassNameIds;
 	private volatile Map<String, String> _joinMap;
 	private final Map<String, String> _replaceJoinAndWhereSQLCache =

@@ -57,21 +57,6 @@ public class ResourcePermissionFinderImpl
 	public static final String FIND_BY_R_S =
 		ResourcePermissionFinder.class.getName() + ".findByR_S";
 
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_N_S_P_R_A =
-		new FinderPath(
-			ResourcePermissionPersistenceImpl.
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"countByC_N_S_P_R_A",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), String.class.getName(),
-				Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"companyId", "name", "scope", "primKey", "roleId", "actionIds"
-			},
-			false);
-
 	@Override
 	public int countByR_S(long roleId, int[] scopes) {
 		Session session = null;
@@ -122,7 +107,7 @@ public class ResourcePermissionFinderImpl
 		};
 
 		Long count = (Long)FinderCacheUtil.getResult(
-			FINDER_PATH_COUNT_BY_C_N_S_P_R_A, finderArgs);
+			_getFinderPathCountByC_N_S_P_R_A(), finderArgs);
 
 		if (count != null) {
 			return count.intValue();
@@ -175,7 +160,7 @@ public class ResourcePermissionFinderImpl
 			}
 
 			FinderCacheUtil.putResult(
-				FINDER_PATH_COUNT_BY_C_N_S_P_R_A, finderArgs, count);
+				_getFinderPathCountByC_N_S_P_R_A(), finderArgs, count);
 
 			closeSession(session);
 		}
@@ -283,5 +268,33 @@ public class ResourcePermissionFinderImpl
 
 		return sb.toString();
 	}
+
+	private FinderPath _getFinderPathCountByC_N_S_P_R_A() {
+		FinderPath finderPath = _finderPathCountByC_N_S_P_R_A;
+
+		if (finderPath == null) {
+			finderPath = new FinderPath(
+				resourcePermissionPersistence,
+				ResourcePermissionPersistenceImpl.
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"countByC_N_S_P_R_A",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), String.class.getName(),
+					Long.class.getName(), Long.class.getName()
+				},
+				new String[] {
+					"companyId", "name", "scope", "primKey", "roleId",
+					"actionIds"
+				},
+				false);
+
+			_finderPathCountByC_N_S_P_R_A = finderPath;
+		}
+
+		return finderPath;
+	}
+
+	private volatile FinderPath _finderPathCountByC_N_S_P_R_A;
 
 }

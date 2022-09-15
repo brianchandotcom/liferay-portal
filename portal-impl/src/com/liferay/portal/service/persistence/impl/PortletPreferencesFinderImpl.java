@@ -55,18 +55,6 @@ public class PortletPreferencesFinderImpl
 	public static final String FIND_BY_C_G_O_O_P_P =
 		PortletPreferencesFinder.class.getName() + ".findByC_G_O_O_P_P";
 
-	public static final FinderPath FINDER_PATH_FIND_BY_C_G_O_O_P_P =
-		new FinderPath(
-			PortletPreferencesPersistenceImpl.
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByC_G_O_O_P_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"ownerId", "ownerType", "portletId"}, true);
-
 	@Override
 	public long countByO_O_P(
 		long ownerId, int ownerType, String portletId,
@@ -211,7 +199,7 @@ public class PortletPreferencesFinderImpl
 
 		List<PortletPreferences> list =
 			(List<PortletPreferences>)FinderCacheUtil.getResult(
-				FINDER_PATH_FIND_BY_C_G_O_O_P_P, finderArgs);
+				_getFinderPathFindByC_G_O_O_P_P(), finderArgs);
 
 		if ((list != null) && !list.isEmpty()) {
 			for (PortletPreferences portletPreferences : list) {
@@ -255,7 +243,7 @@ public class PortletPreferencesFinderImpl
 				PortletPreferencesUtil.cacheResult(list);
 
 				FinderCacheUtil.putResult(
-					FINDER_PATH_FIND_BY_C_G_O_O_P_P, finderArgs, list);
+					_getFinderPathFindByC_G_O_O_P_P(), finderArgs, list);
 			}
 			catch (Exception exception) {
 				throw new SystemException(exception);
@@ -284,5 +272,29 @@ public class PortletPreferencesFinderImpl
 
 		return Objects.equals(portletName, portletId);
 	}
+
+	private FinderPath _getFinderPathFindByC_G_O_O_P_P() {
+		FinderPath finderPath = _finderPathFindByC_G_O_O_P_P;
+
+		if (finderPath == null) {
+			finderPath = new FinderPath(
+				portletPreferencesPersistence,
+				PortletPreferencesPersistenceImpl.
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByC_G_O_O_P_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					String.class.getName(), Boolean.class.getName()
+				},
+				new String[] {"ownerId", "ownerType", "portletId"}, true);
+
+			_finderPathFindByC_G_O_O_P_P = finderPath;
+		}
+
+		return finderPath;
+	}
+
+	private volatile FinderPath _finderPathFindByC_G_O_O_P_P;
 
 }

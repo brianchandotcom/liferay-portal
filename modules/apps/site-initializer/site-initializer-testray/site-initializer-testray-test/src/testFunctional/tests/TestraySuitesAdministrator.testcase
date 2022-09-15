@@ -70,4 +70,26 @@ definition {
 
 	}
 
+	@description = "This is a test for LPS-160626 - Verify if as an Administrator I am able delete a suite"
+	@priority = "4"
+	test AdminCanDeleteSuite {
+		task ("Given that the user goes to add a new suite") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			Testray.projectTabNavigator(navTabName = "Suites");
+
+			TestraySuites.addSuite(
+				suiteName = "ATF_Suites_1 Suite",
+				suiteDescription = "ATF_Suites_1 Suite Description");
+		}
+
+		task ("When the user deletes the created suite") {
+			TestraySuites.deleteSuite(suiteName = "ATF_Suites_1 Suite");
+		}
+
+		task ("Then the suite is not displayed anymore") {
+			Testray.assertItemNotPresent(itemName = "ATF_Suites_1 Suite");
+		}
+
+	}
 }

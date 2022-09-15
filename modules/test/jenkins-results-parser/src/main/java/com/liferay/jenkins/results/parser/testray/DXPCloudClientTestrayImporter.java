@@ -473,7 +473,8 @@ public class DXPCloudClientTestrayImporter {
 			testrayProject.createTestrayProductVersion(_testrayProductVersion);
 
 		_testrayBuild = testrayRoutine.createTestrayBuild(
-			testrayProductVersion, _getTestrayBuildName());
+			testrayProductVersion, _getTestrayBuildName(),
+			new Date(_START_TIME), null, _getTestrayBuildSHA());
 
 		return _testrayBuild;
 	}
@@ -484,6 +485,10 @@ public class DXPCloudClientTestrayImporter {
 			JenkinsResultsParserUtil.toDateString(
 				new Date(_START_TIME), "yyyy-MM-dd[HH:mm:ss]",
 				"America/Los_Angeles"));
+	}
+
+	private static String _getTestrayBuildSHA() {
+		return _testrayBuildSHA;
 	}
 
 	private static Element _getTestSuiteEnvironmentsElement() {
@@ -563,6 +568,12 @@ public class DXPCloudClientTestrayImporter {
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
 			_testrayBuildName = testrayBuildName;
+		}
+
+		String testrayBuildSHA = _getEnvVarValue("testrayBuildSHA");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildSHA)) {
+			_testrayBuildSHA = testrayBuildSHA;
 		}
 
 		String testrayCasePriority = _getEnvVarValue("testrayCasePriority");
@@ -680,6 +691,7 @@ public class DXPCloudClientTestrayImporter {
 	private static TestrayBuild _testrayBuild;
 	private static String _testrayBuildName =
 		"DXP Cloud Client Build - $(start.time)";
+	private static String _testrayBuildSHA;
 	private static Integer _testrayCasePriority = 1;
 	private static String _testrayComponentName = "DXP Cloud Client Component";
 	private static String _testrayProductVersion = "1.x";

@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -390,9 +389,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		_assertContentDashboardItemLatestVersions(
 			contentDashboardItem, jsonObject);
-
-		_assertContentDashboardItemAllVersions(
-			contentDashboardItem, jsonObject);
 	}
 
 	@Test
@@ -513,24 +509,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		Assert.assertEquals(
 			contentDashboardItem.getUserId(), userJSONObject.getLong("userId"));
 		Assert.assertEquals(StringPool.BLANK, userJSONObject.getString("url"));
-	}
-
-	private void _assertContentDashboardItemAllVersions(
-		ContentDashboardItem<?> contentDashboardItem, JSONObject jsonObject) {
-
-		List<ContentDashboardItem.Version> versions =
-			contentDashboardItem.getAllVersions(new ThemeDisplay());
-
-		JSONArray expectedJSONArray = JSONFactoryUtil.createJSONArray();
-
-		for (ContentDashboardItem.Version version : versions) {
-			expectedJSONArray.put(version.toJSONObject());
-		}
-
-		JSONArray actualJSONArray = jsonObject.getJSONArray("allVersions");
-
-		Assert.assertEquals(
-			expectedJSONArray.toString(), actualJSONArray.toString());
 	}
 
 	private void _assertContentDashboardItemLatestVersions(
@@ -743,15 +721,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			);
 
 			return new ContentDashboardItem() {
-
-				@Override
-				public List<Version> getAllVersions(ThemeDisplay themeDisplay) {
-					return ListUtil.fromArray(
-						new Version(
-							"version", "style", "0.1", null, "user", null),
-						new Version(
-							"version", "style", "0.2", null, "user", null));
-				}
 
 				@Override
 				public List<AssetCategory> getAssetCategories() {

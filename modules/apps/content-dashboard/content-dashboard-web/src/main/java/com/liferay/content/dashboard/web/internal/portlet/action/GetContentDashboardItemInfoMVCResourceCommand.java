@@ -24,6 +24,7 @@ import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPort
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
+import com.liferay.content.dashboard.web.internal.item.VersionableContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
@@ -215,10 +216,19 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 	private JSONArray _getAllVersionsJSONArray(
 		ContentDashboardItem contentDashboardItem, ThemeDisplay themeDisplay) {
 
+		if (!(contentDashboardItem instanceof
+				VersionableContentDashboardItem)) {
+
+			return null;
+		}
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		VersionableContentDashboardItem versionableContentDashboardItem =
+			(VersionableContentDashboardItem)contentDashboardItem;
+
 		List<ContentDashboardItem.Version> allVersions =
-			contentDashboardItem.getAllVersions(themeDisplay);
+			versionableContentDashboardItem.getAllVersions(themeDisplay);
 
 		for (ContentDashboardItem.Version version : allVersions) {
 			jsonArray.put(version.toJSONObject());

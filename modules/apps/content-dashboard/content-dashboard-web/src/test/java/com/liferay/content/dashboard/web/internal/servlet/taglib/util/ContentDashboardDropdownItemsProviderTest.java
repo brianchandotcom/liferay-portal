@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -202,11 +201,6 @@ public class ContentDashboardDropdownItemsProviderTest {
 		List<ContentDashboardItemAction> contentDashboardItemActions) {
 
 		return new ContentDashboardItem() {
-
-			@Override
-			public List<Version> getAllVersions(ThemeDisplay themeDisplay) {
-				return Collections.emptyList();
-			}
 
 			@Override
 			public List<AssetCategory> getAssetCategories() {

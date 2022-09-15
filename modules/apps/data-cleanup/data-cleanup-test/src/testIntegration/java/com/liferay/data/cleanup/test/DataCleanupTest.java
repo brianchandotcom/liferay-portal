@@ -19,9 +19,9 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoValue;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
-import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
-import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -205,7 +205,7 @@ public class DataCleanupTest {
 		String columnName = "testColumn";
 
 		if (Validator.isNotNull(expandoName)) {
-			ClassName className = ClassNameLocalServiceUtil.addClassName(
+			ClassName className = _classNameLocalService.addClassName(
 				expandoName + "test");
 
 			ExpandoTable expandoTable = ExpandoTestUtil.addTable(
@@ -293,13 +293,13 @@ public class DataCleanupTest {
 		if (Validator.isNotNull(expandoName)) {
 			Assert.assertEquals(
 				null,
-				ExpandoColumnLocalServiceUtil.getColumn(tableId, columnName));
+				_expandoColumnLocalService.getColumn(tableId, columnName));
 
 			Assert.assertEquals(
-				null, ExpandoTableLocalServiceUtil.fetchExpandoTable(tableId));
+				null, _expandoTableLocalService.fetchExpandoTable(tableId));
 
 			Assert.assertEquals(
-				null, ExpandoValueLocalServiceUtil.fetchExpandoValue(valueId));
+				null, _expandoValueLocalService.fetchExpandoValue(valueId));
 		}
 	}
 
@@ -316,6 +316,18 @@ public class DataCleanupTest {
 		"com.liferay.softwarecatalog.service", "com.liferay.twitter.service",
 		"opensocial-portlet"
 	};
+
+	@Inject
+	private static ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private static ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Inject
+	private static ExpandoTableLocalService _expandoTableLocalService;
+
+	@Inject
+	private static ExpandoValueLocalService _expandoValueLocalService;
 
 	@Inject
 	private static LayoutLocalService _layoutLocalService;

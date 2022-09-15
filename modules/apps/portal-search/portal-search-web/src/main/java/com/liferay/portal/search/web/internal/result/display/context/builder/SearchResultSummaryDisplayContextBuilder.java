@@ -568,7 +568,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 		dateOptional.ifPresent(
 			date -> {
 				searchResultSummaryDisplayContext.setCreationDateString(
-					_formatCreationDate(date));
+					_formatDate(date));
 				searchResultSummaryDisplayContext.setCreationDateVisible(true);
 			});
 	}
@@ -884,7 +884,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 		dateOptional.ifPresent(
 			date -> {
 				searchResultSummaryDisplayContext.setModifiedDateString(
-					_formatCreationDate(date));
+					_formatDate(date));
 				searchResultSummaryDisplayContext.setModifiedDateVisible(true);
 			});
 	}
@@ -901,7 +901,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 		dateOptional.ifPresent(
 			date -> {
 				searchResultSummaryDisplayContext.setPublishedDateString(
-					_formatCreationDate(date));
+					_formatDate(date));
 				searchResultSummaryDisplayContext.setPublishedDateVisible(true);
 			});
 	}
@@ -950,7 +950,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 			getSearchResultViewURL(className, classPK));
 	}
 
-	private String _formatCreationDate(Date date) {
+	private String _formatDate(Date date) {
 		Format format = _fastDateFormatFactory.getDateTime(
 			FastDateFormatConstants.MEDIUM, FastDateFormatConstants.SHORT,
 			_locale, _themeDisplay.getTimeZone());

@@ -689,6 +689,13 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			EmptyCollectionOptions emptyCollectionOptions, JspWriter jspWriter)
 		throws Exception {
 
+		if ((emptyCollectionOptions != null) &&
+			!GetterUtil.getBoolean(
+				emptyCollectionOptions.isDisplayMessage(), true)) {
+
+			return;
+		}
+
 		jspWriter.write("<div class=\"c-empty-state\">");
 		jspWriter.write("<div class=\"c-empty-state-text\">");
 

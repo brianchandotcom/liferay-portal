@@ -20,7 +20,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutRow;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutTab;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -33,6 +33,7 @@ public class ObjectLayoutUtil {
 
 	public static ObjectLayout toObjectLayout(
 		Map<String, Map<String, String>> actions,
+		ObjectFieldLocalService objectFieldLocalService,
 		com.liferay.object.model.ObjectLayout serviceBuilderObjectLayout) {
 
 		if (serviceBuilderObjectLayout == null) {
@@ -52,7 +53,9 @@ public class ObjectLayoutUtil {
 					serviceBuilderObjectLayout.getObjectDefinitionId();
 				objectLayoutTabs = TransformUtil.transformToArray(
 					serviceBuilderObjectLayout.getObjectLayoutTabs(),
-					ObjectLayoutUtil::toObjectLayoutTab, ObjectLayoutTab.class);
+					objectLayoutTab -> toObjectLayoutTab(
+						objectFieldLocalService, objectLayoutTab),
+					ObjectLayoutTab.class);
 			}
 		};
 
@@ -62,6 +65,7 @@ public class ObjectLayoutUtil {
 	}
 
 	public static ObjectLayoutTab toObjectLayoutTab(
+		ObjectFieldLocalService objectFieldLocalService,
 		com.liferay.object.model.ObjectLayoutTab objectLayoutTab) {
 
 		if (objectLayoutTab == null) {
@@ -75,7 +79,8 @@ public class ObjectLayoutUtil {
 					objectLayoutTab.getNameMap());
 				objectLayoutBoxes = TransformUtil.transformToArray(
 					objectLayoutTab.getObjectLayoutBoxes(),
-					ObjectLayoutUtil::_toObjectLayoutBox,
+					objectLayoutBox -> _toObjectLayoutBox(
+						objectFieldLocalService, objectLayoutBox),
 					ObjectLayoutBox.class);
 				objectRelationshipId =
 					objectLayoutTab.getObjectRelationshipId();
@@ -85,6 +90,7 @@ public class ObjectLayoutUtil {
 	}
 
 	private static ObjectLayoutBox _toObjectLayoutBox(
+		ObjectFieldLocalService objectFieldLocalService,
 		com.liferay.object.model.ObjectLayoutBox objectLayoutBox) {
 
 		if (objectLayoutBox == null) {
@@ -99,7 +105,8 @@ public class ObjectLayoutUtil {
 					objectLayoutBox.getNameMap());
 				objectLayoutRows = TransformUtil.transformToArray(
 					objectLayoutBox.getObjectLayoutRows(),
-					ObjectLayoutUtil::_toObjectLayoutRow,
+					objectLayoutRow -> _toObjectLayoutRow(
+						objectFieldLocalService, objectLayoutRow),
 					ObjectLayoutRow.class);
 				priority = objectLayoutBox.getPriority();
 				type = ObjectLayoutBox.Type.create(objectLayoutBox.getType());
@@ -108,6 +115,7 @@ public class ObjectLayoutUtil {
 	}
 
 	private static ObjectLayoutColumn _toObjectLayoutColumn(
+		ObjectFieldLocalService objectFieldLocalService,
 		com.liferay.object.model.ObjectLayoutColumn
 			serviceBuilderObjectLayoutColumn) {
 
@@ -115,9 +123,7 @@ public class ObjectLayoutUtil {
 			return null;
 		}
 
-		// TODO don't use Util
-
-		ObjectField objectField = ObjectFieldLocalServiceUtil.fetchObjectField(
+		ObjectField objectField = objectFieldLocalService.fetchObjectField(
 			serviceBuilderObjectLayoutColumn.getObjectFieldId());
 
 		return new ObjectLayoutColumn() {
@@ -131,6 +137,7 @@ public class ObjectLayoutUtil {
 	}
 
 	private static ObjectLayoutRow _toObjectLayoutRow(
+		ObjectFieldLocalService objectFieldLocalService,
 		com.liferay.object.model.ObjectLayoutRow
 			serviceBuilderObjectLayoutRow) {
 
@@ -143,7 +150,8 @@ public class ObjectLayoutUtil {
 				id = serviceBuilderObjectLayoutRow.getObjectLayoutRowId();
 				objectLayoutColumns = TransformUtil.transformToArray(
 					serviceBuilderObjectLayoutRow.getObjectLayoutColumns(),
-					ObjectLayoutUtil::_toObjectLayoutColumn,
+					objectLayoutColumn -> _toObjectLayoutColumn(
+						objectFieldLocalService, objectLayoutColumn),
 					ObjectLayoutColumn.class);
 				priority = serviceBuilderObjectLayoutRow.getPriority();
 			}

@@ -498,7 +498,7 @@ public class ObjectDefinitionResourceImpl
 					_objectLayoutLocalService.getObjectLayouts(
 						objectDefinition.getObjectDefinitionId()),
 					objectLayout -> ObjectLayoutUtil.toObjectLayout(
-						null, objectLayout),
+						null, _objectFieldLocalService, objectLayout),
 					ObjectLayout.class);
 				objectRelationships = transformToArray(
 					_objectRelationshipLocalService.getObjectRelationships(

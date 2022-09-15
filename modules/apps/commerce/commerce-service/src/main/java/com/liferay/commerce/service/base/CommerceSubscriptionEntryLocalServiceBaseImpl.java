@@ -25,7 +25,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -46,12 +46,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -60,6 +59,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce subscription entry local service.
@@ -74,7 +76,8 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceSubscriptionEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommerceSubscriptionEntryLocalService, IdentifiableOSGiService {
+	implements AopService, CommerceSubscriptionEntryLocalService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -559,112 +562,25 @@ public abstract class CommerceSubscriptionEntryLocalServiceBaseImpl
 			commerceSubscriptionEntry);
 	}
 
-	/**
-	 * Returns the commerce subscription entry local service.
-	 *
-	 * @return the commerce subscription entry local service
-	 */
-	public CommerceSubscriptionEntryLocalService
-		getCommerceSubscriptionEntryLocalService() {
-
-		return commerceSubscriptionEntryLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce subscription entry local service.
-	 *
-	 * @param commerceSubscriptionEntryLocalService the commerce subscription entry local service
-	 */
-	public void setCommerceSubscriptionEntryLocalService(
-		CommerceSubscriptionEntryLocalService
-			commerceSubscriptionEntryLocalService) {
-
-		this.commerceSubscriptionEntryLocalService =
-			commerceSubscriptionEntryLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceSubscriptionEntryLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the commerce subscription entry persistence.
-	 *
-	 * @return the commerce subscription entry persistence
-	 */
-	public CommerceSubscriptionEntryPersistence
-		getCommerceSubscriptionEntryPersistence() {
-
-		return commerceSubscriptionEntryPersistence;
-	}
-
-	/**
-	 * Sets the commerce subscription entry persistence.
-	 *
-	 * @param commerceSubscriptionEntryPersistence the commerce subscription entry persistence
-	 */
-	public void setCommerceSubscriptionEntryPersistence(
-		CommerceSubscriptionEntryPersistence
-			commerceSubscriptionEntryPersistence) {
-
-		this.commerceSubscriptionEntryPersistence =
-			commerceSubscriptionEntryPersistence;
-	}
-
-	/**
-	 * Returns the commerce subscription entry finder.
-	 *
-	 * @return the commerce subscription entry finder
-	 */
-	public CommerceSubscriptionEntryFinder
-		getCommerceSubscriptionEntryFinder() {
-
-		return commerceSubscriptionEntryFinder;
-	}
-
-	/**
-	 * Sets the commerce subscription entry finder.
-	 *
-	 * @param commerceSubscriptionEntryFinder the commerce subscription entry finder
-	 */
-	public void setCommerceSubscriptionEntryFinder(
-		CommerceSubscriptionEntryFinder commerceSubscriptionEntryFinder) {
-
-		this.commerceSubscriptionEntryFinder = commerceSubscriptionEntryFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.model.CommerceSubscriptionEntry",
-			commerceSubscriptionEntryLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceSubscriptionEntryLocalService =
+			(CommerceSubscriptionEntryLocalService)aopProxy;
 
 		_setLocalServiceUtilService(commerceSubscriptionEntryLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.model.CommerceSubscriptionEntry");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -728,28 +644,21 @@ public abstract class CommerceSubscriptionEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CommerceSubscriptionEntryLocalService.class)
 	protected CommerceSubscriptionEntryLocalService
 		commerceSubscriptionEntryLocalService;
 
-	@BeanReference(type = CommerceSubscriptionEntryPersistence.class)
+	@Reference
 	protected CommerceSubscriptionEntryPersistence
 		commerceSubscriptionEntryPersistence;
 
-	@BeanReference(type = CommerceSubscriptionEntryFinder.class)
+	@Reference
 	protected CommerceSubscriptionEntryFinder commerceSubscriptionEntryFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceSubscriptionEntryLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

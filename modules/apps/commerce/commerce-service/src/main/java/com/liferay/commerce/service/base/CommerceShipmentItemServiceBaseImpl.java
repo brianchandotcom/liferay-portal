@@ -19,7 +19,7 @@ import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.service.CommerceShipmentItemServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceShipmentItemFinder;
 import com.liferay.commerce.service.persistence.CommerceShipmentItemPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce shipment item remote service.
@@ -49,129 +51,31 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceShipmentItemServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceShipmentItemService, IdentifiableOSGiService {
+	implements AopService, CommerceShipmentItemService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceShipmentItemService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceShipmentItemServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce shipment item local service.
-	 *
-	 * @return the commerce shipment item local service
-	 */
-	public com.liferay.commerce.service.CommerceShipmentItemLocalService
-		getCommerceShipmentItemLocalService() {
-
-		return commerceShipmentItemLocalService;
-	}
-
-	/**
-	 * Sets the commerce shipment item local service.
-	 *
-	 * @param commerceShipmentItemLocalService the commerce shipment item local service
-	 */
-	public void setCommerceShipmentItemLocalService(
-		com.liferay.commerce.service.CommerceShipmentItemLocalService
-			commerceShipmentItemLocalService) {
-
-		this.commerceShipmentItemLocalService =
-			commerceShipmentItemLocalService;
-	}
-
-	/**
-	 * Returns the commerce shipment item remote service.
-	 *
-	 * @return the commerce shipment item remote service
-	 */
-	public CommerceShipmentItemService getCommerceShipmentItemService() {
-		return commerceShipmentItemService;
-	}
-
-	/**
-	 * Sets the commerce shipment item remote service.
-	 *
-	 * @param commerceShipmentItemService the commerce shipment item remote service
-	 */
-	public void setCommerceShipmentItemService(
-		CommerceShipmentItemService commerceShipmentItemService) {
-
-		this.commerceShipmentItemService = commerceShipmentItemService;
-	}
-
-	/**
-	 * Returns the commerce shipment item persistence.
-	 *
-	 * @return the commerce shipment item persistence
-	 */
-	public CommerceShipmentItemPersistence
-		getCommerceShipmentItemPersistence() {
-
-		return commerceShipmentItemPersistence;
-	}
-
-	/**
-	 * Sets the commerce shipment item persistence.
-	 *
-	 * @param commerceShipmentItemPersistence the commerce shipment item persistence
-	 */
-	public void setCommerceShipmentItemPersistence(
-		CommerceShipmentItemPersistence commerceShipmentItemPersistence) {
-
-		this.commerceShipmentItemPersistence = commerceShipmentItemPersistence;
-	}
-
-	/**
-	 * Returns the commerce shipment item finder.
-	 *
-	 * @return the commerce shipment item finder
-	 */
-	public CommerceShipmentItemFinder getCommerceShipmentItemFinder() {
-		return commerceShipmentItemFinder;
-	}
-
-	/**
-	 * Sets the commerce shipment item finder.
-	 *
-	 * @param commerceShipmentItemFinder the commerce shipment item finder
-	 */
-	public void setCommerceShipmentItemFinder(
-		CommerceShipmentItemFinder commerceShipmentItemFinder) {
-
-		this.commerceShipmentItemFinder = commerceShipmentItemFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceShipmentItemService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceShipmentItemService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceShipmentItemService = (CommerceShipmentItemService)aopProxy;
+
+		_setServiceUtilService(commerceShipmentItemService);
 	}
 
 	/**
@@ -234,24 +138,19 @@ public abstract class CommerceShipmentItemServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.service.CommerceShipmentItemLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.service.CommerceShipmentItemLocalService
 		commerceShipmentItemLocalService;
 
-	@BeanReference(type = CommerceShipmentItemService.class)
 	protected CommerceShipmentItemService commerceShipmentItemService;
 
-	@BeanReference(type = CommerceShipmentItemPersistence.class)
+	@Reference
 	protected CommerceShipmentItemPersistence commerceShipmentItemPersistence;
 
-	@BeanReference(type = CommerceShipmentItemFinder.class)
+	@Reference
 	protected CommerceShipmentItemFinder commerceShipmentItemFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

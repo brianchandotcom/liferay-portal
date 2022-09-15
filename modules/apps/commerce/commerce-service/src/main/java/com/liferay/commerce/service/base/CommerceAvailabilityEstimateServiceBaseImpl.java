@@ -18,7 +18,7 @@ import com.liferay.commerce.model.CommerceAvailabilityEstimate;
 import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
 import com.liferay.commerce.service.CommerceAvailabilityEstimateServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceAvailabilityEstimatePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce availability estimate remote service.
@@ -48,115 +50,33 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceAvailabilityEstimateServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceAvailabilityEstimateService, IdentifiableOSGiService {
+	implements AopService, CommerceAvailabilityEstimateService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceAvailabilityEstimateService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceAvailabilityEstimateServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce availability estimate local service.
-	 *
-	 * @return the commerce availability estimate local service
-	 */
-	public com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService
-		getCommerceAvailabilityEstimateLocalService() {
-
-		return commerceAvailabilityEstimateLocalService;
-	}
-
-	/**
-	 * Sets the commerce availability estimate local service.
-	 *
-	 * @param commerceAvailabilityEstimateLocalService the commerce availability estimate local service
-	 */
-	public void setCommerceAvailabilityEstimateLocalService(
-		com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService
-			commerceAvailabilityEstimateLocalService) {
-
-		this.commerceAvailabilityEstimateLocalService =
-			commerceAvailabilityEstimateLocalService;
-	}
-
-	/**
-	 * Returns the commerce availability estimate remote service.
-	 *
-	 * @return the commerce availability estimate remote service
-	 */
-	public CommerceAvailabilityEstimateService
-		getCommerceAvailabilityEstimateService() {
-
-		return commerceAvailabilityEstimateService;
-	}
-
-	/**
-	 * Sets the commerce availability estimate remote service.
-	 *
-	 * @param commerceAvailabilityEstimateService the commerce availability estimate remote service
-	 */
-	public void setCommerceAvailabilityEstimateService(
-		CommerceAvailabilityEstimateService
-			commerceAvailabilityEstimateService) {
-
-		this.commerceAvailabilityEstimateService =
-			commerceAvailabilityEstimateService;
-	}
-
-	/**
-	 * Returns the commerce availability estimate persistence.
-	 *
-	 * @return the commerce availability estimate persistence
-	 */
-	public CommerceAvailabilityEstimatePersistence
-		getCommerceAvailabilityEstimatePersistence() {
-
-		return commerceAvailabilityEstimatePersistence;
-	}
-
-	/**
-	 * Sets the commerce availability estimate persistence.
-	 *
-	 * @param commerceAvailabilityEstimatePersistence the commerce availability estimate persistence
-	 */
-	public void setCommerceAvailabilityEstimatePersistence(
-		CommerceAvailabilityEstimatePersistence
-			commerceAvailabilityEstimatePersistence) {
-
-		this.commerceAvailabilityEstimatePersistence =
-			commerceAvailabilityEstimatePersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceAvailabilityEstimateService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceAvailabilityEstimateService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceAvailabilityEstimateService =
+			(CommerceAvailabilityEstimateService)aopProxy;
+
+		_setServiceUtilService(commerceAvailabilityEstimateService);
 	}
 
 	/**
@@ -220,24 +140,19 @@ public abstract class CommerceAvailabilityEstimateServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService.class
-	)
+	@Reference
 	protected
 		com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService
 			commerceAvailabilityEstimateLocalService;
 
-	@BeanReference(type = CommerceAvailabilityEstimateService.class)
 	protected CommerceAvailabilityEstimateService
 		commerceAvailabilityEstimateService;
 
-	@BeanReference(type = CommerceAvailabilityEstimatePersistence.class)
+	@Reference
 	protected CommerceAvailabilityEstimatePersistence
 		commerceAvailabilityEstimatePersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

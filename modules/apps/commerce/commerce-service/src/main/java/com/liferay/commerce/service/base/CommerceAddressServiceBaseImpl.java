@@ -17,14 +17,16 @@ package com.liferay.commerce.service.base;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceAddressServiceUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce address remote service.
@@ -39,86 +41,30 @@ import java.lang.reflect.Field;
  */
 public abstract class CommerceAddressServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceAddressService, IdentifiableOSGiService {
+	implements AopService, CommerceAddressService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceAddressService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceAddressServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce address local service.
-	 *
-	 * @return the commerce address local service
-	 */
-	public com.liferay.commerce.service.CommerceAddressLocalService
-		getCommerceAddressLocalService() {
-
-		return commerceAddressLocalService;
-	}
-
-	/**
-	 * Sets the commerce address local service.
-	 *
-	 * @param commerceAddressLocalService the commerce address local service
-	 */
-	public void setCommerceAddressLocalService(
-		com.liferay.commerce.service.CommerceAddressLocalService
-			commerceAddressLocalService) {
-
-		this.commerceAddressLocalService = commerceAddressLocalService;
-	}
-
-	/**
-	 * Returns the commerce address remote service.
-	 *
-	 * @return the commerce address remote service
-	 */
-	public CommerceAddressService getCommerceAddressService() {
-		return commerceAddressService;
-	}
-
-	/**
-	 * Sets the commerce address remote service.
-	 *
-	 * @param commerceAddressService the commerce address remote service
-	 */
-	public void setCommerceAddressService(
-		CommerceAddressService commerceAddressService) {
-
-		this.commerceAddressService = commerceAddressService;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceAddressService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceAddressService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceAddressService = (CommerceAddressService)aopProxy;
+
+		_setServiceUtilService(commerceAddressService);
 	}
 
 	/**
@@ -155,18 +101,13 @@ public abstract class CommerceAddressServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.service.CommerceAddressLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.service.CommerceAddressLocalService
 		commerceAddressLocalService;
 
-	@BeanReference(type = CommerceAddressService.class)
 	protected CommerceAddressService commerceAddressService;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

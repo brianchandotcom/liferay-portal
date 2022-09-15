@@ -24,7 +24,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -45,12 +45,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -59,6 +58,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce availability estimate local service.
@@ -73,7 +75,7 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceAvailabilityEstimateLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommerceAvailabilityEstimateLocalService,
+	implements AopService, CommerceAvailabilityEstimateLocalService,
 			   IdentifiableOSGiService {
 
 	/*
@@ -529,90 +531,25 @@ public abstract class CommerceAvailabilityEstimateLocalServiceBaseImpl
 			commerceAvailabilityEstimate);
 	}
 
-	/**
-	 * Returns the commerce availability estimate local service.
-	 *
-	 * @return the commerce availability estimate local service
-	 */
-	public CommerceAvailabilityEstimateLocalService
-		getCommerceAvailabilityEstimateLocalService() {
-
-		return commerceAvailabilityEstimateLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce availability estimate local service.
-	 *
-	 * @param commerceAvailabilityEstimateLocalService the commerce availability estimate local service
-	 */
-	public void setCommerceAvailabilityEstimateLocalService(
-		CommerceAvailabilityEstimateLocalService
-			commerceAvailabilityEstimateLocalService) {
-
-		this.commerceAvailabilityEstimateLocalService =
-			commerceAvailabilityEstimateLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceAvailabilityEstimateLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the commerce availability estimate persistence.
-	 *
-	 * @return the commerce availability estimate persistence
-	 */
-	public CommerceAvailabilityEstimatePersistence
-		getCommerceAvailabilityEstimatePersistence() {
-
-		return commerceAvailabilityEstimatePersistence;
-	}
-
-	/**
-	 * Sets the commerce availability estimate persistence.
-	 *
-	 * @param commerceAvailabilityEstimatePersistence the commerce availability estimate persistence
-	 */
-	public void setCommerceAvailabilityEstimatePersistence(
-		CommerceAvailabilityEstimatePersistence
-			commerceAvailabilityEstimatePersistence) {
-
-		this.commerceAvailabilityEstimatePersistence =
-			commerceAvailabilityEstimatePersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.model.CommerceAvailabilityEstimate",
-			commerceAvailabilityEstimateLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceAvailabilityEstimateLocalService =
+			(CommerceAvailabilityEstimateLocalService)aopProxy;
 
 		_setLocalServiceUtilService(commerceAvailabilityEstimateLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.model.CommerceAvailabilityEstimate");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -676,25 +613,18 @@ public abstract class CommerceAvailabilityEstimateLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CommerceAvailabilityEstimateLocalService.class)
 	protected CommerceAvailabilityEstimateLocalService
 		commerceAvailabilityEstimateLocalService;
 
-	@BeanReference(type = CommerceAvailabilityEstimatePersistence.class)
+	@Reference
 	protected CommerceAvailabilityEstimatePersistence
 		commerceAvailabilityEstimatePersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceAvailabilityEstimateLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

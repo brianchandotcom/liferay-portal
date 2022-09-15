@@ -25,7 +25,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -46,12 +46,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -60,6 +59,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce shipment item local service.
@@ -74,7 +76,8 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceShipmentItemLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommerceShipmentItemLocalService, IdentifiableOSGiService {
+	implements AopService, CommerceShipmentItemLocalService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -593,107 +596,25 @@ public abstract class CommerceShipmentItemLocalServiceBaseImpl
 		return commerceShipmentItemPersistence.update(commerceShipmentItem);
 	}
 
-	/**
-	 * Returns the commerce shipment item local service.
-	 *
-	 * @return the commerce shipment item local service
-	 */
-	public CommerceShipmentItemLocalService
-		getCommerceShipmentItemLocalService() {
-
-		return commerceShipmentItemLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce shipment item local service.
-	 *
-	 * @param commerceShipmentItemLocalService the commerce shipment item local service
-	 */
-	public void setCommerceShipmentItemLocalService(
-		CommerceShipmentItemLocalService commerceShipmentItemLocalService) {
-
-		this.commerceShipmentItemLocalService =
-			commerceShipmentItemLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceShipmentItemLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the commerce shipment item persistence.
-	 *
-	 * @return the commerce shipment item persistence
-	 */
-	public CommerceShipmentItemPersistence
-		getCommerceShipmentItemPersistence() {
-
-		return commerceShipmentItemPersistence;
-	}
-
-	/**
-	 * Sets the commerce shipment item persistence.
-	 *
-	 * @param commerceShipmentItemPersistence the commerce shipment item persistence
-	 */
-	public void setCommerceShipmentItemPersistence(
-		CommerceShipmentItemPersistence commerceShipmentItemPersistence) {
-
-		this.commerceShipmentItemPersistence = commerceShipmentItemPersistence;
-	}
-
-	/**
-	 * Returns the commerce shipment item finder.
-	 *
-	 * @return the commerce shipment item finder
-	 */
-	public CommerceShipmentItemFinder getCommerceShipmentItemFinder() {
-		return commerceShipmentItemFinder;
-	}
-
-	/**
-	 * Sets the commerce shipment item finder.
-	 *
-	 * @param commerceShipmentItemFinder the commerce shipment item finder
-	 */
-	public void setCommerceShipmentItemFinder(
-		CommerceShipmentItemFinder commerceShipmentItemFinder) {
-
-		this.commerceShipmentItemFinder = commerceShipmentItemFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.model.CommerceShipmentItem",
-			commerceShipmentItemLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceShipmentItemLocalService =
+			(CommerceShipmentItemLocalService)aopProxy;
 
 		_setLocalServiceUtilService(commerceShipmentItemLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.model.CommerceShipmentItem");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -756,26 +677,19 @@ public abstract class CommerceShipmentItemLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CommerceShipmentItemLocalService.class)
 	protected CommerceShipmentItemLocalService commerceShipmentItemLocalService;
 
-	@BeanReference(type = CommerceShipmentItemPersistence.class)
+	@Reference
 	protected CommerceShipmentItemPersistence commerceShipmentItemPersistence;
 
-	@BeanReference(type = CommerceShipmentItemFinder.class)
+	@Reference
 	protected CommerceShipmentItemFinder commerceShipmentItemFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceShipmentItemLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

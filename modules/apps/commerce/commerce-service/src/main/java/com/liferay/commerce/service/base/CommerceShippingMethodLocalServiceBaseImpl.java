@@ -19,7 +19,7 @@ import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -39,12 +39,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -53,6 +52,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce shipping method local service.
@@ -67,7 +69,8 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceShippingMethodLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CommerceShippingMethodLocalService, IdentifiableOSGiService {
+	implements AopService, CommerceShippingMethodLocalService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -412,88 +415,25 @@ public abstract class CommerceShippingMethodLocalServiceBaseImpl
 		return commerceShippingMethodPersistence.update(commerceShippingMethod);
 	}
 
-	/**
-	 * Returns the commerce shipping method local service.
-	 *
-	 * @return the commerce shipping method local service
-	 */
-	public CommerceShippingMethodLocalService
-		getCommerceShippingMethodLocalService() {
-
-		return commerceShippingMethodLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the commerce shipping method local service.
-	 *
-	 * @param commerceShippingMethodLocalService the commerce shipping method local service
-	 */
-	public void setCommerceShippingMethodLocalService(
-		CommerceShippingMethodLocalService commerceShippingMethodLocalService) {
-
-		this.commerceShippingMethodLocalService =
-			commerceShippingMethodLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceShippingMethodLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the commerce shipping method persistence.
-	 *
-	 * @return the commerce shipping method persistence
-	 */
-	public CommerceShippingMethodPersistence
-		getCommerceShippingMethodPersistence() {
-
-		return commerceShippingMethodPersistence;
-	}
-
-	/**
-	 * Sets the commerce shipping method persistence.
-	 *
-	 * @param commerceShippingMethodPersistence the commerce shipping method persistence
-	 */
-	public void setCommerceShippingMethodPersistence(
-		CommerceShippingMethodPersistence commerceShippingMethodPersistence) {
-
-		this.commerceShippingMethodPersistence =
-			commerceShippingMethodPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.model.CommerceShippingMethod",
-			commerceShippingMethodLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceShippingMethodLocalService =
+			(CommerceShippingMethodLocalService)aopProxy;
 
 		_setLocalServiceUtilService(commerceShippingMethodLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.model.CommerceShippingMethod");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -556,25 +496,18 @@ public abstract class CommerceShippingMethodLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CommerceShippingMethodLocalService.class)
 	protected CommerceShippingMethodLocalService
 		commerceShippingMethodLocalService;
 
-	@BeanReference(type = CommerceShippingMethodPersistence.class)
+	@Reference
 	protected CommerceShippingMethodPersistence
 		commerceShippingMethodPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceShippingMethodLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

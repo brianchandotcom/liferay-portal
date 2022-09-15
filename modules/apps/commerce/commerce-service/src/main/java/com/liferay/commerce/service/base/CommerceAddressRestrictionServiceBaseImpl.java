@@ -18,7 +18,7 @@ import com.liferay.commerce.model.CommerceAddressRestriction;
 import com.liferay.commerce.service.CommerceAddressRestrictionService;
 import com.liferay.commerce.service.CommerceAddressRestrictionServiceUtil;
 import com.liferay.commerce.service.persistence.CommerceAddressRestrictionPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce address restriction remote service.
@@ -48,114 +50,33 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceAddressRestrictionServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceAddressRestrictionService, IdentifiableOSGiService {
+	implements AopService, CommerceAddressRestrictionService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceAddressRestrictionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceAddressRestrictionServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce address restriction local service.
-	 *
-	 * @return the commerce address restriction local service
-	 */
-	public com.liferay.commerce.service.CommerceAddressRestrictionLocalService
-		getCommerceAddressRestrictionLocalService() {
-
-		return commerceAddressRestrictionLocalService;
-	}
-
-	/**
-	 * Sets the commerce address restriction local service.
-	 *
-	 * @param commerceAddressRestrictionLocalService the commerce address restriction local service
-	 */
-	public void setCommerceAddressRestrictionLocalService(
-		com.liferay.commerce.service.CommerceAddressRestrictionLocalService
-			commerceAddressRestrictionLocalService) {
-
-		this.commerceAddressRestrictionLocalService =
-			commerceAddressRestrictionLocalService;
-	}
-
-	/**
-	 * Returns the commerce address restriction remote service.
-	 *
-	 * @return the commerce address restriction remote service
-	 */
-	public CommerceAddressRestrictionService
-		getCommerceAddressRestrictionService() {
-
-		return commerceAddressRestrictionService;
-	}
-
-	/**
-	 * Sets the commerce address restriction remote service.
-	 *
-	 * @param commerceAddressRestrictionService the commerce address restriction remote service
-	 */
-	public void setCommerceAddressRestrictionService(
-		CommerceAddressRestrictionService commerceAddressRestrictionService) {
-
-		this.commerceAddressRestrictionService =
-			commerceAddressRestrictionService;
-	}
-
-	/**
-	 * Returns the commerce address restriction persistence.
-	 *
-	 * @return the commerce address restriction persistence
-	 */
-	public CommerceAddressRestrictionPersistence
-		getCommerceAddressRestrictionPersistence() {
-
-		return commerceAddressRestrictionPersistence;
-	}
-
-	/**
-	 * Sets the commerce address restriction persistence.
-	 *
-	 * @param commerceAddressRestrictionPersistence the commerce address restriction persistence
-	 */
-	public void setCommerceAddressRestrictionPersistence(
-		CommerceAddressRestrictionPersistence
-			commerceAddressRestrictionPersistence) {
-
-		this.commerceAddressRestrictionPersistence =
-			commerceAddressRestrictionPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceAddressRestrictionService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceAddressRestrictionService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceAddressRestrictionService =
+			(CommerceAddressRestrictionService)aopProxy;
+
+		_setServiceUtilService(commerceAddressRestrictionService);
 	}
 
 	/**
@@ -218,24 +139,19 @@ public abstract class CommerceAddressRestrictionServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.service.CommerceAddressRestrictionLocalService.class
-	)
+	@Reference
 	protected
 		com.liferay.commerce.service.CommerceAddressRestrictionLocalService
 			commerceAddressRestrictionLocalService;
 
-	@BeanReference(type = CommerceAddressRestrictionService.class)
 	protected CommerceAddressRestrictionService
 		commerceAddressRestrictionService;
 
-	@BeanReference(type = CommerceAddressRestrictionPersistence.class)
+	@Reference
 	protected CommerceAddressRestrictionPersistence
 		commerceAddressRestrictionPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

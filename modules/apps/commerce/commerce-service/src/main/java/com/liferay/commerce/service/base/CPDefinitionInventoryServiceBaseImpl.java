@@ -18,7 +18,7 @@ import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.commerce.service.CPDefinitionInventoryServiceUtil;
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the cp definition inventory remote service.
@@ -48,110 +50,31 @@ import javax.sql.DataSource;
  */
 public abstract class CPDefinitionInventoryServiceBaseImpl
 	extends BaseServiceImpl
-	implements CPDefinitionInventoryService, IdentifiableOSGiService {
+	implements AopService, CPDefinitionInventoryService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CPDefinitionInventoryService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPDefinitionInventoryServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the cp definition inventory local service.
-	 *
-	 * @return the cp definition inventory local service
-	 */
-	public com.liferay.commerce.service.CPDefinitionInventoryLocalService
-		getCPDefinitionInventoryLocalService() {
-
-		return cpDefinitionInventoryLocalService;
-	}
-
-	/**
-	 * Sets the cp definition inventory local service.
-	 *
-	 * @param cpDefinitionInventoryLocalService the cp definition inventory local service
-	 */
-	public void setCPDefinitionInventoryLocalService(
-		com.liferay.commerce.service.CPDefinitionInventoryLocalService
-			cpDefinitionInventoryLocalService) {
-
-		this.cpDefinitionInventoryLocalService =
-			cpDefinitionInventoryLocalService;
-	}
-
-	/**
-	 * Returns the cp definition inventory remote service.
-	 *
-	 * @return the cp definition inventory remote service
-	 */
-	public CPDefinitionInventoryService getCPDefinitionInventoryService() {
-		return cpDefinitionInventoryService;
-	}
-
-	/**
-	 * Sets the cp definition inventory remote service.
-	 *
-	 * @param cpDefinitionInventoryService the cp definition inventory remote service
-	 */
-	public void setCPDefinitionInventoryService(
-		CPDefinitionInventoryService cpDefinitionInventoryService) {
-
-		this.cpDefinitionInventoryService = cpDefinitionInventoryService;
-	}
-
-	/**
-	 * Returns the cp definition inventory persistence.
-	 *
-	 * @return the cp definition inventory persistence
-	 */
-	public CPDefinitionInventoryPersistence
-		getCPDefinitionInventoryPersistence() {
-
-		return cpDefinitionInventoryPersistence;
-	}
-
-	/**
-	 * Sets the cp definition inventory persistence.
-	 *
-	 * @param cpDefinitionInventoryPersistence the cp definition inventory persistence
-	 */
-	public void setCPDefinitionInventoryPersistence(
-		CPDefinitionInventoryPersistence cpDefinitionInventoryPersistence) {
-
-		this.cpDefinitionInventoryPersistence =
-			cpDefinitionInventoryPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(cpDefinitionInventoryService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CPDefinitionInventoryService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		cpDefinitionInventoryService = (CPDefinitionInventoryService)aopProxy;
+
+		_setServiceUtilService(cpDefinitionInventoryService);
 	}
 
 	/**
@@ -214,21 +137,16 @@ public abstract class CPDefinitionInventoryServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.service.CPDefinitionInventoryLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.service.CPDefinitionInventoryLocalService
 		cpDefinitionInventoryLocalService;
 
-	@BeanReference(type = CPDefinitionInventoryService.class)
 	protected CPDefinitionInventoryService cpDefinitionInventoryService;
 
-	@BeanReference(type = CPDefinitionInventoryPersistence.class)
+	@Reference
 	protected CPDefinitionInventoryPersistence cpDefinitionInventoryPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

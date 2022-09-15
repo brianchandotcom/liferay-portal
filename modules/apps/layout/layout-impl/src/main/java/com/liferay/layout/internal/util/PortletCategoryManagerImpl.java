@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -304,6 +305,8 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 
 		Set<String> portletIds = portletCategory.getPortletIds();
 
+		Layout layout = themeDisplay.getLayout();
+
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158737")) &&
 			Objects.equals(portletCategory.getName(), "category.highlighted")) {
 
@@ -315,8 +318,9 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 				themeDisplay.getCompanyId(), portletId);
 
 			if ((portlet == null) ||
-				ArrayUtil.contains(
-					_UNSUPPORTED_PORTLETS_NAMES, portlet.getPortletName())) {
+				((layout.isTypeContent() || layout.isTypeAssetDisplay()) &&
+				 ArrayUtil.contains(
+					 _UNSUPPORTED_PORTLETS_NAMES, portlet.getPortletName()))) {
 
 				continue;
 			}

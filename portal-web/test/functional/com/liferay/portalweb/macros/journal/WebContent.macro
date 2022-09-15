@@ -1628,19 +1628,6 @@ definition {
 			locator1 = "FormFields#FIELD_REMOVE");
 	}
 
-	macro saveAsDraft {
-		Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
-
-		Click(locator1 = "ContentDashboard#EDIT_OPTION");
-
-		CKEditor.addContentInWebContent(
-			content = "Web Content Content",
-			fieldLabel = "Content");
-
-		Click(locator1 = "Button#SAVE_AS_DRAFT");
-
-		Click(locator1 = "Icon#BACK");
-	}
 
 	macro saveAsDraftViaAP {
 		Button.clickSaveAsDraft();

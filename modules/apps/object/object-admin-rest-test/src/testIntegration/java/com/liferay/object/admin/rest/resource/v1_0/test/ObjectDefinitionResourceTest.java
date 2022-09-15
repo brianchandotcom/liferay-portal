@@ -120,6 +120,12 @@ public class ObjectDefinitionResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testGraphQLGetObjectDefinitionByExternalReferenceCodeNotFound() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLGetObjectDefinitionNotFound() {
 	}
 
@@ -306,6 +312,14 @@ public class ObjectDefinitionResourceTest
 
 	@Override
 	protected ObjectDefinition testPutObjectDefinition_addObjectDefinition()
+		throws Exception {
+
+		return _addObjectDefinition(randomObjectDefinition());
+	}
+
+	@Override
+	protected ObjectDefinition
+			testPutObjectDefinitionByExternalReferenceCode_addObjectDefinition()
 		throws Exception {
 
 		return _addObjectDefinition(randomObjectDefinition());

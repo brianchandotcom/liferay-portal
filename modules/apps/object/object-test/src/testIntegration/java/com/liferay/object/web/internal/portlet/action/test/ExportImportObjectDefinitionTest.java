@@ -51,6 +51,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
@@ -91,7 +92,7 @@ public class ExportImportObjectDefinitionTest {
 					"dependencies/object_definition.json")),
 			String.valueOf(
 				mockLiferayResourceResponse.getPortletOutputStream()),
-			true);
+			JSONCompareMode.STRICT_ORDER);
 
 		_objectDefinitionResource.deleteObjectDefinition(
 			objectDefinition.getId());

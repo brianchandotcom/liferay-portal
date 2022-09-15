@@ -184,10 +184,30 @@ public class ObjectDefinitionResourceImpl
 							_objectFilterLocalService)));
 
 		if (!Validator.isBlank(objectDefinition.getExternalReferenceCode())) {
-			_objectDefinitionService.updateExternalReferenceCode(
-				objectDefinition.getExternalReferenceCode(),
-				serviceBuilderObjectDefinition.getObjectDefinitionId());
+			serviceBuilderObjectDefinition =
+				_objectDefinitionService.updateExternalReferenceCode(
+					objectDefinition.getExternalReferenceCode(),
+					serviceBuilderObjectDefinition.getObjectDefinitionId());
 		}
+
+		com.liferay.object.model.ObjectField titleObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				serviceBuilderObjectDefinition.getObjectDefinitionId(),
+				objectDefinition.getTitleObjectFieldName());
+
+		if (titleObjectField != null) {
+			serviceBuilderObjectDefinition =
+				_objectDefinitionService.updateTitleObjectFieldId(
+					serviceBuilderObjectDefinition.getObjectDefinitionId(),
+					titleObjectField.getObjectFieldId());
+		}
+
+		_addObjectDefinitionResources(
+			serviceBuilderObjectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectActions(),
+			objectDefinition.getObjectLayouts(),
+			objectDefinition.getObjectRelationships(),
+			objectDefinition.getObjectViews());
 
 		return _toObjectDefinition(serviceBuilderObjectDefinition);
 	}
@@ -230,136 +250,61 @@ public class ObjectDefinitionResourceImpl
 					objectDefinitionId, titleObjectFieldId));
 		}
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672"))) {
-			serviceBuilderObjectDefinition =
-				_objectDefinitionService.updateCustomObjectDefinition(
-					objectDefinition.getExternalReferenceCode(),
-					objectDefinitionId,
-					GetterUtil.getLong(
-						objectDefinition.
-							getAccountEntryRestrictedObjectFieldId()),
-					0, titleObjectFieldId,
-					GetterUtil.getBoolean(
-						objectDefinition.getAccountEntryRestricted()),
-					GetterUtil.getBoolean(objectDefinition.getActive(), true),
-					true, false,
-					LocalizedMapUtil.getLocalizedMap(
-						objectDefinition.getLabel()),
-					objectDefinition.getName(),
-					objectDefinition.getPanelAppOrder(),
-					objectDefinition.getPanelCategoryKey(),
-					objectDefinition.getPortlet(),
-					LocalizedMapUtil.getLocalizedMap(
-						objectDefinition.getPluralLabel()),
-					objectDefinition.getScope());
+		boolean enableCategorization = true;
+		boolean enableComments = false;
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672"))) {
+			enableCategorization = objectDefinition.getEnableCategorization();
+			enableComments = objectDefinition.getEnableComments();
 		}
-		else {
-			serviceBuilderObjectDefinition =
-				_objectDefinitionService.updateCustomObjectDefinition(
-					objectDefinition.getExternalReferenceCode(),
-					objectDefinitionId,
-					GetterUtil.getLong(
-						objectDefinition.
-							getAccountEntryRestrictedObjectFieldId()),
-					0, titleObjectFieldId,
-					GetterUtil.getBoolean(
-						objectDefinition.getAccountEntryRestricted()),
-					GetterUtil.getBoolean(objectDefinition.getActive(), true),
-					objectDefinition.getEnableCategorization(),
-					objectDefinition.getEnableComments(),
-					LocalizedMapUtil.getLocalizedMap(
-						objectDefinition.getLabel()),
-					objectDefinition.getName(),
-					objectDefinition.getPanelAppOrder(),
-					objectDefinition.getPanelCategoryKey(),
-					objectDefinition.getPortlet(),
-					LocalizedMapUtil.getLocalizedMap(
-						objectDefinition.getPluralLabel()),
-					objectDefinition.getScope());
-		}
+
+		serviceBuilderObjectDefinition =
+			_objectDefinitionService.updateCustomObjectDefinition(
+				objectDefinition.getExternalReferenceCode(), objectDefinitionId,
+				GetterUtil.getLong(
+					objectDefinition.getAccountEntryRestrictedObjectFieldId()),
+				0, titleObjectFieldId,
+				GetterUtil.getBoolean(
+					objectDefinition.getAccountEntryRestricted()),
+				GetterUtil.getBoolean(objectDefinition.getActive(), true),
+				enableCategorization, enableComments,
+				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
+				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
+				objectDefinition.getPanelCategoryKey(),
+				objectDefinition.getPortlet(),
+				LocalizedMapUtil.getLocalizedMap(
+					objectDefinition.getPluralLabel()),
+				objectDefinition.getScope());
 
 		ObjectAction[] objectActions = objectDefinition.getObjectActions();
 
 		if (objectActions != null) {
-			ObjectActionResource.Builder objectActionResourcedBuilder =
-				_objectActionResourceFactory.create();
-
-			ObjectActionResource objectActionResource =
-				objectActionResourcedBuilder.user(
-					contextUser
-				).build();
-
 			_objectActionLocalService.deleteObjectActions(objectDefinitionId);
-
-			for (ObjectAction objectAction :
-					objectDefinition.getObjectActions()) {
-
-				objectActionResource.postObjectDefinitionObjectAction(
-					objectDefinitionId, objectAction);
-			}
 		}
 
 		ObjectLayout[] objectLayouts = objectDefinition.getObjectLayouts();
 
 		if (objectLayouts != null) {
-			ObjectLayoutResource.Builder builder =
-				_objectLayoutResourceFactory.create();
-
-			ObjectLayoutResource objectLayoutResource = builder.user(
-				contextUser
-			).build();
-
 			_objectLayoutLocalService.deleteObjectLayouts(objectDefinitionId);
-
-			for (ObjectLayout objectLayout : objectLayouts) {
-				objectLayoutResource.postObjectDefinitionObjectLayout(
-					objectDefinitionId, objectLayout);
-			}
 		}
 
 		ObjectRelationship[] objectRelationships =
 			objectDefinition.getObjectRelationships();
 
 		if (objectRelationships != null) {
-			ObjectRelationshipResource.Builder
-				objectRelationshipResourcedBuilder =
-					_objectRelationshipResourceFactory.create();
-
-			ObjectRelationshipResource objectRelationshipResource =
-				objectRelationshipResourcedBuilder.user(
-					contextUser
-				).build();
-
 			_objectRelationshipLocalService.deleteObjectRelationships(
 				objectDefinitionId);
-
-			for (ObjectRelationship objectRelationship :
-					objectDefinition.getObjectRelationships()) {
-
-				objectRelationshipResource.
-					postObjectDefinitionObjectRelationship(
-						objectDefinitionId, objectRelationship);
-			}
 		}
 
 		ObjectView[] objectViews = objectDefinition.getObjectViews();
 
 		if (objectViews != null) {
-			ObjectViewResource.Builder objectViewResourcedBuilder =
-				_objectViewResourceFactory.create();
-
-			ObjectViewResource objectViewResource =
-				objectViewResourcedBuilder.user(
-					contextUser
-				).build();
-
 			_objectViewLocalService.deleteObjectViews(objectDefinitionId);
-
-			for (ObjectView objectView : objectDefinition.getObjectViews()) {
-				objectViewResource.postObjectDefinitionObjectView(
-					objectDefinitionId, objectView);
-			}
 		}
+
+		_addObjectDefinitionResources(
+			objectDefinitionId, objectActions, objectLayouts,
+			objectRelationships, objectViews);
 
 		return _toObjectDefinition(serviceBuilderObjectDefinition);
 	}
@@ -384,6 +329,74 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		return postObjectDefinition(objectDefinition);
+	}
+
+	private void _addObjectDefinitionResources(
+			long objectDefinitionId, ObjectAction[] objectActions,
+			ObjectLayout[] objectLayouts,
+			ObjectRelationship[] objectRelationships, ObjectView[] objectViews)
+		throws Exception {
+
+		if (objectActions != null) {
+			ObjectActionResource.Builder objectActionResourcedBuilder =
+				_objectActionResourceFactory.create();
+
+			ObjectActionResource objectActionResource =
+				objectActionResourcedBuilder.user(
+					contextUser
+				).build();
+
+			for (ObjectAction objectAction : objectActions) {
+				objectActionResource.postObjectDefinitionObjectAction(
+					objectDefinitionId, objectAction);
+			}
+		}
+
+		if (objectLayouts != null) {
+			ObjectLayoutResource.Builder builder =
+				_objectLayoutResourceFactory.create();
+
+			ObjectLayoutResource objectLayoutResource = builder.user(
+				contextUser
+			).build();
+
+			for (ObjectLayout objectLayout : objectLayouts) {
+				objectLayoutResource.postObjectDefinitionObjectLayout(
+					objectDefinitionId, objectLayout);
+			}
+		}
+
+		if (objectRelationships != null) {
+			ObjectRelationshipResource.Builder
+				objectRelationshipResourcedBuilder =
+					_objectRelationshipResourceFactory.create();
+
+			ObjectRelationshipResource objectRelationshipResource =
+				objectRelationshipResourcedBuilder.user(
+					contextUser
+				).build();
+
+			for (ObjectRelationship objectRelationship : objectRelationships) {
+				objectRelationshipResource.
+					postObjectDefinitionObjectRelationship(
+						objectDefinitionId, objectRelationship);
+			}
+		}
+
+		if (objectViews != null) {
+			ObjectViewResource.Builder objectViewResourcedBuilder =
+				_objectViewResourceFactory.create();
+
+			ObjectViewResource objectViewResource =
+				objectViewResourcedBuilder.user(
+					contextUser
+				).build();
+
+			for (ObjectView objectView : objectViews) {
+				objectViewResource.postObjectDefinitionObjectView(
+					objectDefinitionId, objectView);
+			}
+		}
 	}
 
 	private ObjectDefinition _toObjectDefinition(

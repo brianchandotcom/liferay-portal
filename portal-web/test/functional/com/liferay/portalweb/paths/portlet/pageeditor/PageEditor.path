@@ -589,7 +589,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_SECONDARY_TEXT</td>
-	<td>//*[contains(@class,'text-secondary')]</td>
+	<td>//*[contains(@class,'text-secondary')][not(contains(@class,'lexicon-icon'))]</td>
 	<td></td>
 </tr>
 <tr>

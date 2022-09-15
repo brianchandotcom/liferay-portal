@@ -72,7 +72,7 @@ declare type TAction =
 	| {
 			payload: {
 				boxIndex: number;
-				objectFieldId: number;
+				objectFieldName: string;
 				objectFieldSize: number;
 				tabIndex: number;
 			};
@@ -112,7 +112,7 @@ declare type TAction =
 			payload: {
 				boxIndex: number;
 				columnIndex: number;
-				objectFieldId: number;
+				objectFieldName: string;
 				rowIndex: number;
 				tabIndex: number;
 			};

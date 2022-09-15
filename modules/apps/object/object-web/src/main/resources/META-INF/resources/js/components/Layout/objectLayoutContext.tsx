@@ -15,7 +15,8 @@
 import React, {createContext, useContext, useReducer} from 'react';
 
 import {
-	findObjectFieldIndex,
+	findObjectFieldIndexById,
+	findObjectFieldIndexByName,
 	findObjectLayoutRowIndex,
 } from '../../utils/layout';
 import {BoxesVisitor, RowsVisitor} from '../../utils/visitor';
@@ -68,7 +69,7 @@ type TAction =
 	| {
 			payload: {
 				boxIndex: number;
-				objectFieldId: number;
+				objectFieldName: string;
 				objectFieldSize: number;
 				tabIndex: number;
 			};
@@ -104,7 +105,7 @@ type TAction =
 			payload: {
 				boxIndex: number;
 				columnIndex: number;
-				objectFieldId: number;
+				objectFieldName: string;
 				rowIndex: number;
 				tabIndex: number;
 			};
@@ -186,7 +187,7 @@ const layoutReducer = (state: TState, action: TAction) => {
 
 			if (objectRelationshipId) {
 				newState.objectRelationships[
-					findObjectFieldIndex(
+					findObjectFieldIndexById(
 						newState.objectRelationships,
 						objectRelationshipId
 					)
@@ -258,7 +259,7 @@ const layoutReducer = (state: TState, action: TAction) => {
 		case TYPES.ADD_OBJECT_LAYOUT_FIELD: {
 			const {
 				boxIndex,
-				objectFieldId,
+				objectFieldName,
 				objectFieldSize,
 				tabIndex,
 			} = action.payload;
@@ -266,7 +267,7 @@ const layoutReducer = (state: TState, action: TAction) => {
 			const newState = {...state};
 
 			const newField = {
-				objectFieldId,
+				objectFieldName,
 				priority: 0,
 				size: objectFieldSize,
 			};
@@ -293,7 +294,10 @@ const layoutReducer = (state: TState, action: TAction) => {
 			}
 
 			newState.objectFields[
-				findObjectFieldIndex(newState.objectFields, objectFieldId)
+				findObjectFieldIndexByName(
+					newState.objectFields,
+					objectFieldName
+				)
 			].inLayout = true;
 
 			return newState;
@@ -346,7 +350,9 @@ const layoutReducer = (state: TState, action: TAction) => {
 
 			// Change object field inLayout attribute to false to be visible when add field again.
 
-			const objectFieldIds = newState.objectFields.map(({id}) => id);
+			const objectFieldNames = newState.objectFields.map(
+				({name}) => name
+			);
 			const visitor = new RowsVisitor(
 				newState.objectLayout.objectLayoutTabs[
 					tabIndex
@@ -354,7 +360,9 @@ const layoutReducer = (state: TState, action: TAction) => {
 			);
 
 			visitor.mapFields((field) => {
-				const objectIndex = objectFieldIds.indexOf(field.objectFieldId);
+				const objectIndex = objectFieldNames.indexOf(
+					field.objectFieldName
+				);
 				newState.objectFields[objectIndex].inLayout = false;
 			});
 
@@ -370,7 +378,7 @@ const layoutReducer = (state: TState, action: TAction) => {
 			const {
 				boxIndex,
 				columnIndex,
-				objectFieldId,
+				objectFieldName,
 				rowIndex,
 				tabIndex,
 			} = action.payload;
@@ -389,9 +397,9 @@ const layoutReducer = (state: TState, action: TAction) => {
 				objectLayoutBox.objectLayoutRows.splice(rowIndex, 1);
 			}
 
-			const objectFieldIndex = findObjectFieldIndex(
+			const objectFieldIndex = findObjectFieldIndexByName(
 				newState.objectFields,
-				objectFieldId
+				objectFieldName
 			);
 
 			newState.objectFields[objectFieldIndex].inLayout = false;
@@ -422,15 +430,17 @@ const layoutReducer = (state: TState, action: TAction) => {
 
 			// Change object field inLayout attribute to false to be visible when add field again.
 
-			const objectFieldIds = newState.objectFields.map(({id}) => id);
+			const objectFieldNames = newState.objectFields.map(
+				({name}) => name
+			);
 			const visitor = new BoxesVisitor(
 				newState.objectLayout.objectLayoutTabs[tabIndex]
 			);
 
 			visitor.mapFields((field) => {
-				if (field.objectFieldId) {
-					const objectFieldIndex = objectFieldIds.indexOf(
-						field.objectFieldId
+				if (field.objectFieldName) {
+					const objectFieldIndex = objectFieldNames.indexOf(
+						field.objectFieldName
 					);
 					newState.objectFields[objectFieldIndex].inLayout = false;
 				}

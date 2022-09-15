@@ -33,24 +33,26 @@ const ObjectLayoutColumns: React.FC<IObjectLayoutColumnsProps> = ({
 }) => {
 	return (
 		<>
-			{objectLayoutColumns?.map(({objectFieldId, size}, columnIndex) => {
-				return (
-					<div
-						className={classNames('layout-tab__columns', {
-							[`col-md-${size}`]: size,
-						})}
-						key={`column_${columnIndex}`}
-					>
-						<ObjectLayoutField
-							boxIndex={boxIndex}
-							columnIndex={columnIndex}
-							objectFieldId={objectFieldId}
-							rowIndex={rowIndex}
-							tabIndex={tabIndex}
-						/>
-					</div>
-				);
-			})}
+			{objectLayoutColumns?.map(
+				({objectFieldName, size}, columnIndex) => {
+					return (
+						<div
+							className={classNames('layout-tab__columns', {
+								[`col-md-${size}`]: size,
+							})}
+							key={`column_${columnIndex}`}
+						>
+							<ObjectLayoutField
+								boxIndex={boxIndex}
+								columnIndex={columnIndex}
+								objectFieldName={objectFieldName}
+								rowIndex={rowIndex}
+								tabIndex={tabIndex}
+							/>
+						</div>
+					);
+				}
+			)}
 		</>
 	);
 };

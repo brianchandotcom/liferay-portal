@@ -16,7 +16,7 @@ import React from 'react';
 interface IObjectLayoutFieldProps extends React.HTMLAttributes<HTMLElement> {
 	boxIndex: number;
 	columnIndex: number;
-	objectFieldId: number;
+	objectFieldName: string;
 	rowIndex: number;
 	tabIndex: number;
 }

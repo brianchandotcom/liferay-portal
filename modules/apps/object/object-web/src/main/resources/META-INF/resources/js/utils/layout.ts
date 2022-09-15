@@ -43,12 +43,22 @@ export function findObjectLayoutRowIndex(
 	return objectLayoutRowIndex;
 }
 
-export function findObjectFieldIndex(
+export function findObjectFieldIndexById(
 	objectFields: TObjectField[] | TObjectRelationship[],
 	objectFieldId: number
 ): number {
 	const objIds = objectFields.map(({id}) => id);
 	const objectIndex = objIds.indexOf(objectFieldId);
+
+	return objectIndex;
+}
+
+export function findObjectFieldIndexByName(
+	objectFields: TObjectField[] | TObjectRelationship[],
+	objectFieldName: string
+): number {
+	const objIds = objectFields.map(({name}) => name);
+	const objectIndex = objIds.indexOf(objectFieldName);
 
 	return objectIndex;
 }

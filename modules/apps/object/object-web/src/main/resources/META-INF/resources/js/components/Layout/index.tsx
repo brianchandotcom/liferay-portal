@@ -64,12 +64,14 @@ const normalizeObjectFields: TNormalizeObjectFields = ({
 }) => {
 	const visitor = new TabsVisitor(objectLayout);
 
-	const objectFieldIds = objectFields.map(({id}) => id);
+	const objectFieldNames = objectFields.map(({name}) => name);
 
 	const normalizedObjectFields = [...objectFields];
 
 	visitor.mapFields((field) => {
-		const objectFieldIndex = objectFieldIds.indexOf(field.objectFieldId);
+		const objectFieldIndex = objectFieldNames.indexOf(
+			field.objectFieldName
+		);
 		normalizedObjectFields[objectFieldIndex].inLayout = true;
 	});
 

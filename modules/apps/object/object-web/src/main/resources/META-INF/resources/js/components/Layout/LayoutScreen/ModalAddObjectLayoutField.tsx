@@ -32,7 +32,7 @@ import RequiredLabel from './RequiredLabel';
 const objectFieldSizes = [1, 2, 3];
 
 type TInitialValues = {
-	objectFieldId: number;
+	objectFieldName: string;
 	objectFieldSize: number;
 };
 
@@ -111,7 +111,7 @@ export default function ModalAddObjectLayoutField({
 		dispatch({
 			payload: {
 				boxIndex,
-				objectFieldId: values.objectFieldId,
+				objectFieldName: values.objectFieldName,
 				objectFieldSize: 12 / Number(values.objectFieldSize),
 				tabIndex,
 			},
@@ -124,15 +124,15 @@ export default function ModalAddObjectLayoutField({
 	const onValidate = (values: TInitialValues) => {
 		const errors: FormError<TInitialValues> = {};
 
-		if (!values.objectFieldId) {
-			errors.objectFieldId = Liferay.Language.get('required');
+		if (!values.objectFieldName) {
+			errors.objectFieldName = Liferay.Language.get('required');
 		}
 
 		return errors;
 	};
 
 	const initialValues: TInitialValues = {
-		objectFieldId: 0,
+		objectFieldName: '',
 		objectFieldSize: 1,
 	};
 
@@ -160,13 +160,13 @@ export default function ModalAddObjectLayoutField({
 						emptyStateMessage={Liferay.Language.get(
 							'there-are-no-fields-for-this-object'
 						)}
-						error={errors.objectFieldId}
+						error={errors.objectFieldName}
 						items={filteredObjectFields}
 						label={Liferay.Language.get('field')}
 						onChangeQuery={setQuery}
 						onSelectItem={(item) => {
 							setSelectedObjectField(item);
-							setValues({objectFieldId: item.id});
+							setValues({objectFieldName: item.name});
 						}}
 						query={query}
 						required

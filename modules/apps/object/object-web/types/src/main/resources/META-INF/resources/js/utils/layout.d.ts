@@ -21,7 +21,11 @@ export declare function findObjectLayoutRowIndex(
 	objectLayoutRows: TObjectLayoutRow[],
 	fieldSize: number
 ): number;
-export declare function findObjectFieldIndex(
+export declare function findObjectFieldIndexById(
 	objectFields: TObjectField[] | TObjectRelationship[],
 	objectFieldId: number
+): number;
+export declare function findObjectFieldIndexByName(
+	objectFields: TObjectField[] | TObjectRelationship[],
+	objectFieldName: string
 ): number;

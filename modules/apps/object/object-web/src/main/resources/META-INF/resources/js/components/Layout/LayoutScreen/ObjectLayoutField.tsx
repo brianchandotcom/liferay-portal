@@ -22,7 +22,7 @@ import RequiredLabel from './RequiredLabel';
 interface IObjectLayoutFieldProps extends React.HTMLAttributes<HTMLElement> {
 	boxIndex: number;
 	columnIndex: number;
-	objectFieldId: number;
+	objectFieldName: string;
 	rowIndex: number;
 	tabIndex: number;
 }
@@ -32,13 +32,15 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const ObjectLayoutField: React.FC<IObjectLayoutFieldProps> = ({
 	boxIndex,
 	columnIndex,
-	objectFieldId,
+	objectFieldName,
 	rowIndex,
 	tabIndex,
 }) => {
 	const [{objectFieldTypes, objectFields}, dispatch] = useLayoutContext();
 
-	const objectField = objectFields.find(({id}) => id === objectFieldId)!;
+	const objectField = objectFields.find(
+		({name}) => name === objectFieldName
+	)!;
 
 	const objectFieldType = objectFieldTypes.find(
 		({businessType}) => businessType === objectField.businessType
@@ -46,7 +48,7 @@ const ObjectLayoutField: React.FC<IObjectLayoutFieldProps> = ({
 
 	return (
 		<>
-			<Panel key={`field_${objectFieldId}`}>
+			<Panel key={`field_${objectFieldName}`}>
 				<Panel.SimpleBody
 					contentRight={
 						<HeaderDropdown
@@ -55,7 +57,7 @@ const ObjectLayoutField: React.FC<IObjectLayoutFieldProps> = ({
 									payload: {
 										boxIndex,
 										columnIndex,
-										objectFieldId,
+										objectFieldName,
 										rowIndex,
 										tabIndex,
 									},

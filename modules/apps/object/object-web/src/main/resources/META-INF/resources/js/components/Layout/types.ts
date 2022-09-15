@@ -44,7 +44,7 @@ export type TObjectLayoutRow = {
 };
 
 export type TObjectLayoutColumn = {
-	objectFieldId: number;
+	objectFieldName: string;
 	priority: number;
 	size: number;
 };

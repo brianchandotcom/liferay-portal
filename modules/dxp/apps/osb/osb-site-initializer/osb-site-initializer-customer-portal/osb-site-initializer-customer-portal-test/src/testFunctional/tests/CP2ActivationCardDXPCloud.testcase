@@ -15,12 +15,16 @@ definition {
 			TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
-
-			CustomerPortal.assignUserToOrganization();
 		}
 
 		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToAllAccounts();
 		}
 	}
 
@@ -73,7 +77,7 @@ definition {
 		}
 
 		task ("Change the activation card status to Active") {
-			CustomerPortal.activeStatus();
+			CustomerPortal.activeStatus(index = "1");
 		}
 
 		task ("Go to CP2.0 and join a project") {

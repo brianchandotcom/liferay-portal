@@ -19,22 +19,26 @@ definition {
 			TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
-
-			CustomerPortal.assignUserToOrganization();
-		}
+		}		
 
 		task ("Create a new Customer Portal Site") {
-			Site.openSitesAdmin();
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
 
-			TeamExtranet.addSiteTemplateCP(
-				siteName = "${testSiteName}",
-				siteTemplateName = "${testSiteTamplate}");
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToAllAccounts();
 		}
 
 		task ("Go to Customer Portal") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.waitCP20PageToLoad(userFirstName = "${userFirstName}");
+
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToAllAccounts();
 		}
 	}
 

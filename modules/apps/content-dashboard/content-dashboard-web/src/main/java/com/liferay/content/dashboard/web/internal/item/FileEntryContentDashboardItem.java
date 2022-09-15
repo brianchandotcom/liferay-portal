@@ -70,7 +70,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alejandro Tardín
  */
 public class FileEntryContentDashboardItem
-	implements ContentDashboardItem<FileEntry> {
+	implements VersionableContentDashboardItem<FileEntry> {
 
 	public FileEntryContentDashboardItem(
 		List<AssetCategory> assetCategories, List<AssetTag> assetTags,

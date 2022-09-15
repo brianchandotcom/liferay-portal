@@ -17,7 +17,7 @@ definition {
 
 			ApplicationsMenu.gotoSite(site = "Site Name");
 
-			Walkthrough.enableWalkthrough(fileName = "walkthrough_configuration.json");
+			Walkthrough.addWalkthrough(fileName = "walkthrough_configuration.json");
 		}
 
 		task ("And Given mutiple pages defined") {

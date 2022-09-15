@@ -1,5 +1,29 @@
 definition {
 
+	macro _editWalkthroughJSON {
+		var jsonSnippet = Walkthrough.getWalkthroughSteps(fileName = "${fileName}");
+
+		SystemSettings.editTextAreaSetting(
+			settingName = "Steps",
+			settingValue = "${jsonSnippet}");
+	}
+
+	macro _enableWalkthrough {
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enable Walkthrough");
+	}
+
+	macro addWalkthrough {
+		Walkthrough.gotoSiteConfigWalkthrough();
+
+		Walkthrough._enableWalkthrough();
+
+		Walkthrough._editWalkthroughJSON(fileName = "${fileName}");
+
+		SystemSettings.saveConfiguration();
+	}
+
 	macro enablePopoverMode {
 		if (IsElementNotPresent(locator1 = "Walkthrough#POPOVER")) {
 			if (IsElementPresent(key_portletName = "JS Walkthrough Sample", locator1 = "Portlet#TITLE")) {
@@ -9,29 +33,6 @@ definition {
 				Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 			}
 		}
-	}
-
-	macro enableWalkthrough {
-		var jsonSnippet = Walkthrough.getWalkthroughSteps(fileName = "${fileName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Walkthrough",
-			configurationName = "Walkthrough",
-			configurationScope = "Site Scope");
-
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enable Walkthrough");
-
-		SystemSettings.editTextAreaSetting(
-			settingName = "Steps",
-			settingValue = "${jsonSnippet}");
-
-		SystemSettings.saveConfiguration();
 	}
 
 	macro getWalkthroughSteps {
@@ -56,6 +57,17 @@ definition {
 		VerifyElementPresent(
 			key_title = "Step ${key_step}",
 			locator1 = "Walkthrough#POPOVER_TITLE");
+	}
+
+	macro gotoSiteConfigWalkthrough {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Walkthrough",
+			configurationName = "Walkthrough",
+			configurationScope = "Site Scope");
 	}
 
 	macro goToSpecificStep {

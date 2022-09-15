@@ -33,7 +33,7 @@ definition {
 		}
 
 		task ("When walkthrough is enabled") {
-			Walkthrough.enableWalkthrough(fileName = "walkthrough_configuration.json");
+			Walkthrough.addWalkthrough(fileName = "walkthrough_configuration.json");
 		}
 
 		task ("Then success message appears") {
@@ -53,7 +53,7 @@ definition {
 
 			ApplicationsMenu.gotoSite(site = "Site Name");
 
-			Walkthrough.enableWalkthrough(fileName = "walkthrough_configuration.json");
+			Walkthrough.addWalkthrough(fileName = "walkthrough_configuration.json");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",

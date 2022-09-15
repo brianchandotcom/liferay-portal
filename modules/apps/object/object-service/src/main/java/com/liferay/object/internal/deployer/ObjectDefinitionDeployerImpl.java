@@ -51,6 +51,7 @@ import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
@@ -328,6 +329,27 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			objectDefinition.getClassName());
 	}
 
+	private String _getGuestUnsupportedResourceActions(
+		ObjectDefinition objectDefinition) {
+
+		if (objectDefinition.isEnableComments()) {
+			return "<action-key>DELETE_DISCUSSION</action-key>" +
+				"<action-key>UPDATE_DISCUSSION</action-key>";
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private String _getResourceActions(ObjectDefinition objectDefinition) {
+		if (objectDefinition.isEnableComments()) {
+			return "<action-key>ADD_DISCUSSION</action-key>" +
+				"<action-key>DELETE_DISCUSSION</action-key>" +
+					"<action-key>UPDATE_DISCUSSION</action-key>";
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private void _readResourceActions(ObjectDefinition objectDefinition)
 		throws Exception {
 
@@ -339,10 +361,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				StringUtil.read(
 					classLoader, "resource-actions/resource-actions.xml.tpl"),
 				new String[] {
-					"[$MODEL_NAME$]", "[$PORTLET_NAME$]", "[$RESOURCE_NAME$]"
+					"[$MODEL_NAME$]", "[$PERMISSIONS_GUEST_UNSUPPORTED$]",
+					"[$PERMISSIONS_SUPPORTS$]", "[$PORTLET_NAME$]",
+					"[$RESOURCE_NAME$]"
 				},
 				new String[] {
 					objectDefinition.getClassName(),
+					_getGuestUnsupportedResourceActions(objectDefinition),
+					_getResourceActions(objectDefinition),
 					objectDefinition.getPortletId(),
 					objectDefinition.getResourceName()
 				}));

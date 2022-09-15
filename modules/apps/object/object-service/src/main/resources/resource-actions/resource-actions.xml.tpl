@@ -28,6 +28,7 @@
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
+				[$PERMISSIONS_SUPPORTS$]
 			</supports>
 			<site-member-defaults>
 			</site-member-defaults>
@@ -37,6 +38,7 @@
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
+				[$PERMISSIONS_GUEST_UNSUPPORTED$]
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

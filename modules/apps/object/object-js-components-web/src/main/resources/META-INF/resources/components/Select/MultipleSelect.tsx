@@ -85,7 +85,7 @@ export function MultipleSelect<
 					/>
 				)}
 
-				{options.map(({checked, label}, index) => (
+				{options.map(({checked, label, value}, index) => (
 					<CheckboxItem
 						checked={checked}
 						key={index}
@@ -93,7 +93,8 @@ export function MultipleSelect<
 						onChange={({target: {checked}}) => {
 							setOptions(
 								options.map((option) =>
-									option.label === label
+									option.label === label &&
+									option.value === value
 										? {
 												...option,
 												checked,

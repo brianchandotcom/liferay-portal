@@ -149,20 +149,37 @@ export function ModalAddFilter({
 
 	const getCheckedRelationshipItems = (
 		relatedEntries: ObjectEntry[],
-		titleFieldName: string
+		titleFieldName: string,
+		systemField: boolean
 	): IItem[] => {
 		let newItemsValues: IItem[] = [];
 
 		const valuesArray = setEditingFilterType() as string[];
 
 		newItemsValues = relatedEntries.map((entry) => {
-			const item: IItem = {
+			let item = {
 				checked: false,
-				label: entry[titleFieldName] as string,
-				value: entry.id.toString(),
-			};
+				value: entry.externalReferenceCode,
+			} as IItem;
 
-			if (valuesArray.includes(entry.id.toString())) {
+			if (systemField && titleFieldName === 'creator') {
+				const {
+					creator: {name},
+				} = entry;
+
+				item = {
+					...item,
+					label: name,
+				};
+			}
+			else {
+				item = {
+					...item,
+					label: entry[titleFieldName] as string,
+				};
+			}
+
+			if (valuesArray.includes(entry.externalReferenceCode)) {
 				item.checked = true;
 			}
 
@@ -240,15 +257,30 @@ export function ModalAddFilter({
 						setItems(
 							getCheckedRelationshipItems(
 								relatedEntries,
-								titleField.name
+								titleField.name,
+								titleField.system as boolean
 							)
 						);
 					}
 					else {
 						const newItems = relatedEntries.map((entry) => {
+							if (
+								titleField.system &&
+								titleField.name === 'creator'
+							) {
+								const {
+									creator: {name},
+								} = entry;
+
+								return {
+									label: name,
+									value: entry.externalReferenceCode,
+								};
+							}
+
 							return {
 								label: entry[titleField?.name] as string,
-								value: entry.id.toString(),
+								value: entry.externalReferenceCode,
 							};
 						});
 

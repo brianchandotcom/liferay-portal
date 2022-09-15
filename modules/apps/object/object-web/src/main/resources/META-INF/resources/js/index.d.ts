@@ -142,8 +142,17 @@ interface ObjectFieldSetting {
 }
 
 interface ObjectEntry {
+	creator: {
+		additionalName: string;
+		contentType: string;
+		familyName: string;
+		givenName: string;
+		id: number;
+		name: string;
+	};
 	dateCreated: string;
 	dateModified: string;
+	externalReferenceCode: string;
 	id: number;
 	name: string;
 	status: {

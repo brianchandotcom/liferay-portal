@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
@@ -326,7 +327,15 @@ public class UADSearchContainerBuilder {
 			SearchContainer.DEFAULT_DELTA, currentURL, null,
 			"no-entities-remain-of-this-type", null);
 
-		searchContainer.setId("UADEntities_" + StringUtil.randomId());
+		String uniqueSearchContainerId = (String)renderRequest.getAttribute(
+			WebKeys.UNIQUE_SEARCH_CONTAINER_ID);
+
+		if (Validator.isNull(uniqueSearchContainerId)) {
+			uniqueSearchContainerId = StringUtil.randomId();
+		}
+
+		searchContainer.setId("UADEntities_" + uniqueSearchContainerId);
+
 		searchContainer.setOrderableHeaders(
 			new LinkedHashMap<String, String>() {
 				{

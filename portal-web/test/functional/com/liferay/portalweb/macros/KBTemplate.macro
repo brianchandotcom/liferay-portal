@@ -77,12 +77,12 @@ definition {
 
 	macro viewNoTemplates {
 		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No templates were found.");
+			locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
+			value1 = "There are no article templates.");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_STATE_INFO",
-			value1 = "No templates were found.");
+			value1 = "There are no article templates.");
 	}
 
 	macro viewTemplatesThroughPageTreePanel {

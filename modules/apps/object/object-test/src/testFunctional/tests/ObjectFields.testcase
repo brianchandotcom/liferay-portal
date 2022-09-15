@@ -685,6 +685,7 @@ definition {
 	@description = "Verify that it's possible to see the custom field label and system field label"
 	@priority = "5"
 	test CanSeeFieldLabel {
+		property custom.properties = "feature.flag.LPS-158456=true";
 		property portal.acceptance = "true";
 
 		task ("Add an object, go to the fields tab and state whether the system fields have the label System") {

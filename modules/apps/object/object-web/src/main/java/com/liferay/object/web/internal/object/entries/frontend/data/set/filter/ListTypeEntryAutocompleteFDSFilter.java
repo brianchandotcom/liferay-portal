@@ -14,6 +14,7 @@
 
 package com.liferay.object.web.internal.object.entries.frontend.data.set.filter;
 
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseAutocompleteFDSFilter;
 
 import java.util.Map;
@@ -42,7 +43,7 @@ public class ListTypeEntryAutocompleteFDSFilter
 
 	@Override
 	public String getEntityFieldType() {
-		return "string";
+		return FDSEntityFieldTypes.STRING;
 	}
 
 	@Override

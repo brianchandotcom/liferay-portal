@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.data.set.sample.web.internal.filter;
 
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseDateRangeFDSFilter;
 import com.liferay.frontend.data.set.filter.DateFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
@@ -34,7 +35,7 @@ public class CustomizedDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {
-		return "date";
+		return FDSEntityFieldTypes.DATE;
 	}
 
 	@Override

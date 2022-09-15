@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.data.set.filter;
 
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -28,7 +29,7 @@ public abstract class BaseAutocompleteFDSFilter implements FDSFilter {
 
 	@Override
 	public String getEntityFieldType() {
-		return "collection";
+		return FDSEntityFieldTypes.COLLECTION;
 	}
 
 	public abstract String getItemKey();

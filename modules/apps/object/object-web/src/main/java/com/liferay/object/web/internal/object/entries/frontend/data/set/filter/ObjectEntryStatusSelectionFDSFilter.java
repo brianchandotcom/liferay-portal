@@ -14,6 +14,7 @@
 
 package com.liferay.object.web.internal.object.entries.frontend.data.set.filter;
 
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -37,7 +38,7 @@ public class ObjectEntryStatusSelectionFDSFilter
 
 	@Override
 	public String getEntityFieldType() {
-		return "collection";
+		return FDSEntityFieldTypes.COLLECTION;
 	}
 
 	@Override

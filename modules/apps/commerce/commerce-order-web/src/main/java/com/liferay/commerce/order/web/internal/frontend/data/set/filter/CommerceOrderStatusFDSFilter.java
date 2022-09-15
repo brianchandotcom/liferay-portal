@@ -17,6 +17,7 @@ package com.liferay.commerce.order.web.internal.frontend.data.set.filter;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
@@ -40,7 +41,7 @@ public class CommerceOrderStatusFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {
-		return "collection";
+		return FDSEntityFieldTypes.COLLECTION;
 	}
 
 	@Override

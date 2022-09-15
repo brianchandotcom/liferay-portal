@@ -2,6 +2,7 @@ import com.liferay.gradle.plugins.patcher.PatchTask
 
 apply plugin: "com.liferay.patcher"
 
+task jarManifest
 task jarPatched(type: Zip)
 task patch(type: PatchTask)
 
@@ -14,6 +15,13 @@ jar {
 	setActions([])
 
 	dependsOn jarPatched
+	finalizedBy jarManifest
+}
+
+jarManifest {
+	doLast {
+		ant.jar(destfile: jar.archivePath, update: true)
+	}
 }
 
 jarPatched {

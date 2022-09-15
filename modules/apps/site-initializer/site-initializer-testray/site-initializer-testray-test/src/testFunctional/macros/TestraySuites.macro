@@ -3,7 +3,13 @@ definition {
 	macro typeSuiteField {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "Suite Test");
+			value1 = "${suiteName}");
+
+		Type(
+			key_text = "description",
+			locator1 = "TextArea#ANY",
+			value1 = "${suiteDescription}");
+	}
 
 		Click(locator1 = "TestraySuites#ADD_SUITE");
 	}

@@ -14,9 +14,13 @@
 	.type {
 		color: $mainLighten52;
 		font-size: 12px;
+		max-width: 56px;
+		overflow: hidden;
 		position: absolute;
 		right: 16px;
+		text-overflow: ellipsis;
 		top: 50%;
 		transform: translateY(-50%);
+		white-space: nowrap;
 	}
 }

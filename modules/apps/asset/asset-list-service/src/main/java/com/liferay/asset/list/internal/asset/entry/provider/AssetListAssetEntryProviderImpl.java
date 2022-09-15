@@ -334,7 +334,7 @@ public class AssetListAssetEntryProviderImpl
 			unicodeProperties.getProperty("anyAssetType", null), true);
 		long[] availableClassNameIds =
 			AssetRendererFactoryRegistryUtil.getClassNameIds(
-				assetListEntry.getCompanyId());
+				assetListEntry.getCompanyId(), true);
 		long[] classTypeIds = {};
 
 		if (!anyAssetType) {
@@ -1040,7 +1040,7 @@ public class AssetListAssetEntryProviderImpl
 		else {
 			assetEntryQuery.setClassNameIds(
 				AssetRendererFactoryRegistryUtil.getClassNameIds(
-					assetListEntry.getCompanyId()));
+					assetListEntry.getCompanyId(), true));
 		}
 
 		return assetEntryQuery;

@@ -294,6 +294,7 @@ definition {
 		Workflow.viewCompletedTasksTaskNotPresentCP(workflowAssetTitle = "Blogs Entry Title - Site Name");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test AddDDLRecordWithDoubleApproverDefinition {
 		property portal.acceptance = "true";

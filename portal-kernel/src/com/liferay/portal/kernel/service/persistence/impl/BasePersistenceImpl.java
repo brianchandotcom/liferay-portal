@@ -727,7 +727,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public T update(T model) {
+	public T update(T model) throws Exception {
 		if (ReadOnlyTransactionThreadLocal.isReadOnly()) {
 			throw new IllegalStateException(
 				"Update called with read only transaction");
@@ -798,7 +798,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public T update(T model, ServiceContext serviceContext) {
+	public T update(T model, ServiceContext serviceContext) throws Exception {
 		try {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
@@ -985,7 +985,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	 * @param  model the model instance to update
 	 * @return the model instance that was updated
 	 */
-	protected T updateImpl(T model) {
+	protected T updateImpl(T model) throws Exception {
 		throw new UnsupportedOperationException();
 	}
 

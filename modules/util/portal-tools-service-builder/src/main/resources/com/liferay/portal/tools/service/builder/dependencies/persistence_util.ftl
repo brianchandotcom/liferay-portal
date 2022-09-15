@@ -95,14 +95,14 @@ public class ${entity.name}Util {
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
-	public static ${entity.name} update(${entity.name} ${entity.variableName}) {
+	public static ${entity.name} update(${entity.name} ${entity.variableName}) throws Exception {
 		return getPersistence().update(${entity.variableName});
 	}
 
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
-	public static ${entity.name} update(${entity.name} ${entity.variableName}, ServiceContext serviceContext) {
+	public static ${entity.name} update(${entity.name} ${entity.variableName}, ServiceContext serviceContext) throws Exception {
 		return getPersistence().update(${entity.variableName}, serviceContext);
 	}
 

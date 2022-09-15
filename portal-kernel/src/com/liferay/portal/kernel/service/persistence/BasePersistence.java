@@ -291,7 +291,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @param  model the model instance to update
 	 * @return the model instance that was updated
 	 */
-	public T update(T model);
+	public T update(T model) throws Exception;
 
 	/**
 	 * Updates the model instance in the database or adds it if it does not yet
@@ -302,6 +302,6 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @param  serviceContext the service context to be applied
 	 * @return the model instance that was updated
 	 */
-	public T update(T model, ServiceContext serviceContext);
+	public T update(T model, ServiceContext serviceContext) throws Exception;
 
 }

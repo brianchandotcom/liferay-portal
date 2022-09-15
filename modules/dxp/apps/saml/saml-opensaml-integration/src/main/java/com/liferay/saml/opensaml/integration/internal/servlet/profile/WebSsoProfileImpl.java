@@ -2095,9 +2095,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	@Reference
 	private NameIdResolverRegistry _nameIdResolverRegistry;
 
-	@Reference
-	private Portal _portal;
-
 	private SamlConfiguration _samlConfiguration;
 
 	@Reference

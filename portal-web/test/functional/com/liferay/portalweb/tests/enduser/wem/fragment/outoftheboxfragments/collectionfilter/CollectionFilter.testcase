@@ -3826,11 +3826,6 @@ definition {
 				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
 				value1 = "No Results Found");
 
-			AssertTextEquals.assertPartialText(
-				index = "1",
-				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
-				value1 = "Sorry, no results were found.");
-
 			Close.closeWindow();
 
 			PageEditor.publish();
@@ -3860,11 +3855,6 @@ definition {
 				index = "1",
 				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
 				value1 = "No Results Found");
-
-			AssertTextEquals.assertPartialText(
-				index = "1",
-				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
-				value1 = "Sorry, no results were found.");
 		}
 
 		task ("Add the second content page") {
@@ -3934,11 +3924,6 @@ definition {
 				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
 				value1 = "No Results Found");
 
-			AssertTextEquals.assertPartialText(
-				index = "1",
-				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
-				value1 = "Sorry, no results were found.");
-
 			Close.closeWindow();
 
 			PageEditor.publish();
@@ -3971,11 +3956,6 @@ definition {
 				index = "1",
 				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
 				value1 = "No Results Found");
-
-			AssertTextEquals.assertPartialText(
-				index = "1",
-				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
-				value1 = "Sorry, no results were found.");
 		}
 	}
 

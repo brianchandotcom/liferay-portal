@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsUtil;
 
@@ -70,6 +71,21 @@ public class ObjectDefinitionResourceTest
 				}
 			}
 		}
+	}
+
+	@Override
+	@Test
+	public void testGetObjectDefinition() throws Exception {
+		super.testGetObjectDefinition();
+
+		ObjectDefinition objectDefinition = randomObjectDefinition();
+
+		String expectedRestContextPath =
+			(objectDefinition.getSystem() ? "/o/" : "/o/c/") +
+				TextFormatter.formatPlural(objectDefinition.getName());
+
+		Assert.assertEquals(
+			expectedRestContextPath, objectDefinition.getRestContextPath());
 	}
 
 	@Override

@@ -51,8 +51,8 @@ definition {
 				StyleBooks.expandSection(sectionName = "Spacing");
 
 				Type(
-					key_fieldLabel = "Spacer 1",
-					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					ariaLabel = "Spacer 1",
+					locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
 					value1 = "-32px");
 
 				StyleBooks.clickManagementBar();
@@ -1705,8 +1705,8 @@ definition {
 
 				for (var tokenValue : list "1em,2em,3em,Auto") {
 					Type(
-						key_fieldLabel = "Spacer ${i}",
-						locator1 = "TextInput#GENERIC_TEXT_INPUT",
+						ariaLabel = "Spacer ${i}",
+						locator1 = "TextInput#ANY_WITH_AIRA_LABEL",
 						value1 = "${tokenValue}");
 
 					StyleBooks.clickManagementBar();

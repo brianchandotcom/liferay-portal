@@ -25,12 +25,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -63,12 +66,13 @@ public class HeadlessDiscoveryOpenAPIApplication extends Application {
 	@GET
 	@Produces({"application/json", "application/xml"})
 	public Map<String, List<String>> openAPI(
-		@HeaderParam("Accept") String accept) {
+		@HeaderParam("Accept") String accept,
+		@HeaderParam("X-Forwarded-Host") String xForwardedHost,
+		@HeaderParam("X-Forwarded-Proto") String xForwardedProto) {
 
 		Map<String, List<String>> pathsMap = new TreeMap<>();
 
-		String serverURL = StringUtil.removeSubstring(
-			UriInfoUtil.getAbsolutePath(_uriInfo), "/openapi/");
+		String serverURL = _getServerURL(xForwardedHost, xForwardedProto);
 
 		RuntimeDTO runtimeDTO = _jaxrsServiceRuntime.getRuntimeDTO();
 
@@ -120,6 +124,31 @@ public class HeadlessDiscoveryOpenAPIApplication extends Application {
 			}
 		}
 	}
+
+	private String _getServerURL(
+		String xForwardedHost, String xForwardedProto) {
+
+		String absolutePath;
+
+		if ((xForwardedHost != null) && (xForwardedProto != null)) {
+			UriBuilder uriBuilder = _uriInfo.getAbsolutePathBuilder();
+
+			absolutePath = String.valueOf(
+				uriBuilder.host(
+					xForwardedHost
+				).scheme(
+					xForwardedProto
+				).build());
+		}
+		else {
+			absolutePath = UriInfoUtil.getAbsolutePath(_uriInfo);
+		}
+
+		return StringUtil.removeSubstring(absolutePath, "/openapi/");
+	}
+
+	@Context
+	private HttpServletRequest _httpServletRequest;
 
 	@Reference
 	private JaxrsServiceRuntime _jaxrsServiceRuntime;

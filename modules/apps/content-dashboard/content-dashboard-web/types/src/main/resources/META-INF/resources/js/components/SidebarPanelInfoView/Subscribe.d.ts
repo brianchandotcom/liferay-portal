@@ -13,9 +13,10 @@
  */
 
 import React from 'react';
-declare const Subscribe: ({icon, label, url}: IProps) => JSX.Element;
+declare const Subscribe: ({disabled, icon, label, url}: IProps) => JSX.Element;
 interface IProps {
 	children?: React.ReactNode;
+	disabled: boolean;
 	icon: string;
 	label: string;
 	url: RequestInfo;

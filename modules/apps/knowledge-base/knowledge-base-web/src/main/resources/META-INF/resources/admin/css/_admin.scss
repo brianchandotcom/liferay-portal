@@ -1,6 +1,7 @@
 @import 'atlas-variables';
 
 $controlMenuHeight: 56px;
+$toolbarDesktopHeight: 4rem;
 
 .knowledge-base-portlet-admin {
 	.kb-article {
@@ -94,6 +95,18 @@ $controlMenuHeight: 56px;
 
 			.panel {
 				margin-bottom: 0;
+			}
+		}
+
+		.tbar-knowledge-base-edit-article {
+			min-height: 3.5rem;
+
+			@include media-breakpoint-up(lg) {
+				min-height: $toolbarDesktopHeight;
+			}
+
+			.input-text-wrapper .form-validator-stack {
+				display: none;
 			}
 		}
 	}

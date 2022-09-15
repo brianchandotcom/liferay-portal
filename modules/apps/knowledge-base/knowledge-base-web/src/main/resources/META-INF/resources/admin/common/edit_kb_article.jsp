@@ -55,6 +55,25 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 	<aui:input name="redirect" type="hidden" value="<%= editKBArticleDisplayContext.getRedirect() %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 
+	<nav class="component-tbar subnav-tbar-light tbar tbar-knowledge-base-edit-article">
+		<clay:container-fluid>
+			<ul class="tbar-nav">
+				<li class="tbar-item tbar-item-expand">
+					<aui:input autocomplete="off" cssClass="form-control-inline" label="" name="title" placeholder='<%= LanguageUtil.get(request, "title") %>' required="<%= true %>" type="text" value="<%= HtmlUtil.escape(editKBArticleDisplayContext.getKBArticleTitle()) %>" wrapperCssClass="mb-0" />
+				</li>
+				<li class="tbar-item">
+					<div class="tbar-section text-right">
+						<aui:button disabled="<%= editKBArticleDisplayContext.isPending() %>" name="publishButton" type="submit" value="<%= editKBArticleDisplayContext.getPublishButtonLabel() %>" />
+
+						<aui:button primary="<%= false %>" type="submit" value="<%= editKBArticleDisplayContext.getSaveButtonLabel() %>" />
+
+						<aui:button href="<%= editKBArticleDisplayContext.getRedirect() %>" type="cancel" />
+					</div>
+				</li>
+			</ul>
+		</clay:container-fluid>
+	</nav>
+
 	<div class="contextual-sidebar contextual-sidebar-visible sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer">
 		<div class="sidebar-body">
 			<liferay-ui:tabs
@@ -213,10 +232,6 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 
 				<aui:fieldset-group markupView="lexicon">
 					<aui:fieldset>
-						<h1 class="kb-title">
-							<aui:input autocomplete="off" label='<%= LanguageUtil.get(request, "title") %>' name="title" required="<%= true %>" type="text" value="<%= HtmlUtil.escape(editKBArticleDisplayContext.getKBArticleTitle()) %>" />
-						</h1>
-
 						<div class="kb-entity-body">
 							<liferay-editor:editor
 								contents="<%= editKBArticleDisplayContext.getContent() %>"
@@ -242,14 +257,6 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 							<liferay-util:include page="/admin/common/attachments.jsp" servletContext="<%= application %>" />
 						</div>
 					</aui:fieldset>
-
-					<div class="kb-submit-buttons sheet-footer">
-						<aui:button disabled="<%= editKBArticleDisplayContext.isPending() %>" name="publishButton" type="submit" value="<%= editKBArticleDisplayContext.getPublishButtonLabel() %>" />
-
-						<aui:button primary="<%= false %>" type="submit" value="<%= editKBArticleDisplayContext.getSaveButtonLabel() %>" />
-
-						<aui:button href="<%= editKBArticleDisplayContext.getRedirect() %>" type="cancel" />
-					</div>
 				</aui:fieldset-group>
 			</div>
 		</div>

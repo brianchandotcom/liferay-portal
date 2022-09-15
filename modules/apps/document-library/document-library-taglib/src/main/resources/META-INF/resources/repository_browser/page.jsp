@@ -29,15 +29,25 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 			modelVar="repositoryEntry"
 		>
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card
-					verticalCard="<%= repositoryBrowserTagDisplayContext.getVerticalCard(repositoryEntry) %>"
-				/>
+				<c:choose>
+					<c:when test="<%= repositoryBrowserTagDisplayContext.isVerticalCard(repositoryEntry) %>">
+						<clay:vertical-card
+							verticalCard="<%= repositoryBrowserTagDisplayContext.getVerticalCard(repositoryEntry) %>"
+						/>
+					</c:when>
+					<c:otherwise>
+						<clay:horizontal-card
+							horizontalCard="<%= repositoryBrowserTagDisplayContext.getHorizontalCard(repositoryEntry) %>"
+						/>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
 			displayStyle="icon"
 			markupView="lexicon"
+			resultRowSplitter="<%= repositoryBrowserTagDisplayContext.getResultRowSplitter() %>"
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>

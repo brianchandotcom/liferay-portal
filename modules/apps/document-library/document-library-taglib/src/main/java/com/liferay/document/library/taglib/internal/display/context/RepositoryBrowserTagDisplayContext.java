@@ -15,7 +15,11 @@
 package com.liferay.document.library.taglib.internal.display.context;
 
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
+import com.liferay.portal.kernel.dao.search.ResultRow;
+import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
+import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -24,6 +28,9 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 
@@ -44,6 +51,49 @@ public class RepositoryBrowserTagDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_portletRequest = portletRequest;
 		_repositoryId = repositoryId;
+	}
+
+	public HorizontalCard getHorizontalCard(RepositoryEntry repositoryEntry) {
+		if (!(repositoryEntry instanceof Folder)) {
+			throw new IllegalArgumentException(
+				"Invalid repository model " + repositoryEntry);
+		}
+
+		Folder folder = (Folder)repositoryEntry;
+
+		return folder::getName;
+	}
+
+	public ResultRowSplitter getResultRowSplitter() {
+		return resultRows -> {
+			List<ResultRowSplitterEntry> resultRowSplitterEntries =
+				new ArrayList<>();
+
+			List<ResultRow> fileEntryResultRows = new ArrayList<>();
+			List<ResultRow> folderResultRows = new ArrayList<>();
+
+			for (ResultRow resultRow : resultRows) {
+				if (resultRow.getObject() instanceof Folder) {
+					folderResultRows.add(resultRow);
+				}
+				else {
+					fileEntryResultRows.add(resultRow);
+				}
+			}
+
+			if (!folderResultRows.isEmpty()) {
+				resultRowSplitterEntries.add(
+					new ResultRowSplitterEntry("folders", folderResultRows));
+			}
+
+			if (!fileEntryResultRows.isEmpty()) {
+				resultRowSplitterEntries.add(
+					new ResultRowSplitterEntry(
+						"documents", fileEntryResultRows));
+			}
+
+			return resultRowSplitterEntries;
+		};
 	}
 
 	public SearchContainer<Object> getSearchContainer() throws PortalException {
@@ -69,19 +119,23 @@ public class RepositoryBrowserTagDisplayContext {
 
 			return fileEntry::getTitle;
 		}
-		else if (repositoryEntry instanceof FileShortcut) {
+
+		if (repositoryEntry instanceof FileShortcut) {
 			FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
 
 			return fileShortcut::getToTitle;
 		}
-		else if (repositoryEntry instanceof Folder) {
-			Folder folder = (Folder)repositoryEntry;
-
-			return folder::getName;
-		}
 
 		throw new IllegalArgumentException(
 			"Invalid repository model " + repositoryEntry);
+	}
+
+	public boolean isVerticalCard(RepositoryEntry repositoryEntry) {
+		if (repositoryEntry instanceof Folder) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private final long _folderId;

@@ -107,7 +107,7 @@ definition {
 
 		KBArticle.selectFolderThroughPageTreePanel(kbChildFolderName = "KB Child Folder");
 
-		KBArticle.viewDefaultCP();
+		KBArticle.viewDefaultCP(featureFlag = "true");
 	}
 
 	@description = "This test ensures that the KB page tree is opened after opening sections, and it is collapsed after opening the product menu."	

@@ -49,11 +49,12 @@ public class IconDeactivateTag extends IconTag {
 		setMessage("deactivate");
 		setUrl(
 			StringBundler.concat(
-				"javascript:if (confirm('",
+				"Liferay.Util.openConfirmModal({message:'",
 				UnicodeLanguageUtil.get(
 					TagResourceBundleUtil.getResourceBundle(pageContext),
 					"are-you-sure-you-want-to-deactivate-this"),
-				"')) { ", url, " } else { self.focus(); }"));
+				"', onConfirm: (isConfirmed) => {if (isConfirmed) {", url,
+				" } else { self.focus(); }}});"));
 
 		return super.getPage();
 	}

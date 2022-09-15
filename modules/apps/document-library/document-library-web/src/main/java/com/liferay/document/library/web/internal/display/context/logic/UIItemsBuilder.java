@@ -226,11 +226,11 @@ public class UIItemsBuilder {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("if (confirm('");
+		sb.append("Liferay.Util.openConfirmModal({message:'");
 		sb.append(
 			UnicodeLanguageUtil.get(
 				_resourceBundle, "are-you-sure-you-want-to-delete-this"));
-		sb.append("')) {");
+		sb.append("', onConfirm: (isConfirmed) => {if (isConfirmed) {");
 
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
@@ -253,7 +253,7 @@ public class UIItemsBuilder {
 		sb.append(
 			_getSubmitFormJavaScript(Constants.DELETE, portletURL.toString()));
 
-		sb.append("}");
+		sb.append(" }}});");
 
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.DELETE,

@@ -99,7 +99,9 @@ public class IconDeleteTag extends IconTag {
 
 		String url = getUrl();
 
-		if (url.startsWith("javascript:if (confirm('")) {
+		if (url.startsWith(
+				"javascript: Liferay.Util.openConfirmModal({message:'")) {
+
 			return super.getPage();
 		}
 
@@ -117,7 +119,7 @@ public class IconDeleteTag extends IconTag {
 		if (!_trash) {
 			StringBundler sb = new StringBundler(5);
 
-			sb.append("javascript:if (confirm('");
+			sb.append("javascript: Liferay.Util.openConfirmModal({message:'");
 
 			if (Validator.isNotNull(_confirmation)) {
 				sb.append(
@@ -132,9 +134,9 @@ public class IconDeleteTag extends IconTag {
 						_getResourceBundle(), confirmation));
 			}
 
-			sb.append("')) { ");
+			sb.append("', onConfirm: (isConfirmed) => {if (isConfirmed) {");
 			sb.append(url);
-			sb.append(" } else { self.focus(); }");
+			sb.append(" } else { self.focus(); }}});");
 
 			url = sb.toString();
 		}

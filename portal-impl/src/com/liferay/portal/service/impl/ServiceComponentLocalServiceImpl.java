@@ -17,7 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -91,16 +90,6 @@ public class ServiceComponentLocalServiceImpl
 		super.destroy();
 
 		_upgradeStepServiceTracker.close();
-	}
-
-	@Override
-	public void destroyServiceComponent(
-		ServiceComponentConfiguration serviceComponentConfiguration,
-		ClassLoader classLoader) {
-
-		if (PropsValues.CACHE_CLEAR_ON_PLUGIN_UNDEPLOY) {
-			CacheRegistryUtil.clear();
-		}
 	}
 
 	@Override

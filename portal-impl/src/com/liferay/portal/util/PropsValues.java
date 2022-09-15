@@ -304,10 +304,6 @@ public class PropsValues {
 			PropsUtil.get(
 				PropsKeys.BUFFERED_INCREMENT_STANDBY_TIME_UPPER_LIMIT));
 
-	public static final boolean CACHE_CLEAR_ON_PLUGIN_UNDEPLOY =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.CACHE_CLEAR_ON_PLUGIN_UNDEPLOY));
-
 	public static final int CACHE_CONTENT_THRESHOLD_SIZE =
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.CACHE_CONTENT_THRESHOLD_SIZE));

@@ -50,9 +50,6 @@ public class ServiceConfigurationInitializer {
 	}
 
 	public void stop() {
-		_serviceComponentLocalService.destroyServiceComponent(
-			_serviceComponentConfiguration, _classLoader);
-
 		if (_configurationServiceRegistration != null) {
 			_configurationServiceRegistration.unregister();
 

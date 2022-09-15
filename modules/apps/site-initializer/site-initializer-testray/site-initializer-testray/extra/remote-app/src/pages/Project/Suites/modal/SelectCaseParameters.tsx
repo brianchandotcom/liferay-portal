@@ -54,7 +54,7 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 		'/casetypes?fields=id,name'
 	);
 	const {data: components} = useFetch<APIResponse<TestrayComponent>>(
-		'/components?fields=id,name'
+		'/components?fields=id,name&pageSize=1000'
 	);
 	const {data: requirements} = useFetch<APIResponse<TestrayRequirement>>(
 		'/requirements?fields=id,name'

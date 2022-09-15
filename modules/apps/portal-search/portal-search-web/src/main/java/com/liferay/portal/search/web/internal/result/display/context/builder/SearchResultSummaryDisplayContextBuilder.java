@@ -405,6 +405,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 		_buildModifiedByUserName(searchResultSummaryDisplayContext);
 		_buildModifiedByUserPortrait(searchResultSummaryDisplayContext);
 		_buildModifiedDateString(searchResultSummaryDisplayContext);
+		_buildPublishedDateString(searchResultSummaryDisplayContext);
 		_buildUserPortrait(
 			searchResultSummaryDisplayContext, assetEntry, className);
 		_buildViewURL(className, classPK, searchResultSummaryDisplayContext);
@@ -885,6 +886,23 @@ public class SearchResultSummaryDisplayContextBuilder {
 				searchResultSummaryDisplayContext.setModifiedDateString(
 					_formatCreationDate(date));
 				searchResultSummaryDisplayContext.setModifiedDateVisible(true);
+			});
+	}
+
+	private void _buildPublishedDateString(
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
+
+		Optional<String> dateStringOptional = SearchStringUtil.maybe(
+			_getFieldValueString(Field.PUBLISH_DATE));
+
+		Optional<Date> dateOptional = dateStringOptional.map(
+			this::_parseDateStringFieldValue);
+
+		dateOptional.ifPresent(
+			date -> {
+				searchResultSummaryDisplayContext.setPublishedDateString(
+					_formatCreationDate(date));
+				searchResultSummaryDisplayContext.setPublishedDateVisible(true);
 			});
 	}
 

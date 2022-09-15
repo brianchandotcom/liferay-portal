@@ -1,4 +1,4 @@
-@component-name = "portal-upgrades"
+@component-name = "portal-database-upgrade-framework"
 definition {
 
 	property portal.release = "true";

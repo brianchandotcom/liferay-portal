@@ -1,0 +1,41 @@
+@import 'atlas-variables';
+
+$layoutBreadcrumbHeight: 30px;
+$prefix: '.page-editor__layout-breadcrumbs';
+
+html#{$cadmin-selector} {
+	#{$prefix} {
+		bottom: 0;
+		height: $layoutBreadcrumbHeight;
+		left: $sidebarButtonWidth;
+		right: $defaultSidebarContentWidth;
+		transition: left ease $defaultTransitionDuration,
+			right ease $defaultTransitionDuration;
+		z-index: $sidebarZIndex;
+	}
+
+	.page-editor__wrapper--padded-start #{$prefix} {
+		left: $sidebarButtonWidth + $defaultSidebarContentWidth;
+	}
+
+	.page-editor__wrapper--padded-block-end {
+		padding-bottom: $layoutBreadcrumbHeight;
+	}
+
+	.page-editor__wrapper--sidebar--hidden #{$prefix} {
+		left: 0;
+		right: 0;
+	}
+
+	#{$prefix} .breadcrumb {
+		flex-wrap: nowrap;
+	}
+
+	#{$prefix} .breadcrumb-item {
+		flex-shrink: 0;
+
+		&:not(.active) span {
+			color: $gray-600;
+		}
+	}
+}

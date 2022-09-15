@@ -31,6 +31,7 @@ import CommonStylesManager from './CommonStylesManager';
 import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
 import DragPreview from './DragPreview';
 import ItemConfigurationSidebar from './ItemConfigurationSidebar';
+import {LayoutBreadcrumbs} from './LayoutBreadcrumbs';
 import LayoutViewport from './LayoutViewport';
 import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
@@ -64,6 +65,8 @@ export default function App({state}) {
 										<CommonStylesManager />
 
 										<LayoutViewport />
+
+										<LayoutBreadcrumbs />
 
 										<StyleBookContextProvider>
 											<Sidebar />

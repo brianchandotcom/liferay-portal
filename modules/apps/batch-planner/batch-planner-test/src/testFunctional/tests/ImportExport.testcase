@@ -1049,7 +1049,7 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "csv_account_import.csv");
 
 			JobScheduler.addScheduleTrigger(
-				taskExecutorType = "batch-planner",
+				taskExecutorType = "batch-planner-executor-name",
 				triggerName = "Scheduled Account Import",
 				triggerProperties = '''batchPlannerPlanId=${templateId}
 					external-file-url=${filePath}''');
@@ -1062,7 +1062,7 @@ definition {
 		}
 
 		task ("Then the import is triggered automatically at that time") {
-			Refresh();
+			JobScheduler.openJobSchedulerAdmin();
 
 			AssertElementPresent(
 				key_rowEntry = "Scheduled Account Import",

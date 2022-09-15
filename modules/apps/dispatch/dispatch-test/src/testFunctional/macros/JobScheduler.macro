@@ -20,7 +20,7 @@ definition {
 	}
 
 	macro addScheduleTrigger {
-		Click(locator1 = "Button#ADD");
+		Click(locator1 = "Button#NEW");
 
 		MenuItem.click(menuItem = "${taskExecutorType}");
 

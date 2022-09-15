@@ -30,11 +30,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface JSImportmapsConfiguration {
 
-	@Meta.AD(deflt = "false", name = "enable-importmaps", required = false)
+	@Meta.AD(deflt = "true", name = "enable-importmaps", required = false)
 	public boolean enableImportmaps();
 
 	@Meta.AD(
-		deflt = "false", description = "enable-es-module-shims-help",
+		deflt = "true", description = "enable-es-module-shims-help",
 		name = "enable-es-module-shims", required = false
 	)
 	public boolean enableESModuleShims();

@@ -13,6 +13,7 @@
  */
 
 export const ITEM_ACTIVATION_ORIGINS = {
+	breadcrumbs: 'breadcrumbs',
 	contents: 'contents',
 	pageEditor: 'pageEditor',
 	sidebar: 'sidebar',

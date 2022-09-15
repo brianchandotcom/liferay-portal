@@ -11,8 +11,28 @@
 
 <tbody>
 <tr>
-	<td>ADD_SUITE</td>
-	<td>//button[contains(text(),'Add Suite')]</td>
+	<td>SUITE_ON_LIST</td>
+	<td>//tbody//tr[contains(@class,'table-row')]//td[text()='${key_suiteName}']//parent::tr//td[text()='${key_suiteDescription}']//parent::tr//td[text()='${key_suiteType}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CASE_CHECKBOX</td>
+	<td>//div[@class='modal-body']//tr[contains(.,'${key_caseName}')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_SELECT_CASES</td>
+	<td>//div[@class='modal-body']//following::div//button[@title='Select Cases']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SMART_SUITE_PARAMTER_TYPE</td>
+	<td>//div[contains(@class,'listbox')]//label[contains(.,'${key_paramterType}')]/..//div//select//option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SMART_SUITE_ARROW</td>
+	<td>//label[contains(.,'${key_paramterType}')]//ancestor::div[contains(@class,'listbox')]//button[contains(@aria-label,'to ${key_arrowDirection}')]</td>
 	<td></td>
 </tr>
 </tbody>

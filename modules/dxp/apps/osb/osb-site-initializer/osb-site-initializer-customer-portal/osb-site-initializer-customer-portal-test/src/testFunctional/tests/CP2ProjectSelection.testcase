@@ -16,6 +16,8 @@ definition {
 			TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
+
+			CustomerPortal.assignUserToOrganization();
 		}
 
 		task ("Create a new Customer Portal Site") {

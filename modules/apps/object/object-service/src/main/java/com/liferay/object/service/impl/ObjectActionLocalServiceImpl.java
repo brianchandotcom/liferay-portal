@@ -106,6 +106,7 @@ public class ObjectActionLocalServiceImpl
 		objectAction.setObjectActionExecutorKey(objectActionExecutorKey);
 		objectAction.setObjectActionTriggerKey(objectActionTriggerKey);
 		objectAction.setParameters(parametersUnicodeProperties.toString());
+		objectAction.setScriptSyntaxVersion(2);
 		objectAction.setStatus(ObjectActionConstants.STATUS_NEVER_RAN);
 
 		return objectActionPersistence.update(objectAction);

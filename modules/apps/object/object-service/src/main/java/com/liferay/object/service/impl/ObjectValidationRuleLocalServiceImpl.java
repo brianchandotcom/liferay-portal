@@ -94,6 +94,7 @@ public class ObjectValidationRuleLocalServiceImpl
 		objectValidationRule.setErrorLabelMap(errorLabelMap);
 		objectValidationRule.setNameMap(nameMap);
 		objectValidationRule.setScript(script);
+		objectValidationRule.setScriptSyntaxVersion(2);
 
 		return objectValidationRulePersistence.update(objectValidationRule);
 	}

@@ -10,27 +10,19 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.display.template.util.PortletDisplayTemplateUtil;
-import com.liferay.site.navigation.model.SiteNavigationMenuItem;
-import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.site.navigation.taglib.internal.util.NavItemUtil;
-import com.liferay.site.navigation.taglib.internal.util.SiteNavigationMenuNavItemImpl;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -248,86 +240,6 @@ public class NavigationMenuTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-	}
-
-	private List<NavItem> _getBranchNavItems() throws PortalException {
-		HttpServletRequest httpServletRequest = getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		long siteNavigationMenuItemId = _getRelativeSiteNavigationMenuItemId(
-			themeDisplay.getLayout());
-
-		SiteNavigationMenuItem siteNavigationMenuItem =
-			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
-				siteNavigationMenuItemId);
-
-		if (siteNavigationMenuItem == null) {
-			return new ArrayList<>();
-		}
-
-		SiteNavigationMenuItem originalSiteNavigationMenuItem =
-			siteNavigationMenuItem;
-
-		List<SiteNavigationMenuItem> ancestorSiteNavigationMenuItems =
-			new ArrayList<>();
-
-		while (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() !=
-					0) {
-
-			siteNavigationMenuItem =
-				SiteNavigationMenuItemLocalServiceUtil.
-					getSiteNavigationMenuItem(
-						siteNavigationMenuItem.
-							getParentSiteNavigationMenuItemId());
-
-			ancestorSiteNavigationMenuItems.add(siteNavigationMenuItem);
-		}
-
-		List<NavItem> navItems = new ArrayList<>(
-			ancestorSiteNavigationMenuItems.size() + 1);
-
-		for (int i = ancestorSiteNavigationMenuItems.size() - 1; i >= 0; i--) {
-			SiteNavigationMenuItem ancestorSiteNavigationMenuItem =
-				ancestorSiteNavigationMenuItems.get(i);
-
-			navItems.add(
-				new SiteNavigationMenuNavItemImpl(
-					httpServletRequest, themeDisplay,
-					ancestorSiteNavigationMenuItem));
-		}
-
-		navItems.add(
-			new SiteNavigationMenuNavItemImpl(
-				httpServletRequest, themeDisplay,
-				originalSiteNavigationMenuItem));
-
-		return navItems;
-	}
-
-	private long _getRelativeSiteNavigationMenuItemId(Layout layout) {
-		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
-				_siteNavigationMenuId);
-
-		for (SiteNavigationMenuItem siteNavigationMenuItem :
-				siteNavigationMenuItems) {
-
-			UnicodeProperties unicodeProperties =
-				UnicodePropertiesBuilder.fastLoad(
-					siteNavigationMenuItem.getTypeSettings()
-				).build();
-
-			String itemLayoutUuid = unicodeProperties.getProperty("layoutUuid");
-
-			if (Objects.equals(layout.getUuid(), itemLayoutUuid)) {
-				return siteNavigationMenuItem.getSiteNavigationMenuItemId();
-			}
-		}
-
-		return 0;
 	}
 
 	private static final String _PAGE = "/navigation/page.jsp";

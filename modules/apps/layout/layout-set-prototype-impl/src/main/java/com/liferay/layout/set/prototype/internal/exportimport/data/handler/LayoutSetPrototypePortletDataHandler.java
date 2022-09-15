@@ -152,6 +152,6 @@ public class LayoutSetPrototypePortletDataHandler
 	protected LayoutSetPrototypeLocalService layoutSetPrototypeLocalService;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
+	protected ModuleServiceLifecycle moduleServiceLifecycle;
 
 }

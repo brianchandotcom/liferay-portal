@@ -26,13 +26,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SMART_SUITE_PARAMTER_TYPE</td>
-	<td>//div[contains(@class,'listbox')]//label[contains(.,'${key_paramterType}')]/..//div//select//option</td>
+	<td>SMART_SUITE_PARAMETER_TYPE</td>
+	<td>//div[contains(@class,'listbox')]//label[contains(.,'${key_parameterType}')]/..//div//select//option</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SMART_SUITE_ARROW</td>
-	<td>//label[contains(.,'${key_paramterType}')]//ancestor::div[contains(@class,'listbox')]//button[contains(@aria-label,'to ${key_arrowDirection}')]</td>
+	<td>//label[contains(.,'${key_parameterType}')]//ancestor::div[contains(@class,'listbox')]//button[contains(@aria-label,'to ${key_arrowDirection}')]</td>
 	<td></td>
 </tr>
 </tbody>

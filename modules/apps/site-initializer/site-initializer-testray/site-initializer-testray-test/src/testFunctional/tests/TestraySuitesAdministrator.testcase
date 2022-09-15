@@ -41,33 +41,51 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160627 - Verify if as an Administrator I am able to edit suites"
+	@description = "This is a test for LPS-162816 - Verify that as an Administrator I can delete a smart suite"
 	@priority = "4"
-	test AdminCanEditSuite {
-		task ("Given that the user goes to add a new suite") {
+	test AdminCanDeleteSmartSuite {
+		task ("Given that the user goes to add a new component") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+
+			Testray.addNewComponent(componentName = "Components_1 Project");
+
+			TestrayManage.closeModalInOptions();
+		}
+
+		task ("And given that the user adds a new requirement") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
+			Testray.projectTabNavigator(navTabName = "Requirements");
+
+			TestrayRequirements.addRequirement(
+				componentId = "Components_1 Project",
+				linkTitle = "ATF_Requirements Link Title",
+				linkURL = "https://www.google.com",
+				requirementDescription = "ATF_Requirements Description",
+				requirementName = "ATF_Requirements Summary");
+		}
+
+		task ("And given that the user adds a Smart Suite") {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.addSuite(
-				suiteName = "ATF_Suites_1 Suite",
-				suiteDescription = "ATF_Suites_1 Suite Description");
+				caseType = "Automated Functional Test",
+				mainComponent = "Tags",
+				priorityNumber = "3",
+				smartSuite = "true",
+				suiteDescription = "ATF_Suites_1 Suite Description",
+				suiteName = "ATF_Suites_1 Suite");
 		}
 
-		task ("When the user edits the created suite") {
-			TestraySuites.editSuite(
-				suiteName = "ATF_Suites_1 Suite",
-				newName = "ATF_Suites_1 Suite Edited",
-				newDescription = "ATF_Suites_1 Suite Description Edited");
+		task ("When the smart suite is deleted") {
+			TestraySuites.deleteSuite(suiteName = "ATF_Suites_1 Suite");
 		}
 
-		task ("then the suite should appear on the list with the new informations") {
-			TestraySuites.verifySuite(
-				suiteName = "ATF_Suites_1 Suite Edited",
-				suiteDescription = "ATF_Suites_1 Suite Description Edited",
-				suiteType = "Static");
+		task ("Then the suite is not displayed anymore") {
+			Testray.assertItemNotPresent(itemName = "ATF_Suites_1 Suite");
 		}
-
 	}
 
 	@description = "This is a test for LPS-160626 - Verify if as an Administrator I am able delete a suite"
@@ -79,8 +97,8 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.addSuite(
-				suiteName = "ATF_Suites_1 Suite",
-				suiteDescription = "ATF_Suites_1 Suite Description");
+				suiteDescription = "ATF_Suites_1 Suite Description",
+				suiteName = "ATF_Suites_1 Suite");
 		}
 
 		task ("When the user deletes the created suite") {
@@ -90,7 +108,6 @@ definition {
 		task ("Then the suite is not displayed anymore") {
 			Testray.assertItemNotPresent(itemName = "ATF_Suites_1 Suite");
 		}
-
 	}
 
 	@description = "This is a test for LPS-160574 - Verify if as an Administrator I am able to design Suites"
@@ -113,9 +130,9 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.addSuite(
-				suiteName = "ATF_Suites_1 Suite",
+				caseName = "ATF_Suites Case",
 				suiteDescription = "ATF_Suites_1 Suite Description",
-				caseName = "ATF_Suites Case");
+				suiteName = "ATF_Suites_1 Suite");
 		}
 
 		task ("Then the selected case is displayed on suite details") {
@@ -126,9 +143,10 @@ definition {
 	}
 
 	@description = "This is a test for LPS-162815 - Verify that as an Administrator I can edit and update a smart suite"
-	@priority = "4"
 	@ignore = "true"
+	@priority = "4"
 	test AdminCanEditSmartSuite {
+
 		// This test is blocked by LPS-163214
 
 		task ("Given that the user goes to add a new component") {
@@ -136,7 +154,7 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
 
-			Testray.addNewComponent(componentName = "Components_1 Project");	
+			Testray.addNewComponent(componentName = "Components_1 Project");
 
 			TestrayManage.closeModalInOptions();
 		}
@@ -158,63 +176,44 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.addSuite(
-				suiteName = "ATF_Suites_1 Suite",
-				suiteDescription = "ATF_Suites_1 Suite Description",
-				smartSuite = "true",
 				caseType = "Automated Functional Test",
 				mainComponent = "Tags",
-				priorityNumber = "3");
+				priorityNumber = "3",
+				smartSuite = "true",
+				suiteDescription = "ATF_Suites_1 Suite Description",
+				suiteName = "ATF_Suites_1 Suite");
 		}
 
 		// Missing the edit steps
+
 	}
 
-	@description = "This is a test for LPS-162816 - Verify that as an Administrator I can delete a smart suite"
+	@description = "This is a test for LPS-160627 - Verify if as an Administrator I am able to edit suites"
 	@priority = "4"
-	test AdminCanDeleteSmartSuite {
-		task ("Given that the user goes to add a new component") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
-
-			Testray.addNewComponent(componentName = "Components_1 Project");	
-
-			TestrayManage.closeModalInOptions();
-		}
-
-		task ("And given that the user adds a new requirement") {
+	test AdminCanEditSuite {
+		task ("Given that the user goes to add a new suite") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-			Testray.projectTabNavigator(navTabName = "Requirements");
-
-			TestrayRequirements.addRequirement(
-				componentId = "Components_1 Project",
-				linkTitle = "ATF_Requirements Link Title",
-				linkURL = "https://www.google.com",
-				requirementDescription = "ATF_Requirements Description",
-				requirementName = "ATF_Requirements Summary");
-		}
-
-		task ("And given that the user adds a Smart Suite") {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.addSuite(
-				suiteName = "ATF_Suites_1 Suite",
 				suiteDescription = "ATF_Suites_1 Suite Description",
-				smartSuite = "true",
-				caseType = "Automated Functional Test",
-				mainComponent = "Tags",
-				priorityNumber = "3");
+				suiteName = "ATF_Suites_1 Suite");
 		}
 
-		task ("When the smart suite is deleted") {
-			TestraySuites.deleteSuite(suiteName = "ATF_Suites_1 Suite");
+		task ("When the user edits the created suite") {
+			TestraySuites.editSuite(
+				newDescription = "ATF_Suites_1 Suite Description Edited",
+				newName = "ATF_Suites_1 Suite Edited",
+				suiteName = "ATF_Suites_1 Suite");
 		}
 
-		task ("Then the suite is not displayed anymore") {
-			Testray.assertItemNotPresent(itemName = "ATF_Suites_1 Suite");
+		task ("then the suite should appear on the list with the new informations") {
+			TestraySuites.verifySuite(
+				suiteDescription = "ATF_Suites_1 Suite Description Edited",
+				suiteName = "ATF_Suites_1 Suite Edited",
+				suiteType = "Static");
 		}
-
 	}
 
 }

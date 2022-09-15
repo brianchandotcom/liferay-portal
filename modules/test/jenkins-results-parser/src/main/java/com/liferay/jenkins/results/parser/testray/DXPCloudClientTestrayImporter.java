@@ -171,6 +171,80 @@ public class DXPCloudClientTestrayImporter {
 		return varValue;
 	}
 
+	private static Element _getPoshiLogAttachmentElement(File testDir) {
+		if (_testrayS3Bucket == null) {
+			return null;
+		}
+
+		Element systemOutAttachmentElement = _getSystemOutAttachmentElement();
+
+		if (systemOutAttachmentElement == null) {
+			return null;
+		}
+
+		File systemOutGzipFile = new File(
+			_projectDir, "test-results/system-out.txt.gz");
+
+		if (!systemOutGzipFile.exists()) {
+			return null;
+		}
+
+		File poshiLogGzipFile = new File(testDir, "poshi-log.txt.gz");
+
+		String key = JenkinsResultsParserUtil.combine(
+			_getRelativeURLPath(), "/",
+			JenkinsResultsParserUtil.getPathRelativeTo(
+				poshiLogGzipFile, _projectDir));
+
+		try {
+			String systemOut = JenkinsResultsParserUtil.read(systemOutGzipFile);
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(systemOut)) {
+				return null;
+			}
+
+			String testName = testDir.getName();
+
+			testName = testName.replaceAll("_", "#");
+
+			String open = "###\n### " + testName + "\n###";
+
+			int x = systemOut.indexOf(open);
+
+			if (x == -1) {
+				return null;
+			}
+
+			int y = systemOut.indexOf("###", x + open.length());
+
+			if (y == -1) {
+				y = systemOut.length();
+			}
+
+			File poshiLogFile = new File(testDir, "poshi-log.txt");
+
+			JenkinsResultsParserUtil.write(
+				poshiLogFile, systemOut.substring(x, y));
+
+			JenkinsResultsParserUtil.gzip(poshiLogFile, poshiLogGzipFile);
+
+			_testrayS3Bucket.createTestrayS3Object(key, poshiLogGzipFile);
+		}
+		catch (IOException ioException) {
+			return null;
+		}
+
+		Element attachmentElement = Dom4JUtil.getNewElement("attachment");
+
+		attachmentElement.addAttribute("name", "Poshi Log");
+		attachmentElement.addAttribute(
+			"url",
+			_testrayS3Bucket.getTestrayS3BaseURL() + key + "?authuser=0");
+		attachmentElement.addAttribute("value", key + "?authuser=0");
+
+		return attachmentElement;
+	}
+
 	private static Element _getPropertiesElement(Properties properties) {
 		Element element = Dom4JUtil.getNewElement("properties");
 
@@ -423,6 +497,13 @@ public class DXPCloudClientTestrayImporter {
 					_testrayServerURL, "/reports/", _testrayReleaseName,
 					"/logs/", key, "?authuser=0"));
 			attachmentElement.addAttribute("value", key + "?authuser=0");
+		}
+
+		Element poshiLogAttachmentElement = _getPoshiLogAttachmentElement(
+			testDir);
+
+		if (poshiLogAttachmentElement != null) {
+			attachmentsElement.add(poshiLogAttachmentElement);
 		}
 
 		Element systemErrAttachmentElement = _getSystemErrAttachmentElement();

@@ -695,9 +695,9 @@ definition {
 				assetLibraryId = "${assetLibraryId}",
 				externalReferenceCode = "subfolder-erc");
 
-			TestUtils.assertPartialEquals(
-				actual = "${response}",
-				expected = "No JournalFolder exists with the key");
+			ObjectDefinitionAPI.assertStatusInResponse(
+				expectedValue = "NOT_FOUND",
+				responseToParse = "${response}");
 
 			HeadlessWebcontentFolderAPI.assertProperTotalCountOfStructuredContentFoldersInAssetLibrary(
 				assetLibraryId = "${assetLibraryId}",

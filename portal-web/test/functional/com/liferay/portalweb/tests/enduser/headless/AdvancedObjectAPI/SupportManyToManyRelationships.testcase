@@ -1081,7 +1081,7 @@ definition {
 				nestedField = "universitiesSubjects",
 				objects = "universities");
 
-			ObjectDefinitionAPI.assertResponseMessageAfterDeletingObjectEntry(
+			ObjectDefinitionAPI.assertStatusInResponse(
 				expectedValue = "BAD_REQUEST",
 				responseToParse = "${responseToParse}");
 
@@ -1092,6 +1092,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "5"
 	test RelationshipEnpointGetsDeletedWhenObjectDefinitionDeleted {
 		property portal.acceptance = "true";
@@ -1140,8 +1141,8 @@ definition {
 		}
 
 		task ("Then I receive an error message of relationship not present") {
-			ObjectDefinitionAPI.assertResponseIncludesErrorMessage(
-				expectedValue = "No ObjectRelationship exists with the key {objectDefinitionId1=${staticObjectId1}, name=${relationshipName}}",
+			ObjectDefinitionAPI.assertStatusInResponse(
+				expectedValue = "NOT_FOUND",
 				responseToParse = "${responseToParse}");
 		}
 	}

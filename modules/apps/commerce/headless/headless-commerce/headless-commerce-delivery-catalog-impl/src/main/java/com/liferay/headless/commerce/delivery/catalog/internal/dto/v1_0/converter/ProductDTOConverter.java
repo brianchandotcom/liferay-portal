@@ -72,17 +72,17 @@ public class ProductDTOConverter
 		Product product = new Product() {
 			{
 				createDate = cpDefinition.getCreateDate();
-				description = cpDefinition.getDescription();
+				description = cpDefinition.getDescription(languageId);
 				expando = expandoBridge.getAttributes();
 				id = cpDefinition.getCPDefinitionId();
 				metaDescription = cpDefinition.getMetaDescription(languageId);
 				metaKeyword = cpDefinition.getMetaKeywords(languageId);
 				metaTitle = cpDefinition.getMetaTitle(languageId);
 				modifiedDate = cpDefinition.getModifiedDate();
-				name = cpDefinition.getName();
+				name = cpDefinition.getName(languageId);
 				productId = cpDefinition.getCProductId();
 				productType = cpDefinition.getProductTypeName();
-				shortDescription = cpDefinition.getShortDescription();
+				shortDescription = cpDefinition.getShortDescription(languageId);
 				slug = cpDefinition.getURL(languageId);
 				tags = _getTags(cpDefinition);
 				urls = LanguageUtils.getLanguageIdMap(

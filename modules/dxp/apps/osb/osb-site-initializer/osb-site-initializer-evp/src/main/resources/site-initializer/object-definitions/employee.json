@@ -58,24 +58,6 @@
 			"type": "String"
 		},
 		{
-			"DBType": "Long",
-			"businessType": "LongInteger",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Employee User Id"
-			},
-			"name": "employeeUserId",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Long"
-		},
-		{
 			"DBType": "Integer",
 			"businessType": "Integer",
 			"defaultValue": "",
@@ -182,24 +164,6 @@
 			"state": false,
 			"system": true,
 			"type": "String"
-		},
-		{
-			"DBType": "Long",
-			"businessType": "LongInteger",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Subsidiary EVP Division Id"
-			},
-			"name": "subsidiaryEVPDivisionId",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Long"
 		},
 		{
 			"DBType": "String",

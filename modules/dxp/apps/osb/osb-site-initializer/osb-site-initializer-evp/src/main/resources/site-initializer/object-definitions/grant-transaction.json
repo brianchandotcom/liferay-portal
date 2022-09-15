@@ -121,24 +121,6 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en_US": "EVP Grant Request Id"
-			},
-			"name": "evpGrantRequestId",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Long"
-		},
-		{
-			"DBType": "Long",
-			"businessType": "LongInteger",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
 				"en_US": "File Entry Id"
 			},
 			"name": "fileEntryId",

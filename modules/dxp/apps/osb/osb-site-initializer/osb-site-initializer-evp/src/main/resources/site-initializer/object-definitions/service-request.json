@@ -120,100 +120,6 @@
 			"type": "Integer"
 		},
 		{
-			"DBType": "Integer",
-			"businessType": "Integer",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Contact Benefit"
-			},
-			"name": "contactBenefit",
-			"objectFieldSettings": [
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "Integer"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Contact Comments"
-			},
-			"name": "contactComments",
-			"objectFieldSettings": [
-				{
-					"name": "showCounter",
-					"value": "false"
-				}
-			],
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "String"
-		},
-		{
-			"DBType": "Long",
-			"businessType": "LongInteger",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Contact Email AddressId"
-			},
-			"name": "contactEmailAddressId",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Long"
-		},
-		{
-			"DBType": "Long",
-			"businessType": "LongInteger",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Contact SPhoneId"
-			},
-			"name": "contactPhoneId",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Long"
-		},
-		{
-			"DBType": "Long",
-			"businessType": "LongInteger",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Contact UserId"
-			},
-			"name": "contactUserId",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
-			"type": "Long"
-		},
-		{
 			"DBType": "Date",
 			"businessType": "Date",
 			"defaultValue": "",
@@ -407,24 +313,6 @@
 			"required": false,
 			"state": false,
 			"system": true,
-			"type": "Long"
-		},
-		{
-			"DBType": "Long",
-			"businessType": "LongInteger",
-			"defaultValue": "",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Manager User Id"
-			},
-			"name": "managerUserId",
-			"objectFieldSettings": [
-			],
-			"required": true,
-			"state": false,
-			"system": false,
 			"type": "Long"
 		},
 		{

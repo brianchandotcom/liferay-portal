@@ -15,6 +15,8 @@
 package com.liferay.commerce.inventory.internal.upgrade.v2_6_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -30,13 +32,6 @@ public class CommerceInventoryWarehouseUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType("CIWarehouse", "description", "STRING null");
-		alterColumnType("CIWarehouse", "name", "STRING null");
-
-		_updateLocalizedFileds();
-	}
-
-	private void _updateLocalizedFileds() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 			"update CIWarehouse set description = ?, name = ? where " +
 			"CIWarehouseId = ?");
@@ -88,6 +83,16 @@ public class CommerceInventoryWarehouseUpgradeProcess extends UpgradeProcess {
 				preparedStatement.execute();
 			}
 		}
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.alterColumnType(
+				"CIWarehouse", "description", "STRING null"),
+			UpgradeProcessFactory.alterColumnType(
+				"CIWarehouse", "name", "STRING null")
+		};
 	}
 
 }

@@ -1,9 +1,14 @@
 definition {
 
 	macro addCP {
-		Navigator.gotoNavItem(navItem = "Templates");
+		if (isSet(addByCenterButton)) {
+			Button.click(button = "New");
+		}
+		else {
+			Navigator.gotoNavItem(navItem = "Templates");
 
-		LexiconEntry.gotoAdd();
+			LexiconEntry.gotoAdd();
+		}
 
 		PortletEntry.inputTitle(title = "${kbTemplateTitle}");
 

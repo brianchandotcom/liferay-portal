@@ -22,7 +22,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext
 
 <div id="<%= liferayPortletResponse.getNamespace() %>-layout-finder">
 	<react:component
-		module="js/LayoutFinder.es"
+		module="js/LayoutFinder"
 		props="<%= layoutsTreeDisplayContext.getLayoutFinderData() %>"
 		servletContext="<%= application %>"
 	/>
@@ -31,7 +31,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext
 <div id="<portlet:namespace />layoutsTree">
 	<div id="<%= liferayPortletResponse.getNamespace() %>-page-type">
 		<react:component
-			module="js/PageTypeSelector.es"
+			module="js/PageTypeSelector"
 			props="<%= layoutsTreeDisplayContext.getPageTypeSelectorData() %>"
 			servletContext="<%= application %>"
 		/>
@@ -41,7 +41,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext
 		<c:when test="<%= layoutsTreeDisplayContext.isSiteNavigationMenu() %>">
 			<div>
 				<react:component
-					module="js/NavigationMenuItemsTree.es"
+					module="js/NavigationMenuItemsTree"
 					props="<%= layoutsTreeDisplayContext.getSiteNavigationMenuData() %>"
 					servletContext="<%= application %>"
 				/>

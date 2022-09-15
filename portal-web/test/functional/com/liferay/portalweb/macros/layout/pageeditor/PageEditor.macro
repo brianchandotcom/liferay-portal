@@ -1199,10 +1199,13 @@ definition {
 
 	macro configureFragment {
 		if (isSet(alignment)) {
-			Select(
-				key_fieldLabel = "Text Align",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${alignment}");
+			var alignment = StringUtil.replace("${alignment}", " ", "-");
+
+			var alignment = StringUtil.lowerCase("${alignment}");
+
+			Click(
+				key_text = "${alignment}",
+				locator1 = "PageEditor#TEXT_ALIGN_ICON");
 
 			PageEditor.waitForAutoSave();
 		}
@@ -1225,8 +1228,8 @@ definition {
 
 		if (isSet(borderRadius)) {
 			Select(
-				key_fieldLabel = "Border Radius",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
+				key_text = "corner-radius",
+				locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON",
 				value1 = "${borderRadius}");
 
 			PageEditor.waitForAutoSave();
@@ -1264,8 +1267,8 @@ definition {
 
 		if (isSet(boxShadow)) {
 			Select(
-				key_fieldLabel = "Shadow",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
+				key_text = "shadow",
+				locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON",
 				value1 = "${boxShadow}");
 
 			PageEditor.waitForAutoSave();
@@ -2978,8 +2981,8 @@ definition {
 
 			if (isSet(borderRadius)) {
 				Select(
-					key_fieldLabel = "Border Radius",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
+					key_text = "corner-radius",
+					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON",
 					value1 = "${borderRadius}");
 
 				PageEditor.waitForAutoSave();
@@ -2996,8 +2999,8 @@ definition {
 
 			if (isSet(boxShadow)) {
 				Select(
-					key_fieldLabel = "Shadow",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
+					key_text = "shadow",
+					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON",
 					value1 = "${boxShadow}");
 
 				PageEditor.waitForAutoSave();
@@ -3306,8 +3309,8 @@ definition {
 
 			if (isSet(borderRadius)) {
 				Select(
-					key_fieldLabel = "Border Radius",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
+					key_text = "corner-radius",
+					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON",
 					value1 = "${borderRadius}");
 
 				PageEditor.waitForAutoSave();
@@ -3324,8 +3327,8 @@ definition {
 
 			if (isSet(boxShadow)) {
 				Select(
-					key_fieldLabel = "Shadow",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
+					key_text = "shadow",
+					locator1 = "Select#GENERIC_SELECT_FIELD_WITH_ICON",
 					value1 = "${boxShadow}");
 
 				PageEditor.waitForAutoSave();

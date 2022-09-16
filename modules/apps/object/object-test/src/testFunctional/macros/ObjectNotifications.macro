@@ -33,6 +33,16 @@ definition {
 			value1 = "${emailBody}");
 	}
 
+	macro deleteNotificationTemplate {
+		Click(
+			key_objectLabel = "${templateName}",
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro editNotificationTemplate {
 		ObjectNotifications.goToNotificationTemplate(notificationTemplateName = "${notificationTemplateName}");
 
@@ -86,6 +96,12 @@ definition {
 
 	macro viewNotificationTemplate {
 		AssertElementPresent(
+			key_name = "${notificationTemplateName}",
+			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+	}
+
+	macro viewNotificationTemplateNotPresent {
+		AssertElementNotPresent(
 			key_name = "${notificationTemplateName}",
 			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 	}

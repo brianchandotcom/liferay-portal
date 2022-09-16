@@ -71,11 +71,13 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_defaultAttributeResolver, "_beanProperties", _beanProperties);
 
-		_defaultAttributeResolver.setGroupLocalService(groupLocalService);
+		ReflectionTestUtil.setFieldValue(
+			_defaultAttributeResolver, "_groupLocalService", groupLocalService);
 
 		_metadataManager = Mockito.mock(MetadataManager.class);
 
-		_defaultAttributeResolver.setMetadataManager(_metadataManager);
+		ReflectionTestUtil.setFieldValue(
+			_defaultAttributeResolver, "_metadataManager", _metadataManager);
 
 		Mockito.when(
 			_metadataManager.isAttributesEnabled(Mockito.eq(SP_ENTITY_ID))
@@ -95,7 +97,8 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 
 		_roleLocalService = Mockito.mock(RoleLocalService.class);
 
-		_defaultAttributeResolver.setRoleLocalService(_roleLocalService);
+		ReflectionTestUtil.setFieldValue(
+			_defaultAttributeResolver, "_roleLocalService", _roleLocalService);
 
 		_messageContext = new MessageContext<>();
 
@@ -107,13 +110,15 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 		_userGroupGroupRoleLocalService = Mockito.mock(
 			UserGroupGroupRoleLocalService.class);
 
-		_defaultAttributeResolver.setUserGroupGroupRoleLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_defaultAttributeResolver, "_userGroupGroupRoleLocalService",
 			_userGroupGroupRoleLocalService);
 
 		_userGroupRoleLocalService = Mockito.mock(
 			UserGroupRoleLocalService.class);
 
-		_defaultAttributeResolver.setUserGroupRoleLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_defaultAttributeResolver, "_userGroupRoleLocalService",
 			_userGroupRoleLocalService);
 	}
 

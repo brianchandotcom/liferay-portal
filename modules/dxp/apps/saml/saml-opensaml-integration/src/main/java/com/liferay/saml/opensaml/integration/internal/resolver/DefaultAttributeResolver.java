@@ -132,35 +132,6 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setMetadataManager(MetadataManager metadataManager) {
-		_metadataManager = metadataManager;
-	}
-
-	@Reference(unbind = "-")
-	public void setRoleLocalService(RoleLocalService roleLocalService) {
-		_roleLocalService = roleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setUserGroupGroupRoleLocalService(
-		UserGroupGroupRoleLocalService userGroupGroupRoleLocalService) {
-
-		_userGroupGroupRoleLocalService = userGroupGroupRoleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setUserGroupRoleLocalService(
-		UserGroupRoleLocalService userGroupRoleLocalService) {
-
-		_userGroupRoleLocalService = userGroupRoleLocalService;
-	}
-
 	protected String[] getAttributeNames(String entityId) {
 		return _metadataManager.getAttributeNames(entityId);
 	}
@@ -727,10 +698,19 @@ public class DefaultAttributeResolver implements AttributeResolver {
 	@Reference
 	private BeanProperties _beanProperties;
 
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private MetadataManager _metadataManager;
+
+	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
 	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
+
+	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

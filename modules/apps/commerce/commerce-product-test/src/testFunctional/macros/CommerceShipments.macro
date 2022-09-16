@@ -115,7 +115,7 @@ definition {
 
 		Button.click(button = "Submit");
 
-		Refresh();
+		Refresh.refreshNoSPARefresh();
 
 		SelectFrameTop();
 	}

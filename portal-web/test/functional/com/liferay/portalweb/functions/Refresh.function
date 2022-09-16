@@ -13,4 +13,14 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function refreshNoSPARefresh {
+		selenium.refresh();
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 }

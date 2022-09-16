@@ -213,7 +213,10 @@ public class KBAdminNavigationDisplayContext {
 				).put(
 					"navigationItems", navigationItemsJSONArray
 				).put(
-					"selectedItemId", _getSelectedItemId()
+					"selectedItemId",
+					ParamUtil.getLong(
+						_httpServletRequest, "selectedItemId",
+						KBFolderConstants.DEFAULT_PARENT_FOLDER_ID)
 				).put(
 					"title",
 					LanguageUtil.get(
@@ -387,6 +390,8 @@ public class KBAdminNavigationDisplayContext {
 						"parentResourceClassNameId", kbFolder.getClassNameId()
 					).setParameter(
 						"parentResourcePrimKey", kbFolder.getKbFolderId()
+					).setParameter(
+						"selectedItemId", kbFolder.getKbFolderId()
 					).buildString()
 				).put(
 					"id", kbFolder.getKbFolderId()
@@ -457,14 +462,6 @@ public class KBAdminNavigationDisplayContext {
 		}
 
 		return navigationItemsJSONArray;
-	}
-
-	private long _getSelectedItemId() {
-		return ParamUtil.getLong(
-			_httpServletRequest, "parentResourcePrimKey",
-			ParamUtil.getLong(
-				_httpServletRequest, "selectedItemId",
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 	}
 
 	private final HttpServletRequest _httpServletRequest;

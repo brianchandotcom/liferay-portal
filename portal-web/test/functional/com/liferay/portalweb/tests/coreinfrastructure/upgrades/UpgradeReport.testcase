@@ -34,6 +34,15 @@ definition {
 		}
 	}
 
+	@description = "LPS-154683: The Upgrade Report Document Library Store and storage size."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DocumentLibraryLogged {
+
+		// TODO The Upgrade Report should list which Document Library Store is being used and the amount of storage it contains in bytes
+
+	}
+
 	@description = "LPS-154683: Upgrade Report shows errors"
 	@priority = "4"
 	test ErrorsLogged {
@@ -55,6 +64,15 @@ definition {
 				fail("Upgrade report does not contain expected errors.");
 			}
 		}
+	}
+
+	@description = "LPS-154683: The Upgrade Report logs the longest running upgrade processes."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test LongestProcessesLogged {
+
+		// TODO The Upgrade Report should list the 20 longest running upgrade process in the upgrade report in descending order
+
 	}
 
 	@description = "LPS-154683: Upgrade Report is created when property is set to true"
@@ -96,6 +114,42 @@ definition {
 				fail("Upgrade report found in ${liferayHome}/tools/portal-tools-db-upgrade-client/reports/");
 			}
 		}
+	}
+
+	@description = "LPS-154683: The Upgrade Report should not be deleted on additional upgrade runs."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ReportPersistThroughAdditionalUpgradeRuns {
+
+		// TODO Running the upgrade report more than once should not delete any old upgrade reports, they should be named based on time generated
+
+	}
+
+	@description = "LPS-154683: The Upgrade Report logs the row counts for each table."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test RowCountsLogged {
+
+		// TODO The Upgrade Report should list the initial and final row counts for each database table sorted by initial row in descending order
+
+	}
+
+	@description = "LPS-154683: The Upgrade Report logs portal and schema versions."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SchemaVersionsLogged {
+
+		// TODO The Upgrade Report should list the initial, expected, and final portal versions and schema versions
+
+	}
+
+	@description = "LPS-154683: The Upgrade Report logs total upgrade runtime."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TotalRuntimeLogged {
+
+		// TODO The Upgrade Report should give the total runtime of the upgrade
+
 	}
 
 	@description = "LPS-154683: Upgrade Report shows warnings"

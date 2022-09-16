@@ -375,11 +375,6 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private LayoutPageTemplateEntry _addStagedModel(
 			PortletDataContext portletDataContext,
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
@@ -548,6 +543,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 	private StagedModelRepository<LayoutPageTemplateEntry>
 		_stagedModelRepository;
 
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

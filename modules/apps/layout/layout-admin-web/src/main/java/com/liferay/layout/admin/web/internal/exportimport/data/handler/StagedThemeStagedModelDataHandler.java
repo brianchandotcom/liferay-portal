@@ -127,11 +127,7 @@ public class StagedThemeStagedModelDataHandler
 		PortletDataContext portletDataContext, StagedTheme stagedTheme) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setThemeLocalService(ThemeLocalService themeLocalService) {
-		_themeLocalService = themeLocalService;
-	}
-
+	@Reference
 	private ThemeLocalService _themeLocalService;
 
 }

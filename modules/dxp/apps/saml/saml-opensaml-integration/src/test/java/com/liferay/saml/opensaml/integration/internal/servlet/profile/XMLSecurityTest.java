@@ -15,6 +15,7 @@
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
@@ -98,10 +99,15 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 		_webSsoProfileImpl.setSamlBindings(samlBindings);
 		_webSsoProfileImpl.setSamlProviderConfigurationHelper(
 			samlProviderConfigurationHelper);
-		_webSsoProfileImpl.setSamlSpAuthRequestLocalService(
+
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "_samlSpAuthRequestLocalService",
 			samlSpAuthRequestLocalService);
-		_webSsoProfileImpl.setSamlSpIdpConnectionLocalService(
+
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "_samlSpIdpConnectionLocalService",
 			samlSpIdpConnectionLocalService);
+
 		_webSsoProfileImpl.setSamlSpSessionLocalService(
 			samlSpSessionLocalService);
 

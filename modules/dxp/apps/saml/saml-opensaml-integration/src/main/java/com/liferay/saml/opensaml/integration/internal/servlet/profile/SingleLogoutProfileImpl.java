@@ -706,50 +706,10 @@ public class SingleLogoutProfileImpl
 	}
 
 	@Reference(unbind = "-")
-	protected void setSamlHttpRequestUtil(
-		SamlHttpRequestUtil samlHttpRequestUtil) {
-
-		_samlHttpRequestUtil = samlHttpRequestUtil;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSamlIdpSpConnectionLocalService(
-		SamlIdpSpConnectionLocalService samlIdpSpConnectionLocalService) {
-
-		_samlIdpSpConnectionLocalService = samlIdpSpConnectionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSamlIdpSpSessionLocalService(
-		SamlIdpSpSessionLocalService samlIdpSpSessionLocalService) {
-
-		_samlIdpSpSessionLocalService = samlIdpSpSessionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSamlIdpSsoSessionLocalService(
-		SamlIdpSsoSessionLocalService samlIdpSsoSessionLocalService) {
-
-		_samlIdpSsoSessionLocalService = samlIdpSsoSessionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSamlPeerBindingLocalService(
-		SamlPeerBindingLocalService samlPeerBindingLocalService) {
-
-		_samlPeerBindingLocalService = samlPeerBindingLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setSamlSpSessionLocalService(
 		SamlSpSessionLocalService samlSpSessionLocalService) {
 
 		super.samlSpSessionLocalService = samlSpSessionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	private void _addSessionIndex(
@@ -1496,11 +1456,22 @@ public class SingleLogoutProfileImpl
 	@Reference
 	private HttpClient _httpClient;
 
+	@Reference
 	private SamlHttpRequestUtil _samlHttpRequestUtil;
+
+	@Reference
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
+
+	@Reference
 	private SamlIdpSpSessionLocalService _samlIdpSpSessionLocalService;
+
+	@Reference
 	private SamlIdpSsoSessionLocalService _samlIdpSsoSessionLocalService;
+
+	@Reference
 	private SamlPeerBindingLocalService _samlPeerBindingLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

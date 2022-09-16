@@ -17,6 +17,7 @@ package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.struts.Definition;
 import com.liferay.portal.struts.TilesUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -95,8 +96,11 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		_singleLogoutProfileImpl.setMetadataManager(metadataManagerImpl);
 		_singleLogoutProfileImpl.setPortal(portal);
 		_singleLogoutProfileImpl.setSamlBindings(samlBindings);
-		_singleLogoutProfileImpl.setSamlPeerBindingLocalService(
+
+		ReflectionTestUtil.setFieldValue(
+			_singleLogoutProfileImpl, "_samlPeerBindingLocalService",
 			samlPeerBindingLocalService);
+
 		_singleLogoutProfileImpl.setSamlProviderConfigurationHelper(
 			samlProviderConfigurationHelper);
 		_singleLogoutProfileImpl.setSamlSpSessionLocalService(

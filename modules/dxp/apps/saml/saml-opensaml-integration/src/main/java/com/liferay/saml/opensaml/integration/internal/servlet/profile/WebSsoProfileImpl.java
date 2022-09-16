@@ -680,13 +680,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		return subjectConfirmationData;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAttributeResolverRegistry(
-		AttributeResolverRegistry attributeResolverRegistry) {
-
-		_attributeResolverRegistry = attributeResolverRegistry;
-	}
-
 	@Override
 	@Reference(unbind = "-")
 	protected void setIdentifierGenerationStrategyFactory(
@@ -700,13 +693,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	@Reference(unbind = "-")
 	protected void setMetadataManager(MetadataManager metadataManager) {
 		super.setMetadataManager(metadataManager);
-	}
-
-	@Reference(unbind = "-")
-	protected void setNameIdResolverRegistry(
-		NameIdResolverRegistry nameIdResolverRegistry) {
-
-		_nameIdResolverRegistry = nameIdResolverRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -732,36 +718,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	@Reference(unbind = "-")
-	protected void setSamlSpAuthRequestLocalService(
-		SamlSpAuthRequestLocalService samlSpAuthRequestLocalService) {
-
-		_samlSpAuthRequestLocalService = samlSpAuthRequestLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSamlSpIdpConnectionLocalService(
-		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService) {
-
-		_samlSpIdpConnectionLocalService = samlSpIdpConnectionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSamlSpMessageLocalService(
-		SamlSpMessageLocalService samlSpMessageLocalService) {
-
-		_samlSpMessageLocalService = samlSpMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setSamlSpSessionLocalService(
 		SamlSpSessionLocalService samlSpSessionLocalService) {
 
 		super.samlSpSessionLocalService = samlSpSessionLocalService;
-	}
-
-	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
-	protected void setUserResolver(UserResolver userResolver) {
-		_userResolver = userResolver;
 	}
 
 	@Override
@@ -2126,11 +2086,13 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private static final SAMLSignatureProfileValidator
 		_samlSignatureProfileValidator = new SAMLSignatureProfileValidator();
 
+	@Reference
 	private AttributeResolverRegistry _attributeResolverRegistry;
 
 	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
 	private Decrypter _decrypter;
 
+	@Reference
 	private NameIdResolverRegistry _nameIdResolverRegistry;
 
 	@Reference
@@ -2149,13 +2111,20 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	private SAMLMetadataEncryptionParametersResolver
 		_samlMetadataEncryptionParametersResolver;
+
+	@Reference
 	private SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;
+
+	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
+
+	@Reference
 	private SamlSpMessageLocalService _samlSpMessageLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;
 
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
 	private UserResolver _userResolver;
 
 }

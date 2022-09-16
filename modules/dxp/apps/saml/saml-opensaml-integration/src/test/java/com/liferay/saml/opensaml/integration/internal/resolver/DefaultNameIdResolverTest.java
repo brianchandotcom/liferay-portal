@@ -56,7 +56,8 @@ public class DefaultNameIdResolverTest extends BaseSamlTestCase {
 
 		_metadataManager = Mockito.mock(MetadataManager.class);
 
-		_defaultNameIdResolver.setMetadataManager(_metadataManager);
+		ReflectionTestUtil.setFieldValue(
+			_defaultNameIdResolver, "_metadataManager", _metadataManager);
 
 		Mockito.when(
 			_metadataManager.getNameIdFormat(Mockito.eq(SP_ENTITY_ID))

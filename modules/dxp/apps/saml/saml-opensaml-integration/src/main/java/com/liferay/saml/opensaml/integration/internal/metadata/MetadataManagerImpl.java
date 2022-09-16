@@ -467,16 +467,6 @@ public class MetadataManagerImpl
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	public void setCredentialResolver(CredentialResolver credentialResolver) {
-		_credentialResolver = credentialResolver;
-	}
-
-	@Reference(unbind = "-")
-	public void setLocalEntityManager(LocalEntityManager localEntityManager) {
-		_localEntityManager = localEntityManager;
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policyOption = ReferencePolicyOption.GREEDY,
@@ -488,23 +478,6 @@ public class MetadataManagerImpl
 		}
 
 		_cachingChainingMetadataResolver.addMetadataResolver(metadataResolver);
-	}
-
-	@Reference(unbind = "-")
-	public void setParserPool(ParserPool parserPool) {
-		_parserPool = parserPool;
-	}
-
-	@Reference(unbind = "-")
-	public void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
-	@Reference(unbind = "-")
-	public void setSamlProviderConfigurationHelper(
-		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
-
-		_samlProviderConfigurationHelper = samlProviderConfigurationHelper;
 	}
 
 	public void unsetMetadataResolver(MetadataResolver metadataResolver) {
@@ -594,11 +567,21 @@ public class MetadataManagerImpl
 		_cachingChainingMetadataResolver =
 			new CachingChainingMetadataResolver();
 	private ChainingSignatureTrustEngine _chainingSignatureTrustEngine;
+
+	@Reference
 	private CredentialResolver _credentialResolver;
+
+	@Reference
 	private LocalEntityManager _localEntityManager;
+
 	private MetadataCredentialResolver _metadataCredentialResolver;
+
+	@Reference
 	private ParserPool _parserPool;
+
+	@Reference
 	private Portal _portal;
+
 	private final PredicateRoleDescriptorResolver
 		_predicateRoleDescriptorResolver = new PredicateRoleDescriptorResolver(
 			_cachingChainingMetadataResolver);
@@ -606,6 +589,7 @@ public class MetadataManagerImpl
 	@Reference
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
 
+	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 	@Reference

@@ -439,7 +439,8 @@ public abstract class BaseSamlTestCase {
 		KeyStoreCredentialResolver keyStoreCredentialResolver =
 			new KeyStoreCredentialResolver();
 
-		keyStoreCredentialResolver.setKeyStoreManager(
+		ReflectionTestUtil.setFieldValue(
+			keyStoreCredentialResolver, "_keyStoreManager",
 			fileSystemKeyStoreManagerImpl);
 
 		SamlProviderConfigurationHelper peerSamlProviderConfigurationHelper =
@@ -469,7 +470,8 @@ public abstract class BaseSamlTestCase {
 			peerSamlProviderConfiguration
 		);
 
-		keyStoreCredentialResolver.setSamlProviderConfigurationHelper(
+		ReflectionTestUtil.setFieldValue(
+			keyStoreCredentialResolver, "_samlProviderConfigurationHelper",
 			peerSamlProviderConfigurationHelper);
 
 		return keyStoreCredentialResolver;
@@ -627,23 +629,31 @@ public abstract class BaseSamlTestCase {
 
 		credentialResolver = new KeyStoreCredentialResolver();
 
-		credentialResolver.setKeyStoreManager(fileSystemKeyStoreManagerImpl);
+		ReflectionTestUtil.setFieldValue(
+			credentialResolver, "_keyStoreManager",
+			fileSystemKeyStoreManagerImpl);
 
-		credentialResolver.setSamlProviderConfigurationHelper(
+		ReflectionTestUtil.setFieldValue(
+			credentialResolver, "_samlProviderConfigurationHelper",
 			samlProviderConfigurationHelper);
 
-		metadataManagerImpl.setCredentialResolver(credentialResolver);
+		ReflectionTestUtil.setFieldValue(
+			metadataManagerImpl, "_credentialResolver", credentialResolver);
 
-		metadataManagerImpl.setParserPool(parserPool);
+		ReflectionTestUtil.setFieldValue(
+			metadataManagerImpl, "_parserPool", parserPool);
 
 		metadataManagerImpl.setMetadataResolver(new MockMetadataResolver());
 
-		metadataManagerImpl.setSamlProviderConfigurationHelper(
+		ReflectionTestUtil.setFieldValue(
+			metadataManagerImpl, "_samlProviderConfigurationHelper",
 			samlProviderConfigurationHelper);
 
-		metadataManagerImpl.setPortal(portal);
+		ReflectionTestUtil.setFieldValue(
+			metadataManagerImpl, "_portal", portal);
 
-		metadataManagerImpl.setLocalEntityManager(credentialResolver);
+		ReflectionTestUtil.setFieldValue(
+			metadataManagerImpl, "_localEntityManager", credentialResolver);
 
 		ReflectionTestUtil.invoke(
 			metadataManagerImpl, "activate", new Class<?>[0]);

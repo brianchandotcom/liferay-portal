@@ -43,11 +43,6 @@ public class DefaultNameIdResolver implements NameIdResolver {
 		return _getNameIdValue(user, entityId);
 	}
 
-	@Reference(unbind = "-")
-	public void setMetadataManager(MetadataManager metadataManager) {
-		_metadataManager = metadataManager;
-	}
-
 	private String _getNameIdAttributeName(String entityId) {
 		return _metadataManager.getNameIdAttribute(entityId);
 	}
@@ -85,6 +80,7 @@ public class DefaultNameIdResolver implements NameIdResolver {
 	@Reference
 	private BeanProperties _beanProperties;
 
+	@Reference
 	private MetadataManager _metadataManager;
 
 }

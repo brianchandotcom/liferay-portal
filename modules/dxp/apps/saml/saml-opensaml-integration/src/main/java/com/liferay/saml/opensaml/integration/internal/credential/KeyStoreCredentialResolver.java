@@ -224,20 +224,6 @@ public class KeyStoreCredentialResolver
 		}
 	}
 
-	@Reference(
-		name = "KeyStoreManager", target = "(default=true)", unbind = "-"
-	)
-	public void setKeyStoreManager(KeyStoreManager keyStoreManager) {
-		_keyStoreManager = keyStoreManager;
-	}
-
-	@Reference(unbind = "-")
-	public void setSamlProviderConfigurationHelper(
-		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
-
-		_samlProviderConfigurationHelper = samlProviderConfigurationHelper;
-	}
-
 	@Override
 	public void storeLocalEntityCertificate(
 			PrivateKey privateKey, String certificateKeyPassword,
@@ -362,7 +348,10 @@ public class KeyStoreCredentialResolver
 		return basicX509Credential;
 	}
 
+	@Reference(name = "KeyStoreManager", target = "(default=true)")
 	private KeyStoreManager _keyStoreManager;
+
+	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 	@Reference

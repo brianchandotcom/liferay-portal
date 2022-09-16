@@ -134,18 +134,26 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		_webSsoProfileImpl.setSamlProviderConfigurationHelper(
 			samlProviderConfigurationHelper);
-		_webSsoProfileImpl.setSamlSpAuthRequestLocalService(
+
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "_samlSpAuthRequestLocalService",
 			_samlSpAuthRequestLocalService);
+
 		_webSsoProfileImpl.setSamlSpSessionLocalService(
 			_samlSpSessionLocalService);
-		_webSsoProfileImpl.setSamlSpMessageLocalService(
+
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "_samlSpMessageLocalService",
 			getMockPortletService(
 				SamlSpMessageLocalServiceUtil.class,
 				SamlSpMessageLocalService.class));
-		_webSsoProfileImpl.setSamlSpIdpConnectionLocalService(
+
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "_samlSpIdpConnectionLocalService",
 			getMockPortletService(
 				SamlSpIdpConnectionLocalServiceUtil.class,
 				SamlSpIdpConnectionLocalService.class));
+
 		_webSsoProfileImpl.activate(new HashMap<String, Object>());
 
 		prepareServiceProvider(SP_ENTITY_ID);
@@ -381,7 +389,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			samlSpIdpConnection
 		);
 
-		_webSsoProfileImpl.setSamlSpIdpConnectionLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "_samlSpIdpConnectionLocalService",
 			samlSpIdpConnectionLocalService);
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -494,7 +503,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			samlSpIdpConnection
 		);
 
-		_webSsoProfileImpl.setSamlSpIdpConnectionLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "_samlSpIdpConnectionLocalService",
 			samlSpIdpConnectionLocalService);
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -586,13 +596,23 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		metadataManagerImpl = new MetadataManagerImpl();
 
-		metadataManagerImpl.setCredentialResolver(credentialResolver);
-		metadataManagerImpl.setLocalEntityManager(credentialResolver);
+		ReflectionTestUtil.setFieldValue(
+			metadataManagerImpl, "_credentialResolver", credentialResolver);
+
+		ReflectionTestUtil.setFieldValue(
+			metadataManagerImpl, "_localEntityManager", credentialResolver);
+
 		metadataManagerImpl.setMetadataResolver(
 			new MockMetadataResolver(false));
-		metadataManagerImpl.setParserPool(parserPool);
-		metadataManagerImpl.setPortal(portal);
-		metadataManagerImpl.setSamlProviderConfigurationHelper(
+
+		ReflectionTestUtil.setFieldValue(
+			metadataManagerImpl, "_parserPool", parserPool);
+
+		ReflectionTestUtil.setFieldValue(
+			metadataManagerImpl, "_portal", portal);
+
+		ReflectionTestUtil.setFieldValue(
+			metadataManagerImpl, "_samlProviderConfigurationHelper",
 			samlProviderConfigurationHelper);
 
 		ReflectionTestUtil.invoke(
@@ -607,7 +627,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			samlSpIdpConnection
 		);
 
-		_webSsoProfileImpl.setSamlSpIdpConnectionLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "_samlSpIdpConnectionLocalService",
 			samlSpIdpConnectionLocalService);
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -660,7 +681,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			samlSpIdpConnection
 		);
 
-		_webSsoProfileImpl.setSamlSpIdpConnectionLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "_samlSpIdpConnectionLocalService",
 			samlSpIdpConnectionLocalService);
 
 		MockHttpServletRequest mockHttpServletRequest =

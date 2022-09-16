@@ -15,6 +15,7 @@
 package com.liferay.batch.planner.internal.batch.engine.broker;
 
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
+import com.liferay.batch.engine.constants.CreateStrategy;
 import com.liferay.batch.engine.jaxrs.uri.BatchEngineUriInfo;
 import com.liferay.batch.planner.batch.engine.broker.BatchEngineBroker;
 import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
@@ -33,7 +34,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -131,7 +131,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			batchPlannerMappings, unsafeFunction, String.class);
 	}
 
-	private String _getImportStrategy(BatchPlannerPlan batchPlannerPlan)
+	private String _getImportErrorStrategy(BatchPlannerPlan batchPlannerPlan)
 		throws Exception {
 
 		BatchPlannerPolicy batchPlannerPolicy =
@@ -205,20 +205,30 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 		File file = _getFile(batchPlannerPlan.getBatchPlannerPlanId());
 
+		CreateStrategy createStrategy =
+			CreateStrategy.getDefaultCreateStrategy();
+
+		String createStrategyBatchPlannerPolicy = _getValue(
+			batchPlannerPlan.fetchBatchPlannerPolicy("createStrategy"));
+
+		if (createStrategyBatchPlannerPolicy != null) {
+			createStrategy = CreateStrategy.valueOf(
+				createStrategyBatchPlannerPolicy);
+		}
+
 		try {
-			if (!GetterUtil.getBoolean(
-					_getValue(
-						batchPlannerPlan.fetchBatchPlannerPolicy(
-							"allowUpdate")))) {
+			if ((createStrategy == CreateStrategy.CREATE_ONLY) ||
+				(createStrategy == CreateStrategy.UPSERT)) {
 
 				_importTaskResource.postImportTask(
-					batchPlannerPlan.getInternalClassName(), null, null,
+					batchPlannerPlan.getInternalClassName(), null,
+					createStrategy.name(),
 					String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()),
 					_getFieldNameMapping(
 						_batchPlannerMappingLocalService.
 							getBatchPlannerMappings(
 								batchPlannerPlan.getBatchPlannerPlanId())),
-					_getImportStrategy(batchPlannerPlan),
+					_getImportErrorStrategy(batchPlannerPlan),
 					batchPlannerPlan.getTaskItemDelegateName(),
 					MultipartBody.of(
 						Collections.singletonMap(
@@ -236,7 +246,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			_importTaskResource.putImportTask(
 				batchPlannerPlan.getInternalClassName(), null,
 				String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()),
-				_getImportStrategy(batchPlannerPlan),
+				_getImportErrorStrategy(batchPlannerPlan),
 				batchPlannerPlan.getTaskItemDelegateName(), null,
 				MultipartBody.of(
 					Collections.singletonMap(

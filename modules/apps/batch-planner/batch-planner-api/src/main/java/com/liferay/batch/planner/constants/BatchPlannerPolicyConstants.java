@@ -27,9 +27,9 @@ public class BatchPlannerPolicyConstants {
 	public static final Map<String, String> nameTypes =
 		Collections.unmodifiableMap(
 			HashMapBuilder.put(
-				"allowUpdate", "checkbox"
-			).put(
 				"containsHeaders", "checkbox"
+			).put(
+				"createStrategy", "text"
 			).put(
 				"delimiter", "text"
 			).put(
@@ -38,8 +38,6 @@ public class BatchPlannerPolicyConstants {
 				"headlessEndpoint", "text"
 			).put(
 				"onErrorFail", "checkbox"
-			).put(
-				"onUpdateDoPatch", "checkbox"
 			).put(
 				"siteId", "text"
 			).build());

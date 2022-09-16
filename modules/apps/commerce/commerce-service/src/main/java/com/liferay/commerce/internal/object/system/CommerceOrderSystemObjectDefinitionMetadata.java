@@ -16,12 +16,15 @@ package com.liferay.commerce.internal.object.system;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderTable;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +32,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -40,6 +44,14 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CommerceOrderSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
+
+	@Override
+	public BaseModel<?> deleteBaseModel(BaseModel<?> baseModel)
+		throws PortalException {
+
+		return _commerceOrderLocalService.deleteCommerceOrder(
+			(CommerceOrder)baseModel);
+	}
 
 	@Override
 	public String getJaxRsApplicationName() {
@@ -96,5 +108,8 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	public int getVersion() {
 		return 1;
 	}
+
+	@Reference
+	private CommerceOrderLocalService _commerceOrderLocalService;
 
 }

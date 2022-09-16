@@ -20,8 +20,11 @@ import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.AddressTable;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.service.AddressLocalService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +32,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Paulino
@@ -36,6 +40,13 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = SystemObjectDefinitionMetadata.class)
 public class AddressSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
+
+	@Override
+	public BaseModel<?> deleteBaseModel(BaseModel<?> baseModel)
+		throws PortalException {
+
+		return _addressLocalService.deleteAddress((Address)baseModel);
+	}
 
 	@Override
 	public String getJaxRsApplicationName() {
@@ -90,5 +101,8 @@ public class AddressSystemObjectDefinitionMetadata
 	public int getVersion() {
 		return 1;
 	}
+
+	@Reference
+	private AddressLocalService _addressLocalService;
 
 }

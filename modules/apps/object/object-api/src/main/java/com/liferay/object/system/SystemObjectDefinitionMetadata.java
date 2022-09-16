@@ -17,6 +17,8 @@ package com.liferay.object.system;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.List;
 import java.util.Locale;
@@ -27,6 +29,9 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  */
 public interface SystemObjectDefinitionMetadata {
+
+	public BaseModel<?> deleteBaseModel(BaseModel<?> baseModel)
+		throws PortalException;
 
 	public String getJaxRsApplicationName();
 

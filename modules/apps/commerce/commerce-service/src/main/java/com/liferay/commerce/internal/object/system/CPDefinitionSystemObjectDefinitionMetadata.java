@@ -16,12 +16,15 @@ package com.liferay.commerce.internal.object.system;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionTable;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +32,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author José Abelenda
@@ -36,6 +40,14 @@ import org.osgi.service.component.annotations.Component;
 @Component(enabled = true, service = SystemObjectDefinitionMetadata.class)
 public class CPDefinitionSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
+
+	@Override
+	public BaseModel<?> deleteBaseModel(BaseModel<?> baseModel)
+		throws PortalException {
+
+		return _cpDefinitionLocalService.deleteCPDefinition(
+			(CPDefinition)baseModel);
+	}
 
 	@Override
 	public String getJaxRsApplicationName() {
@@ -108,5 +120,8 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 	public int getVersion() {
 		return 1;
 	}
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 }

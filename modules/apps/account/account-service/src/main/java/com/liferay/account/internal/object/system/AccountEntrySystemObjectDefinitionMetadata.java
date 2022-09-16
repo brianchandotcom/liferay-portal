@@ -16,12 +16,15 @@ package com.liferay.account.internal.object.system;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryTable;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +32,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gabriel Albuquerque
@@ -36,6 +40,14 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = SystemObjectDefinitionMetadata.class)
 public class AccountEntrySystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
+
+	@Override
+	public BaseModel<?> deleteBaseModel(BaseModel<?> baseModel)
+		throws PortalException {
+
+		return _accountEntryLocalService.deleteAccountEntry(
+			(AccountEntry)baseModel);
+	}
 
 	@Override
 	public String getJaxRsApplicationName() {
@@ -90,5 +102,8 @@ public class AccountEntrySystemObjectDefinitionMetadata
 	public int getVersion() {
 		return 1;
 	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 }

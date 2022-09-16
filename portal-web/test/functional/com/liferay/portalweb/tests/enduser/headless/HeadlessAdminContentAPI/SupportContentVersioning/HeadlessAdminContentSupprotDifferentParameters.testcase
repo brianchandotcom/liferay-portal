@@ -280,7 +280,7 @@ definition {
 
 			var response = HeadlessWebcontentAPI.versionStructureContent(
 				parameter = "restrictFields",
-				parameterValue = "actions,availableLanguages,contentFields,contentStructureId,creator,customFields,dateCreated,dateModified,datePublished,description,externalReferenceCode,friendlyUrlPath,id,key,keywords,numberOfComments,priority,relatedContents,renderedContents,siteId,subscribed,taxonomyCategoryBriefs,uuid,version",
+				parameterValue = "actions,availableLanguages,contentFields,contentStructureId,creator,customFields,dateCreated,dateModified,datePublished,description,externalReferenceCode,friendlyUrlPath,id,key,keywords,numberOfComments,priority,relatedContents,renderedContents,siteId,structuredContentFolderId,subscribed,taxonomyCategoryBriefs,uuid,version",
 				structuredContentId = "${structuredContentId}",
 				versionvalue = "1.0");
 		}

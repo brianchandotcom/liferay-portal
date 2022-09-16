@@ -23,6 +23,8 @@ import com.liferay.frontend.taglib.clay.internal.util.ServicesProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
@@ -353,6 +355,10 @@ public class BaseContainerTag extends AttributesTagSupport {
 				catch (UnsupportedOperationException
 							unsupportedOperationException) {
 
+					if (_log.isDebugEnabled()) {
+						_log.debug(unsupportedOperationException);
+					}
+
 					JSModuleResolver jsModuleResolver =
 						ServicesProvider.getJSModuleResolver();
 
@@ -443,6 +449,9 @@ public class BaseContainerTag extends AttributesTagSupport {
 		jspWriter.write(getId());
 		jspWriter.write("\"");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseContainerTag.class);
 
 	private Map<String, Object> _additionalProps;
 	private String _componentId;

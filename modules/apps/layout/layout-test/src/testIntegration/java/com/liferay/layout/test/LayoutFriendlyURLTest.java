@@ -18,11 +18,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLsException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -34,7 +36,11 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -315,6 +321,52 @@ public class LayoutFriendlyURLTest {
 	}
 
 	@Test
+	public void testMissingDefaultLocaleOnGroupDefaultLocaleChange()
+		throws Exception {
+
+		Map<Locale, String> friendlyURLMap = HashMapBuilder.put(
+			LocaleUtil.SPAIN, "/casa"
+		).put(
+			LocaleUtil.US, "/home"
+		).build();
+
+		Group group = GroupTestUtil.addGroup();
+
+		_groups.add(group);
+
+		Layout layout = addLayout(group.getGroupId(), false, friendlyURLMap);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			group.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.setProperty(
+			"inheritLocales", Boolean.toString(false));
+
+		typeSettingsUnicodeProperties.setProperty(
+			PropsKeys.LOCALES,
+			StringUtil.merge(
+				LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales())));
+
+		Locale defaultLocale = LocaleUtil.GERMANY;
+
+		Locale originalDefaultLocale = LocaleThreadLocal.getDefaultLocale();
+
+		LocaleThreadLocal.setDefaultLocale(defaultLocale);
+
+		typeSettingsUnicodeProperties.setProperty(
+			"languageId", LocaleUtil.toLanguageId(defaultLocale));
+
+		GroupLocalServiceUtil.updateGroup(
+			group.getGroupId(), typeSettingsUnicodeProperties.toString());
+
+		friendlyURLMap = layout.getFriendlyURLMap();
+
+		LocaleThreadLocal.setDefaultLocale(originalDefaultLocale);
+
+		Assert.assertNull(friendlyURLMap.get(defaultLocale));
+	}
+
+	@Test
 	public void testMultipleInvalidFriendlyURLMapperURL() throws Exception {
 		Map<Locale, String> friendlyURLMap = HashMapBuilder.put(
 			LocaleUtil.SPAIN, "/tags/dos"
@@ -508,7 +560,7 @@ public class LayoutFriendlyURLTest {
 			).build());
 	}
 
-	protected void addLayout(
+	protected Layout addLayout(
 			long groupId, boolean privateLayout,
 			Map<Locale, String> friendlyURLMap)
 		throws Exception {
@@ -516,7 +568,7 @@ public class LayoutFriendlyURLTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		LayoutLocalServiceUtil.addLayout(
+		return LayoutLocalServiceUtil.addLayout(
 			TestPropsValues.getUserId(), groupId, privateLayout,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomLocaleStringMap(),

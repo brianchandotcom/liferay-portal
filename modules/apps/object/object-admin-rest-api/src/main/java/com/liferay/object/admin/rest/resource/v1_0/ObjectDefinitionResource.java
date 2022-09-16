@@ -72,6 +72,14 @@ public interface ObjectDefinitionResource {
 	public Response postObjectDefinitionBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public ObjectDefinition getObjectDefinitionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public ObjectDefinition putObjectDefinitionByExternalReferenceCode(
+			String externalReferenceCode, ObjectDefinition objectDefinition)
+		throws Exception;
+
 	public void deleteObjectDefinition(Long objectDefinitionId)
 		throws Exception;
 

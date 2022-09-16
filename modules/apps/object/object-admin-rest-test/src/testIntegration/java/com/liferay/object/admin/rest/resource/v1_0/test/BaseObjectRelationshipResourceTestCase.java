@@ -185,6 +185,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		ObjectRelationship objectRelationship = randomObjectRelationship();
 
 		objectRelationship.setName(regex);
+		objectRelationship.setObjectDefinitionExternalReferenceCode2(regex);
 		objectRelationship.setObjectDefinitionName2(regex);
 
 		String json = ObjectRelationshipSerDes.toJSON(objectRelationship);
@@ -194,6 +195,9 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		objectRelationship = ObjectRelationshipSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, objectRelationship.getName());
+		Assert.assertEquals(
+			regex,
+			objectRelationship.getObjectDefinitionExternalReferenceCode2());
 		Assert.assertEquals(
 			regex, objectRelationship.getObjectDefinitionName2());
 	}
@@ -785,6 +789,19 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"objectDefinitionExternalReferenceCode2",
+					additionalAssertFieldName)) {
+
+				if (objectRelationship.
+						getObjectDefinitionExternalReferenceCode2() == null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"objectDefinitionId1", additionalAssertFieldName)) {
 
 				if (objectRelationship.getObjectDefinitionId1() == null) {
@@ -983,6 +1000,22 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				if (!Objects.deepEquals(
 						objectRelationship1.getName(),
 						objectRelationship2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectDefinitionExternalReferenceCode2",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectRelationship1.
+							getObjectDefinitionExternalReferenceCode2(),
+						objectRelationship2.
+							getObjectDefinitionExternalReferenceCode2())) {
 
 					return false;
 				}
@@ -1190,6 +1223,17 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("objectDefinitionExternalReferenceCode2")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					objectRelationship.
+						getObjectDefinitionExternalReferenceCode2()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("objectDefinitionId1")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1270,6 +1314,8 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			{
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				objectDefinitionExternalReferenceCode2 = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				objectDefinitionId1 = RandomTestUtil.randomLong();
 				objectDefinitionId2 = RandomTestUtil.randomLong();
 				objectDefinitionName2 = StringUtil.toLowerCase(

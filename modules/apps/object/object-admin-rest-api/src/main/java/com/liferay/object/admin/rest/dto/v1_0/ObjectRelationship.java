@@ -210,6 +210,39 @@ public class ObjectRelationship implements Serializable {
 	protected String name;
 
 	@Schema
+	public String getObjectDefinitionExternalReferenceCode2() {
+		return objectDefinitionExternalReferenceCode2;
+	}
+
+	public void setObjectDefinitionExternalReferenceCode2(
+		String objectDefinitionExternalReferenceCode2) {
+
+		this.objectDefinitionExternalReferenceCode2 =
+			objectDefinitionExternalReferenceCode2;
+	}
+
+	@JsonIgnore
+	public void setObjectDefinitionExternalReferenceCode2(
+		UnsafeSupplier<String, Exception>
+			objectDefinitionExternalReferenceCode2UnsafeSupplier) {
+
+		try {
+			objectDefinitionExternalReferenceCode2 =
+				objectDefinitionExternalReferenceCode2UnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String objectDefinitionExternalReferenceCode2;
+
+	@Schema
 	public Long getObjectDefinitionId1() {
 		return objectDefinitionId1;
 	}
@@ -466,6 +499,20 @@ public class ObjectRelationship implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		if (objectDefinitionExternalReferenceCode2 != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinitionExternalReferenceCode2\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinitionExternalReferenceCode2));
 
 			sb.append("\"");
 		}

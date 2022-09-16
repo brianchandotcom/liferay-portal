@@ -83,20 +83,20 @@ public class ObjectLayoutColumn implements Serializable {
 	protected Long id;
 
 	@Schema
-	public Long getObjectFieldId() {
-		return objectFieldId;
+	public String getObjectFieldName() {
+		return objectFieldName;
 	}
 
-	public void setObjectFieldId(Long objectFieldId) {
-		this.objectFieldId = objectFieldId;
+	public void setObjectFieldName(String objectFieldName) {
+		this.objectFieldName = objectFieldName;
 	}
 
 	@JsonIgnore
-	public void setObjectFieldId(
-		UnsafeSupplier<Long, Exception> objectFieldIdUnsafeSupplier) {
+	public void setObjectFieldName(
+		UnsafeSupplier<String, Exception> objectFieldNameUnsafeSupplier) {
 
 		try {
-			objectFieldId = objectFieldIdUnsafeSupplier.get();
+			objectFieldName = objectFieldNameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -108,7 +108,7 @@ public class ObjectLayoutColumn implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long objectFieldId;
+	protected String objectFieldName;
 
 	@Schema
 	public Integer getPriority() {
@@ -201,14 +201,18 @@ public class ObjectLayoutColumn implements Serializable {
 			sb.append(id);
 		}
 
-		if (objectFieldId != null) {
+		if (objectFieldName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"objectFieldId\": ");
+			sb.append("\"objectFieldName\": ");
 
-			sb.append(objectFieldId);
+			sb.append("\"");
+
+			sb.append(_escape(objectFieldName));
+
+			sb.append("\"");
 		}
 
 		if (priority != null) {

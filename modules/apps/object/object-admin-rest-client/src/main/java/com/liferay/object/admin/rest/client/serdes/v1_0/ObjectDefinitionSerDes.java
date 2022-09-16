@@ -429,14 +429,18 @@ public class ObjectDefinitionSerDes {
 			sb.append(objectDefinition.getSystem());
 		}
 
-		if (objectDefinition.getTitleObjectFieldId() != null) {
+		if (objectDefinition.getTitleObjectFieldName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"titleObjectFieldId\": ");
+			sb.append("\"titleObjectFieldName\": ");
 
-			sb.append(objectDefinition.getTitleObjectFieldId());
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinition.getTitleObjectFieldName()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -680,13 +684,13 @@ public class ObjectDefinitionSerDes {
 			map.put("system", String.valueOf(objectDefinition.getSystem()));
 		}
 
-		if (objectDefinition.getTitleObjectFieldId() == null) {
-			map.put("titleObjectFieldId", null);
+		if (objectDefinition.getTitleObjectFieldName() == null) {
+			map.put("titleObjectFieldName", null);
 		}
 		else {
 			map.put(
-				"titleObjectFieldId",
-				String.valueOf(objectDefinition.getTitleObjectFieldId()));
+				"titleObjectFieldName",
+				String.valueOf(objectDefinition.getTitleObjectFieldName()));
 		}
 
 		return map;
@@ -905,11 +909,11 @@ public class ObjectDefinitionSerDes {
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "titleObjectFieldId")) {
+						jsonParserFieldName, "titleObjectFieldName")) {
 
 				if (jsonParserFieldValue != null) {
-					objectDefinition.setTitleObjectFieldId(
-						Long.valueOf((String)jsonParserFieldValue));
+					objectDefinition.setTitleObjectFieldName(
+						(String)jsonParserFieldValue);
 				}
 			}
 		}

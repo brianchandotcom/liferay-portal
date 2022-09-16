@@ -143,6 +143,10 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 			}
 		}
 		catch (NoSuchPageException noSuchPageException1) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchPageException1);
+			}
+
 			try {
 				page = _wikiPageService.getPage(nodeId, title, false);
 			}

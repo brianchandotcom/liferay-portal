@@ -228,6 +228,10 @@ public class TemplateSelectorTag extends IncludeTag {
 				});
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return Collections.emptyList();
 		}
 	}

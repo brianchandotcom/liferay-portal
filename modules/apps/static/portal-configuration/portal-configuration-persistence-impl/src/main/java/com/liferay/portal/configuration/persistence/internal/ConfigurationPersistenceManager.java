@@ -452,6 +452,10 @@ public class ConfigurationPersistenceManager
 			preparedStatement.executeUpdate();
 		}
 		catch (SQLException sqlException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(sqlException);
+			}
+
 			return false;
 		}
 

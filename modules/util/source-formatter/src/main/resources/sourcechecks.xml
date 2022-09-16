@@ -1013,7 +1013,7 @@
 		</check>
 		<check name="JSPLanguageUtilCheck">
 			<category name="Bug Prevention" />
-			<description name="Finds cases where Locale is passed to `LanguageUtil.get` instead of `HttpServletRequest`." />
+			<description name="Finds incorrect use of `LanguageUtil.get` in `.jsp` files." />
 			<property name="enabled" value="false" />
 		</check>
 		<check name="JSPLineBreakCheck">

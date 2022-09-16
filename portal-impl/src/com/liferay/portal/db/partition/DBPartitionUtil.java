@@ -519,7 +519,6 @@ public class DBPartitionUtil {
 		throws Exception {
 
 		if (_controlTableNames.contains(StringUtil.toLowerCase(tableName)) ||
-			tableName.startsWith("QUARTZ_") ||
 			!dbInspector.hasColumn(tableName, "companyId")) {
 
 			return true;

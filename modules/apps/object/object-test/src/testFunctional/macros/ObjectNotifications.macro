@@ -106,4 +106,10 @@ definition {
 			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 	}
 
+	macro viewQueueNotificationBySubject {
+		AssertElementPresent(
+			key_validationInfo = "${entryName}",
+			locator1 = "ObjectCustomValidation#VIEW_INFO_VALIDATION");
+	}
+
 }

@@ -1000,6 +1000,14 @@ definition {
 						value1 = "${inputExpressionValue}");
 				}
 			}
+
+			if ("${thenAction}" == "Notification") {
+				Click(locator1 = "ObjectAction#SELECT_OPTION_TYPE");
+
+				Click(
+					key_entryName = "${notificationName}",
+					locator1 = "ObjectAction#AUTOCOMPLETE_INPUT");
+			}
 		}
 
 		if (isSet(inputExpression)) {

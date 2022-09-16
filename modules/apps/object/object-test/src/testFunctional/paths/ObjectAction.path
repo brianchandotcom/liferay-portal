@@ -13,6 +13,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>SELECT_OPTION_TYPE</td>
+		<td>//input[@placeholder="Choose an Option"]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SELECT_TRIGGER</td>
 		<td>//input[@placeholder="Choose a Trigger"]</td>
 		<td></td>
@@ -55,6 +60,11 @@
 	<tr>
 		<td>ACTIONS_STATUS_INFO</td>
 		<td>//*[contains(@class,'label label') and contains(.,'${key_statusInfo}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>AUTOCOMPLETE_INPUT</td>
+		<td>//div[@class='dropdown-menu autocomplete-dropdown-menu show']//button[@class='dropdown-item' and contains(., '${key_entryName}')]</td>
 		<td></td>
 	</tr>
 </tbody>

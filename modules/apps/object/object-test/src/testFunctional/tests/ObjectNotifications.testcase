@@ -120,4 +120,75 @@ definition {
 		}
 	}
 
+	@description = "LPS-161920 - Verify that it's possible to send an e-mail notification via an Action"
+	@priority = "3"
+	test CanSendEmailViaAction {
+		task ("Go to Templates and add a new Notification Template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Templates");
+
+			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "Email Body",
+				entryTo = "test@liferay.com",
+				fromAddress = "Liferay",
+				fromName = "Test Test",
+				name = "Notification Template",
+				subject = "Subject");
+
+			Button.clickSave();
+		}
+
+		task ("Create a Custom Object and add a field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161920",
+				objectName = "CustomObject161920",
+				pluralLabelName = "Custom Objects 161920");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject161920");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161920");
+		}
+
+		task ("Add a new action") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161920");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.gotoAddObjectAction();
+
+			ObjectAdmin.fillObjectAction(
+				actionName = "Action Name",
+				notificationName = "Notification Template",
+				thenAction = "Notification",
+				whenAction = "On After Add");
+
+			Button.clickSave();
+		}
+
+		task ("Go to created Object and add a Entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject161920");
+
+			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry");
+		}
+
+		task ("Go to Notifications Queue and assert that notification is present") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Queue");
+
+			ObjectNotifications.viewQueueNotificationBySubject(entryName = "Subject");
+		}
+	}
+
 }

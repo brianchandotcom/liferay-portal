@@ -94,16 +94,9 @@ public class ProjectTemplatesTemplateContextContributorTest
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
-		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
-			testContains(
-				gradleProjectDir, "build.gradle", DEPENDENCY_JAVAX_SERVLET_API,
-				DEPENDENCY_ORG_OSGI_ANNOTATIONS);
-		}
-		else {
-			testContains(
-				gradleProjectDir, "build.gradle",
-				DEPENDENCY_RELEASE_PORTAL_API);
-		}
+		testContains(
+			gradleProjectDir, "build.gradle",
+			DEPENDENCY_RELEASE_PORTAL_API);
 
 		testContains(
 			gradleProjectDir,

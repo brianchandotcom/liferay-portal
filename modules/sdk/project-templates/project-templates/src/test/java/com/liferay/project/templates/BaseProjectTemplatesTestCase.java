@@ -21,7 +21,6 @@ import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
 import com.liferay.project.templates.extensions.util.FileUtil;
 import com.liferay.project.templates.extensions.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.extensions.util.Validator;
-import com.liferay.project.templates.extensions.util.VersionUtil;
 import com.liferay.project.templates.extensions.util.WorkspaceUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.StringTestUtil;
@@ -1272,11 +1271,9 @@ public interface BaseProjectTemplatesTestCase {
 			gradleWorkspaceModulesDir, template, name, "--liferay-version",
 			liferayVersion);
 
-		if (VersionUtil.getMinorVersion(liferayVersion) < 3) {
-			testContains(
-				gradleProjectDir, "build.gradle", DEPENDENCY_JAVAX_PORTLET_API,
-				DEPENDENCY_JAVAX_SERVLET_API, DEPENDENCY_ORG_OSGI_ANNOTATIONS);
-		}
+		testContains(
+			gradleProjectDir, "build.gradle",
+			DEPENDENCY_RELEASE_PORTAL_API);
 
 		testContains(
 			gradleProjectDir, "package.json",
@@ -1383,18 +1380,9 @@ public interface BaseProjectTemplatesTestCase {
 			testExists(gradleProjectDir, "src/main/" + resourceFileName);
 		}
 
-		if (liferayVersion.startsWith("7.0") ||
-			liferayVersion.startsWith("7.1") ||
-			liferayVersion.startsWith("7.2")) {
-
-			testContains(
-				gradleProjectDir, "build.gradle", DEPENDENCY_PORTAL_KERNEL);
-		}
-		else {
-			testContains(
-				gradleProjectDir, "build.gradle",
-				DEPENDENCY_RELEASE_PORTAL_API);
-		}
+		testContains(
+			gradleProjectDir, "build.gradle",
+			DEPENDENCY_RELEASE_PORTAL_API);
 
 		testNotContains(gradleProjectDir, "build.gradle", "version: \"[0-9].*");
 

@@ -51,7 +51,9 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		AssertElementPresent(locator1 = "PublicationsChanges#MESSAGE_NO_CHANGES");
+		// Workaround LPS-163263
+
+		/*AssertElementPresent(locator1 = "PublicationsChanges#MESSAGE_NO_CHANGES");*/
 	}
 
 	@description = "Assert we can publish the publication with category with Message Board Thread."

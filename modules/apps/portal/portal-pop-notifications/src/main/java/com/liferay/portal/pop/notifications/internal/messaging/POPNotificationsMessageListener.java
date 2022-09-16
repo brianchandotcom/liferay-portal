@@ -53,7 +53,6 @@ import javax.mail.internet.InternetAddress;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -66,7 +65,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class POPNotificationsMessageListener extends BaseMessageListener {
 
 	@Activate
-	@Modified
 	protected void activate() {
 		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
 			Class<?> clazz = getClass();

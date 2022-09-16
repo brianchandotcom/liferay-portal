@@ -140,6 +140,35 @@ public class ObjectFieldLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public ObjectField addOrUpdateCustomObjectField(
+			long userId, long objectDefinitionId, String externalReferenceCode,
+			long listTypeDefinitionId, String businessType, String dbType,
+			String defaultValue, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<Locale, String> labelMap, String name,
+			boolean required, boolean state,
+			List<ObjectFieldSetting> objectFieldSettings)
+		throws PortalException {
+
+		ObjectField existingObjectField = objectFieldPersistence.fetchByODI_N(
+			objectDefinitionId, name);
+
+		if (existingObjectField == null) {
+			return objectFieldLocalService.addCustomObjectField(
+				userId, listTypeDefinitionId, objectDefinitionId, businessType,
+				dbType, defaultValue, indexed, indexedAsKeyword,
+				indexedLanguageId, labelMap, name, required, state,
+				objectFieldSettings);
+		}
+
+		return objectFieldLocalService.updateCustomObjectField(
+			existingObjectField.getObjectFieldId(), externalReferenceCode,
+			listTypeDefinitionId, businessType, dbType, defaultValue, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			state, objectFieldSettings);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public ObjectField addOrUpdateSystemObjectField(
 			long userId, long objectDefinitionId, String businessType,
 			String dbColumnName, String dbTableName, String dbType,
@@ -576,11 +605,11 @@ public class ObjectFieldLocalServiceImpl
 				indexedLanguageId, labelMap, name, required, state);
 		}
 
-		return objectFieldLocalService.updateCustomObjectField(
-			objectFieldId, externalReferenceCode, listTypeDefinitionId,
-			businessType, dbType, defaultValue, indexed, indexedAsKeyword,
-			indexedLanguageId, labelMap, name, required, state,
-			objectFieldSettings);
+		return objectFieldLocalService.addOrUpdateCustomObjectField(
+			userId, objectDefinitionId, externalReferenceCode,
+			listTypeDefinitionId, businessType, dbType, defaultValue, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			state, objectFieldSettings);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

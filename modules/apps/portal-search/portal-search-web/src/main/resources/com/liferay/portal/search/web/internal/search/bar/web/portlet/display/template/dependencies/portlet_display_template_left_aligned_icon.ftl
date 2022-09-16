@@ -9,7 +9,7 @@
 	<div class="input-group ${searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope()?then("search-bar-scope","search-bar-simple")}">
 		<#if searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope()>
 			<div class="input-group-item input-group-item-shrink input-group-prepend">
-				<button aria-label="${languageUtil.get(locale, "submit")}" class="btn btn-secondary" type="submit">
+				<button aria-label="${languageUtil.get(locale, "search")}" class="btn btn-secondary" type="submit">
 					<@clay.icon symbol="search" />
 				</button>
 			</div>
@@ -68,7 +68,7 @@
 				/>
 
 				<div class="input-group-inset-item input-group-inset-item-before">
-					<button aria-label="${languageUtil.get(locale, "submit")}" class="btn btn-unstyled" type="submit">
+					<button aria-label="${languageUtil.get(locale, "search")}" class="btn btn-unstyled" type="submit">
 						<@clay.icon symbol="search" />
 					</button>
 				</div>

@@ -165,7 +165,7 @@ export default function SearchBar({
 				) : (
 					<ClayInput.GroupInsetItem after>
 						<ClayButton
-							aria-label={Liferay.Language.get('submit')}
+							aria-label={Liferay.Language.get('search')}
 							displayType="unstyled"
 							onClick={_handleSubmit}
 							type="submit"
@@ -231,7 +231,7 @@ export default function SearchBar({
 
 				<ClayInput.GroupItem append className="mr-0" shrink>
 					<ClayButton
-						aria-label={Liferay.Language.get('submit')}
+						aria-label={Liferay.Language.get('search')}
 						displayType="secondary"
 						onClick={_handleSubmit}
 						type="submit"

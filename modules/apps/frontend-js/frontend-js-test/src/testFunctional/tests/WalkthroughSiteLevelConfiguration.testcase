@@ -11,12 +11,23 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		task ("Given a new Site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			ApplicationsMenu.gotoSite(site = "Site Name");
+		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		PortalInstances.tearDownCP();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
 	}
 
 	@description = "LPS-159838. Can enable walkthrough in System Settings."
@@ -27,13 +38,11 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Given Walkthrough in System Settings") {
-			JSONGroup.addGroup(groupName = "Site Name");
-
-			ApplicationsMenu.gotoSite(site = "Site Name");
+			Walkthrough.gotoSiteConfigWalkthrough();
 		}
 
 		task ("When walkthrough is enabled") {
-			Walkthrough.addWalkthrough(fileName = "walkthrough_configuration.json");
+			Walkthrough._enableWalkthrough();
 		}
 
 		task ("Then success message appears") {
@@ -49,10 +58,6 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Given there is a site-level JSON defined for current site") {
-			JSONGroup.addGroup(groupName = "Site Name");
-
-			ApplicationsMenu.gotoSite(site = "Site Name");
-
 			Walkthrough.addWalkthrough(fileName = "walkthrough_configuration.json");
 
 			JSONLayout.addPublicLayout(
@@ -88,10 +93,6 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Given there is no site-level JSON defined for current site") {
-			JSONGroup.addGroup(groupName = "Site Name");
-
-			ApplicationsMenu.gotoSite(site = "Site Name");
-
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
 				layoutName = "Walkthrough Page 1");

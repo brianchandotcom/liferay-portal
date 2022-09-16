@@ -1483,6 +1483,14 @@ definition {
 		AssertElementNotPresent(locator1 = "KnowledgeBase#DISPLAY_TITLE");
 	}
 
+	macro viewFieldRequiredAsterisk {
+		LexiconEntry.gotoAddMenuItem(menuItem = "Basic Article");
+
+		for (var fieldFieldLabel : list "${fieldLabel}") {
+			FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "${fieldFieldLabel}");
+		}
+	}
+
 	macro viewFriendlyURLCP {
 		Click(
 			key_rowEntry = "${kbArticleTitle}",
@@ -1499,6 +1507,44 @@ definition {
 
 	macro viewImageViaContentCmd {
 		AssertElementPresent(locator1 = "KnowledgeBaseArticle#CONTENT_IMAGE");
+	}
+
+	macro viewInfoPanel {
+		DMDocument.expandInfo();
+
+		AssertTextEquals(
+			locator1 = "KnowledgeBaseArticle#INFO_TITLE",
+			value1 = "${kbArticleTitle}");
+
+		if (isSet(versionNumber)) {
+			AssertTextEquals(
+				key_dmDocumentVersionNumber = "${versionNumber}",
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION",
+				value1 = "VERSION ${versionNumber}");
+		}
+
+		if (isSet(workflowStatus)) {
+			AssertTextEquals(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS",
+				value1 = "${workflowStatus}");
+		}
+	}
+
+	macro viewInfoPanelVersions {
+		Navigator.gotoNavTab(navTab = "Versions");
+
+		AssertTextEquals(
+			key_entryVersion = "${entryVersion}",
+			locator1 = "KnowledgeBaseArticle#INFO_VERSION_TITLE",
+			value1 = "${entryVersion}");
+
+		var modifiedDate = DateUtil.getFormattedCurrentDate("MMMM dd, yyyy");
+
+		AssertTextEquals.assertPartialText(
+			key_entryVersion = "${entryVersion}",
+			locator1 = "KnowledgeBaseArticle#INFO_VERSION_SUBTITLE",
+			userName = "${userName}",
+			value1 = "By ${userName}, on ${modifiedDate}");
 	}
 
 	macro viewKBArticlePriorityCP {

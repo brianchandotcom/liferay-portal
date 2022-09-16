@@ -286,6 +286,10 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CannotAddArticleWithoutContent {
+		KBArticle.viewFieldRequiredAsterisk(fieldLabel = "Title,Content");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
 		KBArticle.addCP(
 			kbArticleContent = "",
 			kbArticleInvalidContent = "true",
@@ -350,6 +354,47 @@ definition {
 			embedVideo = "true",
 			kbArticleContent = "Knowledge Base Video Content",
 			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
+	@description = "This test ensures that the information related to the KB entry can be viewed."
+	@priority = "4"
+	test CanViewEntryInfo {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.gotoViaKBAdminCP(kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewInfoPanel(
+			kbArticleTitle = "Knowledge Base Article Title",
+			versionNumber = "1",
+			workflowStatus = "APPROVED");
+
+		KBArticle.viewInfoPanelVersions(
+			entryVersion = "Version 1",
+			userName = "Test Test");
+
+		JSONKnowledgeBase.updateKBArticle(
+			groupName = "Guest",
+			kbArticleTitle = "Knowledge Base Article Title",
+			newKbArticleContent = "Knowledge Base Article Content Edit",
+			newKbArticleTitle = "Knowledge Base Article Title Edit");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.gotoViaKBAdminCP(kbArticleTitle = "Knowledge Base Article Title Edit");
+
+		KBArticle.viewInfoPanel(
+			kbArticleTitle = "Knowledge Base Article Title Edit",
+			versionNumber = "2",
+			workflowStatus = "APPROVED");
+
+		KBArticle.viewInfoPanelVersions(
+			entryVersion = "Version 2",
+			userName = "Test Test");
 	}
 
 	@description = "This ensures that an image in the KB content field can be rendered correctly after moving it to a folder."

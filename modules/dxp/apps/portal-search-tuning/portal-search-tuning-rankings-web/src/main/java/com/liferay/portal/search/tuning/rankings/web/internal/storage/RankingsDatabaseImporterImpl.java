@@ -140,7 +140,9 @@ public class RankingsDatabaseImporterImpl implements RankingsDatabaseImporter {
 			rankingIndexReindexer.reindex(new long[] {companyId});
 		}
 		catch (Exception exception) {
-			_log.error("Unable to reindex " + rankingIndexName.getIndexName());
+			_log.error(
+				"Unable to reindex " + rankingIndexName.getIndexName(),
+				exception);
 		}
 	}
 

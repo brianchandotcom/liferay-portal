@@ -79,7 +79,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 									"Search experiences blueprint with ID ",
 									resultSet.getLong("sxpBlueprintId"),
 									" contains corrupted element instances ",
-									"JSON"));
+									"JSON"),
+								runtimeException);
 						}
 					}
 
@@ -165,7 +166,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			catch (IOException ioException) {
 				_log.error(
 					"Unable to get default value for element with external " +
-						"reference code: " + externalReferenceCode);
+						"reference code: " + externalReferenceCode,
+					ioException);
 			}
 		}
 

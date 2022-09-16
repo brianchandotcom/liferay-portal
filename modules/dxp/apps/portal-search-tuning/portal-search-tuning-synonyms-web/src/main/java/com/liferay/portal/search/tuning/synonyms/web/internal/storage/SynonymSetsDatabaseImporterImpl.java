@@ -142,7 +142,8 @@ public class SynonymSetsDatabaseImporterImpl
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to reindex " + synonymSetIndexName.getIndexName());
+				"Unable to reindex " + synonymSetIndexName.getIndexName(),
+				exception);
 		}
 	}
 

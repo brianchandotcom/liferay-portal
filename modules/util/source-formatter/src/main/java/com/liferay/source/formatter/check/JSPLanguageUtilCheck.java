@@ -45,7 +45,7 @@ public class JSPLanguageUtilCheck extends BaseFileCheck {
 			if (!ToolsUtil.isInsideQuotes(content, matcher.start())) {
 				addMessage(
 					fileName,
-					"Use <liferay-ui:message> tag instead of LanguageUtil.get'",
+					"Use <liferay-ui:message> tag instead of LanguageUtil.get",
 					getLineNumber(content, matcher.start()));
 			}
 		}

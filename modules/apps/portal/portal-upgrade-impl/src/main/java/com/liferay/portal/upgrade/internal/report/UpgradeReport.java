@@ -133,7 +133,7 @@ public class UpgradeReport {
 					StringPool.NEW_LINE + StringPool.NEW_LINE));
 		}
 		catch (IOException ioException) {
-			_log.error("Unable to generate the upgrade report");
+			_log.error("Unable to generate the upgrade report", ioException);
 		}
 	}
 
@@ -151,7 +151,7 @@ public class UpgradeReport {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get build number");
+				_log.warn("Unable to get build number", exception);
 			}
 		}
 
@@ -481,7 +481,9 @@ public class UpgradeReport {
 		}
 		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get document library store root dir");
+				_log.warn(
+					"Unable to get document library store root dir",
+					ioException);
 			}
 		}
 
@@ -502,7 +504,7 @@ public class UpgradeReport {
 		}
 		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get schema version");
+				_log.warn("Unable to get schema version", sqlException);
 			}
 		}
 
@@ -537,7 +539,8 @@ public class UpgradeReport {
 					catch (SQLException sqlException) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to retrieve data from " + tableName);
+								"Unable to retrieve data from " + tableName,
+								sqlException);
 						}
 					}
 				}
@@ -546,6 +549,10 @@ public class UpgradeReport {
 			}
 		}
 		catch (SQLException sqlException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(sqlException);
+			}
+
 			return null;
 		}
 	}

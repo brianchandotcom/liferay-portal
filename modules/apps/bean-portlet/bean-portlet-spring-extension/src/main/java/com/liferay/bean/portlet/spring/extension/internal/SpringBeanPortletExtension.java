@@ -509,7 +509,8 @@ public class SpringBeanPortletExtension {
 
 			if (!className.startsWith("org.springframework")) {
 				_log.error(
-					"Unable to discover methods in class " + clazz.getName());
+					"Unable to discover methods in class " + clazz.getName(),
+					throwable);
 			}
 
 			return false;

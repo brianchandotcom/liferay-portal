@@ -185,7 +185,8 @@ public class ImageEditableElementParser implements EditableElementParser {
 				value = jsonObject.getString("url");
 			}
 			catch (JSONException jsonException) {
-				_log.error("Unable to parse JSON value " + value);
+				_log.error(
+					"Unable to parse JSON value " + value, jsonException);
 
 				value = StringPool.BLANK;
 			}

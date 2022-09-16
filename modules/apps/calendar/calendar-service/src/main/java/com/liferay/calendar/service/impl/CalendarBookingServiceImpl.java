@@ -978,7 +978,8 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		catch (IOException ioException) {
 			_log.error(
 				"Unable to read the content for " +
-					CalendarServiceConfigurationValues.CALENDAR_RSS_TEMPLATE);
+					CalendarServiceConfigurationValues.CALENDAR_RSS_TEMPLATE,
+				ioException);
 		}
 
 		TimeZone timeZone = themeDisplay.getTimeZone();

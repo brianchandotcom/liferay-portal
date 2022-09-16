@@ -153,7 +153,8 @@ public class LoginUtil {
 			catch (IOException ioException) {
 				_log.error(
 					"Unable to read the content for " +
-						PropsUtil.get(portalPropertiesTemplateKey));
+						PropsUtil.get(portalPropertiesTemplateKey),
+					ioException);
 			}
 
 			xml = LocalizationUtil.getLocalizationXmlFromPreferences(

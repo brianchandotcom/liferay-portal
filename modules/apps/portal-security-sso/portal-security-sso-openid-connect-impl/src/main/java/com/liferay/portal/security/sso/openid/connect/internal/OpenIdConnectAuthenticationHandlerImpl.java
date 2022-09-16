@@ -350,7 +350,8 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to create a lang tag with locale " +
-						locale.getLanguage());
+						locale.getLanguage(),
+					langTagException);
 			}
 
 			return null;

@@ -2142,7 +2142,8 @@ public class LayoutsAdminDisplayContext {
 			catch (IOException ioException) {
 				_log.error(
 					"Unable to read the content for " +
-						PropsValues.ROBOTS_TXT_WITH_SITEMAP);
+						PropsValues.ROBOTS_TXT_WITH_SITEMAP,
+					ioException);
 			}
 		}
 
@@ -2154,7 +2155,8 @@ public class LayoutsAdminDisplayContext {
 		catch (IOException ioException) {
 			_log.error(
 				"Unable to read the content for " +
-					PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
+					PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP,
+				ioException);
 
 			return null;
 		}

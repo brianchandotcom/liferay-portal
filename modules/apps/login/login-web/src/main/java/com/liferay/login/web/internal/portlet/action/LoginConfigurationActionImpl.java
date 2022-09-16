@@ -71,7 +71,8 @@ public class LoginConfigurationActionImpl extends DefaultConfigurationAction {
 		catch (IOException ioException) {
 			_log.error(
 				"Unable to read the content for " +
-					PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY);
+					PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY,
+				ioException);
 		}
 
 		try {
@@ -85,7 +86,8 @@ public class LoginConfigurationActionImpl extends DefaultConfigurationAction {
 		catch (IOException ioException) {
 			_log.error(
 				"Unable to read the content for " +
-					PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT);
+					PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT,
+				ioException);
 		}
 
 		String[] discardLegacyKeys = ParamUtil.getStringValues(

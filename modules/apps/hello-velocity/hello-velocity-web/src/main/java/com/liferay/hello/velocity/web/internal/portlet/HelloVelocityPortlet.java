@@ -105,7 +105,8 @@ public class HelloVelocityPortlet extends VelocityPortlet {
 		catch (IOException ioException) {
 			_log.error(
 				"Unable to read the content for META-INF/resources" +
-					templateId);
+					templateId,
+				ioException);
 		}
 
 		return new StringTemplateResource(templateId, content);

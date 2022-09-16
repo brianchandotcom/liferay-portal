@@ -264,7 +264,9 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Invalid local date time " + localDateTimeString);
+				_log.warn(
+					"Invalid local date time " + localDateTimeString,
+					exception);
 			}
 
 			return null;

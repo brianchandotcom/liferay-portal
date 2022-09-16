@@ -136,6 +136,11 @@ public class MicroblogsPortlet extends MVCPortlet {
 	@Reference
 	protected MicroblogsEntryService microblogsEntryService;
 
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.microblogs.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
+	)
+	protected Release release;
+
 	private String[] _getAssetTagNames(String content) {
 		List<String> assetTagNames = new ArrayList<>();
 
@@ -145,10 +150,5 @@ public class MicroblogsPortlet extends MVCPortlet {
 
 		return assetTagNames.toArray(new String[0]);
 	}
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.microblogs.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
-	)
-	private Release _release;
 
 }

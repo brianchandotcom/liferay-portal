@@ -48,4 +48,39 @@ definition {
 		}
 	}
 
+	@description = "LPS-161918 - Verify that it's possible to edit an e-mail notification template"
+	@priority = "3"
+	test CanEditEmailTemplate {
+		task ("Go to Templates and add a new Notification Template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Templates");
+
+			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "Email Body",
+				entryTo = "test@liferay.com",
+				fromAddress = "Liferay",
+				fromName = "Test Test",
+				name = "Notification Template",
+				subject = "Subject");
+
+			Button.clickSave();
+		}
+
+		task ("Edit the created notification Template") {
+			ObjectNotifications.editNotificationTemplate(
+				name = "Notification Template Edited",
+				notificationTemplateName = "Notification Template");
+
+			Button.clickSave();
+		}
+
+		task ("Assert that the Notification Template edited is present") {
+			Refresh();
+
+			ObjectNotifications.viewNotificationTemplate(notificationTemplateName = "Notification Template Edited");
+		}
+	}
+
 }

@@ -33,6 +33,57 @@ definition {
 			value1 = "${emailBody}");
 	}
 
+	macro editNotificationTemplate {
+		ObjectNotifications.goToNotificationTemplate(notificationTemplateName = "${notificationTemplateName}");
+
+		if (isSet(name)) {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "${name}");
+		}
+
+		if (isSet(entryTo)) {
+			Type(
+				key_text = "To",
+				locator1 = "TextInput#ANY",
+				value1 = "${entryTo}");
+		}
+
+		if (isSet(fromAddress)) {
+			Type(
+				key_text = "From Address",
+				locator1 = "TextInput#ANY",
+				value1 = "${fromAddress}");
+		}
+
+		if (isSet(fromName)) {
+			Type(
+				key_text = "From Name",
+				locator1 = "TextInput#ANY",
+				value1 = "${fromName}");
+		}
+
+		if (isSet(subject)) {
+			Type(
+				key_text = "Subject",
+				locator1 = "TextInput#ANY",
+				value1 = "${subject}");
+		}
+
+		if (isSet(emailBody)) {
+			Type(
+				locator1 = "CKEditor#BODY_FIELD_IFRAME",
+				value1 = "${emailBody}");
+		}
+	}
+
+	macro goToNotificationTemplate {
+		Click(
+			key_name = "${notificationTemplateName}",
+			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+	}
+
 	macro viewNotificationTemplate {
 		AssertElementPresent(
 			key_name = "${notificationTemplateName}",

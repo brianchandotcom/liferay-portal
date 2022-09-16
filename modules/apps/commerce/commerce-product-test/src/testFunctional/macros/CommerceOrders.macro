@@ -262,7 +262,7 @@ definition {
 		if (isSet(checkReferenceCode)) {
 			AssertElementPresent(
 				key_erc = "${keyReferenceCode}",
-				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE");
+				locator1 = "CommerceEntry#HEADER_ERC_VALUE");
 		}
 
 		if (isSet(uniqueERC)) {

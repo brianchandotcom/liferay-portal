@@ -47,7 +47,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 		dismissible="<%= true %>"
 		displayType="warning"
 	>
-		<strong><%= LanguageUtil.get(request, "segmentation-is-disabled") %></strong>
+		<strong><liferay-ui:message key="segmentation-is-disabled" /></strong>
 
 		<%
 		String segmentsConfigurationURL = segmentsDisplayContext.getSegmentsCompanyConfigurationURL(request);

@@ -9,6 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account DXP";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -24,7 +25,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToAllAccounts();
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
 	}
 
@@ -51,7 +52,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account DXP");
+			CustomerPortal.accountTableProject(title = "${testAccount}");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -59,13 +60,13 @@ definition {
 		}
 
 		task ("Go to CP2.0") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("Login in Okta") {
 			CustomerPortal.loginOktaToUpdateCP();
 
-			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
+			SelectWindow(locator1 = "title=Home - ${testSiteName} - Liferay DXP");
 
 			Refresh();
 		}
@@ -114,17 +115,17 @@ definition {
 
 			Accounts.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "Test Account DXP");
+			LexiconEntry.gotoEntry(rowEntry = "${testAccount}");
 
 			Accounts.assignUsers(
-				accountName = "Test Account DXP",
+				accountName = "${testAccount}",
 				assigneeName = "Test User");
 		}
 
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account DXP");
+			CustomerPortal.accountTableProject(title = "${testAccount}");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -132,13 +133,13 @@ definition {
 		}
 
 		task ("Go to CP2.0") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("Login in Okta") {
 			CustomerPortal.loginOktaToUpdateCP();
 
-			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
+			SelectWindow(locator1 = "title=Home - ${testSiteName} - Liferay DXP");
 
 			Refresh();
 		}

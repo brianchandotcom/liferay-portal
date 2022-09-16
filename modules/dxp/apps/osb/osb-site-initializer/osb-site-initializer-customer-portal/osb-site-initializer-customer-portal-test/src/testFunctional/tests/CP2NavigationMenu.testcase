@@ -9,6 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccounts = "Test Account Analytics Cloud,Test Account Commerce,Test Account LXC-SM,Test Account Enterprise Search";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -24,7 +25,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToAllAccounts();
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
 		}
 	}
 
@@ -45,7 +46,7 @@ definition {
 	@priority = "3"
 	test IsAnalyticsCloudOptionAvailable {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
@@ -67,7 +68,7 @@ definition {
 	@priority = "3"
 	test IsCommerceOptionAvailable {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account Commerce");
 		}
@@ -87,7 +88,7 @@ definition {
 	@priority = "3"
 	test IsDXPCloudOptionAvailable {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
@@ -107,7 +108,7 @@ definition {
 	@priority = "3"
 	test IsDXPOptionAvailable {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account DXP");
 		}
@@ -127,7 +128,7 @@ definition {
 	@priority = "3"
 	test IsEnterpriseSearchOptionAvailable {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account Enterprise Search");
 		}
@@ -147,7 +148,7 @@ definition {
 	@priority = "4"
 	test IsOverviewMenuDisplayed {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
@@ -161,7 +162,7 @@ definition {
 	@priority = "3"
 	test IsPortalOptionAvailable {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(
 				status = "Future",
@@ -184,7 +185,7 @@ definition {
 	@priority = "4"
 	test IsTeamMembersMenuDisplayed {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}

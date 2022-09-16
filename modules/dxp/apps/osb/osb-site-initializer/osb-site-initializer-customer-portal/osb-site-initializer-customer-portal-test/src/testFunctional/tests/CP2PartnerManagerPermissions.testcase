@@ -9,6 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account Analytics Cloud";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -24,7 +25,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToAllAccounts();
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
 	}
 
@@ -51,7 +52,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "Test Account Analytics Cloud");
+			LexiconEntry.gotoEntry(rowEntry = "${testAccount}");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Partner Manager",
@@ -59,13 +60,13 @@ definition {
 		}
 
 		task ("Go to CP2.0") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("Login in Okta") {
 			CustomerPortal.loginOktaToUpdateCP();
 
-			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
+			SelectWindow(locator1 = "title=Home - ${testSiteName} - Liferay DXP");
 
 			Refresh();
 		}
@@ -73,7 +74,7 @@ definition {
 		task ("Get into the project") {
 			CustomerPortal.enterOnProject(
 				status = "Expired",
-				title = "Test Account Analytics Cloud");
+				title = "${testAccount}");
 		}
 
 		task ("Go to the Team Members page and click on the Invite button") {
@@ -110,17 +111,17 @@ definition {
 
 			Accounts.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "Test Account Analytics Cloud");
+			LexiconEntry.gotoEntry(rowEntry = "${testAccount}");
 
 			Accounts.assignUsers(
-				accountName = "Test Account Analytics Cloud",
+				accountName = "${testAccount}",
 				assigneeName = "Test User");
 		}
 
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "Test Account Analytics Cloud");
+			LexiconEntry.gotoEntry(rowEntry = "${testAccount}");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Partner Manager",
@@ -128,13 +129,13 @@ definition {
 		}
 
 		task ("Go to CP2.0") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("Login in Okta") {
 			CustomerPortal.loginOktaToUpdateCP();
 
-			SelectWindow(locator1 = "title=Home - Customer Portal Site - Liferay DXP");
+			SelectWindow(locator1 = "title=Home - ${testSiteName} - Liferay DXP");
 
 			Refresh();
 		}
@@ -142,7 +143,7 @@ definition {
 		task ("Get into the project") {
 			CustomerPortal.enterOnProject(
 				status = "Expired",
-				title = "Test Account Analytics Cloud");
+				title = "${testAccount}");
 		}
 
 		task ("Go to the team members page and remove a guest user") {

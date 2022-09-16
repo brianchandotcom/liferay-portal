@@ -9,6 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account LXC-SM";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -24,7 +25,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToAllAccounts();
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
 	}
 
@@ -45,9 +46,9 @@ definition {
 	@priority = "4"
 	test CanUserSelectActiveStatus {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
 		task ("Open the drop-down and assert the active status") {
@@ -65,9 +66,9 @@ definition {
 	@priority = "4"
 	test CanUserSelectExpiredStatus {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
 		task ("Open the drop-down and assert the expired status") {
@@ -85,9 +86,9 @@ definition {
 	@priority = "4"
 	test CanUserSelectFutureStatus {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
 		task ("Open the drop-down and assert the future status") {
@@ -105,9 +106,9 @@ definition {
 	@priority = "3"
 	test CanUserSelectThreeStatuses {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
 		task ("Open the drop-down and assert the all status") {
@@ -125,9 +126,9 @@ definition {
 	@priority = "4"
 	test ValueIsKeptOnTransition {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
 		task ("Select a status and open a subscription card") {
@@ -145,9 +146,9 @@ definition {
 		}
 
 		task ("Go back to Homepage and join a project again") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
 		task ("Assert that the active status is no longer selected") {

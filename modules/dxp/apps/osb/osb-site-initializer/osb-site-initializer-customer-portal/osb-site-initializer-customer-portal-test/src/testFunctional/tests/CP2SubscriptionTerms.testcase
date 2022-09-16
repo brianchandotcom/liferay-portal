@@ -9,6 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccounts = "Test Account LXC-SM,Test Account Commerce,Test Account DXP";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -24,7 +25,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToAllAccounts();
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
 		}
 	}
 
@@ -45,7 +46,7 @@ definition {
 	@priority = "4"
 	test ClickingSubscriptionCardPopUpShows {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
@@ -70,7 +71,7 @@ definition {
 	@priority = "3"
 	test IfActiveStatusShowsUp {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
@@ -101,7 +102,7 @@ definition {
 	@priority = "2"
 	test IfExpiredStatusShowsUp {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account Commerce");
 		}
@@ -120,7 +121,7 @@ definition {
 	@priority = "2"
 	test IfFutureStatusShowsUp {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account Commerce");
 		}
@@ -150,7 +151,7 @@ definition {
 	@priority = "3"
 	test ModalCloseIfClickedOut {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
@@ -183,7 +184,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account Commerce");
 		}
@@ -213,7 +214,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account DXP");
 		}
@@ -238,7 +239,7 @@ definition {
 	@priority = "3"
 	test ProvisionedColumnAppearsForDXPCloud {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
@@ -263,9 +264,9 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test ValueUnderColumnFields {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+		ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-		CustomerPortal.enterOnProject(title = "Test Account 01");
+		CustomerPortal.enterOnProject(title = "Test Account DXP");
 
 		task ("Open the modal and assert the start and end dates of the subscription") {
 			Click(

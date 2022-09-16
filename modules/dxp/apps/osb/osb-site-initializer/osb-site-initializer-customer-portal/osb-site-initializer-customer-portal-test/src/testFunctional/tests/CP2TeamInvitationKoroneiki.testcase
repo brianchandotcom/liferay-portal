@@ -9,6 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account LXC-SM";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -24,7 +25,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToAllAccounts();
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
 	}
 
@@ -47,7 +48,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
+			CustomerPortal.accountTableProject(title = "${testAccount}");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -55,9 +56,9 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 		}
 
 		task ("Start the project configuration and invite a user to the project") {
@@ -75,7 +76,7 @@ definition {
 		task ("Go to admin accounts") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
+			CustomerPortal.accountTableProject(title = "${testAccount}");
 
 			Navigator.gotoNavTab(navTab = "Users");
 		}

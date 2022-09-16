@@ -9,6 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccounts = "Test Account LXC-SM,Test Account Analytics Cloud,Test Account Portal,Test Account Commerce,Test Account Partnership,Test Account Others";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -24,7 +25,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToAllAccounts();
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
 		}
 	}
 
@@ -45,7 +46,7 @@ definition {
 	@priority = "5"
 	test AffirmAllCardInformation {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
@@ -59,7 +60,7 @@ definition {
 	@priority = "4"
 	test IfActiveStatusReflectsDate {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
 		}
@@ -76,7 +77,7 @@ definition {
 	@priority = "4"
 	test IfExpiredStatusReflectsDate {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(
 				status = "Expired",
@@ -95,7 +96,7 @@ definition {
 	@priority = "4"
 	test IfFutureStatusReflectsDate {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(
 				status = "Future",
@@ -114,7 +115,7 @@ definition {
 	@priority = "5"
 	test IfTabAppearOnlyWithSubscriptions {
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(
 				status = "Future",
@@ -134,7 +135,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account Commerce");
 		}
@@ -152,7 +153,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account Partnership");
 		}
@@ -170,7 +171,7 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
 			CustomerPortal.enterOnProject(title = "Test Account Others");
 		}

@@ -10,6 +10,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account QA 7.4";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -25,7 +26,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToAllAccounts();
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
 	}
 
@@ -58,7 +59,7 @@ definition {
 		}
 
 		task ("When a user selects a project and an individual key") {
-			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 
 			CP2NavigationMenu.goToProductActivation();
 
@@ -104,7 +105,7 @@ definition {
 		}
 
 		task ("When a user selects a project and clicks on a key") {
-			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 
 			CP2NavigationMenu.goToProductActivation();
 
@@ -138,7 +139,7 @@ definition {
 		}
 
 		task ("When a user selects a project and an individual key with a Virtual Cluster key type") {
-			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 
 			CP2NavigationMenu.goToProductActivation();
 
@@ -170,7 +171,7 @@ definition {
 		}
 
 		task ("When a user selects a project and an individual key") {
-			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 
 			CP2NavigationMenu.goToProductActivation();
 
@@ -204,7 +205,7 @@ definition {
 		}
 
 		task ("When a user selects a project") {
-			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 
 			CP2NavigationMenu.goToProductActivation();
 

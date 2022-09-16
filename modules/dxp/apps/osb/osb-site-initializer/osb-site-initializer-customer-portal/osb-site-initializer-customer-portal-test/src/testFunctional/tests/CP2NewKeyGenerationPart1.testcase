@@ -9,6 +9,8 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account QA 7.4";
+	var testProduct = "DXP";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -19,12 +21,12 @@ definition {
 
 		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
-		}
+		} 
 
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToAllAccounts();
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
 	}
 
@@ -48,15 +50,15 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
-			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -80,7 +82,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
@@ -88,7 +90,7 @@ definition {
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -97,7 +99,7 @@ definition {
 			Button.click(button = "Cancel");
 
 			AssertElementPresent(
-				key_productType = "DXP",
+				key_productType = "${testProduct}",
 				locator1 = "CP2ActivationKeys#ACTIVE_PRODUCT_TYPE");
 		}
 	}
@@ -114,7 +116,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
@@ -122,7 +124,7 @@ definition {
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -144,7 +146,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
@@ -152,7 +154,7 @@ definition {
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 		}
 
 		task ("And when the user goes to generate a new key and selects a Key Type that does not have permanent licenses") {
@@ -185,7 +187,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
@@ -193,7 +195,7 @@ definition {
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -219,15 +221,15 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
-			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -251,15 +253,15 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("When a user selects a DXP project in Customer Portal and goes to 'Generate New' in Actions") {
-			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -267,7 +269,7 @@ definition {
 		task ("Then the product field will be filled in by default with the project selected - DXP") {
 			AssertTextEquals(
 				locator1 = "CP2ActivationKeys#ENABLED_PRODUCT",
-				value1 = "DXP");
+				value1 = "${testProduct}");
 		}
 	}
 
@@ -283,7 +285,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
@@ -291,7 +293,7 @@ definition {
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -313,7 +315,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
@@ -321,7 +323,7 @@ definition {
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 
 			CP2ActivationKeys.generateNewKey();
 		}
@@ -346,7 +348,7 @@ definition {
 
 			Navigator.openURL();
 
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 		}
 
 		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
@@ -354,7 +356,7 @@ definition {
 
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+			CP2NavigationMenu.clickOnProductButton(product = "${testProduct}");
 
 			CP2ActivationKeys.generateNewKey();
 		}

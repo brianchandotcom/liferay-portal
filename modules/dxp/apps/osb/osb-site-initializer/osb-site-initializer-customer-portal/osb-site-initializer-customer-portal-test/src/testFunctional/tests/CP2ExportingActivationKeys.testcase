@@ -9,6 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account DXP";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -24,7 +25,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToAllAccounts();
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
 		}
 	}
 
@@ -52,7 +53,7 @@ definition {
 		}
 
 		task ("When a user selects a project in Customer Portal") {
-			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+			CustomerPortal.enterOnProject(title = "${testAccount}");
 
 			CP2NavigationMenu.goToProductActivation();
 

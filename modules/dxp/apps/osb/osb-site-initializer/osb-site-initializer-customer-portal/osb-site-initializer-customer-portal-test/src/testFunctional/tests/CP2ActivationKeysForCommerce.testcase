@@ -13,6 +13,7 @@ definition {
 	var pageTitle = "Activation Keys";
 	var testUser = "Test Test";
 	var userFirstName = "Test";
+	var testAccounts = "Test Account QA 7.4,Test Account QA 7.3,Test Account QA 7.2,Test Account QA 7.1,Test Account QA 7.0";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -28,7 +29,7 @@ definition {
 		task ("Add test user access to all Accounts") {
 			CustomerPortal.assignUserToOrganization();
 
-			CustomerPortal.addUserToAllAccounts();
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccounts}");
 		}
 
 		task ("Go to Customer Portal") {

@@ -47,7 +47,7 @@ public class ViewNotificationQueueEntriesDisplayContext {
 				getAPIURL() + "/{id}/resend", null, "put",
 				LanguageUtil.get(
 					_notificationRequestHelper.getRequest(), "resend"),
-				"put", null, "async"),
+				"put", "update", "async"),
 			new FDSActionDropdownItem(
 				getAPIURL() + "/{id}", "trash", "delete",
 				LanguageUtil.get(

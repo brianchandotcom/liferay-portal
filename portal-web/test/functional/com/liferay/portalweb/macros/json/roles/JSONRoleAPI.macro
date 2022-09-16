@@ -118,4 +118,27 @@ definition {
 		return "${roleId}";
 	}
 
+	macro _searchRolesIds {
+		Variables.assertDefined(parameterList = "${roleName}");
+
+		var companyId = JSONCompany.getCompanyId();
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/role/search \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d keywords=${roleName} \
+				-d types= \
+				-d -params= \
+				-d "start=-1" \
+				-d "end=-1"
+				-d -orderByComparator=
+		''';
+
+		var rolesIds = JSONCurlUtil.post("${curl}", "$..['roleId']");
+
+		return "${rolesIds}";
+	}
+
 }

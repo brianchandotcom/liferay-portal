@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.fragment.listener.FragmentEntryLinkListener;
+import com.liferay.fragment.listener.FragmentEntryLinkListenerTracker;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -77,6 +80,17 @@ public class FragmentEntryLinkModelListener
 			_commentManager.deleteDiscussion(
 				FragmentEntryLink.class.getName(),
 				fragmentEntryLink.getFragmentEntryLinkId());
+
+			List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
+				_fragmentEntryLinkListenerTracker.
+					getFragmentEntryLinkListeners();
+
+			for (FragmentEntryLinkListener fragmentEntryLinkListener :
+					fragmentEntryLinkListeners) {
+
+				fragmentEntryLinkListener.onDeleteFragmentEntryLink(
+					fragmentEntryLink);
+			}
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -282,6 +296,9 @@ public class FragmentEntryLinkModelListener
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
+	private FragmentEntryLinkListenerTracker _fragmentEntryLinkListenerTracker;
 
 	@Reference
 	private LayoutClassedModelUsageLocalService

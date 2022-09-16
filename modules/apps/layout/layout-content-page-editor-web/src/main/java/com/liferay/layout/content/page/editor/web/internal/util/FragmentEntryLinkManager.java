@@ -19,8 +19,6 @@ import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.helper.FragmentEntryLinkHelper;
-import com.liferay.fragment.listener.FragmentEntryLinkListener;
-import com.liferay.fragment.listener.FragmentEntryLinkListenerTracker;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
@@ -93,16 +91,6 @@ public class FragmentEntryLinkManager {
 
 		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 			fragmentEntryLinkId);
-
-		List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
-			_fragmentEntryLinkListenerTracker.getFragmentEntryLinkListeners();
-
-		for (FragmentEntryLinkListener fragmentEntryLinkListener :
-				fragmentEntryLinkListeners) {
-
-			fragmentEntryLinkListener.onDeleteFragmentEntryLink(
-				fragmentEntryLink);
-		}
 	}
 
 	public FragmentEntry getFragmentEntry(
@@ -493,9 +481,6 @@ public class FragmentEntryLinkManager {
 
 	@Reference
 	private FragmentEntryLinkHelper _fragmentEntryLinkHelper;
-
-	@Reference
-	private FragmentEntryLinkListenerTracker _fragmentEntryLinkListenerTracker;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

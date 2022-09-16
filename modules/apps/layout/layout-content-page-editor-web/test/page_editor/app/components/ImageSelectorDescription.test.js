@@ -30,9 +30,11 @@ describe('ImageSelectorDescription', () => {
 			</StoreMother.Component>
 		);
 
-		expect(screen.getByLabelText('image-description').value).toBe(
-			'Random description'
-		);
+		expect(
+			screen.getByLabelText('image-description', {
+				selector: 'input',
+			}).value
+		).toBe('Random description');
 	});
 
 	it('call onImageDescriptionChanged on blur', () => {
@@ -47,7 +49,9 @@ describe('ImageSelectorDescription', () => {
 			</StoreMother.Component>
 		);
 
-		const input = screen.getByLabelText('image-description');
+		const input = screen.getByLabelText('image-description', {
+			selector: 'input',
+		});
 
 		input.value = 'Some other thing';
 		input.dispatchEvent(new FocusEvent('blur'));

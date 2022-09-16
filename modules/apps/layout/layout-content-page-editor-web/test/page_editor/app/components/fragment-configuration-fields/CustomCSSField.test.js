@@ -57,7 +57,11 @@ describe('CSSClassSelectorField', () => {
 	it('renders', () => {
 		renderCustomCSSField();
 
-		expect(screen.getByLabelText('custom-css')).toBeInTheDocument();
+		expect(
+			screen.getByLabelText('custom-css', {
+				selector: 'textarea',
+			})
+		).toBeInTheDocument();
 	});
 
 	it('allow editing the custom css in the modal after clicking on expand button', () => {
@@ -126,7 +130,9 @@ describe('CSSClassSelectorField', () => {
 
 		renderCustomCSSField({onValueSelect});
 
-		const textarea = screen.getByLabelText('custom-css');
+		const textarea = screen.getByLabelText('custom-css', {
+			selector: 'textarea',
+		});
 
 		const css = `
 			.${FRAGMENT_CLASS_PLACEHOLDER} { color: blue; }
@@ -145,7 +151,9 @@ describe('CSSClassSelectorField', () => {
 
 		renderCustomCSSField({onValueSelect});
 
-		const textarea = screen.getByLabelText('custom-css');
+		const textarea = screen.getByLabelText('custom-css', {
+			selector: 'textarea',
+		});
 
 		userEvent.type(textarea, `.${FRAGMENT_CLASS_PLACEHOLDER} {\n\n}`);
 

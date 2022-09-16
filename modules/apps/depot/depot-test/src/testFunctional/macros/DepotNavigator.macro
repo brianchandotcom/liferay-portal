@@ -285,6 +285,20 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_navigation=file_entry_types");
 	}
 
+	macro openDepotExportImportAdmin {
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		if (isSet(exportAdmin)) {
+			var portletName = "ExportPortlet";
+		}
+
+		if (isSet(importAdmin)) {
+			var portletName = "ImportPortlet";
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_${portletName}");
+	}
+
 	macro openDepotLanguages {
 		var depotId = JSONGroupAPI._getDepotIdByName(
 			defaultLocale = "${defaultLocale}",

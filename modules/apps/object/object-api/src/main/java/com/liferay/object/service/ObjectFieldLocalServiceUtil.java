@@ -75,6 +75,23 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().addObjectField(objectField);
 	}
 
+	public static ObjectField addOrUpdateCustomObjectField(
+			long userId, long objectDefinitionId, String externalReferenceCode,
+			long listTypeDefinitionId, String businessType, String dbType,
+			String defaultValue, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
+			String name, boolean required, boolean state,
+			List<com.liferay.object.model.ObjectFieldSetting>
+				objectFieldSettings)
+		throws PortalException {
+
+		return getService().addOrUpdateCustomObjectField(
+			userId, objectDefinitionId, externalReferenceCode,
+			listTypeDefinitionId, businessType, dbType, defaultValue, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			state, objectFieldSettings);
+	}
+
 	public static ObjectField addOrUpdateSystemObjectField(
 			long userId, long objectDefinitionId, String businessType,
 			String dbColumnName, String dbTableName, String dbType,

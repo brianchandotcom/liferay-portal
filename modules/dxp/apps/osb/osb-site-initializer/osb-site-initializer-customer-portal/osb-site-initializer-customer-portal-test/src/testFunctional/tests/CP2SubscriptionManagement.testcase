@@ -177,7 +177,9 @@ definition {
 		}
 
 		task ("Assert the drop-down list") {
-			CustomerPortal.viewSubscriptionManagementList(productList = "LXC-SM,DXP,Analytics Cloud,Commerce,Enterprise Search,Portal");
+			CustomerPortal.viewSubscriptionManagementList(
+				dropDownItems = "LXC-SM,DXP,Commerce,Enterprise Search,Portal",
+				dropDownLabel = "Type");
 		}
 	}
 

@@ -16,6 +16,7 @@ package com.liferay.batch.engine.internal.item;
 
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.batch.engine.jaxrs.uri.BatchEngineUriInfo;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
@@ -46,6 +47,7 @@ import org.osgi.framework.ServiceObjects;
 
 /**
  * @author Ivica Cardic
+ * @author Igor Beslic
  */
 public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 
@@ -182,6 +184,15 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 		BatchEngineTaskItemDelegate<Object> batchEngineTaskItemDelegate) {
 
 		batchEngineTaskItemDelegate.setContextCompany(_company);
+
+		BatchEngineUriInfo.Builder builder = new BatchEngineUriInfo.Builder();
+
+		for (Map.Entry<String, Serializable> entry : _parameters.entrySet()) {
+			builder.queryParameter(entry.getKey(), (String)entry.getValue());
+		}
+
+		batchEngineTaskItemDelegate.setContextUriInfo(builder.build());
+
 		batchEngineTaskItemDelegate.setContextUser(_user);
 		batchEngineTaskItemDelegate.setLanguageId(_user.getLanguageId());
 	}

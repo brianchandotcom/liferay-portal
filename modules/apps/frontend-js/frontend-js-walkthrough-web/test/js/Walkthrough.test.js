@@ -292,4 +292,30 @@ describe('Walkthrough', () => {
 
 		expect(getByLabelText('start-the-walkthrough')).toBeInTheDocument();
 	});
+
+	it('when `closeable` property is set to false, it should not be able to close the popover using the X button', () => {
+		const {getByLabelText} = renderWalkthrough({
+			closeable: false,
+			...PAGE_MOCK,
+		});
+
+		const hotspot = getByLabelText('start-the-walkthrough');
+
+		userEvents.click(hotspot);
+
+		expect(screen.queryByLabelText('close')).not.toBeInTheDocument();
+	});
+
+	it('when `closeable` property is set to true, it should be able to close the popover using the X button', () => {
+		const {getByLabelText} = renderWalkthrough({
+			closeable: true,
+			...PAGE_MOCK,
+		});
+
+		const hotspot = getByLabelText('start-the-walkthrough');
+
+		userEvents.click(hotspot);
+
+		expect(screen.queryByLabelText('close')).toBeInTheDocument();
+	});
 });

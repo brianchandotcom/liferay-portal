@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -58,6 +59,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 	}
 
 	private String _generateFeatureFlags(String content) throws IOException {
+		List<File> bndFiles = new ArrayList<>();
 		List<File> javaFiles = new ArrayList<>();
 
 		File portalDir = getPortalDir();
@@ -87,11 +89,15 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 
 					String absolutePath = SourceUtil.getAbsolutePath(filePath);
 
-					if (!absolutePath.endsWith(".java")) {
-						return FileVisitResult.CONTINUE;
+					if (absolutePath.endsWith("bnd.bnd")) {
+						bndFiles.add(filePath.toFile());
+
+						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					javaFiles.add(filePath.toFile());
+					if (absolutePath.endsWith(".java")) {
+						javaFiles.add(filePath.toFile());
+					}
 
 					return FileVisitResult.CONTINUE;
 				}
@@ -105,15 +111,36 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		for (File javafile : javaFiles) {
 			String javaContent = FileUtil.read(javafile);
 
-			if (!javaContent.contains("\"feature.flag.")) {
+			if (!javaContent.contains("feature.flag")) {
 				continue;
 			}
 
-			matcher = _featureFlagPattern.matcher(javaContent);
+			matcher = _featureFlagPattern1.matcher(javaContent);
 
 			while (matcher.find()) {
-				featureFlags.add(matcher.group(1));
+				featureFlags.add("feature.flag." + matcher.group(1));
 			}
+
+			matcher = _featureFlagPattern2.matcher(javaContent);
+
+			while (matcher.find()) {
+				featureFlags.add("feature.flag." + matcher.group(1));
+			}
+		}
+
+		for (File bndFile : bndFiles) {
+			String bndContent = FileUtil.read(bndFile);
+
+			String liferaySiteInitializerFeatureFlag =
+				BNDSourceUtil.getDefinitionValue(
+					bndContent, "Liferay-Site-Initializer-Feature-Flag");
+
+			if (liferaySiteInitializerFeatureFlag == null) {
+				continue;
+			}
+
+			featureFlags.add(
+				"feature.flag." + liferaySiteInitializerFeatureFlag);
 		}
 
 		ListUtil.distinct(featureFlags, new NaturalOrderStringComparator());
@@ -176,8 +203,10 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		"test-coverage", "test-results", "tmp"
 	};
 
-	private static final Pattern _featureFlagPattern = Pattern.compile(
-		"\"(feature\\.flag\\..+?)\"");
+	private static final Pattern _featureFlagPattern1 = Pattern.compile(
+		"\"feature\\.flag\\.(.+?)\"");
+	private static final Pattern _featureFlagPattern2 = Pattern.compile(
+		"\\.feature\\.flag=(.+?)\"");
 	private static final Pattern _featureFlagsPattern = Pattern.compile(
 		"(\n|\\A)##\n## Feature Flag\n##(\n\n[\\s\\S]*?)(?=(\n\n##|\\Z))");
 

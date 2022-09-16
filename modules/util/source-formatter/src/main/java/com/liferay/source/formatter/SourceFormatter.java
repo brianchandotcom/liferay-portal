@@ -647,14 +647,18 @@ public class SourceFormatter {
 				_sourceFormatterArgs.getGitWorkingBranchName());
 
 			for (String fileName : fileNames) {
-				if (!fileName.endsWith(".java")) {
+				if (!fileName.endsWith("bnd.bnd") &&
+					!fileName.endsWith(".java")) {
+
 					continue;
 				}
 
 				for (String line : StringUtil.split(currentBranchDiff, "\n")) {
 					if ((line.startsWith(StringPool.MINUS) ||
 						 line.startsWith(StringPool.PLUS)) &&
-						line.contains("\"feature.flag.")) {
+						(line.contains("feature.flag") ||
+						 line.contains(
+							 "Liferay-Site-Initializer-Feature-Flag:"))) {
 
 						File portalDir = SourceFormatterUtil.getPortalDir(
 							_sourceFormatterArgs.getBaseDirName(),

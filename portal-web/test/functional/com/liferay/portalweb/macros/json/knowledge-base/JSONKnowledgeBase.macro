@@ -339,4 +339,51 @@ definition {
 		}
 	}
 
+	@summary = "This calls the JSON WS API to edit a kB article"
+	macro updateKBArticle {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(folderName)) {
+			var resourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
+				folderName = "${folderName}",
+				groupName = "${groupName}",
+				kbArticleTitle = "${kbArticleTitle}");
+		}
+		else {
+			var resourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
+				groupName = "${groupName}",
+				kbArticleTitle = "${kbArticleTitle}");
+		}
+
+		if (isSet(groupName)) {
+			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				addGuestPermissions = "${addGuestPermissions}",
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				groupName = "${groupName}");
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/kb.kbarticle/update-kb-article \
+				-u test@liferay.com:test \
+				-d resourcePrimKey=${resourcePrimKey} \
+				-d title=${newKbArticleTitle} \
+				-d content=<p>${newKbArticleContent}</p> \
+				-d description= \
+				-d sourceURL= \
+				-d sections= \
+				-d selectedFileNames= \
+				-d removeFileEntryIds= \
+				-d serviceContext=${serviceContext}
+		''';
+
+		echo("## Editing a 'KBArticle' with the following info using JSONWS:");
+
+		echo("## * Name: ${newKbArticleTitle}");
+
+		echo("## * Content: ${newKbArticleContent}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
 }

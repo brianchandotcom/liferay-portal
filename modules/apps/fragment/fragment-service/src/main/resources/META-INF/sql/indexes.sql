@@ -51,6 +51,7 @@ create index IX_25790E3 on FragmentEntryLink (groupId, fragmentEntryId, ctCollec
 create index IX_1A46116E on FragmentEntryLink (groupId, fragmentEntryId, plid, ctCollectionId);
 create index IX_7D730C77 on FragmentEntryLink (groupId, originalFragmentEntryLinkId, plid, ctCollectionId);
 create index IX_FF5CDFD1 on FragmentEntryLink (groupId, plid, ctCollectionId);
+create index IX_F81D4954 on FragmentEntryLink (groupId, plid, deleted, ctCollectionId);
 create index IX_56DF5B4 on FragmentEntryLink (groupId, segmentsExperienceId, classNameId, classPK, ctCollectionId);
 create index IX_BB1027AA on FragmentEntryLink (groupId, segmentsExperienceId, plid, ctCollectionId);
 create index IX_95663C5E on FragmentEntryLink (groupId, segmentsExperienceId, plid, rendererKey[$COLUMN_LENGTH:200$], ctCollectionId);

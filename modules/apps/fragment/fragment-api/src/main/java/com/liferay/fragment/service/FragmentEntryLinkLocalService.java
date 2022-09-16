@@ -142,6 +142,9 @@ public interface FragmentEntryLinkLocalService
 
 	public void deleteFragmentEntryLinks(long groupId);
 
+	public void deleteFragmentEntryLinks(
+		long groupId, long plid, boolean deleted);
+
 	public void deleteFragmentEntryLinks(long[] fragmentEntryLinkIds)
 		throws PortalException;
 

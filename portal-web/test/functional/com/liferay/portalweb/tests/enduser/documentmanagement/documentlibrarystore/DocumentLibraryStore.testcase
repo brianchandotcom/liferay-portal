@@ -192,13 +192,11 @@ definition {
 			category = "Recycle Bin",
 			portlet = "Recycle Bin");
 
-		// Commented due to LPS-160953
+		RecycleBin.emptyCP();
 
-		//RecycleBin.emptyCP();
-		//AntCommand(
-		//	locator1 = "build-test-azure.xml",
-		//	value1 = "assert-no-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId}");
-
+		AntCommand(
+			locator1 = "build-test-azure.xml",
+			value1 = "assert-no-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId}");
 	}
 
 	@priority = "5"

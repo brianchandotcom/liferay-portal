@@ -38,6 +38,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.UriInfo;
+
 /**
  * @author Preston Crary
  */
@@ -127,6 +129,11 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 	public void setContextCompany(Company contextCompany) {
 		_company = contextCompany;
 		_vulcanBatchEngineTaskItemDelegate.setContextCompany(contextCompany);
+	}
+
+	@Override
+	public void setContextUriInfo(UriInfo uriInfo) {
+		_vulcanBatchEngineTaskItemDelegate.setContextUriInfo(uriInfo);
 	}
 
 	@Override

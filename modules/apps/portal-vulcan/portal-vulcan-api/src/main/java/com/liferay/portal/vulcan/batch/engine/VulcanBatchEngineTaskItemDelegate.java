@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -76,6 +78,8 @@ public interface VulcanBatchEngineTaskItemDelegate<T> {
 			contextBatchUnsafeConsumer);
 
 	public void setContextCompany(Company contextCompany);
+
+	public void setContextUriInfo(UriInfo uriInfo);
 
 	public void setContextUser(User contextUser);
 

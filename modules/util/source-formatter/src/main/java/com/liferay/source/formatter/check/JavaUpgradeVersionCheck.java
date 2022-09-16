@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
@@ -90,7 +89,7 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			String latestUpgradeVersion = _checkLatestUpgradeVersion(
+			_checkLatestUpgradeVersion(
 				fileName, absolutePath, childJavaTerm,
 				javaClass.getImportNames(), javaClass.getPackageName());
 
@@ -98,10 +97,6 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 				_checkServiceUpgradeStepVersion(fileName, childJavaTerm);
 			}
 			else {
-				if (Validator.isNull(latestUpgradeVersion)) {
-					continue;
-				}
-
 				content = _replaceDummyUpgradeStepForInitialize(
 					content, childJavaTerm, fileName);
 			}
@@ -198,7 +193,7 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 		return incrementType;
 	}
 
-	private String _checkLatestUpgradeVersion(
+	private void _checkLatestUpgradeVersion(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			List<String> imports, String upgradePackageName)
 		throws IOException {
@@ -208,7 +203,7 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 		int x = content.lastIndexOf("registry.register(");
 
 		if (x == -1) {
-			return null;
+			return;
 		}
 
 		List<String> parameterList = JavaSourceUtil.getParameterList(
@@ -222,7 +217,7 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 					_JAVA_UPGRADE_PROCESS_EXCLUDES, absolutePath,
 					toSchemaVersion.toString())) {
 
-				return null;
+				return;
 			}
 
 			Version fromSchemaVersion = new Version(
@@ -240,18 +235,12 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 					fileName,
 					"Expected new schema version: " + expectedSchemaVersion,
 					javaTerm.getLineNumber(x));
-
-				return null;
 			}
-
-			return toSchemaVersion.toString();
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(illegalArgumentException);
 			}
-
-			return null;
 		}
 	}
 

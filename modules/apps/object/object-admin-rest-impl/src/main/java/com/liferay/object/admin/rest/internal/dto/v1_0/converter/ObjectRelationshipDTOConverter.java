@@ -15,7 +15,6 @@
 package com.liferay.object.admin.rest.internal.dto.v1_0.converter;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
-import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
@@ -38,7 +37,7 @@ public class ObjectRelationshipDTOConverter
 
 	@Override
 	public String getContentType() {
-		return ObjectView.class.getSimpleName();
+		return ObjectRelationship.class.getSimpleName();
 	}
 
 	@Override

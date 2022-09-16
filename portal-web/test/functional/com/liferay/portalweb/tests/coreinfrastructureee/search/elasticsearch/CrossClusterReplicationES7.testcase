@@ -438,6 +438,7 @@ definition {
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
+			workflowDefinitionTask = "approve",
 			workflowTask = "review");
 
 		Navigator.openURL();

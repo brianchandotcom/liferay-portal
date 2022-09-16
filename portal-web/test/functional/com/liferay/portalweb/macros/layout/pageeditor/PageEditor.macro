@@ -1120,7 +1120,7 @@ definition {
 	macro clearSelection {
 		Click.clickNoWaitForVisible(
 			key_fieldLabel = "${fieldLabel}",
-			key_text = "times-circle",
+			key_text = "restore",
 			locator1 = "Icon#ANY_ITEM_SELECTOR");
 
 		PageEditor.waitForAutoSave();

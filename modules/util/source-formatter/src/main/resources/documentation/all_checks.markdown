@@ -139,7 +139,7 @@ JSPIndentationCheck | [Styling](styling_checks.markdown#styling-checks) | .jsp, 
 JSPInlineVariableCheck | [Styling](styling_checks.markdown#styling-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where variables can be inlined. |
 JSPJavaParserCheck | [Styling](styling_checks.markdown#styling-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Performs JavaParser on `.java` files. |
 JSPLanguageKeysCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds missing language keys in `Language.properties`. |
-JSPLanguageUtilCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where Locale is passed to `LanguageUtil.get` instead of `HttpServletRequest`. |
+JSPLanguageUtilCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds incorrect use of `LanguageUtil.get` in `.jsp` files. |
 JSPLineBreakCheck | [Styling](styling_checks.markdown#styling-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds missing and unnecessary line breaks in `.jsp` lines. |
 JSPLogFileNameCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Validates the value that is passed to `LogFactoryUtil.getLog` in `.jsp`. |
 [JSPMethodCallsCheck](check/jsp_method_calls_check.markdown#jspmethodcallscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that type `LiferayPortletResponse` is used to call `getNamespace()`. |

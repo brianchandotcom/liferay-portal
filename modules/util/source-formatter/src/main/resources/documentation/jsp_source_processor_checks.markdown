@@ -40,7 +40,7 @@ JSPIndentationCheck | [Styling](styling_checks.markdown#styling-checks) | Finds 
 JSPInlineVariableCheck | [Styling](styling_checks.markdown#styling-checks) | Finds cases where variables can be inlined. |
 JSPJavaParserCheck | [Styling](styling_checks.markdown#styling-checks) | Performs JavaParser on `.java` files. |
 JSPLanguageKeysCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds missing language keys in `Language.properties`. |
-JSPLanguageUtilCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases where Locale is passed to `LanguageUtil.get` instead of `HttpServletRequest`. |
+JSPLanguageUtilCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds incorrect use of `LanguageUtil.get` in `.jsp` files. |
 JSPLineBreakCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary line breaks in `.jsp` lines. |
 JSPLogFileNameCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the value that is passed to `LogFactoryUtil.getLog` in `.jsp`. |
 [JSPMethodCallsCheck](check/jsp_method_calls_check.markdown#jspmethodcallscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that type `LiferayPortletResponse` is used to call `getNamespace()`. |

@@ -56,7 +56,7 @@ JSPGetStaticResourceURLCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks ca
 [JSPIllegalSyntaxCheck](check/jsp_illegal_syntax_check.markdown#jspillegalsyntaxcheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds incorrect use of `System.out.print`, `console.log` or `debugger.*` in `.jsp` files. |
 [JSPIncludeCheck](check/jsp_include_check.markdown#jspincludecheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Validates values of `include` in `.jsp` files. |
 JSPLanguageKeysCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds missing language keys in `Language.properties`. |
-JSPLanguageUtilCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where Locale is passed to `LanguageUtil.get` instead of `HttpServletRequest`. |
+JSPLanguageUtilCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds incorrect use of `LanguageUtil.get` in `.jsp` files. |
 JSPLogFileNameCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Validates the value that is passed to `LogFactoryUtil.getLog` in `.jsp`. |
 [JSPMethodCallsCheck](check/jsp_method_calls_check.markdown#jspmethodcallscheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that type `LiferayPortletResponse` is used to call `getNamespace()`. |
 [JSPMissingTaglibsCheck](check/jsp_missing_taglibs_check.markdown#jspmissingtaglibscheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for missing taglibs. |

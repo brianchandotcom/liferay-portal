@@ -121,6 +121,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBSCRIPTION_DROPDOWN_ITEM</td>
+	<td>//*[@class='dropdown-item' and text()='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_HEAD</td>
 	<td>//thead//th[text()= '${title}']</td>
 	<td></td>

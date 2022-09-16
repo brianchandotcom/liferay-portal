@@ -5,7 +5,17 @@ components:
                 id:
                     format: int64
                     type: integer
+                link:
+                    $ref: "#/components/schemas/Link"
+                    readOnly: true
                 name:
+                    type: string
+            type: object
+        Link:
+            properties:
+                href:
+                    type: string
+                label:
                     type: string
             type: object
         ListEntry:

@@ -35,6 +35,8 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -149,6 +151,15 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 			StringFDSTableSchemaField stringFDSTableSchemaField =
 				new StringFDSTableSchemaField();
+
+			if (Objects.equals(
+					businessType,
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) &&
+				GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-162245"))) {
+
+				stringFDSTableSchemaField.setContentRenderer("link");
+			}
 
 			stringFDSTableSchemaField.setFieldName(fieldName);
 			stringFDSTableSchemaField.setLabel(label);
@@ -288,8 +299,18 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 	private String _getFieldName(String businessType, String fieldName) {
 		if (Objects.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
-			Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-162245"))) {
+
+				return fieldName + ".link";
+			}
+
+			return fieldName + ".name";
+		}
+
+		if (Objects.equals(
 				businessType, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 			return fieldName + ".name";

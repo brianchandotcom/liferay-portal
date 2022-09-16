@@ -52,11 +52,26 @@ public class ObjectDefinitionServiceUtil {
 			scope, storageType, objectFields);
 	}
 
+	public static ObjectDefinition addObjectDefinition(
+			String externalReferenceCode)
+		throws PortalException {
+
+		return getService().addObjectDefinition(externalReferenceCode);
+	}
+
 	public static ObjectDefinition deleteObjectDefinition(
 			long objectDefinitionId)
 		throws PortalException {
 
 		return getService().deleteObjectDefinition(objectDefinitionId);
+	}
+
+	public static ObjectDefinition fetchObjectDefinitionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchObjectDefinitionByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static ObjectDefinition getObjectDefinition(long objectDefinitionId)
@@ -120,6 +135,14 @@ public class ObjectDefinitionServiceUtil {
 			titleObjectFieldId, accountEntryRestricted, active,
 			enableCategorization, enableComments, labelMap, name, panelAppOrder,
 			panelCategoryKey, portlet, pluralLabelMap, scope);
+	}
+
+	public static ObjectDefinition updateExternalReferenceCode(
+			String externalReferenceCode, long objectDefinitionId)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			externalReferenceCode, objectDefinitionId);
 	}
 
 	public static ObjectDefinition updateTitleObjectFieldId(

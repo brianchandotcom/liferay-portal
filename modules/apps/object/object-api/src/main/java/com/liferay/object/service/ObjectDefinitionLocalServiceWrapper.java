@@ -70,6 +70,15 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectDefinition addObjectDefinition(
+			String externalReferenceCode, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.addObjectDefinition(
+			externalReferenceCode, userId);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectDefinition
 			addOrUpdateSystemObjectDefinition(
 				long companyId,
@@ -571,6 +580,16 @@ public class ObjectDefinitionLocalServiceWrapper
 			titleObjectFieldId, accountEntryRestricted, active,
 			enableCategorization, enableComments, labelMap, name, panelAppOrder,
 			panelCategoryKey, portlet, pluralLabelMap, scope);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectDefinition
+			updateExternalReferenceCode(
+				String externalReferenceCode, long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.updateExternalReferenceCode(
+			externalReferenceCode, objectDefinitionId);
 	}
 
 	/**

@@ -74,6 +74,13 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().addObjectDefinition(objectDefinition);
 	}
 
+	public static ObjectDefinition addObjectDefinition(
+			String externalReferenceCode, long userId)
+		throws PortalException {
+
+		return getService().addObjectDefinition(externalReferenceCode, userId);
+	}
+
 	public static ObjectDefinition addOrUpdateSystemObjectDefinition(
 			long companyId,
 			com.liferay.object.system.SystemObjectDefinitionMetadata
@@ -497,6 +504,14 @@ public class ObjectDefinitionLocalServiceUtil {
 			titleObjectFieldId, accountEntryRestricted, active,
 			enableCategorization, enableComments, labelMap, name, panelAppOrder,
 			panelCategoryKey, portlet, pluralLabelMap, scope);
+	}
+
+	public static ObjectDefinition updateExternalReferenceCode(
+			String externalReferenceCode, long objectDefinitionId)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			externalReferenceCode, objectDefinitionId);
 	}
 
 	/**

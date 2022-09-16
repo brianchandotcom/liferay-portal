@@ -60,7 +60,15 @@ public interface ObjectDefinitionService extends BaseService {
 			String scope, String storageType, List<ObjectField> objectFields)
 		throws PortalException;
 
+	public ObjectDefinition addObjectDefinition(String externalReferenceCode)
+		throws PortalException;
+
 	public ObjectDefinition deleteObjectDefinition(long objectDefinitionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectDefinition fetchObjectDefinitionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -100,6 +108,10 @@ public interface ObjectDefinitionService extends BaseService {
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, boolean portlet,
 			Map<Locale, String> pluralLabelMap, String scope)
+		throws PortalException;
+
+	public ObjectDefinition updateExternalReferenceCode(
+			String externalReferenceCode, long objectDefinitionId)
 		throws PortalException;
 
 	public ObjectDefinition updateTitleObjectFieldId(

@@ -52,12 +52,32 @@ public class ObjectDefinitionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectDefinition addObjectDefinition(
+			String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionService.addObjectDefinition(
+			externalReferenceCode);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectDefinition deleteObjectDefinition(
 			long objectDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.deleteObjectDefinition(
 			objectDefinitionId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectDefinition
+			fetchObjectDefinitionByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionService.
+			fetchObjectDefinitionByExternalReferenceCode(
+				externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -136,6 +156,16 @@ public class ObjectDefinitionServiceWrapper
 			titleObjectFieldId, accountEntryRestricted, active,
 			enableCategorization, enableComments, labelMap, name, panelAppOrder,
 			panelCategoryKey, portlet, pluralLabelMap, scope);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectDefinition
+			updateExternalReferenceCode(
+				String externalReferenceCode, long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionService.updateExternalReferenceCode(
+			externalReferenceCode, objectDefinitionId);
 	}
 
 	@Override

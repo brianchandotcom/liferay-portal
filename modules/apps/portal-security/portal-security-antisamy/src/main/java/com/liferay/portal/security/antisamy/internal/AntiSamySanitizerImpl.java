@@ -123,17 +123,22 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 
 		try {
 			AntiSamy antiSamy = new AntiSamy();
+			CleanResults cleanResults;
 
 			if (_isConfigured(className, classPK)) {
 				Policy policy = _policies.get(className);
 
-				CleanResults cleanResults = antiSamy.scan(
-					content, policy, AntiSamy.SAX);
-
-				return cleanResults.getCleanHTML();
+				cleanResults = antiSamy.scan(content, policy, AntiSamy.SAX);
+			}
+			else {
+				cleanResults = antiSamy.scan(content, _policy);
 			}
 
-			CleanResults cleanResults = antiSamy.scan(content, _policy);
+			if (_log.isWarnEnabled()) {
+				for (String errorMesagges : cleanResults.getErrorMessages()) {
+					_log.warn(errorMesagges);
+				}
+			}
 
 			return cleanResults.getCleanHTML();
 		}

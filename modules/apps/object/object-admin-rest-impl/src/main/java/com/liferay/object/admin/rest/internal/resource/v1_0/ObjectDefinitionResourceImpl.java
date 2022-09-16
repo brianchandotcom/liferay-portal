@@ -25,6 +25,7 @@ import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectFieldDTOConverter;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectRelationshipDTOConverter;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectViewDTOConverter;
+import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldSettingUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectLayoutUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectDefinitionEntityModel;
@@ -35,6 +36,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionService;
@@ -58,6 +60,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -68,6 +71,9 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.List;
+import java.util.Objects;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -275,6 +281,53 @@ public class ObjectDefinitionResourceImpl
 				LocalizedMapUtil.getLocalizedMap(
 					objectDefinition.getPluralLabel()),
 				objectDefinition.getScope());
+
+		ObjectField[] objectFields = objectDefinition.getObjectFields();
+
+		List<com.liferay.object.model.ObjectField> existingObjectFields =
+			ListUtil.copy(
+				_objectFieldLocalService.getObjectFields(objectDefinitionId));
+
+		for (ObjectField objectField : objectFields) {
+			_objectFieldLocalService.updateObjectField(
+				contextUser.getUserId(), objectDefinitionId,
+				GetterUtil.getLong(objectField.getId()),
+				objectField.getExternalReferenceCode(),
+				GetterUtil.getLong(objectField.getListTypeDefinitionId()),
+				objectField.getBusinessTypeAsString(), null, null,
+				objectField.getDBTypeAsString(), objectField.getDefaultValue(),
+				objectField.getIndexed(), objectField.getIndexedAsKeyword(),
+				objectField.getIndexedLanguageId(),
+				com.liferay.portal.vulcan.util.LocalizedMapUtil.getLocalizedMap(
+					objectField.getLabel()),
+				objectField.getName(), objectField.getRequired(),
+				GetterUtil.getBoolean(objectField.getState()),
+				objectField.getSystem(),
+				transformToList(
+					objectField.getObjectFieldSettings(),
+					objectFieldSetting ->
+						ObjectFieldSettingUtil.toObjectFieldSetting(
+							objectField.getBusinessTypeAsString(),
+							objectFieldSetting, _objectFieldSettingLocalService,
+							_objectFilterLocalService)));
+
+			existingObjectFields.removeIf(
+				existingObjectField -> Objects.equals(
+					existingObjectField.getName(), objectField.getName()));
+		}
+
+		for (com.liferay.object.model.ObjectField existingObjectField :
+				existingObjectFields) {
+
+			if (Objects.equals(
+					existingObjectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+				continue;
+			}
+
+			_objectFieldLocalService.deleteObjectField(existingObjectField);
+		}
 
 		ObjectAction[] objectActions = objectDefinition.getObjectActions();
 

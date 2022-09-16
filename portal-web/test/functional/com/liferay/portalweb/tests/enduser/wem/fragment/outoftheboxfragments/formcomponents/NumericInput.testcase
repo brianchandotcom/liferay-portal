@@ -206,68 +206,6 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General");
-			}
-
-			task ("Remove the automatic added fragments") {
-				for (var index : list "4,3,2") {
-					PageEditor.removeFragment(
-						fragmentName = "Numeric Input",
-						index = "${index}");
-				}
-
-				for (var fragmentName : list "Numeric Input,Submit Button") {
-					PageEditor.removeFragment(fragmentName = "${fragmentName}");
-				}
-			}
-
-			task ("Add four Numeric Input and a Submit Button fragments into the Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Numeric Input");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Numeric Input",
-					targetFragmentName = "Numeric Input");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Numeric Input",
-					index = "2",
-					targetFragmentName = "Numeric Input");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Numeric Input",
-					index = "3",
-					targetFragmentName = "Numeric Input");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Submit Button",
-					index = "4",
-					targetFragmentName = "Numeric Input");
-			}
-
-			task ("Map the Numeric Input fragments to different fields") {
-				PageEditor.editInput(
-					field = "Amount",
-					fragmentName = "Numeric Input");
-
-				PageEditor.editInput(
-					field = "Ticket Number",
-					fragmentName = "Numeric Input",
-					index = "2");
-
-				PageEditor.editInput(
-					field = "Price",
-					fragmentName = "Numeric Input",
-					index = "3");
-
-				PageEditor.editInput(
-					field = "Tax",
-					fragmentName = "Numeric Input",
-					index = "4");
 
 				PageEditor.publish();
 			}
@@ -353,30 +291,6 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General");
-			}
-
-			task ("Remove the automatic added fragments") {
-				for (var index : list "4,3,2") {
-					PageEditor.removeFragment(
-						fragmentName = "Numeric Input",
-						index = "${index}");
-				}
-
-				for (var fragmentName : list "Numeric Input,Submit Button") {
-					PageEditor.removeFragment(fragmentName = "${fragmentName}");
-				}
-			}
-
-			task ("Add a Numeric Input fragment into the Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Numeric Input");
-			}
-
-			task ("Map the Numeric Input fragment to the decimal field") {
-				PageEditor.editInput(
-					field = "Tax",
-					fragmentName = "Numeric Input");
 
 				PageEditor.publish(objectName = "Purchase Order");
 			}
@@ -504,35 +418,6 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General");
-			}
-
-			task ("Remove the automatic added fragments") {
-				for (var index : list "4,3,2") {
-					PageEditor.removeFragment(
-						fragmentName = "Numeric Input",
-						index = "${index}");
-				}
-
-				for (var fragmentName : list "Numeric Input,Submit Button") {
-					PageEditor.removeFragment(fragmentName = "${fragmentName}");
-				}
-			}
-
-			task ("Add a Numeric Input and Submit Button fragment into Form Container") {
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Numeric Input");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Submit Button",
-					targetFragmentName = "Numeric Input");
-			}
-
-			task ("Map the Numeric Input fragment to Integer field") {
-				PageEditor.editInput(
-					field = "Ticket Number",
-					fragmentName = "Numeric Input");
 
 				PageEditor.publish();
 			}

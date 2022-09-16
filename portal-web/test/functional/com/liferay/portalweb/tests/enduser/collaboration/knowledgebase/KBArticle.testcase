@@ -377,12 +377,11 @@ definition {
 			entryVersion = "Version 1",
 			userName = "Test Test");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.editCP(
-			kbArticleContentEdit = "Knowledge Base Article Content Edit",
+		JSONKnowledgeBase.updateKBArticle(
+			groupName = "Guest",
 			kbArticleTitle = "Knowledge Base Article Title",
-			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
+			newKbArticleContent = "Knowledge Base Article Content Edit",
+			newKbArticleTitle = "Knowledge Base Article Title Edit");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

@@ -653,20 +653,24 @@ definition {
 	macro addTaxCategory {
 		Click(locator1 = "Button#PLUS");
 
-		Type(
-			key_fieldLabel = "External Reference Code",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyReferenceCode}");
+		if (isSet(keyReferenceCode)) {
+			Type(
+				key_fieldLabel = "External Reference Code",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${keyReferenceCode}");
+		}
 
 		Type(
 			key_fieldLabel = "Name",
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = "${keyName}");
 
-		Type(
-			key_fieldLabel = "Description",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyDescription}");
+		if (isSet(keyDescription)) {
+			Type(
+				key_fieldLabel = "Description",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${keyDescription}");
+		}
 
 		Button.clickSave();
 	}
@@ -713,6 +717,31 @@ definition {
 			key_entryName = "${entryName}",
 			key_layout = "${layout}",
 			locator1 = "CommerceEntry#OVERRIDE_DEFAULT_DISPLAY_PAGE");
+	}
+
+	macro assertUniqueTaxCategoryErc {
+		Click(
+			key_entry = "${keyName}",
+			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+		Click(locator1 = "Icon#EDIT_PENCIL");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		Type(
+			key_fieldLabel = "External Reference Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${keyReferenceCode}");
+
+		Button.click(button = "Submit");
+
+		if (isSet(uniqueERC)) {
+			Alert.viewErrorMessage(errorMessage = "Please enter a unique external reference code.");
+
+			Click(locator1 = "Button#CANCEL_SPECIAL");
+		}
+
+		Click(locator1 = "Icon#BACK");
 	}
 
 	macro changePinColor {
@@ -906,8 +935,8 @@ definition {
 		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		AssertElementNotPresent(
-			key_value = "${keyName}",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT");
+			key_entryName = "${keyName}",
+			locator1 = "CommerceEntry#ENTRY_CONTENT_ROW_BY_NAME");
 	}
 
 	macro editEntryFullDescription {
@@ -927,41 +956,39 @@ definition {
 	}
 
 	macro editTaxCategory {
-		Type(
-			key_fieldLabel = "External Reference Code",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyReferenceCode}");
+		if (isSet(keyReferenceCode)) {
+			Click(locator1 = "Icon#EDIT_PENCIL");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+			Type(
+				key_fieldLabel = "External Reference Code",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${keyReferenceCode}");
+
+			Button.click(button = "Submit");
+		}
 
 		Type(
 			key_fieldLabel = "Name",
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = "${keyName}");
 
-		Type(
-			key_fieldLabel = "Description",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyDescription}");
+		if (isSet(keyDescription)) {
+			Type(
+				key_fieldLabel = "Description",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${keyDescription}");
+		}
 
 		Button.clickSave();
 
-		CommerceNavigator.gotoEntry(entryName = "${keyName}");
+		Click(locator1 = "Icon#BACK");
 
-		AssertTextEquals(
-			key_fieldLabel = "External Reference Code",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyReferenceCode}");
-
-		AssertTextEquals(
-			key_fieldLabel = "Name",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyName}");
-
-		AssertTextEquals(
-			key_fieldLabel = "Description",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyDescription}");
-
-		Click(locator1 = "Button#BACK");
+		CommerceEntry.viewTaxCategory(
+			keyDescription = "${keyDescription}",
+			keyName = "${keyName}",
+			keyReferenceCode = "${keyReferenceCode}");
 	}
 
 	macro editWarehousesQuantity {
@@ -1802,24 +1829,30 @@ definition {
 	}
 
 	macro viewTaxCategory {
-		CommerceNavigator.gotoEntry(entryName = "${keyName}");
+		Click(
+			key_entry = "${keyName}",
+			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
 
-		AssertTextEquals(
-			key_fieldLabel = "External Reference Code",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyReferenceCode}");
+		if (isSet(keyReferenceCode)) {
+			AssertTextEquals(
+				key_fieldLabel = "External Reference Code",
+				locator1 = "CommerceEntry#HEADER_ERC_VALUE",
+				value1 = "${keyReferenceCode}");
+		}
 
 		AssertTextEquals(
 			key_fieldLabel = "Name",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "${keyName}");
 
-		AssertTextEquals(
-			key_fieldLabel = "Description",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${keyDescription}");
+		if (isSet(keyDescription)) {
+			AssertTextEquals(
+				key_fieldLabel = "Description",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${keyDescription}");
+		}
 
-		Click(locator1 = "Button#BACK");
+		Click(locator1 = "Icon#BACK");
 	}
 
 }

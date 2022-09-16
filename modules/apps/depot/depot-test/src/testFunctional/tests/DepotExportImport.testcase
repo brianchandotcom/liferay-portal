@@ -30,10 +30,153 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the user can import the asset library lar to an asset library."
+	@description = "This ensures that the user can import the asset library with collections to an asset library."
 	@priority = "5"
-	@refactorneeded
-	test ImportDepotLARToDepot {
+	@refactordone
+	test ExportedDepotWithCollectionsCanBeImportedToDepot {
+		JSONAssetlist.addManualAssetListEntryWithItemType(
+			groupName = "Test Depot Name",
+			itemSubtype = "DM Document Type Name",
+			itemType = "Document",
+			site = "false",
+			title = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotExportImportAdmin(
+			depotName = "Test Depot Name",
+			exportAdmin = "true");
+
+		LAR.exportSiteCP(depotName = "Test Depot Name");
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Import Depot Name");
+
+		DepotNavigator.openDepotExportImportAdmin(
+			depotName = "Test Import Depot Name",
+			importAdmin = "true");
+
+		LAR.importSiteCP(
+			depotName = "Test Import Depot Name",
+			larFileName = "${larFileName}");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Import Depot Name");
+
+		AssetListsAdmin.viewAssetList(
+			assetListTitle = "Depot Manual Asset List",
+			type = "Manual");
+	}
+
+	@description = "This ensures that the user can import the asset library with collections to a site."
+	@priority = "5"
+	@refactordone
+	test ExportedDepotWithCollectionsCanBeImportedToSite {
+		JSONAssetlist.addManualAssetListEntry(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotExportImportAdmin(
+			depotName = "Test Depot Name",
+			exportAdmin = "true");
+
+		LAR.exportSiteCP(depotName = "Test Depot Name");
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONGroup.addGroup(groupName = "New Site");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "New Site");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "new-site");
+
+		AssetListsAdmin.viewAssetList(
+			assetListTitle = "Depot Manual Asset List",
+			type = "Manual");
+	}
+
+	@description = "This ensures that the user can import the asset library with customize document to an asset library."
+	@priority = "5"
+	@refactordone
+	test ExportedDepotWithCustomizeDMCanBeImportedToDepot {
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Numeric",
+			dmDocumentTypeName = "DM Document Type Name",
+			metadataSetName = "DM Metadata Set Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document with DM Document Type Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			numericField = "1234",
+			textField = "Text");
+
+		DepotNavigator.openDepotDashboard(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoDepotPortletViaBreadcrumb(
+			otherDepotName = "Test Depot Name",
+			portlet = "Export");
+
+		LAR.exportSiteCP(depotName = "Test Depot Name");
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Import Depot Name");
+
+		DepotNavigator.openDepotDashboard(depotName = "Test Import Depot Name");
+
+		DepotNavigator.gotoDepotPortletViaBreadcrumb(
+			otherDepotName = "Test Import Depot Name",
+			portlet = "Import");
+
+		LAR.importSiteCP(
+			depotName = "Test Import Depot Name",
+			larFileName = "${larFileName}");
+
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Import Depot Name",
+			dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+
+		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Import Depot Name");
+
+		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
+	}
+
+	@description = "This ensures that the user can import the asset library customize web content to an asset library."
+	@priority = "5"
+	@refactordone
+	test ExportedDepotWithCustomizeWCCanBeImportedToDepot {
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 
 		WebContentStructures.addCP(
@@ -66,73 +209,9 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMNavigator.gotoMetadataSets();
-
-		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Numeric",
-			dmDocumentTypeName = "DM Document Type Name",
-			metadataSetName = "DM Metadata Set Name");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document with DM Document Type Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name",
-			numericField = "1234",
-			textField = "Text");
-
-		DepotNavigator.openToDMEntryInDepot(
+		DepotNavigator.openDepotExportImportAdmin(
 			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewDocumentTypePG(
-			numericValue = "1234",
-			textContent = "Text");
-
-		JSONAssetlist.addManualAssetListEntryWithItemType(
-			groupName = "Test Depot Name",
-			itemSubtype = "DM Document Type Name",
-			itemType = "Document",
-			site = "false",
-			title = "Depot Manual Asset List");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewAssetList(
-			assetListTitle = "Depot Manual Asset List",
-			type = "Manual");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.selectAsset(
-			assetListName = "Depot Manual Asset List",
-			assetName = "DM Document Title",
-			assetType = "DM Document Type Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoDepotPortletViaBreadcrumb(
-			otherDepotName = "Test Depot Name",
-			portlet = "Export");
+			exportAdmin = "true");
 
 		LAR.exportSiteCP(depotName = "Test Depot Name");
 
@@ -144,13 +223,9 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Import Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(depotName = "Test Import Depot Name");
-
-		DepotNavigator.gotoDepotPortletViaBreadcrumb(
-			otherDepotName = "Test Import Depot Name",
-			portlet = "Import");
+		DepotNavigator.openDepotExportImportAdmin(
+			depotName = "Test Import Depot Name",
+			importAdmin = "true");
 
 		LAR.importSiteCP(
 			depotName = "Test Import Depot Name",
@@ -170,65 +245,54 @@ definition {
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name");
-
-		DepotNavigator.openToDMEntryInDepot(
-			depotName = "Test Import Depot Name",
-			dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-
-		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Import Depot Name");
-
-		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Import Depot Name");
-
-		AssetListsAdmin.viewAssetList(
-			assetListTitle = "Depot Manual Asset List",
-			type = "Manual");
 	}
 
-	@description = "This ensures that the user can import the asset library lar to a site."
+	@description = "This ensures that the user can import the asset library with document to a site."
 	@priority = "5"
-	@refactorneeded
-	test ImportDepotLARToSite {
+	@refactordone
+	test ExportedDepotWithDMCanBeImportedToSite {
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Depot Name");
+
+		DepotNavigator.openDepotExportImportAdmin(
+			depotName = "Test Depot Name",
+			exportAdmin = "true");
+
+		LAR.exportSiteCP(depotName = "Test Depot Name");
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONGroup.addGroup(groupName = "New Site");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "New Site");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "New Site",
+			siteURLKey = "new-site");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This ensures that the user can import the asset library with web content to a site."
+	@priority = "5"
+	@refactordone
+	test ExportedDepotWithWCCanBeImportedToSite {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
 			site = "false",
 			title = "WC WebContent Title");
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Depot Name");
-
-		DepotNavigator.openToDMEntryInDepot(
+		DepotNavigator.openDepotExportImportAdmin(
 			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-
-		JSONAssetlist.addManualAssetListEntry(
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "Depot Manual Asset List");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewAssetList(
-			assetListTitle = "Depot Manual Asset List",
-			type = "Manual");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Export");
+			exportAdmin = "true");
 
 		LAR.exportSiteCP(depotName = "Test Depot Name");
 
@@ -245,57 +309,17 @@ definition {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "new-site");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "New Site",
-			siteURLKey = "new-site");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "new-site");
-
-		AssetListsAdmin.viewAssetList(
-			assetListTitle = "Depot Manual Asset List",
-			type = "Manual");
 	}
 
-	@description = "This ensures that the user can import the site lar to an asset library."
+	@description = "This ensures that the user can import the site with collections to a depot."
 	@priority = "5"
-	@refactorneeded
-	test ImportSiteLARToDepot {
+	@refactordone
+	test ExportedSiteWithCollectionsCanBeImportedToDepot {
 		JSONGroup.addGroup(groupName = "Site Name");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Site Name",
-			title = "WC WebContent Title");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name");
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
 		JSONAssetlist.addManualAssetListEntry(
 			groupName = "Site Name",
 			title = "Depot Manual Asset List");
-
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
-
-		AssetListsAdmin.viewAssetList(
-			assetListTitle = "Depot Manual Asset List",
-			type = "Manual");
 
 		LAR.exportSiteCP(siteScopeName = "Site Name");
 
@@ -303,11 +327,73 @@ definition {
 
 		LAR.downloadLar();
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
+		DepotNavigator.openDepotExportImportAdmin(
 			depotName = "Test Depot Name",
-			portlet = "Import");
+			importAdmin = "true");
+
+		LAR.importSiteCP(
+			depotName = "Test Depot Name",
+			larFileName = "${larFileName}");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.viewAssetList(
+			assetListTitle = "Depot Manual Asset List",
+			type = "Manual");
+	}
+
+	@description = "This ensures that the user can import the site with document to a depot."
+	@priority = "5"
+	@refactordone
+	test ExportedSiteWithDMCanBeImportedToDepot {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name");
+
+		LAR.exportSiteCP(siteScopeName = "Site Name");
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		DepotNavigator.openDepotExportImportAdmin(
+			depotName = "Test Depot Name",
+			importAdmin = "true");
+
+		LAR.importSiteCP(
+			depotName = "Test Depot Name",
+			larFileName = "${larFileName}");
+
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This ensures that the user can import the site with web content to a depot."
+	@priority = "5"
+	@refactordone
+	test ExportedSiteWithWCCanBeImportedToDepot {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Site Name",
+			title = "WC WebContent Title");
+
+		LAR.exportSiteCP(siteScopeName = "Site Name");
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		DepotNavigator.openDepotExportImportAdmin(
+			depotName = "Test Depot Name",
+			importAdmin = "true");
 
 		LAR.importSiteCP(
 			depotName = "Test Depot Name",
@@ -316,18 +402,6 @@ definition {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		DepotNavigator.openToDMEntryInDepot(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewAssetList(
-			assetListTitle = "Depot Manual Asset List",
-			type = "Manual");
 	}
 
 }

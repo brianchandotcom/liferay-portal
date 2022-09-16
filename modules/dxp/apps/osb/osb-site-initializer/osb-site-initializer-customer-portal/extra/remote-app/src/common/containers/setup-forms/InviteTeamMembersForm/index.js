@@ -387,7 +387,11 @@ const InviteTeamMembersPage = ({
 												  )
 										}
 										  ${i18n.sub('available-x-of-x', [
-												availableAdminsRoles,
+												`${
+													availableAdminsRoles < 0
+														? '0'
+														: availableAdminsRoles
+												}`,
 												project.maxRequestors,
 											])}`}
 									</h5>

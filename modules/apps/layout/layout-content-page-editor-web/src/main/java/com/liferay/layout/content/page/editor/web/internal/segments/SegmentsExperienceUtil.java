@@ -22,7 +22,6 @@ import com.liferay.layout.content.page.editor.web.internal.util.layout.structure
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -61,11 +59,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -370,35 +365,19 @@ public class SegmentsExperienceUtil {
 				getFragmentEntryLinksBySegmentsExperienceId(
 					groupId, sourceSegmentsExperienceId, plid);
 
-		Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
-
-		Map<Long, FragmentEntryLink> fragmentEntryLinkMap = stream.collect(
-			Collectors.toMap(
-				FragmentEntryLink::getFragmentEntryLinkId,
-				fragmentEntryLink -> fragmentEntryLink));
-
-		for (LayoutStructureItem layoutStructureItem :
-				layoutStructure.getLayoutStructureItems()) {
-
-			if (!(layoutStructureItem instanceof
-					FragmentStyledLayoutStructureItem) ||
-				ListUtil.exists(
-					layoutStructure.getDeletedLayoutStructureItems(),
-					deletedLayoutStructureItem -> Objects.equals(
-						deletedLayoutStructureItem.getItemId(),
-						layoutStructureItem.getItemId()))) {
-
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			if (fragmentEntryLink.isDeleted()) {
 				continue;
 			}
 
 			FragmentStyledLayoutStructureItem
 				fragmentStyledLayoutStructureItem =
-					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+					(FragmentStyledLayoutStructureItem)
+						layoutStructure.
+							getLayoutStructureItemByFragmentEntryLinkId(
+								fragmentEntryLink.getFragmentEntryLinkId());
 
-			FragmentEntryLink fragmentEntryLink = fragmentEntryLinkMap.get(
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
-
-			if (fragmentEntryLink == null) {
+			if (fragmentStyledLayoutStructureItem == null) {
 				continue;
 			}
 

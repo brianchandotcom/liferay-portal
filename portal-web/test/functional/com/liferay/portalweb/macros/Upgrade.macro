@@ -1753,6 +1753,16 @@ definition {
 		}
 	}
 
+	macro getDatabaseVersion {
+		var mysqlStatement = "SELECT buildNumber FROM Release_ WHERE servletContextName='portal';";
+
+		var databaseVersion = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
+
+		echo("## * Database Version is: ${databaseVersion}");
+
+		return "${databaseVersion}";
+	}
+
 	macro ignore404URLs {
 		var portalURL = PropsUtil.get("portal.url");
 

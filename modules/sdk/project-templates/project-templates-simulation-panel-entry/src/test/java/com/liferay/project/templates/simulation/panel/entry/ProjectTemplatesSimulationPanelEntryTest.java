@@ -93,17 +93,9 @@ public class ProjectTemplatesSimulationPanelEntryTest
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
-		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
-			testContains(
-				gradleProjectDir, "build.gradle", DEPENDENCY_PORTAL_KERNEL,
-				DEPENDENCY_JAVAX_PORTLET_API, DEPENDENCY_JAVAX_SERVLET_API,
-				DEPENDENCY_ORG_OSGI_ANNOTATIONS);
-		}
-		else {
-			testContains(
-				gradleProjectDir, "build.gradle",
-				DEPENDENCY_RELEASE_PORTAL_API);
-		}
+		testContains(
+			gradleProjectDir, "build.gradle",
+			DEPENDENCY_RELEASE_PORTAL_API);
 
 		testContains(
 			gradleProjectDir,

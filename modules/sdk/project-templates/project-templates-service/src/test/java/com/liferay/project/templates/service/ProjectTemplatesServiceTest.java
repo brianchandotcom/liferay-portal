@@ -98,16 +98,9 @@ public class ProjectTemplatesServiceTest
 			_liferayVersion, "--class-name", "FooAction", "--service",
 			"com.liferay.portal.kernel.events.LifecycleAction");
 
-		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
-			testContains(
-				gradleProjectDir, "build.gradle",
-				DEPENDENCY_ORG_OSGI_ANNOTATIONS);
-		}
-		else {
-			testContains(
-				gradleProjectDir, "build.gradle",
-				DEPENDENCY_RELEASE_PORTAL_API);
-		}
+		testContains(
+			gradleProjectDir, "build.gradle",
+			DEPENDENCY_RELEASE_PORTAL_API);
 
 		testNotContains(gradleProjectDir, "build.gradle", "version: \"[0-9].*");
 

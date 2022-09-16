@@ -111,11 +111,6 @@
 	 <td></td>
 </tr>
 <tr>
-	<td>ORDER_AND_SHIPMENT_ERC_VALUE</td>
-	<td>//span[@title="External Reference Code"]//..//strong[contains(@class,'header-info-value') and normalize-space(text()='${key_erc}')]</td>
-	 <td></td>
-</tr>
-<tr>
 	<td>SHIPMENT_ITEM_ERC_COLUMN</td>
 	<td>//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_ercColumnValue}')]/..//div[3]</td>
 	<td></td>

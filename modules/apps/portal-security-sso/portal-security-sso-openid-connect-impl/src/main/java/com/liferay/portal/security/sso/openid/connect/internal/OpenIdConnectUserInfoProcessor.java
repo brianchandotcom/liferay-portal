@@ -65,6 +65,23 @@ public class OpenIdConnectUserInfoProcessor {
 			throw new PortalException(exception);
 		}
 
+		try {
+
+			// TODO: Service tracker to find a list of suitable custom
+			// UserOptionalMapperProcessors(OPTIONAL), once which become SPI.
+
+			_openIdConnectAddressUserMapperProcessor.process(
+				userId, serviceContext, userInfoJSON, userInfoMapperJSON);
+
+			_openIdConnectPhoneUserMapperProcessor.process(
+				userId, serviceContext, userInfoJSON, userInfoMapperJSON);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to process optional user mapper" + exception);
+			}
+		}
+
 		return userId;
 	}
 
@@ -104,6 +121,14 @@ public class OpenIdConnectUserInfoProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdConnectUserInfoProcessor.class);
+
+	@Reference
+	private OpenIdConnectAddressUserMapperProcessor
+		_openIdConnectAddressUserMapperProcessor;
+
+	@Reference
+	private OpenIdConnectPhoneUserMapperProcessor
+		_openIdConnectPhoneUserMapperProcessor;
 
 	@Reference
 	private OpenIdConnectUserMapperProcessor _openIdConnectUserMapperProcessor;

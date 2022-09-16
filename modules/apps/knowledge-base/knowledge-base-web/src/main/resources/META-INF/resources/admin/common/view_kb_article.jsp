@@ -106,7 +106,23 @@ if (portletTitleBasedNavigation) {
 					<%= kbArticle.getContent() %>
 				</div>
 
-				<liferay-util:include page="/admin/common/kb_article_social_bookmarks.jsp" servletContext="<%= application %>" />
+				<clay:content-row>
+					<clay:content-col>
+						<liferay-util:include page="/admin/common/kb_article_social_bookmarks.jsp" servletContext="<%= application %>" />
+					</clay:content-col>
+
+					<c:if test="<%= enableKBArticleRatings %>">
+						<clay:content-col
+							expand="<%= true %>"
+						>
+							<liferay-ratings:ratings
+								className="<%= KBArticle.class.getName() %>"
+								classPK="<%= kbArticle.getResourcePrimKey() %>"
+								inTrash="<%= false %>"
+							/>
+						</clay:content-col>
+					</c:if>
+				</clay:content-row>
 
 				<liferay-expando:custom-attributes-available
 					className="<%= KBArticle.class.getName() %>"
@@ -129,16 +145,6 @@ if (portletTitleBasedNavigation) {
 
 				<c:if test="<%= !portletTitleBasedNavigation %>">
 					<liferay-util:include page="/admin/common/kb_article_asset_entries.jsp" servletContext="<%= application %>" />
-				</c:if>
-
-				<c:if test="<%= enableKBArticleRatings %>">
-					<div class="kb-article-ratings">
-						<liferay-ratings:ratings
-							className="<%= KBArticle.class.getName() %>"
-							classPK="<%= kbArticle.getResourcePrimKey() %>"
-							inTrash="<%= false %>"
-						/>
-					</div>
 				</c:if>
 
 				<c:if test="<%= !portletTitleBasedNavigation && !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE) %>">

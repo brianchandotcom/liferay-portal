@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>SUBSCRIPTION_DROPDOWN</td>
-	<td>//button[contains(@class, 'dropdown-toggle') and contains(text(), 'Partnership')]</td>
+	<td>//*[contains(text(), '${key_dropdownLabel}')]/following-sibling::*[@class='dropdown']</td>
 	<td></td>
 </tr>
 <tr>

@@ -215,6 +215,7 @@ public class AccountEntryDisplay {
 
 	private AccountEntryDisplay(AccountEntry accountEntry) {
 		_accountEntry = accountEntry;
+
 		_accountEntryEmailAddressValidator =
 			AccountEntryEmailAddressValidatorFactoryUtil.create(
 				accountEntry.getCompanyId(), accountEntry.getDomainsArray());

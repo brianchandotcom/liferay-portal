@@ -587,6 +587,12 @@ definition {
 		WaitForVisible(locator1 = "Button#PLUS");
 	}
 
+	macro searchAndGoToProductEntry {
+		CommerceNavigator.searchEntry(entryName = "${entryProductName}");
+
+		CommerceNavigator.gotoEntry(entryName = "${entryProductName}");
+	}
+
 	macro searchProduct {
 		Type(
 			locator1 = "CommerceNavigation#SEARCH_FIELD",

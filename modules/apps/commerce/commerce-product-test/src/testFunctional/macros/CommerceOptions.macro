@@ -15,9 +15,12 @@ definition {
 		AssertElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
 
 		CommerceEntry.addOptionsEntry(
+			facetable = "${facetable}",
 			optionDescription = "${optionDescription}",
 			optionFieldType = "${optionFieldType}",
-			optionName = "${optionName}");
+			optionName = "${optionName}",
+			required = "${required}",
+			skuContributor = "${skuContributor}");
 	}
 
 	macro addNewOptionValue {

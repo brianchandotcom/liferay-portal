@@ -1,5 +1,4 @@
 @component-name = "portal-headless-frontend-infrastructure"
-@disable-webdriver = "true"
 definition {
 
 	property portal.release = "true";
@@ -7,7 +6,7 @@ definition {
 	property testray.main.component.name = "Headless Frontend Infrastructure";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstanceNoSelenium();
 
 		ObjectDefinitionAPI.setUpGlobalobjectDefinitionId();
 	}
@@ -29,6 +28,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "4"
 	test CanDeleteObjectEntryWithDisassociateDeletionTypeRelationshipCreated_1 {
 		property portal.acceptance = "true";
@@ -98,6 +98,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "4"
 	test CanDeleteObjectEntryWithDisassociateDeletionTypeRelationshipCreated_2 {
 		property portal.acceptance = "true";
@@ -170,6 +171,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "5"
 	test CanGetFirstObjectEntiresRelatedToSecondObjectByManyToMany {
 		property portal.acceptance = "true";
@@ -219,6 +221,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "5"
 	test CanGetManyToManyRelationshipDetailsAsNestedFields_1 {
 		property portal.acceptance = "true";
@@ -274,6 +277,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "5"
 	test CanGetManyToManyRelationshipDetailsAsNestedFields_2 {
 		property portal.acceptance = "true";
@@ -329,6 +333,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "5"
 	test CanGetManyToManyRelationshipDetailsAsNestedFields_3 {
 		property portal.acceptance = "true";
@@ -384,6 +389,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "5"
 	test CanGetManyToManyRelationshipDetailsAsNestedFields_4 {
 		property portal.acceptance = "true";
@@ -439,6 +445,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "5"
 	test CanGetManyToManyRelationshipDetailsAsNestedFields_5 {
 		property portal.acceptance = "true";
@@ -506,6 +513,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "5"
 	test CanGetManyToManyRelationshipDetailsAsNestedFields_6 {
 		property portal.acceptance = "true";
@@ -573,6 +581,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "4"
 	test CanGetMultipleManyToManyRelationshipDetailsAsNestedFields {
 		property portal.acceptance = "true";
@@ -664,6 +673,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "5"
 	test CanGetObjectEntiresRelatedByManyToManyWhenDifferentRelationshipTypesCreated {
 		property portal.acceptance = "true";
@@ -747,6 +757,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "5"
 	test CanGetObjectEntiresRelatedByOneToManyWhenDifferentRelationshipTypesCreated {
 		property portal.acceptance = "true";
@@ -830,6 +841,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "5"
 	test CanGetSecondObjectEntiresRelatedToFirstObjectByManyToMany {
 		property portal.acceptance = "true";
@@ -879,6 +891,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "4"
 	test DeletedObjectDoesNotAppearInManyToManyRelationshipDetailsNestedFields_1 {
 		property portal.acceptance = "true";
@@ -948,6 +961,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "4"
 	test DeletedObjectDoesNotAppearInManyToManyRelationshipDetailsNestedFields_2 {
 		property portal.acceptance = "true";
@@ -1018,6 +1032,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "4"
 	test ObjectEntryDeletionImpossibleWithPreventDeletionTypeRelationshipCreated {
 		property portal.acceptance = "true";
@@ -1092,6 +1107,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = "5"
 	test RelationshipEnpointGetsDeletedWhenObjectDefinitionDeleted {
 		property portal.acceptance = "true";

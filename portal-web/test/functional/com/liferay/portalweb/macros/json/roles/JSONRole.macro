@@ -105,4 +105,12 @@ definition {
 		JSONRoleAPI._deleteRoleById(roleId = "${roleId}");
 	}
 
+	macro deleteTestRoles {
+		var rolesIds = JSONRoleAPI._searchRolesIds(roleName = "Test");
+
+		for (var roleId : list "${rolesIds}") {
+			JSONRoleAPI._deleteRoleById(roleId = "${roleId}");
+		}
+	}
+
 }

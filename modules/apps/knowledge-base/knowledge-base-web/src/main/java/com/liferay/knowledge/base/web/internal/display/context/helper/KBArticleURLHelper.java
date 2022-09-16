@@ -92,6 +92,8 @@ public class KBArticleURLHelper {
 			"resourceClassNameId", kbArticle.getClassNameId()
 		).setParameter(
 			"resourcePrimKey", kbArticle.getResourcePrimKey()
+		).setParameter(
+			"selectedItemId", kbArticle.getKbArticleId()
 		).buildPortletURL();
 	}
 

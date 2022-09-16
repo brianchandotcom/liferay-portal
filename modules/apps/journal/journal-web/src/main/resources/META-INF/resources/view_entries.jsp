@@ -92,16 +92,9 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 
 				<c:choose>
 					<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "descriptive") %>'>
-
-						<%
-						List<JournalArticle> articles = JournalArticleLocalServiceUtil.getArticles(curArticle.getGroupId(), curArticle.getArticleId(), 0, 1, new ArticleVersionComparator(true));
-
-						JournalArticle article = articles.get(0);
-						%>
-
 						<liferay-ui:search-container-column-text>
 							<liferay-ui:user-portrait
-								userId="<%= article.getUserId() %>"
+								userId="<%= curArticle.getStatusByUserId() %>"
 							/>
 						</liferay-ui:search-container-column-text>
 

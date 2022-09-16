@@ -14,7 +14,7 @@
 
 module.exports = {
 	globals: {
-		$: true,
 		CryptoJS: true,
+		bootstrap: true,
 	},
 };

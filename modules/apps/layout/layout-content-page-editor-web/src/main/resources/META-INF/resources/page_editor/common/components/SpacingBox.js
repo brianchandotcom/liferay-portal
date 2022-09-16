@@ -351,7 +351,7 @@ function SpacingOptionValue({
 	return value === undefined ? '' : value;
 }
 
-export function Tooltip({hoverElement, id: tooltipId, label, positionElement}) {
+function Tooltip({hoverElement, id: tooltipId, label, positionElement}) {
 	const [tooltipStyle, setTooltipStyle] = useState(null);
 
 	useEffect(() => {

@@ -28,13 +28,11 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -83,7 +81,6 @@ public class EditRegionMVCActionCommand
 			double position = ParamUtil.getDouble(actionRequest, "position");
 			String regionCode = ParamUtil.getString(
 				actionRequest, "regionCode");
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			Region region = null;
 
@@ -95,28 +92,38 @@ public class EditRegionMVCActionCommand
 					ServiceContextFactory.getInstance(
 						Region.class.getName(), actionRequest));
 
-				redirect = HttpComponentsUtil.setParameter(
-					redirect, actionResponse.getNamespace() + "regionId",
-					region.getRegionId());
+				actionRequest.setAttribute(
+					WebKeys.REDIRECT,
+					HttpComponentsUtil.setParameter(
+						ParamUtil.getString(actionRequest, "redirect"),
+						actionResponse.getNamespace() + "regionId",
+						region.getRegionId()));
 			}
 			else {
 				region = _regionService.updateRegion(
 					regionId, active, name, position, regionCode);
 			}
 
-			_updateRegionLocalizations(
-				region,
-				_localization.getLocalizationMap(actionRequest, "title"));
+			if (region != null) {
+				Map<String, String> titleMap = new HashMap<>();
 
-			if (Validator.isNotNull(redirect)) {
-				sendRedirect(actionRequest, actionResponse, redirect);
+				Map<Locale, String> titleLocalizationMap =
+					_localization.getLocalizationMap(actionRequest, "title");
+
+				for (Map.Entry<Locale, String> entry :
+						titleLocalizationMap.entrySet()) {
+
+					titleMap.put(
+						_language.getLanguageId(entry.getKey()),
+						entry.getValue());
+				}
+
+				_regionLocalService.updateRegionLocalizations(region, titleMap);
 			}
 		}
 		catch (Throwable throwable) {
 			if (throwable instanceof NoSuchRegionException ||
 				throwable instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
@@ -127,27 +134,11 @@ public class EditRegionMVCActionCommand
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, throwable.getClass());
-
 				sendRedirect(actionRequest, actionResponse);
 			}
-			else {
-				throw new Exception(throwable);
-			}
+
+			throw new PortletException(throwable);
 		}
-	}
-
-	private void _updateRegionLocalizations(
-			Region region, Map<Locale, String> localizationMap)
-		throws Exception {
-
-		Map<String, String> map = new HashMap<>();
-
-		for (Map.Entry<Locale, String> entry : localizationMap.entrySet()) {
-			map.put(_language.getLanguageId(entry.getKey()), entry.getValue());
-		}
-
-		_regionLocalService.updateRegionLocalizations(region, map);
 	}
 
 	@Reference
@@ -155,9 +146,6 @@ public class EditRegionMVCActionCommand
 
 	@Reference
 	private Localization _localization;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private RegionLocalService _regionLocalService;

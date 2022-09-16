@@ -55,14 +55,6 @@ public class NameIdResolverRegistry {
 		return nameIdResolver;
 	}
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(!(companyId=*))", unbind = "-"
-	)
-	public void setDefaultNameIdResolver(NameIdResolver defaultNameIdResolver) {
-		_defaultNameIdResolver = defaultNameIdResolver;
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_nameIdResolvers = ServiceTrackerMapFactory.openSingleValueMap(
@@ -78,7 +70,11 @@ public class NameIdResolverRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		NameIdResolverRegistry.class);
 
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY, target = "(!(companyId=*))"
+	)
 	private NameIdResolver _defaultNameIdResolver;
+
 	private ServiceTrackerMap<String, NameIdResolver> _nameIdResolvers;
 
 }

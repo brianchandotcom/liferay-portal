@@ -55,16 +55,6 @@ public class AttributeResolverRegistry {
 		return attributeResolver;
 	}
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(!(companyId=*))", unbind = "-"
-	)
-	public void setDefaultAttributeResolver(
-		AttributeResolver defaultAttributeResolver) {
-
-		_defaultAttributeResolver = defaultAttributeResolver;
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_attributeResolvers = ServiceTrackerMapFactory.openSingleValueMap(
@@ -81,6 +71,10 @@ public class AttributeResolverRegistry {
 		AttributeResolverRegistry.class);
 
 	private ServiceTrackerMap<String, AttributeResolver> _attributeResolvers;
+
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY, target = "(!(companyId=*))"
+	)
 	private AttributeResolver _defaultAttributeResolver;
 
 }

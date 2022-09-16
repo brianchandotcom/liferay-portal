@@ -35,6 +35,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-148120 - Assert that a deactivated key will no longer appear."
+	@priority = "5"
+	test CannotViewDeactivatedKeys {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		}
+
+		task ("When the user selects a project in Customer Portal") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
+
+		task ("Then deactivating a key will ensure that key will no longer be available") {
+			CP2ActivationKeys.deactivateExistingKey(environmentName = "Test3");
+
+			Search.searchCP(searchTerm = "Test3");
+
+			AssertElementNotPresent(
+				key_text = "Test3",
+				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+		}
+	}
+
 	@description = "LPS-148121 - Assert that number of keys on 'All' tab is equal to number of total keys after deactivating."
 	@priority = "3"
 	test CanViewChangeInNumberOfKeys {
@@ -62,7 +96,7 @@ definition {
 			VerifyElementPresent(
 				key_value = "33",
 				locator1 = "CP2ActivationKeys#KEY_COUNT_ALL");
-			
+
 			CP2ActivationKeys.deactivateExistingKey(environmentName = "Test for Deactivation");
 
 			TableViewBuilder.clearSearch();
@@ -107,40 +141,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-148120 - Assert that a deactivated key will no longer appear."
-	@priority = "5"
-	test CannotViewDeactivatedKeys {
-		property portal.upstream = "quarantine";
-
-		// Needs refactor since it depends on example FIFA account
-
-		task ("Given a user signs in on OKTA to update the Customer Portal") {
-			CustomerPortal.loginOktaToUpdateCP();
-
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
-		}
-
-		task ("When the user selects a project in Customer Portal") {
-			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = "DXP");
-		}
-
-		task ("Then deactivating a key will ensure that key will no longer be available") {
-			CP2ActivationKeys.deactivateExistingKey(environmentName = "Test3");
-
-			Search.searchCP(searchTerm = "Test3");
-
-			AssertElementNotPresent(
-					key_text = "Test3",
-					locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
-		}
-	}
-
 	@description = "LPS-148118 - Assert there are no changes to selected keys after clicking 'Cancel' on the Deactivation Terms modal."
 	@priority = "4"
 	test NoChangesMadeAfterClickingCancel {
@@ -174,11 +174,11 @@ definition {
 
 		task ("Then clicking 'Cancel' will have user stay on DXP Product Activation page and the keys will not be deactivated") {
 			Button.click(button = "Cancel");
-			
+
 			AssertElementPresent(
 				key_productType = "DXP",
 				locator1 = "CP2ActivationKeys#ACTIVE_PRODUCT_TYPE");
-			
+
 			for (var key_environmentName : list "Test2,Test3") {
 				AssertElementPresent(
 					key_text = "${key_environmentName}",

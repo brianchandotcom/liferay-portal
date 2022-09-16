@@ -129,8 +129,8 @@
 			"DBType": "Long",
 			"businessType": "LongInteger",
 			"defaultValue": "",
-			"indexed": false,
-			"indexedAsKeyword": false,
+			"indexed": true,
+			"indexedAsKeyword": true,
 			"indexedLanguageId": "",
 			"label": {
 				"en_US": "ID"

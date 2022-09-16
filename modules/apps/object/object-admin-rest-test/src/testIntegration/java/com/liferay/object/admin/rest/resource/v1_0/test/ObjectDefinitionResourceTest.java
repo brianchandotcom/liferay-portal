@@ -236,8 +236,12 @@ public class ObjectDefinitionResourceTest
 					{
 						setBusinessType(BusinessType.TEXT);
 						setDBType(ObjectField.DBType.create("String"));
+						setIndexed(false);
+						setIndexedAsKeyword(false);
 						setLabel(Collections.singletonMap("en_US", "Column"));
 						setName("column");
+						setRequired(false);
+						setSystem(false);
 					}
 				}
 			});

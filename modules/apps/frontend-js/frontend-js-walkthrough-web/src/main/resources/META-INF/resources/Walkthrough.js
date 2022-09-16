@@ -27,6 +27,7 @@ import {Hotspot} from './Hotspot';
 import {Overlay} from './Overlay';
 import {doAlign} from './doAlign';
 import {LOCAL_STORAGE_KEYS} from './localStorageKeys';
+import {useClickOutside} from './useClickOutside';
 import {useLocalStorage} from './useLocalStorage';
 import {useObserveRect} from './useObserveRect';
 
@@ -335,6 +336,15 @@ const Step = ({
 
 	useObserveRect(align, popoverRef?.current);
 
+	useClickOutside(
+		['.lfr-walkthrough-popover', '.lfr-walkthrough-hotspot'],
+		() => {
+			if (closeOnClickOutside) {
+				onPopoverVisible(false);
+			}
+		}
+	);
+
 	const SITE_PREFIX_PATH = `/${getSitePrefix(currentPage)}`;
 
 	return (
@@ -360,7 +370,7 @@ const Step = ({
 				<ReactPortal>
 					<ClayPopover
 						alignPosition={currentAlignment}
-						closeOnClickOutside={closeOnClickOutside}
+						className="lfr-walkthrough-popover"
 						displayType="secondary"
 						header={
 							<ClayLayout.ContentRow

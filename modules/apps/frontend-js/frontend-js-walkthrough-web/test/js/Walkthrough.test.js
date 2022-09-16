@@ -273,4 +273,20 @@ describe('Walkthrough', () => {
 
 		expect(localStorage.getItem(LOCAL_STORAGE_KEYS.SKIPPABLE)).toBe('true');
 	});
+
+	it('when `closeOnClickOutside` is enabled, it should close when clicking outside the popover', () => {
+		const {getByLabelText} = renderWalkthrough({closeOnClickOutside: true, ...PAGE_MOCK});
+
+		const hotspot = getByLabelText('start-the-walkthrough');
+
+		userEvents.click(hotspot);
+
+		expect(screen.getByText('ok')).toBeInTheDocument();
+
+		fireEvent.mouseDown(document.body);
+
+		expect(screen.queryByText('ok')).not.toBeInTheDocument();
+
+		expect(getByLabelText('start-the-walkthrough')).toBeInTheDocument();
+	});
 });

@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -83,14 +83,16 @@ public class EditCountryMVCActionCommand
 			Country country = null;
 
 			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (cmd.equals(Constants.ADD)) {
 				country = _addCountry(actionRequest);
 
-				redirect = HttpComponentsUtil.setParameter(
-					redirect, actionResponse.getNamespace() + "countryId",
-					country.getCountryId());
+				actionRequest.setAttribute(
+					WebKeys.REDIRECT,
+					HttpComponentsUtil.setParameter(
+						ParamUtil.getString(actionRequest, "redirect"),
+						actionResponse.getNamespace() + "countryId",
+						country.getCountryId()));
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
 				country = _updateCountry(actionRequest);
@@ -113,10 +115,6 @@ public class EditCountryMVCActionCommand
 				_countryLocalService.updateCountryLocalizations(
 					country, titleMap);
 			}
-
-			if (Validator.isNotNull(redirect)) {
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
 		}
 		catch (Throwable throwable) {
 			if (throwable instanceof NoSuchCountryException ||
@@ -138,8 +136,7 @@ public class EditCountryMVCActionCommand
 
 				SessionErrors.add(actionRequest, throwable.getClass());
 
-				actionResponse.setRenderParameter(
-					"mvcRenderCommandName", "/address/edit_country");
+				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
 				throw new Exception(throwable);

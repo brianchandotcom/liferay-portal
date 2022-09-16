@@ -352,6 +352,10 @@ definition {
 			MenuItem.viewPresent(menuItem = "Rice");
 
 			MenuItem.viewNotPresent(menuItem = "Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta");
+
+			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "MenuList");
+
+			ObjectDefinitionAPI.deleteRelationship(objectDefinitionId = "${objectDefinitionId}");
 		}
 	}
 
@@ -459,6 +463,10 @@ definition {
 			MenuItem.viewOrder(menuItemList = "Choose an Option,Assets,Equity,Expenses,Free,Liabilities,Nominal,Personal,Real,Revenue,Saving");
 
 			AssertNotVisible(locator1 = "MenuItem#SEARCH_FIELD");
+
+			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "AccountEntry");
+
+			ObjectDefinitionAPI.deleteRelationship(objectDefinitionId = "${objectDefinitionId}");
 		}
 	}
 

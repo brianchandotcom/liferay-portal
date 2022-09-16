@@ -168,15 +168,6 @@ public class WabGenerator
 		_serviceRegistration = null;
 	}
 
-	/**
-	 * This reference is held to force a dependency on the portal's complete
-	 * startup.
-	 */
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
@@ -259,6 +250,13 @@ public class WabGenerator
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(WabGenerator.class);
+
+	/**
+	 * This reference is held to force a dependency on the portal's complete
+	 * startup.
+	 */
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	private final AtomicBoolean _portalIsReady = new AtomicBoolean();
 	private ServiceRegistration<FileInstaller> _serviceRegistration;

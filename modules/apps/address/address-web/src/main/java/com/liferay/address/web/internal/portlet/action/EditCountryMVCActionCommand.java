@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -120,8 +119,6 @@ public class EditCountryMVCActionCommand
 			if (throwable instanceof NoSuchCountryException ||
 				throwable instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, throwable.getClass());
-
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (throwable instanceof CountryA2Exception ||
@@ -133,8 +130,6 @@ public class EditCountryMVCActionCommand
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
-
-				SessionErrors.add(actionRequest, throwable.getClass());
 
 				sendRedirect(actionRequest, actionResponse);
 			}

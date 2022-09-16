@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Salva Tejero
  */
 @Component(
-	immediate = true,
 	property = "platform=" + MicrosoftPushNotificationsSender.PLATFORM,
 	service = PushNotificationsSender.class
 )

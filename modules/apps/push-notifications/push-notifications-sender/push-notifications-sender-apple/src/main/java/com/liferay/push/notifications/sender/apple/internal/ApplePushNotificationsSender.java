@@ -63,7 +63,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.push.notifications.sender.apple.internal.configuration.ApplePushNotificationsSenderConfiguration",
-	immediate = true,
 	property = "platform=" + ApplePushNotificationsSender.PLATFORM,
 	service = PushNotificationsSender.class
 )

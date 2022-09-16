@@ -49,7 +49,7 @@ public class IconDeactivateTag extends IconTag {
 		setMessage("deactivate");
 		setUrl(
 			StringBundler.concat(
-				"Liferay.Util.openConfirmModal({message:'",
+				"javascript:Liferay.Util.openConfirmModal({message:'",
 				UnicodeLanguageUtil.get(
 					TagResourceBundleUtil.getResourceBundle(pageContext),
 					"are-you-sure-you-want-to-deactivate-this"),

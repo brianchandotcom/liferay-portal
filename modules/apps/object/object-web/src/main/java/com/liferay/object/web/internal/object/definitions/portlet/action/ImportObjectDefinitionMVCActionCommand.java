@@ -138,19 +138,21 @@ public class ImportObjectDefinitionMVCActionCommand
 		ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
 			objectDefinitionJSONObject.toString());
 
+		objectDefinition.setActive(false);
 		objectDefinition.setName(ParamUtil.getString(actionRequest, "name"));
 
-		ObjectDefinition postObjectDefinition =
-			objectDefinitionResource.postObjectDefinition(objectDefinition);
+		ObjectDefinition putObjectDefinition =
+			objectDefinitionResource.putObjectDefinitionByExternalReferenceCode(
+				objectDefinition.getExternalReferenceCode(), objectDefinition);
 
-		postObjectDefinition.setPortlet(objectDefinition.getPortlet());
+		putObjectDefinition.setPortlet(objectDefinition.getPortlet());
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135430"))) {
-			postObjectDefinition.setStorageType(StringPool.BLANK);
+			putObjectDefinition.setStorageType(StringPool.BLANK);
 		}
 
 		objectDefinitionResource.putObjectDefinition(
-			postObjectDefinition.getId(), postObjectDefinition);
+			putObjectDefinition.getId(), putObjectDefinition);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

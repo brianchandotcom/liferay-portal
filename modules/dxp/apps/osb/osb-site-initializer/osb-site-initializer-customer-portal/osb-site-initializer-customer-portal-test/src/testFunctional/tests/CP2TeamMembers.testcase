@@ -319,7 +319,8 @@ definition {
 		task ("Assert the current SLA via Koroneiki") {
 			CustomerPortal.viewValueFieldKoroneiki(
 				field = "slaCurrent",
-				value = "Platinum Subscription");
+				value = "Platinum Subscription",
+				index = "1");
 		}
 
 		task ("Change the user role in the project") {

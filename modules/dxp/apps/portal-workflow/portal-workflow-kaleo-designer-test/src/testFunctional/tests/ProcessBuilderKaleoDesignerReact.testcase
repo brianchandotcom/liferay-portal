@@ -2109,12 +2109,21 @@ definition {
 	}
 
 	@description = "Verify that the user can't Publish a workflow without transitions"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanNotPublishWorkflowWithoutTransitions {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotPublishWorkflowWithoutTransitions";
 
-		// TODO CanNotPublishWorkflowWithoutTransitions pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		Button.clickPublish();
+
+		Alert.viewErrorMessage(errorMessage = "The Start node must have an outgoing transition");
+
+		Navigator.gotoBack();
+
+		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
 	@description = "Verify that the user can't restore to a invalid previous definition version when the workflow is Published and a Error alert appears (Example: Error:Unable to restore this item)"

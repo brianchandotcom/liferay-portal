@@ -115,11 +115,11 @@
 		<metadata>
 			<![CDATA[
 				{
+					"terminal": true,
 					"xy": [
 						221.99993896484375,
 						538.0000152587891
-					],
-					"terminal": true
+					]
 				}
 			]]>
 		</metadata>

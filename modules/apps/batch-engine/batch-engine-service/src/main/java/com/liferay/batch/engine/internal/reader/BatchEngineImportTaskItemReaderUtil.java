@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -129,6 +131,9 @@ public class BatchEngineImportTaskItemReaderUtil {
 		return targetFieldNameValueMap;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		BatchEngineImportTaskItemReaderUtil.class);
+
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
 			SimpleModule simpleModule = new SimpleModule();
@@ -157,6 +162,10 @@ public class BatchEngineImportTaskItemReaderUtil {
 					jsonParser, LinkedHashMap.class);
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
 				Map<String, Object> map = new LinkedHashMap<>();
 
 				String string = jsonParser.getValueAsString();

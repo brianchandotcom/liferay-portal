@@ -59,9 +59,9 @@ definition {
 			publicationDescription = "Publication Description",
 			publicationName = "Publication Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
-
-		PagesAdmin.addPage(pageName = "Test Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",

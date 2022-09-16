@@ -908,7 +908,7 @@ definition {
 		Redirect.addEntry(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 			siteName = "test-site-name",
-			sourceURL = "test-source-page!@#$",
+			sourceURL = "/test-source-page",
 			sourceURLVariation = "Invalid");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");

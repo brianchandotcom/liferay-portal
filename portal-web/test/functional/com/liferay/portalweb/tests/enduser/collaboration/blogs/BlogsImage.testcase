@@ -34,9 +34,9 @@ definition {
 	}
 
 	@description = "This is a usecase for LPS-110117. This test checks that an inline image can be added to a blog."
+	@e2etest
 	@priority = "4"
 	@refactordone
-	@uitest
 	test CanAddInlineImage {
 		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
@@ -308,9 +308,9 @@ definition {
 	}
 
 	@description = "This checks that a cover image can be uploaded and published in a blog"
+	@e2etest
 	@priority = "3"
 	@refactordone
-	@uitest
 	test CanUploadAndPublishCoverImage {
 		Navigator.gotoPage(pageName = "Blogs Page");
 

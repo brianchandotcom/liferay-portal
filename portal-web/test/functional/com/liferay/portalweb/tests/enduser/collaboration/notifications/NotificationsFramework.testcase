@@ -644,9 +644,9 @@ definition {
 			viewEllipsisIcon = "true");
 	}
 
+	@e2etest
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanViewNotificationDefault {
 		Notifications.viewNoNotifications(activePanel = "Profile");
 

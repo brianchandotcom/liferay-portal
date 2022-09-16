@@ -140,8 +140,8 @@ definition {
 	}
 
 	@description = "This test ensures that when setting the Mime Type Size Limit at different levels (Asset Library and System Settings), the lower limit will take effect."
+	@e2etest
 	@priority = "4"
-	@uitest
 	test SystemTakesEffectOverALLimit {
 		property custom.properties = "feature.flag.LPS-114786=true";
 		property test.name.skip.portal.instance = "DepotMimeTypeLimits#SystemTakesEffectOverALLimit";

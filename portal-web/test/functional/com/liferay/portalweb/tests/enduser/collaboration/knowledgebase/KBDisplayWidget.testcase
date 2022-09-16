@@ -38,9 +38,9 @@ definition {
 		}
 	}
 
+	@e2etest
 	@priority = "4"
 	@refactordone
-	@uitest
 	test CanAddChildArticle {
 		property portal.acceptance = "true";
 

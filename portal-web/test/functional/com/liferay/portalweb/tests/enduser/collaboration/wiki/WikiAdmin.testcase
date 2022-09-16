@@ -60,9 +60,9 @@ definition {
 	}
 
 	@description = "This ensures that a wiki node can be added."
+	@e2etest
 	@priority = "4"
 	@refactordone
-	@uitest
 	test CanAddNode {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
@@ -76,9 +76,9 @@ definition {
 	}
 
 	@description = "This ensures that a wiki page can be added to a wiki node."
+	@e2etest
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanAddPageToNode {
 		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 

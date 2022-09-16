@@ -86,8 +86,8 @@ definition {
 	}
 
 	@description = "This test ensures that the size limit setting only take effects in current site."
+	@e2etest
 	@priority = "4"
-	@uitest
 	test CanLimitSizeOnlyInCurrentSite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -129,8 +129,8 @@ definition {
 	}
 
 	@description = "This test ensures that when setting the Maximum File Size at different levels(Site, System Settings and Instance Settings), the lower limit from instance settings will take effect."
+	@e2etest
 	@priority = "4"
-	@uitest
 	test InstanceSizeLimitTakesEffectOverSiteAndSystemSettings {
 		property test.name.skip.portal.instance = "DMFileSizeLimits#InstanceSizeLimitTakesEffectOverSiteAndSystemSettings";
 

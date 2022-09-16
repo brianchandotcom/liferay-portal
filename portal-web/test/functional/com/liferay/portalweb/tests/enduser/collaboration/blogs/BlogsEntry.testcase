@@ -442,9 +442,9 @@ definition {
 	}
 
 	@description = "This checks that basic text can be inputted and displayed in the most common fields in a blog entry."
+	@e2etest
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanAddWithSubtitle {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -541,9 +541,9 @@ definition {
 	}
 
 	@description = "This checks that a user can change the publish date for a scheduled entry to the present and publish it."
+	@e2etest
 	@priority = "4"
 	@refactordone
-	@uitest
 	test CanChangeAScheduledEntryToThePresentAndPublish {
 		property test.name.skip.portal.instance = "BlogsEntry#CanChangeAScheduledEntryToThePresentAndPublish";
 

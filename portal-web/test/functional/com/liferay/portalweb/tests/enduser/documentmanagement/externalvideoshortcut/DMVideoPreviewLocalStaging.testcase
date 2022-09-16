@@ -50,9 +50,9 @@ definition {
 	}
 
 	@description = "This test ensures that a kb article can be published successfully after deleting the embedded video."
+	@e2etest
 	@priority = "5"
 	@refactorneeded
-	@uitest
 	test PublishKBAfterDeletingEmbeddedVideo {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DLVideoLocalStaging#PublishKBAfterDeletingEmbeddedVideo";

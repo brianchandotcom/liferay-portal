@@ -167,9 +167,9 @@ definition {
 	}
 
 	@description = "This checks that the title and content fields of a blog entry can be edited."
+	@e2etest
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanEditEntry {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -749,8 +749,8 @@ definition {
 	}
 
 	@description = "View the related assets in Blogs."
+	@e2etest
 	@priority = "4"
-	@uitest
 	test ViewRelatedAssetsInBlogs {
 		task ("Add the first blogs entry") {
 			JSONBlog.addEntry(

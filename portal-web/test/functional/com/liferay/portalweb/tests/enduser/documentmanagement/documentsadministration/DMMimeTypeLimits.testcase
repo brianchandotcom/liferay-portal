@@ -64,8 +64,8 @@ definition {
 	}
 
 	@description = "This test ensures that the mime typy size limit setting only take effects in current site."
+	@e2etest
 	@priority = "4"
-	@uitest
 	test CanLimitSizeOnlyInCurrentSite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -300,8 +300,8 @@ definition {
 	}
 
 	@description = "This test ensures that when setting the Mime Type Size Limit at different levels(Instance Settings and System Settings), the lower limit from Instance Settings will take effect."
+	@e2etest
 	@priority = "4"
-	@uitest
 	test InstanceTakesEffectOverSystemLimit {
 		property test.name.skip.portal.instance = "DMMimeTypeLimits#InstanceTakesEffectOverSystemLimit";
 
@@ -372,8 +372,8 @@ definition {
 	}
 
 	@description = "This test ensures that when setting the Mime Type Size Limit at different levels(Site, System Settings and Instance Settings), the lower limit from the site will take effect."
+	@e2etest
 	@priority = "4"
-	@uitest
 	test SiteSizeLimitTakesEffectOverSystemAndInstanceSettings {
 		property test.name.skip.portal.instance = "DMMimeTypeLimits#SiteSizeLimitTakesEffectOverSystemAndInstanceSettings";
 

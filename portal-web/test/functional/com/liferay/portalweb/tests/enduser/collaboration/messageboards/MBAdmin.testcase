@@ -27,9 +27,9 @@ definition {
 		}
 	}
 
+	@e2etest
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanAddCategory {
 		property portal.acceptance = "true";
 
@@ -73,9 +73,9 @@ definition {
 			threadCount = "0");
 	}
 
+	@e2etest
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanAddThread {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";

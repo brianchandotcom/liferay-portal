@@ -84,9 +84,9 @@ definition {
 		WorkflowComment.add(workflowComment = "Workflow Comment");
 	}
 
+	@e2etest
 	@priority = "4"
 	@refactordone
-	@uitest
 	test CanViewPendingContent {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "KBWorkflow#CanViewPendingContent";

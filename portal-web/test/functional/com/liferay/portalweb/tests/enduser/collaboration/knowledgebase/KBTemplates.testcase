@@ -28,9 +28,9 @@ definition {
 		}
 	}
 
+	@e2etest
 	@priority = "4"
 	@refactordone
-	@uitest
 	test CanAddArticleWithTemplate {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "KBTemplates#CanAddArticleWithTemplate";
@@ -54,9 +54,9 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
+	@e2etest
 	@priority = "4"
 	@refactordone
-	@uitest
 	test CanAddTemplate {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "KBTemplates#CanAddTemplate";
@@ -75,8 +75,8 @@ definition {
 	}
 
 	@description = "This test ensures that the template can be added by center new button."	
+	@e2etest
 	@priority = "5"
-	@uitest
 	test CanAddTemplateThroughCenterNewButton {
 		property custom.properties = "feature.flag.LPS-156421=true";
 

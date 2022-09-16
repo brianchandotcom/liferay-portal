@@ -240,9 +240,9 @@ definition {
 			userName = "Test Test");
 	}
 
+	@e2etest
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanCancelThread {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 

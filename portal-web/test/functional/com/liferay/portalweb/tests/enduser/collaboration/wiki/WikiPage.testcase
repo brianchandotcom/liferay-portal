@@ -190,9 +190,9 @@ definition {
 	}
 
 	@description = "This ensures that a front page can be added with HTML format."
+	@e2etest
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanAddFrontPageWithHTMLFormat {
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
@@ -317,9 +317,9 @@ definition {
 	}
 
 	@description = "This ensures that users can add wiki pages via wiki widget."
+	@e2etest
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanAddWikiPages {
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 

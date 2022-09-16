@@ -66,9 +66,9 @@ definition {
 			entryURL = "http://www.liferay.com");
 	}
 
+	@e2etest
 	@priority = "4"
 	@refactordone
-	@uitest
 	test CanAddAnnouncementsEntryFutureDate {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 
@@ -168,9 +168,9 @@ definition {
 			entryTitle = "Announcements Entry Title Edit");
 	}
 
+	@e2etest
 	@priority = "3"
 	@refactordone
-	@uitest
 	test CannotAddAnnouncementsEntryPastExpirationDate {
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",

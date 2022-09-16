@@ -42,9 +42,9 @@ definition {
 		}
 	}
 
+	@e2etest
 	@priority = "4"
 	@refactordone
-	@uitest
 	test CanAddCategoryWithDescription {
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -189,9 +189,9 @@ definition {
 		MessageboardsCategory.viewDefault();
 	}
 
+	@e2etest
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanDeleteThread {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
@@ -720,9 +720,9 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
+	@e2etest
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanViewThreadInSubcategory {
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",

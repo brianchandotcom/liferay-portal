@@ -96,9 +96,9 @@ definition {
 		PortletEntry.publish();
 	}
 
+	@e2etest
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanAddEntryWithHighDensityResolution {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

@@ -26,7 +26,7 @@ public class Attribute {
 		this(name, StringPool.BLANK, StringPool.BLANK);
 	}
 
-	public Attribute(String name, String newValue, String oldValue) {
+	public Attribute(String name, Object newValue, Object oldValue) {
 		_name = name;
 		_newValue = newValue;
 		_oldValue = oldValue;
@@ -36,16 +36,16 @@ public class Attribute {
 		return _name;
 	}
 
-	public String getNewValue() {
+	public Object getNewValue() {
 		return _newValue;
 	}
 
-	public String getOldValue() {
+	public Object getOldValue() {
 		return _oldValue;
 	}
 
 	private final String _name;
-	private final String _newValue;
-	private final String _oldValue;
+	private final Object _newValue;
+	private final Object _oldValue;
 
 }

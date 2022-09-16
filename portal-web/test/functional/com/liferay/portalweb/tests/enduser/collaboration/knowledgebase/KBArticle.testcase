@@ -356,7 +356,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
-	@description = "This test ensures that the informations related to the KB entry can be viewed."
+	@description = "This test ensures that the information related to the KB entry can be viewed."
 	@priority = "4"
 	test CanViewEntryInfo {
 		JSONKnowledgeBase.addkBArticle(

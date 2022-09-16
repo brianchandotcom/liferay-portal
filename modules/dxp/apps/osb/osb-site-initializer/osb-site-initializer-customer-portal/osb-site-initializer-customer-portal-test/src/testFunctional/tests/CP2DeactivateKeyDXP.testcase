@@ -17,9 +17,9 @@ definition {
 			User.firstLoginPG();
 		}
 
-		/*task ("Create a new Customer Portal Site") {
+		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
-		}*/
+		}
 	}
 
 	tearDown {
@@ -32,6 +32,44 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+		}
+	}
+
+	@description = "LPS-148121 - Assert that number of keys on 'All' tab is equal to number of total keys after deactivating."
+	@priority = "3"
+	test CanViewChangeInNumberOfKeys {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		}
+
+		task ("When the user selects a project in Customer Portal") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
+
+		task ("Then deactivating a key will ensure that the key will no longer be counted towards the final amount") {
+			VerifyElementPresent(
+				key_value = "33",
+				locator1 = "CP2ActivationKeys#KEY_COUNT_ALL");
+			
+			CP2ActivationKeys.deactivateExistingKey(environmentName = "Test for Deactivation");
+
+			TableViewBuilder.clearSearch();
+
+			AssertElementPresent(
+				key_value = "32",
+				locator1 = "CP2ActivationKeys#KEY_COUNT_ALL");
 		}
 	}
 

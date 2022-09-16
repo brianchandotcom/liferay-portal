@@ -202,51 +202,18 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				"dependency-injector=\"ds\"");
 		}
 
-		if (_liferayVersion.startsWith("7.0") ||
-			_liferayVersion.startsWith("7.1")) {
+		testContains(
+			gradleProjectDir, _name + "-api/build.gradle",
+			DEPENDENCY_RELEASE_PORTAL_API);
+		testContains(
+			gradleProjectDir, _name + "-service/build.gradle",
+			DEPENDENCY_RELEASE_PORTAL_API);
 
-			testContains(
-				gradleProjectDir, _name + "-api/build.gradle",
-				DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bnd.annotation");
-			testContains(
-				gradleProjectDir, _name + "-service/build.gradle",
-				DEPENDENCY_PORTAL_KERNEL, "biz.aQute.bnd.annotation");
-
-			testNotContains(
-				gradleProjectDir, _name + "-api/build.gradle",
-				"org.osgi.annotation.versioning");
-			testNotContains(
-				gradleProjectDir, _name + "-service/build.gradle",
-				"org.osgi.annotation.versioning");
-		}
-		else if (_liferayVersion.startsWith("7.2")) {
-			testContains(
-				gradleProjectDir, _name + "-api/build.gradle",
-				DEPENDENCY_PORTAL_KERNEL, "org.osgi.annotation.versioning");
-			testContains(
-				gradleProjectDir, _name + "-service/build.gradle",
-				DEPENDENCY_PORTAL_KERNEL, "org.osgi.annotation.versioning");
-
-			testNotContains(
-				gradleProjectDir, _name + "-api/build.gradle", "biz.aQute.bnd");
-			testNotContains(
-				gradleProjectDir, _name + "-service/build.gradle",
-				"biz.aQute.bnd");
-		}
-		else {
-			testContains(
-				gradleProjectDir, _name + "-api/build.gradle",
-				DEPENDENCY_RELEASE_PORTAL_API);
-			testContains(
-				gradleProjectDir, _name + "-service/build.gradle",
-				DEPENDENCY_RELEASE_PORTAL_API);
-
-			testNotContains(
-				gradleProjectDir, _name + "-api/build.gradle", "biz.aQute.bnd");
-			testNotContains(
-				gradleProjectDir, _name + "-service/build.gradle",
-				"biz.aQute.bnd");
-		}
+		testNotContains(
+			gradleProjectDir, _name + "-api/build.gradle", "biz.aQute.bnd");
+		testNotContains(
+			gradleProjectDir, _name + "-service/build.gradle",
+			"biz.aQute.bnd");
 
 		File gradleUADModuleDir = new File(gradleProjectDir, _name + "-uad");
 

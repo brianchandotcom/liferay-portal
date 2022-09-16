@@ -138,26 +138,13 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 				"\": \"*\"",
 			"\"metal-tools-soy\": \"4.3.2\"");
 
-		if (Objects.equals("7.2.1-1", _liferayVersion)) {
-			testContains(
-				gradleProjectDir, "build.gradle",
-				"compileOnly group: \"com.liferay\", name: " +
-					"\"com.liferay.dynamic.data.mapping.api\"",
-				"compileOnly group: \"com.liferay\", name: " +
-					"\"com.liferay.frontend.js.loader.modules.extender.api\"",
-				"jsCompile group: \"com.liferay\", name: " +
-					"\"com.liferay.dynamic.data.mapping.form.field.type\"",
-				DEPENDENCY_PORTAL_KERNEL);
-		}
-		else {
-			testContains(
-				gradleProjectDir, "build.gradle",
-				"compileOnly group: \"com.liferay.portal\", name: " +
-					"\"release.portal.api\"",
-				"jsCompile group: \"com.liferay\", name: " +
-					"\"com.liferay.dynamic.data.mapping.form.field.type\"",
-				DEPENDENCY_RELEASE_PORTAL_API);
-		}
+		testContains(
+			gradleProjectDir, "build.gradle",
+			"compileOnly group: \"com.liferay.portal\", name: " +
+				"\"release.portal.api\"",
+			"jsCompile group: \"com.liferay\", name: " +
+				"\"com.liferay.dynamic.data.mapping.form.field.type\"",
+			DEPENDENCY_RELEASE_PORTAL_API);
 
 		testContains(
 			gradleProjectDir,

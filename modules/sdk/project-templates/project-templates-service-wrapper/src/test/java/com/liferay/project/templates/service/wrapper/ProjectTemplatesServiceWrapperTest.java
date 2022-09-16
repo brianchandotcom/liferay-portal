@@ -93,16 +93,9 @@ public class ProjectTemplatesServiceWrapperTest
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
-		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
-			testContains(
-				gradleProjectDir, "build.gradle",
-				DEPENDENCY_ORG_OSGI_ANNOTATIONS);
-		}
-		else {
-			testContains(
-				gradleProjectDir, "build.gradle",
-				DEPENDENCY_RELEASE_PORTAL_API);
-		}
+		testContains(
+			gradleProjectDir, "build.gradle",
+			DEPENDENCY_RELEASE_PORTAL_API);
 
 		testContains(
 			gradleProjectDir,

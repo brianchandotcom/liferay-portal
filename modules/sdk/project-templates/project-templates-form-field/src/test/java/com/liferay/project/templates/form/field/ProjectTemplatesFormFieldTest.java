@@ -151,7 +151,7 @@ public class ProjectTemplatesFormFieldTest
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: " + name,
 			"Web-ContextPath: /dynamic-data-foobar-form-field");
 		testContains(
-			gradleProjectDir, "build.gradle", DEPENDENCY_PORTAL_KERNEL);
+			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
 		testContains(
 			gradleProjectDir, "package.json",
 			"\"name\": \"dynamic-data-foobar-form-field\"",
@@ -241,7 +241,7 @@ public class ProjectTemplatesFormFieldTest
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: " + name,
 			"Web-ContextPath: /dynamic-data-foo-bar-form-field");
 		testContains(
-			gradleProjectDir, "build.gradle", DEPENDENCY_PORTAL_KERNEL);
+			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
 		testContains(
 			gradleProjectDir, "package.json",
 			"\"name\": \"dynamic-data-foo-bar-form-field\"",

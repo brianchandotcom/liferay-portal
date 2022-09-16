@@ -69,4 +69,50 @@ definition {
 		}
 	}
 
+	@description = "LPS-148118 - Assert there are no changes to selected keys after clicking 'Cancel' on the Deactivation Terms modal."
+	@priority = "4"
+	test NoChangesMadeAfterClickingCancel {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		}
+
+		task ("When the user selects a project in Customer Portal and selects multiple keys to deactivate") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			Search.searchCP(searchTerm = "test");
+
+			for (var key_environmentName : list "Test2,Test3") {
+				CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "${key_environmentName}");
+			}
+
+			Button.click(button = "Deactivate");
+		}
+
+		task ("Then clicking 'Cancel' will have user stay on DXP Product Activation page and the keys will not be deactivated") {
+			Button.click(button = "Cancel");
+			
+			AssertElementPresent(
+				key_productType = "DXP",
+				locator1 = "CP2ActivationKeys#ACTIVE_PRODUCT_TYPE");
+			
+			for (var key_environmentName : list "Test2,Test3") {
+				AssertElementPresent(
+					key_text = "${key_environmentName}",
+					locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+			}
+		}
+	}
+
 }

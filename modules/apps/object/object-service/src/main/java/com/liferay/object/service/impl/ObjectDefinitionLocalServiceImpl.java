@@ -189,15 +189,10 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition.class.getName(),
 			objectDefinition.getObjectDefinitionId(), false, true, true);
 
-		_objectFieldLocalService.addSystemObjectField(
-			userId, objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectEntryTable.INSTANCE.status.getName(),
-			ObjectEntryTable.INSTANCE.getTableName(),
-			ObjectFieldConstants.DB_TYPE_INTEGER, null, false, false, null,
-			LocalizedMapUtil.getLocalizedMap(
-				_language.get(LocaleUtil.getDefault(), "status")),
-			"status", false, false);
+		_addSystemObjectFields(
+			userId, ObjectEntryTable.INSTANCE.getTableName(), objectDefinition,
+			ObjectEntryTable.INSTANCE.objectEntryId.getName(),
+			objectDefinition.isSystem());
 
 		return objectDefinition;
 	}
@@ -833,6 +828,52 @@ public class ObjectDefinitionLocalServiceImpl
 			dbTableName = "ObjectEntry";
 		}
 
+		_addSystemObjectFields(
+			userId, dbTableName, objectDefinition, pkObjectFieldName, system);
+
+		if (objectFields != null) {
+			for (ObjectField objectField : objectFields) {
+				if (system || objectField.isSystem()) {
+					_objectFieldLocalService.addOrUpdateSystemObjectField(
+						userId, objectDefinition.getObjectDefinitionId(),
+						objectField.getBusinessType(),
+						objectField.getDBColumnName(),
+						objectDefinition.getDBTableName(),
+						objectField.getDBType(), objectField.getDefaultValue(),
+						objectField.isIndexed(),
+						objectField.isIndexedAsKeyword(),
+						objectField.getIndexedLanguageId(),
+						objectField.getLabelMap(), objectField.getName(),
+						objectField.isRequired(), objectField.isState());
+				}
+				else {
+					_objectFieldLocalService.addCustomObjectField(
+						userId, objectField.getListTypeDefinitionId(),
+						objectDefinition.getObjectDefinitionId(),
+						objectField.getBusinessType(), objectField.getDBType(),
+						objectField.getDefaultValue(), objectField.isIndexed(),
+						objectField.isIndexedAsKeyword(),
+						objectField.getIndexedLanguageId(),
+						objectField.getLabelMap(), objectField.getName(),
+						objectField.isRequired(), objectField.isState(),
+						objectField.getObjectFieldSettings());
+				}
+			}
+		}
+
+		if (system) {
+			_createTable(
+				objectDefinition.getExtensionDBTableName(), objectDefinition);
+		}
+
+		return objectDefinition;
+	}
+
+	private void _addSystemObjectFields(
+			long userId, String dbTableName, ObjectDefinition objectDefinition,
+			String pkObjectFieldName, boolean system)
+		throws PortalException {
+
 		_objectFieldLocalService.addSystemObjectField(
 			userId, objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -896,43 +937,6 @@ public class ObjectDefinitionLocalServiceImpl
 			LocalizedMapUtil.getLocalizedMap(
 				_language.get(LocaleUtil.getDefault(), "status")),
 			"status", false, false);
-
-		if (objectFields != null) {
-			for (ObjectField objectField : objectFields) {
-				if (system || objectField.isSystem()) {
-					_objectFieldLocalService.addOrUpdateSystemObjectField(
-						userId, objectDefinition.getObjectDefinitionId(),
-						objectField.getBusinessType(),
-						objectField.getDBColumnName(),
-						objectDefinition.getDBTableName(),
-						objectField.getDBType(), objectField.getDefaultValue(),
-						objectField.isIndexed(),
-						objectField.isIndexedAsKeyword(),
-						objectField.getIndexedLanguageId(),
-						objectField.getLabelMap(), objectField.getName(),
-						objectField.isRequired(), objectField.isState());
-				}
-				else {
-					_objectFieldLocalService.addCustomObjectField(
-						userId, objectField.getListTypeDefinitionId(),
-						objectDefinition.getObjectDefinitionId(),
-						objectField.getBusinessType(), objectField.getDBType(),
-						objectField.getDefaultValue(), objectField.isIndexed(),
-						objectField.isIndexedAsKeyword(),
-						objectField.getIndexedLanguageId(),
-						objectField.getLabelMap(), objectField.getName(),
-						objectField.isRequired(), objectField.isState(),
-						objectField.getObjectFieldSettings());
-				}
-			}
-		}
-
-		if (system) {
-			_createTable(
-				objectDefinition.getExtensionDBTableName(), objectDefinition);
-		}
-
-		return objectDefinition;
 	}
 
 	private void _createTable(

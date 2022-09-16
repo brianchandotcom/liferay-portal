@@ -700,10 +700,14 @@ public class DefaultObjectEntryManagerImpl
 					objectDefinition.getObjectDefinitionId(), deletionType,
 					false)) {
 
+			ObjectDefinition objectDefinition2 =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId2());
+
 			ObjectRelatedModelsProvider objectRelatedModelsProvider =
 				_objectRelatedModelsProviderRegistry.
 					getObjectRelatedModelsProvider(
-						objectDefinition.getClassName(),
+						objectDefinition2.getClassName(),
 						objectRelationship.getType());
 
 			int count = objectRelatedModelsProvider.getRelatedModelsCount(

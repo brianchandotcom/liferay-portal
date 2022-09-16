@@ -30,6 +30,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
@@ -44,6 +45,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
@@ -123,7 +125,7 @@ public class WebDriverUtil extends PropsValues {
 				PropsValues.BROWSER_CHROME_BIN_ARGS.split("\\s+"));
 		}
 
-		return new RemoteWebDriver(_REMOTE_DRIVER_URL, chromeOptions);
+		return _getRemoteWebDriver(chromeOptions);
 	}
 
 	private InternetExplorerOptions _getDefaultInternetExplorerOptions() {
@@ -149,7 +151,7 @@ public class WebDriverUtil extends PropsValues {
 
 		edgeOptions.setCapability("platform", "WINDOWS");
 
-		return new RemoteWebDriver(_REMOTE_DRIVER_URL, edgeOptions);
+		return _getRemoteWebDriver(edgeOptions);
 	}
 
 	private WebDriver _getFirefoxDriver() {
@@ -215,7 +217,7 @@ public class WebDriverUtil extends PropsValues {
 
 		_setGenericCapabilities(firefoxOptions);
 
-		return new RemoteWebDriver(_REMOTE_DRIVER_URL, firefoxOptions);
+		return _getRemoteWebDriver(firefoxOptions);
 	}
 
 	private WebDriver _getInternetExplorerDriver() {
@@ -231,7 +233,16 @@ public class WebDriverUtil extends PropsValues {
 		internetExplorerOptions.setCapability(
 			"version", PropsValues.BROWSER_VERSION);
 
-		return new RemoteWebDriver(_REMOTE_DRIVER_URL, internetExplorerOptions);
+		return _getRemoteWebDriver(internetExplorerOptions);
+	}
+
+	private RemoteWebDriver _getRemoteWebDriver(Capabilities capabilities) {
+		RemoteWebDriver remoteWebDriver = new RemoteWebDriver(
+			_REMOTE_DRIVER_URL, capabilities);
+
+		remoteWebDriver.setFileDetector(new LocalFileDetector());
+
+		return remoteWebDriver;
 	}
 
 	private WebDriver _getSafariDriver() {
@@ -245,7 +256,7 @@ public class WebDriverUtil extends PropsValues {
 
 		_setGenericCapabilities(safariOptions);
 
-		return new RemoteWebDriver(_REMOTE_DRIVER_URL, safariOptions);
+		return _getRemoteWebDriver(safariOptions);
 	}
 
 	private WebDriver _getWebDriver() {

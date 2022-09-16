@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
 
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
@@ -49,6 +48,9 @@ public class LayoutStructureUtil {
 			return;
 		}
 
+		FragmentEntryLinkLocalServiceUtil.deleteFragmentEntryLinks(
+			groupId, plid, true);
+
 		List<LayoutPageTemplateStructureRel> layoutPageTemplateStructureRels =
 			LayoutPageTemplateStructureRelLocalServiceUtil.
 				getLayoutPageTemplateStructureRels(
@@ -64,24 +66,8 @@ public class LayoutStructureUtil {
 			for (DeletedLayoutStructureItem deletedLayoutStructureItem :
 					layoutStructure.getDeletedLayoutStructureItems()) {
 
-				List<LayoutStructureItem> deletedLayoutStructureItems =
-					layoutStructure.deleteLayoutStructureItem(
-						deletedLayoutStructureItem.getItemId());
-
-				for (long fragmentEntryLinkId :
-						getFragmentEntryLinkIds(deletedLayoutStructureItems)) {
-
-					FragmentEntryLink fragmentEntryLink =
-						FragmentEntryLinkLocalServiceUtil.
-							fetchFragmentEntryLink(fragmentEntryLinkId);
-
-					if (fragmentEntryLink == null) {
-						continue;
-					}
-
-					FragmentEntryLinkLocalServiceUtil.deleteFragmentEntryLink(
-						fragmentEntryLinkId);
-				}
+				layoutStructure.deleteLayoutStructureItem(
+					deletedLayoutStructureItem.getItemId());
 			}
 
 			LayoutPageTemplateStructureLocalServiceUtil.

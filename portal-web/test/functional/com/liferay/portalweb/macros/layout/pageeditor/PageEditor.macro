@@ -1118,10 +1118,18 @@ definition {
 	}
 
 	macro clearSelection {
-		Click.clickNoWaitForVisible(
-			key_fieldLabel = "${fieldLabel}",
-			key_text = "restore",
-			locator1 = "Icon#ANY_ITEM_SELECTOR");
+		if (contains("${fieldLabel}", "Image")) {
+			Click.clickNoWaitForVisible(
+				key_fieldLabel = "${fieldLabel}",
+				key_text = "times-circle",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
+		else {
+			Click.clickNoWaitForVisible(
+				key_fieldLabel = "${fieldLabel}",
+				key_text = "restore",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
 
 		PageEditor.waitForAutoSave();
 	}

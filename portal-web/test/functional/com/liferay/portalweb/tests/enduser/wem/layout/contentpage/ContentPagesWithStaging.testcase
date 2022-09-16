@@ -1720,9 +1720,11 @@ definition {
 			}
 
 			task ("Edit the inline text of Button in Default experience") {
-				ContentPagesNavigator.openEditContentPage(
+				ContentPagesNavigator.openViewContentPage(
 					pageName = "Test Page Name",
 					siteName = "Test Site Name Staging");
+
+				ContentPages.gotoPageEditor();
 
 				PageEditor.editFragmentText(
 					fragmentName = "Button",
@@ -1740,7 +1742,7 @@ definition {
 			}
 		}
 
-		task ("When the page creator previews the draft page via Page Tree") {
+		task ("When the page creator navigates to the preview draft page via Page Tree") {
 			PagesFinder.goToPagesFinder();
 
 			PagesFinder.gotoPageEllipsisItem(
@@ -1756,13 +1758,28 @@ definition {
 			ContentPages.viewCurrentExperience(experienceName = "New Experience");
 		}
 
-		task ("When the page creator previews the draft page via header ellipsis icon of page editor") {
+		task ("When the page creator previews the draft in a new tab") {
 			ContentPages.gotoPageEditor();
 
 			PageEditor.previewInANewTab();
 		}
 
-		task ("The the page creator should see the fragments on New Experience") {
+		task ("Then the page creator should preview the content from new experience") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Edited Heading Example");
+		}
+
+		task ("When the page creator is back to view mode") {
+			Close.closeWindow();
+
+			PageEditor.clickBack();
+		}
+
+		task ("Then the page creator should see the New Experience still selected in experience selector") {
+			ContentPages.viewCurrentExperience(experienceName = "New Experience");
+
 			ContentPages.viewFragmentText(
 				fragmentName = "button",
 				id = "link",
@@ -1771,7 +1788,7 @@ definition {
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
 				id = "element-text",
-				text = "Edited Heading Example");
+				text = "Heading Example");
 		}
 	}
 

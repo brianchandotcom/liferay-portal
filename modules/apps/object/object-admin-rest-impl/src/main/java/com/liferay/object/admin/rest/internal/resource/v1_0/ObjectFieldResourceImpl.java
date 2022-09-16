@@ -91,6 +91,12 @@ public class ObjectFieldResourceImpl
 					com.liferay.object.model.ObjectDefinition.class.getName(),
 					objectDefinitionId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.UPDATE, "postObjectDefinitionObjectFieldBatch",
+					com.liferay.object.model.ObjectDefinition.class.getName(),
+					objectDefinitionId)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getObjectDefinitionObjectFieldsPage",

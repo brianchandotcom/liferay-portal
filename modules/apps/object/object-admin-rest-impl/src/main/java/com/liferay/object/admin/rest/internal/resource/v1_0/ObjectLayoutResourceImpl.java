@@ -66,6 +66,11 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 					ActionKeys.UPDATE, "postObjectDefinitionObjectLayout",
 					ObjectDefinition.class.getName(), objectDefinitionId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.UPDATE, "postObjectDefinitionObjectLayoutBatch",
+					ObjectDefinition.class.getName(), objectDefinitionId)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getObjectDefinitionObjectLayoutsPage",

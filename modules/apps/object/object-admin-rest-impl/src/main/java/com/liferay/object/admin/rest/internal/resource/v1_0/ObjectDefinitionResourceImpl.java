@@ -109,6 +109,12 @@ public class ObjectDefinitionResourceImpl
 					"postObjectDefinition", ObjectConstants.RESOURCE_NAME,
 					contextCompany.getCompanyId())
 			).put(
+				"createBatch",
+				addAction(
+					ObjectActionKeys.ADD_OBJECT_DEFINITION,
+					"postObjectDefinitionBatch", ObjectConstants.RESOURCE_NAME,
+					contextCompany.getCompanyId())
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getObjectDefinitionsPage",

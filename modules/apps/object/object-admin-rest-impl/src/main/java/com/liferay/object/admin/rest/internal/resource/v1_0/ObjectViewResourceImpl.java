@@ -66,6 +66,11 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 					ActionKeys.UPDATE, "postObjectDefinitionObjectView",
 					ObjectDefinition.class.getName(), objectDefinitionId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.UPDATE, "postObjectDefinitionObjectViewBatch",
+					ObjectDefinition.class.getName(), objectDefinitionId)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getObjectDefinitionObjectViewsPage",

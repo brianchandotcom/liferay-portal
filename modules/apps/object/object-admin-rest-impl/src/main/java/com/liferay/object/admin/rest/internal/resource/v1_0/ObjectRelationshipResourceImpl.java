@@ -35,7 +35,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.util.Collections;
 import java.util.Objects;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -79,7 +78,14 @@ public class ObjectRelationshipResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			Collections.emptyMap(),
+			HashMapBuilder.put(
+				"createBatch",
+				addAction(
+					ActionKeys.UPDATE,
+					"postObjectDefinitionObjectRelationshipBatch",
+					com.liferay.object.model.ObjectDefinition.class.getName(),
+					objectDefinitionId)
+			).build(),
 			booleanQuery -> {
 			},
 			filter, com.liferay.object.model.ObjectRelationship.class.getName(),

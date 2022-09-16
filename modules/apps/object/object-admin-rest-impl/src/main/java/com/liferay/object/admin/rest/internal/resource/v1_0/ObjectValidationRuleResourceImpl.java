@@ -64,6 +64,12 @@ public class ObjectValidationRuleResourceImpl
 					"postObjectDefinitionObjectValidationRule",
 					ObjectDefinition.class.getName(), objectDefinitionId)
 			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.UPDATE,
+					"postObjectDefinitionObjectValidationRuleBatch",
+					ObjectDefinition.class.getName(), objectDefinitionId)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW,

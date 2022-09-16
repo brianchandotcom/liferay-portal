@@ -138,9 +138,8 @@ public class EditCountryMVCActionCommand
 
 				sendRedirect(actionRequest, actionResponse);
 			}
-			else {
-				throw new Exception(throwable);
-			}
+
+			throw new PortletException(throwable);
 		}
 	}
 

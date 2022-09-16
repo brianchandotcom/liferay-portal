@@ -4480,12 +4480,25 @@ definition {
 	}
 
 	@description = "Publish workflow definition with Invalid JoinXOR Node And View Error Message"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ViewErrorMessageAfterPublishInvalidJoinXORDefinition {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ViewErrorMessageAfterPublishInvalidJoinXORDefinition";
 
-		// TODO ViewErrorMessageAfterPublishInvalidJoinXORDefinition pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "invalid-joinxor-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		Button.clickPublish();
+
+		Alert.viewErrorMessage(errorMessage = "Fix the errors between the fork node Fork and join node Join XOR");
+
+		Navigator.gotoBack();
+
+		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
 	@description = "Verify that a message warning is displayed when the user adds another transition and selects it as default"

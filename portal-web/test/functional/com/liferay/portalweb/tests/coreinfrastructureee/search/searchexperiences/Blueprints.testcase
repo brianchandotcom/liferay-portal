@@ -816,7 +816,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 501");
 
-		CreateObject.selectTitleField(fieldLabel = "Title");
+		CreateObject.selectTitleField(fieldLabel = "title");
 
 		ObjectAdmin.publishObjectViaUI();
 

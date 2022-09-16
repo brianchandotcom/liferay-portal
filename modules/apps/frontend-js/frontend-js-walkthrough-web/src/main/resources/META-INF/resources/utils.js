@@ -12,8 +12,17 @@
  * details.
  */
 
+import domAlign from 'dom-align';
+
 export const LOCAL_STORAGE_KEYS = {
 	CURRENT_STEP: `${themeDisplay.getUserId()}-walkthrough-current-step`,
 	POPOVER_VISIBILITY: `${themeDisplay.getUserId()}-walkthrough-popover-visible`,
 	SKIPPABLE: `${themeDisplay.getUserId()}-${themeDisplay.getSiteGroupId()}-walkthrough-dismissed`,
 };
+
+export function doAlign({sourceElement, targetElement, ...config}) {
+	return domAlign(sourceElement, targetElement, {
+		...config,
+		useCssRight: window.getComputedStyle(sourceElement).direction === 'rtl',
+	});
+}

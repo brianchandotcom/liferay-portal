@@ -18,8 +18,8 @@ import userEvents from '@testing-library/user-event';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
-import Walkthrough from '../../src/main/resources/META-INF/resources/Walkthrough';
-import {LOCAL_STORAGE_KEYS} from '../../src/main/resources/META-INF/resources/localStorageKeys';
+import Walkthrough from '../../src/main/resources/META-INF/resources/components/Walkthrough';
+import {LOCAL_STORAGE_KEYS} from '../../src/main/resources/META-INF/resources/utils';
 import {
 	BOX_SHADOW_ELEMENT_MOCK,
 	DOM_STRUCTURE_FOR_PLACING_STEPS,
@@ -275,7 +275,10 @@ describe('Walkthrough', () => {
 	});
 
 	it('when `closeOnClickOutside` is enabled, it should close when clicking outside the popover', () => {
-		const {getByLabelText} = renderWalkthrough({closeOnClickOutside: true, ...PAGE_MOCK});
+		const {getByLabelText} = renderWalkthrough({
+			closeOnClickOutside: true,
+			...PAGE_MOCK,
+		});
 
 		const hotspot = getByLabelText('start-the-walkthrough');
 

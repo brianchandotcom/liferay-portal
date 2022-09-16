@@ -14,8 +14,8 @@
 
 import React, {forwardRef, useCallback, useEffect} from 'react';
 
-import {doAlign} from './doAlign';
-import {useObserveRect} from './useObserveRect';
+import {useObserveRect} from '../hooks/useObserveRect';
+import {doAlign} from '../utils';
 
 export const Hotspot = forwardRef(({onHotspotClick, trigger}, ref) => {
 	const align = useCallback(() => {

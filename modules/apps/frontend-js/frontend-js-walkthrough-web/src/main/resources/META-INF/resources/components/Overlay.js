@@ -15,7 +15,7 @@
 import {OverlayMask} from '@clayui/core';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import {useObserveRect} from './useObserveRect';
+import {useObserveRect} from '../hooks/useObserveRect';
 
 export function Overlay({popoverVisible, trigger}) {
 	const [overlayBounds, setOverlayBounds] = useState({

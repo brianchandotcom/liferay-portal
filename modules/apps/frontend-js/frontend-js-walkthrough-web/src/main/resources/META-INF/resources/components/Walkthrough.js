@@ -23,13 +23,12 @@ import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-import {Hotspot} from './Hotspot';
-import {Overlay} from './Overlay';
-import {doAlign} from './doAlign';
-import {LOCAL_STORAGE_KEYS} from './localStorageKeys';
-import {useClickOutside} from './useClickOutside';
-import {useLocalStorage} from './useLocalStorage';
-import {useObserveRect} from './useObserveRect';
+import {Hotspot} from '../components/Hotspot';
+import {Overlay} from '../components/Overlay';
+import {useClickOutside} from '../hooks/useClickOutside';
+import {useLocalStorage} from '../hooks/useLocalStorage';
+import {useObserveRect} from '../hooks/useObserveRect';
+import {LOCAL_STORAGE_KEYS, doAlign} from '../utils';
 
 /**
  * This map humanize tuples received from dom-align

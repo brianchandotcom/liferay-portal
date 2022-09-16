@@ -15,8 +15,8 @@
 import {render} from '@liferay/frontend-js-react-web';
 import React from 'react';
 
-import Walkthrough from './Walkthrough';
-import {LOCAL_STORAGE_KEYS} from './localStorageKeys';
+import Walkthrough from './components/Walkthrough';
+import {LOCAL_STORAGE_KEYS} from './utils';
 
 const DEFAULT_CONTAINER_ID = 'walkthroughContainer';
 

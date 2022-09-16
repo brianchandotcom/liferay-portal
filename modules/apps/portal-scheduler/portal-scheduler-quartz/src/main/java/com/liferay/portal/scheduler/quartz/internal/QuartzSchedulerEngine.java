@@ -781,13 +781,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			_props.get(PropsKeys.SCHEDULER_JOB_NAME_MAX_LENGTH), 80);
 	}
 
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.portal.scheduler.quartz)(release.schema.version=1.0.0))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
 	protected void unschedule(Scheduler scheduler, JobKey jobKey)
 		throws Exception {
 
@@ -998,6 +991,12 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 	private Scheduler _persistedScheduler;
 	private Props _props;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.portal.scheduler.quartz)(release.schema.version=1.0.0))"
+	)
+	private Release _release;
+
 	private volatile boolean _schedulerEngineEnabled;
 
 	@Reference(

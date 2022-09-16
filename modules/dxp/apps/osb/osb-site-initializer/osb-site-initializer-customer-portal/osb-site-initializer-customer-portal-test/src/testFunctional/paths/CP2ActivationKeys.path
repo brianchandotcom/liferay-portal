@@ -61,6 +61,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>KEY_CHECKBOX_ALL</td>
+	<td>xpath=(//div[@class='table-responsive']//*[@type='checkbox'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KEY_COUNT_ALL</td>
+	<td>//*[contains(@type, 'button') and text()='All (${key_value})']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KEY_DEACTIVATION_TERMS</td>
+	<td>//div[contains(@class, 'modal-content')]//*[contains(text(), '${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_CHECKBOX</td>
 	<td>//*[@class='custom-control-label' and contains(., '${key_filterOption}')]/preceding-sibling::*[@type='checkbox']</td>
 	<td></td>

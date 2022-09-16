@@ -518,7 +518,8 @@ public class DBPartitionUtil {
 			DBInspector dbInspector, String tableName)
 		throws Exception {
 
-		if (_controlTableNames.contains(StringUtil.toLowerCase(tableName)) ||
+		if (_controlTableLowerCaseNames.contains(
+				StringUtil.toLowerCase(tableName)) ||
 			!dbInspector.hasColumn(tableName, "companyId")) {
 
 			return true;
@@ -738,8 +739,8 @@ public class DBPartitionUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DBPartitionUtil.class);
 
-	private static final Set<String> _controlTableNames = new HashSet<>(
-		Arrays.asList("company", "virtualhost"));
+	private static final Set<String> _controlTableLowerCaseNames =
+		new HashSet<>(Arrays.asList("company", "virtualhost"));
 	private static volatile long _defaultCompanyId;
 	private static String _defaultSchemaName;
 

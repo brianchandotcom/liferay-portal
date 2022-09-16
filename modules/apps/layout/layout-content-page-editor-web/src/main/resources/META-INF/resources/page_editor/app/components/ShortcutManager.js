@@ -15,6 +15,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 
 import {CONTAINER_DISPLAY_OPTIONS} from '../config/constants/containerDisplayOptions';
+import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {
 	ARROW_DOWN_KEYCODE,
 	ARROW_LEFT_KEYCODE,
@@ -27,7 +28,11 @@ import {
 	Z_KEYCODE,
 } from '../config/constants/keycodes';
 import {MOVE_ITEM_DIRECTIONS} from '../config/constants/moveItemDirections';
-import {useActiveItemId, useSelectItem} from '../contexts/ControlsContext';
+import {
+	useActiveItemId,
+	useActiveItemType,
+	useSelectItem,
+} from '../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import deleteItem from '../thunks/deleteItem';
@@ -68,6 +73,7 @@ const isWithinIframe = () => {
 
 export default function ShortcutManager() {
 	const activeItemId = useActiveItemId();
+	const activeItemType = useActiveItemType();
 	const dispatch = useDispatch();
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const [openSaveModal, setOpenSaveModal] = useState(false);
@@ -79,7 +85,10 @@ export default function ShortcutManager() {
 
 	const {fragmentEntryLinks, layoutData, segmentsExperienceId} = state;
 
-	const activeItem = layoutData.items[activeItemId];
+	const activeLayoutDataItem =
+		activeItemType === ITEM_TYPES.layoutDataItem
+			? layoutData.items[activeItemId]
+			: null;
 
 	const duplicate = () => {
 		dispatch(
@@ -96,7 +105,7 @@ export default function ShortcutManager() {
 	};
 
 	const move = (event) => {
-		const {itemId, parentId} = activeItem;
+		const {itemId, parentId} = activeLayoutDataItem;
 
 		const parentItem = layoutData.items[parentId];
 
@@ -200,11 +209,11 @@ export default function ShortcutManager() {
 				!isEditableField(event.target) &&
 				!isInteractiveElement(event.target),
 			isKeyCombination: (event) => {
-				if (!activeItem) {
+				if (!activeLayoutDataItem) {
 					return false;
 				}
 
-				const {parentId} = activeItem;
+				const {parentId} = activeLayoutDataItem;
 
 				const parentItem = layoutData.items[parentId];
 

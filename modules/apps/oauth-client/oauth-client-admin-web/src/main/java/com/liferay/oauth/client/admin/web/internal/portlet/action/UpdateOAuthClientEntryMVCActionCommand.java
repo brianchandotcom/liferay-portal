@@ -58,7 +58,7 @@ public class UpdateOAuthClientEntryMVCActionCommand
 				actionRequest, "authServerWellKnownURI");
 			String infoJSON = ParamUtil.getString(actionRequest, "infoJSON");
 			String oidcUserInfoMapperJSON = ParamUtil.getString(
-				actionRequest, "oidcUserInfoMapperJSON");
+				actionRequest, "OIDCUserInfoMapperJSON");
 			String tokenRequestParametersJSON = ParamUtil.getString(
 				actionRequest, "tokenRequestParametersJSON");
 

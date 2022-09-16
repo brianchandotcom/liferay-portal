@@ -103,7 +103,8 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 
 		if (Objects.equals(
 				objectRelationship.getDeletionType(),
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE) &&
+			!objectRelationship.isReverse()) {
 
 			PersistedModelLocalService persistedModelLocalService =
 				_persistedModelLocalServiceRegistry.

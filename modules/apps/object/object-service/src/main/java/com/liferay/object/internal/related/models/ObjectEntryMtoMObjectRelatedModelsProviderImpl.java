@@ -83,7 +83,8 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 
 		if (Objects.equals(
 				objectRelationship.getDeletionType(),
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE) &&
+			!objectRelationship.isReverse()) {
 
 			for (ObjectEntry objectEntry : relatedModels) {
 				_objectEntryLocalService.deleteObjectEntry(

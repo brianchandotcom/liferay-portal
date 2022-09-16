@@ -2,6 +2,8 @@
 
 $controlMenuHeight: 56px;
 $toolbarDesktopHeight: 4rem;
+$toolbarHeight: 6.875rem;
+$toolbarZIndex: 971;
 
 .knowledge-base-portlet-admin {
 	.kb-article {
@@ -77,29 +79,48 @@ $toolbarDesktopHeight: 4rem;
 			border-left: 1px $gray-300 solid;
 			box-shadow: none;
 			overflow-y: scroll;
-		}
 
-		.sidebar-body {
-			.collapse-icon {
-				border-bottom: 1px solid $light;
-				color: $secondary;
+			.sidebar-body {
+				.collapse-icon {
+					border-bottom: 1px solid $light;
+					color: $secondary;
 
-				&:hover {
-					color: $dark;
+					&:hover {
+						color: $dark;
+					}
+
+					.collapse-icon-open {
+						color: $dark;
+					}
 				}
 
-				.collapse-icon-open {
-					color: $dark;
+				.panel {
+					margin-bottom: 0;
+
+					.panel-body {
+						padding-top: 0;
+					}
 				}
 			}
+		}
 
-			.panel {
-				margin-bottom: 0;
+		.contextual-sidebar-content .lfr-form-content {
+			margin-top: $toolbarHeight;
+
+			@include media-breakpoint-up(lg) {
+				margin-top: 2.5rem;
 			}
 		}
 
 		.tbar-knowledge-base-edit-article {
 			min-height: 3.5rem;
+			position: fixed;
+			width: 100%;
+			z-index: $toolbarZIndex;
+
+			@include media-breakpoint-up(lg) {
+				min-height: $toolbarDesktopHeight;
+			}
 
 			@include media-breakpoint-up(lg) {
 				min-height: $toolbarDesktopHeight;

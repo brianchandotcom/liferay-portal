@@ -4471,12 +4471,25 @@ definition {
 	}
 
 	@description = "Publish workflow definition with Invalid Join Node And View Error Message"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ViewErrorMessageAfterPublishInvalidJoinDefinition {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ViewErrorMessageAfterPublishInvalidJoinDefinition";
 
-		// TODO ViewErrorMessageAfterPublishInvalidJoinDefinition pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "invalid-join-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		Button.clickPublish();
+
+		Alert.viewErrorMessage(errorMessage = "Fix the errors between the fork node Fork and join node Join");
+
+		Navigator.gotoBack();
+
+		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
 	@description = "Publish workflow definition with Invalid JoinXOR Node And View Error Message"

@@ -10,14 +10,13 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-
 		task ("Copy the token from AC") {
 			ACUtils.launchAC();
+
 			ACSettings.takeTokenFromAnalyticsCloud();
 		}
 
 		task ("Set up instance and sign in DXP") {
-
 			TestCase.setUpPortalInstance();
 
 			ACUtils.launchDXP();
@@ -25,23 +24,26 @@ definition {
 
 		task ("Add a new site and blog") {
 			ACUtils.addSiteAndPage();
+
 			ACUtils.createBlogsAndAddToPage();
 		}
+
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
+
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",
 				userFirstName = "ac",
 				userLastName = "ac",
 				userScreenName = "ac");
+
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
 				userEmailAddress = "ac@liferay.com");
 		}
-
 	}
 
 	tearDown {
@@ -652,7 +654,6 @@ definition {
 	@priority = "3"
 	test CheckIfAutocompleteSuggestionEmailPresentInKnownIndividualsList {
 		property analytics.cloud.upstream = "false";
-		property portal.upstream = "manu";
 
 		var username = "ac ac";
 		var individualEmail = "ac@liferay.com";

@@ -342,6 +342,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEGMENT_AUTOCOMPLETE_DROPDOWN_BY_INDEX</td>
+	<td>xpath=(//ul[contains(@class,'dropdown-menu')]/li)[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEGMENT_DROP_AREA</td>
 	<td>xpath=(//div[contains(@class,'drop-zone-target')])[last()]</td>
 	<td></td>

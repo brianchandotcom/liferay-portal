@@ -60,7 +60,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = POPNotificationsMessageListener.class)
+@Component(service = {})
 public class POPNotificationsMessageListener extends BaseMessageListener {
 
 	@Activate

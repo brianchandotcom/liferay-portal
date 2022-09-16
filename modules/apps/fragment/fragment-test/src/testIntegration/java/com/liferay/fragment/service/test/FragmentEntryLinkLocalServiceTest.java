@@ -406,35 +406,35 @@ public class FragmentEntryLinkLocalServiceTest {
 				StringPool.BLANK, StringPool.BLANK, 0, null,
 				_fragmentEntry.getType(), _serviceContext);
 
-		List<FragmentEntryLink> fragmentEntryLinks1 =
+		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
 				getAllFragmentEntryLinksByFragmentEntryId(
 					_group.getGroupId(), _fragmentEntry.getFragmentEntryId(),
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertTrue(fragmentEntryLinks1.contains(fragmentEntryLink));
+		Assert.assertTrue(fragmentEntryLinks.contains(fragmentEntryLink));
 
 		_fragmentEntryLinkLocalService.updateDeleted(
 			fragmentEntryLink.getFragmentEntryLinkId(), true);
 
-		fragmentEntryLinks1 =
+		fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
 				getAllFragmentEntryLinksByFragmentEntryId(
 					_group.getGroupId(), _fragmentEntry.getFragmentEntryId(),
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertFalse(fragmentEntryLinks1.contains(fragmentEntryLink));
+		Assert.assertFalse(fragmentEntryLinks.contains(fragmentEntryLink));
 
 		_fragmentEntryLinkLocalService.updateDeleted(
 			fragmentEntryLink.getFragmentEntryLinkId(), false);
 
-		List<FragmentEntryLink> fragmentEntryLinks2 =
+		fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
 				getAllFragmentEntryLinksByFragmentEntryId(
 					_group.getGroupId(), _fragmentEntry.getFragmentEntryId(),
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertNotEquals(fragmentEntryLinks1, fragmentEntryLinks2);
+		Assert.assertTrue(fragmentEntryLinks.contains(fragmentEntryLink));
 	}
 
 	@Test

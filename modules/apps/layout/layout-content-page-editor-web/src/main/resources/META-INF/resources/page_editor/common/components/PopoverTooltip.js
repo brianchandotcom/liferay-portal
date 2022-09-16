@@ -13,19 +13,32 @@
  */
 
 import ClayPopover from '@clayui/popover';
-import React, {useState} from 'react';
-
-import {useId} from '../../core/hooks/useId';
+import React, {useEffect, useState} from 'react';
 
 export function PopoverTooltip({
 	alignPosition = 'top',
 	content,
 	header = undefined,
+	id,
 	trigger,
 }) {
-	const id = useId();
-
 	const [showPopover, setShowPopover] = useState(false);
+
+	useEffect(() => {
+		if (!showPopover) {
+			return;
+		}
+
+		const handleKeyDown = (event) => {
+			if (event.key === 'Escape') {
+				setShowPopover(false);
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyDown);
+
+		return () => window.removeEventListener('keydown', handleKeyDown);
+	}, [showPopover]);
 
 	return (
 		<ClayPopover
@@ -38,16 +51,17 @@ export function PopoverTooltip({
 			role="tooltip"
 			show={showPopover}
 			trigger={
-				<span
-					aria-describedby={id}
+				<button
+					aria-controls={id}
 					onBlur={() => setShowPopover(false)}
+					onClick={() => setShowPopover((show) => !show)}
 					onFocus={() => setShowPopover(true)}
 					onMouseEnter={() => setShowPopover(true)}
 					onMouseLeave={() => setShowPopover(false)}
-					tabIndex="0"
+					type="button"
 				>
 					{trigger}
-				</span>
+				</button>
 			}
 		>
 			{content}

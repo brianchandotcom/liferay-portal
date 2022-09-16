@@ -32,6 +32,7 @@ export function ImageSelectorDescription({
 
 	const helpTextId = useId();
 	const imageDescriptionInputId = useId();
+	const tooltipId = useId();
 
 	useEffect(() => {
 		if (imageDescriptionInputElement) {
@@ -41,16 +42,21 @@ export function ImageSelectorDescription({
 
 	return (
 		<ClayForm.Group>
-			<label htmlFor={imageDescriptionInputId}>
+			<label
+				aria-describedby={tooltipId}
+				htmlFor={imageDescriptionInputId}
+			>
 				<span>{Liferay.Language.get('image-description')}</span>
 
 				<PopoverTooltip
 					content={Liferay.Language.get(
 						'this-value-is-used-for-alt-text'
 					)}
+					id={tooltipId}
 					trigger={
 						<ClayIcon
-							className="lfr-portal-tooltip ml-2 text-secondary"
+							aria-label={Liferay.Language.get('show-more')}
+							className="ml-2"
 							symbol="question-circle-full"
 						/>
 					}

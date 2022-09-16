@@ -23,6 +23,7 @@ import {getEditableLocalizedValue} from '../../../../../../../app/utils/getEdita
 import CurrentLanguageFlag from '../../../../../../../common/components/CurrentLanguageFlag';
 import {PopoverTooltip} from '../../../../../../../common/components/PopoverTooltip';
 import useControlledState from '../../../../../../../core/hooks/useControlledState';
+import {useId} from '../../../../../../../core/hooks/useId';
 
 export function EmptyCollectionOptions({
 	collectionEmptyCollectionMessageId,
@@ -30,6 +31,7 @@ export function EmptyCollectionOptions({
 	handleConfigurationChanged,
 }) {
 	const {displayMessage = true} = emptyCollectionOptions || {};
+	const tooltipId = useId();
 
 	const handleDisplayMessageChanged = (event) =>
 		handleConfigurationChanged({
@@ -56,6 +58,7 @@ export function EmptyCollectionOptions({
 		<>
 			<div className="align-items-center d-flex mb-2 pt-1">
 				<ClayCheckbox
+					aria-describedby={tooltipId}
 					checked={displayMessage}
 					containerProps={{className: 'mb-0'}}
 					label={Liferay.Language.get('show-empty-collection-alert')}
@@ -68,9 +71,11 @@ export function EmptyCollectionOptions({
 						'information-message-displayed-in-view-mode-when-the-collection-is-empty-or-no-results-match-the-applied-filters'
 					)}
 					header={Liferay.Language.get('empty-collection-alert')}
+					id={tooltipId}
 					trigger={
 						<ClayIcon
-							className="ml-2 text-secondary"
+							aria-label={Liferay.Language.get('show-more')}
+							className="ml-2"
 							symbol="question-circle-full"
 						/>
 					}

@@ -28,6 +28,7 @@ const defaultValue = `.${FRAGMENT_CLASS_PLACEHOLDER} {\n\n}`;
 
 export default function CustomCSSField({field, onValueSelect, value}) {
 	const id = useId();
+	const tooltipId = useId();
 
 	const [customCSS, setCustomCSS] = useControlledState(value || defaultValue);
 	const [editorModalOpen, setEditorModalOpen] = useState(false);
@@ -50,7 +51,7 @@ export default function CustomCSSField({field, onValueSelect, value}) {
 		<>
 			<ClayForm.Group className="page-editor__custom-css-field" small>
 				<div className="align-items-end d-flex justify-content-between">
-					<label htmlFor={id}>
+					<label aria-describedby={tooltipId} htmlFor={id}>
 						{Liferay.Language.get('custom-css')}
 
 						<PopoverTooltip
@@ -58,9 +59,13 @@ export default function CustomCSSField({field, onValueSelect, value}) {
 								'you-can-add-your-own-css-and-include-variables-to-use-existing-tokens'
 							)}
 							header={Liferay.Language.get('custom-css')}
+							id={tooltipId}
 							trigger={
 								<ClayIcon
-									className="ml-2 text-secondary"
+									aria-label={Liferay.Language.get(
+										'show-more'
+									)}
+									className="ml-2"
 									symbol="info-panel-open"
 								/>
 							}

@@ -714,11 +714,14 @@ definition {
 	}
 
 	macro viewSubscriptionManagementList {
-		for (var product : list "${productList}") {
-			AssertElementPresent(
-				key_product = "${productList}",
-				locator1 = "CustomerPortalSite#SUBSCRIPTION_DROPDOWN",
-				value1 = "${product}");
+		Click(
+			key_dropdownLabel = "${dropDownLabel}",
+			locator1 = "CustomerPortalSite#SUBSCRIPTION_DROPDOWN");
+
+		for (var dropDownItem : list "${dropDownItems}") {
+			AssertVisible(
+				key_text = "${dropDownItem}",
+				locator1 = "CustomerPortalSite#SUBSCRIPTION_DROPDOWN_ITEM");
 		}
 	}
 

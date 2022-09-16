@@ -162,13 +162,6 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setSchedulerEngineHelper(
-		SchedulerEngineHelper schedulerEngineHelper) {
-
-		_schedulerEngineHelper = schedulerEngineHelper;
-	}
-
 	private String _getEmailAddress(Address[] addresses) {
 		if (ArrayUtil.isEmpty(addresses)) {
 			return StringPool.BLANK;
@@ -286,6 +279,8 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 	private MailService _mailService;
 
 	private ServiceTrackerList<MessageListenerWrapper> _messageListenerWrappers;
+
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference

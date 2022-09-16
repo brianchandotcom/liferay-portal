@@ -114,7 +114,11 @@ function useBreadcrumbItems() {
 							: DROP_ZONE_BASE_LABEL,
 					});
 				}
-				else {
+				else if (
+					layoutDataItem.type !== LAYOUT_DATA_ITEM_TYPES.column &&
+					layoutDataItem.type !==
+						LAYOUT_DATA_ITEM_TYPES.collectionItem
+				) {
 					items.push({
 						label: selectLayoutDataItemLabel(state, layoutDataItem),
 						onClick: () =>

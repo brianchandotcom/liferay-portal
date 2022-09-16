@@ -78,13 +78,31 @@ public class EditCountryMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		String a2 = ParamUtil.getString(actionRequest, "a2");
+		String a3 = ParamUtil.getString(actionRequest, "a3");
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+		boolean billingAllowed = ParamUtil.getBoolean(
+			actionRequest, "billingAllowed");
+		String idd = ParamUtil.getString(actionRequest, "idd");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String number = ParamUtil.getString(actionRequest, "number");
+		double position = ParamUtil.getDouble(actionRequest, "position");
+		boolean shippingAllowed = ParamUtil.getBoolean(
+			actionRequest, "shippingAllowed");
+		boolean subjectToVAT = ParamUtil.getBoolean(
+			actionRequest, "subjectToVAT");
+
 		try {
 			Country country = null;
 
 			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 			if (cmd.equals(Constants.ADD)) {
-				country = _addCountry(actionRequest);
+				country = _countryService.addCountry(
+					a2, a3, active, billingAllowed, idd, name, number, position,
+					shippingAllowed, subjectToVAT, false,
+					ServiceContextFactory.getInstance(
+						Country.class.getName(), actionRequest));
 
 				actionRequest.setAttribute(
 					WebKeys.REDIRECT,
@@ -94,7 +112,11 @@ public class EditCountryMVCActionCommand
 						country.getCountryId()));
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				country = _updateCountry(actionRequest);
+				long countryId = ParamUtil.getLong(actionRequest, "countryId");
+
+				country = _countryService.updateCountry(
+					countryId, a2, a3, active, billingAllowed, idd, name,
+					number, position, shippingAllowed, subjectToVAT);
 			}
 
 			if (country != null) {
@@ -136,52 +158,6 @@ public class EditCountryMVCActionCommand
 
 			throw new PortletException(throwable);
 		}
-	}
-
-	private Country _addCountry(ActionRequest actionRequest) throws Exception {
-		String a2 = ParamUtil.getString(actionRequest, "a2");
-		String a3 = ParamUtil.getString(actionRequest, "a3");
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
-		boolean billingAllowed = ParamUtil.getBoolean(
-			actionRequest, "billingAllowed");
-		String idd = ParamUtil.getString(actionRequest, "idd");
-		String name = ParamUtil.getString(actionRequest, "name");
-		String number = ParamUtil.getString(actionRequest, "number");
-		double position = ParamUtil.getDouble(actionRequest, "position");
-		boolean shippingAllowed = ParamUtil.getBoolean(
-			actionRequest, "shippingAllowed");
-		boolean subjectToVAT = ParamUtil.getBoolean(
-			actionRequest, "subjectToVAT");
-
-		return _countryService.addCountry(
-			a2, a3, active, billingAllowed, idd, name, number, position,
-			shippingAllowed, subjectToVAT, false,
-			ServiceContextFactory.getInstance(
-				Country.class.getName(), actionRequest));
-	}
-
-	private Country _updateCountry(ActionRequest actionRequest)
-		throws Exception {
-
-		long countryId = ParamUtil.getLong(actionRequest, "countryId");
-
-		String a2 = ParamUtil.getString(actionRequest, "a2");
-		String a3 = ParamUtil.getString(actionRequest, "a3");
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
-		boolean billingAllowed = ParamUtil.getBoolean(
-			actionRequest, "billingAllowed");
-		String idd = ParamUtil.getString(actionRequest, "idd");
-		String name = ParamUtil.getString(actionRequest, "name");
-		String number = ParamUtil.getString(actionRequest, "number");
-		double position = ParamUtil.getDouble(actionRequest, "position");
-		boolean shippingAllowed = ParamUtil.getBoolean(
-			actionRequest, "shippingAllowed");
-		boolean subjectToVAT = ParamUtil.getBoolean(
-			actionRequest, "subjectToVAT");
-
-		return _countryService.updateCountry(
-			countryId, a2, a3, active, billingAllowed, idd, name, number,
-			position, shippingAllowed, subjectToVAT);
 	}
 
 	@Reference

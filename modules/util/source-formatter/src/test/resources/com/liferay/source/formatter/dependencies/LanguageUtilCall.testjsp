@@ -14,10 +14,4 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-
 <span><%= LanguageUtil.get(request, "test") %></span>
-<span><%= LanguageUtil.get(request, "test") + "test" %></span>
-<span><%= LanguageUtil.get(request, "test" + test + "test") %></span>
-<span class="<%= LanguageUtil.get(request, "test") %>">test</span>
-<liferay-ui:message key="go-to-this-version />

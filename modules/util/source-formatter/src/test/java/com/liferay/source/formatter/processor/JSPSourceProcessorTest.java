@@ -109,8 +109,11 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testReplaceLiferayTag() throws Exception {
-		test("ReplaceLiferayTag.testjsp");
+	public void testLanguageUtilCall() throws Exception {
+		test(
+			"LanguageUtilCall.testjsp",
+			"Use <liferay-ui:message> tag instead of LanguageUtil.get",
+			17);
 	}
 
 	@Test

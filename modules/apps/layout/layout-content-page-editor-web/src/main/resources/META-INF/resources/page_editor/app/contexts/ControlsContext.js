@@ -188,6 +188,7 @@ const useSelectItem = () => {
 
 			if (
 				itemId &&
+				sidebarPanelId &&
 				!['browser', 'comments', 'page-content'].includes(
 					sidebarPanelId
 				)

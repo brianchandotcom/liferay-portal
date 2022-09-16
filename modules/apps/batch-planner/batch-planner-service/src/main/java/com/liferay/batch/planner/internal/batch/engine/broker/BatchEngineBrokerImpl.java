@@ -15,10 +15,10 @@
 package com.liferay.batch.planner.internal.batch.engine.broker;
 
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
+import com.liferay.batch.engine.jaxrs.uri.BatchEngineUriInfo;
 import com.liferay.batch.planner.batch.engine.broker.BatchEngineBroker;
 import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 import com.liferay.batch.planner.constants.BatchPlannerPolicyConstants;
-import com.liferay.batch.planner.internal.jaxrs.uri.BatchPlannerUriInfo;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerMappingModel;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
@@ -149,7 +149,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 	}
 
 	private UriInfo _getImportTaskUriInfo(BatchPlannerPlan batchPlannerPlan) {
-		BatchPlannerUriInfo.Builder builder = new BatchPlannerUriInfo.Builder();
+		BatchEngineUriInfo.Builder builder = new BatchEngineUriInfo.Builder();
 
 		for (String name : BatchPlannerPolicyConstants.nameTypes.keySet()) {
 			builder.queryParameter(

@@ -108,7 +108,20 @@ if (portletTitleBasedNavigation) {
 
 				<clay:content-row>
 					<clay:content-col>
-						<liferay-util:include page="/admin/common/kb_article_social_bookmarks.jsp" servletContext="<%= application %>" />
+
+						<%
+						KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse);
+						%>
+
+						<liferay-social-bookmarks:bookmarks
+							className="<%= KBArticle.class.getName() %>"
+							classPK="<%= kbArticle.getKbArticleId() %>"
+							displayStyle="<%= socialBookmarksDisplayStyle %>"
+							target="_blank"
+							title="<%= kbArticle.getTitle() %>"
+							types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(socialBookmarksTypes) %>"
+							urlImpl="<%= kbArticleURLHelper.createViewURL(kbArticle) %>"
+						/>
 					</clay:content-col>
 
 					<c:if test="<%= enableKBArticleRatings %>">

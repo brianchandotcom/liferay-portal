@@ -3237,7 +3237,7 @@ public abstract class BaseBuild implements Build {
 			JSONObject actionsJSONObject = actionsJSONArray.getJSONObject(i);
 
 			if (!Objects.equals(
-					actionsJSONObject.getString("_class"),
+					actionsJSONObject.optString("_class"),
 					"hudson.model.ParametersAction")) {
 
 				continue;

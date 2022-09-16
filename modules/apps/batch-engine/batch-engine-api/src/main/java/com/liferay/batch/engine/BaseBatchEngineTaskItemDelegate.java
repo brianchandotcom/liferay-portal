@@ -25,6 +25,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.UriInfo;
+
 /**
  * @author Ivica Cardic
  */
@@ -78,6 +80,11 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 	}
 
 	@Override
+	public void setContextUriInfo(UriInfo uriInfo) {
+		this.uriInfo = uriInfo;
+	}
+
+	@Override
 	public void setContextUser(User contextUser) {
 		this.contextUser = contextUser;
 	}
@@ -105,5 +112,6 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 	protected Company contextCompany;
 	protected User contextUser;
 	protected String languageId;
+	protected UriInfo uriInfo;
 
 }

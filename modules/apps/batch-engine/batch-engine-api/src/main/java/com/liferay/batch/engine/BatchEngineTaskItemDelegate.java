@@ -29,6 +29,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.UriInfo;
+
 /**
  * @author Ivica Cardic
  */
@@ -58,6 +60,8 @@ public interface BatchEngineTaskItemDelegate<T> {
 		BatchEngineImportStrategy batchEngineImportStrategy);
 
 	public void setContextCompany(Company contextCompany);
+
+	public void setContextUriInfo(UriInfo uriInfo);
 
 	public void setContextUser(User contextUser);
 

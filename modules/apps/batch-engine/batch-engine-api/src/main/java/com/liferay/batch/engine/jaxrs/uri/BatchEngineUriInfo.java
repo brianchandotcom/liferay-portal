@@ -16,6 +16,7 @@ package com.liferay.batch.engine.jaxrs.uri;
 
 import java.net.URI;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.ws.rs.core.MultivaluedHashMap;
@@ -46,22 +47,22 @@ public class BatchEngineUriInfo implements UriInfo {
 
 	@Override
 	public UriBuilder getBaseUriBuilder() {
-		return null;
+		return UriBuilder.fromPath("/headless-batch-engine");
 	}
 
 	@Override
 	public List<Object> getMatchedResources() {
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
 	public List<String> getMatchedURIs() {
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
 	public List<String> getMatchedURIs(boolean decode) {
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -81,17 +82,17 @@ public class BatchEngineUriInfo implements UriInfo {
 
 	@Override
 	public MultivaluedMap<String, String> getPathParameters(boolean decode) {
-		return null;
+		return _pathParameters;
 	}
 
 	@Override
 	public List<PathSegment> getPathSegments() {
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
 	public List<PathSegment> getPathSegments(boolean decode) {
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -101,7 +102,7 @@ public class BatchEngineUriInfo implements UriInfo {
 
 	@Override
 	public MultivaluedMap<String, String> getQueryParameters(boolean decode) {
-		return null;
+		return _queryParameters;
 	}
 
 	@Override

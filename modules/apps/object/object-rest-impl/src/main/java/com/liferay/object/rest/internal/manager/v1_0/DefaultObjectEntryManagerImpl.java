@@ -395,6 +395,14 @@ public class DefaultObjectEntryManagerImpl
 						objectDefinition.getObjectDefinitionId()),
 					groupId, dtoConverterContext.getUriInfo())
 			).put(
+				"createBatch",
+				ActionUtil.addAction(
+					"ADD_OBJECT_ENTRY", ObjectEntryResourceImpl.class, 0L,
+					"postObjectEntryBatch", null, objectDefinition.getUserId(),
+					_getObjectEntriesPermissionName(
+						objectDefinition.getObjectDefinitionId()),
+					groupId, dtoConverterContext.getUriInfo())
+			).put(
 				"get",
 				ActionUtil.addAction(
 					ActionKeys.VIEW, ObjectEntryResourceImpl.class, 0L,

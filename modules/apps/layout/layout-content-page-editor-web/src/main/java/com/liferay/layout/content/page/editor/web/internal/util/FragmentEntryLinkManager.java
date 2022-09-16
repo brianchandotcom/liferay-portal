@@ -88,19 +88,11 @@ public class FragmentEntryLinkManager {
 				fragmentEntryLinkId);
 
 		if (fragmentEntryLink == null) {
-			_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
-				String.valueOf(fragmentEntryLinkId),
-				_portal.getClassNameId(FragmentEntryLink.class), plid);
-
 			return;
 		}
 
 		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 			fragmentEntryLinkId);
-
-		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
-			String.valueOf(fragmentEntryLinkId),
-			_portal.getClassNameId(FragmentEntryLink.class), plid);
 
 		List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
 			_fragmentEntryLinkListenerTracker.getFragmentEntryLinkListeners();

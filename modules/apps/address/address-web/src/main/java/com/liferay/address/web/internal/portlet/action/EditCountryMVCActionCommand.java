@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -81,18 +80,38 @@ public class EditCountryMVCActionCommand
 		throws Exception {
 
 		try {
+			Country country = null;
+
 			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (cmd.equals(Constants.ADD)) {
-				Country country = _addCountry(actionRequest);
+				country = _addCountry(actionRequest);
 
 				redirect = HttpComponentsUtil.setParameter(
 					redirect, actionResponse.getNamespace() + "countryId",
 					country.getCountryId());
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				_updateCountry(actionRequest);
+				country = _updateCountry(actionRequest);
+			}
+
+			if (country != null) {
+				Map<String, String> titleMap = new HashMap<>();
+
+				Map<Locale, String> titleLocalizationMap =
+					_localization.getLocalizationMap(actionRequest, "title");
+
+				for (Map.Entry<Locale, String> entry :
+						titleLocalizationMap.entrySet()) {
+
+					titleMap.put(
+						_language.getLanguageId(entry.getKey()),
+						entry.getValue());
+				}
+
+				_countryLocalService.updateCountryLocalizations(
+					country, titleMap);
 			}
 
 			if (Validator.isNotNull(redirect)) {
@@ -143,16 +162,11 @@ public class EditCountryMVCActionCommand
 		boolean subjectToVAT = ParamUtil.getBoolean(
 			actionRequest, "subjectToVAT");
 
-		Country country = _countryService.addCountry(
+		return _countryService.addCountry(
 			a2, a3, active, billingAllowed, idd, name, number, position,
 			shippingAllowed, subjectToVAT, false,
 			ServiceContextFactory.getInstance(
 				Country.class.getName(), actionRequest));
-
-		_updateCountryLocalizations(
-			country, _localization.getLocalizationMap(actionRequest, "title"));
-
-		return country;
 	}
 
 	private Country _updateCountry(ActionRequest actionRequest)
@@ -174,27 +188,9 @@ public class EditCountryMVCActionCommand
 		boolean subjectToVAT = ParamUtil.getBoolean(
 			actionRequest, "subjectToVAT");
 
-		Country country = _countryService.updateCountry(
+		return _countryService.updateCountry(
 			countryId, a2, a3, active, billingAllowed, idd, name, number,
 			position, shippingAllowed, subjectToVAT);
-
-		_updateCountryLocalizations(
-			country, _localization.getLocalizationMap(actionRequest, "title"));
-
-		return country;
-	}
-
-	private void _updateCountryLocalizations(
-			Country country, Map<Locale, String> localizationMap)
-		throws Exception {
-
-		Map<String, String> map = new HashMap<>();
-
-		for (Map.Entry<Locale, String> entry : localizationMap.entrySet()) {
-			map.put(_language.getLanguageId(entry.getKey()), entry.getValue());
-		}
-
-		_countryLocalService.updateCountryLocalizations(country, map);
 	}
 
 	@Reference

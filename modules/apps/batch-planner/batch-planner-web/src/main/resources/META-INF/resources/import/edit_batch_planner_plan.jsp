@@ -110,15 +110,6 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 							<div class="mt-2">
 								<clay:checkbox
 									checked="<%= false %>"
-									id='<%= liferayPortletResponse.getNamespace() + "allowUpdate" %>'
-									label='<%= LanguageUtil.get(request, "override-existing-records") %>'
-									name='<%= liferayPortletResponse.getNamespace() + "allowUpdate" %>'
-								/>
-							</div>
-
-							<div class="mt-2">
-								<clay:checkbox
-									checked="<%= true %>"
 									disabled="<%= true %>"
 									id='<%= liferayPortletResponse.getNamespace() + "onUpdateDoPatch" %>'
 									label='<%= LanguageUtil.get(request, "ignore-blank-field-values-during-import") %>'
@@ -132,6 +123,15 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 									id='<%= liferayPortletResponse.getNamespace() + "onErrorFail" %>'
 									label='<%= LanguageUtil.get(request, "stop-the-import-on-error") %>'
 									name='<%= liferayPortletResponse.getNamespace() + "onErrorFail" %>'
+								/>
+							</div>
+
+							<div class="mt-2">
+								<clay:select
+									id='<%= liferayPortletResponse.getNamespace() + "createStrategy" %>'
+									label='<%= LanguageUtil.get(request, "import-strategy") %>'
+									name="createStrategy"
+									options="<%= editBatchPlannerPlanDisplayContext.getCreateStrategySelectOptions() %>"
 								/>
 							</div>
 						</liferay-frontend:edit-form-body>

@@ -161,6 +161,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_DETAILS_OPTION_POSITION</td>
+	<td>//div[contains(@class,'ddm-row')][${key_position}]//label[contains(text(),'${key_optionName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_DETAILS_OPTION_VALUE_POSITION</td>
+	<td>//button[contains(@data-testid,'dropdownItem-${key_index}')][contains(text(),'${key_optionValue}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_DETAILS_QUANTITY_SELECTOR</td>
 	<td>//h2[text()='${key_productName}']/../..//input[contains(@class,'quantity-selector')]</td>
 	<td></td>

@@ -67,12 +67,7 @@ export default function ShortcutModal({onCloseModal}) {
 				</p>
 
 				<KeyboardShorcut
-					description={Liferay.Language.get('hide-sidebars')}
-					keyCombinations={[KEY_LABEL, '⇧', '.']}
-				/>
-
-				<KeyboardShorcut
-					description={Liferay.Language.get('show-sidebars')}
+					description={Liferay.Language.get('toggle-sidebars')}
 					keyCombinations={[KEY_LABEL, '⇧', '.']}
 				/>
 			</ClayModal.Body>

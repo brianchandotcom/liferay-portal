@@ -14,7 +14,6 @@
 
 package com.liferay.petra.xml;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,21 +28,6 @@ import org.dom4j.DocumentException;
  * @author Leonardo Barros
  */
 public class XMLUtil {
-
-	public static String fixProlog(String xml) {
-
-		// LEP-1921
-
-		if (xml != null) {
-			int pos = xml.indexOf(CharPool.LESS_THAN);
-
-			if (pos > 0) {
-				xml = xml.substring(pos);
-			}
-		}
-
-		return xml;
-	}
 
 	public static String formatXML(Document document) {
 		try {

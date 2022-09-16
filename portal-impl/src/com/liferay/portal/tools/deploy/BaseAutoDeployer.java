@@ -15,9 +15,9 @@
 package com.liferay.portal.tools.deploy;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
@@ -1105,7 +1105,13 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 			String xml = StringUtil.read(inputStream);
 
-			xml = XMLUtil.fixProlog(xml);
+			// LEP-1921
+
+			int pos = xml.indexOf(CharPool.LESS_THAN);
+
+			if (pos > 0) {
+				xml = xml.substring(pos);
+			}
 
 			return PluginPackageUtil.readPluginPackageXml(xml);
 		}

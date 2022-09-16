@@ -18,12 +18,15 @@ import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -31,6 +34,9 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -66,7 +72,33 @@ public class RepositoryBrowserTagDisplayContext {
 
 		Folder folder = (Folder)repositoryEntry;
 
-		return folder::getName;
+		return new HorizontalCard() {
+
+			@Override
+			public List<DropdownItem> getActionDropdownItems() {
+				return DropdownItemListBuilder.add(
+					dropdownItem -> {
+						dropdownItem.putData("action", "delete");
+						dropdownItem.putData(
+							"deleteURL", _getDeleteFolderURL(folder));
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_httpServletRequest, "delete"));
+					}
+				).build();
+			}
+
+			@Override
+			public String getDefaultEventHandler() {
+				return "repositoryBrowserEventHandler";
+			}
+
+			@Override
+			public String getTitle() {
+				return folder.getName();
+			}
+
+		};
 	}
 
 	public ResultRowSplitter getResultRowSplitter() {
@@ -129,6 +161,26 @@ public class RepositoryBrowserTagDisplayContext {
 			return new VerticalCard() {
 
 				@Override
+				public List<DropdownItem> getActionDropdownItems() {
+					return DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "delete");
+							dropdownItem.putData(
+								"deleteURL", _getDeleteFileEntryURL(fileEntry));
+							dropdownItem.setIcon("trash");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "delete"));
+						}
+					).build();
+				}
+
+				@Override
+				public String getDefaultEventHandler() {
+					return "repositoryBrowserEventHandler";
+				}
+
+				@Override
 				public String getImageSrc() {
 					try {
 						return DLURLHelperUtil.getThumbnailSrc(
@@ -155,6 +207,27 @@ public class RepositoryBrowserTagDisplayContext {
 			FileVersion fileVersion = fileShortcut.getFileVersion();
 
 			return new VerticalCard() {
+
+				@Override
+				public List<DropdownItem> getActionDropdownItems() {
+					return DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "delete");
+							dropdownItem.putData(
+								"deleteURL",
+								_getDeleteFileShortcutURL(fileShortcut));
+							dropdownItem.setIcon("trash");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "delete"));
+						}
+					).build();
+				}
+
+				@Override
+				public String getDefaultEventHandler() {
+					return "repositoryBrowserEventHandler";
+				}
 
 				@Override
 				public String getImageSrc() {
@@ -189,10 +262,40 @@ public class RepositoryBrowserTagDisplayContext {
 		return true;
 	}
 
+	private String _getDeleteFileEntryURL(FileEntry fileEntry) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "fileEntryId",
+			fileEntry.getFileEntryId());
+	}
+
+	private String _getDeleteFileShortcutURL(FileShortcut fileShortcut) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "fileShortcutId",
+			fileShortcut.getFileShortcutId());
+	}
+
+	private String _getDeleteFolderURL(Folder folder) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
+	}
+
+	private String _getRepositoryBrowserURL() {
+		if (_repositoryBrowserURL != null) {
+			return _repositoryBrowserURL;
+		}
+
+		_repositoryBrowserURL =
+			PortalUtil.getPortalURL(_httpServletRequest) + Portal.PATH_MODULE +
+				"/repository_browser";
+
+		return _repositoryBrowserURL;
+	}
+
 	private final long _folderId;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PortletRequest _portletRequest;
+	private String _repositoryBrowserURL;
 	private final long _repositoryId;
 
 }

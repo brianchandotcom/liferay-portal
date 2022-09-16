@@ -51,3 +51,10 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>
+
+<div>
+	<liferay-frontend:component
+		componentId="repositoryBrowserEventHandler"
+		module="repository_browser/js/ElementsDefaultEventHandler.es"
+	/>
+</div>

@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  * @author Michael C. Han
  */
-@Component(immediate = true, service = MessageListener.class)
+@Component(service = MessageListener.class)
 public class MessageListenerImpl implements MessageListener {
 
 	@Override

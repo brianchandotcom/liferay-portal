@@ -1138,7 +1138,7 @@ definition {
 
 			AssertElementPresent(
 				key_erc = "testERC",
-				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE");
+				locator1 = "CommerceEntry#HEADER_ERC_VALUE");
 
 			Click(
 				key_index = "Ship",
@@ -1146,7 +1146,7 @@ definition {
 
 			AssertElementPresent(
 				key_erc = "testERC",
-				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE");
+				locator1 = "CommerceEntry#HEADER_ERC_VALUE");
 
 			Click(
 				key_index = "Deliver",
@@ -1154,7 +1154,7 @@ definition {
 
 			AssertElementPresent(
 				key_erc = "testERC",
-				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE");
+				locator1 = "CommerceEntry#HEADER_ERC_VALUE");
 		}
 	}
 

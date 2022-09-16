@@ -107,11 +107,9 @@ definition {
 		var accountsList = "Test Account LXC-SM,DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account Partnership,Test Account Others,Test Account QA 7.4,Test Account QA 7.3,Test Account QA 7.2,Test Account QA 7.1,Test Account QA 7.0";
 
 		CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${accountsList}");
-
 	}
 
 	macro addUserToOneOrMoreAccounts {
-
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
 		}

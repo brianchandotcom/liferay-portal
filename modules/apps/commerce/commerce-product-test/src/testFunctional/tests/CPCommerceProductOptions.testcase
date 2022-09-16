@@ -14,6 +14,756 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-9824. CanAssertChangesNotSavedOnCorrespondingOptions"
+	@priority = "3"
+	test CanAssertChangesNotSavedOnCorrespondingOptions {
+		property portal.acceptance = "false";
+
+		task ("Given a product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+		}
+
+		task ("And the admin navigates inside the product entry") {
+			CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+		}
+
+		task ("And 2 options are added to the product") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionNumber : list "1,2") {
+				CommerceProductOptions.createProductOption(key_optionName = "Option${optionNumber}");
+
+				Refresh();
+			}
+		}
+
+		task ("And changes are made on the first option") {
+			CommerceProductOptions.editProductOption(
+				key_option = "Option1",
+				productOptionFacetable = "true");
+
+			SelectFrameTop();
+		}
+
+		task ("And assert that the changes are not saved on the corresponding option on Commerce -> Product Management -> Options -> Option") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Options");
+
+			CommerceNavigator.gotoEntry(entryName = "Option1");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Use in Faceted Navigation",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		task ("And changes are made on the second option") {
+			Click(locator1 = "Icon#BACK");
+
+			CommerceNavigator.gotoEntry(entryName = "Option2");
+
+			CPCommerceCatalog.addOptionValues(
+				optionEntryName = "Option2",
+				optionValuesList = "Value Test:0");
+
+			Button.clickSave();
+		}
+
+		task ("Then the changes are not saved on the corresponding option on the Simple T-Shirt 'Options' tab") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceNavigator.gotoEntry(entryName = "Option2");
+
+			AssertElementNotPresent(
+				key_value = "Value Test",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-9834. CanAssertDefaultOptionValuesAreChecked"
+	@priority = "3"
+	test CanAssertDefaultOptionValuesAreChecked {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an account associated with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a Single Selection option with a value is created within a product") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.createProductOption(key_optionName = "Option1");
+
+			Refresh();
+
+			CommerceProductOptions.editProductOption(
+				key_fieldType = "Single Selection",
+				key_option = "Option1",
+				productOptionFieldType = "true");
+
+			CommerceProductOptions.createProductOptionValue(key_name = "Value1");
+
+			SelectFrameTop();
+		}
+
+		task ("When the option value is set as default") {
+			Click(
+				key_index = "Option1",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Value1",
+				menuItem = "Toggle Default");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the buyer logs in And navigates to Minium -> Catalog -> ABS Sensor ") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
+		}
+
+		task ("Then the option value selected as default must be checked in the product details") {
+			AssertChecked.assertCheckedNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Value1");
+		}
+
+		task ("And once the product is added to cart, the option value is also visible in mini cart") {
+			FrontStore.addToCartFromProductDetails(
+				productName = "ABS Sensor",
+				productSku = "MIN93015");
+
+			CommerceNavigator.gotoMiniCart();
+
+			AssertElementPresent(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_INFO_EXTRA",
+				value1 = "Value1");
+
+			Button.click(button = "Remove All Items");
+
+			Button.click(button = "Yes");
+		}
+
+		task ("When Toggle Default of the value from the option is deactivated") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			Click(
+				key_index = "Option1",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Value1",
+				menuItem = "Toggle Default");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the buyer logs in And navigates to Minium -> Catalog -> ABS Sensor") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
+		}
+
+		task ("Then the option value selected as default must be unchecked in the product details") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Value1");
+		}
+
+		task ("And once the product is added to cart, the option value is not visible in mini cart") {
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+			CommerceNavigator.gotoMiniCart();
+
+			AssertElementNotPresent(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_INFO_EXTRA",
+				value1 = "Value1");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-9837. CanChangeOptionAndOptionValuePositions"
+	@priority = "3"
+	test CanChangeOptionAndOptionValuePositions {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an account associated with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And 2 options are created") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Options");
+
+			for (var optionNumber : list "1,2") {
+				CPCommerceCatalog.newOptionsEntry(
+					facetable = "false",
+					optionDescription = "",
+					optionFieldType = "Select from List",
+					optionName = "Option${optionNumber}",
+					required = "false",
+					skuContributor = "false");
+
+				Button.clickSave();
+
+				Click(locator1 = "Icon#BACK");
+			}
+		}
+
+		task ("And 2 values are added on the first option with first value position greater than 0") {
+			CommerceNavigator.gotoEntry(entryName = "Option1");
+
+			CPCommerceCatalog.addOptionValues(optionValuesList = "Value1:1,Value2:0");
+
+			Button.clickSave();
+		}
+
+		task ("And the options are assigned to ABS Sensor product") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionNum : list "1,2") {
+				CommerceRelations.assignSingleRelationToProductsEntry(
+					entryName = "Option${optionNum}",
+					title = "Add Option");
+			}
+		}
+
+		task ("And the position of the first option's value is set as a number greater than zero") {
+			Refresh();
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Option1",
+				key_position = "1",
+				productOptionPosition = "true");
+
+			SelectFrameTop();
+		}
+
+		task ("When the buyer logs in, navigating to Minium -> Catalog") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And the buyer goes to the product details") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
+		}
+
+		task ("Then in the product details, Option2 is the first option on the list") {
+			AssertElementPresent(
+				key_optionName = "Option2",
+				key_position = "1",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_OPTION_POSITION");
+
+			AssertElementPresent(
+				key_optionName = "Option1",
+				key_position = "2",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_OPTION_POSITION");
+		}
+
+		task ("And Value2 is the first option value on the option values list") {
+			Click(
+				key_fieldName = "Option1",
+				key_fieldValue = "",
+				locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM_SELECTLIST");
+
+			AssertElementPresent(
+				key_index = "1",
+				key_optionValue = "Value2",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_OPTION_VALUE_POSITION");
+
+			AssertElementPresent(
+				key_index = "2",
+				key_optionValue = "Value1",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_OPTION_VALUE_POSITION");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-9833. CanCheckoutProductWithEveryOptionFieldType"
+	@priority = "3"
+	test CanCheckoutProductWithEveryOptionFieldType {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an account associated with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And 1 option for each option field type is added to a product") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var fieldType : list "Text,Select from List,Single Selection,Multiple Selection,Date,Numeric,Boolean") {
+				CommerceProductOptions.createProductOption(key_optionName = "Option ${fieldType}");
+
+				Refresh();
+
+				CommerceProductOptions.editProductOption(
+					key_fieldType = "${fieldType}",
+					key_option = "Option ${fieldType}",
+					productOptionFieldType = "true");
+
+				if (("${fieldType}" == "Select from List") || ("${fieldType}" == "Single Selection") || ("${fieldType}" == "Multiple Selection")) {
+					CommerceProductOptions.createProductOptionValue(key_name = "Value ${fieldType}");
+				}
+
+				SelectFrameTop();
+
+				CommerceEntry.gotoMenuTab(menuTab = "Options");
+			}
+		}
+
+		task ("When the buyer logs in, navigating to Minium -> Catalog") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And the buyer goes to the product details") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
+		}
+
+		task ("And all option fields are filled") {
+			Check.checkNotVisible(
+				key_columnOption = "Option Boolean",
+				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+
+			Check.checkNotVisible(
+				key_columnOption = "Value Multiple Selection",
+				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+
+			Type(
+				key_fieldLabel = "Option Numeric",
+				locator1 = "TextInput#NUMERIC",
+				value1 = "9876543210");
+
+			Type(
+				key_fieldLabel = "Option Text",
+				locator1 = "TextInput#NUMERIC",
+				value1 = "abc@#^");
+
+			Check.checkNotVisible(
+				key_radioOption = "Value Single Selection",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			var currentDate = DateUtil.getFormattedCurrentDate("MM-dd/yyyy");
+
+			Type(
+				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
+				value1 = "${currentDate}");
+
+			FrontStore.selectAssociatedFSOptionsValue(
+				fsOptionName = "Option Select from List",
+				fsOptionValue = "Value Select from List");
+		}
+
+		task ("And the product is added to the cart") {
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+		}
+
+		task ("And the buyer asserts the presence of the option values on Pending Orders") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Click(
+				key_orderAuthor = "Commerce Account",
+				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+
+			var month = StringUtil.extractFirst("${currentDate}", "-");
+
+			var currentDate = StringUtil.replace("${currentDate}", "${month}-", "");
+
+			var day = StringUtil.extractFirst("${currentDate}", "/");
+			var year = StringUtil.extractLast("${currentDate}", "/");
+
+			for (var optionValue : list "9876543210,true,Value Multiple Selection,Value Select from List,Value Single Selection,abc@#^,${year}-${month}-${day}") {
+				AssertTextEquals.assertPartialText(
+					key_columnNumber = "2",
+					key_entryName = "MIN93015",
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
+					value1 = "${optionValue}");
+			}
+		}
+
+		task ("And the buyer starts the checkout") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "ABS Sensor",
+				productQuantity = "1",
+				productUnitPrice = "50",
+				shippingMethod = "Standard");
+		}
+
+		task ("Then the checkout ends successfully") {
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+				value1 = "Success! Your order has been processed.");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-9823. CanEditRemoveReaddProductOption"
+	@priority = "3"
+	test CanEditRemoveReaddProductOption {
+		property portal.acceptance = "false";
+
+		task ("Given an option is created from Commerce -> Product Management -> Options") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Options");
+
+			CPCommerceCatalog.newOptionsEntry(
+				facetable = "false",
+				optionDescription = "",
+				optionFieldType = "Select from List",
+				optionName = "Test Option",
+				required = "false",
+				skuContributor = "false");
+
+			Button.clickSave();
+		}
+
+		task ("And 2 values are added to the option") {
+			for (var index : list "1,2") {
+				CPCommerceCatalog.addOptionValues(
+					optionEntryName = "Test Option",
+					optionValuesList = "Value${index}:${index}");
+			}
+		}
+
+		task ("And a product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+		}
+
+		task ("And the admin navigates inside the product entry") {
+			CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+		}
+
+		task ("And the option is linked to the product") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Test Option",
+				title = "Add Option");
+		}
+
+		task ("And on the Options tab of the product, an option value is deleted") {
+			Refresh();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Option");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceProductOptions.deleteProductOptionValue(key_value = "Value2");
+		}
+
+		task ("And the option entry is clicked again") {
+			SelectFrameTop();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Option");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		}
+
+		task ("And assert the changes are successfully saved") {
+			AssertElementPresent(
+				key_value = "Value1",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			AssertElementNotPresent(
+				key_value = "Value2",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		}
+
+		task ("When the option is deleted") {
+			SelectFrameTop();
+
+			Click(
+				key_value = "Test Option",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			CommerceEntry.clickNoError(menuItem = "Delete");
+		}
+
+		task ("And the option is linked again to the product") {
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Test Option",
+				title = "Add Option");
+		}
+
+		task ("Then all the data of the option matches the changes initially made on Product Management -> Options") {
+			Refresh();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Option");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementPresent(
+				key_value = "Value1",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			AssertElementPresent(
+				key_value = "Value2",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-9830. CanViewOptionOnTheOptionFacetWidget"
+	@priority = "3"
+	test CanViewOptionOnTheOptionFacetWidget {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an account associated with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And an option that can have values is created from Commerce -> Product Management -> Options") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Options");
+
+			CPCommerceCatalog.newOptionsEntry(
+				facetable = "true",
+				optionDescription = "",
+				optionFieldType = "Select from List",
+				optionName = "Option Test",
+				required = "false",
+				skuContributor = "false");
+
+			Button.clickSave();
+		}
+
+		task ("And 2 values are added to the option") {
+			CPCommerceCatalog.addOptionValues(optionValuesList = "Value1:0,Value2:0");
+
+			Button.clickSave();
+		}
+
+		task ("And assigning the options to ABS Sensor product") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Option Test",
+				title = "Add Option");
+		}
+
+		task ("And the buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And assert the option and its values are visible on the Option Facet widget") {
+			AssertElementPresent(
+				locator1 = "FormViewBuilder#RULE_LABEL",
+				ruleLabel = "Option Test");
+
+			for (var indexValue : list "1,2") {
+				AssertElementPresent(
+					key_fieldType = "Value${indexValue}",
+					locator1 = "FormViewBuilder#FIELD_LABEL_MULTIPLE_SELECTION");
+			}
+		}
+
+		task ("And the admin logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("And navigates to the ABS Sensor Product Detail page") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+		}
+
+		task ("And navigates to the 'Options' tab") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+		}
+
+		task ("And the 'Use in faceted navigation' checkbox is unchecked on the option") {
+			CommerceProductOptions.editProductOption(
+				key_option = "Option Test",
+				productOptionFacetable = "false");
+
+			SelectFrameTop();
+		}
+
+		task ("When the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the option is not visible on the Option Facet widget") {
+			AssertElementNotPresent(
+				locator1 = "FormViewBuilder#RULE_LABEL",
+				ruleLabel = "Option Test");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6017. CreateAnOptionForAllTheFieldType"
 	@priority = "3"
 	test CreateAnOptionForAllTheFieldType {

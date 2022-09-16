@@ -93,6 +93,9 @@ public class ElasticsearchServerUtil {
 						_shutdownCountDownLatch.await();
 					}
 					catch (InterruptedException interruptedException) {
+						if (_logger.isDebugEnabled()) {
+							_logger.debug(interruptedException);
+						}
 					}
 
 					for (Thread thread : threads) {
@@ -107,6 +110,9 @@ public class ElasticsearchServerUtil {
 								break;
 							}
 							catch (InterruptedException interruptedException) {
+								if (_logger.isDebugEnabled()) {
+									_logger.debug(interruptedException);
+								}
 							}
 						}
 					}

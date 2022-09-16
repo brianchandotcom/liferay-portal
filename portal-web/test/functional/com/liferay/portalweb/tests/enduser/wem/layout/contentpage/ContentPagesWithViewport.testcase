@@ -316,7 +316,7 @@ definition {
 				deviceType = "Portrait Phone",
 				fragmentName = "Heading");
 
-			PageEditor.configureFragment(alignment = "Justify");
+			PageEditor.configureFragment(alignment = "Align Justify");
 		}
 
 		task ("View the Text Align of Heading in different viewports") {

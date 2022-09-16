@@ -1,6 +1,5 @@
 {
-	"dependencies": {
-	},
+	"dependencies": {},
 	"name": "@liferay/frontend-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

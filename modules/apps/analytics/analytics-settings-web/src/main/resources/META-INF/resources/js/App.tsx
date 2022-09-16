@@ -12,10 +12,56 @@
  * details.
  */
 
+import {ClayIconSpriteContext} from '@clayui/icon';
 import React from 'react';
 
-const App = () => {
-	return <div>Hello, world!</div>;
+import DefaultPage from './pages/default/DefaultPage';
+import WizardPage from './pages/wizard/WizardPage';
+
+export const AppContext = React.createContext({
+	connected: false,
+	liferayAnalyticsURL: '',
+	token: '',
+});
+
+export enum EPageView {
+	Wizard = 'VIEW_WIZARD_MODE',
+	Default = 'VIEW_DEFAULT_MODE',
+}
+
+type TView = {
+	[key in EPageView]: React.FC;
+};
+
+const View: TView = {
+	[EPageView.Wizard]: WizardPage,
+	[EPageView.Default]: DefaultPage,
+};
+
+interface IAppProps extends React.HTMLAttributes<HTMLElement> {
+	connected: boolean;
+	liferayAnalyticsURL: string;
+	token: string;
+}
+
+const App: React.FC<IAppProps> = ({connected, liferayAnalyticsURL, token}) => {
+	const PageView: React.FC =
+		View[connected ? EPageView.Default : EPageView.Wizard];
+
+	const spritemap =
+		Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
+
+	return (
+		<ClayIconSpriteContext.Provider value={spritemap}>
+			<AppContext.Provider
+				value={{connected, liferayAnalyticsURL, token}}
+			>
+				<div className="analytics-settings-web mt-5">
+					<PageView />
+				</div>
+			</AppContext.Provider>
+		</ClayIconSpriteContext.Provider>
+	);
 };
 
 export default App;

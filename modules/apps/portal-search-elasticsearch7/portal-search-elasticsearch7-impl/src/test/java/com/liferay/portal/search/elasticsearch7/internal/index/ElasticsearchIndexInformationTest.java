@@ -125,14 +125,7 @@ public class ElasticsearchIndexInformationTest {
 			elasticsearchClientResolver);
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchIndexInformation, "_indexNameBuilder",
-			new IndexNameBuilder() {
-
-				@Override
-				public String getIndexName(long companyId) {
-					return "test-" + companyId;
-				}
-
-			});
+			(IndexNameBuilder)companyId -> _getIndexNameBuilder(companyId));
 
 		return elasticsearchIndexInformation;
 	}

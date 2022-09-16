@@ -78,21 +78,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = FragmentEntryLinkManager.class)
 public class FragmentEntryLinkManager {
 
-	public void deleteFragmentEntryLink(long fragmentEntryLinkId, long plid)
-		throws PortalException {
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentEntryLinkId);
-
-		if (fragmentEntryLink == null) {
-			return;
-		}
-
-		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
-			fragmentEntryLinkId);
-	}
-
 	public FragmentEntry getFragmentEntry(
 		long groupId, String fragmentEntryKey, Locale locale) {
 

@@ -24,7 +24,8 @@
 					{
 						"definition": {
 							"widgetInstance": {
-								"widgetConfig": {},
+								"widgetConfig": {
+								},
 								"widgetName": "com_liferay_login_web_portlet_LoginPortlet"
 							}
 						},

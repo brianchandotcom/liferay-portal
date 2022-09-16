@@ -25,6 +25,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -35,7 +36,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -60,7 +60,9 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry,
-		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
+		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata,
+		SystemObjectDefinitionMetadataTracker
+			systemObjectDefinitionMetadataTracker) {
 
 		_objectDefinition = objectDefinition;
 		_objectEntryLocalService = objectEntryLocalService;
@@ -69,6 +71,8 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		_persistedModelLocalServiceRegistry =
 			persistedModelLocalServiceRegistry;
 		_systemObjectDefinitionMetadata = systemObjectDefinitionMetadata;
+		_systemObjectDefinitionMetadataTracker =
+			systemObjectDefinitionMetadataTracker;
 
 		_table = systemObjectDefinitionMetadata.getTable();
 	}
@@ -95,14 +99,13 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 				objectRelationship.getDeletionType(),
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
 
-			PersistedModelLocalService persistedModelLocalService =
-				_persistedModelLocalServiceRegistry.
-					getPersistedModelLocalService(
-						_systemObjectDefinitionMetadata.getModelClassName());
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+				_systemObjectDefinitionMetadataTracker.
+					getSystemObjectDefinitionMetadata(
+						_objectDefinition.getName());
 
 			for (BaseModel<T> baseModel : relatedModels) {
-				persistedModelLocalService.deletePersistedModel(
-					(PersistedModel)baseModel);
+				systemObjectDefinitionMetadata.deleteBaseModel(baseModel);
 			}
 		}
 		else if (Objects.equals(
@@ -360,6 +363,8 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		_persistedModelLocalServiceRegistry;
 	private final SystemObjectDefinitionMetadata
 		_systemObjectDefinitionMetadata;
+	private final SystemObjectDefinitionMetadataTracker
+		_systemObjectDefinitionMetadataTracker;
 	private final Table _table;
 
 }

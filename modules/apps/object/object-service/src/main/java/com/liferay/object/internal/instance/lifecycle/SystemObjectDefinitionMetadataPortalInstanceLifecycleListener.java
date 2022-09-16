@@ -37,6 +37,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
@@ -249,7 +250,8 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 					objectDefinition, _objectEntryLocalService,
 					_objectFieldLocalService, _objectRelationshipLocalService,
 					_persistedModelLocalServiceRegistry,
-					systemObjectDefinitionMetadata),
+					systemObjectDefinitionMetadata,
+					_systemObjectDefinitionMetadataTracker),
 				null);
 			_bundleContext.registerService(
 				ObjectRelatedModelsProvider.class,
@@ -257,7 +259,8 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 					objectDefinition, _objectDefinitionLocalService,
 					_objectFieldLocalService, _objectRelationshipLocalService,
 					_persistedModelLocalServiceRegistry,
-					systemObjectDefinitionMetadata),
+					systemObjectDefinitionMetadata,
+					_systemObjectDefinitionMetadataTracker),
 				null);
 			_bundleContext.registerService(
 				RESTContextPathResolver.class,
@@ -323,6 +326,10 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 
 	private ServiceTrackerList<SystemObjectDefinitionMetadata>
 		_serviceTrackerList;
+
+	@Reference
+	private SystemObjectDefinitionMetadataTracker
+		_systemObjectDefinitionMetadataTracker;
 
 	@Reference
 	private UserLocalService _userLocalService;

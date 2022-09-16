@@ -1014,6 +1014,7 @@
 		<check name="JSPLanguageUtilCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases where Locale is passed to `LanguageUtil.get` instead of `HttpServletRequest`." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JSPLineBreakCheck">
 			<category name="Styling" />

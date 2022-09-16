@@ -69,6 +69,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-148120 - Assert that a deactivated key will no longer appear."
+	@priority = "5"
+	test CannotViewDeactivatedKeys {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		}
+
+		task ("When the user selects a project in Customer Portal") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+		}
+
+		task ("Then deactivating a key will ensure that key will no longer be available") {
+			CP2ActivationKeys.deactivateExistingKey(environmentName = "Test3");
+
+			Search.searchCP(searchTerm = "Test3");
+
+			AssertElementNotPresent(
+					key_text = "Test3",
+					locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+		}
+	}
+
 	@description = "LPS-148118 - Assert there are no changes to selected keys after clicking 'Cancel' on the Deactivation Terms modal."
 	@priority = "4"
 	test NoChangesMadeAfterClickingCancel {

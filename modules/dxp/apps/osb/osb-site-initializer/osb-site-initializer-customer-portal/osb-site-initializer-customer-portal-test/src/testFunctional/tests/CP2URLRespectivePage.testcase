@@ -49,7 +49,7 @@ definition {
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/${testSiteURL}/project/#/ERC-003/activation/analytics-cloud");
+			Navigator.openSpecificURL(url = "${baseURL}/web/${testSiteURL}/project/#/ERC-003/activation/analytics-cloud");
 		}
 
 		task ("Assert that the URL displays the page of the Analytics Cloud product") {
@@ -67,7 +67,7 @@ definition {
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/${testSiteURL}/project/#/ERC-004/activation/commerce");
+			Navigator.openSpecificURL(url = "${baseURL}/web/${testSiteURL}/project/#/ERC-004/activation/commerce");
 		}
 
 		task ("Assert that the URL displays the page of the Commerce product") {
@@ -85,7 +85,7 @@ definition {
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/${testSiteURL}/project/#/ERC-001/activation/lxc-sm");
+			Navigator.openSpecificURL(url = "${baseURL}/web/${testSiteURL}/project/#/ERC-001/activation/lxc-sm");
 		}
 
 		task ("Assert that the URL displays the page of the LXC-SM product") {
@@ -103,7 +103,7 @@ definition {
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/${testSiteURL}/project/#/ERC-002/activation/dxp");
+			Navigator.openSpecificURL(url = "${baseURL}/web/${testSiteURL}/project/#/ERC-002/activation/dxp");
 		}
 
 		task ("Assert that the URL displays the page of the DXP product") {
@@ -121,7 +121,7 @@ definition {
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/${testSiteURL}/project/#/ERC-005/activation/enterprise-search");
+			Navigator.openSpecificURL(url = "${baseURL}/web/${testSiteURL}/project/#/ERC-005/activation/enterprise-search");
 		}
 
 		task ("Assert that the URL displays the page of the Enterprise Search product") {
@@ -143,7 +143,7 @@ definition {
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/${testSiteURL}/project/#/ERC-007/activation/partnership");
+			Navigator.openSpecificURL(url = "${baseURL}/web/${testSiteURL}/project/#/ERC-007/activation/partnership");
 		}
 
 		task ("Assert that the URL displays the page of the Partnership product") {
@@ -161,7 +161,7 @@ definition {
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/${testSiteURL}/project/#/ERC-006/activation/portal");
+			Navigator.openSpecificURL(url = "${baseURL}/web/${testSiteURL}/project/#/ERC-006/activation/portal");
 		}
 
 		task ("Assert that the URL displays the page of the Portal product") {
@@ -179,7 +179,7 @@ definition {
 		task ("Go to CP2.0 and navigate to the product activation page") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			Navigator.openSpecificURL(url = "${baseURL}/group/${testSiteURL}/project/#/ERC-008/activation/lxc-sm");
+			Navigator.openSpecificURL(url = "${baseURL}/web/${testSiteURL}/project/#/ERC-008/activation/lxc-sm");
 		}
 
 		task ("Assert that the URL displays the page of the DXP product") {
@@ -189,7 +189,7 @@ definition {
 		}
 
 		task ("Navigate to the homepage and assert that the URL displays the homepage") {
-			Navigator.openSpecificURL(url = "http://localhost:8080/group/${testSiteURL}");
+			Navigator.openSpecificURL(url = "http://localhost:8080/web/${testSiteURL}");
 
 			AssertElementPresent(locator1 = "CP2LiferayContact#FIND_A_PROJECT");
 		}

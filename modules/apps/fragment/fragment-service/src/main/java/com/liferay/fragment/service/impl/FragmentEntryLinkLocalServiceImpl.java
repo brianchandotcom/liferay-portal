@@ -202,6 +202,19 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public void deleteFragmentEntryLinks(
+		long groupId, long plid, boolean deleted) {
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			fragmentEntryLinkPersistence.findByG_P_D(groupId, plid, deleted);
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+				fragmentEntryLink);
+		}
+	}
+
+	@Override
 	public void deleteFragmentEntryLinks(long[] fragmentEntryLinkIds)
 		throws PortalException {
 

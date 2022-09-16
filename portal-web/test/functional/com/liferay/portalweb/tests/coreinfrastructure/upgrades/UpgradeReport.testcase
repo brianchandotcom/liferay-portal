@@ -44,7 +44,9 @@ definition {
 	}
 
 	@description = "LPS-154683: Upgrade Report shows errors"
+	@ignore = "true"
 	@priority = "4"
+	@refactorneeded
 	test ErrorsLogged {
 		property portal.version = "6.0.12";
 		property skip.start.app.server = "true";

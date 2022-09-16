@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -143,16 +142,13 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			_getLoginRedirectURI(httpServletRequest),
 			oAuthClientEntry.getTokenRequestParametersJSON());
 
-		UserInfo userInfo = _requestUserInfo(
+		String userInfoJSON = _requestUserInfoJSON(
 			oidcTokens.getAccessToken(), oidcProviderMetadata);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			httpServletRequest);
-
 		long userId = _openIdConnectUserInfoProcessor.processUserInfo(
-			userInfo, _portal.getCompanyId(httpServletRequest),
-			String.valueOf(oidcProviderMetadata.getIssuer()),
-			serviceContext.getPathMain(), serviceContext.getPortalURL());
+			_portal.getCompanyId(httpServletRequest),
+			ServiceContextFactory.getInstance(httpServletRequest), userInfoJSON,
+			oAuthClientEntry.getOIDCUserInfoMapperJSON());
 
 		userIdUnsafeConsumer.accept(userId);
 
@@ -371,7 +367,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		}
 	}
 
-	private UserInfo _requestUserInfo(
+	private String _requestUserInfoJSON(
 			AccessToken accessToken, OIDCProviderMetadata oidcProviderMetadata)
 		throws OpenIdConnectServiceException.UserInfoException {
 
@@ -408,13 +404,13 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 			UserInfo userInfo = userInfoSuccessResponse.getUserInfo();
 
-			if (userInfo != null) {
-				return userInfo;
+			if (userInfo == null) {
+				JWT userInfoJWT = userInfoSuccessResponse.getUserInfoJWT();
+
+				userInfo = new UserInfo(userInfoJWT.getJWTClaimsSet());
 			}
 
-			JWT userInfoJWT = userInfoSuccessResponse.getUserInfoJWT();
-
-			return new UserInfo(userInfoJWT.getJWTClaimsSet());
+			return userInfo.toJSONString();
 		}
 		catch (IOException ioException) {
 			throw new OpenIdConnectServiceException.UserInfoException(

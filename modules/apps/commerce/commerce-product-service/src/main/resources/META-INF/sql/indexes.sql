@@ -2,6 +2,7 @@ create unique index IX_EBF9C243 on CChannelAccountEntryRel (accountEntryId, clas
 create index IX_14DAA0AE on CChannelAccountEntryRel (accountEntryId, commerceChannelId, type_, ctCollectionId);
 create index IX_48A2C58C on CChannelAccountEntryRel (accountEntryId, ctCollectionId);
 create index IX_80463745 on CChannelAccountEntryRel (accountEntryId, type_, ctCollectionId);
+create index IX_F945768F on CChannelAccountEntryRel (classNameId, classPK, commerceChannelId, type_, ctCollectionId);
 create index IX_E558B2AD on CChannelAccountEntryRel (classNameId, classPK, ctCollectionId);
 create index IX_52525877 on CChannelAccountEntryRel (commerceChannelId, ctCollectionId);
 create index IX_CB0295FA on CChannelAccountEntryRel (commerceChannelId, type_, ctCollectionId);

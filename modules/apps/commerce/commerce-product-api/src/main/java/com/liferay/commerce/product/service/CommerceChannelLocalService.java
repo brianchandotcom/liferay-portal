@@ -250,6 +250,10 @@ public interface CommerceChannelLocalService
 	public CommerceChannel fetchCommerceChannelByExternalReferenceCode(
 		long companyId, String externalReferenceCode);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceChannel fetchCommerceChannelByGroupId(long groupId)
+		throws PortalException;
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceChannelByExternalReferenceCode(long, String)}
 	 */

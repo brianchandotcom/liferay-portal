@@ -301,6 +301,14 @@ public class CommerceChannelLocalServiceWrapper
 				companyId, externalReferenceCode);
 	}
 
+	@Override
+	public CommerceChannel fetchCommerceChannelByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelLocalService.fetchCommerceChannelByGroupId(
+			groupId);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceChannelByExternalReferenceCode(long, String)}
 	 */

@@ -280,6 +280,11 @@ public interface CommerceChannelAccountEntryRelLocalService
 			OrderByComparator<CommerceChannelAccountEntryRel>
 				orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceChannelAccountEntryRel>
+		getCommerceChannelAccountEntryRels(
+			String className, long classPK, long commerceChannelId, int type);
+
 	/**
 	 * Returns the number of commerce channel account entry rels.
 	 *

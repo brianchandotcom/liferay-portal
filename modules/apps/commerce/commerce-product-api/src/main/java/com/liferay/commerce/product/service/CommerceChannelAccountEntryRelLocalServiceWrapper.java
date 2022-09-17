@@ -372,6 +372,16 @@ public class CommerceChannelAccountEntryRelLocalServiceWrapper
 				accountEntryId, type, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<CommerceChannelAccountEntryRel>
+		getCommerceChannelAccountEntryRels(
+			String className, long classPK, long commerceChannelId, int type) {
+
+		return _commerceChannelAccountEntryRelLocalService.
+			getCommerceChannelAccountEntryRels(
+				className, classPK, commerceChannelId, type);
+	}
+
 	/**
 	 * Returns the number of commerce channel account entry rels.
 	 *

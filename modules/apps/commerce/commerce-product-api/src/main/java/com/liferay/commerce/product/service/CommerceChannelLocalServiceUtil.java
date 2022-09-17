@@ -274,6 +274,12 @@ public class CommerceChannelLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	public static CommerceChannel fetchCommerceChannelByGroupId(long groupId)
+		throws PortalException {
+
+		return getService().fetchCommerceChannelByGroupId(groupId);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceChannelByExternalReferenceCode(long, String)}
 	 */

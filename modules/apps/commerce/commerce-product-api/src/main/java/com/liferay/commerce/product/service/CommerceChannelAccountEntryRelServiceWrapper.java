@@ -97,6 +97,16 @@ public class CommerceChannelAccountEntryRelServiceWrapper
 	}
 
 	@Override
+	public java.util.List<CommerceChannelAccountEntryRel>
+		getCommerceChannelAccountEntryRels(
+			String className, long classPK, long commerceChannelId, int type) {
+
+		return _commerceChannelAccountEntryRelService.
+			getCommerceChannelAccountEntryRels(
+				className, classPK, commerceChannelId, type);
+	}
+
+	@Override
 	public int getCommerceChannelAccountEntryRelsCount(
 			long accountEntryId, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {

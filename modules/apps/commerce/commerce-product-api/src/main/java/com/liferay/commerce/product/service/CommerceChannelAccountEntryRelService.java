@@ -91,6 +91,11 @@ public interface CommerceChannelAccountEntryRelService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceChannelAccountEntryRel>
+		getCommerceChannelAccountEntryRels(
+			String className, long classPK, long commerceChannelId, int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceChannelAccountEntryRelsCount(
 			long accountEntryId, int type)
 		throws PortalException;

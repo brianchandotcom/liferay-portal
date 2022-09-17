@@ -33,4 +33,6 @@ public class CommerceChannelAccountEntryRelConstants {
 
 	public static final int TYPE_SHIPPING_ADDRESS = 3;
 
+	public static final int TYPE_USER = 7;
+
 }

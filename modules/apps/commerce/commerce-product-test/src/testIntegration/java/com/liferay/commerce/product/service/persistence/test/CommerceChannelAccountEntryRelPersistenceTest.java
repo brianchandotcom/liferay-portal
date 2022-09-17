@@ -277,6 +277,15 @@ public class CommerceChannelAccountEntryRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_C_T() throws Exception {
+		_persistence.countByC_C_C_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_C_C_T(0L, 0L, 0L, 0);
+	}
+
+	@Test
 	public void testCountByA_C_C_C_T() throws Exception {
 		_persistence.countByA_C_C_C_T(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

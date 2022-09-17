@@ -331,6 +331,14 @@ public class CommerceChannelAccountEntryRelLocalServiceUtil {
 			accountEntryId, type, start, end, orderByComparator);
 	}
 
+	public static List<CommerceChannelAccountEntryRel>
+		getCommerceChannelAccountEntryRels(
+			String className, long classPK, long commerceChannelId, int type) {
+
+		return getService().getCommerceChannelAccountEntryRels(
+			className, classPK, commerceChannelId, type);
+	}
+
 	/**
 	 * Returns the number of commerce channel account entry rels.
 	 *

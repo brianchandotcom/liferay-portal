@@ -20,6 +20,7 @@ import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.account.constants.CommerceAccountWebKeys;
 import com.liferay.commerce.account.web.internal.constants.AccountEntryScreenNavigationEntryConstants;
 import com.liferay.commerce.account.web.internal.display.context.CommerceAccountDisplayContext;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelService;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -47,6 +50,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Andrea Sbarra
@@ -60,19 +65,19 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class AccountEntryCommerceOrderDefaultsScreenNavigationCategory
+public class AccountEntryCommerceChannelDefaultsScreenNavigationCategory
 	implements ScreenNavigationCategory, ScreenNavigationEntry<AccountEntry> {
 
 	@Override
 	public String getCategoryKey() {
 		return AccountEntryScreenNavigationEntryConstants.
-			CATEGORY_KEY_COMMERCE_ORDER_DEFAULTS;
+			CATEGORY_KEY_COMMERCE_CHANNEL_DEFAULTS;
 	}
 
 	@Override
 	public String getEntryKey() {
 		return AccountEntryScreenNavigationEntryConstants.
-			CATEGORY_KEY_COMMERCE_ORDER_DEFAULTS;
+			CATEGORY_KEY_COMMERCE_CHANNEL_DEFAULTS;
 	}
 
 	@Override
@@ -80,7 +85,7 @@ public class AccountEntryCommerceOrderDefaultsScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return _language.get(resourceBundle, "order-defaults");
+		return _language.get(resourceBundle, "channel-defaults");
 	}
 
 	@Override
@@ -111,11 +116,13 @@ public class AccountEntryCommerceOrderDefaultsScreenNavigationCategory
 		try {
 			CommerceAccountDisplayContext commerceAccountDisplayContext =
 				new CommerceAccountDisplayContext(
-					_accountEntryService, _commerceChannelService,
+					_accountEntryModelResourcePermission, _accountEntryService,
+					_commerceChannelAccountEntryRelService,
+					_commerceChannelService,
 					_commerceShippingFixedOptionService,
 					_commerceShippingMethodService,
 					_commerceShippingOptionAccountEntryRelService,
-					httpServletRequest, _portal);
+					httpServletRequest, _language, _portal, _userService);
 
 			httpServletRequest.setAttribute(
 				CommerceAccountWebKeys.COMMERCE_ACCOUNT_DISPLAY_CONTEXT,
@@ -127,14 +134,26 @@ public class AccountEntryCommerceOrderDefaultsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/account_entry/commerce_order_defaults.jsp");
+			"/account_entry/commerce_channel_defaults.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AccountEntryCommerceOrderDefaultsScreenNavigationCategory.class);
+		AccountEntryCommerceChannelDefaultsScreenNavigationCategory.class);
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private volatile ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
 
 	@Reference
 	private AccountEntryService _accountEntryService;
+
+	@Reference
+	private CommerceChannelAccountEntryRelService
+		_commerceChannelAccountEntryRelService;
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;
@@ -163,5 +182,8 @@ public class AccountEntryCommerceOrderDefaultsScreenNavigationCategory
 		target = "(osgi.web.symbolicname=com.liferay.commerce.account.web)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private UserService _userService;
 
 }

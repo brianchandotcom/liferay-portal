@@ -38,6 +38,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alessio Antonio Rendina
@@ -83,7 +85,7 @@ public class DefaultCommercePriceListsJSPDynamicInclude
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
 			"com.liferay.commerce.account.web#/account_entry" +
-				"/order_defaults.jsp#price_lists");
+				"/channel_defaults.jsp#price_lists");
 	}
 
 	@Override
@@ -100,9 +102,11 @@ public class DefaultCommercePriceListsJSPDynamicInclude
 		DefaultCommercePriceListsJSPDynamicInclude.class);
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
 	)
-	private ModelResourcePermission<AccountEntry>
+	private volatile ModelResourcePermission<AccountEntry>
 		_accountEntryModelResourcePermission;
 
 	@Reference

@@ -51,9 +51,20 @@ public class CommerceChannelAccountEntryRelLocalServiceImpl
 			double priority, int type)
 		throws PortalException {
 
-		int commerceChannelAccountEntryRelsCount =
-			commerceChannelAccountEntryRelPersistence.countByA_C_T(
-				accountEntryId, commerceChannelId, type);
+		int commerceChannelAccountEntryRelsCount = 0;
+		long classNameId = _classNameLocalService.getClassNameId(className);
+
+		if (CommerceChannelAccountEntryRelConstants.TYPE_USER != type) {
+			commerceChannelAccountEntryRelsCount =
+				commerceChannelAccountEntryRelPersistence.countByA_C_T(
+					accountEntryId, commerceChannelId, type);
+		}
+		else {
+			commerceChannelAccountEntryRelsCount =
+				commerceChannelAccountEntryRelPersistence.countByA_C_C_C_T(
+					accountEntryId, classNameId, classPK, commerceChannelId,
+					type);
+		}
 
 		if (commerceChannelAccountEntryRelsCount > 0) {
 			throw new DuplicateCommerceChannelAccountEntryRelException();
@@ -71,8 +82,7 @@ public class CommerceChannelAccountEntryRelLocalServiceImpl
 		commerceChannelAccountEntryRel.setUserId(user.getUserId());
 		commerceChannelAccountEntryRel.setUserName(user.getFullName());
 		commerceChannelAccountEntryRel.setAccountEntryId(accountEntryId);
-		commerceChannelAccountEntryRel.setClassNameId(
-			_classNameLocalService.getClassNameId(className));
+		commerceChannelAccountEntryRel.setClassNameId(classNameId);
 		commerceChannelAccountEntryRel.setClassPK(classPK);
 		commerceChannelAccountEntryRel.setCommerceChannelId(commerceChannelId);
 		commerceChannelAccountEntryRel.setOverrideEligibility(
@@ -238,6 +248,16 @@ public class CommerceChannelAccountEntryRelLocalServiceImpl
 
 		return commerceChannelAccountEntryRelPersistence.findByA_T(
 			accountEntryId, type, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommerceChannelAccountEntryRel>
+		getCommerceChannelAccountEntryRels(
+			String className, long classPK, long commerceChannelId, int type) {
+
+		return commerceChannelAccountEntryRelPersistence.findByC_C_C_T(
+			_classNameLocalService.getClassNameId(className), classPK,
+			commerceChannelId, type);
 	}
 
 	@Override

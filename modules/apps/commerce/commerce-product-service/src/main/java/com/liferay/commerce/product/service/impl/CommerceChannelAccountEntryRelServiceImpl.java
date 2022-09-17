@@ -124,6 +124,16 @@ public class CommerceChannelAccountEntryRelServiceImpl
 	}
 
 	@Override
+	public List<CommerceChannelAccountEntryRel>
+		getCommerceChannelAccountEntryRels(
+			String className, long classPK, long commerceChannelId, int type) {
+
+		return commerceChannelAccountEntryRelLocalService.
+			getCommerceChannelAccountEntryRels(
+				className, classPK, commerceChannelId, type);
+	}
+
+	@Override
 	public int getCommerceChannelAccountEntryRelsCount(
 			long accountEntryId, int type)
 		throws PortalException {

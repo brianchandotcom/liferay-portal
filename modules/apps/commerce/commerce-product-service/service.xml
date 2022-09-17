@@ -135,6 +135,12 @@
 			<finder-column name="commerceChannelId" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="C_C_C_T" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="commerceChannelId" />
+			<finder-column name="type" />
+		</finder>
 		<finder name="A_C_C_C_T" return-type="CommerceChannelAccountEntryRel" unique="true">
 			<finder-column name="accountEntryId" />
 			<finder-column name="classNameId" />

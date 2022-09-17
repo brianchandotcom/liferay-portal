@@ -20,8 +20,8 @@ package com.liferay.commerce.account.web.internal.constants;
  */
 public class AccountEntryScreenNavigationEntryConstants {
 
-	public static final String CATEGORY_KEY_COMMERCE_ORDER_DEFAULTS =
-		"commerce-order-defaults";
+	public static final String CATEGORY_KEY_COMMERCE_CHANNEL_DEFAULTS =
+		"commerce-channel-defaults";
 
 	public static final String SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY =
 		"edit.account.entry.form";

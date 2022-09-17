@@ -108,8 +108,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 
 		Matcher matcher = null;
 
-		for (File javafile : javaFiles) {
-			String javaContent = FileUtil.read(javafile);
+		for (File javaFile : javaFiles) {
+			String javaContent = FileUtil.read(javaFile);
 
 			if (!javaContent.contains("feature.flag")) {
 				continue;

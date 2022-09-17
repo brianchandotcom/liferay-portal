@@ -15,16 +15,21 @@
 package com.liferay.commerce.account.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.account.constants.CommerceAccountWebKeys;
 import com.liferay.commerce.account.web.internal.display.context.CommerceAccountDisplayContext;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -38,6 +43,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Andrea Sbarra
@@ -71,11 +78,13 @@ public class EditAccountEntryCommerceShippingOptionMVCRenderCommand
 
 			CommerceAccountDisplayContext commerceAccountDisplayContext =
 				new CommerceAccountDisplayContext(
-					_accountEntryService, _commerceChannelService,
+					_accountEntryModelResourcePermission, _accountEntryService,
+					_commerceChannelAccountEntryRelService,
+					_commerceChannelService,
 					_commerceShippingFixedOptionService,
 					_commerceShippingMethodService,
 					_commerceShippingOptionAccountEntryRelService,
-					httpServletRequest, _portal);
+					httpServletRequest, _language, _portal, _userService);
 
 			httpServletRequest.setAttribute(
 				CommerceAccountWebKeys.COMMERCE_ACCOUNT_DISPLAY_CONTEXT,
@@ -98,8 +107,20 @@ public class EditAccountEntryCommerceShippingOptionMVCRenderCommand
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
 
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private volatile ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
+
 	@Reference
 	private AccountEntryService _accountEntryService;
+
+	@Reference
+	private CommerceChannelAccountEntryRelService
+		_commerceChannelAccountEntryRelService;
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;
@@ -116,11 +137,17 @@ public class EditAccountEntryCommerceShippingOptionMVCRenderCommand
 		_commerceShippingOptionAccountEntryRelService;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.account.web)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private UserService _userService;
 
 }

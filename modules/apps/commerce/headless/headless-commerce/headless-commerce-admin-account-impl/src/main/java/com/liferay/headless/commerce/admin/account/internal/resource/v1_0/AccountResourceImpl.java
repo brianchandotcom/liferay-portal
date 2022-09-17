@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
@@ -54,8 +55,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
@@ -206,22 +205,11 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			AccountEntry.class.getName(), search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				PermissionChecker permissionChecker =
-					PermissionThreadLocal.getPermissionChecker();
-
-				if (!permissionChecker.isOmniadmin()) {
-					searchContext.setAttribute(
-						"organizationIds",
-						_organizationLocalService.getUserOrganizationIds(
-							contextUser.getUserId(), true));
-				}
-
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
 			sorts,
 			document -> _toAccount(
-				_commerceAccountService.fetchCommerceAccount(
+				_accountEntryService.getAccountEntry(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
@@ -458,6 +446,17 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		return true;
 	}
 
+	private Account _toAccount(AccountEntry accountEntry) throws Exception {
+		if (accountEntry == null) {
+			return null;
+		}
+
+		return _accountDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				accountEntry.getAccountEntryId(),
+				contextAcceptLanguage.getPreferredLocale()));
+	}
+
 	private Account _toAccount(CommerceAccount commerceAccount)
 		throws Exception {
 
@@ -685,6 +684,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Reference
 	private AccountDTOConverter _accountDTOConverter;
+
+	@Reference
+	private AccountEntryService _accountEntryService;
 
 	@Reference
 	private CommerceAccountGroupCommerceAccountRelService

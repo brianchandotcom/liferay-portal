@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -21,9 +22,11 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,89 +61,61 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		return _generateFeatureFlags(content);
 	}
 
+	@Override
+	public void setAllFileNames(List<String> allFileNames) {
+		_allFileNames = allFileNames;
+	}
+
+	private List<String> _allFileNames;
+
 	private String _generateFeatureFlags(String content) throws IOException {
-		List<File> bndFiles = new ArrayList<>();
-		List<File> javaFiles = new ArrayList<>();
-
-		File portalDir = getPortalDir();
-
-		Files.walkFileTree(
-			portalDir.toPath(), EnumSet.noneOf(FileVisitOption.class), 25,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult preVisitDirectory(
-						Path dirPath, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					if (ArrayUtil.contains(
-							_SKIP_DIR_NAMES,
-							String.valueOf(dirPath.getFileName()))) {
-
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFile(
-					Path filePath, BasicFileAttributes basicFileAttributes) {
-
-					String absolutePath = SourceUtil.getAbsolutePath(filePath);
-
-					if (absolutePath.endsWith("bnd.bnd")) {
-						bndFiles.add(filePath.toFile());
-
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					if (absolutePath.endsWith(".java")) {
-						javaFiles.add(filePath.toFile());
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
 
 		List<String> featureFlags = new ArrayList<>();
+		
+		List<String> fileNames = SourceFormatterUtil.filterFileNames(
+				_allFileNames, new String[0],
+				new String[] {"**/bnd.bnd", "**/*.java"},
+				getSourceFormatterExcludes(), true);
 
 		Matcher matcher = null;
+		
+		for (String fileName : fileNames) {
+			fileName = StringUtil.replace(
+					fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+			
+			String fileContent = FileUtil.read(new File(fileName));
+			
+			if (fileName.endsWith("bnd.bnd")) {
+				String liferaySiteInitializerFeatureFlag =
+						BNDSourceUtil.getDefinitionValue(
+						fileContent, "Liferay-Site-Initializer-Feature-Flag");
 
-		for (File javaFile : javaFiles) {
-			String javaContent = FileUtil.read(javaFile);
+				if (liferaySiteInitializerFeatureFlag == null) {
+					continue;
+				}
+	
+				featureFlags.add(
+					"feature.flag." + liferaySiteInitializerFeatureFlag);
 
-			if (!javaContent.contains("feature.flag")) {
-				continue;
 			}
+			else  {
+				if (!fileContent.contains("feature.flag")) {
+					continue;
+				}
+				
+				matcher = _featureFlagPattern1.matcher(fileContent);
+	
+				while (matcher.find()) {
+					featureFlags.add("feature.flag." + matcher.group(1));
+				}
+	
+				matcher = _featureFlagPattern2.matcher(fileContent);
+	
+				while (matcher.find()) {
+					featureFlags.add("feature.flag." + matcher.group(1));
+				}
 
-			matcher = _featureFlagPattern1.matcher(javaContent);
-
-			while (matcher.find()) {
-				featureFlags.add("feature.flag." + matcher.group(1));
 			}
-
-			matcher = _featureFlagPattern2.matcher(javaContent);
-
-			while (matcher.find()) {
-				featureFlags.add("feature.flag." + matcher.group(1));
-			}
-		}
-
-		for (File bndFile : bndFiles) {
-			String bndContent = FileUtil.read(bndFile);
-
-			String liferaySiteInitializerFeatureFlag =
-				BNDSourceUtil.getDefinitionValue(
-					bndContent, "Liferay-Site-Initializer-Feature-Flag");
-
-			if (liferaySiteInitializerFeatureFlag == null) {
-				continue;
-			}
-
-			featureFlags.add(
-				"feature.flag." + liferaySiteInitializerFeatureFlag);
 		}
 
 		ListUtil.distinct(featureFlags, new NaturalOrderStringComparator());
@@ -195,13 +170,6 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 
 		return content;
 	}
-
-	private static final String[] _SKIP_DIR_NAMES = {
-		".git", ".gradle", ".idea", ".m2", ".releng", ".settings", "bin",
-		"build", "classes", "node_modules", "node_modules_cache", "poshi",
-		"sdk", "source-formatter", "sql", "test", "test-classes",
-		"test-coverage", "test-results", "tmp"
-	};
 
 	private static final Pattern _featureFlagPattern1 = Pattern.compile(
 		"\"feature\\.flag\\.(.+?)\"");

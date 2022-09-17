@@ -263,7 +263,7 @@ public class AccountEntryModelResourcePermissionTest {
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject(filter = "model.class.name=com.liferay.account.model.AccountEntry")
-	private ModelResourcePermission<AccountEntry>
+	private volatile ModelResourcePermission<AccountEntry>
 		_accountEntryModelResourcePermission;
 
 	@Inject

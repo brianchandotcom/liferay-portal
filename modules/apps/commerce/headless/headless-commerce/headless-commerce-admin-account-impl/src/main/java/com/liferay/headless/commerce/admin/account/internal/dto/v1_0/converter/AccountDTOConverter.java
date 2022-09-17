@@ -14,6 +14,10 @@
 
 package com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.CommerceAccountService;
@@ -24,8 +28,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.webserver.WebServerServletToken;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,7 +57,7 @@ public class AccountDTOConverter
 	public Account toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		CommerceAccount commerceAccount;
+		AccountEntry accountEntry;
 
 		if ((Long)dtoConverterContext.getId() == -1) {
 			User user = dtoConverterContext.getUser();
@@ -60,37 +67,37 @@ public class AccountDTOConverter
 					PrincipalThreadLocal.getUserId());
 			}
 
-			commerceAccount =
-				_commerceAccountLocalService.getGuestCommerceAccount(
-					user.getCompanyId());
+			accountEntry = _accountEntryLocalService.getGuestAccountEntry(
+				user.getCompanyId());
 		}
 		else {
-			commerceAccount = _commerceAccountService.getCommerceAccount(
+			accountEntry = _accountEntryLocalService.getAccountEntry(
 				(Long)dtoConverterContext.getId());
 		}
 
-		ExpandoBridge expandoBridge = commerceAccount.getExpandoBridge();
+		ExpandoBridge expandoBridge = accountEntry.getExpandoBridge();
 
 		return new Account() {
 			{
-				active = commerceAccount.isActive();
+				active = _toCommerceAccountActive(accountEntry.getStatus());
 				customFields = expandoBridge.getAttributes();
-				dateCreated = commerceAccount.getCreateDate();
-				dateModified = commerceAccount.getModifiedDate();
+				dateCreated = accountEntry.getCreateDate();
+				dateModified = accountEntry.getModifiedDate();
 				defaultBillingAccountAddressId =
-					commerceAccount.getDefaultBillingAddressId();
+					accountEntry.getDefaultBillingAddressId();
 				defaultShippingAccountAddressId =
-					commerceAccount.getDefaultShippingAddressId();
-				emailAddresses = new String[] {commerceAccount.getEmail()};
-				externalReferenceCode =
-					commerceAccount.getExternalReferenceCode();
-				id = commerceAccount.getCommerceAccountId();
-				logoId = commerceAccount.getLogoId();
-				logoURL = _getLogoURL(commerceAccount.getLogoId());
-				name = commerceAccount.getName();
-				root = commerceAccount.isRoot();
-				taxId = commerceAccount.getTaxId();
-				type = commerceAccount.getType();
+					accountEntry.getDefaultShippingAddressId();
+				emailAddresses = new String[] {accountEntry.getEmailAddress()};
+				externalReferenceCode = accountEntry.getExternalReferenceCode();
+				id = accountEntry.getAccountEntryId();
+				logoId = accountEntry.getLogoId();
+				logoURL = _getLogoURL(accountEntry.getLogoId());
+				name = accountEntry.getName();
+				root =
+					accountEntry.getParentAccountEntryId() ==
+						CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID;
+				taxId = accountEntry.getTaxIdNumber();
+				type = _toCommerceAccountType(accountEntry.getType());
 			}
 		};
 	}
@@ -100,6 +107,40 @@ public class AccountDTOConverter
 			"/image/organization_logo?img_id=", logoId, "&t=",
 			_webServerServletToken.getToken(logoId));
 	}
+
+	private boolean _toCommerceAccountActive(int accountEntryStatus) {
+		if (accountEntryStatus == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private Integer _toCommerceAccountType(String accountEntryType) {
+		if (Objects.equals(
+				accountEntryType,
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS)) {
+
+			return CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS;
+		}
+		else if (Objects.equals(
+					accountEntryType,
+					AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST)) {
+
+			return CommerceAccountConstants.ACCOUNT_TYPE_GUEST;
+		}
+		else if (Objects.equals(
+					accountEntryType,
+					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON)) {
+
+			return CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL;
+		}
+
+		return CommerceAccountConstants.ACCOUNT_TYPE_GUEST;
+	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private CommerceAccountLocalService _commerceAccountLocalService;

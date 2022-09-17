@@ -23,4 +23,8 @@ public class CommerceAccountFDSNames {
 		CommerceAccountPortletKeys.COMMERCE_ACCOUNT +
 			"-account-entry-default-shipping-options";
 
+	public static final String ACCOUNT_ENTRY_DEFAULT_USERS =
+		CommerceAccountPortletKeys.COMMERCE_ACCOUNT +
+			"-account-entry-default-users";
+
 }

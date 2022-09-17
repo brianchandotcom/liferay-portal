@@ -25,13 +25,19 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.commerce.account.constants.CommerceAccountWebKeys" %><%@
+<%@ page import="com.liferay.account.model.AccountEntry" %><%@
+page import="com.liferay.commerce.account.constants.CommerceAccountWebKeys" %><%@
 page import="com.liferay.commerce.account.web.internal.constants.CommerceAccountFDSNames" %><%@
 page import="com.liferay.commerce.account.web.internal.display.context.CommerceAccountDisplayContext" %><%@
 page import="com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel" %><%@
+page import="com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants" %><%@
+page import="com.liferay.commerce.product.exception.DuplicateCommerceChannelAccountEntryRelException" %><%@
+page import="com.liferay.commerce.product.model.CommerceChannel" %><%@
+page import="com.liferay.commerce.product.model.CommerceChannelAccountEntryRel" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>

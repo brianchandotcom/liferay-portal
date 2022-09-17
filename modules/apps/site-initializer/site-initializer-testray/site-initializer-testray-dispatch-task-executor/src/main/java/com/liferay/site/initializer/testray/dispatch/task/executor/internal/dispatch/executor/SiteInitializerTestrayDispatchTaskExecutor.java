@@ -97,8 +97,6 @@ import org.w3c.dom.NodeList;
 public class SiteInitializerTestrayDispatchTaskExecutor
 	extends BaseDispatchTaskExecutor {
 
-	// TODO "feature.flag.LPS-163118"
-
 	@Override
 	public void doExecute(
 			DispatchTrigger dispatchTrigger,

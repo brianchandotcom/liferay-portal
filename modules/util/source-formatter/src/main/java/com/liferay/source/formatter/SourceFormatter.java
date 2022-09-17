@@ -609,11 +609,11 @@ public class SourceFormatter {
 		}
 
 		if (_sourceFormatterArgs.isFormatCurrentBranch()) {
-			List<String> fileNames = GitUtil.getCurrentBranchFileNames(
-				_sourceFormatterArgs.getBaseDirName(),
-				_sourceFormatterArgs.getGitWorkingBranchName(), true);
-
 			if (!buildPropertiesAdded) {
+				List<String> fileNames = GitUtil.getCurrentBranchFileNames(
+					_sourceFormatterArgs.getBaseDirName(),
+					_sourceFormatterArgs.getGitWorkingBranchName(), true);
+
 				for (String fileName : fileNames) {
 					if (!buildPropertiesAdded &&
 						fileName.endsWith(".lfrbuild-portal")) {
@@ -642,36 +642,13 @@ public class SourceFormatter {
 						_sourceFormatterExcludes, false));
 			}
 
-			String currentBranchDiff = GitUtil.getCurrentBranchDiff(
-				_sourceFormatterArgs.getBaseDirName(),
-				_sourceFormatterArgs.getGitWorkingBranchName());
+			if (_isFeatureFlagChanges()) {
+				File portalDir = SourceFormatterUtil.getPortalDir(
+					_sourceFormatterArgs.getBaseDirName(),
+					_sourceFormatterArgs.getMaxLineLength());
 
-			for (String fileName : fileNames) {
-				if (!fileName.endsWith("bnd.bnd") &&
-					!fileName.endsWith(".java")) {
-
-					continue;
-				}
-
-				for (String line : StringUtil.split(currentBranchDiff, "\n")) {
-					if ((line.startsWith(StringPool.MINUS) ||
-						 line.startsWith(StringPool.PLUS)) &&
-						(line.contains("feature.flag") ||
-						 line.contains(
-							 "Liferay-Site-Initializer-Feature-Flag:"))) {
-
-						File portalDir = SourceFormatterUtil.getPortalDir(
-							_sourceFormatterArgs.getBaseDirName(),
-							_sourceFormatterArgs.getMaxLineLength());
-
-						dependentFileNames.add(
-							portalDir + "/portal-impl/src/portal.properties");
-
-						break;
-					}
-				}
-
-				break;
+				dependentFileNames.add(
+					portalDir + "/portal-impl/src/portal.properties");
 			}
 		}
 
@@ -1132,6 +1109,24 @@ public class SourceFormatter {
 		if (_sourceFormatterArgs.isShowDebugInformation()) {
 			DebugUtil.addCheckNames(CheckType.SOURCE_CHECK, _getCheckNames());
 		}
+	}
+
+	private boolean _isFeatureFlagChanges() throws Exception {
+		String currentBranchDiff = GitUtil.getCurrentBranchDiff(
+			_sourceFormatterArgs.getBaseDirName(),
+			_sourceFormatterArgs.getGitWorkingBranchName());
+
+		for (String line : StringUtil.split(currentBranchDiff, "\n")) {
+			if ((line.startsWith(StringPool.MINUS) ||
+				 line.startsWith(StringPool.PLUS)) &&
+				(line.contains("feature.flag") ||
+				 line.contains("Liferay-Site-Initializer-Feature-Flag:"))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isFrontendPackageChanges(String recentChangesFileName) {

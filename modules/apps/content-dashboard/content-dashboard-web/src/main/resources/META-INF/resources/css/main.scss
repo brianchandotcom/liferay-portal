@@ -114,9 +114,8 @@ html#{$cadmin-selector} {
 				width: $sidebarWidth;
 				z-index: $cadmin-zindex-dropdown - 1;
 
-				.sidebar-body {
-					padding-top: 0;
-
+				.sidebar-body,
+				.sidebar-header {
 					.sidebar-section {
 						margin-bottom: 1rem;
 
@@ -128,6 +127,10 @@ html#{$cadmin-selector} {
 					.sidebar-section-subtitle-sm {
 						line-height: 18px;
 					}
+				}
+
+				.sidebar-body {
+					padding-top: 0;
 
 					.file-url-copy-button {
 						.form-group {
@@ -135,7 +138,17 @@ html#{$cadmin-selector} {
 						}
 					}
 				}
+
+				.sidebar-header {
+					top: 0;
+				}
 			}
+		}
+
+		.is-sticky {
+			background-color: $cadmin-white;
+			position: sticky;
+			z-index: $z-index-for-sticky-items;
 		}
 
 		.sidebar-wrapper {

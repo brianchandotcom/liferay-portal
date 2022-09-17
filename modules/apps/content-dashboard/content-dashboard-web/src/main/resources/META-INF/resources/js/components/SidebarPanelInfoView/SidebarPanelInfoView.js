@@ -15,7 +15,6 @@
 import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
 import classnames from 'classnames';
@@ -65,27 +64,27 @@ const SidebarPanelInfoView = ({
 
 	return (
 		<>
-			<Sidebar.Header title={title}>
-				{subscribe && <Subscribe {...subscribe} />}
-			</Sidebar.Header>
+			<Sidebar.Header
+				actionsSlot={subscribe && <Subscribe {...subscribe} />}
+				className="pb-0"
+				title={title}
+			>
+				<div className="px-0">
+					{error && (
+						<ClayAlert
+							className="mb-3"
+							displayType="warning"
+							onClose={() => {
+								setError(false);
+							}}
+							variant="stripe"
+						>
+							{Liferay.Language.get(
+								'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+							)}
+						</ClayAlert>
+					)}
 
-			<Sidebar.Body className="px-0">
-				{error && (
-					<ClayAlert
-						className="mb-3"
-						displayType="warning"
-						onClose={() => {
-							setError(false);
-						}}
-						variant="stripe"
-					>
-						{Liferay.Language.get(
-							'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
-						)}
-					</ClayAlert>
-				)}
-
-				<div className="px-3">
 					<div className="sidebar-section sidebar-section--compress">
 						<p
 							className="c-mb-1 text-secondary"
@@ -137,7 +136,6 @@ const SidebarPanelInfoView = ({
 										<ClayIcon symbol="user" />
 									)}
 								</ClaySticker>
-
 								<span className="c-ml-2 text-secondary">
 									{user.name}
 								</span>
@@ -145,7 +143,7 @@ const SidebarPanelInfoView = ({
 						)}
 					</div>
 
-					<ClayPanel.Group className="panel-group-flush panel-group-sm">
+					<div className="mb-0 sidebar-dl sidebar-section">
 						{showTabs && (
 							<ClayTabs modern>
 								<ClayTabs.Item
@@ -169,41 +167,40 @@ const SidebarPanelInfoView = ({
 								</ClayTabs.Item>
 							</ClayTabs>
 						)}
+					</div>
+				</div>
+			</Sidebar.Header>
 
-						<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
-							<ClayTabs.TabPane
-								aria-labelledby="tab-1"
-								className="mt-4"
-							>
-								<DetailsContent
-									classPK={classPK}
-									createDate={createDate}
-									description={description}
-									downloadURL={downloadURL}
-									fetchSharingButtonURL={
-										fetchSharingButtonURL
-									}
-									formatDate={formatDate}
-									languageTag={languageTag}
-									modifiedDate={modifiedDate}
-									preview={preview}
-									specificFields={specificFields}
-									tags={tags}
-									title={title}
-									viewURLs={viewURLs}
-									vocabularies={vocabularies}
-								/>
-							</ClayTabs.TabPane>
+			<Sidebar.Body className="px-0">
+				<div className="px-3">
+					<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
+						<ClayTabs.TabPane aria-labelledby="tab-1">
+							<DetailsContent
+								classPK={classPK}
+								createDate={createDate}
+								description={description}
+								downloadURL={downloadURL}
+								fetchSharingButtonURL={fetchSharingButtonURL}
+								formatDate={formatDate}
+								languageTag={languageTag}
+								modifiedDate={modifiedDate}
+								preview={preview}
+								specificFields={specificFields}
+								tags={tags}
+								title={title}
+								viewURLs={viewURLs}
+								vocabularies={vocabularies}
+							/>
+						</ClayTabs.TabPane>
 
-							<ClayTabs.TabPane aria-labelledby="tab-2">
-								<VersionsContent
-									allVersions={allVersions}
-									formatDate={formatDate}
-									languageTag={languageTag}
-								/>
-							</ClayTabs.TabPane>
-						</ClayTabs.Content>
-					</ClayPanel.Group>
+						<ClayTabs.TabPane aria-labelledby="tab-2">
+							<VersionsContent
+								allVersions={allVersions}
+								formatDate={formatDate}
+								languageTag={languageTag}
+							/>
+						</ClayTabs.TabPane>
+					</ClayTabs.Content>
 				</div>
 			</Sidebar.Body>
 		</>

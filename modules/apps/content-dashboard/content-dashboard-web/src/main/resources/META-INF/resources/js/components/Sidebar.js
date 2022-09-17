@@ -28,11 +28,11 @@ const SidebarBody = ({children, className}) => {
 	);
 };
 
-const SidebarHeader = ({children, title}) => {
+const SidebarHeader = ({actionsSlot, children, className, title}) => {
 	const {onClose} = useContext(SidebarContext);
 
 	return (
-		<section className="sidebar-header">
+		<section className={classNames('is-sticky sidebar-header', className)}>
 			<ClayLayout.ContentRow className="sidebar-section">
 				<ClayLayout.ContentCol
 					className="justify-content-center"
@@ -41,8 +41,8 @@ const SidebarHeader = ({children, title}) => {
 					<p className="font-weight-bold mb-0 pr-2">{title}</p>
 				</ClayLayout.ContentCol>
 
-				{children && (
-					<ClayLayout.ContentCol>{children}</ClayLayout.ContentCol>
+				{actionsSlot && (
+					<ClayLayout.ContentCol>{actionsSlot}</ClayLayout.ContentCol>
 				)}
 
 				<ClayLayout.ContentCol>
@@ -56,6 +56,10 @@ const SidebarHeader = ({children, title}) => {
 						title={Liferay.Language.get('close')}
 					/>
 				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
+
+			<ClayLayout.ContentRow className="sidebar-section">
+				{children}
 			</ClayLayout.ContentRow>
 		</section>
 	);

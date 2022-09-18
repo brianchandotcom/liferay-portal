@@ -87,17 +87,11 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 					continue;
 				}
 
-				matcher = _featureFlagPattern1.matcher(fileContent);
+				featureFlags.addAll(
+					_getFeatureFlags(fileContent, _featureFlagPattern1));
 
-				while (matcher.find()) {
-					featureFlags.add(matcher.group(1));
-				}
-
-				matcher = _featureFlagPattern2.matcher(fileContent);
-
-				while (matcher.find()) {
-					featureFlags.add(matcher.group(1));
-				}
+				featureFlags.addAll(
+					_getFeatureFlags(fileContent, _featureFlagPattern2));
 			}
 		}
 
@@ -154,6 +148,18 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private List<String> _getFeatureFlags(String content, Pattern pattern) {
+		List<String> featureFlags = new ArrayList<>();
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			featureFlags.add(matcher.group(1));
+		}
+
+		return featureFlags;
 	}
 
 	private static final Pattern _featureFlagPattern1 = Pattern.compile(

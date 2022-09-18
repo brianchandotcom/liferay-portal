@@ -50,7 +50,7 @@
 							"tip": {
 								"en_US": ""
 							},
-							"type": "rich_text"
+							"type": "text"
 						}
 					],
 					"successPage": {

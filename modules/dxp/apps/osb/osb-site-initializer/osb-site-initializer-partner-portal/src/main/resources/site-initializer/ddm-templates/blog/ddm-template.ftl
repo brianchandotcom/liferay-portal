@@ -5,7 +5,7 @@
 </style>
 
 <#if (Body.getData())??>
-		<div class="text-paragraph overflow-auto partner-portal-body mb-3">${htmlUtil.escape(Body.getData())}</div>
+		<div class="text-paragraph overflow-auto partner-portal-body mb-3">${Body.getData()}</div>
 	</#if>
 
 	<#if (LinkToReadMore.getData())??>

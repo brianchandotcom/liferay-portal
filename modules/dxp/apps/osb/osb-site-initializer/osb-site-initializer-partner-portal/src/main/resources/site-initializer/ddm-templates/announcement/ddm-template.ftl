@@ -1,3 +1,3 @@
 <#if (Body.getData())??>
-	${htmlUtil.escape(Body.getData())}
+	${Body.getData()}
 </#if>

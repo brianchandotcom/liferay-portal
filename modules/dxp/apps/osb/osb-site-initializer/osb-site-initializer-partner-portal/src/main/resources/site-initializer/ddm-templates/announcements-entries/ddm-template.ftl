@@ -47,7 +47,7 @@
 						userName=curEntry.getUserName()
 					/>
 
-					<div class="flex-wrap ml-3 mt-n1">
+					<div class="flex-wrap ml-2 mt-n1">
 						<div class="font-weight-semi-bold text-neutral-10 text-paragraph-xs">
 							${htmlUtil.escape(curEntry.getUserName())}
 						</div>

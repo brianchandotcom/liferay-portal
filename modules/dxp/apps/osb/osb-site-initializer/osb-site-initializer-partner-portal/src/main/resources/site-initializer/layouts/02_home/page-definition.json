@@ -423,6 +423,77 @@
 															}
 														],
 														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"cssClasses": [
+																"mt-n2"
+															],
+															"fragment": {
+																"key": "DIALECT-dialect-button"
+															},
+															"fragmentConfig": {
+																"buttonSize": "",
+																"inverted": false,
+																"style": "primary",
+																"type": "borderless",
+																"uppercase": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "link",
+																	"value": {
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"mapping": {
+																						"itemReference": {
+																							"className": "com.liferay.portal.kernel.model.Layout",
+																							"fields": [
+																								{
+																									"fieldName": "friendlyURL",
+																									"fieldValue": "/home/announcements"
+																								},
+																								{
+																									"fieldName": "privatePage",
+																									"fieldValue": "false"
+																								},
+																								{
+																									"fieldName": "siteKey",
+																									"fieldValue": "[$GROUP_KEY$]"
+																								}
+																							]
+																						}
+																					}
+																				}
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "View All Announcements",
+																				"ca_ES": "View All Announcements",
+																				"de_DE": "View All Announcements",
+																				"en_US": "View All Announcements",
+																				"es_ES": "View All Announcements",
+																				"fi_FI": "View All Announcements",
+																				"fr_FR": "View All Announcements",
+																				"hu_HU": "View All Announcements",
+																				"ja_JP": "View All Announcements",
+																				"nl_NL": "View All Announcements",
+																				"pt_BR": "View All Announcements",
+																				"sv_SE": "View All Announcements",
+																				"zh_CN": "View All Announcements"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"textAlign": "center"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
 													}
 												],
 												"type": "Column"
@@ -620,13 +691,13 @@
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
-														"marginTop": "0"
+														"marginTop": "4"
 													},
 													"id": "landscapeMobile"
 												},
 												{
 													"fragmentViewportStyle": {
-														"marginBottom": "0",
+														"marginBottom": "4",
 														"textAlign": "left"
 													},
 													"id": "portraitMobile"
@@ -818,6 +889,15 @@
 																					}
 																				}
 																			],
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "4",
+																						"paddingBottom": "2"
+																					},
+																					"id": "tablet"
+																				}
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -898,6 +978,15 @@
 																							}
 																						}
 																					}
+																				}
+																			],
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "4",
+																						"paddingBottom": "2"
+																					},
+																					"id": "tablet"
 																				}
 																			],
 																			"indexed": true
@@ -1028,6 +1117,22 @@
 																					}
 																				}
 																			],
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "4",
+																						"paddingBottom": "2"
+																					},
+																					"id": "landscapeMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "0",
+																						"paddingBottom": "0"
+																					},
+																					"id": "tablet"
+																				}
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -1126,7 +1231,7 @@
 																			"id": "tablet"
 																		}
 																	],
-																	"size": 4
+																	"size": 6
 																},
 																"pageElements": [
 																	{
@@ -1180,6 +1285,15 @@
 																					}
 																				}
 																			],
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "4",
+																						"paddingBottom": "2"
+																					},
+																					"id": "tablet"
+																				}
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -1208,7 +1322,7 @@
 																			"id": "tablet"
 																		}
 																	],
-																	"size": 4
+																	"size": 6
 																},
 																"pageElements": [
 																	{
@@ -1282,6 +1396,7 @@
 															"fragmentViewports": [
 																{
 																	"fragmentViewportStyle": {
+																		"height": "0",
 																		"marginBottom": "0"
 																	},
 																	"id": "landscapeMobile"

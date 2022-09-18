@@ -73,7 +73,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		List<String> featureFlags = new ArrayList<>();
 		
 		List<String> fileNames = SourceFormatterUtil.filterFileNames(
-				_allFileNames, new String[0],
+				_allFileNames, new String[] {"**/test/**"},
 				new String[] {"**/bnd.bnd", "**/*.java"},
 				getSourceFormatterExcludes(), true);
 

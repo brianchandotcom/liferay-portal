@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US" default-locale="en_US">
-	<dynamic-element index-type="keyword" instance-id="xieebayf" name="AnnouncementContent" type="rich_text">
+	<dynamic-element index-type="keyword" instance-id="xieebayf" name="Body" type="rich_text">
 		<dynamic-content language-id="en_US"><![CDATA[Effective July 1, 2022, Liferay will be implementing stricter compliance to the payment terms stated in our contractual agreements with partners, including the application of interest on past due amounts. Please view the full details on meeting compliance with current payment terms here: https://partner.liferay.com/sales/sales-operations]]></dynamic-content>
 	</dynamic-element>
 </root>

@@ -1,7 +1,7 @@
 {
-	"articleId": "WEB-CONTENT-ANNOUNCEMENTS-03",
-	"ddmStructureKey": "ANNOUNCEMENTS-STRUCTURE",
-	"ddmTemplateKey": "ANNOUNCEMENTS-TEMPLATE",
+	"articleId": "WEB-CONTENT-ANNOUNCEMENT-03",
+	"ddmStructureKey": "ANNOUNCEMENT",
+	"ddmTemplateKey": "ANNOUNCEMENT",
 	"folder": "Announcements",
 	"name": "Reminder: Payment Term Compliance for Liferay Partners"
 }

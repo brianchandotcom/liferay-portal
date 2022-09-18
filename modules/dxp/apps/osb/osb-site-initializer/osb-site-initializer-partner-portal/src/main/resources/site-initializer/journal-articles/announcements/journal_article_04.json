@@ -1,7 +1,7 @@
 {
-	"articleId": "WEB-CONTENT-ANNOUNCEMENTS-04",
-	"ddmStructureKey": "ANNOUNCEMENTS-STRUCTURE",
-	"ddmTemplateKey": "ANNOUNCEMENTS-TEMPLATE",
+	"articleId": "WEB-CONTENT-ANNOUNCEMENT-04",
+	"ddmStructureKey": "ANNOUNCEMENT",
+	"ddmTemplateKey": "ANNOUNCEMENT",
 	"folder": "Announcements",
 	"name": "New Business Webinar: Campaign in a Box Program"
 }

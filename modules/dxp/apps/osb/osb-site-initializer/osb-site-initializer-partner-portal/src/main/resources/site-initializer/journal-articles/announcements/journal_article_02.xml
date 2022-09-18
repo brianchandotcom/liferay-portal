@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US" default-locale="en_US">
-	<dynamic-element index-type="keyword" instance-id="xieebayf" name="AnnouncementContent" type="rich_text">
+	<dynamic-element index-type="keyword" instance-id="xieebayf" name="Body" type="rich_text">
 		<dynamic-content language-id="en_US"><![CDATA[Join the webinar on Tuesday, May 31 at 9 am EST to get answers on frequently asked questions for Liferay Experience Cloud. Register now: https://register.gotowebinar.com/register/8037278689606330894]]></dynamic-content>
 	</dynamic-element>
 </root>

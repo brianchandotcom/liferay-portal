@@ -2,7 +2,7 @@
 
 <root>
 	<structure>
-		<name>Announcements-Structure</name>
+		<name>Announcement</name>
 		<description></description>
 		<definition>
 			<![CDATA[
@@ -16,10 +16,10 @@
 							"dataType": "string",
 							"indexType": "text",
 							"label": {
-								"en_US": "Announcement Content"
+								"en_US": "Body"
 							},
 							"localizable": true,
-							"name": "AnnouncementContent",
+							"name": "Body",
 							"predefinedValue": {
 								"en_US": ""
 							},
@@ -43,31 +43,5 @@
 				}
 			]]>
 		</definition>
-		<layout>
-			<![CDATA[
-				{
-					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
-					"pages": [
-						{
-							"rows": [
-								{
-									"columns": [
-										{
-											"fieldNames": [
-												"AnnouncementContent"
-											],
-											"size": 12
-										}
-									]
-								}
-							],
-							"title": {
-								"[$LOCALE_DEFAULT$]": "Announcements Structure"
-							}
-						}
-					]
-				}
-			]]>
-		</layout>
 	</structure>
 </root>

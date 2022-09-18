@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US" default-locale="en_US">
-	<dynamic-element index-type="keyword" instance-id="xieebayf" name="AnnouncementContent" type="rich_text">
+	<dynamic-element index-type="keyword" instance-id="xieebayf" name="Body" type="rich_text">
 		<dynamic-content language-id="en_US"><![CDATA[We're holding Liferay office hours online! Drop in to ask any technical questions that you may have about Liferay solutions. Register once to be added to all 30-minute sessions: Friday, June 17, Thursday, July 14, 2022 and Friday, August 12, 2022. Sign up now: https://www.liferay.com/web/l/partner-enablement-webinars-liferay-office-hours]]></dynamic-content>
 	</dynamic-element>
 </root>

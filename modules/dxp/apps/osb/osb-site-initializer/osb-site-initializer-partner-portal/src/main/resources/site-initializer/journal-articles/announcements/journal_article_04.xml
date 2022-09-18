@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US" default-locale="en_US">
-	<dynamic-element index-type="keyword" instance-id="xieebayf" name="AnnouncementContent" type="rich_text">
+	<dynamic-element index-type="keyword" instance-id="xieebayf" name="Body" type="rich_text">
 		<dynamic-content language-id="en_US"><![CDATA[Learn how to use the new Campaign in a Box for marketing programs to drive new leads! Register for the July 19 webinar and see how your team can leverage the campaign kits for your demand generation needs.]]></dynamic-content>
 	</dynamic-element>
 </root>

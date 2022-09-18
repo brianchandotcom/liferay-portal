@@ -17,29 +17,18 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
-import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.file.FileVisitOption;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,6 +37,11 @@ import java.util.regex.Pattern;
  * @author Alan Huang
  */
 public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
+
+	@Override
+	public void setAllFileNames(List<String> allFileNames) {
+		_allFileNames = allFileNames;
+	}
 
 	@Override
 	protected String doProcess(
@@ -61,59 +55,49 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		return _generateFeatureFlags(content);
 	}
 
-	@Override
-	public void setAllFileNames(List<String> allFileNames) {
-		_allFileNames = allFileNames;
-	}
-
-	private List<String> _allFileNames;
-
 	private String _generateFeatureFlags(String content) throws IOException {
-
 		List<String> featureFlags = new ArrayList<>();
-		
+
 		List<String> fileNames = SourceFormatterUtil.filterFileNames(
-				_allFileNames, new String[] {"**/test/**"},
-				new String[] {"**/bnd.bnd", "**/*.java"},
-				getSourceFormatterExcludes(), true);
+			_allFileNames, new String[] {"**/test/**"},
+			new String[] {"**/bnd.bnd", "**/*.java"},
+			getSourceFormatterExcludes(), true);
 
 		Matcher matcher = null;
-		
+
 		for (String fileName : fileNames) {
 			fileName = StringUtil.replace(
-					fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-			
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
 			String fileContent = FileUtil.read(new File(fileName));
-			
+
 			if (fileName.endsWith("bnd.bnd")) {
 				String liferaySiteInitializerFeatureFlag =
-						BNDSourceUtil.getDefinitionValue(
+					BNDSourceUtil.getDefinitionValue(
 						fileContent, "Liferay-Site-Initializer-Feature-Flag");
 
 				if (liferaySiteInitializerFeatureFlag == null) {
 					continue;
 				}
-	
-				featureFlags.add(liferaySiteInitializerFeatureFlag);
 
+				featureFlags.add(liferaySiteInitializerFeatureFlag);
 			}
-			else  {
+			else {
 				if (!fileContent.contains("feature.flag")) {
 					continue;
 				}
-				
+
 				matcher = _featureFlagPattern1.matcher(fileContent);
-	
-				while (matcher.find()) {
-					featureFlags.add(matcher.group(1));
-				}
-	
-				matcher = _featureFlagPattern2.matcher(fileContent);
-	
+
 				while (matcher.find()) {
 					featureFlags.add(matcher.group(1));
 				}
 
+				matcher = _featureFlagPattern2.matcher(fileContent);
+
+				while (matcher.find()) {
+					featureFlags.add(matcher.group(1));
+				}
 			}
 		}
 
@@ -138,7 +122,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 
 			for (String featureFlag : featureFlags) {
 				featureFlag = "feature.flag." + featureFlag;
-				
+
 				String environmentVariable =
 					ToolsUtil.encodeEnvironmentProperty(featureFlag);
 
@@ -156,7 +140,6 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				sb.append(StringPool.FOUR_SPACES);
 				sb.append(featureFlag);
 				sb.append("=false");
-				
 			}
 
 			if (matchedFeatureFlags.contains("feature.flag.")) {
@@ -179,5 +162,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		"\\.feature\\.flag=(.+?)\"");
 	private static final Pattern _featureFlagsPattern = Pattern.compile(
 		"(\n|\\A)##\n## Feature Flag\n##(\n\n[\\s\\S]*?)(?=(\n\n##|\\Z))");
+
+	private List<String> _allFileNames;
 
 }

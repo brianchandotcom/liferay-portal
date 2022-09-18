@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="xieebayf" name="Body" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[Liferay's next evolution in delivering digital experiences at scale is here! We’re combining the powerful capabilities we have built and grown over the years under our pioneer platform, Liferay DXP and are now offering a full-service SaaS offering: Liferay Experience Cloud.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="xieebayf" name="LinkToReadMore" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[https://www.liferay.com/en/blog/liferay-experience/what-is-liferay-experience-cloud]]></dynamic-content>
+	</dynamic-element>
+</root>

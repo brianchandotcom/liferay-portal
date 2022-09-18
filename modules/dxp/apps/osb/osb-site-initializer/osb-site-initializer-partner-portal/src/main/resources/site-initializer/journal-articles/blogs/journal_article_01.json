@@ -1,0 +1,10 @@
+{
+	"articleId": "WEB-CONTENT-BLOG-01",
+	"assetCategoryERCs": [
+		"PRMC001"
+	],
+	"ddmStructureKey": "BLOG",
+	"ddmTemplateKey": "BLOG",
+	"folder": "Blogs",
+	"name": "Blog: Liferay Experience Cloud"
+}

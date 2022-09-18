@@ -34,9 +34,10 @@ const updateStatus = async (status) => {
 
 	if (statusManagerResponse.ok) {
 		const data = await statusManagerResponse.json();
+
 		document.getElementById(
-			'mdfClaimStatusDisplay'
-		).innerHTML = `Status: ${data.claimStatus}`;
+			'mdf-claim-status-display'
+		).innerHTML = `Status: ${Liferay.Util.escape(data.claimStatus)}`;
 
 		return;
 	}

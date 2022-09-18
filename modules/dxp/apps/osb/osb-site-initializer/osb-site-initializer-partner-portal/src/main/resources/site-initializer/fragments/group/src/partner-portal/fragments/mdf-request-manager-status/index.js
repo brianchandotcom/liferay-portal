@@ -37,8 +37,8 @@ const updateStatus = async (status) => {
 	if (statusManagerResponse.ok) {
 		const data = await statusManagerResponse.json();
 		document.getElementById(
-			'mdfRequestStatusDisplay'
-		).innerHTML = `Status:${data.requestStatus}`;
+			'mdf-request-status-display'
+		).innerHTML = `Status:${Liferay.Util.escape(data.requestStatus)}`;
 
 		return;
 	}

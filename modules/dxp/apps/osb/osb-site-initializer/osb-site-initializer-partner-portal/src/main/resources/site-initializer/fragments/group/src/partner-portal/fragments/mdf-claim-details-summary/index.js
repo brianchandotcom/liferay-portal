@@ -13,7 +13,7 @@
 const currentPath = Liferay.currentURL.split('/');
 const mdfClaimId = +currentPath[currentPath.length - 1];
 
-const updateMDFClaimSummary = async () => {
+const getMDFClaimSummary = async () => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
 		headers: {
@@ -25,21 +25,23 @@ const updateMDFClaimSummary = async () => {
 	if (response.ok) {
 		const data = await response.json();
 
-		const amountClaimed = formatCurrency(data.amountClaimed);
-		const check = formatCurrency(data.check);
-		const paymentReceived = formatCurrency(data.paymentReceived);
-		const type = data.type;
+		const amountClaimed = formatCurrency(
+			Liferay.Util.escape(data.amountClaimed)
+		);
+		const check = formatCurrency(Liferay.Util.escape(data.check));
+		const paymentReceived = formatCurrency(
+			Liferay.Util.escape(data.paymentReceived)
+		);
+		const type = Liferay.Util.escape(data.type);
 
-		fragmentElement.querySelector('#ClaimType').innerHTML = `${type}`;
-
+		fragmentElement.querySelector('#mdf-claim-type').innerHTML = type;
 		fragmentElement.querySelector(
-			'#ClaimAmountClaimed'
-		).innerHTML = `${amountClaimed}`;
-
+			'#mdf-claim-amount-claimed'
+		).innerHTML = amountClaimed;
 		fragmentElement.querySelector(
-			'#ClaimPaymentReceived'
-		).innerHTML = `${paymentReceived}`;
-		fragmentElement.querySelector('#ClaimCheck').innerHTML = `${check}`;
+			'#mdf-claim-payment-received'
+		).innerHTML = paymentReceived;
+		fragmentElement.querySelector('#mdf-claim-check').innerHTML = check;
 
 		return;
 	}
@@ -56,4 +58,4 @@ const formatCurrency = (value) =>
 		style: 'currency',
 	}).format(value);
 
-updateMDFClaimSummary();
+getMDFClaimSummary();

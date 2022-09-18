@@ -25,29 +25,24 @@ const updateMDFDetailsSummary = async () => {
 	if (response.ok) {
 		const data = await response.json();
 
-		const startDate = new Intl.DateTimeFormat(
-			Liferay.ThemeDisplay.getBCP47LanguageId(),
-			{day: 'numeric', month: 'short'}
-		).format(new Date(data.minDateActivity));
-
-		const endDate = new Intl.DateTimeFormat(
-			Liferay.ThemeDisplay.getBCP47LanguageId(),
-			{day: 'numeric', month: 'short', year: 'numeric'}
-		).format(new Date(data.maxDateActivity));
-
-		const totalCost = formatCurrency(data.totalCostOfExpense);
-
-		const requestedCost = formatCurrency(data.totalMDFRequestAmount);
+		const startDate = formatDate(Liferay.Util.escape(data.minDateActivity));
+		const endDate = formatDate(Liferay.Util.escape(data.maxDateActivity));
+		const totalCost = formatCurrency(
+			Liferay.Util.escape(data.totalCostOfExpense)
+		);
+		const requestedCost = formatCurrency(
+			Liferay.Util.escape(data.totalMDFRequestAmount)
+		);
 
 		fragmentElement.querySelector(
-			'#dateField'
+			'#mdf-request-date-field'
 		).innerHTML = `${startDate} - ${endDate}`;
-
-		fragmentElement.querySelector('#totalCost').innerHTML = `${totalCost}`;
-
 		fragmentElement.querySelector(
-			'#requestedCost'
-		).innerHTML = `${requestedCost}`;
+			'#mdf-request-total-cost'
+		).innerHTML = totalCost;
+		fragmentElement.querySelector(
+			'#mdf-request-requested-cost'
+		).innerHTML = requestedCost;
 
 		return;
 	}
@@ -63,5 +58,11 @@ const formatCurrency = (value) =>
 		currency: 'USD',
 		style: 'currency',
 	}).format(value);
+
+const formatDate = (value) =>
+	new Intl.DateTimeFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
+		day: 'numeric',
+		month: 'short',
+	}).format(new Date(value));
 
 updateMDFDetailsSummary();

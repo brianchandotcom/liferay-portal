@@ -26,11 +26,12 @@ const getMDFClaimStatus = async () => {
 		const data = await statusResponse.json();
 
 		fragmentElement.querySelector(
-			'#mdfClaimStatusDisplay'
-		).innerHTML = `Status: ${data.claimStatus}`;
+			'#mdf-claim-status-display'
+		).innerHTML = `Status: ${Liferay.Util.escape(data.claimStatus)}`;
 
 		return;
 	}
+
 	Liferay.Util.openToast({
 		message: 'An unexpected error occured.',
 		type: 'danger',

@@ -26,11 +26,12 @@ const getMDFRequestStatus = async () => {
 		const data = await statusResponse.json();
 
 		fragmentElement.querySelector(
-			'#mdfRequestStatusDisplay'
-		).innerHTML = `Status: ${data.requestStatus}`;
+			'#mdf-request-status-display'
+		).innerHTML = `Status: ${Liferay.Util.escape(data.requestStatus)}`;
 
 		return;
 	}
+
 	Liferay.Util.openToast({
 		message: 'An unexpected error occured.',
 		type: 'danger',

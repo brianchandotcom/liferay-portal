@@ -2,26 +2,38 @@
 	<thead>
 		<tr>
 			<th class="w-50">
-				<div class="text-neutral-10" data-lfr-editable-id="tableTitle" data-lfr-editable-type="rich-text">
+				<lfr-editable
+					class="text-neutral-10"
+					id="tableTitle"
+					type="rich-text"
+				>
 					This is editable text!
-				</div>
+				</lfr-editable>
 			</th>
 			<th class="w-50"></th>
 		</tr>
 	</thead>
 
 	<tbody class="ml-1">
-		[#list 0..configuration.numberOfRows-1 as i]
+		[#list 0..configuration.numberOfRows as index]
 		<tr>
 			<td class="w-50">
-				<div class="text-neutral-10" data-lfr-editable-id="rowTitle-${i+1}" data-lfr-editable-type="rich-text">
+				<lfr-editable
+					class="text-neutral-10"
+					id="rowTitle-${index}"
+					type="rich-text"
+				>
 					This is editable text!
-				</div>
+				</lfr-editable>
 			</td>
 			<td class="w-50">
-				<div class="text-neutral-10" data-lfr-editable-id="rowValue-${i+1}" data-lfr-editable-type="rich-text">
+				<lfr-editable
+					class="text-neutral-10"
+					id="rowValue-${index}"
+					type="rich-text"
+				>
 					This is editable text!
-				</div>
+				</lfr-editable>
 			</td>
 		</tr>
 		[/#list]

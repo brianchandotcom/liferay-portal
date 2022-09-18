@@ -63,8 +63,6 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 			new String[] {"**/bnd.bnd", "**/*.java"},
 			getSourceFormatterExcludes(), true);
 
-		Matcher matcher = null;
-
 		for (String fileName : fileNames) {
 			fileName = StringUtil.replace(
 				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
@@ -97,7 +95,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 
 		ListUtil.distinct(featureFlags, new NaturalOrderStringComparator());
 
-		matcher = _featureFlagsPattern.matcher(content);
+		Matcher matcher = _featureFlagsPattern.matcher(content);
 
 		if (matcher.find()) {
 			String matchedFeatureFlags = matcher.group(2);

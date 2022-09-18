@@ -94,8 +94,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 					continue;
 				}
 	
-				featureFlags.add(
-					"feature.flag." + liferaySiteInitializerFeatureFlag);
+				featureFlags.add(liferaySiteInitializerFeatureFlag);
 
 			}
 			else  {
@@ -106,13 +105,13 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				matcher = _featureFlagPattern1.matcher(fileContent);
 	
 				while (matcher.find()) {
-					featureFlags.add("feature.flag." + matcher.group(1));
+					featureFlags.add(matcher.group(1));
 				}
 	
 				matcher = _featureFlagPattern2.matcher(fileContent);
 	
 				while (matcher.find()) {
-					featureFlags.add("feature.flag." + matcher.group(1));
+					featureFlags.add(matcher.group(1));
 				}
 
 			}
@@ -138,6 +137,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 			StringBundler sb = new StringBundler(featureFlags.size() * 14);
 
 			for (String featureFlag : featureFlags) {
+				featureFlag = "feature.flag." + featureFlag;
+				
 				String environmentVariable =
 					ToolsUtil.encodeEnvironmentProperty(featureFlag);
 
@@ -155,6 +156,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				sb.append(StringPool.FOUR_SPACES);
 				sb.append(featureFlag);
 				sb.append("=false");
+				
 			}
 
 			if (matchedFeatureFlags.contains("feature.flag.")) {

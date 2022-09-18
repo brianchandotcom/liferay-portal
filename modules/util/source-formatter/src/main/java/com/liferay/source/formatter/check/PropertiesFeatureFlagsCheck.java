@@ -87,7 +87,6 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 
 				featureFlags.addAll(
 					_getFeatureFlags(fileContent, _featureFlagPattern1));
-
 				featureFlags.addAll(
 					_getFeatureFlags(fileContent, _featureFlagPattern2));
 			}

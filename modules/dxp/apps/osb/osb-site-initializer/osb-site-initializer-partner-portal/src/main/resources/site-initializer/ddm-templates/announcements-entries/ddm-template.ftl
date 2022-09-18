@@ -27,18 +27,12 @@
 </style>
 
 <div>
-	<div class="align-items-baseline d-flex justify-content-between">
-		<h4 class="mb-4">
-			Announcements
-		</h4>
-	</div>
-
 	<#if entries?has_content>
 		<#list entries as curEntry>
 			<div class="border border-neutral-3 d-flex justify-content-between mb-3 p-3 rounded">
 				<div class="mr-4 pr-2 text-left text-wrap">
 					<h6 class="font-weight-bold mb-1 text-neutral-10">
-						${curEntry.getTitle(locale)}
+						${htmlUtil.escape(curEntry.getTitle(locale))}
 					</h6>
 
 					<div class="partner-portal-announcements text-neutral-8 text-paragraph-sm">
@@ -55,7 +49,7 @@
 
 					<div class="flex-wrap ml-3 mt-n1">
 						<div class="font-weight-semi-bold text-neutral-10 text-paragraph-xs">
-							${curEntry.getUserName()}
+							${htmlUtil.escape(curEntry.getUserName())}
 						</div>
 
 						<div class="text-neutral-8 text-paragraph-xxs">
@@ -66,10 +60,4 @@
 			</div>
 		</#list>
 	</#if>
-
-	<div class="text-center">
-		<a href="https://www.liferay.com" target="_blank">
-			View All Announcements
-		</a>
-	</div>
 </div>

@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "Home Welcome Banner",
+	"name": "Welcome Banner",
 	"type": "component"
 }

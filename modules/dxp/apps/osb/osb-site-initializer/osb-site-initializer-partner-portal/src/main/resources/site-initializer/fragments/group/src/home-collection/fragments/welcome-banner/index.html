@@ -1,0 +1,12 @@
+[#assign firstName = themeDisplay.getUser().getFirstName()]
+
+<div class="align-items-center d-flex partner-portal-welcome-banner position-relative">
+	<div class="partner-portal-text text-neutral-0">
+		<div class="ml-3 pl-5">
+			Welcome,
+			<span class="font-weight-bold">${htmlUtil.escape(firstName)}!</span>
+		</div>
+	</div>
+
+<img class="h-100 partner-portal-welcome-img position-absolute w-100" src="[resources:banner_background_partner_portal.svg]" />
+</div>

@@ -1,0 +1,9 @@
+.partner-portal-heading-icon {
+	font-size: var(--h3-font-size);
+}
+
+@media (min-width: 992px) {
+	.partner-portal-heading-icon {
+		font-size: var(--h1-font-size);
+	}
+}

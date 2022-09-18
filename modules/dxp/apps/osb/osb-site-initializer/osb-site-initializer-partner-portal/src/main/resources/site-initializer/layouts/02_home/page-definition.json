@@ -43,10 +43,8 @@
 							"fragment": {
 								"key": "welcome-banner"
 							},
-							"fragmentConfig": {
-							},
-							"fragmentFields": [
-							],
+							"fragmentConfig": {},
+							"fragmentFields": [],
 							"fragmentStyle": {
 								"textAlign": ""
 							},
@@ -99,13 +97,11 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {
-									}
+									"rowViewportDefinition": {}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {
-									}
+									"rowViewportDefinition": {}
 								}
 							],
 							"verticalAlignment": "top"
@@ -121,13 +117,11 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "tablet"
 										}
 									],
@@ -158,8 +152,7 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {
-													}
+													"rowViewportDefinition": {}
 												},
 												{
 													"id": "tablet",
@@ -182,8 +175,7 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
@@ -201,14 +193,12 @@
 															"fragment": {
 																"key": "announcements-subscribe"
 															},
-															"fragmentConfig": {
-															},
+															"fragmentConfig": {},
 															"fragmentFields": [
 																{
 																	"id": "announcements-heading",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"ar_SA": "Announcements",
@@ -290,7 +280,7 @@
 																		"enableViewCountIncrement": "false",
 																		"mergeUrlTags": "false",
 																		"metadataFields": "author,modified-date",
-																		"orderByColumn1": "createDate",
+																		"orderByColumn1": "publishDate",
 																		"orderByColumn2": "title",
 																		"orderByType1": "DESC",
 																		"orderByType2": "ASC",
@@ -386,7 +376,7 @@
 																					"mergeUrlTags": "false",
 																					"metadataFields": "author,modified-date",
 																					"notifiedAssetEntryIds": "66029",
-																					"orderByColumn1": "createDate",
+																					"orderByColumn1": "publishDate",
 																					"orderByColumn2": "title",
 																					"orderByType1": "DESC",
 																					"orderByType2": "ASC",
@@ -508,8 +498,7 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
@@ -585,7 +574,7 @@
 																	"enableViewCountIncrement": "false",
 																	"mergeUrlTags": "true",
 																	"metadataFields": "author,modified-date",
-																	"orderByColumn1": "createDate",
+																	"orderByColumn1": "publishDate",
 																	"orderByColumn2": "title",
 																	"orderByType1": "DESC",
 																	"orderByType2": "ASC",
@@ -635,13 +624,11 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "tablet"
 										}
 									],
@@ -660,8 +647,7 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {
-														},
+														"fragmentLink": {},
 														"text": {
 															"value_i18n": {
 																"ar_SA": "Quick Links",
@@ -763,8 +749,7 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
@@ -801,8 +786,7 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {
-																	}
+																	"rowViewportDefinition": {}
 																},
 																{
 																	"id": "tablet",
@@ -824,8 +808,7 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "portraitMobile"
 																		},
 																		{
@@ -843,8 +826,7 @@
 																			"fragment": {
 																				"key": "quick-link"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "brief-image",
@@ -860,15 +842,13 @@
 																								}
 																							}
 																						},
-																						"fragmentLink": {
-																						}
+																						"fragmentLink": {}
 																					}
 																				},
 																				{
 																					"id": "quick-link",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"ar_SA": "Deal Registration",
@@ -915,8 +895,7 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "portraitMobile"
 																		},
 																		{
@@ -934,8 +913,7 @@
 																			"fragment": {
 																				"key": "quick-link"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "brief-image",
@@ -951,15 +929,13 @@
 																								}
 																							}
 																						},
-																						"fragmentLink": {
-																						}
+																						"fragmentLink": {}
 																					}
 																				},
 																				{
 																					"id": "quick-link",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"ar_SA": "Demo Access",
@@ -1006,8 +982,7 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "portraitMobile"
 																		},
 																		{
@@ -1025,8 +1000,7 @@
 																			"fragment": {
 																				"key": "quick-link"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "brief-image",
@@ -1156,8 +1130,7 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
@@ -1196,8 +1169,7 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {
-																	}
+																	"rowViewportDefinition": {}
 																},
 																{
 																	"id": "tablet",
@@ -1220,8 +1192,7 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "portraitMobile"
 																		},
 																		{
@@ -1239,8 +1210,7 @@
 																			"fragment": {
 																				"key": "quick-link"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "brief-image",
@@ -1256,15 +1226,13 @@
 																								}
 																							}
 																						},
-																						"fragmentLink": {
-																						}
+																						"fragmentLink": {}
 																					}
 																				},
 																				{
 																					"id": "quick-link",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"ar_SA": "QSP Tracker",
@@ -1311,8 +1279,7 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "portraitMobile"
 																		},
 																		{
@@ -1330,8 +1297,7 @@
 																			"fragment": {
 																				"key": "quick-link"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "brief-image",
@@ -1347,15 +1313,13 @@
 																								}
 																							}
 																						},
-																						"fragmentLink": {
-																						}
+																						"fragmentLink": {}
 																					}
 																				},
 																				{
 																					"id": "quick-link",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"ar_SA": "Price Books",

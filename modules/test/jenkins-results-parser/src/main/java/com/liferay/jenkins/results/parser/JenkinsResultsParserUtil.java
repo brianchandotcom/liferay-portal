@@ -1680,12 +1680,12 @@ public class JenkinsResultsParserUtil {
 		Pattern distPortalBundleFileNamesPattern =
 			_getDistPortalBundleFileNamesPattern(portalBranchName);
 
-		int buildNumber = lastCompletedBuildNumber;
+		int buildNumber = lastCompletedBuildNumber + 1;
 
 		while (buildNumber > Math.max(0, lastCompletedBuildNumber - 10)) {
 			String distPortalBundlesBuildURL = combine(
 				_getDistPortalBundlesURL(portalBranchName), "/",
-				String.valueOf(lastCompletedBuildNumber), "/");
+				String.valueOf(buildNumber), "/");
 
 			try {
 				Matcher matcher = distPortalBundleFileNamesPattern.matcher(

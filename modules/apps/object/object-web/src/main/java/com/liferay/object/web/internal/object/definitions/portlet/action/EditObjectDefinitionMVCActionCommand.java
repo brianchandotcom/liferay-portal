@@ -103,6 +103,10 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				return;
 			}
 
+			if (objectDefinition.isEnableComments()) {
+				enableComments = true;
+			}
+
 			_objectDefinitionService.updateCustomObjectDefinition(
 				externalReferenceCode, objectDefinitionId,
 				accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,

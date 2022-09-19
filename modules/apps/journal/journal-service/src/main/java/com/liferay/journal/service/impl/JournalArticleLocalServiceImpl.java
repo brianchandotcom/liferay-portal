@@ -1328,7 +1328,12 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
-		_ddmFieldLocalService.deleteDDMFormValues(article.getId());
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_ddmFieldLocalService.deleteDDMFormValues(article.getId());
+
+				return null;
+			});
 
 		if (article.getClassNameId() != _classNameLocalService.getClassNameId(
 				DDMStructure.class)) {

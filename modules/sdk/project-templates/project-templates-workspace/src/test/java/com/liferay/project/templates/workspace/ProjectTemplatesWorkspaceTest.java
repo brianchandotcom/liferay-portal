@@ -71,7 +71,7 @@ public class ProjectTemplatesWorkspaceTest
 			temporaryFolder, "gradle", "foows", getDefaultLiferayVersion(),
 			mavenExecutor);
 
-		testExists(workspaceProjectDir, "configs/dev/portal-ext.properties");
+		testExists(workspaceProjectDir, "configs/dev/portal-env.properties");
 		testExists(workspaceProjectDir, "gradle.properties");
 		testExists(workspaceProjectDir, "modules");
 		testExists(workspaceProjectDir, "themes");

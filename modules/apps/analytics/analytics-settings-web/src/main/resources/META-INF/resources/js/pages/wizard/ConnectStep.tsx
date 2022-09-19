@@ -46,7 +46,8 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 				Liferay.Util.openToast({
 					message: Liferay.Language.get('saved-successfully'),
 				});
-			} else {
+			}
+			else {
 				Liferay.Util.openToast({
 					message: Liferay.Language.get(
 						'an-unexpected-system-error-occurred'

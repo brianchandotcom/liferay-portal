@@ -488,6 +488,9 @@ public interface SubscriptionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Subscription updateSubscription(Subscription subscription);
 
+	public void updateSubscriptions(
+		long companyId, long classNameId, long oldClassPK, long newClassPK);
+
 	@Override
 	@Transactional(enabled = false)
 	public CTPersistence<Subscription> getCTPersistence();

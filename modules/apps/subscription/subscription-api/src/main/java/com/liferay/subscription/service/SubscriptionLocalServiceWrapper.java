@@ -603,6 +603,14 @@ public class SubscriptionLocalServiceWrapper
 	}
 
 	@Override
+	public void updateSubscriptions(
+		long companyId, long classNameId, long oldClassPK, long newClassPK) {
+
+		_subscriptionLocalService.updateSubscriptions(
+			companyId, classNameId, oldClassPK, newClassPK);
+	}
+
+	@Override
 	public CTPersistence<Subscription> getCTPersistence() {
 		return _subscriptionLocalService.getCTPersistence();
 	}

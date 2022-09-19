@@ -550,6 +550,13 @@ public class SubscriptionLocalServiceUtil {
 		return getService().updateSubscription(subscription);
 	}
 
+	public static void updateSubscriptions(
+		long companyId, long classNameId, long oldClassPK, long newClassPK) {
+
+		getService().updateSubscriptions(
+			companyId, classNameId, oldClassPK, newClassPK);
+	}
+
 	public static SubscriptionLocalService getService() {
 		return _service;
 	}

@@ -116,6 +116,8 @@ definition {
 	@description = "LRQA-71891 - Verify that the user can filter by Name"
 	@priority = "2"
 	test CanFilterByTemplateName {
+		property portal.upstream = "quarantine";
+
 		Portlet.gotoPortletOptions(
 			portletName = "Calendar",
 			portletOption = "Configuration Templates");
@@ -139,6 +141,8 @@ definition {
 		Workflow.clickRevertSortDirection();
 
 		ConfigurationTemplate.viewOrderConfigurationsTemplate(tableOrder = "Second Configuration Templates Name,First Configuration Templates Name");
+	
+		
 	}
 
 	@description = "LRQA-71891 - Verify that the user can save Current Configuration as a template"

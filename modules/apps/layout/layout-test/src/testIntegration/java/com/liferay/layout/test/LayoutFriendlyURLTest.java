@@ -341,32 +341,28 @@ public class LayoutFriendlyURLTest {
 
 		typeSettingsUnicodeProperties.setProperty(
 			"inheritLocales", Boolean.toString(false));
-
+		typeSettingsUnicodeProperties.setProperty(
+			"languageId", LocaleUtil.toLanguageId(LocaleUtil.GERMANY));
 		typeSettingsUnicodeProperties.setProperty(
 			PropsKeys.LOCALES,
 			StringUtil.merge(
 				LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales())));
 
-		Locale defaultLocale = LocaleUtil.GERMANY;
-
 		Locale originalDefaultLocale = LocaleThreadLocal.getDefaultLocale();
 
 		try {
-			LocaleThreadLocal.setDefaultLocale(defaultLocale);
-
-			typeSettingsUnicodeProperties.setProperty(
-				"languageId", LocaleUtil.toLanguageId(defaultLocale));
+			LocaleThreadLocal.setDefaultLocale(LocaleUtil.GERMANY);
 
 			GroupLocalServiceUtil.updateGroup(
 				group.getGroupId(), typeSettingsUnicodeProperties.toString());
-
-			friendlyURLMap = layout.getFriendlyURLMap();
-
-			Assert.assertNull(friendlyURLMap.get(defaultLocale));
 		}
 		finally {
 			LocaleThreadLocal.setDefaultLocale(originalDefaultLocale);
 		}
+
+		friendlyURLMap = layout.getFriendlyURLMap();
+
+		Assert.assertNull(friendlyURLMap.get(LocaleUtil.GERMANY));
 	}
 
 	@Test

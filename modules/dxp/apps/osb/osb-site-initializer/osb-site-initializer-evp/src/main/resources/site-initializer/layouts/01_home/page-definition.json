@@ -566,12 +566,13 @@
 						"definition": {
 							"fragmentStyle": {
 								"borderWidth": "0",
+								"marginBottom": "5",
 								"textAlign": ""
 							},
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
-								"marginBottom": 0,
+								"marginBottom": 4,
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
@@ -646,6 +647,7 @@
 										"definition": {
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
+												"borderRadius": "borderRadiusLg",
 												"borderWidth": "",
 												"height": "180px",
 												"maxHeight": "180px",
@@ -693,7 +695,7 @@
 																		"classPKReferences": {
 																			"en_US": {
 																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/calendar_icon.svg$]"
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/cards/calendar_icon.svg$]"
 																			}
 																		},
 																		"fragmentImageConfiguration": {
@@ -812,6 +814,7 @@
 										"definition": {
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
+												"borderRadius": "borderRadiusLg",
 												"borderWidth": "",
 												"height": "180px",
 												"maxHeight": "180px",
@@ -859,7 +862,7 @@
 																		"classPKReferences": {
 																			"en_US": {
 																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/watch_icon.svg$]"
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/cards/watch_icon.svg$]"
 																			}
 																		},
 																		"fragmentImageConfiguration": {
@@ -978,6 +981,7 @@
 										"definition": {
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
+												"borderRadius": "borderRadiusLg",
 												"borderWidth": "",
 												"height": "180px",
 												"maxHeight": "180px",
@@ -1025,7 +1029,7 @@
 																		"classPKReferences": {
 																			"en_US": {
 																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/money_icon.svg$]"
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/cards/money_icon.svg$]"
 																			}
 																		},
 																		"fragmentImageConfiguration": {
@@ -1144,6 +1148,7 @@
 										"definition": {
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
+												"borderRadius": "borderRadiusLg",
 												"borderWidth": "",
 												"height": "180px",
 												"maxHeight": "180px",
@@ -1191,7 +1196,7 @@
 																		"classPKReferences": {
 																			"en_US": {
 																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/heart_icon.svg$]"
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/cards/heart_icon.svg$]"
 																			}
 																		},
 																		"fragmentImageConfiguration": {
@@ -1310,6 +1315,7 @@
 										"definition": {
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
+												"borderRadius": "borderRadiusLg",
 												"borderWidth": "",
 												"height": "180px",
 												"maxHeight": "180px",
@@ -1357,7 +1363,7 @@
 																		"classPKReferences": {
 																			"en_US": {
 																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/community_icon.svg$]"
+																				"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/cards/community_icon.svg$]"
 																			}
 																		},
 																		"fragmentImageConfiguration": {
@@ -1474,6 +1480,708 @@
 									}
 								],
 								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "colorNeutral1",
+								"borderRadius": "borderRadiusLg"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							},
+							"name": "Process Section"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"gutters": false,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
+											}
+										}
+									],
+									"verticalAlignment": "middle"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 6
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"indexed": true,
+													"layout": {
+														"borderWidth": 0,
+														"contentDisplay": "FlexColumn",
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													},
+													"name": "Process Left Container"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															},
+															"name": "Process Title Container"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"fragmentImageClassPKReference": {
+																						"classPKReferences": {
+																							"en_US": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/evp_process_icon.svg$]"
+																							}
+																						},
+																						"fragmentImageConfiguration": {
+																							"landscapeMobile": "auto",
+																							"portraitMobile": "auto",
+																							"tablet": "auto"
+																						}
+																					},
+																					"title": {
+																						"value": "evp_process_icon.svg"
+																					}
+																				},
+																				"fragmentLink": {
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginLeft": "5",
+																		"marginRight": "3"
+																	},
+																	"indexed": true,
+																	"name": "Process Icon"
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "DIALECT-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "h2"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "EVP Process Steps"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightBold",
+																		"textAlign": "",
+																		"textColor": "colorNeutral10"
+																	},
+																	"indexed": true,
+																	"name": "Process Title"
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"borderWidth": 0,
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															},
+															"name": "Process Description Container"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "DIALECT-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "EVP is our Employee Volunteer Program, born out of Liferay's vision to see people reach their full potential to serve others.&nbsp;&nbsp;"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"paddingLeft": "9",
+																		"paddingRight": "5"
+																	},
+																	"indexed": true,
+																	"name": "Process Description"
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "DIALECT-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																					"value": {
+																						"href": {
+																							"mapping": {
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.model.Layout",
+																									"fields": [
+																										{
+																											"fieldName": "friendlyURL",
+																											"fieldValue": "/my-evp"
+																										},
+																										{
+																											"fieldName": "privatePage",
+																											"fieldValue": "false"
+																										},
+																										{
+																											"fieldName": "siteKey",
+																											"fieldValue": "EVP 2"
+																										}
+																									]
+																								}
+																							}
+																						}
+																					}
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Create your request here!"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3",
+																		"paddingLeft": "9",
+																		"paddingRight": "5",
+																		"textColor": "colorBrandPrimaryLighten1"
+																	},
+																	"indexed": true,
+																	"name": "MyEVP Link"
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"borderWidth": 0,
+																"contentDisplay": "FlexColumn",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															},
+															"name": "Process Image Container"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-100"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"fragmentImageClassPKReference": {
+																						"classPKReferences": {
+																							"en_US": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/evp_process_steps_banner.png$]"
+																							}
+																						},
+																						"fragmentImageConfiguration": {
+																							"landscapeMobile": "auto",
+																							"portraitMobile": "auto",
+																							"tablet": "auto"
+																						}
+																					},
+																					"title": {
+																						"value": "EVP Process Steps Image"
+																					}
+																				},
+																				"fragmentLink": {
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"height": "315",
+																		"width": "500px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 6
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"indexed": true,
+													"layout": {
+														"align": "Center",
+														"borderWidth": 0,
+														"contentDisplay": "FlexRow",
+														"justify": "Center",
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													},
+													"name": "Process Slider Container"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "evp-process-steps-slider"
+															},
+															"fragmentConfig": {
+																"numberOfSlides": 5,
+																"textColor": "#3D8CCB"
+															},
+															"fragmentFields": [
+																{
+																	"id": "02-step-number",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "2"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "04-step-icon",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "FileEntry_previewImage",
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																					"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/steps/step_4.svg$]"
+																				}
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "01-step-number",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "1"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "03-step-number",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "3"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "04-step-description",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Now it’s time to benefit a great cause through your service and giving."
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "02-step-description",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Go to “My EVP” and submit a form with details about your service or grant request."
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "04-step-number",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "4"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "05-step-icon",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "FileEntry_previewImage",
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																					"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/steps/step_5.svg$]"
+																				}
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "05-step-title",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Share Your Stories"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "02-step-icon",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "FileEntry_previewImage",
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																					"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/steps/step_2.svg$]"
+																				}
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "02-step-title",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Submit A Request"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "04-step-title",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Serve Others/Fund A Cause"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "05-step-number",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "5"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "01-step-icon",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "FileEntry_previewImage",
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																					"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/steps/step_1.svg$]"
+																				}
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "03-step-description",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Your EVP Team and manager will review your request, and if everything looks good,you’re approved!"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "05-step-description",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Encourage ande inspire others by sharing your experience"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "03-step-title",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Get Approved"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "01-step-title",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Find A Non-Profit"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "01-step-description",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Do you know an awesome nonprofit that you want to serve or support? Great, let’s get started!"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "03-step-icon",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "FileEntry_previewImage",
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																					"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icons/steps/step_3.svg$]"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
 							}
 						],
 						"type": "Section"

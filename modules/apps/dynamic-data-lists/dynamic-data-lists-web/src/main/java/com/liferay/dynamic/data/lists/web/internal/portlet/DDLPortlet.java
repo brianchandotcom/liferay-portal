@@ -138,54 +138,6 @@ public class DDLPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference(unbind = "-")
-	public void setDDL(DDL ddl) {
-		_ddl = ddl;
-	}
-
-	@Reference(unbind = "-")
-	public void setDDLRecordService(DDLRecordService ddlRecordService) {
-		_ddlRecordService = ddlRecordService;
-	}
-
-	@Reference(unbind = "-")
-	public void setDDLRecordSetLocalService(
-		DDLRecordSetLocalService ddlRecordSetLocalService) {
-
-		_ddlRecordSetLocalService = ddlRecordSetLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setDDLRecordSetService(
-		DDLRecordSetService ddlRecordSetService) {
-
-		_ddlRecordSetService = ddlRecordSetService;
-	}
-
-	@Reference(unbind = "-")
-	public void setDDMDisplayRegistry(DDMDisplayRegistry ddmDisplayRegistry) {
-		_ddmDisplayRegistry = ddmDisplayRegistry;
-	}
-
-	@Reference(unbind = "-")
-	public void setDDMPermissionSupport(
-		DDMPermissionSupport ddmPermissionSupport) {
-
-		_ddmPermissionSupport = ddmPermissionSupport;
-	}
-
-	@Reference(unbind = "-")
-	public void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setStorageEngine(StorageEngine storageEngine) {
-		_storageEngine = storageEngine;
-	}
-
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -268,9 +220,16 @@ public class DDLPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLPortlet.class);
 
+	@Reference
 	private DDL _ddl;
+
+	@Reference
 	private DDLRecordService _ddlRecordService;
+
+	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+
+	@Reference
 	private DDLRecordSetService _ddlRecordSetService;
 
 	@Reference(
@@ -281,13 +240,19 @@ public class DDLPortlet extends MVCPortlet {
 	)
 	private volatile DDLWebConfigurationActivator _ddlWebConfigurationActivator;
 
+	@Reference
 	private DDMDisplayRegistry _ddmDisplayRegistry;
+
+	@Reference
 	private DDMPermissionSupport _ddmPermissionSupport;
+
+	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private StorageEngine _storageEngine;
 
 }

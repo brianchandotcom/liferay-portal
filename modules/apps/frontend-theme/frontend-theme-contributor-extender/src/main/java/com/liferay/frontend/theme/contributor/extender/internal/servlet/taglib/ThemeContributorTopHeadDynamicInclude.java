@@ -106,10 +106,6 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 
 	@Reference(unbind = "-")
 	public void setPortal(Portal portal) {
-		String pathContext = portal.getPathContext();
-
-		_comboContextPath = pathContext.concat("/combo");
-
 		_portal = portal;
 	}
 
@@ -118,6 +114,10 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 		_bundleContext = bundleContext;
 
 		_rebuild();
+
+		String pathContext = _portal.getPathContext();
+
+		_comboContextPath = pathContext.concat("/combo");
 	}
 
 	@Reference(

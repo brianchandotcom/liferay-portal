@@ -1,12 +1,12 @@
 @component-name = "portal-solutions"
 definition {
 
+	property custom.properties = "feature.flag.LPS-163118=true";
 	property osgi.modules.includes = "site-initializer-testray";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
-	property custom.properties = "feature.flag.LPS-163118=true";
 
 	setUp {
 		task ("Login and create a Testray Site") {

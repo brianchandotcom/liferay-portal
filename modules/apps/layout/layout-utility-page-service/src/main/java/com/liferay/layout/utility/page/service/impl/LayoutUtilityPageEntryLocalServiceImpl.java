@@ -98,8 +98,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			long groupId, int type)
 		throws PortalException {
 
-		return layoutUtilityPageEntryPersistence.findByG_T_D_First(
-			groupId, type, true, null);
+		return layoutUtilityPageEntryPersistence.findByG_D_T_First(
+			groupId, true, type, null);
 	}
 
 	@Override
@@ -142,9 +142,9 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 				layoutUtilityPageEntryId);
 
 		LayoutUtilityPageEntry defaultLayoutUtilityPageEntry =
-			layoutUtilityPageEntryPersistence.fetchByG_T_D_First(
-				layoutUtilityPageEntry.getGroupId(),
-				layoutUtilityPageEntry.getType(), true, null);
+			layoutUtilityPageEntryPersistence.fetchByG_D_T_First(
+				layoutUtilityPageEntry.getGroupId(), true,
+				layoutUtilityPageEntry.getType(), null);
 
 		if (defaultLayoutUtilityPageEntry != null) {
 			defaultLayoutUtilityPageEntry.setDefaultLayoutUtilityPageEntry(

@@ -801,7 +801,7 @@
 		"label": "borders",
 		"styles": [
 			{
-				"cssTemplate": "border-style: solid; border-width: {value}px !important;",
+				"cssTemplate": "border-style: solid; border-width: {value} !important; border-width: {value}px !important;",
 				"dataType": "number",
 				"defaultValue": 0,
 				"icon": "border-width",

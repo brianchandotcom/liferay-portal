@@ -227,11 +227,6 @@ public class GroupSearchProvider {
 		return true;
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	private long[] _classNameIds;
 
 	@Reference
@@ -239,5 +234,8 @@ public class GroupSearchProvider {
 
 	@Reference
 	private GroupPermission _groupPermission;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 }

@@ -114,6 +114,11 @@ public class AssetDisplayPageUsagesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isShowSearch() {
+		return false;
+	}
+
+	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"modified-date"};
 	}

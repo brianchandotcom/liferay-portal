@@ -144,9 +144,9 @@ definition {
 			Panel.expandPanel(panel = "JavaScript");
 
 			AssertTextEquals(
-				key_sectionTitle = "JavaScript Extensions",
+				key_sectionTitle = "JavaScript Client Extensions",
 				locator1 = "PagesAdmin#SECTION_SUBTITLE",
-				value1 = "No JavaScript extensions were loaded.");
+				value1 = "No JavaScript client extensions were loaded.");
 		}
 
 		task ("Then the site designer could add a JavaScript Extension to widget page") {
@@ -200,9 +200,9 @@ definition {
 			Panel.expandPanel(panel = "JavaScript");
 
 			AssertTextEquals(
-				key_sectionTitle = "JavaScript Extensions",
+				key_sectionTitle = "JavaScript Client Extensions",
 				locator1 = "PagesAdmin#SECTION_SUBTITLE",
-				value1 = "No JavaScript extensions were loaded.");
+				value1 = "No JavaScript client extensions were loaded.");
 		}
 
 		task ("Then the site designer could add a JavaScript Extension to widget page") {
@@ -237,9 +237,9 @@ definition {
 			Panel.expandPanel(panel = "JavaScript");
 
 			AssertTextEquals(
-				key_sectionTitle = "JavaScript Extensions",
+				key_sectionTitle = "JavaScript Client Extensions",
 				locator1 = "PagesAdmin#SECTION_SUBTITLE",
-				value1 = "No JavaScript extensions were loaded.");
+				value1 = "No JavaScript client extensions were loaded.");
 		}
 
 		task ("Then the site designer could add a JavaScript Extension to Pages") {

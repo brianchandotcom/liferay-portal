@@ -11,19 +11,22 @@
 import {ButtonWithIcon} from '@clayui/core';
 import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+
 import i18n from '../../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../../common/components';
+
 import {
 	STATUS_TAG_TYPES,
 	STATUS_TAG_TYPE_NAMES,
 } from '../../../../utils/constants';
 
-export default function getActivationStatusCardLayout(
+const getActivationStatusCardLayout = (
 	lxcEnvironment,
 	project,
 	onNotActivatedClick,
+	onInProgressClick,
 	userAccount
-) {
+) => {
 	return {
 		[STATUS_TAG_TYPE_NAMES.active]: {
 			buttonLink: (
@@ -64,7 +67,7 @@ export default function getActivationStatusCardLayout(
 			),
 			id: STATUS_TAG_TYPES.active,
 			subtitle: i18n.translate(
-				'your-experience-cloud-environments-are-ready'
+				'your-experience-cloud-project-is-being-set-up-and-will-be-available-soon'
 			),
 			title: i18n.translate('liferay-experience-cloud-activation'),
 		},
@@ -82,6 +85,7 @@ export default function getActivationStatusCardLayout(
 					items={[
 						{
 							label: i18n.translate('set-to-active'),
+							onClick: () => onInProgressClick(),
 						},
 					]}
 					menuElementAttrs={{
@@ -113,4 +117,6 @@ export default function getActivationStatusCardLayout(
 			title: i18n.translate('liferay-experience-cloud-activation'),
 		},
 	};
-}
+};
+
+export default getActivationStatusCardLayout;

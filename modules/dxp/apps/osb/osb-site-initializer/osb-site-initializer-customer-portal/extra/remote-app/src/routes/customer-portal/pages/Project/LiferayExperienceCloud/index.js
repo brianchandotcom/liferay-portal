@@ -17,7 +17,10 @@ import {useCustomerPortal} from '../../../context';
 import {PRODUCT_TYPES} from '../../../utils/constants';
 
 const LiferayExperienceCloud = () => {
-	const [{project, subscriptionGroups, userAccount}] = useCustomerPortal();
+	const [
+		{project, subscriptionGroups, userAccount},
+		dispatch,
+	] = useCustomerPortal();
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
 
 	useEffect(() => {
@@ -29,7 +32,7 @@ const LiferayExperienceCloud = () => {
 		filter: `accountKey eq '${project?.accountKey}'`,
 	});
 
-	const lxcEnvironment =
+	const liferayExperienceCloudEnvironment =
 		data?.c?.liferayExperienceCloudEnvironments?.items[0];
 
 	const subscriptionGroupLxcEnvironment = subscriptionGroups?.find(
@@ -44,11 +47,14 @@ const LiferayExperienceCloud = () => {
 	return (
 		<div>
 			<ActivationStatus.LiferayExperienceCloud
-				lxcEnvironment={lxcEnvironment}
+				data={data}
+				dispatch={dispatch}
+				lxcEnvironment={liferayExperienceCloudEnvironment}
 				project={project}
 				subscriptionGroupLxcEnvironment={
 					subscriptionGroupLxcEnvironment
 				}
+				subscriptionGroups={subscriptionGroups}
 				userAccount={userAccount}
 			/>
 		</div>

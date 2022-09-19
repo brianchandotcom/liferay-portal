@@ -22,7 +22,7 @@
 				"en-US": "Incident Management Full Name"
 			},
 			"name": "incidentManagementFullName",
-			"required": true
+			"required": false
 		},
 		{
 			"DBType": "String",
@@ -32,7 +32,7 @@
 				"en-US": "Incident Management Email Address"
 			},
 			"name": "incidentManagementEmailAddress",
-			"required": true
+			"required": false
 		},
 		{
 			"DBType": "String",
@@ -42,7 +42,7 @@
 				"en-US": "Primary Region"
 			},
 			"name": "primaryRegion",
-			"required": true
+			"required": false
 		},
 		{
 			"DBType": "String",

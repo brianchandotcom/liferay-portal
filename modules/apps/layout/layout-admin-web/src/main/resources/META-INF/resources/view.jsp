@@ -26,7 +26,7 @@ portletDisplay.setShowStagingIcon(false);
 
 <c:choose>
 	<c:when test='<%= Objects.equals(layoutsAdminDisplayContext.getTabs1(), "utility-pages") %>'>
-		<liferay-util:include page="/view_utility_pages.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/view_layout_utility_page_entries.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />

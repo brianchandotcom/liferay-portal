@@ -223,6 +223,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		_layoutLocalService.updateLayout(draftLayout);
 
+		_layoutCopyHelper.copyLayout(layoutPageTemplateEntryLayout, layout);
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =

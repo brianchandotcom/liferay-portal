@@ -14,7 +14,7 @@
 
 package com.liferay.layout.utility.page.service.impl;
 
-import com.liferay.layout.utility.page.exception.DuplicateEntryExternalReferenceCodeException;
+import com.liferay.layout.utility.page.exception.DuplicateLayoutUtilityPageEntryExternalReferenceCodeException;
 import com.liferay.layout.utility.page.exception.LayoutUtilityPageEntryNameException;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.base.LayoutUtilityPageEntryLocalServiceBaseImpl;
@@ -206,7 +206,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 				groupId, externalReferenceCode);
 
 		if (layoutUtilityPageEntry != null) {
-			throw new DuplicateEntryExternalReferenceCodeException(
+			throw new DuplicateLayoutUtilityPageEntryExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate layout utility page entry external reference ",
 					"code ", externalReferenceCode, " in group ", groupId));

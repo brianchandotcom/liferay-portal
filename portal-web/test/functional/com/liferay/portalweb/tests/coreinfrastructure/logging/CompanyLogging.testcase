@@ -23,6 +23,7 @@ definition {
 	}
 
 	@description = "Any logs that would appear in specifically company A should never appear in the logs of company B"
+	@ignore = "true"
 	@priority = "5"
 	test AssertCompanyLogsIsolated {
 		property portal.acceptance = "true";
@@ -52,6 +53,7 @@ definition {
 	}
 
 	@description = "If company.log.enabled=false, there should not be additional logging files created for each company and the UI access point should be unavailable"
+	@ignore = "true"
 	@priority = "4"
 	test CompanyLoggingDisabled {
 		property custom.properties = "company.log.enabled=false";
@@ -87,6 +89,7 @@ definition {
 	}
 
 	@description = "An Omniadmin can get log names from all companies and download logs from all companies though the UI"
+	@ignore = "true"
 	@priority = "4"
 	test GetAllCompanyLogs {
 		property test.assert.warning.exceptions = "true";
@@ -135,6 +138,7 @@ definition {
 	}
 
 	@description = "A company admin should only be able to see the logs from the company they are an admin of"
+	@ignore = "true"
 	@priority = "5"
 	test GetCompanyAdminLogs {
 		property portal.acceptance = "true";
@@ -197,6 +201,7 @@ definition {
 	}
 
 	@description = "A company admin that tries to directly download the logs of a company they do not have access to should get a permissions error"
+	@ignore = "true"
 	@priority = "4"
 	test GetCompanyAdminLogsFromDifferentCompany {
 		property test.assert.warning.exceptions = "true";
@@ -259,6 +264,7 @@ definition {
 	}
 
 	@description = "A non-administrative user should get a permissions denied error when trying to access the UI to get company logging information"
+	@ignore = "true"
 	@priority = "4"
 	test GetCompanyLogsAsGuest {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
@@ -302,6 +308,7 @@ definition {
 	}
 
 	@description = "If there are no logs available for a company, there should be some kind of message to notify the user when they try to check the available log names"
+	@ignore = "true"
 	@priority = "4"
 	test GetEmptyCompanyLogs {
 		property test.assert.warning.exceptions = "true";
@@ -325,6 +332,7 @@ definition {
 	}
 
 	@description = "If a user tries to download a logging file or company that doesn’t exist it should fail and throw a suitable error message"
+	@ignore = "true"
 	@priority = "4"
 	test GetInvalidCompanyLogs {
 		task ("When the user tries to download a log via an http request where the log name is invalid") {

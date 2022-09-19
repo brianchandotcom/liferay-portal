@@ -196,6 +196,44 @@ export function ModalAddFilter({
 		return newItemsValues;
 	};
 
+	const getSystemFieldLabelFromEntry = (
+		titleFieldName: string,
+		entry: ObjectEntry,
+		itemObject: LabelValueObject
+	) => {
+		if (titleFieldName === 'creator') {
+			const {name} = entry.creator;
+
+			return {
+				...itemObject,
+				label: name,
+			};
+		}
+
+		if (titleFieldName === 'status') {
+			const {label_i18n} = entry.status;
+
+			return {
+				...itemObject,
+				label: label_i18n,
+			};
+		}
+
+		if (titleFieldName === 'createDate') {
+			return {
+				...itemObject,
+				label: entry['dateCreated'],
+			};
+		}
+
+		if (titleFieldName === 'modifiedDate') {
+			return {
+				...itemObject,
+				label: entry['dateModified'],
+			};
+		}
+	};
+
 	const setFieldValues = useCallback(
 		(objectField: ObjectField) => {
 			if (objectField?.businessType === 'Picklist') {
@@ -277,28 +315,12 @@ export function ModalAddFilter({
 								value: entry.externalReferenceCode,
 							} as LabelValueObject;
 
-							if (
-								titleField.system &&
-								titleField.name === 'creator'
-							) {
-								const {name} = entry.creator;
-
-								return {
-									...newItemsObject,
-									label: name,
-								};
-							}
-
-							if (
-								titleField.system &&
-								titleField.name === 'status'
-							) {
-								const {label_i18n} = entry.status;
-
-								return {
-									...newItemsObject,
-									label: label_i18n,
-								};
+							if (titleField.system) {
+								return getSystemFieldLabelFromEntry(
+									titleField.name,
+									entry,
+									newItemsObject
+								) as LabelValueObject;
 							}
 
 							return {

@@ -81,13 +81,13 @@ public class ViewConflictsMVCRenderCommand implements MVCRenderCommand {
 			renderRequest, "ctCollectionId");
 
 		try {
+			boolean hasUnapprovedChanges =
+				_ctCollectionLocalService.hasUnapprovedChanges(ctCollectionId);
+
 			CTCollection ctCollection =
 				_ctCollectionLocalService.getCTCollection(ctCollectionId);
 
 			Map<Long, List<ConflictInfo>> conflictInfoMap = null;
-
-			boolean hasUnapprovedChanges =
-				_ctCollectionLocalService.hasUnapprovedChanges(ctCollectionId);
 
 			if (!hasUnapprovedChanges) {
 				conflictInfoMap = _ctCollectionLocalService.checkConflicts(

@@ -93,18 +93,20 @@ public class ViewConflictsDisplayContext {
 		JSONArray unresolvedConflictsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
-		for (Map.Entry<Long, List<ConflictInfo>> entry :
-				_conflictInfoMap.entrySet()) {
+		if (_conflictInfoMap != null) {
+			for (Map.Entry<Long, List<ConflictInfo>> entry :
+					_conflictInfoMap.entrySet()) {
 
-			for (ConflictInfo conflictInfo : entry.getValue()) {
-				JSONObject jsonObject = _getConflictJSONObject(
-					conflictInfo, entry.getKey());
+				for (ConflictInfo conflictInfo : entry.getValue()) {
+					JSONObject jsonObject = _getConflictJSONObject(
+						conflictInfo, entry.getKey());
 
-				if (conflictInfo.isResolved()) {
-					resolvedConflictsJSONArray.put(jsonObject);
-				}
-				else {
-					unresolvedConflictsJSONArray.put(jsonObject);
+					if (conflictInfo.isResolved()) {
+						resolvedConflictsJSONArray.put(jsonObject);
+					}
+					else {
+						unresolvedConflictsJSONArray.put(jsonObject);
+					}
 				}
 			}
 		}

@@ -142,10 +142,10 @@ public class WorkflowTaskUserNotificationHandler
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
+		long workflowTaskId = jsonObject.getLong("workflowTaskId");
+
 		String notificationMessage = jsonObject.getString(
 			"notificationMessage");
-
-		long workflowTaskId = jsonObject.getLong("workflowTaskId");
 
 		if (workflowTaskId > 0) {
 			long ctCollectionId = jsonObject.getLong(
@@ -216,7 +216,7 @@ public class WorkflowTaskUserNotificationHandler
 	}
 
 	private WorkflowTask _fetchWorkflowTask(
-			long ctCollectionId, long workflowTaskId)
+			long collectionId, long workflowTaskId)
 		throws Exception {
 
 		if (workflowTaskId <= 0) {
@@ -225,7 +225,7 @@ public class WorkflowTaskUserNotificationHandler
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollectionId)) {
+					collectionId)) {
 
 			return WorkflowTaskManagerUtil.fetchWorkflowTask(workflowTaskId);
 		}

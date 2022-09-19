@@ -61,6 +61,8 @@ public class UserNotificationMessageSender
 			_notificationMessageHelper.createMessageJSONObject(
 				notificationMessage, executionContext);
 
+		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+
 		for (Map.Entry<NotificationReceptionType, Set<NotificationRecipient>>
 				entry : notificationRecipients.entrySet()) {
 
@@ -68,9 +70,6 @@ public class UserNotificationMessageSender
 					getDeliverableNotificationRecipients(
 						entry.getValue(),
 						UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
-
-				long ctCollectionId =
-					CTCollectionThreadLocal.getCTCollectionId();
 
 				if (ctCollectionId > 0) {
 					User user = _userLocalService.fetchUser(

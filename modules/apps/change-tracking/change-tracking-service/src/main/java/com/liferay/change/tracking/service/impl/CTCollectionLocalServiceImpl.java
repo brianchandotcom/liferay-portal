@@ -763,9 +763,9 @@ public class CTCollectionLocalServiceImpl
 			if (ctService == null) {
 				throw new SystemException(
 					StringBundler.concat(
-						"Unable to check for unapproved changes for change ",
-						"tracking collection ", ctCollectionId,
-						" because the service for ", modelClassNameId,
+						"Unable to check for unapproved changes for the ",
+						"ctCollection with id=", ctCollectionId,
+						" because service for ", modelClassNameId,
 						" is missing"));
 			}
 

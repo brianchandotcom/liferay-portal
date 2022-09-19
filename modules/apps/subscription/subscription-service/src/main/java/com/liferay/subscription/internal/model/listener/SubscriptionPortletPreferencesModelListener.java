@@ -54,75 +54,73 @@ public class SubscriptionPortletPreferencesModelListener
 					portletPreferences.getCompanyId(),
 					portletPreferences.getModelClassName(),
 					portletPreferences.getPortletPreferencesId());
+
+				return;
 			}
-			else {
-				TransactionCommitCallbackUtil.registerCallback(
-					() -> {
-						PortletPreferences remainingPortletPreferences =
-							_portletPreferencesLocalService.
-								fetchPortletPreferences(
-									portletPreferences.getOwnerId(),
-									portletPreferences.getOwnerType(),
-									portletPreferences.getPlid(),
-									portletPreferences.getPortletId());
 
-						if (remainingPortletPreferences == null) {
-							_subscriptionLocalService.deleteSubscriptions(
-								portletPreferences.getCompanyId(),
-								portletPreferences.getModelClassName(),
-								portletPreferences.getPortletPreferencesId());
-						}
-						else {
-							ActionableDynamicQuery actionableDynamicQuery =
-								_subscriptionLocalService.
-									getActionableDynamicQuery();
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					PortletPreferences remainingPortletPreferences =
+						_portletPreferencesLocalService.fetchPortletPreferences(
+							portletPreferences.getOwnerId(),
+							portletPreferences.getOwnerType(),
+							portletPreferences.getPlid(),
+							portletPreferences.getPortletId());
 
-							actionableDynamicQuery.setAddCriteriaMethod(
-								dynamicQuery -> {
-									dynamicQuery.add(
-										RestrictionsFactoryUtil.eq(
-											"companyId",
-											remainingPortletPreferences.
-												getCompanyId()));
-
-									dynamicQuery.add(
-										RestrictionsFactoryUtil.eq(
-											"classNameId",
-											_classNameLocalService.
-												getClassNameId(
-													remainingPortletPreferences.
-														getModelClassName())));
-
-									dynamicQuery.add(
-										RestrictionsFactoryUtil.eq(
-											"classPK",
-											portletPreferences.
-												getPortletPreferencesId()));
-								});
-
-							actionableDynamicQuery.setPerformActionMethod(
-								(Subscription subscription) -> {
-									subscription.setClassPK(
-										remainingPortletPreferences.
-											getPortletPreferencesId());
-
-									_subscriptionLocalService.
-										updateSubscription(subscription);
-								});
-
-							try {
-								actionableDynamicQuery.performActions();
-							}
-							catch (Exception exception) {
-								_log.error(
-									"Unable to restore subscriptions",
-									exception);
-							}
-						}
+					if (remainingPortletPreferences == null) {
+						_subscriptionLocalService.deleteSubscriptions(
+							portletPreferences.getCompanyId(),
+							portletPreferences.getModelClassName(),
+							portletPreferences.getPortletPreferencesId());
 
 						return null;
-					});
-			}
+					}
+
+					ActionableDynamicQuery actionableDynamicQuery =
+						_subscriptionLocalService.getActionableDynamicQuery();
+
+					actionableDynamicQuery.setAddCriteriaMethod(
+						dynamicQuery -> {
+							dynamicQuery.add(
+								RestrictionsFactoryUtil.eq(
+									"companyId",
+									remainingPortletPreferences.
+										getCompanyId()));
+
+							dynamicQuery.add(
+								RestrictionsFactoryUtil.eq(
+									"classNameId",
+									_classNameLocalService.getClassNameId(
+										remainingPortletPreferences.
+											getModelClassName())));
+
+							dynamicQuery.add(
+								RestrictionsFactoryUtil.eq(
+									"classPK",
+									portletPreferences.
+										getPortletPreferencesId()));
+						});
+
+					actionableDynamicQuery.setPerformActionMethod(
+						(Subscription subscription) -> {
+							subscription.setClassPK(
+								remainingPortletPreferences.
+									getPortletPreferencesId());
+
+							_subscriptionLocalService.updateSubscription(
+								subscription);
+						});
+
+					try {
+						actionableDynamicQuery.performActions();
+					}
+					catch (Exception exception) {
+						_log.error(
+							"Unable to restore subscriptions", exception);
+					}
+
+					return null;
+				});
 		}
 		catch (Exception exception) {
 			_log.error("Unable to delete subscriptions", exception);

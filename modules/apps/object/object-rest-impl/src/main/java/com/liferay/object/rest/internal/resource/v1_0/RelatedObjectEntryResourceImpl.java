@@ -37,6 +37,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Objects;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -252,7 +253,9 @@ public class RelatedObjectEntryResourceImpl
 			}
 		}
 
-		return null;
+		throw new NotFoundException(
+			"No system object definition metadata for \"" + restContextPath +
+				"\"");
 	}
 
 	@Reference

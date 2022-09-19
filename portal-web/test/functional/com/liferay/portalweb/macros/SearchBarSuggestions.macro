@@ -87,6 +87,13 @@ definition {
 			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_TITLE");
 	}
 
+	macro viewSuggestionContributorDisplayGroupName {
+		AssertTextEquals.assertPartialText(
+			key_suggestionContributorDisplayGroupName = "${suggestionContributorDisplayGroupName}",
+			locator1 = "SearchBarSuggestions#RESULTS_LIST_SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME",
+			value1 = "${suggestionSubheader}");
+	}
+
 	macro viewSuggestionResultDetails {
 		AssertTextEquals(
 			locator1 = "SearchResults#ASSET_DETAILS_TITLE",

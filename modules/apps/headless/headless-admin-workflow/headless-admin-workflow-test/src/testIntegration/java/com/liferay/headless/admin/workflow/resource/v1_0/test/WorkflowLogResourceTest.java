@@ -73,21 +73,24 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 
 		_administratorRole = _roleLocalService.getRole(
 			testGroup.getCompanyId(), RoleConstants.ADMINISTRATOR);
+		_siteContentReviewerRole = _roleLocalService.getRole(
+			testGroup.getCompanyId(), RoleConstants.SITE_CONTENT_REVIEWER);
+
 		_workflowInstance = WorkflowInstanceTestUtil.addWorkflowInstance(
 			testGroup.getGroupId(), ObjectReviewedTestUtil.addObjectReviewed(),
 			_workflowDefinition);
+
+		_workflowTask = WorkflowTaskTestUtil.getWorkflowTask(
+			_workflowInstance.getId());
 	}
 
 	@Override
 	@Test
 	public void testGetWorkflowInstanceWorkflowLogsPage() throws Exception {
-		WorkflowTask workflowTask = WorkflowTaskTestUtil.getWorkflowTask(
-			_workflowInstance.getId());
-
 		_workflowTaskManager.assignWorkflowTaskToUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowTask.getId(), TestPropsValues.getUserId(), StringPool.BLANK,
-			null, null);
+			_workflowTask.getId(), TestPropsValues.getUserId(),
+			StringPool.BLANK, null, null);
 
 		Page<WorkflowLog> page =
 			workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
@@ -100,43 +103,15 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 		page = workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
 			_workflowInstance.getId(),
 			new String[] {WorkflowLog.Type.TASK_ASSIGN.getValue()},
-			Pagination.of(1, 2));
+			Pagination.of(1, 3));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(3, page.getTotalCount());
 
 		assertEquals(
 			Arrays.asList(
-				new WorkflowLog() {
-					{
-						commentLog = StringPool.BLANK;
-						description = _language.format(
-							LocaleUtil.getDefault(),
-							"x-assigned-the-task-to-himself",
-							_portal.getUserName(
-								TestPropsValues.getUserId(), StringPool.BLANK),
-							false);
-						state = "review";
-						stateLabel = "Review";
-						type = Type.TASK_ASSIGN;
-						workflowTaskId = workflowTask.getId();
-					}
-				},
-				new WorkflowLog() {
-					{
-						commentLog = _language.get(
-							LocaleUtil.getDefault(), "assigned-initial-task");
-						description = _language.format(
-							LocaleUtil.getDefault(),
-							"task-initially-assigned-to-the-x-role",
-							_administratorRole.getTitle(
-								LocaleUtil.getDefault()),
-							false);
-						state = "review";
-						stateLabel = "Review";
-						type = Type.TASK_ASSIGN;
-						workflowTaskId = workflowTask.getId();
-					}
-				}),
+				_toAssignToHimselfWorkflowLog(),
+				_toAssignToRoleWorkflowLog(_siteContentReviewerRole),
+				_toAssignToRoleWorkflowLog(_administratorRole)),
 			(List<WorkflowLog>)page.getItems());
 
 		assertValid(page);
@@ -147,108 +122,61 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 	public void testGetWorkflowInstanceWorkflowLogsPageWithPagination()
 		throws Exception {
 
-		WorkflowTask workflowTask = WorkflowTaskTestUtil.getWorkflowTask(
-			_workflowInstance.getId());
-
 		_workflowTaskManager.assignWorkflowTaskToUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowTask.getId(), TestPropsValues.getUserId(), StringPool.BLANK,
-			null, null);
+			_workflowTask.getId(), TestPropsValues.getUserId(),
+			StringPool.BLANK, null, null);
 
 		Page<WorkflowLog> page1 =
 			workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
 				_workflowInstance.getId(),
 				new String[] {WorkflowLog.Type.TASK_ASSIGN.getValue()},
-				Pagination.of(1, 1));
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(3, page1.getTotalCount());
 
 		List<WorkflowLog> workflowLogs1 = (List<WorkflowLog>)page1.getItems();
 
-		Assert.assertEquals(workflowLogs1.toString(), 1, workflowLogs1.size());
+		Assert.assertEquals(workflowLogs1.toString(), 2, workflowLogs1.size());
 
 		assertEquals(
 			Arrays.asList(
-				new WorkflowLog() {
-					{
-						commentLog = StringPool.BLANK;
-						description = _language.format(
-							LocaleUtil.getDefault(),
-							"x-assigned-the-task-to-himself",
-							_portal.getUserName(
-								TestPropsValues.getUserId(), StringPool.BLANK),
-							false);
-						state = "review";
-						stateLabel = "Review";
-						type = Type.TASK_ASSIGN;
-						workflowTaskId = workflowTask.getId();
-					}
-				}),
+				_toAssignToHimselfWorkflowLog(),
+				_toAssignToRoleWorkflowLog(_siteContentReviewerRole)),
 			workflowLogs1);
 
-		Page<WorkflowLog> page2 =
+		Page<WorkflowLog> page3 =
 			workflowLogResource.getWorkflowInstanceWorkflowLogsPage(
 				_workflowInstance.getId(),
 				new String[] {WorkflowLog.Type.TASK_ASSIGN.getValue()},
-				Pagination.of(2, 1));
+				Pagination.of(3, 1));
 
-		Assert.assertEquals(2, page2.getTotalCount());
+		Assert.assertEquals(3, page3.getTotalCount());
 
-		List<WorkflowLog> workflowLogs2 = (List<WorkflowLog>)page2.getItems();
+		List<WorkflowLog> workflowLogs2 = (List<WorkflowLog>)page3.getItems();
 
 		Assert.assertEquals(workflowLogs2.toString(), 1, workflowLogs2.size());
 
 		assertEquals(
-			Arrays.asList(
-				new WorkflowLog() {
-					{
-						commentLog = _language.get(
-							LocaleUtil.getDefault(), "assigned-initial-task");
-						description = _language.format(
-							LocaleUtil.getDefault(),
-							"task-initially-assigned-to-the-x-role",
-							_administratorRole.getTitle(
-								LocaleUtil.getDefault()),
-							false);
-						state = "review";
-						stateLabel = "Review";
-						type = Type.TASK_ASSIGN;
-						workflowTaskId = workflowTask.getId();
-					}
-				}),
+			Arrays.asList(_toAssignToRoleWorkflowLog(_administratorRole)),
 			workflowLogs2);
 	}
 
 	@Override
 	@Test
 	public void testGetWorkflowTaskWorkflowLogsPage() throws Exception {
-		WorkflowTask workflowTask = WorkflowTaskTestUtil.getWorkflowTask(
-			_workflowInstance.getId());
-
 		Page<WorkflowLog> page =
 			workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-				workflowTask.getId(),
+				_workflowTask.getId(),
 				new String[] {WorkflowLog.Type.TASK_ASSIGN.getValue()},
 				Pagination.of(1, 2));
 
-		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEquals(
 			Arrays.asList(
-				new WorkflowLog() {
-					{
-						commentLog = _language.get(
-							LocaleUtil.getDefault(), "assigned-initial-task");
-						description = _language.format(
-							LocaleUtil.getDefault(),
-							"task-initially-assigned-to-the-x-role",
-							_administratorRole.getTitle(
-								LocaleUtil.getDefault()),
-							false);
-						state = "review";
-						stateLabel = "Review";
-						type = Type.TASK_ASSIGN;
-						workflowTaskId = workflowTask.getId();
-					}
-				}),
+				_toAssignToRoleWorkflowLog(_siteContentReviewerRole),
+				_toAssignToRoleWorkflowLog(_administratorRole)),
 			(List<WorkflowLog>)page.getItems());
 
 		assertValid(page);
@@ -259,73 +187,41 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 	public void testGetWorkflowTaskWorkflowLogsPageWithPagination()
 		throws Exception {
 
-		WorkflowTask workflowTask = WorkflowTaskTestUtil.getWorkflowTask(
-			_workflowInstance.getId());
-
 		_workflowTaskManager.assignWorkflowTaskToUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			workflowTask.getId(), TestPropsValues.getUserId(), StringPool.BLANK,
-			null, null);
+			_workflowTask.getId(), TestPropsValues.getUserId(),
+			StringPool.BLANK, null, null);
 
 		Page<WorkflowLog> page1 =
 			workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-				workflowTask.getId(),
+				_workflowTask.getId(),
 				new String[] {WorkflowLog.Type.TASK_ASSIGN.getValue()},
-				Pagination.of(1, 1));
+				Pagination.of(1, 2));
 
 		List<WorkflowLog> workflowLogs1 = (List<WorkflowLog>)page1.getItems();
 
-		Assert.assertEquals(workflowLogs1.toString(), 1, workflowLogs1.size());
+		Assert.assertEquals(workflowLogs1.toString(), 2, workflowLogs1.size());
 
 		assertEquals(
 			Arrays.asList(
-				new WorkflowLog() {
-					{
-						commentLog = StringPool.BLANK;
-						description = _language.format(
-							LocaleUtil.getDefault(),
-							"x-assigned-the-task-to-himself",
-							_portal.getUserName(
-								TestPropsValues.getUserId(), StringPool.BLANK),
-							false);
-						state = "review";
-						stateLabel = "Review";
-						type = Type.TASK_ASSIGN;
-						workflowTaskId = workflowTask.getId();
-					}
-				}),
+				_toAssignToHimselfWorkflowLog(),
+				_toAssignToRoleWorkflowLog(_siteContentReviewerRole)),
 			workflowLogs1);
 
-		Page<WorkflowLog> page2 =
+		Page<WorkflowLog> page3 =
 			workflowLogResource.getWorkflowTaskWorkflowLogsPage(
-				workflowTask.getId(),
+				_workflowTask.getId(),
 				new String[] {WorkflowLog.Type.TASK_ASSIGN.getValue()},
-				Pagination.of(2, 1));
+				Pagination.of(3, 1));
 
-		Assert.assertEquals(2, page2.getTotalCount());
+		Assert.assertEquals(3, page3.getTotalCount());
 
-		List<WorkflowLog> workflowLogs2 = (List<WorkflowLog>)page2.getItems();
+		List<WorkflowLog> workflowLogs2 = (List<WorkflowLog>)page3.getItems();
 
 		Assert.assertEquals(workflowLogs2.toString(), 1, workflowLogs2.size());
 
 		assertEquals(
-			Arrays.asList(
-				new WorkflowLog() {
-					{
-						commentLog = _language.get(
-							LocaleUtil.getDefault(), "assigned-initial-task");
-						description = _language.format(
-							LocaleUtil.getDefault(),
-							"task-initially-assigned-to-the-x-role",
-							_administratorRole.getTitle(
-								LocaleUtil.getDefault()),
-							false);
-						state = "review";
-						stateLabel = "Review";
-						type = Type.TASK_ASSIGN;
-						workflowTaskId = workflowTask.getId();
-					}
-				}),
+			Arrays.asList(_toAssignToRoleWorkflowLog(_administratorRole)),
 			workflowLogs2);
 	}
 
@@ -357,6 +253,41 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 		return testGetWorkflowLog_addWorkflowLog();
 	}
 
+	private WorkflowLog _toAssignToHimselfWorkflowLog() throws Exception {
+		return new WorkflowLog() {
+			{
+				commentLog = StringPool.BLANK;
+				description = _language.format(
+					LocaleUtil.getDefault(), "x-assigned-the-task-to-himself",
+					_portal.getUserName(
+						TestPropsValues.getUserId(), StringPool.BLANK),
+					false);
+				state = "review";
+				stateLabel = "Review";
+				type = Type.TASK_ASSIGN;
+				workflowTaskId = _workflowTask.getId();
+			}
+		};
+	}
+
+	private WorkflowLog _toAssignToRoleWorkflowLog(Role role) {
+		String roleTitle = role.getTitle(LocaleUtil.getDefault());
+
+		return new WorkflowLog() {
+			{
+				commentLog = _language.get(
+					LocaleUtil.getDefault(), "assigned-initial-task");
+				description = _language.format(
+					LocaleUtil.getDefault(),
+					"task-initially-assigned-to-the-x-role", roleTitle, false);
+				state = "review";
+				stateLabel = "Review";
+				type = Type.TASK_ASSIGN;
+				workflowTaskId = _workflowTask.getId();
+			}
+		};
+	}
+
 	private static WorkflowDefinition _workflowDefinition;
 	private static WorkflowInstance _workflowInstance;
 
@@ -370,6 +301,9 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	private Role _siteContentReviewerRole;
+	private WorkflowTask _workflowTask;
 
 	@Inject
 	private WorkflowTaskManager _workflowTaskManager;

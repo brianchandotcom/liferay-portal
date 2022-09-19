@@ -257,7 +257,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					</aui:field-wrapper>
 
 					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-						<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff="enable-comments" labelOn="enable-comments" name="enableComments" type="toggle-switch" value="<%= objectDefinition.isEnableComments() %>" />
+						<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() || objectDefinition.isEnableComments() %>" label="" labelOff="enable-comments" labelOn="enable-comments" name="enableComments" type="toggle-switch" value="<%= objectDefinition.isEnableComments() %>" />
 					</aui:field-wrapper>
 				</c:if>
 

@@ -45,7 +45,7 @@ const ItemLanguages = ({urls}) => {
 	);
 
 	return (
-		<div className="c-mb-4 sidebar-dl sidebar-section">
+		<div className="c-mb-4 sidebar-section">
 			<h5 className="font-weight-semi-bold">
 				{Liferay.Language.get('languages-translated-into')}
 			</h5>

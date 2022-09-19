@@ -53,7 +53,7 @@ const SpecificFields = ({fields, languageTag}: IProps) => {
 			title &&
 			value &&
 			type && (
-				<div className="c-mb-4 sidebar-dl sidebar-section" key={title}>
+				<div className="c-mb-4 sidebar-section" key={title}>
 					<h5 className="c-mb-1 font-weight-semi-bold">{title}</h5>
 
 					<SpecificItem

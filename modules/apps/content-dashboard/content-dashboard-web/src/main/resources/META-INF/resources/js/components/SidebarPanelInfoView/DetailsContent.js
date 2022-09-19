@@ -64,10 +64,7 @@ const DetailsContent = ({
 						languageTag={languageTag}
 					/>
 
-					<div
-						className="c-mb-4 sidebar-dl sidebar-section"
-						key="creation-date"
-					>
+					<div className="c-mb-4 sidebar-section" key="creation-date">
 						<h5 className="c-mb-1 font-weight-semi-bold">
 							{Liferay.Language.get('creation-date')}
 						</h5>
@@ -77,10 +74,7 @@ const DetailsContent = ({
 						</p>
 					</div>
 
-					<div
-						className="c-mb-4 sidebar-dl sidebar-section"
-						key="modified-date"
-					>
+					<div className="c-mb-4 sidebar-section" key="modified-date">
 						<h5 className="c-mb-1 font-weight-semi-bold">
 							{Liferay.Language.get('modified-date')}
 						</h5>
@@ -90,7 +84,7 @@ const DetailsContent = ({
 						</p>
 					</div>
 
-					<div className="c-mb-4 sidebar-dl sidebar-section" key="id">
+					<div className="c-mb-4 sidebar-section" key="id">
 						<h5 className="c-mb-1 font-weight-semi-bold">
 							{Liferay.Language.get('id')}
 						</h5>

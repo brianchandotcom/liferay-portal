@@ -65,7 +65,7 @@ const Categorization = ({tags, vocabularies}: IProps): JSX.Element | null => {
 			)}
 
 			{!!tags.length && (
-				<div className="c-mb-4 sidebar-dl sidebar-section">
+				<div className="c-mb-4 sidebar-section">
 					<h5 className="c-mb-1 font-weight-semi-bold">
 						{Liferay.Language.get('tags')}
 					</h5>

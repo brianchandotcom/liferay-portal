@@ -370,6 +370,8 @@ public class FileEntryContentDashboardItem
 		return HashMapBuilder.<String, Object>put(
 			"extension", _getExtension()
 		).put(
+			"file-name", _getFileName()
+		).put(
 			"latest-version-url", _getLatestVersionURL()
 		).put(
 			"size", _getSize(locale)
@@ -427,9 +429,12 @@ public class FileEntryContentDashboardItem
 	}
 
 	private String _getExtension() {
-		return FileUtil.getExtension(
-			InfoItemFieldValuesProviderUtil.getStringValue(
-				_fileEntry, _infoItemFieldValuesProvider, "fileName"));
+		return FileUtil.getExtension(_getFileName());
+	}
+
+	private String _getFileName() {
+		return InfoItemFieldValuesProviderUtil.getStringValue(
+			_fileEntry, _infoItemFieldValuesProvider, "fileName");
 	}
 
 	private Version _getLastVersion(Locale locale) {

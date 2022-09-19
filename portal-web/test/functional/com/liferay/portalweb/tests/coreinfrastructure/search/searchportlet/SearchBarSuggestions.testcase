@@ -377,4 +377,49 @@ definition {
 		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple Pie Site Name");
 	}
 
+	@priority = "4"
+	test ViewCustomContributorDisplayGroupName {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Language Override");
+
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			locator1 = "TextInput#KEY",
+			value1 = "top-search-keywords");
+
+		Type(
+			key_text = "en-US",
+			locator1 = "TextInput#ANY",
+			value1 = "Top Search Keywords");
+
+		PortletEntry.save();
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Navigator.openURL();
+
+		SearchBarSuggestions.configureEmbeddedSearchBarSuggestions(suggestionContributorSize = "3");
+
+		SearchBarSuggestions.configureEmbeddedSearchBarSuggestions(
+			addContributor = "true",
+			suggestionContributor = "Blueprint",
+			suggestionContributorBlueprint = "Test Blueprint",
+			suggestionContributorDisplayGroupName = "top-search-keywords",
+			suggestionContributorOrder = "2",
+			suggestionContributorSize = "3");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Home");
+
+		SearchBarSuggestions.viewSuggestionContributorDisplayGroupName(
+			suggestionContributorDisplayGroupName = "Top Search Keywords",
+			suggestionSubheader = "TOP SEARCH KEYWORDS");
+	}
+
 }

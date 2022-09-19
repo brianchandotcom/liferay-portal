@@ -5,9 +5,11 @@
 				"definition": {
 					"fragmentStyle": {
 						"backgroundColor": "colorNeutral1",
+						"borderWidth": "0",
 						"minHeight": "93vh",
 						"paddingBottom": "6",
-						"paddingTop": "4"
+						"paddingTop": "4",
+						"textAlign": ""
 					},
 					"indexed": true,
 					"layout": {
@@ -28,7 +30,8 @@
 						"definition": {
 							"fragmentStyle": {
 								"marginBottom": "4",
-								"paddingBottom": "2"
+								"paddingBottom": "2",
+								"textAlign": ""
 							},
 							"gutters": true,
 							"indexed": true,
@@ -112,6 +115,24 @@
 											},
 											"fragmentFields": [
 												{
+													"id": "heading-image",
+													"value": {
+														"fragmentImage": {
+															"url": {
+																"mapping": {
+																	"fieldKey": "FileEntry_previewImage",
+																	"itemReference": {
+																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/mdf-request-heading-icon.svg$]"
+																	}
+																}
+															}
+														},
+														"fragmentLink": {
+														}
+													}
+												},
+												{
 													"id": "heading-title",
 													"value": {
 														"fragmentLink": {
@@ -134,24 +155,6 @@
 															}
 														}
 													}
-												},
-												{
-													"id": "heading-image",
-													"value": {
-														"fragmentImage": {
-															"url": {
-																"mapping": {
-																	"fieldKey": "FileEntry_previewImage",
-																	"itemReference": {
-																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/mdf-request-heading-icon.svg$]"
-																	}
-																}
-															}
-														},
-														"fragmentLink": {
-														}
-													}
 												}
 											],
 											"indexed": true
@@ -166,6 +169,9 @@
 					},
 					{
 						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
 							"indexed": true,
 							"layout": {
 								"align": "Start",
@@ -187,7 +193,7 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"width": "680px"
+										"maxWidth": "680px"
 									},
 									"widgetInstance": {
 										"widgetConfig": {

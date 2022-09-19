@@ -41,12 +41,14 @@
 							"fragment": {
 								"key": "heading-with-icon"
 							},
-							"fragmentConfig": {},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "heading-title",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"ar_SA": "Announcements",
@@ -80,7 +82,8 @@
 												}
 											}
 										},
-										"fragmentLink": {}
+										"fragmentLink": {
+										}
 									}
 								}
 							],
@@ -97,12 +100,14 @@
 							"fragment": {
 								"key": "announcements-subscribe"
 							},
-							"fragmentConfig": {},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "announcements-heading",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"ar_SA": "All Announcements",

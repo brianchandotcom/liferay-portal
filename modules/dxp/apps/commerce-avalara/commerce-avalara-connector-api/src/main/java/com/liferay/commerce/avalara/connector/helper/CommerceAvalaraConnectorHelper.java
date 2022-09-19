@@ -12,26 +12,19 @@
  *
  */
 
-package com.liferay.commerce.avalara.connector;
+package com.liferay.commerce.avalara.connector.helper;
 
-import java.util.List;
-import java.util.Map;
-
-import net.avalara.avatax.rest.client.models.TaxCodeModel;
+import com.liferay.commerce.tax.model.CommerceTaxMethod;
 
 /**
  * @author Riccardo Alberti
  */
-public interface CommerceAvalaraConnector {
+public interface CommerceAvalaraConnectorHelper {
 
-	public Map<String, String> getCompanyCodes() throws Exception;
+	public void createTaxCategories(long userId) throws Exception;
 
-	public List<TaxCodeModel> getTaxCodes() throws Exception;
+	public void removeByAddressEntries(CommerceTaxMethod commerceTaxMethod);
 
-	public String getTaxRateByZipCode() throws Exception;
-
-	public void verifyConnection(
-			String accountNumber, String licenseKey, String serviceURL)
-		throws Exception;
+	public void updateByAddressEntries(long groupId) throws Exception;
 
 }

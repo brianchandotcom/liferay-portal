@@ -114,11 +114,11 @@ public class RelatedObjectEntryResourceImpl
 		_objectRelationshipService.addObjectRelationshipMappingTableValues(
 			objectRelationship.getObjectRelationshipId(),
 			_getPrimaryKey1(
-				systemObjectDefinition, objectDefinition, objectEntryId,
-				relatedObjectEntryId),
+				objectDefinition, objectEntryId, relatedObjectEntryId,
+				systemObjectDefinition),
 			_getPrimaryKey2(
-				systemObjectDefinition, objectDefinition, objectEntryId,
-				relatedObjectEntryId),
+				objectDefinition, objectEntryId, relatedObjectEntryId,
+				systemObjectDefinition),
 			new ServiceContext());
 
 		ObjectEntryManager objectEntryManager =
@@ -151,9 +151,8 @@ public class RelatedObjectEntryResourceImpl
 	}
 
 	private long _getPrimaryKey1(
-		ObjectDefinition systemObjectDefinition,
 		ObjectDefinition objectDefinition, long objectEntryId,
-		long relatedObjectEntryId) {
+		long relatedObjectEntryId, ObjectDefinition systemObjectDefinition) {
 
 		if (objectDefinition.getObjectDefinitionId() ==
 				systemObjectDefinition.getObjectDefinitionId()) {
@@ -165,9 +164,8 @@ public class RelatedObjectEntryResourceImpl
 	}
 
 	private long _getPrimaryKey2(
-		ObjectDefinition systemObjectDefinition,
 		ObjectDefinition objectDefinition, long objectEntryId,
-		long relatedObjectEntryId) {
+		long relatedObjectEntryId, ObjectDefinition systemObjectDefinition) {
 
 		if (objectDefinition.getObjectDefinitionId() ==
 				systemObjectDefinition.getObjectDefinitionId()) {

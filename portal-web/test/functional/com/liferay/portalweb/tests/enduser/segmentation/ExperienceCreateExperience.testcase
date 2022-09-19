@@ -4160,7 +4160,22 @@ definition {
 		task ("Assert that Default Segment is active and at the bottom") {
 			PageEditor.viewExperienceActive(experienceName = "Default");
 
-			PageEditor.viewExperiencesNameOrder(experienceName = "Segment Name Experience,Segment Email Experience,Default");
+			PageEditor.openExperienceMenu();
+
+			AssertTextEquals(
+				index = "1",
+				locator1 = "PageEditor#EXPERIENCE_TITLE_INDEX",
+				value1 = "Segment Name Experience");
+
+			AssertTextEquals(
+				index = "2",
+				locator1 = "PageEditor#EXPERIENCE_TITLE_INDEX",
+				value1 = "Segment Email Experience");
+
+			AssertTextEquals(
+				index = "3",
+				locator1 = "PageEditor#EXPERIENCE_TITLE_INDEX",
+				value1 = "Default");
 		}
 	}
 

@@ -84,13 +84,7 @@ public class RelatedObjectEntryResourceTest {
 					"Text", "String", true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
 
-		_objectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
-			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+		_objectEntry = _createObjectEntry(_OBJECT_FIELD_VALUE);
 
 		_userSystemObjectDefinitionMetadata =
 			_systemObjectDefinitionMetadataTracker.
@@ -133,7 +127,8 @@ public class RelatedObjectEntryResourceTest {
 			StringBundler.concat(
 				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
 				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName()));
+				_objectRelationship.getName()),
+			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
@@ -143,6 +138,47 @@ public class RelatedObjectEntryResourceTest {
 
 		Assert.assertEquals(
 			_OBJECT_FIELD_VALUE, itemJSONObject.getString(_OBJECT_FIELD_NAME));
+	}
+
+	@Test
+	public void testPutSystemObjectRelatedObject() throws Exception {
+		String objectFieldValue = RandomTestUtil.randomString();
+
+		ObjectEntry objectEntry = _createObjectEntry(objectFieldValue);
+
+		JSONObject jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				_objectRelationship.getName(), StringPool.SLASH,
+				objectEntry.getPrimaryKey()),
+			Http.Method.PUT);
+
+		Assert.assertEquals(
+			objectFieldValue, jsonObject.getString(_OBJECT_FIELD_NAME));
+
+		jsonObject = _invoke(
+			StringBundler.concat(
+				_userSystemObjectDefinitionMetadata.getRESTContextPath(),
+				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
+				_objectRelationship.getName()),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(2, itemsJSONArray.length());
+	}
+
+	private ObjectEntry _createObjectEntry(String objectFieldValue)
+		throws Exception {
+
+		return ObjectEntryLocalServiceUtil.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME, objectFieldValue
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private ObjectDefinition _getSystemObjectDefinition(
@@ -165,8 +201,14 @@ public class RelatedObjectEntryResourceTest {
 		return null;
 	}
 
-	private JSONObject _invoke(String endpoint) throws Exception {
+	private JSONObject _invoke(String endpoint, Http.Method httpMethod)
+		throws Exception {
+
 		Http.Options options = new Http.Options();
+
+		if (httpMethod == Http.Method.PUT) {
+			options.setPut(true);
+		}
 
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);

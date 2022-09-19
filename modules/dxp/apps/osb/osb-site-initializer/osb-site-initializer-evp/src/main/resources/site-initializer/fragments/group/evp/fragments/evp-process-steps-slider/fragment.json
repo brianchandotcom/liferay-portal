@@ -1,0 +1,10 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "slideshow",
+	"jsPath": "index.js",
+	"name": "EVP Process Steps Slider",
+	"thumbnailPath": "thumbnail.png",
+	"type": "component"
+}

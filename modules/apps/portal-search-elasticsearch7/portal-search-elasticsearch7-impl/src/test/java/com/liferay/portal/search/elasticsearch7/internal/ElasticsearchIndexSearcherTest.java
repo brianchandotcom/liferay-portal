@@ -17,10 +17,12 @@ package com.liferay.portal.search.elasticsearch7.internal;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.elasticsearch7.constants.ElasticsearchSearchContextAttributes;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
@@ -92,14 +94,20 @@ public class ElasticsearchIndexSearcherTest {
 	private ElasticsearchIndexSearcher _createElasticsearchIndexSearcher(
 		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
-		return new ElasticsearchIndexSearcher() {
-			{
-				setElasticsearchConfigurationWrapper(
-					Mockito.mock(ElasticsearchConfigurationWrapper.class));
-				setIndexNameBuilder(String::valueOf);
-				setSearchRequestBuilderFactory(searchRequestBuilderFactory);
-			}
-		};
+		ElasticsearchIndexSearcher elasticsearchIndexSearcher =
+			new ElasticsearchIndexSearcher();
+
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexSearcher, "_elasticsearchConfigurationWrapper",
+			Mockito.mock(ElasticsearchConfigurationWrapper.class));
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexSearcher, "_indexNameBuilder",
+			(IndexNameBuilder)String::valueOf);
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexSearcher, "_searchRequestBuilderFactory",
+			searchRequestBuilderFactory);
+
+		return elasticsearchIndexSearcher;
 	}
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();

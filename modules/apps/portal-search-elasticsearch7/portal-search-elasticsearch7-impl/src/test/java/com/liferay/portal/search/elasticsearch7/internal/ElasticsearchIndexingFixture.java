@@ -18,6 +18,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.suggest.QuerySuggester;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Props;
@@ -225,24 +226,33 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		SearchEngineAdapter searchEngineAdapter,
 		IndexNameBuilder indexNameBuilder, Localization localization) {
 
-		return new ElasticsearchIndexSearcher() {
-			{
-				setElasticsearchConfigurationWrapper(
-					createElasticsearchConfigurationWrapper(
-						elasticsearchFixture.
-							getElasticsearchConfigurationProperties()));
-				setIndexNameBuilder(indexNameBuilder);
-				setProps(_createProps());
-				setQuerySuggester(
-					_createElasticsearchQuerySuggester(
-						searchEngineAdapter, indexNameBuilder, localization));
-				setSearchEngineAdapter(searchEngineAdapter);
-				setSearchRequestBuilderFactory(
-					new SearchRequestBuilderFactoryImpl());
-				setSearchResponseBuilderFactory(
-					new SearchResponseBuilderFactoryImpl());
-			}
-		};
+		ElasticsearchIndexSearcher elasticsearchIndexSearcher =
+			new ElasticsearchIndexSearcher();
+
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexSearcher, "_elasticsearchConfigurationWrapper",
+			createElasticsearchConfigurationWrapper(
+				elasticsearchFixture.
+					getElasticsearchConfigurationProperties()));
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexSearcher, "_indexNameBuilder", indexNameBuilder);
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexSearcher, "_props", _createProps());
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexSearcher, "_querySuggester",
+			_createElasticsearchQuerySuggester(
+				searchEngineAdapter, indexNameBuilder, localization));
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexSearcher, "_searchEngineAdapter",
+			searchEngineAdapter);
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexSearcher, "_searchRequestBuilderFactory",
+			new SearchRequestBuilderFactoryImpl());
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexSearcher, "_searchResponseBuilderFactory",
+			new SearchResponseBuilderFactoryImpl());
+
+		return elasticsearchIndexSearcher;
 	}
 
 	private IndexWriter _createIndexWriter(
@@ -250,19 +260,25 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		SearchEngineAdapter searchEngineAdapter,
 		IndexNameBuilder indexNameBuilder, Localization localization) {
 
-		return new ElasticsearchIndexWriter() {
-			{
-				setElasticsearchConfigurationWrapper(
-					createElasticsearchConfigurationWrapper(
-						elasticsearchFixture.
-							getElasticsearchConfigurationProperties()));
-				setIndexNameBuilder(indexNameBuilder);
-				setSearchEngineAdapter(searchEngineAdapter);
-				setSpellCheckIndexWriter(
-					_createElasticsearchSpellCheckIndexWriter(
-						searchEngineAdapter, indexNameBuilder, localization));
-			}
-		};
+		ElasticsearchIndexWriter elasticsearchIndexWriter =
+			new ElasticsearchIndexWriter();
+
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexWriter, "_elasticsearchConfigurationWrapper",
+			createElasticsearchConfigurationWrapper(
+				elasticsearchFixture.
+					getElasticsearchConfigurationProperties()));
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexWriter, "_indexNameBuilder", indexNameBuilder);
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexWriter, "_searchEngineAdapter",
+			searchEngineAdapter);
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexWriter, "_spellCheckIndexWriter",
+			_createElasticsearchSpellCheckIndexWriter(
+				searchEngineAdapter, indexNameBuilder, localization));
+
+		return elasticsearchIndexWriter;
 	}
 
 	private Props _createProps() {

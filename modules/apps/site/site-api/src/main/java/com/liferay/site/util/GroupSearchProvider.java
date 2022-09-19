@@ -41,6 +41,7 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -108,6 +109,15 @@ public class GroupSearchProvider {
 		}
 
 		return groupSearch;
+	}
+
+	@Activate
+	protected void activate() {
+		_classNameIds = new long[] {
+			PortalUtil.getClassNameId(Company.class),
+			PortalUtil.getClassNameId(Group.class),
+			PortalUtil.getClassNameId(Organization.class)
+		};
 	}
 
 	protected List<Group> getAllGroups(PortletRequest portletRequest)
@@ -220,12 +230,6 @@ public class GroupSearchProvider {
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
-
-		_classNameIds = new long[] {
-			PortalUtil.getClassNameId(Company.class),
-			PortalUtil.getClassNameId(Group.class),
-			PortalUtil.getClassNameId(Organization.class)
-		};
 	}
 
 	private long[] _classNameIds;

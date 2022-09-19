@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -111,11 +110,16 @@ public class PortalAddressOSGiCommands {
 
 				Map<String, String> titleMap = new HashMap<>();
 
-				for (Locale locale : _language.getCompanyAvailableLocales(companyId)) {
-					titleMap.put(_language.getLanguageId(locale), country.getName(locale));
+				for (Locale locale :
+						_language.getCompanyAvailableLocales(companyId)) {
+
+					titleMap.put(
+						_language.getLanguageId(locale),
+						country.getName(locale));
 				}
 
-				_countryLocalService.updateCountryLocalizations(country, titleMap);
+				_countryLocalService.updateCountryLocalizations(
+					country, titleMap);
 
 				_processCountryRegions(country);
 			}

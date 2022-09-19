@@ -93,6 +93,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -567,8 +568,9 @@ public class ObjectDefinitionLocalServiceImpl
 				_objectEntryLocalService, _objectFieldLocalService,
 				_objectLayoutLocalService, _objectRelationshipLocalService,
 				_objectScopeProviderRegistry, _objectViewLocalService,
-				_persistedModelLocalServiceRegistry, _resourceActions,
-				_userLocalService, _workflowStatusModelPreFilterContributor));
+				_persistedModelLocalServiceRegistry, _portletLocalService,
+				_resourceActions, _userLocalService,
+				_workflowStatusModelPreFilterContributor));
 
 		_objectDefinitionDeployerServiceTracker = new ServiceTracker<>(
 			_bundleContext, ObjectDefinitionDeployer.class,
@@ -1564,6 +1566,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

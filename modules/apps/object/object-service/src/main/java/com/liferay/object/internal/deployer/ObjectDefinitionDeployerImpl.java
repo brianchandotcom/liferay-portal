@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -66,6 +67,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -106,6 +108,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		ObjectViewLocalService objectViewLocalService,
 		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry,
+		PortletLocalService portletLocalService,
 		ResourceActions resourceActions, UserLocalService userLocalService,
 		ModelPreFilterContributor workflowStatusModelPreFilterContributor) {
 
@@ -127,6 +130,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_objectViewLocalService = objectViewLocalService;
 		_persistedModelLocalServiceRegistry =
 			persistedModelLocalServiceRegistry;
+		_portletLocalService = portletLocalService;
 		_resourceActions = resourceActions;
 		_userLocalService = userLocalService;
 		_workflowStatusModelPreFilterContributor =
@@ -325,21 +329,28 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private void _readResourceActions(ObjectDefinition objectDefinition)
 		throws Exception {
 
-		_resourceActions.populateModelResources(
-			SAXReaderUtil.read(
-				StringUtil.replace(
-					StringUtil.read(
-						ObjectDefinitionDeployerImpl.class.getClassLoader(),
-						"resource-actions/resource-actions.xml.tpl"),
-					new String[] {
-						"[$MODEL_NAME$]", "[$PORTLET_NAME$]",
-						"[$RESOURCE_NAME$]"
-					},
-					new String[] {
-						objectDefinition.getClassName(),
-						objectDefinition.getPortletId(),
-						objectDefinition.getResourceName()
-					})));
+		ClassLoader classLoader =
+			ObjectDefinitionDeployerImpl.class.getClassLoader();
+
+		Document document = SAXReaderUtil.read(
+			StringUtil.replace(
+				StringUtil.read(
+					classLoader, "resource-actions/resource-actions.xml.tpl"),
+				new String[] {
+					"[$MODEL_NAME$]", "[$PORTLET_NAME$]", "[$RESOURCE_NAME$]"
+				},
+				new String[] {
+					objectDefinition.getClassName(),
+					objectDefinition.getPortletId(),
+					objectDefinition.getResourceName()
+				}));
+
+		_resourceActions.populateModelResources(document);
+		_resourceActions.populatePortletResource(
+			_portletLocalService.getPortletById(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getPortletId()),
+			classLoader, document);
 	}
 
 	private final AssetCategoryLocalService _assetCategoryLocalService;
@@ -361,6 +372,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final ObjectViewLocalService _objectViewLocalService;
 	private final PersistedModelLocalServiceRegistry
 		_persistedModelLocalServiceRegistry;
+	private final PortletLocalService _portletLocalService;
 	private final ResourceActions _resourceActions;
 	private final UserLocalService _userLocalService;
 	private final ModelPreFilterContributor

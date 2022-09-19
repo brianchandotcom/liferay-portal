@@ -84,6 +84,44 @@ definition {
 		}
 	}
 
+	@description = "LPS-150886 - Verify that it's not possible to delete an object that has a relationship"
+	@priority = "5"
+	test CannotDeleteCustomObjectWithRelationship {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 290",
+			objectName = "CustomObject290",
+			pluralLabelName = "Custom Objects 290");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject290");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject290",
+			objectName_2 = "User",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject290");
+
+		ObjectAdmin.openObjectAdmin();
+
+		Click(
+			key_objectLabel = "Custom Object 290",
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
+
+		ObjectAdmin.assertCannotDeleteObjectWithRelationshipErrorMessage();
+	}
+
 	@description = "LPS-135406 - Verify it is not possible to delete native fields of objects native"
 	@priority = "4"
 	test CannotDeleteFieldsFromNativeObjects {

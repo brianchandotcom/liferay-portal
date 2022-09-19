@@ -17,22 +17,21 @@ package com.liferay.commerce.avalara.connector.configuration;
 import aQute.bnd.annotation.metatype.Meta;
 
 /**
- * @author Katie Nesterovich
+ * @author Calvin Keum
  */
 @Meta.OCD(
-	id = "com.liferay.commerce.avalara.connector.configuration.CommerceAvalaraConnectorConfiguration",
+	id = "com.liferay.commerce.avalara.connector.configuration.CommerceAvalaraConnectorChannelConfiguration",
 	localization = "content/Language",
-	name = "commerce-avalara-connector-configuration-name"
+	name = "commerce-avalara-connector-channel-configuration-name"
 )
-public interface CommerceAvalaraConnectorConfiguration {
+public interface CommerceAvalaraConnectorChannelConfiguration {
 
-	@Meta.AD(name = "account-number", required = false)
-	public String accountNumber();
+	@Meta.AD(name = "company-code", required = false)
+	public String companyCode();
 
-	@Meta.AD(name = "license-key", required = false)
-	public String licenseKey();
-
-	@Meta.AD(name = "service-url", required = false)
-	public String serviceURL();
+	@Meta.AD(
+		deflt = "false", name = "disabled-document-recording", required = false
+	)
+	public boolean disabledDocumentRecording();
 
 }

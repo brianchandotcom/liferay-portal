@@ -188,6 +188,8 @@ definition {
 	@description = "Verify that the translation icon next to the -Name- and -Description- field is in English by default."
 	@priority = "3"
 	test IconTranslationEnglishByDefault {
+		property portal.upstream = "quarantine";
+
 		KaleoFormsAdmin.addProcess();
 
 		KaleoFormsAdmin.viewSelectedLanguage(

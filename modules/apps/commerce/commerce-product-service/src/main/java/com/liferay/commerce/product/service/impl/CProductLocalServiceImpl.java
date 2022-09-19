@@ -19,7 +19,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.base.CProductLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.portal.aop.AopService;
@@ -192,9 +191,6 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 
 	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
-
-	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -3020,8 +3020,4 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommercePaymentMethodGroupRelModelArgumentsResolver
-		_commercePaymentMethodGroupRelModelArgumentsResolver;
-
 }

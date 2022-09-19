@@ -25004,7 +25004,4 @@ public class WikiPagePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private WikiPageModelArgumentsResolver _wikiPageModelArgumentsResolver;
-
 }

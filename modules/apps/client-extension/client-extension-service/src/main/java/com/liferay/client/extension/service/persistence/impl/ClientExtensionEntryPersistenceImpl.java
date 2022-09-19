@@ -5462,8 +5462,4 @@ public class ClientExtensionEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ClientExtensionEntryModelArgumentsResolver
-		_clientExtensionEntryModelArgumentsResolver;
-
 }

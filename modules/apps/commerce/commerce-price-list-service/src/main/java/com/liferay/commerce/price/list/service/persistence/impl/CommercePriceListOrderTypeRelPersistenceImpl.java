@@ -3116,8 +3116,4 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommercePriceListOrderTypeRelModelArgumentsResolver
-		_commercePriceListOrderTypeRelModelArgumentsResolver;
-
 }

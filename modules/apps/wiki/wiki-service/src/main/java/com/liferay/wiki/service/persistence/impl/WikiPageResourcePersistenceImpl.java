@@ -2436,8 +2436,4 @@ public class WikiPageResourcePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private WikiPageResourceModelArgumentsResolver
-		_wikiPageResourceModelArgumentsResolver;
-
 }

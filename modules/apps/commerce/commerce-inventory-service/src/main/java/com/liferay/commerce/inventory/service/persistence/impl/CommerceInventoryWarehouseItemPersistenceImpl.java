@@ -4308,8 +4308,4 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommerceInventoryWarehouseItemModelArgumentsResolver
-		_commerceInventoryWarehouseItemModelArgumentsResolver;
-
 }

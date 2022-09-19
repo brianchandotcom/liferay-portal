@@ -3527,8 +3527,4 @@ public class CalendarNotificationTemplatePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CalendarNotificationTemplateModelArgumentsResolver
-		_calendarNotificationTemplateModelArgumentsResolver;
-
 }

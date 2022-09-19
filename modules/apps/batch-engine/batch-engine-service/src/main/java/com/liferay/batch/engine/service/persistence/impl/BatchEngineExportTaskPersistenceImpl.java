@@ -3345,8 +3345,4 @@ public class BatchEngineExportTaskPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private BatchEngineExportTaskModelArgumentsResolver
-		_batchEngineExportTaskModelArgumentsResolver;
-
 }

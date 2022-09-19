@@ -2381,8 +2381,4 @@ public class MemberRequestPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private MemberRequestModelArgumentsResolver
-		_memberRequestModelArgumentsResolver;
-
 }

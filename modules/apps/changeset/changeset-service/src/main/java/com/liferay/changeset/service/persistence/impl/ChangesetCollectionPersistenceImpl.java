@@ -3223,8 +3223,4 @@ public class ChangesetCollectionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private ChangesetCollectionModelArgumentsResolver
-		_changesetCollectionModelArgumentsResolver;
-
 }

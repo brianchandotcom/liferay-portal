@@ -4866,8 +4866,4 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private AssetListEntrySegmentsEntryRelModelArgumentsResolver
-		_assetListEntrySegmentsEntryRelModelArgumentsResolver;
-
 }

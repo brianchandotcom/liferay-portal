@@ -5538,8 +5538,4 @@ public class KaleoInstancePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoInstanceModelArgumentsResolver
-		_kaleoInstanceModelArgumentsResolver;
-
 }

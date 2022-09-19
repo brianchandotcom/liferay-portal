@@ -2695,8 +2695,4 @@ public class KaleoNotificationRecipientPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoNotificationRecipientModelArgumentsResolver
-		_kaleoNotificationRecipientModelArgumentsResolver;
-
 }

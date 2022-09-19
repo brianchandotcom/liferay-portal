@@ -2222,8 +2222,4 @@ public class CTAutoResolutionInfoPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CTAutoResolutionInfoModelArgumentsResolver
-		_ctAutoResolutionInfoModelArgumentsResolver;
-
 }

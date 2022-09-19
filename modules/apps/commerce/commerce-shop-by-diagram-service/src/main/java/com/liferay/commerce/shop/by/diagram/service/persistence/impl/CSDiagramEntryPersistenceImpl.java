@@ -2339,8 +2339,4 @@ public class CSDiagramEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CSDiagramEntryModelArgumentsResolver
-		_csDiagramEntryModelArgumentsResolver;
-
 }

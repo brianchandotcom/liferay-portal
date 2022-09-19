@@ -7096,8 +7096,4 @@ public class SegmentsExperimentPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private SegmentsExperimentModelArgumentsResolver
-		_segmentsExperimentModelArgumentsResolver;
-
 }

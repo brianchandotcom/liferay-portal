@@ -3530,7 +3530,4 @@ public class CTSContentPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CTSContentModelArgumentsResolver _ctsContentModelArgumentsResolver;
-
 }

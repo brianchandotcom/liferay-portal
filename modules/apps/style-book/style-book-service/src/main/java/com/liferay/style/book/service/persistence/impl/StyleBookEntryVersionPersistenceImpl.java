@@ -9849,8 +9849,4 @@ public class StyleBookEntryVersionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private StyleBookEntryVersionModelArgumentsResolver
-		_styleBookEntryVersionModelArgumentsResolver;
-
 }

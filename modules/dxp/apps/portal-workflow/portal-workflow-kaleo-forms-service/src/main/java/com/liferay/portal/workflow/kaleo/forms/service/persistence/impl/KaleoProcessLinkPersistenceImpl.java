@@ -1515,8 +1515,4 @@ public class KaleoProcessLinkPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoProcessLinkModelArgumentsResolver
-		_kaleoProcessLinkModelArgumentsResolver;
-
 }

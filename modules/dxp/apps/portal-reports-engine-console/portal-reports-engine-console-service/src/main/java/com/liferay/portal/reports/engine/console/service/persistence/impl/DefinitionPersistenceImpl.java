@@ -3587,7 +3587,4 @@ public class DefinitionPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DefinitionModelArgumentsResolver _definitionModelArgumentsResolver;
-
 }

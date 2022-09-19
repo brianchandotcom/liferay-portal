@@ -5270,8 +5270,4 @@ public class TemplateEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private TemplateEntryModelArgumentsResolver
-		_templateEntryModelArgumentsResolver;
-
 }

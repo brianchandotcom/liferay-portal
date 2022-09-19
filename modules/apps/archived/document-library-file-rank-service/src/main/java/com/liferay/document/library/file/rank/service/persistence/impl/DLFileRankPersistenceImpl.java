@@ -3190,7 +3190,4 @@ public class DLFileRankPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DLFileRankModelArgumentsResolver _dlFileRankModelArgumentsResolver;
-
 }

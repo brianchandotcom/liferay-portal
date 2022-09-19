@@ -3963,8 +3963,4 @@ public class OAuthClientEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private OAuthClientEntryModelArgumentsResolver
-		_oAuthClientEntryModelArgumentsResolver;
-
 }

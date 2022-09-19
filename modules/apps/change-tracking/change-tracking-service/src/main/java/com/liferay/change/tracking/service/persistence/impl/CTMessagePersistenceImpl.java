@@ -1201,7 +1201,4 @@ public class CTMessagePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CTMessageModelArgumentsResolver _ctMessageModelArgumentsResolver;
-
 }

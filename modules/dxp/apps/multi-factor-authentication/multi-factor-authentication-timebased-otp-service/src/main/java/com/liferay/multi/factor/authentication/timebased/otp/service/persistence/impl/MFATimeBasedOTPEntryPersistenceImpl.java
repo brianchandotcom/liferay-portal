@@ -972,8 +972,4 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private MFATimeBasedOTPEntryModelArgumentsResolver
-		_mfaTimeBasedOTPEntryModelArgumentsResolver;
-
 }

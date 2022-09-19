@@ -7800,8 +7800,4 @@ public class DispatchTriggerPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DispatchTriggerModelArgumentsResolver
-		_dispatchTriggerModelArgumentsResolver;
-
 }

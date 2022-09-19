@@ -2522,8 +2522,4 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CPDefinitionVirtualSettingModelArgumentsResolver
-		_cpDefinitionVirtualSettingModelArgumentsResolver;
-
 }

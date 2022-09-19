@@ -2443,8 +2443,4 @@ public class ObjectLayoutBoxPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectLayoutBoxModelArgumentsResolver
-		_objectLayoutBoxModelArgumentsResolver;
-
 }

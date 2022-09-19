@@ -8317,8 +8317,4 @@ public class SiteNavigationMenuPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private SiteNavigationMenuModelArgumentsResolver
-		_siteNavigationMenuModelArgumentsResolver;
-
 }

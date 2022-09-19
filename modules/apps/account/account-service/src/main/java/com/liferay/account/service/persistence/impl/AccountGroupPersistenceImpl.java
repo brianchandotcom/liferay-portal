@@ -6998,8 +6998,4 @@ public class AccountGroupPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private AccountGroupModelArgumentsResolver
-		_accountGroupModelArgumentsResolver;
-
 }

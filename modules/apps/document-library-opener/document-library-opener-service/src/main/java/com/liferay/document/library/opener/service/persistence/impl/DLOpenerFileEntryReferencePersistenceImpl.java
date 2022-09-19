@@ -1307,8 +1307,4 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DLOpenerFileEntryReferenceModelArgumentsResolver
-		_dlOpenerFileEntryReferenceModelArgumentsResolver;
-
 }

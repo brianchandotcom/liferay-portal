@@ -5610,7 +5610,4 @@ public class WikiNodePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private WikiNodeModelArgumentsResolver _wikiNodeModelArgumentsResolver;
-
 }

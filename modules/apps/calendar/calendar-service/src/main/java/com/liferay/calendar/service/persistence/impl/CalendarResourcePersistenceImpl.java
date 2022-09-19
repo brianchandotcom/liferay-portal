@@ -7473,8 +7473,4 @@ public class CalendarResourcePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CalendarResourceModelArgumentsResolver
-		_calendarResourceModelArgumentsResolver;
-
 }

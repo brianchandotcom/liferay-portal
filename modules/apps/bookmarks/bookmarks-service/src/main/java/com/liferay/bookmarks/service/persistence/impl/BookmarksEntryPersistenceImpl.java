@@ -13419,8 +13419,4 @@ public class BookmarksEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private BookmarksEntryModelArgumentsResolver
-		_bookmarksEntryModelArgumentsResolver;
-
 }

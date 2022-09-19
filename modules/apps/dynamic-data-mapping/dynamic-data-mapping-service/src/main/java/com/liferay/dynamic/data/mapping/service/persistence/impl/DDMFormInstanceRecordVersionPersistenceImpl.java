@@ -4432,8 +4432,4 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DDMFormInstanceRecordVersionModelArgumentsResolver
-		_ddmFormInstanceRecordVersionModelArgumentsResolver;
-
 }

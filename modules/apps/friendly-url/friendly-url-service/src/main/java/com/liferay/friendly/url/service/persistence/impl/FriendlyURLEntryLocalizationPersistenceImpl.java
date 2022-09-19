@@ -2937,8 +2937,4 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private FriendlyURLEntryLocalizationModelArgumentsResolver
-		_friendlyURLEntryLocalizationModelArgumentsResolver;
-
 }

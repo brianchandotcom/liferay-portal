@@ -5328,8 +5328,4 @@ public class CommerceNotificationTemplatePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommerceNotificationTemplateModelArgumentsResolver
-		_commerceNotificationTemplateModelArgumentsResolver;
-
 }

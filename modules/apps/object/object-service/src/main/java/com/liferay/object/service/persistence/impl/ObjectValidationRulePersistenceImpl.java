@@ -3042,8 +3042,4 @@ public class ObjectValidationRulePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectValidationRuleModelArgumentsResolver
-		_objectValidationRuleModelArgumentsResolver;
-
 }

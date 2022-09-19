@@ -3503,7 +3503,4 @@ public class DDMContentPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DDMContentModelArgumentsResolver _ddmContentModelArgumentsResolver;
-
 }

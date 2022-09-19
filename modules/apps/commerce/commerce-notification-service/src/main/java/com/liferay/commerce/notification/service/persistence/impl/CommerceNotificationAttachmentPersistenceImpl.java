@@ -2876,8 +2876,4 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommerceNotificationAttachmentModelArgumentsResolver
-		_commerceNotificationAttachmentModelArgumentsResolver;
-
 }

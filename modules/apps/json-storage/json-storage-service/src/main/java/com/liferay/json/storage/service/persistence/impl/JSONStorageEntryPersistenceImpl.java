@@ -3409,8 +3409,4 @@ public class JSONStorageEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private JSONStorageEntryModelArgumentsResolver
-		_jsonStorageEntryModelArgumentsResolver;
-
 }

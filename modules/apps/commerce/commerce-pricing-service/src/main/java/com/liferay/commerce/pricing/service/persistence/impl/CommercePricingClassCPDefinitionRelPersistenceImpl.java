@@ -2527,8 +2527,4 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommercePricingClassCPDefinitionRelModelArgumentsResolver
-		_commercePricingClassCPDefinitionRelModelArgumentsResolver;
-
 }

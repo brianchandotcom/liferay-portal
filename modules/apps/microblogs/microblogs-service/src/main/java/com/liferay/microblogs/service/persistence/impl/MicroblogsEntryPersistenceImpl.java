@@ -14138,8 +14138,4 @@ public class MicroblogsEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private MicroblogsEntryModelArgumentsResolver
-		_microblogsEntryModelArgumentsResolver;
-
 }

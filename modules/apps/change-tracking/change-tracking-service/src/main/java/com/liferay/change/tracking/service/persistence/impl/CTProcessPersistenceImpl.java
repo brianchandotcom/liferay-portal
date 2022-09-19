@@ -1730,7 +1730,4 @@ public class CTProcessPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CTProcessModelArgumentsResolver _ctProcessModelArgumentsResolver;
-
 }

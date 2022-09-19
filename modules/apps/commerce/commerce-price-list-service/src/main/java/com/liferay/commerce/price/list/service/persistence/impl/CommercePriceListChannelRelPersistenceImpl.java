@@ -3103,8 +3103,4 @@ public class CommercePriceListChannelRelPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommercePriceListChannelRelModelArgumentsResolver
-		_commercePriceListChannelRelModelArgumentsResolver;
-
 }

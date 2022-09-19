@@ -4122,7 +4122,4 @@ public class ModulePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ModuleModelArgumentsResolver _moduleModelArgumentsResolver;
-
 }

@@ -11522,8 +11522,4 @@ public class DDMStructurePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DDMStructureModelArgumentsResolver
-		_ddmStructureModelArgumentsResolver;
-
 }

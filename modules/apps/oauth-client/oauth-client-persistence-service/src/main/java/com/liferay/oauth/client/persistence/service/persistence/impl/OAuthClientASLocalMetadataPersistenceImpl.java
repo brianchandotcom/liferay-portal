@@ -2906,8 +2906,4 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private OAuthClientASLocalMetadataModelArgumentsResolver
-		_oAuthClientASLocalMetadataModelArgumentsResolver;
-
 }

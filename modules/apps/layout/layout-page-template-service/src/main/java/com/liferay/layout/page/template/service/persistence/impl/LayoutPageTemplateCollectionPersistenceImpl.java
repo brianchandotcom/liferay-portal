@@ -5214,8 +5214,4 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private LayoutPageTemplateCollectionModelArgumentsResolver
-		_layoutPageTemplateCollectionModelArgumentsResolver;
-
 }

@@ -5446,8 +5446,4 @@ public class DDMStructureLayoutPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DDMStructureLayoutModelArgumentsResolver
-		_ddmStructureLayoutModelArgumentsResolver;
-
 }

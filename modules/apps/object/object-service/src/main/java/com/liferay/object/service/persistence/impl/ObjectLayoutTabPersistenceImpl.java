@@ -2970,8 +2970,4 @@ public class ObjectLayoutTabPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectLayoutTabModelArgumentsResolver
-		_objectLayoutTabModelArgumentsResolver;
-
 }

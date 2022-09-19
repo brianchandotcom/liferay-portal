@@ -32,12 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jamie Sammons
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		AkismetEntryModelArgumentsResolver.class, ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class AkismetEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

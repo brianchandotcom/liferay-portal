@@ -5382,8 +5382,4 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommerceInventoryReplenishmentItemModelArgumentsResolver
-		_commerceInventoryReplenishmentItemModelArgumentsResolver;
-
 }

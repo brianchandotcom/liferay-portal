@@ -2291,8 +2291,4 @@ public class FVSActiveEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private FVSActiveEntryModelArgumentsResolver
-		_fvsActiveEntryModelArgumentsResolver;
-
 }

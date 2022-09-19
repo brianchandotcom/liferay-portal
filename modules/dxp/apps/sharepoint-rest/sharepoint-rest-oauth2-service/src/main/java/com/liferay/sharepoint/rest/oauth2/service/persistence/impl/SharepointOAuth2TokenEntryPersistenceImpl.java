@@ -1577,8 +1577,4 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private SharepointOAuth2TokenEntryModelArgumentsResolver
-		_sharepointOAuth2TokenEntryModelArgumentsResolver;
-
 }

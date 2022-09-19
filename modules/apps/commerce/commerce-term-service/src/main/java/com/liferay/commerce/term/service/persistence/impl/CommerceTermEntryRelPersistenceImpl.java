@@ -2142,8 +2142,4 @@ public class CommerceTermEntryRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceTermEntryRelModelArgumentsResolver
-		_commerceTermEntryRelModelArgumentsResolver;
-
 }

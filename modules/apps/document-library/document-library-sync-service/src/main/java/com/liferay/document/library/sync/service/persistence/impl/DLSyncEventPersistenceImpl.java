@@ -1418,8 +1418,4 @@ public class DLSyncEventPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DLSyncEventModelArgumentsResolver
-		_dlSyncEventModelArgumentsResolver;
-
 }

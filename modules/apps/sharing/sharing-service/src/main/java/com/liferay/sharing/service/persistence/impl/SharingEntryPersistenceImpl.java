@@ -6211,8 +6211,4 @@ public class SharingEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private SharingEntryModelArgumentsResolver
-		_sharingEntryModelArgumentsResolver;
-
 }

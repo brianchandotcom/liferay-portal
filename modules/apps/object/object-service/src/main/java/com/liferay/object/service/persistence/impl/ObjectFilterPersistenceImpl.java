@@ -2415,8 +2415,4 @@ public class ObjectFilterPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectFilterModelArgumentsResolver
-		_objectFilterModelArgumentsResolver;
-
 }

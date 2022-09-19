@@ -3444,8 +3444,4 @@ public class KaleoTaskFormPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoTaskFormModelArgumentsResolver
-		_kaleoTaskFormModelArgumentsResolver;
-
 }

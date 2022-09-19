@@ -1638,8 +1638,4 @@ public class CommerceShippingFixedOptionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceShippingFixedOptionModelArgumentsResolver
-		_commerceShippingFixedOptionModelArgumentsResolver;
-
 }

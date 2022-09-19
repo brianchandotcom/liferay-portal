@@ -2631,7 +2631,4 @@ public class KaleoNodePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoNodeModelArgumentsResolver _kaleoNodeModelArgumentsResolver;
-
 }

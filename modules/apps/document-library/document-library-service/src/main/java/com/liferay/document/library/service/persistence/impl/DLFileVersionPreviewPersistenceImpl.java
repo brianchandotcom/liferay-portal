@@ -2617,8 +2617,4 @@ public class DLFileVersionPreviewPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DLFileVersionPreviewModelArgumentsResolver
-		_dlFileVersionPreviewModelArgumentsResolver;
-
 }

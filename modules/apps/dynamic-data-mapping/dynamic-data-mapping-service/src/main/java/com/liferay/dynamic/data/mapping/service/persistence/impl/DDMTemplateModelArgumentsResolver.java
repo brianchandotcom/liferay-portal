@@ -32,10 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {DDMTemplateModelArgumentsResolver.class, ArgumentsResolver.class}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class DDMTemplateModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

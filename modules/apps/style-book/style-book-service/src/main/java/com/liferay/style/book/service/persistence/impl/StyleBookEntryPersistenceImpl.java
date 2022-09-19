@@ -9130,8 +9130,4 @@ public class StyleBookEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private StyleBookEntryModelArgumentsResolver
-		_styleBookEntryModelArgumentsResolver;
-
 }

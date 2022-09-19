@@ -4640,8 +4640,4 @@ public class DepotEntryGroupRelPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DepotEntryGroupRelModelArgumentsResolver
-		_depotEntryGroupRelModelArgumentsResolver;
-
 }

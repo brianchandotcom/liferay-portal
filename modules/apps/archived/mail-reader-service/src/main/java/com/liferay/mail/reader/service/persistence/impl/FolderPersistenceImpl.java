@@ -1500,7 +1500,4 @@ public class FolderPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private FolderModelArgumentsResolver _folderModelArgumentsResolver;
-
 }

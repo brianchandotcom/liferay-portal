@@ -1541,8 +1541,4 @@ public class AkismetEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private AkismetEntryModelArgumentsResolver
-		_akismetEntryModelArgumentsResolver;
-
 }

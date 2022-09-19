@@ -1739,7 +1739,4 @@ public class CTCommentPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CTCommentModelArgumentsResolver _ctCommentModelArgumentsResolver;
-
 }

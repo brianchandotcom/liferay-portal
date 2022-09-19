@@ -6704,8 +6704,4 @@ public class CalendarBookingPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CalendarBookingModelArgumentsResolver
-		_calendarBookingModelArgumentsResolver;
-
 }

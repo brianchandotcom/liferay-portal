@@ -32,13 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Arthur Chan
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		OpenIdConnectSessionModelArgumentsResolver.class,
-		ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class OpenIdConnectSessionModelArgumentsResolver
 	implements ArgumentsResolver {
 

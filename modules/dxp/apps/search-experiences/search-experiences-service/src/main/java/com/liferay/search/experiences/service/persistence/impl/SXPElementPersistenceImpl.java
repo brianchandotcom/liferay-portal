@@ -6883,7 +6883,4 @@ public class SXPElementPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private SXPElementModelArgumentsResolver _sxpElementModelArgumentsResolver;
-
 }

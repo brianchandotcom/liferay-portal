@@ -2252,7 +2252,4 @@ public class KaleoTimerPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoTimerModelArgumentsResolver _kaleoTimerModelArgumentsResolver;
-
 }

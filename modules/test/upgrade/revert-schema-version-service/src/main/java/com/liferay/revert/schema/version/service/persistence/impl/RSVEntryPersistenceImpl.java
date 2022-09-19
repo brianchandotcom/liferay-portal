@@ -655,7 +655,4 @@ public class RSVEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private RSVEntryModelArgumentsResolver _rsvEntryModelArgumentsResolver;
-
 }

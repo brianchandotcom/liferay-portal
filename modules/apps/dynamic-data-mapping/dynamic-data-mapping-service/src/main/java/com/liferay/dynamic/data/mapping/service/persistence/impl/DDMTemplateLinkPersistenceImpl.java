@@ -1730,8 +1730,4 @@ public class DDMTemplateLinkPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DDMTemplateLinkModelArgumentsResolver
-		_ddmTemplateLinkModelArgumentsResolver;
-
 }

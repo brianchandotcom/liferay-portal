@@ -3078,8 +3078,4 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoTimerInstanceTokenModelArgumentsResolver
-		_kaleoTimerInstanceTokenModelArgumentsResolver;
-
 }

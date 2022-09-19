@@ -2830,8 +2830,4 @@ public class ListTypeDefinitionPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ListTypeDefinitionModelArgumentsResolver
-		_listTypeDefinitionModelArgumentsResolver;
-
 }

@@ -1921,8 +1921,4 @@ public class PushNotificationsDevicePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private PushNotificationsDeviceModelArgumentsResolver
-		_pushNotificationsDeviceModelArgumentsResolver;
-
 }

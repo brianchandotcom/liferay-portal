@@ -27623,8 +27623,4 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private LayoutPageTemplateEntryModelArgumentsResolver
-		_layoutPageTemplateEntryModelArgumentsResolver;
-
 }

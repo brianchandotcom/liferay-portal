@@ -17748,8 +17748,4 @@ public class FragmentEntryVersionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private FragmentEntryVersionModelArgumentsResolver
-		_fragmentEntryVersionModelArgumentsResolver;
-
 }

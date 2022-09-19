@@ -1817,8 +1817,4 @@ public class DispatchLogPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DispatchLogModelArgumentsResolver
-		_dispatchLogModelArgumentsResolver;
-
 }

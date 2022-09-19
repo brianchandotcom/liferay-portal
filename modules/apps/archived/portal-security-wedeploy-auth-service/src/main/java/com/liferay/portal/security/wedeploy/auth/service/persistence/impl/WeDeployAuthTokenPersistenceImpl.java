@@ -1399,8 +1399,4 @@ public class WeDeployAuthTokenPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private WeDeployAuthTokenModelArgumentsResolver
-		_weDeployAuthTokenModelArgumentsResolver;
-
 }

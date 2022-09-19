@@ -2969,7 +2969,4 @@ public class CTEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CTEntryModelArgumentsResolver _ctEntryModelArgumentsResolver;
-
 }

@@ -3006,8 +3006,4 @@ public class SegmentsEntryRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private SegmentsEntryRelModelArgumentsResolver
-		_segmentsEntryRelModelArgumentsResolver;
-
 }

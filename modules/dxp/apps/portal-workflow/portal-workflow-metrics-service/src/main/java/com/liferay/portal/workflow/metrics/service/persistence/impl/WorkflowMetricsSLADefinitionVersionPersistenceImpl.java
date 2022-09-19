@@ -3266,8 +3266,4 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private WorkflowMetricsSLADefinitionVersionModelArgumentsResolver
-		_workflowMetricsSLADefinitionVersionModelArgumentsResolver;
-
 }

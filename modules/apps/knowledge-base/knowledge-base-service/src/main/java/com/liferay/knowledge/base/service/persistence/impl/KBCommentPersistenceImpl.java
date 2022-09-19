@@ -5838,7 +5838,4 @@ public class KBCommentPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private KBCommentModelArgumentsResolver _kbCommentModelArgumentsResolver;
-
 }

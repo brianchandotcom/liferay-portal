@@ -1907,8 +1907,4 @@ public class FVSCustomEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private FVSCustomEntryModelArgumentsResolver
-		_fvsCustomEntryModelArgumentsResolver;
-
 }

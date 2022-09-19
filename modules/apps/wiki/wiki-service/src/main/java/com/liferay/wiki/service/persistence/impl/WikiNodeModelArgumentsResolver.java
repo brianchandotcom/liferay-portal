@@ -32,10 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {WikiNodeModelArgumentsResolver.class, ArgumentsResolver.class}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class WikiNodeModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

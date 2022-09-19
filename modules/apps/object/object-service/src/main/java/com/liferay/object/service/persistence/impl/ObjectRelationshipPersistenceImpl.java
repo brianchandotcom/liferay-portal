@@ -6378,8 +6378,4 @@ public class ObjectRelationshipPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectRelationshipModelArgumentsResolver
-		_objectRelationshipModelArgumentsResolver;
-
 }

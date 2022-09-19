@@ -1266,8 +1266,4 @@ public class DDMFormInstanceReportPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DDMFormInstanceReportModelArgumentsResolver
-		_ddmFormInstanceReportModelArgumentsResolver;
-
 }

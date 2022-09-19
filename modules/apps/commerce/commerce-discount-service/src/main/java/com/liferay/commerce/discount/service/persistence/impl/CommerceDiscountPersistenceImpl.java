@@ -8622,8 +8622,4 @@ public class CommerceDiscountPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommerceDiscountModelArgumentsResolver
-		_commerceDiscountModelArgumentsResolver;
-
 }

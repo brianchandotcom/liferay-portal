@@ -2343,8 +2343,4 @@ public class DDMStructureLinkPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DDMStructureLinkModelArgumentsResolver
-		_ddmStructureLinkModelArgumentsResolver;
-
 }

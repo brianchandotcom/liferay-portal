@@ -2310,8 +2310,4 @@ public class KaleoConditionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoConditionModelArgumentsResolver
-		_kaleoConditionModelArgumentsResolver;
-
 }

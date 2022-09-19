@@ -16886,8 +16886,4 @@ public class FragmentEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private FragmentEntryModelArgumentsResolver
-		_fragmentEntryModelArgumentsResolver;
-
 }

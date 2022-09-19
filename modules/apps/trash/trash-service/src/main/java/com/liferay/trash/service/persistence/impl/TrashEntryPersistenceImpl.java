@@ -3427,7 +3427,4 @@ public class TrashEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private TrashEntryModelArgumentsResolver _trashEntryModelArgumentsResolver;
-
 }

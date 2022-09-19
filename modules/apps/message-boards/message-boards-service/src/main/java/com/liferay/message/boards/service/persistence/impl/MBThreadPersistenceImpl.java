@@ -14478,7 +14478,4 @@ public class MBThreadPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private MBThreadModelArgumentsResolver _mbThreadModelArgumentsResolver;
-
 }

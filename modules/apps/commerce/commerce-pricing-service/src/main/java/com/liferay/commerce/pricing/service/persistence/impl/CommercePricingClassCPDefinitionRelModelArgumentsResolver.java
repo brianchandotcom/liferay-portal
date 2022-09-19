@@ -32,13 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Riccardo Alberti
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		CommercePricingClassCPDefinitionRelModelArgumentsResolver.class,
-		ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class CommercePricingClassCPDefinitionRelModelArgumentsResolver
 	implements ArgumentsResolver {
 

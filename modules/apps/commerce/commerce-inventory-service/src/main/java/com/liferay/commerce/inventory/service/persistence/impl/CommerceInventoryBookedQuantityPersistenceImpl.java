@@ -2560,8 +2560,4 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceInventoryBookedQuantityModelArgumentsResolver
-		_commerceInventoryBookedQuantityModelArgumentsResolver;
-
 }

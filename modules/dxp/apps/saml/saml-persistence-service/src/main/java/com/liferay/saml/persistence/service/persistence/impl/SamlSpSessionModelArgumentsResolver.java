@@ -32,12 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		SamlSpSessionModelArgumentsResolver.class, ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class SamlSpSessionModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

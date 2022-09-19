@@ -1242,8 +1242,4 @@ public class AnalyticsMessagePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private AnalyticsMessageModelArgumentsResolver
-		_analyticsMessageModelArgumentsResolver;
-
 }

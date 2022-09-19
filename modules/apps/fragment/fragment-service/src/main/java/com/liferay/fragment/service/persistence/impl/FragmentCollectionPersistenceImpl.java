@@ -4520,8 +4520,4 @@ public class FragmentCollectionPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private FragmentCollectionModelArgumentsResolver
-		_fragmentCollectionModelArgumentsResolver;
-
 }

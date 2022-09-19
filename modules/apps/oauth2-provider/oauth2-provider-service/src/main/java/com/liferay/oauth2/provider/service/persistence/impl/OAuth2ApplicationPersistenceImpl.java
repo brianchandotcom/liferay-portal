@@ -5288,8 +5288,4 @@ public class OAuth2ApplicationPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private OAuth2ApplicationModelArgumentsResolver
-		_oAuth2ApplicationModelArgumentsResolver;
-
 }

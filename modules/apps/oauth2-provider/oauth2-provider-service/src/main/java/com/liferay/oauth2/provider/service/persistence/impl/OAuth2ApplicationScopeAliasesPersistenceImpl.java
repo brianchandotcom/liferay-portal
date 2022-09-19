@@ -1863,8 +1863,4 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private OAuth2ApplicationScopeAliasesModelArgumentsResolver
-		_oAuth2ApplicationScopeAliasesModelArgumentsResolver;
-
 }

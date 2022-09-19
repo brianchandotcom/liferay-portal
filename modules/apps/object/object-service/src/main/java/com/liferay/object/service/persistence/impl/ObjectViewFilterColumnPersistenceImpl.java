@@ -3088,8 +3088,4 @@ public class ObjectViewFilterColumnPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectViewFilterColumnModelArgumentsResolver
-		_objectViewFilterColumnModelArgumentsResolver;
-
 }

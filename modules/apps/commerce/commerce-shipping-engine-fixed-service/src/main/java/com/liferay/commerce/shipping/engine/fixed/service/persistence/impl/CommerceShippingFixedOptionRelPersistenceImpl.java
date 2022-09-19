@@ -1939,8 +1939,4 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceShippingFixedOptionRelModelArgumentsResolver
-		_commerceShippingFixedOptionRelModelArgumentsResolver;
-
 }

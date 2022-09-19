@@ -2482,8 +2482,4 @@ public class CommerceVirtualOrderItemPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommerceVirtualOrderItemModelArgumentsResolver
-		_commerceVirtualOrderItemModelArgumentsResolver;
-
 }

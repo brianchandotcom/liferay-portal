@@ -3103,8 +3103,4 @@ public class CommercePriceListAccountRelPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommercePriceListAccountRelModelArgumentsResolver
-		_commercePriceListAccountRelModelArgumentsResolver;
-
 }

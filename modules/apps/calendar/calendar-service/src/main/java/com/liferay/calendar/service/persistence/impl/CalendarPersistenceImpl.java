@@ -4492,7 +4492,4 @@ public class CalendarPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CalendarModelArgumentsResolver _calendarModelArgumentsResolver;
-
 }

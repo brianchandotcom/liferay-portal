@@ -6304,8 +6304,4 @@ public class JournalContentSearchPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private JournalContentSearchModelArgumentsResolver
-		_journalContentSearchModelArgumentsResolver;
-
 }

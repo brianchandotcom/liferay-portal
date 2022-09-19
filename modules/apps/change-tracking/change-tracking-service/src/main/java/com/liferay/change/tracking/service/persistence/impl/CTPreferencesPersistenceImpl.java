@@ -2005,8 +2005,4 @@ public class CTPreferencesPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CTPreferencesModelArgumentsResolver
-		_ctPreferencesModelArgumentsResolver;
-
 }

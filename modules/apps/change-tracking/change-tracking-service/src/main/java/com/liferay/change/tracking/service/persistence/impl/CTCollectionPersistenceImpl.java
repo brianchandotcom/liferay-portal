@@ -3997,8 +3997,4 @@ public class CTCollectionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CTCollectionModelArgumentsResolver
-		_ctCollectionModelArgumentsResolver;
-
 }

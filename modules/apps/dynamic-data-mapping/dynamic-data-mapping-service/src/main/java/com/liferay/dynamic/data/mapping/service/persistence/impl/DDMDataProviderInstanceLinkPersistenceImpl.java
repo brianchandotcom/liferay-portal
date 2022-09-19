@@ -2377,8 +2377,4 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DDMDataProviderInstanceLinkModelArgumentsResolver
-		_ddmDataProviderInstanceLinkModelArgumentsResolver;
-
 }

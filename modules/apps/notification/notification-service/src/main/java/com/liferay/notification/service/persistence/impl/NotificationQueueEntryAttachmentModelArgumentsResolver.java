@@ -32,13 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Gabriel Albuquerque
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		NotificationQueueEntryAttachmentModelArgumentsResolver.class,
-		ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class NotificationQueueEntryAttachmentModelArgumentsResolver
 	implements ArgumentsResolver {
 

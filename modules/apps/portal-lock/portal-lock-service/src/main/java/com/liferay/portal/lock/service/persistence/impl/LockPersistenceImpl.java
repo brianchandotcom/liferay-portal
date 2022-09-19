@@ -3256,7 +3256,4 @@ public class LockPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private LockModelArgumentsResolver _lockModelArgumentsResolver;
-
 }

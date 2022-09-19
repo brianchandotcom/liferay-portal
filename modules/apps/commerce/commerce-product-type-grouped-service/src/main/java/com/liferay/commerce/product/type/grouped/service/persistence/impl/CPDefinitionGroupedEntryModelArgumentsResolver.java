@@ -32,13 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Andrea Di Giorgi
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		CPDefinitionGroupedEntryModelArgumentsResolver.class,
-		ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class CPDefinitionGroupedEntryModelArgumentsResolver
 	implements ArgumentsResolver {
 

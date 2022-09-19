@@ -32,10 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Luca Pellizzon
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {COREntryRelModelArgumentsResolver.class, ArgumentsResolver.class}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class COREntryRelModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

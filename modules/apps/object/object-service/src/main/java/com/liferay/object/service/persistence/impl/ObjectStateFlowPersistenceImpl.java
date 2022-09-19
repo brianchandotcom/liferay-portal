@@ -2155,8 +2155,4 @@ public class ObjectStateFlowPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectStateFlowModelArgumentsResolver
-		_objectStateFlowModelArgumentsResolver;
-
 }

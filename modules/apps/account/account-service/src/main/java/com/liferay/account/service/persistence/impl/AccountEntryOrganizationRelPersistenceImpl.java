@@ -2100,8 +2100,4 @@ public class AccountEntryOrganizationRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private AccountEntryOrganizationRelModelArgumentsResolver
-		_accountEntryOrganizationRelModelArgumentsResolver;
-
 }

@@ -4886,7 +4886,4 @@ public class SAPEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private SAPEntryModelArgumentsResolver _sapEntryModelArgumentsResolver;
-
 }

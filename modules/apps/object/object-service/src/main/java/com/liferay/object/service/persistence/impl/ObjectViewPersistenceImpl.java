@@ -2994,7 +2994,4 @@ public class ObjectViewPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectViewModelArgumentsResolver _objectViewModelArgumentsResolver;
-
 }

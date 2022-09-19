@@ -32,12 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eduardo Lundgren
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		CalendarResourceModelArgumentsResolver.class, ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class CalendarResourceModelArgumentsResolver
 	implements ArgumentsResolver {
 

@@ -3517,8 +3517,4 @@ public class CommerceQualifierEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceQualifierEntryModelArgumentsResolver
-		_commerceQualifierEntryModelArgumentsResolver;
-
 }

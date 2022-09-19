@@ -32,13 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Arthur Chan
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		MFAFIDO2CredentialEntryModelArgumentsResolver.class,
-		ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class MFAFIDO2CredentialEntryModelArgumentsResolver
 	implements ArgumentsResolver {
 

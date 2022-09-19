@@ -4454,8 +4454,4 @@ public class RedirectEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private RedirectEntryModelArgumentsResolver
-		_redirectEntryModelArgumentsResolver;
-
 }

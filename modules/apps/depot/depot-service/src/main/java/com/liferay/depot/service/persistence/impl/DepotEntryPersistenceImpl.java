@@ -2380,7 +2380,4 @@ public class DepotEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DepotEntryModelArgumentsResolver _depotEntryModelArgumentsResolver;
-
 }

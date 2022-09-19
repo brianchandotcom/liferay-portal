@@ -2679,8 +2679,4 @@ public class AccountGroupRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private AccountGroupRelModelArgumentsResolver
-		_accountGroupRelModelArgumentsResolver;
-
 }

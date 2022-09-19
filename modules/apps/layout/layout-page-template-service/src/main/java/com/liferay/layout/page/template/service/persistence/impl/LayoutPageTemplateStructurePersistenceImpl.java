@@ -3406,8 +3406,4 @@ public class LayoutPageTemplateStructurePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private LayoutPageTemplateStructureModelArgumentsResolver
-		_layoutPageTemplateStructureModelArgumentsResolver;
-
 }

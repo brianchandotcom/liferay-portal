@@ -2442,8 +2442,4 @@ public class ObjectLayoutRowPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectLayoutRowModelArgumentsResolver
-		_objectLayoutRowModelArgumentsResolver;
-
 }

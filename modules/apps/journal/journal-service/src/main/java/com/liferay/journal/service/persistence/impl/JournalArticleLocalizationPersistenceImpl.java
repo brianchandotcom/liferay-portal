@@ -2834,8 +2834,4 @@ public class JournalArticleLocalizationPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private JournalArticleLocalizationModelArgumentsResolver
-		_journalArticleLocalizationModelArgumentsResolver;
-
 }

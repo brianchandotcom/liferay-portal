@@ -2106,8 +2106,4 @@ public class CommerceTaxMethodPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceTaxMethodModelArgumentsResolver
-		_commerceTaxMethodModelArgumentsResolver;
-
 }

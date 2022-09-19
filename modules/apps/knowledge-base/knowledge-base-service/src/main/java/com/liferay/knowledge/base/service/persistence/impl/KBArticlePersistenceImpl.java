@@ -36301,7 +36301,4 @@ public class KBArticlePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private KBArticleModelArgumentsResolver _kbArticleModelArgumentsResolver;
-
 }

@@ -4505,8 +4505,4 @@ public class DDMDataProviderInstancePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DDMDataProviderInstanceModelArgumentsResolver
-		_ddmDataProviderInstanceModelArgumentsResolver;
-
 }

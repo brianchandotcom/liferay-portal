@@ -3674,8 +3674,4 @@ public class JournalFeedPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private JournalFeedModelArgumentsResolver
-		_journalFeedModelArgumentsResolver;
-
 }

@@ -32,13 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Bruno Farache
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		PushNotificationsDeviceModelArgumentsResolver.class,
-		ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class PushNotificationsDeviceModelArgumentsResolver
 	implements ArgumentsResolver {
 

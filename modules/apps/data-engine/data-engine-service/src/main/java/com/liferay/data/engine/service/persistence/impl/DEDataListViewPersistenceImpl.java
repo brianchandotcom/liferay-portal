@@ -3636,8 +3636,4 @@ public class DEDataListViewPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DEDataListViewModelArgumentsResolver
-		_deDataListViewModelArgumentsResolver;
-
 }

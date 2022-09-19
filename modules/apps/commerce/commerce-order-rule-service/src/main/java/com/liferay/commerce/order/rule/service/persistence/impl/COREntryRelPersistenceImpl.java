@@ -2073,8 +2073,4 @@ public class COREntryRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private COREntryRelModelArgumentsResolver
-		_corEntryRelModelArgumentsResolver;
-
 }

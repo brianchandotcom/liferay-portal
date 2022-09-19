@@ -2371,9 +2371,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private
-		CommerceNotificationTemplateCommerceAccountGroupRelModelArgumentsResolver
-			_commerceNotificationTemplateCommerceAccountGroupRelModelArgumentsResolver;
-
 }

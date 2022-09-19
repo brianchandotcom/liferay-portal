@@ -3386,8 +3386,4 @@ public class TranslationEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private TranslationEntryModelArgumentsResolver
-		_translationEntryModelArgumentsResolver;
-
 }

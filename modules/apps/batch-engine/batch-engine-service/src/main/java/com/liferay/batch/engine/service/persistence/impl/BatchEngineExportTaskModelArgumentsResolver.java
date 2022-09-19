@@ -32,13 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Shuyang Zhou
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		BatchEngineExportTaskModelArgumentsResolver.class,
-		ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class BatchEngineExportTaskModelArgumentsResolver
 	implements ArgumentsResolver {
 

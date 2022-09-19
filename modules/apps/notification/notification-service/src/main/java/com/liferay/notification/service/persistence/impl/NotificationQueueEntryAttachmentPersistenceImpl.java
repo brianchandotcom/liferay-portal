@@ -1355,8 +1355,4 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private NotificationQueueEntryAttachmentModelArgumentsResolver
-		_notificationQueueEntryAttachmentModelArgumentsResolver;
-
 }

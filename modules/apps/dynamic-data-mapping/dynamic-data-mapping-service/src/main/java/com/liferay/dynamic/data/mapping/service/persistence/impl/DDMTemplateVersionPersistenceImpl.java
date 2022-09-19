@@ -2385,8 +2385,4 @@ public class DDMTemplateVersionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DDMTemplateVersionModelArgumentsResolver
-		_ddmTemplateVersionModelArgumentsResolver;
-
 }

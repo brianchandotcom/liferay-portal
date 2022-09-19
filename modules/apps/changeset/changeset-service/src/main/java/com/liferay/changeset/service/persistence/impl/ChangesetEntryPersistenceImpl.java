@@ -3705,8 +3705,4 @@ public class ChangesetEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private ChangesetEntryModelArgumentsResolver
-		_changesetEntryModelArgumentsResolver;
-
 }

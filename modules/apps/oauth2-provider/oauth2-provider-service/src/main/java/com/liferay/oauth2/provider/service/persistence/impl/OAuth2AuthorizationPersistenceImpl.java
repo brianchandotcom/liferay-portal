@@ -3962,8 +3962,4 @@ public class OAuth2AuthorizationPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private OAuth2AuthorizationModelArgumentsResolver
-		_oAuth2AuthorizationModelArgumentsResolver;
-
 }

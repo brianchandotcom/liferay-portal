@@ -1323,8 +1323,4 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private BatchEngineImportTaskErrorModelArgumentsResolver
-		_batchEngineImportTaskErrorModelArgumentsResolver;
-
 }

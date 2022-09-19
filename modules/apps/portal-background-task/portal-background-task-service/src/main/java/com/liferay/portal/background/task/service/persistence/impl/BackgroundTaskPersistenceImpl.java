@@ -9587,8 +9587,4 @@ public class BackgroundTaskPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private BackgroundTaskModelArgumentsResolver
-		_backgroundTaskModelArgumentsResolver;
-
 }

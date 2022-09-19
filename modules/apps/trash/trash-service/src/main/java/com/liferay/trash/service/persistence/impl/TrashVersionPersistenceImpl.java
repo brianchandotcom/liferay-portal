@@ -2285,8 +2285,4 @@ public class TrashVersionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private TrashVersionModelArgumentsResolver
-		_trashVersionModelArgumentsResolver;
-
 }

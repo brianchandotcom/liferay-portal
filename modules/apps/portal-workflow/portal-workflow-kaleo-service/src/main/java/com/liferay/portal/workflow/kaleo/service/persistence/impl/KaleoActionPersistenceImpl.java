@@ -4819,8 +4819,4 @@ public class KaleoActionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoActionModelArgumentsResolver
-		_kaleoActionModelArgumentsResolver;
-
 }

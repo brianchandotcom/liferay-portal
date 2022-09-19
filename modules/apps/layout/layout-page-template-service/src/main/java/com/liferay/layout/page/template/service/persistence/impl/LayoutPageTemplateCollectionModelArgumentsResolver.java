@@ -32,13 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		LayoutPageTemplateCollectionModelArgumentsResolver.class,
-		ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class LayoutPageTemplateCollectionModelArgumentsResolver
 	implements ArgumentsResolver {
 

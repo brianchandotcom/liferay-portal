@@ -2102,8 +2102,4 @@ public class OAuth2ScopeGrantPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private OAuth2ScopeGrantModelArgumentsResolver
-		_oAuth2ScopeGrantModelArgumentsResolver;
-
 }

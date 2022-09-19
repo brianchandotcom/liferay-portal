@@ -3002,8 +3002,4 @@ public class ObjectLayoutPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectLayoutModelArgumentsResolver
-		_objectLayoutModelArgumentsResolver;
-
 }

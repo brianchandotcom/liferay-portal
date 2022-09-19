@@ -3548,8 +3548,4 @@ public class ObjectStateTransitionPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectStateTransitionModelArgumentsResolver
-		_objectStateTransitionModelArgumentsResolver;
-
 }

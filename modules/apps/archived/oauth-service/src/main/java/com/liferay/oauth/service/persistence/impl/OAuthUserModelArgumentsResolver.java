@@ -32,10 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Ivica Cardic
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {OAuthUserModelArgumentsResolver.class, ArgumentsResolver.class}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class OAuthUserModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

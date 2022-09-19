@@ -2374,8 +2374,4 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private AssetEntryAssetCategoryRelModelArgumentsResolver
-		_assetEntryAssetCategoryRelModelArgumentsResolver;
-
 }

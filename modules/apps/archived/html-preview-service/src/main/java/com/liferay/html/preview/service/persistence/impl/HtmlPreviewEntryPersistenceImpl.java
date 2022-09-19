@@ -1028,8 +1028,4 @@ public class HtmlPreviewEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private HtmlPreviewEntryModelArgumentsResolver
-		_htmlPreviewEntryModelArgumentsResolver;
-
 }

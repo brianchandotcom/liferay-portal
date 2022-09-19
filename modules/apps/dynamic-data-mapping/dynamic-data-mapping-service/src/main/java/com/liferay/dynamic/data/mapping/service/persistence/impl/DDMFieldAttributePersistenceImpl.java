@@ -3133,8 +3133,4 @@ public class DDMFieldAttributePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DDMFieldAttributeModelArgumentsResolver
-		_ddmFieldAttributeModelArgumentsResolver;
-
 }

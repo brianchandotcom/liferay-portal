@@ -4983,8 +4983,4 @@ public class CommerceWishListPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommerceWishListModelArgumentsResolver
-		_commerceWishListModelArgumentsResolver;
-
 }

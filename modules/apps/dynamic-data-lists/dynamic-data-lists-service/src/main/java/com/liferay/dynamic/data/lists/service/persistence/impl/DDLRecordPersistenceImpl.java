@@ -5312,7 +5312,4 @@ public class DDLRecordPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DDLRecordModelArgumentsResolver _ddlRecordModelArgumentsResolver;
-
 }

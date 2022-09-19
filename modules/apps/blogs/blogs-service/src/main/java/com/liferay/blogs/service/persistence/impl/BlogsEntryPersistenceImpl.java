@@ -23151,7 +23151,4 @@ public class BlogsEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private BlogsEntryModelArgumentsResolver _blogsEntryModelArgumentsResolver;
-
 }

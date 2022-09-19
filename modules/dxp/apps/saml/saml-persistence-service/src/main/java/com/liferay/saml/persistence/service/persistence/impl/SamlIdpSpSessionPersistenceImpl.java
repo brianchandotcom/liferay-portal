@@ -1814,8 +1814,4 @@ public class SamlIdpSpSessionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private SamlIdpSpSessionModelArgumentsResolver
-		_samlIdpSpSessionModelArgumentsResolver;
-
 }

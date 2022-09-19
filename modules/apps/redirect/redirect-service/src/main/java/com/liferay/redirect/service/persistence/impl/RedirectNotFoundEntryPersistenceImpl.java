@@ -1590,8 +1590,4 @@ public class RedirectNotFoundEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private RedirectNotFoundEntryModelArgumentsResolver
-		_redirectNotFoundEntryModelArgumentsResolver;
-
 }

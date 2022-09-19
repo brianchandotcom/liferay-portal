@@ -2901,8 +2901,4 @@ public class OpenIdConnectSessionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private OpenIdConnectSessionModelArgumentsResolver
-		_openIdConnectSessionModelArgumentsResolver;
-
 }

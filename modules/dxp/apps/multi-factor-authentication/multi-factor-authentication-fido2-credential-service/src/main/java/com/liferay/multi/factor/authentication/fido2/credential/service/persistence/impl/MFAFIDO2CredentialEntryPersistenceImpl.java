@@ -2071,8 +2071,4 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private MFAFIDO2CredentialEntryModelArgumentsResolver
-		_mfaFIDO2CredentialEntryModelArgumentsResolver;
-
 }

@@ -2431,8 +2431,4 @@ public class CSDiagramSettingPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CSDiagramSettingModelArgumentsResolver
-		_csDiagramSettingModelArgumentsResolver;
-
 }

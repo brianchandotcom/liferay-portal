@@ -1217,8 +1217,4 @@ public class CTSchemaVersionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CTSchemaVersionModelArgumentsResolver
-		_ctSchemaVersionModelArgumentsResolver;
-
 }

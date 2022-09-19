@@ -4870,8 +4870,4 @@ public class OAuthApplicationPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private OAuthApplicationModelArgumentsResolver
-		_oAuthApplicationModelArgumentsResolver;
-
 }

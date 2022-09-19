@@ -2781,8 +2781,4 @@ public class LayoutSEOEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private LayoutSEOEntryModelArgumentsResolver
-		_layoutSEOEntryModelArgumentsResolver;
-
 }

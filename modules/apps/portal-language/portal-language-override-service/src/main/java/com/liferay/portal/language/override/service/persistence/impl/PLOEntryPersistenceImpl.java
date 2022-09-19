@@ -2793,7 +2793,4 @@ public class PLOEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private PLOEntryModelArgumentsResolver _ploEntryModelArgumentsResolver;
-
 }

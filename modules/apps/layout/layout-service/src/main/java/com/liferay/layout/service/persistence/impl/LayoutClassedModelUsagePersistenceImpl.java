@@ -5974,8 +5974,4 @@ public class LayoutClassedModelUsagePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private LayoutClassedModelUsageModelArgumentsResolver
-		_layoutClassedModelUsageModelArgumentsResolver;
-
 }

@@ -1807,8 +1807,4 @@ public class DepotAppCustomizationPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DepotAppCustomizationModelArgumentsResolver
-		_depotAppCustomizationModelArgumentsResolver;
-
 }

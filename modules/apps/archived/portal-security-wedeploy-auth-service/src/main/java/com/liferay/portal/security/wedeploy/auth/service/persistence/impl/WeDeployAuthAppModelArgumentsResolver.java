@@ -32,12 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Supritha Sundaram
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		WeDeployAuthAppModelArgumentsResolver.class, ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class WeDeployAuthAppModelArgumentsResolver
 	implements ArgumentsResolver {
 

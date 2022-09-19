@@ -3194,7 +3194,4 @@ public class DLContentPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DLContentModelArgumentsResolver _dlContentModelArgumentsResolver;
-
 }

@@ -4977,8 +4977,4 @@ public class DDLRecordSetPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DDLRecordSetModelArgumentsResolver
-		_ddlRecordSetModelArgumentsResolver;
-
 }

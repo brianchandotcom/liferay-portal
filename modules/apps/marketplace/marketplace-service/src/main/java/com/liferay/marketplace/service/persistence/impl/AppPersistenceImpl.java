@@ -3151,7 +3151,4 @@ public class AppPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private AppModelArgumentsResolver _appModelArgumentsResolver;
-
 }

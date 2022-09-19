@@ -920,8 +920,4 @@ public class DLStorageQuotaPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DLStorageQuotaModelArgumentsResolver
-		_dlStorageQuotaModelArgumentsResolver;
-
 }

@@ -6460,8 +6460,4 @@ public class FragmentCompositionPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private FragmentCompositionModelArgumentsResolver
-		_fragmentCompositionModelArgumentsResolver;
-
 }

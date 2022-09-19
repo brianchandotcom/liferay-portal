@@ -2434,8 +2434,4 @@ public class DDMFormInstanceVersionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DDMFormInstanceVersionModelArgumentsResolver
-		_ddmFormInstanceVersionModelArgumentsResolver;
-
 }

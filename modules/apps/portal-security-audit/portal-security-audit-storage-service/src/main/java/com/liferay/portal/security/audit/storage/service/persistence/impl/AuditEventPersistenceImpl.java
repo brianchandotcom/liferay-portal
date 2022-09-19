@@ -1217,7 +1217,4 @@ public class AuditEventPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private AuditEventModelArgumentsResolver _auditEventModelArgumentsResolver;
-
 }

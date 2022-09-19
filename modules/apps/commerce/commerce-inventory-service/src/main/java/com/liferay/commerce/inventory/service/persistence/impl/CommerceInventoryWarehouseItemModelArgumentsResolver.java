@@ -32,13 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Luca Pellizzon
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		CommerceInventoryWarehouseItemModelArgumentsResolver.class,
-		ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class CommerceInventoryWarehouseItemModelArgumentsResolver
 	implements ArgumentsResolver {
 

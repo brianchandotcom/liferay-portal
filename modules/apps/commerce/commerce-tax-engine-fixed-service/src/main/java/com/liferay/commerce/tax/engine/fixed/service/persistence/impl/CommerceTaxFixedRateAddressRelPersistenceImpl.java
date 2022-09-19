@@ -2414,8 +2414,4 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceTaxFixedRateAddressRelModelArgumentsResolver
-		_commerceTaxFixedRateAddressRelModelArgumentsResolver;
-
 }

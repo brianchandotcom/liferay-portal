@@ -3032,8 +3032,4 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CPDefinitionGroupedEntryModelArgumentsResolver
-		_cpDefinitionGroupedEntryModelArgumentsResolver;
-
 }

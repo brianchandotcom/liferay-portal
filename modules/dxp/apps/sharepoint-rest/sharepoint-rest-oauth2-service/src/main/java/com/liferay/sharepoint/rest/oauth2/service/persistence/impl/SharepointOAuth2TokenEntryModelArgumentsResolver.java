@@ -32,13 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		SharepointOAuth2TokenEntryModelArgumentsResolver.class,
-		ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class SharepointOAuth2TokenEntryModelArgumentsResolver
 	implements ArgumentsResolver {
 

@@ -3077,8 +3077,4 @@ public class ObjectViewSortColumnPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectViewSortColumnModelArgumentsResolver
-		_objectViewSortColumnModelArgumentsResolver;
-
 }

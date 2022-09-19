@@ -5091,7 +5091,4 @@ public class EntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private EntryModelArgumentsResolver _entryModelArgumentsResolver;
-
 }

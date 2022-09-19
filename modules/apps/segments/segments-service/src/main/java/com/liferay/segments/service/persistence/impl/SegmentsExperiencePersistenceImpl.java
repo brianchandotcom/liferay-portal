@@ -12010,8 +12010,4 @@ public class SegmentsExperiencePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private SegmentsExperienceModelArgumentsResolver
-		_segmentsExperienceModelArgumentsResolver;
-
 }

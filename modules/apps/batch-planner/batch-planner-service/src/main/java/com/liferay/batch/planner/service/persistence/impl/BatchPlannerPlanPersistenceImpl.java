@@ -6639,8 +6639,4 @@ public class BatchPlannerPlanPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private BatchPlannerPlanModelArgumentsResolver
-		_batchPlannerPlanModelArgumentsResolver;
-
 }

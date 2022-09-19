@@ -13437,8 +13437,4 @@ public class DDMTemplatePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DDMTemplateModelArgumentsResolver
-		_ddmTemplateModelArgumentsResolver;
-
 }

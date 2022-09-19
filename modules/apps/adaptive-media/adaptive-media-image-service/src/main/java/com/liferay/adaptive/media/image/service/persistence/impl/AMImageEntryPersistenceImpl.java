@@ -5161,8 +5161,4 @@ public class AMImageEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private AMImageEntryModelArgumentsResolver
-		_amImageEntryModelArgumentsResolver;
-
 }

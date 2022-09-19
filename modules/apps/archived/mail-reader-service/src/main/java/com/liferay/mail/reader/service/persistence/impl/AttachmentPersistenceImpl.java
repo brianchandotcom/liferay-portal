@@ -1218,7 +1218,4 @@ public class AttachmentPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private AttachmentModelArgumentsResolver _attachmentModelArgumentsResolver;
-
 }

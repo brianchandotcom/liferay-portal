@@ -5961,8 +5961,4 @@ public class AccountEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private AccountEntryModelArgumentsResolver
-		_accountEntryModelArgumentsResolver;
-
 }

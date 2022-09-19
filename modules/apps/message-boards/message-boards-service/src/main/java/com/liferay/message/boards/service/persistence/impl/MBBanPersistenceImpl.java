@@ -4231,7 +4231,4 @@ public class MBBanPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private MBBanModelArgumentsResolver _mbBanModelArgumentsResolver;
-
 }

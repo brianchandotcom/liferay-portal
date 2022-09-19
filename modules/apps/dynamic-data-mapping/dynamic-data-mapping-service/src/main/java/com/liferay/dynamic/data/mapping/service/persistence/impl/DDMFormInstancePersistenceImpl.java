@@ -3901,8 +3901,4 @@ public class DDMFormInstancePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DDMFormInstanceModelArgumentsResolver
-		_ddmFormInstanceModelArgumentsResolver;
-
 }

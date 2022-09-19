@@ -3004,8 +3004,4 @@ public class AssetCategoryPropertyPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private AssetCategoryPropertyModelArgumentsResolver
-		_assetCategoryPropertyModelArgumentsResolver;
-
 }

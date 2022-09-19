@@ -1605,8 +1605,4 @@ public class CTermEntryLocalizationPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CTermEntryLocalizationModelArgumentsResolver
-		_cTermEntryLocalizationModelArgumentsResolver;
-
 }

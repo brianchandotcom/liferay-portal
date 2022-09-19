@@ -14726,8 +14726,4 @@ public class AssetListEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private AssetListEntryModelArgumentsResolver
-		_assetListEntryModelArgumentsResolver;
-
 }

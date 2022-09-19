@@ -3323,8 +3323,4 @@ public class KaleoProcessPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private KaleoProcessModelArgumentsResolver
-		_kaleoProcessModelArgumentsResolver;
-
 }

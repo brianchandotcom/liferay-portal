@@ -3336,8 +3336,4 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommerceDiscountOrderTypeRelModelArgumentsResolver
-		_commerceDiscountOrderTypeRelModelArgumentsResolver;
-
 }

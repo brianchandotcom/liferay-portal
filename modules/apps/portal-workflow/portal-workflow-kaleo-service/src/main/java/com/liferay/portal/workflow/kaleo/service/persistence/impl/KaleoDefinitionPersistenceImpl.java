@@ -4352,8 +4352,4 @@ public class KaleoDefinitionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoDefinitionModelArgumentsResolver
-		_kaleoDefinitionModelArgumentsResolver;
-
 }

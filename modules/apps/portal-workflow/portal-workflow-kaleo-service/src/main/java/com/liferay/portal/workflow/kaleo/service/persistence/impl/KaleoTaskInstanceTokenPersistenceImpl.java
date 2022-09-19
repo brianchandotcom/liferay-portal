@@ -4767,8 +4767,4 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoTaskInstanceTokenModelArgumentsResolver
-		_kaleoTaskInstanceTokenModelArgumentsResolver;
-
 }

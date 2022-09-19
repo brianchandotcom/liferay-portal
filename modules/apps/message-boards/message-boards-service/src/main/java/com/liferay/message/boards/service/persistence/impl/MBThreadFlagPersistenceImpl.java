@@ -3764,8 +3764,4 @@ public class MBThreadFlagPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private MBThreadFlagModelArgumentsResolver
-		_mbThreadFlagModelArgumentsResolver;
-
 }

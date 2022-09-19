@@ -4655,8 +4655,4 @@ public class AccountRolePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private AccountRoleModelArgumentsResolver
-		_accountRoleModelArgumentsResolver;
-
 }

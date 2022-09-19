@@ -2989,8 +2989,4 @@ public class ObjectLayoutColumnPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectLayoutColumnModelArgumentsResolver
-		_objectLayoutColumnModelArgumentsResolver;
-
 }

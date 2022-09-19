@@ -1295,8 +1295,4 @@ public class CommerceDiscountRulePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceDiscountRuleModelArgumentsResolver
-		_commerceDiscountRuleModelArgumentsResolver;
-
 }

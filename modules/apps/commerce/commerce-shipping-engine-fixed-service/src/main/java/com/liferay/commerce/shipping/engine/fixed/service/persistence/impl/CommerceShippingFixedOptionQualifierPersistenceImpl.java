@@ -2345,8 +2345,4 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceShippingFixedOptionQualifierModelArgumentsResolver
-		_commerceShippingFixedOptionQualifierModelArgumentsResolver;
-
 }

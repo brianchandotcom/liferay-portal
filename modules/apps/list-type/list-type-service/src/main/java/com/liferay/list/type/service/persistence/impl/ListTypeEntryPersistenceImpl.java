@@ -3370,8 +3370,4 @@ public class ListTypeEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ListTypeEntryModelArgumentsResolver
-		_listTypeEntryModelArgumentsResolver;
-
 }

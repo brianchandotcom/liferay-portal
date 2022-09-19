@@ -3445,8 +3445,4 @@ public class KaleoTaskAssignmentPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoTaskAssignmentModelArgumentsResolver
-		_kaleoTaskAssignmentModelArgumentsResolver;
-
 }

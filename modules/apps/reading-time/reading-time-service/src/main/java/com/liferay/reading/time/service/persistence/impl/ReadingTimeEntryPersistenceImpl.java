@@ -2773,8 +2773,4 @@ public class ReadingTimeEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ReadingTimeEntryModelArgumentsResolver
-		_readingTimeEntryModelArgumentsResolver;
-
 }

@@ -3105,8 +3105,4 @@ public class CommercePriceListDiscountRelPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommercePriceListDiscountRelModelArgumentsResolver
-		_commercePriceListDiscountRelModelArgumentsResolver;
-
 }

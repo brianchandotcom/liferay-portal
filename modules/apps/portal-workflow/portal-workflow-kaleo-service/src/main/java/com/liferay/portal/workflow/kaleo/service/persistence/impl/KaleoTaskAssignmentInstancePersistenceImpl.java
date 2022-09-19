@@ -5744,8 +5744,4 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoTaskAssignmentInstanceModelArgumentsResolver
-		_kaleoTaskAssignmentInstanceModelArgumentsResolver;
-
 }

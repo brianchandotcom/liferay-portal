@@ -32,12 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Igor Beslic
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		BatchPlannerPolicyModelArgumentsResolver.class, ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class BatchPlannerPolicyModelArgumentsResolver
 	implements ArgumentsResolver {
 

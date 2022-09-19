@@ -7606,8 +7606,4 @@ public class CommercePriceModifierPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommercePriceModifierModelArgumentsResolver
-		_commercePriceModifierModelArgumentsResolver;
-
 }

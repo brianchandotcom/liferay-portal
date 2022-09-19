@@ -1372,8 +1372,4 @@ public class WeDeployAuthAppPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private WeDeployAuthAppModelArgumentsResolver
-		_weDeployAuthAppModelArgumentsResolver;
-
 }

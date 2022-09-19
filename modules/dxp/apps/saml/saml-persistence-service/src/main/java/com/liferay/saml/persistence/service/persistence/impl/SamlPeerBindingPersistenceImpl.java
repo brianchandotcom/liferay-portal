@@ -2601,8 +2601,4 @@ public class SamlPeerBindingPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private SamlPeerBindingModelArgumentsResolver
-		_samlPeerBindingModelArgumentsResolver;
-
 }

@@ -948,8 +948,4 @@ public class MFAEmailOTPEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private MFAEmailOTPEntryModelArgumentsResolver
-		_mfaEmailOTPEntryModelArgumentsResolver;
-
 }

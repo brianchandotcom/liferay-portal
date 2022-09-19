@@ -6310,8 +6310,4 @@ public class CommerceTierPriceEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommerceTierPriceEntryModelArgumentsResolver
-		_commerceTierPriceEntryModelArgumentsResolver;
-
 }

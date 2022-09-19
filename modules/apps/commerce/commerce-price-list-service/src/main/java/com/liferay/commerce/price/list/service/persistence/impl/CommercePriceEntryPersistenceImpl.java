@@ -6714,8 +6714,4 @@ public class CommercePriceEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommercePriceEntryModelArgumentsResolver
-		_commercePriceEntryModelArgumentsResolver;
-
 }

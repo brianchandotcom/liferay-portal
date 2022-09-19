@@ -7642,8 +7642,4 @@ public class BookmarksFolderPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private BookmarksFolderModelArgumentsResolver
-		_bookmarksFolderModelArgumentsResolver;
-
 }

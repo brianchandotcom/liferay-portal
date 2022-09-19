@@ -2523,8 +2523,4 @@ public class KaleoDefinitionVersionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoDefinitionVersionModelArgumentsResolver
-		_kaleoDefinitionVersionModelArgumentsResolver;
-
 }

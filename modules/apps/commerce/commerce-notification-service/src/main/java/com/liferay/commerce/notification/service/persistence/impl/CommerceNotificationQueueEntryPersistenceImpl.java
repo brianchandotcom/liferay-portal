@@ -3662,8 +3662,4 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceNotificationQueueEntryModelArgumentsResolver
-		_commerceNotificationQueueEntryModelArgumentsResolver;
-
 }

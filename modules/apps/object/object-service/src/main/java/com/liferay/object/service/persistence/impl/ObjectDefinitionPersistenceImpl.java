@@ -8593,8 +8593,4 @@ public class ObjectDefinitionPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectDefinitionModelArgumentsResolver
-		_objectDefinitionModelArgumentsResolver;
-
 }

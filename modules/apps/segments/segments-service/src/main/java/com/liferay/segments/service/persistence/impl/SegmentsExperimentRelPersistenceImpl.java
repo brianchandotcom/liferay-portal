@@ -1833,8 +1833,4 @@ public class SegmentsExperimentRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private SegmentsExperimentRelModelArgumentsResolver
-		_segmentsExperimentRelModelArgumentsResolver;
-
 }

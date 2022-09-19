@@ -2043,8 +2043,4 @@ public class AccountEntryUserRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private AccountEntryUserRelModelArgumentsResolver
-		_accountEntryUserRelModelArgumentsResolver;
-
 }

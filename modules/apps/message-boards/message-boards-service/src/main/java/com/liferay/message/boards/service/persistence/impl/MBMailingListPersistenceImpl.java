@@ -3270,8 +3270,4 @@ public class MBMailingListPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private MBMailingListModelArgumentsResolver
-		_mbMailingListModelArgumentsResolver;
-
 }

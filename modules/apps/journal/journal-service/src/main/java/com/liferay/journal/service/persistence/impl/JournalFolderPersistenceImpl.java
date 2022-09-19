@@ -8943,8 +8943,4 @@ public class JournalFolderPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private JournalFolderModelArgumentsResolver
-		_journalFolderModelArgumentsResolver;
-
 }

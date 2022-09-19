@@ -3044,8 +3044,4 @@ public class ObjectViewColumnPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectViewColumnModelArgumentsResolver
-		_objectViewColumnModelArgumentsResolver;
-
 }

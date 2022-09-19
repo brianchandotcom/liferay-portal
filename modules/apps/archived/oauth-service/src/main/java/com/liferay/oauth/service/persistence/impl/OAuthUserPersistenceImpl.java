@@ -3014,7 +3014,4 @@ public class OAuthUserPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private OAuthUserModelArgumentsResolver _oAuthUserModelArgumentsResolver;
-
 }

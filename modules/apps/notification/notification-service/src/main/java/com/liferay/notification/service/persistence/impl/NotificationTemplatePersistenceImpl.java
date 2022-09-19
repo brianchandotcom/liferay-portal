@@ -2847,8 +2847,4 @@ public class NotificationTemplatePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private NotificationTemplateModelArgumentsResolver
-		_notificationTemplateModelArgumentsResolver;
-
 }

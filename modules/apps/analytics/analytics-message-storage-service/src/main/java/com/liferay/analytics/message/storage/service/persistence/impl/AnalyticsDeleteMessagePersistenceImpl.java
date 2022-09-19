@@ -1874,8 +1874,4 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private AnalyticsDeleteMessageModelArgumentsResolver
-		_analyticsDeleteMessageModelArgumentsResolver;
-
 }

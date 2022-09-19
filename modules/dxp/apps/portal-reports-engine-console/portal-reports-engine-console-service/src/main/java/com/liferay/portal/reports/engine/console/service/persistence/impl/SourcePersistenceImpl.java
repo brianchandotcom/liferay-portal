@@ -3552,7 +3552,4 @@ public class SourcePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private SourceModelArgumentsResolver _sourceModelArgumentsResolver;
-
 }

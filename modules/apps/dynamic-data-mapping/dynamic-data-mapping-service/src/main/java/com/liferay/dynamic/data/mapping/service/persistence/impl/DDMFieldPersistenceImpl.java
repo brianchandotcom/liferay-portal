@@ -2879,7 +2879,4 @@ public class DDMFieldPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DDMFieldModelArgumentsResolver _ddmFieldModelArgumentsResolver;
-
 }

@@ -2073,8 +2073,4 @@ public class CommerceTaxFixedRatePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceTaxFixedRateModelArgumentsResolver
-		_commerceTaxFixedRateModelArgumentsResolver;
-
 }

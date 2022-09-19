@@ -7322,8 +7322,4 @@ public class CommerceInventoryWarehousePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommerceInventoryWarehouseModelArgumentsResolver
-		_commerceInventoryWarehouseModelArgumentsResolver;
-
 }

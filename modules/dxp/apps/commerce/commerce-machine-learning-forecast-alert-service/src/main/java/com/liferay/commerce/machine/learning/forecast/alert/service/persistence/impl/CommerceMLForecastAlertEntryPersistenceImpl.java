@@ -5264,8 +5264,4 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommerceMLForecastAlertEntryModelArgumentsResolver
-		_commerceMLForecastAlertEntryModelArgumentsResolver;
-
 }

@@ -1570,8 +1570,4 @@ public class SamlIdpSpConnectionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private SamlIdpSpConnectionModelArgumentsResolver
-		_samlIdpSpConnectionModelArgumentsResolver;
-
 }

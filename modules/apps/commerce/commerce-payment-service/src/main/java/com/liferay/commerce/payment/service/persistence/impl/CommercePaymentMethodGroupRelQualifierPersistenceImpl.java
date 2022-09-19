@@ -2356,8 +2356,4 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommercePaymentMethodGroupRelQualifierModelArgumentsResolver
-		_commercePaymentMethodGroupRelQualifierModelArgumentsResolver;
-
 }

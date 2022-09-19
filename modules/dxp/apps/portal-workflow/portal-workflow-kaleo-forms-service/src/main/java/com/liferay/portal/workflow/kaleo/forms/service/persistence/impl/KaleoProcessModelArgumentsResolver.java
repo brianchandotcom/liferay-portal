@@ -32,12 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  * @generated
  */
-@Component(
-	immediate = true,
-	service = {
-		KaleoProcessModelArgumentsResolver.class, ArgumentsResolver.class
-	}
-)
+@Component(immediate = true, service = ArgumentsResolver.class)
 public class KaleoProcessModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

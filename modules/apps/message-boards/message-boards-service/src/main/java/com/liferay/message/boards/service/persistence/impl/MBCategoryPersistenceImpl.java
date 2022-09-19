@@ -12741,7 +12741,4 @@ public class MBCategoryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private MBCategoryModelArgumentsResolver _mbCategoryModelArgumentsResolver;
-
 }

@@ -3102,7 +3102,4 @@ public class KBTemplatePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private KBTemplateModelArgumentsResolver _kbTemplateModelArgumentsResolver;
-
 }

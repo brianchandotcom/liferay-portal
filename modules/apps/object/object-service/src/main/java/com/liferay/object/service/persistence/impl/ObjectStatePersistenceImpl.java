@@ -3220,8 +3220,4 @@ public class ObjectStatePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectStateModelArgumentsResolver
-		_objectStateModelArgumentsResolver;
-
 }

@@ -675,8 +675,4 @@ public class ViewCountEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private ViewCountEntryModelArgumentsResolver
-		_viewCountEntryModelArgumentsResolver;
-
 }

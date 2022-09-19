@@ -3671,8 +3671,4 @@ public class SiteFriendlyURLPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private SiteFriendlyURLModelArgumentsResolver
-		_siteFriendlyURLModelArgumentsResolver;
-
 }

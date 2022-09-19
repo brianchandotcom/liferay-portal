@@ -1613,8 +1613,4 @@ public class SamlSpMessagePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private SamlSpMessageModelArgumentsResolver
-		_samlSpMessageModelArgumentsResolver;
-
 }

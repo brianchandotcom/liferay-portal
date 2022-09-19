@@ -1931,8 +1931,4 @@ public class CommerceInventoryAuditPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceInventoryAuditModelArgumentsResolver
-		_commerceInventoryAuditModelArgumentsResolver;
-
 }

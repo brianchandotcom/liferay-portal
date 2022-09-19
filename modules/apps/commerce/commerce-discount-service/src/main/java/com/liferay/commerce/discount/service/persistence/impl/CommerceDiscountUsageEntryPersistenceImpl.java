@@ -3117,8 +3117,4 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceDiscountUsageEntryModelArgumentsResolver
-		_commerceDiscountUsageEntryModelArgumentsResolver;
-
 }

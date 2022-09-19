@@ -1236,8 +1236,4 @@ public class FriendlyURLEntryMappingPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private FriendlyURLEntryMappingModelArgumentsResolver
-		_friendlyURLEntryMappingModelArgumentsResolver;
-
 }

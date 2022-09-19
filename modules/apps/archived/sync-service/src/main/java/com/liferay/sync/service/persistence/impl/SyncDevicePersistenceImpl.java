@@ -2981,7 +2981,4 @@ public class SyncDevicePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private SyncDeviceModelArgumentsResolver _syncDeviceModelArgumentsResolver;
-
 }

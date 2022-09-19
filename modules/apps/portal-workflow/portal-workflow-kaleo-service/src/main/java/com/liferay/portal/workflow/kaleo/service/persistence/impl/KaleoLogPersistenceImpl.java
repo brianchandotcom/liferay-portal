@@ -4529,7 +4529,4 @@ public class KaleoLogPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoLogModelArgumentsResolver _kaleoLogModelArgumentsResolver;
-
 }

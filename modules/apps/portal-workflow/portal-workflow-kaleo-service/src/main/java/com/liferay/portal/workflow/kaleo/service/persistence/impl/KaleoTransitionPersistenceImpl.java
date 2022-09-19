@@ -3199,8 +3199,4 @@ public class KaleoTransitionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private KaleoTransitionModelArgumentsResolver
-		_kaleoTransitionModelArgumentsResolver;
-
 }

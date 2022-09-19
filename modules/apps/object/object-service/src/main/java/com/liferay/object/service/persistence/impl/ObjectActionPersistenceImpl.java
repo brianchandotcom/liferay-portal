@@ -3105,8 +3105,4 @@ public class ObjectActionPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectActionModelArgumentsResolver
-		_objectActionModelArgumentsResolver;
-
 }

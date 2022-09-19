@@ -2273,8 +2273,4 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceDiscountCommerceAccountGroupRelModelArgumentsResolver
-		_commerceDiscountCommerceAccountGroupRelModelArgumentsResolver;
-
 }

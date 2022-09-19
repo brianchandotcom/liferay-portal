@@ -3052,8 +3052,4 @@ public class CommercePriceModifierRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommercePriceModifierRelModelArgumentsResolver
-		_commercePriceModifierRelModelArgumentsResolver;
-
 }

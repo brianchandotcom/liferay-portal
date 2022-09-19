@@ -1625,8 +1625,4 @@ public class SamlSpAuthRequestPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private SamlSpAuthRequestModelArgumentsResolver
-		_samlSpAuthRequestModelArgumentsResolver;
-
 }

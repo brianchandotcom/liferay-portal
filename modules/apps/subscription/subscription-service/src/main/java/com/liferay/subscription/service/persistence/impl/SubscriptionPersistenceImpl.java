@@ -4459,8 +4459,4 @@ public class SubscriptionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private SubscriptionModelArgumentsResolver
-		_subscriptionModelArgumentsResolver;
-
 }

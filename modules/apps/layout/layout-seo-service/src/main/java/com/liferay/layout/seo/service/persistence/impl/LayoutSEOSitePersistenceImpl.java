@@ -2700,8 +2700,4 @@ public class LayoutSEOSitePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private LayoutSEOSiteModelArgumentsResolver
-		_layoutSEOSiteModelArgumentsResolver;
-
 }

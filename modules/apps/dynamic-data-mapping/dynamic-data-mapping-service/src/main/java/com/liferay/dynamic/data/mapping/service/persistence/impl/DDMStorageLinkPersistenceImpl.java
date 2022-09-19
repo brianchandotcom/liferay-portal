@@ -3737,8 +3737,4 @@ public class DDMStorageLinkPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DDMStorageLinkModelArgumentsResolver
-		_ddmStorageLinkModelArgumentsResolver;
-
 }

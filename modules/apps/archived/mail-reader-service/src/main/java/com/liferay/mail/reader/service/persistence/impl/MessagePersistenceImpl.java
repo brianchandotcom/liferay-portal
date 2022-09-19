@@ -2003,7 +2003,4 @@ public class MessagePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private MessageModelArgumentsResolver _messageModelArgumentsResolver;
-
 }

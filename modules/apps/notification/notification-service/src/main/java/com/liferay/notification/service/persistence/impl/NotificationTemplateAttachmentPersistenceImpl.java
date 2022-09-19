@@ -1599,8 +1599,4 @@ public class NotificationTemplateAttachmentPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private NotificationTemplateAttachmentModelArgumentsResolver
-		_notificationTemplateAttachmentModelArgumentsResolver;
-
 }

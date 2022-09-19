@@ -2080,8 +2080,4 @@ public class SamlSpSessionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private SamlSpSessionModelArgumentsResolver
-		_samlSpSessionModelArgumentsResolver;
-
 }

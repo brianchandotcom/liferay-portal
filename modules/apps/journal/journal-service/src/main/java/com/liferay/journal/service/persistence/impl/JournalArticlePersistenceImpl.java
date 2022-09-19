@@ -35785,8 +35785,4 @@ public class JournalArticlePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private JournalArticleModelArgumentsResolver
-		_journalArticleModelArgumentsResolver;
-
 }

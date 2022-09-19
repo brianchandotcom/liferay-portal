@@ -13766,8 +13766,4 @@ public class CommercePriceListPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommercePriceListModelArgumentsResolver
-		_commercePriceListModelArgumentsResolver;
-
 }

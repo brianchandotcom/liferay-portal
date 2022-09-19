@@ -2131,8 +2131,4 @@ public class SyncDLFileVersionDiffPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private SyncDLFileVersionDiffModelArgumentsResolver
-		_syncDLFileVersionDiffModelArgumentsResolver;
-
 }

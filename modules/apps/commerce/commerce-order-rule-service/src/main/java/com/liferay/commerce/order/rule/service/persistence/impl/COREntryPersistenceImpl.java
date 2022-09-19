@@ -8110,7 +8110,4 @@ public class COREntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private COREntryModelArgumentsResolver _corEntryModelArgumentsResolver;
-
 }

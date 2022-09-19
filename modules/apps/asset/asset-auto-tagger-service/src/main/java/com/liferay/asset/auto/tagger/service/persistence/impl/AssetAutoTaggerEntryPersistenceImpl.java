@@ -2338,8 +2338,4 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private AssetAutoTaggerEntryModelArgumentsResolver
-		_assetAutoTaggerEntryModelArgumentsResolver;
-
 }

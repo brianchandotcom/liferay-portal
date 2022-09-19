@@ -1518,7 +1518,4 @@ public class AccountPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private AccountModelArgumentsResolver _accountModelArgumentsResolver;
-
 }

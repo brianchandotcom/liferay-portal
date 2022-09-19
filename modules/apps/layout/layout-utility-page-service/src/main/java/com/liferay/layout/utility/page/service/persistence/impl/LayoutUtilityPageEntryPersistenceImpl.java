@@ -5848,8 +5848,4 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private LayoutUtilityPageEntryModelArgumentsResolver
-		_layoutUtilityPageEntryModelArgumentsResolver;
-
 }

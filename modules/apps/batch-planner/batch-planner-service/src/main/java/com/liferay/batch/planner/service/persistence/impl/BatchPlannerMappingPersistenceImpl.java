@@ -1644,8 +1644,4 @@ public class BatchPlannerMappingPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private BatchPlannerMappingModelArgumentsResolver
-		_batchPlannerMappingModelArgumentsResolver;
-
 }

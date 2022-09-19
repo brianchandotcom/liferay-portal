@@ -7031,8 +7031,4 @@ public class SyncDLObjectPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private SyncDLObjectModelArgumentsResolver
-		_syncDLObjectModelArgumentsResolver;
-
 }

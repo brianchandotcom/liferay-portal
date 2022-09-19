@@ -2728,8 +2728,4 @@ public class AnalyticsAssociationPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private AnalyticsAssociationModelArgumentsResolver
-		_analyticsAssociationModelArgumentsResolver;
-
 }

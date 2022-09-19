@@ -3924,8 +3924,4 @@ public class AssetDisplayPageEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private AssetDisplayPageEntryModelArgumentsResolver
-		_assetDisplayPageEntryModelArgumentsResolver;
-
 }

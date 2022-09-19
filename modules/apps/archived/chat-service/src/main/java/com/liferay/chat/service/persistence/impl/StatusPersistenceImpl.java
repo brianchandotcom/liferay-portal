@@ -2475,7 +2475,4 @@ public class StatusPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private StatusModelArgumentsResolver _statusModelArgumentsResolver;
-
 }

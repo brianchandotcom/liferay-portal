@@ -3101,8 +3101,4 @@ public class FriendlyURLEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private FriendlyURLEntryModelArgumentsResolver
-		_friendlyURLEntryModelArgumentsResolver;
-
 }

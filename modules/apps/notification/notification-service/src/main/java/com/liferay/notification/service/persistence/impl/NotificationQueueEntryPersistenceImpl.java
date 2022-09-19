@@ -4524,8 +4524,4 @@ public class NotificationQueueEntryPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private NotificationQueueEntryModelArgumentsResolver
-		_notificationQueueEntryModelArgumentsResolver;
-
 }

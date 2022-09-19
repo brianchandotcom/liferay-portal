@@ -11094,8 +11094,4 @@ public class SegmentsEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private SegmentsEntryModelArgumentsResolver
-		_segmentsEntryModelArgumentsResolver;
-
 }

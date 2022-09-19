@@ -1491,8 +1491,4 @@ public class CSDiagramPinPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CSDiagramPinModelArgumentsResolver
-		_csDiagramPinModelArgumentsResolver;
-
 }

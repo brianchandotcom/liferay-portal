@@ -4575,7 +4575,4 @@ public class KBFolderPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private KBFolderModelArgumentsResolver _kbFolderModelArgumentsResolver;
-
 }

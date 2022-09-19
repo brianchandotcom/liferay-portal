@@ -1557,8 +1557,4 @@ public class BatchPlannerPolicyPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private BatchPlannerPolicyModelArgumentsResolver
-		_batchPlannerPolicyModelArgumentsResolver;
-
 }

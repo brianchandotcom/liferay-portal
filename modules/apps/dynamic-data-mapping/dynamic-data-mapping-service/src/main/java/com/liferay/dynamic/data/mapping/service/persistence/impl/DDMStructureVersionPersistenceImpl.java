@@ -2418,8 +2418,4 @@ public class DDMStructureVersionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DDMStructureVersionModelArgumentsResolver
-		_ddmStructureVersionModelArgumentsResolver;
-
 }

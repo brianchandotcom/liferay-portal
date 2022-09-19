@@ -5638,8 +5638,4 @@ public class ObjectEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectEntryModelArgumentsResolver
-		_objectEntryModelArgumentsResolver;
-
 }

@@ -8876,8 +8876,4 @@ public class CommerceTermEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommerceTermEntryModelArgumentsResolver
-		_commerceTermEntryModelArgumentsResolver;
-
 }

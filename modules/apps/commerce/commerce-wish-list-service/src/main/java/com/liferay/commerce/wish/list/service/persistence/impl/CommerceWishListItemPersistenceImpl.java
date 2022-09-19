@@ -3907,8 +3907,4 @@ public class CommerceWishListItemPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceWishListItemModelArgumentsResolver
-		_commerceWishListItemModelArgumentsResolver;
-
 }

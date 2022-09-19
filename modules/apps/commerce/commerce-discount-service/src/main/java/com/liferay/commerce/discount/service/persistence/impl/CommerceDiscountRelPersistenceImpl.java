@@ -2402,8 +2402,4 @@ public class CommerceDiscountRelPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private CommerceDiscountRelModelArgumentsResolver
-		_commerceDiscountRelModelArgumentsResolver;
-
 }

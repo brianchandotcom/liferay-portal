@@ -4146,8 +4146,4 @@ public class MBSuspiciousActivityPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private MBSuspiciousActivityModelArgumentsResolver
-		_mbSuspiciousActivityModelArgumentsResolver;
-
 }

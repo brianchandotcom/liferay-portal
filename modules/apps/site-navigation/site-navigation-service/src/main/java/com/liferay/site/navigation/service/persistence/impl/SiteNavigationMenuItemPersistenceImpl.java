@@ -5423,8 +5423,4 @@ public class SiteNavigationMenuItemPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private SiteNavigationMenuItemModelArgumentsResolver
-		_siteNavigationMenuItemModelArgumentsResolver;
-
 }

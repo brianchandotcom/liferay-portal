@@ -2314,8 +2314,4 @@ public class SegmentsEntryRolePersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private SegmentsEntryRoleModelArgumentsResolver
-		_segmentsEntryRoleModelArgumentsResolver;
-
 }

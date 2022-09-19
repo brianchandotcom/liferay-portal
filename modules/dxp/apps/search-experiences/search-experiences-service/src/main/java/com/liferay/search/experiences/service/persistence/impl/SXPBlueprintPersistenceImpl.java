@@ -4003,8 +4003,4 @@ public class SXPBlueprintPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private SXPBlueprintModelArgumentsResolver
-		_sxpBlueprintModelArgumentsResolver;
-
 }

@@ -2953,8 +2953,4 @@ public class MBDiscussionPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private MBDiscussionModelArgumentsResolver
-		_mbDiscussionModelArgumentsResolver;
-
 }

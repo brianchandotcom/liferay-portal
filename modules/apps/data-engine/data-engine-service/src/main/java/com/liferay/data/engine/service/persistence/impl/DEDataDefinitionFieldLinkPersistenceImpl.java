@@ -6777,8 +6777,4 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private DEDataDefinitionFieldLinkModelArgumentsResolver
-		_deDataDefinitionFieldLinkModelArgumentsResolver;
-
 }

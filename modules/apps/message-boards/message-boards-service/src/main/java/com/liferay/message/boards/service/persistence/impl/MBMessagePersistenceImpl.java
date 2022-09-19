@@ -23020,7 +23020,4 @@ public class MBMessagePersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private MBMessageModelArgumentsResolver _mbMessageModelArgumentsResolver;
-
 }

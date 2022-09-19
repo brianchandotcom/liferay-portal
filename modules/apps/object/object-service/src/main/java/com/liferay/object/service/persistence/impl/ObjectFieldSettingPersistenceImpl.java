@@ -2738,8 +2738,4 @@ public class ObjectFieldSettingPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private ObjectFieldSettingModelArgumentsResolver
-		_objectFieldSettingModelArgumentsResolver;
-
 }

@@ -1885,7 +1885,4 @@ public class FVSEntryPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private FVSEntryModelArgumentsResolver _fvsEntryModelArgumentsResolver;
-
 }

@@ -2404,8 +2404,4 @@ public class DDLRecordSetVersionPersistenceImpl
 		return finderCache;
 	}
 
-	@Reference
-	private DDLRecordSetVersionModelArgumentsResolver
-		_ddlRecordSetVersionModelArgumentsResolver;
-
 }

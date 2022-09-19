@@ -60,33 +60,33 @@ public class RelatedObjectEntryResourceImpl
 			String objectRelationshipName, Pagination pagination)
 		throws Exception {
 
-		ObjectDefinition currentObjectDefinition = _getSystemObjectDefinition(
+		ObjectDefinition systemObjectDefinition = _getSystemObjectDefinition(
 			_getSystemObjectDefinitionMetadata(
 				_getRESTContextPath(previousPath)));
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.
 				getObjectRelationshipByObjectDefinitionId(
-					currentObjectDefinition.getObjectDefinitionId(),
+					systemObjectDefinition.getObjectDefinitionId(),
 					objectRelationshipName);
 
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
-			currentObjectDefinition, objectRelationship);
+			systemObjectDefinition, objectRelationship);
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerTracker.getObjectEntryManager(
-				currentObjectDefinition.getStorageType());
+				systemObjectDefinition.getStorageType());
 
 		if (relatedObjectDefinition.isSystem()) {
 			return objectEntryManager.getRelatedSystemObjectEntries(
-				currentObjectDefinition, objectEntryId, objectRelationshipName,
+				systemObjectDefinition, objectEntryId, objectRelationshipName,
 				pagination);
 		}
 
 		return (Page)objectEntryManager.getObjectEntryRelatedObjectEntries(
 			_getDefaultDTOConverterContext(
-				currentObjectDefinition, objectEntryId, _uriInfo),
-			currentObjectDefinition, objectEntryId, objectRelationshipName,
+				systemObjectDefinition, objectEntryId, _uriInfo),
+			systemObjectDefinition, objectEntryId, objectRelationshipName,
 			pagination);
 	}
 
@@ -97,14 +97,14 @@ public class RelatedObjectEntryResourceImpl
 			Pagination pagination)
 		throws Exception {
 
-		ObjectDefinition currentObjectDefinition = _getSystemObjectDefinition(
+		ObjectDefinition systemObjectDefinition = _getSystemObjectDefinition(
 			_getSystemObjectDefinitionMetadata(
 				_getRESTContextPath(previousPath)));
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.
 				getObjectRelationshipByObjectDefinitionId(
-					currentObjectDefinition.getObjectDefinitionId(),
+					systemObjectDefinition.getObjectDefinitionId(),
 					objectRelationshipName);
 
 		ObjectDefinition objectDefinition =
@@ -114,19 +114,19 @@ public class RelatedObjectEntryResourceImpl
 		_objectRelationshipService.addObjectRelationshipMappingTableValues(
 			objectRelationship.getObjectRelationshipId(),
 			_getPrimaryKey1(
-				currentObjectDefinition, objectDefinition, objectEntryId,
+				systemObjectDefinition, objectDefinition, objectEntryId,
 				relatedObjectEntryId),
 			_getPrimaryKey2(
-				currentObjectDefinition, objectDefinition, objectEntryId,
+				systemObjectDefinition, objectDefinition, objectEntryId,
 				relatedObjectEntryId),
 			new ServiceContext());
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerTracker.getObjectEntryManager(
-				currentObjectDefinition.getStorageType());
+				systemObjectDefinition.getStorageType());
 
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
-			currentObjectDefinition, objectRelationship);
+			systemObjectDefinition, objectRelationship);
 
 		return objectEntryManager.getObjectEntry(
 			_getDefaultDTOConverterContext(
@@ -151,12 +151,12 @@ public class RelatedObjectEntryResourceImpl
 	}
 
 	private long _getPrimaryKey1(
-		ObjectDefinition currentObjectDefinition,
+		ObjectDefinition systemObjectDefinition,
 		ObjectDefinition objectDefinition, long objectEntryId,
 		long relatedObjectEntryId) {
 
 		if (objectDefinition.getObjectDefinitionId() ==
-				currentObjectDefinition.getObjectDefinitionId()) {
+				systemObjectDefinition.getObjectDefinitionId()) {
 
 			return objectEntryId;
 		}
@@ -165,12 +165,12 @@ public class RelatedObjectEntryResourceImpl
 	}
 
 	private long _getPrimaryKey2(
-		ObjectDefinition currentObjectDefinition,
+		ObjectDefinition systemObjectDefinition,
 		ObjectDefinition objectDefinition, long objectEntryId,
 		long relatedObjectEntryId) {
 
 		if (objectDefinition.getObjectDefinitionId() ==
-				currentObjectDefinition.getObjectDefinitionId()) {
+				systemObjectDefinition.getObjectDefinitionId()) {
 
 			return relatedObjectEntryId;
 		}

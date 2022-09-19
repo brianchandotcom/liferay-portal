@@ -22,11 +22,17 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
+
+import java.net.HttpURLConnection;
+
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -160,8 +166,30 @@ public class SalesforceHttp {
 				location));
 		options.setMethod(method);
 
-		return _http.URLtoByteArray(options);
+		byte[] bytes = _http.URLtoByteArray(options);
+
+		Http.Response response = options.getResponse();
+
+		if ((response.getResponseCode() < HttpURLConnection.HTTP_OK) ||
+			(response.getResponseCode() >=
+				HttpURLConnection.HTTP_MULT_CHOICE)) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unexpected response status ",
+						response.getResponseCode(), " with response message: ",
+						new String(bytes)));
+			}
+
+			throw new ObjectEntryManagerHttpException(
+				"Request to Salesforce failed");
+		}
+
+		return bytes;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(SalesforceHttp.class);
 
 	@Reference
 	private Http _http;

@@ -141,8 +141,6 @@ definition {
 		Workflow.clickRevertSortDirection();
 
 		ConfigurationTemplate.viewOrderConfigurationsTemplate(tableOrder = "Second Configuration Templates Name,First Configuration Templates Name");
-	
-		
 	}
 
 	@description = "LRQA-71891 - Verify that the user can save Current Configuration as a template"

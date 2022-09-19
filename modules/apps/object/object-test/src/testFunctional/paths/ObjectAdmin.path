@@ -560,6 +560,11 @@
 		<td>//*[contains(@label,'Unrelated Objects')]//..//option[contains(.,'${key_objectLabel}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>TAB_NAME_ON_LAYOUT</td>
+		<td>//h3[@class = 'object-admin-panel__title' and contains(text(),'${key_tabName}')]/../..//button[@class = 'dropdown-toggle btn btn-monospaced btn-unstyled']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

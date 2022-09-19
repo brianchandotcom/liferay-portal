@@ -826,12 +826,73 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify that it is not possible to leave a layout with a Relationship tab on first place by removing the fields tab"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotLeaveRelationshipTabOnFirstPlaceByRemovingFieldsTab {
+		task ("Create a custom object and a relationship to itself") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
 
-		// TODO LPS-147734 CannotLeaveRelationshipTabOnFirstPlaceByRemovingFieldsTab pending implementation
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
 
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject",
+				objectName_2 = "CustomObject",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+		}
+
+		task ("Go to layout tab, add a field tab and relationship tab") {
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "CustomObject");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(tabName = "Field Tab");
+
+			ObjectAdmin.addTabRelationshipsOnLayout(
+				relationshipsLabelName = "Relationship",
+				tabName = "Relationship Tab");
+		}
+
+		task ("Remove the field tab, add field tab again and assert that error message") {
+			Click(
+				key_tabName = "Field Tab",
+				locator1 = "ObjectAdmin#TAB_NAME_ON_LAYOUT");
+
+			DropdownMenuItem.click(menuItem = "Delete");
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = "2",
+				fieldLabelName = "Custom Field",
+				tabName = "Field Tab");
+
+			Button.clickSave();
+
+			SelectFrame(locator1 = "Message#ERROR");
+
+			Alert.viewErrorMessage(errorMessage = "The layout's first tab must be a field tab.");
+		}
 	}
 
 	@description = "LPS-139803 - It is not possible to select a Relationship field for the Object Entry Title"

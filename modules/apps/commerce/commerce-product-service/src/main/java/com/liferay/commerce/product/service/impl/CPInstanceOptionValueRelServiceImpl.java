@@ -15,6 +15,9 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.service.base.CPInstanceOptionValueRelServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * The implementation of the cp instance option value rel remote service.
@@ -31,6 +34,14 @@ import com.liferay.commerce.product.service.base.CPInstanceOptionValueRelService
  * @author Marco Leo
  * @see    CPInstanceOptionValueRelServiceBaseImpl
  */
+@Component(
+	enabled = false,
+	property = {
+		"json.web.service.context.name=commerce",
+		"json.web.service.context.path=CPInstanceOptionValueRel"
+	},
+	service = AopService.class
+)
 public class CPInstanceOptionValueRelServiceImpl
 	extends CPInstanceOptionValueRelServiceBaseImpl {
 

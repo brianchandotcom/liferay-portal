@@ -29,8 +29,8 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,10 +65,18 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alec Sloan
  * @author Alessio Antonio Rendina
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.product.model.CommerceChannel",
+	service = AopService.class
+)
 public class CommerceChannelLocalServiceImpl
 	extends CommerceChannelLocalServiceBaseImpl {
 
@@ -548,26 +555,26 @@ public class CommerceChannelLocalServiceImpl
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID
 	};
 
-	@ServiceReference(type = ClassNameLocalService.class)
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@BeanReference(type = CommerceChannelAccountEntryRelLocalService.class)
+	@Reference
 	private CommerceChannelAccountEntryRelLocalService
 		_commerceChannelAccountEntryRelLocalService;
 
-	@BeanReference(type = CommerceChannelRelLocalService.class)
+	@Reference
 	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
-	@ServiceReference(type = GroupLocalService.class)
+	@Reference
 	private GroupLocalService _groupLocalService;
 
-	@ServiceReference(type = ResourceLocalService.class)
+	@Reference
 	private ResourceLocalService _resourceLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

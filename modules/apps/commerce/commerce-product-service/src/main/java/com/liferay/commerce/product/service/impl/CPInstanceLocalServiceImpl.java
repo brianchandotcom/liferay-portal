@@ -40,7 +40,7 @@ import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRel
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -71,14 +71,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -91,11 +90,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  * @author Igor Beslic
  */
+@Component(
+	enabled = false,
+	property = "model.class.name=com.liferay.commerce.product.model.CPInstance",
+	service = AopService.class
+)
 public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -139,13 +146,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		Date expirationDate = null;
 		Date date = new Date();
 
-		Date displayDate = PortalUtil.getDate(
+		Date displayDate = _portal.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
 			CPInstanceDisplayDateException.class);
 
 		if (!neverExpire) {
-			expirationDate = PortalUtil.getDate(
+			expirationDate = _portal.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
 				CPInstanceExpirationDateException.class);
@@ -168,7 +175,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setUserId(user.getUserId());
 		cpInstance.setUserName(user.getFullName());
 		cpInstance.setCPDefinitionId(cpDefinitionId);
-		cpInstance.setCPInstanceUuid(PortalUUIDUtil.generate());
+		cpInstance.setCPInstanceUuid(_portalUUID.generate());
 		cpInstance.setSku(sku);
 		cpInstance.setGtin(gtin);
 		cpInstance.setManufacturerPartNumber(manufacturerPartNumber);
@@ -213,7 +220,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setUnspsc(unspsc);
 		cpInstance.setDiscontinued(discontinued);
 		cpInstance.setDiscontinuedDate(
-			PortalUtil.getDate(
+			_portal.getDate(
 				discontinuedDateMonth, discontinuedDateDay,
 				discontinuedDateYear));
 		cpInstance.setReplacementCPInstanceUuid(replacementCPInstanceUuid);
@@ -395,7 +402,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 
 		for (CPInstance cpInstance : cpInstances) {
-			long userId = PortalUtil.getValidUserId(
+			long userId = _portal.getValidUserId(
 				cpInstance.getCompanyId(), cpInstance.getUserId());
 
 			ServiceContext serviceContext = new ServiceContext();
@@ -811,13 +818,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		Date expirationDate = null;
 		Date date = new Date();
 
-		Date displayDate = PortalUtil.getDate(
+		Date displayDate = _portal.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
 			CPInstanceDisplayDateException.class);
 
 		if (!neverExpire) {
-			expirationDate = PortalUtil.getDate(
+			expirationDate = _portal.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
 				CPInstanceExpirationDateException.class);
@@ -848,7 +855,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setUnspsc(unspsc);
 		cpInstance.setDiscontinued(discontinued);
 		cpInstance.setDiscontinuedDate(
-			PortalUtil.getDate(
+			_portal.getDate(
 				discontinuedDateMonth, discontinuedDateDay,
 				discontinuedDateYear));
 		cpInstance.setReplacementCPInstanceUuid(replacementCPInstanceUuid);
@@ -1302,7 +1309,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		if ((cpInstances != null) && !cpInstances.isEmpty()) {
 			for (CPInstance cpInstance : cpInstances) {
-				long userId = PortalUtil.getValidUserId(
+				long userId = _portal.getValidUserId(
 					cpInstance.getCompanyId(), cpInstance.getUserId());
 
 				ServiceContext serviceContext = new ServiceContext();
@@ -1680,35 +1687,41 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPInstanceLocalServiceImpl.class);
 
-	@BeanReference(type = CPDefinitionLocalService.class)
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
-	@BeanReference(type = CPDefinitionOptionRelLocalService.class)
+	@Reference
 	private CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
 
-	@BeanReference(type = CPDefinitionOptionValueRelLocalService.class)
+	@Reference
 	private CPDefinitionOptionValueRelLocalService
 		_cpDefinitionOptionValueRelLocalService;
 
-	@BeanReference(type = CPInstanceOptionValueRelLocalService.class)
+	@Reference
 	private CPInstanceOptionValueRelLocalService
 		_cpInstanceOptionValueRelLocalService;
 
-	@BeanReference(type = CPInstanceOptionValueRelPersistence.class)
+	@Reference
 	private CPInstanceOptionValueRelPersistence
 		_cpInstanceOptionValueRelPersistence;
 
-	@BeanReference(type = CProductLocalService.class)
+	@Reference
 	private CProductLocalService _cProductLocalService;
 
-	@ServiceReference(type = ExpandoRowLocalService.class)
+	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortalUUID _portalUUID;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
-	@ServiceReference(type = WorkflowInstanceLinkLocalService.class)
+	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

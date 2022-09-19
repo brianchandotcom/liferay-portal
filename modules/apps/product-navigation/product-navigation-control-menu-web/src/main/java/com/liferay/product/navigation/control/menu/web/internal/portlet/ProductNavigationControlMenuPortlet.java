@@ -16,7 +16,7 @@ package com.liferay.product.navigation.control.menu.web.internal.portlet;
 
 import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.util.AssetHelper;
-import com.liferay.layout.util.PortletCategoryManager;
+import com.liferay.layout.portlet.category.PortletCategoryManager;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Constants;

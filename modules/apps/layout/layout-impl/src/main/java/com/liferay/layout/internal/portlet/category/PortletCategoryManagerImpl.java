@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.layout.internal.util;
+package com.liferay.layout.internal.portlet.category;
 
+import com.liferay.layout.portlet.category.PortletCategoryManager;
 import com.liferay.layout.util.PortalPreferencesUtil;
-import com.liferay.layout.util.PortletCategoryManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -146,7 +146,8 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		String[] sortedPortletCategoryKeys) {
 
 		PortalPreferencesUtil.updateSortedPortalPreferencesValues(
-			portalPreferences, _CONTENT_PAGE_EDITOR_PORTLET_KEY,
+			portalPreferences,
+			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 			"sortedPortletCategoryKeys", sortedPortletCategoryKeys);
 	}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.util;
+package com.liferay.layout.portlet.category;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.portlet.PortalPreferences;

@@ -117,7 +117,7 @@ const BudgetBreakdownSection = ({
 				))}
 
 				<Button
-					className="d-flex"
+					className="align-items-center d-flex"
 					onClick={() => arrayHelpers.push(getNewBudget())}
 					outline
 					small

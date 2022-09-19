@@ -59,7 +59,12 @@ const Listing = ({
 				)}
 			</div>
 
-			<Button className="d-flex" onClick={handleOnAdd} outline small>
+			<Button
+				className="align-items-center d-flex"
+				onClick={handleOnAdd}
+				outline
+				small
+			>
 				<span className="inline-item inline-item-before">
 					<ClayIcon symbol="plus" />
 				</span>

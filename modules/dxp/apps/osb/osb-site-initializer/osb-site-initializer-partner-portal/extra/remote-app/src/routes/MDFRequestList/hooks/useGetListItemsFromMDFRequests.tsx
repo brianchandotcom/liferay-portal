@@ -25,23 +25,22 @@ export default function useGetListItemsFromMDFRequests(
 
 	const listItems = useMemo(
 		() =>
-			swrResponse.data?.items.map((item) => {
-				return {
-					[MDFColumnKey.ID]: String(item.id),
-					...getMDFActivityPeriod(
-						item.minDateActivity,
-						item.maxDateActivity
-					),
-					[MDFColumnKey.STATUS]: item.requestStatus,
-					[MDFColumnKey.PARTNER]:
-						item.r_accountToMDFRequests_accountEntry?.name,
-					...getMDFDates(item.dateCreated, item.dateModified),
-					...getMDFBudgetInfos(
-						item.totalCostOfExpense,
-						item.totalMDFRequestAmount
-					),
-				};
-			}),
+			swrResponse.data?.items.map((item) => ({
+				[MDFColumnKey.ID]: String(item.id),
+				[MDFColumnKey.NAME]: item.overallCampaign,
+				...getMDFActivityPeriod(
+					item.minDateActivity,
+					item.maxDateActivity
+				),
+				[MDFColumnKey.STATUS]: item.requestStatus,
+				[MDFColumnKey.PARTNER]:
+					item.r_accountToMDFRequests_accountEntry?.name,
+				...getMDFDates(item.dateCreated, item.dateModified),
+				...getMDFBudgetInfos(
+					item.totalCostOfExpense,
+					item.totalMDFRequestAmount
+				),
+			})),
 		[swrResponse.data?.items]
 	);
 

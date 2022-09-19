@@ -380,6 +380,13 @@
   dependencies:
     classnames "^2.2.6"
 
+"@clayui/loading-indicator@^3.60.0":
+  version "3.60.0"
+  resolved "https://registry.yarnpkg.com/@clayui/loading-indicator/-/loading-indicator-3.60.0.tgz#d5573f0d391367599740fb23d1999a9064ba71b1"
+  integrity sha512-UpPwjJqex0tX+asB4hDRe50qJop6hvAyvDjfE6P6ivYxpuLjdTqhk7CN9QKLWSesPh8DFvmG32BYnuW9OZ59XQ==
+  dependencies:
+    classnames "^2.2.6"
+
 "@clayui/pagination-bar@^3.70.0":
   version "3.72.0"
   resolved "https://registry.yarnpkg.com/@clayui/pagination-bar/-/pagination-bar-3.72.0.tgz#3f37938843be0682196525ee3db3564c387b7786"

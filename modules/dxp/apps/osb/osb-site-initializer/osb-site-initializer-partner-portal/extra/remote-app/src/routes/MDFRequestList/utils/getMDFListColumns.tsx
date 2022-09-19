@@ -10,23 +10,32 @@
  */
 
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
+import {RequestStatus} from '../../../common/enums/requestStatus';
 import {MDFRequestListItem} from '../../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../../common/interfaces/tableColumn';
 import {Liferay} from '../../../common/services/liferay';
 import Dropdown from '../components/Dropdown';
+import RequestStatusBadge from '../components/RequestStatusBadge';
 
 export default function getMDFListColumns(
-	data?: TableColumn<MDFRequestListItem>[],
+	columns?: TableColumn<MDFRequestListItem>[],
 	siteURL?: string
 ): TableColumn<MDFRequestListItem>[] | undefined {
 	return (
-		data && [
+		columns && [
 			{
 				columnKey: MDFColumnKey.ID,
 				label: 'Request ID',
 				render: (data) => <>{`Request-${data}`}</>,
 			},
-			...data,
+			{
+				columnKey: MDFColumnKey.STATUS,
+				label: 'Request ID',
+				render: (data) => (
+					<RequestStatusBadge status={data as RequestStatus} />
+				),
+			},
+			...columns,
 			{
 				columnKey: MDFColumnKey.ACTION,
 				label: '',

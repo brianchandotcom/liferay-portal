@@ -14,8 +14,6 @@
 
 package com.liferay.subscription.internal.model.listener;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -23,9 +21,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
-import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -74,53 +70,12 @@ public class SubscriptionPortletPreferencesModelListener
 				return;
 			}
 
-			TransactionCommitCallbackUtil.registerCallback(
-				() -> {
-					ActionableDynamicQuery actionableDynamicQuery =
-						_subscriptionLocalService.getActionableDynamicQuery();
-
-					actionableDynamicQuery.setAddCriteriaMethod(
-						dynamicQuery -> {
-							dynamicQuery.add(
-								RestrictionsFactoryUtil.eq(
-									"companyId",
-									remainingPortletPreferences.
-										getCompanyId()));
-
-							dynamicQuery.add(
-								RestrictionsFactoryUtil.eq(
-									"classNameId",
-									_classNameLocalService.getClassNameId(
-										remainingPortletPreferences.
-											getModelClassName())));
-
-							dynamicQuery.add(
-								RestrictionsFactoryUtil.eq(
-									"classPK",
-									portletPreferences.
-										getPortletPreferencesId()));
-						});
-
-					actionableDynamicQuery.setPerformActionMethod(
-						(Subscription subscription) -> {
-							subscription.setClassPK(
-								remainingPortletPreferences.
-									getPortletPreferencesId());
-
-							_subscriptionLocalService.updateSubscription(
-								subscription);
-						});
-
-					try {
-						actionableDynamicQuery.performActions();
-					}
-					catch (Exception exception) {
-						_log.error(
-							"Unable to restore subscriptions", exception);
-					}
-
-					return null;
-				});
+			_subscriptionLocalService.updateSubscriptions(
+				remainingPortletPreferences.getCompanyId(),
+				_classNameLocalService.getClassNameId(
+					remainingPortletPreferences.getModelClassName()),
+				portletPreferences.getPortletPreferencesId(),
+				remainingPortletPreferences.getPortletPreferencesId());
 		}
 		catch (Exception exception) {
 			_log.error("Unable to delete subscriptions", exception);

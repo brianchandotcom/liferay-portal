@@ -21,6 +21,64 @@ definition {
 		}
 	}
 
+	@description = "LPS-150886 - Verify that it's possible to delete an object after deleting the relationship"
+	@priority = "4"
+	test CanDeleteCustomObjectAfterDeleteRelationship {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 290",
+			objectName = "CustomObject290",
+			pluralLabelName = "Custom Objects 290");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject290");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject290",
+			objectName_2 = "User",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject290");
+
+		ObjectAdmin.openObjectAdmin();
+
+		Click(
+			key_objectLabel = "Custom Object 290",
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
+
+		ObjectAdmin.assertCannotDeleteObjectWithRelationshipErrorMessage();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectSystemObject(label = "Custom Object 290");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.deleteRelationshipViaUI(
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.deleteCustomObjectViaUI(
+			labelName = "Custom Object 290",
+			objectName = "CustomObject290");
+
+		AssertElementNotPresent(
+			locator1 = "ObjectAdmin#OBJECT_LABEL",
+			value1 = "Custom Object 290");
+	}
+
 	@description = "LPS-150886 - Verify that it's possible to delete a published object"
 	@priority = "5"
 	test CanDeletePublishedCustomObject {

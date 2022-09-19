@@ -31,7 +31,7 @@ export async function SendAccountRequest(email, password, captcha) {
 		basics: {businessInformation},
 	} = JSON.parse(getItem('raylife-application-form'));
 
-	const {data} = await createAccount(
+	const data = await createAccount(
 		businessInformation.firstName,
 		businessInformation.lastName,
 		email,

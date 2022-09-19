@@ -351,19 +351,22 @@ public class LayoutFriendlyURLTest {
 
 		Locale originalDefaultLocale = LocaleThreadLocal.getDefaultLocale();
 
-		LocaleThreadLocal.setDefaultLocale(defaultLocale);
+		try {
+			LocaleThreadLocal.setDefaultLocale(defaultLocale);
 
-		typeSettingsUnicodeProperties.setProperty(
-			"languageId", LocaleUtil.toLanguageId(defaultLocale));
+			typeSettingsUnicodeProperties.setProperty(
+				"languageId", LocaleUtil.toLanguageId(defaultLocale));
 
-		GroupLocalServiceUtil.updateGroup(
-			group.getGroupId(), typeSettingsUnicodeProperties.toString());
+			GroupLocalServiceUtil.updateGroup(
+				group.getGroupId(), typeSettingsUnicodeProperties.toString());
 
-		friendlyURLMap = layout.getFriendlyURLMap();
+			friendlyURLMap = layout.getFriendlyURLMap();
 
-		LocaleThreadLocal.setDefaultLocale(originalDefaultLocale);
-
-		Assert.assertNull(friendlyURLMap.get(defaultLocale));
+			Assert.assertNull(friendlyURLMap.get(defaultLocale));
+		}
+		finally {
+			LocaleThreadLocal.setDefaultLocale(originalDefaultLocale);
+		}
 	}
 
 	@Test

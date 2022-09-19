@@ -49,13 +49,7 @@ const renderSidebar = async () => {
 
 describe('Sidebar', () => {
 	describe('resize', () => {
-		beforeEach(() => {
-			Liferay.FeatureFlags['LPS-153452'] = true;
-		});
-
 		afterEach(() => {
-			delete Liferay.FeatureFlags['LPS-153452'];
-
 			window.sessionStorage.clear();
 		});
 

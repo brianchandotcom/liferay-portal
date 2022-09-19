@@ -66,8 +66,6 @@ definition {
 	@description = "This is a test for LPS-153383. The page creator cannot resize editor sidebar to an invalid size."
 	@priority = "4"
 	test CannotResizeLeftSidebarPanelBeyoundLimitation {
-		property custom.properties = "feature.flag.LPS-153452=true";
-
 		task ("Given a page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",

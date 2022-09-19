@@ -16,5 +16,77 @@
 		"resourceName": "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
 		"roleName": "User",
 		"scope": "2"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.list.type.model.ListTypeDefinition",
+		"roleName": "User",
+		"scope": "2"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFRequest$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequest$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "UPDATE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFRequest$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TypeActivity$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Tactic$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Activity$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Activity$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "UPDATE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Activity$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "VIEW",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Budget$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Budget$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionId": "UPDATE",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Budget$]",
+		"roleName": "User",
+		"scope": "1"
 	}
 ]

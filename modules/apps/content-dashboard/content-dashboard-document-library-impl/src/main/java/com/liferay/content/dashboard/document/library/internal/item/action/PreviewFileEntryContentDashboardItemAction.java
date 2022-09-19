@@ -15,15 +15,23 @@
 package com.liferay.content.dashboard.document.library.internal.item.action;
 
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
-import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.petra.string.StringPool;
+import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
-import java.util.Optional;
+
+import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Cristina González
@@ -32,13 +40,15 @@ public class PreviewFileEntryContentDashboardItemAction
 	implements ContentDashboardItemAction {
 
 	public PreviewFileEntryContentDashboardItemAction(
-		FileEntry fileEntry,
-		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider,
-		Language language) {
+		DLURLHelper dlURLHelper, FileEntry fileEntry,
+		HttpServletRequest httpServletRequest, Language language,
+		Portal portal) {
 
+		_dlURLHelper = dlURLHelper;
 		_fileEntry = fileEntry;
-		_infoItemFieldValuesProvider = infoItemFieldValuesProvider;
+		_httpServletRequest = httpServletRequest;
 		_language = language;
+		_portal = portal;
 	}
 
 	@Override
@@ -63,16 +73,31 @@ public class PreviewFileEntryContentDashboardItemAction
 
 	@Override
 	public String getURL() {
-		InfoItemFieldValues infoItemFieldValues =
-			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
+		PortletRequest portletRequest =
+			(PortletRequest)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		return Optional.ofNullable(
-			infoItemFieldValues.getInfoFieldValue("previewURL")
-		).map(
-			InfoFieldValue::getValue
-		).orElse(
-			StringPool.BLANK
-		).toString();
+		if (portletRequest == null) {
+			return null;
+		}
+
+		try {
+			String backURL = ParamUtil.getString(
+				_httpServletRequest, "backURL");
+
+			String portletNamespace = _portal.getPortletNamespace(
+				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
+
+			return HttpComponentsUtil.addParameter(
+				_dlURLHelper.getFileEntryControlPanelLink(
+					portletRequest, _fileEntry.getFileEntryId()),
+				portletNamespace + "redirect", backURL);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -80,9 +105,13 @@ public class PreviewFileEntryContentDashboardItemAction
 		return getURL();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		PreviewFileEntryContentDashboardItemAction.class);
+
+	private final DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;
-	private final InfoItemFieldValuesProvider<FileEntry>
-		_infoItemFieldValuesProvider;
+	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
+	private final Portal _portal;
 
 }

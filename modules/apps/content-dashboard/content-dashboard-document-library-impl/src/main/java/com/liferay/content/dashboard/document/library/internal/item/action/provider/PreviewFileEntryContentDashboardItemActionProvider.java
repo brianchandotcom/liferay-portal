@@ -17,11 +17,11 @@ package com.liferay.content.dashboard.document.library.internal.item.action.prov
 import com.liferay.content.dashboard.document.library.internal.item.action.PreviewFileEntryContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
-import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -45,12 +45,8 @@ public class PreviewFileEntryContentDashboardItemActionProvider
 			return null;
 		}
 
-		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, FileEntry.class.getName());
-
 		return new PreviewFileEntryContentDashboardItemAction(
-			fileEntry, infoItemFieldValuesProvider, _language);
+			_dluRLHelper, fileEntry, httpServletRequest, _language, _portal);
 	}
 
 	@Override
@@ -73,13 +69,10 @@ public class PreviewFileEntryContentDashboardItemActionProvider
 			return false;
 		}
 
-		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, FileEntry.class.getName());
-
 		ContentDashboardItemAction contentDashboardItemAction =
 			new PreviewFileEntryContentDashboardItemAction(
-				fileEntry, infoItemFieldValuesProvider, _language);
+				_dluRLHelper, fileEntry, httpServletRequest, _language,
+				_portal);
 
 		if (Validator.isNull(contentDashboardItemAction.getURL())) {
 			return false;
@@ -89,9 +82,12 @@ public class PreviewFileEntryContentDashboardItemActionProvider
 	}
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private DLURLHelper _dluRLHelper;
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

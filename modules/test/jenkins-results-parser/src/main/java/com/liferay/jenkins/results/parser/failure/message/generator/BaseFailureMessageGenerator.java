@@ -244,6 +244,14 @@ public abstract class BaseFailureMessageGenerator
 	private String _getConsoleTextSnippet(
 		String consoleText, boolean truncateTop, int start, int end) {
 
+		if (end == -1) {
+			end = consoleText.length() - 1;
+		}
+
+		if (start == -1) {
+			start = 0;
+		}
+
 		if ((end - start) > CHARS_CONSOLE_TEXT_SNIPPET_SIZE_MAX) {
 			if (truncateTop) {
 				start = end - CHARS_CONSOLE_TEXT_SNIPPET_SIZE_MAX;

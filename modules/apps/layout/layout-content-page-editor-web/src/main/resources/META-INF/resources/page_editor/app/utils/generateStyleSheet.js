@@ -135,5 +135,5 @@ function getValue(itemId, styleName, styleValue) {
 }
 
 function replaceValue(template, value) {
-	return template.replace('{value}', value);
+	return template.replaceAll('{value}', value);
 }

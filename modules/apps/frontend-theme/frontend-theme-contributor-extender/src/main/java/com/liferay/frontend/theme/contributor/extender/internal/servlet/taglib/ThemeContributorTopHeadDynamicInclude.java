@@ -104,11 +104,6 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 			"/html/common/themes/top_head.jsp#post");
 	}
 
-	@Reference(unbind = "-")
-	public void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
@@ -283,6 +278,8 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 	private volatile String[] _jsResourceURLs = StringPool.EMPTY_ARRAY;
 	private volatile String _mergedCSSResourceURLs;
 	private volatile String _mergedJSResourceURLs;
+
+	@Reference
 	private Portal _portal;
 
 }

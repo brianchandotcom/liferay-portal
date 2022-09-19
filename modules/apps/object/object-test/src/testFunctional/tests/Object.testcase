@@ -21,6 +21,39 @@ definition {
 		}
 	}
 
+	@description = "LPS-150886 - Verify that it's possible to delete a published object"
+	@priority = "5"
+	test CanDeletePublishedCustomObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 290",
+			objectName = "CustomObject290",
+			pluralLabelName = "Custom Objects 290");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject290");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject290");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.assertObjectStatus(
+			label = "Custom Object 290",
+			status = "Approved");
+
+		ObjectAdmin.deleteObjectEntryViaUI(
+			labelName = "Custom Object 290",
+			objectName = "CustomObject290");
+
+		AssertElementNotPresent(
+			locator1 = "ObjectAdmin#OBJECT_LABEL",
+			value1 = "Custom Object 290");
+	}
+
 	@description = "LPS-135406 - Verify it is the user is able to delete a relationship of object native"
 	@priority = "4"
 	test CanDeleteRelationshipFromNativeObject {

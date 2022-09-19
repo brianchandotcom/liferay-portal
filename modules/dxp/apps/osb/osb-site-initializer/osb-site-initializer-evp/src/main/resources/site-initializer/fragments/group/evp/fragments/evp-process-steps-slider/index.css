@@ -1,0 +1,134 @@
+@keyframes moveLeftActive {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(100%);
+	}
+}
+
+@keyframes moveLeft {
+	from {
+		transform: translateX(-100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+@keyframes moveRightActive {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-100%);
+	}
+}
+
+@keyframes moveRight {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+.evp-process-steps-slider .carousel {
+	height: 500px;
+	position: relative;
+	width: 450px;
+}
+
+.evp-process-steps-slider .carousel-item {
+	opacity: 0;
+}
+
+.evp-process-steps-slider .carousel-item.move-right,
+.evp-process-steps-slider .carousel-item.move-left {
+	animation-duration: 0.6s;
+	animation-iteration-count: 1;
+	display: block;
+}
+
+.evp-process-steps-slider .carousel-item.active,
+.evp-process-steps-slider .carousel-item.move-left,
+.evp-process-steps-slider .carousel-item.move-right {
+	opacity: 1;
+}
+
+.evp-process-steps-slider .carousel-item.active {
+	transform: translateX(0);
+}
+
+.evp-process-steps-slider .carousel-item.active.move-left {
+	animation-name: moveLeftActive;
+}
+
+.evp-process-steps-slider .carousel-item.move-left {
+	animation-name: moveLeft;
+}
+
+.evp-process-steps-slider .carousel-item.active.move-right {
+	animation-name: moveRightActive;
+}
+
+.evp-process-steps-slider .carousel-item.move-right {
+	animation-name: moveRight;
+}
+
+.evp-process-steps-slider .carousel-navigation {
+	bottom: 10px;
+	display: flex;
+	justify-content: center;
+	left: 0;
+	list-style: none;
+	padding-left: 0;
+	position: absolute;
+	right: 0;
+	z-index: 15;
+}
+
+.evp-process-steps-slider .carousel-navigation button {
+	background-color: var(--color-brand-primary-lighten-4);
+	border: 0;
+	flex: 0 1 auto;
+	height: 3px;
+	margin-left: 3px;
+	margin-right: 3px;
+	position: relative;
+	width: 30px;
+}
+
+.evp-process-steps-slider .carousel-navigation button:focus {
+	outline: 0;
+	text-decoration: none;
+}
+
+.evp-process-steps-slider .carousel-navigation button.active {
+	background-color: var(--color-brand-primary);
+}
+
+.evp-process-steps-slider .evp-slider-card .step-icon {
+	height: 170px;
+	width: 170px;
+}
+
+.evp-process-steps-slider .evp-slider-card .image-container {
+	padding: 65px;
+}
+
+.evp-process-steps-slider .evp-slider-card .process-step {
+	border-right: 1px solid #3d8ccb;
+	font-size: 48px;
+	line-height: 116px;
+}
+
+.evp-process-steps-slider .evp-slider-card .step-content {
+	height: 140px;
+}
+
+.evp-process-steps-slider .evp-slider-card .step-description {
+	font-size: 24px;
+	overflow: visible;
+}

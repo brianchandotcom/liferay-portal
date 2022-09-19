@@ -77,6 +77,14 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
+		if (isSet(depotName)) {
+			ItemSelector.changeWorkspaces(
+				customImage = "false",
+				workspacesType = "Asset Library");
+
+			LexiconCard.clickCard(card = "${depotName}");
+		}
+
 		if ("${item}" == "Page") {
 			NavigationMenusAdmin._addItemPage(
 				pageNameList = "${pageNameList}",
@@ -92,28 +100,9 @@ definition {
 		}
 
 		if ("${item}" == "Web Content Article") {
-			if (isSet(depotName)) {
-				AssertClick(
-					key_breadcrumbName = "Sites and Libraries",
-					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-					value1 = "Sites and Libraries");
-
-				AssertClick(
-					key_groupTab = "Asset Library",
-					locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-					value1 = "Asset Library");
-
-				LexiconCard.clickCard(card = "${depotName}");
-
-				Click(
-					key_listEntry = "${assetTitle}",
-					locator1 = "LexiconList#LIST_ENTRY_TITLE");
-			}
-			else {
-				Click(
-					key_listEntry = "${assetTitle}",
-					locator1 = "LexiconList#LIST_ENTRY_TITLE");
-			}
+			Click(
+				key_listEntry = "${assetTitle}",
+				locator1 = "LexiconList#LIST_ENTRY_TITLE");
 		}
 
 		if ("${item}" == "Blogs Entry") {
@@ -298,6 +287,10 @@ definition {
 
 	macro editItem {
 		NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
+
+		if (isSet(useCustomName)) {
+			NavigationMenusAdmin._editItemPage();
+		}
 
 		if ("${item}" == "Page") {
 			if (isSet(customName)) {

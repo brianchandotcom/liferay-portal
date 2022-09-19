@@ -28,7 +28,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -55,7 +55,7 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -72,6 +71,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the cp instance local service.
@@ -86,8 +88,7 @@ import javax.sql.DataSource;
  */
 public abstract class CPInstanceLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CPInstanceLocalService, CTService<CPInstance>,
-			   IdentifiableOSGiService {
+	implements AopService, CPInstanceLocalService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -637,100 +638,24 @@ public abstract class CPInstanceLocalServiceBaseImpl
 		return cpInstancePersistence.update(cpInstance);
 	}
 
-	/**
-	 * Returns the cp instance local service.
-	 *
-	 * @return the cp instance local service
-	 */
-	public CPInstanceLocalService getCPInstanceLocalService() {
-		return cpInstanceLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the cp instance local service.
-	 *
-	 * @param cpInstanceLocalService the cp instance local service
-	 */
-	public void setCPInstanceLocalService(
-		CPInstanceLocalService cpInstanceLocalService) {
-
-		this.cpInstanceLocalService = cpInstanceLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CPInstanceLocalService.class, IdentifiableOSGiService.class,
+			CTService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the cp instance persistence.
-	 *
-	 * @return the cp instance persistence
-	 */
-	public CPInstancePersistence getCPInstancePersistence() {
-		return cpInstancePersistence;
-	}
-
-	/**
-	 * Sets the cp instance persistence.
-	 *
-	 * @param cpInstancePersistence the cp instance persistence
-	 */
-	public void setCPInstancePersistence(
-		CPInstancePersistence cpInstancePersistence) {
-
-		this.cpInstancePersistence = cpInstancePersistence;
-	}
-
-	/**
-	 * Returns the cp instance finder.
-	 *
-	 * @return the cp instance finder
-	 */
-	public CPInstanceFinder getCPInstanceFinder() {
-		return cpInstanceFinder;
-	}
-
-	/**
-	 * Sets the cp instance finder.
-	 *
-	 * @param cpInstanceFinder the cp instance finder
-	 */
-	public void setCPInstanceFinder(CPInstanceFinder cpInstanceFinder) {
-		this.cpInstanceFinder = cpInstanceFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.product.model.CPInstance",
-			cpInstanceLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		cpInstanceLocalService = (CPInstanceLocalService)aopProxy;
 
 		_setLocalServiceUtilService(cpInstanceLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.product.model.CPInstance");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -806,26 +731,19 @@ public abstract class CPInstanceLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CPInstanceLocalService.class)
 	protected CPInstanceLocalService cpInstanceLocalService;
 
-	@BeanReference(type = CPInstancePersistence.class)
+	@Reference
 	protected CPInstancePersistence cpInstancePersistence;
 
-	@BeanReference(type = CPInstanceFinder.class)
+	@Reference
 	protected CPInstanceFinder cpInstanceFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPInstanceLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

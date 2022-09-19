@@ -18,7 +18,7 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.service.CPOptionServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the cp option remote service.
@@ -48,104 +50,30 @@ import javax.sql.DataSource;
  */
 public abstract class CPOptionServiceBaseImpl
 	extends BaseServiceImpl
-	implements CPOptionService, IdentifiableOSGiService {
+	implements AopService, CPOptionService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CPOptionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPOptionServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the cp option local service.
-	 *
-	 * @return the cp option local service
-	 */
-	public com.liferay.commerce.product.service.CPOptionLocalService
-		getCPOptionLocalService() {
-
-		return cpOptionLocalService;
-	}
-
-	/**
-	 * Sets the cp option local service.
-	 *
-	 * @param cpOptionLocalService the cp option local service
-	 */
-	public void setCPOptionLocalService(
-		com.liferay.commerce.product.service.CPOptionLocalService
-			cpOptionLocalService) {
-
-		this.cpOptionLocalService = cpOptionLocalService;
-	}
-
-	/**
-	 * Returns the cp option remote service.
-	 *
-	 * @return the cp option remote service
-	 */
-	public CPOptionService getCPOptionService() {
-		return cpOptionService;
-	}
-
-	/**
-	 * Sets the cp option remote service.
-	 *
-	 * @param cpOptionService the cp option remote service
-	 */
-	public void setCPOptionService(CPOptionService cpOptionService) {
-		this.cpOptionService = cpOptionService;
-	}
-
-	/**
-	 * Returns the cp option persistence.
-	 *
-	 * @return the cp option persistence
-	 */
-	public CPOptionPersistence getCPOptionPersistence() {
-		return cpOptionPersistence;
-	}
-
-	/**
-	 * Sets the cp option persistence.
-	 *
-	 * @param cpOptionPersistence the cp option persistence
-	 */
-	public void setCPOptionPersistence(
-		CPOptionPersistence cpOptionPersistence) {
-
-		this.cpOptionPersistence = cpOptionPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(cpOptionService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CPOptionService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		cpOptionService = (CPOptionService)aopProxy;
+
+		_setServiceUtilService(cpOptionService);
 	}
 
 	/**
@@ -204,21 +132,16 @@ public abstract class CPOptionServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.product.service.CPOptionLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.product.service.CPOptionLocalService
 		cpOptionLocalService;
 
-	@BeanReference(type = CPOptionService.class)
 	protected CPOptionService cpOptionService;
 
-	@BeanReference(type = CPOptionPersistence.class)
+	@Reference
 	protected CPOptionPersistence cpOptionPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

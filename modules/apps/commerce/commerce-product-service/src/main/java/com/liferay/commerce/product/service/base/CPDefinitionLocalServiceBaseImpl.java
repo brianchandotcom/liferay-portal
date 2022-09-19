@@ -30,7 +30,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -65,7 +65,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -77,6 +76,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the cp definition local service.
@@ -91,8 +93,7 @@ import javax.sql.DataSource;
  */
 public abstract class CPDefinitionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CPDefinitionLocalService, CTService<CPDefinition>,
-			   IdentifiableOSGiService {
+	implements AopService, CPDefinitionLocalService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -855,124 +856,24 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 			cpDefinitionLocalization);
 	}
 
-	/**
-	 * Returns the cp definition local service.
-	 *
-	 * @return the cp definition local service
-	 */
-	public CPDefinitionLocalService getCPDefinitionLocalService() {
-		return cpDefinitionLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the cp definition local service.
-	 *
-	 * @param cpDefinitionLocalService the cp definition local service
-	 */
-	public void setCPDefinitionLocalService(
-		CPDefinitionLocalService cpDefinitionLocalService) {
-
-		this.cpDefinitionLocalService = cpDefinitionLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CPDefinitionLocalService.class, IdentifiableOSGiService.class,
+			CTService.class, PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the cp definition persistence.
-	 *
-	 * @return the cp definition persistence
-	 */
-	public CPDefinitionPersistence getCPDefinitionPersistence() {
-		return cpDefinitionPersistence;
-	}
-
-	/**
-	 * Sets the cp definition persistence.
-	 *
-	 * @param cpDefinitionPersistence the cp definition persistence
-	 */
-	public void setCPDefinitionPersistence(
-		CPDefinitionPersistence cpDefinitionPersistence) {
-
-		this.cpDefinitionPersistence = cpDefinitionPersistence;
-	}
-
-	/**
-	 * Returns the cp definition finder.
-	 *
-	 * @return the cp definition finder
-	 */
-	public CPDefinitionFinder getCPDefinitionFinder() {
-		return cpDefinitionFinder;
-	}
-
-	/**
-	 * Sets the cp definition finder.
-	 *
-	 * @param cpDefinitionFinder the cp definition finder
-	 */
-	public void setCPDefinitionFinder(CPDefinitionFinder cpDefinitionFinder) {
-		this.cpDefinitionFinder = cpDefinitionFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the cp definition localization persistence.
-	 *
-	 * @return the cp definition localization persistence
-	 */
-	public CPDefinitionLocalizationPersistence
-		getCPDefinitionLocalizationPersistence() {
-
-		return cpDefinitionLocalizationPersistence;
-	}
-
-	/**
-	 * Sets the cp definition localization persistence.
-	 *
-	 * @param cpDefinitionLocalizationPersistence the cp definition localization persistence
-	 */
-	public void setCPDefinitionLocalizationPersistence(
-		CPDefinitionLocalizationPersistence
-			cpDefinitionLocalizationPersistence) {
-
-		this.cpDefinitionLocalizationPersistence =
-			cpDefinitionLocalizationPersistence;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.commerce.product.model.CPDefinition",
-			cpDefinitionLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		cpDefinitionLocalService = (CPDefinitionLocalService)aopProxy;
 
 		_setLocalServiceUtilService(cpDefinitionLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.commerce.product.model.CPDefinition");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1048,30 +949,23 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = CPDefinitionLocalService.class)
 	protected CPDefinitionLocalService cpDefinitionLocalService;
 
-	@BeanReference(type = CPDefinitionPersistence.class)
+	@Reference
 	protected CPDefinitionPersistence cpDefinitionPersistence;
 
-	@BeanReference(type = CPDefinitionFinder.class)
+	@Reference
 	protected CPDefinitionFinder cpDefinitionFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@BeanReference(type = CPDefinitionLocalizationPersistence.class)
+	@Reference
 	protected CPDefinitionLocalizationPersistence
 		cpDefinitionLocalizationPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

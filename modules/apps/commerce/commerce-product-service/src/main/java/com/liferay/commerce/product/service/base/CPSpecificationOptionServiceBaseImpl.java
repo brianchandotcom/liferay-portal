@@ -18,7 +18,7 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.commerce.product.service.CPSpecificationOptionServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPSpecificationOptionPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the cp specification option remote service.
@@ -48,111 +50,31 @@ import javax.sql.DataSource;
  */
 public abstract class CPSpecificationOptionServiceBaseImpl
 	extends BaseServiceImpl
-	implements CPSpecificationOptionService, IdentifiableOSGiService {
+	implements AopService, CPSpecificationOptionService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CPSpecificationOptionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPSpecificationOptionServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the cp specification option local service.
-	 *
-	 * @return the cp specification option local service
-	 */
-	public
-		com.liferay.commerce.product.service.CPSpecificationOptionLocalService
-			getCPSpecificationOptionLocalService() {
-
-		return cpSpecificationOptionLocalService;
-	}
-
-	/**
-	 * Sets the cp specification option local service.
-	 *
-	 * @param cpSpecificationOptionLocalService the cp specification option local service
-	 */
-	public void setCPSpecificationOptionLocalService(
-		com.liferay.commerce.product.service.CPSpecificationOptionLocalService
-			cpSpecificationOptionLocalService) {
-
-		this.cpSpecificationOptionLocalService =
-			cpSpecificationOptionLocalService;
-	}
-
-	/**
-	 * Returns the cp specification option remote service.
-	 *
-	 * @return the cp specification option remote service
-	 */
-	public CPSpecificationOptionService getCPSpecificationOptionService() {
-		return cpSpecificationOptionService;
-	}
-
-	/**
-	 * Sets the cp specification option remote service.
-	 *
-	 * @param cpSpecificationOptionService the cp specification option remote service
-	 */
-	public void setCPSpecificationOptionService(
-		CPSpecificationOptionService cpSpecificationOptionService) {
-
-		this.cpSpecificationOptionService = cpSpecificationOptionService;
-	}
-
-	/**
-	 * Returns the cp specification option persistence.
-	 *
-	 * @return the cp specification option persistence
-	 */
-	public CPSpecificationOptionPersistence
-		getCPSpecificationOptionPersistence() {
-
-		return cpSpecificationOptionPersistence;
-	}
-
-	/**
-	 * Sets the cp specification option persistence.
-	 *
-	 * @param cpSpecificationOptionPersistence the cp specification option persistence
-	 */
-	public void setCPSpecificationOptionPersistence(
-		CPSpecificationOptionPersistence cpSpecificationOptionPersistence) {
-
-		this.cpSpecificationOptionPersistence =
-			cpSpecificationOptionPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(cpSpecificationOptionService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CPSpecificationOptionService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		cpSpecificationOptionService = (CPSpecificationOptionService)aopProxy;
+
+		_setServiceUtilService(cpSpecificationOptionService);
 	}
 
 	/**
@@ -215,22 +137,17 @@ public abstract class CPSpecificationOptionServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.product.service.CPSpecificationOptionLocalService.class
-	)
+	@Reference
 	protected
 		com.liferay.commerce.product.service.CPSpecificationOptionLocalService
 			cpSpecificationOptionLocalService;
 
-	@BeanReference(type = CPSpecificationOptionService.class)
 	protected CPSpecificationOptionService cpSpecificationOptionService;
 
-	@BeanReference(type = CPSpecificationOptionPersistence.class)
+	@Reference
 	protected CPSpecificationOptionPersistence cpSpecificationOptionPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

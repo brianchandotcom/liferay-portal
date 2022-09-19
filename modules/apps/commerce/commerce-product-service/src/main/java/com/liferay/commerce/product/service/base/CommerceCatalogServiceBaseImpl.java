@@ -18,7 +18,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceCatalogServiceUtil;
 import com.liferay.commerce.product.service.persistence.CommerceCatalogPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce catalog remote service.
@@ -48,106 +50,30 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceCatalogServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceCatalogService, IdentifiableOSGiService {
+	implements AopService, CommerceCatalogService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceCatalogService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceCatalogServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce catalog local service.
-	 *
-	 * @return the commerce catalog local service
-	 */
-	public com.liferay.commerce.product.service.CommerceCatalogLocalService
-		getCommerceCatalogLocalService() {
-
-		return commerceCatalogLocalService;
-	}
-
-	/**
-	 * Sets the commerce catalog local service.
-	 *
-	 * @param commerceCatalogLocalService the commerce catalog local service
-	 */
-	public void setCommerceCatalogLocalService(
-		com.liferay.commerce.product.service.CommerceCatalogLocalService
-			commerceCatalogLocalService) {
-
-		this.commerceCatalogLocalService = commerceCatalogLocalService;
-	}
-
-	/**
-	 * Returns the commerce catalog remote service.
-	 *
-	 * @return the commerce catalog remote service
-	 */
-	public CommerceCatalogService getCommerceCatalogService() {
-		return commerceCatalogService;
-	}
-
-	/**
-	 * Sets the commerce catalog remote service.
-	 *
-	 * @param commerceCatalogService the commerce catalog remote service
-	 */
-	public void setCommerceCatalogService(
-		CommerceCatalogService commerceCatalogService) {
-
-		this.commerceCatalogService = commerceCatalogService;
-	}
-
-	/**
-	 * Returns the commerce catalog persistence.
-	 *
-	 * @return the commerce catalog persistence
-	 */
-	public CommerceCatalogPersistence getCommerceCatalogPersistence() {
-		return commerceCatalogPersistence;
-	}
-
-	/**
-	 * Sets the commerce catalog persistence.
-	 *
-	 * @param commerceCatalogPersistence the commerce catalog persistence
-	 */
-	public void setCommerceCatalogPersistence(
-		CommerceCatalogPersistence commerceCatalogPersistence) {
-
-		this.commerceCatalogPersistence = commerceCatalogPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceCatalogService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceCatalogService.class, IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceCatalogService = (CommerceCatalogService)aopProxy;
+
+		_setServiceUtilService(commerceCatalogService);
 	}
 
 	/**
@@ -208,21 +134,16 @@ public abstract class CommerceCatalogServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.product.service.CommerceCatalogLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.product.service.CommerceCatalogLocalService
 		commerceCatalogLocalService;
 
-	@BeanReference(type = CommerceCatalogService.class)
 	protected CommerceCatalogService commerceCatalogService;
 
-	@BeanReference(type = CommerceCatalogPersistence.class)
+	@Reference
 	protected CommerceCatalogPersistence commerceCatalogPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

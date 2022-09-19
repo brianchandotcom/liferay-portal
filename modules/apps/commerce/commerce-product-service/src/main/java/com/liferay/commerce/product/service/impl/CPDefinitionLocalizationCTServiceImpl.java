@@ -17,18 +17,22 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  * @generated
  */
+@Component(service = AopService.class)
 @CTAware
 public class CPDefinitionLocalizationCTServiceImpl
-	implements CTService<CPDefinitionLocalization> {
+	implements AopService, CTService<CPDefinitionLocalization> {
 
 	@Override
 	public CTPersistence<CPDefinitionLocalization> getCTPersistence() {
@@ -49,7 +53,7 @@ public class CPDefinitionLocalizationCTServiceImpl
 		return updateUnsafeFunction.apply(_cpDefinitionLocalizationPersistence);
 	}
 
-	@BeanReference(type = CPDefinitionLocalizationPersistence.class)
+	@Reference
 	private CPDefinitionLocalizationPersistence
 		_cpDefinitionLocalizationPersistence;
 

@@ -18,7 +18,7 @@ import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelServiceUtil;
 import com.liferay.commerce.product.service.persistence.CommerceChannelAccountEntryRelPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -29,11 +29,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the commerce channel account entry rel remote service.
@@ -48,117 +50,33 @@ import javax.sql.DataSource;
  */
 public abstract class CommerceChannelAccountEntryRelServiceBaseImpl
 	extends BaseServiceImpl
-	implements CommerceChannelAccountEntryRelService, IdentifiableOSGiService {
+	implements AopService, CommerceChannelAccountEntryRelService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>CommerceChannelAccountEntryRelService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceChannelAccountEntryRelServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the commerce channel account entry rel local service.
-	 *
-	 * @return the commerce channel account entry rel local service
-	 */
-	public com.liferay.commerce.product.service.
-		CommerceChannelAccountEntryRelLocalService
-			getCommerceChannelAccountEntryRelLocalService() {
-
-		return commerceChannelAccountEntryRelLocalService;
-	}
-
-	/**
-	 * Sets the commerce channel account entry rel local service.
-	 *
-	 * @param commerceChannelAccountEntryRelLocalService the commerce channel account entry rel local service
-	 */
-	public void setCommerceChannelAccountEntryRelLocalService(
-		com.liferay.commerce.product.service.
-			CommerceChannelAccountEntryRelLocalService
-				commerceChannelAccountEntryRelLocalService) {
-
-		this.commerceChannelAccountEntryRelLocalService =
-			commerceChannelAccountEntryRelLocalService;
-	}
-
-	/**
-	 * Returns the commerce channel account entry rel remote service.
-	 *
-	 * @return the commerce channel account entry rel remote service
-	 */
-	public CommerceChannelAccountEntryRelService
-		getCommerceChannelAccountEntryRelService() {
-
-		return commerceChannelAccountEntryRelService;
-	}
-
-	/**
-	 * Sets the commerce channel account entry rel remote service.
-	 *
-	 * @param commerceChannelAccountEntryRelService the commerce channel account entry rel remote service
-	 */
-	public void setCommerceChannelAccountEntryRelService(
-		CommerceChannelAccountEntryRelService
-			commerceChannelAccountEntryRelService) {
-
-		this.commerceChannelAccountEntryRelService =
-			commerceChannelAccountEntryRelService;
-	}
-
-	/**
-	 * Returns the commerce channel account entry rel persistence.
-	 *
-	 * @return the commerce channel account entry rel persistence
-	 */
-	public CommerceChannelAccountEntryRelPersistence
-		getCommerceChannelAccountEntryRelPersistence() {
-
-		return commerceChannelAccountEntryRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce channel account entry rel persistence.
-	 *
-	 * @param commerceChannelAccountEntryRelPersistence the commerce channel account entry rel persistence
-	 */
-	public void setCommerceChannelAccountEntryRelPersistence(
-		CommerceChannelAccountEntryRelPersistence
-			commerceChannelAccountEntryRelPersistence) {
-
-		this.commerceChannelAccountEntryRelPersistence =
-			commerceChannelAccountEntryRelPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		_setServiceUtilService(commerceChannelAccountEntryRelService);
-	}
-
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		_setServiceUtilService(null);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			CommerceChannelAccountEntryRelService.class,
+			IdentifiableOSGiService.class
+		};
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		commerceChannelAccountEntryRelService =
+			(CommerceChannelAccountEntryRelService)aopProxy;
+
+		_setServiceUtilService(commerceChannelAccountEntryRelService);
 	}
 
 	/**
@@ -222,24 +140,19 @@ public abstract class CommerceChannelAccountEntryRelServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService.class
-	)
+	@Reference
 	protected com.liferay.commerce.product.service.
 		CommerceChannelAccountEntryRelLocalService
 			commerceChannelAccountEntryRelLocalService;
 
-	@BeanReference(type = CommerceChannelAccountEntryRelService.class)
 	protected CommerceChannelAccountEntryRelService
 		commerceChannelAccountEntryRelService;
 
-	@BeanReference(type = CommerceChannelAccountEntryRelPersistence.class)
+	@Reference
 	protected CommerceChannelAccountEntryRelPersistence
 		commerceChannelAccountEntryRelPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

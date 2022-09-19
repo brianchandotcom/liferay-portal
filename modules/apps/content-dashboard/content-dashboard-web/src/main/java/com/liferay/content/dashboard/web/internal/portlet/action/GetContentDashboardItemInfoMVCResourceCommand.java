@@ -159,13 +159,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					_toString(contentDashboardItem.getModifiedDate())
 				).put(
 					"preview",
-					Optional.ofNullable(
-						contentDashboardItem.getPreview()
-					).map(
-						ContentDashboardItem.Preview::toJSONObject
-					).orElse(
-						null
-					)
+					_getPreviewJSONObject(
+						contentDashboardItem, httpServletRequest)
 				).put(
 					"specificFields",
 					_getSpecificFieldsJSONObject(contentDashboardItem, locale)
@@ -380,6 +375,55 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		}
 
 		return jsonArray;
+	}
+
+	private String _getPreviewImageURL(
+		ContentDashboardItem contentDashboardItem,
+		HttpServletRequest httpServletRequest) {
+
+		List<ContentDashboardItemAction> contentDashboardItemActions =
+			contentDashboardItem.getContentDashboardItemActions(
+				httpServletRequest,
+				ContentDashboardItemAction.Type.PREVIEW_IMAGE);
+
+		if (ListUtil.isNotEmpty(contentDashboardItemActions)) {
+			ContentDashboardItemAction contentDashboardItemAction =
+				contentDashboardItemActions.get(0);
+
+			return contentDashboardItemAction.getURL();
+		}
+
+		return null;
+	}
+
+	private JSONObject _getPreviewJSONObject(
+		ContentDashboardItem contentDashboardItem,
+		HttpServletRequest httpServletRequest) {
+
+		return JSONUtil.put(
+			"imageURL",
+			_getPreviewImageURL(contentDashboardItem, httpServletRequest)
+		).put(
+			"url", _getPreviewURL(contentDashboardItem, httpServletRequest)
+		);
+	}
+
+	private String _getPreviewURL(
+		ContentDashboardItem contentDashboardItem,
+		HttpServletRequest httpServletRequest) {
+
+		List<ContentDashboardItemAction> contentDashboardItemActions =
+			contentDashboardItem.getContentDashboardItemActions(
+				httpServletRequest, ContentDashboardItemAction.Type.PREVIEW);
+
+		if (ListUtil.isNotEmpty(contentDashboardItemActions)) {
+			ContentDashboardItemAction contentDashboardItemAction =
+				contentDashboardItemActions.get(0);
+
+			return contentDashboardItemAction.getURL();
+		}
+
+		return null;
 	}
 
 	private JSONObject _getSpecificFieldsJSONObject(

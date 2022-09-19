@@ -15,6 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
@@ -60,86 +61,99 @@ const SidebarPanelInfoViewCollapsable = ({
 
 	return (
 		<>
-			<Sidebar.Header title={title}>
-				{subscribe && <Subscribe {...subscribe} />}
+			<Sidebar.Header
+				actionsSlot={subscribe && <Subscribe {...subscribe} />}
+				title={title}
+			>
+				<ClayLayout.ContentRow>
+					<div>
+						{error && (
+							<ClayAlert
+								className="mb-3"
+								displayType="warning"
+								onClose={() => {
+									setError(false);
+								}}
+								variant="stripe"
+							>
+								{Liferay.Language.get(
+									'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+								)}
+							</ClayAlert>
+						)}
+
+						<div className="sidebar-section sidebar-section--compress">
+							<p
+								className="c-mb-1 text-secondary"
+								data-qa-id="assetTypeInfo"
+							>
+								{subType ? `${type} - ${subType}` : `${type}`}
+							</p>
+						</div>
+
+						<div className="sidebar-section sidebar-section--compress">
+							{latestVersions.map((latestVersion) => (
+								<div
+									className="c-mt-2"
+									key={latestVersion.version}
+								>
+									<ClayLabel displayType="info">
+										{Liferay.Language.get('version') + ' '}
+
+										{latestVersion.version}
+									</ClayLabel>
+
+									<ClayLabel
+										displayType={latestVersion.statusStyle}
+									>
+										{latestVersion.statusLabel}
+									</ClayLabel>
+								</div>
+							))}
+						</div>
+
+						<div className="sidebar-section">
+							{fetchSharingCollaboratorsURL ? (
+								<ManageCollaborators
+									fetchSharingCollaboratorsURL={
+										fetchSharingCollaboratorsURL
+									}
+									onError={handleError}
+								/>
+							) : (
+								<>
+									<ClaySticker
+										className={classnames(
+											'sticker-user-icon',
+											{
+												[`user-icon-color-${stickerColor}`]: !user.url,
+											}
+										)}
+										shape="circle"
+									>
+										{user.url ? (
+											<img
+												alt={`${user.name}.`}
+												className="sticker-img"
+												src={user.url}
+											/>
+										) : (
+											<ClayIcon symbol="user" />
+										)}
+									</ClaySticker>
+
+									<span className="c-ml-2 text-secondary">
+										{user.name}
+									</span>
+								</>
+							)}
+						</div>
+					</div>
+				</ClayLayout.ContentRow>
 			</Sidebar.Header>
 
-			<Sidebar.Body className="px-0">
-				{error && (
-					<ClayAlert
-						className="mb-3"
-						displayType="warning"
-						onClose={() => {
-							setError(false);
-						}}
-						variant="stripe"
-					>
-						{Liferay.Language.get(
-							'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
-						)}
-					</ClayAlert>
-				)}
-
-				<div className="px-3">
-					<div className="sidebar-section sidebar-section--compress">
-						<p
-							className="c-mb-1 text-secondary"
-							data-qa-id="assetTypeInfo"
-						>
-							{subType ? `${type} - ${subType}` : `${type}`}
-						</p>
-
-						{latestVersions.map((latestVersion) => (
-							<div className="c-mt-2" key={latestVersion.version}>
-								<ClayLabel displayType="info">
-									{Liferay.Language.get('version') + ' '}
-
-									{latestVersion.version}
-								</ClayLabel>
-
-								<ClayLabel
-									displayType={latestVersion.statusStyle}
-								>
-									{latestVersion.statusLabel}
-								</ClayLabel>
-							</div>
-						))}
-					</div>
-
-					<div className="sidebar-dl sidebar-section">
-						{fetchSharingCollaboratorsURL ? (
-							<ManageCollaborators
-								fetchSharingCollaboratorsURL={
-									fetchSharingCollaboratorsURL
-								}
-								onError={handleError}
-							/>
-						) : (
-							<>
-								<ClaySticker
-									className={classnames('sticker-user-icon', {
-										[`user-icon-color-${stickerColor}`]: !user.url,
-									})}
-									shape="circle"
-								>
-									{user.url ? (
-										<img
-											alt={`${user.name}.`}
-											className="sticker-img"
-											src={user.url}
-										/>
-									) : (
-										<ClayIcon symbol="user" />
-									)}
-								</ClaySticker>
-
-								<span className="c-ml-2 text-secondary">
-									{user.name}
-								</span>
-							</>
-						)}
-					</div>
-
+			<Sidebar.Body>
+				<div>
 					<PreviewActionsDescriptionSection
 						description={description}
 						downloadURL={downloadURL}

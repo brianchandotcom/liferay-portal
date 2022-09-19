@@ -58,9 +58,7 @@ const SidebarHeader = ({actionsSlot, children, className, title}) => {
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
 
-			<ClayLayout.ContentRow className="sidebar-section">
-				{children}
-			</ClayLayout.ContentRow>
+			{children}
 		</section>
 	);
 };

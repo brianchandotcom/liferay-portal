@@ -15,6 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
 import classnames from 'classnames';
@@ -66,113 +67,120 @@ const SidebarPanelInfoView = ({
 		<>
 			<Sidebar.Header
 				actionsSlot={subscribe && <Subscribe {...subscribe} />}
-				className="pb-0"
 				title={title}
 			>
-				<div className="px-0">
-					{error && (
-						<ClayAlert
-							className="mb-3"
-							displayType="warning"
-							onClose={() => {
-								setError(false);
-							}}
-							variant="stripe"
-						>
-							{Liferay.Language.get(
-								'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+				<ClayLayout.ContentRow>
+					<div>
+						{error && (
+							<ClayAlert
+								className="mb-3"
+								displayType="warning"
+								onClose={() => {
+									setError(false);
+								}}
+								variant="stripe"
+							>
+								{Liferay.Language.get(
+									'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+								)}
+							</ClayAlert>
+						)}
+
+						<div className="sidebar-section sidebar-section--compress">
+							<p
+								className="c-mb-1 text-secondary"
+								data-qa-id="assetTypeInfo"
+							>
+								{subType ? `${type} - ${subType}` : `${type}`}
+							</p>
+
+							{latestVersions.map((latestVersion) => (
+								<div
+									className="c-mt-2"
+									key={latestVersion.version}
+								>
+									<ClayLabel displayType="info">
+										{Liferay.Language.get('version') + ' '}
+
+										{latestVersion.version}
+									</ClayLabel>
+
+									<ClayLabel
+										displayType={latestVersion.statusStyle}
+									>
+										{latestVersion.statusLabel}
+									</ClayLabel>
+								</div>
+							))}
+						</div>
+
+						<div className="sidebar-section">
+							{fetchSharingCollaboratorsURL ? (
+								<ManageCollaborators
+									fetchSharingCollaboratorsURL={
+										fetchSharingCollaboratorsURL
+									}
+									onError={handleError}
+								/>
+							) : (
+								<>
+									<ClaySticker
+										className={classnames(
+											'sticker-user-icon',
+											{
+												[`user-icon-color-${stickerColor}`]: !user.url,
+											}
+										)}
+										shape="circle"
+									>
+										{user.url ? (
+											<img
+												alt={`${user.name}.`}
+												className="sticker-img"
+												src={user.url}
+											/>
+										) : (
+											<ClayIcon symbol="user" />
+										)}
+									</ClaySticker>
+									<span className="c-ml-2 text-secondary">
+										{user.name}
+									</span>
+								</>
 							)}
-						</ClayAlert>
-					)}
+						</div>
 
-					<div className="sidebar-section sidebar-section--compress">
-						<p
-							className="c-mb-1 text-secondary"
-							data-qa-id="assetTypeInfo"
-						>
-							{subType ? `${type} - ${subType}` : `${type}`}
-						</p>
+						<div className="mb-0 sidebar-section">
+							{showTabs && (
+								<ClayTabs modern>
+									<ClayTabs.Item
+										active={activeTabKeyValue === 0}
+										innerProps={{
+											'aria-controls': 'details',
+										}}
+										onClick={() => setActiveTabKeyValue(0)}
+									>
+										{Liferay.Language.get('details')}
+									</ClayTabs.Item>
 
-						{latestVersions.map((latestVersion) => (
-							<div className="c-mt-2" key={latestVersion.version}>
-								<ClayLabel displayType="info">
-									{Liferay.Language.get('version') + ' '}
-
-									{latestVersion.version}
-								</ClayLabel>
-
-								<ClayLabel
-									displayType={latestVersion.statusStyle}
-								>
-									{latestVersion.statusLabel}
-								</ClayLabel>
-							</div>
-						))}
+									<ClayTabs.Item
+										active={activeTabKeyValue === 1}
+										innerProps={{
+											'aria-controls': 'versions',
+										}}
+										onClick={() => setActiveTabKeyValue(1)}
+									>
+										{Liferay.Language.get('versions')}
+									</ClayTabs.Item>
+								</ClayTabs>
+							)}
+						</div>
 					</div>
-
-					<div className="sidebar-dl sidebar-section">
-						{fetchSharingCollaboratorsURL ? (
-							<ManageCollaborators
-								fetchSharingCollaboratorsURL={
-									fetchSharingCollaboratorsURL
-								}
-								onError={handleError}
-							/>
-						) : (
-							<>
-								<ClaySticker
-									className={classnames('sticker-user-icon', {
-										[`user-icon-color-${stickerColor}`]: !user.url,
-									})}
-									shape="circle"
-								>
-									{user.url ? (
-										<img
-											alt={`${user.name}.`}
-											className="sticker-img"
-											src={user.url}
-										/>
-									) : (
-										<ClayIcon symbol="user" />
-									)}
-								</ClaySticker>
-								<span className="c-ml-2 text-secondary">
-									{user.name}
-								</span>
-							</>
-						)}
-					</div>
-
-					<div className="mb-0 sidebar-dl sidebar-section">
-						{showTabs && (
-							<ClayTabs modern>
-								<ClayTabs.Item
-									active={activeTabKeyValue === 0}
-									innerProps={{
-										'aria-controls': 'details',
-									}}
-									onClick={() => setActiveTabKeyValue(0)}
-								>
-									{Liferay.Language.get('details')}
-								</ClayTabs.Item>
-
-								<ClayTabs.Item
-									active={activeTabKeyValue === 1}
-									innerProps={{
-										'aria-controls': 'versions',
-									}}
-									onClick={() => setActiveTabKeyValue(1)}
-								>
-									{Liferay.Language.get('versions')}
-								</ClayTabs.Item>
-							</ClayTabs>
-						)}
-					</div>
-				</div>
+				</ClayLayout.ContentRow>
 			</Sidebar.Header>
 
-			<Sidebar.Body className="px-0">
-				<div className="px-3">
+			<Sidebar.Body>
+				<div>
 					<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
 						<ClayTabs.TabPane aria-labelledby="tab-1">
 							<DetailsContent

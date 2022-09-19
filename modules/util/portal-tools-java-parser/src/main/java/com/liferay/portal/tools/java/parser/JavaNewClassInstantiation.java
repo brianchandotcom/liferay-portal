@@ -40,18 +40,16 @@ public class JavaNewClassInstantiation extends BaseJavaExpression {
 
 		indent = "\t" + indent;
 
-		if (_javaClassCall.hasParameterValueJavaExpressions()) {
-			JavaExpression chainedJavaExpression = getChainedJavaExpression();
+		JavaExpression chainedJavaExpression = getChainedJavaExpression();
 
-			if (chainedJavaExpression != null) {
-				_javaClassCall.setUseChainStyle(true);
+		if (chainedJavaExpression != null) {
+			_javaClassCall.setUseChainStyle(true);
 
-				if (chainedJavaExpression instanceof JavaMethodCall) {
-					JavaMethodCall javaMethodCall =
-						(JavaMethodCall)chainedJavaExpression;
+			if (chainedJavaExpression instanceof JavaMethodCall) {
+				JavaMethodCall javaMethodCall =
+					(JavaMethodCall)chainedJavaExpression;
 
-					javaMethodCall.setUseChainStyle(true);
-				}
+				javaMethodCall.setUseChainStyle(true);
 			}
 		}
 

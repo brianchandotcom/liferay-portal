@@ -107,6 +107,10 @@ public interface ResourceActions {
 		throws ResourceActionsException;
 
 	public void populatePortletResource(
+			Portlet portlet, ClassLoader classLoader, Document document)
+		throws ResourceActionsException;
+
+	public void populatePortletResource(
 			Portlet portlet, ClassLoader classLoader, String... sources)
 		throws ResourceActionsException;
 

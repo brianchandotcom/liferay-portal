@@ -22,6 +22,7 @@ import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.internal.action.util.ObjectActionVariablesUtil;
+import com.liferay.object.internal.action.util.ObjectScriptVariablesUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
@@ -120,14 +122,27 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 		);
 
 		Set<Long> objectActionIds = _objectActionIdsThreadLocal.get();
-		Map<String, Object> variables = ObjectActionVariablesUtil.toVariables(
-			_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-			_systemObjectDefinitionMetadataTracker);
+
+		Map<Integer, Map<String, Object>> variablesMap =
+			HashMapBuilder.<Integer, Map<String, Object>>put(
+				1,
+				ObjectActionVariablesUtil.toVariables(
+					_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+					_systemObjectDefinitionMetadataTracker)
+			).put(
+				2,
+				ObjectScriptVariablesUtil.toVariables(
+					_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+					_systemObjectDefinitionMetadataTracker)
+			).build();
 
 		for (ObjectAction objectAction :
 				_objectActionLocalService.getObjectActions(
 					objectDefinition.getObjectDefinitionId(),
 					objectActionTriggerKey)) {
+
+			Map<String, Object> variables = variablesMap.get(
+				objectAction.getScriptSyntaxVersion());
 
 			try {
 				if (objectActionIds.contains(
@@ -143,6 +158,10 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				ObjectActionExecutor objectActionExecutor =
 					_objectActionExecutorRegistry.getObjectActionExecutor(
 						objectAction.getObjectActionExecutorKey());
+
+				payloadJSONObject.put(
+					"scriptSyntaxVersion",
+					objectAction.getScriptSyntaxVersion());
 
 				objectActionExecutor.execute(
 					companyId, objectAction.getParametersUnicodeProperties(),

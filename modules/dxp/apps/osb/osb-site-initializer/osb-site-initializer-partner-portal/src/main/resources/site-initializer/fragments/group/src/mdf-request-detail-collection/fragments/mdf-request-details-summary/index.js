@@ -65,4 +65,6 @@ const formatDate = (value) =>
 		month: 'short',
 	}).format(new Date(value));
 
-updateMDFDetailsSummary();
+if (layoutMode !== 'edit') {
+	updateMDFDetailsSummary();
+}

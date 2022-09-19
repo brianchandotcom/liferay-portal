@@ -38,4 +38,6 @@ const getMDFRequestStatus = async () => {
 	});
 };
 
-getMDFRequestStatus();
+if (layoutMode !== 'edit') {
+	getMDFRequestStatus();
+}

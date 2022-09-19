@@ -173,6 +173,21 @@ public class RedirectEntryLocalServiceTest {
 			"sourceURL", ServiceContextTestUtil.getServiceContext());
 	}
 
+	@Test(expected = DuplicateRedirectEntrySourceURLException.class)
+	public void testAddRedirectEntryFailsWhenDuplicateSourceURLDiffersUpperCaseLowerCase()
+		throws Exception {
+
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "groupBaseURL/destinationURL", null, false,
+			StringUtil.toUpperCase("sourceURL"),
+			ServiceContextTestUtil.getServiceContext());
+
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false,
+			StringUtil.toLowerCase("sourceURL"),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	@Test(
 		expected = CircularRedirectEntryException.MustNotFormALoopWithAnotherRedirectEntry.class
 	)
@@ -184,6 +199,24 @@ public class RedirectEntryLocalServiceTest {
 		_chainedRedirectEntry = _redirectEntryLocalService.addRedirectEntry(
 			_group.getGroupId(), "groupBaseURL/sourceURL", null, "groupBaseURL",
 			false, "destinationURL", false,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Test(
+		expected = CircularRedirectEntryException.MustNotFormALoopWithAnotherRedirectEntry.class
+	)
+	public void testAddRedirectEntryFailsWhenRedirectLoopSourceURLDiffersUpperCaseLowerCase()
+		throws Exception {
+
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "groupBaseURL/destinationURL", null, false,
+			StringUtil.toUpperCase("sourceURL"),
+			ServiceContextTestUtil.getServiceContext());
+
+		_chainedRedirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(),
+			"groupBaseURL/" + StringUtil.toLowerCase("sourceURL"), null,
+			"groupBaseURL", false, "destinationURL", false,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

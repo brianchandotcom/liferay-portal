@@ -3594,7 +3594,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 
 		WaitForElementPresent(locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
 
-		var fileSize = selenium.getText("PageEditor#IMAGE_RESOLUTION_LABEL");
+		var fileSize = selenium.getText("PageEditor#IMAGE_RESOLUTION_VALUE");
 
 		var fileSize = StringUtil.extractFirst("${fileSize}", ".");
 
@@ -3626,7 +3626,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 
 		WaitForElementPresent(locator1 = "PageEditor#IMAGE_RESOLUTION_LABEL");
 
-		var width = selenium.getText("PageEditor#IMAGE_RESOLUTION_LABEL");
+		var width = selenium.getText("PageEditor#IMAGE_RESOLUTION_VALUE");
 
 		var width = StringUtil.extractDigits("${width}");
 

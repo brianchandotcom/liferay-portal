@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESULTS_LIST_SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME</td>
+	<td>//div[contains(@class,'search-bar-suggestions-dropdown-menu')]//li[@class='dropdown-subheader' and contains (.,'${key_suggestionContributorDisplayGroupName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUGGESTION_CONTRIBUTOR</td>
 	<td>//div[contains(@class,'field-list')]/div[${key_suggestionContributorOrder}]//select[contains(@aria-label,'Suggestion Contributor')]</td>
 	<td></td>

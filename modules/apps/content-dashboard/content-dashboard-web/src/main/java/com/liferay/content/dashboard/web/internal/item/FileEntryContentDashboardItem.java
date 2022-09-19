@@ -23,7 +23,6 @@ import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.info.item.provider.util.InfoItemFieldValuesProviderUtil;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
-import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
@@ -44,10 +43,8 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -350,11 +347,6 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public Preview getPreview() {
-		return new Preview(_getPreviewImageURL(), _getViewURL());
-	}
-
-	@Override
 	public String getScopeName(Locale locale) {
 		return Optional.ofNullable(
 			_group
@@ -476,65 +468,8 @@ public class FileEntryContentDashboardItem
 		);
 	}
 
-	private String _getPreviewImageURL() {
-		return Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).map(
-			ServiceContext::getLiferayPortletRequest
-		).map(
-			portletRequest -> {
-				List<ContentDashboardItemAction> contentDashboardItemActions =
-					getContentDashboardItemActions(
-						_portal.getHttpServletRequest(portletRequest),
-						ContentDashboardItemAction.Type.PREVIEW_IMAGE);
-
-				Stream<ContentDashboardItemAction> stream =
-					contentDashboardItemActions.stream();
-
-				return stream.findAny(
-				).map(
-					ContentDashboardItemAction::getURL
-				).orElse(
-					null
-				);
-			}
-		).orElse(
-			null
-		);
-	}
-
 	private String _getSize(Locale locale) {
 		return LanguageUtil.formatStorageSize(_fileEntry.getSize(), locale);
-	}
-
-	private String _getViewURL() {
-		return Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).map(
-			ServiceContext::getLiferayPortletRequest
-		).map(
-			portletRequest -> {
-				try {
-					String backURL = ParamUtil.getString(
-						portletRequest, "backURL");
-
-					String portletNamespace = _portal.getPortletNamespace(
-						DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
-
-					return HttpComponentsUtil.addParameter(
-						_dlURLHelper.getFileEntryControlPanelLink(
-							portletRequest, _fileEntry.getFileEntryId()),
-						portletNamespace + "redirect", backURL);
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException);
-
-					return null;
-				}
-			}
-		).orElse(
-			null
-		);
 	}
 
 	private URL _getWebDAVURL() {

@@ -771,13 +771,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 				@Override
-				public Preview getPreview() {
-					return new Preview(
-						"www.preview.com/imageURL",
-						"www.viewURL.url.com/viewURL");
-				}
-
-				@Override
 				public String getScopeName(Locale locale) {
 					return RandomTestUtil.randomString();
 				}

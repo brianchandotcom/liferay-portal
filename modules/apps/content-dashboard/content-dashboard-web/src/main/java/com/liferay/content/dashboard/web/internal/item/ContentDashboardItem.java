@@ -66,8 +66,6 @@ public interface ContentDashboardItem<T> {
 
 	public Date getModifiedDate();
 
-	public Preview getPreview();
-
 	public String getScopeName(Locale locale);
 
 	public Map<String, Object> getSpecificInformation(Locale locale);
@@ -81,36 +79,6 @@ public interface ContentDashboardItem<T> {
 	public String getUserName();
 
 	public boolean isViewable(HttpServletRequest httpServletRequest);
-
-	public static class Preview {
-
-		public static final Preview EMPTY = new Preview(null, null);
-
-		public Preview(String imageURL, String url) {
-			_imageURL = imageURL;
-			_url = url;
-		}
-
-		public String getImageURL() {
-			return _imageURL;
-		}
-
-		public String getUrl() {
-			return _url;
-		}
-
-		public JSONObject toJSONObject() {
-			return JSONUtil.put(
-				"imageURL", getImageURL()
-			).put(
-				"url", getUrl()
-			);
-		}
-
-		private final String _imageURL;
-		private final String _url;
-
-	}
 
 	public static class Version {
 

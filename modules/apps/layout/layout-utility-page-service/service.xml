@@ -23,10 +23,10 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
 		<column name="plid" type="long" />
-		<column name="type" type="int" />
 		<column name="defaultLayoutUtilityPageEntry" type="boolean" />
+		<column name="name" type="String" />
+		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->

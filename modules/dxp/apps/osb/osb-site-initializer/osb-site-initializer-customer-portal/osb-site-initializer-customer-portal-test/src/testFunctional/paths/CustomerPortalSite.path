@@ -167,7 +167,7 @@
 </tr>
 <tr>
 	<td>GETTING_STARTED_MODAL</td>
-	<td>//header[contains(@class,'p-4')]//h2[contains(text(),'Let’s set up your project')]</td>
+	<td>//header[contains(@class,'p-4')]//h2[contains(text(),"Let's set up your project")]</td>
 	<td></td>
 </tr>
 <tr>

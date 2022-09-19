@@ -199,7 +199,9 @@ definition {
 				assetTitle = "Web Content Title",
 				item = "Web Content Article");
 
-			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+			NavigationMenusAdmin.editItem(
+				itemName = "Web Content Title",
+				useCustomName = "true");
 		}
 
 		task ("When with get request and siteId to retrieve the navigation menu") {

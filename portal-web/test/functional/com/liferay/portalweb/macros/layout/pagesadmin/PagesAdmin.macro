@@ -245,11 +245,11 @@ definition {
 
 	macro addCSSExtensions {
 		WaitForEditable(
-			key_text = "Add CSS Extensions",
+			key_text = "Add CSS Client Extensions",
 			locator1 = "Button#ANY");
 
 		Click(
-			key_text = "Add CSS Extensions",
+			key_text = "Add CSS Client Extensions",
 			locator1 = "Button#ANY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -292,11 +292,11 @@ definition {
 
 	macro addJavaScriptExtensions {
 		WaitForEditable(
-			key_text = "Add JavaScript Extensions",
+			key_text = "Add JavaScript Client Extensions",
 			locator1 = "Button#ANY");
 
 		Click(
-			key_text = "Add JavaScript Extensions",
+			key_text = "Add JavaScript Client Extensions",
 			locator1 = "Button#ANY");
 
 		MenuItem.click(menuItem = "${insertion}");
@@ -610,11 +610,11 @@ definition {
 
 	macro addThemeCSSExtension {
 		WaitForEditable(
-			key_text = "Extension",
+			key_text = "Client Extension",
 			locator1 = "TextInput#ANY");
 
 		Click(
-			key_text = "Extension",
+			key_text = "Client Extension",
 			locator1 = "TextInput#ANY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -1171,7 +1171,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Navigator.gotoNavTab(navTab = "Extensions");
+		Navigator.gotoNavTab(navTab = "Client Extension");
 
 		Click(
 			key_listEntry = "${extensionName}",

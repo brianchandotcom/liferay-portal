@@ -459,9 +459,9 @@ definition {
 			}
 
 			AssertTextEquals(
-				key_sectionTitle = "JavaScript Extensions",
+				key_sectionTitle = "JavaScript Client Extensions",
 				locator1 = "PagesAdmin#SECTION_SUBTITLE",
-				value1 = "No JavaScript extensions were loaded.");
+				value1 = "No JavaScript client extensions were loaded.");
 
 			PortletEntry.save();
 
@@ -528,9 +528,9 @@ definition {
 			DropdownMenuItem.click(menuItem = "Delete");
 
 			AssertTextEquals(
-				key_sectionTitle = "JavaScript Extensions",
+				key_sectionTitle = "JavaScript Client Extensions",
 				locator1 = "PagesAdmin#SECTION_SUBTITLE",
-				value1 = "No JavaScript extensions were loaded.");
+				value1 = "No JavaScript client extensions were loaded.");
 
 			PortletEntry.save();
 
@@ -871,7 +871,7 @@ definition {
 			Panel.expandPanel(panel = "JavaScript");
 
 			AssertVisible(
-				key_groupHeader = "Page bottom JS extensions",
+				key_groupHeader = "Page bottom JS client extensions",
 				key_tableEntry = "InnerText",
 				locator1 = "LexiconTable#GROUPED_TABLE_ENTRY");
 
@@ -929,7 +929,7 @@ definition {
 			Panel.expandPanel(panel = "JavaScript");
 
 			AssertVisible(
-				key_groupHeader = "Page Head JS Extensions",
+				key_groupHeader = "Page Head JS Client Extensions",
 				key_tableEntry = "FontFamily",
 				locator1 = "LexiconTable#GROUPED_TABLE_ENTRY");
 

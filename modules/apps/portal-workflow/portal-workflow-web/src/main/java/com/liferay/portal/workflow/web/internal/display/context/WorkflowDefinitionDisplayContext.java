@@ -14,12 +14,15 @@
 
 package com.liferay.portal.workflow.web.internal.display.context;
 
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPCreationMenu;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,6 +43,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
@@ -80,9 +84,12 @@ import javax.servlet.jsp.PageContext;
 public class WorkflowDefinitionDisplayContext {
 
 	public WorkflowDefinitionDisplayContext(
-		RenderRequest renderRequest, ResourceBundleLoader resourceBundleLoader,
+		RenderRequest renderRequest, CTEntryLocalService ctEntryLocalService,
+		Portal portal, ResourceBundleLoader resourceBundleLoader,
 		UserLocalService userLocalService) {
 
+		_ctEntryLocalService = ctEntryLocalService;
+		_portal = portal;
 		_resourceBundleLoader = resourceBundleLoader;
 		_userLocalService = userLocalService;
 
@@ -370,6 +377,23 @@ public class WorkflowDefinitionDisplayContext {
 				_workflowDefinitionRequestHelper.getCompanyId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				_getWorkflowDefinitionOrderByComparator());
+
+		if (!CTCollectionThreadLocal.isProductionMode() &&
+			_ctEntryLocalService.hasCTEntries(
+				CTCollectionThreadLocal.getCTCollectionId(),
+				_portal.getClassNameId(WorkflowDefinition.class.getName()))) {
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				workflowDefinitions.addAll(
+					WorkflowDefinitionManagerUtil.getLatestWorkflowDefinitions(
+						_workflowDefinitionRequestHelper.getCompanyId(),
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+						_getWorkflowDefinitionOrderByComparator()));
+			}
+		}
 
 		WorkflowDefinitionSearchTerms searchTerms =
 			new WorkflowDefinitionSearchTerms(renderRequest);
@@ -701,8 +725,10 @@ public class WorkflowDefinitionDisplayContext {
 		"<a class='alert-link' href='[$RENDER_URL$]'>[$MESSAGE$]</a>";
 
 	private boolean _companyAdministratorCanPublish;
+	private final CTEntryLocalService _ctEntryLocalService;
 	private String _orderByCol;
 	private String _orderByType;
+	private final Portal _portal;
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final UserLocalService _userLocalService;
 	private final WorkflowDefinitionRequestHelper

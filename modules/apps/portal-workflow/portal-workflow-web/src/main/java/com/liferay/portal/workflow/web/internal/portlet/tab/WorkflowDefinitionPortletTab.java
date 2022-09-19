@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.tab;
 
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
@@ -83,7 +85,7 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 
 			WorkflowDefinitionDisplayContext displayContext =
 				new WorkflowDefinitionDisplayContext(
-					renderRequest,
+					renderRequest, ctEntryLocalService, portal,
 					ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
 					userLocalService);
 
@@ -130,6 +132,12 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 	protected String getJspPath() {
 		return "/definition/view.jsp";
 	}
+
+	@Reference
+	protected CTEntryLocalService ctEntryLocalService;
+
+	@Reference
+	protected Portal portal;
 
 	@Reference
 	protected UserLocalService userLocalService;

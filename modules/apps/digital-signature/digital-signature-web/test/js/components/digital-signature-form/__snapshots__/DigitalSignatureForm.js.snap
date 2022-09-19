@@ -299,7 +299,7 @@ exports[`DigitalSignatureForm Validates required fields 1`] = `
                 <div
                   class="form-text"
                 >
-                  9987-characters-remaining
+                  x-characters-remaining
                 </div>
               </div>
             </div>

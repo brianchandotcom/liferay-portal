@@ -253,7 +253,7 @@ exports[`EnvelopeForm renders 1`] = `
                 <div
                   class="form-text"
                 >
-                  10000-characters-remaining
+                  x-characters-remaining
                 </div>
               </div>
             </div>

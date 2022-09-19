@@ -253,7 +253,7 @@ describe('ReviewExperimentModal', () => {
 				expect(getEstimatedTimeMock).toHaveBeenCalledTimes(1)
 			);
 
-			await findByText('20-days');
+			await findByText('x-days');
 		});
 	});
 });

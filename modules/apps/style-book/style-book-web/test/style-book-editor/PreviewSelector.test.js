@@ -118,8 +118,6 @@ jest.mock(
 );
 
 const renderPreviewSelector = (layoutType = LAYOUT_TYPES.page) => {
-	Liferay.Util.sub.mockImplementation((langKey) => langKey);
-
 	return render(
 		<>
 			<LayoutTypeSelector

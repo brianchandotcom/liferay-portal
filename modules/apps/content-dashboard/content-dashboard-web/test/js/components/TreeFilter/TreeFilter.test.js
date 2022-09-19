@@ -26,15 +26,18 @@ import {
 	mockTypesProps,
 } from '../../mocks/clayTreeProps';
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	getOpener: jest.fn(() => ({
+		Liferay: {
+			fire: jest.fn(),
+		},
+	})),
+}));
+
 describe('SelectFileExtension', () => {
 	beforeEach(() => {
 		cleanup();
-
-		window.Liferay.Util.getOpener = jest.fn().mockReturnValue({
-			Liferay: {
-				fire: jest.fn(),
-			},
-		});
 	});
 
 	it('renders a Treeview with parent nodes and only first node expanded', () => {

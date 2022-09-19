@@ -11,9 +11,9 @@
 
 <tbody>
 <tr>
-    <td>DIGITAL_SIGNATURE_ELLIPSIS_COLLECT_BUTTON</td>
-    <td>//div[contains(@id, 'clay-dropdown-menu')]//a[contains(@class, 'dropdown-item') and contains(. , 'Collect Digital Signature')]</td>
-    <td></td>
+	<td>DIGITAL_SIGNATURE_ELLIPSIS_COLLECT_BUTTON</td>
+	<td>//div[contains(@id, 'clay-dropdown-menu')]//a[contains(@class, 'dropdown-item') and contains(. , 'Collect Digital Signature')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>DIGITAL_SIGNATURE_COLLECT_BUTTON</td>

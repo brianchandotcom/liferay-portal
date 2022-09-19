@@ -17,7 +17,6 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewPortalSmokeArchiveAutoUpgrade730 {
 		property data.archive.type = "data-archive-portal";
@@ -28,7 +27,6 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewPortalSmokeArchiveAutoUpgrade740 {
 		property data.archive.type = "data-archive-portal";
@@ -50,7 +48,6 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewPortalSmokeArchiveAutoUpgrade7110 {
 		property data.archive.type = "data-archive-portal";
@@ -60,7 +57,6 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewPortalSmokeArchiveAutoUpgrade7210 {
 		property data.archive.type = "data-archive-portal";
@@ -91,7 +87,6 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewPortalSmokeArchiveAutoUpgrade70106 {
 		property data.archive.type = "data-archive-portal";
@@ -101,7 +96,6 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewPortalSmokeArchiveAutoUpgrade71103 {
 		property data.archive.type = "data-archive-portal";
@@ -111,7 +105,6 @@ definition {
 		Upgrade.viewUpgrade();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewPortalSmokeArchiveAutoUpgrade621021 {
 		property data.archive.type = "data-archive-portal";

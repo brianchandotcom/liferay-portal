@@ -177,11 +177,17 @@ function SpacingSelectorButton({
 
 	useEffect(() => {
 		if (active && itemListRef.current) {
-			itemListRef.current
-				.querySelector(
-					`button[data-value="${value || field?.defaultValue}"]`
-				)
-				?.focus();
+			setTimeout(
+				() =>
+					itemListRef.current
+						.querySelector(
+							`button[data-value="${
+								value || field?.defaultValue
+							}"]`
+						)
+						?.focus(),
+				10
+			);
 		}
 	}, [active, field, value]);
 

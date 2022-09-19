@@ -94,8 +94,6 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 	@Reference(unbind = "-")
 	public void setPortal(Portal portal) {
 		_portal = portal;
-
-		_rebuild();
 	}
 
 	@Activate

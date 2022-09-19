@@ -125,7 +125,7 @@ definition {
 
 	macro deleteEnvelope {
 		Refresh();
-		
+
 		Click(
 			key_text = "${envelopeName}",
 			locator1 = "Link#ANY");

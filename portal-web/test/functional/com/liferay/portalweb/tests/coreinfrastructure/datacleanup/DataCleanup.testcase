@@ -15,7 +15,6 @@ definition {
 		PortalInstances.tearDownCP();
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test CanCleanupOpensocialDataAfterUpgrade {
 		property data.archive.type = "data-archive-opensocial";

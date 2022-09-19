@@ -1,0 +1,53 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+--%>
+
+<%
+CommerceAvalaraConnectorChannelConfiguration commerceAvalaraConnectorChannelConfiguration = (CommerceAvalaraConnectorChannelConfiguration)GetterUtil.getObject(request.getAttribute(CommerceAvalaraConnectorChannelConfiguration.class.getName()));
+%>
+
+<liferay-frontend:fieldset
+	collapsible="<%= true %>"
+	label="settings"
+>
+	<aui:select id="avalara-company-code" ignoreRequestValue="<%= true %>" label="company-code" name="companyCode" value="<%= commerceAvalaraConnectorChannelConfiguration.companyCode() %>">
+
+		<%
+		Map<String, String> avalaraCompanies = (Map<String, String>)request.getAttribute("avalaraCompanies");
+		String companyCode = commerceAvalaraConnectorChannelConfiguration.companyCode();
+		%>
+
+		<c:choose>
+			<c:when test="<%= avalaraCompanies.isEmpty() %>">
+				<aui:option label="<%= CommerceAvalaraConstants.DEFAULT %>" selected="<%= true %>" value="<%= CommerceAvalaraConstants.DEFAULT %>" />
+			</c:when>
+			<c:otherwise>
+
+				<%
+				for (Map.Entry<String, String> companyModel : avalaraCompanies.entrySet()) {
+				%>
+
+					<aui:option label="<%= companyModel.getKey() %>" selected="<%= companyCode.isEmpty() ? companyModel.getValue().equals(CommerceAvalaraConstants.DEFAULT) : companyModel.getValue().equals(companyCode) %>" value="<%= companyModel.getValue() %>" />
+
+				<%
+				}
+				%>
+
+			</c:otherwise>
+		</c:choose>
+	</aui:select>
+
+	<aui:input id="avalara-disabled-document-recording" label="disable-document-recording" name="disabledDocumentRecording" type="toggle-switch" value="<%= commerceAvalaraConnectorChannelConfiguration.disabledDocumentRecording() %>" />
+</liferay-frontend:fieldset>

@@ -140,7 +140,7 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-146852 | Test Summary: Verify if when the status is 'In Progress' the page subtitle: 'Your DXP Cloud environments are being set up and will be available soon' appears"
+	@description = "Automation ID: LPS-146852 | Test Summary: Verify if when the status is 'In Progress' the page subtitle: 'Your LXC-SM environments are being set up and will be available soon' appears"
 	@priority = "4"
 	test CanViewCaptionWhenTheStatusIsInProgress {
 		task ("Change the user role in the project") {
@@ -178,7 +178,7 @@ definition {
 		task ("Assert the card legend change") {
 			AssertElementPresent(
 				locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
-				title = "Your DXP Cloud environments are being set up and will be available soon");
+				title = "Your LXC-SM environments are being set up and will be available soon");
 		}
 
 		task ("Delete the entries and objects created") {

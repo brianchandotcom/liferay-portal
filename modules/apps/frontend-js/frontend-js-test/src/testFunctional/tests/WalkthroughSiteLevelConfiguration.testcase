@@ -50,6 +50,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-159839. JSON can be configured on System Settings."
+	@priority = "5"
+	test JSONCanBeConfigured {
+		property portal.acceptance = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given Walkthrough in System Settings") {
+			Walkthrough.gotoSiteConfigWalkthrough();
+		}
+
+		task ("When a JSON description is saved") {
+			Walkthrough._editWalkthroughJSON(fileName = "walkthrough_configuration.json");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Then success message appears") {
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	@description = "LPS-159836. Walkthrough displays when defined for a site."
 	@priority = "5"
 	test WillDisplayWhenDefinedForSite {
@@ -111,28 +133,6 @@ definition {
 
 		task ("Then walkthrough is not instantiated on the site") {
 			AssertElementNotPresent(locator1 = "Walkthrough#POPOVER");
-		}
-	}
-
-	@description = "LPS-159839. JSON can be configured on System Settings."
-	@priority = "5"
-	test JSONCanBeConfigured {
-		property portal.acceptance = "true";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		task ("Given Walkthrough in System Settings") {
-			Walkthrough.gotoSiteConfigWalkthrough();
-		}
-
-		task ("When a JSON description is saved") {
-			Walkthrough._editWalkthroughJSON(fileName = "walkthrough_configuration.json");
-
-			SystemSettings.saveConfiguration();
-		}
-
-		task ("Then success message appears") {
-			Alert.viewSuccessMessage();
 		}
 	}
 

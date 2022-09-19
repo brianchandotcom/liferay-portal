@@ -228,4 +228,48 @@ definition {
 			locator1 = "CreateObject#SELECT_OBJECT_FIELD_IN_TABLE");
 	}
 
+	@description = "LPS-150886 - Verify that the delete modal contains a warning message with the number of entries that will be deleted"
+	@priority = "4"
+	test CanViewWarningMessageDeleteModal {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 290",
+			objectName = "CustomObject290",
+			pluralLabelName = "Custom Objects 290");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject290");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject290");
+
+		for (var fieldEntry : list "A,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject290",
+				value = "Entry ${fieldEntry}");
+		}
+
+		ObjectAdmin.openObjectAdmin();
+
+		Click(
+			key_objectLabel = "Custom Object 290",
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Delete Object Definition");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Modal#BODY",
+			value1 = "has 2 object entries.");
+	}
+
 }

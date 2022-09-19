@@ -2284,6 +2284,7 @@ definition {
 	@priority = "5"
 	test GuestCanAddObjectEntriesWithAddPermission {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPermission#GuestCanAddObjectEntriesWithAddPermission";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -2501,6 +2502,7 @@ definition {
 	@priority = "5"
 	test GuestCanViewObjectEntriesWithViewPermission {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPermission#GuestCanViewObjectEntriesWithViewPermission";
 
 		ObjectAdmin.addObjectViaAPI(

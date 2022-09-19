@@ -51,6 +51,7 @@ declare type TSortOptions = {
 export declare type TAction =
 	| {
 			payload: {
+				objectFields: ObjectField[];
 				objectView: TObjectView;
 			};
 			type: TYPES.ADD_OBJECT_VIEW;
@@ -77,13 +78,6 @@ export declare type TAction =
 				selectedObjetSort: TSortOptions;
 			};
 			type: TYPES.ADD_OBJECT_VIEW_SORT_COLUMN;
-	  }
-	| {
-			payload: {
-				objectFields: ObjectField[];
-				objectView: TObjectView;
-			};
-			type: TYPES.ADD_OBJECT_FIELDS;
 	  }
 	| {
 			payload: {

@@ -88,7 +88,10 @@ type TSortOptions = {
 
 export type TAction =
 	| {
-			payload: {objectView: TObjectView};
+			payload: {
+				objectFields: ObjectField[];
+				objectView: TObjectView;
+			};
 			type: TYPES.ADD_OBJECT_VIEW;
 	  }
 	| {
@@ -111,13 +114,6 @@ export type TAction =
 				selectedObjetSort: TSortOptions;
 			};
 			type: TYPES.ADD_OBJECT_VIEW_SORT_COLUMN;
-	  }
-	| {
-			payload: {
-				objectFields: ObjectField[];
-				objectView: TObjectView;
-			};
-			type: TYPES.ADD_OBJECT_FIELDS;
 	  }
 	| {
 			payload: {
@@ -189,11 +185,156 @@ export type TAction =
 const viewReducer = (state: TState, action: TAction) => {
 	switch (action.type) {
 		case TYPES.ADD_OBJECT_VIEW: {
-			const {objectView} = action.payload;
+			const {objectFields, objectView} = action.payload;
+
+			const {
+				objectViewColumns,
+				objectViewFilterColumns,
+				objectViewSortColumns,
+			} = objectView;
+
+			const objectFieldsWithCheck = objectFields.map(
+				(field: ObjectField) => {
+					return {
+						...field,
+						checked: false,
+						filtered: true,
+					};
+				}
+			);
+
+			const newObjectFields: ObjectFieldView[] = [];
+
+			objectFieldsWithCheck.map((field: ObjectField) => {
+				newObjectFields.push(field);
+			});
+
+			newObjectFields.forEach((field) => {
+				objectViewColumns.forEach(
+					(column: {objectFieldName?: string}) => {
+						if (column.objectFieldName === field.name) {
+							field.checked = true;
+						}
+					}
+				);
+
+				const existingFilter = objectViewFilterColumns.find(
+					(filter: {objectFieldName?: string}) => {
+						if (filter.objectFieldName === field.name) {
+							return filter;
+						}
+					}
+				);
+
+				field.hasFilter = !!existingFilter;
+			});
+
+			const newObjectViewColumns: TObjectViewColumn[] = [];
+			const newObjectViewSortColumns: TObjectViewSortColumn[] = [];
+
+			objectViewColumns.forEach((viewColumn: TObjectViewColumn) => {
+				newObjectFields.forEach((objectField: ObjectField) => {
+					if (objectField.name === viewColumn.objectFieldName) {
+						newObjectViewColumns.push({
+							...viewColumn,
+							defaultSort: false,
+							fieldLabel: objectField.label[
+								defaultLanguageId
+							] as string,
+							label: viewColumn.label,
+							objectFieldBusinessType: objectField.businessType,
+						});
+					}
+				});
+			});
+
+			objectViewSortColumns.forEach(
+				(sortColumn: TObjectViewSortColumn) => {
+					newObjectFields.forEach((objectField: ObjectField) => {
+						if (objectField.name === sortColumn.objectFieldName) {
+							newObjectViewSortColumns.push({
+								...sortColumn,
+								fieldLabel: objectField.label[
+									defaultLanguageId
+								] as string,
+							});
+						}
+					});
+				}
+			);
+
+			newObjectViewSortColumns.forEach(
+				(sortColumn: TObjectViewSortColumn) => {
+					newObjectViewColumns.forEach(
+						(viewColumn: TObjectViewColumn) => {
+							if (
+								sortColumn.objectFieldName ===
+								viewColumn.objectFieldName
+							) {
+								viewColumn.defaultSort = true;
+							}
+						}
+					);
+				}
+			);
+
+			const newObjectViewFilterColumns = (objectViewFilterColumns as TInitialFilterColumn[]).map(
+				(filterColumn) => {
+					const definition = filterColumn.json
+						? JSON.parse(filterColumn.json)
+						: null;
+					const filterType = filterColumn.filterType;
+					const objectFieldName = filterColumn.objectFieldName;
+					const objectField = newObjectFields.find(
+						(field: ObjectField) => {
+							if (field.name === objectFieldName) {
+								return field;
+							}
+						}
+					);
+					const valueList = [];
+					let valueSummary = filterColumn.valueSummary?.split(',');
+
+					valueSummary = valueSummary?.map((item) => item.trim());
+
+					if (valueSummary && filterType) {
+						for (
+							let i = 0;
+							i < definition[filterType].length;
+							i++
+						) {
+							valueList.push({
+								label: valueSummary[i],
+								value: definition[filterType][i],
+							});
+						}
+					}
+
+					return {
+						...filterColumn,
+						definition,
+						fieldLabel: objectField
+							? objectField.label[defaultLanguageId]
+							: '',
+						filterBy: objectFieldName,
+						filterType,
+						objectFieldBusinessType: objectField?.businessType,
+						valueList,
+					};
+				}
+			);
+
+			const newObjectView = {
+				...objectView,
+				objectViewColumns: newObjectViewColumns,
+				objectViewFilterColumns: newObjectViewFilterColumns,
+				objectViewSortColumns: newObjectViewSortColumns,
+			};
 
 			return {
 				...state,
-				objectView,
+				objectFields: newObjectFields,
+				objectView: newObjectView,
 			};
 		}
 		case TYPES.ADD_OBJECT_VIEW_COLUMN: {
@@ -374,159 +515,6 @@ const viewReducer = (state: TState, action: TAction) => {
 
 			return {
 				...state,
-				objectView: newObjectView,
-			};
-		}
-		case TYPES.ADD_OBJECT_FIELDS: {
-			const {objectFields, objectView} = action.payload;
-
-			const {
-				objectViewColumns,
-				objectViewFilterColumns,
-				objectViewSortColumns,
-			} = objectView;
-
-			const objectFieldsWithCheck = objectFields.map(
-				(field: ObjectField) => {
-					return {
-						...field,
-						checked: false,
-						filtered: true,
-					};
-				}
-			);
-
-			const newObjectFields: ObjectFieldView[] = [];
-
-			objectFieldsWithCheck.map((field: ObjectField) => {
-				newObjectFields.push(field);
-			});
-
-			newObjectFields.forEach((field) => {
-				objectViewColumns.forEach(
-					(column: {objectFieldName?: string}) => {
-						if (column.objectFieldName === field.name) {
-							field.checked = true;
-						}
-					}
-				);
-
-				const existingFilter = objectViewFilterColumns.find(
-					(filter: {objectFieldName?: string}) => {
-						if (filter.objectFieldName === field.name) {
-							return filter;
-						}
-					}
-				);
-
-				field.hasFilter = !!existingFilter;
-			});
-
-			const newObjectViewColumns: TObjectViewColumn[] = [];
-			const newObjectViewSortColumns: TObjectViewSortColumn[] = [];
-
-			objectViewColumns.forEach((viewColumn: TObjectViewColumn) => {
-				newObjectFields.forEach((objectField: ObjectField) => {
-					if (objectField.name === viewColumn.objectFieldName) {
-						newObjectViewColumns.push({
-							...viewColumn,
-							defaultSort: false,
-							fieldLabel: objectField.label[
-								defaultLanguageId
-							] as string,
-							label: viewColumn.label,
-							objectFieldBusinessType: objectField.businessType,
-						});
-					}
-				});
-			});
-
-			objectViewSortColumns.forEach(
-				(sortColumn: TObjectViewSortColumn) => {
-					newObjectFields.forEach((objectField: ObjectField) => {
-						if (objectField.name === sortColumn.objectFieldName) {
-							newObjectViewSortColumns.push({
-								...sortColumn,
-								fieldLabel: objectField.label[
-									defaultLanguageId
-								] as string,
-							});
-						}
-					});
-				}
-			);
-
-			newObjectViewSortColumns.forEach(
-				(sortColumn: TObjectViewSortColumn) => {
-					newObjectViewColumns.forEach(
-						(viewColumn: TObjectViewColumn) => {
-							if (
-								sortColumn.objectFieldName ===
-								viewColumn.objectFieldName
-							) {
-								viewColumn.defaultSort = true;
-							}
-						}
-					);
-				}
-			);
-
-			const newObjectViewFilterColumns = (objectViewFilterColumns as TInitialFilterColumn[]).map(
-				(filterColumn) => {
-					const definition = filterColumn.json
-						? JSON.parse(filterColumn.json)
-						: null;
-					const filterType = filterColumn.filterType;
-					const objectFieldName = filterColumn.objectFieldName;
-					const objectField = newObjectFields.find(
-						(field: ObjectField) => {
-							if (field.name === objectFieldName) {
-								return field;
-							}
-						}
-					);
-					const valueList = [];
-					let valueSummary = filterColumn.valueSummary?.split(',');
-
-					valueSummary = valueSummary?.map((item) => item.trim());
-
-					if (valueSummary && filterType) {
-						for (
-							let i = 0;
-							i < definition[filterType].length;
-							i++
-						) {
-							valueList.push({
-								label: valueSummary[i],
-								value: definition[filterType][i],
-							});
-						}
-					}
-
-					return {
-						...filterColumn,
-						definition,
-						fieldLabel: objectField
-							? objectField.label[defaultLanguageId]
-							: '',
-						filterBy: objectFieldName,
-						filterType,
-						objectFieldBusinessType: objectField?.businessType,
-						valueList,
-					};
-				}
-			);
-
-			const newObjectView = {
-				...objectView,
-				objectViewColumns: newObjectViewColumns,
-				objectViewFilterColumns: newObjectViewFilterColumns,
-				objectViewSortColumns: newObjectViewSortColumns,
-			};
-
-			return {
-				...state,
-				objectFields: newObjectFields,
 				objectView: newObjectView,
 			};
 		}

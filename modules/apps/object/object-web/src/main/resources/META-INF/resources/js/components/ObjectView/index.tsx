@@ -80,17 +80,10 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 			dispatch({
 				payload: {
-					objectView,
-				},
-				type: TYPES.ADD_OBJECT_VIEW,
-			});
-
-			dispatch({
-				payload: {
 					objectFields,
 					objectView,
 				},
-				type: TYPES.ADD_OBJECT_FIELDS,
+				type: TYPES.ADD_OBJECT_VIEW,
 			});
 
 			setLoading(false);

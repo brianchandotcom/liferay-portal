@@ -200,12 +200,17 @@ const viewReducer = (state: TState, action: TAction) => {
 			const {selectedObjectFields} = action.payload;
 
 			const {objectView} = state;
+			const {objectViewSortColumns} = objectView;
 
 			const newObjectViewColumns = selectedObjectFields.map(
 				(item: ObjectField, index: number) => {
+					const defaultSortColumn = objectViewSortColumns.find(
+						(sortColumn) => item.name === sortColumn.objectFieldName
+					);
+
 					return {
 						...item,
-						defaultSort: false,
+						defaultSort: defaultSortColumn ? true : false,
 						fieldLabel: item.label[defaultLanguageId],
 						label: item.label,
 						objectFieldBusinessType: item.businessType,

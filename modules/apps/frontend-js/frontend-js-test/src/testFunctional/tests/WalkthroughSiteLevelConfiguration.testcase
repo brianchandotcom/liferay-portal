@@ -65,7 +65,7 @@ definition {
 				pageName = "Walkthrough Page 1",
 				siteName = "Site Name");
 
-			AssertElementNotPresent(locator1 = "Walkthrough#POPOVER");
+			AssertElementNotPresent(locator1 = "Walkthrough#HOTSPOT");
 		}
 	}
 

@@ -53,6 +53,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.test.rule.Inject;
@@ -67,6 +69,7 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -108,6 +111,18 @@ public class LayoutWorkflowHandlerTest {
 
 	@After
 	public void tearDown() throws Exception {
+		List<WorkflowInstance> workflowInstances =
+			WorkflowInstanceManagerUtil.getWorkflowInstances(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				new String[] {Layout.class.getName()}, false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (WorkflowInstance workflowInstance : workflowInstances) {
+			WorkflowInstanceManagerUtil.deleteWorkflowInstance(
+				TestPropsValues.getCompanyId(),
+				workflowInstance.getWorkflowInstanceId());
+		}
+
 		ServiceContextThreadLocal.popServiceContext();
 	}
 

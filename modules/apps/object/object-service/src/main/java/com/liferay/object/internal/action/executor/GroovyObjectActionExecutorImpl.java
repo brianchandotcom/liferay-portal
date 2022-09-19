@@ -17,6 +17,7 @@ package com.liferay.object.internal.action.executor;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.internal.action.util.ObjectActionVariablesUtil;
+import com.liferay.object.internal.action.util.ObjectScriptVariablesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scripting.executor.ObjectScriptingExecutor;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.util.HashSet;
@@ -49,11 +51,22 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 
-		Map<String, Object> results = _objectScriptingExecutor.execute(
-			ObjectActionVariablesUtil.toVariables(
+		Map<String, Object> variables = null;
+
+		if (PropsValues.OBJECT_DEFINITION_SCRIPT_SYNTAX_VERSION == 2) {
+			variables = ObjectScriptVariablesUtil.toVariables(
 				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-				_systemObjectDefinitionMetadataTracker),
-			new HashSet<>(), parametersUnicodeProperties.get("script"));
+				_systemObjectDefinitionMetadataTracker);
+		}
+		else {
+			variables = ObjectActionVariablesUtil.toVariables(
+				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+				_systemObjectDefinitionMetadataTracker);
+		}
+
+		Map<String, Object> results = _objectScriptingExecutor.execute(
+			variables, new HashSet<>(),
+			parametersUnicodeProperties.get("script"));
 
 		if (GetterUtil.getBoolean(results.get("invalidScript"))) {
 			throw new ScriptingException();

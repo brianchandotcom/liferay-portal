@@ -931,6 +931,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMAGE_RESOLUTION_VALUE</td>
+	<td>//p[contains(@class,'text-secondary')][contains(.,'${key_resolutionLabel}')]//span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ITEM_CONFIGURATION_ALERT_INFO</td>
 	<td>//div[contains(@class,'item-configuration')]//*[contains(@class,'alert-info')]</td>
 	<td></td>

@@ -49,8 +49,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long userId, long groupId,
-			String name, long plid, int type, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long groupId, long plid,
+			String name, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -86,8 +86,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 
 		layoutUtilityPageEntry.setExternalReferenceCode(externalReferenceCode);
-		layoutUtilityPageEntry.setName(name);
 		layoutUtilityPageEntry.setPlid(plid);
+		layoutUtilityPageEntry.setName(name);
 		layoutUtilityPageEntry.setType(type);
 
 		return layoutUtilityPageEntryPersistence.update(layoutUtilityPageEntry);
@@ -161,7 +161,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, String name, long plid, int type,
+			long layoutUtilityPageEntryId, long plid, String name, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -173,8 +173,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		_validateLayout(layoutUtilityPageEntry.getGroupId(), plid);
 
-		layoutUtilityPageEntry.setName(name);
 		layoutUtilityPageEntry.setPlid(plid);
+		layoutUtilityPageEntry.setName(name);
 		layoutUtilityPageEntry.setType(type);
 
 		layoutUtilityPageEntry.setModifiedDate(

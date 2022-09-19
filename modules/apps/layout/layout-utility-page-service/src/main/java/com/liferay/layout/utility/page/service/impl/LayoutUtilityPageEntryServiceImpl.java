@@ -45,7 +45,7 @@ public class LayoutUtilityPageEntryServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long groupId, String name, long plid,
+			String externalReferenceCode, long groupId, long plid, String name,
 			int type, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -54,7 +54,7 @@ public class LayoutUtilityPageEntryServiceImpl
 			LayoutUtilityPageActionKeys.ADD_LAYOUT_UTILITY_PAGE_ENTRY);
 
 		return layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-			externalReferenceCode, getUserId(), groupId, name, plid, type,
+			externalReferenceCode, getUserId(), groupId, plid, name, type,
 			serviceContext);
 	}
 
@@ -127,12 +127,12 @@ public class LayoutUtilityPageEntryServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, String name, long plid, int type,
+			long layoutUtilityPageEntryId, long plid, String name, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntryId, name, plid, type, serviceContext);
+			layoutUtilityPageEntryId, plid, name, type, serviceContext);
 	}
 
 	@Reference(

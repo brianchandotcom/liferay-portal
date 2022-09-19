@@ -816,16 +816,18 @@ definition {
 			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
 
 		CommerceEntry.editTaxCategory(
-			keyDescription = "Test Description 3",
-			keyName = "Test Tax Category 3",
-			keyReferenceCode = "Test Reference 3");
+			keyDescription = "New Description",
+			keyName = "New Tax Category",
+			keyReferenceCode = "New Reference");
 
 		CommerceEntry.assertUniqueTaxCategoryErc(
-			keyName = "Test Tax Category 3",
+			keyName = "New Tax Category",
 			keyReferenceCode = "Test Reference",
 			uniqueERC = "true");
 
-		CommerceEntry.deleteTaxCategory(keyName = "Test Tax Category");
+		for (var taxCategory : list "Test Tax Category, New Tax Category") {
+			CommerceEntry.deleteTaxCategory(keyName = "taxCategory");
+		}
 	}
 
 }

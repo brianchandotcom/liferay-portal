@@ -156,6 +156,17 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommandTest {
 	}
 
 	@Test
+	public void testMergeFragmentCollectionKeysOldSize2NewSize5Add1And3And5Swap2And4()
+		throws IllegalAccessException, InvocationTargetException {
+
+		Assert.assertArrayEquals(
+			new String[] {"A", "d", "C", "b", "E"},
+			_mergeFragmentCollectionKeys(
+				ListUtil.fromArray("A", "d", "C", "b", "E"),
+				ListUtil.fromArray("b", "d")));
+	}
+
+	@Test
 	public void testMergeFragmentCollectionKeysOldSize2NewSize5Swap2And4()
 		throws IllegalAccessException, InvocationTargetException {
 
@@ -197,6 +208,17 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommandTest {
 			_mergeFragmentCollectionKeys(
 				ListUtil.fromArray("c", "b"),
 				ListUtil.fromArray("a", "b", "c")));
+	}
+
+	@Test
+	public void testMergeFragmentCollectionKeysOldSize4NewSize3Add5Swap2And4()
+		throws IllegalAccessException, InvocationTargetException {
+
+		Assert.assertArrayEquals(
+			new String[] {"a", "d", "c", "b", "E"},
+			_mergeFragmentCollectionKeys(
+				ListUtil.fromArray("d", "b", "E"),
+				ListUtil.fromArray("a", "b", "c", "d")));
 	}
 
 	@Test

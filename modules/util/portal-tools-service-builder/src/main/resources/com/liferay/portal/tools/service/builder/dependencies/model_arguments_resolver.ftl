@@ -28,9 +28,7 @@
 	 * @generated
 	 */
 	<#if dependencyInjectorDS>
-		@Component(
-			immediate = true, service = ArgumentsResolver.class
-		)
+		@Component(service = ArgumentsResolver.class)
 	</#if>
 	public
 <#else>

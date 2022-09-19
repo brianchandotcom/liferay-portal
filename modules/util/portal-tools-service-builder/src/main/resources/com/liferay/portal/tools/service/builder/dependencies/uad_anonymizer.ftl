@@ -7,6 +7,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author ${author}
  */
-@Component(immediate = true,service = UADAnonymizer.class)
+@Component(service = UADAnonymizer.class)
 public class ${entity.name}UADAnonymizer extends Base${entity.name}UADAnonymizer {
 }

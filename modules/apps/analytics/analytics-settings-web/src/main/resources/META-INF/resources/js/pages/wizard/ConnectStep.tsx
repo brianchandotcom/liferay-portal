@@ -40,13 +40,23 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 
 			// @ts-ignore
 
-			if (result?.connected) {
+			if (result?.ok) {
 				onChangeStep(ESteps.Property);
 
 				Liferay.Util.openToast({
 					message: Liferay.Language.get('saved-successfully'),
 				});
+			} else {
+				Liferay.Util.openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-system-error-occurred'
+					),
+					type: 'danger',
+				});
 			}
+
+			// eslint-disable-next-line no-console
+			console.log(result);
 		};
 
 		request();

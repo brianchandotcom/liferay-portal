@@ -12,20 +12,6 @@
  * details.
  */
 
-import {fetch} from 'frontend-js-web';
-
-export function fetchConnection(token: string) {
-	return fetch('/o/analytics-settings-rest/v1.0/data-source', {
-		body: JSON.stringify({
-			token,
-		}),
-		headers: {'Content-Type': 'application/json'},
-		method: 'POST',
-	});
-}
-
-export function deleteConnection() {
-	return fetch('/o/analytics-settings-rest/v1.0/data-source', {
-		method: 'DELETE',
-	});
+declare module 'frontend-js-web' {
+	export * from 'frontend-js-web/src/main/resources/META-INF/resources/index';
 }

@@ -14,8 +14,10 @@
 
 import React from 'react';
 
+import WorkspaceConnection from '../../components/WorkspaceConnection';
+
 const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	return <div>wizard view!!</div>;
+	return <WorkspaceConnection />;
 };
 
 export default DefaultPage;

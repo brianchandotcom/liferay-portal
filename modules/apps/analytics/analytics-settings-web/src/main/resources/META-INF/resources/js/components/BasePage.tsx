@@ -24,7 +24,7 @@ const BasePage: React.FC<IBasePageProps> & {
 } = ({children, description, title}) => {
 	return (
 		<div className="sheet sheet-lg">
-			<div className="sheet-header">
+			<div>
 				<h2 className="sheet-title">{title}</h2>
 
 				{description && <div className="sheet-text">{description}</div>}

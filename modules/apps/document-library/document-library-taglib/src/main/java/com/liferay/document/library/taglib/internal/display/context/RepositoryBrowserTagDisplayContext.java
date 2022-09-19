@@ -78,6 +78,16 @@ public class RepositoryBrowserTagDisplayContext {
 			public List<DropdownItem> getActionDropdownItems() {
 				return DropdownItemListBuilder.add(
 					dropdownItem -> {
+						dropdownItem.putData("action", "rename");
+						dropdownItem.putData(
+							"renameURL", _getRenameFolderURL(folder));
+						dropdownItem.putData("value", folder.getName());
+						dropdownItem.setIcon("pencil");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_httpServletRequest, "rename"));
+					}
+				).add(
+					dropdownItem -> {
 						dropdownItem.putData("action", "delete");
 						dropdownItem.putData(
 							"deleteURL", _getDeleteFolderURL(folder));
@@ -163,6 +173,17 @@ public class RepositoryBrowserTagDisplayContext {
 				@Override
 				public List<DropdownItem> getActionDropdownItems() {
 					return DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "rename");
+							dropdownItem.putData(
+								"renameURL", _getRenameFileEntryURL(fileEntry));
+							dropdownItem.putData("value", fileEntry.getTitle());
+							dropdownItem.setIcon("pencil");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "rename"));
+						}
+					).add(
 						dropdownItem -> {
 							dropdownItem.putData("action", "delete");
 							dropdownItem.putData(
@@ -275,6 +296,17 @@ public class RepositoryBrowserTagDisplayContext {
 	}
 
 	private String _getDeleteFolderURL(Folder folder) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
+	}
+
+	private String _getRenameFileEntryURL(FileEntry fileEntry) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "fileEntryId",
+			fileEntry.getFileEntryId());
+	}
+
+	private String _getRenameFolderURL(Folder folder) {
 		return HttpComponentsUtil.addParameter(
 			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
 	}

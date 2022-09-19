@@ -802,6 +802,52 @@ definition {
 		}
 	}
 
+	@description = "LPS-152508 - Verify that it's not possible to delete a relationship with an incorrect input"
+	@priority = "4"
+	test CannotDeleteRelationshipWithIncorrectInput {
+		task ("Create a custom object and a relationship to itself") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject",
+				objectName_2 = "CustomObject",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("Go to relationship tab and try to delete") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			Click(
+				key_objectLabel = "Relationship",
+				locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
+
+			Type(
+				locator1 = "ObjectAdmin#PLACEHOLDER_DELETE_RELATIONSHIP",
+				value1 = "IncorrectInput");
+
+			Click(locator1 = "Form#SIDEBAR_DELETE_FIELD_MODAL_DELETE_BUTTON");
+
+			AssertElementPresent(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "Input and relationship name do not match.");
+		}
+	}
+
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Label blank"
 	@priority = "4"
 	test CannotLeaveRelationshipLabelBlank {

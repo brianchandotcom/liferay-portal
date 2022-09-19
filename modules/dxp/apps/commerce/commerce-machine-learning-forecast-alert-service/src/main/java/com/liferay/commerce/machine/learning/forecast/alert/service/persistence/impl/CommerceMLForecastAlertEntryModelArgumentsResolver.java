@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Riccardo Ferrari
  * @generated
  */
-@Component(immediate = true, service = ArgumentsResolver.class)
+@Component(service = ArgumentsResolver.class)
 public class CommerceMLForecastAlertEntryModelArgumentsResolver
 	implements ArgumentsResolver {
 

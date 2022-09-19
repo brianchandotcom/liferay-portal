@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @deprecated
  * @generated
  */
-@Component(immediate = true, service = ArgumentsResolver.class)
+@Component(service = ArgumentsResolver.class)
 public class DDMContentModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override

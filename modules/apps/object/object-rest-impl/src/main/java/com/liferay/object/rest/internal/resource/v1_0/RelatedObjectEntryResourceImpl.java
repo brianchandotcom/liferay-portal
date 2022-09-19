@@ -25,7 +25,9 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -60,6 +62,10 @@ public class RelatedObjectEntryResourceImpl
 			String previousPath, Long objectEntryId,
 			String objectRelationshipName, Pagination pagination)
 		throws Exception {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153324"))) {
+			throw new NotFoundException();
+		}
 
 		ObjectDefinition systemObjectDefinition = _getSystemObjectDefinition(
 			_getSystemObjectDefinitionMetadata(
@@ -97,6 +103,10 @@ public class RelatedObjectEntryResourceImpl
 			String objectRelationshipName, Long relatedObjectEntryId,
 			Pagination pagination)
 		throws Exception {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153324"))) {
+			throw new NotFoundException();
+		}
 
 		ObjectDefinition systemObjectDefinition = _getSystemObjectDefinition(
 			_getSystemObjectDefinitionMetadata(

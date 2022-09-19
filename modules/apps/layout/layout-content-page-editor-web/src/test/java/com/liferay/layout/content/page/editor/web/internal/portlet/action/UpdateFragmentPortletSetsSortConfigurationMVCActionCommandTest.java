@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.Constructor;
@@ -23,9 +24,11 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Objects;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 
 /**
  * @author Rubén Pulido
@@ -65,6 +68,81 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommandTest {
 
 		_updateFragmentPortletSetsSortConfigurationMVCActionCommand =
 			constructor.newInstance();
+	}
+
+	@Test
+	public void testMergeFragmentCollectionKeysOldSize2NewSize2Swap1And2()
+		throws IllegalAccessException, InvocationTargetException {
+
+		Assert.assertArrayEquals(
+			new String[] {"b", "a"},
+			_mergeFragmentCollectionKeys(
+				ListUtil.fromArray("b", "a"), ListUtil.fromArray("a", "b")));
+	}
+
+	@Test
+	public void testMergeFragmentCollectionKeysOldSize2NewSize2SwapNone()
+		throws IllegalAccessException, InvocationTargetException {
+
+		Assert.assertArrayEquals(
+			new String[] {"a", "b"},
+			_mergeFragmentCollectionKeys(
+				ListUtil.fromArray("a", "b"), ListUtil.fromArray("a", "b")));
+	}
+
+	@Test
+	public void testMergeFragmentCollectionKeysOldSize2NewSize5Swap2And4()
+		throws IllegalAccessException, InvocationTargetException {
+
+		Assert.assertArrayEquals(
+			new String[] {"a", "d", "c", "b", "e"},
+			_mergeFragmentCollectionKeys(
+				ListUtil.fromArray("d", "b"),
+				ListUtil.fromArray("a", "b", "c", "d", "e")));
+	}
+
+	@Test
+	public void testMergeFragmentCollectionKeysOldSize3NewSize2Swap1And2()
+		throws IllegalAccessException, InvocationTargetException {
+
+		Assert.assertArrayEquals(
+			new String[] {"b", "a", "c"},
+			_mergeFragmentCollectionKeys(
+				ListUtil.fromArray("b", "a"),
+				ListUtil.fromArray("a", "b", "c")));
+	}
+
+	@Test
+	public void testMergeFragmentCollectionKeysOldSize3NewSize2Swap1And3()
+		throws IllegalAccessException, InvocationTargetException {
+
+		Assert.assertArrayEquals(
+			new String[] {"c", "b", "a"},
+			_mergeFragmentCollectionKeys(
+				ListUtil.fromArray("c", "a"),
+				ListUtil.fromArray("a", "b", "c")));
+	}
+
+	@Test
+	public void testMergeFragmentCollectionKeysOldSize3NewSize2Swap2And3()
+		throws IllegalAccessException, InvocationTargetException {
+
+		Assert.assertArrayEquals(
+			new String[] {"a", "c", "b"},
+			_mergeFragmentCollectionKeys(
+				ListUtil.fromArray("c", "b"),
+				ListUtil.fromArray("a", "b", "c")));
+	}
+
+	@Test
+	public void testMergeFragmentCollectionKeysOldSize5NewSize3Swap1And3And5()
+		throws IllegalAccessException, InvocationTargetException {
+
+		Assert.assertArrayEquals(
+			new String[] {"c", "b", "e", "d", "a"},
+			_mergeFragmentCollectionKeys(
+				ListUtil.fromArray("c", "e", "a"),
+				ListUtil.fromArray("a", "b", "c", "d", "e")));
 	}
 
 	private static String[] _mergeFragmentCollectionKeys(

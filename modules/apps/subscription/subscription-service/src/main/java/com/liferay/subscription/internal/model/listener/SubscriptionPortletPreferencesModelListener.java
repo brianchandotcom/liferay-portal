@@ -58,24 +58,24 @@ public class SubscriptionPortletPreferencesModelListener
 				return;
 			}
 
+			PortletPreferences remainingPortletPreferences =
+				_portletPreferencesLocalService.fetchPortletPreferences(
+					portletPreferences.getOwnerId(),
+					portletPreferences.getOwnerType(),
+					portletPreferences.getPlid(),
+					portletPreferences.getPortletId());
+
+			if (remainingPortletPreferences == null) {
+				_subscriptionLocalService.deleteSubscriptions(
+					portletPreferences.getCompanyId(),
+					portletPreferences.getModelClassName(),
+					portletPreferences.getPortletPreferencesId());
+
+				return;
+			}
+
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					PortletPreferences remainingPortletPreferences =
-						_portletPreferencesLocalService.fetchPortletPreferences(
-							portletPreferences.getOwnerId(),
-							portletPreferences.getOwnerType(),
-							portletPreferences.getPlid(),
-							portletPreferences.getPortletId());
-
-					if (remainingPortletPreferences == null) {
-						_subscriptionLocalService.deleteSubscriptions(
-							portletPreferences.getCompanyId(),
-							portletPreferences.getModelClassName(),
-							portletPreferences.getPortletPreferencesId());
-
-						return null;
-					}
-
 					ActionableDynamicQuery actionableDynamicQuery =
 						_subscriptionLocalService.getActionableDynamicQuery();
 

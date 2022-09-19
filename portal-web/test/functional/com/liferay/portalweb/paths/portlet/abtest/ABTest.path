@@ -136,11 +136,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXPERIENCE_LOCKED_MESSAGE</td>
-	<td>//button[@class="nav-link btn btn-unstyled"]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>IMAGE_EMPTY_STATE</td>
 	<td>//*[contains(@class,'segments-experiments-empty-state__image') and (@src)]</td>
 	<td></td>

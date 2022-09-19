@@ -20,6 +20,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.junit.BeforeClass;
@@ -64,6 +65,16 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommandTest {
 
 		_updateFragmentPortletSetsSortConfigurationMVCActionCommand =
 			constructor.newInstance();
+	}
+
+	private static String[] _mergeFragmentCollectionKeys(
+			List<String> newFragmentCollectionKeys,
+			List<String> oldFragmentCollectionKeys)
+		throws IllegalAccessException, InvocationTargetException {
+
+		return (String[])_mergeFragmentCollectionKeysMethod.invoke(
+			_updateFragmentPortletSetsSortConfigurationMVCActionCommand,
+			newFragmentCollectionKeys, oldFragmentCollectionKeys);
 	}
 
 	private static Method _mergeFragmentCollectionKeysMethod;

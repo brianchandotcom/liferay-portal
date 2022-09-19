@@ -14,6 +14,7 @@
 
 package com.liferay.layout.internal.portlet.category;
 
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.portlet.category.PortletCategoryManager;
 import com.liferay.layout.util.PortalPreferencesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -164,13 +165,13 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		highlightedPortletIds.addAll(
 			SetUtil.fromArray(
 				portalPreferences.getValues(
-					_CONTENT_PAGE_EDITOR_PORTLET_KEY, "highlightedPortletIds",
-					new String[0])));
+					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+					"highlightedPortletIds", new String[0])));
 
 		highlightedPortletIds.removeAll(
 			SetUtil.fromArray(
 				portalPreferences.getValues(
-					_CONTENT_PAGE_EDITOR_PORTLET_KEY,
+					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 					"nonhighlightedPortletIds", new String[0])));
 
 		return highlightedPortletIds;
@@ -393,13 +394,10 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		PortalPreferences portalPreferences) {
 
 		return PortalPreferencesUtil.getSortedPortalPreferencesValues(
-			portalPreferences, _CONTENT_PAGE_EDITOR_PORTLET_KEY,
+			portalPreferences,
+			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 			"sortedPortletCategoryKeys");
 	}
-
-	private static final String _CONTENT_PAGE_EDITOR_PORTLET_KEY =
-		"com_liferay_layout_content_page_editor_web_internal_portlet_" +
-			"ContentPageEditorPortlet";
 
 	private static final String[] _UNSUPPORTED_PORTLETS_NAMES = {
 		PortletKeys.NESTED_PORTLETS

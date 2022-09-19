@@ -927,7 +927,7 @@
 </tr>
 <tr>
 	<td>IMAGE_RESOLUTION_LABEL</td>
-	<td>//div[contains(@class,'text-secondary')][contains(.,'${key_resolutionLabel}')]</td>
+	<td>//p[contains(@class,'text-secondary')]/b[contains(.,'${key_resolutionLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

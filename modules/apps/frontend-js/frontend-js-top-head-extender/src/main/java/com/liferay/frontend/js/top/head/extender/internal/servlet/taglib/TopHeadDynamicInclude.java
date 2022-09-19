@@ -91,11 +91,6 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 			"/html/common/themes/top_js.jspf#resources");
 	}
 
-	@Reference(unbind = "-")
-	public void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
@@ -294,7 +289,10 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 	private volatile List<String> _allJsResourceURLs = new ArrayList<>();
 	private BundleContext _bundleContext;
 	private volatile List<String> _jsResourceURLs = new ArrayList<>();
+
+	@Reference
 	private Portal _portal;
+
 	private PortalWebResources _portalWebResources;
 	private final Collection<ServiceReference<TopHeadResources>>
 		_topHeadResourcesServiceReferences = new TreeSet<>();

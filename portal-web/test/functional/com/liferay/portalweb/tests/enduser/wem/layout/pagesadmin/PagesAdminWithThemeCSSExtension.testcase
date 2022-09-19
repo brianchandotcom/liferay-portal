@@ -68,6 +68,8 @@ definition {
 	@description = "This is a test for LPS-153653. The site designer could add theme CSS extension to page, page template, and group of pages."
 	@priority = "5"
 	test AddThemeCSSExtension {
+		property portal.acceptance = "true";
+
 		task ("Given a site designer has a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -227,6 +229,8 @@ definition {
 	@description = "This is a test for LPS-153653 and LPS-153658. The site designer could change theme CSS extension selection to an inheritor page. View the inherited theme CSS extension from master."
 	@priority = "5"
 	test ChangeThemeCSSExtensionOfInheritorPage {
+		property portal.acceptance = "true";
+
 		task ("Given a site designer has a content page template with a theme CSS extension") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Test Site Name",

@@ -45,6 +45,8 @@ definition {
 	@description = "This is a test for LPS-153654. The site designer could change favicon from favicon extension for page, page template, and group of pages."
 	@priority = "5"
 	test ChangeFavicons {
+		property portal.acceptance = "true";
+
 		task ("Given a site designer has a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

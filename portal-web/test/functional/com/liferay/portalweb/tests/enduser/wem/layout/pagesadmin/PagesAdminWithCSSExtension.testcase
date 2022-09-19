@@ -68,6 +68,8 @@ definition {
 	@description = "This is a test for LPS-153656. The site designer could add CSS extension to page, page template, and group of pages."
 	@priority = "5"
 	test AddCSSExtension {
+		property portal.acceptance = "true";
+
 		task ("Given a site designer has a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -221,6 +223,8 @@ definition {
 	@description = "This is a test for LPS-153656. The site designer could change CSS extension selection to an inheritor page from page template."
 	@priority = "5"
 	test ChangeCSSExtensionOfInheritorPage {
+		property portal.acceptance = "true";
+
 		task ("Given a site designer has a content page template with a CSS extension") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Test Site Name",
@@ -525,6 +529,8 @@ definition {
 	@description = "This is a test for LPS-153656. Page should inherit the CSS extension from page template."
 	@priority = "5"
 	test ViewInheritedCSSExtensionFromPageTemplate {
+		property portal.acceptance = "true";
+
 		task ("Given a site designer has a content page template with a CSS extension") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Test Site Name",

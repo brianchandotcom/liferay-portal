@@ -39,6 +39,18 @@ definition {
 	test CanDownloadEnvelopeByEnvelopeDescription {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
 
+		DigitalSignature.createEnvelope(
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
+			emailMessage = "Email Message",
+			emailSubject = "Email Subject",
+			envelopeName = "Test",
+			recipientEmail = "test@liferay.com",
+			recipientFullName = "Recipient Full Name");
+
+		Button.click(button = "Send");
+
+		Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -126,6 +138,18 @@ definition {
 	@priority = "4"
 	test CanViewEnvelopeDetails {
 		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		DigitalSignature.createEnvelope(
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
+			emailMessage = "Email Message",
+			emailSubject = "Email Subject",
+			envelopeName = "Test",
+			recipientEmail = "test@liferay.com",
+			recipientFullName = "Recipient Full Name");
+
+		Button.click(button = "Send");
+
+		Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
 
 		Navigator.openURL();
 

@@ -24,7 +24,7 @@ import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalServiceUtil;
-import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.constants.CPField;
@@ -2935,7 +2935,7 @@ public class CPDefinitionLocalServiceImpl
 		throws PortalException {
 
 		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.
+			CommercePriceListLocalServiceUtil.
 				getCatalogBaseCommercePriceListByType(
 					cpInstance.getGroupId(), type);
 
@@ -3187,9 +3187,6 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
-
-	@Reference
-	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	@Reference
 	private CPAttachmentFileEntryPersistence _cpAttachmentFileEntryPersistence;

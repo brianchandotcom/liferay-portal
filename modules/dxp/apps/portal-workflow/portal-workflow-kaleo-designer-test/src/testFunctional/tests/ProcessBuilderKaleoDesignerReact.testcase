@@ -1620,6 +1620,7 @@ definition {
 	@description = "Verify that the user can edit the Name of the Notification"
 	@priority = "4"
 	test CanEditNotificationName {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditNotificationName";
 
 		Workflow.openWorkflowListView();
@@ -1655,6 +1656,7 @@ definition {
 	@description = "Verify that the user can edit a Template for Notification"
 	@priority = "4"
 	test CanEditNotificationTemplate {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditNotificationTemplate";
 
 		Workflow.openWorkflowListView();
@@ -1770,6 +1772,7 @@ definition {
 	@description = "Verify that the user can edit the Template Language of the Notification to Text"
 	@priority = "4"
 	test CanEditTemplateLanguageToText {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTemplateLanguageToText";
 
 		Workflow.openWorkflowListView();
@@ -1796,6 +1799,7 @@ definition {
 	@description = "Verify that the user can edit the Template Language of the Notification to Velocity"
 	@priority = "4"
 	test CanEditTemplateLanguageToVelocity {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTemplateLanguageToVelocity";
 
 		Workflow.openWorkflowListView();
@@ -2750,6 +2754,7 @@ definition {
 	@description = "Verify that the is able to select who receives the notification: Asset Creator"
 	@priority = "5"
 	test CanSelectAssetCreatorAsNotificationRecipientType {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectAssetCreatorAsNotificationRecipientType";
 
 		Workflow.openWorkflowListView();
@@ -2776,6 +2781,7 @@ definition {
 	@description = "Verify that the user can select Email as Notification type"
 	@priority = "5"
 	test CanSelectEmailAsNotificationType {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectEmailAsNotificationType";
 
 		Workflow.openWorkflowListView();
@@ -2834,6 +2840,7 @@ definition {
 	@description = "Verify that the user can select On Assignment as the time when the notification will be sent in a task"
 	@priority = "4"
 	test CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications";
 
 		Workflow.openWorkflowListView();
@@ -2862,6 +2869,7 @@ definition {
 	@description = "Verify that the user can select On Entry as the time when the notification will be sent"
 	@priority = "4"
 	test CanSelectOnEntryAsExecutionTypeAtNodeNotifications {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnEntryAsExecutionTypeAtNodeNotifications";
 
 		Workflow.openWorkflowListView();
@@ -2944,6 +2952,7 @@ definition {
 	@description = "Verify that the user can select On Exit as the time when the notification will be sent"
 	@priority = "4"
 	test CanSelectOnExitAsExecutionTypeAtNodeNotifications {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnExitAsExecutionTypeAtNodeNotifications";
 
 		Workflow.openWorkflowListView();
@@ -2970,6 +2979,7 @@ definition {
 	@description = "Verify that the is able to select who receives the notification: Role"
 	@priority = "5"
 	test CanSelectRoleAsNotificationRecipientType {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectRoleAsNotificationRecipientType";
 
 		Workflow.openWorkflowListView();
@@ -3052,6 +3062,7 @@ definition {
 	@description = "Verify that the user can select Email and User Notification as Notification type"
 	@priority = "5"
 	test CanSelectUserNotificationAndEmailAsNotificationType {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectUserNotificationAndEmailAsNotificationType";
 
 		Workflow.openWorkflowListView();

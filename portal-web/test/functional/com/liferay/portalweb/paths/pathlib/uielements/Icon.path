@@ -341,6 +341,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBSCRIBE_BELL</td>
+	<td>//a[span/*[name()='svg'][contains(@class,'icon-bell-on')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TIMES</td>
 	<td>//button[*[name()='svg'][contains(@class,'icon-times')]]</td>
 	<td></td>

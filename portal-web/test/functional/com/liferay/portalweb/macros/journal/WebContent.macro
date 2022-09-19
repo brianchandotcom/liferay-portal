@@ -1792,7 +1792,7 @@ definition {
 	macro subscribeToCurrentFolderCP {
 		Click.clickAt(locator1 = "Icon#INFO");
 
-		Click(locator1 = "Icon#SUBSCRIBE");
+		Click(locator1 = "Icon#SUBSCRIBE_BELL");
 
 		Alert.viewSuccessMessage();
 	}

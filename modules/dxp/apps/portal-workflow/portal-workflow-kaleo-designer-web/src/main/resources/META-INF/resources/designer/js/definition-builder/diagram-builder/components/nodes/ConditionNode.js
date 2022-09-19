@@ -28,7 +28,7 @@ export default function ConditionNode({
 	}
 
 	if (!script) {
-		script = 'returnValue = "Transition Name"';
+		script = 'returnValue = "Transition Id"';
 	}
 
 	return (

@@ -49,20 +49,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Given walkthrough enabled site-level") {
-			JSONGroup.addGroup(groupName = "Site Name");
-
-			ApplicationsMenu.gotoSite(site = "Site Name");
-
-			Walkthrough.enableWalkthrough(fileName = "walkthrough_configuration.json");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Walkthrough Page 1");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Walkthrough Page 1",
-				widgetName = "JS Walkthrough Sample");
+			Walkthrough.addWalkthrough(fileName = "walkthrough_configuration.json");
 		}
 
 		task ("When walkthrough is disabled") {

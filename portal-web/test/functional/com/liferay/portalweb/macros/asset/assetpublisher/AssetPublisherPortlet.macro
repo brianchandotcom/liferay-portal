@@ -99,11 +99,20 @@ definition {
 
 		var key_sortOrder = "${sortOrder}";
 
-		if (isSet(sortOrder) && (IsVisible(locator1 = "APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON"))) {
-			Click(locator1 = "APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON");
+		if (isSet(sortOrder) && (IsNotVisible(locator1 = "APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON"))) {
+			if ("${sortOrder}" == "Ascending") {
+				Click(
+					key_sortOrder = "Descending",
+					locator1 = "APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON");
+			}
+			else {
+				Click(
+					key_sortOrder = "Ascending",
+					locator1 = "APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON");
+			}
 		}
 
-		AssertNotVisible(locator1 = "APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON");
+		AssertVisible(locator1 = "APConfiguration#ORDERING_AND_GROUPING_ORDER_DIRECTIONAL_ICON");
 
 		PortletEntry.save();
 	}

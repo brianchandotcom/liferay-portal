@@ -12,7 +12,11 @@
  * details.
  */
 
-import {openSelectionModal, openSimpleInputModal} from 'frontend-js-web';
+import {
+	openSelectionModal,
+	openSimpleInputModal,
+	setFormValues,
+} from 'frontend-js-web';
 
 import openDeleteFragmentModal from './openDeleteFragmentModal';
 
@@ -45,7 +49,7 @@ const ACTIONS = {
 					);
 
 					if (form) {
-						Liferay.Util.setFormValues(form, {
+						setFormValues(form, {
 							fragmentCollectionId: selectedItem.id,
 							fragmentCompositionId,
 						});
@@ -95,7 +99,7 @@ const ACTIONS = {
 					);
 
 					if (form) {
-						Liferay.Util.setFormValues(form, {
+						setFormValues(form, {
 							fileEntryId: itemValue.fileEntryId,
 							fragmentCompositionId,
 						});

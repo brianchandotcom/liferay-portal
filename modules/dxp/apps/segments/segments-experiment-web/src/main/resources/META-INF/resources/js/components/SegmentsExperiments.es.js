@@ -15,7 +15,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayTabs from '@clayui/tabs';
-import {openConfirmModal} from 'frontend-js-web';
+import {openConfirmModal, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
@@ -170,7 +170,7 @@ function SegmentsExperiments({
 									<div
 										className="d-inline"
 										dangerouslySetInnerHTML={{
-											__html: Liferay.Util.sub(
+											__html: sub(
 												Liferay.Language.get(
 													'x-is-the-winner-variant'
 												),

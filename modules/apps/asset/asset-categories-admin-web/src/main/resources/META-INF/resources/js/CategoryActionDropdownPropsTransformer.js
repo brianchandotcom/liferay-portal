@@ -12,7 +12,13 @@
  * details.
  */
 
-import {openModal, openSelectionModal, openToast, sub} from 'frontend-js-web';
+import {
+	openModal,
+	openSelectionModal,
+	openToast,
+	setFormValues,
+	sub,
+} from 'frontend-js-web';
 
 import openDeleteCategoryModal from './openDeleteCategoryModal';
 
@@ -68,7 +74,7 @@ const ACTIONS = {
 					);
 
 					if (form) {
-						Liferay.Util.setFormValues(form, {
+						setFormValues(form, {
 							categoryId,
 							parentCategoryId,
 							vocabularyId,

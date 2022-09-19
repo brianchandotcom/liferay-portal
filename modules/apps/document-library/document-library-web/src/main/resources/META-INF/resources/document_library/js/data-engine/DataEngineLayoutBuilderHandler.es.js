@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openToast, sub} from 'frontend-js-web';
+import {openToast, postForm, sub} from 'frontend-js-web';
 
 import {
 	getDataEngineStructure,
@@ -81,7 +81,7 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 			return;
 		}
 
-		Liferay.Util.postForm(form, {
+		postForm(form, {
 			data: getDataEngineStructure({dataLayoutBuilder, namespace}),
 		});
 	};

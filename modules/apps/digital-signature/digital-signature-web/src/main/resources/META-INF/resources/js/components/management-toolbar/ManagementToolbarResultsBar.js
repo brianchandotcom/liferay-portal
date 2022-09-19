@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayLabel from '@clayui/label';
 import {ManagementToolbar} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import {concatValues} from '../../utils/utils';
@@ -85,7 +86,7 @@ export default function ManagementToolbarResultsBar({
 					<ManagementToolbar.ResultsBarItem>
 						<span className="component-text text-truncate-inline">
 							<span className="text-truncate">
-								{Liferay.Util.sub(
+								{sub(
 									totalCount === 1
 										? Liferay.Language.get('x-result-for-x')
 										: Liferay.Language.get(

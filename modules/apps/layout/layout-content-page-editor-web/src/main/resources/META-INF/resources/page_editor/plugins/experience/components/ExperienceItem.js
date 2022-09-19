@@ -19,7 +19,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
-import {navigate, openConfirmModal} from 'frontend-js-web';
+import {navigate, openConfirmModal, setSessionValue} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -83,7 +83,7 @@ const ExperienceItem = ({
 	const handleExperimentNavigation = (event) => {
 		event.preventDefault();
 
-		Liferay.Util.Session.set(
+		setSessionValue(
 			'com.liferay.segments.experiment.web_panelState',
 			'open'
 		).then(() => {

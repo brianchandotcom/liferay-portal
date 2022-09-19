@@ -14,9 +14,12 @@
 
 import {
 	fetch,
+	getFormElement,
+	objectToFormData,
 	openToast,
 	openWindow,
 	runScriptsInElement,
+	setFormValues,
 	toggleDisabled,
 } from 'frontend-js-web';
 
@@ -56,14 +59,14 @@ export default function Comments({
 		`${namespace}moreCommentsTrigger`
 	);
 
-	const indexElement = Util.getFormElement(form, 'index');
-	const rootIndexPageElement = Util.getFormElement(form, 'rootIndexPage');
+	const indexElement = getFormElement(form, 'index');
+	const rootIndexPageElement = getFormElement(form, 'rootIndexPage');
 
 	if (moreCommentsTrigger && indexElement && rootIndexPageElement) {
 		moreCommentsTrigger.addEventListener('click', () => {
 			const data = Util.ns(namespace, {
-				className: Util.getFormElement(form, 'className').value,
-				classPK: Util.getFormElement(form, 'classPK').value,
+				className: getFormElement(form, 'className').value,
+				classPK: getFormElement(form, 'classPK').value,
 				hideControls,
 				index: indexElement.value,
 				randomNamespace,
@@ -73,7 +76,7 @@ export default function Comments({
 			});
 
 			fetch(paginationURL, {
-				body: Util.objectToFormData(data),
+				body: objectToFormData(data),
 				method: 'POST',
 			})
 				.then((response) => {
@@ -143,8 +146,8 @@ export default function Comments({
 			);
 		});
 
-		const className = Util.getFormElement(form, 'className').value;
-		const classPK = Util.getFormElement(form, 'classPK').value;
+		const className = getFormElement(form, 'className').value;
+		const classPK = getFormElement(form, 'classPK').value;
 
 		if (response.commentId) {
 			const messageTextNode = document.querySelector(
@@ -283,7 +286,7 @@ export default function Comments({
 
 		if (!editorWrapper || !editorWrapper.childNodes.length) {
 			fetch(editorURL, {
-				body: Util.objectToFormData(Util.ns(namespace, options)),
+				body: objectToFormData(Util.ns(namespace, options)),
 				method: 'POST',
 			})
 				.then((response) => {
@@ -329,7 +332,7 @@ export default function Comments({
 		emailAddress,
 		anonymousAccount
 	) {
-		Util.setFormValues(form, {
+		setFormValues(form, {
 			emailAddress,
 		});
 
@@ -337,10 +340,10 @@ export default function Comments({
 	};
 
 	window[`${randomNamespace}deleteMessage`] = function (i) {
-		const commentIdElement = Util.getFormElement(form, 'commentId' + i);
+		const commentIdElement = getFormElement(form, 'commentId' + i);
 
 		if (commentIdElement) {
-			Util.setFormValues(form, {
+			setFormValues(form, {
 				cmd: constants.DELETE,
 				commentId: commentIdElement.value,
 			});
@@ -363,13 +366,13 @@ export default function Comments({
 		const editorInstance =
 			window[`${namespace}${randomNamespace}postReplyBody${i}`];
 
-		const parentCommentIdElement = Util.getFormElement(
+		const parentCommentIdElement = getFormElement(
 			form,
 			'parentCommentId' + i
 		);
 
 		if (parentCommentIdElement) {
-			Util.setFormValues(form, {
+			setFormValues(form, {
 				body: editorInstance.getHTML(),
 				cmd: constants.ADD,
 				parentCommentId: parentCommentIdElement.value,
@@ -444,7 +447,7 @@ export default function Comments({
 	};
 
 	window[`${randomNamespace}subscribeToComments`] = function (subscribe) {
-		Util.setFormValues(form, {
+		setFormValues(form, {
 			[`${randomNamespace}className`]: subscriptionClassName,
 			cmd: subscribe
 				? constants.SUBSCRIBE_TO_COMMENTS
@@ -458,16 +461,16 @@ export default function Comments({
 		const editorInstance =
 			window[`${namespace}${randomNamespace}editReplyBody${i}`];
 
-		const commentIdElement = Util.getFormElement(form, `commentId${i}`);
+		const commentIdElement = getFormElement(form, `commentId${i}`);
 
 		if (commentIdElement) {
 			if (pending) {
-				Util.setFormValues(form, {
+				setFormValues(form, {
 					workflowAction: constants.ACTION_SAVE_DRAFT,
 				});
 			}
 
-			Util.setFormValues(form, {
+			setFormValues(form, {
 				body: editorInstance.getHTML(),
 				cmd: constants.UPDATE,
 				commentId: commentIdElement.value,

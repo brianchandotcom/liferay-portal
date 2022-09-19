@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openSelectionModal} from 'frontend-js-web';
+import {getPortletNamespace, openSelectionModal} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {eventName, itemSelectorURL},
@@ -56,7 +56,7 @@ export default function propsTransformer({
 						privateLayoutInput.value = selectedItem.privateLayout;
 
 						url.searchParams.set(
-							`${Liferay.Util.getPortletNamespace(
+							`${getPortletNamespace(
 								Liferay.PortletKeys.ITEM_SELECTOR
 							)}layoutUuid`,
 							selectedItem.id

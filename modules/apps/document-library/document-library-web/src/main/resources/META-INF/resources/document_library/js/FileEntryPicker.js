@@ -16,7 +16,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {sub} from 'frontend-js-web';
+import {formatStorage, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -105,7 +105,7 @@ const FileNamePicker = ({
 							Liferay.Language.get(
 								'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 							),
-							Liferay.Util.formatStorage(maxFileSize, {
+							formatStorage(maxFileSize, {
 								addSpaceBeforeSuffix: true,
 							})
 						)}

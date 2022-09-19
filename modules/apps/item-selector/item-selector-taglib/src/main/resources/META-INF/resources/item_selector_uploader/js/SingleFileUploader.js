@@ -18,7 +18,7 @@ import ClayLayout from '@clayui/layout';
 import ClayProgressBar from '@clayui/progress-bar';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {sub} from 'frontend-js-web';
+import {formatStorage, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 import {ErrorCode, useDropzone} from 'react-dropzone';
@@ -64,7 +64,7 @@ function SingleFileUploader({
 				Liferay.Language.get(
 					'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 				),
-				[Liferay.Util.formatStorage(maxFileSize)]
+				[formatStorage(maxFileSize)]
 			),
 			[ErrorCode.TooManyFiles]: Liferay.Language.get(
 				'multiple-file-upload-is-not-supported-please-enter-a-single-file'

@@ -15,7 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayLayout from '@clayui/layout';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {fetch, navigate, openConfirmModal} from 'frontend-js-web';
+import {fetch, navigate, openConfirmModal, unescapeHTML} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useReducer, useState} from 'react';
 
@@ -189,7 +189,7 @@ const Translate = ({
 						payload: Object.entries(fields).reduce(
 							(acc, [id, content]) => {
 								acc[id] = {
-									content: Liferay.Util.unescapeHTML(content),
+									content: unescapeHTML(content),
 								};
 
 								return acc;
@@ -247,9 +247,7 @@ const Translate = ({
 					dispatch({
 						payload: {
 							field: {
-								content: Liferay.Util.unescapeHTML(
-									fields[fieldId]
-								),
+								content: unescapeHTML(fields[fieldId]),
 								message: Liferay.Language.get(
 									'field-translated'
 								),

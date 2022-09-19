@@ -19,6 +19,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {
 	fetch,
+	getPortletNamespace,
 	objectToFormData,
 	openConfirmModal,
 	runScriptsInElement,
@@ -45,7 +46,7 @@ export function SidebarPanelContent({contentRequestBody, contentUrl, title}) {
 
 	const {portletId, redirect} = useConstants();
 
-	const namespace = Liferay.Util.getPortletNamespace(portletId);
+	const namespace = getPortletNamespace(portletId);
 
 	useEffect(() => {
 		if (changedRef.current) {

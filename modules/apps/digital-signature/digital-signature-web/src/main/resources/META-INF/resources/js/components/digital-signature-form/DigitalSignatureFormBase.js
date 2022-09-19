@@ -15,6 +15,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {errorToast} from '../../utils/toast';
@@ -165,7 +166,7 @@ const DigitalSignatureFormBase = ({
 
 			<Input
 				error={errors.emailMessage}
-				feedbackMessage={Liferay.Util.sub(
+				feedbackMessage={sub(
 					Liferay.Language.get('x-characters-remaining'),
 					MAX_LENGTH.EMAIL_MESSAGE - values.emailMessage.length
 				)}

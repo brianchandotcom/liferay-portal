@@ -15,6 +15,7 @@
 import {State} from '@liferay/frontend-js-state-web';
 import {
 	fetch,
+	normalizeFriendlyURL,
 	openConfirmModal,
 	toggleBoxes,
 	toggleDisabled,
@@ -659,7 +660,7 @@ export default class Blogs {
 			this._automaticURL() &&
 			(friendlyURLEmpty || this._originalFriendlyURLChanged)
 		) {
-			urlTitleInput.value = Liferay.Util.normalizeFriendlyURL(title);
+			urlTitleInput.value = normalizeFriendlyURL(title);
 		}
 
 		this._originalFriendlyURLChanged = true;

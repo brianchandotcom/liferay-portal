@@ -12,6 +12,8 @@
  * details.
  */
 
+import {postForm} from 'frontend-js-web';
+
 export function getInputLocalizedValues(namespace, fieldName) {
 	const inputLocalized = Liferay.component(`${namespace}${fieldName}`);
 	const localizedValues = {};
@@ -59,7 +61,7 @@ export default function saveDDMStructure({namespace}) {
 			`${namespace}dataLayoutBuilder`
 		);
 
-		Liferay.Util.postForm(form, {
+		postForm(form, {
 			data: getDataEngineStructure({dataLayoutBuilder, namespace}),
 		});
 	};

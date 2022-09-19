@@ -12,7 +12,7 @@
  * details.
  */
 
-import {getOpener} from 'frontend-js-web';
+import {getOpener, setFormValues} from 'frontend-js-web';
 
 export default function ({itemSelectorURL, portletNamespace, selectEventName}) {
 	const openRecordSetModalButton = document.querySelector(
@@ -34,7 +34,7 @@ export default function ({itemSelectorURL, portletNamespace, selectEventName}) {
 						return;
 					}
 
-					Liferay.Util.setFormValues(form, {
+					setFormValues(form, {
 						ddmStructureId: selectedItem.ddmstructureid,
 						ddmStructureNameDisplay: Liferay.Util.unescape(
 							selectedItem.name

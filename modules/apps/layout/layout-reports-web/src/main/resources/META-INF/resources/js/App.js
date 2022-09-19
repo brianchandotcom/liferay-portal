@@ -13,6 +13,7 @@
  */
 
 import {useEventListener} from '@liferay/frontend-js-react-web';
+import {setSessionValue} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import LayoutReports from './components/LayoutReports';
@@ -35,14 +36,14 @@ export default function App(props) {
 		);
 
 		sidenavInstance.on('open.lexicon.sidenav', () => {
-			Liferay.Util.Session.set(
+			setSessionValue(
 				'com.liferay.layout.reports.web_layoutReportsPanelState',
 				'open'
 			);
 		});
 
 		sidenavInstance.on('closed.lexicon.sidenav', () => {
-			Liferay.Util.Session.set(
+			setSessionValue(
 				'com.liferay.layout.reports.web_layoutReportsPanelState',
 				'closed'
 			);

@@ -13,6 +13,7 @@
  */
 
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 const DEFAULT_EMPTY = {
@@ -64,7 +65,7 @@ export function FilteredEmpty(props) {
 }
 
 export function SearchEmpty({keywords, ...otherProps}) {
-	const description = Liferay.Util.sub(
+	const description = sub(
 		Liferay.Language.get('there-are-no-envelopes-for-x'),
 		keywords
 	);
@@ -73,7 +74,7 @@ export function SearchEmpty({keywords, ...otherProps}) {
 }
 
 export function SearchAndFilteredEmpty({keywords, ...otherProps}) {
-	const description = Liferay.Util.sub(
+	const description = sub(
 		Liferay.Language.get(
 			'there-are-no-envelopes-for-x-with-these-attributes'
 		),

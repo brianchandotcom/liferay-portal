@@ -13,6 +13,7 @@
  */
 
 import {
+	createPortletURL,
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
@@ -62,7 +63,7 @@ const ACTIONS = {
 
 				const value = JSON.parse(selectedItem.value);
 
-				const portletURL = new Liferay.Util.PortletURL.createPortletURL(
+				const portletURL = new createPortletURL(
 					moveLayoutPageTemplateEntryURL,
 					{
 						targetLayoutPageTemplateCollectionId:

@@ -20,6 +20,7 @@ import {
 	PortletBase,
 	STATUS_CODE,
 	delegate,
+	formatStorage,
 	sub,
 } from 'frontend-js-web';
 import ReactDOM from 'react-dom';
@@ -325,7 +326,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 						Liferay.Language.get(
 							'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 						),
-						[Liferay.Util.formatStorage(this.maxFileSize)]
+						[formatStorage(this.maxFileSize)]
 					);
 
 					break;
@@ -338,7 +339,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 						Liferay.Language.get(
 							'request-is-larger-than-x-and-could-not-be-processed'
 						),
-						[Liferay.Util.formatStorage(maxUploadRequestSize)]
+						[formatStorage(maxUploadRequestSize)]
 					);
 
 					break;
@@ -372,7 +373,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 						},
 						{
 							key: Liferay.Language.get('size'),
-							value: Liferay.Util.formatStorage(file.size),
+							value: formatStorage(file.size),
 						},
 						{
 							key: Liferay.Language.get('name'),
@@ -509,7 +510,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					Liferay.Language.get(
 						'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 					),
-					[Liferay.Util.formatStorage(maxFileSize)]
+					[formatStorage(maxFileSize)]
 				);
 			}
 		}

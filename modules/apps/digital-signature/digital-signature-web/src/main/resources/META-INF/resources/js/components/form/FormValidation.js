@@ -12,6 +12,8 @@
  * details.
  */
 
+import {sub} from 'frontend-js-web';
+
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const required = (value) => {
@@ -34,7 +36,7 @@ const withInvalidExtensions = (fileEntries, availableExtensions) => {
 
 const maxLength = (value, max) => {
 	if (value.length > max) {
-		return Liferay.Util.sub(
+		return sub(
 			Liferay.Language.get('this-field-exceeded-x-characters'),
 			max
 		);

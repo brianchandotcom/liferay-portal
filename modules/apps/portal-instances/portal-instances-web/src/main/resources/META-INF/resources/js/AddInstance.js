@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fetch, openToast} from 'frontend-js-web';
+import {fetch, getOpener, openToast} from 'frontend-js-web';
 
 export default function ({namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
@@ -35,7 +35,7 @@ export default function ({namespace}) {
 		})
 			.then((response) => response.json())
 			.then((response) => {
-				const opener = Liferay.Util.getOpener();
+				const opener = getOpener();
 
 				const alertContainer = document.querySelector(
 					'.add-instance-alert-container'

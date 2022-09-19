@@ -12,6 +12,8 @@
  * details.
  */
 
+import escapeHTML from './../util/html_util';
+
 const DEFAULT_APPEND_CONTENT = '&nbsp;&nbsp;';
 
 class AutoSize {
@@ -74,8 +76,7 @@ class AutoSize {
 		}
 
 		this.template.innerHTML =
-			Liferay.Util.escapeHTML(inputElement.value) +
-			DEFAULT_APPEND_CONTENT;
+			escapeHTML(inputElement.value) + DEFAULT_APPEND_CONTENT;
 
 		inputElement.style.height = `${
 			this.template.scrollHeight + this.paddingHeight < this.minHeight

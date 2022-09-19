@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openToast, sub} from 'frontend-js-web';
+import {openToast, postForm, sub} from 'frontend-js-web';
 
 const isElementInnerSelector = (element, ...selectors) =>
 	!selectors.some((selector) => element.closest(selector));
@@ -100,7 +100,7 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 
 		clearNameInputIfNeeded(defaultLanguageId);
 
-		Liferay.Util.postForm(form, {
+		postForm(form, {
 			data: {
 				dataDefinition: JSON.stringify({
 					...dataDefinition.serialize(),

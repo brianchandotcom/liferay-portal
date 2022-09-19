@@ -12,7 +12,7 @@
  * details.
  */
 
-import {STATUS_CODE, sub} from 'frontend-js-web';
+import {STATUS_CODE, formatStorage, sub} from 'frontend-js-web';
 
 export default function getUploadErrorMessage(error, maxFileSize) {
 	let message = Liferay.Language.get(
@@ -57,7 +57,7 @@ export default function getUploadErrorMessage(error, maxFileSize) {
 					Liferay.Language.get(
 						'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 					),
-					[Liferay.Util.formatStorage(maxFileSize)]
+					[formatStorage(maxFileSize)]
 				);
 
 				break;
@@ -69,7 +69,7 @@ export default function getUploadErrorMessage(error, maxFileSize) {
 					Liferay.Language.get(
 						'request-is-larger-than-x-and-could-not-be-processed'
 					),
-					[Liferay.Util.formatStorage(maxUploadRequestSize)]
+					[formatStorage(maxUploadRequestSize)]
 				);
 
 				break;

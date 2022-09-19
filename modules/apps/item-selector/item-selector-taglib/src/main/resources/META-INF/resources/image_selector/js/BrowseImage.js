@@ -13,7 +13,7 @@
  */
 
 import classNames from 'classnames';
-import {sub} from 'frontend-js-web';
+import {formatStorage, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -70,9 +70,7 @@ const BrowseImage = ({
 						dangerouslySetInnerHTML={{
 							__html: sub(
 								Liferay.Language.get('maximum-size-x'),
-								Liferay.Util.formatStorage(
-									parseInt(maxFileSize, 10)
-								)
+								formatStorage(parseInt(maxFileSize, 10))
 							),
 						}}
 					></span>

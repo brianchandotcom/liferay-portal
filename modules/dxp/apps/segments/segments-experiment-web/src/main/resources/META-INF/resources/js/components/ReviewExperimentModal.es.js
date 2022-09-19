@@ -12,6 +12,7 @@
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {
 	useCallback,
@@ -286,10 +287,10 @@ function _variantsToSplitVariantsMap(variants) {
 
 function _getDaysMessage(days) {
 	if (days === 1) {
-		return Liferay.Util.sub(Liferay.Language.get('x-day'), days);
+		return sub(Liferay.Language.get('x-day'), days);
 	}
 	else {
-		return Liferay.Util.sub(Liferay.Language.get('x-days'), days);
+		return sub(Liferay.Language.get('x-days'), days);
 	}
 }
 

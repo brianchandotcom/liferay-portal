@@ -17,6 +17,7 @@ import {
 	navigate,
 	openConfirmModal,
 	openSelectionModal,
+	setFormValues,
 } from 'frontend-js-web';
 
 export default function ({
@@ -56,7 +57,7 @@ export default function ({
 					const form = document.getElementById(namespaceId('fm1'));
 
 					if (form) {
-						Liferay.Util.setFormValues(form, {
+						setFormValues(form, {
 							ddmTemplateId: newDDMTemplateId,
 							ddmTemplateKey:
 								(newDDMTemplate &&

@@ -12,6 +12,8 @@
  * details.
  */
 
+import {openSelectionModal} from 'frontend-js-web';
+
 const wrapper = fragmentElement;
 
 const fileInput = document.getElementById(`${fragmentNamespace}-file-upload`);
@@ -41,7 +43,7 @@ function onRemoveFile() {
 function onSelectFile(event) {
 	event.preventDefault();
 
-	Liferay.Util.openSelectionModal({
+	openSelectionModal({
 		onSelect(selectedItem) {
 			const {fileEntryId, title} = JSON.parse(selectedItem.value);
 

@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import {fetch, navigate, openToast} from 'frontend-js-web';
+import {fetch, navigate, openToast, setSessionValue} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
@@ -37,44 +37,43 @@ function PageTypeSelector({
 	const handleSelect = (type) => {
 		setPageTypeDropdownActive(false);
 
-		Liferay.Util.Session.set(
-			`${namespace}PAGE_TYPE_SELECTED_OPTION`,
-			type
-		).then(() => {
-			Liferay.Portlet.destroy(`#p_p_id${namespace}`, true);
+		setSessionValue(`${namespace}PAGE_TYPE_SELECTED_OPTION`, type).then(
+			() => {
+				Liferay.Portlet.destroy(`#p_p_id${namespace}`, true);
 
-			fetch(pagesTreeURL)
-				.then((response) => {
-					if (!response.ok) {
-						throw new Error();
-					}
+				fetch(pagesTreeURL)
+					.then((response) => {
+						if (!response.ok) {
+							throw new Error();
+						}
 
-					return response.text();
-				})
-				.then((productMenuContent) => {
-					const sidebar = document.querySelector(
-						'.lfr-product-menu-sidebar .sidebar-body .pages-tree'
-					);
+						return response.text();
+					})
+					.then((productMenuContent) => {
+						const sidebar = document.querySelector(
+							'.lfr-product-menu-sidebar .sidebar-body .pages-tree'
+						);
 
-					sidebar.innerHTML = '';
+						sidebar.innerHTML = '';
 
-					const range = document.createRange();
-					range.selectNode(sidebar);
+						const range = document.createRange();
+						range.selectNode(sidebar);
 
-					sidebar.appendChild(
-						range.createContextualFragment(productMenuContent)
-					);
-				})
-				.catch(() => {
-					openToast({
-						message: Liferay.Language.get(
-							'an-unexpected-error-occurred'
-						),
-						title: Liferay.Language.get('error'),
-						type: 'danger',
+						sidebar.appendChild(
+							range.createContextualFragment(productMenuContent)
+						);
+					})
+					.catch(() => {
+						openToast({
+							message: Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+							title: Liferay.Language.get('error'),
+							type: 'danger',
+						});
 					});
-				});
-		});
+			}
+		);
 	};
 
 	const handleOnAddCollectionPageClick = useCallback(() => {

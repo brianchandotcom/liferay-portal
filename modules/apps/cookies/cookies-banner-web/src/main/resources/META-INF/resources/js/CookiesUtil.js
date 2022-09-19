@@ -12,6 +12,12 @@
  * details.
  */
 
+import {
+	COOKIE_TYPES,
+	getCookie as getCookieUtil,
+	setCookie as setCookieUtil,
+} from 'frontend-js-web';
+
 export const userConfigCookieName = 'USER_CONSENT_CONFIGURED';
 
 export function acceptAllCookies(
@@ -41,11 +47,11 @@ export function declineAllCookies(
 }
 
 export function getCookie(name) {
-	return Liferay.Util.Cookie.get(name, Liferay.Util.Cookie.TYPES.NECESSARY);
+	return getCookieUtil(name, COOKIE_TYPES.NECESSARY);
 }
 
 export function setCookie(name, value) {
-	Liferay.Util.Cookie.set(name, value, Liferay.Util.Cookie.TYPES.NECESSARY);
+	setCookieUtil(name, value, COOKIE_TYPES.NECESSARY);
 }
 
 export function setUserConfigCookie() {

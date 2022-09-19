@@ -13,6 +13,7 @@
  */
 
 import classNames from 'classnames';
+import {getCropRegion} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -124,7 +125,7 @@ const ImageSelectorImage = ({
 
 		setIsDragging(false);
 
-		const cropRegion = Liferay.Util.getCropRegion(imageRef.current, {
+		const cropRegion = getCropRegion(imageRef.current, {
 			height: containerRef.current.offsetHeight,
 			x: Math.abs(imagePosition.x),
 			y: Math.abs(imagePosition.y),

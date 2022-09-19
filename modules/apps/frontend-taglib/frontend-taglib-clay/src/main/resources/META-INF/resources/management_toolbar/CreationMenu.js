@@ -16,7 +16,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {sub} from 'frontend-js-web';
+import {sub, unescapeHTML} from 'frontend-js-web';
 import React, {useContext, useRef, useState} from 'react';
 
 import getDataAttributes from '../get_data_attributes';
@@ -115,7 +115,7 @@ const CreationMenu = ({
 				symbolLeft={item.icon}
 				{...getDataAttributes(item.data)}
 			>
-				{Liferay.Util.unescapeHTML(item.label)}
+				{unescapeHTML(item.label)}
 			</ClayDropDown.Item>
 		);
 	};

@@ -14,6 +14,8 @@
 
 /* eslint-disable @liferay/no-get-data-attribute */
 
+import {addParams} from 'frontend-js-web';
+
 CKEDITOR.dialog.add('audio', (editor) => {
 	const TPL_SCRIPT =
 		'boundingBox: "#" + mediaId,' + 'oggUrl: "{oggUrl}",' + 'url: "{url}"';
@@ -33,14 +35,11 @@ CKEDITOR.dialog.add('audio', (editor) => {
 		if (id === 'url') {
 			audioNode.setAttribute('data-document-url', value);
 
-			audioUrl = Liferay.Util.addParams('audioPreview=1&type=mp3', value);
+			audioUrl = addParams('audioPreview=1&type=mp3', value);
 
 			audioNode.setAttribute('data-audio-url', audioUrl);
 
-			audioOggUrl = Liferay.Util.addParams(
-				'audioPreview=1&type=ogg',
-				value
-			);
+			audioOggUrl = addParams('audioPreview=1&type=ogg', value);
 
 			audioNode.setAttribute('data-audio-ogg-url', audioOggUrl);
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-const sub = Liferay.Util.sub;
+import {sub} from 'frontend-js-web';
 
 const DEFAULT_BALLOON_EDITOR_CONFIG = {
 	extraAllowedContent: '*',

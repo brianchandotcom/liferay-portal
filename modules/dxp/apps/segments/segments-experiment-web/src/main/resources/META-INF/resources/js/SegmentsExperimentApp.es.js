@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import {setSessionValue} from 'frontend-js-web';
 import React, {useEffect} from 'react';
 
 import ConnectToAC from './components/ConnectToAC.es';
@@ -44,14 +45,14 @@ export default function ({context, props}) {
 			);
 
 			sidenavInstance.on('open.lexicon.sidenav', () => {
-				Liferay.Util.Session.set(
+				setSessionValue(
 					'com.liferay.segments.experiment.web_panelState',
 					'open'
 				);
 			});
 
 			sidenavInstance.on('closed.lexicon.sidenav', () => {
-				Liferay.Util.Session.set(
+				setSessionValue(
 					'com.liferay.segments.experiment.web_panelState',
 					'closed'
 				);

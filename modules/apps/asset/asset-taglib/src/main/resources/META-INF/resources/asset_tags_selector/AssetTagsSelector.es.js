@@ -17,7 +17,7 @@ import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
 import {usePrevious} from '@liferay/frontend-js-react-web';
-import {openSelectionModal} from 'frontend-js-web';
+import {objectToFormData, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
 
@@ -39,7 +39,7 @@ function AssetTagsSelector({
 }) {
 	const {refetch, resource} = useResource({
 		fetchOptions: {
-			'body': Liferay.Util.objectToFormData({
+			'body': objectToFormData({
 				cmd: JSON.stringify({
 					'/assettag/search': {
 						end: 20,

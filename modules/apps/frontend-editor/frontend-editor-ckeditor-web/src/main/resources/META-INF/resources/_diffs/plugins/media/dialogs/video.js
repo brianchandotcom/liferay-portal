@@ -14,6 +14,8 @@
 
 /* eslint-disable @liferay/no-get-data-attribute */
 
+import {addParams} from 'frontend-js-web';
+
 CKEDITOR.dialog.add('video', (editor) => {
 	const TPL_SCRIPT =
 		'boundingBox: "#" + mediaId,' +
@@ -41,18 +43,15 @@ CKEDITOR.dialog.add('video', (editor) => {
 		if (id === 'poster') {
 			videoNode.setAttribute('data-document-url', value);
 
-			videoUrl = Liferay.Util.addParams('videoPreview=1&type=mp4', value);
+			videoUrl = addParams('videoPreview=1&type=mp4', value);
 
 			videoNode.setAttribute('data-video-url', videoUrl);
 
-			videoOgvUrl = Liferay.Util.addParams(
-				'videoPreview=1&type=ogv',
-				value
-			);
+			videoOgvUrl = addParams('videoPreview=1&type=ogv', value);
 
 			videoNode.setAttribute('data-video-ogv-url', videoOgvUrl);
 
-			value = Liferay.Util.addParams('videoThumbnail=1', value);
+			value = addParams('videoThumbnail=1', value);
 
 			videoNode.setAttribute('data-poster', value);
 

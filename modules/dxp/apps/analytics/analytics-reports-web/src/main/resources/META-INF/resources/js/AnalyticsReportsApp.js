@@ -10,6 +10,7 @@
  */
 
 import {useEventListener} from '@liferay/frontend-js-react-web';
+import {getSessionValue, setSessionValue} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -22,9 +23,7 @@ const setInitialOpenPanelState = async (stateCallback) => {
 	const ANALYTICS_REPORTS_PANEL_ID =
 		'com.liferay.analytics.reports.web_panelState';
 
-	const _panelState = await Liferay.Util.Session.get(
-		ANALYTICS_REPORTS_PANEL_ID
-	);
+	const _panelState = await getSessionValue(ANALYTICS_REPORTS_PANEL_ID);
 
 	stateCallback(_panelState === ANALYTICS_REPORTS_OPEN_PANEL_VALUE);
 };
@@ -59,14 +58,14 @@ export default function AnalyticsReportsApp({context, portletNamespace}) {
 			);
 
 			sidenavInstance.on('open.lexicon.sidenav', () => {
-				Liferay.Util.Session.set(
+				setSessionValue(
 					'com.liferay.analytics.reports.web_panelState',
 					'open'
 				);
 			});
 
 			sidenavInstance.on('closed.lexicon.sidenav', () => {
-				Liferay.Util.Session.set(
+				setSessionValue(
 					'com.liferay.analytics.reports.web_panelState',
 					'closed'
 				);

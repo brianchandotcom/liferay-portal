@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal, selectFolder} from 'frontend-js-web';
 
 export default function ({inputName, namespace, selectFolderURL}) {
 	const handleSelectFolderButtonClick = () =>
@@ -28,7 +28,7 @@ export default function ({inputName, namespace, selectFolderURL}) {
 						nameValue: selectedItem.folderName,
 					};
 
-					Liferay.Util.selectFolder(folderData, namespace);
+					selectFolder(folderData, namespace);
 				}
 			},
 			selectEventName: `${namespace}selectFolder`,

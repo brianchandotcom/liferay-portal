@@ -12,7 +12,13 @@
  * details.
  */
 
-import {fetch, openConfirmModal, openModal, sub} from 'frontend-js-web';
+import {
+	escapeHTML,
+	fetch,
+	openConfirmModal,
+	openModal,
+	sub,
+} from 'frontend-js-web';
 
 const RECENTLY_REMOVED_ATTACHMENTS = {
 	multiple: Liferay.Language.get('x-recently-removed-attachments'),
@@ -275,7 +281,7 @@ class MBPortlet {
 					const id = index;
 					const value = item.value;
 
-					return `<input id="${namespace}selectedFileName${id}" name="${namespace}selectedFileName" type="hidden" value="${Liferay.Util.escapeHTML(
+					return `<input id="${namespace}selectedFileName${id}" name="${namespace}selectedFileName" type="hidden" value="${escapeHTML(
 						value
 					)}" />`;
 				})

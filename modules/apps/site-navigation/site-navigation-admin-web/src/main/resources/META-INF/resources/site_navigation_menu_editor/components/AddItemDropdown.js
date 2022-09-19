@@ -13,7 +13,12 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
-import {fetch, objectToFormData, openSelectionModal} from 'frontend-js-web';
+import {
+	fetch,
+	objectToFormData,
+	openModal,
+	openSelectionModal,
+} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -143,7 +148,7 @@ export function AddItemDropDown({trigger}) {
 									});
 								}
 								else {
-									Liferay.Util.openModal({
+									openModal({
 										height: useSmallerModal
 											? '60vh'
 											: undefined,

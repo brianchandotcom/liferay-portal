@@ -15,7 +15,12 @@
 import ClayIcon from '@clayui/icon';
 import {State} from '@liferay/frontend-js-state-web';
 import classNames from 'classnames';
-import {STATUS_CODE, openSelectionModal, sub} from 'frontend-js-web';
+import {
+	STATUS_CODE,
+	formatStorage,
+	openSelectionModal,
+	sub,
+} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -107,7 +112,7 @@ const ImageSelector = ({
 				Liferay.Language.get(
 					'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 				),
-				[Liferay.Util.formatStorage(parseInt(maxFileSize, 10))]
+				[formatStorage(parseInt(maxFileSize, 10))]
 			);
 		}
 		else if (errorType === STATUS_CODE.SC_UPLOAD_REQUEST_SIZE_EXCEPTION) {
@@ -118,7 +123,7 @@ const ImageSelector = ({
 				Liferay.Language.get(
 					'request-is-larger-than-x-and-could-not-be-processed'
 				),
-				[Liferay.Util.formatStorage(maxUploadRequestSize)]
+				[formatStorage(maxUploadRequestSize)]
 			);
 		}
 
@@ -209,9 +214,9 @@ const ImageSelector = ({
 
 		setProgressValue(Math.ceil(percentLoaded));
 
-		const bytesLoaded = Liferay.Util.formatStorage(event.bytesLoaded);
+		const bytesLoaded = formatStorage(event.bytesLoaded);
 
-		const bytesTotal = Liferay.Util.formatStorage(event.bytesTotal);
+		const bytesTotal = formatStorage(event.bytesTotal);
 
 		const bytesLoadedSpaceIndex = bytesLoaded.indexOf(STR_SPACE);
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {getOpener} from 'frontend-js-web';
+import {formatStorage, getOpener} from 'frontend-js-web';
 
 function getUploadFileMetadata(file) {
 	return {
@@ -25,7 +25,7 @@ function getUploadFileMetadata(file) {
 					},
 					{
 						key: Liferay.Language.get('size'),
-						value: Liferay.Util.formatStorage(file.size),
+						value: formatStorage(file.size),
 					},
 					{
 						key: Liferay.Language.get('name'),

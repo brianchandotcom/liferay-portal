@@ -24,10 +24,10 @@ if (Validator.isNotNull(script)) {
 		DDMForm ddmForm = DDMUtil.getDDMForm(script);
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			String dataType = ddmFormField.getType();
-
-			if (dataType.equals("ddm-documentlibrary")) {
+			if (StringUtil.equals(ddmFormField.getType(), "ddm-documentlibrary")) {
 				hasDDMDocumentLibraryDataType = true;
+
+				break;
 			}
 		}
 

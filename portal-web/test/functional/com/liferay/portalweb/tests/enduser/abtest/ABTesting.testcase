@@ -97,7 +97,9 @@ definition {
 
 			Click.clickNoMouseOver(locator1 = "ABTest#PADLOCK_ICON");
 
-			AssertElementPresent(locator1 = "ABTest#EXPERIENCE_LOCKED_MESSAGE");
+			AssertVisible(
+				key_content = "Edit is not allowed for this experience because there is an A/B test in progress.",
+				locator1 = "Tooltip#POPOVER_BODY_CONTENT");
 		}
 	}
 

@@ -61,9 +61,9 @@ definition {
 		var fileExists = FileUtil.exists("${dependencyFilePath}");
 
 		if ("${fileExists}" == "false") {
-			var testBaseEndsWith = StringUtil.endsWith("${testBaseDir}", "/");
+			var testBaseDirEndsWith = StringUtil.endsWith("${testBaseDir}", "/");
 
-			if ("${testBaseEndsWith}" == "false") {
+			if ("${testBaseDirEndsWith}" == "false") {
 				var testBaseDir = "${testBaseDir}/";
 			}
 

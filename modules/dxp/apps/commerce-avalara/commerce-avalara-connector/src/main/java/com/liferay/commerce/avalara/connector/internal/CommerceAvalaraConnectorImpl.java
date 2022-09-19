@@ -15,24 +15,89 @@
 package com.liferay.commerce.avalara.connector.internal;
 
 import com.liferay.commerce.avalara.connector.CommerceAvalaraConnector;
+import com.liferay.commerce.avalara.connector.configuration.CommerceAvalaraConnectorConfiguration;
 import com.liferay.commerce.avalara.connector.constants.CommerceAvalaraConstants;
 import com.liferay.commerce.avalara.connector.exception.CommerceAvalaraConnectionException;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Base64;
 
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import net.avalara.avatax.rest.client.AvaTaxClient;
+import net.avalara.avatax.rest.client.FetchResult;
+import net.avalara.avatax.rest.client.models.CompanyModel;
 import net.avalara.avatax.rest.client.models.PingResultModel;
+import net.avalara.avatax.rest.client.models.TaxCodeModel;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Calvin Keum
+ * @author Katie Nesterovich
+ * @author Riccardo Alberti
  */
 @Component(
 	enabled = false, immediate = true, service = CommerceAvalaraConnector.class
 )
 public class CommerceAvalaraConnectorImpl implements CommerceAvalaraConnector {
+
+	@Override
+	public Map<String, String> getCompanyCodes() throws Exception {
+		AvaTaxClient avaTaxClient = _getAvaTaxClient();
+
+		FetchResult<CompanyModel> companyModelFetchResult =
+			avaTaxClient.queryCompanies(null, null, 0, 0, null);
+
+		Map<String, String> companyNamesWithCodes = new HashMap<>();
+
+		for (CompanyModel companyModel : companyModelFetchResult.getValue()) {
+			companyNamesWithCodes.put(
+				companyModel.getName(), companyModel.getCompanyCode());
+		}
+
+		return companyNamesWithCodes;
+	}
+
+	@Override
+	public List<TaxCodeModel> getTaxCodes() throws Exception {
+		AvaTaxClient avaTaxClient = _getAvaTaxClient();
+
+		String expiredTaxCodeFilter = "isActive eq true";
+
+		FetchResult<TaxCodeModel> taxCodeModelFetchResult =
+			avaTaxClient.listTaxCodes(expiredTaxCodeFilter, 0, 0, null);
+
+		return taxCodeModelFetchResult.getValue();
+	}
+
+	public String getTaxRateByZipCode() throws Exception {
+		AvaTaxClient avaTaxClient = _getAvaTaxClient();
+
+		Date date = new Date() {
+
+			@Override
+			public String toString() {
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+					"yyyy-MM-dd");
+
+				return simpleDateFormat.format(this);
+			}
+
+		};
+
+		return avaTaxClient.downloadTaxRatesByZipCode(date, null);
+	}
 
 	@Override
 	public void verifyConnection(
@@ -54,6 +119,21 @@ public class CommerceAvalaraConnectorImpl implements CommerceAvalaraConnector {
 		}
 	}
 
+	private AvaTaxClient _getAvaTaxClient() throws PortalException {
+		CommerceAvalaraConnectorConfiguration
+			commerceAvalaraConnectorConfiguration =
+				_configurationProvider.getConfiguration(
+					CommerceAvalaraConnectorConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						CompanyThreadLocal.getCompanyId(),
+						CommerceAvalaraConnectorConfiguration.class.getName()));
+
+		return _getAvaTaxClient(
+			commerceAvalaraConnectorConfiguration.accountNumber(),
+			commerceAvalaraConnectorConfiguration.licenseKey(),
+			commerceAvalaraConnectorConfiguration.serviceURL());
+	}
+
 	private AvaTaxClient _getAvaTaxClient(
 		String accountNumber, String licenseKey, String serviceURL) {
 
@@ -71,5 +151,8 @@ public class CommerceAvalaraConnectorImpl implements CommerceAvalaraConnector {
 
 		return avaTaxClient.withSecurity(encodedSecurityHeader);
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

@@ -189,7 +189,7 @@ definition {
 		}
 
 		task ("Navigate to the homepage and assert that the URL displays the homepage") {
-			Navigator.openSpecificURL(url = "http://localhost:8080/web/${testSiteURL}");
+			Navigator.openSpecificURL(url = "${baseURL}/web/${testSiteURL}");
 
 			AssertElementPresent(locator1 = "CP2LiferayContact#FIND_A_PROJECT");
 		}

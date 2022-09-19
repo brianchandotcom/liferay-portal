@@ -4583,21 +4583,6 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			locator1 = "PageEditor#EXPERIENCE_ACTIVE_LABEL");
 	}
 
-	macro viewExperiencesNameOrder {
-		var index = "0";
-
-		PageEditor.openExperienceMenu();
-
-		for (var experienceName : list "${experienceName}") {
-			var index = ${index} + 1;
-
-			AssertElementPresent(
-				key_experienceName = "${experienceName}",
-				key_index = "${index}",
-				locator1 = "PageEditor#EXPERIENCE_ORDER_NAMES");
-		}
-	}
-
 	macro viewExperienceValues {
 		PageEditor.openExperienceMenu();
 

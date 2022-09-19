@@ -1,57 +1,43 @@
 definition {
 
-	macro _assertResponseIncludeCorrectDetailsOfContentURL {
-		if (isSet(responseToParseFromSiteId)) {
-			var responseToParse = "${responseToParseFromSiteId}";
+	macro _assertResponseIncludeCorrectElement {
+		Variables.assertDefined(parameterList = "${element},${expectedElement}");
 
-			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.items..navigationMenuItems..contentURL");
+		if (isSet(responseFromSite)) {
+			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.items..navigationMenuItems..${element}");
 		}
 		else {
-			var responseToParse = "${responseToParseFromNavigationMenuId}";
-
-			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.navigationMenuItems..contentURL");
+			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.navigationMenuItems..${element}");
 		}
 
 		TestUtils.assertEquals(
 			actual = "${actual}",
-			expected = "${expectedURL}");
+			expected = "${expectedElement}");
 	}
 
-	macro _assertResponseIncludeCorrectDetailsOfType {
-		if (isSet(responseToParseFromSiteId)) {
-			var responseToParse = "${responseToParseFromSiteId}";
+	macro assertResponseHasCorrectInformations {
+		Variables.assertDefined(parameterList = "${expectedURL},${expectedType},${expectedUseCustomName},${responseToParse}");
 
-			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.items..navigationMenuItems..type");
-		}
-		else {
-			var responseToParse = "${responseToParseFromNavigationMenuId}";
+		NavigationMenuAPI._assertResponseIncludeCorrectElement(
+			element = "contentURL",
+			expectedElement = "${expectedURL}",
+			responseFromSite = "${responseFromSite}",
+			responseToParse = "${responseToParse}");
 
-			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.navigationMenuItems..type");
-		}
+		NavigationMenuAPI._assertResponseIncludeCorrectElement(
+			element = "type",
+			expectedElement = "${expectedType}",
+			responseFromSite = "${responseFromSite}",
+			responseToParse = "${responseToParse}");
 
-		TestUtils.assertEquals(
-			actual = "${actual}",
-			expected = "${expectedType}");
+		NavigationMenuAPI._assertResponseIncludeCorrectElement(
+			element = "useCustomName",
+			expectedElement = "${expectedUseCustomName}",
+			responseFromSite = "${responseFromSite}",
+			responseToParse = "${responseToParse}");
 	}
 
-	macro _assertResponseIncludeCorrectDetailsOfUseCustomName {
-		if (isSet(responseToParseFromSiteId)) {
-			var responseToParse = "${responseToParseFromSiteId}";
-
-			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.items..navigationMenuItems..useCustomName");
-		}
-		else {
-			var responseToParse = "${responseToParseFromNavigationMenuId}";
-
-			var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.navigationMenuItems..useCustomName");
-		}
-
-		TestUtils.assertEquals(
-			actual = "${actual}",
-			expected = "${expectedUseCustomName}");
-	}
-
-	macro _curlNavigationMenu {
+	macro getNavigationMenu {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(navigationMenuId)) {
@@ -66,56 +52,6 @@ definition {
 			-u test@liferay.com:test \
 			-H accept: application/json
 		''';
-
-		return "${curl}";
-	}
-
-	macro assertResponseHasCorrectDetailsFromNavigationMenuId {
-		Variables.assertDefined(parameterList = "${expectedURL},${expectedType},${expectedUseCustomName},${responseToParse}");
-
-		NavigationMenuAPI._assertResponseIncludeCorrectDetailsOfContentURL(
-			expectedURL = "${expectedURL}",
-			responseToParseFromNavigationMenuId = "${responseToParse}");
-
-		NavigationMenuAPI._assertResponseIncludeCorrectDetailsOfType(
-			expectedType = "${expectedType}",
-			responseToParseFromNavigationMenuId = "${responseToParse}");
-
-		NavigationMenuAPI._assertResponseIncludeCorrectDetailsOfUseCustomName(
-			expectedUseCustomName = "${expectedUseCustomName}",
-			responseToParseFromNavigationMenuId = "${responseToParse}");
-	}
-
-	macro assertResponseHasCorrectDetailsFromSiteId {
-		Variables.assertDefined(parameterList = "${expectedURL},${expectedType},${expectedUseCustomName},${responseToParse}");
-
-		NavigationMenuAPI._assertResponseIncludeCorrectDetailsOfContentURL(
-			expectedURL = "${expectedURL}",
-			responseToParseFromSiteId = "${responseToParse}");
-
-		NavigationMenuAPI._assertResponseIncludeCorrectDetailsOfType(
-			expectedType = "${expectedType}",
-			responseToParseFromSiteId = "${responseToParse}");
-
-		NavigationMenuAPI._assertResponseIncludeCorrectDetailsOfUseCustomName(
-			expectedUseCustomName = "${expectedUseCustomName}",
-			responseToParseFromSiteId = "${responseToParse}");
-	}
-
-	macro getNavigationMenuByNavigationMenuId {
-		Variables.assertDefined(parameterList = "${navigationMenuId}");
-
-		var curl = NavigationMenuAPI._curlNavigationMenu(navigationMenuId = "${navigationMenuId}");
-
-		var response = JSONCurlUtil.get("${curl}");
-
-		return "${response}";
-	}
-
-	macro getNavigationMenuBySiteId {
-		Variables.assertDefined(parameterList = "${siteId}");
-
-		var curl = NavigationMenuAPI._curlNavigationMenu(siteId = "${siteId}");
 
 		var response = JSONCurlUtil.get("${curl}");
 

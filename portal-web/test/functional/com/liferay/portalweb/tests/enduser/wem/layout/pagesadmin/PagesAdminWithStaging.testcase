@@ -591,6 +591,8 @@ definition {
 
 			Navigator.closeWindow();
 
+			ProductMenuHelper.closeProductMenu();
+
 			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();

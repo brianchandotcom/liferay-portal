@@ -59,11 +59,11 @@ public class LayoutUtilityPageEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
 		attributes.put("plid", getPlid());
-		attributes.put("type", getType());
 		attributes.put(
 			"defaultLayoutUtilityPageEntry", isDefaultLayoutUtilityPageEntry());
+		attributes.put("name", getName());
+		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -139,22 +139,10 @@ public class LayoutUtilityPageEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
 		Long plid = (Long)attributes.get("plid");
 
 		if (plid != null) {
 			setPlid(plid);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
 		}
 
 		Boolean defaultLayoutUtilityPageEntry = (Boolean)attributes.get(
@@ -162,6 +150,18 @@ public class LayoutUtilityPageEntryWrapper
 
 		if (defaultLayoutUtilityPageEntry != null) {
 			setDefaultLayoutUtilityPageEntry(defaultLayoutUtilityPageEntry);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");

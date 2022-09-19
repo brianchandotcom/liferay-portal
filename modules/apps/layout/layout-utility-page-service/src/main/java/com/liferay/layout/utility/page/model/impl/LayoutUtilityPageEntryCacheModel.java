@@ -102,14 +102,14 @@ public class LayoutUtilityPageEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", plid=");
 		sb.append(plid);
-		sb.append(", type=");
-		sb.append(type);
 		sb.append(", defaultLayoutUtilityPageEntry=");
 		sb.append(defaultLayoutUtilityPageEntry);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -167,6 +167,10 @@ public class LayoutUtilityPageEntryCacheModel
 			layoutUtilityPageEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		layoutUtilityPageEntryImpl.setPlid(plid);
+		layoutUtilityPageEntryImpl.setDefaultLayoutUtilityPageEntry(
+			defaultLayoutUtilityPageEntry);
+
 		if (name == null) {
 			layoutUtilityPageEntryImpl.setName("");
 		}
@@ -174,10 +178,7 @@ public class LayoutUtilityPageEntryCacheModel
 			layoutUtilityPageEntryImpl.setName(name);
 		}
 
-		layoutUtilityPageEntryImpl.setPlid(plid);
 		layoutUtilityPageEntryImpl.setType(type);
-		layoutUtilityPageEntryImpl.setDefaultLayoutUtilityPageEntry(
-			defaultLayoutUtilityPageEntry);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			layoutUtilityPageEntryImpl.setLastPublishDate(null);
@@ -210,13 +211,13 @@ public class LayoutUtilityPageEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		name = objectInput.readUTF();
 
 		plid = objectInput.readLong();
 
-		type = objectInput.readInt();
-
 		defaultLayoutUtilityPageEntry = objectInput.readBoolean();
+		name = objectInput.readUTF();
+
+		type = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -258,6 +259,10 @@ public class LayoutUtilityPageEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(plid);
+
+		objectOutput.writeBoolean(defaultLayoutUtilityPageEntry);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -265,11 +270,7 @@ public class LayoutUtilityPageEntryCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		objectOutput.writeLong(plid);
-
 		objectOutput.writeInt(type);
-
-		objectOutput.writeBoolean(defaultLayoutUtilityPageEntry);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -284,10 +285,10 @@ public class LayoutUtilityPageEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String name;
 	public long plid;
-	public int type;
 	public boolean defaultLayoutUtilityPageEntry;
+	public String name;
+	public int type;
 	public long lastPublishDate;
 
 }

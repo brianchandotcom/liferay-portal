@@ -62,13 +62,13 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 	}
 
 	public static LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long userId, long groupId,
-			String name, long plid, int type,
+			String externalReferenceCode, long userId, long groupId, long plid,
+			String name, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addLayoutUtilityPageEntry(
-			externalReferenceCode, userId, groupId, name, plid, type,
+			externalReferenceCode, userId, groupId, plid, name, type,
 			serviceContext);
 	}
 
@@ -479,12 +479,12 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 	}
 
 	public static LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, String name, long plid, int type,
+			long layoutUtilityPageEntryId, long plid, String name, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntryId, name, plid, type, serviceContext);
+			layoutUtilityPageEntryId, plid, name, type, serviceContext);
 	}
 
 	public static LayoutUtilityPageEntryLocalService getService() {

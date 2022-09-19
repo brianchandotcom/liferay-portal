@@ -79,9 +79,9 @@ public class LayoutUtilityPageEntryModelImpl
 		{"LayoutUtilityPageEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
-		{"plid", Types.BIGINT}, {"type_", Types.INTEGER},
+		{"modifiedDate", Types.TIMESTAMP}, {"plid", Types.BIGINT},
 		{"defaultLayoutUtilityPageEntry", Types.BOOLEAN},
+		{"name", Types.VARCHAR}, {"type_", Types.INTEGER},
 		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
@@ -100,15 +100,15 @@ public class LayoutUtilityPageEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("defaultLayoutUtilityPageEntry", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutUtilityPageEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,LayoutUtilityPageEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,plid LONG,type_ INTEGER,defaultLayoutUtilityPageEntry BOOLEAN,lastPublishDate DATE null,primary key (LayoutUtilityPageEntryId, ctCollectionId))";
+		"create table LayoutUtilityPageEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,LayoutUtilityPageEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,defaultLayoutUtilityPageEntry BOOLEAN,name VARCHAR(75) null,type_ INTEGER,lastPublishDate DATE null,primary key (LayoutUtilityPageEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutUtilityPageEntry";
@@ -350,21 +350,11 @@ public class LayoutUtilityPageEntryModelImpl
 			"modifiedDate",
 			(BiConsumer<LayoutUtilityPageEntry, Date>)
 				LayoutUtilityPageEntry::setModifiedDate);
-		attributeGetterFunctions.put("name", LayoutUtilityPageEntry::getName);
-		attributeSetterBiConsumers.put(
-			"name",
-			(BiConsumer<LayoutUtilityPageEntry, String>)
-				LayoutUtilityPageEntry::setName);
 		attributeGetterFunctions.put("plid", LayoutUtilityPageEntry::getPlid);
 		attributeSetterBiConsumers.put(
 			"plid",
 			(BiConsumer<LayoutUtilityPageEntry, Long>)
 				LayoutUtilityPageEntry::setPlid);
-		attributeGetterFunctions.put("type", LayoutUtilityPageEntry::getType);
-		attributeSetterBiConsumers.put(
-			"type",
-			(BiConsumer<LayoutUtilityPageEntry, Integer>)
-				LayoutUtilityPageEntry::setType);
 		attributeGetterFunctions.put(
 			"defaultLayoutUtilityPageEntry",
 			LayoutUtilityPageEntry::getDefaultLayoutUtilityPageEntry);
@@ -372,6 +362,16 @@ public class LayoutUtilityPageEntryModelImpl
 			"defaultLayoutUtilityPageEntry",
 			(BiConsumer<LayoutUtilityPageEntry, Boolean>)
 				LayoutUtilityPageEntry::setDefaultLayoutUtilityPageEntry);
+		attributeGetterFunctions.put("name", LayoutUtilityPageEntry::getName);
+		attributeSetterBiConsumers.put(
+			"name",
+			(BiConsumer<LayoutUtilityPageEntry, String>)
+				LayoutUtilityPageEntry::setName);
+		attributeGetterFunctions.put("type", LayoutUtilityPageEntry::getType);
+		attributeSetterBiConsumers.put(
+			"type",
+			(BiConsumer<LayoutUtilityPageEntry, Integer>)
+				LayoutUtilityPageEntry::setType);
 		attributeGetterFunctions.put(
 			"lastPublishDate", LayoutUtilityPageEntry::getLastPublishDate);
 		attributeSetterBiConsumers.put(
@@ -626,26 +626,6 @@ public class LayoutUtilityPageEntryModelImpl
 
 	@JSON
 	@Override
-	public String getName() {
-		if (_name == null) {
-			return "";
-		}
-		else {
-			return _name;
-		}
-	}
-
-	@Override
-	public void setName(String name) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_name = name;
-	}
-
-	@JSON
-	@Override
 	public long getPlid() {
 		return _plid;
 	}
@@ -657,31 +637,6 @@ public class LayoutUtilityPageEntryModelImpl
 		}
 
 		_plid = plid;
-	}
-
-	@JSON
-	@Override
-	public int getType() {
-		return _type;
-	}
-
-	@Override
-	public void setType(int type) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_type = type;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public int getOriginalType() {
-		return GetterUtil.getInteger(
-			this.<Integer>getColumnOriginalValue("type_"));
 	}
 
 	@JSON
@@ -716,6 +671,51 @@ public class LayoutUtilityPageEntryModelImpl
 		return GetterUtil.getBoolean(
 			this.<Boolean>getColumnOriginalValue(
 				"defaultLayoutUtilityPageEntry"));
+	}
+
+	@JSON
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return "";
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_name = name;
+	}
+
+	@JSON
+	@Override
+	public int getType() {
+		return _type;
+	}
+
+	@Override
+	public void setType(int type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public int getOriginalType() {
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("type_"));
 	}
 
 	@JSON
@@ -810,11 +810,11 @@ public class LayoutUtilityPageEntryModelImpl
 		layoutUtilityPageEntryImpl.setUserName(getUserName());
 		layoutUtilityPageEntryImpl.setCreateDate(getCreateDate());
 		layoutUtilityPageEntryImpl.setModifiedDate(getModifiedDate());
-		layoutUtilityPageEntryImpl.setName(getName());
 		layoutUtilityPageEntryImpl.setPlid(getPlid());
-		layoutUtilityPageEntryImpl.setType(getType());
 		layoutUtilityPageEntryImpl.setDefaultLayoutUtilityPageEntry(
 			isDefaultLayoutUtilityPageEntry());
+		layoutUtilityPageEntryImpl.setName(getName());
+		layoutUtilityPageEntryImpl.setType(getType());
 		layoutUtilityPageEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		layoutUtilityPageEntryImpl.resetOriginalValues();
@@ -849,15 +849,15 @@ public class LayoutUtilityPageEntryModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		layoutUtilityPageEntryImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		layoutUtilityPageEntryImpl.setName(
-			this.<String>getColumnOriginalValue("name"));
 		layoutUtilityPageEntryImpl.setPlid(
 			this.<Long>getColumnOriginalValue("plid"));
-		layoutUtilityPageEntryImpl.setType(
-			this.<Integer>getColumnOriginalValue("type_"));
 		layoutUtilityPageEntryImpl.setDefaultLayoutUtilityPageEntry(
 			this.<Boolean>getColumnOriginalValue(
 				"defaultLayoutUtilityPageEntry"));
+		layoutUtilityPageEntryImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		layoutUtilityPageEntryImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
 		layoutUtilityPageEntryImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 
@@ -997,6 +997,11 @@ public class LayoutUtilityPageEntryModelImpl
 			layoutUtilityPageEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		layoutUtilityPageEntryCacheModel.plid = getPlid();
+
+		layoutUtilityPageEntryCacheModel.defaultLayoutUtilityPageEntry =
+			isDefaultLayoutUtilityPageEntry();
+
 		layoutUtilityPageEntryCacheModel.name = getName();
 
 		String name = layoutUtilityPageEntryCacheModel.name;
@@ -1005,12 +1010,7 @@ public class LayoutUtilityPageEntryModelImpl
 			layoutUtilityPageEntryCacheModel.name = null;
 		}
 
-		layoutUtilityPageEntryCacheModel.plid = getPlid();
-
 		layoutUtilityPageEntryCacheModel.type = getType();
-
-		layoutUtilityPageEntryCacheModel.defaultLayoutUtilityPageEntry =
-			isDefaultLayoutUtilityPageEntry();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -1128,10 +1128,10 @@ public class LayoutUtilityPageEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _name;
 	private long _plid;
-	private int _type;
 	private boolean _defaultLayoutUtilityPageEntry;
+	private String _name;
+	private int _type;
 	private Date _lastPublishDate;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1176,11 +1176,11 @@ public class LayoutUtilityPageEntryModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("plid", _plid);
-		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put(
 			"defaultLayoutUtilityPageEntry", _defaultLayoutUtilityPageEntry);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
 
@@ -1228,13 +1228,13 @@ public class LayoutUtilityPageEntryModelImpl
 
 		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("name", 2048L);
+		columnBitmasks.put("plid", 2048L);
 
-		columnBitmasks.put("plid", 4096L);
+		columnBitmasks.put("defaultLayoutUtilityPageEntry", 4096L);
 
-		columnBitmasks.put("type_", 8192L);
+		columnBitmasks.put("name", 8192L);
 
-		columnBitmasks.put("defaultLayoutUtilityPageEntry", 16384L);
+		columnBitmasks.put("type_", 16384L);
 
 		columnBitmasks.put("lastPublishDate", 32768L);
 

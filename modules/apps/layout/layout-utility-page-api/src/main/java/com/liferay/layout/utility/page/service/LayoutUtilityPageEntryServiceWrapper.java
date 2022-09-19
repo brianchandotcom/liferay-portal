@@ -40,13 +40,13 @@ public class LayoutUtilityPageEntryServiceWrapper
 
 	@Override
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long groupId, String name, long plid,
+			String externalReferenceCode, long groupId, long plid, String name,
 			int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
-			externalReferenceCode, groupId, name, plid, type, serviceContext);
+			externalReferenceCode, groupId, plid, name, type, serviceContext);
 	}
 
 	@Override
@@ -130,12 +130,12 @@ public class LayoutUtilityPageEntryServiceWrapper
 
 	@Override
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, String name, long plid, int type,
+			long layoutUtilityPageEntryId, long plid, String name, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntryId, name, plid, type, serviceContext);
+			layoutUtilityPageEntryId, plid, name, type, serviceContext);
 	}
 
 	@Override

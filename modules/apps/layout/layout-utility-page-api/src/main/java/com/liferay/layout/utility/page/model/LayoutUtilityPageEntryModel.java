@@ -255,21 +255,6 @@ public interface LayoutUtilityPageEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the name of this layout utility page entry.
-	 *
-	 * @return the name of this layout utility page entry
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this layout utility page entry.
-	 *
-	 * @param name the name of this layout utility page entry
-	 */
-	public void setName(String name);
-
-	/**
 	 * Returns the plid of this layout utility page entry.
 	 *
 	 * @return the plid of this layout utility page entry
@@ -282,20 +267,6 @@ public interface LayoutUtilityPageEntryModel
 	 * @param plid the plid of this layout utility page entry
 	 */
 	public void setPlid(long plid);
-
-	/**
-	 * Returns the type of this layout utility page entry.
-	 *
-	 * @return the type of this layout utility page entry
-	 */
-	public int getType();
-
-	/**
-	 * Sets the type of this layout utility page entry.
-	 *
-	 * @param type the type of this layout utility page entry
-	 */
-	public void setType(int type);
 
 	/**
 	 * Returns the default layout utility page entry of this layout utility page entry.
@@ -318,6 +289,35 @@ public interface LayoutUtilityPageEntryModel
 	 */
 	public void setDefaultLayoutUtilityPageEntry(
 		boolean defaultLayoutUtilityPageEntry);
+
+	/**
+	 * Returns the name of this layout utility page entry.
+	 *
+	 * @return the name of this layout utility page entry
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this layout utility page entry.
+	 *
+	 * @param name the name of this layout utility page entry
+	 */
+	public void setName(String name);
+
+	/**
+	 * Returns the type of this layout utility page entry.
+	 *
+	 * @return the type of this layout utility page entry
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this layout utility page entry.
+	 *
+	 * @param type the type of this layout utility page entry
+	 */
+	public void setType(int type);
 
 	/**
 	 * Returns the last publish date of this layout utility page entry.

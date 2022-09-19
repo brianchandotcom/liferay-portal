@@ -53,7 +53,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 			addLayoutUtilityPageEntry(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long groupId, String name, long plid, int type,
+				long groupId, long plid, String name, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -64,7 +64,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 				_addLayoutUtilityPageEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, groupId, name, plid, type,
+				methodKey, externalReferenceCode, groupId, plid, name, type,
 				serviceContext);
 
 			Object returnObj = null;
@@ -412,7 +412,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 			updateLayoutUtilityPageEntry(
 				HttpPrincipal httpPrincipal, long layoutUtilityPageEntryId,
-				String name, long plid, int type,
+				long plid, String name, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -423,7 +423,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 				_updateLayoutUtilityPageEntryParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, layoutUtilityPageEntryId, name, plid, type,
+				methodKey, layoutUtilityPageEntryId, plid, name, type,
 				serviceContext);
 
 			Object returnObj = null;
@@ -460,7 +460,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 
 	private static final Class<?>[] _addLayoutUtilityPageEntryParameterTypes0 =
 		new Class[] {
-			String.class, long.class, String.class, long.class, int.class,
+			String.class, long.class, long.class, String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
@@ -493,7 +493,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateLayoutUtilityPageEntryParameterTypes9 = new Class[] {
-			long.class, String.class, long.class, int.class,
+			long.class, long.class, String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

@@ -10,10 +10,10 @@ create table LayoutUtilityPageEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	name VARCHAR(75) null,
 	plid LONG,
-	type_ INTEGER,
 	defaultLayoutUtilityPageEntry BOOLEAN,
+	name VARCHAR(75) null,
+	type_ INTEGER,
 	lastPublishDate DATE null,
 	primary key (LayoutUtilityPageEntryId, ctCollectionId)
 );

@@ -150,14 +150,14 @@ public class LayoutUtilityPageEntryPersistenceTest {
 
 		newLayoutUtilityPageEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		newLayoutUtilityPageEntry.setName(RandomTestUtil.randomString());
-
 		newLayoutUtilityPageEntry.setPlid(RandomTestUtil.nextLong());
-
-		newLayoutUtilityPageEntry.setType(RandomTestUtil.nextInt());
 
 		newLayoutUtilityPageEntry.setDefaultLayoutUtilityPageEntry(
 			RandomTestUtil.randomBoolean());
+
+		newLayoutUtilityPageEntry.setName(RandomTestUtil.randomString());
+
+		newLayoutUtilityPageEntry.setType(RandomTestUtil.nextInt());
 
 		newLayoutUtilityPageEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
@@ -205,17 +205,17 @@ public class LayoutUtilityPageEntryPersistenceTest {
 			Time.getShortTimestamp(
 				newLayoutUtilityPageEntry.getModifiedDate()));
 		Assert.assertEquals(
-			existingLayoutUtilityPageEntry.getName(),
-			newLayoutUtilityPageEntry.getName());
-		Assert.assertEquals(
 			existingLayoutUtilityPageEntry.getPlid(),
 			newLayoutUtilityPageEntry.getPlid());
 		Assert.assertEquals(
-			existingLayoutUtilityPageEntry.getType(),
-			newLayoutUtilityPageEntry.getType());
-		Assert.assertEquals(
 			existingLayoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry(),
 			newLayoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry());
+		Assert.assertEquals(
+			existingLayoutUtilityPageEntry.getName(),
+			newLayoutUtilityPageEntry.getName());
+		Assert.assertEquals(
+			existingLayoutUtilityPageEntry.getType(),
+			newLayoutUtilityPageEntry.getType());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingLayoutUtilityPageEntry.getLastPublishDate()),
@@ -266,12 +266,12 @@ public class LayoutUtilityPageEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_T_D() throws Exception {
-		_persistence.countByG_T_D(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
-			RandomTestUtil.randomBoolean());
+	public void testCountByG_D_T() throws Exception {
+		_persistence.countByG_D_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
 
-		_persistence.countByG_T_D(0L, 0, RandomTestUtil.randomBoolean());
+		_persistence.countByG_D_T(0L, RandomTestUtil.randomBoolean(), 0);
 	}
 
 	@Test
@@ -321,8 +321,8 @@ public class LayoutUtilityPageEntryPersistenceTest {
 			true, "uuid", true, "externalReferenceCode", true,
 			"LayoutUtilityPageEntryId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "plid", true, "type", true,
-			"defaultLayoutUtilityPageEntry", true, "lastPublishDate", true);
+			"modifiedDate", true, "plid", true, "defaultLayoutUtilityPageEntry",
+			true, "name", true, "type", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -669,14 +669,14 @@ public class LayoutUtilityPageEntryPersistenceTest {
 
 		layoutUtilityPageEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		layoutUtilityPageEntry.setName(RandomTestUtil.randomString());
-
 		layoutUtilityPageEntry.setPlid(RandomTestUtil.nextLong());
-
-		layoutUtilityPageEntry.setType(RandomTestUtil.nextInt());
 
 		layoutUtilityPageEntry.setDefaultLayoutUtilityPageEntry(
 			RandomTestUtil.randomBoolean());
+
+		layoutUtilityPageEntry.setName(RandomTestUtil.randomString());
+
+		layoutUtilityPageEntry.setType(RandomTestUtil.nextInt());
 
 		layoutUtilityPageEntry.setLastPublishDate(RandomTestUtil.nextDate());
 

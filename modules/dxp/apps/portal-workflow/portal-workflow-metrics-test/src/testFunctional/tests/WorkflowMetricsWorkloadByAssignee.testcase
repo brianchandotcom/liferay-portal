@@ -225,7 +225,6 @@ definition {
 	@priority = "4"
 	test CardIsUpdatedWhenUserWithPendingInstanceIsDeleted {
 		property portal.upstream = "quarantine";
-
 		property test.name.skip.portal.instance = "WorkflowMetricsWorkloadByAssignee#CardIsUpdatedWhenUserWithPendingInstanceIsDeleted";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -256,8 +255,6 @@ definition {
 		Alert.viewSuccessMessage();
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-
-		
 
 		AssertElementNotPresent(
 			key_assigneeName = "1user user1",

@@ -17,6 +17,7 @@ package com.liferay.object.internal.action.executor;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.internal.action.util.ObjectActionVariablesUtil;
+import com.liferay.object.internal.action.util.ObjectScriptVariablesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scripting.executor.ObjectScriptingExecutor;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -49,11 +50,25 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 
-		Map<String, Object> results = _objectScriptingExecutor.execute(
-			ObjectActionVariablesUtil.toVariables(
+		int scriptSyntaxVersion = (int)payloadJSONObject.get(
+			"scriptSyntaxVersion");
+
+		Map<String, Object> variables = null;
+
+		if (scriptSyntaxVersion == 2) {
+			variables = ObjectScriptVariablesUtil.toVariables(
 				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-				_systemObjectDefinitionMetadataTracker),
-			new HashSet<>(), parametersUnicodeProperties.get("script"));
+				_systemObjectDefinitionMetadataTracker);
+		}
+		else {
+			variables = ObjectActionVariablesUtil.toVariables(
+				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+				_systemObjectDefinitionMetadataTracker);
+		}
+
+		Map<String, Object> results = _objectScriptingExecutor.execute(
+			variables, new HashSet<>(),
+			parametersUnicodeProperties.get("script"));
 
 		if (GetterUtil.getBoolean(results.get("invalidScript"))) {
 			throw new ScriptingException();

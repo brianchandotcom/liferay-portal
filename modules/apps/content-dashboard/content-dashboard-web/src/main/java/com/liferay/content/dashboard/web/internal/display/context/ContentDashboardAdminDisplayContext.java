@@ -25,6 +25,7 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.content.dashboard.web.internal.model.AssetVocabularyMetric;
 import com.liferay.content.dashboard.web.internal.servlet.taglib.util.ContentDashboardDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
@@ -245,10 +246,22 @@ public class ContentDashboardAdminDisplayContext {
 						InfoItemReference infoItemReference =
 							contentDashboardItemSubtype.getInfoItemReference();
 
-						ClassNameClassPKInfoItemIdentifier
-							classNameClassPKInfoItemIdentifier =
-								(ClassNameClassPKInfoItemIdentifier)
-									infoItemReference.getInfoItemIdentifier();
+						InfoItemIdentifier infoItemIdentifier =
+							infoItemReference.getInfoItemIdentifier();
+
+						long classPK = infoItemReference.getClassPK();
+
+						if (infoItemIdentifier instanceof
+								ClassNameClassPKInfoItemIdentifier) {
+
+							ClassNameClassPKInfoItemIdentifier
+								classNameClassPKInfoItemIdentifier =
+									(ClassNameClassPKInfoItemIdentifier)
+										infoItemIdentifier;
+
+							classPK =
+								classNameClassPKInfoItemIdentifier.getClassPK();
+						}
 
 						Class<?> genericClass = GenericUtil.getGenericClass(
 							contentDashboardItemSubtype);
@@ -256,8 +269,7 @@ public class ContentDashboardAdminDisplayContext {
 						return JSONUtil.put(
 							"className", infoItemReference.getClassName()
 						).put(
-							"classPK",
-							classNameClassPKInfoItemIdentifier.getClassPK()
+							"classPK", classPK
 						).put(
 							"entryClassName", genericClass.getName()
 						).toString();

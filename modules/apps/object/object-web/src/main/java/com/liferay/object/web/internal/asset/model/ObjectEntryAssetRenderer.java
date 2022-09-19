@@ -158,6 +158,11 @@ public class ObjectEntryAssetRenderer
 		return super.include(httpServletRequest, httpServletResponse, template);
 	}
 
+	@Override
+	public boolean isCommentable() {
+		return _objectDefinition.isEnableComments();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryAssetRenderer.class);
 

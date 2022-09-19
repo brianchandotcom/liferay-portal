@@ -94,6 +94,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		}
 	}
 
+	@Override
 	@Test
 	public void testDeleteCart() throws Exception {
 		Cart cart = testDeleteCart_addCart();
@@ -102,6 +103,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 			204, cartResource.deleteCartHttpResponse(cart.getId()));
 	}
 
+	@Override
 	@Test
 	public void testGetCartPaymentURL() throws Exception {
 		Cart cart = randomCart();

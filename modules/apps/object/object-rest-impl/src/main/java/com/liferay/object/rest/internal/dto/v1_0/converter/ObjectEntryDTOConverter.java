@@ -138,15 +138,15 @@ public class ObjectEntryDTOConverter
 	}
 
 	private ObjectEntry[] _getManyToManyRelationshipObjectEntries(
-		DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
-		com.liferay.object.model.ObjectEntry objectEntry,
+		boolean bypassPermission, DTOConverterContext dtoConverterContext,
+		int nestedFieldsDepth, com.liferay.object.model.ObjectEntry objectEntry,
 		ObjectRelationship objectRelationship) {
 
 		try {
 			return _toObjectEntries(
 				dtoConverterContext, nestedFieldsDepth,
 				_objectEntryLocalService.getManyToManyObjectEntries(
-					objectEntry.getGroupId(),
+					bypassPermission, objectEntry.getGroupId(),
 					objectRelationship.getObjectRelationshipId(),
 					objectEntry.getObjectEntryId(), true,
 					objectRelationship.isReverse(), QueryUtil.ALL_POS,
@@ -180,15 +180,15 @@ public class ObjectEntryDTOConverter
 	}
 
 	private ObjectEntry[] _getOneToManyRelationshipObjectEntries(
-		DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
-		com.liferay.object.model.ObjectEntry objectEntry,
+		boolean bypassPermission, DTOConverterContext dtoConverterContext,
+		int nestedFieldsDepth, com.liferay.object.model.ObjectEntry objectEntry,
 		ObjectRelationship objectRelationship) {
 
 		try {
 			return _toObjectEntries(
 				dtoConverterContext, nestedFieldsDepth,
 				_objectEntryLocalService.getOneToManyObjectEntries(
-					objectEntry.getGroupId(),
+					bypassPermission, objectEntry.getGroupId(),
 					objectRelationship.getObjectRelationshipId(),
 					objectEntry.getObjectEntryId(), true, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS));
@@ -496,16 +496,16 @@ public class ObjectEntryDTOConverter
 						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
 					objectEntries = _getManyToManyRelationshipObjectEntries(
-						dtoConverterContext, nestedFieldsDepth, objectEntry,
-						objectRelationship);
+						false, dtoConverterContext, nestedFieldsDepth,
+						objectEntry, objectRelationship);
 				}
 				else if (Objects.equals(
 							objectRelationship.getType(),
 							ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 					objectEntries = _getOneToManyRelationshipObjectEntries(
-						dtoConverterContext, nestedFieldsDepth, objectEntry,
-						objectRelationship);
+						false, dtoConverterContext, nestedFieldsDepth,
+						objectEntry, objectRelationship);
 				}
 
 				map.put(objectRelationship.getName(), objectEntries);

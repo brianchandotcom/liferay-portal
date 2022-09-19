@@ -66,7 +66,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, QueryUtil.ALL_POS,
+			true, groupId, objectRelationshipId, primaryKey, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		if (relatedModels.isEmpty()) {
@@ -147,21 +147,23 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public List<ObjectEntry> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey, int start,
-			int end)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, int start, int end)
 		throws PortalException {
 
 		return _objectEntryLocalService.getOneToManyObjectEntries(
-			groupId, objectRelationshipId, primaryKey, true, start, end);
+			bypassPermission, groupId, objectRelationshipId, primaryKey, true,
+			start, end);
 	}
 
 	@Override
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey)
 		throws PortalException {
 
 		return _objectEntryLocalService.getOneToManyObjectEntriesCount(
-			groupId, objectRelationshipId, primaryKey, true);
+			bypassPermission, groupId, objectRelationshipId, primaryKey, true);
 	}
 
 	@Override
@@ -171,7 +173,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		return _objectEntryLocalService.getOneToManyObjectEntries(
-			groupId, objectRelationshipId, objectEntryId, false,
+			false, groupId, objectRelationshipId, objectEntryId, false,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 

@@ -81,7 +81,7 @@ public class RelatedModelsFDSDataProvider
 
 		return TransformUtil.transform(
 			(List<ObjectEntry>)objectRelatedModelsProvider.getRelatedModels(
-				objectScopeProvider.getGroupId(httpServletRequest),
+				false, objectScopeProvider.getGroupId(httpServletRequest),
 				objectRelationshipId, objectEntryId,
 				fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition()),
@@ -118,7 +118,7 @@ public class RelatedModelsFDSDataProvider
 			httpServletRequest, "objectEntryId");
 
 		return objectRelatedModelsProvider.getRelatedModelsCount(
-			objectScopeProvider.getGroupId(httpServletRequest),
+			false, objectScopeProvider.getGroupId(httpServletRequest),
 			objectRelationshipId, objectEntryId);
 	}
 

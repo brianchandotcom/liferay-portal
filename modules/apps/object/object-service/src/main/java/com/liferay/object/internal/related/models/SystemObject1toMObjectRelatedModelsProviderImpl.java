@@ -88,7 +88,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		List<T> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, QueryUtil.ALL_POS,
+			true, groupId, objectRelationshipId, primaryKey, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		if (relatedModels.isEmpty()) {
@@ -173,8 +173,8 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public List<T> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey, int start,
-			int end)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, int start, int end)
 		throws PortalException {
 
 		PersistedModelLocalService persistedModelLocalService =
@@ -193,7 +193,8 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey)
 		throws PortalException {
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =

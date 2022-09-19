@@ -65,7 +65,7 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, 0, 1);
+			true, groupId, objectRelationshipId, primaryKey, 0, 1);
 
 		if (relatedModels.isEmpty()) {
 			return;
@@ -147,21 +147,23 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 
 	@Override
 	public List<ObjectEntry> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey, int start,
-			int end)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, int start, int end)
 		throws PortalException {
 
 		return _objectEntryLocalService.getOneToManyObjectEntries(
-			groupId, objectRelationshipId, primaryKey, true, 0, 1);
+			bypassPermission, groupId, objectRelationshipId, primaryKey, true,
+			0, 1);
 	}
 
 	@Override
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey)
 		throws PortalException {
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, 0, 1);
+			bypassPermission, groupId, objectRelationshipId, primaryKey, 0, 1);
 
 		return relatedModels.size();
 	}

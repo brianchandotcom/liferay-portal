@@ -520,7 +520,7 @@ public class DefaultObjectEntryManagerImpl
 			_toObjectEntries(
 				dtoConverterContext,
 				objectRelatedModelsProvider.getRelatedModels(
-					objectEntry.getGroupId(),
+					false, objectEntry.getGroupId(),
 					objectRelationship.getObjectRelationshipId(),
 					objectEntry.getPrimaryKey(), pagination.getStartPosition(),
 					pagination.getEndPosition())));
@@ -552,7 +552,7 @@ public class DefaultObjectEntryManagerImpl
 			TransformUtil.transform(
 				(List<BaseModel<?>>)
 					objectRelatedModelsProvider.getRelatedModels(
-						objectEntry.getGroupId(),
+						false, objectEntry.getGroupId(),
 						objectRelationship.getObjectRelationshipId(),
 						objectEntry.getPrimaryKey(),
 						pagination.getStartPosition(),
@@ -694,7 +694,8 @@ public class DefaultObjectEntryManagerImpl
 			_toObjectEntries(
 				dtoConverterContext,
 				objectRelatedModelsProvider.getRelatedModels(
-					groupId, objectRelationship.getObjectRelationshipId(),
+					false, groupId,
+					objectRelationship.getObjectRelationshipId(),
 					assetEntry.getClassPK(), pagination.getStartPosition(),
 					pagination.getEndPosition())));
 	}
@@ -720,7 +721,7 @@ public class DefaultObjectEntryManagerImpl
 						objectRelationship.getType());
 
 			int count = objectRelatedModelsProvider.getRelatedModelsCount(
-				objectEntry.getGroupId(),
+				true, objectEntry.getGroupId(),
 				objectRelationship.getObjectRelationshipId(),
 				objectEntry.getPrimaryKey());
 

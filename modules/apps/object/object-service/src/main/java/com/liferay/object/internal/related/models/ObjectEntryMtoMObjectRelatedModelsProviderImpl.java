@@ -54,7 +54,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, QueryUtil.ALL_POS,
+			true, groupId, objectRelationshipId, primaryKey, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		if (relatedModels.isEmpty()) {
@@ -115,8 +115,8 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 	}
 
 	public List<ObjectEntry> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey, int start,
-			int end)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, int start, int end)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -124,13 +124,15 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		return _objectEntryLocalService.getManyToManyObjectEntries(
-			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
-			true, objectRelationship.isReverse(), start, end);
+			bypassPermission, groupId,
+			objectRelationship.getObjectRelationshipId(), primaryKey, true,
+			objectRelationship.isReverse(), start, end);
 	}
 
 	@Override
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -138,8 +140,9 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		return _objectEntryLocalService.getManyToManyObjectEntriesCount(
-			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
-			true, objectRelationship.isReverse());
+			bypassPermission, groupId,
+			objectRelationship.getObjectRelationshipId(), primaryKey, true,
+			objectRelationship.isReverse());
 	}
 
 	@Override
@@ -153,7 +156,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		return _objectEntryLocalService.getManyToManyObjectEntries(
-			groupId, objectRelationship.getObjectRelationshipId(),
+			false, groupId, objectRelationship.getObjectRelationshipId(),
 			objectEntryId, false, objectRelationship.isReverse(),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}

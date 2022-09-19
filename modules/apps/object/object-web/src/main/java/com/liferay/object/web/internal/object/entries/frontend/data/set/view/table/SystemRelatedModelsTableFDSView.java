@@ -142,7 +142,7 @@ public class SystemRelatedModelsTableFDSView
 
 		return TransformUtil.transform(
 			(List<BaseModel<?>>)objectRelatedModelsProvider.getRelatedModels(
-				objectScopeProvider.getGroupId(httpServletRequest),
+				false, objectScopeProvider.getGroupId(httpServletRequest),
 				objectRelationshipId, objectEntryId,
 				fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition()),
@@ -200,7 +200,7 @@ public class SystemRelatedModelsTableFDSView
 			httpServletRequest, "objectEntryId");
 
 		return objectRelatedModelsProvider.getRelatedModelsCount(
-			objectScopeProvider.getGroupId(httpServletRequest),
+			false, objectScopeProvider.getGroupId(httpServletRequest),
 			objectRelationshipId, objectEntryId);
 	}
 

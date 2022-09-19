@@ -530,12 +530,14 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public List<ObjectEntry> getManyToManyObjectEntries(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, boolean reverse, int start, int end)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, boolean related, boolean reverse, int start,
+			int end)
 		throws PortalException {
 
 		DSLQuery dslQuery = _getManyToManyObjectEntriesGroupByStep(
-			groupId, objectRelationshipId, primaryKey, related, reverse,
+			bypassPermission, groupId, objectRelationshipId, primaryKey,
+			related, reverse,
 			DSLQueryFactoryUtil.selectDistinct(ObjectEntryTable.INSTANCE)
 		).limit(
 			start, end
@@ -550,12 +552,13 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public int getManyToManyObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, boolean reverse)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, boolean related, boolean reverse)
 		throws PortalException {
 
 		DSLQuery dslQuery = _getManyToManyObjectEntriesGroupByStep(
-			groupId, objectRelationshipId, primaryKey, related, reverse,
+			bypassPermission, groupId, objectRelationshipId, primaryKey,
+			related, reverse,
 			DSLQueryFactoryUtil.countDistinct(
 				ObjectEntryTable.INSTANCE.objectEntryId));
 
@@ -601,13 +604,14 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	public List<ObjectEntry> getOneToManyObjectEntries(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, int start, int end)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, boolean related, int start, int end)
 		throws PortalException {
 
 		DSLQuery dslQuery = _getOneToManyObjectEntriesGroupByStep(
 			groupId, objectRelationshipId, primaryKey, related,
-			DSLQueryFactoryUtil.selectDistinct(ObjectEntryTable.INSTANCE)
+			DSLQueryFactoryUtil.selectDistinct(ObjectEntryTable.INSTANCE),
+			bypassPermission
 		).limit(
 			start, end
 		);
@@ -621,14 +625,15 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public int getOneToManyObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, boolean related)
 		throws PortalException {
 
 		DSLQuery dslQuery = _getOneToManyObjectEntriesGroupByStep(
 			groupId, objectRelationshipId, primaryKey, related,
 			DSLQueryFactoryUtil.countDistinct(
-				ObjectEntryTable.INSTANCE.objectEntryId));
+				ObjectEntryTable.INSTANCE.objectEntryId),
+			bypassPermission);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -1445,8 +1450,9 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private GroupByStep _getManyToManyObjectEntriesGroupByStep(
-			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, boolean reverse, FromStep fromStep)
+			boolean bypassPermission, long groupId, long objectRelationshipId,
+			long primaryKey, boolean related, boolean reverse,
+			FromStep fromStep)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -1515,7 +1521,10 @@ public class ObjectEntryLocalServiceImpl
 					objectDefinitionId2)
 			).and(
 				() -> {
-					if (PermissionThreadLocal.getPermissionChecker() == null) {
+					if (bypassPermission ||
+						(PermissionThreadLocal.getPermissionChecker() ==
+							null)) {
+
 						return null;
 					}
 
@@ -1664,7 +1673,7 @@ public class ObjectEntryLocalServiceImpl
 
 	private GroupByStep _getOneToManyObjectEntriesGroupByStep(
 			long groupId, long objectRelationshipId, long primaryKey,
-			boolean related, FromStep fromStep)
+			boolean related, FromStep fromStep, boolean bypassPermission)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -1737,7 +1746,10 @@ public class ObjectEntryLocalServiceImpl
 				}
 			).and(
 				() -> {
-					if (PermissionThreadLocal.getPermissionChecker() == null) {
+					if (bypassPermission ||
+						(PermissionThreadLocal.getPermissionChecker() ==
+							null)) {
+
 						return null;
 					}
 

@@ -14,7 +14,7 @@
 
 package com.liferay.layout.utility.page.service.persistence.impl;
 
-import com.liferay.layout.utility.page.exception.NoSuchEntryException;
+import com.liferay.layout.utility.page.exception.NoSuchLayoutUtilityPageEntryException;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntryTable;
 import com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryImpl;
@@ -296,13 +296,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry findByUuid_First(
 			String uuid,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByUuid_First(
 			uuid, orderByComparator);
@@ -320,7 +320,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
 	}
 
 	/**
@@ -351,13 +351,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry findByUuid_Last(
 			String uuid,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByUuid_Last(
 			uuid, orderByComparator);
@@ -375,7 +375,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
 	}
 
 	/**
@@ -413,13 +413,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry[] findByUuid_PrevAndNext(
 			long LayoutUtilityPageEntryId, String uuid,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -672,16 +672,16 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	private FinderPath _finderPathCountByUUID_G;
 
 	/**
-	 * Returns the layout utility page entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the layout utility page entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry findByUUID_G(String uuid, long groupId)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByUUID_G(
 			uuid, groupId);
@@ -703,7 +703,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				_log.debug(sb.toString());
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
 		}
 
 		return layoutUtilityPageEntry;
@@ -838,7 +838,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 */
 	@Override
 	public LayoutUtilityPageEntry removeByUUID_G(String uuid, long groupId)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = findByUUID_G(
 			uuid, groupId);
@@ -1137,13 +1137,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry findByUuid_C_First(
 			String uuid, long companyId,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByUuid_C_First(
 			uuid, companyId, orderByComparator);
@@ -1164,7 +1164,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
 	}
 
 	/**
@@ -1197,13 +1197,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry findByUuid_C_Last(
 			String uuid, long companyId,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
@@ -1224,7 +1224,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
 	}
 
 	/**
@@ -1264,13 +1264,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry[] findByUuid_C_PrevAndNext(
 			long LayoutUtilityPageEntryId, String uuid, long companyId,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -1709,13 +1709,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry findByGroupId_First(
 			long groupId,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByGroupId_First(
 			groupId, orderByComparator);
@@ -1733,7 +1733,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
 	}
 
 	/**
@@ -1764,13 +1764,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry findByGroupId_Last(
 			long groupId,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByGroupId_Last(
 			groupId, orderByComparator);
@@ -1788,7 +1788,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
 	}
 
 	/**
@@ -1826,13 +1826,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry[] findByGroupId_PrevAndNext(
 			long LayoutUtilityPageEntryId, long groupId,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = findByPrimaryKey(
 			LayoutUtilityPageEntryId);
@@ -2114,13 +2114,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry[] filterFindByGroupId_PrevAndNext(
 			long LayoutUtilityPageEntryId, long groupId,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(
@@ -2627,13 +2627,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry findByG_T_First(
 			long groupId, int type,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByG_T_First(
 			groupId, type, orderByComparator);
@@ -2654,7 +2654,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
 	}
 
 	/**
@@ -2687,13 +2687,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry findByG_T_Last(
 			long groupId, int type,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByG_T_Last(
 			groupId, type, orderByComparator);
@@ -2714,7 +2714,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
 	}
 
 	/**
@@ -2754,13 +2754,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry[] findByG_T_PrevAndNext(
 			long LayoutUtilityPageEntryId, long groupId, int type,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = findByPrimaryKey(
 			LayoutUtilityPageEntryId);
@@ -3056,13 +3056,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry[] filterFindByG_T_PrevAndNext(
 			long LayoutUtilityPageEntryId, long groupId, int type,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_T_PrevAndNext(
@@ -3615,13 +3615,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry findByG_T_D_First(
 			long groupId, int type, boolean defaultLayoutUtilityPageEntry,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByG_T_D_First(
 			groupId, type, defaultLayoutUtilityPageEntry, orderByComparator);
@@ -3645,7 +3645,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
 	}
 
 	/**
@@ -3681,13 +3681,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry findByG_T_D_Last(
 			long groupId, int type, boolean defaultLayoutUtilityPageEntry,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByG_T_D_Last(
 			groupId, type, defaultLayoutUtilityPageEntry, orderByComparator);
@@ -3711,7 +3711,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
 	}
 
 	/**
@@ -3754,14 +3754,14 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry[] findByG_T_D_PrevAndNext(
 			long LayoutUtilityPageEntryId, long groupId, int type,
 			boolean defaultLayoutUtilityPageEntry,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = findByPrimaryKey(
 			LayoutUtilityPageEntryId);
@@ -4075,14 +4075,14 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry[] filterFindByG_T_D_PrevAndNext(
 			long LayoutUtilityPageEntryId, long groupId, int type,
 			boolean defaultLayoutUtilityPageEntry,
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_T_D_PrevAndNext(
@@ -4456,17 +4456,17 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	private FinderPath _finderPathCountByG_ERC;
 
 	/**
-	 * Returns the layout utility page entry where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the layout utility page entry where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
 	 * @return the matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry findByG_ERC(
 			long groupId, String externalReferenceCode)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByG_ERC(
 			groupId, externalReferenceCode);
@@ -4488,7 +4488,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				_log.debug(sb.toString());
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchLayoutUtilityPageEntryException(sb.toString());
 		}
 
 		return layoutUtilityPageEntry;
@@ -4627,7 +4627,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	@Override
 	public LayoutUtilityPageEntry removeByG_ERC(
 			long groupId, String externalReferenceCode)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = findByG_ERC(
 			groupId, externalReferenceCode);
@@ -4905,11 +4905,11 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 *
 	 * @param LayoutUtilityPageEntryId the primary key of the layout utility page entry
 	 * @return the layout utility page entry that was removed
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry remove(long LayoutUtilityPageEntryId)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		return remove((Serializable)LayoutUtilityPageEntryId);
 	}
@@ -4919,11 +4919,11 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the layout utility page entry
 	 * @return the layout utility page entry that was removed
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		Session session = null;
 
@@ -4939,13 +4939,13 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchEntryException(
+				throw new NoSuchLayoutUtilityPageEntryException(
 					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(layoutUtilityPageEntry);
 		}
-		catch (NoSuchEntryException noSuchEntityException) {
+		catch (NoSuchLayoutUtilityPageEntryException noSuchEntityException) {
 			throw noSuchEntityException;
 		}
 		catch (Exception exception) {
@@ -5113,11 +5113,11 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the layout utility page entry
 	 * @return the layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByPrimaryKey(
 			primaryKey);
@@ -5127,7 +5127,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchEntryException(
+			throw new NoSuchLayoutUtilityPageEntryException(
 				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
@@ -5135,16 +5135,16 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the layout utility page entry with the primary key or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the layout utility page entry with the primary key or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
 	 *
 	 * @param LayoutUtilityPageEntryId the primary key of the layout utility page entry
 	 * @return the layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	@Override
 	public LayoutUtilityPageEntry findByPrimaryKey(
 			long LayoutUtilityPageEntryId)
-		throws NoSuchEntryException {
+		throws NoSuchLayoutUtilityPageEntryException {
 
 		return findByPrimaryKey((Serializable)LayoutUtilityPageEntryId);
 	}

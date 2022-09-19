@@ -14,7 +14,7 @@
 
 package com.liferay.layout.utility.page.service.persistence;
 
-import com.liferay.layout.utility.page.exception.NoSuchEntryException;
+import com.liferay.layout.utility.page.exception.NoSuchLayoutUtilityPageEntryException;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -110,13 +110,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry findByUuid_First(
 			String uuid,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the first layout utility page entry in the ordered set where uuid = &#63;.
@@ -136,13 +136,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry findByUuid_Last(
 			String uuid,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the last layout utility page entry in the ordered set where uuid = &#63;.
@@ -163,13 +163,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	public LayoutUtilityPageEntry[] findByUuid_PrevAndNext(
 			long LayoutUtilityPageEntryId, String uuid,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Removes all the layout utility page entries where uuid = &#63; from the database.
@@ -187,15 +187,15 @@ public interface LayoutUtilityPageEntryPersistence
 	public int countByUuid(String uuid);
 
 	/**
-	 * Returns the layout utility page entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the layout utility page entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry findByUUID_G(String uuid, long groupId)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the layout utility page entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -225,7 +225,7 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @return the layout utility page entry that was removed
 	 */
 	public LayoutUtilityPageEntry removeByUUID_G(String uuid, long groupId)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the number of layout utility page entries where uuid = &#63; and groupId = &#63;.
@@ -309,13 +309,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry findByUuid_C_First(
 			String uuid, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the first layout utility page entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -337,13 +337,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry findByUuid_C_Last(
 			String uuid, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the last layout utility page entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -366,13 +366,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	public LayoutUtilityPageEntry[] findByUuid_C_PrevAndNext(
 			long LayoutUtilityPageEntryId, String uuid, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Removes all the layout utility page entries where uuid = &#63; and companyId = &#63; from the database.
@@ -458,13 +458,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry findByGroupId_First(
 			long groupId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the first layout utility page entry in the ordered set where groupId = &#63;.
@@ -484,13 +484,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry findByGroupId_Last(
 			long groupId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the last layout utility page entry in the ordered set where groupId = &#63;.
@@ -511,13 +511,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	public LayoutUtilityPageEntry[] findByGroupId_PrevAndNext(
 			long LayoutUtilityPageEntryId, long groupId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63;.
@@ -568,13 +568,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	public LayoutUtilityPageEntry[] filterFindByGroupId_PrevAndNext(
 			long LayoutUtilityPageEntryId, long groupId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Removes all the layout utility page entries where groupId = &#63; from the database.
@@ -672,13 +672,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry findByG_T_First(
 			long groupId, int type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the first layout utility page entry in the ordered set where groupId = &#63; and type = &#63;.
@@ -700,13 +700,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry findByG_T_Last(
 			long groupId, int type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the last layout utility page entry in the ordered set where groupId = &#63; and type = &#63;.
@@ -729,13 +729,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	public LayoutUtilityPageEntry[] findByG_T_PrevAndNext(
 			long LayoutUtilityPageEntryId, long groupId, int type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63;.
@@ -790,13 +790,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	public LayoutUtilityPageEntry[] filterFindByG_T_PrevAndNext(
 			long LayoutUtilityPageEntryId, long groupId, int type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Removes all the layout utility page entries where groupId = &#63; and type = &#63; from the database.
@@ -905,13 +905,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry findByG_T_D_First(
 			long groupId, int type, boolean defaultLayoutUtilityPageEntry,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the first layout utility page entry in the ordered set where groupId = &#63; and type = &#63; and defaultLayoutUtilityPageEntry = &#63;.
@@ -935,13 +935,13 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry findByG_T_D_Last(
 			long groupId, int type, boolean defaultLayoutUtilityPageEntry,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the last layout utility page entry in the ordered set where groupId = &#63; and type = &#63; and defaultLayoutUtilityPageEntry = &#63;.
@@ -966,14 +966,14 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	public LayoutUtilityPageEntry[] findByG_T_D_PrevAndNext(
 			long LayoutUtilityPageEntryId, long groupId, int type,
 			boolean defaultLayoutUtilityPageEntry,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63; and defaultLayoutUtilityPageEntry = &#63;.
@@ -1034,14 +1034,14 @@ public interface LayoutUtilityPageEntryPersistence
 	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	public LayoutUtilityPageEntry[] filterFindByG_T_D_PrevAndNext(
 			long LayoutUtilityPageEntryId, long groupId, int type,
 			boolean defaultLayoutUtilityPageEntry,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutUtilityPageEntry> orderByComparator)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Removes all the layout utility page entries where groupId = &#63; and type = &#63; and defaultLayoutUtilityPageEntry = &#63; from the database.
@@ -1076,16 +1076,16 @@ public interface LayoutUtilityPageEntryPersistence
 		long groupId, int type, boolean defaultLayoutUtilityPageEntry);
 
 	/**
-	 * Returns the layout utility page entry where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the layout utility page entry where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
 	 * @return the matching layout utility page entry
-	 * @throws NoSuchEntryException if a matching layout utility page entry could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a matching layout utility page entry could not be found
 	 */
 	public LayoutUtilityPageEntry findByG_ERC(
 			long groupId, String externalReferenceCode)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the layout utility page entry where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -1117,7 +1117,7 @@ public interface LayoutUtilityPageEntryPersistence
 	 */
 	public LayoutUtilityPageEntry removeByG_ERC(
 			long groupId, String externalReferenceCode)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the number of layout utility page entries where groupId = &#63; and externalReferenceCode = &#63;.
@@ -1156,24 +1156,24 @@ public interface LayoutUtilityPageEntryPersistence
 	 *
 	 * @param LayoutUtilityPageEntryId the primary key of the layout utility page entry
 	 * @return the layout utility page entry that was removed
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	public LayoutUtilityPageEntry remove(long LayoutUtilityPageEntryId)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	public LayoutUtilityPageEntry updateImpl(
 		LayoutUtilityPageEntry layoutUtilityPageEntry);
 
 	/**
-	 * Returns the layout utility page entry with the primary key or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the layout utility page entry with the primary key or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
 	 *
 	 * @param LayoutUtilityPageEntryId the primary key of the layout utility page entry
 	 * @return the layout utility page entry
-	 * @throws NoSuchEntryException if a layout utility page entry with the primary key could not be found
+	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
 	 */
 	public LayoutUtilityPageEntry findByPrimaryKey(
 			long LayoutUtilityPageEntryId)
-		throws NoSuchEntryException;
+		throws NoSuchLayoutUtilityPageEntryException;
 
 	/**
 	 * Returns the layout utility page entry with the primary key or returns <code>null</code> if it could not be found.

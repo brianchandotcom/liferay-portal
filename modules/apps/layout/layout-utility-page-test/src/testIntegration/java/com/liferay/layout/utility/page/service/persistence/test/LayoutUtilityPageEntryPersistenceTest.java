@@ -15,7 +15,7 @@
 package com.liferay.layout.utility.page.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.utility.page.exception.NoSuchEntryException;
+import com.liferay.layout.utility.page.exception.NoSuchLayoutUtilityPageEntryException;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServiceUtil;
 import com.liferay.layout.utility.page.service.persistence.LayoutUtilityPageEntryPersistence;
@@ -296,7 +296,7 @@ public class LayoutUtilityPageEntryPersistenceTest {
 			existingLayoutUtilityPageEntry, newLayoutUtilityPageEntry);
 	}
 
-	@Test(expected = NoSuchEntryException.class)
+	@Test(expected = NoSuchLayoutUtilityPageEntryException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 

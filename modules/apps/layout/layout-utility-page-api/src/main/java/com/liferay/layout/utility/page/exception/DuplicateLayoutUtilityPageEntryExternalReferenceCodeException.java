@@ -19,23 +19,27 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateEntryExternalReferenceCodeException
+public class DuplicateLayoutUtilityPageEntryExternalReferenceCodeException
 	extends PortalException {
 
-	public DuplicateEntryExternalReferenceCodeException() {
+	public DuplicateLayoutUtilityPageEntryExternalReferenceCodeException() {
 	}
 
-	public DuplicateEntryExternalReferenceCodeException(String msg) {
+	public DuplicateLayoutUtilityPageEntryExternalReferenceCodeException(
+		String msg) {
+
 		super(msg);
 	}
 
-	public DuplicateEntryExternalReferenceCodeException(
+	public DuplicateLayoutUtilityPageEntryExternalReferenceCodeException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public DuplicateEntryExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateLayoutUtilityPageEntryExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

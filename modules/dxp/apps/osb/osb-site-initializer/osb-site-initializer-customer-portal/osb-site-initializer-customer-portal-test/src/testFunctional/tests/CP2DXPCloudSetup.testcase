@@ -369,7 +369,7 @@ definition {
 		}
 
 		task ("Assert the error message") {
-			Alert.viewErrorMessage(errorMessage = "Please insert a valid e-mail.");
+			Alert.viewErrorMessage(errorMessage = "Please insert a valid email.");
 		}
 	}
 

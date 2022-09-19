@@ -172,8 +172,8 @@ public class UpdateFragmentPortletSetsSortConfigurationMVCActionCommand
 			fragmentCollectionKeys.addAll(
 				ListUtil.subList(
 					newFragmentCollectionKeys,
-					oldVisibleFragmentCollectionKeys.size() - 1,
-					newFragmentCollectionKeys.size() - 1));
+					oldVisibleFragmentCollectionKeys.size(),
+					newFragmentCollectionKeys.size()));
 		}
 
 		return fragmentCollectionKeys.toArray(new String[0]);

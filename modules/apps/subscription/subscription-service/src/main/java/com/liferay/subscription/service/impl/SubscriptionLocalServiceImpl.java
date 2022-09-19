@@ -500,6 +500,20 @@ public class SubscriptionLocalServiceImpl
 		return false;
 	}
 
+	@Override
+	public void updateSubscriptions(
+		long companyId, long classNameId, long oldClassPK, long newClassPK) {
+
+		List<Subscription> subscriptions = subscriptionPersistence.findByC_C_C(
+			companyId, classNameId, oldClassPK);
+
+		for (Subscription subscription : subscriptions) {
+			subscription.setClassPK(newClassPK);
+
+			subscriptionPersistence.update(subscription);
+		}
+	}
+
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 

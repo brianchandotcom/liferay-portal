@@ -3141,11 +3141,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#if>
 		private PortalUUID ${portalUUID};
 	</#if>
-
-	<#if serviceBuilder.isVersionGTE_7_4_0() && dependencyInjectorDS>
-		@Reference
-		private ${entity.name}ModelArgumentsResolver _${entity.variableName}ModelArgumentsResolver;
-	</#if>
 }
 
 <#function bindParameter entityColumns>

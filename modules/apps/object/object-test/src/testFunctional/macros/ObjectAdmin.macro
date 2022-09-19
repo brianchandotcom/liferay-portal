@@ -803,6 +803,24 @@ definition {
 			value = "${value}");
 	}
 
+	macro deleteObjectEntryViaUI {
+		Click(
+			key_objectLabel = "${labelName}",
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
+
+		Type(
+			locator1 = "ObjectAdmin#PLACEHOLDER_DELETE_OBJECT",
+			value1 = "${objectName}");
+
+		Click(locator1 = "Form#SIDEBAR_DELETE_FIELD_MODAL_DELETE_BUTTON");
+
+		Refresh();
+	}
+
 	macro deleteObjectField {
 		Click(
 			key_value = "${fieldName}",

@@ -452,14 +452,14 @@ definition {
 		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(
 			newTranslationOption = "fr_FR",
 			translationOptionSelected = "en-us",
-			translationStatus = "warning");
+			translationStatus = "label-warning");
 
 		ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "Titre l'epreuve");
 
 		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(
 			newTranslationOption = "pt_BR",
 			translationOptionSelected = "fr-fr",
-			translationStatus = "warning");
+			translationStatus = "label-warning");
 
 		ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "Titulo do teste");
 
@@ -2196,15 +2196,6 @@ definition {
 		Navigator.gotoBack();
 
 		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
-	}
-
-	@description = "Verify that the user can't restore to a invalid previous definition version when the workflow is Published and a Error alert appears (Example: Error:Unable to restore this item)"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanNotRestoreToAInvalidDefinitionWhenPublished {
-
-		// TODO CantRestoreToAInvalidDefinitionWhenPublished pending implementation
-
 	}
 
 	@description = "LPS-139388 - Verify that is not possible to save a process with node ID not unique"

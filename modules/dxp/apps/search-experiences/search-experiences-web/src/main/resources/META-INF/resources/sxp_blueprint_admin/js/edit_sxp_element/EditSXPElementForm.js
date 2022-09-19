@@ -490,7 +490,7 @@ function EditSXPElementForm({
 						sxpElementJSONObject.description_i18n,
 						formatLocaleWithDashes
 					)}
-					disableModal={isSXPElementJSONInvalid}
+					disableTitleAndDescriptionModal={isSXPElementJSONInvalid}
 					isSubmitting={isSubmitting}
 					onCancel={redirectURL}
 					onChangeTitleAndDescription={

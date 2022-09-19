@@ -272,7 +272,7 @@ function EditTitleModal({
 export default function PageToolbar({
 	children,
 	description,
-	disableModal = false,
+	disableTitleAndDescriptionModal = false,
 	isSubmitting,
 	onCancel,
 	onChangeTab,
@@ -318,7 +318,7 @@ export default function PageToolbar({
 						<ClayToolbar.Item className="text-left" expand>
 							{modalVisible && (
 								<EditTitleModal
-									disabled={disableModal}
+									disabled={disableTitleAndDescriptionModal}
 									initialDescription={description}
 									initialTitle={title}
 									modalFieldFocus={modalFieldFocus}
@@ -490,7 +490,7 @@ export default function PageToolbar({
 
 PageToolbar.propTypes = {
 	description: PropTypes.object,
-	disableModal: PropTypes.bool,
+	disableTitleAndDescriptionModal: PropTypes.bool,
 	isSubmitting: PropTypes.bool,
 	onCancel: PropTypes.string.isRequired,
 	onChangeTab: PropTypes.func,

@@ -516,6 +516,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>PLACEHOLDER_DELETE_OBJECT</td>
+		<td>//input[contains(@placeholder,'Confirm Object Definition Name')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>PLACEHOLDER_DELETE_RELATIONSHIP</td>
 		<td>//input[contains(@placeholder,'Confirm Relationship Name')]</td>
 		<td></td>

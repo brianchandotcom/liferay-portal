@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -183,8 +183,8 @@ describe('SpacingBox', () => {
 		const onChange = jest.fn();
 		render(<SpacingBoxTest onChange={onChange} />);
 
-		userEvent.click(screen.getByLabelText('padding-left'));
-		userEvent.click(screen.getByLabelText('set-padding-left-to-10'));
+		fireEvent.click(screen.getByLabelText('padding-left'));
+		fireEvent.click(screen.getByLabelText('set-padding-left-to-10'));
 
 		expect(onChange).toHaveBeenCalledWith('paddingLeft', '10');
 	});
@@ -200,7 +200,15 @@ describe('SpacingBox', () => {
 	it('focuses the selected option when the dropdown is opened', () => {
 		render(<SpacingBoxTest value={{marginTop: '10'}} />);
 
-		userEvent.click(screen.getByLabelText('margin-top'));
+		jest.useFakeTimers();
+
+		fireEvent.click(screen.getByLabelText('margin-top'));
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		jest.useRealTimers();
 
 		expect(screen.getByText('Spacer 10').parentElement).toHaveFocus();
 	});

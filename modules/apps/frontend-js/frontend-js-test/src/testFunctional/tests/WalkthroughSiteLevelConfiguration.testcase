@@ -122,13 +122,13 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Given Walkthrough in System Settings") {
-			JSONGroup.addGroup(groupName = "Site Name");
-
-			ApplicationsMenu.gotoSite(site = "Site Name");
+			Walkthrough.gotoSiteConfigWalkthrough();
 		}
 
-		task ("When JSON description is configured") {
-			Walkthrough.configureJSON(fileName = "walkthrough_configuration.json");
+		task ("When a JSON description is saved") {
+			Walkthrough._editWalkthroughJSON(fileName = "walkthrough_configuration.json");
+
+			SystemSettings.saveConfiguration();
 		}
 
 		task ("Then success message appears") {

@@ -64,8 +64,6 @@ portletDisplay.setURLBack(backURL);
 	</c:if>
 </liferay-frontend:edit-form>
 
-<%@ include file="/object_entries/object_entry/discussion.jspf" %>
-
 <c:if test="<%= !objectEntryDisplayContext.isReadOnly() %>">
 	<aui:script>
 		function <portlet:namespace />getExternalReferenceCode() {

@@ -129,7 +129,35 @@ public class TaxonomyVocabularyResourceImpl
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return getSiteTaxonomyVocabulariesPage(
+		return _getTaxonomyVocabularyPage(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.ADD_VOCABULARY,
+					"postAssetLibraryTaxonomyVocabulary",
+					AssetCategoriesPermission.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_VOCABULARY,
+					"postAssetLibraryTaxonomyVocabularyBatch",
+					AssetCategoriesPermission.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteTaxonomyVocabularyBatch",
+					AssetCategoriesPermission.RESOURCE_NAME, null)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getAssetLibraryTaxonomyVocabulariesPage",
+					AssetCategoriesPermission.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putTaxonomyVocabularyBatch",
+					AssetCategoriesPermission.RESOURCE_NAME, null)
+			).build(),
 			assetLibraryId, search, aggregation, filter, pagination, sorts);
 	}
 
@@ -155,7 +183,7 @@ public class TaxonomyVocabularyResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return SearchUtil.search(
+		return _getTaxonomyVocabularyPage(
 			HashMapBuilder.put(
 				"create",
 				addAction(
@@ -183,21 +211,7 @@ public class TaxonomyVocabularyResourceImpl
 					ActionKeys.UPDATE, "putTaxonomyVocabularyBatch",
 					AssetCategoriesPermission.RESOURCE_NAME, null)
 			).build(),
-			booleanQuery -> {
-			},
-			filter, AssetVocabulary.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ASSET_VOCABULARY_ID),
-			searchContext -> {
-				searchContext.addVulcanAggregation(aggregation);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {siteId});
-			},
-			sorts,
-			document -> _toTaxonomyVocabulary(
-				_assetVocabularyService.getVocabulary(
-					GetterUtil.getLong(
-						document.get(Field.ASSET_VOCABULARY_ID)))));
+			siteId, search, aggregation, filter, pagination, sorts);
 	}
 
 	@Override
@@ -630,6 +644,31 @@ public class TaxonomyVocabularyResourceImpl
 		return assetVocabularySettingsHelper.toString();
 	}
 
+	private Page<TaxonomyVocabulary> _getTaxonomyVocabularyPage(
+			Map<String, Map<String, String>> actions, Long groupId,
+			String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			actions,
+			booleanQuery -> {
+			},
+			filter, AssetVocabulary.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ASSET_VOCABULARY_ID),
+			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(new long[] {groupId});
+			},
+			sorts,
+			document -> _toTaxonomyVocabulary(
+				_assetVocabularyService.getVocabulary(
+					GetterUtil.getLong(
+						document.get(Field.ASSET_VOCABULARY_ID)))));
+	}
+
 	private TaxonomyVocabulary _toTaxonomyVocabulary(
 		AssetVocabulary assetVocabulary) {
 
@@ -638,7 +677,7 @@ public class TaxonomyVocabularyResourceImpl
 
 		return new TaxonomyVocabulary() {
 			{
-				actions = HashMapBuilder.put(
+				actions = HashMapBuilder.<String, Map<String, String>>put(
 					"delete",
 					addAction(
 						ActionKeys.DELETE, assetVocabulary,

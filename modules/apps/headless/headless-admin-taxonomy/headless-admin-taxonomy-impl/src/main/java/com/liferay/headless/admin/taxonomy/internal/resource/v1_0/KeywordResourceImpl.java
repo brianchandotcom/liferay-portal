@@ -53,6 +53,7 @@ import com.liferay.portlet.asset.service.permission.AssetTagsPermission;
 import java.sql.Timestamp;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -80,7 +81,33 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return getSiteKeywordsPage(
+		return _getKeywordPage(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.MANAGE_TAG, "postAssetLibraryKeyword",
+					AssetTagsPermission.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.MANAGE_TAG, "postAssetLibraryKeywordBatch",
+					AssetTagsPermission.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteKeywordBatch",
+					AssetTagsPermission.RESOURCE_NAME, null)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.MANAGE_TAG, "getAssetLibraryKeywordsPage",
+					AssetTagsPermission.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putKeywordBatch",
+					AssetTagsPermission.RESOURCE_NAME, null)
+			).build(),
 			assetLibraryId, search, aggregation, filter, pagination, sorts);
 	}
 
@@ -134,7 +161,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return SearchUtil.search(
+		return _getKeywordPage(
 			HashMapBuilder.put(
 				"create",
 				addAction(
@@ -161,21 +188,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 					ActionKeys.UPDATE, "putKeywordBatch",
 					AssetTagsPermission.RESOURCE_NAME, null)
 			).build(),
-			booleanQuery -> {
-			},
-			filter, AssetTag.class.getName(), search, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.addVulcanAggregation(aggregation);
-				searchContext.setAttribute(Field.NAME, search);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {siteId});
-			},
-			sorts,
-			document -> _toKeyword(
-				_assetTagService.getTag(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+			siteId, search, aggregation, filter, pagination, sorts);
 	}
 
 	@Override
@@ -230,6 +243,31 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	@Override
 	protected String getPermissionCheckerResourceName(Object id) {
 		return AssetTagsPermission.RESOURCE_NAME;
+	}
+
+	private Page<Keyword> _getKeywordPage(
+			Map<String, Map<String, String>> actions, Long groupId,
+			String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			actions,
+			booleanQuery -> {
+			},
+			filter, AssetTag.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
+				searchContext.setAttribute(Field.NAME, search);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setGroupIds(new long[] {groupId});
+			},
+			sorts,
+			document -> _toKeyword(
+				_assetTagService.getTag(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	private ProjectionList _getProjectionList() {

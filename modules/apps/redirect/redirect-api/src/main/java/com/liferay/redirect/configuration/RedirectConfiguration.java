@@ -15,7 +15,7 @@
 package com.liferay.redirect.configuration;
 
 /**
- * @author     Alejandro Tardín
+ * @author Alejandro Tardín
  */
 public interface RedirectConfiguration {
 

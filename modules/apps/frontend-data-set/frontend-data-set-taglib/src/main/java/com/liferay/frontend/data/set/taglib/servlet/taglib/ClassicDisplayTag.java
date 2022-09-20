@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.data.set.taglib.servlet.taglib;
 
-import com.liferay.frontend.data.set.model.FDSPaginationEntry;
 import com.liferay.frontend.data.set.model.FDSSortItem;
 import com.liferay.frontend.data.set.model.FDSSortItemList;
 import com.liferay.frontend.data.set.taglib.internal.servlet.ServletContextUtil;
@@ -23,7 +22,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -36,13 +34,11 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -102,7 +98,6 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 
 			_setActiveViewSettingsJSON();
 			_setDataSetDisplayViewsContext();
-			_setFDSPaginationEntries();
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -152,20 +147,12 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 		return _formName;
 	}
 
-	public int getItemsPerPage() {
-		return _itemsPerPage;
-	}
-
 	public String getNestedItemsKey() {
 		return _nestedItemsKey;
 	}
 
 	public String getNestedItemsReferenceKey() {
 		return _nestedItemsReferenceKey;
-	}
-
-	public int getPageNumber() {
-		return _pageNumber;
 	}
 
 	public String getSelectedItemsKey() {
@@ -230,10 +217,6 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 		_formName = formName;
 	}
 
-	public void setItemsPerPage(int itemsPerPage) {
-		_itemsPerPage = itemsPerPage;
-	}
-
 	public void setNestedItemsKey(String nestedItemsKey) {
 		_nestedItemsKey = nestedItemsKey;
 	}
@@ -249,10 +232,6 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 		super.setPageContext(pageContext);
 
 		setServletContext(ServletContextUtil.getServletContext());
-	}
-
-	public void setPageNumber(int pageNumber) {
-		_pageNumber = pageNumber;
 	}
 
 	public void setSelectedItemsKey(String selectedItemsKey) {
@@ -293,16 +272,12 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 		_dataProviderKey = null;
 		_dataSetDisplayViewsContext = null;
 		_deltaParam = null;
-		_fdsPaginationEntries = null;
 		_fdsSortItemList = new FDSSortItemList();
 		_fdsViewSerializer = null;
 		_formId = null;
 		_formName = null;
-		_itemsPerPage = 0;
 		_nestedItemsKey = null;
 		_nestedItemsReferenceKey = null;
-		_pageNumber = 0;
-		_paginationSelectedEntry = 0;
 		_selectedItemsKey = null;
 		_selectionType = null;
 		_showManagementBar = true;
@@ -345,15 +320,6 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 				"nestedItemsReferenceKey",
 				_toNullOrObject(_nestedItemsReferenceKey)
 			).put(
-				"pagination",
-				HashMapBuilder.<String, Object>put(
-					"deltas", _fdsPaginationEntries
-				).put(
-					"initialDelta", _itemsPerPage
-				).put(
-					"initialPageNumber", _pageNumber
-				).build()
-			).put(
 				"portletId", PortalUtil.getPortletId(getRequest())
 			).put(
 				"selectedItemsKey", _toNullOrObject(_selectedItemsKey)
@@ -374,20 +340,6 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 			).build());
 	}
 
-	private List<FDSPaginationEntry> _getFDSPaginationEntries() {
-		List<FDSPaginationEntry> fdsPaginationEntries = new ArrayList<>();
-
-		for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
-			if (curDelta > SearchContainer.MAX_DELTA) {
-				continue;
-			}
-
-			fdsPaginationEntries.add(new FDSPaginationEntry(null, curDelta));
-		}
-
-		return fdsPaginationEntries;
-	}
-
 	private void _setActiveViewSettingsJSON() {
 		HttpServletRequest httpServletRequest = getRequest();
 
@@ -404,22 +356,6 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 	private void _setDataSetDisplayViewsContext() {
 		_dataSetDisplayViewsContext = _fdsViewSerializer.serialize(
 			getId(), PortalUtil.getLocale(getRequest()));
-	}
-
-	private void _setFDSPaginationEntries() {
-		_fdsPaginationEntries = _getFDSPaginationEntries();
-
-		Stream<FDSPaginationEntry> stream = _fdsPaginationEntries.stream();
-
-		FDSPaginationEntry fdsPaginationEntry = stream.filter(
-			entry -> entry.getLabel() == _itemsPerPage
-		).findAny(
-		).orElse(
-			null
-		);
-
-		_paginationSelectedEntry = _fdsPaginationEntries.indexOf(
-			fdsPaginationEntry);
 	}
 
 	private Object _toNullOrObject(Object object) {
@@ -443,16 +379,12 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 	private String _dataProviderKey;
 	private Object _dataSetDisplayViewsContext;
 	private String _deltaParam;
-	private List<FDSPaginationEntry> _fdsPaginationEntries;
 	private FDSSortItemList _fdsSortItemList = new FDSSortItemList();
 	private FDSViewSerializer _fdsViewSerializer;
 	private String _formId;
 	private String _formName;
-	private int _itemsPerPage;
 	private String _nestedItemsKey;
 	private String _nestedItemsReferenceKey;
-	private int _pageNumber;
-	private int _paginationSelectedEntry;
 	private String _selectedItemsKey;
 	private String _selectionType;
 	private boolean _showManagementBar = true;

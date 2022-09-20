@@ -14,11 +14,13 @@
 
 package com.liferay.frontend.data.set.taglib.servlet.taglib;
 
+import com.liferay.frontend.data.set.model.FDSPaginationEntry;
 import com.liferay.frontend.data.set.taglib.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.data.set.taglib.internal.util.ServicesProvider;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.js.module.launcher.JSModuleResolver;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -26,8 +28,10 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.AttributesTagSupport;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -59,12 +63,39 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		}
 	}
 
+	@Override
+	public int doStartTag() throws JspException {
+		try {
+			_fdsPaginationEntries = new ArrayList<>();
+
+			for (int curDelta :
+					PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
+
+				if (curDelta > SearchContainer.MAX_DELTA) {
+					continue;
+				}
+
+				_fdsPaginationEntries.add(
+					new FDSPaginationEntry(null, curDelta));
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return super.doStartTag();
+	}
+
 	public Map<String, Object> getAdditionalProps() {
 		return _additionalProps;
 	}
 
 	public String getId() {
 		return _id;
+	}
+
+	public int getItemsPerPage() {
+		return _itemsPerPage;
 	}
 
 	public String getNamespace() {
@@ -83,6 +114,10 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		}
 
 		return _namespace;
+	}
+
+	public int getPageNumber() {
+		return _pageNumber;
 	}
 
 	public String getPropsTransformer() {
@@ -105,8 +140,16 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		_id = id;
 	}
 
+	public void setItemsPerPage(int itemsPerPage) {
+		_itemsPerPage = itemsPerPage;
+	}
+
 	public void setNamespace(String namespace) {
 		_namespace = namespace;
+	}
+
+	public void setPageNumber(int pageNumber) {
+		_pageNumber = pageNumber;
 	}
 
 	/**
@@ -137,8 +180,11 @@ public class BaseDisplayTag extends AttributesTagSupport {
 
 	protected void cleanUp() {
 		_additionalProps = null;
+		_fdsPaginationEntries = null;
 		_id = null;
+		_itemsPerPage = 0;
 		_namespace = null;
+		_pageNumber = 0;
 		_portletURL = null;
 		_propsTransformer = null;
 		_propsTransformerServletContext = null;
@@ -176,6 +222,15 @@ public class BaseDisplayTag extends AttributesTagSupport {
 			}
 		).put(
 			"namespace", getNamespace()
+		).put(
+			"pagination",
+			HashMapBuilder.<String, Object>put(
+				"deltas", _fdsPaginationEntries
+			).put(
+				"initialDelta", _itemsPerPage
+			).put(
+				"initialPageNumber", _pageNumber
+			).build()
 		).put(
 			"selectedItems", _selectedItems
 		).build();
@@ -241,8 +296,11 @@ public class BaseDisplayTag extends AttributesTagSupport {
 	private static final Log _log = LogFactoryUtil.getLog(BaseDisplayTag.class);
 
 	private Map<String, Object> _additionalProps;
+	private List<FDSPaginationEntry> _fdsPaginationEntries;
 	private String _id;
+	private int _itemsPerPage;
 	private String _namespace;
+	private int _pageNumber;
 	private PortletURL _portletURL;
 	private String _propsTransformer;
 	private ServletContext _propsTransformerServletContext;

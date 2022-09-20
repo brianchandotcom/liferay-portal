@@ -23,4 +23,7 @@ public class ModuleFrameworkPropsValues {
 		GetterUtil.getInteger(
 			SystemProperties.get("module.framework.beginning.start.level"));
 
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING =
+		SystemProperties.get("module.framework.file.install.config.encoding");
+
 }

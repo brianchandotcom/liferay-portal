@@ -980,7 +980,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			bundleContext.getService(
 				bundleContext.getServiceReference(
 					"org.osgi.service.cm.ConfigurationAdmin")),
-			PropsValues.MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING);
+			ModuleFrameworkPropsValues.
+				MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING);
 
 		File dir = new File(PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR);
 

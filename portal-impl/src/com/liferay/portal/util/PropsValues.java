@@ -1431,9 +1431,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED));
 
-	public static final String MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING =
-		PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING);
-
 	public static final String MODULE_FRAMEWORK_FILE_INSTALL_FILTER =
 		PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_FILE_INSTALL_FILTER);
 

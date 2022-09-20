@@ -1753,9 +1753,6 @@ public interface PropsKeys {
 	public static final String MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED =
 		"module.framework.file.install.cfg.enabled";
 
-	public static final String MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING =
-		"module.framework.file.install.config.encoding";
-
 	public static final String MODULE_FRAMEWORK_FILE_INSTALL_FILTER =
 		"module.framework.file.install.filter";
 

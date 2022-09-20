@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1152,12 +1153,12 @@ public class RedirectNotFoundEntryPersistenceImpl
 
 			try {
 				redirectNotFoundEntry.setUrl(
-					sanitize(
-						_sanitizers, companyId, groupId, userId,
+					SanitizerUtil.sanitize(
+						companyId, groupId, userId,
 						RedirectNotFoundEntry.class.getName(),
 						redirectNotFoundEntryId, ContentTypes.TEXT_PLAIN,
-						new String[] {Sanitizer.MODE_ALL},
-						redirectNotFoundEntry.getUrl(), null));
+						Sanitizer.MODE_ALL, redirectNotFoundEntry.getUrl(),
+						null));
 			}
 			catch (SanitizerException sanitizerException) {
 				throw new SystemException(sanitizerException);
@@ -1559,9 +1560,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 
 	@Reference
 	protected FinderCache finderCache;
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 	private static final String _SQL_SELECT_REDIRECTNOTFOUNDENTRY =
 		"SELECT redirectNotFoundEntry FROM RedirectNotFoundEntry redirectNotFoundEntry";

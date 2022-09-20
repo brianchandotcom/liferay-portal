@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
@@ -2605,12 +2606,10 @@ public class KBTemplatePersistenceImpl
 
 			try {
 				kbTemplate.setContent(
-					sanitize(
-						_sanitizers, companyId, groupId, userId,
-						KBTemplate.class.getName(), kbTemplateId,
-						ContentTypes.TEXT_HTML,
-						new String[] {Sanitizer.MODE_ALL},
-						kbTemplate.getContent(), null));
+					SanitizerUtil.sanitize(
+						companyId, groupId, userId, KBTemplate.class.getName(),
+						kbTemplateId, ContentTypes.TEXT_HTML,
+						Sanitizer.MODE_ALL, kbTemplate.getContent(), null));
 			}
 			catch (SanitizerException sanitizerException) {
 				throw new SystemException(sanitizerException);
@@ -3045,9 +3044,6 @@ public class KBTemplatePersistenceImpl
 
 	@Reference
 	protected FinderCache finderCache;
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 	private static final String _SQL_SELECT_KBTEMPLATE =
 		"SELECT kbTemplate FROM KBTemplate kbTemplate";

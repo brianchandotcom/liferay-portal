@@ -536,6 +536,15 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().updateObjectDefinition(objectDefinition);
 	}
 
+	public static ObjectDefinition updateSystemObjectDefinition(
+			String externalReferenceCode, long objectDefinitionId,
+			long titleObjectFieldId)
+		throws PortalException {
+
+		return getService().updateSystemObjectDefinition(
+			externalReferenceCode, objectDefinitionId, titleObjectFieldId);
+	}
+
 	public static ObjectDefinition updateTitleObjectFieldId(
 			long objectDefinitionId, long titleObjectFieldId)
 		throws PortalException {

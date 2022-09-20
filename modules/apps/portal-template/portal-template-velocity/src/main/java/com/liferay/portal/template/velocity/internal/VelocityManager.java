@@ -67,11 +67,6 @@ public class VelocityManager extends BaseTemplateManager {
 	}
 
 	@Override
-	public void destroy(ClassLoader classLoader) {
-		_templateContextHelper.removeHelperUtilities(classLoader);
-	}
-
-	@Override
 	public String getName() {
 		return TemplateConstants.LANG_TYPE_VM;
 	}

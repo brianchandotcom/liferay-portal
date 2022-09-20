@@ -46,12 +46,6 @@ public class TemplateManagerUtil {
 		_templateManagers.clear();
 	}
 
-	public static void destroy(ClassLoader classLoader) {
-		for (TemplateManager templateManager : _templateManagers.values()) {
-			templateManager.destroy(classLoader);
-		}
-	}
-
 	public static Set<String> getSupportedLanguageTypes(String propertyKey) {
 		Set<String> supportedLanguageTypes = _supportedLanguageTypes.get(
 			propertyKey);

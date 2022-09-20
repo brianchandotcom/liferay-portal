@@ -38,8 +38,6 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 
 			setSubmitting(false);
 
-			// @ts-ignore
-
 			if (result?.ok) {
 				onChangeStep(ESteps.Property);
 
@@ -55,9 +53,6 @@ const Step: React.FC<IStepProps> = ({onChangeStep}) => {
 					type: 'danger',
 				});
 			}
-
-			// eslint-disable-next-line no-console
-			console.log(result);
 		};
 
 		request();

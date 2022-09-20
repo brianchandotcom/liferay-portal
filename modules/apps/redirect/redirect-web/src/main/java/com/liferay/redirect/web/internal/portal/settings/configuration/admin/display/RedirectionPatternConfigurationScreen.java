@@ -17,10 +17,16 @@ package com.liferay.redirect.web.internal.portal.settings.configuration.admin.di
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
+import com.liferay.redirect.web.internal.display.context.RedirectPatternConfigurationDisplayContext;
 
 import java.io.IOException;
 
 import java.util.Locale;
+
+import javax.portlet.PortletResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -64,6 +70,15 @@ public class RedirectionPatternConfigurationScreen
 		throws IOException {
 
 		try {
+			httpServletRequest.setAttribute(
+				RedirectPatternConfigurationDisplayContext.class.getName(),
+				new RedirectPatternConfigurationDisplayContext(
+					httpServletRequest,
+					_portal.getLiferayPortletResponse(
+						(PortletResponse)httpServletRequest.getAttribute(
+							JavaConstants.JAVAX_PORTLET_RESPONSE)),
+					_redirectPatternConfigurationProvider));
+
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
 					"/redirect_settings/redirect_pattern.jsp");
@@ -78,6 +93,13 @@ public class RedirectionPatternConfigurationScreen
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RedirectPatternConfigurationProvider
+		_redirectPatternConfigurationProvider;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.redirect.web)")
 	private ServletContext _servletContext;

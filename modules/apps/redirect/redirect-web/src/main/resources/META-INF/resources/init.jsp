@@ -59,6 +59,7 @@ page import="com.liferay.redirect.web.internal.display.context.RedirectEntriesDi
 page import="com.liferay.redirect.web.internal.display.context.RedirectEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.redirect.web.internal.display.context.RedirectNotFoundEntriesDisplayContext" %><%@
 page import="com.liferay.redirect.web.internal.display.context.RedirectNotFoundEntriesManagementToolbarDisplayContext" %><%@
+page import="com.liferay.redirect.web.internal.display.context.RedirectPatternConfigurationDisplayContext" %><%@
 page import="com.liferay.redirect.web.internal.util.RedirectUtil" %>
 
 <%@ page import="java.text.DateFormat" %>

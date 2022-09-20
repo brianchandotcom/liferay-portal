@@ -190,6 +190,74 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 					}
 
 				}
+			).withContentDashboardItemAction(
+				new ContentDashboardItemAction() {
+
+					@Override
+					public String getIcon() {
+						return "preview-image";
+					}
+
+					@Override
+					public String getLabel(Locale locale) {
+						return "preview-image";
+					}
+
+					@Override
+					public String getName() {
+						return "preview-image";
+					}
+
+					@Override
+					public Type getType() {
+						return Type.PREVIEW_IMAGE;
+					}
+
+					@Override
+					public String getURL() {
+						return "http://www.preview.com/imageURL";
+					}
+
+					@Override
+					public String getURL(Locale locale) {
+						return getURL();
+					}
+
+				}
+			).withContentDashboardItemAction(
+				new ContentDashboardItemAction() {
+
+					@Override
+					public String getIcon() {
+						return "preview";
+					}
+
+					@Override
+					public String getLabel(Locale locale) {
+						return "preview";
+					}
+
+					@Override
+					public String getName() {
+						return "preview";
+					}
+
+					@Override
+					public Type getType() {
+						return Type.PREVIEW;
+					}
+
+					@Override
+					public String getURL() {
+						return "http://www.viewURL.url.com/viewURL";
+					}
+
+					@Override
+					public String getURL(Locale locale) {
+						return getURL();
+					}
+
+				}
 			).withSubtype(
 				"subType"
 			).withUser(
@@ -251,6 +319,17 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		Assert.assertNotNull(jsonObject.getString("fetchSharingButtonURL"));
 		Assert.assertNotNull(
 			jsonObject.getString("fetchSharingCollaboratorsURL"));
+
+		Assert.assertNotNull(jsonObject.getString("preview"));
+
+		JSONObject previewJSONObject = jsonObject.getJSONObject("preview");
+
+		Assert.assertEquals(
+			"http://www.preview.com/imageURL",
+			previewJSONObject.getString("imageURL"));
+		Assert.assertEquals(
+			"http://www.viewURL.url.com/viewURL",
+			previewJSONObject.getString("url"));
 
 		JSONArray tagsJSONArray = jsonObject.getJSONArray("tags");
 

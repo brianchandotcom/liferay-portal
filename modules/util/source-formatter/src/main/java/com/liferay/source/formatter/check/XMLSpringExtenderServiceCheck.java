@@ -62,11 +62,11 @@ public class XMLSpringExtenderServiceCheck extends BaseFileCheck {
 
 			Element rootElement = document.getRootElement();
 
-			String dependencyInjectorName = rootElement.attributeValue(
+			String dependencyInjector = rootElement.attributeValue(
 				"dependency-injector");
 
-			if (Validator.isNotNull(dependencyInjectorName) &&
-				dependencyInjectorName.equals("spring")) {
+			if (Validator.isNotNull(dependencyInjector) &&
+				dependencyInjector.equals("spring")) {
 
 				addMessage(
 					fileName,

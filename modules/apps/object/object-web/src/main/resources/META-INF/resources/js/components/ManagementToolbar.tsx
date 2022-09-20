@@ -22,6 +22,8 @@ import React, {useState} from 'react';
 
 import ModalEditExternalReferenceCode from './ModalEditExternalReferenceCode';
 
+import './ManagementToolbar.scss';
+
 export default function ManagementToolbar({
 	backURL,
 	externalReferenceCode: initialExternalReferenceCode,

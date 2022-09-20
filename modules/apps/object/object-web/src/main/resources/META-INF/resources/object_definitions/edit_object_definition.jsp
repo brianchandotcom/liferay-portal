@@ -21,45 +21,47 @@ ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(Objec
 ObjectDefinitionsDetailsDisplayContext objectDefinitionsDetailsDisplayContext = (ObjectDefinitionsDetailsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<div>
-	<react:component
-		module="js/components/ManagementToolbar"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"backURL", ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()))
-			).put(
-				"externalReferenceCode", objectDefinition.getExternalReferenceCode()
-			).put(
-				"hasPublishObjectPermission", objectDefinitionsDetailsDisplayContext.hasPublishObjectPermission()
-			).put(
-				"hasUpdateObjectDefinitionPermission", objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission()
-			).put(
-				"isApproved", objectDefinition.isApproved()
-			).put(
-				"label", objectDefinition.getLabel(locale, true)
-			).put(
+<div class="lfr-object-edit-object-definition">
+	<div>
+		<react:component
+			module="js/components/ManagementToolbar"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"backURL", ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()))
+				).put(
+					"externalReferenceCode", objectDefinition.getExternalReferenceCode()
+				).put(
+					"hasPublishObjectPermission", objectDefinitionsDetailsDisplayContext.hasPublishObjectPermission()
+				).put(
+					"hasUpdateObjectDefinitionPermission", objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission()
+				).put(
+					"isApproved", objectDefinition.isApproved()
+				).put(
+					"label", objectDefinition.getLabel(locale, true)
+				).put(
+					"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+				).put(
+					"portletNamespace", liferayPortletResponse.getNamespace()
+				).put(
+					"screenNavigationCategoryKey", ParamUtil.getString(request, "screenNavigationCategoryKey")
+				).put(
+					"system", objectDefinition.isSystem()
+				).build()
+			%>'
+		/>
+	</div>
+
+	<liferay-frontend:screen-navigation
+		context="<%= objectDefinition %>"
+		key="<%= ObjectDefinitionsScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_OBJECT_DEFINITION %>"
+		portletURL='<%=
+			PortletURLBuilder.createRenderURL(
+				renderResponse
+			).setMVCRenderCommandName(
+				"/object_definitions/edit_object_definition"
+			).setParameter(
 				"objectDefinitionId", objectDefinition.getObjectDefinitionId()
-			).put(
-				"portletNamespace", liferayPortletResponse.getNamespace()
-			).put(
-				"screenNavigationCategoryKey", ParamUtil.getString(request, "screenNavigationCategoryKey")
-			).put(
-				"system", objectDefinition.isSystem()
 			).build()
 		%>'
 	/>
 </div>
-
-<liferay-frontend:screen-navigation
-	context="<%= objectDefinition %>"
-	key="<%= ObjectDefinitionsScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_OBJECT_DEFINITION %>"
-	portletURL='<%=
-		PortletURLBuilder.createRenderURL(
-			renderResponse
-		).setMVCRenderCommandName(
-			"/object_definitions/edit_object_definition"
-		).setParameter(
-			"objectDefinitionId", objectDefinition.getObjectDefinitionId()
-		).build()
-	%>'
-/>

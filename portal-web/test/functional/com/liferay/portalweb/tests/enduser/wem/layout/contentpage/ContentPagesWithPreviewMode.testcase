@@ -28,6 +28,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-158527. The guest shouldn't be allowed to preview changes."
+	@priority = "4"
+	test CannotPreviewChangesAsGuest {
+		task ("Given a guest has a content pages with draft changes") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.previewInANewTab();
+
+			var previewURL = Navigator.getCurrentURL();
+
+			Close.closeWindow();
+		}
+
+		task ("When the guest access to the content page at preview mode") {
+			User.logoutPG();
+
+			Navigator.openSpecificURL(url = "${previewURL}");
+		}
+
+		task ("Then the guest should see not found") {
+			AssertTextEquals(
+				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+				value1 = "Not Found");
+		}
+	}
+
 	@description = "This is a test for LPS-153367. The page creator could preview changes in a new tab."
 	@priority = "5"
 	test PreviewChangesInANewTab {

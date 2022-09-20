@@ -976,6 +976,53 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-160243. The page creator could reenable show empty collection alert at preview mode and view mode."
+	@priority = "4"
+	test ReenableEmptyCollectionAlert {
+		task ("Given a page creator has a Collection Display with empty collection alert disabled on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets",
+				showEmptyCollectionAlert = "false");
+		}
+
+		task ("When the page creator reenables the empty collection alert") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				showEmptyCollectionAlert = "true");
+		}
+
+		task ("Then the page creator sees the empty collection alert at preview and view modes") {
+			PageEditor.previewInANewTab();
+
+			AssertTextEquals(
+				index = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "No Results Found");
+
+			Close.closeWindow();
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				index = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "No Results Found");
+		}
+	}
+
 	@description = "This is a use case for LPS-114727. The Content Display fragment can display abstract of asset entries in Collection Display."
 	@priority = "5"
 	@uitest

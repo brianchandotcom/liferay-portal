@@ -14,7 +14,6 @@
 
 package com.liferay.portal.spring.extender.internal.configuration;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,9 +21,8 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.BundleUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.util.Dictionary;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -50,10 +48,7 @@ public class PortletConfigurationExtender
 	public PortletConfigurationExtension addingBundle(
 		Bundle bundle, BundleEvent bundleEvent) {
 
-		Dictionary<String, String> headers = bundle.getHeaders(
-			StringPool.BLANK);
-
-		if (headers.get("Liferay-Service") == null) {
+		if (!BundleUtil.isLiferayServiceBundle(bundle)) {
 			return null;
 		}
 

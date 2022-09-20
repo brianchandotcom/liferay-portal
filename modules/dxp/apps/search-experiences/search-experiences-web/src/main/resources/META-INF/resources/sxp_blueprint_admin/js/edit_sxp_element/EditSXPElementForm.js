@@ -169,7 +169,7 @@ function EditSXPElementForm({
 	);
 
 	/**
-	 * Set to true, `isSXPElementJSONInvalid` prevents saving, rendering
+	 * When set to `true`, `isSXPElementJSONInvalid` prevents saving, rendering
 	 * preview, and editing on the title/description modal.
 	 */
 	const [isSXPElementJSONInvalid, setIsSXPElementJSONInvalid] = useState(

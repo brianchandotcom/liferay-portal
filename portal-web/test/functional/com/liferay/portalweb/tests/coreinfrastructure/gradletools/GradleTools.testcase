@@ -1,0 +1,51 @@
+@component-name = "portal-gradle-tools"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Gradle Tools";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Verify a module can be deployed after adding a hotfix qualifier to its build version"
+	@priority = "3"
+	test HotfixQualifierSmoke {
+		property test.name.skip.portal.instance = "GradleTools#HotfixQualifierSmoke";
+
+		task ("Given a hotfix qualifier is added to a module's build version") {
+			var hotfixQualifier = ".hotfix-0-8000";
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+			var moduleBaseDir = "modules/apps/account/account-admin-web";
+			var projectDir = PropsUtil.get("project.dir");
+
+			for (var file : list "bnd.bnd,package.json") {
+				var fileContent = FileUtil.read("${projectDir}/${moduleBaseDir}/${file}");
+
+				var bundleVersion = RegexUtil.replace("${fileContent}", "[Vv]ersion\"?: \"?(.*[0-9])", "1");
+
+				var fileContent = StringUtil.replace("${fileContent}", "${bundleVersion}", "${bundleVersion}${hotfixQualifier}");
+
+				FileUtil.write("${projectDir}/${moduleBaseDir}/${file}", "${fileContent}");
+			}
+		}
+
+		task ("Then the module can be deployed successfully") {
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=${moduleBaseDir} -DliferayHome=${liferayHome}");
+
+			WaitForConsoleTextPresent(value1 = "STARTED com.liferay.account.admin.web_${bundleVersion}${hotfixQualifier}");
+		}
+	}
+
+}

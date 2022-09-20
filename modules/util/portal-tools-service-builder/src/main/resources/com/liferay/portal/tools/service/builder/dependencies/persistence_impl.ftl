@@ -2970,6 +2970,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		protected ${localizedEntity.name}Persistence ${localizedEntity.variableName}Persistence;
 	</#if>
 
+	<#if sanitizeTuples?size != 0 && serviceBuilder.isVersionGTE_7_4_0() && dependencyInjectorDS>
+			@Reference
+			private volatile List<Sanitizer> _sanitizers;
+	</#if>
+
 	<#if entity.versionedEntity?? && entity.versionedEntity.localizedEntity??>
 		<#assign
 			versionedEntity = entity.versionedEntity
@@ -3146,11 +3151,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			@ServiceReference(type = PortalUUID.class)
 		</#if>
 		private PortalUUID ${portalUUID};
-	</#if>
-
-	<#if (sanitizeTuples?size != 0) && serviceBuilder.isVersionGTE_7_4_0() && dependencyInjectorDS>
-		@Reference
-		private volatile List<Sanitizer> _sanitizers;
 	</#if>
 
 	<#if serviceBuilder.isVersionGTE_7_4_0() && dependencyInjectorDS>

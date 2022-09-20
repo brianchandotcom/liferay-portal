@@ -118,6 +118,7 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 			new String[] {
 				AccountActionKeys.MANAGE_ADDRESSES,
 				AccountActionKeys.MANAGE_ORGANIZATIONS,
+				AccountActionKeys.VIEW_ACCOUNT_ROLES,
 				AccountActionKeys.VIEW_ADDRESSES,
 				AccountActionKeys.VIEW_ORGANIZATIONS,
 				AccountActionKeys.VIEW_USERS, ActionKeys.MANAGE_USERS,

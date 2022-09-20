@@ -12,4 +12,10 @@
  * details.
  */
 
-export {};
+module.exports = {
+	build: {
+		bundler: {
+			ignore: ['**/js/liferay.js'],
+		},
+	},
+};

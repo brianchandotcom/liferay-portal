@@ -350,6 +350,7 @@ export default {
 	'warning': 'Warning',
 	'warnings': 'Warnings',
 	'warnings-x': 'Warnings ({0})',
+	'x-is-a-required-field': '{0} is a required field.',
 	'x-items': '{0} Items',
 	'x-minutes': '{0} Minutes',
 	'x-results-for-x': '{0} Results for {1}',

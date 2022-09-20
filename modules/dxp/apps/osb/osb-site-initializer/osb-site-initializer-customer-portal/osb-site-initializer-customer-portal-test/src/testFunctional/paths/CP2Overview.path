@@ -10,7 +10,11 @@
 </thead>
 
 <tbody>
-
+<tr>
+	<td>SLA_CARD_CONTENT</td> 
+	<td>//*[contains(@class, 'cp-sla-card-active')]//*[text()='${key_cardContent}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

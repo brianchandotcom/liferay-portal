@@ -1,3 +1,9 @@
 definition {
-    
+
+    macro assertSLACardContentIsVisible {
+        var key_cardContent = "${cardContent}";
+
+        AssertVisible(locator1 = "CP2Overview#SLA_CARD_CONTENT");
+    }
+
 }

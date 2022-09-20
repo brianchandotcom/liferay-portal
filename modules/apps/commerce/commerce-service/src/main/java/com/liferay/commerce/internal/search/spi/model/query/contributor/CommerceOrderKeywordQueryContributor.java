@@ -60,6 +60,9 @@ public class CommerceOrderKeywordQueryContributor
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "externalReferenceCode", false);
 
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "orderCreatorEmailAddress", false);
+
 		if (Validator.isNotNull(keywords)) {
 			try {
 				keywords = StringUtil.toLowerCase(keywords);

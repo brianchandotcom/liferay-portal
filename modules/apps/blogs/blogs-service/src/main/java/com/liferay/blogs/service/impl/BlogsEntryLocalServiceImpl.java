@@ -95,7 +95,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -1983,7 +1983,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (bodyLocalizedValuesMap != null) {
 			subscriptionSender.setLocalizedBodyMap(
-				LocalizationUtil.getMap(bodyLocalizedValuesMap));
+				_localization.getMap(bodyLocalizedValuesMap));
 		}
 
 		subscriptionSender.setLocalizedContextAttributeWithFunction(
@@ -1992,7 +1992,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (subjectLocalizedValuesMap != null) {
 			subscriptionSender.setLocalizedSubjectMap(
-				LocalizationUtil.getMap(subjectLocalizedValuesMap));
+				_localization.getMap(subjectLocalizedValuesMap));
 		}
 
 		subscriptionSender.setMailId("blogs_entry", entry.getEntryId());
@@ -2433,6 +2433,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

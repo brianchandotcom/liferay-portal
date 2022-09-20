@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.Calendar;
@@ -65,10 +65,10 @@ public class EditCommerceOrderTypeMVCActionCommand
 				long commerceOrderTypeId = ParamUtil.getLong(
 					actionRequest, "commerceOrderTypeId");
 
-				Map<Locale, String> nameMap =
-					LocalizationUtil.getLocalizationMap(actionRequest, "name");
+				Map<Locale, String> nameMap = _localization.getLocalizationMap(
+					actionRequest, "name");
 				Map<Locale, String> descriptionMap =
-					LocalizationUtil.getLocalizationMap(
+					_localization.getLocalizationMap(
 						actionRequest, "description");
 				boolean active = ParamUtil.getBoolean(actionRequest, "active");
 				int displayDateMonth = ParamUtil.getInteger(
@@ -157,5 +157,8 @@ public class EditCommerceOrderTypeMVCActionCommand
 
 	@Reference
 	private CommerceOrderTypeService _commerceOrderTypeService;
+
+	@Reference
+	private Localization _localization;
 
 }

@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -140,10 +140,9 @@ public class CPDefinitionOptionRelIndexer
 			cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
 
 		String cpDefinitionOptionRelDefaultLanguageId =
-			LocalizationUtil.getDefaultLanguageId(
-				cpDefinitionOptionRel.getName());
+			_localization.getDefaultLanguageId(cpDefinitionOptionRel.getName());
 
-		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
+		String[] languageIds = _localization.getAvailableLanguageIds(
 			cpDefinitionOptionRel.getName());
 
 		for (String languageId : languageIds) {
@@ -174,11 +173,9 @@ public class CPDefinitionOptionRelIndexer
 			}
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
-				name);
+				_localization.getLocalizedName(Field.NAME, languageId), name);
 			document.addText(
-				LocalizationUtil.getLocalizedName(
-					Field.DESCRIPTION, languageId),
+				_localization.getLocalizedName(Field.DESCRIPTION, languageId),
 				description);
 
 			document.addText(Field.CONTENT, name);
@@ -188,7 +185,7 @@ public class CPDefinitionOptionRelIndexer
 				cpDefinitionOptionRel.getCPDefinitionId());
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(
+				_localization.getLocalizedName(
 					CPField.DEFINITION_OPTION_VALUE_REL_NAME, languageId),
 				cpDefinitionOptionValueRelNames);
 		}
@@ -277,5 +274,8 @@ public class CPDefinitionOptionRelIndexer
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference
+	private Localization _localization;
 
 }

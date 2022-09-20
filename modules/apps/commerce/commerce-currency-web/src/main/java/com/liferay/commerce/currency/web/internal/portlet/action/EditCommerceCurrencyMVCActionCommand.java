@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.math.BigDecimal;
@@ -217,11 +217,11 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "commerceCurrencyId");
 
 		String code = ParamUtil.getString(actionRequest, "code");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
 		String rate = ParamUtil.getString(actionRequest, "rate");
-		Map<Locale, String> formatPatternMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "formatPattern");
+		Map<Locale, String> formatPatternMap = _localization.getLocalizationMap(
+			actionRequest, "formatPattern");
 
 		String roundingMode = ParamUtil.getString(
 			actionRequest, "roundingMode");
@@ -256,5 +256,8 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Localization _localization;
 
 }

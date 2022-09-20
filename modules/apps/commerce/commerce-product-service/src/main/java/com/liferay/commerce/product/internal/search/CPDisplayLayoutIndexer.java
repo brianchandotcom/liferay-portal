@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -153,12 +153,12 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 					cpDisplayLayout.getClassPK());
 
 			String[] availableLanguageIds =
-				LocalizationUtil.getAvailableLanguageIds(
+				_localization.getAvailableLanguageIds(
 					assetCategory.getDescription());
 
 			for (String availableLanguageId : availableLanguageIds) {
 				document.addText(
-					LocalizationUtil.getLocalizedName(
+					_localization.getLocalizedName(
 						Field.DESCRIPTION, availableLanguageId),
 					_html.stripHtml(
 						assetCategory.getDescription(availableLanguageId)));
@@ -262,6 +262,9 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

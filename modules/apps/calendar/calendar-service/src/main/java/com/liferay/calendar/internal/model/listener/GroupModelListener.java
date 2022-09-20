@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
@@ -48,7 +48,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			}
 
 			calendarResource.setNameMap(
-				LocalizationUtil.populateLocalizationMap(
+				_localization.populateLocalizationMap(
 					HashMapBuilder.put(
 						LocaleUtil.getSiteDefault(), group.getDescriptiveName()
 					).build(),
@@ -90,6 +90,9 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Reference
 	private CalendarResourceLocalService _calendarResourceLocalService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

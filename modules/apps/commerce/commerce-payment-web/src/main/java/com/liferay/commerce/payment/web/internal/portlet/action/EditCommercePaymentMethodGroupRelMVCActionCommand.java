@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -123,11 +123,10 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(actionRequest);
 
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "nameMapAsXML");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, "descriptionMapAsXML");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "descriptionMapAsXML");
 		File imageFile = uploadPortletRequest.getFile("imageFile");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
@@ -169,6 +168,9 @@ public class EditCommercePaymentMethodGroupRelMVCActionCommand
 	@Reference
 	private CommercePaymentMethodGroupRelService
 		_commercePaymentMethodGroupRelService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

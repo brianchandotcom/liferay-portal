@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.trash.TrashHelper;
 
@@ -60,7 +60,7 @@ public class CalendarBookingModelDocumentContributor
 				descriptionLanguageId);
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(
+				_localization.getLocalizedName(
 					Field.DESCRIPTION, descriptionLanguageId),
 				description);
 		}
@@ -74,7 +74,7 @@ public class CalendarBookingModelDocumentContributor
 			String title = calendarBooking.getTitle(titleLanguageId);
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.TITLE, titleLanguageId),
+				_localization.getLocalizedName(Field.TITLE, titleLanguageId),
 				title);
 		}
 
@@ -103,8 +103,7 @@ public class CalendarBookingModelDocumentContributor
 	protected TrashHelper trashHelper;
 
 	private String[] _getLanguageIds(String defaultLanguageId, String content) {
-		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
-			content);
+		String[] languageIds = _localization.getAvailableLanguageIds(content);
 
 		if (languageIds.length == 0) {
 			languageIds = new String[] {defaultLanguageId};
@@ -112,5 +111,8 @@ public class CalendarBookingModelDocumentContributor
 
 		return languageIds;
 	}
+
+	@Reference
+	private Localization _localization;
 
 }

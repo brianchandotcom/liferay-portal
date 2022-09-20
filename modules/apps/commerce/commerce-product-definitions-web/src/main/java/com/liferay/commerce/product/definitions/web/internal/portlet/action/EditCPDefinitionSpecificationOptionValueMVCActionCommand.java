@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -170,7 +170,7 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 
 		long cpOptionCategoryId = ParamUtil.getLong(
 			actionRequest, "CPOptionCategoryId");
-		Map<Locale, String> valueMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> valueMap = _localization.getLocalizationMap(
 			actionRequest, "value");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
@@ -190,5 +190,8 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 
 	@Reference
 	private CPSpecificationOptionService _cpSpecificationOptionService;
+
+	@Reference
+	private Localization _localization;
 
 }

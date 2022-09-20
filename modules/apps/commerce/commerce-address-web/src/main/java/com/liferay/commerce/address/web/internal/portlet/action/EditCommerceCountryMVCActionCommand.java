@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -222,7 +222,7 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		boolean billingAllowed = ParamUtil.getBoolean(
 			actionRequest, "billingAllowed");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
 		String number = ParamUtil.getString(actionRequest, "number");
 		double position = ParamUtil.getDouble(actionRequest, "position");
@@ -275,6 +275,9 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

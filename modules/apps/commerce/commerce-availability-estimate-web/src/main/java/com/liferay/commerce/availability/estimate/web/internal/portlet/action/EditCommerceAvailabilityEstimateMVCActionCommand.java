@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.Locale;
@@ -118,7 +118,7 @@ public class EditCommerceAvailabilityEstimateMVCActionCommand
 		long commerceAvailabilityEstimateId = ParamUtil.getLong(
 			actionRequest, "commerceAvailabilityEstimateId");
 
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> titleMap = _localization.getLocalizationMap(
 			actionRequest, "title");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
@@ -141,5 +141,8 @@ public class EditCommerceAvailabilityEstimateMVCActionCommand
 	@Reference
 	private CommerceAvailabilityEstimateService
 		_commerceAvailabilityEstimateService;
+
+	@Reference
+	private Localization _localization;
 
 }

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.util.Locale;
@@ -60,10 +60,10 @@ public class BlogsEntryModelDocumentContributor
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.CONTENT, languageId),
+				_localization.getLocalizedName(Field.CONTENT, languageId),
 				content);
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
+				_localization.getLocalizedName(Field.TITLE, languageId),
 				blogsEntry.getTitle());
 		}
 	}
@@ -73,5 +73,8 @@ public class BlogsEntryModelDocumentContributor
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Localization _localization;
 
 }

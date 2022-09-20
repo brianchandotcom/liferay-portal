@@ -59,7 +59,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -258,7 +258,7 @@ public class AssetPublisherWebHelper {
 		PortletPreferences portletPreferences) {
 
 		Map<Locale, String> emailAssetEntryAddedBodyMap =
-			LocalizationUtil.getLocalizationMap(
+			_localization.getLocalizationMap(
 				portletPreferences, "emailAssetEntryAddedBody",
 				StringPool.BLANK, StringPool.BLANK,
 				AssetPublisherWebHelper.class.getClassLoader());
@@ -296,7 +296,7 @@ public class AssetPublisherWebHelper {
 		PortletPreferences portletPreferences) {
 
 		Map<Locale, String> emailAssetEntryAddedSubjectMap =
-			LocalizationUtil.getLocalizationMap(
+			_localization.getLocalizationMap(
 				portletPreferences, "emailAssetEntryAddedSubject",
 				StringPool.BLANK, StringPool.BLANK,
 				AssetPublisherWebHelper.class.getClassLoader());
@@ -681,6 +681,9 @@ public class AssetPublisherWebHelper {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

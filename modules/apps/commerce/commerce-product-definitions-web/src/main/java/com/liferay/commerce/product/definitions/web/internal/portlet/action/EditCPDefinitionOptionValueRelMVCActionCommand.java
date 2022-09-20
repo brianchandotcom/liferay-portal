@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.math.BigDecimal;
@@ -135,7 +135,7 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 		long cpDefinitionOptionValueRelId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionOptionValueRelId");
 
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		String key = ParamUtil.getString(actionRequest, "key");
@@ -199,5 +199,8 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 	@Reference
 	private CPDefinitionOptionValueRelService
 		_cpDefinitionOptionValueRelService;
+
+	@Reference
+	private Localization _localization;
 
 }

@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -147,8 +147,7 @@ public class EditCountryMVCActionCommand
 				Country.class.getName(), actionRequest));
 
 		_updateCountryLocalizations(
-			country,
-			LocalizationUtil.getLocalizationMap(actionRequest, "title"));
+			country, _localization.getLocalizationMap(actionRequest, "title"));
 
 		return country;
 	}
@@ -177,8 +176,7 @@ public class EditCountryMVCActionCommand
 			position, shippingAllowed, subjectToVAT);
 
 		_updateCountryLocalizations(
-			country,
-			LocalizationUtil.getLocalizationMap(actionRequest, "title"));
+			country, _localization.getLocalizationMap(actionRequest, "title"));
 
 		return country;
 	}
@@ -204,6 +202,9 @@ public class EditCountryMVCActionCommand
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -148,15 +148,15 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 		String description = ParamUtil.getString(actionRequest, "description");
 		String to = ParamUtil.getString(actionRequest, "to");
 		String from = ParamUtil.getString(actionRequest, "from");
-		Map<Locale, String> fromNameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> fromNameMap = _localization.getLocalizationMap(
 			actionRequest, "fromName");
 		String cc = ParamUtil.getString(actionRequest, "cc");
 		String bcc = ParamUtil.getString(actionRequest, "bcc");
 		String type = ParamUtil.getString(actionRequest, "type");
 		boolean enabled = ParamUtil.getBoolean(actionRequest, "enabled");
-		Map<Locale, String> subjectMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> subjectMap = _localization.getLocalizationMap(
 			actionRequest, "subject");
-		Map<Locale, String> bodyMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> bodyMap = _localization.getLocalizationMap(
 			actionRequest, "body");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -200,6 +200,9 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 	@Reference
 	private CommerceNotificationTemplateService
 		_commerceNotificationTemplateService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

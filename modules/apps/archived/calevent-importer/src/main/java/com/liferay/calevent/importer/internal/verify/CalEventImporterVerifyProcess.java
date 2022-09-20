@@ -78,7 +78,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -670,7 +670,7 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 				userId, userGroup.getGroupId(),
 				_classNameLocalService.getClassNameId(User.class), userId, null,
 				null,
-				LocalizationUtil.populateLocalizationMap(
+				_localization.populateLocalizationMap(
 					nameMap,
 					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
 					groupId),
@@ -707,7 +707,7 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		return _calendarResourceLocalService.addCalendarResource(
 			userId, groupId, _classNameLocalService.getClassNameId(Group.class),
 			groupId, null, null,
-			LocalizationUtil.populateLocalizationMap(
+			_localization.populateLocalizationMap(
 				nameMap, LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
 				groupId),
 			descriptionMap, true, serviceContext);
@@ -1427,6 +1427,9 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 	private GroupLocalService _groupLocalService;
 
 	private JSONSerializer _jsonSerializer;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;

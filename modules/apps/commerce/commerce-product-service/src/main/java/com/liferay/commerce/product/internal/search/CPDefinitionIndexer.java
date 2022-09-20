@@ -74,7 +74,7 @@ import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -396,7 +396,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		Document document = getBaseModelDocument(CLASS_NAME, cpDefinition);
 
 		String cpDefinitionDefaultLanguageId =
-			LocalizationUtil.getDefaultLanguageId(cpDefinition.getName());
+			_localization.getDefaultLanguageId(cpDefinition.getName());
 
 		List<String> languageIds =
 			_cpDefinitionLocalService.getCPDefinitionLocalizationLanguageIds(
@@ -433,30 +433,27 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			String urlTitle = languageIdToUrlTitleMap.get(languageId);
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(
+				_localization.getLocalizedName(
 					CPField.META_DESCRIPTION, languageId),
 				metaDescription);
 			document.addText(
-				LocalizationUtil.getLocalizedName(
+				_localization.getLocalizedName(
 					CPField.META_KEYWORDS, languageId),
 				metaKeywords);
 			document.addText(
-				LocalizationUtil.getLocalizedName(
-					CPField.META_TITLE, languageId),
+				_localization.getLocalizedName(CPField.META_TITLE, languageId),
 				metaTitle);
 			document.addText(
-				LocalizationUtil.getLocalizedName(
+				_localization.getLocalizedName(
 					CPField.SHORT_DESCRIPTION, languageId),
 				shortDescription);
 			document.addText(
-				LocalizationUtil.getLocalizedName(
-					Field.DESCRIPTION, languageId),
+				_localization.getLocalizedName(Field.DESCRIPTION, languageId),
 				description);
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
-				name);
+				_localization.getLocalizedName(Field.NAME, languageId), name);
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.URL, languageId),
+				_localization.getLocalizedName(Field.URL, languageId),
 				urlTitle);
 
 			document.addText(Field.CONTENT, description);
@@ -1013,5 +1010,8 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Localization _localization;
 
 }

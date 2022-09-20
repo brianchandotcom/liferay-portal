@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -144,10 +144,10 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		throws Exception {
 
 		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "description");
 		String ddmFormFieldTypeName = ParamUtil.getString(
 			actionRequest, "DDMFormFieldTypeName");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
@@ -168,5 +168,8 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
+
+	@Reference
+	private Localization _localization;
 
 }

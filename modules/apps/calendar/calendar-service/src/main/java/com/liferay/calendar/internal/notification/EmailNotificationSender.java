@@ -26,12 +26,13 @@ import com.liferay.calendar.notification.NotificationUtil;
 import com.liferay.calendar.service.impl.CalendarBookingLocalServiceImpl;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 
 import java.io.File;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
@@ -141,10 +142,10 @@ public class EmailNotificationSender implements NotificationSender {
 				subscriptionSender.setCreatorUserId(
 					calendarNotificationTemplate.getUserId());
 				subscriptionSender.setLocalizedBodyMap(
-					LocalizationUtil.getLocalizationMap(
+					_localization.getLocalizationMap(
 						calendarNotificationTemplate.getBody()));
 				subscriptionSender.setLocalizedSubjectMap(
-					LocalizationUtil.getLocalizationMap(
+					_localization.getLocalizationMap(
 						calendarNotificationTemplate.getSubject()));
 			}
 			else {
@@ -165,5 +166,8 @@ public class EmailNotificationSender implements NotificationSender {
 				"Unable to send mail message", exception);
 		}
 	}
+
+	@Reference
+	private Localization _localization;
 
 }

@@ -190,9 +190,11 @@ export async function save(
 	item: unknown,
 	method: 'PUT' | 'POST' = 'PUT'
 ) {
+	const isFormData = item instanceof FormData;
+
 	const response = await fetch(url, {
-		body: JSON.stringify(item),
-		headers,
+		body: isFormData ? item : JSON.stringify(item),
+		...(!isFormData && {headers}),
 		method,
 	});
 

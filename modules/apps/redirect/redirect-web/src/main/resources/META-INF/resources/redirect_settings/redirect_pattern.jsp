@@ -13,3 +13,35 @@
  * details.
  */
 --%>
+
+<%@ include file="/init.jsp" %>
+
+<%
+RedirectPatternConfigurationDisplayContext redirectPatternConfigurationDisplayContext = (RedirectPatternConfigurationDisplayContext)request.getAttribute(RedirectPatternConfigurationDisplayContext.class.getName());
+%>
+
+<aui:form action="<%= redirectPatternConfigurationDisplayContext.getRedirectPatternConfigurationURL() %>" method="post" name="fm">
+	<clay:sheet>
+		<clay:sheet-header>
+			<h2>
+				<liferay-ui:message key="redirect-pattern-configuration-name" />
+			</h2>
+
+			<p class="text-default"><strong>
+				<liferay-ui:message key="redirect-pattern-configuration-description" />
+			</strong></p>
+		</clay:sheet-header>
+
+		<clay:sheet-section>
+			<aui:input label="redirect-patterns" name="patterns" value="<%= StringUtil.merge(redirectPatternConfigurationDisplayContext.getPatterns(scopeGroupId)) %>" />
+
+			<p class="text-muted">
+				<liferay-ui:message key="redirect-patterns-description" />
+			</p>
+		</clay:sheet-section>
+
+		<clay:sheet-footer>
+			<aui:button primary="<%= true %>" type="submit" />
+		</clay:sheet-footer>
+	</clay:sheet>
+</aui:form>

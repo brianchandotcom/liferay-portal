@@ -198,11 +198,7 @@ public class ObjectEntryEntityModelTest {
 				new StringEntityField(
 					"externalReferenceCode", locale -> "externalReferenceCode")
 			).put(
-				"id",
-				new IdEntityField(
-					"id",
-					locale -> Field.getSortableFieldName(Field.ENTRY_CLASS_PK),
-					String::valueOf)
+				"id", new IdEntityField("id", locale -> "id", String::valueOf)
 			).put(
 				"objectDefinitionId",
 				new IntegerEntityField(

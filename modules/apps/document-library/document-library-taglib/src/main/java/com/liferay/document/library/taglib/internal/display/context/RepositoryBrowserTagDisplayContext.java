@@ -20,21 +20,19 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FileEntryVerticalCard;
+import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FileShortcutVerticalCard;
 import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FolderHorizontalCard;
-import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -44,7 +42,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.search.Hits;
@@ -104,6 +101,12 @@ public class RepositoryBrowserTagDisplayContext {
 		return HttpComponentsUtil.addParameter(
 			_getRepositoryBrowserURL(), "fileEntryId",
 			fileEntry.getFileEntryId());
+	}
+
+	public String getDeleteFileShortcutURL(FileShortcut fileShortcut) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "fileShortcutId",
+			fileShortcut.getFileShortcutId());
 	}
 
 	public String getDeleteFolderURL(Folder folder) {
@@ -240,77 +243,13 @@ public class RepositoryBrowserTagDisplayContext {
 		throws PortalException {
 
 		if (repositoryEntry instanceof FileEntry) {
-			FileEntry fileEntry = (FileEntry)repositoryEntry;
-
 			return new FileEntryVerticalCard(
-				fileEntry, _httpServletRequest, this);
+				(FileEntry)repositoryEntry, _httpServletRequest, this);
 		}
 
 		if (repositoryEntry instanceof FileShortcut) {
-			FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
-
-			FileVersion fileVersion = fileShortcut.getFileVersion();
-
-			SearchContainer<Object> searchContainer = getSearchContainer();
-
-			return new VerticalCard() {
-
-				@Override
-				public List<DropdownItem> getActionDropdownItems() {
-					return DropdownItemListBuilder.add(
-						dropdownItem -> {
-							dropdownItem.putData("action", "delete");
-							dropdownItem.putData(
-								"deleteURL",
-								_getDeleteFileShortcutURL(fileShortcut));
-							dropdownItem.setIcon("trash");
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, "delete"));
-						}
-					).build();
-				}
-
-				@Override
-				public String getDefaultEventHandler() {
-					return "repositoryBrowserEventHandler";
-				}
-
-				@Override
-				public String getImageSrc() {
-					try {
-						return DLURLHelperUtil.getThumbnailSrc(
-							fileVersion.getFileEntry(), fileVersion,
-							(ThemeDisplay)_httpServletRequest.getAttribute(
-								WebKeys.THEME_DISPLAY));
-					}
-					catch (Exception exception) {
-						return ReflectionUtil.throwException(exception);
-					}
-				}
-
-				@Override
-				public String getInputName() {
-					RowChecker rowChecker = searchContainer.getRowChecker();
-
-					if (rowChecker == null) {
-						return null;
-					}
-
-					return rowChecker.getRowIds();
-				}
-
-				@Override
-				public String getInputValue() {
-					return String.valueOf(fileShortcut.getFileShortcutId());
-				}
-
-				@Override
-				public String getTitle() {
-					return fileShortcut.getToTitle();
-				}
-
-			};
+			return new FileShortcutVerticalCard(
+				(FileShortcut)repositoryEntry, _httpServletRequest, this);
 		}
 
 		throw new IllegalArgumentException(
@@ -323,12 +262,6 @@ public class RepositoryBrowserTagDisplayContext {
 		}
 
 		return true;
-	}
-
-	private String _getDeleteFileShortcutURL(FileShortcut fileShortcut) {
-		return HttpComponentsUtil.addParameter(
-			_getRepositoryBrowserURL(), "fileShortcutId",
-			fileShortcut.getFileShortcutId());
 	}
 
 	private SearchContainer<Object> _getDLSearchContainer()

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactory;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
@@ -81,7 +82,7 @@ public class Log4jLogFactoryImpl implements LogFactory {
 
 	private static final Class<?>[] _CLASSES_BASE_UPGRADE = {
 		BaseDB.class, BaseDBProcess.class, BaseUpgradeCallable.class,
-		LoggingTimer.class
+		LoggingTimer.class, UpgradeStep.class
 	};
 
 	private static final String[] _CLASSES_BY_NAME_UPGRADE = {

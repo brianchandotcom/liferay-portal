@@ -122,7 +122,6 @@ export default function EditableLinkPanel({item}) {
 					},
 				},
 				fragmentEntryLinkId: item.fragmentEntryLinkId,
-				languageId,
 				segmentsExperienceId,
 			})
 		);

@@ -57,7 +57,6 @@ const SOURCE_OPTIONS = {
 export default function ImageSourcePanel({item}) {
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
-	const languageId = useSelector(selectLanguageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const sourceSelectionInputId = useId();
 
@@ -95,7 +94,6 @@ export default function ImageSourcePanel({item}) {
 						}
 					),
 					fragmentEntryLinkId: item.fragmentEntryLinkId,
-					languageId,
 					segmentsExperienceId,
 				})
 			);
@@ -151,7 +149,6 @@ export default function ImageSourcePanel({item}) {
 									value
 								),
 								fragmentEntryLinkId: item.fragmentEntryLinkId,
-								languageId,
 								segmentsExperienceId,
 							})
 						);
@@ -251,7 +248,6 @@ function DirectImagePanel({item}) {
 					nextEditableValue
 				),
 				fragmentEntryLinkId,
-				languageId,
 				segmentsExperienceId,
 			})
 		);

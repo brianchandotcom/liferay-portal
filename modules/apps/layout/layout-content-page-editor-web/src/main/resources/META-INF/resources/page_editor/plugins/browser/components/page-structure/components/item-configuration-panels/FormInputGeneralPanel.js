@@ -296,7 +296,6 @@ export function FormInputGeneralPanel({item}) {
 				editableValues: setIn(editableValues, keyPath, value),
 				fragmentEntryLinkId:
 					fragmentEntryLinkRef.current.fragmentEntryLinkId,
-				languageId,
 				segmentsExperienceId,
 			})
 		);

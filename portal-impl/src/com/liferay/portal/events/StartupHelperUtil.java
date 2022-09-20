@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
-import com.liferay.portal.util.IndexUpdaterUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
@@ -100,14 +99,6 @@ public class StartupHelperUtil {
 
 	public static void setUpgrading(boolean upgrading) {
 		_upgrading = upgrading;
-	}
-
-	public static void updateIndexes() {
-		if (!_dbNew) {
-			IndexUpdaterUtil.updatePortalIndexes(true);
-
-			IndexUpdaterUtil.updateModulesIndexes(true);
-		}
 	}
 
 	public static void upgradeProcess(int buildNumber) throws UpgradeException {

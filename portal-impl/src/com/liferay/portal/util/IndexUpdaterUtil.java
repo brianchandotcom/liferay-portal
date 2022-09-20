@@ -36,6 +36,12 @@ import org.osgi.framework.BundleContext;
  */
 public class IndexUpdaterUtil {
 
+	public static void updateAllIndexes() {
+		updatePortalIndexes(true);
+
+		updateModulesIndexes(true);
+	}
+
 	public static void updateIndexes(Bundle bundle) throws Exception {
 		String indexesSQL = BundleUtil.getSQLTemplateString(
 			bundle, "indexes.sql");

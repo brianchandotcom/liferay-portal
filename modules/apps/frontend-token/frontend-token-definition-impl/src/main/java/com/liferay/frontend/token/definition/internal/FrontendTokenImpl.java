@@ -62,7 +62,7 @@ public class FrontendTokenImpl implements FrontendToken {
 		}
 		else {
 			throw new RuntimeException(
-				"Unsupported frontend token type " + _type.toString());
+				"Unsupported frontend token type " + _type);
 		}
 
 		JSONArray mappingsJSONArray = jsonObject.getJSONArray("mappings");

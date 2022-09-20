@@ -27,7 +27,6 @@ import {
 	useSelectorCallback,
 } from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import updateEditableValues from '../../thunks/updateEditableValues';
 
 export default function FragmentContentProcessor({
@@ -38,7 +37,6 @@ export default function FragmentContentProcessor({
 	const editableProcessorClickPosition = useEditableProcessorClickPosition();
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const languageId = useSelector(selectLanguageId);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const toControlsId = useToControlsId();
 
@@ -108,7 +106,6 @@ export default function FragmentContentProcessor({
 							},
 						},
 						fragmentEntryLinkId,
-						segmentsExperienceId,
 					})
 				);
 			},
@@ -133,7 +130,6 @@ export default function FragmentContentProcessor({
 		editableValues,
 		fragmentEntryLinkId,
 		languageId,
-		segmentsExperienceId,
 		setEditableProcessorUniqueId,
 	]);
 

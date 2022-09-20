@@ -28,7 +28,6 @@ import {
 } from '../../../../../../app/contexts/StoreContext';
 import selectEditableValueContent from '../../../../../../app/selectors/selectEditableValueContent';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateEditableValuesThunk from '../../../../../../app/thunks/updateEditableValues';
 import isMapped from '../../../../../../app/utils/editable-value/isMapped';
 import isMappedToCollection from '../../../../../../app/utils/editable-value/isMappedToCollection';
@@ -57,7 +56,6 @@ const SOURCE_OPTIONS = {
 export default function ImageSourcePanel({item}) {
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const sourceSelectionInputId = useId();
 
 	const selectedViewportSize = useSelector(
@@ -94,7 +92,6 @@ export default function ImageSourcePanel({item}) {
 						}
 					),
 					fragmentEntryLinkId: item.fragmentEntryLinkId,
-					segmentsExperienceId,
 				})
 			);
 		}
@@ -149,7 +146,6 @@ export default function ImageSourcePanel({item}) {
 									value
 								),
 								fragmentEntryLinkId: item.fragmentEntryLinkId,
-								segmentsExperienceId,
 							})
 						);
 					}}
@@ -170,7 +166,6 @@ function DirectImagePanel({item}) {
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const languageId = useSelector(selectLanguageId);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -248,7 +243,6 @@ function DirectImagePanel({item}) {
 					nextEditableValue
 				),
 				fragmentEntryLinkId,
-				segmentsExperienceId,
 			})
 		);
 	};
@@ -279,7 +273,6 @@ function DirectImagePanel({item}) {
 					{}
 				),
 				fragmentEntryLinkId,
-				segmentsExperienceId,
 			})
 		);
 	};
@@ -341,7 +334,6 @@ function ImagePanelSizeSelector({item}) {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const globalContext = useGlobalContext();
 	const languageId = useSelector(selectLanguageId);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -401,7 +393,6 @@ function ImagePanelSizeSelector({item}) {
 					imageSizeId
 				),
 				fragmentEntryLinkId,
-				segmentsExperienceId,
 			})
 		);
 	};

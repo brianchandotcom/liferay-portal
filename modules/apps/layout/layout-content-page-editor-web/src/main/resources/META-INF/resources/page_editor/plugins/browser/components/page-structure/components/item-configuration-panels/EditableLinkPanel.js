@@ -24,7 +24,6 @@ import {
 } from '../../../../../../app/contexts/StoreContext';
 import selectEditableValue from '../../../../../../app/selectors/selectEditableValue';
 import selectEditableValues from '../../../../../../app/selectors/selectEditableValues';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
 import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
 import isMapped from '../../../../../../app/utils/editable-value/isMapped';
@@ -34,7 +33,6 @@ import {getEditableItemPropTypes} from '../../../../../../prop-types/index';
 export default function EditableLinkPanel({item}) {
 	const dispatch = useDispatch();
 	const languageId = useSelector((state) => state.languageId);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const editableValues = useSelectorCallback(
 		(state) => selectEditableValues(state, item.fragmentEntryLinkId),
@@ -122,7 +120,6 @@ export default function EditableLinkPanel({item}) {
 					},
 				},
 				fragmentEntryLinkId: item.fragmentEntryLinkId,
-				segmentsExperienceId,
 			})
 		);
 	};

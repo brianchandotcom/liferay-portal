@@ -30,7 +30,6 @@ import {
 import selectFormConfiguration from '../../../../../../app/selectors/selectFormConfiguration';
 import selectFragmentEntryLink from '../../../../../../app/selectors/selectFragmentEntryLink';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import FormService from '../../../../../../app/services/FormService';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
 import {CACHE_KEYS} from '../../../../../../app/utils/cache';
@@ -128,7 +127,6 @@ function getTypeLabels(classNameId, classTypeId) {
 export function FormInputGeneralPanel({item}) {
 	const dispatch = useDispatch();
 	const languageId = useSelector(selectLanguageId);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const fragmentEntryLinkRef = useSelectorRef((state) =>
 		selectFragmentEntryLink(state, item)
@@ -296,7 +294,6 @@ export function FormInputGeneralPanel({item}) {
 				editableValues: setIn(editableValues, keyPath, value),
 				fragmentEntryLinkId:
 					fragmentEntryLinkRef.current.fragmentEntryLinkId,
-				segmentsExperienceId,
 			})
 		);
 	};

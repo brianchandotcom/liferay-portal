@@ -1505,6 +1505,56 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-160243. The No Results Found shown at preview mode and view mode by default when selected collection doesn't have items."
+	@priority = "4"
+	test ViewEmptyCollectionAlert {
+		task ("Given a page creator has a Collection Display without items on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets");
+
+			AssertVisible(
+				key_infoMessage = "The collection is empty. To display your items, add them to the collection or choose a different collection.",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("When the page creator previews the draft on a new tab") {
+			PageEditor.previewInANewTab();
+		}
+
+		task ("Then the page creator sees the empty collection alert") {
+			AssertTextEquals(
+				index = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "No Results Found");
+		}
+
+		task ("When the page creator navigates to content page at view mode") {
+			Close.closeWindow();
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page creator sees the empty collection alert") {
+			AssertTextEquals(
+				index = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "No Results Found");
+		}
+	}
+
 	@description = "This is a use case for LPS-114727. The Content Display fragment can display full content of asset entries in Collection Display."
 	@priority = "5"
 	@uitest

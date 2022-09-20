@@ -67,16 +67,12 @@ const TestflowForm = () => {
 		setValue,
 		watch,
 	} = useForm<TestflowFormType>({
-		defaultValues: buildId
-			? {
-					build: Number(buildId),
-					caseTypes: [],
-					dueStatus: 1,
-			  }
-			: {
-					caseTypes: [],
-					dueStatus: 1,
-			  },
+		defaultValues: {
+			buildId: Number(buildId ?? 0),
+			caseTypes: [],
+			dueStatus: 1,
+			users: [],
+		},
 		resolver: yupResolver(yupSchema.task),
 	});
 
@@ -110,7 +106,7 @@ const TestflowForm = () => {
 			});
 		}
 
-		if (!form.userToTasks?.length) {
+		if (!form.users?.length) {
 			hasError = true;
 
 			onError({
@@ -150,11 +146,13 @@ const TestflowForm = () => {
 	};
 
 	useEffect(() => {
-		setValue('name', testrayBuild?.name);
+		if (testrayBuild?.name) {
+			setValue('name', testrayBuild?.name);
+		}
 	}, [testrayBuild, setValue]);
 
 	useEffect(() => {
-		setValue('userToTasks', users);
+		setValue('users', users);
 	}, [setValue, users]);
 
 	return (

@@ -22,17 +22,15 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask> {
 	constructor() {
 		super({
 			adapter: ({
-				build: r_buildToTasks_c_buildId,
+				buildId: r_buildToTasks_c_buildId,
 				caseTypes: taskToTasksCaseTypes,
 				dueStatus,
 				name,
-				userToTasks,
 			}) => ({
 				dueStatus,
 				name,
 				r_buildToTasks_c_buildId,
 				taskToTasksCaseTypes,
-				userToTasks,
 			}),
 			nestedFields: 'build.project,build.routine',
 			transformData: (testrayTask) => ({

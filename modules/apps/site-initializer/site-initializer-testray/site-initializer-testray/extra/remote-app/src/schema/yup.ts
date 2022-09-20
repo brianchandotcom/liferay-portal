@@ -183,13 +183,11 @@ const yupSchema = {
 		smartSuite: yup.string(),
 	}),
 	task: yup.object({
-		build: yup.number().required(),
+		buildId: yup.number().required(),
 		caseTypes: yup.array(yup.number()).required(),
 		dueStatus: yup.number(),
-		name: yup.string(),
-		project: yup.number(),
-		routine: yup.number(),
-		userToTasks: yup.array().of(yup.number()),
+		name: yup.string().required(),
+		users: yup.array().of(yup.number()),
 	}),
 	taskToUser: yup.object({
 		name: yup.string(),

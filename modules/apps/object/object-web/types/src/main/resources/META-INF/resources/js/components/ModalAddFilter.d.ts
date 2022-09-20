@@ -16,23 +16,8 @@
 
 import {Observer} from '@clayui/modal/lib/types';
 import './ModalAddFilter.scss';
-export declare function ModalAddFilter({
-	currentFilters,
-	disableDateValues,
-	editingFilter,
-	editingObjectFieldName,
-	filterOperators,
-	filterTypeRequired,
-	header,
-	objectFields,
-	observer,
-	onClose,
-	onSave,
-	validate,
-	workflowStatusJSONArray,
-}: IProps): JSX.Element;
 interface IProps {
-	currentFilters: TCurrentFilter[];
+	currentFilters: CurrentFilter[];
 	disableDateValues?: boolean;
 	editingFilter: boolean;
 	editingObjectFieldName: string;
@@ -60,7 +45,7 @@ interface IProps {
 		setErrors,
 		value,
 	}: FilterValidation) => FilterErrors;
-	workflowStatusJSONArray: TWorkflowStatus[];
+	workflowStatusJSONArray: LabelValueObject[];
 }
 interface IItem extends LabelValueObject {
 	checked?: boolean;
@@ -82,7 +67,7 @@ export declare type FilterValidation = {
 	setErrors: (value: FilterErrors) => void;
 	value?: string;
 };
-declare type TCurrentFilter = {
+declare type CurrentFilter = {
 	definition: {
 		[key: string]: string[] | number[];
 	} | null;
@@ -95,11 +80,22 @@ declare type TCurrentFilter = {
 	value?: string;
 	valueList?: LabelValueObject[];
 };
-declare type TWorkflowStatus = {
-	label: string;
-	value: string;
-};
 declare type TName = {
 	[key: string]: string;
 };
+export declare function ModalAddFilter({
+	currentFilters,
+	disableDateValues,
+	editingFilter,
+	editingObjectFieldName,
+	filterOperators,
+	filterTypeRequired,
+	header,
+	objectFields,
+	observer,
+	onClose,
+	onSave,
+	validate,
+	workflowStatusJSONArray,
+}: IProps): JSX.Element;
 export {};

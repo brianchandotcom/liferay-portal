@@ -1015,7 +1015,7 @@ definition {
 
 			AssetPublisherPortlet.configureAssetDisplayOrderPG(
 				fieldNameOrder = "Modified Date",
-				sortOrder = "Descending");
+				sortOrder = "Ascending");
 		}
 
 		task ("Filter assets by category") {

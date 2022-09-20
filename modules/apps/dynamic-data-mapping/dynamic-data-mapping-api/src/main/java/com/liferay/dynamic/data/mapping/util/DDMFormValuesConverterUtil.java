@@ -16,6 +16,8 @@ package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,6 +55,13 @@ public class DDMFormValuesConverterUtil {
 						{
 							setInstanceId(StringUtil.randomString());
 							setName(ddmFormFieldName);
+
+							if (ddmFormField.isLocalizable()) {
+								setValue(new LocalizedValue());
+							}
+							else {
+								setValue(new UnlocalizedValue((String)null));
+							}
 						}
 					});
 			}

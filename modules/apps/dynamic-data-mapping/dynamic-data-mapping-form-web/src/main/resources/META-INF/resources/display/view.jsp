@@ -125,7 +125,7 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 				<portlet:actionURL name="/dynamic_data_mapping_form/add_form_instance_record" var="addFormInstanceRecordActionURL" />
 
 				<div class="portlet-forms">
-					<aui:form action="<%= addFormInstanceRecordActionURL %>" data-DDMFormInstanceId="<%= formInstanceId %>" data-senna-off="true" method="post" name="fm">
+					<aui:form action="<%= addFormInstanceRecordActionURL %>" data-DDMFormInstanceId="<%= formInstanceId %>" data-DDMFormInstanceTitle="<%= HtmlUtil.escapeJS(formInstance.getName(displayLocale)) %>" data-senna-off="true" method="post" name="fm">
 						<aui:input name="currentURL" type="hidden" value="<%= currentURL %>" />
 
 						<%

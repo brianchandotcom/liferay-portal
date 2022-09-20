@@ -38,7 +38,7 @@ import formValidate from '../../core/thunks/formValidate.es';
 import pageLanguageUpdate from '../../core/thunks/pageLanguageUpdate.es';
 import {evaluate} from '../../utils/evaluation.es';
 import * as Fields from '../../utils/fields.es';
-import {getFormId, getFormNode} from '../../utils/formId.es';
+import {getFormId, getFormNode, getFormTitle} from '../../utils/formId.es';
 import {parseProps} from '../../utils/parseProps.es';
 import {
 	objectRelationshipReducer,
@@ -95,6 +95,9 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 								formId: getFormId(
 									getFormNode(containerRef.current)
 								),
+								title: getFormTitle(
+									getFormNode(containerRef.current)
+								) 
 							});
 						});
 					}

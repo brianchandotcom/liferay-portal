@@ -261,7 +261,8 @@ public class ObjectDefinitionResourceImpl
 
 		if (serviceBuilderObjectDefinition.isSystem()) {
 			return _toObjectDefinition(
-				_objectDefinitionService.updateTitleObjectFieldId(
+				_objectDefinitionService.updateSystemObjectDefinition(
+					objectDefinition.getExternalReferenceCode(),
 					objectDefinitionId, titleObjectFieldId));
 		}
 

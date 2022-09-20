@@ -324,6 +324,10 @@ public class VerifyProperties {
 			"module.framework.concurrent.startup.enabled",
 			"module.framework.concurrent.startup.enabled"
 		},
+		{
+			"module.framework.runtime.start.level",
+			"module.framework.runtime.start.level"
+		},
 		{"module.framework.web.start.level", "module.framework.web.start.level"}
 	};
 

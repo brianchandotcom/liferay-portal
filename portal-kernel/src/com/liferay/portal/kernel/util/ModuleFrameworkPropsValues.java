@@ -36,6 +36,10 @@ public class ModuleFrameworkPropsValues {
 	public static final String MODULE_FRAMEWORK_FILE_INSTALL_CONFIG_ENCODING =
 		SystemProperties.get("module.framework.file.install.config.encoding");
 
+	public static final int MODULE_FRAMEWORK_RUNTIME_START_LEVEL =
+		GetterUtil.getInteger(
+			SystemProperties.get("module.framework.runtime.start.level"));
+
 	public static final int MODULE_FRAMEWORK_WEB_START_LEVEL =
 		GetterUtil.getInteger(
 			SystemProperties.get("module.framework.web.start.level"));

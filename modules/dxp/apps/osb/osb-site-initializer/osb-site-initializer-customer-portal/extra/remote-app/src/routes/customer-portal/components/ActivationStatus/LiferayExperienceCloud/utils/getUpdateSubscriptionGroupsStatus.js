@@ -12,7 +12,7 @@
 import {actionTypes} from '../../../../context/reducer';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../utils/constants';
 
-const getUpdateSubscriptionGroupsStatus = async (
+export default function getUpdateSubscriptionGroupsStatus(
 	handleStatusLxcActivation,
 	handleFinishUpdate,
 	project,
@@ -20,8 +20,8 @@ const getUpdateSubscriptionGroupsStatus = async (
 	dispatch,
 	subscriptionGroups,
 	updateAccountSubscriptionGroup
-) => {
-	await updateAccountSubscriptionGroup({
+) {
+	updateAccountSubscriptionGroup({
 		variables: {
 			AccountSubscriptionGroup: {
 				accountKey: project.accountKey,
@@ -53,6 +53,4 @@ const getUpdateSubscriptionGroupsStatus = async (
 		payload: newSubscriptionGroups,
 		type: actionTypes.UPDATE_SUBSCRIPTION_GROUPS,
 	});
-};
-
-export default getUpdateSubscriptionGroupsStatus;
+}

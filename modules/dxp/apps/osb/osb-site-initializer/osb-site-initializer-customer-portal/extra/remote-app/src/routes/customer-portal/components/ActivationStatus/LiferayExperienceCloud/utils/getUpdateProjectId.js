@@ -9,13 +9,13 @@
  * distribution rights of the Software.
  */
 
-const getUpdateProjectId = async (
+export default function getUpdateProjectId(
 	projectIdValue,
 	lxcEnvironment,
 	updateLiferayExperienceCloudEnvironment
-) => {
+) {
 	if (lxcEnvironment) {
-		await updateLiferayExperienceCloudEnvironment({
+		updateLiferayExperienceCloudEnvironment({
 			variables: {
 				LiferayExperienceCloudEnvironment: {
 					projectId: projectIdValue,
@@ -25,6 +25,4 @@ const getUpdateProjectId = async (
 			},
 		});
 	}
-};
-
-export default getUpdateProjectId;
+}

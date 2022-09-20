@@ -20,13 +20,13 @@ import {
 	STATUS_TAG_TYPE_NAMES,
 } from '../../../../utils/constants';
 
-const getActivationStatusCardLayout = (
+export default function getActivationStatusCardLayout(
 	lxcEnvironment,
 	project,
 	onNotActivatedClick,
 	onInProgressClick,
 	userAccount
-) => {
+) {
 	return {
 		[STATUS_TAG_TYPE_NAMES.active]: {
 			buttonLink: (
@@ -117,6 +117,4 @@ const getActivationStatusCardLayout = (
 			title: i18n.translate('liferay-experience-cloud-activation'),
 		},
 	};
-};
-
-export default getActivationStatusCardLayout;
+}

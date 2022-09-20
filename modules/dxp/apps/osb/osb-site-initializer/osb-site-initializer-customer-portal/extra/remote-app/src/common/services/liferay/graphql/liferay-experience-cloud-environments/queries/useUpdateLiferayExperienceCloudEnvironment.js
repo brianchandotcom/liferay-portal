@@ -12,7 +12,7 @@
 import {gql, useMutation} from '@apollo/client';
 
 export const UPDATE_LIFERAY_EXPERIENCE_CLOUD_ENVIRONMENT = gql`
-	mutation updateLiferayExperienceCloudEnvironmentProjectId(
+	mutation updateLiferayExperienceCloudEnvironment(
 		$liferayExperienceCloudEnvironmentId: Long!
 		$LiferayExperienceCloudEnvironment: InputC_LiferayExperienceCloudEnvironment!
 	) {

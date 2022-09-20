@@ -11,8 +11,8 @@
 
 import {gql, useMutation} from '@apollo/client';
 
-export const UPDATE_ACCOUNT_SUBSCRIPTION_GROUPS = gql`
-	mutation updateAccountSubscriptionGroups(
+export const UPDATE_ACCOUNT_SUBSCRIPTION_GROUP = gql`
+	mutation updateAccountSubscriptionGroup(
 		$accountSubscriptionGroupId: Long!
 		$AccountSubscriptionGroup: InputC_AccountSubscriptionGroup!
 	) {
@@ -29,8 +29,8 @@ export const UPDATE_ACCOUNT_SUBSCRIPTION_GROUPS = gql`
 	}
 `;
 
-export function useUpdateAccountSubscriptionGroups(variables) {
-	return useMutation(UPDATE_ACCOUNT_SUBSCRIPTION_GROUPS, {
+export function useUpdateAccountSubscriptionGroup(variables) {
+	return useMutation(UPDATE_ACCOUNT_SUBSCRIPTION_GROUP, {
 		variables,
 	});
 }

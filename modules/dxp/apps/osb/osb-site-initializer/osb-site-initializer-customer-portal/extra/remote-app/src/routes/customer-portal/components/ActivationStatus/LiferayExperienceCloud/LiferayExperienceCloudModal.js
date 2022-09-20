@@ -15,7 +15,7 @@ import classNames from 'classnames';
 import {useState} from 'react';
 import i18n from '../../../../../common/I18n';
 import {Badge, Button} from '../../../../../common/components';
-import {useUpdateAccountSubscriptionGroups} from '../../../../../common/services/liferay/graphql/account-subscription-groups/queries/useUpdateAccountSubscriptionGroups';
+import {useUpdateAccountSubscriptionGroup} from '../../../../../common/services/liferay/graphql/account-subscription-groups/queries/useUpdateAccountSubscriptionGroup';
 import {useUpdateLiferayExperienceCloudEnvironment} from '../../../../../common/services/liferay/graphql/liferay-experience-cloud-environments/queries/useUpdateLiferayExperienceCloudEnvironment';
 import getHandleOnConfirm from './utils/getHandleOnConfirm';
 import getUpdateProjectId from './utils/getUpdateProjectId';
@@ -45,7 +45,7 @@ const LiferayExperienceCloudModal = ({
 
 	const [
 		updateAccountSubscriptionGroup,
-	] = useUpdateAccountSubscriptionGroups();
+	] = useUpdateAccountSubscriptionGroup();
 
 	const handleOnConfirm = () => {
 		getHandleOnConfirm(

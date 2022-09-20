@@ -2,9 +2,9 @@
 	<thead>
 		<tr>
 			<th class="w-50">
-				<lfr-editable class="text-neutral-10" id="tableTitle" type="rich-text">
+				<div class="text-neutral-10" data-lfr-editable-id="tableTitle" data-lfr-editable-type="rich-text">
 					This is editable text!
-				</lfr-editable>
+				</div>
 			</th>
 			<th class="w-50"></th>
 		</tr>
@@ -14,14 +14,14 @@
 		[#list 0..configuration.numberOfRows-1 as i]
 		<tr>
 			<td class="w-50">
-				<lfr-editable class="text-neutral-10" id="rowTitle-${i+1}" type="rich-text">
+				<div class="text-neutral-10" data-lfr-editable-id="rowTitle-${i+1}" data-lfr-editable-type="rich-text">
 					This is editable text!
-				</lfr-editable>
+				</div>
 			</td>
 			<td class="w-50">
-				<lfr-editable class="text-neutral-10" id="rowValue-${i+1}" type="rich-text">
+				<div class="text-neutral-10" data-lfr-editable-id="rowValue-${i+1}" data-lfr-editable-type="rich-text">
 					This is editable text!
-				</lfr-editable>
+				</div>
 			</td>
 		</tr>
 		[/#list]

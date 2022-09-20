@@ -169,12 +169,12 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 		for (String[] batch : idBatches) {
 			String inClause = _createInClause(batch);
 
-			_processOneBatchOfnonOrphanPagesAndStructures(
+			_processOneBatchOfNonorphanPagesAndStructures(
 				sql + inClause, batch);
 		}
 	}
 
-	private void _processOneBatchOfnonOrphanPagesAndStructures(
+	private void _processOneBatchOfNonorphanPagesAndStructures(
 			String sql, String[] idBatch)
 		throws Exception {
 

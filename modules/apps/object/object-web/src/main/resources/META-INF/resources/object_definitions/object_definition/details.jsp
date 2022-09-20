@@ -276,16 +276,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 			</c:if>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
-
-	<liferay-frontend:edit-form-footer>
-		<aui:button disabled="<%= !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="save" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(true);" %>' value="save" />
-
-		<c:if test="<%= !objectDefinition.isApproved() %>">
-			<aui:button disabled="<%= !objectDefinitionsDetailsDisplayContext.hasPublishObjectPermission() %>" name="publish" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(false);" %>' type="submit" value="publish" />
-		</c:if>
-
-		<aui:button href="<%= backURL %>" type="cancel" />
-	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
 <script>
@@ -324,17 +314,5 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 		else {
 			window.location.href = url;
 		}
-	}
-
-	function <portlet:namespace />submitObjectDefinition(draft) {
-		var form = document.getElementById('<portlet:namespace />fm');
-
-		var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
-
-		if (!draft) {
-			cmd.setAttribute('value', '<%= Constants.PUBLISH %>');
-		}
-
-		submitForm(form);
 	}
 </script>

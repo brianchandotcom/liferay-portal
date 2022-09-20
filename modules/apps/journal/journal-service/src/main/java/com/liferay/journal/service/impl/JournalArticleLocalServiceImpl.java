@@ -144,7 +144,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -7649,13 +7649,10 @@ public class JournalArticleLocalServiceImpl
 							contentType = ContentTypes.TEXT_HTML;
 						}
 
-						for (Sanitizer sanitizer : _sanitizers) {
-							dynamicContent = sanitizer.sanitize(
-								user.getCompanyId(), groupId, user.getUserId(),
-								JournalArticle.class.getName(), 0, contentType,
-								new String[] {Sanitizer.MODE_ALL},
-								dynamicContent, null);
-						}
+						dynamicContent = SanitizerUtil.sanitize(
+							user.getCompanyId(), groupId, user.getUserId(),
+							JournalArticle.class.getName(), 0, contentType,
+							dynamicContent);
 
 						dynamicContentElement.clearContent();
 
@@ -8296,14 +8293,9 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
-			String description = entry.getValue();
-
-			for (Sanitizer sanitizer : _sanitizers) {
-				sanitizer.sanitize(
-					companyId, groupId, userId, JournalArticle.class.getName(),
-					classPK, ContentTypes.TEXT_HTML,
-					new String[] {Sanitizer.MODE_ALL}, description, null);
-			}
+			String description = SanitizerUtil.sanitize(
+				companyId, groupId, userId, JournalArticle.class.getName(),
+				classPK, ContentTypes.TEXT_HTML, entry.getValue());
 
 			descriptionMap.put(entry.getKey(), description);
 		}
@@ -9509,9 +9501,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

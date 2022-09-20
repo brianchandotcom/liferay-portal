@@ -21,6 +21,7 @@ import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldTyp
 import com.liferay.info.display.field.InfoDisplayFieldProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -102,15 +103,12 @@ public class InfoDisplayFieldProviderImpl implements InfoDisplayFieldProvider {
 					infoDisplayContributorFieldType) &&
 				(fieldValue instanceof String)) {
 
-				for (Sanitizer sanitizer : _sanitizers) {
-					fieldValue = sanitizer.sanitize(
-						serviceContext.getCompanyId(),
-						serviceContext.getScopeGroupId(),
-						serviceContext.getUserId(), className, 0,
-						ContentTypes.TEXT_HTML,
-						new String[] {Sanitizer.MODE_ALL}, (String)fieldValue,
-						null);
-				}
+				fieldValue = SanitizerUtil.sanitize(
+					serviceContext.getCompanyId(),
+					serviceContext.getScopeGroupId(),
+					serviceContext.getUserId(), className, 0,
+					ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+					(String)fieldValue, null);
 			}
 
 			infoDisplayFieldsValues.putIfAbsent(
@@ -123,8 +121,5 @@ public class InfoDisplayFieldProviderImpl implements InfoDisplayFieldProvider {
 	@Reference
 	private InfoDisplayContributorFieldTracker
 		_infoDisplayContributorFieldTracker;
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 }

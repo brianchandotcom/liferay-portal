@@ -96,8 +96,6 @@ public class RelatedObjectEntryResourceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_user = TestPropsValues.getUser();
-
 		_objectDefinition = _publishObjectDefinition(
 			Collections.singletonList(
 				ObjectFieldUtil.createObjectField(
@@ -122,6 +120,8 @@ public class RelatedObjectEntryResourceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_user = TestPropsValues.getUser();
 
 		ObjectRelationshipLocalServiceUtil.
 			addObjectRelationshipMappingTableValues(

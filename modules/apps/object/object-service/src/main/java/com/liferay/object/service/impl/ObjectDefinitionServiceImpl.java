@@ -190,6 +190,19 @@ public class ObjectDefinitionServiceImpl
 	}
 
 	@Override
+	public ObjectDefinition updateSystemObjectDefinition(
+			String externalReferenceCode, long objectDefinitionId,
+			long titleObjectFieldId)
+		throws PortalException {
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
+
+		return _objectDefinitionLocalService.updateSystemObjectDefinition(
+			externalReferenceCode, objectDefinitionId, titleObjectFieldId);
+	}
+
+	@Override
 	public ObjectDefinition updateTitleObjectFieldId(
 			long objectDefinitionId, long titleObjectFieldId)
 		throws PortalException {

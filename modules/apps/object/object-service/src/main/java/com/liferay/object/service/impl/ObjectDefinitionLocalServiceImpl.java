@@ -717,6 +717,24 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public ObjectDefinition updateSystemObjectDefinition(
+			String externalReferenceCode, long objectDefinitionId,
+			long titleObjectFieldId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
+
+		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
+
+		objectDefinition.setExternalReferenceCode(externalReferenceCode);
+		objectDefinition.setTitleObjectFieldId(titleObjectFieldId);
+
+		return objectDefinitionPersistence.update(objectDefinition);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public ObjectDefinition updateTitleObjectFieldId(
 			long objectDefinitionId, long titleObjectFieldId)
 		throws PortalException {

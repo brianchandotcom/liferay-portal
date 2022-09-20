@@ -629,6 +629,48 @@ definition {
 		}
 	}
 
+	@description = "LPS-152323 Bug: Element ID field gets empty after changing from variant"
+	@priority = "3"
+	test CheckElementIdWithVariant {
+		task ("Create a page with a button fragment") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			Button.clickPublish();
+		}
+
+		task ("Create a AB Test") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
+		}
+
+		task ("Select the button as click goal ") {
+			var idbutton = ABTest.takeElementID();
+
+			ABTest.selectElementID();
+		}
+
+		task ("Create a variant ") {
+			ABTest.createVariant(variantName = "Variant name");
+		}
+
+		task ("Change to 'Control' variant") {
+			ABTest.switchVariant(variantName = "Variant name");
+		}
+
+		task ("Assert that the Element ID still set") {
+			AssertVisible(
+				key_id = "${idbutton}",
+				locator1 = "ABTest#ELEMENT_ID_VALUE_ID_BOX");
+		}
+	}
+
 	@description = "LPS-101167: Validate if the image for the empty state appears"
 	@priority = "3"
 	test CheckEmptyStateImage {

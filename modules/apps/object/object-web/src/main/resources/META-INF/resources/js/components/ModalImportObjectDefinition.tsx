@@ -16,8 +16,11 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {useEffect, useRef, useState} from 'react';
+import {API, Input, openToast} from '@liferay/object-js-components-web';
+import {fetch} from 'frontend-js-web';
+import React, {FormEvent, useEffect, useRef, useState} from 'react';
 
+import {openImportWarningModal} from '../utils/openImportWarningModal';
 interface IProps {
 	importObjectDefinitionURL: string;
 	nameMaxLength: string;
@@ -35,6 +38,9 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 	nameMaxLength,
 	portletNamespace,
 }) => {
+	const [externalReferenceCode, setExternalReferenceCode] = useState<string>(
+		''
+	);
 	const [visible, setVisible] = useState(false);
 	const inputFileRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 	const [name, setName] = useState('');
@@ -48,6 +54,7 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 	const {observer, onClose} = useModal({
 		onClose: () => {
 			setVisible(false);
+			setExternalReferenceCode('');
 			setFile({
 				fileName: '',
 				inputFile: null,
@@ -56,6 +63,40 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 			setName('');
 		},
 	});
+
+	const handleImport = async (formData: FormData) => {
+		try {
+			await API.save(importObjectDefinitionURL, formData, 'POST');
+
+			window.location.reload();
+		}
+		catch (error) {
+			onClose();
+			openToast({
+				message: (error as Error).message,
+				type: 'danger',
+			});
+		}
+	};
+
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+
+		const formData = new FormData(event.currentTarget);
+		const response = await fetch(
+			`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${externalReferenceCode}`
+		);
+
+		if (response.status === 204) {
+			handleImport(formData);
+		}
+		else {
+			setVisible(false);
+			openImportWarningModal({
+				handleImport: () => handleImport(formData),
+			});
+		}
+	};
 
 	useEffect(() => {
 		Liferay.component(
@@ -75,7 +116,7 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 	}, [importObjectDefinitionModalComponentId, setVisible]);
 
 	return visible ? (
-		<ClayModal observer={observer}>
+		<ClayModal center observer={observer}>
 			<ClayModal.Header>
 				{Liferay.Language.get('import-object')}
 			</ClayModal.Header>
@@ -85,10 +126,8 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 
 					// @ts-ignore
 
-					action={importObjectDefinitionURL}
-					encType="multipart/form-data"
 					id={importObjectDefinitionFormId}
-					method="POST"
+					onSubmit={handleSubmit}
 				>
 					<ClayAlert
 						displayType="info"
@@ -143,6 +182,7 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 									<ClayButton
 										displayType="secondary"
 										onClick={() => {
+											setExternalReferenceCode('');
 											setFile({
 												fileName: '',
 												inputFile: null,
@@ -157,6 +197,21 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 						</ClayInput.Group>
 					</ClayForm.Group>
 
+					{externalReferenceCode && (
+						<Input
+							disabled
+							feedbackMessage={Liferay.Language.get(
+								'internal-key-to-refer-the-object-definition'
+							)}
+							id="externalReferenceCode"
+							label={Liferay.Language.get(
+								'external-reference-code'
+							)}
+							name="externalReferenceCode"
+							value={externalReferenceCode}
+						/>
+					)}
+
 					<input
 						className="d-none"
 						name={objectDefinitionJSONInputId}
@@ -168,6 +223,24 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 								inputFile,
 								inputFileValue: target.value,
 							});
+
+							const fileReader = new FileReader();
+
+							fileReader.onload = () => {
+								try {
+									const objectDefinitionJSON = JSON.parse(
+										fileReader.result as string
+									) as {externalReferenceCode: string};
+
+									setExternalReferenceCode(
+										objectDefinitionJSON.externalReferenceCode
+									);
+								}
+								catch (error) {
+									setExternalReferenceCode('');
+								}
+							};
+							fileReader.readAsText(inputFile!);
 						}}
 						ref={inputFileRef}
 						type="file"

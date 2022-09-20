@@ -468,6 +468,10 @@ public class ObjectDefinitionResourceImpl
 	private ObjectDefinition _toObjectDefinition(
 		com.liferay.object.model.ObjectDefinition objectDefinition) {
 
+		if (objectDefinition == null) {
+			return null;
+		}
+
 		String permissionName =
 			com.liferay.object.model.ObjectDefinition.class.getName();
 

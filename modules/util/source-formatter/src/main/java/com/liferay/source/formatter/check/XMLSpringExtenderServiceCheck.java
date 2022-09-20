@@ -57,8 +57,7 @@ public class XMLSpringExtenderServiceCheck extends BaseFileCheck {
 				"Do not use Spring extender service as a dependency " +
 					"injection, use DS instead");
 		}
-
-		if (fileName.endsWith("/service.xml")) {
+		else if (fileName.endsWith("/service.xml")) {
 			Document document = SourceUtil.readXML(content);
 
 			Element rootElement = document.getRootElement();

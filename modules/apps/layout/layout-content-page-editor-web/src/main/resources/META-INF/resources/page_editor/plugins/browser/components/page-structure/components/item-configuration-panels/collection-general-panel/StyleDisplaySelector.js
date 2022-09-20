@@ -16,24 +16,33 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
+import {CONTENT_DISPLAY_OPTIONS} from '../../../../../../../app/config/constants/contentDisplayOptions';
 import InfoItemService from '../../../../../../../app/services/InfoItemService';
 import {useId} from '../../../../../../../core/hooks/useId';
 
-const LIST_STYLE_GRID = '';
-
-const DEFAULT_LIST_STYLE = {
-	label: Liferay.Language.get('grid'),
-	value: LIST_STYLE_GRID,
-};
+const DEFAULT_LIST_STYLES = [
+	{
+		label: Liferay.Language.get('grid'),
+		value: '',
+	},
+	{
+		label: Liferay.Language.get('flex-row'),
+		value: CONTENT_DISPLAY_OPTIONS.flexRow,
+	},
+	{
+		label: Liferay.Language.get('flex-column'),
+		value: CONTENT_DISPLAY_OPTIONS.flexColumn,
+	},
+];
 
 export function StyleDisplaySelector({
 	collectionItemType,
 	handleConfigurationChanged,
 	listStyle,
 }) {
-	const [availableListStyles, setAvailableListStyles] = useState([
-		DEFAULT_LIST_STYLE,
-	]);
+	const [availableListStyles, setAvailableListStyles] = useState(
+		DEFAULT_LIST_STYLES
+	);
 
 	const listStyleId = useId();
 
@@ -44,7 +53,7 @@ export function StyleDisplaySelector({
 			})
 				.then((response) => {
 					setAvailableListStyles([
-						DEFAULT_LIST_STYLE,
+						...DEFAULT_LIST_STYLES,
 						{
 							label: Liferay.Language.get('templates'),
 							options: response,
@@ -53,7 +62,7 @@ export function StyleDisplaySelector({
 					]);
 				})
 				.catch(() => {
-					setAvailableListStyles([DEFAULT_LIST_STYLE]);
+					setAvailableListStyles(DEFAULT_LIST_STYLES);
 				});
 		}
 	}, [collectionItemType]);

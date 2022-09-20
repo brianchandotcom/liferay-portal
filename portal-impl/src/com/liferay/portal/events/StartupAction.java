@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.tools.DBUpgrader;
+import com.liferay.portal.util.IndexUpdaterUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -174,8 +175,10 @@ public class StartupAction extends SimpleAction {
 			DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
 		}
 
-		if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP) {
-			StartupHelperUtil.updateIndexes();
+		if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP &&
+			!StartupHelperUtil.isDBNew()) {
+
+			IndexUpdaterUtil.updateAllIndexes();
 		}
 	}
 

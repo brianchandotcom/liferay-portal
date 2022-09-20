@@ -19,7 +19,11 @@ const ProductOutlet = ({product}) => {
 	const [{project, subscriptionGroups}] = useCustomerPortal();
 
 	const hasProduct = useMemo(
-		() => !!subscriptionGroups?.find(({name}) => name === product),
+		() =>
+			!!subscriptionGroups?.find(
+				({name}) =>
+					name.replaceAll(' ', '') === product.replaceAll(' ', '')
+			),
 		[product, subscriptionGroups]
 	);
 

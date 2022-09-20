@@ -356,6 +356,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UNDO</td>
+	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-undo')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -20,12 +20,20 @@
 RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (RepositoryBrowserTagDisplayContext)request.getAttribute(RepositoryBrowserTagDisplayContext.class.getName());
 %>
 
+<clay:management-toolbar
+	additionalProps="<%= repositoryBrowserTagDisplayContext.getAdditionalProps() %>"
+	managementToolbarDisplayContext="<%= repositoryBrowserTagDisplayContext.getManagementToolbarDisplayContext() %>"
+	propsTransformer="repository_browser/js/RepositoryBrowserManagementToolbarPropsTransformer"
+/>
+
 <clay:container-fluid>
 	<liferay-ui:search-container
+		id="repositoryEntries"
 		searchContainer="<%= repositoryBrowserTagDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.repository.model.RepositoryEntry"
+			keyProperty="primaryKey"
 			modelVar="repositoryEntry"
 		>
 			<liferay-ui:search-container-column-text>

@@ -73,6 +73,7 @@ public class RepositoryBrowserTag extends IncludeTag {
 			RepositoryBrowserTagDisplayContext.class.getName(),
 			new RepositoryBrowserTagDisplayContext(
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, httpServletRequest,
+				PortalUtil.getLiferayPortletRequest(portletRequest),
 				PortalUtil.getLiferayPortletResponse(portletResponse),
 				portletRequest, _getRepositoryId()));
 	}

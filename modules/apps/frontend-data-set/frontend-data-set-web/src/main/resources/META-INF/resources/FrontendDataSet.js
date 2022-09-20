@@ -494,7 +494,7 @@ const FrontendDataSet = ({
 				<ClayPaginationBarWithBasicItems
 					activeDelta={paginationDelta}
 					activePage={pageNumber}
-					deltas={pagination.paginationDeltas}
+					deltas={pagination?.deltas}
 					ellipsisBuffer={3}
 					onDeltaChange={(delta) => {
 						setPageNumber(1);

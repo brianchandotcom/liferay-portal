@@ -14,24 +14,39 @@
 
 package com.liferay.poshi.runner.exception;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class PoshiRunnerWarningException extends Exception {
 
-	public PoshiRunnerWarningException() {
+	public static void addException(
+		PoshiRunnerWarningException poshiRunnerWarningException) {
+
+		_poshiRunnerWarningExceptions.add(poshiRunnerWarningException);
+	}
+
+	public static List<PoshiRunnerWarningException>
+		getPoshiRunnerWarningExceptions() {
+
+		return _poshiRunnerWarningExceptions;
 	}
 
 	public PoshiRunnerWarningException(String msg) {
 		super(msg);
+
+		_poshiRunnerWarningExceptions.add(this);
 	}
 
 	public PoshiRunnerWarningException(String msg, Throwable throwable) {
 		super(msg, throwable);
+
+		_poshiRunnerWarningExceptions.add(this);
 	}
 
-	public PoshiRunnerWarningException(Throwable throwable) {
-		super(throwable);
-	}
+	private static final List<PoshiRunnerWarningException>
+		_poshiRunnerWarningExceptions = new ArrayList<>();
 
 }

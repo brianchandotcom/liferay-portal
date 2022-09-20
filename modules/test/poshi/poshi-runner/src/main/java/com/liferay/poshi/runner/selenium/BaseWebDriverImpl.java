@@ -451,41 +451,38 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			return;
 		}
 
-		List<JavaScriptError> javaScriptErrors = new ArrayList<>();
+		List<JavaScriptError> javaScriptErrors = JavaScriptError.readErrors(
+			getWrappedWebDriver("//body"));
 
-		try {
-			javaScriptErrors.addAll(
-				JavaScriptError.readErrors(getWrappedWebDriver("//body")));
-		}
-		catch (Exception exception) {
-		}
+		PoshiRunnerWarningException poshiRunnerWarningException = null;
 
-		List<Exception> exceptions = new ArrayList<>();
+		for (JavaScriptError javaScriptError : javaScriptErrors) {
+			String javaScriptErrorValue = javaScriptError.toString();
 
-		if (!javaScriptErrors.isEmpty()) {
-			for (JavaScriptError javaScriptError : javaScriptErrors) {
-				String javaScriptErrorValue = javaScriptError.toString();
+			if ((Validator.isNotNull(ignoreJavaScriptError) &&
+				 javaScriptErrorValue.contains(ignoreJavaScriptError)) ||
+				LiferaySeleniumUtil.isInIgnoreErrorsFile(
+					javaScriptErrorValue, "javascript")) {
 
-				if ((Validator.isNotNull(ignoreJavaScriptError) &&
-					 javaScriptErrorValue.contains(ignoreJavaScriptError)) ||
-					LiferaySeleniumUtil.isInIgnoreErrorsFile(
-						javaScriptErrorValue, "javascript")) {
+				continue;
+			}
 
-					continue;
-				}
+			String message = "JAVA_SCRIPT_ERROR: " + javaScriptErrorValue;
 
-				String message = "JAVA_SCRIPT_ERROR: " + javaScriptErrorValue;
+			System.out.println(message);
 
-				System.out.println(message);
-
-				exceptions.add(new PoshiRunnerWarningException(message));
+			if (poshiRunnerWarningException == null) {
+				poshiRunnerWarningException = new PoshiRunnerWarningException(
+					message);
+			}
+			else {
+				PoshiRunnerWarningException.addException(
+					new PoshiRunnerWarningException(message));
 			}
 		}
 
-		if (!exceptions.isEmpty()) {
-			LiferaySeleniumUtil.addToJavaScriptExceptions(exceptions);
-
-			throw exceptions.get(0);
+		if (poshiRunnerWarningException != null) {
+			throw poshiRunnerWarningException;
 		}
 	}
 

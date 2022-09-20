@@ -564,10 +564,10 @@ const Walkthrough = ({
 Walkthrough.propTypes = {
 	closeOnClickOutside: PropTypes.bool,
 	closeable: PropTypes.bool,
-	darkbg: PropTypes.bool,
 	skippable: PropTypes.bool,
 	steps: PropTypes.arrayOf(
 		PropTypes.shape({
+			darkbg: PropTypes.bool,
 			content: PropTypes.string,
 			nodeToHighlight: PropTypes.string.isRequired,
 			positioning: PropTypes.oneOf(Object.keys(ALIGNMENTS_MAP)),

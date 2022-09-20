@@ -12,7 +12,7 @@
  * details.
  */
 
-import Walkthrough from '@liferay/frontend-js-walkthrough-web/Walkthrough';
+import Walkthrough from '@liferay/frontend-js-walkthrough-web/components/Walkthrough';
 import React from 'react';
 
 const WALKTHROUGH_CONFIG = {

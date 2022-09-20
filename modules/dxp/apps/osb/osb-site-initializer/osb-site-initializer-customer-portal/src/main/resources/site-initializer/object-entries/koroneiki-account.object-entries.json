@@ -34,7 +34,13 @@
 			"region": "Brazil",
 			"slaCurrent": "Platinum Subscription",
 			"slaCurrentEndDate": "2022-08-24 00:00:00.0",
-			"slaCurrentStartDate": "2021-08-24 00:00:00.0"
+			"slaCurrentStartDate": "2021-08-24 00:00:00.0",
+			"slaFuture": "Premium Subscription",
+			"slaFutureEndDate": "2028-08-24 00:00:00.0",
+			"slaFutureStartDate": "2025-08-24 00:00:00.0",
+			"slaExpired": "Gold Subscription",
+			"slaExpiredEndDate": "2022-08-24 00:00:00.0",
+			"slaExpiredStartDate": "2021-08-24 00:00:00.0"
 		},
 		{
 			"accountKey": "ERC-003",

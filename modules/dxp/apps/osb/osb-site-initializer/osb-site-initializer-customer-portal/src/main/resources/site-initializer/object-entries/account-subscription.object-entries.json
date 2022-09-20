@@ -31,6 +31,16 @@
 			"subscriptionStatus": "Active"
 		},
 		{
+			"accountKey": "ERC-002",
+			"accountSubscriptionGroupERC": "ERC-002_dxp",
+			"endDate": "2028-01-14 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 6,
+			"startDate": "2021-01-15 00:00:00.0",
+			"subscriptionStatus": "Active"
+		},
+		{
 			"accountKey": "ERC-003",
 			"accountSubscriptionGroupERC": "ERC-003_analytics-cloud",
 			"endDate": "2028-01-14 00:00:00.0",

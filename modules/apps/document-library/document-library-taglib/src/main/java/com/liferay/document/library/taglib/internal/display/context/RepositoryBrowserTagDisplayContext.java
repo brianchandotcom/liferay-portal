@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FileEntryVerticalCard;
 import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FolderHorizontalCard;
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCard;
@@ -99,6 +100,12 @@ public class RepositoryBrowserTagDisplayContext {
 		).build();
 	}
 
+	public String getDeleteFileEntryURL(FileEntry fileEntry) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "fileEntryId",
+			fileEntry.getFileEntryId());
+	}
+
 	public String getDeleteFolderURL(Folder folder) {
 		return HttpComponentsUtil.addParameter(
 			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
@@ -168,6 +175,12 @@ public class RepositoryBrowserTagDisplayContext {
 		};
 	}
 
+	public String getRenameFileEntryURL(FileEntry fileEntry) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "fileEntryId",
+			fileEntry.getFileEntryId());
+	}
+
 	public String getRenameFolderURL(Folder folder) {
 		return HttpComponentsUtil.addParameter(
 			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
@@ -226,87 +239,19 @@ public class RepositoryBrowserTagDisplayContext {
 	public VerticalCard getVerticalCard(RepositoryEntry repositoryEntry)
 		throws PortalException {
 
-		SearchContainer<Object> searchContainer = getSearchContainer();
-
 		if (repositoryEntry instanceof FileEntry) {
 			FileEntry fileEntry = (FileEntry)repositoryEntry;
 
-			FileVersion fileVersion = fileEntry.getFileVersion();
-
-			return new VerticalCard() {
-
-				@Override
-				public List<DropdownItem> getActionDropdownItems() {
-					return DropdownItemListBuilder.add(
-						dropdownItem -> {
-							dropdownItem.putData("action", "rename");
-							dropdownItem.putData(
-								"renameURL", _getRenameFileEntryURL(fileEntry));
-							dropdownItem.putData("value", fileEntry.getTitle());
-							dropdownItem.setIcon("pencil");
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, "rename"));
-						}
-					).add(
-						dropdownItem -> {
-							dropdownItem.putData("action", "delete");
-							dropdownItem.putData(
-								"deleteURL", _getDeleteFileEntryURL(fileEntry));
-							dropdownItem.setIcon("trash");
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, "delete"));
-						}
-					).build();
-				}
-
-				@Override
-				public String getDefaultEventHandler() {
-					return "repositoryBrowserEventHandler";
-				}
-
-				@Override
-				public String getImageSrc() {
-					try {
-						return DLURLHelperUtil.getThumbnailSrc(
-							fileEntry, fileVersion,
-							(ThemeDisplay)_httpServletRequest.getAttribute(
-								WebKeys.THEME_DISPLAY));
-					}
-					catch (Exception exception) {
-						return ReflectionUtil.throwException(exception);
-					}
-				}
-
-				@Override
-				public String getInputName() {
-					RowChecker rowChecker = searchContainer.getRowChecker();
-
-					if (rowChecker == null) {
-						return null;
-					}
-
-					return rowChecker.getRowIds();
-				}
-
-				@Override
-				public String getInputValue() {
-					return String.valueOf(fileEntry.getFileEntryId());
-				}
-
-				@Override
-				public String getTitle() {
-					return fileEntry.getTitle();
-				}
-
-			};
+			return new FileEntryVerticalCard(
+				fileEntry, _httpServletRequest, this);
 		}
 
 		if (repositoryEntry instanceof FileShortcut) {
 			FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
 
 			FileVersion fileVersion = fileShortcut.getFileVersion();
+
+			SearchContainer<Object> searchContainer = getSearchContainer();
 
 			return new VerticalCard() {
 
@@ -380,12 +325,6 @@ public class RepositoryBrowserTagDisplayContext {
 		return true;
 	}
 
-	private String _getDeleteFileEntryURL(FileEntry fileEntry) {
-		return HttpComponentsUtil.addParameter(
-			_getRepositoryBrowserURL(), "fileEntryId",
-			fileEntry.getFileEntryId());
-	}
-
 	private String _getDeleteFileShortcutURL(FileShortcut fileShortcut) {
 		return HttpComponentsUtil.addParameter(
 			_getRepositoryBrowserURL(), "fileShortcutId",
@@ -437,12 +376,6 @@ public class RepositoryBrowserTagDisplayContext {
 		searchContext.setStart(searchContainer.getStart());
 
 		return DLAppServiceUtil.search(_repositoryId, searchContext);
-	}
-
-	private String _getRenameFileEntryURL(FileEntry fileEntry) {
-		return HttpComponentsUtil.addParameter(
-			_getRepositoryBrowserURL(), "fileEntryId",
-			fileEntry.getFileEntryId());
 	}
 
 	private String _getRepositoryBrowserURL() {

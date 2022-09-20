@@ -32,6 +32,13 @@ import React, {
 	useState,
 } from 'react';
 
+import {
+	getCheckedPickListItems,
+	getCheckedRelationshipItems,
+	getCheckedWorkflowStatusItems,
+	getSystemFieldLabelFromEntry,
+} from '../utils/filter';
+
 import './ModalAddFilter.scss';
 interface IProps {
 	currentFilters: CurrentFilter[];
@@ -173,139 +180,6 @@ export function ModalAddFilter({
 		return valuesArray;
 	};
 
-	const getCheckedWorkflowStatusItems = (
-		itemValues: LabelValueObject[]
-	): IItem[] => {
-		let newItemsValues: IItem[] = [];
-
-		const valuesArray = setEditingFilterType() as number[];
-
-		newItemsValues = itemValues.map((itemValue) => {
-			const item = {
-				checked: false,
-				label: itemValue.label,
-				value: itemValue.value,
-			};
-
-			if (valuesArray?.includes(Number(itemValue.value))) {
-				item.checked = true;
-			}
-
-			return item;
-		});
-
-		return newItemsValues;
-	};
-
-	const getCheckedPickListItems = (itemValues: PickListItem[]): IItem[] => {
-		let newItemsValues: IItem[] = [];
-
-		const valuesArray = setEditingFilterType() as string[];
-
-		newItemsValues = (itemValues as PickListItem[]).map((itemValue) => {
-			const item = {
-				checked: false,
-				label: itemValue.name,
-				value: itemValue.key,
-			};
-
-			if (valuesArray?.includes(itemValue.key)) {
-				item.checked = true;
-			}
-
-			return item;
-		});
-
-		return newItemsValues;
-	};
-
-	const getSystemFieldLabelFromEntry = (
-		titleFieldName: string,
-		entry: ObjectEntry,
-		itemObject: LabelValueObject
-	) => {
-		if (titleFieldName === 'creator') {
-			const {name} = entry.creator;
-
-			return {
-				...itemObject,
-				label: name,
-			};
-		}
-
-		if (titleFieldName === 'status') {
-			const {label_i18n} = entry.status;
-
-			return {
-				...itemObject,
-				label: label_i18n,
-			};
-		}
-
-		if (titleFieldName === 'createDate') {
-			return {
-				...itemObject,
-				label: entry['dateCreated'],
-			};
-		}
-
-		if (titleFieldName === 'modifiedDate') {
-			return {
-				...itemObject,
-				label: entry['dateModified'],
-			};
-		}
-
-		if (
-			titleFieldName === 'id' ||
-			titleFieldName === 'externalReferenceCode'
-		) {
-			return {
-				...itemObject,
-				label: entry[titleFieldName],
-			};
-		}
-	};
-
-	const getCheckedRelationshipItems = (
-		relatedEntries: ObjectEntry[],
-		titleFieldName: string,
-		systemField: boolean
-	): IItem[] => {
-		let newItemsValues: IItem[] = [];
-
-		const valuesArray = setEditingFilterType() as string[];
-
-		newItemsValues = relatedEntries.map((entry) => {
-			let item = {
-				checked: false,
-				value: entry.externalReferenceCode,
-			} as IItem;
-
-			if (systemField) {
-				item = getSystemFieldLabelFromEntry(
-					titleFieldName,
-					entry,
-					item
-				) as IItem;
-			}
-			else {
-				item = {
-					...item,
-					label: entry[titleFieldName] as string,
-				};
-			}
-
-			if (valuesArray.includes(entry.externalReferenceCode)) {
-				item.checked = true;
-			}
-
-			return item;
-		});
-
-		return newItemsValues;
-	};
-
 	const setFieldValues = useCallback(
 		(objectField: ObjectField) => {
 			if (objectField?.businessType === 'Picklist') {
@@ -315,7 +189,9 @@ export function ModalAddFilter({
 					);
 
 					if (editingFilter) {
-						setItems(getCheckedPickListItems(items));
+						setItems(
+							getCheckedPickListItems(items, setEditingFilterType)
+						);
 					}
 					else {
 						setItems(
@@ -336,7 +212,8 @@ export function ModalAddFilter({
 
 				if (editingFilter) {
 					newItems = getCheckedWorkflowStatusItems(
-						workflowStatusJSONArray
+						workflowStatusJSONArray,
+						setEditingFilterType
 					);
 				}
 				else {
@@ -377,7 +254,8 @@ export function ModalAddFilter({
 							getCheckedRelationshipItems(
 								relatedEntries,
 								titleField.name,
-								titleField.system as boolean
+								titleField.system as boolean,
+								setEditingFilterType
 							)
 						);
 					}

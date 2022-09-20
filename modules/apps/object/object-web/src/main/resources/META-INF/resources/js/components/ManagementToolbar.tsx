@@ -17,14 +17,21 @@ import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
+import {navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import ModalEditExternalReferenceCode from './ModalEditExternalReferenceCode';
 
 export default function ManagementToolbar({
+	backURL,
 	externalReferenceCode: initialExternalReferenceCode,
+	hasPublishObjectPermission,
+	hasUpdateObjectDefinitionPermission,
+	isApproved,
 	label,
 	objectDefinitionId,
+	portletNamespace,
+	screenNavigationCategoryKey,
 	system,
 }: IProps) {
 	const [externalReferenceCode, setExternalReferenceCode] = useState<string>(
@@ -35,6 +42,23 @@ export default function ManagementToolbar({
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleModal(false),
 	});
+
+	const submitObjectDefinition = (draft: boolean) => {
+		const form = document.getElementById(`${portletNamespace}fm`);
+
+		if (!draft) {
+			form?.querySelector(`#${portletNamespace}cmd`)?.setAttribute(
+				'value',
+				'publish'
+			);
+		}
+
+		form?.querySelector(
+			`#${portletNamespace}externalReferenceCode`
+		)?.setAttribute('value', externalReferenceCode);
+
+		(form as HTMLFormElement)?.submit();
+	};
 
 	return (
 		<>
@@ -94,6 +118,42 @@ export default function ManagementToolbar({
 						</div>
 					</div>
 				</ClayManagementToolbar.ItemList>
+
+				{(!screenNavigationCategoryKey ||
+					screenNavigationCategoryKey === 'details') && (
+					<ClayManagementToolbar.ItemList>
+						<ClayButton.Group key={1} spaced>
+							<ClayButton
+								displayType="unstyled"
+								name="cancel"
+								onClick={() => navigate(backURL)}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+
+							<ClayButton
+								disabled={!hasUpdateObjectDefinitionPermission}
+								displayType="secondary"
+								name="save"
+								onClick={() => submitObjectDefinition(true)}
+							>
+								{Liferay.Language.get('save')}
+							</ClayButton>
+
+							{!isApproved && (
+								<ClayButton
+									disabled={!hasPublishObjectPermission}
+									name="publish"
+									onClick={() =>
+										submitObjectDefinition(false)
+									}
+								>
+									{Liferay.Language.get('publish')}
+								</ClayButton>
+							)}
+						</ClayButton.Group>
+					</ClayManagementToolbar.ItemList>
+				)}
 			</ClayManagementToolbar>
 
 			{visibleModal && (
@@ -110,8 +170,14 @@ export default function ManagementToolbar({
 }
 
 interface IProps {
+	backURL: string;
 	externalReferenceCode: string;
+	hasPublishObjectPermission: boolean;
+	hasUpdateObjectDefinitionPermission: boolean;
+	isApproved: boolean;
 	label: string;
 	objectDefinitionId: number;
+	portletNamespace: string;
+	screenNavigationCategoryKey: string;
 	system: boolean;
 }

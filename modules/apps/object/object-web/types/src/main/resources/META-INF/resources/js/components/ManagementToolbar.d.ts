@@ -15,15 +15,27 @@
 /// <reference types="react" />
 
 export default function ManagementToolbar({
+	backURL,
 	externalReferenceCode: initialExternalReferenceCode,
+	hasPublishObjectPermission,
+	hasUpdateObjectDefinitionPermission,
+	isApproved,
 	label,
 	objectDefinitionId,
+	portletNamespace,
+	screenNavigationCategoryKey,
 	system,
 }: IProps): JSX.Element;
 interface IProps {
+	backURL: string;
 	externalReferenceCode: string;
+	hasPublishObjectPermission: boolean;
+	hasUpdateObjectDefinitionPermission: boolean;
+	isApproved: boolean;
 	label: string;
 	objectDefinitionId: number;
+	portletNamespace: string;
+	screenNavigationCategoryKey: string;
 	system: boolean;
 }
 export {};

@@ -918,8 +918,8 @@ function EditSXPBlueprintForm({
 				isSubmitting={formik.isSubmitting}
 				onCancel={redirectURL}
 				onChangeTab={_handleChangeTab}
-				onChangeTitleAndDescription={_handleChangeTitleAndDescription}
 				onSubmit={_handleSubmit}
+				onTitleAndDescriptionChange={_handleChangeTitleAndDescription}
 				tab={tab}
 				tabs={TABS}
 				title={formik.values.title}

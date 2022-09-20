@@ -19,7 +19,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 jest.useFakeTimers();
 
-const onChangeTitleAndDescription = jest.fn();
+const onTitleAndDescriptionChange = jest.fn();
 const onSubmit = jest.fn();
 
 const context = {
@@ -48,8 +48,8 @@ function PageToolbarComponent(props) {
 			description={description}
 			onCancel="/link"
 			onChangeTab={jest.fn()}
-			onChangeTitleAndDescription={onChangeTitleAndDescription}
 			onSubmit={onSubmit}
+			onTitleAndDescriptionChange={onTitleAndDescriptionChange}
 			tab="query-builder"
 			tabs={{
 				'query-builder': 'query-builder',
@@ -85,7 +85,7 @@ describe('PageToolbar', () => {
 		getByText(title['en-US']);
 	});
 
-	it('calls onChangeTitleAndDescription when updating title', () => {
+	it('calls onTitleAndDescriptionChange when updating title', () => {
 		const {getByLabelText, getByText} = renderPageToolbar();
 
 		getByText(title['en-US']);
@@ -102,10 +102,10 @@ describe('PageToolbar', () => {
 
 		act(() => jest.runAllTimers());
 
-		expect(onChangeTitleAndDescription).toHaveBeenCalled();
+		expect(onTitleAndDescriptionChange).toHaveBeenCalled();
 	});
 
-	it('calls onChangeTitleAndDescription when updating description', () => {
+	it('calls onTitleAndDescriptionChange when updating description', () => {
 		const {getByLabelText, getByText} = renderPageToolbar();
 
 		getByText(description['en-US']);
@@ -122,7 +122,7 @@ describe('PageToolbar', () => {
 
 		act(() => jest.runAllTimers());
 
-		expect(onChangeTitleAndDescription).toHaveBeenCalled();
+		expect(onTitleAndDescriptionChange).toHaveBeenCalled();
 	});
 
 	it('offers link to cancel', () => {

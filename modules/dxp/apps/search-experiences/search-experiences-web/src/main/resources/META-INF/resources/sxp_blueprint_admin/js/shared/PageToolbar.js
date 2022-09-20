@@ -276,8 +276,8 @@ export default function PageToolbar({
 	isSubmitting,
 	onCancel,
 	onChangeTab,
-	onChangeTitleAndDescription,
 	onSubmit,
+	onTitleAndDescriptionChange,
 	readOnly = false,
 	tab,
 	tabs,
@@ -324,7 +324,7 @@ export default function PageToolbar({
 									modalFieldFocus={modalFieldFocus}
 									observer={observer}
 									onClose={onClose}
-									onSubmit={onChangeTitleAndDescription}
+									onSubmit={onTitleAndDescriptionChange}
 								/>
 							)}
 
@@ -494,8 +494,8 @@ PageToolbar.propTypes = {
 	isSubmitting: PropTypes.bool,
 	onCancel: PropTypes.string.isRequired,
 	onChangeTab: PropTypes.func,
-	onChangeTitleAndDescription: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,
+	onTitleAndDescriptionChange: PropTypes.func,
 	readOnly: PropTypes.bool,
 	tab: PropTypes.string,
 	tabs: PropTypes.object,

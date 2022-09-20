@@ -493,10 +493,10 @@ function EditSXPElementForm({
 					disableTitleAndDescriptionModal={isSXPElementJSONInvalid}
 					isSubmitting={isSubmitting}
 					onCancel={redirectURL}
-					onChangeTitleAndDescription={
+					onSubmit={_handleSubmit}
+					onTitleAndDescriptionChange={
 						_handleTitleAndDescriptionChange
 					}
-					onSubmit={_handleSubmit}
 					readOnly={readOnly}
 					title={renameKeys(
 						sxpElementJSONObject.title_i18n,

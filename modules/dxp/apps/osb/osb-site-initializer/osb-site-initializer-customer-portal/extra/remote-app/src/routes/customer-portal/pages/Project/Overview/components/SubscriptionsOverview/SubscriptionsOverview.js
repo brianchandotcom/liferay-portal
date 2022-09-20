@@ -14,20 +14,23 @@ import {useOutletContext} from 'react-router-dom';
 import i18n from '../../../../../../../common/I18n';
 import Skeleton from '../../../../../../../common/components/Skeleton';
 import SubscriptionsNavbar from './components/SubscriptionsNavbar/SubscriptionsNavbar';
-import useSubscriptions from './hooks/useSubscriptions';
+import useAccountSubscriptionGroups from './hooks/useAccountSubscriptionGroups';
+import useAccountSubscriptions from './hooks/useAccountSubscriptions';
 
 const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
-	const {
-		accountSubcriptionsResult: [
-			{onSelectAccountSubscriptionGroup, onSelectSubscriptionStatus},
-			{loading: accountSubscriptionsLoading},
-		],
-		accountSubscriptionGroupsResult: {
-			data: accountSubscriptionGroupsData,
-			loading: accountSubscriptionGroupsLoading,
-		},
-	} = useSubscriptions(koroneikiAccount?.accountKey, loading);
+	const [
+		{lastAccountSubcriptionGroup, onSelectAccountSubscriptionGroup},
+		{accountSubscriptionGroups, loading: accountSubscriptionGroupsLoading},
+	] = useAccountSubscriptionGroups(koroneikiAccount?.accountKey, loading);
+
+	const [
+		onSelectSubscriptionStatus,
+		{loading: accountSubscriptionsLoading},
+	] = useAccountSubscriptions(
+		lastAccountSubcriptionGroup,
+		accountSubscriptionGroupsLoading
+	);
 
 	useEffect(() => {
 		setHasQuickLinksPanel(true);
@@ -43,9 +46,6 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 
 		onSelectSubscriptionStatus();
 	};
-
-	const accountSubscriptionGroups =
-		accountSubscriptionGroupsData?.c.accountSubscriptionGroups;
 
 	return (
 		<div>

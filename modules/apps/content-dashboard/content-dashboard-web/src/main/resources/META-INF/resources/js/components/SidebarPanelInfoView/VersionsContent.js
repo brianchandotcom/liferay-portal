@@ -18,12 +18,9 @@ import {fetch, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-const VersionsContent = ({
-	formatDate,
-	getItemVersionsURL,
-	languageTag = 'en',
-	onError,
-}) => {
+import formatDate from './utils/formatDate';
+
+const VersionsContent = ({getItemVersionsURL, languageTag = 'en', onError}) => {
 	const [loading, setLoading] = useState(false);
 	const [versions, setVersions] = useState([]);
 
@@ -95,7 +92,6 @@ VersionsContent.defaultProps = {
 };
 
 VersionsContent.propTypes = {
-	formatDate: PropTypes.func.isRequired,
 	getItemVersionsURL: PropTypes.string.isRequired,
 };
 

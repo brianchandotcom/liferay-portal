@@ -20,6 +20,7 @@ import CollapsibleSection from './CollapsibleSection';
 import ItemLanguages from './ItemLanguages';
 import PreviewActionsDescriptionSection from './PreviewActionsDescriptionSection';
 import SpecificFields from './SpecificFields';
+import formatDate from './utils/formatDate';
 
 const DetailsContent = ({
 	classPK,
@@ -27,7 +28,6 @@ const DetailsContent = ({
 	description,
 	downloadURL,
 	fetchSharingButtonURL,
-	formatDate,
 	handleError,
 	languageTag = 'en',
 	modifiedDate,
@@ -106,7 +106,6 @@ DetailsContent.defaultProps = {
 DetailsContent.propTypes = {
 	classPK: PropTypes.string.isRequired,
 	createDate: PropTypes.string.isRequired,
-	formatDate: PropTypes.func.isRequired,
 	modifiedDate: PropTypes.string.isRequired,
 	specificFields: PropTypes.object.isRequired,
 	viewURLs: PropTypes.array.isRequired,

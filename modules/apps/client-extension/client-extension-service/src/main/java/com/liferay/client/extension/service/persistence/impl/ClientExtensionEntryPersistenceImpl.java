@@ -5402,6 +5402,9 @@ public class ClientExtensionEntryPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
+
 	private static final String _SQL_SELECT_CLIENTEXTENSIONENTRY =
 		"SELECT clientExtensionEntry FROM ClientExtensionEntry clientExtensionEntry";
 
@@ -5460,9 +5463,6 @@ public class ClientExtensionEntryPersistenceImpl
 
 	@Reference
 	private PortalUUID _portalUUID;
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 	@Reference
 	private ClientExtensionEntryModelArgumentsResolver

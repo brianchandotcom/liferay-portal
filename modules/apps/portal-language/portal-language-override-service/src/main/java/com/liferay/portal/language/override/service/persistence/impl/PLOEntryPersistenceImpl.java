@@ -2763,6 +2763,9 @@ public class PLOEntryPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
+
 	private static final String _SQL_SELECT_PLOENTRY =
 		"SELECT ploEntry FROM PLOEntry ploEntry";
 
@@ -2793,9 +2796,6 @@ public class PLOEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 	@Reference
 	private PLOEntryModelArgumentsResolver _ploEntryModelArgumentsResolver;

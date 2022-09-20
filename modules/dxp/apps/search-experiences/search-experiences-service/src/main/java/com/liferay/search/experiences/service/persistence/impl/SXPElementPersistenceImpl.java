@@ -6827,6 +6827,9 @@ public class SXPElementPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
+
 	private static final String _SQL_SELECT_SXPELEMENT =
 		"SELECT sxpElement FROM SXPElement sxpElement";
 
@@ -6883,9 +6886,6 @@ public class SXPElementPersistenceImpl
 
 	@Reference
 	private PortalUUID _portalUUID;
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 	@Reference
 	private SXPElementModelArgumentsResolver _sxpElementModelArgumentsResolver;

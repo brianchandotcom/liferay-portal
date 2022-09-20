@@ -22964,6 +22964,9 @@ public class MBMessagePersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
+
 	private static final String _SQL_SELECT_MBMESSAGE =
 		"SELECT mbMessage FROM MBMessage mbMessage";
 
@@ -23020,9 +23023,6 @@ public class MBMessagePersistenceImpl
 
 	@Reference
 	private PortalUUID _portalUUID;
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 	@Reference
 	private MBMessageModelArgumentsResolver _mbMessageModelArgumentsResolver;

@@ -23091,6 +23091,9 @@ public class BlogsEntryPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
+
 	private static Long _getTime(Date date) {
 		if (date == null) {
 			return null;
@@ -23155,9 +23158,6 @@ public class BlogsEntryPersistenceImpl
 
 	@Reference
 	private PortalUUID _portalUUID;
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 	@Reference
 	private BlogsEntryModelArgumentsResolver _blogsEntryModelArgumentsResolver;

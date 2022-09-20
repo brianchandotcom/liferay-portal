@@ -1560,6 +1560,9 @@ public class RedirectNotFoundEntryPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
+
 	private static final String _SQL_SELECT_REDIRECTNOTFOUNDENTRY =
 		"SELECT redirectNotFoundEntry FROM RedirectNotFoundEntry redirectNotFoundEntry";
 
@@ -1588,9 +1591,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 	@Reference
 	private RedirectNotFoundEntryModelArgumentsResolver

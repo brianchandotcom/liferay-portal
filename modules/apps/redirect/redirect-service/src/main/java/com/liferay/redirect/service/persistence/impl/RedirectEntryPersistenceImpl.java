@@ -4398,6 +4398,9 @@ public class RedirectEntryPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
+
 	private static final String _SQL_SELECT_REDIRECTENTRY =
 		"SELECT redirectEntry FROM RedirectEntry redirectEntry";
 
@@ -4454,9 +4457,6 @@ public class RedirectEntryPersistenceImpl
 
 	@Reference
 	private PortalUUID _portalUUID;
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 	@Reference
 	private RedirectEntryModelArgumentsResolver

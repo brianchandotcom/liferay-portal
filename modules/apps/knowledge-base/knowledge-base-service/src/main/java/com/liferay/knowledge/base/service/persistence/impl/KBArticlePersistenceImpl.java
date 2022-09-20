@@ -36245,6 +36245,9 @@ public class KBArticlePersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
+
 	private static final String _SQL_SELECT_KBARTICLE =
 		"SELECT kbArticle FROM KBArticle kbArticle";
 
@@ -36301,9 +36304,6 @@ public class KBArticlePersistenceImpl
 
 	@Reference
 	private PortalUUID _portalUUID;
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 	@Reference
 	private KBArticleModelArgumentsResolver _kbArticleModelArgumentsResolver;

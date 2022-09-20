@@ -14414,6 +14414,9 @@ public class MBThreadPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
+
 	private static Long _getTime(Date date) {
 		if (date == null) {
 			return null;
@@ -14478,9 +14481,6 @@ public class MBThreadPersistenceImpl
 
 	@Reference
 	private PortalUUID _portalUUID;
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 	@Reference
 	private MBThreadModelArgumentsResolver _mbThreadModelArgumentsResolver;

@@ -3046,6 +3046,9 @@ public class KBTemplatePersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
+
 	private static final String _SQL_SELECT_KBTEMPLATE =
 		"SELECT kbTemplate FROM KBTemplate kbTemplate";
 
@@ -3102,9 +3105,6 @@ public class KBTemplatePersistenceImpl
 
 	@Reference
 	private PortalUUID _portalUUID;
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 	@Reference
 	private KBTemplateModelArgumentsResolver _kbTemplateModelArgumentsResolver;

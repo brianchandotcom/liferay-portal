@@ -24948,6 +24948,9 @@ public class WikiPagePersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	@Reference
+	private volatile List<Sanitizer> _sanitizers;
+
 	private static final String _SQL_SELECT_WIKIPAGE =
 		"SELECT wikiPage FROM WikiPage wikiPage";
 
@@ -25004,9 +25007,6 @@ public class WikiPagePersistenceImpl
 
 	@Reference
 	private PortalUUID _portalUUID;
-
-	@Reference
-	private volatile List<Sanitizer> _sanitizers;
 
 	@Reference
 	private WikiPageModelArgumentsResolver _wikiPageModelArgumentsResolver;

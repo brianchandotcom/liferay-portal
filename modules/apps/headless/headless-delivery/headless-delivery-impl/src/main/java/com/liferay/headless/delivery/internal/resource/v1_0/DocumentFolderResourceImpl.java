@@ -87,9 +87,42 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 			Sort[] sorts)
 		throws Exception {
 
-		return getSiteDocumentFoldersPage(
-			assetLibraryId, flatten, search, aggregation, filter, pagination,
-			sorts);
+		Long documentFolderId = null;
+
+		if (!GetterUtil.getBoolean(flatten)) {
+			documentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
+		return _getDocumentFoldersPage(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.ADD_FOLDER, "postAssetLibraryDocumentFolder",
+					DLConstants.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_FOLDER,
+					"postAssetLibraryDocumentFolderBatch",
+					DLConstants.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteDocumentFolderBatch",
+					DLConstants.RESOURCE_NAME, null)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getAssetLibraryDocumentFoldersPage",
+					DLConstants.RESOURCE_NAME, assetLibraryId)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putDocumentFolderBatch",
+					DLConstants.RESOURCE_NAME, null)
+			).build(),
+			documentFolderId, assetLibraryId, flatten, search, aggregation,
+			filter, pagination, sorts);
 	}
 
 	@Override

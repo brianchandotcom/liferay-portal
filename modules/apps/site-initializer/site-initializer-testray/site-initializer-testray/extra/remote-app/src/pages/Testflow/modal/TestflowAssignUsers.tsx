@@ -28,7 +28,10 @@ const TestflowAssignUsers: React.FC<TestflowAssignUsersProps> = ({
 }) => (
 	<UserListView
 		listViewProps={{
-			initialContext: {selectedRows: modalState},
+			initialContext: {
+				selectedRows: modalState,
+			},
+			managementToolbarProps: {title: ''},
 			onContextChange: ({selectedRows}) =>
 				setState((state: any) =>
 					getUniqueList([...state, ...selectedRows])

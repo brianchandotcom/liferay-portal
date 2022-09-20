@@ -401,6 +401,53 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-160789. No empty collection alert shown when the page creator clear the text of empty collection alert."
+	@priority = "4"
+	test ClearEmptyCollectionAlert {
+		task ("Given a page creator has a Collection Display without items on a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Most Viewed Assets");
+		}
+
+		task ("When the page creator clear the empty collection alert") {
+			PageEditor.editCollectionDisplay(
+				emptyCollectionAlert = "",
+				fragmentName = "Collection Display",
+				selectedName = "Most Viewed Assets");
+		}
+
+		task ("Then the page creator cannot see the empty collection alert at preview and view modes") {
+			PageEditor.previewInANewTab();
+
+			AssertTextEquals(
+				index = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "");
+
+			Close.closeWindow();
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				index = "1",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_EMPTY_STATE",
+				value1 = "");
+		}
+	}
+
 	@description = "This is a test for LPS-126009 and LPS-147390. The user is able to filter web contents in Collection Display using Tag."
 	@priority = "5"
 	test FilterWebContentByTag {

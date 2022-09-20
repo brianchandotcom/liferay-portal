@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -214,13 +215,8 @@ public class ContentDashboardItemSubtypeItemSelectorView
 	}
 
 	private long[] _getGroupIds(long companyId) {
-		List<Long> groupIds = _groupLocalService.getGroupIds(companyId, true);
-
-		Stream<Long> stream = groupIds.stream();
-
-		return stream.mapToLong(
-			groupId -> groupId
-		).toArray();
+		return ArrayUtil.toLongArray(
+			_groupLocalService.getGroupIds(companyId, true));
 	}
 
 	private String _getIcon(String className) {

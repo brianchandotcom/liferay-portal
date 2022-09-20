@@ -1932,6 +1932,22 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if ("${showEmptyCollectionAlert}" == "true") {
+			Check.checkNotVisible(
+				checkboxName = "Show Empty Collection Alert",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		if ("${showEmptyCollectionAlert}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				checkboxName = "Show Empty Collection Alert",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(pagination)) {
 			Select(
 				key_fieldLabel = "Pagination",

@@ -64,10 +64,7 @@ public class InitialUpgradeExtender
 	public InitialUpgradeExtension addingBundle(
 		Bundle bundle, BundleEvent bundleEvent) {
 
-		Dictionary<String, String> headers = bundle.getHeaders(
-			StringPool.BLANK);
-
-		if (headers.get("Liferay-Service") == null) {
+		if (!BundleUtil.isLiferayServiceBundle(bundle)) {
 			return null;
 		}
 

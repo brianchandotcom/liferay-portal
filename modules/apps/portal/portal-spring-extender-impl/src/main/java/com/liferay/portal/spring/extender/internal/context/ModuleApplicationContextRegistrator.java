@@ -94,6 +94,8 @@ public class ModuleApplicationContextRegistrator {
 
 			_dataSourceServiceRegistration = null;
 		}
+
+		_moduleApplicationContext.close();
 	}
 
 	protected void start() throws Exception {

@@ -516,9 +516,18 @@ definition {
 	}
 
 	macro viewActionsInsideTimersPresent {
-		AssertElementPresent(
-			key_actionName = "${actionName}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#ACTIONS_NAME_ON_TIMERS_FIELD");
+		if (isSet(actionName)) {
+			AssertElementPresent(
+				key_actionName = "${actionName}",
+				locator1 = "ProcessBuilderKaleoDesignerReact#ACTIONS_NAME_ON_TIMERS_FIELD");
+		}
+
+		if (isSet(actionTypeOption)) {
+			AssertElementPresent(
+				key_selectorField = "Type",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
+				value1 = "${actionTypeOption}");
+		}
 	}
 
 	macro viewActiveNodeHighlighted {

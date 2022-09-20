@@ -147,55 +147,6 @@ export function ModalAddFilter({
 		return newItemsValues;
 	};
 
-	const getCheckedRelationshipItems = (
-		relatedEntries: ObjectEntry[],
-		titleFieldName: string,
-		systemField: boolean
-	): IItem[] => {
-		let newItemsValues: IItem[] = [];
-
-		const valuesArray = setEditingFilterType() as string[];
-
-		newItemsValues = relatedEntries.map((entry) => {
-			let item = {
-				checked: false,
-				value: entry.externalReferenceCode,
-			} as IItem;
-
-			if (systemField && titleFieldName === 'creator') {
-				const {name} = entry.creator;
-
-				item = {
-					...item,
-					label: name,
-				};
-			}
-
-			if (systemField && titleFieldName === 'status') {
-				const {label_i18n} = entry.status;
-
-				item = {
-					...item,
-					label: label_i18n,
-				};
-			}
-			else {
-				item = {
-					...item,
-					label: entry[titleFieldName] as string,
-				};
-			}
-
-			if (valuesArray.includes(entry.externalReferenceCode)) {
-				item.checked = true;
-			}
-
-			return item;
-		});
-
-		return newItemsValues;
-	};
-
 	const getSystemFieldLabelFromEntry = (
 		titleFieldName: string,
 		entry: ObjectEntry,
@@ -232,6 +183,55 @@ export function ModalAddFilter({
 				label: entry['dateModified'],
 			};
 		}
+
+		if (
+			titleFieldName === 'id' ||
+			titleFieldName === 'externalReferenceCode'
+		) {
+			return {
+				...itemObject,
+				label: entry[titleFieldName],
+			};
+		}
+	};
+
+	const getCheckedRelationshipItems = (
+		relatedEntries: ObjectEntry[],
+		titleFieldName: string,
+		systemField: boolean
+	): IItem[] => {
+		let newItemsValues: IItem[] = [];
+
+		const valuesArray = setEditingFilterType() as string[];
+
+		newItemsValues = relatedEntries.map((entry) => {
+			let item = {
+				checked: false,
+				value: entry.externalReferenceCode,
+			} as IItem;
+
+			if (systemField) {
+				item = getSystemFieldLabelFromEntry(
+					titleFieldName,
+					entry,
+					item
+				) as IItem;
+			}
+			else {
+				item = {
+					...item,
+					label: entry[titleFieldName] as string,
+				};
+			}
+
+			if (valuesArray.includes(entry.externalReferenceCode)) {
+				item.checked = true;
+			}
+
+			return item;
+		});
+
+		return newItemsValues;
 	};
 
 	const setFieldValues = useCallback(

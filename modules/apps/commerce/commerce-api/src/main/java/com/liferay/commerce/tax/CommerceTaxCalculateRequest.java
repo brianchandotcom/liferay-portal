@@ -53,6 +53,10 @@ public class CommerceTaxCalculateRequest {
 		return _percentage;
 	}
 
+	public boolean isShipping() {
+		return _shipping;
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
@@ -89,6 +93,10 @@ public class CommerceTaxCalculateRequest {
 		_price = price;
 	}
 
+	public void setShipping(boolean shipping) {
+		_shipping = shipping;
+	}
+
 	public void setTaxCategoryId(long taxCategoryId) {
 		_taxCategoryId = taxCategoryId;
 	}
@@ -108,6 +116,7 @@ public class CommerceTaxCalculateRequest {
 	private boolean _includeTax;
 	private boolean _percentage;
 	private BigDecimal _price;
+	private boolean _shipping;
 	private long _taxCategoryId;
 
 }

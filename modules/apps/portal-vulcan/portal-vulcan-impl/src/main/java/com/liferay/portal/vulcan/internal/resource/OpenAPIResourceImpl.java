@@ -17,8 +17,10 @@ package com.liferay.portal.vulcan.internal.resource;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -70,6 +72,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -89,105 +93,24 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 	@Override
 	public Response getOpenAPI(
+			HttpServletRequest httpServletRequest,
+			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
+		throws Exception {
+
+		return _getOpenAPI(
+			httpServletRequest, null, null, resourceClasses, type, uriInfo);
+	}
+
+	@Override
+	public Response getOpenAPI(
 			OpenAPIContributor openAPIContributor,
 			OpenAPISchemaFilter openAPISchemaFilter,
 			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
 		throws Exception {
 
-		JaxrsOpenApiContextBuilder jaxrsOpenApiContextBuilder =
-			new JaxrsOpenApiContextBuilder();
-
-		OpenApiContext openApiContext = jaxrsOpenApiContextBuilder.buildContext(
-			true);
-
-		GenericOpenApiContext genericOpenApiContext =
-			(GenericOpenApiContext)openApiContext;
-
-		genericOpenApiContext.setCacheTTL(0L);
-		genericOpenApiContext.setOpenApiScanner(
-			new OpenApiScanner() {
-
-				@Override
-				public Set<Class<?>> classes() {
-					return resourceClasses;
-				}
-
-				@Override
-				public Map<String, Object> resources() {
-					return new HashMap<>();
-				}
-
-				@Override
-				public void setConfiguration(
-					OpenAPIConfiguration openAPIConfiguration) {
-				}
-
-			});
-
-		OpenAPI openAPI = openApiContext.read();
-
-		OpenAPISchemaFilter mergedOpenAPISchemaFilter =
-			_mergeOpenAPISchemaFilters(
-				openAPISchemaFilter,
-				_getOpenAPISchemaFilter(
-					_getBasePath(uriInfo), _extensionProviderRegistry,
-					resourceClasses));
-
-		if (mergedOpenAPISchemaFilter != null) {
-			SpecFilter specFilter = new SpecFilter();
-
-			Map<String, List<String>> queryParameters = null;
-
-			if (uriInfo != null) {
-				queryParameters = uriInfo.getQueryParameters();
-			}
-
-			openAPI = specFilter.filter(
-				openAPI, _toOpenAPISpecFilter(mergedOpenAPISchemaFilter),
-				queryParameters, null, null);
-		}
-
-		if (openAPI == null) {
-			return Response.status(
-				404
-			).build();
-		}
-
-		if (uriInfo != null) {
-			Server server = new Server();
-
-			server.setUrl(_getBasePath(uriInfo));
-
-			openAPI.setServers(Collections.singletonList(server));
-		}
-
-		if (openAPIContributor != null) {
-			openAPIContributor.contribute(openAPI, uriInfo);
-		}
-
-		for (OpenAPIContributor trackedOpenAPIContributor :
-				_trackedOpenAPIContributors) {
-
-			trackedOpenAPIContributor.contribute(openAPI, uriInfo);
-		}
-
-		if (StringUtil.equalsIgnoreCase("yaml", type)) {
-			return Response.status(
-				Response.Status.OK
-			).entity(
-				Yaml.pretty(openAPI)
-			).type(
-				"application/yaml"
-			).build();
-		}
-
-		return Response.status(
-			Response.Status.OK
-		).entity(
-			openAPI
-		).type(
-			MediaType.APPLICATION_JSON_TYPE
-		).build();
+		return _getOpenAPI(
+			null, openAPIContributor, openAPISchemaFilter, resourceClasses,
+			type, uriInfo);
 	}
 
 	@Override
@@ -212,7 +135,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
 		throws Exception {
 
-		return getOpenAPI(null, resourceClasses, type, uriInfo);
+		return getOpenAPI(null, null, resourceClasses, type, uriInfo);
 	}
 
 	@Activate
@@ -226,14 +149,29 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		_trackedOpenAPIContributors.close();
 	}
 
-	private String _getBasePath(UriInfo uriInfo) {
-		String basePath = null;
+	private String _getBasePath(
+		HttpServletRequest httpServletRequest, UriInfo uriInfo) {
 
-		if (uriInfo != null) {
-			basePath = UriInfoUtil.getBasePath(uriInfo);
+		if (uriInfo == null) {
+			return null;
 		}
 
-		return basePath;
+		if (httpServletRequest == null) {
+			return UriInfoUtil.getBasePath(uriInfo);
+		}
+
+		String scheme = Http.HTTP;
+
+		if (_portal.isSecure(httpServletRequest)) {
+			scheme = Http.HTTPS;
+		}
+
+		return UriInfoUtil.getBasePath(
+			_portal.getForwardedHost(httpServletRequest), scheme, uriInfo);
+	}
+
+	private String _getBasePath(UriInfo uriInfo) {
+		return _getBasePath(null, uriInfo);
 	}
 
 	private Set<String> _getDTOClassNames(Set<Class<?>> resourceClasses) {
@@ -356,6 +294,109 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		}
 
 		return propertyDefinitions;
+	}
+
+	private Response _getOpenAPI(
+			HttpServletRequest httpServletRequest,
+			OpenAPIContributor openAPIContributor,
+			OpenAPISchemaFilter openAPISchemaFilter,
+			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
+		throws Exception {
+
+		JaxrsOpenApiContextBuilder jaxrsOpenApiContextBuilder =
+			new JaxrsOpenApiContextBuilder();
+
+		OpenApiContext openApiContext = jaxrsOpenApiContextBuilder.buildContext(
+			true);
+
+		GenericOpenApiContext genericOpenApiContext =
+			(GenericOpenApiContext)openApiContext;
+
+		genericOpenApiContext.setCacheTTL(0L);
+		genericOpenApiContext.setOpenApiScanner(
+			new OpenApiScanner() {
+
+				@Override
+				public Set<Class<?>> classes() {
+					return resourceClasses;
+				}
+
+				@Override
+				public Map<String, Object> resources() {
+					return new HashMap<>();
+				}
+
+				@Override
+				public void setConfiguration(
+					OpenAPIConfiguration openAPIConfiguration) {
+				}
+
+			});
+
+		OpenAPI openAPI = openApiContext.read();
+
+		OpenAPISchemaFilter mergedOpenAPISchemaFilter =
+			_mergeOpenAPISchemaFilters(
+				openAPISchemaFilter,
+				_getOpenAPISchemaFilter(
+					_getBasePath(uriInfo), _extensionProviderRegistry,
+					resourceClasses));
+
+		if (mergedOpenAPISchemaFilter != null) {
+			SpecFilter specFilter = new SpecFilter();
+
+			Map<String, List<String>> queryParameters = null;
+
+			if (uriInfo != null) {
+				queryParameters = uriInfo.getQueryParameters();
+			}
+
+			openAPI = specFilter.filter(
+				openAPI, _toOpenAPISpecFilter(mergedOpenAPISchemaFilter),
+				queryParameters, null, null);
+		}
+
+		if (openAPI == null) {
+			return Response.status(
+				404
+			).build();
+		}
+
+		if (uriInfo != null) {
+			Server server = new Server();
+
+			server.setUrl(_getBasePath(httpServletRequest, uriInfo));
+
+			openAPI.setServers(Collections.singletonList(server));
+		}
+
+		if (openAPIContributor != null) {
+			openAPIContributor.contribute(openAPI, uriInfo);
+		}
+
+		for (OpenAPIContributor trackedOpenAPIContributor :
+				_trackedOpenAPIContributors) {
+
+			trackedOpenAPIContributor.contribute(openAPI, uriInfo);
+		}
+
+		if (StringUtil.equalsIgnoreCase("yaml", type)) {
+			return Response.status(
+				Response.Status.OK
+			).entity(
+				Yaml.pretty(openAPI)
+			).type(
+				"application/yaml"
+			).build();
+		}
+
+		return Response.status(
+			Response.Status.OK
+		).entity(
+			openAPI
+		).type(
+			MediaType.APPLICATION_JSON_TYPE
+		).build();
 	}
 
 	private OpenAPISchemaFilter _getOpenAPISchemaFilter(
@@ -920,6 +961,9 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 	@Reference
 	private JaxRsResourceRegistry _jaxRsResourceRegistry;
+
+	@Reference
+	private Portal _portal;
 
 	private ServiceTrackerList<OpenAPIContributor> _trackedOpenAPIContributors;
 

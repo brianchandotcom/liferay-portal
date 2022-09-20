@@ -8188,6 +8188,15 @@ war.path=${app.server.portal.dir}/</echo>
 			<get-dxp-license-product-name />
 
 			<wait-for-app-server-log-message log.message="${dxp.license.product.name} license validation passed" />
+
+			<get-testcase-property property.name="commerce.license.enabled" />
+
+			<if>
+				<equals arg1="${commerce.license.enabled}" arg2="true" />
+				<then>
+					<wait-for-app-server-log-message log.message="Liferay Commerce Subscription Development license validation passed" />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -9225,6 +9234,23 @@ virtualHostname="localhost"
 		</if>
 	</target>
 
+	<target name="deploy-commerce-license-xml">
+		<if>
+			<matches pattern="https?://" string="${test.commerce.license.url}" />
+			<then>
+				<mkdir dir="${liferay.home}/deploy" />
+
+				<mirrors-get
+					dest="${liferay.home}/deploy/portal-commerce-license.xml"
+					src="${test.commerce.license.url}"
+				/>
+			</then>
+			<else>
+				<echo>No commerce XML license found to deploy.</echo>
+			</else>
+		</if>
+	</target>
+
 	<target name="deploy-data-guard">
 		<if>
 			<not>
@@ -9480,6 +9506,15 @@ virtualHostname="localhost"
 					/>
 				</then>
 			</elseif>
+		</if>
+
+		<get-testcase-property property.name="commerce.license.enabled" />
+
+		<if>
+			<equals arg1="${commerce.license.enabled}" arg2="true" />
+			<then>
+				<antcall target="deploy-commerce-license-xml" />
+			</then>
 		</if>
 	</target>
 

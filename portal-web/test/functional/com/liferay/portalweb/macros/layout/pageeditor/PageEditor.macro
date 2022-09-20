@@ -1948,6 +1948,24 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if (isSet(emptyCollectionAlert)) {
+			Type(
+				key_text = "Empty Collection Alert",
+				locator1 = "TextInput#ANY",
+				value1 = "${emptyCollectionAlert}");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
+
+			AssertTextEquals(
+				key_text = "Empty Collection Alert",
+				locator1 = "TextInput#ANY",
+				value1 = "${emptyCollectionAlert}");
+		}
+
 		if (isSet(pagination)) {
 			Select(
 				key_fieldLabel = "Pagination",

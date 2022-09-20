@@ -341,7 +341,7 @@ public class DepotEntryGroupRelStagingTest {
 								liveDepotEntryGroupRel.getUuid(),
 								_liveGroup.getGroupId()));
 
-					Assert.assertNull(
+					Assert.assertNotNull(
 						_depotEntryGroupRelLocalService.
 							fetchDepotEntryGroupRelByDepotEntryIdToGroupId(
 								stagingDepotEntry.getDepotEntryId(),

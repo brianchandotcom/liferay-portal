@@ -9496,7 +9496,7 @@ virtualHostname="localhost"
 				/>
 			</then>
 			<elseif>
-				<contains string="${test.build.license.xml.zip.url}" substring="${project.dir}" />
+				<isset property="test.build.license.xml.zip.url" />
 				<then>
 					<mkdir dir="${liferay.home}/deploy" />
 

@@ -16,7 +16,9 @@ package com.liferay.commerce.currency.service.persistence.impl;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.persistence.CommerceCurrencyPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.commerce.currency.service.persistence.impl.constants.CommercePersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Andrea Di Giorgi
  * @generated
  */
-public class CommerceCurrencyFinderBaseImpl
+public abstract class CommerceCurrencyFinderBaseImpl
 	extends BasePersistenceImpl<CommerceCurrency> {
 
 	public CommerceCurrencyFinderBaseImpl() {
@@ -47,30 +53,36 @@ public class CommerceCurrencyFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getCommerceCurrencyPersistence().getBadColumnNames();
+		return commerceCurrencyPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the commerce currency persistence.
-	 *
-	 * @return the commerce currency persistence
-	 */
-	public CommerceCurrencyPersistence getCommerceCurrencyPersistence() {
-		return commerceCurrencyPersistence;
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
 	}
 
-	/**
-	 * Sets the commerce currency persistence.
-	 *
-	 * @param commerceCurrencyPersistence the commerce currency persistence
-	 */
-	public void setCommerceCurrencyPersistence(
-		CommerceCurrencyPersistence commerceCurrencyPersistence) {
-
-		this.commerceCurrencyPersistence = commerceCurrencyPersistence;
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = CommerceCurrencyPersistence.class)
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected CommerceCurrencyPersistence commerceCurrencyPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(

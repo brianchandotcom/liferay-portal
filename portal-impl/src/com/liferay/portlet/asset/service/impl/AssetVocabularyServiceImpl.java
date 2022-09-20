@@ -285,7 +285,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	public List<AssetVocabulary> getGroupVocabularies(
 		long groupId, int visibilityType) {
 
-		return assetVocabularyLocalService.getGroupVocabularies(
+		return assetVocabularyPersistence.filterFindByG_V(
 			groupId, visibilityType);
 	}
 
@@ -316,7 +316,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	public List<AssetVocabulary> getGroupVocabularies(
 		long[] groupIds, int[] visibilityTypes) {
 
-		return assetVocabularyLocalService.getGroupVocabularies(
+		return assetVocabularyPersistence.filterFindByG_V(
 			groupIds, visibilityTypes);
 	}
 

@@ -15,6 +15,7 @@
 import {useContext} from 'react';
 
 import {NewApplicationAutoContext} from '../../context/NewApplicationAutoContextProvider';
+import DrivingUnderTheInfluence from '../../forms/steps/Citation';
 import ContactInfo from '../../forms/steps/ContactInfo/ContactInfoForm';
 import Coverage from '../../forms/steps/Coverage';
 import DriverInfo from '../../forms/steps/DriverInfo';
@@ -36,6 +37,8 @@ const NewApplication = () => {
 			{state.currentStep === 3 && <Coverage />}
 
 			{state.currentStep === 4 && <Review />}
+
+			{state.currentStep === 5 && <DrivingUnderTheInfluence />}
 		</NewApplicationAuto>
 	);
 };

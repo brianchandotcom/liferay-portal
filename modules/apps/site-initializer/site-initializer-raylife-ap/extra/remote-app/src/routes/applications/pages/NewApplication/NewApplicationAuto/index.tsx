@@ -92,16 +92,6 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 			? CONSTANTS.APPLICATION_STATUS.UNDERWRITING
 			: hasOpenOrBoundStatus;
 
-		createOrUpdateRaylifeApplication(state, applicationStatus).then(
-			(response) => {
-				const {
-					data: {id},
-				} = response;
-
-				dispatch({payload: {id}, type: ACTIONS.SET_APPLICATION_ID});
-			}
-		);
-
 		if (state.currentStep < steps.length - 1) {
 			dispatch({
 				payload: state.currentStep + 1,
@@ -112,17 +102,52 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 		if (state.currentStep === 4) {
 			redirectTo('Applications');
 		}
+
+		if (
+			state.currentStep === 2 &&
+			form[0]?.accidentCitation[0]?.value ===
+				'Citation - Driving under the influence'
+		) {
+			createOrUpdateRaylifeApplication(
+				state,
+				CONSTANTS.APPLICATION_STATUS.REJECTED
+			).then((response) => {
+				const {
+					data: {id},
+				} = response;
+				dispatch({payload: {id}, type: ACTIONS.SET_APPLICATION_ID});
+			});
+
+			return dispatch({
+				payload: 5,
+				type: ACTIONS.SET_CURRENT_STEP,
+			});
+		}
+
+		createOrUpdateRaylifeApplication(state, applicationStatus).then(
+			(response) => {
+				const {
+					data: {id},
+				} = response;
+				dispatch({payload: {id}, type: ACTIONS.SET_APPLICATION_ID});
+			}
+		);
 	};
 
 	const handlePreviousClick = () => {
 		setSaveChanges(false);
 		dispatch({payload: false, type: ACTIONS.SET_HAS_FORM_CHANGE});
-		if (state.currentStep > 0) {
-			dispatch({
+		if (state.currentStep < 5) {
+			return dispatch({
 				payload: state.currentStep - 1,
 				type: ACTIONS.SET_CURRENT_STEP,
 			});
 		}
+
+		dispatch({
+			payload: 2,
+			type: ACTIONS.SET_CURRENT_STEP,
+		});
 	};
 
 	const handleSaveChanges = () => {
@@ -153,6 +178,10 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 		});
 
 		redirectTo('dashboard');
+	};
+
+	const handleCancelClick = () => {
+		redirectTo('Applications');
 	};
 
 	const ChangeStatusMessage = ({text}: any) => (
@@ -310,6 +339,17 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 								small={true}
 							>
 								Generate Quote
+							</ClayButton>
+						)}
+
+						{state.currentStep === 5 && (
+							<ClayButton
+								className="justify-content-end text-uppercase"
+								displayType="secondary"
+								onClick={() => handleCancelClick()}
+								small={true}
+							>
+								Cancel
 							</ClayButton>
 						)}
 					</div>

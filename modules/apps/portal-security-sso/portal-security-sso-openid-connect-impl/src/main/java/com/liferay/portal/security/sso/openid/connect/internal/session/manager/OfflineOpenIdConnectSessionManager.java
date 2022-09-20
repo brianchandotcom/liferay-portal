@@ -120,11 +120,7 @@ public class OfflineOpenIdConnectSessionManager {
 			OpenIdConnectSession.class.getSimpleName(), key, lockOwner);
 
 		if (!lockOwner.equals(lock.getOwner())) {
-			if (currentTime <= accessTokenExpirationDate.getTime()) {
-				return false;
-			}
-
-			return true;
+			return false;
 		}
 
 		AccessToken accessToken = _extendOpenIdConnectSession(

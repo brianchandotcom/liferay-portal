@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FolderHorizontalCard;
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
@@ -98,6 +99,11 @@ public class RepositoryBrowserTagDisplayContext {
 		).build();
 	}
 
+	public String getDeleteFolderURL(Folder folder) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
+	}
+
 	public HorizontalCard getHorizontalCard(RepositoryEntry repositoryEntry)
 		throws PortalException {
 
@@ -106,63 +112,8 @@ public class RepositoryBrowserTagDisplayContext {
 				"Invalid repository model " + repositoryEntry);
 		}
 
-		Folder folder = (Folder)repositoryEntry;
-
-		SearchContainer<Object> searchContainer = getSearchContainer();
-
-		return new HorizontalCard() {
-
-			@Override
-			public List<DropdownItem> getActionDropdownItems() {
-				return DropdownItemListBuilder.add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "rename");
-						dropdownItem.putData(
-							"renameURL", _getRenameFolderURL(folder));
-						dropdownItem.putData("value", folder.getName());
-						dropdownItem.setIcon("pencil");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "rename"));
-					}
-				).add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "delete");
-						dropdownItem.putData(
-							"deleteURL", _getDeleteFolderURL(folder));
-						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "delete"));
-					}
-				).build();
-			}
-
-			@Override
-			public String getDefaultEventHandler() {
-				return "repositoryBrowserEventHandler";
-			}
-
-			@Override
-			public String getInputName() {
-				RowChecker rowChecker = searchContainer.getRowChecker();
-
-				if (rowChecker == null) {
-					return null;
-				}
-
-				return rowChecker.getRowIds();
-			}
-
-			@Override
-			public String getInputValue() {
-				return String.valueOf(folder.getFolderId());
-			}
-
-			@Override
-			public String getTitle() {
-				return folder.getName();
-			}
-
-		};
+		return new FolderHorizontalCard(
+			(Folder)repositoryEntry, _httpServletRequest, this);
 	}
 
 	public ManagementToolbarDisplayContext getManagementToolbarDisplayContext()
@@ -215,6 +166,11 @@ public class RepositoryBrowserTagDisplayContext {
 			}
 
 		};
+	}
+
+	public String getRenameFolderURL(Folder folder) {
+		return HttpComponentsUtil.addParameter(
+			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
 	}
 
 	public ResultRowSplitter getResultRowSplitter() {
@@ -436,11 +392,6 @@ public class RepositoryBrowserTagDisplayContext {
 			fileShortcut.getFileShortcutId());
 	}
 
-	private String _getDeleteFolderURL(Folder folder) {
-		return HttpComponentsUtil.addParameter(
-			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
-	}
-
 	private SearchContainer<Object> _getDLSearchContainer()
 		throws PortalException {
 
@@ -492,11 +443,6 @@ public class RepositoryBrowserTagDisplayContext {
 		return HttpComponentsUtil.addParameter(
 			_getRepositoryBrowserURL(), "fileEntryId",
 			fileEntry.getFileEntryId());
-	}
-
-	private String _getRenameFolderURL(Folder folder) {
-		return HttpComponentsUtil.addParameter(
-			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
 	}
 
 	private String _getRepositoryBrowserURL() {

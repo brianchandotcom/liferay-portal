@@ -189,7 +189,7 @@ if (organization != null) {
 		<portlet:namespace />deleteOrganizations(organizationsRedirect);
 	}
 
-	<portlet:namespace />doDeleteOrganizations = function (
+	function <portlet:namespace />doDeleteOrganizations(
 		organizationIds,
 		organizationsRedirect
 	) {
@@ -213,7 +213,7 @@ if (organization != null) {
 			url:
 				'<portlet:actionURL name="/users_admin/delete_organizations_and_users" />',
 		});
-	};
+	}
 
 	<portlet:actionURL name="/users_admin/edit_organization_assignments" var="removeOrganizationsAndUsersURL">
 		<portlet:param name="assignmentsRedirect" value="<%= currentURL %>" />

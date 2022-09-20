@@ -113,7 +113,7 @@ const FragmentContent = ({
 		languageId,
 		segmentsExperienceId
 	);
-	const [content, setContent] = useState(defaultContent);
+	const [content, setContent] = useState('');
 
 	/* eslint-disable-next-line react-hooks/exhaustive-deps */
 	const editableValues = fragmentEntryLink

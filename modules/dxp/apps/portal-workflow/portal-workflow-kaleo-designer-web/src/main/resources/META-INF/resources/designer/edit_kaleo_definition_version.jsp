@@ -424,7 +424,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									};
 
 									var initializeKaleoDesigner = function () {
-										<portlet:namespace />kaleoDesigner = new Liferay.KaleoDesigner({
+										window.<portlet:namespace />kaleoDesigner = new Liferay.KaleoDesigner({
 
 											<%
 											String availableFields = ParamUtil.getString(request, "availableFields");

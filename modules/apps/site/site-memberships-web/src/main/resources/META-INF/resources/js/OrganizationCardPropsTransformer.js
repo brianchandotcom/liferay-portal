@@ -38,7 +38,7 @@ export default function propsTransformer({
 }) {
 	return {
 		...props,
-		actions: actions.map((item) => {
+		actions: (actions || []).map((item) => {
 			return {
 				...item,
 				onClick(event) {

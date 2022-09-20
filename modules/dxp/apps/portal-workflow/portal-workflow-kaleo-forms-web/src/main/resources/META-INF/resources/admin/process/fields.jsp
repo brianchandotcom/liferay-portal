@@ -149,7 +149,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 		['aui-base']
 	);
 
-	<portlet:namespace />editStructure = (title, uri) => {
+	window.<portlet:namespace />editStructure = (title, uri) => {
 		let closeRedirectURL;
 		let redirectOnClose = false;
 

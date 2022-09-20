@@ -14,11 +14,15 @@
 
 package com.liferay.commerce.avalara.tax.engine.internal;
 
+import com.liferay.commerce.avalara.connector.constants.CommerceAvalaraConstants;
 import com.liferay.commerce.exception.CommerceTaxEngineException;
+import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.tax.CommerceTaxCalculateRequest;
 import com.liferay.commerce.tax.CommerceTaxEngine;
 import com.liferay.commerce.tax.CommerceTaxValue;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -44,6 +48,9 @@ public class CommerceAvalaraTaxEngine implements CommerceTaxEngine {
 			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
 		throws CommerceTaxEngineException {
 
+		commerceTaxCalculateRequest.setTaxCategoryId(
+			_getTangiblePersonalPropertyTaxCategoryId());
+
 		return _commerceTaxEngine.getCommerceTaxValue(
 			commerceTaxCalculateRequest);
 	}
@@ -64,10 +71,34 @@ public class CommerceAvalaraTaxEngine implements CommerceTaxEngine {
 			"content.Language", locale, getClass());
 	}
 
+	private long _getTangiblePersonalPropertyTaxCategoryId() {
+		if (_tangiblePersonalPropertyTaxCategoryId == 0) {
+			CPTaxCategory cpTaxCategory =
+				_cpTaxCategoryLocalService.fetchCPTaxCategoryByReferenceCode(
+					CompanyThreadLocal.getCompanyId(),
+					CommerceAvalaraConstants.TANGIBLE_PERSONAL_PROPERTY);
+
+			if (cpTaxCategory == null) {
+				_tangiblePersonalPropertyTaxCategoryId = 0;
+			}
+			else {
+				_tangiblePersonalPropertyTaxCategoryId =
+					cpTaxCategory.getCPTaxCategoryId();
+			}
+		}
+
+		return _tangiblePersonalPropertyTaxCategoryId;
+	}
+
 	@Reference(target = "(commerce.tax.engine.key=by-address)")
 	private CommerceTaxEngine _commerceTaxEngine;
 
 	@Reference
+	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
+
+	@Reference
 	private Language _language;
+
+	private long _tangiblePersonalPropertyTaxCategoryId;
 
 }

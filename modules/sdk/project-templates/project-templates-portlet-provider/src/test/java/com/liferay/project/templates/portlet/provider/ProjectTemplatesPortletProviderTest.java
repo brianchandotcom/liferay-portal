@@ -50,7 +50,8 @@ public class ProjectTemplatesPortletProviderTest
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"7.0.6-2"}, {"7.1.3-1"}, {"7.2.1-1"}, {"7.3.7"}, {"7.4.3.36"}
+				{"7.0.6-2", "dxp"}, {"7.1.3-1", "dxp"}, {"7.2.1-1", "dxp"},
+				{"7.3.7", "portal"}, {"7.4.3.36", "portal"}
 			});
 	}
 
@@ -70,8 +71,11 @@ public class ProjectTemplatesPortletProviderTest
 		_gradleDistribution = URI.create(gradleDistribution);
 	}
 
-	public ProjectTemplatesPortletProviderTest(String liferayVersion) {
+	public ProjectTemplatesPortletProviderTest(
+		String liferayVersion, String product) {
+
 		_liferayVersion = liferayVersion;
+		_product = product;
 	}
 
 	@Test
@@ -88,16 +92,22 @@ public class ProjectTemplatesPortletProviderTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			gradleWorkspaceModulesDir, template, name, "--liferay-version",
-			_liferayVersion);
+			_liferayVersion, "--product", _product);
 
 		testExists(gradleProjectDir, "bnd.bnd");
 		testExists(
 			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/main.scss");
 
-		testContains(
-			gradleProjectDir, "build.gradle",
-			DEPENDENCY_RELEASE_PORTAL_API);
+		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
+			testContains(
+				gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_DXP_API);
+		}
+		else {
+			testContains(
+				gradleProjectDir, "build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API);
+		}
 
 		testContains(
 			gradleProjectDir,
@@ -130,7 +140,8 @@ public class ProjectTemplatesPortletProviderTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=ProviderTest",
-			"-Dpackage=provider.test", "-DliferayVersion=" + _liferayVersion);
+			"-Dpackage=provider.test", "-DliferayVersion=" + _liferayVersion,
+			"-Dproduct=" + _product);
 
 		if (!_liferayVersion.startsWith("7.0")) {
 			testContains(
@@ -155,5 +166,6 @@ public class ProjectTemplatesPortletProviderTest
 	private static URI _gradleDistribution;
 
 	private final String _liferayVersion;
+	private final String _product;
 
 }

@@ -16,32 +16,59 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {fetch, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import formatDate from './utils/formatDate';
+
+const useIsFirstRender = () => {
+	const isFirstRef = useRef(true);
+
+	if (isFirstRef.current) {
+		isFirstRef.current = false;
+
+		return true;
+	}
+
+	return isFirstRef.current;
+};
 
 const VersionsContent = ({getItemVersionsURL, languageTag = 'en', onError}) => {
 	const [loading, setLoading] = useState(false);
 	const [versions, setVersions] = useState([]);
+	const isFirst = useIsFirstRender();
+	const getVersionsData = useCallback(async () => {
+		try {
+			setLoading(true);
+			const response = await fetch(getItemVersionsURL);
+
+			if (!response.ok) {
+				throw new Error(`Failed to fetch ${getItemVersionsURL}`);
+			}
+
+			const {versions} = await response.json();
+			setVersions(versions);
+		}
+		catch (error) {
+			onError();
+
+			if (process.env.NODE_ENV === 'development') {
+				console.error(error);
+			}
+		}
+		finally {
+			setLoading(false);
+		}
+	}, [getItemVersionsURL, onError]);
 
 	useEffect(() => {
-		setLoading(true);
-		fetch(getItemVersionsURL)
-			.then((response) => {
-				response.json().then((data) => {
-					setVersions(data.versions);
-					setLoading(false);
-				});
-			})
-			.catch((error) => {
-				if (onError) {
-					onError();
-				}
-				if (process.env.NODE_ENV === 'development') {
-					console.error('Failed to fetch versions: ', error);
-				}
-			});
-	}, [getItemVersionsURL, onError]);
+
+		// prevent the initial fetch when the tab is inactive
+
+		if (isFirst) {
+			return;
+		}
+		getVersionsData();
+	}, [getVersionsData, isFirst]);
 
 	return (
 		<>

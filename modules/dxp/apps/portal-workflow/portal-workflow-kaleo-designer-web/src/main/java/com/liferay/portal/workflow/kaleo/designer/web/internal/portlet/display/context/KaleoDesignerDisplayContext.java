@@ -60,6 +60,7 @@ import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.c
 import com.liferay.portal.workflow.kaleo.designer.web.internal.search.KaleoDefinitionVersionSearch;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionActivePredicate;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionScopePredicate;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionVersionPredicate;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionViewPermissionPredicate;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
@@ -771,6 +772,10 @@ public class KaleoDesignerDisplayContext {
 			kaleoDefinitionVersions,
 			new KaleoDefinitionVersionScopePredicate(
 				WorkflowDefinitionConstants.SCOPE_ALL));
+
+		kaleoDefinitionVersions = ListUtil.filter(
+			kaleoDefinitionVersions,
+			new KaleoDefinitionVersionVersionPredicate());
 
 		kaleoDefinitionVersions = ListUtil.filter(
 			kaleoDefinitionVersions,

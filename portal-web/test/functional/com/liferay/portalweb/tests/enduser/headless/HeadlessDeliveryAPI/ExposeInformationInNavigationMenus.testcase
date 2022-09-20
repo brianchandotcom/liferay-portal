@@ -32,7 +32,118 @@ definition {
 				groupName = "Guest",
 				title = "Web Content Title");
 
+			JSONDocument.deleteFile(
+				dmDocumentTitle = "Document_1.txt",
+				groupName = "Guest");
+
 			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+		}
+	}
+
+	@priority = "4"
+	test GetAssetLibraryDocumentInformationInNavigationMenuWithSiteId {
+		property portal.acceptance = "true";
+
+		task ("And Given an asset library connect to the site") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+
+			JSONDepot.connectSite(
+				depotName = "Test Depot Name",
+				groupName = "Guest");
+		}
+
+		task ("And Given a document is uploaded with post request in asset library") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			var documentId = DocumentAPI.getIdOfCreatedDocument(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				filePath = "${filePath}");
+		}
+
+		task ("And Given a navigation menu doesn't use custom name associate with the document through UI") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "guest");
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Document_1.txt",
+				depotName = "Test Depot Name",
+				item = "Document");
+		}
+
+		task ("When with get request and siteId to retrieve the navigation menu") {
+			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
+
+			var response = NavigationMenuAPI.getNavigationMenu(siteId = "${siteId}");
+		}
+
+		task ("Then I can see values of useCustomName of false, contentURL equals to document endpoint and type equals to document") {
+			var portalURL = JSONCompany.getPortalURL();
+
+			NavigationMenuAPI.assertResponseHasCorrectInformations(
+				expectedType = "document",
+				expectedURL = "${portalURL}/o/headless-delivery/v1.0/documents/${documentId}",
+				expectedUseCustomName = "false",
+				responseFromSite = "true",
+				responseToParse = "${response}");
+		}
+	}
+
+	@priority = "4"
+	test GetAssetLibraryDocumentInformationWithNavigationMenuId {
+		property portal.acceptance = "true";
+
+		task ("And Given an asset library connect to the site") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+
+			JSONDepot.connectSite(
+				depotName = "Test Depot Name",
+				groupName = "Guest");
+		}
+
+		task ("And Given a document is uploaded with post request in asset library") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			var documentId = DocumentAPI.getIdOfCreatedDocument(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				filePath = "${filePath}");
+		}
+
+		task ("And Given a navigation menu use custom name associate with the document through UI") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "guest");
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Document_1.txt",
+				depotName = "Test Depot Name",
+				item = "Document");
+
+			NavigationMenusAdmin.editItem(
+				itemName = "Document_1.txt",
+				useCustomName = "true");
+		}
+
+		task ("When with get request and navigationMenuId to retrieve the navigation menu") {
+			var navigationMenuId = JSONSitenavigationSetter.setSiteNavigationMenuId(
+				groupName = "Guest",
+				siteNavigationMenuName = "Navigation Menu Name");
+
+			var response = NavigationMenuAPI.getNavigationMenu(navigationMenuId = "${navigationMenuId}");
+		}
+
+		task ("Then I can see values of useCustomName equals to true, contentURL equals to document endpoint and type equals to document") {
+			var portalURL = JSONCompany.getPortalURL();
+
+			NavigationMenuAPI.assertResponseHasCorrectInformations(
+				expectedType = "document",
+				expectedURL = "${portalURL}/o/headless-delivery/v1.0/documents/${documentId}",
+				expectedUseCustomName = "true",
+				responseToParse = "${response}");
 		}
 	}
 
@@ -175,6 +286,97 @@ definition {
 				expectedType = "structuredContent",
 				expectedURL = "${portalURL}/o/headless-delivery/v1.0/structured-contents/${structuredContentId}",
 				expectedUseCustomName = "false",
+				responseToParse = "${response}");
+		}
+	}
+
+	@priority = "4"
+	test GetDocumentInformationInNavigationMenuWithSiteId {
+		property portal.acceptance = "true";
+
+		task ("And Given a document is uploaded with post request") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1.txt",
+				groupName = "Guest",
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
+		}
+
+		task ("And Given a navigation menu doesn't use custom name associate with the document through UI") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "guest");
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Document_1.txt",
+				item = "Document");
+		}
+
+		task ("When with get request and siteId to retrieve the navigation menu") {
+			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
+
+			var response = NavigationMenuAPI.getNavigationMenu(siteId = "${siteId}");
+		}
+
+		task ("Then I can see values of useCustomName of false, contentURL equals to document endpoint and type equals to document") {
+			var portalURL = JSONCompany.getPortalURL();
+			var documentId = JSONDocument.getFileEntryId(
+				dmDocumentTitle = "Document_1.txt",
+				groupName = "Guest");
+
+			NavigationMenuAPI.assertResponseHasCorrectInformations(
+				expectedType = "document",
+				expectedURL = "${portalURL}/o/headless-delivery/v1.0/documents/${documentId}",
+				expectedUseCustomName = "false",
+				responseFromSite = "true",
+				responseToParse = "${response}");
+		}
+	}
+
+	@priority = "4"
+	test GetDocumentInformationWithNavigationMenuId {
+		property portal.acceptance = "true";
+
+		task ("And Given a document is uploaded with post request") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1.txt",
+				groupName = "Guest",
+				mimeType = "text/plain",
+				sourceFileName = "Document_1.txt");
+		}
+
+		task ("And Given a navigation menu use custom name associate with the document through UI") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "guest");
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Document_1.txt",
+				item = "Document");
+
+			NavigationMenusAdmin.editItem(
+				itemName = "Document_1.txt",
+				useCustomName = "true");
+		}
+
+		task ("When with get request and navigationMenuId to retrieve the navigation menu") {
+			var navigationMenuId = JSONSitenavigationSetter.setSiteNavigationMenuId(
+				groupName = "Guest",
+				siteNavigationMenuName = "Navigation Menu Name");
+
+			var response = NavigationMenuAPI.getNavigationMenu(navigationMenuId = "${navigationMenuId}");
+		}
+
+		task ("Then I can see values of useCustomName equals to true, contentURL equals to document endpoint and type equals to document") {
+			var portalURL = JSONCompany.getPortalURL();
+			var documentId = JSONDocument.getFileEntryId(
+				dmDocumentTitle = "Document_1.txt",
+				groupName = "Guest");
+
+			NavigationMenuAPI.assertResponseHasCorrectInformations(
+				expectedType = "document",
+				expectedURL = "${portalURL}/o/headless-delivery/v1.0/documents/${documentId}",
+				expectedUseCustomName = "true",
 				responseToParse = "${response}");
 		}
 	}

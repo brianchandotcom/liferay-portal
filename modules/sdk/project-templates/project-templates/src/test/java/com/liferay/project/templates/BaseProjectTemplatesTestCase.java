@@ -21,6 +21,7 @@ import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
 import com.liferay.project.templates.extensions.util.FileUtil;
 import com.liferay.project.templates.extensions.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.extensions.util.Validator;
+import com.liferay.project.templates.extensions.util.VersionUtil;
 import com.liferay.project.templates.extensions.util.WorkspaceUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.StringTestUtil;
@@ -676,27 +677,43 @@ public interface BaseProjectTemplatesTestCase {
 			if (liferayVersion.startsWith("7.0")) {
 				writeGradlePropertiesInWorkspace(
 					workspaceDir,
-					"liferay.workspace.target.platform.version=7.0.6-2");
+					"liferay.workspace.target.platform.version=7.0.10.17");
+
+				writeGradlePropertiesInWorkspace(
+					workspaceDir, "liferay.workspace.product=dxp-7.0-sp17");
 			}
 			else if (liferayVersion.startsWith("7.1")) {
 				writeGradlePropertiesInWorkspace(
 					workspaceDir,
-					"liferay.workspace.target.platform.version=7.1.3-1");
+					"liferay.workspace.target.platform.version=7.1.10.7");
+
+				writeGradlePropertiesInWorkspace(
+					workspaceDir, "liferay.workspace.product=dxp-7.1-sp7");
 			}
 			else if (liferayVersion.startsWith("7.2")) {
 				writeGradlePropertiesInWorkspace(
 					workspaceDir,
-					"liferay.workspace.target.platform.version=7.2.1-1");
+					"liferay.workspace.target.platform.version=7.2.10.7");
+
+				writeGradlePropertiesInWorkspace(
+					workspaceDir, "liferay.workspace.product=dxp-7.2-sp7");
 			}
 			else if (liferayVersion.startsWith("7.3")) {
 				writeGradlePropertiesInWorkspace(
 					workspaceDir,
 					"liferay.workspace.target.platform.version=7.3.7");
+
+				writeGradlePropertiesInWorkspace(
+					workspaceDir, "liferay.workspace.product=portal-7.3-ga8");
 			}
 			else if (liferayVersion.startsWith("7.4")) {
 				writeGradlePropertiesInWorkspace(
 					workspaceDir,
 					"liferay.workspace.target.platform.version=7.4.3.36");
+
+				writeGradlePropertiesInWorkspace(
+					workspaceDir,
+					"liferay.workspace.product=portal-7.4-ga16");
 			}
 		}
 		else {
@@ -707,6 +724,36 @@ public interface BaseProjectTemplatesTestCase {
 				destinationDir, destinationDir, "workspace", name, groupId,
 				mavenExecutor, "-DliferayVersion=" + liferayVersion,
 				"-Dpackage=com.test");
+
+			if (VersionUtil.getMinorVersion(liferayVersion) < 3) {
+				if (liferayVersion.startsWith("7.0")) {
+					updateMavenPomProperties(
+						workspaceDir, "liferay.bom.version",
+						"liferay.bom.version", "7.0.10.17");
+				}
+				else if (liferayVersion.startsWith("7.1")) {
+					updateMavenPomProperties(
+						workspaceDir, "liferay.bom.version",
+						"liferay.bom.version", "7.1.10.7");
+				}
+				else if (liferayVersion.startsWith("7.2")) {
+					updateMavenPomProperties(
+						workspaceDir, "liferay.bom.version",
+						"liferay.bom.version", "7.2.10.7");
+				}
+
+				updateMavenPomElementText(
+					workspaceDir, "//artifactId[text()='release.portal.bom']",
+					"release.dxp.bom");
+				updateMavenPomElementText(
+					workspaceDir,
+					"//artifactId[text()='release.portal.bom.compile.only']",
+					"release.dxp.bom.compile.only");
+				updateMavenPomElementText(
+					workspaceDir,
+					"//artifactId[text()='release.portal.bom.third.party']",
+					"release.dxp.bom.third.party");
+			}
 		}
 
 		return workspaceDir;
@@ -1272,8 +1319,7 @@ public interface BaseProjectTemplatesTestCase {
 			liferayVersion);
 
 		testContains(
-			gradleProjectDir, "build.gradle",
-			DEPENDENCY_RELEASE_PORTAL_API);
+			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
 
 		testContains(
 			gradleProjectDir, "package.json",
@@ -1381,8 +1427,7 @@ public interface BaseProjectTemplatesTestCase {
 		}
 
 		testContains(
-			gradleProjectDir, "build.gradle",
-			DEPENDENCY_RELEASE_PORTAL_API);
+			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
 
 		testNotContains(gradleProjectDir, "build.gradle", "version: \"[0-9].*");
 

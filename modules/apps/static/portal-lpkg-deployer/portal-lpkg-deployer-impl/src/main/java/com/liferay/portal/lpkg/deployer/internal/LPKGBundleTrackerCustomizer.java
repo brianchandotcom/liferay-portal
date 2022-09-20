@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.internal.wrapper.bundle.URLStreamHandlerServiceServiceTrackerCustomizer;
 import com.liferay.portal.lpkg.deployer.internal.wrapper.bundle.activator.WARBundleWrapperBundleActivator;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -336,7 +335,8 @@ public class LPKGBundleTrackerCustomizer
 					if (header != null) {
 						BundleStartLevelUtil.setStartLevelAndStart(
 							installedBundle,
-							PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL,
+							ModuleFrameworkPropsValues.
+								MODULE_FRAMEWORK_WEB_START_LEVEL,
 							_bundleContext);
 					}
 					else {

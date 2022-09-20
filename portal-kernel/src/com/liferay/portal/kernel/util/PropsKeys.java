@@ -1819,9 +1819,6 @@ public interface PropsKeys {
 		MODULE_FRAMEWORK_WEB_SERVLET_ANNOTATION_SCANNING_WHITELIST =
 			"module.framework.web.servlet.annotation.scanning.whitelist";
 
-	public static final String MODULE_FRAMEWORK_WEB_START_LEVEL =
-		"module.framework.web.start.level";
-
 	public static final String MY_SITES_DIRECTORY_SITE_EXCLUDES =
 		"my.sites.directory.site.excludes";
 

@@ -323,7 +323,8 @@ public class VerifyProperties {
 		{
 			"module.framework.concurrent.startup.enabled",
 			"module.framework.concurrent.startup.enabled"
-		}
+		},
+		{"module.framework.web.start.level", "module.framework.web.start.level"}
 	};
 
 	private static final String[][] _MIGRATED_SYSTEM_KEYS = {

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ModuleFrameworkPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.InputStream;
@@ -163,7 +162,8 @@ public class LPKGArtifactInstaller implements FileInstaller {
 					else {
 						BundleStartLevelUtil.setStartLevelAndStart(
 							bundle,
-							PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL,
+							ModuleFrameworkPropsValues.
+								MODULE_FRAMEWORK_WEB_START_LEVEL,
 							_bundleContext);
 					}
 				}

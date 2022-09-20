@@ -344,13 +344,11 @@ public class ObjectEntryDTOConverter
 				DLFileEntry dlFileEntry = _dLFileEntryLocalService.getFileEntry(
 					fileEntryId);
 
-				StringBundler sb = new StringBundler(_portal.getPathContext());
-
-				sb.append("/c/portal/login");
-
 				Link fileEntryLink = new Link() {
 					{
-						href = sb.toString();
+						href = StringBundler.concat(
+							_portal.getPathContext(), _portal.getPathMain(),
+							"/portal/login");
 						label = dlFileEntry.getFileName();
 					}
 				};

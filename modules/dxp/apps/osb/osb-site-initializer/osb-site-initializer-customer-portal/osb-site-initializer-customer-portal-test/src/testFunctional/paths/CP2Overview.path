@@ -15,6 +15,16 @@
 	<td>//*[contains(@class, 'cp-sla-card-active')]//*[text()='${key_cardContent}']</td>
 	<td></td>
 </tr>
+<tr>
+    <td>SLA_CARD_CONTAINER</td>
+    <td>//*[contains(@class, 'cp-sla-container')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SLA_CARD_SHIFT_BUTTON</td>
+    <td>//*[contains(@class, 'cp-sla-container')]//*[contains(@class, 'btn')]</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

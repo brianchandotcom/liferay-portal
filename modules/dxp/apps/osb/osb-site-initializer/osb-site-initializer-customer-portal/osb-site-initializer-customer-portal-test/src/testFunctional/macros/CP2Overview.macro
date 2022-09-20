@@ -6,4 +6,9 @@ definition {
         AssertVisible(locator1 = "CP2Overview#SLA_CARD_CONTENT");
     }
 
+    macro switchSLACard {
+        MouseOver(locator1 = "CP2Overview#SLA_CARD_CONTAINER");
+
+        Click(locator1 = "CP2Overview#SLA_CARD_SHIFT_BUTTON");
+    }
 }

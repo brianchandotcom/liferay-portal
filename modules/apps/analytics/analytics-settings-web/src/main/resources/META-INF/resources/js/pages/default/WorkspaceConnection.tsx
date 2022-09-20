@@ -16,17 +16,16 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayModal, {useModal} from '@clayui/modal';
 import React, {useContext} from 'react';
 
-import {AppContext} from '../App';
-import BasePage from '../components/BasePage';
-import {deleteConnection} from '../utils/api';
+import {AppContext} from '../../App';
+import BasePage from '../../components/BasePage';
+import {deleteConnection} from '../../utils/api';
 
 const WorkspaceConnection: React.FC = () => {
 	const {liferayAnalyticsURL, token} = useContext(AppContext);
-
-	// eslint-disable-next-line no-console
-	console.log(liferayAnalyticsURL);
+	const {observer, onOpenChange, open} = useModal();
 
 	return (
 		<BasePage
@@ -72,14 +71,59 @@ const WorkspaceConnection: React.FC = () => {
 
 				<ClayButton
 					displayType="secondary"
-					onClick={() => {
-						deleteConnection();
-						window.location.reload();
-					}}
+					onClick={() => onOpenChange(true)}
 				>
 					{Liferay.Language.get('disconnect')}
 				</ClayButton>
 			</BasePage.Footer>
+
+			{open && (
+				<ClayModal center observer={observer} status="warning">
+					<ClayModal.Header>
+						{Liferay.Language.get('disconnecting-data-source')}
+					</ClayModal.Header>
+
+					<ClayModal.Body>
+						<h4 className="modal-description">
+							{Liferay.Language.get(
+								'are-you-sure-you-want-to-disconnect-your-analytics-cloud-workspace-from-this-dxp-instance'
+							)}
+						</h4>
+
+						<p className="text-secondary">
+							{Liferay.Language.get(
+								'this-will-stop-any-syncing-of-analytics-or-contact-data-to-your-analytics-cloud-workspace'
+							)}
+						</p>
+					</ClayModal.Body>
+
+					<ClayModal.Footer
+						last={
+							<ClayButton.Group spaced>
+								<ClayButton
+									displayType="secondary"
+									onClick={() => {
+										onOpenChange(false);
+									}}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
+
+								<ClayButton
+									displayType="warning"
+									onClick={() => {
+										deleteConnection();
+										onOpenChange(false);
+										window.location.reload();
+									}}
+								>
+									{Liferay.Language.get('disconnect')}
+								</ClayButton>
+							</ClayButton.Group>
+						}
+					/>
+				</ClayModal>
+			)}
 		</BasePage>
 	);
 };

@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import WorkspaceConnection from '../WorkspaceConnection';
+import WorkspaceConnection from './WorkspaceConnection';
 
 const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	return <WorkspaceConnection />;

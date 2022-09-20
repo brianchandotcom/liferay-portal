@@ -235,10 +235,9 @@
 	<bean class="com.liferay.portal.kernel.util.HtmlUtil" id="com.liferay.portal.kernel.util.HtmlUtil">
 		<property name="html" ref="com.liferay.portal.util.HtmlImpl" />
 	</bean>
+	<bean class="com.liferay.portal.util.LocalizationImpl" id="com.liferay.portal.kernel.util.Localization" />
 	<bean class="com.liferay.portal.kernel.util.LocalizationUtil" id="com.liferay.portal.kernel.util.LocalizationUtil">
-		<property name="localization">
-			<bean class="com.liferay.portal.util.LocalizationImpl" />
-		</property>
+		<property name="localization" ref="com.liferay.portal.kernel.util.Localization" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.util.PortalUtil" id="com.liferay.portal.kernel.util.PortalUtil">
 		<property name="portal" ref="com.liferay.portal.util.Portal" />

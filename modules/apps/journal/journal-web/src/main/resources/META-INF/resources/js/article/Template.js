@@ -32,7 +32,10 @@ export default function ({
 	const namespaceId = (id) => `${namespace}${id}`;
 
 	const changeDDMTemplate = (newDDMTemplate) => {
-		if (newDDMTemplate && newDDMTemplate.ddmtemplateid === ddmTemplateId) {
+		if (
+			newDDMTemplate &&
+			newDDMTemplate.ddmtemplateid === Number(ddmTemplateId)
+		) {
 			return;
 		}
 

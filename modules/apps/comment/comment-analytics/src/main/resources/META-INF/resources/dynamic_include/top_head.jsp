@@ -26,12 +26,22 @@
 
 	var onMessagePosted = function (event) {
 		if (window.Analytics) {
-			Analytics.send('posted', 'Comment', {
+			const mainNode = document.querySelector(
+				'[data-analytics-asset-id="' + event.classPK + '"]'
+			);
+
+			const eventProperties = {
 				className: event.className,
 				classPK: event.classPK,
 				commentId: event.commentId,
 				text: event.text,
-			});
+			};
+
+			if (mainNode) {
+				eventProperties.title = mainNode.dataset.analyticsAssetTitle;
+			}
+
+			Analytics.send('posted', 'Comment', eventProperties);
 		}
 	};
 

@@ -48,6 +48,11 @@ public class CommerceAvalaraTaxEngine implements CommerceTaxEngine {
 			CommerceTaxCalculateRequest commerceTaxCalculateRequest)
 		throws CommerceTaxEngineException {
 
+		if (commerceTaxCalculateRequest.isShipping()) {
+			return _commerceTaxEngine.getCommerceTaxValue(
+				commerceTaxCalculateRequest);
+		}
+
 		commerceTaxCalculateRequest.setTaxCategoryId(
 			_getTangiblePersonalPropertyTaxCategoryId());
 

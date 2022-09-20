@@ -136,7 +136,7 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 
 		return _getCommerceTaxValues(
 			groupId, commerceBillingAddressId, commerceShippingAddressId,
-			amount, includeTax, cpDefinition.getCPTaxCategoryId());
+			amount, includeTax, false, cpDefinition.getCPTaxCategoryId());
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 		List<CommerceTaxValue> commerceTaxValues = _getCommerceTaxValues(
 			commerceOrder.getGroupId(), commerceOrder.getBillingAddressId(),
 			commerceOrder.getShippingAddressId(),
-			commerceOrder.getShippingAmount(), false,
+			commerceOrder.getShippingAmount(), false, true,
 			commerceShippingTaxConfiguration.taxCategoryId());
 
 		BigDecimal taxAmount = BigDecimal.ZERO;
@@ -217,7 +217,7 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 	private List<CommerceTaxValue> _getCommerceTaxValues(
 		long groupId, long commerceBillingAddressId,
 		long commerceShippingAddressId, BigDecimal amount, boolean includeTax,
-		long taxCategoryId) {
+		boolean shipping, long taxCategoryId) {
 
 		List<CommerceTaxValue> commerceTaxValues = new ArrayList<>();
 
@@ -230,6 +230,7 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 			commerceShippingAddressId);
 		commerceTaxCalculateRequest.setPrice(amount);
 		commerceTaxCalculateRequest.setIncludeTax(includeTax);
+		commerceTaxCalculateRequest.setShipping(shipping);
 		commerceTaxCalculateRequest.setCommerceChannelGroupId(groupId);
 		commerceTaxCalculateRequest.setTaxCategoryId(taxCategoryId);
 

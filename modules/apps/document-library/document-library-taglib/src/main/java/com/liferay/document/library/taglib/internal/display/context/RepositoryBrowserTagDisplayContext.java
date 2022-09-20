@@ -25,21 +25,15 @@ import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet
 import com.liferay.frontend.taglib.clay.servlet.taglib.HorizontalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
-import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -129,53 +123,9 @@ public class RepositoryBrowserTagDisplayContext {
 	public ManagementToolbarDisplayContext getManagementToolbarDisplayContext()
 		throws PortalException {
 
-		return new SearchContainerManagementToolbarDisplayContext(
+		return new RepositoryBrowserManagementToolbarDisplayContext(
 			_httpServletRequest, _liferayPortletRequest,
-			_liferayPortletResponse, getSearchContainer()) {
-
-			@Override
-			public List<DropdownItem> getActionDropdownItems() {
-				return DropdownItemListBuilder.add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "deleteEntries");
-						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "delete"));
-						dropdownItem.setQuickAction(true);
-					}
-				).build();
-			}
-
-			@Override
-			public String getClearResultsURL() {
-				return PortletURLBuilder.create(
-					getPortletURL()
-				).setKeywords(
-					StringPool.BLANK
-				).buildString();
-			}
-
-			@Override
-			public String[] getDisplayViews() {
-				return new String[] {"icon"};
-			}
-
-			@Override
-			public String getSearchActionURL() {
-				return String.valueOf(getPortletURL());
-			}
-
-			@Override
-			public String getSearchContainerId() {
-				return "repositoryEntries";
-			}
-
-			@Override
-			protected String getDefaultDisplayStyle() {
-				return "icon";
-			}
-
-		};
+			_liferayPortletResponse, getSearchContainer());
 	}
 
 	public String getRenameFileEntryURL(FileEntry fileEntry) {

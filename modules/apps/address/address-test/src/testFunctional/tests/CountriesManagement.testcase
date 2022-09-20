@@ -215,6 +215,34 @@ definition {
 		}
 	}
 
+	@description = "Test deactivating multiple countries at once via management toolbar"
+	@priority = "3"
+	test CanDectivateCountriesInBulk {
+		task ("Given multiple countries exist") {
+			CountriesManagement.openCountriesManagementPortlet();
+		}
+
+		task ("When a user selects multiple countries and clicks on deactivate via management toolbar") {
+			CountriesManagement.deactivateMultipleCountries(
+                countryNames = "Argentina,Australia,Bahamas,Barbados");
+		}
+
+		task ("Then all the selected regions are deactivated") {
+            for (var countryName : list "Argentina,Australia,Bahamas,Barbados") {
+				AssertElementPresent(
+					key_columnName = "active",
+					key_tableEntry = "${countryName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_INFO_TIMES");
+			}
+
+            ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+            for (var countryName : list "Argentina,Australia,Bahamas,Barbados") {
+				LexiconEntry.viewEntryName(rowEntry = "${countryName}");
+			}	
+		}
+	}
+
 	@description = "This test asserts that a user can delete an existing country."
 	@priority = "5"
 	test CanDeleteCountry {

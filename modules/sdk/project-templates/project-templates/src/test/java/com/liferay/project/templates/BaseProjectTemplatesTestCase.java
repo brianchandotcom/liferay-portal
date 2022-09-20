@@ -1368,7 +1368,7 @@ public interface BaseProjectTemplatesTestCase {
 
 	public default File testBuildTemplatePortlet(
 			TemporaryFolder temporaryFolder, String template, String name,
-			String packageName, String liferayVersion,
+			String packageName, String liferayVersion, String product,
 			MavenExecutor mavenExecutor, URI gradleDistribution)
 		throws Exception {
 
@@ -1395,7 +1395,8 @@ public interface BaseProjectTemplatesTestCase {
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			gradleWorkspaceModulesDir, template, name, "--package-name",
-			packageName, "--liferay-version", liferayVersion);
+			packageName, "--liferay-version", liferayVersion, "--product",
+			product);
 
 		String[] resourceFileNames;
 
@@ -1426,8 +1427,16 @@ public interface BaseProjectTemplatesTestCase {
 			testExists(gradleProjectDir, "src/main/" + resourceFileName);
 		}
 
-		testContains(
-			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
+		if (VersionUtil.getMinorVersion(liferayVersion) < 3) {
+			testContains(
+					gradleProjectDir, "build.gradle",
+					DEPENDENCY_RELEASE_DXP_API);
+		}
+		else {
+			testContains(
+				gradleProjectDir, "build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API);
+		}
 
 		testNotContains(gradleProjectDir, "build.gradle", "version: \"[0-9].*");
 
@@ -1439,7 +1448,8 @@ public interface BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=" + className,
-			"-Dpackage=" + packageName, "-DliferayVersion=" + liferayVersion);
+			"-Dpackage=" + packageName, "-DliferayVersion=" + liferayVersion,
+			"-Dproduct=" + product);
 
 		if (!liferayVersion.startsWith("7.0") && !template.contains("war")) {
 			testContains(

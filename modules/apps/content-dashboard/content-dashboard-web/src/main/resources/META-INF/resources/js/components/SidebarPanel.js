@@ -16,7 +16,13 @@ import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
-import React, {useEffect, useImperativeHandle, useReducer, useRef} from 'react';
+import React, {
+	useEffect,
+	useImperativeHandle,
+	useReducer,
+	useRef,
+	useState,
+} from 'react';
 
 import {CLOSE_PANEL_VALUE} from '../utils/constants';
 import Sidebar from './Sidebar';
@@ -97,9 +103,15 @@ const dataReducer = (state, action) => {
 
 const SidebarPanel = React.forwardRef(
 	(
-		{fetchURL, onClose, singlePageApplicationEnabled, viewComponent: View},
+		{
+			fetchURL: initialFetchUrl,
+			onClose,
+			singlePageApplicationEnabled,
+			viewComponent: View,
+		},
 		ref
 	) => {
+		const [fetchURL, setFetchURL] = useState(initialFetchUrl);
 		const CurrentViewRef = useRef(View);
 
 		const isMounted = useIsMounted();
@@ -184,6 +196,8 @@ const SidebarPanel = React.forwardRef(
 				getData(fetchURL);
 
 				safeDispatch({type: 'OPEN_SIDEBAR'});
+
+				setFetchURL(fetchURL);
 			},
 		}));
 

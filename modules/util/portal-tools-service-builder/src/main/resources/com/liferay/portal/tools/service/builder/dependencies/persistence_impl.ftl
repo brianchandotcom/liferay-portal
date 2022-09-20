@@ -913,14 +913,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						<#else>
 							<#assign modes = "StringUtil.split(\"" + sanitizeTuple.getObject(2) + "\")" />
 						</#if>
-							${entity.variableName}.set${colMethodName}(
-						<#if serviceBuilder.isVersionGTE_7_4_0() && dependencyInjectorDS>
-							sanitize(_sanitizers, companyId, groupId, userId, ${apiPackagePath}.model.${entity.name}.class.getName(),
-							${entity.PKVariableName}, ${contentType}, new String[] {${modes}}, ${entity.variableName}.get${colMethodName}(), null));
-						<#else>
-							SanitizerUtil.sanitize(companyId, groupId, userId, ${apiPackagePath}.model.${entity.name}.class.getName(),
-							${entity.PKVariableName}, ${contentType}, ${modes}, ${entity.variableName}.get${colMethodName}(), null));
-						</#if>
+
+						${entity.variableName}.set${colMethodName}(SanitizerUtil.sanitize(companyId, groupId, userId, ${apiPackagePath}.model.${entity.name}.class.getName(), ${entity.PKVariableName}, ${contentType}, ${modes}, ${entity.variableName}.get${colMethodName}(), null));
 					</#list>
 				}
 				catch (SanitizerException sanitizerException) {
@@ -2968,11 +2962,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#if>
 
 		protected ${localizedEntity.name}Persistence ${localizedEntity.variableName}Persistence;
-	</#if>
-
-	<#if sanitizeTuples?size != 0 && serviceBuilder.isVersionGTE_7_4_0() && dependencyInjectorDS>
-			@Reference
-			private volatile List<Sanitizer> _sanitizers;
 	</#if>
 
 	<#if entity.versionedEntity?? && entity.versionedEntity.localizedEntity??>

@@ -170,75 +170,81 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							"osgi.jaxrs.resource", "true"
 						).build())));
 
-			Collections.addAll(
-				serviceRegistrations,
-				_bundleContext.registerService(
-					ContextProvider.class,
-					new ObjectDefinitionContextProvider(this, _portal),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", "false"
-					).put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + objectDefinition.getName() + ")"
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getName() +
-							"ObjectDefinitionContextProvider"
-					).build()),
-				_bundleContext.registerService(
-					ExceptionMapper.class,
-					new ObjectEntryManagerHttpExceptionMapper(),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + objectDefinition.getName() + ")"
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getName() +
-							"ObjectEntryManagerHttpExceptionMapper"
-					).build()),
-				_bundleContext.registerService(
-					ExceptionMapper.class,
-					new ObjectEntryValuesExceptionMapper(),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + objectDefinition.getName() + ")"
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getName() +
-							"ObjectEntryValuesExceptionMapper"
-					).build()),
-				_bundleContext.registerService(
-					ExceptionMapper.class,
-					new ObjectValidationRuleEngineExceptionMapper(),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + objectDefinition.getName() + ")"
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getName() +
-							"ObjectValidationRuleEngineExceptionMapper"
-					).build()),
-				_bundleContext.registerService(
-					ExceptionMapper.class,
-					new RequiredObjectRelationshipExceptionMapper(),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + objectDefinition.getName() + ")"
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getName() +
-							"RequiredObjectRelationshipExceptionMapper"
-					).build()));
+			_serviceRegistrationsMap.put(
+				objectDefinition.getRESTContextPath(),
+				Arrays.asList(
+					_bundleContext.registerService(
+						ContextProvider.class,
+						new ObjectDefinitionContextProvider(this, _portal),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", "false"
+						).put(
+							"osgi.jaxrs.application.select",
+							"(osgi.jaxrs.name=" + objectDefinition.getName() +
+								")"
+						).put(
+							"osgi.jaxrs.extension", "true"
+						).put(
+							"osgi.jaxrs.name",
+							objectDefinition.getName() +
+								"ObjectDefinitionContextProvider"
+						).build()),
+					_bundleContext.registerService(
+						ExceptionMapper.class,
+						new ObjectEntryManagerHttpExceptionMapper(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"osgi.jaxrs.application.select",
+							"(osgi.jaxrs.name=" + objectDefinition.getName() +
+								")"
+						).put(
+							"osgi.jaxrs.extension", "true"
+						).put(
+							"osgi.jaxrs.name",
+							objectDefinition.getName() +
+								"ObjectEntryManagerHttpExceptionMapper"
+						).build()),
+					_bundleContext.registerService(
+						ExceptionMapper.class,
+						new ObjectEntryValuesExceptionMapper(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"osgi.jaxrs.application.select",
+							"(osgi.jaxrs.name=" + objectDefinition.getName() +
+								")"
+						).put(
+							"osgi.jaxrs.extension", "true"
+						).put(
+							"osgi.jaxrs.name",
+							objectDefinition.getName() +
+								"ObjectEntryValuesExceptionMapper"
+						).build()),
+					_bundleContext.registerService(
+						ExceptionMapper.class,
+						new ObjectValidationRuleEngineExceptionMapper(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"osgi.jaxrs.application.select",
+							"(osgi.jaxrs.name=" + objectDefinition.getName() +
+								")"
+						).put(
+							"osgi.jaxrs.extension", "true"
+						).put(
+							"osgi.jaxrs.name",
+							objectDefinition.getName() +
+								"ObjectValidationRuleEngineExceptionMapper"
+						).build()),
+					_bundleContext.registerService(
+						ExceptionMapper.class,
+						new RequiredObjectRelationshipExceptionMapper(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"osgi.jaxrs.application.select",
+							"(osgi.jaxrs.name=" + objectDefinition.getName() +
+								")"
+						).put(
+							"osgi.jaxrs.extension", "true"
+						).put(
+							"osgi.jaxrs.name",
+							objectDefinition.getName() +
+								"RequiredObjectRelationshipExceptionMapper"
+						).build())));
 		}
 
 		serviceRegistrations.add(
@@ -301,6 +307,18 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			if (componentInstances != null) {
 				for (ComponentInstance componentInstance : componentInstances) {
 					componentInstance.dispose();
+				}
+			}
+
+			List<ServiceRegistration<?>> serviceRegistrations =
+				_serviceRegistrationsMap.get(
+					objectDefinition.getRESTContextPath());
+
+			if (serviceRegistrations != null) {
+				for (ServiceRegistration<?> serviceRegistration :
+						serviceRegistrations) {
+
+					serviceRegistration.unregister();
 				}
 			}
 		}
@@ -407,6 +425,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		target = "(component.factory=com.liferay.object.rest.internal.resource.v1_0.RelatedObjectEntryResource)"
 	)
 	private ComponentFactory _relatedObjectEntryResourceFactory;
+
+	private final Map<String, List<ServiceRegistration<?>>>
+		_serviceRegistrationsMap = new HashMap<>();
 
 	@Reference
 	private SystemObjectDefinitionMetadataTracker

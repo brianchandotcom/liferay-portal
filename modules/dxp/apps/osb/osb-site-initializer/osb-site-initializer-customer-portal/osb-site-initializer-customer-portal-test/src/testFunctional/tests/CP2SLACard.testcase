@@ -98,4 +98,34 @@ definition {
             CP2Overview.assertSLACardBackgroundColor(slaCardTitle = "Premium");
         }
     }
+
+    @description = "Automation Ticket: LPS-147801 | Test Summary: Verify if when user has multiple statuses, the status order went from highest to lowest (Current > Future > Expired)."
+    @priority = "5"
+    test StatusOrderFromHighestToLowest {
+        task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+        task ("Then I should be able to view SLA Status Current") {
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "CURRENT");
+        }
+
+        task ("When I shif the SLA card") {
+            CP2Overview.switchSLACard();
+        }
+
+        task ("Then I should be able to view SLA Status Future") {
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "FUTURE");
+        }
+
+        task ("When I shif the SLA card") {
+            CP2Overview.switchSLACard();
+        }
+
+        task ("Then I should be able to view SLA Status Expired") {
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "EXPIRED");
+        }
+    }
 }

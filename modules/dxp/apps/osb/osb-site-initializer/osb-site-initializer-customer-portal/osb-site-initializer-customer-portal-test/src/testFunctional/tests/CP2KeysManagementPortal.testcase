@@ -11,7 +11,6 @@ definition {
 	var testSiteURL = "customer-portal-site";
 	var testSiteTamplate = "Liferay OSB Site Initializer Customer Portal";
 	var testAccount = "Test Account QA 7.4";
-	var testUser = "Test Test";
 	var testUserFirstName = "Test";
 	var testProduct = "Portal";
 
@@ -39,7 +38,7 @@ definition {
 		task ("Go to Customer Portal Site") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.waitCP20PageToLoad(title = "${testUser}");
+			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
 		}
 	}
 

@@ -63,10 +63,10 @@ definition {
 	}
 
 	macro _selectMultipleCountries {
-        for (var countryName : list "${countryNames}") {
+		for (var countryName : list "${countryNames}") {
 			LexiconEntry.selectEntry(rowEntry = "${countryName}");
 		}
-    }
+	}
 
 	macro activateCountry {
 		Search.searchCP(searchTerm = "${countryName}");
@@ -79,12 +79,12 @@ definition {
 	}
 
 	macro activateMultipleCountries {
-        CountriesManagement._selectMultipleCountries(countryNames = "${countryNames}");
+		CountriesManagement._selectMultipleCountries(countryNames = "${countryNames}");
 
 		ClickNoError(locator1 = "Icon#UNDO");
 
 		Alert.viewSuccessMessage();
-    }
+	}
 
 	macro activateRegion {
 		Search.searchCP(searchTerm = "${regionName}");
@@ -177,14 +177,14 @@ definition {
 	}
 
 	macro deactivateMultipleCountries {
-        CountriesManagement._selectMultipleCountries(countryNames = "${countryNames}");
+		CountriesManagement._selectMultipleCountries(countryNames = "${countryNames}");
 
 		ClickNoError(locator1 = "Icon#DEACTIVATE");
 
 		AssertConfirm(value1 = "Are you sure you want to deactivate the selected countries?");
 
 		Alert.viewSuccessMessage();
-    }
+	}
 
 	macro deactivateRegion {
 		Search.searchCP(searchTerm = "${regionName}");

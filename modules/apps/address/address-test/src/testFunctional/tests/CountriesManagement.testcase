@@ -116,27 +116,25 @@ definition {
 		}
 	}
 
-	@description = "Test deactivating multiple countries at once via management toolbar"
+	@description = "Test activating multiple countries at once via management toolbar"
 	@priority = "3"
 	test CanActivateCountriesInBulk {
 		task ("Given multiple inactive countries exist") {
 			CountriesManagement.openCountriesManagementPortlet();
 
-			CountriesManagement.deactivateMultipleCountries(
-                countryNames = "Antarctica,Aruba,Austria,Bahrain");
+			CountriesManagement.deactivateMultipleCountries(countryNames = "Antarctica,Aruba,Austria,Bahrain");
 		}
 
 		task ("When a user selects multiple countries and clicks on activate via management toolbar") {
-            ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
-			CountriesManagement.activateMultipleCountries(
-                countryNames = "Antarctica,Aruba,Austria,Bahrain");
+			CountriesManagement.activateMultipleCountries(countryNames = "Antarctica,Aruba,Austria,Bahrain");
 		}
 
 		task ("Then all selected countries are active") {
 			Click(locator1 = "ManagementBar#CLEAR_FILTER");
 
-            for (var countryName : list "Antarctica,Aruba,Austria,Bahrain") {
+			for (var countryName : list "Antarctica,Aruba,Austria,Bahrain") {
 				LexiconEntry.viewEntryName(rowEntry = "${countryName}");
 			}
 		}
@@ -249,23 +247,22 @@ definition {
 		}
 
 		task ("When a user selects multiple countries and clicks on deactivate via management toolbar") {
-			CountriesManagement.deactivateMultipleCountries(
-                countryNames = "Argentina,Australia,Bahamas,Barbados");
+			CountriesManagement.deactivateMultipleCountries(countryNames = "Argentina,Australia,Bahamas,Barbados");
 		}
 
 		task ("Then all the selected regions are deactivated") {
-            for (var countryName : list "Argentina,Australia,Bahamas,Barbados") {
+			for (var countryName : list "Argentina,Australia,Bahamas,Barbados") {
 				AssertElementPresent(
 					key_columnName = "active",
 					key_tableEntry = "${countryName}",
 					locator1 = "LexiconTable#TABLE_ENTRY_INFO_TIMES");
 			}
 
-            ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
-            for (var countryName : list "Argentina,Australia,Bahamas,Barbados") {
+			for (var countryName : list "Argentina,Australia,Bahamas,Barbados") {
 				LexiconEntry.viewEntryName(rowEntry = "${countryName}");
-			}	
+			}
 		}
 	}
 

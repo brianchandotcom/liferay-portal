@@ -1,0 +1,39 @@
+@component-name = "portal-gradle-tools"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Gradle Tools";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Verify a module can be deployed after adding a hotfix qualifier to its build version"
+	@priority = "3"
+	test HotfixQualifierSmoke {
+		property test.name.skip.portal.instance = "GradleTools#HotfixQualifierSmoke";
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var moduleBaseDir = "/modules/apps/account/account-admin-web";
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "add-hotfix-qualifier -Dhotfix.qualifier=hotfix-0-8000 -Dmodule.base.dir=${moduleBaseDir}");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=${moduleBaseDir} -DliferayHome=${liferayHome}");
+
+		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.account.admin.web_");
+	}
+
+}

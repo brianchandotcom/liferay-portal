@@ -187,6 +187,10 @@ export default {
 	'manage-user-groups': 'Manage User Groups',
 	'manage-users': 'Manage Users',
 	'manage-x': 'Manage {0}',
+	'mark-at-last-one-user-or-user-group-for-assignment':
+		'Mark at least one user or user group for assignment.',
+	'mark-at-least-one-case-type-for-processing':
+		'Mark at least one case type for processing.',
 	'merged-with': 'Merged With',
 	'metrics': 'Metrics',
 	'minimum-x-characters': 'Minimum {0} characters.',
@@ -222,10 +226,6 @@ export default {
 	'password-may-contain-letters-and-numbers':
 		'Password may contain letters and numbers.',
 	'passwords-do-not-match': 'Passwords do not match.',
-	'please-mark-at-last-one-case-type-for-processing':
-		'Please mark at last one case type for processing.',
-	'please-mark-at-last-one-user-or-user-group-for-assignment':
-		'Please mark at last one user or user group for assignment.',
 	'priority': 'Priority',
 	'product-version': 'Product Version',
 	'progress': 'Progress',

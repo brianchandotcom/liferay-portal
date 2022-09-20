@@ -105,7 +105,7 @@ const TestflowForm = () => {
 
 			onError({
 				message: i18n.translate(
-					'please-mark-at-last-one-case-type-for-processing'
+					'mark-at-least-one-case-type-for-processing'
 				),
 			});
 		}
@@ -115,7 +115,7 @@ const TestflowForm = () => {
 
 			onError({
 				message: i18n.translate(
-					'please-mark-at-last-one-user-or-user-group-for-assignment'
+					'mark-at-last-one-user-or-user-group-for-assignment'
 				),
 			});
 		}

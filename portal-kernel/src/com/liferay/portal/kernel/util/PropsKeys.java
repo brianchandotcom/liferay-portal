@@ -1727,9 +1727,6 @@ public interface PropsKeys {
 		MODULE_FRAMEWORK_CONFIGURATION_BUNDLE_SYMBOLIC_NAMES =
 			"module.framework.configuration.bundle.symbolic.names";
 
-	public static final String MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL =
-		"module.framework.dynamic.install.start.level";
-
 	public static final String MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES =
 		"module.framework.export.password.attributes";
 

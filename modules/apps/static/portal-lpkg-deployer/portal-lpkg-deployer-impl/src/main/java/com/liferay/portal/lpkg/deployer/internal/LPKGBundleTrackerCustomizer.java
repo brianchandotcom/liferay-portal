@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.lpkg.StaticLPKGResolver;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ModuleFrameworkPropsValues;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -341,7 +342,7 @@ public class LPKGBundleTrackerCustomizer
 					else {
 						BundleStartLevelUtil.setStartLevelAndStart(
 							installedBundle,
-							PropsValues.
+							ModuleFrameworkPropsValues.
 								MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
 							_bundleContext);
 					}
@@ -911,7 +912,8 @@ public class LPKGBundleTrackerCustomizer
 		attributes.putValue(
 			"Liferay-WAB-Start-Level",
 			String.valueOf(
-				PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL));
+				ModuleFrameworkPropsValues.
+					MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL));
 		attributes.putValue("Manifest-Version", "2");
 		attributes.putValue("Wrapper-Bundle", "true");
 

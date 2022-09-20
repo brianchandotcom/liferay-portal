@@ -313,6 +313,10 @@ public class VerifyProperties {
 			"module.framework.beginning.start.level"
 		},
 		{
+			"module.framework.dynamic.install.start.level",
+			"module.framework.dynamic.install.start.level"
+		},
+		{
 			"module.framework.file.install.config.encoding",
 			"module.framework.file.install.config.encoding"
 		},

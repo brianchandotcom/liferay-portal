@@ -226,16 +226,16 @@ public class RelatedObjectEntryResourceTest {
 
 		Http.Options options = new Http.Options();
 
-		if (httpMethod == Http.Method.PUT) {
-			options.setPut(true);
-		}
-
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 		options.addHeader(
 			"Authorization",
 			"Basic " + Base64.encode("test@liferay.com:test".getBytes()));
 		options.setLocation("http://localhost:8080/o/" + endpoint);
+
+		if (httpMethod == Http.Method.PUT) {
+			options.setPut(true);
+		}
 
 		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
 	}

@@ -47,52 +47,48 @@ const CustomViewsControls = () => {
 
 	const customViewLabelInputRef = useRef();
 
-	const SaveCustomViewModalBody = () => {
-		return (
-			<ClayForm.Group>
-				<label htmlFor={`${namespace}customViewLabelInput`}>
-					{Liferay.Language.get('name')}
+	const SaveCustomViewModalBody = () => (
+		<ClayForm.Group>
+			<label htmlFor={`${namespace}customViewLabelInput`}>
+				{Liferay.Language.get('name')}
 
-					<RequiredMark />
-				</label>
+				<RequiredMark />
+			</label>
 
-				<ClayInput
-					autoFocus={true}
-					id={`${namespace}customViewLabelInput`}
-					ref={customViewLabelInputRef}
-					type="text"
-				/>
-			</ClayForm.Group>
-		);
-	};
+			<ClayInput
+				autoFocus={true}
+				id={`${namespace}customViewLabelInput`}
+				ref={customViewLabelInputRef}
+				type="text"
+			/>
+		</ClayForm.Group>
+	);
 
-	const ActionsItemList = () => {
-		return (
-			<ClayDropDown.ItemList>
-				{activeCustomViewId && (
-					<ClayDropDown.Item
-						onClick={() => {
-							saveCustomView({
-								id: activeCustomViewId,
-							});
-
-							setActionsDropdownActive(false);
-						}}
-						symbolLeft="disk"
-					>
-						{Liferay.Language.get('save-view')}
-					</ClayDropDown.Item>
-				)}
-
+	const ActionsItemList = () => (
+		<ClayDropDown.ItemList>
+			{activeCustomViewId && (
 				<ClayDropDown.Item
-					onClick={openSaveCustomViewModal}
+					onClick={() => {
+						saveCustomView({
+							id: activeCustomViewId,
+						});
+
+						setActionsDropdownActive(false);
+					}}
 					symbolLeft="disk"
 				>
-					{Liferay.Language.get('save-view-as')}
+					{Liferay.Language.get('save-view')}
 				</ClayDropDown.Item>
-			</ClayDropDown.ItemList>
-		);
-	};
+			)}
+
+			<ClayDropDown.Item
+				onClick={openSaveCustomViewModal}
+				symbolLeft="disk"
+			>
+				{Liferay.Language.get('save-view-as')}
+			</ClayDropDown.Item>
+		</ClayDropDown.ItemList>
+	);
 
 	const getNextCustomViewId = () => {
 		const ids = Object.keys(customViews);

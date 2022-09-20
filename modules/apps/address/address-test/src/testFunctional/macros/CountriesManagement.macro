@@ -78,6 +78,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro activateMultipleCountries {
+        CountriesManagement._selectMultipleCountries(countryNames = "${countryNames}");
+
+		ClickNoError(locator1 = "Icon#UNDO");
+
+		Alert.viewSuccessMessage();
+    }
+
 	macro activateRegion {
 		Search.searchCP(searchTerm = "${regionName}");
 

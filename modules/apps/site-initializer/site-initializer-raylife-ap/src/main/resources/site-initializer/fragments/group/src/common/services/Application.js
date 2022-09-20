@@ -35,6 +35,6 @@ export function getNewSubmissions(
 	periodMonth
 ) {
 	return axios.get(
-		`${DeliveryAPI}/?fields=applicationStatus,applicationCreateDate&filter=applicationStatus ne 'Bound' and applicationStatus ne 'Reviewed' and applicationCreateDate le ${currentYear}-${currentMonth}-31 and applicationCreateDate ge ${periodYear}-${periodMonth}-01&pageSize=200`
+		`${DeliveryAPI}/?fields=applicationStatus,applicationCreateDate&filter=applicationStatus ne 'bound' and applicationStatus ne 'reviewed' and applicationCreateDate le ${currentYear}-${currentMonth}-31 and applicationCreateDate ge ${periodYear}-${periodMonth}-01&pageSize=200`
 	);
 }

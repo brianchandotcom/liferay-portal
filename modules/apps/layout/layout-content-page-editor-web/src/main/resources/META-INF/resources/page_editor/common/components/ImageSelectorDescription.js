@@ -52,6 +52,7 @@ export function ImageSelectorDescription({
 					content={Liferay.Language.get(
 						'this-value-is-used-for-alt-text'
 					)}
+					header={Liferay.Language.get('image-description')}
 					id={tooltipId}
 					trigger={
 						<ClayIcon

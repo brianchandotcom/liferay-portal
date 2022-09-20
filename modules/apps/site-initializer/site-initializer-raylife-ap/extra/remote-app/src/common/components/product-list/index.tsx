@@ -55,9 +55,9 @@ const ProductList: React.FC<ProductListProps> = ({onSelect, productList}) => {
 					<div className="align-items-center col-md-6 d-flex product-container px-0">
 						<img
 							className="mr-2 product-icon"
-							src={`${getWebDavUrl()}/${productCell.productName
-								.toLowerCase()
-								.replaceAll(' ', '_')}_icon.svg`}
+							src={`${getWebDavUrl()}/${
+								productCell.productExternalReferenceCode
+							}_icon.svg`}
 						/>
 
 						<p className="grey-title-color mb-0 product-title text-paragraph">

@@ -193,9 +193,18 @@ const ProductPerformance = () => {
 				termPremium,
 			}: Policy) => {
 				if (!yearlyProductsTotal[productExternalReferenceCode]) {
+					let productNameAbbrevation = productName;
+
+					if (productName.length > 8) {
+						productNameAbbrevation = productName
+							.split(' ')
+							.map((product) => product.charAt(0))
+							.join('');
+					}
+
 					yearlyProductsTotal[productExternalReferenceCode] = {
 						goalValue: 0,
-						productName,
+						productName: productNameAbbrevation,
 						totalSales: termPremium,
 					};
 

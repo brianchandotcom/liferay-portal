@@ -78,13 +78,13 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 	@Test
 	public void testIsShow() throws Exception {
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder().
-				mockObjectAnalyticsReportsInfoItem(
-					MockObjectAnalyticsReportsInfoItem.builder(
-					).show(
-						true
-					).build()
-				).build(),
+			new MockContextUtil.MockContext.Builder(
+			).mockObjectAnalyticsReportsInfoItem(
+				MockObjectAnalyticsReportsInfoItem.builder(
+				).show(
+					true
+				).build()
+			).build(),
 			() -> Assert.assertTrue(
 				_productNavigationControlMenuEntry.isShow(
 					_getHttpServletRequest())));
@@ -95,13 +95,13 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 		throws Exception {
 
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder().
-				mockObjectAnalyticsReportsInfoItem(
-					MockObjectAnalyticsReportsInfoItem.builder(
-					).show(
-						false
-					).build()
-				).build(),
+			new MockContextUtil.MockContext.Builder(
+			).mockObjectAnalyticsReportsInfoItem(
+				MockObjectAnalyticsReportsInfoItem.builder(
+				).show(
+					false
+				).build()
+			).build(),
 			() -> Assert.assertFalse(
 				_productNavigationControlMenuEntry.isShow(
 					_getHttpServletRequest())));
@@ -121,13 +121,13 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 
 		try {
 			MockContextUtil.testWithMockContext(
-				new MockContextUtil.MockContext.Builder().
-					mockObjectAnalyticsReportsInfoItem(
-						MockObjectAnalyticsReportsInfoItem.builder(
-						).show(
-							true
-						).build()
-					).build(),
+				new MockContextUtil.MockContext.Builder(
+				).mockObjectAnalyticsReportsInfoItem(
+					MockObjectAnalyticsReportsInfoItem.builder(
+					).show(
+						true
+					).build()
+				).build(),
 				() -> Assert.assertTrue(
 					_productNavigationControlMenuEntry.isShow(
 						_getHttpServletRequest())));
@@ -152,13 +152,13 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 
 		try {
 			MockContextUtil.testWithMockContext(
-				new MockContextUtil.MockContext.Builder().
-					mockObjectAnalyticsReportsInfoItem(
-						MockObjectAnalyticsReportsInfoItem.builder(
-						).show(
-							true
-						).build()
-					).build(),
+				new MockContextUtil.MockContext.Builder(
+				).mockObjectAnalyticsReportsInfoItem(
+					MockObjectAnalyticsReportsInfoItem.builder(
+					).show(
+						true
+					).build()
+				).build(),
 				() -> Assert.assertTrue(
 					_productNavigationControlMenuEntry.isShow(
 						_getHttpServletRequest())));
@@ -191,13 +191,13 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 
 		try {
 			MockContextUtil.testWithMockContext(
-				new MockContextUtil.MockContext.Builder().
-					mockObjectAnalyticsReportsInfoItem(
-						MockObjectAnalyticsReportsInfoItem.builder(
-						).show(
-							true
-						).build()
-					).build(),
+				new MockContextUtil.MockContext.Builder(
+				).mockObjectAnalyticsReportsInfoItem(
+					MockObjectAnalyticsReportsInfoItem.builder(
+					).show(
+						true
+					).build()
+				).build(),
 				() -> Assert.assertFalse(
 					_productNavigationControlMenuEntry.isShow(
 						httpServletRequest)));

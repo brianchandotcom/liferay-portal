@@ -79,7 +79,8 @@ public class DateDDMFormFieldValueRendererTest {
 	public void testRenderDisplayLocaleNull() {
 		_assertRenderValues(
 			HashMapBuilder.put(
-				new Locale.Builder().setLanguage(
+				new Locale.Builder(
+				).setLanguage(
 					"ar"
 				).setRegion(
 					"SA"
@@ -115,7 +116,8 @@ public class DateDDMFormFieldValueRendererTest {
 			"2015-01-25");
 		_assertRenderValues(
 			HashMapBuilder.put(
-				new Locale.Builder().setLanguage(
+				new Locale.Builder(
+				).setLanguage(
 					"ar"
 				).setRegion(
 					"SA"
@@ -201,7 +203,8 @@ public class DateDDMFormFieldValueRendererTest {
 		String expectedValue) {
 
 		return HashMapBuilder.put(
-			new Locale.Builder().setLanguage(
+			new Locale.Builder(
+			).setLanguage(
 				"ar"
 			).setRegion(
 				"SA"

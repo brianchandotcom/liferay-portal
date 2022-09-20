@@ -671,7 +671,8 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		// java.time.format.DateTimeFormatterBuilder#appendPattern(String).
 
 		private static final DateTimeFormatter _dateTimeFormatter =
-			new DateTimeFormatterBuilder().parseCaseInsensitive(
+			new DateTimeFormatterBuilder(
+			).parseCaseInsensitive(
 			).appendPattern(
 				"yyyy-[MM][M]-[dd][d]"
 			).optionalStart(

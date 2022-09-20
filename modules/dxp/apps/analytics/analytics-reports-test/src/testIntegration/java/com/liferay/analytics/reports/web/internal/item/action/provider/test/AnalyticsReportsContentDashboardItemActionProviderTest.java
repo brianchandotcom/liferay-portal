@@ -70,13 +70,13 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 	@Test
 	public void testIsShowContentDashboardItemAction() throws Exception {
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder().
-				mockObjectAnalyticsReportsInfoItem(
-					MockObjectAnalyticsReportsInfoItem.builder(
-					).show(
-						true
-					).build()
-				).build(),
+			new MockContextUtil.MockContext.Builder(
+			).mockObjectAnalyticsReportsInfoItem(
+				MockObjectAnalyticsReportsInfoItem.builder(
+				).show(
+					true
+				).build()
+			).build(),
 			() -> Assert.assertTrue(
 				_analyticsReportsContentDashboardItemActionProvider.
 					isShowContentDashboardItemAction(
@@ -89,13 +89,13 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 		throws Exception {
 
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder().
-				mockObjectAnalyticsReportsInfoItem(
-					MockObjectAnalyticsReportsInfoItem.builder(
-					).show(
-						true
-					).build()
-				).build(),
+			new MockContextUtil.MockContext.Builder(
+			).mockObjectAnalyticsReportsInfoItem(
+				MockObjectAnalyticsReportsInfoItem.builder(
+				).show(
+					true
+				).build()
+			).build(),
 			() -> Assert.assertFalse(
 				_analyticsReportsContentDashboardItemActionProvider.
 					isShowContentDashboardItemAction(

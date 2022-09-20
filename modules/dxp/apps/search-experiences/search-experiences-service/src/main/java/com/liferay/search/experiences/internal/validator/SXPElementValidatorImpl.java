@@ -69,7 +69,8 @@ public class SXPElementValidatorImpl implements SXPElementValidator {
 		if (MapUtil.isEmpty(titleMap)) {
 			throw new SXPElementTitleException(
 				ListUtil.fromArray(
-					new Problem.Builder().message(
+					new Problem.Builder(
+					).message(
 						"Title is empty"
 					).severity(
 						Severity.ERROR

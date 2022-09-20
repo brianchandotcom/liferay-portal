@@ -67,7 +67,8 @@ public class SXPBlueprintValidatorImpl implements SXPBlueprintValidator {
 		if (MapUtil.isEmpty(titleMap)) {
 			throw new SXPBlueprintTitleException(
 				ListUtil.fromArray(
-					new Problem.Builder().message(
+					new Problem.Builder(
+					).message(
 						"Title is empty"
 					).severity(
 						Severity.ERROR

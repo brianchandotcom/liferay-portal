@@ -94,11 +94,11 @@ public class GetDataMVCResourceCommandTest {
 	@Test
 	public void testGetAuthorWithoutPortraitURL() throws Exception {
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder().
-				mockObjectAnalyticsReportsInfoItem(
-					MockObjectAnalyticsReportsInfoItem.builder(
-					).build()
-				).build(),
+			new MockContextUtil.MockContext.Builder(
+			).mockObjectAnalyticsReportsInfoItem(
+				MockObjectAnalyticsReportsInfoItem.builder(
+				).build()
+			).build(),
 			() -> {
 				MockLiferayResourceRequest mockLiferayResourceRequest =
 					_getMockLiferayResourceRequest(
@@ -140,19 +140,19 @@ public class GetDataMVCResourceCommandTest {
 		String title = RandomTestUtil.randomString();
 
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder().
-				mockObjectAnalyticsReportsInfoItem(
-					MockObjectAnalyticsReportsInfoItem.builder(
-					).authorName(
-						authorName
-					).authorProfileImage(
-						authorProfileImage
-					).publishDate(
-						publishDate
-					).title(
-						title
-					).build()
-				).build(),
+			new MockContextUtil.MockContext.Builder(
+			).mockObjectAnalyticsReportsInfoItem(
+				MockObjectAnalyticsReportsInfoItem.builder(
+				).authorName(
+					authorName
+				).authorProfileImage(
+					authorProfileImage
+				).publishDate(
+					publishDate
+				).title(
+					title
+				).build()
+			).build(),
 			() -> {
 				MockLiferayResourceRequest mockLiferayResourceRequest =
 					_getMockLiferayResourceRequest(
@@ -245,30 +245,30 @@ public class GetDataMVCResourceCommandTest {
 		String title = RandomTestUtil.randomString();
 
 		MockContextUtil.testWithMockContext(
-			new MockContextUtil.MockContext.Builder().
-				mockObjectAnalyticsReportsInfoItem(
-					MockObjectAnalyticsReportsInfoItem.builder(
-					).authorName(
-						RandomTestUtil.randomString()
-					).authorProfileImage(
-						RandomTestUtil.randomString()
-					).publishDate(
-						new Date()
-					).title(
-						RandomTestUtil.randomString()
-					).build()
-				).mockSuperClassObjectAnalyticsReportsInfoItem(
-					MockSuperClassObjectAnalyticsReportsInfoItem.builder(
-					).authorName(
-						authorName
-					).authorProfileImage(
-						authorProfileImage
-					).publishDate(
-						publishDate
-					).title(
-						title
-					).build()
-				).build(),
+			new MockContextUtil.MockContext.Builder(
+			).mockObjectAnalyticsReportsInfoItem(
+				MockObjectAnalyticsReportsInfoItem.builder(
+				).authorName(
+					RandomTestUtil.randomString()
+				).authorProfileImage(
+					RandomTestUtil.randomString()
+				).publishDate(
+					new Date()
+				).title(
+					RandomTestUtil.randomString()
+				).build()
+			).mockSuperClassObjectAnalyticsReportsInfoItem(
+				MockSuperClassObjectAnalyticsReportsInfoItem.builder(
+				).authorName(
+					authorName
+				).authorProfileImage(
+					authorProfileImage
+				).publishDate(
+					publishDate
+				).title(
+					title
+				).build()
+			).build(),
 			() -> {
 				MockLiferayResourceRequest mockLiferayResourceRequest =
 					_getMockLiferayResourceRequest(

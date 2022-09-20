@@ -83,7 +83,8 @@ public class DepotAdminMembershipsDisplayContextTest {
 				new DepotAdminMembershipsDisplayContext(
 					Mockito.mock(ItemSelector.class),
 					_getLiferayPortletRequest(
-						new ThemeDisplayBuilder().withPermissionChecker(
+						new ThemeDisplayBuilder(
+						).withPermissionChecker(
 							_getPermissionCheckerWithCompanyAdmin()
 						).build()),
 					null);
@@ -111,7 +112,8 @@ public class DepotAdminMembershipsDisplayContextTest {
 				new DepotAdminMembershipsDisplayContext(
 					Mockito.mock(ItemSelector.class),
 					_getLiferayPortletRequest(
-						new ThemeDisplayBuilder().withPermissionChecker(
+						new ThemeDisplayBuilder(
+						).withPermissionChecker(
 							_getPermissionCheckerWithNoCompanyAdminAndAssignMember()
 						).build()),
 					null);
@@ -139,7 +141,8 @@ public class DepotAdminMembershipsDisplayContextTest {
 				new DepotAdminMembershipsDisplayContext(
 					Mockito.mock(ItemSelector.class),
 					_getLiferayPortletRequest(
-						new ThemeDisplayBuilder().withPermissionChecker(
+						new ThemeDisplayBuilder(
+						).withPermissionChecker(
 							_getPermissionCheckerWithNoCompanyAdminAndNoAssignMember()
 						).build()),
 					null);
@@ -165,7 +168,8 @@ public class DepotAdminMembershipsDisplayContextTest {
 				new DepotAdminMembershipsDisplayContext(
 					Mockito.mock(ItemSelector.class),
 					_getLiferayPortletRequest(
-						new ThemeDisplayBuilder().build()),
+						new ThemeDisplayBuilder(
+						).build()),
 					null);
 
 		List<Group> depots = depotAdminMembershipsDisplayContext.getDepotGroups(
@@ -191,7 +195,8 @@ public class DepotAdminMembershipsDisplayContextTest {
 				new DepotAdminMembershipsDisplayContext(
 					Mockito.mock(ItemSelector.class),
 					_getLiferayPortletRequest(
-						new ThemeDisplayBuilder().withPermissionChecker(
+						new ThemeDisplayBuilder(
+						).withPermissionChecker(
 							_getPermissionCheckerWithCompanyAdmin()
 						).build()),
 					null);
@@ -213,7 +218,8 @@ public class DepotAdminMembershipsDisplayContextTest {
 				new DepotAdminMembershipsDisplayContext(
 					Mockito.mock(ItemSelector.class),
 					_getLiferayPortletRequest(
-						new ThemeDisplayBuilder().withPermissionChecker(
+						new ThemeDisplayBuilder(
+						).withPermissionChecker(
 							_getPermissionCheckerWithCompanyAdmin()
 						).build()),
 					null);

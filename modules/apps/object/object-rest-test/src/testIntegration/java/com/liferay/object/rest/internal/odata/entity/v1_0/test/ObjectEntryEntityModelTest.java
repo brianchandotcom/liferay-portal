@@ -78,7 +78,8 @@ public class ObjectEntryEntityModelTest {
 				Collections.emptyList());
 
 		List<ObjectField> customObjectFields = Arrays.asList(
-			new ObjectFieldBuilder().businessType(
+			new ObjectFieldBuilder(
+			).businessType(
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT
 			).name(
 				RandomTestUtil.randomString()
@@ -90,7 +91,8 @@ public class ObjectEntryEntityModelTest {
 			_createObjectField(ObjectFieldConstants.DB_TYPE_DOUBLE),
 			_createObjectField(ObjectFieldConstants.DB_TYPE_INTEGER),
 			_createObjectField(ObjectFieldConstants.DB_TYPE_LONG),
-			new ObjectFieldBuilder().relationshipType(
+			new ObjectFieldBuilder(
+			).relationshipType(
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY
 			).name(
 				RandomTestUtil.randomString()
@@ -140,7 +142,8 @@ public class ObjectEntryEntityModelTest {
 	}
 
 	private ObjectField _createObjectField(String dbType) {
-		return new ObjectFieldBuilder().dbType(
+		return new ObjectFieldBuilder(
+		).dbType(
 			dbType
 		).name(
 			RandomTestUtil.randomString()

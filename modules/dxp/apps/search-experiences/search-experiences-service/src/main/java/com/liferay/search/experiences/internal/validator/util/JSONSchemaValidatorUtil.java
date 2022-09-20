@@ -98,7 +98,8 @@ public class JSONSchemaValidatorUtil {
 		}
 
 		problems.add(
-			new Problem.Builder().className(
+			new Problem.Builder(
+			).className(
 				className
 			).message(
 				_getMessage(keyword, validationException)

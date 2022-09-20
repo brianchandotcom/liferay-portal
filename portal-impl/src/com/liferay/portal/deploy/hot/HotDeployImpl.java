@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
@@ -112,10 +111,6 @@ public class HotDeployImpl implements HotDeploy {
 
 		_deployedServletContextNames.remove(
 			hotDeployEvent.getServletContextName());
-
-		ClassLoader classLoader = hotDeployEvent.getContextClassLoader();
-
-		TemplateManagerUtil.destroy(classLoader);
 	}
 
 	@Override

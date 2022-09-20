@@ -44,10 +44,6 @@ public class FreeMarkerPortlet extends MVCPortlet {
 	@Override
 	public void destroy() {
 		super.destroy();
-
-		Class<?> clazz = getClass();
-
-		TemplateManagerUtil.destroy(clazz.getClassLoader());
 	}
 
 	@Override

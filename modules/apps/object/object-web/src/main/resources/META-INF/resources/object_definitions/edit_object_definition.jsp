@@ -20,6 +20,23 @@
 ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
 %>
 
+<div>
+	<react:component
+		module="js/components/ManagementToolbar"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"externalReferenceCode", objectDefinition.getExternalReferenceCode()
+			).put(
+				"label", objectDefinition.getLabel(locale, true)
+			).put(
+				"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+			).put(
+				"system", objectDefinition.isSystem()
+			).build()
+		%>'
+	/>
+</div>
+
 <liferay-frontend:screen-navigation
 	context="<%= objectDefinition %>"
 	key="<%= ObjectDefinitionsScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_OBJECT_DEFINITION %>"

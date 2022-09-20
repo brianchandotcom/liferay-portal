@@ -71,7 +71,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<clay:col
 						md="11"
 					>
-						<aui:input cssClass="disabled" label="object-definition-id" name="objectDefinitionId" readonly="true" type="text" />
+						<aui:input name="externalReferenceCode" type="hidden" />
+						<aui:input name="objectDefinitionId" type="hidden" />
 
 						<aui:input disabled="<%= objectDefinition.isApproved() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="name" name="shortName" required="<%= true %>" type="text" value="<%= objectDefinition.getShortName() %>" />
 
@@ -266,8 +267,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 						<clay:col
 							md="11"
 						>
-							<aui:input name="externalReferenceCode" type="text" value="<%= objectDefinition.getExternalReferenceCode() %>" />
-
 							<aui:select disabled="<%= true %>" name="storageType" showEmptyOption="<%= false %>">
 								<aui:option label="<%= LanguageUtil.get(request, objectDefinition.getStorageType()) %>" selected="<%= true %>" value="" />
 							</aui:select>

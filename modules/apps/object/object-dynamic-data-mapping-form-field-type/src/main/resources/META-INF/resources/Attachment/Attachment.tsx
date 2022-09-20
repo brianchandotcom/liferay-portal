@@ -111,7 +111,6 @@ function File({attachment, loading, onDelete}: IFileProps) {
 
 					<a
 						className="lfr-objects__attachment-download"
-						download
 						href={attachment.contentURL}
 					>
 						<ClayIcon symbol="download" />

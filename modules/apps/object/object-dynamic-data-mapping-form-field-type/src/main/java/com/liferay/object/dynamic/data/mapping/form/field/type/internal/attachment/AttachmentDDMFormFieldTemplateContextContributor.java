@@ -120,7 +120,7 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 
 			return HashMapBuilder.put(
 				"contentURL",
-				_dlURLHelper.getPreviewURL(
+				_dlURLHelper.getDownloadURL(
 					fileEntry, fileEntry.getFileVersion(), themeDisplay,
 					StringPool.BLANK)
 			).put(

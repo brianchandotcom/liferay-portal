@@ -20,13 +20,14 @@ import InfoItemService from '../services/InfoItemService';
 export default function updateEditableValues({
 	editableValues,
 	fragmentEntryLinkId,
-	segmentsExperienceId,
 }) {
-	return (dispatch, getState) =>
-		FragmentService.updateEditableValues({
+	return (dispatch, getState) => {
+		const {languageId, segmentsExperienceId} = getState();
+
+		return FragmentService.updateEditableValues({
 			editableValues,
 			fragmentEntryLinkId,
-			languageId: getState().languageId,
+			languageId,
 			onNetworkStatus: dispatch,
 		})
 			.then((fragmentEntryLink) => {
@@ -51,4 +52,5 @@ export default function updateEditableValues({
 					);
 				});
 			});
+	};
 }

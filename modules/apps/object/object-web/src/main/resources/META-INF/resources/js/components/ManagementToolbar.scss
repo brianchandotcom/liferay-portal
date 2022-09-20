@@ -1,0 +1,22 @@
+.lfr-object-edit-object-definition {
+	.data-set .management-bar-wrapper,
+	> .lfr-tooltip-scope,
+	.page-header {
+		position: sticky;
+		z-index: 1;
+	}
+
+	.data-set {
+		.management-bar-wrapper {
+			top: 168px;
+		}
+	}
+
+	> .lfr-tooltip-scope {
+		top: 56px;
+	}
+
+	.page-header {
+		top: 120px;
+	}
+}

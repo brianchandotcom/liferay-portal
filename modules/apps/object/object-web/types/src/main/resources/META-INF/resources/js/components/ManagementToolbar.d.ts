@@ -14,6 +14,7 @@
 
 /// <reference types="react" />
 
+import './ManagementToolbar.scss';
 export default function ManagementToolbar({
 	backURL,
 	externalReferenceCode: initialExternalReferenceCode,

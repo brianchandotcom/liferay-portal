@@ -117,7 +117,6 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 			AccountEntry.class.getName(),
 			new String[] {
 				AccountActionKeys.MANAGE_ADDRESSES,
-				AccountActionKeys.MANAGE_ORGANIZATIONS,
 				AccountActionKeys.VIEW_ACCOUNT_ROLES,
 				AccountActionKeys.VIEW_ADDRESSES,
 				AccountActionKeys.VIEW_ORGANIZATIONS,

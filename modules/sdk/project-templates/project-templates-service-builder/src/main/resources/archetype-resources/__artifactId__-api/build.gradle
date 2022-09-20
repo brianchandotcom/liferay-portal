@@ -1,3 +1,6 @@
 dependencies {
+#if (${liferayVersion.startsWith("7.0")})
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "@biz.aQute.bnd.version@"
+#end
 	compileOnly group: "com.liferay.portal", name: "release.${product}.api"
 }

@@ -114,6 +114,11 @@ public interface ObjectDefinitionService extends BaseService {
 			long objectDefinitionId, String externalReferenceCode)
 		throws PortalException;
 
+	public ObjectDefinition updateSystemObjectDefinition(
+			String externalReferenceCode, long objectDefinitionId,
+			long titleObjectFieldId)
+		throws PortalException;
+
 	public ObjectDefinition updateTitleObjectFieldId(
 			long objectDefinitionId, long titleObjectFieldId)
 		throws PortalException;

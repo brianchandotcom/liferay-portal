@@ -1379,11 +1379,6 @@ public class PropsValues {
 	public static final String MODULE_FRAMEWORK_BASE_DIR = PropsUtil.get(
 		PropsKeys.MODULE_FRAMEWORK_BASE_DIR);
 
-	public static final boolean MODULE_FRAMEWORK_CONCURRENT_STARTUP_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(
-				PropsKeys.MODULE_FRAMEWORK_CONCURRENT_STARTUP_ENABLED));
-
 	public static final String MODULE_FRAMEWORK_CONFIGS_DIR = PropsUtil.get(
 		PropsKeys.MODULE_FRAMEWORK_CONFIGS_DIR);
 

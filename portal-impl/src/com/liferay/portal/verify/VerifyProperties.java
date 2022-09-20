@@ -315,6 +315,10 @@ public class VerifyProperties {
 		{
 			"module.framework.file.install.config.encoding",
 			"module.framework.file.install.config.encoding"
+		},
+		{
+			"module.framework.concurrent.startup.enabled",
+			"module.framework.concurrent.startup.enabled"
 		}
 	};
 

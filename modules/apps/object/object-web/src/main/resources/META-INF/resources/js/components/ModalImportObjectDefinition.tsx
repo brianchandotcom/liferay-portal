@@ -87,7 +87,7 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 			`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${externalReferenceCode}`
 		);
 
-		if (response.status === 204) {
+		if (!Liferay.FeatureFlags['LPS-155914'] || response.status === 204) {
 			handleImport(formData);
 		}
 		else {
@@ -197,20 +197,21 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 						</ClayInput.Group>
 					</ClayForm.Group>
 
-					{externalReferenceCode && (
-						<Input
-							disabled
-							feedbackMessage={Liferay.Language.get(
-								'internal-key-to-refer-the-object-definition'
-							)}
-							id="externalReferenceCode"
-							label={Liferay.Language.get(
-								'external-reference-code'
-							)}
-							name="externalReferenceCode"
-							value={externalReferenceCode}
-						/>
-					)}
+					{Liferay.FeatureFlags['LPS-155914'] &&
+						externalReferenceCode && (
+							<Input
+								disabled
+								feedbackMessage={Liferay.Language.get(
+									'internal-key-to-refer-the-object-definition'
+								)}
+								id="externalReferenceCode"
+								label={Liferay.Language.get(
+									'external-reference-code'
+								)}
+								name="externalReferenceCode"
+								value={externalReferenceCode}
+							/>
+						)}
 
 					<input
 						className="d-none"
@@ -223,6 +224,10 @@ const ModalImportObjectDefinition: React.FC<IProps> = ({
 								inputFile,
 								inputFileValue: target.value,
 							});
+
+							if (!Liferay.FeatureFlags['LPS-155914']) {
+								return;
+							}
 
 							const fileReader = new FileReader();
 

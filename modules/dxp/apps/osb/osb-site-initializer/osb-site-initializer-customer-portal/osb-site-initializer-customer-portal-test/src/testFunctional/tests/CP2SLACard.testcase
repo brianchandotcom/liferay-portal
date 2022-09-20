@@ -51,4 +51,51 @@ definition {
 	}
 
 
+    @description = "Automation Ticket: LPS-147800 | Test Summary: Verify if the card displays (SLA Card - SLA Name - Start Date - End Date - SLA Status)"
+    @priority = "4"
+    test AssertAllTitlesOnTheSLACard {
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+        task ("Then I should be able to view SLA Title, Status, Start Date and End Date for Platinum Support License.") {
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "Platinum");
+
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "CURRENT");
+
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "08/23/2021 - 08/23/2022");
+
+            CP2Overview.assertSLACardBackgroundColor(slaCardTitle = "Platinum");
+        }
+
+        task ("When I shif the SLA card") {
+            CP2Overview.switchSLACard();
+        }
+
+        task ("Then I should be able to view SLA Title, Status, Start Date and End Date for Gold Support License.") {
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "Gold");
+
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "FUTURE");
+
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "08/24/2022 - 08/24/2023");
+
+            CP2Overview.assertSLACardBackgroundColor(slaCardTitle = "Gold");
+        }
+
+        task ("When I shif the SLA card") {
+            CP2Overview.switchSLACard();
+        }
+
+        task ("Then I should be able to view SLA Title, Status, Start Date and End Date for Premium Support License.") {
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "Premium");
+
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "EXPIRED");
+
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "08/22/2020 - 08/22/2021");
+
+            CP2Overview.assertSLACardBackgroundColor(slaCardTitle = "Premium");
+        }
+    }
 }

@@ -42,8 +42,10 @@ import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventTable;
@@ -413,6 +415,13 @@ public class ObjectDefinitionLocalServiceTest {
 				new BaseSystemObjectDefinitionMetadata() {
 
 					@Override
+					public BaseModel<?> deleteBaseModel(BaseModel<?> baseModel)
+						throws PortalException {
+
+						return null;
+					}
+
+					@Override
 					public String getJaxRsApplicationName() {
 						return "";
 					}
@@ -512,6 +521,13 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService.addOrUpdateSystemObjectDefinition(
 				TestPropsValues.getCompanyId(),
 				new BaseSystemObjectDefinitionMetadata() {
+
+					@Override
+					public BaseModel<?> deleteBaseModel(BaseModel<?> baseModel)
+						throws PortalException {
+
+						return null;
+					}
 
 					@Override
 					public String getJaxRsApplicationName() {

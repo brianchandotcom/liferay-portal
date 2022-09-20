@@ -37,6 +37,8 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -640,6 +642,13 @@ public class ObjectRelationshipLocalServiceTest {
 
 			_modelClass = modelClass;
 			_name = name;
+		}
+
+		@Override
+		public BaseModel<?> deleteBaseModel(BaseModel<?> baseModel)
+			throws PortalException {
+
+			return null;
 		}
 
 		@Override

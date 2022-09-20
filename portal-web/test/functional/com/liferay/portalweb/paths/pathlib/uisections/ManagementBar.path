@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLEAR_FILTER</td>
+	<td>//*[contains(@class,'component-link tbar-link') and contains(text(),'Clear')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_OR_ORDER</td>
 	<td>//nav[contains(@class,'management-bar')]//*[*[contains(@title,'${key_filter}')]]</td>
 	<td></td>

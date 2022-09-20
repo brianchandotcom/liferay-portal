@@ -1770,6 +1770,36 @@ public class ObjectEntryLocalServiceImpl
 			dynamicObjectDefinitionTable.getPrimaryKeyColumn());
 	}
 
+	private Object _getResult(
+		Object entryValues, Expression<?> selectExpression) {
+
+		Object result = null;
+
+		try {
+			if (selectExpression instanceof Column) {
+				Column<?, ?> column = (Column<?, ?>)selectExpression;
+
+				result = _getValue(entryValues, column.getSQLType());
+			}
+			else if (selectExpression instanceof ScalarDSLQueryAlias) {
+				ScalarDSLQueryAlias scalarDSLQueryAlias =
+					(ScalarDSLQueryAlias)selectExpression;
+
+				result = _getValue(
+					entryValues, scalarDSLQueryAlias.getSQLType());
+
+				if (result == null) {
+					result = "0";
+				}
+			}
+		}
+		catch (SQLException sqlException) {
+			throw new SystemException(sqlException);
+		}
+
+		return result;
+	}
+
 	private Expression<?>[] _getSelectExpressions(
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable)
 		throws PortalException {
@@ -2175,37 +2205,18 @@ public class ObjectEntryLocalServiceImpl
 
 		List<Object[]> results = new ArrayList<>();
 
-		List<Object[]> entriesValues = objectEntryPersistence.dslQuery(
-			dslQuery);
+		List<Object> entriesValues = objectEntryPersistence.dslQuery(dslQuery);
 
-		for (Object[] entryValues : entriesValues) {
+		for (Object entryValues : entriesValues) {
 			Object[] result = new Object[selectExpressions.length];
 
-			for (int i = 0; i < selectExpressions.length; i++) {
-				Expression<?> selectExpression = selectExpressions[i];
-
-				try {
-					if (selectExpression instanceof Column) {
-						Column<?, ?> column =
-							(Column<?, ?>)selectExpressions[i];
-
-						result[i] = _getValue(
-							entryValues[i], column.getSQLType());
-					}
-					else if (selectExpression instanceof ScalarDSLQueryAlias) {
-						ScalarDSLQueryAlias scalarDSLQueryAlias =
-							(ScalarDSLQueryAlias)selectExpressions[i];
-
-						result[i] = _getValue(
-							entryValues[i], scalarDSLQueryAlias.getSQLType());
-
-						if (result[i] == null) {
-							result[i] = "0";
-						}
-					}
-				}
-				catch (SQLException sqlException) {
-					throw new SystemException(sqlException);
+			if (selectExpressions.length == 1) {
+				result[0] = _getResult(entryValues, selectExpressions[0]);
+			}
+			else {
+				for (int i = 0; i < selectExpressions.length; i++) {
+					result[i] = _getResult(
+						((Object[])entryValues)[i], selectExpressions[i]);
 				}
 			}
 

@@ -20,6 +20,7 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {COLLECTION_APPLIED_FILTERS_FRAGMENT_ENTRY_KEY} from '../../../../../../../app/config/constants/collectionAppliedFiltersFragmentKey';
 import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../../../app/config/constants/collectionFilterFragmentEntryKey';
 import {COMMON_STYLES_ROLES} from '../../../../../../../app/config/constants/commonStylesRoles';
+import {CONTENT_DISPLAY_OPTIONS} from '../../../../../../../app/config/constants/contentDisplayOptions';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../../app/config/constants/viewportSizes';
@@ -40,6 +41,7 @@ import CollectionSelector from '../../../../../../../common/components/Collectio
 import {useId} from '../../../../../../../core/hooks/useId';
 import CollectionFilterConfigurationModal from '../../CollectionFilterConfigurationModal';
 import {CommonStyles} from '../CommonStyles';
+import {FlexOptions} from '../FlexOptions';
 import {EmptyCollectionOptions} from './EmptyCollectionOptions';
 import {LayoutSelector} from './LayoutSelector';
 import {ListItemStyleSelector} from './ListItemStyleSelector';
@@ -50,7 +52,11 @@ import {ShowGutterSelector} from './ShowGutterSelector';
 import {StyleDisplaySelector} from './StyleDisplaySelector';
 import {VerticalAlignmentSelector} from './VerticalAlignmentSelector';
 
-const LIST_STYLE_GRID = '';
+const LIST_STYLES = {
+	flexColumn: CONTENT_DISPLAY_OPTIONS.flexColumn,
+	flexRow: CONTENT_DISPLAY_OPTIONS.flexRow,
+	grid: '',
+};
 
 export function CollectionGeneralPanel({item}) {
 	const {
@@ -118,7 +124,7 @@ export function CollectionGeneralPanel({item}) {
 			updateCollectionDisplayCollection({
 				collection: Object.keys(collection).length ? collection : null,
 				itemId: item.itemId,
-				listStyle: LIST_STYLE_GRID,
+				listStyle: LIST_STYLES.grid,
 			})
 		);
 	};
@@ -192,7 +198,7 @@ export function CollectionGeneralPanel({item}) {
 	);
 
 	useEffect(() => {
-		if (collection && listStyle && listStyle !== LIST_STYLE_GRID) {
+		if (collection && listStyle && listStyle !== LIST_STYLES.grid) {
 			InfoItemService.getAvailableListItemRenderers({
 				itemSubtype: collection.itemSubtype,
 				itemType: collection.itemType,
@@ -229,6 +235,10 @@ export function CollectionGeneralPanel({item}) {
 		}
 	}, [collection]);
 
+	const flexEnabled =
+		listStyle === LIST_STYLES.flexColumn ||
+		listStyle === LIST_STYLES.flexRow;
+
 	return (
 		<>
 			<div className="mb-3">
@@ -262,7 +272,18 @@ export function CollectionGeneralPanel({item}) {
 								/>
 							)}
 
-							{listStyle === LIST_STYLE_GRID && (
+							{flexEnabled && (
+								<FlexOptions
+									itemConfig={collectionConfig}
+									onConfigChange={(name, value) => {
+										handleConfigurationChanged({
+											[name]: value,
+										});
+									}}
+								/>
+							)}
+
+							{listStyle === LIST_STYLES.grid && (
 								<>
 									<LayoutSelector
 										collectionConfig={collectionConfig}
@@ -302,10 +323,11 @@ export function CollectionGeneralPanel({item}) {
 									)}
 								</>
 							)}
+
 							{selectedViewportSize ===
 								VIEWPORT_SIZES.desktop && (
 								<>
-									{listStyle !== LIST_STYLE_GRID &&
+									{listStyle !== LIST_STYLES.grid &&
 										!!availableListItemStyles.length && (
 											<ListItemStyleSelector
 												availableListItemStyles={

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.redirect.provider.RedirectProvider;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 
@@ -56,8 +55,6 @@ public class RedirectProviderImplTest {
 		).thenReturn(
 			null
 		);
-
-		PropsUtil.set("feature.flag.LPS-160332", Boolean.TRUE.toString());
 	}
 
 	@Test

@@ -567,8 +567,8 @@ Walkthrough.propTypes = {
 	skippable: PropTypes.bool,
 	steps: PropTypes.arrayOf(
 		PropTypes.shape({
-			darkbg: PropTypes.bool,
 			content: PropTypes.string,
+			darkbg: PropTypes.bool,
 			nodeToHighlight: PropTypes.string.isRequired,
 			positioning: PropTypes.oneOf(Object.keys(ALIGNMENTS_MAP)),
 			title: PropTypes.string,

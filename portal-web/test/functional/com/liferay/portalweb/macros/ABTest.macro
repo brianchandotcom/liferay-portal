@@ -198,6 +198,14 @@ definition {
 			value1 = "${status}");
 	}
 
+	macro switchVariant {
+		ABTest.openABTestPanel();
+
+		Click(
+			key_variantName = "${variantName}",
+			locator1 = "ABTest#VARIANT_TITLE");
+	}
+
 	macro takeElementID {
 		if (!(isSet(key_index))) {
 			var key_index = "1";

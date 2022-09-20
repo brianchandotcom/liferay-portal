@@ -171,6 +171,17 @@ public class ObjectDefinitionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectDefinition
+			updateSystemObjectDefinition(
+				String externalReferenceCode, long objectDefinitionId,
+				long titleObjectFieldId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionService.updateSystemObjectDefinition(
+			externalReferenceCode, objectDefinitionId, titleObjectFieldId);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectDefinition updateTitleObjectFieldId(
 			long objectDefinitionId, long titleObjectFieldId)
 		throws com.liferay.portal.kernel.exception.PortalException {

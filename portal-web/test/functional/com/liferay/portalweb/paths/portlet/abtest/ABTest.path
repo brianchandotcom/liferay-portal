@@ -306,6 +306,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VARIANT_TITLE</td>
+	<td>//*[@data-title='${key_variantName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_DATA_ANALYTICS_CLOUD_BUTTON</td>
 	<td>//*[contains(@class,'btn-secondary') and contains(text(),'View Data in Analytics Cloud')]</td>
 	<td></td>

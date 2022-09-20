@@ -14,10 +14,12 @@
 
 package com.liferay.layout.util.structure;
 
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.constants.LayoutStructureConstants;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -452,6 +454,8 @@ public class LayoutStructure {
 				itemId, portletIds, 0, _getChildrenItemIds(itemId));
 		}
 
+		_updateFragmentEntryLinks(itemId, true);
+
 		_deletedLayoutStructureItems.put(itemId, deletedLayoutStructureItem);
 
 		_deletedItemIds.add(itemId);
@@ -558,6 +562,8 @@ public class LayoutStructure {
 		parentLayoutStructureItemId.addChildrenItem(
 			deletedLayoutStructureItem.getPosition(),
 			deletedLayoutStructureItem.getItemId());
+
+		_updateFragmentEntryLinks(itemId, false);
 
 		_deletedItemIds.remove(itemId);
 		_deletedItemIds.removeAll(
@@ -885,6 +891,36 @@ public class LayoutStructure {
 			}
 
 			columnViewportConfigurationJSONObject.put("size", columnSize);
+		}
+	}
+
+	private void _updateFragmentEntryLinks(
+		String itemId, boolean markForDeletion) {
+
+		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
+			itemId);
+
+		if (layoutStructureItem instanceof FragmentStyledLayoutStructureItem) {
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			try {
+				FragmentEntryLinkLocalServiceUtil.updateDeleted(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
+					markForDeletion);
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
+
+			return;
+		}
+
+		for (String childrenItemId : layoutStructureItem.getChildrenItemIds()) {
+			_updateFragmentEntryLinks(childrenItemId, markForDeletion);
 		}
 	}
 

@@ -56,8 +56,6 @@ public class XMLSpringExtenderServiceCheck extends BaseFileCheck {
 				fileName,
 				"Do not use Spring extender service as a dependency " +
 					"injection, use DS instead");
-
-			return content;
 		}
 
 		if (fileName.endsWith("/service.xml")) {
@@ -68,17 +66,13 @@ public class XMLSpringExtenderServiceCheck extends BaseFileCheck {
 			String dependencyInjectorName = rootElement.attributeValue(
 				"dependency-injector");
 
-			if (Validator.isNull(dependencyInjectorName)) {
-				return content;
-			}
+			if (Validator.isNotNull(dependencyInjectorName) &&
+				dependencyInjectorName.equals("spring")) {
 
-			if (dependencyInjectorName.equals("spring")) {
 				addMessage(
 					fileName,
 					"Do not use Spring extender service as a dependency " +
 						"injection, use DS instead");
-
-				return content;
 			}
 		}
 

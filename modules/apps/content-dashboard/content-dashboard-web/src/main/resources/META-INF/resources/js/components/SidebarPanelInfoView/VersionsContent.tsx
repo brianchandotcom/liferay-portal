@@ -15,12 +15,11 @@
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {fetch, sub} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import formatDate from './utils/formatDate';
 
-const useIsFirstRender = () => {
+const useIsFirstRender = (): boolean => {
 	const isFirstRef = useRef(true);
 
 	if (isFirstRef.current) {
@@ -32,23 +31,27 @@ const useIsFirstRender = () => {
 	return isFirstRef.current;
 };
 
-const VersionsContent = ({getItemVersionsURL, languageTag = 'en', onError}) => {
+const VersionsContent = ({
+	getItemVersionsURL,
+	languageTag = 'en',
+	onError,
+}: IProps) => {
 	const [loading, setLoading] = useState(false);
-	const [versions, setVersions] = useState([]);
-	const isFirst = useIsFirstRender();
-	const getVersionsData = useCallback(async () => {
+	const [versions, setVersions] = useState([] as IVersion[]);
+	const isFirst: boolean = useIsFirstRender();
+	const getVersionsData = useCallback(async (): Promise<void> => {
 		try {
 			setLoading(true);
-			const response = await fetch(getItemVersionsURL);
+			const response: Response = await fetch(getItemVersionsURL);
 
 			if (!response.ok) {
 				throw new Error(`Failed to fetch ${getItemVersionsURL}`);
 			}
 
-			const {versions} = await response.json();
+			const {versions}: IData = await response.json();
 			setVersions(versions);
 		}
-		catch (error) {
+		catch (error: unknown) {
 			onError();
 
 			if (process.env.NODE_ENV === 'development') {
@@ -60,7 +63,7 @@ const VersionsContent = ({getItemVersionsURL, languageTag = 'en', onError}) => {
 		}
 	}, [getItemVersionsURL, onError]);
 
-	useEffect(() => {
+	useEffect((): void => {
 
 		// prevent the initial fetch when the tab is inactive
 
@@ -114,12 +117,23 @@ const VersionsContent = ({getItemVersionsURL, languageTag = 'en', onError}) => {
 	);
 };
 
-VersionsContent.defaultProps = {
-	languageTag: 'en-US',
-};
+interface IData {
+	versions: IVersion[];
+}
 
-VersionsContent.propTypes = {
-	getItemVersionsURL: PropTypes.string.isRequired,
-};
+interface IProps {
+	getItemVersionsURL: string;
+	languageTag?: string;
+	onError: () => void;
+}
+
+interface IVersion {
+	changeLog?: string;
+	createDate: string;
+	statusLabel: string;
+	statusStyle: string;
+	userName: string;
+	version: string;
+}
 
 export default VersionsContent;

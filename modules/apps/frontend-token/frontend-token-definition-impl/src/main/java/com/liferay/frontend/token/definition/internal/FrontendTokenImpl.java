@@ -23,7 +23,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Iván Zaera
@@ -69,9 +72,17 @@ public class FrontendTokenImpl implements FrontendToken {
 		}
 
 		for (int i = 0; i < mappingsJSONArray.length(); i++) {
-			_frontendTokenMappings.add(
+			FrontendTokenMapping frontendTokenMapping =
 				new FrontendTokenMappingImpl(
-					this, mappingsJSONArray.getJSONObject(i)));
+					this, mappingsJSONArray.getJSONObject(i));
+
+			_frontendTokenMappings.add(frontendTokenMapping);
+
+			List<FrontendTokenMapping> frontendTokenMappings =
+				_frontendTokenMappingsMap.computeIfAbsent(
+					frontendTokenMapping.getType(), type -> new ArrayList<>());
+
+			frontendTokenMappings.add(frontendTokenMapping);
 		}
 	}
 
@@ -89,18 +100,7 @@ public class FrontendTokenImpl implements FrontendToken {
 	public Collection<FrontendTokenMapping> getFrontendTokenMappings(
 		String type) {
 
-		Collection<FrontendTokenMapping> frontendTokenMappings =
-			new ArrayList<>();
-
-		for (FrontendTokenMapping frontendTokenMapping :
-				_frontendTokenMappings) {
-
-			if (type.equals(frontendTokenMapping.getType())) {
-				frontendTokenMappings.add(frontendTokenMapping);
-			}
-		}
-
-		return frontendTokenMappings;
+		return _frontendTokenMappingsMap.get(type);
 	}
 
 	@Override
@@ -130,6 +130,8 @@ public class FrontendTokenImpl implements FrontendToken {
 	private final Object _defaultValue;
 	private final Collection<FrontendTokenMapping> _frontendTokenMappings =
 		new ArrayList<>();
+	private final Map<String, List<FrontendTokenMapping>>
+		_frontendTokenMappingsMap = new HashMap<>();
 	private final FrontendTokenSetImpl _frontendTokenSetImpl;
 	private final JSONLocalizer _jsonLocalizer;
 	private final String _name;

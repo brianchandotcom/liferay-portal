@@ -143,8 +143,6 @@ public class ReleaseManagerImpl implements ReleaseManager {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, UpgradeStep.class, null,
 			new PropertyServiceReferenceMapper<String, UpgradeStep>(
@@ -258,7 +256,6 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		ReleaseManagerImpl.class);
 
 	private boolean _activated;
-	private BundleContext _bundleContext;
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;

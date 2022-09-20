@@ -38,6 +38,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.ObjectEntryFieldValueUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -343,9 +344,13 @@ public class ObjectEntryDTOConverter
 				DLFileEntry dlFileEntry = _dLFileEntryLocalService.getFileEntry(
 					fileEntryId);
 
+				StringBundler sb = new StringBundler(_portal.getPathContext());
+
+				sb.append("/c/portal/login");
+
 				Link fileEntryLink = new Link() {
 					{
-						href = StringPool.POUND;
+						href = sb.toString();
 						label = dlFileEntry.getFileName();
 					}
 				};

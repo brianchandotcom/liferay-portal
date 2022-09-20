@@ -79,7 +79,7 @@ const RequirementsForm = () => {
 		`/components?fields=id,name&filter=${searchUtil.eq(
 			'projectId',
 			projectId as string
-		)}&pageSize=100`
+		)}&pageSize=1000`
 	);
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps

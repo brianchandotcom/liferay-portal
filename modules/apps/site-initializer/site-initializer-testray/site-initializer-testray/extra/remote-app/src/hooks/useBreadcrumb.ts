@@ -123,7 +123,10 @@ const defaultEntities: Entity[] = [
 	{
 		entity: 'projects',
 		getResource: (_, search) =>
-			`/projects?filter=${searchUtil.contains('name', search)}`,
+			`/projects?filter=${searchUtil.contains(
+				'name',
+				search
+			)}&pageSize=1000`,
 		name: i18n.translate('project'),
 	},
 	{
@@ -133,7 +136,7 @@ const defaultEntities: Entity[] = [
 			`/routines?filter=${searchUtil.eq(
 				'projectId',
 				projectId
-			)} and ${searchUtil.contains('name', search)}`,
+			)} and ${searchUtil.contains('name', search)}&pageSize=1000`,
 		name: i18n.translate('routine'),
 	},
 	{
@@ -142,7 +145,7 @@ const defaultEntities: Entity[] = [
 			`/builds?filter=${searchUtil.eq(
 				'routineId',
 				routineId
-			)} and ${searchUtil.contains('name', search)}`,
+			)} and ${searchUtil.contains('name', search)}&pageSize=1000`,
 		name: i18n.translate('build'),
 	},
 	{
@@ -151,7 +154,7 @@ const defaultEntities: Entity[] = [
 			`/caseresults?filter=${searchUtil.eq(
 				'buildId',
 				buildId
-			)}&nestedFields=case`,
+			)}&nestedFields=case&pageSize=1000`,
 		name: i18n.translate('case-result'),
 		transformer: (response: APIResponse<TestrayCaseResult>) => {
 			const transformedResponse = testrayCaseResultRest.transformDataFromList(

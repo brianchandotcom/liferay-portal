@@ -21,7 +21,7 @@ import {APIResponse, TestrayComponent} from './types';
 
 type Component = typeof yupSchema.component.__outputType;
 class TestrayComponentImpl extends Rest<Component, TestrayComponent> {
-	private UNASSIGNED_TEAM_ID = 0;
+	private UNASSIGNED_TEAM_ID = '0';
 
 	constructor() {
 		super({
@@ -45,11 +45,11 @@ class TestrayComponentImpl extends Rest<Component, TestrayComponent> {
 		});
 	}
 
-	public async assignTeamsToComponents(teamId: number, state: State) {
+	public async assignTeamsToComponents(teamId: string, state: State) {
 		const [unassignedItems = [], currentItems = []] = state;
 
 		for (const unassigned of unassignedItems) {
-			if (this.UNASSIGNED_TEAM_ID !== unassigned.teamId) {
+			if (this.UNASSIGNED_TEAM_ID !== unassigned.teamId.toString()) {
 				await this.update(Number(unassigned.value), {
 					name: unassigned.label,
 					teamId: this.UNASSIGNED_TEAM_ID,
@@ -58,7 +58,7 @@ class TestrayComponentImpl extends Rest<Component, TestrayComponent> {
 		}
 
 		for (const current of currentItems) {
-			if (this.UNASSIGNED_TEAM_ID === current.teamId) {
+			if (this.UNASSIGNED_TEAM_ID === current.teamId.toString()) {
 				await this.update(Number(current.value), {
 					name: current.label,
 					teamId,

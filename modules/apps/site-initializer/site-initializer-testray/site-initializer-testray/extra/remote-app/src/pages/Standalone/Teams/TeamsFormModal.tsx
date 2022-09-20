@@ -123,7 +123,7 @@ const TeamFormModal: React.FC<TeamProps> = ({
 		)
 			.then((teamResponse) =>
 				testrayComponentImpl.assignTeamsToComponents(
-					teamResponse.id,
+					teamResponse.id.toString(),
 					state
 				)
 			)

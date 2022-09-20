@@ -116,33 +116,35 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({control, register}) => {
 			)}
 
 			{!!factorItems.length && (
-				<ClayButton.Group className="mb-4">
-					<ClayButton
-						displayType="secondary"
-						onClick={() => optionModal.open()}
-					>
-						{i18n.translate('add-option')}
-					</ClayButton>
+				<>
+					<ClayButton.Group className="mb-4">
+						<ClayButton
+							displayType="secondary"
+							onClick={() => optionModal.open()}
+						>
+							{i18n.translate('add-option')}
+						</ClayButton>
 
-					<ClayButton
-						className="ml-1"
-						displayType="secondary"
-						onClick={() => optionSelectModal.open()}
-					>
-						{i18n.translate('select-stacks')}
-					</ClayButton>
-				</ClayButton.Group>
+						<ClayButton
+							className="ml-1"
+							displayType="secondary"
+							onClick={() => optionSelectModal.open()}
+						>
+							{i18n.translate('select-stacks')}
+						</ClayButton>
+					</ClayButton.Group>
+
+					<StackList
+						append={append as any}
+						factorItems={factorItems}
+						factorOptionsList={factorOptionsList}
+						fields={fields}
+						register={register}
+						remove={remove}
+						update={update as any}
+					/>
+				</>
 			)}
-
-			<StackList
-				append={append as any}
-				factorItems={factorItems}
-				factorOptionsList={factorOptionsList}
-				fields={fields}
-				register={register}
-				remove={remove}
-				update={update as any}
-			/>
 
 			<FactorOptionsFormModal modal={optionModal} />
 

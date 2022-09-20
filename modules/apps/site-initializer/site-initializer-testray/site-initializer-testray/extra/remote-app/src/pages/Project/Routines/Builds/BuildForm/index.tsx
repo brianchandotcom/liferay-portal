@@ -116,6 +116,7 @@ const BuildForm = () => {
 			  }
 			: {
 					factorStacks: [{}],
+					projectId: Number(projectId),
 					routineId,
 					template: false,
 			  },

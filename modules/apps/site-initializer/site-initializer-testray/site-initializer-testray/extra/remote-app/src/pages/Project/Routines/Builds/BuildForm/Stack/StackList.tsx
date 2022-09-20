@@ -137,7 +137,7 @@ const StackList: React.FC<StackListProps> = ({
 														event.target.options[
 															event.target
 																.selectedIndex
-														].text;
+														]?.text;
 
 													const dataToUpdate = {
 														...field,

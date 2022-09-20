@@ -15,8 +15,8 @@
 package com.liferay.headless.discovery.internal.jaxrs.application;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.vulcan.util.UriInfoUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +33,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,13 +65,12 @@ public class HeadlessDiscoveryOpenAPIApplication extends Application {
 	@GET
 	@Produces({"application/json", "application/xml"})
 	public Map<String, List<String>> openAPI(
-		@HeaderParam("Accept") String accept,
-		@HeaderParam("X-Forwarded-Host") String xForwardedHost,
-		@HeaderParam("X-Forwarded-Proto") String xForwardedProto) {
+		@HeaderParam("Accept") String accept) {
 
 		Map<String, List<String>> pathsMap = new TreeMap<>();
 
-		String serverURL = _getServerURL(xForwardedHost, xForwardedProto);
+		String serverURL =
+			_portal.getPortalURL(_httpServletRequest) + Portal.PATH_MODULE;
 
 		RuntimeDTO runtimeDTO = _jaxrsServiceRuntime.getRuntimeDTO();
 
@@ -125,33 +123,14 @@ public class HeadlessDiscoveryOpenAPIApplication extends Application {
 		}
 	}
 
-	private String _getServerURL(
-		String xForwardedHost, String xForwardedProto) {
-
-		String absolutePath;
-
-		if ((xForwardedHost != null) && (xForwardedProto != null)) {
-			UriBuilder uriBuilder = _uriInfo.getAbsolutePathBuilder();
-
-			absolutePath = String.valueOf(
-				uriBuilder.host(
-					xForwardedHost
-				).scheme(
-					xForwardedProto
-				).build());
-		}
-		else {
-			absolutePath = UriInfoUtil.getAbsolutePath(_uriInfo);
-		}
-
-		return StringUtil.removeSubstring(absolutePath, "/openapi/");
-	}
-
 	@Context
 	private HttpServletRequest _httpServletRequest;
 
 	@Reference
 	private JaxrsServiceRuntime _jaxrsServiceRuntime;
+
+	@Reference
+	private Portal _portal;
 
 	@Context
 	private UriInfo _uriInfo;

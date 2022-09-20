@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ModuleFrameworkPropsValues;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -304,7 +305,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			new DefaultNoticeableFuture<>();
 
 		frameworkStartLevel.setStartLevel(
-			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL,
+			ModuleFrameworkPropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL,
 			frameworkEvent -> defaultNoticeableFuture.set(frameworkEvent));
 
 		FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
@@ -1053,14 +1054,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				_log.debug(
 					StringBundler.concat(
 						"Setting bundle ", bundle, " at start level ",
-						PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL));
+						ModuleFrameworkPropsValues.
+							MODULE_FRAMEWORK_BEGINNING_START_LEVEL));
 			}
 
 			BundleStartLevel bundleStartLevel = bundle.adapt(
 				BundleStartLevel.class);
 
 			bundleStartLevel.setStartLevel(
-				PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL);
+				ModuleFrameworkPropsValues.
+					MODULE_FRAMEWORK_BEGINNING_START_LEVEL);
 
 			return bundle;
 		}
@@ -1487,7 +1490,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			new DefaultNoticeableFuture<>();
 
 		frameworkStartLevel.setStartLevel(
-			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL,
+			ModuleFrameworkPropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL,
 			frameworkEvent -> defaultNoticeableFuture.set(frameworkEvent));
 
 		FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();

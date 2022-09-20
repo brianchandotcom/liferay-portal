@@ -307,6 +307,10 @@ public class VerifyProperties {
 		{
 			"http.header.secure.x.frame.options.255",
 			"http.header.secure.x.frame.options.255"
+		},
+		{
+			"module.framework.beginning.start.level",
+			"module.framework.beginning.start.level"
 		}
 	};
 

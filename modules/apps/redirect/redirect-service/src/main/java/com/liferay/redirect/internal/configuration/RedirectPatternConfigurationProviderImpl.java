@@ -63,6 +63,71 @@ public class RedirectPatternConfigurationProviderImpl
 		return redirectionPatternMap;
 	}
 
+	@Override
+	public void updateRedirectionPatterns(
+			long groupId, Map<String, String> redirectionPatters)
+		throws Exception {
+
+		Dictionary<String, Object> properties = null;
+
+		Configuration configuration = _getConfiguration(groupId);
+
+		if (configuration == null) {
+			configuration = _configurationAdmin.createFactoryConfiguration(
+				RedirectPatternConfiguration.class.getName(),
+				StringPool.QUESTION);
+
+			properties = HashMapDictionaryBuilder.<String, Object>put(
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+				groupId
+			).build();
+		}
+		else {
+			properties = configuration.getProperties();
+		}
+
+		_updatePatternsProperty(properties, redirectionPatters);
+
+		configuration.update(properties);
+	}
+
+	private Configuration _getConfiguration(long scopePK) throws Exception {
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			String.format(
+				"(&(service.factoryPid=%s)(%s=%d))",
+				RedirectPatternConfiguration.class.getName() + ".scoped",
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+				scopePK));
+
+		if (configurations == null) {
+			return null;
+		}
+
+		return configurations[0];
+	}
+
+	private void _updatePatternsProperty(
+		Dictionary<String, Object> properties, Map<String, String> patterns) {
+
+		if (patterns.isEmpty()) {
+			properties.put("patterns", new String[0]);
+		}
+		else {
+			String[] patternsArray = new String[patterns.size()];
+
+			int i = 0;
+
+			for (Map.Entry<String, String> entry : patterns.entrySet()) {
+				patternsArray[i] =
+					entry.getKey() + StringPool.SPACE + entry.getValue();
+
+				i++;
+			}
+
+			properties.put("patterns", patternsArray);
+		}
+	}
+
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 

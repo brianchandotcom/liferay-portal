@@ -15,8 +15,13 @@
 package com.liferay.redirect.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,6 +30,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alicia García
@@ -43,8 +49,58 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		try {
+			_redirectPatternConfigurationProvider.updateRedirectionPatterns(
+				ParamUtil.getLong(actionRequest, "scopePK"),
+				_getRedirectionPatterns(actionRequest));
+		}
+		catch (ConfigurationModelListenerException
+					configurationModelListenerException) {
 
+			SessionErrors.add(
+				actionRequest, configurationModelListenerException.getClass());
+
+			actionResponse.sendRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
+		}
 	}
 
+	private Map<String, String> _getRedirectionPatterns(
+		ActionRequest actionRequest) {
+
+		Map<String, String> redirectPatterns = new LinkedHashMap<>();
+
+		Map<String, String[]> parameterMap = actionRequest.getParameterMap();
+
+		for (int i = 0; parameterMap.containsKey("source_" + i); i++) {
+			String source = null;
+
+			String[] sources = parameterMap.get("source_" + i);
+
+			if ((sources.length != 0) && Validator.isNotNull(sources[0])) {
+				source = sources[0];
+			}
+
+			String destination = null;
+
+			String[] destinations = parameterMap.get("destination_" + i);
+
+			if ((destinations.length != 0) &&
+				Validator.isNotNull(destinations[0])) {
+
+				destination = destinations[0];
+			}
+
+			if ((source != null) || (destination != null)) {
+				redirectPatterns.put(source, destination);
+			}
+		}
+
+		return redirectPatterns;
+	}
+
+	@Reference
+	private RedirectPatternConfigurationProvider
+		_redirectPatternConfigurationProvider;
 
 }

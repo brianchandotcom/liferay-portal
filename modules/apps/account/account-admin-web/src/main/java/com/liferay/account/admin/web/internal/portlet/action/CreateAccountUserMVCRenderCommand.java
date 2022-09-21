@@ -14,14 +14,19 @@
 
 package com.liferay.account.admin.web.internal.portlet.action;
 
+import com.liferay.account.admin.web.internal.helper.TicketHelper;
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.portal.kernel.exception.NoSuchTicketException;
+import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -42,7 +47,18 @@ public class CreateAccountUserMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		Ticket ticket = _ticketHelper.getTicket(renderRequest);
+
+		if (ticket == null) {
+			SessionErrors.add(renderRequest, NoSuchTicketException.class);
+
+			return "/account_user_registration/error.jsp";
+		}
+
 		return "/account_user_registration/create_account_user.jsp";
 	}
+
+	@Reference
+	private TicketHelper _ticketHelper;
 
 }

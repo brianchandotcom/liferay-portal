@@ -14,11 +14,14 @@
 
 package com.liferay.account.admin.web.internal.portlet.action;
 
+import com.liferay.account.admin.web.internal.helper.TicketHelper;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.NoSuchTicketException;
+import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -74,6 +78,15 @@ public class CreateAccountUserMVCActionCommand
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		Ticket ticket = _ticketHelper.getTicket(actionRequest);
+
+		if (ticket == null) {
+			SessionErrors.add(actionRequest, NoSuchTicketException.class);
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/account_user_registration/error.jsp");
+		}
 
 		User user = _addUser(actionRequest);
 
@@ -179,6 +192,9 @@ public class CreateAccountUserMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TicketHelper _ticketHelper;
 
 	@Reference
 	private UserService _userService;

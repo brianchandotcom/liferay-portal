@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
@@ -35,12 +36,39 @@ public class EqualsFunction
 
 	@Override
 	public Boolean apply(Object object1, Object object2) {
-		return Objects.equals(_getValue(object1), _getValue(object2));
+		Object value1 = _getValue(object1);
+
+		Object value2 = _getValue(object2);
+
+		if (!Objects.equals(value1.getClass(), value2.getClass())) {
+			if (object1 instanceof BigDecimal) {
+				value1 = _convertValue(value2, value1);
+			}
+			else if (object2 instanceof BigDecimal) {
+				value2 = _convertValue(value1, value2);
+			}
+		}
+
+		return Objects.equals(value1, value2);
 	}
 
 	@Override
 	public String getName() {
 		return NAME;
+	}
+
+	private Object _convertValue(Object value1, Object value2) {
+		if (value1 instanceof Double) {
+			return GetterUtil.getDouble(value2);
+		}
+		else if (value1 instanceof Integer) {
+			return GetterUtil.getInteger(value2);
+		}
+		else if (value1 instanceof Long) {
+			return GetterUtil.getLong(value2);
+		}
+
+		return value2;
 	}
 
 	private Object _getValue(Object object) {

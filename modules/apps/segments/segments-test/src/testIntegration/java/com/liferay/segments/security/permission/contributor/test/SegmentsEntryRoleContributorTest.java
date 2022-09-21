@@ -88,6 +88,8 @@ public class SegmentsEntryRoleContributorTest {
 					"SegmentsCompanyConfiguration",
 				HashMapDictionaryBuilder.<String, Object>put(
 					"roleSegmentationEnabled", true
+				).put(
+					"segmentationEnabled", true
 				).build(),
 				SettingsFactoryUtil.getSettingsFactory());
 
@@ -95,6 +97,8 @@ public class SegmentsEntryRoleContributorTest {
 			"com.liferay.segments.configuration.SegmentsConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
 				"roleSegmentationEnabled", true
+			).put(
+				"segmentationEnabled", true
 			).build());
 
 		ServiceContext serviceContext =

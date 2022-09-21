@@ -1,0 +1,45 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-raylife-d2c";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Raylife D2C";
+
+	var testSiteName = "Raylife AP";
+	var testSiteURL = "raylife-ap";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Raylife.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-154587 - Verify that the number in the center of the graph is equal to the total amount of registered status"
+	@priority = "4"
+	test NumberCenterGraphEqualNumberOfStatus {
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+
+        RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+
+        RaylifeAPApplications.verifyApplicationsStatus();
+	}
+
+
+}

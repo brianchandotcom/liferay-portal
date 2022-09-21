@@ -3338,6 +3338,14 @@ public class JenkinsResultsParserUtil {
 		return SystemUtils.IS_OS_MAC_OSX;
 	}
 
+	public static boolean isPoshiFile(File file) {
+		if (_poshiFileNamesMultiPattern.matches(file.getName()) == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public static boolean isReachable(String hostname) {
 		try {
 			InetAddress inetAddress = InetAddress.getByName(hostname);
@@ -5898,6 +5906,10 @@ public class JenkinsResultsParserUtil {
 			")?((files|releases).liferay.com)");
 	private static final Pattern _nestedPropertyPattern = Pattern.compile(
 		"\\$\\{([^\\}]+)\\}");
+	private static final MultiPattern _poshiFileNamesMultiPattern =
+		new MultiPattern(
+			".*\\.function", ".*\\.macro", ".*\\.path", ".*\\.prose",
+			".*\\.testcase");
 	private static final Set<String> _redactTokens = new HashSet<>();
 	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(
 		"https://(test).liferay.com/([0-9]+)/");

@@ -408,6 +408,34 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
+	@Schema(description = "The domain of the user.")
+	public String getFeaturedDomain() {
+		return featuredDomain;
+	}
+
+	public void setFeaturedDomain(String featuredDomain) {
+		this.featuredDomain = featuredDomain;
+	}
+
+	@JsonIgnore
+	public void setFeaturedDomain(
+		UnsafeSupplier<String, Exception> featuredDomainUnsafeSupplier) {
+
+		try {
+			featuredDomain = featuredDomainUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The domain of the user.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String featuredDomain;
+
 	@Schema
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;
@@ -1038,6 +1066,20 @@ public class MessageBoardMessage implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		if (featuredDomain != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"featuredDomain\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(featuredDomain));
 
 			sb.append("\"");
 		}

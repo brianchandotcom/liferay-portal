@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.order.content.web.internal.frontend.data.set.provider;
 
+import com.liferay.commerce.context.CommerceGroupThreadLocal;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.commerce.order.content.web.internal.frontend.data.set.util.CommerceOrderFDSUtil;
@@ -76,6 +77,8 @@ public class PlacedCommerceOrderFDSDataProvider
 		if (commerceChannel == null) {
 			return Collections.emptyList();
 		}
+
+		CommerceGroupThreadLocal.set(commerceChannel.getGroup());
 
 		List<CommerceOrder> commerceOrders =
 			_commerceOrderService.getUserPlacedCommerceOrders(

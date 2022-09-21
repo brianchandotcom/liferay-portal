@@ -125,10 +125,6 @@ public class ClientExtensionUpgradeStepRegistrator
 		Release clientExtensionRelease = _releaseLocalService.fetchRelease(
 			"com.liferay.client.extension.service");
 
-		if (clientExtensionRelease == null) {
-			return;
-		}
-
 		clientExtensionRelease.setSchemaVersion(
 			remoteAppRelease.getSchemaVersion());
 
@@ -136,6 +132,11 @@ public class ClientExtensionUpgradeStepRegistrator
 
 		_releaseLocalService.deleteRelease(remoteAppRelease);
 	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.client.extension.service)(release.schema.version>=1.0.0))"
+	)
+	private Release _release;
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;

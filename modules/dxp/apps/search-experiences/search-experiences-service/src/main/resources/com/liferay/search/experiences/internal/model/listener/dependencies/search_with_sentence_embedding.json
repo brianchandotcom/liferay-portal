@@ -1,0 +1,280 @@
+{
+	"description_i18n": {
+		"en_US": "Enables semantic search for the selected asset types. Only Web Contents, Blogs, Knowledge Base Articles, Message Board Messages and Wiki Pages are currently supported. The vector dimensions have to match the dimensions set in the Search Experiences Sentence Transformer Configuration."
+	},
+	"elementDefinition": {
+		"category": "semantic search",
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"script_score": {
+										"boost": "${configuration.boost}",
+										"min_score": "${configuration.min_score}",
+										"query": {
+											"bool": {
+												"filter": [
+													{
+														"bool": {
+															"should": [
+																{
+																	"bool": {
+																		"must_not": [
+																			{
+																				"exists": {
+																					"field": "hidden"
+																				}
+																			}
+																		]
+																	}
+																},
+																{
+																	"bool": {
+																		"must": [
+																			{
+																				"term": {
+																					"hidden": false
+																				}
+																			}
+																		]
+																	}
+																}
+															]
+														}
+													},
+													{
+														"bool": {
+															"should": [
+																{
+																	"bool": {
+																		"must_not": [
+																			{
+																				"exists": {
+																					"field": "displayDate"
+																				}
+																			}
+																		]
+																	}
+																},
+																{
+																	"bool": {
+																		"must": [
+																			{
+																				"range": {
+																					"displayDate_sortable": {
+																						"from": "-9223372036854775808",
+																						"include_lower": true,
+																						"include_upper": true,
+																						"to": "${time.current_date|date_format=timestamp}"
+																					}
+																				}
+																			}
+																		],
+																		"must_not": [
+																			{
+																				"exists": {
+																					"field": "expirationDate"
+																				}
+																			}
+																		]
+																	}
+																},
+																{
+																	"bool": {
+																		"must": [
+																			{
+																				"range": {
+																					"displayDate_sortable": {
+																						"from": "-9223372036854775808",
+																						"include_lower": true,
+																						"include_upper": true,
+																						"to": "${time.current_date|date_format=timestamp}"
+																					}
+																				}
+																			},
+																			{
+																				"range": {
+																					"expirationDate_sortable": {
+																						"from": "${time.current_date|date_format=timestamp}",
+																						"include_lower": true,
+																						"include_upper": true,
+																						"to": "9223372036854775807"
+																					}
+																				}
+																			}
+																		]
+																	}
+																}
+															]
+														}
+													},
+													{
+														"bool": {
+															"should": [
+																{
+																	"bool": {
+																		"must_not": [
+																			{
+																				"term": {
+																					"entryClassName": {
+																						"value": "com.liferay.journal.model.JournalArticle"
+																					}
+																				}
+																			}
+																		]
+																	}
+																},
+																{
+																	"bool": {
+																		"must": [
+																			{
+																				"term": {
+																					"entryClassName": {
+																						"value": "com.liferay.journal.model.JournalArticle"
+																					}
+																				}
+																			},
+																			{
+																				"term": {
+																					"head": {
+																						"value": true
+																					}
+																				}
+																			}
+																		]
+																	}
+																}
+															]
+														}
+													},
+													{
+														"terms": {
+															"entryClassName": [
+																"${configuration.entry_class_name}"
+															]
+														}
+													},
+													{
+														"term": {
+															"status": {
+																"value": 0
+															}
+														}
+													},
+													{
+														"exists": {
+															"field": "text_embedding_${configuration.vector_dimensions}_${context.language_id}"
+														}
+													}
+												]
+											}
+										},
+										"script": {
+											"params": {
+												"query_vector": "${ml.keyword_vectors}"
+											},
+											"source": "Math.pow((cosineSimilarity(params.query_vector, 'text_embedding_${configuration.vector_dimensions}_${context.language_id}') + 1), 3)"
+										}
+									}
+								}
+							}
+						],
+						"condition": {
+							"exists": {
+								"parameterName": "keywords"
+							}
+						}
+					}
+				]
+			}
+		},
+		"icon": "custom-field",
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"defaultValue": [
+								{
+									"label": "com.liferay.blogs.model.BlogsEntry",
+									"value": "com.liferay.blogs.model.BlogsEntry"
+								},
+								{
+									"label": "com.liferay.journal.model.JournalArticle",
+									"value": "com.liferay.journal.model.JournalArticle"
+								},
+								{
+									"label": "com.liferay.knowledge.base.model.KBArticle",
+									"value": "com.liferay.knowledge.base.model.KBArticle"
+								},
+								{
+									"label": "com.liferay.message.boards.model.MBMessage",
+									"value": "com.liferay.message.boards.model.MBMessage"
+								},
+								{
+									"label": "com.liferay.wiki.model.WikiPage",
+									"value": "com.liferay.wiki.model.WikiPage"
+								}
+							],
+							"label": "Entry Class Names",
+							"name": "entry_class_name",
+							"type": "multiselect"
+						},
+						{
+							"defaultValue": "768",
+							"helpText": "Only use fuzziness with the following match types: most fields, best fields, bool prefix.",
+							"label": "Embedding Vector Dimensions",
+							"name": "vector_dimensions",
+							"type": "select",
+							"typeOptions": {
+								"nullable": false,
+								"options": [
+									{
+										"label": "384",
+										"value": "384"
+									},
+									{
+										"label": "512",
+										"value": "512"
+									},
+									{
+										"label": "768",
+										"value": "768"
+									}
+								]
+							}
+						},
+						{
+							"defaultValue": 20,
+							"label": "Boost",
+							"name": "boost",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						},
+						{
+							"defaultValue": 30,
+							"label": "Min Score",
+							"name": "min_score",
+							"type": "number",
+							"typeOptions": {
+								"min": 0
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"schemaVersion": "1.0",
+	"title_i18n": {
+		"en_US": "Search With Sentence Embedding"
+	},
+	"type": 0
+}

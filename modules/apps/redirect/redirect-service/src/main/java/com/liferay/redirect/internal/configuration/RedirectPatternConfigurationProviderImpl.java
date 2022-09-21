@@ -14,10 +14,19 @@
 
 package com.liferay.redirect.internal.configuration;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
 
+import java.util.Dictionary;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -30,13 +39,32 @@ import org.osgi.service.component.annotations.Reference;
 public class RedirectPatternConfigurationProviderImpl
 	implements RedirectPatternConfigurationProvider {
 
-	public String[] getPatterns(long groupId) throws ConfigurationException {
+	public Map<String, String> getRedirectionPatternsMap(long groupId)
+		throws ConfigurationException {
+
 		RedirectPatternConfiguration redirectPatternConfiguration =
 			_configurationProvider.getGroupConfiguration(
 				RedirectPatternConfiguration.class, groupId);
 
-		return redirectPatternConfiguration.patterns();
+		Map<String, String> redirectionPatternMap = new LinkedHashMap<>();
+
+		for (String patternString : redirectPatternConfiguration.patterns()) {
+			String[] parts = patternString.split("\\s+", 2);
+
+			if ((parts.length != 2) || parts[0].isEmpty() ||
+				parts[1].isEmpty()) {
+
+				continue;
+			}
+
+			redirectionPatternMap.put(parts[0], parts[1]);
+		}
+
+		return redirectionPatternMap;
 	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

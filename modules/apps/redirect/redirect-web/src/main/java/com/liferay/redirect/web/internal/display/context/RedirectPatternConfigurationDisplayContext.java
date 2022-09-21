@@ -17,8 +17,13 @@ package com.liferay.redirect.web.internal.display.context;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,6 +66,28 @@ public class RedirectPatternConfigurationDisplayContext {
 		).setRedirect(
 			PortalUtil.getCurrentURL(_httpServletRequest)
 		).buildString();
+	}
+
+	public Map<String, Object> getRedirectPatternData()
+		throws ConfigurationException {
+
+		List<Map<String, Object>> patternList = new ArrayList<>();
+
+		Map<String, String> redirectionPatterns = getPatterns();
+
+		redirectionPatterns.forEach(
+			(source, destination) -> patternList.add(
+				HashMapBuilder.<String, Object>put(
+					"destination", destination
+				).put(
+					"source", source.toString()
+				).build()));
+
+		return HashMapBuilder.<String, Object>put(
+			"patternList", patternList
+		).put(
+			"portletNamespace", _liferayPortletResponse.getNamespace()
+		).build();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

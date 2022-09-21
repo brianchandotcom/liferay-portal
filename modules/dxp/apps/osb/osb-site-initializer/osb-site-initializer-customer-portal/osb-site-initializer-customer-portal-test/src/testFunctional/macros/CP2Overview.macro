@@ -11,4 +11,20 @@ definition {
 
         Click(locator1 = "CP2Overview#SLA_CARD_SHIFT_BUTTON");
     }
+
+    macro _getBackgroundColor {
+        if("${slaCardtitle}" == "Platinum") {
+            var color = "rgba(255, 255, 255, 1)";
+        }
+
+        if("${slaCardtitle}" == "Premium") {
+            var color = "rgba(231, 239, 255, 1)";
+        }
+
+        if("${slaCardtitle}" == "Gold") {
+            var color = "rgba(255, 251, 240, 1)";
+        }
+
+        return "${color}";
+    }
 }

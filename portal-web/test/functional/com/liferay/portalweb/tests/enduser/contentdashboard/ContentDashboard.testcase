@@ -36,6 +36,8 @@ definition {
 		}
 
 		JSONUser.tearDownNonAdminUsers();
+
+		JSONRole.deleteTestRoles();
 	}
 
 	@description = "LPS-116987 When the user makes a change on web content and creates a draft version, the Info panel shows the version for the last version approved and the version of the draft "
@@ -1789,26 +1791,26 @@ definition {
 
 		task ("Create a Role") {
 			JSONRole.addRegularRole(
-				roleKey = "WC Creator Edit Permissions",
-				roleTitle = "WC Creator Edit Permissions");
+				roleKey = "WC Creator Edit Permissions Test",
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_SITE_ADMINISTRATION",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = "90",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "WC Creator Edit Permissions",
+				roleTitle = "WC Creator Edit Permissions Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1830,10 +1832,6 @@ definition {
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "WC Title");
-		}
-
-		task ("Delete Role") {
-			JSONRole.deleteRole(roleTitle = "WC Creator Edit Permissions");
 		}
 	}
 
@@ -1881,41 +1879,41 @@ definition {
 
 		task ("Crete a Role with proper permissons") {
 			JSONRole.addRegularRole(
-				roleKey = "WC Creator Edit Permissions",
-				roleTitle = "WC Creator Edit Permissions");
+				roleKey = "WC Creator Edit Permissions Test",
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com.liferay.journal",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ADD_ARTICLE",
 				resourceName = "com.liferay.journal",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_SITE_ADMINISTRATION",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = "90",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "WC Creator Edit Permissions",
+				roleTitle = "WC Creator Edit Permissions Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -1937,10 +1935,6 @@ definition {
 			AssertTextPresent(
 				locator1 = "ContentDashboard#DISPLAY_PAGE_TITLE",
 				value1 = "WC Title");
-		}
-
-		task ("Delete Role") {
-			JSONRole.deleteRole(roleTitle = "WC Creator Edit Permissions");
 		}
 	}
 
@@ -2019,26 +2013,26 @@ definition {
 
 		task ("Add a role with NO permissions") {
 			JSONRole.addRegularRole(
-				roleKey = "Blog Creator No Edit Permissions",
-				roleTitle = "Blog Creator No Edit Permissions");
+				roleKey = "Blog Creator No Edit Permissions Test",
+				roleTitle = "Blog Creator No Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_SITE_ADMINISTRATION",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Blog Creator No Edit Permissions");
+				roleTitle = "Blog Creator No Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-				roleTitle = "Blog Creator No Edit Permissions");
+				roleTitle = "Blog Creator No Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = "90",
-				roleTitle = "Blog Creator No Edit Permissions");
+				roleTitle = "Blog Creator No Edit Permissions Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Blog Creator No Edit Permissions",
+				roleTitle = "Blog Creator No Edit Permissions Test",
 				userEmailAddress = "userea@liferay.com");
 
 			User.logoutAndLoginPG(
@@ -2058,10 +2052,6 @@ definition {
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "Blogs Entry Title");
-		}
-
-		task ("Delete Role") {
-			JSONRole.deleteRole(roleTitle = "Blog Creator No Edit Permissions");
 		}
 	}
 
@@ -2145,26 +2135,26 @@ definition {
 
 		task ("Add a role with NO permissions") {
 			JSONRole.addRegularRole(
-				roleKey = "Blog Creator No Edit Permissions",
-				roleTitle = "Blog Creator No Edit Permissions");
+				roleKey = "Blog Creator No Edit Permissions Test",
+				roleTitle = "Blog Creator No Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_SITE_ADMINISTRATION",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Blog Creator No Edit Permissions");
+				roleTitle = "Blog Creator No Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-				roleTitle = "Blog Creator No Edit Permissions");
+				roleTitle = "Blog Creator No Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = "90",
-				roleTitle = "Blog Creator No Edit Permissions");
+				roleTitle = "Blog Creator No Edit Permissions Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Blog Creator No Edit Permissions",
+				roleTitle = "Blog Creator No Edit Permissions Test",
 				userEmailAddress = "userea@liferay.com");
 
 			User.logoutAndLoginPG(
@@ -2266,26 +2256,26 @@ definition {
 
 		task ("Add a role with NO permissions") {
 			JSONRole.addRegularRole(
-				roleKey = "WC Creator Edit Permissions",
-				roleTitle = "WC Creator Edit Permissions");
+				roleKey = "WC Creator Edit Permissions Test",
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_SITE_ADMINISTRATION",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = "90",
-				roleTitle = "WC Creator Edit Permissions");
+				roleTitle = "WC Creator Edit Permissions Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "WC Creator Edit Permissions",
+				roleTitle = "WC Creator Edit Permissions Test",
 				userEmailAddress = "userea@liferay.com");
 
 			User.logoutAndLoginPG(
@@ -2305,10 +2295,6 @@ definition {
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "DM Document Title");
-		}
-
-		task ("Delete Role ") {
-			JSONRole.deleteRole(roleTitle = "WC Creator Edit Permissions");
 		}
 	}
 
@@ -5205,26 +5191,26 @@ definition {
 
 		task ("Create a new role and its permissions") {
 			JSONRole.addRegularRole(
-				roleKey = "Content Dashboard User",
-				roleTitle = "Content Dashboard User");
+				roleKey = "Content Dashboard User Test",
+				roleTitle = "Content Dashboard User Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_SITE_ADMINISTRATION",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Content Dashboard User");
+				roleTitle = "Content Dashboard User Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-				roleTitle = "Content Dashboard User");
+				roleTitle = "Content Dashboard User Test");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = "90",
-				roleTitle = "Content Dashboard User");
+				roleTitle = "Content Dashboard User Test");
 
 			JSONRole.assignRoleToUser(
-				roleTitle = "Content Dashboard User",
+				roleTitle = "Content Dashboard User Test",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -5234,10 +5220,6 @@ definition {
 				userLoginFullName = "userfn userln");
 
 			ContentDashboard.goToContentDashboard();
-		}
-
-		task ("Delete role") {
-			JSONRole.deleteRole(roleTitle = "Content Dashboard User");
 		}
 	}
 

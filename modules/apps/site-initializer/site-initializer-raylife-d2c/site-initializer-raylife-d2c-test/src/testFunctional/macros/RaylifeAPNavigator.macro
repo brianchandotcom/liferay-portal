@@ -1,0 +1,11 @@
+definition {
+    macro gotoSidebarItem {
+        MouseOver(locator1 = "RaylifeAP#SIDEBAR");
+
+        Click.clickNoMouseOver(
+			locator1 = "RaylifeAP#SIDEBAR_OPTION",
+			key_optionName = "${itemName}");
+
+        WaitForPageLoad();
+    }
+}

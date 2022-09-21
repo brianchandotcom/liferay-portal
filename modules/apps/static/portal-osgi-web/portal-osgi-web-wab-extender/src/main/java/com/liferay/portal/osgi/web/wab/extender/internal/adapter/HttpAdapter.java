@@ -153,11 +153,6 @@ public class HttpAdapter {
 		_httpServiceServlet = null;
 	}
 
-	@Reference(target = "(original.bean=true)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static final Class<?>[] _INTERFACES = new Class<?>[] {
 		ServletContext.class
 	};
@@ -180,6 +175,8 @@ public class HttpAdapter {
 
 	private HttpServiceServlet _httpServiceServlet;
 	private ServiceRegistration<?> _serviceRegistration;
+
+	@Reference(target = "(original.bean=true)")
 	private ServletContext _servletContext;
 
 	private static class ServletContextAdaptor implements InvocationHandler {

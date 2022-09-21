@@ -354,13 +354,6 @@ public class PortletTracker
 		return serviceReference.getProperty(_NAMESPACE + property);
 	}
 
-	@Reference(unbind = "-")
-	protected void setHttpServiceRuntime(
-		HttpServiceRuntime httpServiceRuntime) {
-
-		_httpServiceRuntime = httpServiceRuntime;
-	}
-
 	private com.liferay.portal.kernel.model.Portlet _addingPortlet(
 		ServiceReference<Portlet> serviceReference, Portlet portlet,
 		String portletName, String portletId) {
@@ -1476,6 +1469,8 @@ public class PortletTracker
 
 	private ExecutorService _executorService;
 	private String _httpServiceEndpoint = StringPool.BLANK;
+
+	@Reference
 	private HttpServiceRuntime _httpServiceRuntime;
 
 	@Reference(

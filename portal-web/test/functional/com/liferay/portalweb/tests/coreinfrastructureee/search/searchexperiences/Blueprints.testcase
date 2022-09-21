@@ -1952,29 +1952,29 @@ definition {
 	test PaginateBlueprintsAdmin {
 		Blueprints.openBlueprintsAdmin();
 
-		for (var index : list "One,Two,Three,Four,Five,Six,Seven,Eight,Nine,Ten,Eleven") {
+		for (var index : list "One,Two,Three,Four,Five") {
 			Blueprints.createBlueprint(title = "Blueprint ${index}");
 
 			PortletEntry.save();
 		}
 
-		Pagination.viewResults(results = "Showing 1 to 11 of 11");
+		Pagination.viewResults(results = "Showing 1 to 5 of 5");
 
-		Pagination.changePagination(itemsPerPage = "10 items");
+		Pagination.changePagination(itemsPerPage = "4 items");
 
-		Pagination.viewResults(results = "Showing 1 to 10 of 11");
+		Pagination.viewResults(results = "Showing 1 to 4 of 5");
 
 		AssertElementPresent(
-			index = "10",
+			index = "4",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "11",
+			index = "5",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
-		Pagination.viewResults(results = "Showing 11 to 11 of 11");
+		Pagination.viewResults(results = "Showing 5 to 5 of 5");
 
 		AssertElementPresent(
 			index = "1",
@@ -1986,21 +1986,21 @@ definition {
 
 		Click(locator1 = "Pagination#PREVIOUS_LINK");
 
-		Pagination.viewResults(results = "Showing 1 to 10 of 11");
+		Pagination.viewResults(results = "Showing 1 to 4 of 5");
 
 		AssertElementPresent(
-			index = "10",
+			index = "4",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "11",
+			index = "5",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Click(
 			key_pageNumber = "2",
 			locator1 = "Pagination#ANY_PAGE");
 
-		Pagination.viewResults(results = "Showing 11 to 11 of 11");
+		Pagination.viewResults(results = "Showing 5 to 5 of 5");
 
 		AssertElementPresent(
 			index = "1",
@@ -2014,22 +2014,22 @@ definition {
 			key_pageNumber = "1",
 			locator1 = "Pagination#ANY_PAGE");
 
-		Pagination.viewResults(results = "Showing 1 to 10 of 11");
+		Pagination.viewResults(results = "Showing 1 to 4 of 5");
 
 		AssertElementPresent(
-			index = "10",
+			index = "4",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "11",
+			index = "5",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
-		Pagination.changePagination(itemsPerPage = "30 items");
+		Pagination.changePagination(itemsPerPage = "8 items");
 
-		Pagination.viewResults(results = "Showing 1 to 11 of 11");
+		Pagination.viewResults(results = "Showing 1 to 5 of 5");
 
 		AssertElementPresent(
-			index = "11",
+			index = "5",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 	}
 
@@ -2101,71 +2101,71 @@ definition {
 
 		var totalElements = StringUtil.extractLast("${paginationResults}", " ");
 
-		Pagination.changePagination(itemsPerPage = "10 items");
+		Pagination.changePagination(itemsPerPage = "4 items");
 
-		Pagination.viewResults(results = "Showing 1 to 10 of ${totalElements}");
+		Pagination.viewResults(results = "Showing 1 to 4 of ${totalElements}");
 
 		AssertElementPresent(
-			index = "10",
+			index = "4",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "11",
+			index = "5",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
-		Pagination.viewResults(results = "Showing 11 to 20 of ${totalElements}");
+		Pagination.viewResults(results = "Showing 5 to 8 of ${totalElements}");
 
 		AssertElementPresent(
-			index = "10",
+			index = "4",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "11",
+			index = "5",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Click(locator1 = "Pagination#PREVIOUS_LINK");
 
-		Pagination.viewResults(results = "Showing 1 to 10 of ${totalElements}");
+		Pagination.viewResults(results = "Showing 1 to 4 of ${totalElements}");
 
 		AssertElementPresent(
-			index = "10",
+			index = "4",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "11",
+			index = "5",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Click(
 			key_pageNumber = "3",
 			locator1 = "Pagination#ANY_PAGE");
 
-		Pagination.viewResults(results = "Showing 21 to 30 of ${totalElements}");
+		Pagination.viewResults(results = "Showing 9 to 12 of ${totalElements}");
 
 		AssertElementPresent(
-			index = "10",
+			index = "4",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "11",
+			index = "5",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		Click(
 			key_pageNumber = "1",
 			locator1 = "Pagination#ANY_PAGE");
 
-		Pagination.viewResults(results = "Showing 1 to 10 of ${totalElements}");
+		Pagination.viewResults(results = "Showing 1 to 4 of ${totalElements}");
 
 		AssertElementPresent(
-			index = "10",
+			index = "4",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
 		AssertElementNotPresent(
-			index = "11",
+			index = "5",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
-		Pagination.changePagination(itemsPerPage = "50 items");
+		Pagination.changePagination(itemsPerPage = "60 items");
 
 		Pagination.viewResults(results = "Showing 1 to ${totalElements} of ${totalElements}");
 

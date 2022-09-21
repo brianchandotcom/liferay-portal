@@ -91,6 +91,11 @@ definition {
 		if (isSet(kbTemplateTitle)) {
 			LexiconEntry.gotoAddMenuItem(menuItem = "${kbTemplateTitle}");
 		}
+		else if (isSet(centerPaneButton)) {
+			Button.click(button = "New");
+
+			MenuItem.click(menuItem = "Basic Article");
+		}
 		else {
 			LexiconEntry.gotoAddMenuItem(menuItem = "Basic Article");
 		}

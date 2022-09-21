@@ -130,6 +130,11 @@
 	<td>//p[contains(@class,'table-list-title') and contains(text(), 'Name')]//*[name()='svg']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SELECT_ENVIRONMENT_FACTORS</td>
+	<td>//div[contains(@class,'listbox')]//label[contains(.,'Available')]/..//div//select//option[text() ='${key_environmentFactors}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -66,8 +66,48 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	macro goToBuild {
+		Click(
+			key_projectName = "${buildName}",
+			locator1 = "Testray#ITEM_NAME");
+	}
+
 	macro verifyPromoteBuild {
 		AssertElementPresent(locator1 = "TestrayBuild#PROMOTE_BUILD");
+	}
+
+	macro selectDefaultEnvironmentFactors {
+		Refresh();
+
+		TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+        Click(
+			locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS",
+			key_environmentFactors = "${optionEnvironmentFactors}");
+
+        Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
+
+		Click(
+			locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS",
+			key_environmentFactors = "${optionEnvironmentFactors1}");
+
+        Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
+
+        Button.click(button = "Next");
+
+		Select(
+			key_fieldLabel = "Application Server",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${optionApplicationServer}");
+
+		Select(
+			key_fieldLabel = "Browser",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${optionBrowser}");
+
+		Button.click(button = "Save");
 	}
 
 	macro viewBuildDetails {

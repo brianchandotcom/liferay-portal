@@ -420,7 +420,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_TITLE_INDEX</td>
-	<td>(//*[contains(@class, 'list-group-item')] //span[@title])[${index}]</td>
+	<td>xpath=(//*[contains(@class, 'list-group-item')] //span[@title])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

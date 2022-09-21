@@ -31,7 +31,7 @@ const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 	return (
 		<div className="d-flex">
-			<div>
+			<>
 				<p className="text-uppercase">
 					{Liferay.Language.get('instance-scope')}
 				</p>
@@ -63,7 +63,7 @@ const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 					]}
 					large={false}
 				/>
-			</div>
+			</>
 
 			{activeNavKey === NAV_KEYS.WORKSPACE_CONNECTION && (
 				<WorkspaceConnection />

@@ -18,6 +18,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.search.experiences.blueprint.exception.InvalidWebCacheItemException;
@@ -37,7 +39,9 @@ public class SentenceTransformerWebCacheItem implements WebCacheItem {
 		SentenceTransformerConfiguration sentenceTransformerConfiguration,
 		String text) {
 
-		if (!sentenceTransformerConfiguration.enabled()) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) ||
+			!sentenceTransformerConfiguration.enabled()) {
+
 			return new Double[0];
 		}
 

@@ -17,6 +17,8 @@ package com.liferay.search.experiences.internal.ml.sentence.embedding;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.search.experiences.configuration.SentenceTransformerConfiguration;
 
 import java.util.Map;
@@ -39,6 +41,10 @@ public class SentenceEmbeddingRetrieverImpl
 
 	@Override
 	public Double[] getEmbedding(String text) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688"))) {
+			return new Double[0];
+		}
+
 		SentenceTransformer sentenceTransformer =
 			_sentenceTransformerServiceTrackerMap.getService(
 				_sentenceTransformerConfiguration.

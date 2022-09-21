@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.search.experiences.configuration.SentenceTransformerConfiguration;
 
 import java.util.Arrays;
@@ -82,7 +84,8 @@ public abstract class BaseSentenceEmbeddingModelDocumentContributor {
 	}
 
 	protected boolean isAddSentenceEmbedding(Class<?> clazz) {
-		if (sentenceTransformerConfiguration.enabled() &&
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-163688")) &&
+			sentenceTransformerConfiguration.enabled() &&
 			ArrayUtil.contains(
 				sentenceTransformerConfiguration.entryClassNames(),
 				clazz.getName(), true)) {

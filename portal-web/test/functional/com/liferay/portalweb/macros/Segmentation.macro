@@ -519,7 +519,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Segmentation#SEGMENT_LIST");
 	}
 
-	macro updateACSegmentSystemSettings {
+	macro updateSegmentsInterval {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -530,16 +530,14 @@ definition {
 			configurationName = "Analytics Cloud Segments",
 			configurationScope = "System Scope");
 
-		if (IsElementPresent(locator1 = "SystemSettings#SAVE_BUTTON_SEGMENTS_AC")) {
-			Click(locator1 = "SystemSettings#SAVE_BUTTON_SEGMENTS_AC");
+		if (isSet(interval)) {
+			Type(
+				key_text = "Update Interval",
+				locator1 = "TextInput#ANY",
+				value1 = "${interval}");
 		}
 
-		AssertClick(
-			key_text = "Update",
-			locator1 = "Button#ANY",
-			value1 = "Update");
-
-		Alert.viewSuccessMessage();
+		SystemSettings.saveConfiguration();
 	}
 
 	macro viewEntryNotPresent {

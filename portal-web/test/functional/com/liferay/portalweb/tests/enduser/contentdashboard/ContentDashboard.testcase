@@ -4124,9 +4124,7 @@ definition {
 		}
 
 		task ("Create a web content structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			NavItem.gotoStructures();
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 
@@ -4896,13 +4894,9 @@ definition {
 		}
 
 		task ("Go to Documents and Media and clik on Add Button and File Upload") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Documents and Media");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoAdd();
-
-			MenuItem.click(menuItem = "File Upload");
+			DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "File Upload");
 		}
 
 		task ("Check if the Vocabulary appears in the list") {
@@ -4931,13 +4925,9 @@ definition {
 		}
 
 		task ("Go to Documents and Media and clik on Add Button and File Upload") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Documents and Media");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.gotoAdd();
-
-			MenuItem.click(menuItem = "File Upload");
+			DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "File Upload");
 		}
 
 		task ("Check if the Vocabulary appears in the list") {

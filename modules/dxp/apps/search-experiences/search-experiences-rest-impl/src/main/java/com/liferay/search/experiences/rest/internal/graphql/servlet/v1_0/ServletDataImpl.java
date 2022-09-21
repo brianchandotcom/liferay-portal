@@ -19,6 +19,7 @@ import com.liferay.search.experiences.rest.internal.graphql.mutation.v1_0.Mutati
 import com.liferay.search.experiences.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.search.experiences.rest.resource.v1_0.FieldMappingInfoResource;
 import com.liferay.search.experiences.rest.resource.v1_0.KeywordQueryContributorResource;
+import com.liferay.search.experiences.rest.resource.v1_0.MLModelResource;
 import com.liferay.search.experiences.rest.resource.v1_0.ModelPrefilterContributorResource;
 import com.liferay.search.experiences.rest.resource.v1_0.QueryPrefilterContributorResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
@@ -58,6 +59,8 @@ public class ServletDataImpl implements ServletData {
 			_fieldMappingInfoResourceComponentServiceObjects);
 		Query.setKeywordQueryContributorResourceComponentServiceObjects(
 			_keywordQueryContributorResourceComponentServiceObjects);
+		Query.setMLModelResourceComponentServiceObjects(
+			_mlModelResourceComponentServiceObjects);
 		Query.setModelPrefilterContributorResourceComponentServiceObjects(
 			_modelPrefilterContributorResourceComponentServiceObjects);
 		Query.setQueryPrefilterContributorResourceComponentServiceObjects(
@@ -109,6 +112,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<KeywordQueryContributorResource>
 		_keywordQueryContributorResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<MLModelResource>
+		_mlModelResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ModelPrefilterContributorResource>

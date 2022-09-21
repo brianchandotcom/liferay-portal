@@ -29,6 +29,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.dto.v1_0.FieldMappingInfo;
 import com.liferay.search.experiences.rest.dto.v1_0.KeywordQueryContributor;
+import com.liferay.search.experiences.rest.dto.v1_0.MLModel;
 import com.liferay.search.experiences.rest.dto.v1_0.ModelPrefilterContributor;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryPrefilterContributor;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
@@ -38,6 +39,7 @@ import com.liferay.search.experiences.rest.dto.v1_0.SearchableAssetName;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchableAssetNameDisplay;
 import com.liferay.search.experiences.rest.resource.v1_0.FieldMappingInfoResource;
 import com.liferay.search.experiences.rest.resource.v1_0.KeywordQueryContributorResource;
+import com.liferay.search.experiences.rest.resource.v1_0.MLModelResource;
 import com.liferay.search.experiences.rest.resource.v1_0.ModelPrefilterContributorResource;
 import com.liferay.search.experiences.rest.resource.v1_0.QueryPrefilterContributorResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
@@ -81,6 +83,14 @@ public class Query {
 
 		_keywordQueryContributorResourceComponentServiceObjects =
 			keywordQueryContributorResourceComponentServiceObjects;
+	}
+
+	public static void setMLModelResourceComponentServiceObjects(
+		ComponentServiceObjects<MLModelResource>
+			mlModelResourceComponentServiceObjects) {
+
+		_mlModelResourceComponentServiceObjects =
+			mlModelResourceComponentServiceObjects;
 	}
 
 	public static void
@@ -175,6 +185,26 @@ public class Query {
 			keywordQueryContributorResource -> new KeywordQueryContributorPage(
 				keywordQueryContributorResource.
 					getKeywordQueryContributorsPage()));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {mLModels(limit: ___, pipelineTag: ___, query: ___, tag: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public MLModelPage mLModels(
+			@GraphQLName("limit") Integer limit,
+			@GraphQLName("pipelineTag") String pipelineTag,
+			@GraphQLName("query") String query, @GraphQLName("tag") String tag)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_mlModelResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			mlModelResource -> new MLModelPage(
+				mlModelResource.getMLModelsPage(
+					limit, pipelineTag, query, tag)));
 	}
 
 	/**
@@ -510,6 +540,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("MLModelPage")
+	public class MLModelPage {
+
+		public MLModelPage(Page mlModelPage) {
+			actions = mlModelPage.getActions();
+
+			items = mlModelPage.getItems();
+			lastPage = mlModelPage.getLastPage();
+			page = mlModelPage.getPage();
+			pageSize = mlModelPage.getPageSize();
+			totalCount = mlModelPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<MLModel> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("ModelPrefilterContributorPage")
 	public class ModelPrefilterContributorPage {
 
@@ -802,6 +865,19 @@ public class Query {
 		keywordQueryContributorResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(MLModelResource mlModelResource)
+		throws Exception {
+
+		mlModelResource.setContextAcceptLanguage(_acceptLanguage);
+		mlModelResource.setContextCompany(_company);
+		mlModelResource.setContextHttpServletRequest(_httpServletRequest);
+		mlModelResource.setContextHttpServletResponse(_httpServletResponse);
+		mlModelResource.setContextUriInfo(_uriInfo);
+		mlModelResource.setContextUser(_user);
+		mlModelResource.setGroupLocalService(_groupLocalService);
+		mlModelResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(
 			ModelPrefilterContributorResource modelPrefilterContributorResource)
 		throws Exception {
@@ -928,6 +1004,8 @@ public class Query {
 		_fieldMappingInfoResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KeywordQueryContributorResource>
 		_keywordQueryContributorResourceComponentServiceObjects;
+	private static ComponentServiceObjects<MLModelResource>
+		_mlModelResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ModelPrefilterContributorResource>
 		_modelPrefilterContributorResourceComponentServiceObjects;
 	private static ComponentServiceObjects<QueryPrefilterContributorResource>

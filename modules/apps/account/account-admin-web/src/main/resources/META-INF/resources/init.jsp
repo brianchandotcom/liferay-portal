@@ -87,6 +87,7 @@ page import="com.liferay.account.service.AccountRoleLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.model.AssetVocabularyConstants" %><%@
 page import="com.liferay.expando.kernel.model.ExpandoColumn" %><%@
 page import="com.liferay.expando.util.ExpandoAttributesUtil" %><%@
+page import="com.liferay.login.web.constants.LoginPortletKeys" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicateRoleException" %><%@
@@ -142,7 +143,9 @@ page import="java.util.Objects" %><%@
 page import="java.util.Optional" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@
-page import="javax.portlet.PortletURL" %>
+page import="javax.portlet.PortletMode" %><%@
+page import="javax.portlet.PortletURL" %><%@
+page import="javax.portlet.WindowState" %>
 
 <liferay-frontend:defineObjects />
 

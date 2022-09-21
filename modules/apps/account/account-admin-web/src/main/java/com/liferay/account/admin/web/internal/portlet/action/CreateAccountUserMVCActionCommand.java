@@ -26,13 +26,16 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
 import java.time.Month;
@@ -72,7 +75,18 @@ public class CreateAccountUserMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_addUser(actionRequest);
+		User user = _addUser(actionRequest);
+
+		if (user.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			SessionMessages.add(
+				_portal.getHttpServletRequest(actionRequest), "userAdded",
+				user.getEmailAddress());
+		}
+		else {
+			SessionMessages.add(
+				_portal.getHttpServletRequest(actionRequest), "userPending",
+				user.getEmailAddress());
+		}
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -162,6 +176,9 @@ public class CreateAccountUserMVCActionCommand
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserService _userService;

@@ -170,7 +170,7 @@ public class MessageBoardMessageDTOConverter
 		Company company = _companyLocalService.getCompany(companyId);
 
 		if (company.hasCompanyMx(user.getEmailAddress()) &&
-			(mbModerationGroupConfiguration.enableCompanyMx())) {
+			mbModerationGroupConfiguration.enableCompanyMx()) {
 
 			return user.getCompanyMx();
 		}

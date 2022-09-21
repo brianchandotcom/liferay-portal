@@ -42,6 +42,14 @@ public class RemoveOnCompletionBackgroundTaskStatusMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		int status = message.getInteger("status");
+
+		if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
+			_deleteCompletedTask(message);
+		}
+	}
+
+	private void _deleteCompletedTask(Message message) throws Exception {
 		long backgroundTaskId = message.getLong(
 			BackgroundTaskConstants.BACKGROUND_TASK_ID);
 
@@ -63,16 +71,11 @@ public class RemoveOnCompletionBackgroundTaskStatusMessageListener
 			return;
 		}
 
-		int status = message.getInteger("status");
-
-		if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Deleting background task " + backgroundTask.toString());
-			}
-
-			_backgroundTaskLocalService.deleteBackgroundTask(backgroundTaskId);
+		if (_log.isInfoEnabled()) {
+			_log.info("Deleting background task " + backgroundTask.toString());
 		}
+
+		_backgroundTaskLocalService.deleteBackgroundTask(backgroundTaskId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -604,6 +604,9 @@ public class DefaultObjectEntryManagerImpl
 
 		ServiceContext serviceContext = new ServiceContext();
 
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
 		if (properties.get("categoryIds") != null) {
 			serviceContext.setAssetCategoryIds(
 				ListUtil.toLongArray(
@@ -617,8 +620,6 @@ public class DefaultObjectEntryManagerImpl
 					(List<String>)properties.get("tagNames")));
 		}
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setUserId(userId);
 
 		return serviceContext;

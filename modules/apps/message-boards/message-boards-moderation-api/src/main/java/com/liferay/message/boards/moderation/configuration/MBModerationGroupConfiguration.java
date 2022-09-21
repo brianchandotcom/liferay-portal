@@ -39,10 +39,10 @@ public interface MBModerationGroupConfiguration {
 	public boolean enableMessageBoardsModeration();
 
 	@Meta.AD(
-		deflt = "false", description = "enable-featured-domain-help",
-		name = "enable-featured-domain", required = false
+		deflt = "false", description = "enable-enable-emphasis-companymx-help",
+		name = "enable-enable-emphasis-companymx", required = false
 	)
-	public boolean enableFeaturedDomain();
+	public boolean enableEmphasisCompanyMx();
 
 	@Meta.AD(
 		description = "authorized-domain-names-help",

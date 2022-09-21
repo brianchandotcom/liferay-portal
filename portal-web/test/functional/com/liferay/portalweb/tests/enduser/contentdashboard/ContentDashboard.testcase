@@ -79,13 +79,20 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			JSONRole.assignRoleToUser(
-				roleTitle = "Administrator",
-				userEmailAddress = "userea@liferay.com");
-
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign site role to user") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Site Owner",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -3221,13 +3228,20 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			JSONRole.assignRoleToUser(
-				roleTitle = "Administrator",
-				userEmailAddress = "userea@liferay.com");
-
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign site role to user") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Site Owner",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -3335,13 +3349,20 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			JSONRole.assignRoleToUser(
-				roleTitle = "Administrator",
-				userEmailAddress = "userea@liferay.com");
-
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign site role to user") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Site Owner",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -3414,13 +3435,20 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
-			JSONRole.assignRoleToUser(
-				roleTitle = "Administrator",
-				userEmailAddress = "userea@liferay.com");
-
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign site role to user") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Site Owner",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -5459,9 +5487,16 @@ definition {
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
+		}
 
-			JSONRole.assignRoleToUser(
-				roleTitle = "Administrator",
+		task ("Assign site role to user") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Site Owner",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -5524,9 +5559,16 @@ definition {
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
+		}
 
-			JSONRole.assignRoleToUser(
-				roleTitle = "Administrator",
+		task ("Assign site role to user") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Site Owner",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -5596,9 +5638,16 @@ definition {
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
+		}
 
-			JSONRole.assignRoleToUser(
-				roleTitle = "Administrator",
+		task ("Assign site role to user") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Site Owner",
 				userEmailAddress = "userea@liferay.com");
 		}
 

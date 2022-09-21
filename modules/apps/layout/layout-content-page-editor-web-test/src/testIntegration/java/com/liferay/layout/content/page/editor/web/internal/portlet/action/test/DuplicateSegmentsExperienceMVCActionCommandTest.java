@@ -107,7 +107,14 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 				true, new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_addSegmentsExperienceData(
+		SegmentsExperienceTestUtil.addSegmentsExperienceData(
+			"fragment_composition_with_a_card.json", _draftLayout,
+			_layoutPageTemplatesImporter,
+			segmentsExperience.getSegmentsExperienceId());
+
+		SegmentsExperienceTestUtil.addSegmentsExperienceData(
+			"fragment_composition_with_a_button.json", _layout,
+			_layoutPageTemplatesImporter,
 			segmentsExperience.getSegmentsExperienceId());
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -141,32 +148,13 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 		Assert.assertTrue(
 			segmentsExperienceJSONObject.getLong("segmentsExperienceId") > 0);
 
-		_checkSegmentsExperiences(
-			segmentsExperience.getSegmentsExperienceId(),
+		SegmentsExperienceTestUtil.checkSegmentsExperiences(
+			_layout, segmentsExperience.getSegmentsExperienceId(),
 			segmentsExperienceJSONObject.getLong("segmentsExperienceId"));
-	}
-
-	private void _addSegmentsExperienceData(long segmentsExperienceId)
-		throws Exception {
-
-		SegmentsExperienceTestUtil.addSegmentsExperienceData(
-			"fragment_composition_with_a_button.json", _layout,
-			_layoutPageTemplatesImporter, segmentsExperienceId);
-
-		SegmentsExperienceTestUtil.addSegmentsExperienceData(
-			"fragment_composition_with_a_card.json", _draftLayout,
-			_layoutPageTemplatesImporter, segmentsExperienceId);
-	}
-
-	private void _checkSegmentsExperiences(
-		long sourceSegmentsExperienceId, long targetSegmentsExperienceId) {
 
 		SegmentsExperienceTestUtil.checkSegmentsExperiences(
-			_layout, sourceSegmentsExperienceId, targetSegmentsExperienceId);
-
-		SegmentsExperienceTestUtil.checkSegmentsExperiences(
-			_draftLayout, sourceSegmentsExperienceId,
-			targetSegmentsExperienceId);
+			_draftLayout, segmentsExperience.getSegmentsExperienceId(),
+			segmentsExperienceJSONObject.getLong("segmentsExperienceId"));
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(

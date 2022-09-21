@@ -17,6 +17,8 @@ package com.liferay.source.formatter.check;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
+import java.util.List;
+
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -40,6 +42,17 @@ public class XMLSpringExtenderServiceCheck extends BaseFileCheck {
 			!absolutePath.contains("/modules/dxp/apps/")) {
 
 			return content;
+		}
+
+		List<String> allowedSpringExtenderServiceDirNames = getAttributeValues(
+			_ALLOWED_SPRING_EXTENDER_SERVICEDIR_NAMES_KEY, absolutePath);
+
+		for (String allowedSpringExtenderServiceDirName :
+				allowedSpringExtenderServiceDirNames) {
+
+			if (absolutePath.contains(allowedSpringExtenderServiceDirName)) {
+				return content;
+			}
 		}
 
 		int x = absolutePath.indexOf("/modules/apps/archived/");
@@ -77,5 +90,8 @@ public class XMLSpringExtenderServiceCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _ALLOWED_SPRING_EXTENDER_SERVICEDIR_NAMES_KEY =
+		"allowedSpringExtenderServiceDirNames";
 
 }

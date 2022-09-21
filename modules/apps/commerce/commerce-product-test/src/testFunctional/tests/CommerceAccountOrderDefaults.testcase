@@ -1,0 +1,169 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Given a buyer user connected to the Commerce Account") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-9829. As a sales manager, I want to check channel options after setting a default account billing address for each channel"
+	@priority = "3"
+	test CanSelectOnlyAllOtherChannelsForDefaultBillingAddress {
+		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
+				Accounts.addAddressViaSetDefaultAddress(
+					addressCity = "Diamond Bar",
+					addressCountry = "United States",
+					addressName = "${typeList} Address Entry 1",
+					addressPostalCode = "91765",
+					addressRegion = "California",
+					addressStreet1 = "1400 Montefino Ave",
+					addressType = "${typeList}",
+					phoneNumber = "+1-877-543-3729");
+			}
+		}
+
+		task ("And two more channels("Test Channel 1" and "Test Channel 2")") {
+			for (var channelNames : list "Test Channel 1,Test Channel 2") {
+				CommerceJSONChannelsAPI._addChannel(
+					channelName = "${channelNames}",
+					channelType = "site",
+					currencyCode = "USD");
+			}
+		}
+
+		task ("Given a default billing address is selected for each Channel (Minium Portal, Test Channel 1 and Test Channel 2)") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			for (var channelEntries : list "Minium Portal,Test Channel 1,Test Channel 2") {
+				Accounts.addDefaultCommerceAddressEntry(
+					addressEntry = "Billing Address Entry 1",
+					addressType = "Billing",
+					channelEntry = "${channelEntries}");
+			}
+		}
+
+		task ("When admin clicks to the plus button to add another default address") {
+			Click(
+				key_termType = "Billing",
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_PLUS");
+		}
+
+		task ("Then only All Other Channels option is listed in the Channel dropdown") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			for (var channelEntries : list "All Channels,Minium Portal,Test Channel 1,Test Channel 2") {
+				AssertTextNotEquals(
+					key_fieldLabel = "Channel",
+					locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_POSITION",
+					row = "1",
+					value1 = "${channelEntries}");
+			}
+
+			AssertTextEquals(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_POSITION",
+				row = "1",
+				value1 = "All Other Channels");
+		}
+	}
+
+	@description = "COMMERCE-9829. As a sales manager, I want to check channel options after setting a default account shipping address for each channel"
+	@priority = "3"
+	test CanSelectOnlyAllOtherChannelsForDefaultShippingAddress {
+		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
+				Accounts.addAddressViaSetDefaultAddress(
+					addressCity = "Diamond Bar",
+					addressCountry = "United States",
+					addressName = "${typeList} Address Entry 1",
+					addressPostalCode = "91765",
+					addressRegion = "California",
+					addressStreet1 = "1400 Montefino Ave",
+					addressType = "${typeList}",
+					phoneNumber = "+1-877-543-3729");
+			}
+		}
+
+		task ("And two more channels("Test Channel 1" and "Test Channel 2")") {
+			for (var channelNames : list "Test Channel 1,Test Channel 2") {
+				CommerceJSONChannelsAPI._addChannel(
+					channelName = "${channelNames}",
+					channelType = "site",
+					currencyCode = "USD");
+			}
+		}
+
+		task ("Given a default shipping address is selected for each Channel (Minium Portal, Test Channel 1 and Test Channel 2)") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			for (var channelEntries : list "Minium Portal,Test Channel 1,Test Channel 2") {
+				Accounts.addDefaultCommerceAddressEntry(
+					addressEntry = "Shipping Address Entry 1",
+					addressType = "Shipping",
+					channelEntry = "${channelEntries}");
+			}
+		}
+
+		task ("When admin clicks to the plus button to add another default address") {
+			Click(
+				key_termType = "Shipping",
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_PLUS");
+		}
+
+		task ("Then only All Other Channels option is listed in the Channel dropdown") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			for (var channelEntries : list "All Channels,Minium Portal,Test Channel 1,Test Channel 2") {
+				AssertTextNotEquals(
+					key_fieldLabel = "Channel",
+					locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_POSITION",
+					row = "1",
+					value1 = "${channelEntries}");
+			}
+
+			AssertTextEquals(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT_POSITION",
+				row = "1",
+				value1 = "All Other Channels");
+		}
+	}
+
+}

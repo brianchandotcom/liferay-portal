@@ -107,7 +107,7 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 				true, new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_addDataContentToNewExperience(
+		_addSegmentsExperienceData(
 			segmentsExperience.getSegmentsExperienceId());
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -140,32 +140,33 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 			segmentsExperienceJSONObject.getLong("segmentsEntryId"));
 		Assert.assertTrue(
 			segmentsExperienceJSONObject.getLong("segmentsExperienceId") > 0);
-		_checkDuplicateSegmentExperienceContent(
-			segmentsExperienceJSONObject.getLong("segmentsExperienceId"),
-			segmentsExperience.getSegmentsExperienceId());
+
+		_checkSegmentsExperiences(
+			segmentsExperience.getSegmentsExperienceId(),
+			segmentsExperienceJSONObject.getLong("segmentsExperienceId"));
 	}
 
-	private void _addDataContentToNewExperience(long newSegmentsExperienceId)
+	private void _addSegmentsExperienceData(long segmentsExperienceId)
 		throws Exception {
 
-		SegmentsExperienceTestUtil.addDataContentToExperience(
+		SegmentsExperienceTestUtil.addSegmentsExperienceData(
 			"fragment_composition_with_a_button.json", _layout,
-			newSegmentsExperienceId, _layoutPageTemplatesImporter);
-		SegmentsExperienceTestUtil.addDataContentToExperience(
+			_layoutPageTemplatesImporter, segmentsExperienceId);
+
+		SegmentsExperienceTestUtil.addSegmentsExperienceData(
 			"fragment_composition_with_a_card.json", _draftLayout,
-			newSegmentsExperienceId, _layoutPageTemplatesImporter);
+			_layoutPageTemplatesImporter, segmentsExperienceId);
 	}
 
-	private void _checkDuplicateSegmentExperienceContent(
-		long duplicatedSegmentsExperienceId, long sourceSegmentsExperienceId) {
+	private void _checkSegmentsExperiences(
+		long sourceSegmentsExperienceId, long targetSegmentsExperienceId) {
 
-		SegmentsExperienceTestUtil.checkNewSegmentExperienceContent(
-			_layout, duplicatedSegmentsExperienceId,
-			sourceSegmentsExperienceId);
+		SegmentsExperienceTestUtil.checkSegmentsExperiences(
+			_layout, sourceSegmentsExperienceId, targetSegmentsExperienceId);
 
-		SegmentsExperienceTestUtil.checkNewSegmentExperienceContent(
-			_draftLayout, duplicatedSegmentsExperienceId,
-			sourceSegmentsExperienceId);
+		SegmentsExperienceTestUtil.checkSegmentsExperiences(
+			_draftLayout, sourceSegmentsExperienceId,
+			targetSegmentsExperienceId);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(

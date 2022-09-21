@@ -35,9 +35,10 @@ import org.junit.Assert;
  */
 public class SegmentsExperienceTestUtil {
 
-	public static void addDataContentToExperience(
-			String fileNameContent, Layout layout, long segmentsExperienceId,
-			LayoutPageTemplatesImporter layoutPageTemplatesImporter)
+	public static void addSegmentsExperienceData(
+			String fileName, Layout layout,
+			LayoutPageTemplatesImporter layoutPageTemplatesImporter,
+			long segmentsExperienceId)
 		throws Exception {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -45,12 +46,13 @@ public class SegmentsExperienceTestUtil {
 				fetchLayoutPageTemplateStructure(
 					layout.getGroupId(), layout.getPlid());
 
-		String data =
+		String segmentsExperienceData =
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData();
 
-		LayoutStructure layoutStructure = LayoutStructure.of(data);
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			segmentsExperienceData);
 
-		String pageElementJSON = _readFileContent(fileNameContent);
+		String pageElementJSON = _readFileContent(fileName);
 
 		if (segmentsExperienceId != SegmentsEntryConstants.ID_DEFAULT) {
 			layoutPageTemplatesImporter.importPageElement(
@@ -64,46 +66,44 @@ public class SegmentsExperienceTestUtil {
 		}
 	}
 
-	public static void checkNewSegmentExperienceContent(
-		Layout layout, long newSegmentsExperienceId,
-		long sourceSegmentsExperienceId) {
+	public static void checkSegmentsExperiences(
+		Layout layout, long sourceSegmentsExperienceId,
+		long targetSegmentsExperienceId) {
 
-		List<FragmentEntryLink> sourceExperienceFragmentEntryLinks =
+		List<FragmentEntryLink> sourceFragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.
 				getFragmentEntryLinksBySegmentsExperienceId(
 					layout.getGroupId(), sourceSegmentsExperienceId,
 					layout.getPlid());
 
-		List<FragmentEntryLink> newExperienceFragmentEntryLinks =
+		List<FragmentEntryLink> targetFragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.
 				getFragmentEntryLinksBySegmentsExperienceId(
-					layout.getGroupId(), newSegmentsExperienceId,
+					layout.getGroupId(), targetSegmentsExperienceId,
 					layout.getPlid());
 
-		Assert.assertTrue(sourceExperienceFragmentEntryLinks.size() == 1);
-		Assert.assertTrue(newExperienceFragmentEntryLinks.size() == 1);
+		Assert.assertTrue(sourceFragmentEntryLinks.size() == 1);
+		Assert.assertTrue(targetFragmentEntryLinks.size() == 1);
 
-		FragmentEntryLink sourceExperienceFragmentEntryLink =
-			sourceExperienceFragmentEntryLinks.get(0);
+		FragmentEntryLink sourceFragmentEntryLink =
+			sourceFragmentEntryLinks.get(0);
 
-		FragmentEntryLink newExperienceFragmentEntryLink =
-			newExperienceFragmentEntryLinks.get(0);
+		FragmentEntryLink targetFragmentEntryLink =
+			targetFragmentEntryLinks.get(0);
 
 		Assert.assertEquals(
-			sourceExperienceFragmentEntryLink.getCss(),
-			newExperienceFragmentEntryLink.getCss());
+			sourceFragmentEntryLink.getCss(), targetFragmentEntryLink.getCss());
 		Assert.assertEquals(
-			sourceExperienceFragmentEntryLink.getHtml(),
-			newExperienceFragmentEntryLink.getHtml());
+			sourceFragmentEntryLink.getHtml(),
+			targetFragmentEntryLink.getHtml());
 		Assert.assertEquals(
-			sourceExperienceFragmentEntryLink.getJs(),
-			newExperienceFragmentEntryLink.getJs());
+			sourceFragmentEntryLink.getJs(), targetFragmentEntryLink.getJs());
 		Assert.assertEquals(
-			sourceExperienceFragmentEntryLink.getConfiguration(),
-			newExperienceFragmentEntryLink.getConfiguration());
+			sourceFragmentEntryLink.getConfiguration(),
+			targetFragmentEntryLink.getConfiguration());
 		Assert.assertEquals(
-			sourceExperienceFragmentEntryLink.getEditableValues(),
-			newExperienceFragmentEntryLink.getEditableValues());
+			sourceFragmentEntryLink.getEditableValues(),
+			targetFragmentEntryLink.getEditableValues());
 	}
 
 	private static String _readFileContent(String fileName) throws Exception {

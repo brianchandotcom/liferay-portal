@@ -102,7 +102,7 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 
-		_addDataContentToDefaultExperience();
+		_addDefaultSegmentsExperienceData();
 
 		JSONObject responseJSONObject = _addSegmentsExperience(
 			name, segmentsEntry.getSegmentsEntryId());
@@ -132,16 +132,17 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		Assert.assertEquals(
 			segmentsExperienceId, segmentsExperience.getSegmentsExperienceId());
 
-		_checkNewSegmentExperienceContent(segmentsExperienceId);
+		_checkSegmentsExperiences(segmentsExperienceId);
 	}
 
-	private void _addDataContentToDefaultExperience() throws Exception {
-		SegmentsExperienceTestUtil.addDataContentToExperience(
+	private void _addDefaultSegmentsExperienceData() throws Exception {
+		SegmentsExperienceTestUtil.addSegmentsExperienceData(
 			"fragment_composition_with_a_button.json", _layout,
-			SegmentsEntryConstants.ID_DEFAULT, _layoutPageTemplatesImporter);
-		SegmentsExperienceTestUtil.addDataContentToExperience(
+			_layoutPageTemplatesImporter, SegmentsEntryConstants.ID_DEFAULT);
+
+		SegmentsExperienceTestUtil.addSegmentsExperienceData(
 			"fragment_composition_with_a_card.json", _draftLayout,
-			SegmentsEntryConstants.ID_DEFAULT, _layoutPageTemplatesImporter);
+			_layoutPageTemplatesImporter, SegmentsEntryConstants.ID_DEFAULT);
 	}
 
 	private JSONObject _addSegmentsExperience(String name, long segmentsEntryId)
@@ -156,18 +157,16 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 			mockActionRequest, new MockLiferayPortletActionResponse());
 	}
 
-	private void _checkNewSegmentExperienceContent(
-		long newSegmentExperienceId) {
-
-		long defaultExperienceId =
+	private void _checkSegmentsExperiences(long segmentsExperienceId) {
+		long defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_draftLayout.getPlid());
 
-		SegmentsExperienceTestUtil.checkNewSegmentExperienceContent(
-			_layout, newSegmentExperienceId, defaultExperienceId);
+		SegmentsExperienceTestUtil.checkSegmentsExperiences(
+			_layout, defaultSegmentsExperienceId, segmentsExperienceId);
 
-		SegmentsExperienceTestUtil.checkNewSegmentExperienceContent(
-			_draftLayout, newSegmentExperienceId, defaultExperienceId);
+		SegmentsExperienceTestUtil.checkSegmentsExperiences(
+			_draftLayout, defaultSegmentsExperienceId, segmentsExperienceId);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(

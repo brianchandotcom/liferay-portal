@@ -39,7 +39,15 @@ public class SegmentsExperienceTestUtil {
 			LayoutPageTemplatesImporter layoutPageTemplatesImporter)
 		throws Exception {
 
-		LayoutStructure layoutStructure = _getLayoutStructure(layout, 0);
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), layout.getPlid());
+
+		String data =
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData();
+
+		LayoutStructure layoutStructure = LayoutStructure.of(data);
 
 		String pageElementJSON = _readFileContent(fileNameContent);
 
@@ -96,26 +104,6 @@ public class SegmentsExperienceTestUtil {
 		Assert.assertEquals(
 			sourceExperienceFragmentEntryLink.getEditableValues(),
 			newExperienceFragmentEntryLink.getEditableValues());
-	}
-
-	private static String _getData(Layout layout, long segmentsExperienceId) {
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(), layout.getPlid());
-
-		if (segmentsExperienceId > 0) {
-			return layoutPageTemplateStructure.getData(segmentsExperienceId);
-		}
-
-		return layoutPageTemplateStructure.getDefaultSegmentsExperienceData();
-	}
-
-	private static LayoutStructure _getLayoutStructure(
-			Layout layout, long segmentsExperienceId)
-		throws Exception {
-
-		return LayoutStructure.of(_getData(layout, segmentsExperienceId));
 	}
 
 	private static String _readFileContent(String fileName) throws Exception {

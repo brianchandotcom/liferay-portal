@@ -153,7 +153,7 @@ definition {
 
 			ApplicationsMenu.gotoSite(site = "Site Name");
 
-			Walkthrough.enableWalkthrough(fileName = "walkthrough_configuration_multiple_page.json");
+			Walkthrough.addWalkthrough(fileName = "walkthrough_configuration_multiple_page.json");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",

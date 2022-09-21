@@ -1,0 +1,77 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+
+package com.liferay.search.experiences.internal.ml.sentence.embedding;
+
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.search.experiences.configuration.SentenceTransformerConfiguration;
+
+import java.util.Map;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+
+/**
+ * @author Petteri Karttunen
+ */
+@Component(
+	configurationPid = "com.liferay.search.experiences.configuration.SentenceTransformerConfiguration",
+	enabled = false, immediate = true,
+	service = SentenceEmbeddingRetriever.class
+)
+public class SentenceEmbeddingRetrieverImpl
+	implements SentenceEmbeddingRetriever {
+
+	@Override
+	public Double[] getEmbedding(String text) {
+		SentenceTransformer sentenceTransformer =
+			_sentenceTransformerServiceTrackerMap.getService(
+				_sentenceTransformerConfiguration.
+					sentenceTransformerProvider());
+
+		if (sentenceTransformer == null) {
+			return new Double[0];
+		}
+
+		return sentenceTransformer.getEmbedding(text);
+	}
+
+	@Activate
+	protected void activate(
+		Map<String, Object> properties, BundleContext bundleContext) {
+
+		_sentenceTransformerConfiguration = ConfigurableUtil.createConfigurable(
+			SentenceTransformerConfiguration.class, properties);
+
+		_sentenceTransformerServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, SentenceTransformer.class,
+				"search.experiences.sentence.transformer.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_sentenceTransformerServiceTrackerMap.close();
+	}
+
+	private volatile SentenceTransformerConfiguration
+		_sentenceTransformerConfiguration;
+	private ServiceTrackerMap<String, SentenceTransformer>
+		_sentenceTransformerServiceTrackerMap;
+
+}

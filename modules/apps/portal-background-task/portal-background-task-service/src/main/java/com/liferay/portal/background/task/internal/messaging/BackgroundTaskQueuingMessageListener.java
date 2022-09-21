@@ -14,6 +14,7 @@
 
 package com.liferay.portal.background.task.internal.messaging;
 
+import com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.background.task.internal.BackgroundTaskImpl;
 import com.liferay.portal.background.task.internal.lock.helper.BackgroundTaskLockHelper;
 import com.liferay.portal.background.task.model.BackgroundTask;
@@ -24,7 +25,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 /**
  * @author Michael C. Han
@@ -45,10 +51,14 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 		int status = message.getInteger("status");
 
 		if ((status == BackgroundTaskConstants.STATUS_CANCELLED) ||
-			(status == BackgroundTaskConstants.STATUS_FAILED) ||
-			(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
+			(status == BackgroundTaskConstants.STATUS_FAILED)) {
 
 			_executeQueuedBackgroundTasks(message);
+		}
+		else if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
+			_executeQueuedBackgroundTasks(message);
+
+			_deleteCompletedTask(message);
 		}
 		else if (status == BackgroundTaskConstants.STATUS_QUEUED) {
 			long backgroundTaskId = message.getLong(
@@ -62,6 +72,35 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 				_executeQueuedBackgroundTasks(message);
 			}
 		}
+	}
+
+	private void _deleteCompletedTask(Message message) throws Exception {
+		long backgroundTaskId = message.getLong(
+			BackgroundTaskConstants.BACKGROUND_TASK_ID);
+
+		BackgroundTask backgroundTask =
+			_backgroundTaskLocalService.fetchBackgroundTask(backgroundTaskId);
+
+		if (backgroundTask == null) {
+			return;
+		}
+
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		boolean deleteOnCompetion = GetterUtil.getBoolean(
+			taskContextMap.get(
+				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS));
+
+		if (!deleteOnCompetion) {
+			return;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Deleting background task " + backgroundTask.toString());
+		}
+
+		_backgroundTaskLocalService.deleteBackgroundTask(backgroundTaskId);
 	}
 
 	private void _executeQueuedBackgroundTasks(Message message) {

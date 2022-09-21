@@ -16,7 +16,6 @@ package com.liferay.portal.background.task.internal;
 
 import com.liferay.portal.background.task.internal.messaging.BackgroundTaskMessageListener;
 import com.liferay.portal.background.task.internal.messaging.BackgroundTaskQueuingMessageListener;
-import com.liferay.portal.background.task.internal.messaging.RemoveOnCompletionBackgroundTaskStatusMessageListener;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutorRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
@@ -66,9 +65,6 @@ public class BackgroundTaskMessagingConfigurator {
 		backgroundTaskStatusDestination.register(
 			new BackgroundTaskQueuingMessageListener(
 				_backgroundTaskLocalService, _lockManager));
-		backgroundTaskStatusDestination.register(
-			new RemoveOnCompletionBackgroundTaskStatusMessageListener(
-				_backgroundTaskLocalService));
 	}
 
 	@Deactivate

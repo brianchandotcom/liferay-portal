@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>RaylifeAPApplications</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RaylifeAPApplications</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>STATUS_GRAPH</td>
+	<td>xpath=(//div[contains(@class,'legend-container')])[2]//span[@class='legend-title' and contains(.,'${key_legendTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_LEGEND</td>
+	<td>//div[contains(@class,'legend-container')]//span[@class='legend-title' and contains(.,'${key_legendItem}')]//parent::div/../span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOTAL_STATUS</td>
+	<td>//div[contains(@class,'status-title')]/..//*[contains(@class,'arcs-title')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>SELECT_PRODUCT</td>
-	<td>//label[contains(@for, 'basics.productQuote') and contains(., '${selectProduct}')]</td>
+	<td>//label[contains(@for, 'basics.productId') and contains(., '${selectProduct}')]</td>
 	<td></td>
 </tr>
 </tbody>

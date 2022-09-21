@@ -26,10 +26,16 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorStatisticsUti
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -86,6 +92,7 @@ public class MessageBoardMessageDTOConverter
 				dateModified = mbMessage.getModifiedDate();
 				encodingFormat = mbMessage.getFormat();
 				externalReferenceCode = mbMessage.getExternalReferenceCode();
+				featuredDomain = _getFeaturedDomainName(mbMessage.getCompanyId(), mbMessage.getGroupId(), user);
 				friendlyUrlPath = mbMessage.getUrlSubject();
 				headline = mbMessage.getSubject();
 				id = mbMessage.getMessageId();
@@ -153,6 +160,22 @@ public class MessageBoardMessageDTOConverter
 		};
 	}
 
+	private String _getFeaturedDomainName(long companyId, long groupId, User user )
+		throws Exception {
+
+		MBModerationGroupConfiguration mbModerationGroupConfiguration =
+			_configurationProvider.getGroupConfiguration(
+				MBModerationGroupConfiguration.class, groupId);
+
+		Company company = _companyLocalService.getCompany(companyId);
+
+		if(company.hasCompanyMx(user.getEmailAddress()) && mbModerationGroupConfiguration.enableFeaturedDomain() == true) {
+			return user.getCompanyMx();
+			}
+
+		return StringPool.BLANK;
+	}
+
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -170,6 +193,12 @@ public class MessageBoardMessageDTOConverter
 
 	@Reference
 	private MBStatsUserLocalService _mbStatsUserLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Portal _portal;

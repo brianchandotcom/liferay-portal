@@ -2617,6 +2617,10 @@ components:
                     description:
                         The message's main content.
                     type: string
+                companyMxName:
+                    description:
+                        The domain of the user.
+                    type: string
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -2655,10 +2659,6 @@ components:
                 externalReferenceCode:
                     description:
                         The message's external reference code.
-                    type: string
-                featuredDomain:
-                    description:
-                        The domain of the user.
                     type: string
                 friendlyUrlPath:
                     type: string

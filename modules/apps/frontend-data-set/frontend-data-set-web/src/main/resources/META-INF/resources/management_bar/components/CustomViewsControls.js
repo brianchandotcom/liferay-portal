@@ -87,6 +87,15 @@ const CustomViewsControls = () => {
 			>
 				{Liferay.Language.get('save-view-as')}
 			</ClayDropDown.Item>
+
+			{activeCustomViewId && (
+				<ClayDropDown.Item
+					onClick={openDeleteCustomViewModal}
+					symbolLeft="trash"
+				>
+					{Liferay.Language.get('delete-view')}
+				</ClayDropDown.Item>
+			)}
 		</ClayDropDown.ItemList>
 	);
 
@@ -188,6 +197,77 @@ const CustomViewsControls = () => {
 				},
 			],
 			title: Liferay.Language.get('save-new-view-as'),
+		});
+	};
+
+	const deleteCustomView = ({id}) => {
+		const url = new URL(`${appURL}/fds/${fdsName}/custom-views/${id}`);
+
+		url.searchParams.append('portletId', portletId);
+
+		fetch(url, {
+			method: 'DELETE',
+		})
+			.then((response) => {
+				if (response.ok) {
+					openToast({
+						message: Liferay.Language.get(
+							'view-was-deleted-successfully'
+						),
+						type: 'success',
+					});
+
+					viewsDispatch({
+						type: VIEWS_ACTION_TYPES.DELETE_CUSTOM_VIEW,
+						value: {
+							id,
+						},
+					});
+				}
+				else {
+					openToast({
+						message: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+						type: 'danger',
+					});
+				}
+			})
+			.catch(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					type: 'danger',
+				});
+			});
+	};
+
+	const openDeleteCustomViewModal = () => {
+		openModal({
+			bodyHTML: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			buttons: [
+				{
+					displayType: 'secondary',
+					label: Liferay.Language.get('cancel'),
+					type: 'cancel',
+				},
+				{
+					autoFocus: true,
+					label: Liferay.Language.get('delete'),
+					onClick: ({processClose}) => {
+						processClose();
+
+						deleteCustomView({
+							id: activeCustomViewId,
+						});
+					},
+				},
+			],
+			status: 'warning',
+			title: Liferay.Language.get('delete-view'),
 		});
 	};
 

@@ -16,6 +16,7 @@ import getViewComponent from './getViewComponent';
 
 export const VIEWS_ACTION_TYPES = {
 	ADD_OR_UPDATE_CUSTOM_VIEW: 'ADD_OR_UPDATE_CUSTOM_VIEW',
+	DELETE_CUSTOM_VIEW: 'DELETE_CUSTOM_VIEW',
 	RESET_TO_DEFAULT_VIEW: 'RESET_TO_DEFAULT_VIEW',
 	UPDATE_ACTIVE_CUSTOM_VIEW: 'UPDATE_ACTIVE_CUSTOM_VIEW',
 	UPDATE_ACTIVE_VIEW: 'UPDATE_ACTIVE_VIEW',
@@ -39,6 +40,18 @@ export function viewsReducer(state, {type, value}) {
 				...customViews,
 				[id]: viewState,
 			},
+			viewUpdated: false,
+		};
+	}
+	else if (type === VIEWS_ACTION_TYPES.DELETE_CUSTOM_VIEW) {
+		/* eslint-disable-next-line no-unused-vars */
+		const {[value.id]: unusedVar, ...remainingCustomViews} = customViews;
+
+		return {
+			...state,
+			...defaultView,
+			activeCustomViewId: null,
+			customViews: remainingCustomViews,
 			viewUpdated: false,
 		};
 	}

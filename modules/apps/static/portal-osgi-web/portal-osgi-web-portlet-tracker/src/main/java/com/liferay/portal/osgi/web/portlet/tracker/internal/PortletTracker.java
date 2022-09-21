@@ -273,7 +273,9 @@ public class PortletTracker
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_bundleContext = bundleContext;
 
 		_executorService = _portalExecutorManager.getPortalExecutor(
@@ -319,6 +321,20 @@ public class PortletTracker
 		if (_log.isInfoEnabled()) {
 			_log.info("Activated");
 		}
+
+		List<String> httpServiceEndpoints = StringPlus.asList(
+			properties.get(HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT));
+
+		if (!httpServiceEndpoints.isEmpty()) {
+			_httpServiceEndpoint = httpServiceEndpoints.get(0);
+		}
+
+		if ((_httpServiceEndpoint.length() > 0) &&
+			_httpServiceEndpoint.endsWith("/")) {
+
+			_httpServiceEndpoint = _httpServiceEndpoint.substring(
+				0, _httpServiceEndpoint.length() - 1);
+		}
 	}
 
 	@Deactivate
@@ -340,21 +356,9 @@ public class PortletTracker
 
 	@Reference(unbind = "-")
 	protected void setHttpServiceRuntime(
-		HttpServiceRuntime httpServiceRuntime, Map<String, Object> properties) {
+		HttpServiceRuntime httpServiceRuntime) {
 
-		List<String> httpServiceEndpoints = StringPlus.asList(
-			properties.get(HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT));
-
-		if (!httpServiceEndpoints.isEmpty()) {
-			_httpServiceEndpoint = httpServiceEndpoints.get(0);
-		}
-
-		if ((_httpServiceEndpoint.length() > 0) &&
-			_httpServiceEndpoint.endsWith("/")) {
-
-			_httpServiceEndpoint = _httpServiceEndpoint.substring(
-				0, _httpServiceEndpoint.length() - 1);
-		}
+		_httpServiceRuntime = httpServiceRuntime;
 	}
 
 	private com.liferay.portal.kernel.model.Portlet _addingPortlet(
@@ -1472,6 +1476,7 @@ public class PortletTracker
 
 	private ExecutorService _executorService;
 	private String _httpServiceEndpoint = StringPool.BLANK;
+	private HttpServiceRuntime _httpServiceRuntime;
 
 	@Reference(
 		target = ModuleServiceLifecycle.PORTLETS_INITIALIZED, unbind = "-"

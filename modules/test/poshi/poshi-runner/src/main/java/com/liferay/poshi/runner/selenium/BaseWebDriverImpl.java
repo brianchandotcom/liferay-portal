@@ -1270,7 +1270,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		Object object2 = null;
 
 		try {
-			object1 = getWebElement(argument1);
+			if (Validator.isNotNull(argument1)) {
+				object1 = getWebElement(argument1);
+			}
 		}
 		catch (ElementNotFoundPoshiRunnerException | InvalidSelectorException
 					exception) {
@@ -1279,7 +1281,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		}
 
 		try {
-			object2 = getWebElement(argument2);
+			if (Validator.isNotNull(argument2)) {
+				object2 = getWebElement(argument2);
+			}
 		}
 		catch (ElementNotFoundPoshiRunnerException | InvalidSelectorException
 					exception) {
@@ -3852,7 +3856,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				Object object = null;
 
 				try {
-					object = getWebElement(argument);
+					if (Validator.isNotNull(argument)) {
+						object = getWebElement(argument);
+					}
 				}
 				catch (ElementNotFoundPoshiRunnerException |
 					   InvalidSelectorException | NullPointerException

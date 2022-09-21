@@ -318,6 +318,42 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro addDefaultCommerceAddressEntry {
+		AssertElementPresent(
+			key_addressType = "${addressType}",
+			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESS_HEADING");
+
+		Click(
+			key_termType = "${addressType}",
+			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(channelEntry) && ("${channelEntry}" != "")) {
+			Select(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+				value1 = "${channelEntry}");
+		}
+		else {
+			Select(
+				key_fieldLabel = "Channel",
+				locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+				value1 = "All Channels");
+		}
+
+		Select(
+			key_fieldLabel = "Address",
+			locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+			value1 = "${addressEntry}");
+
+		AssertClick(
+			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SAVE_BUTTON",
+			value1 = "Save");
+
+		SelectFrameTop();
+	}
+
 	macro addInactiveBusinessAccount {
 		LexiconEntry.gotoAdd();
 

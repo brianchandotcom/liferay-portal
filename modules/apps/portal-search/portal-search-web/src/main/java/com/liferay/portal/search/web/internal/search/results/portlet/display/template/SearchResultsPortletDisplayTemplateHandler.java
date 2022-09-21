@@ -121,7 +121,7 @@ public class SearchResultsPortletDisplayTemplateHandler
 			"modified-date", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getModifiedDateString()");
 		templateVariableGroup.addVariable(
-			"published-date", SearchResultSummaryDisplayContext.class,
+			"publish-date", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getPublishedDateString()");
 		templateVariableGroup.addVariable(
 			"search-container", SearchContainer.class, "searchContainer");

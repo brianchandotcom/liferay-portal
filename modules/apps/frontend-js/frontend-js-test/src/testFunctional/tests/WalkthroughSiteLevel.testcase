@@ -30,7 +30,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given walkthrough enabled site-level") {
-			Walkthrough.addWalkthroughPageAndEnablePopoverMode(filename = "walkthrough_configuration_single_page.json");
+			Walkthrough.setupWalkthroughPage(filename = "walkthrough_configuration_single_page.json");
 		}
 
 		task ("And When navigate to second step") {
@@ -38,18 +38,19 @@ definition {
 		}
 
 		task ("And When enable Do not show me this again") {
-			Check.checkNotVisible(checkboxName = "Do not show me this again.",
+			Check.checkNotVisible(
+				checkboxName = "Do not show me this again.",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
-		
+
 		task ("And When navigate to next step") {
 			Walkthrough.goToNextStep(key_step = "3");
 		}
 
 		task ("And When click ok to finish the steps") {
 			Click(
-			key_text = "Close",
-			locator1 = "Button#ANY");
+				key_text = "Close",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Then popover mode is not present") {

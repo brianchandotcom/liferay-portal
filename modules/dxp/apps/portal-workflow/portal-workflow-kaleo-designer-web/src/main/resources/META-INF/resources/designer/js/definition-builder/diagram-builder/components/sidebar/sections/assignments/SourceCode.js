@@ -11,7 +11,6 @@
 
 import React, {useContext} from 'react';
 
-import {DEFAULT_LANGUAGE} from '../../../../../source-builder/constants';
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import BaseSourceCode from '../shared-components/BaseSourceCode';
 
@@ -19,6 +18,8 @@ const SourceCode = () => {
 	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
 
 	const scriptSourceCode = selectedItem.data?.assignments?.script;
+
+	const scriptLanguage = selectedItem.data?.assignments?.scriptLanguage;
 
 	const updateSelectedItem = (editor) => {
 		if (editor.getData().trim() !== '') {
@@ -29,7 +30,7 @@ const SourceCode = () => {
 					assignments: {
 						assignmentType: ['scriptedAssignment'],
 						script: [editor.getData()],
-						scriptLanguage: [DEFAULT_LANGUAGE],
+						scriptLanguage,
 					},
 				},
 			}));

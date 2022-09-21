@@ -136,14 +136,7 @@ portletDisplay.setURLBack(backURL);
 					<clay:col
 						md="6"
 					>
-						<aui:input
-							label="job-title"
-							maxlength='<%=
-								ModelHintsUtil.getMaxLength(Contact.class.getName(), "jobTitle")
-							%>'
-							name="jobTitle"
-							type="text"
-						/>
+						<aui:input label="job-title" maxlength='<%= ModelHintsUtil.getMaxLength(Contact.class.getName(), "jobTitle") %>' name="jobTitle" type="text" />
 					</clay:col>
 				</clay:row>
 			</div>

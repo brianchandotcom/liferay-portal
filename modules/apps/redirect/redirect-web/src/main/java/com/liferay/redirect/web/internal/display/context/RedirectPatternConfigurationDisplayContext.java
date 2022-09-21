@@ -31,22 +31,26 @@ public class RedirectPatternConfigurationDisplayContext {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		RedirectPatternConfigurationProvider
-			redirectPatternConfigurationProvider) {
+			redirectPatternConfigurationProvider,
+		long scopePK) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_redirectPatternConfigurationProvider =
 			redirectPatternConfigurationProvider;
+		_scopePK = scopePK;
 	}
 
-	public String[] getPatterns(long groupId) throws ConfigurationException {
-		if (_patterns != null) {
-			return _patterns;
+	public Map<String, String> getPatterns() throws ConfigurationException {
+		if (_patternsMap != null) {
+			return _patternsMap;
 		}
 
-		_patterns = _redirectPatternConfigurationProvider.getPatterns(groupId);
+		_patternsMap =
+			_redirectPatternConfigurationProvider.getRedirectionPatternsMap(
+				_scopePK);
 
-		return _patterns;
+		return _patternsMap;
 	}
 
 	public String getRedirectPatternConfigurationURL() {
@@ -61,8 +65,9 @@ public class RedirectPatternConfigurationDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private String[] _patterns;
+	private Map<String, String> _patternsMap;
 	private final RedirectPatternConfigurationProvider
 		_redirectPatternConfigurationProvider;
+	private final long _scopePK;
 
 }

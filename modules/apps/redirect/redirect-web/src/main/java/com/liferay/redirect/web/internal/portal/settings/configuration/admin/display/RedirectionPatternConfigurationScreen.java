@@ -17,8 +17,10 @@ package com.liferay.redirect.web.internal.portal.settings.configuration.admin.di
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
 import com.liferay.redirect.web.internal.display.context.RedirectPatternConfigurationDisplayContext;
 
@@ -69,6 +71,10 @@ public class RedirectionPatternConfigurationScreen
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		try {
 			httpServletRequest.setAttribute(
 				RedirectPatternConfigurationDisplayContext.class.getName(),
@@ -77,7 +83,8 @@ public class RedirectionPatternConfigurationScreen
 					_portal.getLiferayPortletResponse(
 						(PortletResponse)httpServletRequest.getAttribute(
 							JavaConstants.JAVAX_PORTLET_RESPONSE)),
-					_redirectPatternConfigurationProvider));
+					_redirectPatternConfigurationProvider,
+					themeDisplay.getScopeGroupId()));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(

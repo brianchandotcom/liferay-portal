@@ -29,7 +29,7 @@ import org.dom4j.Element;
 public class XMLSpringExtenderServiceCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isLiferaySourceCheck() {
+	public boolean isModuleSourceCheck() {
 		return true;
 	}
 

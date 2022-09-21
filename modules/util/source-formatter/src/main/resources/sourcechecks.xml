@@ -1654,11 +1654,6 @@
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on `sourcechecks.xml` file." />
 		</check>
-		<check name="XMLSpringExtenderServiceCheck">
-			<category name="Performance" />
-			<description name="Finds cases where Spring extender service is used as a dependency injection." />
-			<property name="enabled" value="false" />
-		</check>
 		<check name="XMLSpringFileCheck">
 			<category name="Styling" />
 			<description name="Checks the order of elements in `*-spring.xml` file." />
@@ -1678,6 +1673,14 @@
 		<check name="XMLWebFileCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on `web.xml` file." />
+		</check>
+
+		<!-- Module Source Checks -->
+
+		<check name="XMLSpringExtenderServiceCheck">
+			<category name="Performance" />
+			<description name="Finds cases where Spring extender service is used as a dependency injection." />
+			<property name="enabled" value="false" />
 		</check>
 	</source-processor>
 	<source-processor name="YMLSourceProcessor">

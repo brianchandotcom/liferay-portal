@@ -28,6 +28,7 @@ import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.file.PathMatcher;
 
@@ -897,10 +898,38 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	private List<File> _getRequiredModuleDirs(
 		List<File> moduleDirs, List<File> requiredModuleDirs) {
 
+		List<File> modifiedPoshiModulesList = new ArrayList<>();
+		List<File> modifiedNonPoshiModulesList = new ArrayList<>();
+
+		try {
+			modifiedPoshiModulesList =
+				portalGitWorkingDirectory.getModifiedPoshiModules();
+			modifiedNonPoshiModulesList =
+				portalGitWorkingDirectory.getModifiedNonPoshiModules();
+		}
+		catch (IOException ioException) {
+			File workingDirectory =
+				portalGitWorkingDirectory.getWorkingDirectory();
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get modified modules with non poshi and poshi " +
+						"changes directories in ",
+					workingDirectory.getPath()),
+				ioException);
+		}
+
 		File modulesBaseDir = new File(
 			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 
 		for (File moduleDir : moduleDirs) {
+			if (testRelevantChanges &&
+				modifiedPoshiModulesList.contains(moduleDir) &&
+				!modifiedNonPoshiModulesList.contains(moduleDir)) {
+
+				continue;
+			}
+
 			JobProperty jobProperty = getJobProperty(
 				"modules.includes.required[" + getTestSuiteName() + "]",
 				moduleDir, JobProperty.Type.MODULE_TEST_DIR);

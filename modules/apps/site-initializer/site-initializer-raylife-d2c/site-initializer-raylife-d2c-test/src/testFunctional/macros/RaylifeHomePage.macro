@@ -15,12 +15,6 @@ definition {
 	macro startFlow {
 		RaylifeHomePage.getAQuote();
 
-		while (IsElementNotPresent(locator1 = "RaylifeProduct#SELECT_PRODUCT", selectProduct = "Business Owners Policy")) {
-			Refresh();
-
-			WaitForPageLoad();
-		}
-
 		Click(
 			locator1 = "RaylifeProduct#SELECT_PRODUCT",
 			selectProduct = "Business Owners Policy");

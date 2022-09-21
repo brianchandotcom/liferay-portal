@@ -29,7 +29,7 @@ const DXP = () => {
 				<DeveloperKeysLayouts.Inputs
 					accountKey={project.accountKey}
 					downloadTextHelper={i18n.translate(
-						'select-the-liferay-dxp-version-for-which-you-want-to-download-a-developer-key'
+						'select-the-liferay-dxp-version-for-your-developer-key-to-download'
 					)}
 					dxpVersion={project.dxpVersion}
 					listType={LIST_TYPES.dxpVersion}

@@ -99,7 +99,7 @@ const DeactivateKeysTable = ({productName}) => {
 
 					<p>
 						{i18n.translate(
-							'select-the-activation-key-you-wish-to-deactivate'
+							'select-the-activation-key-you-want-to-deactivate'
 						)}
 					</p>
 				</div>

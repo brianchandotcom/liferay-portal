@@ -482,32 +482,35 @@ public class PoshiValidation {
 		}
 	}
 
-	protected static void validateDeprecatedMethods(
-		PoshiElement poshiElement, String method) {
+	protected static void validateDeprecatedFunction(
+		PoshiElement poshiElement, String functionName) {
 
 		URL filePathURL = poshiElement.getFilePathURL();
 
-		String file = filePathURL.getFile();
+		String filePath = filePathURL.getFile();
 
 		Logger logger = Logger.getAnonymousLogger();
 
 		logger.setLevel(Level.WARNING);
 
-		if (_deprecatedMethods.containsKey(method)) {
-			String className = PoshiGetterUtil.getClassNameFromFilePath(filePathURL.getFile());
+		if (_deprecatedMethodNames.containsKey(functionName)) {
+			String className = PoshiGetterUtil.getClassNameFromFilePath(
+				filePath);
 
-			_deprecatedFunctionNames.add(className + "#" + method);
+			_deprecatedFunctionNames.add(className + "#" + functionName);
 
 			logger.warning(
-				"Deprecated method \"selenium." + method +
+				"Deprecated method \"selenium." + functionName +
 					"\" should be replaced with " +
-						_deprecatedMethods.get(method) + " at:\n" + file +
-							":" + poshiElement.getPoshiScriptLineNumber());
+						_deprecatedMethodNames.get(functionName) + " at:\n" +
+							filePath + ":" +
+								poshiElement.getPoshiScriptLineNumber());
 		}
-		else if (_deprecatedFunctionNames.contains(method)) {
+
+		if (_deprecatedFunctionNames.contains(functionName)) {
 			logger.warning(
-				"Use of function \"" + method +
-					"\" contains deprecated selenium method at:\n" + file +
+				"Use of function \"" + functionName +
+					"\" contains deprecated selenium method at:\n" + filePath +
 						":" + poshiElement.getPoshiScriptLineNumber());
 		}
 	}
@@ -612,7 +615,7 @@ public class PoshiValidation {
 			if (Validator.isNotNull(function) &&
 				!filePath.endsWith(".function")) {
 
-				validateDeprecatedMethods(poshiElement, function);
+				validateDeprecatedFunction(poshiElement, function);
 			}
 
 			validatePossibleAttributeNames(
@@ -637,7 +640,7 @@ public class PoshiValidation {
 				"argument1", "argument2", "argument3", "line-number",
 				"selenium");
 
-			validateDeprecatedMethods(
+			validateDeprecatedFunction(
 				poshiElement, poshiElement.attributeValue("selenium"));
 
 			validatePossibleAttributeNames(
@@ -1966,7 +1969,7 @@ public class PoshiValidation {
 
 	private static final List<String> _deprecatedFunctionNames =
 		new ArrayList<>();
-	private static final Map<String, String> _deprecatedMethods =
+	private static final Map<String, String> _deprecatedMethodNames =
 		new Hashtable<String, String>() {
 			{
 				put("assertAlert", "\"selenium.assertAlertText\"");

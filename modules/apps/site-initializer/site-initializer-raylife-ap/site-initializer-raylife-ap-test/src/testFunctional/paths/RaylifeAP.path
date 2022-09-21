@@ -59,7 +59,6 @@
 	<td>//div[contains(text(),'Please enter a valid email address.')]</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>SIDEBAR</td>
 	<td>//div[contains(@class,'ray-sidebar')]</td>

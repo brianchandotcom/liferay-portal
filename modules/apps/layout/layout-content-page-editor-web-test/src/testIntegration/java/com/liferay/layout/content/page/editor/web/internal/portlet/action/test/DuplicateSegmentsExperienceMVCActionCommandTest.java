@@ -15,6 +15,8 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.web.internal.util.SegmentsExperienceTestUtil;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -49,6 +51,7 @@ import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.Collections;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -151,13 +154,33 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 		Assert.assertTrue(
 			segmentsExperienceJSONObject.getLong("segmentsExperienceId") > 0);
 
-		SegmentsExperienceTestUtil.checkSegmentsExperiences(
-			_layout, segmentsExperience.getSegmentsExperienceId(),
-			segmentsExperienceJSONObject.getLong("segmentsExperienceId"));
-
-		SegmentsExperienceTestUtil.checkSegmentsExperiences(
+		_assertContentEquals(
 			_draftLayout, segmentsExperience.getSegmentsExperienceId(),
 			segmentsExperienceJSONObject.getLong("segmentsExperienceId"));
+
+		_assertContentEquals(
+			_layout, segmentsExperience.getSegmentsExperienceId(),
+			segmentsExperienceJSONObject.getLong("segmentsExperienceId"));
+	}
+
+	private void _assertContentEquals(
+		Layout layout, long sourceSegmentsExperienceId,
+		long targetSegmentsExperienceId) {
+
+		List<FragmentEntryLink> sourceFragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					layout.getGroupId(), sourceSegmentsExperienceId,
+					layout.getPlid());
+
+		List<FragmentEntryLink> targetFragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					layout.getGroupId(), targetSegmentsExperienceId,
+					layout.getPlid());
+
+		SegmentsExperienceTestUtil.assertContentEquals(
+			sourceFragmentEntryLinks, targetFragmentEntryLinks);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
@@ -212,6 +235,9 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 	private CompanyLocalService _companyLocalService;
 
 	private Layout _draftLayout;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

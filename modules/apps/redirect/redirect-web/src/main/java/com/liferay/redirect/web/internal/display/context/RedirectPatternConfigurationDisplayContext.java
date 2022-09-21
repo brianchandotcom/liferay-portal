@@ -62,9 +62,11 @@ public class RedirectPatternConfigurationDisplayContext {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
-			"/redirect_settings/edit_redirect_pattern"
+			"/redirect_settings/edit_redirect_patterns"
 		).setRedirect(
 			PortalUtil.getCurrentURL(_httpServletRequest)
+		).setParameter(
+			"scopePK", _scopePK
 		).buildString();
 	}
 

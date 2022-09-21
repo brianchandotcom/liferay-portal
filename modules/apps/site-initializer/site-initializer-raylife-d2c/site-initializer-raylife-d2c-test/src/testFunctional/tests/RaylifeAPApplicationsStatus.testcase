@@ -41,5 +41,63 @@ definition {
         RaylifeAPApplications.verifyApplicationsStatus();
 	}
 
+	@description = "LPS-154592 - Check if when making an incomplete Flow until the section Business in the Raylife d2c, the status 'Open' appears in the Applications status of Raylife ap"
+	@priority = "4"
+	test IfStatusOpenAppearsInApplicationsStatus {
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+
+        RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+
+		var open = RaylifeAPApplications.getApplicationLegendValue(legendItem = "Open");
+
+		ApplicationsMenu.gotoSite(site = "Raylife D2C");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+		Click(locator1 = "RaylifeSaveExit#SEND_LINK_EXIT");
+		
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+
+		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+
+		var newValue = ${open} + 1;
+
+		AssertTextEquals(
+			locator1 = "RaylifeAPApplications#STATUS_LEGEND",
+			key_legendItem = "Open",
+			value1 = "${newValue}");
+	}
+
+	@description = "LPS-154593 - Check if when making an incomplete flow until the page Quote Comparison in Raylife d2c, the status 'Quoted' appears in the Applications status of Raylife ap"
+	@priority = "4"
+	test IfStatusQuotedAppearsInApplicationsStatus {
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+
+        RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+
+		var quoted = RaylifeAPApplications.getApplicationLegendValue(legendItem = "Quoted");
+
+		ApplicationsMenu.gotoSite(site = "Raylife D2C");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
+
+		RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+
+		var newValue = ${quoted} + 1;
+
+		AssertTextEquals(
+			locator1 = "RaylifeAPApplications#STATUS_LEGEND",
+			key_legendItem = "Quoted",
+			value1 = "${newValue}");
+
+	}
 
 }

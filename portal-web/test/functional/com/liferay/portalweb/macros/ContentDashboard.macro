@@ -298,12 +298,6 @@ definition {
 		}
 	}
 
-	macro openInfoPanelByDropdownMenu {
-		Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
-
-		Click(locator1 = "ContentDashboard#INFO_OPTION");
-	}
-
 	macro openViewMetricsByDropdownMenu {
 		Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
 
@@ -485,8 +479,6 @@ definition {
 	}
 
 	macro viewAssetsTranslatedVersion {
-		ContentDashboard.openInfoPanelByDropdownMenu();
-
 		Panel.expandPanel(panel = "Details");
 
 		ClickNoError(

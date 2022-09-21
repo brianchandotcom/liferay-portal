@@ -219,7 +219,9 @@ definition {
 		task ("When the info panel of a blog is open") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Blogs Entry Title");
 		}
 
 		task ("Then the blog author's avatar and name are shown") {
@@ -282,7 +284,9 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the vocabularies, public and internal, and their categories are shown in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Blogs Entry Title");
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_VOCABULARY_NAME",
@@ -325,7 +329,9 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the Creation date in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Blogs Entry Title");
 
 			Panel.expandPanel(panel = "Details");
 
@@ -358,7 +364,9 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the Display date in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Blogs Entry Title");
 
 			Panel.expandPanel(panel = "Details");
 
@@ -391,7 +399,9 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the ID in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Blogs Entry Title");
 
 			Panel.expandPanel(panel = "Details");
 
@@ -422,7 +432,9 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the Modified date in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Blogs Entry Title");
 
 			Panel.expandPanel(panel = "Details");
 
@@ -555,7 +567,9 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the status in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Blogs Entry Title");
 
 			AssertElementPresent(
 				assetStatus = "Approved",
@@ -587,7 +601,9 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the tags are shown in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Blogs Entry Title");
 
 			AssertElementPresent(locator1 = "ContentDashboard#INFO_PANEL_TAGS_TITLE");
 
@@ -620,7 +636,9 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Blogs Entry Title");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_TITLE",
@@ -648,7 +666,9 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the type in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Blogs Entry Title");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_ASSET_TYPE",
@@ -679,7 +699,9 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the version in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Blogs Entry Title");
 
 			AssertElementPresent(
 				assetVersion = "Version",
@@ -1244,7 +1266,9 @@ definition {
 		task ("When the user accesses the information panel") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "DM Document Title");
 
 			Panel.expandPanel(panel = "Details");
 		}
@@ -1460,7 +1484,9 @@ definition {
 				panel = "Applications",
 				portlet = "Content Dashboard");
 
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Blogs Entry Content");
 		}
 
 		task ("Check if the share button is not present at info panel") {
@@ -1489,7 +1515,9 @@ definition {
 				panel = "Applications",
 				portlet = "Content Dashboard");
 
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "WC Content");
 		}
 
 		task ("Check if the share button is not present at info panel") {
@@ -2776,7 +2804,9 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the type in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "DM Document Title");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_ASSET_TYPE",
@@ -2806,7 +2836,11 @@ definition {
 		}
 
 		task ("Open the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "DM Document Title");
+
+			AssertVisible(locator1 = "ContentDashboard#INFO_PANEL");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_TITLE",
@@ -4412,7 +4446,9 @@ definition {
 		}
 
 		task ("Open the info panel and collapse the Categorization section") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "WC WebContent Title");
 
 			AssertElementPresent(
 				categoryName = "Category Name",
@@ -4458,7 +4494,9 @@ definition {
 		}
 
 		task ("Open the info panel and expand the Categorization section") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "WC WebContent Title");
 
 			AssertElementPresent(
 				categoryName = "Category Name",
@@ -4494,7 +4532,9 @@ definition {
 			}
 
 			task ("Open info panel") {
-				ContentDashboard.openInfoPanelByDropdownMenu();
+				LexiconTable.clickEllipsisItem(
+					item = "Info",
+					tableEntry = "Web Content Title");
 			}
 		}
 
@@ -4527,7 +4567,9 @@ definition {
 			}
 
 			task ("Open info panel") {
-				ContentDashboard.openInfoPanelByDropdownMenu();
+				LexiconTable.clickEllipsisItem(
+					item = "Info",
+					tableEntry = "Web Content Title");
 			}
 		}
 
@@ -4673,9 +4715,15 @@ definition {
 			Button.clickPublish();
 		}
 
-		task ("Navigate to the content Dashboard and go to the page view in the corresponding language") {
+		task ("Navigate to Content Dashboard and open info panel") {
 			ContentDashboard.goToContentDashboard();
 
+			LexiconTable.clickEllipsisItem(
+				item = "View Metrics",
+				tableEntry = "WC WebContent Title");
+		}
+
+		task ("Click to view page in the corresponding language") {
 			ContentDashboard.viewAssetsTranslatedVersion(language = "es-ES");
 		}
 
@@ -5345,7 +5393,9 @@ definition {
 		task ("When the user opens asset Info Panel at Content Dashboard ") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Blogs Title");
 		}
 
 		task ("Then a preview of the blog image must appear in the Info Panel") {
@@ -5950,7 +6000,9 @@ definition {
 		}
 
 		task ("Check the info panel of the asset") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Web Content Title");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_TITLE",
@@ -6029,7 +6081,9 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the type in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "Web Content Title");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_ASSET_TYPE",
@@ -6057,7 +6111,9 @@ definition {
 		}
 
 		task ("Open the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
+			LexiconTable.clickEllipsisItem(
+				item = "Info",
+				tableEntry = "WC Title");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_TITLE",

@@ -19,6 +19,24 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL", themeDisplay.getURLHome());
 
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNull(redirect)) {
+	PortletURL loginURL = PortletURLBuilder.createRenderURL(
+		liferayPortletResponse, LoginPortletKeys.LOGIN
+	).setMVCRenderCommandName(
+		"/login/login"
+	).setRedirect(
+		themeDisplay.getURLHome()
+	).setPortletMode(
+		PortletMode.VIEW
+	).setWindowState(
+		WindowState.MAXIMIZED
+	).buildPortletURL();
+
+	redirect = loginURL.toString();
+}
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 %>
@@ -30,7 +48,7 @@ portletDisplay.setURLBack(backURL);
 	cssClass="pt-0"
 >
 	<liferay-frontend:edit-form-body>
-		<aui:input name="redirect" type="hidden" value='<%= ParamUtil.getString(request, "redirect", backURL) %>' />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 		<h2 class="sheet-title">
 			<liferay-ui:message key="create-account" />

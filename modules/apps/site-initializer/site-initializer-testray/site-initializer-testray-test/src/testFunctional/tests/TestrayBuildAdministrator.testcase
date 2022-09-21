@@ -31,37 +31,7 @@ definition {
 				valuePagination = "150");
 		}
 
-		task ("Go to created project and add a new team") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
-
-			Testray.addNewTeam(teamName = "Components_1 Team");
-
-			TestrayManage.closeModalInOptions();
-		}
-
-		task ("Go to created project and add two new components") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
-
-			Testray.addNewComponent(
-				componentName = "Components_1 Project 1",
-				teamName = "Components_1 Team");
-
-			Testray.addNewComponent(
-				componentName = "Components_1 Project 2",
-				teamName = "Components_1 Team");
-
-			Refresh();
-		}
-
-		task ("Change pagination, create two new Product Version") {
-			Testray.changePagination(
-				numberItems = "20",
-				valuePagination = "150");
-
+		task ("Create two new Product Version") {
 			TestrayManage.createProductVersion(
 				manageOption = "Manage Product Versions",
 				nameOptions = "Projects_1 Project",

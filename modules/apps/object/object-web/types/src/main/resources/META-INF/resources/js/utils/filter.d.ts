@@ -24,15 +24,14 @@ export declare function getSystemFieldLabelFromEntry(
 	titleFieldName: string,
 	entry: ObjectEntry,
 	itemObject: LabelValueObject
-):
-	| {
-			label: string | number;
-			value: string;
-	  }
-	| undefined;
+): {
+	label: unknown;
+	value: string;
+};
 export declare function getCheckedRelationshipItems(
 	relatedEntries: ObjectEntry[],
 	titleFieldName: string,
 	systemField: boolean,
+	systemObject: boolean,
 	setEditingFilterType: () => number[] | string[] | null
 ): IItem[];

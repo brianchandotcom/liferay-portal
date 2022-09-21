@@ -99,18 +99,17 @@ export function getSystemFieldLabelFromEntry(
 		};
 	}
 
-	if (titleFieldName === 'id' || titleFieldName === 'externalReferenceCode') {
-		return {
-			...itemObject,
-			label: entry[titleFieldName],
-		};
-	}
+	return {
+		...itemObject,
+		label: entry[titleFieldName],
+	};
 }
 
 export function getCheckedRelationshipItems(
 	relatedEntries: ObjectEntry[],
 	titleFieldName: string,
 	systemField: boolean,
+	systemObject: boolean,
 	setEditingFilterType: () => number[] | string[] | null
 ): IItem[] {
 	let newItemsValues: IItem[] = [];
@@ -120,7 +119,9 @@ export function getCheckedRelationshipItems(
 	newItemsValues = relatedEntries.map((entry) => {
 		let item = {
 			checked: false,
-			value: entry.externalReferenceCode,
+			value: systemObject
+				? String(entry.id)
+				: entry.externalReferenceCode,
 		} as IItem;
 
 		if (systemField) {

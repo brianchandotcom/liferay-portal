@@ -98,16 +98,19 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 						md="11"
 					>
 						<aui:select disabled="<%= !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="titleObjectFieldId" showEmptyOption="<%= false %>">
-							<aui:option label='<%= LanguageUtil.get(request, "id") %>' selected="<%= true %>" value="" />
 
 							<%
 							for (ObjectField objectField : nonrelationshipObjectFields) {
-								if (Objects.equals(objectField.getName(), "id")) {
-									continue;
-								}
 							%>
 
-								<aui:option label="<%= HtmlUtil.escape(objectField.getLabel(locale)) %>" localizeLabel="<%= false %>" selected="<%= Objects.equals(objectField.getObjectFieldId(), objectDefinition.getTitleObjectFieldId()) %>" value="<%= objectField.getObjectFieldId() %>" />
+								<c:choose>
+									<c:when test='<%= Objects.equals(objectField.getName(), "id") %>'>
+										<aui:option label='<%= LanguageUtil.get(request, "id") %>' selected="<%= true %>" value="<%= objectField.getObjectFieldId() %>" />
+									</c:when>
+									<c:otherwise>
+										<aui:option label="<%= HtmlUtil.escape(objectField.getLabel(locale)) %>" localizeLabel="<%= false %>" selected="<%= Objects.equals(objectField.getObjectFieldId(), objectDefinition.getTitleObjectFieldId()) %>" value="<%= objectField.getObjectFieldId() %>" />
+									</c:otherwise>
+								</c:choose>
 
 							<%
 							}

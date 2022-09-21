@@ -38,7 +38,7 @@ interface ObjectDefinition {
 	};
 	storageType?: string;
 	system: boolean;
-	titleObjectFieldId: number;
+	titleObjectFieldName: string;
 }
 
 interface ObjectField {

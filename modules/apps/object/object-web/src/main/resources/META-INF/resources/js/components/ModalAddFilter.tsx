@@ -234,15 +234,19 @@ export function ModalAddFilter({
 					const [{value}] = objectFieldSettings as NameValueObject[];
 
 					const [
-						{objectFields, restContextPath, titleObjectFieldId},
+						{
+							objectFields,
+							restContextPath,
+							system,
+							titleObjectFieldName,
+						},
 					] = await API.getObjectDefinitions(
 						`filter=name eq '${value}'`
 					);
 
-					const titleField = objectFields.find((objectField) =>
-						titleObjectFieldId === 0
-							? objectField.system && objectField.name === 'id'
-							: objectField.id === titleObjectFieldId
+					const titleField = objectFields.find(
+						(objectField) =>
+							objectField.name === titleObjectFieldName
 					) as ObjectField;
 
 					const relatedEntries = await API.getList<ObjectEntry>(
@@ -255,6 +259,7 @@ export function ModalAddFilter({
 								relatedEntries,
 								titleField.name,
 								titleField.system as boolean,
+								system,
 								setEditingFilterType
 							)
 						);
@@ -262,7 +267,9 @@ export function ModalAddFilter({
 					else {
 						const newItems = relatedEntries.map((entry) => {
 							const newItemsObject = {
-								value: entry.externalReferenceCode,
+								value: system
+									? String(entry.id)
+									: entry.externalReferenceCode,
 							} as LabelValueObject;
 
 							if (titleField.system) {

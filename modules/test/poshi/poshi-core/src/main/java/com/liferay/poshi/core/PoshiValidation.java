@@ -494,8 +494,7 @@ public class PoshiValidation {
 		logger.setLevel(Level.WARNING);
 
 		if (_deprecatedMethods.containsKey(method)) {
-			String className = file.substring(
-				file.lastIndexOf("/") + 1, file.indexOf("."));
+			String className = PoshiGetterUtil.getClassNameFromFilePath(filePathURL.getFile());
 
 			_deprecatedFunctionNames.add(className + "#" + method);
 

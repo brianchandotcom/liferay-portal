@@ -25,8 +25,12 @@ const updateMDFDetailsSummary = async () => {
 	if (response.ok) {
 		const data = await response.json();
 
-		const startDate = formatNewDate(Liferay.Util.escape(data.minDateActivity) );
-		const endDate = formatEndDate(Liferay.Util.escape(data.maxDateActivity) );
+		const startDate = formatNewDate(
+			Liferay.Util.escape(data.minDateActivity)
+		);
+		const endDate = formatEndDate(
+			Liferay.Util.escape(data.maxDateActivity)
+		);
 		const totalCost = formatCurrency(
 			Liferay.Util.escape(data.totalCostOfExpense)
 		);
@@ -63,16 +67,14 @@ const formatEndDate = (value) =>
 	new Intl.DateTimeFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
 		day: 'numeric',
 		month: 'short',
-		year: 'numeric' 
+		year: 'numeric',
 	}).format(new Date(value));
 
 const formatNewDate = (value) =>
 	new Intl.DateTimeFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
 		day: 'numeric',
 		month: 'short',
-		
 	}).format(new Date(value));
-
 
 if (layoutMode !== 'edit') {
 	updateMDFDetailsSummary();

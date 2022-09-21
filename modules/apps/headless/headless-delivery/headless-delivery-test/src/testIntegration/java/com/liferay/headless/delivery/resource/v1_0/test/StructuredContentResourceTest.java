@@ -486,6 +486,20 @@ public class StructuredContentResourceTest
 	}
 
 	@Override
+	protected StructuredContent
+			testDeleteAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent()
+		throws Exception {
+
+		StructuredContent structuredContent = randomStructuredContent();
+
+		structuredContent.setContentStructureId(
+			_depotDDMStructure.getStructureId());
+
+		return structuredContentResource.postAssetLibraryStructuredContent(
+			testDepotEntry.getDepotEntryId(), structuredContent);
+	}
+
+	@Override
 	protected Long
 			testDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {

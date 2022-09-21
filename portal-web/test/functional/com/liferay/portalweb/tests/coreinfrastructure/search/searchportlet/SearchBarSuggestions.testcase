@@ -377,8 +377,9 @@ definition {
 		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple Pie Site Name");
 	}
 
+	@description = "This is a use case for LPS-162509."
 	@priority = "4"
-	test ViewCustomContributorDisplayGroupName {
+	test ViewSuggestionsLocalizedDisplayGroupName {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

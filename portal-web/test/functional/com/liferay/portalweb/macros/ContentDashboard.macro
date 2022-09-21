@@ -14,15 +14,6 @@ definition {
 		Button.clickSave();
 	}
 
-	macro checkClearAllButtonNotPresent {
-		ClickNoError(
-			key_text = "Clear All",
-			locator1 = "Button#ANY");
-
-		AssertElementNotPresent(
-			key_text = "Clear All",
-			locator1 = "Button#ANY");
-	}
 
 	macro checkMimeExtensionDisplayed {
 		if (isSet(typeName)) {
@@ -43,15 +34,19 @@ definition {
 		Button.clickCancel();
 	}
 
-	macro checkNoFiltersApplied {
-		AssertElementNotPresent(locator1 = "ContentDashboard#FILTER_BAR");
-	}
-
 	macro clearFilters {
 		Click(locator1 = "ContentDashboard#CLEAR_FILTERS_BUTTON");
 	}
 
-	macro clearFilterTreeview {
+	macro clickQuickActionIcon {
+		Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+		Click.javaScriptClick(
+			locator1 = "ContentDashboard#QUICK_ACTION_ICON",
+			title = "${iconName}");
+	}
+
+	macro cancelSelectFilterTreeview {
 		Portlet.expandTree();
 
 		for (var optionName : list "${optionsList}") {

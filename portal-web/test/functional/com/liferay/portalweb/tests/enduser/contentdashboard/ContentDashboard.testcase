@@ -52,7 +52,10 @@ definition {
 			ContentDashboard.goToContentDashboard();
 		}
 
-			WebContent.saveAsDraft();
+		task ("Edit the Web Content to draft version") {
+			ContentDashboard.editAsset(
+				assetTitle = "WC Content Edit",
+				saveAsDraft = "true");
 		}
 
 		task ("go back to web content and check for approved and draft versions") {
@@ -759,13 +762,9 @@ definition {
 	@priority = "3"
 	test CategorizationInOOTBTable {
 		task ("Go to Documents and Media and clik on Add Button and File Upload") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Documents and Media");
-
-			LexiconEntry.gotoAdd();
-
-			MenuItem.click(menuItem = "File Upload");
+			DMNavigator.openToAddEntry(
+				groupName = "Test Site Name",
+				siteURLKey = "test-site-name");
 		}
 
 		task ("Go to categorization and check if Topic, Audience and Stage are present") {
@@ -2596,7 +2595,8 @@ definition {
 		}
 
 		task ("Click on the View icon and check the user is lead to the Display Page") {
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+			ContentDashboard.clickQuickActionIcon(iconName = "View");
+		}
 
 			Click.javaScriptClick(locator1 = "ContentDashboard#ICON_VIEW_LISTED_MODIFIED_DATE");
 		}
@@ -2786,7 +2786,7 @@ definition {
 		}
 
 		task ("Edit the Blog") {
-			ContentDashboard.editAsset();
+			ContentDashboard.editAsset(assetTitle = "Blogs Entry Title Edited");
 		}
 
 		task ("Assert the document has been edited") {
@@ -3926,20 +3926,6 @@ definition {
 
 			WebContent.editDisplayDate(displayDate = "01/01/2100");
 
-			Click(locator1 = "TextInput#DISPLAY_DATE_TIME");
-
-			AssertVisible(locator1 = "TextInput#DISPLAY_DATE_TIME_TIMEPICKER");
-
-			Click(locator1 = "TextInput#DISPLAY_DATE");
-
-			AssertNotVisible(locator1 = "TextInput#DISPLAY_DATE_TIME_TIMEPICKER");
-
-			Click(locator1 = "TextInput#DISPLAY_DATE_TIME");
-
-			Click(locator1 = "TextInput#DISPLAY_DATE_TIME_TIMEPICKER");
-
-			AssertNotVisible(locator1 = "TextInput#DISPLAY_DATE_TIME_TIMEPICKER");
-
 			PortletEntry.publish();
 		}
 
@@ -4256,7 +4242,10 @@ definition {
 			ContentDashboard.goToContentDashboard();
 		}
 
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_MODIFIED_DATE");
+		task ("Click at edit icon") {
+			ContentDashboard.clickQuickActionIcon(iconName = "Edit");
+		}
+
 		}
 	}
 
@@ -4290,8 +4279,7 @@ definition {
 			ContentDashboard.goToContentDashboard();
 		}
 
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
-
+			ContentDashboard.clickQuickActionIcon(iconName = "Info");
 			Click(locator1 = "ContentDashboard#ICON_INFO_LISTED_MODIFIED_DATE");
 		}
 	}
@@ -5884,11 +5872,11 @@ definition {
 				groupName = "Test Site Name",
 				title = "WC");
 
+		task ("Click at view icon at Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
-
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
-
-			WaitForElementPresent(locator1 = "ContentDashboard#ICON_VIEW_LISTED_MODIFIED_DATE");
+			
+			ContentDashboard.clickQuickActionIcon(iconName = "View");
+		}
 
 			Click.javaScriptClick(locator1 = "ContentDashboard#ICON_VIEW_LISTED_MODIFIED_DATE");
 		}

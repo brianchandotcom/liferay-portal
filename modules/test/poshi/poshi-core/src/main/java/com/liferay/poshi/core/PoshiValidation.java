@@ -37,7 +37,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -489,17 +488,13 @@ public class PoshiValidation {
 
 		String filePath = filePathURL.getFile();
 
-		Logger logger = Logger.getAnonymousLogger();
-
-		logger.setLevel(Level.WARNING);
-
 		if (_deprecatedMethodNames.containsKey(functionName)) {
 			String className = PoshiGetterUtil.getClassNameFromFilePath(
 				filePath);
 
 			_deprecatedFunctionNames.add(className + "#" + functionName);
 
-			logger.warning(
+			_logger.warning(
 				"Deprecated method \"selenium." + functionName +
 					"\" should be replaced with " +
 						_deprecatedMethodNames.get(functionName) + " at:\n" +
@@ -508,7 +503,7 @@ public class PoshiValidation {
 		}
 
 		if (_deprecatedFunctionNames.contains(functionName)) {
-			logger.warning(
+			_logger.warning(
 				"Use of function \"" + functionName +
 					"\" contains deprecated selenium method at:\n" + filePath +
 						":" + poshiElement.getPoshiScriptLineNumber());
@@ -1966,6 +1961,9 @@ public class PoshiValidation {
 
 		throw new Exception();
 	}
+
+	private static final Logger _logger = Logger.getLogger(
+		PoshiValidation.class.getName());
 
 	private static final List<String> _deprecatedFunctionNames =
 		new ArrayList<>();

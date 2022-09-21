@@ -12,4 +12,5 @@
  * details.
  */
 
-export declare function fetchConnection(token: string): Promise<unknown>;
+export declare function fetchConnection(token: string): Promise<Response>;
+export declare function deleteConnection(): Promise<Response>;

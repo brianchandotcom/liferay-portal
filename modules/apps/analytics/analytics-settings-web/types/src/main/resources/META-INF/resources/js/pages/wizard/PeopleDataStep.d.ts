@@ -12,5 +12,7 @@
  * details.
  */
 
+/// <reference types="react" />
+
 declare const Step: () => JSX.Element;
 export default Step;

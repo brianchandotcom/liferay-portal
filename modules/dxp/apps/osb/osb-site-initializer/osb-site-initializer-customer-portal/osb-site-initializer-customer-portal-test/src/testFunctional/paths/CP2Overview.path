@@ -17,7 +17,7 @@
 </tr>
 <tr>
     <td>SLA_CARD_CONTAINER</td>
-    <td>//*[contains(@class, 'cp-sla-container')]</td>
+    <td>//*[contains(@class, 'cp-sla-card-active')]//*[contains(@class, 'card card-type-asset')]</td>
     <td></td>
 </tr>
 <tr>

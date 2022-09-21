@@ -12,6 +12,15 @@ definition {
         Click(locator1 = "CP2Overview#SLA_CARD_SHIFT_BUTTON");
     }
 
+    macro assertSLACardBackgroundColor {
+        var color = CP2Overview._getBackgroundColor(slaCardtitle = "${slaCardTitle}");
+
+        AssertCssValue(
+			locator1 = "CP2Overview#SLA_CARD_CONTAINER",
+			locator2 = "background-color",
+			value1 = "${color}");
+    }
+
     macro _getBackgroundColor {
         if("${slaCardtitle}" == "Platinum") {
             var color = "rgba(255, 255, 255, 1)";

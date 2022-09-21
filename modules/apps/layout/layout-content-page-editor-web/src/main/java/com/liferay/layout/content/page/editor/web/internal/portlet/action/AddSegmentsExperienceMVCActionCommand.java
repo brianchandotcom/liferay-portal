@@ -93,7 +93,7 @@ public class AddSegmentsExperienceMVCActionCommand
 		long baseSegmentsExperienceId = _getBaseSegmentsExperienceId(
 			segmentsExperiment, themeDisplay);
 
-		SegmentsExperienceUtil.copySegmentsExperienceData(
+		SegmentsExperienceUtil.copySegmentsExperienceDataFromDraftLayout(
 			themeDisplay.getPlid(), _commentManager,
 			themeDisplay.getScopeGroupId(), _portletRegistry,
 			baseSegmentsExperienceId,

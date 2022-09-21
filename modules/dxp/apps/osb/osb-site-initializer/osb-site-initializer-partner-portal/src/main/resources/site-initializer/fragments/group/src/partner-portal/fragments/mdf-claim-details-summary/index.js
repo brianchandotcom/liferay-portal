@@ -58,4 +58,7 @@ const formatCurrency = (value) =>
 		style: 'currency',
 	}).format(value);
 
-getMDFClaimSummary();
+if (layoutMode !== 'edit'){
+	getMDFClaimSummary();
+};
+

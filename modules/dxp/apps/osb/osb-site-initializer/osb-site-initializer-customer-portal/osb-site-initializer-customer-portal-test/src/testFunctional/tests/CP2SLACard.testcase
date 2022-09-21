@@ -8,7 +8,8 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-    var testAccount = "Test Account LXC-SM";
+    var testAccount1 = "Test Account LXC-SM";
+    var testAccount2 = "Test Account No SLA";
 	var testUserFirstName = "Test";
 	var testProduct = "LXC-SM";
 
@@ -27,7 +28,7 @@ definition {
         task ("Add user to the Liferay Staff organization and a account") {
             CustomerPortal.assignUserToOrganization();
 
-            CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount}");
+            CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount1},${testAccount2}");
         }
 
 		task ("Go to Customer Portal Site") {
@@ -55,9 +56,9 @@ definition {
     @priority = "4"
     test AssertAllTitlesOnTheSLACard {
 		task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "${testAccount1}");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "${testAccount1}");
 		}
 
         task ("Then I should be able to view SLA Title, Status, Start Date and End Date for Platinum Support License.") {
@@ -103,9 +104,9 @@ definition {
     @priority = "5"
     test StatusOrderFromHighestToLowest {
         task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "${testAccount1}");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "${testAccount1}");
 		}
 
         task ("Then I should be able to view SLA Status Current") {
@@ -133,9 +134,9 @@ definition {
     @priority = "5"
     test UserCanSwitchBetweenSLACards {
         task ("Given I go to the test account") {
-			CustomerPortal.search(searchItem = "${testAccount}");
+			CustomerPortal.search(searchItem = "${testAccount1}");
 
-			CustomerPortal.enterOnProject(title = "${testAccount}");
+			CustomerPortal.enterOnProject(title = "${testAccount1}");
 		}
 
         task ("And I should be able to view SLA Title Platinum") {
@@ -164,6 +165,22 @@ definition {
 
         task ("And I should be able to view SLA Title Platinum") {
             CP2Overview.assertSLACardContentIsVisible(cardContent = "Platinum");
+        }
+    }
+
+    @description = "Automation Ticket: LPS-147803 | Test Summary: Verify the message 'The project's Support Level is displayed here for projects with ticketing support.' if there is no SLA on the project"
+    @priority = "4"
+    test CanViewErrorMessageIfThereIsNoSLAInTheProject {
+        task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount2}");
+
+			CustomerPortal.enterOnProject(
+                title = "${testAccount2}",
+                status = "Expired");
+		}
+
+        task ("The I message at SLA Card should be equal to 'The project's Support Level is displayed here for projects with ticketing support.'") {
+            CP2Overview.assertEmptySLACardMessage(message = "The project's Support Level is displayed here for projects with ticketing support.");
         }
     }
 }

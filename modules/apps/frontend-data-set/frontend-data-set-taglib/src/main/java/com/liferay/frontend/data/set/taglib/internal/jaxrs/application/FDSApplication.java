@@ -40,6 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -69,6 +70,45 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 	service = Application.class
 )
 public class FDSApplication extends Application {
+
+	@DELETE
+	@Path("/fds/{fdsName}/custom-views/{customViewId}")
+	public Response deleteFDSCustomView(
+		@PathParam("fdsName") String fdsName,
+		@PathParam("customViewId") String customViewId,
+		@Context HttpServletRequest httpServletRequest,
+		@Context ThemeDisplay themeDisplay) {
+
+		try {
+			PortalPreferences portalPreferences =
+				PortletPreferencesFactoryUtil.getPortalPreferences(
+					httpServletRequest);
+
+			String fdsSettingsNamespace =
+				ServletContextUtil.getFDSSettingsNamespace(
+					httpServletRequest, fdsName);
+
+			JSONObject customViewsJSONObject = _jsonFactory.createJSONObject(
+				portalPreferences.getValue(
+					fdsSettingsNamespace, "customViews", "{}"));
+
+			customViewsJSONObject.remove(customViewId);
+
+			portalPreferences.setValue(
+				fdsSettingsNamespace, "customViews",
+				customViewsJSONObject.toString());
+
+			return Response.ok(
+			).build();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return Response.status(
+			Response.Status.INTERNAL_SERVER_ERROR
+		).build();
+	}
 
 	@GET
 	@Path("/data-set/{tableName}/{fdsDataProviderKey}")

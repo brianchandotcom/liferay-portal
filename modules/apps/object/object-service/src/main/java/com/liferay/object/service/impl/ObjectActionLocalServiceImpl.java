@@ -22,7 +22,6 @@ import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.ObjectActionConditionExpressionException;
-import com.liferay.object.exception.ObjectActionExecutorKeyException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
 import com.liferay.object.exception.ObjectActionTriggerKeyException;
@@ -209,7 +208,11 @@ public class ObjectActionLocalServiceImpl
 		if (!_objectActionExecutorRegistry.hasObjectActionExecutor(
 				objectActionExecutorKey)) {
 
-			throw new ObjectActionExecutorKeyException(objectActionExecutorKey);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Object definition registered with missing action ".concat(
+						objectActionExecutorKey));
+			}
 		}
 
 		if (!Objects.equals(

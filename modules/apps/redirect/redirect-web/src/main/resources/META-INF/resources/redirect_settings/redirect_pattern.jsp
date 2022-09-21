@@ -33,11 +33,14 @@ RedirectPatternConfigurationDisplayContext redirectPatternConfigurationDisplayCo
 		</clay:sheet-header>
 
 		<clay:sheet-section>
-			<aui:input label="redirect-patterns" name="patterns" value="<%= StringUtil.merge(redirectPatternConfigurationDisplayContext.getPatterns(scopeGroupId)) %>" />
+			<div>
+				<span aria-hidden="true" class="loading-animation"></span>
 
-			<p class="text-muted">
-				<liferay-ui:message key="redirect-patterns-description" />
-			</p>
+				<react:component
+					module="js/RedirectPatterns"
+					props="<%= redirectPatternConfigurationDisplayContext.getRedirectPatternData() %>"
+				/>
+			</div>
 		</clay:sheet-section>
 
 		<clay:sheet-footer>

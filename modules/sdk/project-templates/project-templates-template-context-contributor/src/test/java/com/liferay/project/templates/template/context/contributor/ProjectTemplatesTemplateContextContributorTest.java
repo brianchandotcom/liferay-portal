@@ -50,7 +50,8 @@ public class ProjectTemplatesTemplateContextContributorTest
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"7.0.6-2"}, {"7.1.3-1"}, {"7.2.1-1"}, {"7.3.7"}, {"7.4.1-1"}
+				{"7.0.10.17", "dxp"}, {"7.1.10.7", "dxp"}, {"7.2.10.7", "dxp"},
+				{"7.3.7", "portal"}, {"7.4.1-1", "portal"}
 			});
 	}
 
@@ -71,9 +72,10 @@ public class ProjectTemplatesTemplateContextContributorTest
 	}
 
 	public ProjectTemplatesTemplateContextContributorTest(
-		String liferayVersion) {
+		String liferayVersion, String product) {
 
 		_liferayVersion = liferayVersion;
+		_product = product;
 	}
 
 	@Test
@@ -90,13 +92,19 @@ public class ProjectTemplatesTemplateContextContributorTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			gradleWorkspaceModulesDir, template, name, "--liferay-version",
-			_liferayVersion);
+			_liferayVersion, "--product", _product);
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
-		testContains(
-			gradleProjectDir, "build.gradle",
-			DEPENDENCY_RELEASE_PORTAL_API);
+		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
+			testContains(
+				gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_DXP_API);
+		}
+		else {
+			testContains(
+				gradleProjectDir, "build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API);
+		}
 
 		testContains(
 			gradleProjectDir,
@@ -116,7 +124,7 @@ public class ProjectTemplatesTemplateContextContributorTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=BladeTest", "-Dpackage=blade.test",
-			"-DliferayVersion=" + _liferayVersion);
+			"-DliferayVersion=" + _liferayVersion, "-Dproduct=" + _product);
 
 		testContains(
 			mavenProjectDir, "bnd.bnd",
@@ -139,5 +147,6 @@ public class ProjectTemplatesTemplateContextContributorTest
 	private static URI _gradleDistribution;
 
 	private final String _liferayVersion;
+	private final String _product;
 
 }

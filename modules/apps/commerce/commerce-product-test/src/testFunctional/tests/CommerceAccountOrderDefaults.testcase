@@ -30,6 +30,102 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "COMMERCE-9876. As a Sales Manager, I want to remove default billing and shipping addresses from the account"
+	@priority = "3"
+	test CanRemoveDefaultAddresses {
+		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
+				Accounts.addAddressViaSetDefaultAddress(
+					addressCity = "Diamond Bar",
+					addressCountry = "United States",
+					addressName = "${typeList} Address Entry 1",
+					addressPostalCode = "91765",
+					addressRegion = "California",
+					addressStreet1 = "1400 Montefino Ave",
+					addressType = "${typeList}",
+					phoneNumber = "+1-877-543-3729");
+			}
+		}
+
+		task ("And two more channels("Test Channel 1" and "Test Channel 2")") {
+			for (var channelNames : list "Test Channel 1,Test Channel 2") {
+				CommerceJSONChannelsAPI._addChannel(
+					channelName = "${channelNames}",
+					channelType = "site",
+					currencyCode = "USD");
+			}
+		}
+
+		task ("Given there is a default billing and a default shipping address set for the Account and Channel") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.addDefaultCommerceAddressEntry(
+				addressEntry = "Billing Address Entry 1",
+				addressType = "Billing",
+				channelEntry = "Test Channel 1");
+
+			Accounts.addDefaultCommerceAddressEntry(
+				addressEntry = "Shipping Address Entry 1",
+				addressType = "Shipping",
+				channelEntry = "Test Channel 2");
+		}
+
+		task ("When admin removes both default addresses from the account") {
+			for (var typeList : list "Billing,Shipping") {
+				Accounts.removeDefaultCommerceTerms(
+					entryDetails = "${typeList} Address Entry 1",
+					termType = "${typeList}");
+			}
+		}
+
+		task ("And user makes an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
+
+		task ("Then during the checkout there is no default address pre-selected") {
+			CommerceCheckout.gotoCheckout();
+
+			AssertElementPresent(
+				key_selectFieldLabel = "Choose Shipping Address",
+				locator1 = "Select#ANY",
+				value1 = "Add New Address");
+
+			for (var fieldNames : list "Name,Address,Zip,City") {
+				AssertElementNotPresent(
+					key_fieldName = "${fieldNames}",
+					locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT_DISABLED");
+			}
+		}
+
+		task ("And user enters new addresses that will be visible in Order Summary") {
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "New Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+	}
+
 	@description = "COMMERCE-9829. As a sales manager, I want to check channel options after setting a default account billing address for each channel"
 	@priority = "3"
 	test CanSelectOnlyAllOtherChannelsForDefaultBillingAddress {

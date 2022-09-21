@@ -1628,7 +1628,6 @@ definition {
 			locator1 = "FormFields#FIELD_REMOVE");
 	}
 
-
 	macro saveAsDraftViaAP {
 		Button.clickSaveAsDraft();
 

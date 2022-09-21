@@ -14,45 +14,16 @@ definition {
 		Button.clickSave();
 	}
 
+	macro applySelectedFilter {
+		SelectFrame(value1 = "relative=top");
 
-	macro checkMimeExtensionDisplayed {
-		if (isSet(typeName)) {
-			AssertVisible(
-				key_nodeName = "${typeName}",
-				locator1 = "Treeview#NODE_ITEM");
-		}
-		else {
-			for (var typeName : list "${typeNameList}") {
-				AssertVisible(
-					key_nodeName = "${typeName}",
-					locator1 = "Treeview#NODE_ITEM");
-			}
-		}
+		AssertClickNoError(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
 
-		Button.clickCancel();
-	}
-
-	macro clearFilters {
-		Click(
-			locator1 = "LINK#ANY",
-			key_text = "Clear"
-	}
-
-	macro clickQuickActionIcon {
-		if (isSet(assetName)) {
-			Click.clickNoMouseOver(
-				key_assetName = "${assetName}",
-				locator1 = "ContentDashboard#ROW_PANEL_ASSET_NAME");
-		}
-		else {
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL");
-		}
-
-		Click.javaScriptClick(
-			locator1 = "ContentDashboard#QUICK_ACTION_ICON",
-			title = "${iconName}");
+		WaitForElementPresent(locator1 = "ContentDashboard#ROW_PANEL");
 	}
 
 	macro cancelSelectFilterTreeview {
@@ -77,6 +48,31 @@ definition {
 		Button.clickCancel();
 	}
 
+	macro checkMimeExtensionDisplayed {
+		if (isSet(typeName)) {
+			AssertVisible(
+				key_nodeName = "${typeName}",
+				locator1 = "Treeview#NODE_ITEM");
+		}
+		else {
+			for (var typeName : list "${typeNameList}") {
+				AssertVisible(
+					key_nodeName = "${typeName}",
+					locator1 = "Treeview#NODE_ITEM");
+			}
+		}
+
+		SelectFrame(value1 = "relative=top");
+
+		Button.clickCancel();
+	}
+
+	macro clearFilters {
+		Click(
+			key_text = "Clear",
+			locator1 = "LINK#ANY");
+	}
+
 	macro clickOnFirstBar {
 		if (!(isSet(fillColor))) {
 			var fillColor = "4B9FFF";
@@ -85,6 +81,21 @@ definition {
 		Click(
 			fillColor = "${fillColor}",
 			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
+	}
+
+	macro clickQuickActionIcon {
+		if (isSet(assetName)) {
+			Click.clickNoMouseOver(
+				key_assetName = "${assetName}",
+				locator1 = "ContentDashboard#ROW_PANEL_ASSET_NAME");
+		}
+		else {
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL");
+		}
+
+		Click.javaScriptClick(
+			locator1 = "ContentDashboard#QUICK_ACTION_ICON",
+			title = "${iconName}");
 	}
 
 	macro deleteSecondCategoryFilter {
@@ -141,7 +152,7 @@ definition {
 			}
 		}
 
-		ContentDashboard.applySelectedFilter();	
+		ContentDashboard.applySelectedFilter();
 	}
 
 	macro filterByAuthorAll {
@@ -284,6 +295,14 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
+	macro openFilterAndOrder {
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+	}
+
 	macro openFilterModal {
 		ContentDashboard.openFilterAndOrder();
 
@@ -292,14 +311,6 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
-	}
-
-	macro openFilterAndOrder {
-		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
-			AssertClickNoError(
-				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
-				value1 = "Filter and Order");
-		}
 	}
 
 	macro orderByModificationDate {
@@ -433,18 +444,6 @@ definition {
 				key_nodeName = "${optionName}",
 				locator1 = "Treeview#NODE_CHECKBOX");
 		}
-	}
-
-	macro applySelectedFilter {
-		SelectFrame(value1 = "relative=top");
-
-		AssertClickNoError(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
-
-		SelectFrame(value1 = "relative=top");
-
-		WaitForElementPresent(locator1 = "ContentDashboard#ROW_PANEL");
 	}
 
 	macro viewAppliedFilters {

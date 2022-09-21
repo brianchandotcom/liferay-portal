@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ASSET_STATUS_LABEL</td>
-	<td>//*[@data-qa-id and descendant::span[text()='${assetName}']]  //*[contains(@class, 'lfr-status-column')] //*[contains(@class, 'label-item')]</td>
+	<td>//*[@data-qa-id and descendant::span[text()='${assetName}']] //*[contains(@class, 'lfr-status-column')] //*[contains(@class, 'label-item')]</td>
 	<td></td>
 </tr>
 <tr>

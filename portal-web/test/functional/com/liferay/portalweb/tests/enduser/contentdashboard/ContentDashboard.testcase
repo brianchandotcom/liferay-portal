@@ -58,8 +58,8 @@ definition {
 
 		task ("Edit the Web Content to draft version") {
 			ContentDashboard.editAsset(
-				assetTitle = "WC Content",
 				assetNewTitle = "WC Content Edit",
+				assetTitle = "WC Content",
 				saveAsDraft = "true");
 		}
 
@@ -1264,8 +1264,8 @@ definition {
 			ContentDashboard.goToContentDashboard();
 
 			AssertTextPresent(
-				locator1 = "ContentDashboard#ASSET_CATEGORY_LABEL",
 				assetName = "WC",
+				locator1 = "ContentDashboard#ASSET_CATEGORY_LABEL",
 				value1 = "+ 2");
 		}
 	}
@@ -2185,7 +2185,7 @@ definition {
 			AssertElementNotPresent(
 				key_menuItem = "View",
 				locator1 = "MenuItem#ANY_MENU_ITEM");
-			
+
 			AssertElementNotPresent(
 				key_menuItem = "Edit",
 				locator1 = "MenuItem#ANY_MENU_ITEM");
@@ -2751,8 +2751,8 @@ definition {
 
 		task ("Edit the Blog") {
 			ContentDashboard.editAsset(
-				assetTitle = "Blogs Entry Title",
-				assetNewTitle = "Blogs Entry Title Edited");
+				assetNewTitle = "Blogs Entry Title Edited",
+				assetTitle = "Blogs Entry Title");
 		}
 
 		task ("Assert the document has been edited") {
@@ -2785,8 +2785,8 @@ definition {
 
 		task ("Edit the document") {
 			ContentDashboard.editAsset(
-				assetTitle = "DM Document Title",
-				assetNewTitle = "DM Document Title Edited");
+				assetNewTitle = "DM Document Title Edited",
+				assetTitle = "DM Document Title");
 		}
 
 		task ("Assert the document has been edited") {
@@ -2812,8 +2812,8 @@ definition {
 			ContentDashboard.goToContentDashboard();
 
 			ContentDashboard.editAsset(
-				assetTitle = "WC Title",
-				assetNewTitle = "WC Title Edited");
+				assetNewTitle = "WC Title Edited",
+				assetTitle = "WC Title");
 		}
 
 		task ("Assert in title was porperty edited") {
@@ -2844,8 +2844,8 @@ definition {
 			ContentDashboard.goToContentDashboard();
 
 			AssertTextPresent(
-				locator1 = "ContentDashboard#ASSET_STATUS_LABEL",
 				assetName = "WC Title",
+				locator1 = "ContentDashboard#ASSET_STATUS_LABEL",
 				value1 = "EXPIRED");
 		}
 	}
@@ -3615,18 +3615,18 @@ definition {
 			AssertVisible(
 				locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW",
 				optionName = "Audio");
-			
+
 			AssertVisible(
 				locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW",
 				optionName = "Code");
-			
+
 			AssertVisible(
 				locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW",
 				optionName = "Presentation");
-			
+
 			AssertVisible(
 				locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW",
-				optionName = "Text");	
+				optionName = "Text");
 		}
 	}
 
@@ -4092,7 +4092,7 @@ definition {
 				key_tableEntry = "Web Content Title",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
 				value1 = "Web Content Title");
-			
+
 			AssertTextEquals(
 				key_tableEntry = "Blogs Entry Title",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
@@ -4314,7 +4314,7 @@ definition {
 
 		task ("Check that user can open info panel") {
 			ContentDashboard.clickQuickActionIcon(iconName = "Info");
-			
+
 			AssertVisible(locator1 = "ContentDashboard#INFO_PANEL");
 		}
 	}
@@ -5296,8 +5296,8 @@ definition {
 			ContentDashboard.filterByAuthor();
 
 			ContentDashboard.editAsset(
-				assetTitle = "WC Title",
-				assetNewTitle = "WC Title Edited");
+				assetNewTitle = "WC Title Edited",
+				assetTitle = "WC Title");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FILTER_TEXT",
@@ -5389,8 +5389,8 @@ definition {
 			ContentDashboard.goToContentDashboard();
 
 			ContentDashboard.editAsset(
-				assetTitle = "WC WebContent Title",
-				assetNewTitle = "WC WebContent New Title");
+				assetNewTitle = "WC WebContent New Title",
+				assetTitle = "WC WebContent Title");
 		}
 
 		task ("Check if content is correct") {
@@ -5523,7 +5523,7 @@ definition {
 				key_tableEntry = "WC Title 1",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
 				value1 = "WC Title 1");
-			
+
 			AssertTextEquals(
 				key_tableEntry = "WC Title 2",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
@@ -5930,7 +5930,7 @@ definition {
 
 		task ("Click at view icon at Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
-			
+
 			ContentDashboard.clickQuickActionIcon(iconName = "View");
 		}
 

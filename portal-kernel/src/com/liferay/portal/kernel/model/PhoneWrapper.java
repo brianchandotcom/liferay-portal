@@ -211,6 +211,13 @@ public class PhoneWrapper
 		return model.getExtension();
 	}
 
+	@Override
+	public ListType getListType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getListType();
+	}
+
 	/**
 	 * Returns the list type ID of this phone.
 	 *
@@ -279,13 +286,6 @@ public class PhoneWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
-	}
-
-	@Override
-	public ListType getType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getType();
 	}
 
 	/**

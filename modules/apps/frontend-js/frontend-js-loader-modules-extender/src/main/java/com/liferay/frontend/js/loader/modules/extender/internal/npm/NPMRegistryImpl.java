@@ -98,7 +98,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	public void finishUpdate(NPMRegistryUpdate npmRegistryUpdate) {
-		_refreshJSModuleCaches(null);
+		_refreshJSModuleCaches(null, _getNPMRegistryUpdatesListeners());
 	}
 
 	@Override
@@ -298,7 +298,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
 
-		_refreshJSModuleCaches(tracked.values());
+		_refreshJSModuleCaches(tracked.values(), null);
 
 		Details details = ConfigurableUtil.createConfigurable(
 			Details.class, properties);
@@ -309,14 +309,13 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		_javaScriptAwarePortalWebResources = ServiceTrackerListFactory.open(
 			bundleContext, JavaScriptAwarePortalWebResources.class);
-
-		_npmRegistryUpdatesListeners = ServiceTrackerListFactory.open(
-			bundleContext, NPMRegistryUpdatesListener.class);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_npmRegistryUpdatesListeners.close();
+		if (_npmRegistryUpdatesListeners != null) {
+			_npmRegistryUpdatesListeners.close();
+		}
 
 		_javaScriptAwarePortalWebResources.close();
 
@@ -337,6 +336,17 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 			_serviceTracker = _openServiceTracker();
 		}
+	}
+
+	private ServiceTrackerList<NPMRegistryUpdatesListener>
+		_getNPMRegistryUpdatesListeners() {
+
+		if (_npmRegistryUpdatesListeners == null) {
+			_npmRegistryUpdatesListeners = ServiceTrackerListFactory.open(
+				_bundleContext, NPMRegistryUpdatesListener.class);
+		}
+
+		return _npmRegistryUpdatesListeners;
 	}
 
 	private JSONObject _getPackageJSONObject(Bundle bundle) {
@@ -456,7 +466,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 	}
 
-	private void _refreshJSModuleCaches(Collection<JSBundle> jsBundles) {
+	private void _refreshJSModuleCaches(
+		Collection<JSBundle> jsBundles,
+		ServiceTrackerList<NPMRegistryUpdatesListener>
+			npmRegistryUpdatesListeners) {
+
 		if (jsBundles == null) {
 			Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
 
@@ -517,9 +531,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_resolvedJSPackages = resolvedJSPackages;
 		_exactMatchMap = exactMatchMap;
 
-		if (_npmRegistryUpdatesListeners != null) {
+		if (npmRegistryUpdatesListeners != null) {
 			for (NPMRegistryUpdatesListener npmRegistryUpdatesListener :
-					_npmRegistryUpdatesListeners) {
+					npmRegistryUpdatesListeners) {
 
 				npmRegistryUpdatesListener.onAfterUpdate();
 			}
@@ -604,7 +618,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 				jsBundles.add(jsBundle);
 
-				_refreshJSModuleCaches(jsBundles);
+				_refreshJSModuleCaches(
+					jsBundles, _getNPMRegistryUpdatesListeners());
 
 				for (JavaScriptAwarePortalWebResources
 						javaScriptAwarePortalWebResources :
@@ -628,7 +643,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 			Bundle bundle, BundleEvent bundleEvent, JSBundle jsBundle) {
 
 			if (!_activationThreadLocal.get()) {
-				_refreshJSModuleCaches(null);
+				_refreshJSModuleCaches(null, _getNPMRegistryUpdatesListeners());
 			}
 		}
 

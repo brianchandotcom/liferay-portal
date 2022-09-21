@@ -712,8 +712,7 @@ public interface BaseProjectTemplatesTestCase {
 					"liferay.workspace.target.platform.version=7.4.3.36");
 
 				writeGradlePropertiesInWorkspace(
-					workspaceDir,
-					"liferay.workspace.product=portal-7.4-ga16");
+					workspaceDir, "liferay.workspace.product=portal-7.4-ga16");
 			}
 		}
 		else {
@@ -1429,8 +1428,7 @@ public interface BaseProjectTemplatesTestCase {
 
 		if (VersionUtil.getMinorVersion(liferayVersion) < 3) {
 			testContains(
-					gradleProjectDir, "build.gradle",
-					DEPENDENCY_RELEASE_DXP_API);
+				gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_DXP_API);
 		}
 		else {
 			testContains(
@@ -1479,20 +1477,28 @@ public interface BaseProjectTemplatesTestCase {
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, liferayVersion);
 
+		String product = "portal";
+
 		if (liferayVersion.startsWith("7.0")) {
 			writeGradlePropertiesInWorkspace(
 				gradleWorkspaceDir,
-				"liferay.workspace.target.platform.version=7.0.6-2");
+				"liferay.workspace.target.platform.version=7.0.10.17");
+
+			product = "dxp";
 		}
 		else if (liferayVersion.startsWith("7.1")) {
 			writeGradlePropertiesInWorkspace(
 				gradleWorkspaceDir,
-				"liferay.workspace.target.platform.version=7.1.3-1");
+				"liferay.workspace.target.platform.version=7.1.10.7");
+
+			product = "dxp";
 		}
 		else if (liferayVersion.startsWith("7.2")) {
 			writeGradlePropertiesInWorkspace(
 				gradleWorkspaceDir,
-				"liferay.workspace.target.platform.version=7.2.1-1");
+				"liferay.workspace.target.platform.version=7.2.10.7");
+
+			product = "dxp";
 		}
 		else if (liferayVersion.startsWith("7.3")) {
 			writeGradlePropertiesInWorkspace(
@@ -1509,7 +1515,7 @@ public interface BaseProjectTemplatesTestCase {
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			modulesDir, template, name, "--dependency-management-enabled",
-			"--liferay-version", liferayVersion);
+			"--liferay-version", liferayVersion, "--product", product);
 
 		if (!template.equals("war-hook") && !template.equals("theme")) {
 			testContains(
@@ -1539,7 +1545,7 @@ public interface BaseProjectTemplatesTestCase {
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=" + name,
 			"-Dpackage=" + name.toLowerCase(),
-			"-DliferayVersion=" + liferayVersion);
+			"-DliferayVersion=" + liferayVersion, "-Dproduct=" + product);
 
 		if (isBuildProjects()) {
 			File gradleOutputDir = new File(gradleProjectDir, "build/libs");

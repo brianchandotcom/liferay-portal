@@ -84,6 +84,7 @@ public class MessageBoardMessageDTOConverter
 						MBMessage.class.getName(), mbMessage.getMessageId()));
 				anonymous = mbMessage.isAnonymous();
 				articleBody = mbMessage.getBody();
+				companyMxName = _getCompanyMxName(mbMessage.getCompanyId(), mbMessage.getGroupId(), user);
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
 					MBMessage.class.getName(), mbMessage.getMessageId(),
@@ -92,7 +93,6 @@ public class MessageBoardMessageDTOConverter
 				dateModified = mbMessage.getModifiedDate();
 				encodingFormat = mbMessage.getFormat();
 				externalReferenceCode = mbMessage.getExternalReferenceCode();
-				featuredDomain = _getFeaturedDomainName(mbMessage.getCompanyId(), mbMessage.getGroupId(), user);
 				friendlyUrlPath = mbMessage.getUrlSubject();
 				headline = mbMessage.getSubject();
 				id = mbMessage.getMessageId();
@@ -160,7 +160,7 @@ public class MessageBoardMessageDTOConverter
 		};
 	}
 
-	private String _getFeaturedDomainName(long companyId, long groupId, User user )
+	private String _getCompanyMxName(long companyId, long groupId, User user )
 		throws Exception {
 
 		MBModerationGroupConfiguration mbModerationGroupConfiguration =
@@ -169,7 +169,7 @@ public class MessageBoardMessageDTOConverter
 
 		Company company = _companyLocalService.getCompany(companyId);
 
-		if(company.hasCompanyMx(user.getEmailAddress()) && mbModerationGroupConfiguration.enableFeaturedDomain() == true) {
+		if(company.hasCompanyMx(user.getEmailAddress()) && mbModerationGroupConfiguration.enableEmphasisCompanyMx() == true) {
 			return user.getCompanyMx();
 			}
 

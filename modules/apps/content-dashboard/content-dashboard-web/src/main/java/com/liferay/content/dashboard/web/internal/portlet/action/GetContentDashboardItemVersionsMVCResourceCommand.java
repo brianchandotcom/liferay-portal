@@ -124,7 +124,7 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 	}
 
 	private JSONArray _getVersionsJSONArray(
-		HttpServletRequest httpServletRequest,
+		int displayVersions, HttpServletRequest httpServletRequest,
 		VersionableContentDashboardItem versionableContentDashboardItem) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -140,7 +140,7 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 			return jsonArray;
 		}
 
-		versions = ListUtil.subList(versions, 0, _MAX_SIZE);
+		versions = ListUtil.subList(versions, 0, displayVersions);
 
 		for (ContentDashboardItem.Version version : versions) {
 			jsonArray.put(version.toJSONObject());
@@ -158,8 +158,15 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 
 		return JSONUtil.put(
 			"versions",
-			_getVersionsJSONArray(
-				httpServletRequest, versionableContentDashboardItem)
+			() -> {
+				int displayVersions = ParamUtil.getInteger(
+					resourceRequest, "maxDisplayVersions",
+					_DEFAULT_MAX_DISPLAY_VERSIONS);
+
+				return _getVersionsJSONArray(
+					displayVersions, httpServletRequest,
+					versionableContentDashboardItem);
+			}
 		).put(
 			"viewVersionsURL",
 			versionableContentDashboardItem.getViewVersionsURL(
@@ -167,7 +174,7 @@ public class GetContentDashboardItemVersionsMVCResourceCommand
 		);
 	}
 
-	private static final int _MAX_SIZE = 10;
+	private static final int _DEFAULT_MAX_DISPLAY_VERSIONS = 10;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetContentDashboardItemVersionsMVCResourceCommand.class);

@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"uuid": "^3.3.2"
 	},
 	"name": "redirect-web",
 	"scripts": {

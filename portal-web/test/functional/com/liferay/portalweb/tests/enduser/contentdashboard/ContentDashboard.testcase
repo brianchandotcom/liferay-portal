@@ -4420,9 +4420,7 @@ definition {
 				categoryName = "Category Name",
 				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL");
 
-			Click(
-				locator1 = "ContentDashboard#INFO_PANEL_SECTION_TITLE",
-				sectionName = "Categorization");
+			Panel.collapsePanel(panel = "Categorization");
 
 			AssertNotVisible(
 				categoryName = "Category Name",
@@ -4468,17 +4466,13 @@ definition {
 				categoryName = "Category Name",
 				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL");
 
-			Click(
-				locator1 = "ContentDashboard#INFO_PANEL_SECTION_TITLE",
-				sectionName = "Categorization");
+			Panel.collapsePanel(panel = "Categorization");
 
 			AssertNotVisible(
 				categoryName = "Category Name",
 				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL");
 
-			Click(
-				locator1 = "ContentDashboard#INFO_PANEL_SECTION_TITLE",
-				sectionName = "Categorization");
+			Panel.expandPanel(panel = "Categorization");
 
 			AssertElementPresent(
 				categoryName = "Category Name",

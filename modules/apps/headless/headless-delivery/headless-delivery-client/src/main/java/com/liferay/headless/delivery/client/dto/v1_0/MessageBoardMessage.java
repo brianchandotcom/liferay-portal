@@ -122,6 +122,27 @@ public class MessageBoardMessage implements Cloneable, Serializable {
 
 	protected String articleBody;
 
+	public String getCompanyMxName() {
+		return companyMxName;
+	}
+
+	public void setCompanyMxName(String companyMxName) {
+		this.companyMxName = companyMxName;
+	}
+
+	public void setCompanyMxName(
+		UnsafeSupplier<String, Exception> companyMxNameUnsafeSupplier) {
+
+		try {
+			companyMxName = companyMxNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String companyMxName;
+
 	public Creator getCreator() {
 		return creator;
 	}
@@ -269,27 +290,6 @@ public class MessageBoardMessage implements Cloneable, Serializable {
 	}
 
 	protected String externalReferenceCode;
-
-	public String getFeaturedDomain() {
-		return featuredDomain;
-	}
-
-	public void setFeaturedDomain(String featuredDomain) {
-		this.featuredDomain = featuredDomain;
-	}
-
-	public void setFeaturedDomain(
-		UnsafeSupplier<String, Exception> featuredDomainUnsafeSupplier) {
-
-		try {
-			featuredDomain = featuredDomainUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String featuredDomain;
 
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;

@@ -108,6 +108,20 @@ public class MessageBoardMessageSerDes {
 			sb.append("\"");
 		}
 
+		if (messageBoardMessage.getCompanyMxName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"companyMxName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(messageBoardMessage.getCompanyMxName()));
+
+			sb.append("\"");
+		}
+
 		if (messageBoardMessage.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -208,20 +222,6 @@ public class MessageBoardMessageSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(messageBoardMessage.getExternalReferenceCode()));
-
-			sb.append("\"");
-		}
-
-		if (messageBoardMessage.getFeaturedDomain() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"featuredDomain\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(messageBoardMessage.getFeaturedDomain()));
 
 			sb.append("\"");
 		}
@@ -479,6 +479,15 @@ public class MessageBoardMessageSerDes {
 				String.valueOf(messageBoardMessage.getArticleBody()));
 		}
 
+		if (messageBoardMessage.getCompanyMxName() == null) {
+			map.put("companyMxName", null);
+		}
+		else {
+			map.put(
+				"companyMxName",
+				String.valueOf(messageBoardMessage.getCompanyMxName()));
+		}
+
 		if (messageBoardMessage.getCreator() == null) {
 			map.put("creator", null);
 		}
@@ -541,15 +550,6 @@ public class MessageBoardMessageSerDes {
 			map.put(
 				"externalReferenceCode",
 				String.valueOf(messageBoardMessage.getExternalReferenceCode()));
-		}
-
-		if (messageBoardMessage.getFeaturedDomain() == null) {
-			map.put("featuredDomain", null);
-		}
-		else {
-			map.put(
-				"featuredDomain",
-				String.valueOf(messageBoardMessage.getFeaturedDomain()));
 		}
 
 		if (messageBoardMessage.getFriendlyUrlPath() == null) {
@@ -729,6 +729,12 @@ public class MessageBoardMessageSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "companyMxName")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardMessage.setCompanyMxName(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
 					messageBoardMessage.setCreator(
@@ -777,12 +783,6 @@ public class MessageBoardMessageSerDes {
 
 				if (jsonParserFieldValue != null) {
 					messageBoardMessage.setExternalReferenceCode(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "featuredDomain")) {
-				if (jsonParserFieldValue != null) {
-					messageBoardMessage.setFeaturedDomain(
 						(String)jsonParserFieldValue);
 				}
 			}

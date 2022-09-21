@@ -193,9 +193,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage = randomMessageBoardMessage();
 
 		messageBoardMessage.setArticleBody(regex);
+		messageBoardMessage.setCompanyMxName(regex);
 		messageBoardMessage.setEncodingFormat(regex);
 		messageBoardMessage.setExternalReferenceCode(regex);
-		messageBoardMessage.setFeaturedDomain(regex);
 		messageBoardMessage.setFriendlyUrlPath(regex);
 		messageBoardMessage.setHeadline(regex);
 		messageBoardMessage.setStatus(regex);
@@ -207,10 +207,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		messageBoardMessage = MessageBoardMessageSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, messageBoardMessage.getArticleBody());
+		Assert.assertEquals(regex, messageBoardMessage.getCompanyMxName());
 		Assert.assertEquals(regex, messageBoardMessage.getEncodingFormat());
 		Assert.assertEquals(
 			regex, messageBoardMessage.getExternalReferenceCode());
-		Assert.assertEquals(regex, messageBoardMessage.getFeaturedDomain());
 		Assert.assertEquals(regex, messageBoardMessage.getFriendlyUrlPath());
 		Assert.assertEquals(regex, messageBoardMessage.getHeadline());
 		Assert.assertEquals(regex, messageBoardMessage.getStatus());
@@ -2451,6 +2451,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("companyMxName", additionalAssertFieldName)) {
+				if (messageBoardMessage.getCompanyMxName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (messageBoardMessage.getCreator() == null) {
 					valid = false;
@@ -2489,14 +2497,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 					"externalReferenceCode", additionalAssertFieldName)) {
 
 				if (messageBoardMessage.getExternalReferenceCode() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("featuredDomain", additionalAssertFieldName)) {
-				if (messageBoardMessage.getFeaturedDomain() == null) {
 					valid = false;
 				}
 
@@ -2843,6 +2843,17 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("companyMxName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardMessage1.getCompanyMxName(),
+						messageBoardMessage2.getCompanyMxName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						messageBoardMessage1.getCreator(),
@@ -2917,17 +2928,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardMessage1.getExternalReferenceCode(),
 						messageBoardMessage2.getExternalReferenceCode())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("featuredDomain", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						messageBoardMessage1.getFeaturedDomain(),
-						messageBoardMessage2.getFeaturedDomain())) {
 
 					return false;
 				}
@@ -3320,6 +3320,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("companyMxName")) {
+			sb.append("'");
+			sb.append(String.valueOf(messageBoardMessage.getCompanyMxName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3415,14 +3423,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			sb.append("'");
 			sb.append(
 				String.valueOf(messageBoardMessage.getExternalReferenceCode()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("featuredDomain")) {
-			sb.append("'");
-			sb.append(String.valueOf(messageBoardMessage.getFeaturedDomain()));
 			sb.append("'");
 
 			return sb.toString();
@@ -3565,13 +3565,13 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				anonymous = RandomTestUtil.randomBoolean();
 				articleBody = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				companyMxName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				encodingFormat = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				featuredDomain = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				friendlyUrlPath = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

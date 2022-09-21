@@ -192,6 +192,34 @@ public class MessageBoardMessage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String articleBody;
 
+	@Schema(description = "The domain of the user.")
+	public String getCompanyMxName() {
+		return companyMxName;
+	}
+
+	public void setCompanyMxName(String companyMxName) {
+		this.companyMxName = companyMxName;
+	}
+
+	@JsonIgnore
+	public void setCompanyMxName(
+		UnsafeSupplier<String, Exception> companyMxNameUnsafeSupplier) {
+
+		try {
+			companyMxName = companyMxNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The domain of the user.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String companyMxName;
+
 	@Schema(description = "The message's author.")
 	@Valid
 	public Creator getCreator() {
@@ -407,34 +435,6 @@ public class MessageBoardMessage implements Serializable {
 	@GraphQLField(description = "The message's external reference code.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
-
-	@Schema(description = "The domain of the user.")
-	public String getFeaturedDomain() {
-		return featuredDomain;
-	}
-
-	public void setFeaturedDomain(String featuredDomain) {
-		this.featuredDomain = featuredDomain;
-	}
-
-	@JsonIgnore
-	public void setFeaturedDomain(
-		UnsafeSupplier<String, Exception> featuredDomainUnsafeSupplier) {
-
-		try {
-			featuredDomain = featuredDomainUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The domain of the user.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String featuredDomain;
 
 	@Schema
 	public String getFriendlyUrlPath() {
@@ -974,6 +974,20 @@ public class MessageBoardMessage implements Serializable {
 			sb.append("\"");
 		}
 
+		if (companyMxName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"companyMxName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(companyMxName));
+
+			sb.append("\"");
+		}
+
 		if (creator != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1066,20 +1080,6 @@ public class MessageBoardMessage implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(externalReferenceCode));
-
-			sb.append("\"");
-		}
-
-		if (featuredDomain != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"featuredDomain\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(featuredDomain));
 
 			sb.append("\"");
 		}

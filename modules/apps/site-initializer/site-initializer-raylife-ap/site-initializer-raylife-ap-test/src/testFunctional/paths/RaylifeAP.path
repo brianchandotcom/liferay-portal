@@ -59,6 +59,17 @@
 	<td>//div[contains(text(),'Please enter a valid email address.')]</td>
 	<td></td>
 </tr>
+
+<tr>
+	<td>SIDEBAR</td>
+	<td>//div[contains(@class,'ray-sidebar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_OPTION</td>
+	<td>//div[contains(@class,'ray-sidebar')]//span[contains(text(),'${key_optionName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

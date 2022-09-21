@@ -46,6 +46,28 @@ definition {
 			kbStatus = "Draft");
 	}
 
+	@description = "This test ensures that users can add article via center pane button."
+	@e2etest
+	@priority = "5"
+	test CanAddArticleViaCenterPaneButton {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBArticle.addCP(
+			centerPaneButton = "true",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewArticleThroughPageTreePanel(kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Button.viewNotPresent(button = "New");
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanAddArticleWithAttachment {

@@ -40,6 +40,26 @@ definition {
 		KBArticle.viewDefaultCP();
 	}
 
+	@description = "This test ensures that users can add folder via center pane button."
+	@e2etest
+	@priority = "5"
+	test CanAddFolderViaCenterPaneButton {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBFolder.addCP(
+			centerPaneButton = "true",
+			kbFolderDescription = "KB Folder Description",
+			kbFolderName = "KB Folder");
+
+		KBFolder.viewFolderThroughPageTreePanel(kbFolderName = "KB Folder");
+
+		KBFolder.viewFolderNameCP(kbFolderName = "KB Folder");
+
+		Button.viewNotPresent(button = "New");
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanDeleteFolder {

@@ -22,6 +22,29 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that users can import article via center pane button."
+	@e2etest
+	@priority = "5"
+	test CanImportArticleViaCenterPaneButton {
+		property custom.properties = "feature.flag.LPS-156421=true";
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.openPageTreePanel(section = "Folders and Articles");
+
+		KBArticle.importCP(
+			centerPaneButton = "true",
+			kbZipFile = "KBArticlesWithMetadata.zip");
+
+		KBArticle.viewArticleThroughPageTreePanel(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		KBArticle.viewArticleThroughPageTreePanel(kbArticleTitle = "Knowledge Base Article Parent Title 2");
+
+		LexiconEntry.viewEntryName(rowEntry = "Knowledge Base Article Parent Title 1");
+
+		LexiconEntry.viewEntryName(rowEntry = "Knowledge Base Article Parent Title 2");
+	}
+
 	@priority = "5"
 	@refactorneeded
 	test DeleteImportedArticles {

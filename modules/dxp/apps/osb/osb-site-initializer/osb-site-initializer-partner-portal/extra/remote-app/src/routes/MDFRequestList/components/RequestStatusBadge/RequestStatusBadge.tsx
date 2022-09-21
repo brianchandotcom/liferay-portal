@@ -23,7 +23,13 @@ type StatusClassname = {
 
 const statusClassName: StatusClassname = {
 	[RequestStatus.DRAFT]: 'text-neutral-5',
-	[RequestStatus.PENDING]: 'text-secondary',
+	[RequestStatus.PENDING]: 'text-brand-secondary',
+	[RequestStatus.APPROVED]: 'text-success',
+	[RequestStatus.REQUEST_MORE_INFO]: 'text-info',
+	[RequestStatus.REJECT]: 'text-danger',
+	[RequestStatus.EXPIRED]: 'text-danger',
+	[RequestStatus.MARKETING_DIRECTOR_REVIEW]: 'text-brand-secondary-darken-3',
+	[RequestStatus.CANCELED]: 'text-neutral-10',
 };
 
 const RequestStatusBadge = ({status}: IProps) => {

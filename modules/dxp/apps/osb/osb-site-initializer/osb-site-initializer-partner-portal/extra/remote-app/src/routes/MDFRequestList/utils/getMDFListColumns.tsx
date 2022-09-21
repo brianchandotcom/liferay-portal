@@ -30,7 +30,7 @@ export default function getMDFListColumns(
 			},
 			{
 				columnKey: MDFColumnKey.STATUS,
-				label: 'Request ID',
+				label: 'Status',
 				render: (data) => (
 					<RequestStatusBadge status={data as RequestStatus} />
 				),

@@ -41,8 +41,8 @@ public final class AMDRequire {
 	 * @review
 	 */
 	public AMDRequire(String alias, String module) {
-		_module = module;
 		_alias = alias;
+		_module = module;
 	}
 
 	/**

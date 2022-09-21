@@ -45,9 +45,9 @@ public final class ESImport {
 	 * @review
 	 */
 	public ESImport(String alias, String module, String symbol) {
-		_symbol = symbol;
 		_alias = alias;
 		_module = module;
+		_symbol = symbol;
 	}
 
 	/**

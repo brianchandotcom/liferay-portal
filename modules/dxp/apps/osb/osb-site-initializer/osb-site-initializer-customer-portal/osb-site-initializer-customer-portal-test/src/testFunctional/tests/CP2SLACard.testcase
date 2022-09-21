@@ -128,4 +128,42 @@ definition {
             CP2Overview.assertSLACardContentIsVisible(cardContent = "EXPIRED");
         }
     }
+
+    @description = "Automation Ticket: LPS-147802 | Test Summary: Check if the user can switch between SLA cards."
+    @priority = "5"
+    test UserCanSwitchBetweenSLACards {
+        task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount}");
+		}
+
+        task ("And I should be able to view SLA Title Platinum") {
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "Platinum");
+        }
+
+        task ("When I shif the SLA card") {
+            CP2Overview.switchSLACard();
+        }
+
+        task ("Then I should be able to view SLA Title Gold") {
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "Gold");
+        }
+
+        task ("When I shif the SLA card") {
+            CP2Overview.switchSLACard();
+        }
+
+        task ("Then I should be able to view SLA Title Premium") {
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "Premium");
+        }
+
+        task ("When I shif the SLA card") {
+            CP2Overview.switchSLACard();
+        }
+
+        task ("And I should be able to view SLA Title Platinum") {
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "Platinum");
+        }
+    }
 }

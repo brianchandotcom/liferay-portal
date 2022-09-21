@@ -33,14 +33,14 @@
 			"partner": false,
 			"region": "Brazil",
 			"slaCurrent": "Platinum Subscription",
-			"slaCurrentEndDate": "2022-08-24 00:00:00.0",
-			"slaCurrentStartDate": "2021-08-24 00:00:00.0",
-			"slaFuture": "Premium Subscription",
-			"slaFutureEndDate": "2028-08-24 00:00:00.0",
-			"slaFutureStartDate": "2025-08-24 00:00:00.0",
-			"slaExpired": "Gold Subscription",
-			"slaExpiredEndDate": "2022-08-24 00:00:00.0",
-			"slaExpiredStartDate": "2021-08-24 00:00:00.0"
+			"slaCurrentEndDate": "2023-01-01 00:00:00.0",
+			"slaCurrentStartDate": "2022-01-01 00:00:00.0",
+			"slaExpired": "Platinum Subscription",
+			"slaExpiredEndDate": "2021-12-31 00:00:00.0",
+			"slaExpiredStartDate": "2020-12-31 00:00:00.0",
+			"slaFuture": "Platinum Subscription",
+			"slaFutureEndDate": "2024-01-02 00:00:00.0",
+			"slaFutureStartDate": "2023-01-02 00:00:00.0"
 		},
 		{
 			"accountKey": "ERC-003",

@@ -17,11 +17,16 @@ package com.liferay.content.dashboard.journal.internal.item.action;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
 
@@ -35,13 +40,16 @@ public class SubscribeJournalArticleContentDashboardItemAction
 
 	public SubscribeJournalArticleContentDashboardItemAction(
 		HttpServletRequest httpServletRequest, JournalArticle journalArticle,
-		Language language, Portal portal,
+		ModelResourcePermission<JournalArticle>
+			journalArticleModelResourcePermission,
+		Language language,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		_httpServletRequest = httpServletRequest;
 		_journalArticle = journalArticle;
+		_journalArticleModelResourcePermission =
+			journalArticleModelResourcePermission;
 		_language = language;
-		_portal = portal;
 		_requestBackedPortletURLFactory = requestBackedPortletURLFactory;
 	}
 
@@ -84,10 +92,29 @@ public class SubscribeJournalArticleContentDashboardItemAction
 		return getURL();
 	}
 
+	public boolean isDisabled() {
+		try {
+			_journalArticleModelResourcePermission.check(
+				GuestOrUserUtil.getPermissionChecker(),
+				_journalArticle.getResourcePrimKey(), ActionKeys.SUBSCRIBE);
+
+			return false;
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return true;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SubscribeJournalArticleContentDashboardItemAction.class);
+
 	private final HttpServletRequest _httpServletRequest;
 	private final JournalArticle _journalArticle;
+	private final ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission;
 	private final Language _language;
-	private final Portal _portal;
 	private final RequestBackedPortletURLFactory
 		_requestBackedPortletURLFactory;
 

@@ -499,12 +499,16 @@ public class PoshiValidation {
 			_deprecatedFunctionNames.add(className + "#" + method);
 
 			logger.warning(
-				"Deprecated Method: " + method + "\nReplace with: " +
-					_deprecatedMethods.get(method) + "\nFile path: " + file);
+				"Deprecated method \"selenium." + method +
+					"\" should be replaced with " +
+						_deprecatedMethods.get(method) + " at:\n" + file +
+							":" + poshiElement.getPoshiScriptLineNumber());
 		}
 		else if (_deprecatedFunctionNames.contains(method)) {
 			logger.warning(
-				"Deprecated Method: " + method + "\nFile path: " + file);
+				"Use of function \"" + method +
+					"\" contains deprecated selenium method at:\n" + file +
+						":" + poshiElement.getPoshiScriptLineNumber());
 		}
 	}
 
@@ -1965,14 +1969,16 @@ public class PoshiValidation {
 	private static final Map<String, String> _deprecatedMethods =
 		new Hashtable<String, String>() {
 			{
-				put("assertAlert", "assertAlertText");
-				put("copyText", "getText (store as var)");
-				put("copyValue", "getElementValue (store as var)");
-				put("getEval", "getJavaScriptResult");
-				put("runScript", "executeJavaScript");
-				put("paste", "var saved from copy methods");
-				put("typeAlloyEditor", "typeEditor");
-				put("typeCKEditor", "typeEditor");
+				put("assertAlert", "\"selenium.assertAlertText\"");
+				put("copyText", "\"selenium.getText\" (stored as a variable)");
+				put(
+					"copyValue",
+					"\"selenium.getElementValue\" (stored as a variable)");
+				put("getEval", "\"selenium.getJavaScriptResult\"");
+				put("runScript", "\"selenium.executeJavaScript\"");
+				put("paste", "a variable storing the desired value");
+				put("typeAlloyEditor", "\"selenium.typeEditor\"");
+				put("typeCKEditor", "\"selenium.typeEditor\"");
 			}
 		};
 	private static final Set<Exception> _exceptions = new HashSet<>();

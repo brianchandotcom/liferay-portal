@@ -13,15 +13,11 @@
  */
 
 export function getFormId(form) {
-    return form?.dataset.ddmforminstanceid;
+	return form?.dataset.ddmforminstanceid;
 }
 
 export function getFormNode(element) {
 	return element.closest('form');
-}
-
-export function getFormTitle(form) {
-    return form?.dataset.ddmforminstancetitle;
 }
 
 export function getUid() {

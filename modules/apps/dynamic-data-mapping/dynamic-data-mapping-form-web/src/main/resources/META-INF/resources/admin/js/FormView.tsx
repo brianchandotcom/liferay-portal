@@ -27,7 +27,8 @@ const FormView: React.FC<IProps> = ({description, title, ...otherProps}) => {
 					title={title}
 				/>
 			)}
-			<DataEngineFormView {...otherProps} />
+
+			<DataEngineFormView {...{...otherProps, title}} />
 		</>
 	);
 };

@@ -70,7 +70,7 @@ definition {
 	macro clearFilters {
 		Click(
 			key_text = "Clear",
-			locator1 = "LINK#ANY");
+			locator1 = "Link#ANY");
 	}
 
 	macro clickOnFirstBar {

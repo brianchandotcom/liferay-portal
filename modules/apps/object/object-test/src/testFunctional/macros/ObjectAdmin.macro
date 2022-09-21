@@ -727,7 +727,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Click(locator1 = "ContentDashboard#MY_SITES_TAB");
+		AssertClick(
+			locator1 = "NavBar#MY_SITES",
+			value1 = "My Sites");
 
 		Click(
 			key_siteCard = "${siteCard}",

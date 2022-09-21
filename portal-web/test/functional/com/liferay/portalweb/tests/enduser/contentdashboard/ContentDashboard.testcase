@@ -3613,19 +3613,19 @@ definition {
 			ContentDashboard.openFilterModal(filterOption = "Extension");
 
 			AssertVisible(
-				locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW",
+				locator1 = "Treeview#NODE_ITEM",
 				optionName = "Audio");
 
 			AssertVisible(
-				locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW",
+				locator1 = "Treeview#NODE_ITEM",
 				optionName = "Code");
 
 			AssertVisible(
-				locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW",
+				locator1 = "Treeview#NODE_ITEM",
 				optionName = "Presentation");
 
 			AssertVisible(
-				locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW",
+				locator1 = "Treeview#NODE_ITEM",
 				optionName = "Text");
 		}
 	}

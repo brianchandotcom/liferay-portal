@@ -22,6 +22,34 @@ definition {
 		Walkthrough._editWalkthroughJSON(fileName = "${fileName}");
 
 		SystemSettings.saveConfiguration();
+
+	}
+
+	macro setupWalkthroughPage {
+		task ("Given there is a site-level JSON defined for current site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			ApplicationsMenu.gotoSite(site = "Site Name");
+
+			Walkthrough.addWalkthrough(fileName = "${filename}");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Walkthrough Page",
+				widgetName = "JS Walkthrough Sample");
+		}
+
+		task ("When instantiate the walkthrough") {
+			Navigator.openSitePage(
+				pageName = "Walkthrough Page",
+				siteName = "Site Name");
+
+			Walkthrough.enablePopoverMode();
+		}
 	}
 
 	macro enablePopoverMode {
@@ -73,33 +101,6 @@ definition {
 	macro goToSpecificStep {
 		while (IsElementNotPresent(key_title = "Step ${key_step}", locator1 = "Walkthrough#POPOVER_TITLE")) {
 			Click(locator1 = "Button#OK");
-		}
-	}
-
-	macro addWalkthroughPageAndEnablePopoverMode {
-		task ("Given there is a site-level JSON defined for current site") {
-			JSONGroup.addGroup(groupName = "Site Name");
-
-			ApplicationsMenu.gotoSite(site = "Site Name");
-
-			Walkthrough.enableWalkthrough(fileName = "${filename}");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Walkthrough Page");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Walkthrough Page",
-				widgetName = "JS Walkthrough Sample");
-		}
-
-		task ("When instantiate the walkthrough") {
-			Navigator.openSitePage(
-				pageName = "Walkthrough Page",
-				siteName = "Site Name");
-
-			Walkthrough.enablePopoverMode();
 		}
 	}
 

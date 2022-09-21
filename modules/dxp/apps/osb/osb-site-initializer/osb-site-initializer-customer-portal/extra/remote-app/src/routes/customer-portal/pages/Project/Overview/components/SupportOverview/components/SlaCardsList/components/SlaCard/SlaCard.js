@@ -53,7 +53,7 @@ const SlaCard = ({endDate, label, selected, startDate, title}) => {
 							'text-neutral-7': title === SLA_TYPES.platinum,
 						})}
 					>
-						{i18n.translate(title)}
+						{i18n.translate(title.toLowerCase())}
 					</div>
 
 					<div>

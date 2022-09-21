@@ -102,9 +102,7 @@ const CardSubscriptions = ({
 
 					<div className="d-flex justify-content-center">
 						<StatusTag
-							currentStatus={i18n.translate(
-								SLA_STATUS_TYPES[subscriptionStatus]
-							)}
+							currentStatus={SLA_STATUS_TYPES[subscriptionStatus]}
 						/>
 					</div>
 				</div>

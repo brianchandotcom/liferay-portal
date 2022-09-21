@@ -2671,7 +2671,7 @@ definition {
 
 		AssetPublisherPortlet.configureAssetDisplayOrderPG(
 			fieldNameOrder = "Content",
-			sortOrder = "Descending");
+			sortOrder = "Ascending");
 
 		IFrame.closeFrame();
 

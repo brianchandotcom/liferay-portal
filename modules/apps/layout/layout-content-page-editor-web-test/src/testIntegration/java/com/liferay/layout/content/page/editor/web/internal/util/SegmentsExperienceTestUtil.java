@@ -22,6 +22,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.io.InputStream;
 
@@ -51,7 +52,7 @@ public class SegmentsExperienceTestUtil {
 
 		String pageElementJSON = _readFileContent(fileNameContent);
 
-		if (segmentsExperienceId > 0) {
+		if (segmentsExperienceId != SegmentsEntryConstants.ID_DEFAULT) {
 			layoutPageTemplatesImporter.importPageElement(
 				layout, layoutStructure, layoutStructure.getMainItemId(),
 				pageElementJSON, 0, segmentsExperienceId);
@@ -64,9 +65,8 @@ public class SegmentsExperienceTestUtil {
 	}
 
 	public static void checkNewSegmentExperienceContent(
-			Layout layout, long newSegmentsExperienceId,
-			long sourceSegmentsExperienceId)
-		throws Exception {
+		Layout layout, long newSegmentsExperienceId,
+		long sourceSegmentsExperienceId) {
 
 		List<FragmentEntryLink> sourceExperienceFragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.

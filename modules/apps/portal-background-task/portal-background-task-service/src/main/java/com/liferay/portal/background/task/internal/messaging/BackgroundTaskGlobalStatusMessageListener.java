@@ -59,7 +59,7 @@ public class BackgroundTaskGlobalStatusMessageListener
 		else if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
 			_executeQueuedBackgroundTasks(message);
 
-			_deleteCompletedTask(message);
+			_deleteSuccessfulTask(message);
 		}
 		else if (status == BackgroundTaskConstants.STATUS_QUEUED) {
 			long backgroundTaskId = message.getLong(
@@ -75,7 +75,7 @@ public class BackgroundTaskGlobalStatusMessageListener
 		}
 	}
 
-	private void _deleteCompletedTask(Message message) throws Exception {
+	private void _deleteSuccessfulTask(Message message) throws Exception {
 		long backgroundTaskId = message.getLong(
 			BackgroundTaskConstants.BACKGROUND_TASK_ID);
 
@@ -89,11 +89,11 @@ public class BackgroundTaskGlobalStatusMessageListener
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		boolean deleteOnCompetion = GetterUtil.getBoolean(
+		boolean deleteOnSuccess = GetterUtil.getBoolean(
 			taskContextMap.get(
 				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS));
 
-		if (!deleteOnCompetion) {
+		if (!deleteOnSuccess) {
 			return;
 		}
 

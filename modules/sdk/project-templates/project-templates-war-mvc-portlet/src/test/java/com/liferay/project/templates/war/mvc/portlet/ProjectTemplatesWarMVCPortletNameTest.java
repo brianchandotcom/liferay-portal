@@ -69,15 +69,18 @@ public class ProjectTemplatesWarMVCPortletNameTest
 		_gradleDistribution = URI.create(gradleDistribution);
 	}
 
-	public ProjectTemplatesWarMVCPortletNameTest(String liferayVersion) {
+	public ProjectTemplatesWarMVCPortletNameTest(
+		String liferayVersion, String product) {
+
 		_liferayVersion = liferayVersion;
+		_product = product;
 	}
 
 	@Test
 	public void testBuildTemplateWarMvcPortlet() throws Exception {
 		File gradleProjectDir = testBuildTemplatePortlet(
 			temporaryFolder, "war-mvc-portlet", "portlet", "portlet",
-			_liferayVersion, mavenExecutor, _gradleDistribution);
+			_liferayVersion, _product, mavenExecutor, _gradleDistribution);
 
 		testTemplateWarPortletDTD(gradleProjectDir, _liferayVersion);
 	}
@@ -88,5 +91,6 @@ public class ProjectTemplatesWarMVCPortletNameTest
 	private static URI _gradleDistribution;
 
 	private final String _liferayVersion;
+	private final String _product;
 
 }

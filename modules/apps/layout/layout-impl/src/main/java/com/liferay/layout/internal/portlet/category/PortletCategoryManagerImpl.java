@@ -213,7 +213,11 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 									highlightedPortletIds, httpServletRequest,
 									currentPortletCategory, themeDisplay);
 
-						return childPortletCategoryJSONObjectsMap.values();
+						return JSONUtil.toJSONArray(
+							new ArrayList<>(
+								childPortletCategoryJSONObjectsMap.values()),
+							portletCategoryJSONObject ->
+								portletCategoryJSONObject);
 					}
 				).put(
 					"path", portletCategoryKey

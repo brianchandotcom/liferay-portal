@@ -34,59 +34,38 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletApp;
-import com.liferay.portal.kernel.model.PortletCategory;
-import com.liferay.portal.kernel.model.PortletItem;
-import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.PortletItemLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.util.comparator.PortletCategoryComparator;
-import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
-import com.liferay.portal.util.PortletCategoryUtil;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.portlet.PortletConfig;
 import javax.portlet.ResourceURL;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Eudaldo Alonso
@@ -458,204 +437,14 @@ public class AddContentPanelDisplayContext {
 				locale -> LanguageUtil.get(locale, "lang.dir")));
 	}
 
-	private Set<String> _getLayoutDecodedPortletNames() {
-		if (_layoutDecodedPortletNames != null) {
-			return _layoutDecodedPortletNames;
-		}
-
-		Set<String> layoutDecodedPortletNames = new HashSet<>();
-
-		LayoutTypePortlet layoutTypePortlet =
-			_themeDisplay.getLayoutTypePortlet();
-
-		for (Portlet layoutPortlet : layoutTypePortlet.getPortlets()) {
-			String decodedPortletName = PortletIdCodec.decodePortletName(
-				layoutPortlet.getPortletId());
-
-			layoutDecodedPortletNames.add(decodedPortletName);
-		}
-
-		_layoutDecodedPortletNames = layoutDecodedPortletNames;
-
-		return _layoutDecodedPortletNames;
-	}
-
-	private String _getPortletCategoryTitle(PortletCategory portletCategory) {
-		for (String portletId :
-				PortletCategoryUtil.getFirstChildPortletIds(portletCategory)) {
-
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				_themeDisplay.getCompanyId(), portletId);
-
-			if (portlet == null) {
-				continue;
-			}
-
-			PortletApp portletApp = portlet.getPortletApp();
-
-			if (!portletApp.isWARFile()) {
-				continue;
-			}
-
-			PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-				portlet, _httpServletRequest.getServletContext());
-
-			ResourceBundle portletResourceBundle =
-				portletConfig.getResourceBundle(_themeDisplay.getLocale());
-
-			String title = ResourceBundleUtil.getString(
-				portletResourceBundle, portletCategory.getName());
-
-			if (Validator.isNotNull(title)) {
-				return title;
-			}
-		}
-
-		return LanguageUtil.get(_httpServletRequest, portletCategory.getName());
-	}
-
-	private List<Map<String, Object>> _getPortletItems(Portlet portlet) {
-		List<PortletItem> portletItems =
-			PortletItemLocalServiceUtil.getPortletItems(
-				_themeDisplay.getScopeGroupId(), portlet.getPortletId(),
-				PortletPreferences.class.getName());
-
-		if (ListUtil.isEmpty(portletItems)) {
-			return Collections.emptyList();
-		}
-
-		Stream<PortletItem> stream = portletItems.stream();
-
-		return stream.map(
-			portletItem -> HashMapBuilder.<String, Object>put(
-				"instanceable", portlet.isInstanceable()
-			).put(
-				"portletId", portlet.getPortletId()
-			).put(
-				"portletItemId", portletItem.getPortletItemId()
-			).put(
-				"title", HtmlUtil.escape(portletItem.getName())
-			).put(
-				"used", _isUsed(portlet)
-			).build()
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	private List<Map<String, Object>> _getPortlets(
-		PortletCategory portletCategory) {
-
-		HttpSession httpSession = _httpServletRequest.getSession();
-
-		ServletContext servletContext = httpSession.getServletContext();
-
-		Set<String> portletIds = portletCategory.getPortletIds();
-
-		Stream<String> stream = portletIds.stream();
-
-		return stream.map(
-			portletId -> PortletLocalServiceUtil.getPortletById(
-				_themeDisplay.getCompanyId(), portletId)
-		).filter(
-			portlet -> {
-				if (portlet == null) {
-					return false;
-				}
-
-				try {
-					return PortletPermissionUtil.contains(
-						_themeDisplay.getPermissionChecker(),
-						_themeDisplay.getLayout(), portlet,
-						ActionKeys.ADD_TO_PAGE);
-				}
-				catch (PortalException portalException) {
-					_log.error(
-						"Unable to check portlet permissions for " +
-							portlet.getPortletId(),
-						portalException);
-
-					return false;
-				}
-			}
-		).sorted(
-			new PortletTitleComparator(
-				servletContext, _themeDisplay.getLocale())
-		).map(
-			portlet -> HashMapBuilder.<String, Object>put(
-				"instanceable", portlet.isInstanceable()
-			).put(
-				"portletId", portlet.getPortletId()
-			).put(
-				"portletItems", _getPortletItems(portlet)
-			).put(
-				"title",
-				PortalUtil.getPortletTitle(
-					portlet, servletContext, _themeDisplay.getLocale())
-			).put(
-				"used", _isUsed(portlet)
-			).build()
-		).collect(
-			Collectors.toList()
-		);
-	}
-
 	private String _getRedirectURL() throws Exception {
 		return PortalUtil.getLayoutFullURL(
 			_themeDisplay.getLayout(), _themeDisplay);
 	}
 
-	private List<Map<String, Object>> _getWidgetCategories(
-		PortletCategory portletCategory) {
-
-		Collection<PortletCategory> portletCategories =
-			portletCategory.getCategories();
-
-		Stream<PortletCategory> stream = portletCategories.stream();
-
-		return stream.sorted(
-			new PortletCategoryComparator(_themeDisplay.getLocale())
-		).filter(
-			currentPortletCategory -> !currentPortletCategory.isHidden()
-		).map(
-			currentPortletCategory -> HashMapBuilder.<String, Object>put(
-				"categories", _getWidgetCategories(currentPortletCategory)
-			).put(
-				"path",
-				StringUtil.replace(
-					currentPortletCategory.getPath(), new String[] {"/", "."},
-					new String[] {"-", "-"})
-			).put(
-				"portlets", _getPortlets(currentPortletCategory)
-			).put(
-				"title", _getPortletCategoryTitle(currentPortletCategory)
-			).build()
-		).collect(
-			Collectors.toList()
-		);
-	}
-
 	private JSONArray _getWidgetsJSONArray() throws Exception {
 		return _portletCategoryManager.getPortletsJSONArray(
 			_httpServletRequest, _themeDisplay);
-	}
-
-	private boolean _isUsed(Portlet portlet) {
-		if (portlet.isInstanceable()) {
-			return false;
-		}
-
-		Set<String> layoutDecodedPortletNames = _getLayoutDecodedPortletNames();
-		LayoutTypePortlet layoutTypePortlet =
-			_themeDisplay.getLayoutTypePortlet();
-
-		if (layoutDecodedPortletNames.contains(portlet.getPortletId()) ||
-			layoutTypePortlet.hasPortletId(portlet.getPortletId())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -669,7 +458,6 @@ public class AddContentPanelDisplayContext {
 	private Boolean _hasLayoutUpdatePermission;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
-	private Set<String> _layoutDecodedPortletNames;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PortletCategoryManager _portletCategoryManager;

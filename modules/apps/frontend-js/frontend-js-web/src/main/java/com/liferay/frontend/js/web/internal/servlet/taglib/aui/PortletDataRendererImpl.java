@@ -185,7 +185,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 
 					amdRequiresMap.put(
 						amdRequire,
-						new AMDRequire(amdRequire.getModule(), alias));
+						new AMDRequire(alias, amdRequire.getModule()));
 				}
 			}
 		}
@@ -242,7 +242,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 					esImportsMap.put(
 						esImport,
 						new ESImport(
-							esImport.getSymbol(), alias, esImport.getModule()));
+							alias, esImport.getModule(), esImport.getSymbol()));
 				}
 			}
 		}

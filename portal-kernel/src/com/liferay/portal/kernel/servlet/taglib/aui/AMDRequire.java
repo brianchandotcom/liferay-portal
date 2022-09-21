@@ -28,7 +28,7 @@ public final class AMDRequire {
 	 * @review
 	 */
 	public AMDRequire(String module) {
-		this(module, VariableUtil.generateVariable(module));
+		this(VariableUtil.generateVariable(module), module);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public final class AMDRequire {
 	 *
 	 * @review
 	 */
-	public AMDRequire(String module, String alias) {
+	public AMDRequire(String alias, String module) {
 		_module = module;
 		_alias = alias;
 	}

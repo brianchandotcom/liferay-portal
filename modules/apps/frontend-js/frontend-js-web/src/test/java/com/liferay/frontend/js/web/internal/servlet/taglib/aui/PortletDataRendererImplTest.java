@@ -90,7 +90,7 @@ public class PortletDataRendererImplTest {
 		portletData.add(
 			new JSFragment(
 				null, null, "content",
-				Arrays.asList(new ESImport("openDialog", "frontend-js-web"))));
+				Arrays.asList(new ESImport("frontend-js-web", "openDialog"))));
 
 		Writer writer = new CharArrayWriter();
 
@@ -180,9 +180,9 @@ public class PortletDataRendererImplTest {
 				Arrays.asList(new AMDRequire("frontend-js-web")), null,
 				"content1",
 				Arrays.asList(
-					new ESImport("openDialog", "frontend-js-web"),
+					new ESImport("frontend-js-web", "openDialog"),
 					new ESImport(
-						"openDialog", "myOpenDialog", "frontend-js-web"),
+						"myOpenDialog", "frontend-js-web", "openDialog"),
 					new ESImport("react", "react"))));
 
 		portletData1.add(
@@ -190,9 +190,9 @@ public class PortletDataRendererImplTest {
 				Arrays.asList(new AMDRequire("frontend-js-web")), null,
 				"content2",
 				Arrays.asList(
-					new ESImport("openDialog", "frontend-js-web"),
+					new ESImport("frontend-js-web", "openDialog"),
 					new ESImport(
-						"openDialog", "myOpenDialog2", "frontend-js-web"),
+						"myOpenDialog2", "frontend-js-web", "openDialog"),
 					new ESImport("react", "react"))));
 
 		PortletData portletData2 = new PortletData();
@@ -203,9 +203,9 @@ public class PortletDataRendererImplTest {
 					new AMDRequire("frontend-js-web"), new AMDRequire("react")),
 				null, "content3",
 				Arrays.asList(
-					new ESImport("openDialog", "frontend-js-web"),
+					new ESImport("frontend-js-web", "openDialog"),
 					new ESImport(
-						"openDialog", "myOpenDialog2", "frontend-js-web"))));
+						"myOpenDialog2", "frontend-js-web", "openDialog"))));
 
 		Writer writer = new CharArrayWriter();
 

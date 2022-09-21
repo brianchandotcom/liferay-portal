@@ -177,7 +177,7 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 				amdRequire = new AMDRequire(nameAndAlias[0]);
 			}
 			else {
-				amdRequire = new AMDRequire(nameAndAlias[0], nameAndAlias[1]);
+				amdRequire = new AMDRequire(nameAndAlias[1], nameAndAlias[0]);
 			}
 
 			amdRequires.add(amdRequire);

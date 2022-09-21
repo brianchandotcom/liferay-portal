@@ -30,8 +30,8 @@ public final class ESImport {
 	 *
 	 * @review
 	 */
-	public ESImport(String symbol, String module) {
-		this(symbol, symbol, module);
+	public ESImport(String module, String symbol) {
+		this(symbol, module, symbol);
 	}
 
 	/**
@@ -44,7 +44,7 @@ public final class ESImport {
 	 *
 	 * @review
 	 */
-	public ESImport(String symbol, String alias, String module) {
+	public ESImport(String alias, String module, String symbol) {
 		_symbol = symbol;
 		_alias = alias;
 		_module = module;

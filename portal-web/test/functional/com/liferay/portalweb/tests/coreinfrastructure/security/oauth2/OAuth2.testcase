@@ -1976,7 +1976,7 @@ definition {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
 				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/pkce/?url=https://localhost:8443&client_id=pkce''',
+				callbackUri = '''https://localhost:8443/oauth2-tester/?pkce=1&url=https://localhost:8443&client_id=pkce''',
 				checkboxCheckList = "Token Introspection",
 				checkboxUncheckList = "Authorization Code,Client Credentials,JWT_BEARER,Resource Owner Password Credentials",
 				clientAuthenticationMethod = "None",

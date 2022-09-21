@@ -35,9 +35,10 @@ import java.util.Map;
 /**
  * @author Michael C. Han
  */
-public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
+public class BackgroundTaskGlobalStatusMessageListener
+	extends BaseMessageListener {
 
-	public BackgroundTaskQueuingMessageListener(
+	public BackgroundTaskGlobalStatusMessageListener(
 		BackgroundTaskLocalService backgroundTaskLocalService,
 		LockManager lockManager) {
 
@@ -142,7 +143,7 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BackgroundTaskQueuingMessageListener.class);
+		BackgroundTaskGlobalStatusMessageListener.class);
 
 	private final BackgroundTaskLocalService _backgroundTaskLocalService;
 	private final BackgroundTaskLockHelper _backgroundTaskLockHelper;

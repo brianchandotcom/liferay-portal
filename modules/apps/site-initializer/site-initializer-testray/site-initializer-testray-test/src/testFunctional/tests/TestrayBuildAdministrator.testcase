@@ -179,12 +179,56 @@ definition {
 	}
 
 	@description = "This is a test for LPS-156575 - Verify if as an Administrator I should be able to delete a build that contains runs"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanDeleteBuildContainsRuns {
+		task ("Given that the user add a new build with Environments Factors") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-		// TODO LPS-156575 pending AdminCanDeleteBuildContainsRuns implementation
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
 
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				optionEnvironmentFactors = "Application Server",
+				optionEnvironmentFactors1 = "Browser",
+				optionApplicationServer = "JBoss 6.1",
+				optionBrowser = "Chrome x");
+
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+
+			TestrayBuild.createBuild(
+					description = "Builds_1 Project Description",
+					fieldName = "Builds_1 Project",
+					gitHash = "12345",
+					productVersion = "1.0",
+					routine = "Routines_1 Routine");
+		}
+
+		task ("And deleted build with runs") {
+			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
+
+			Testray.projectTabNavigator(navTabName = "Runs");
+
+			Testray.assertItemName(key_name = "JBoss 6.1");
+
+			Testray.assertItemName(key_name = "Chrome x");
+
+			TestrayLayout.clickResultsOnSidebar();
+
+			Testray.changePagination(
+					numberItems = "20",
+					valuePagination = "150");
+
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayBuild.deleteBuild(itemName = "Builds_1 Project");
+		}
+
+		task ("Then the build with runs should not appear on the list") {
+			Testray.assertItemNotPresent(itemName = "Builds_1 Project");
+		}
 	}
 
 	@description = "This is a test for LPS-156543 - Verify if as an Administrator I am able to edit Builds"

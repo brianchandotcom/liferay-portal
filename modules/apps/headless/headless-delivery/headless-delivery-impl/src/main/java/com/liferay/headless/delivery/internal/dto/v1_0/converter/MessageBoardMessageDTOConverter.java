@@ -33,7 +33,6 @@ import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -84,7 +83,8 @@ public class MessageBoardMessageDTOConverter
 						MBMessage.class.getName(), mbMessage.getMessageId()));
 				anonymous = mbMessage.isAnonymous();
 				articleBody = mbMessage.getBody();
-				companyMxName = _getCompanyMxName(mbMessage.getCompanyId(), mbMessage.getGroupId(), user);
+				companyMxName = _getCompanyMxName(
+					mbMessage.getCompanyId(), mbMessage.getGroupId(), user);
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
 					MBMessage.class.getName(), mbMessage.getMessageId(),
@@ -160,7 +160,7 @@ public class MessageBoardMessageDTOConverter
 		};
 	}
 
-	private String _getCompanyMxName(long companyId, long groupId, User user )
+	private String _getCompanyMxName(long companyId, long groupId, User user)
 		throws Exception {
 
 		MBModerationGroupConfiguration mbModerationGroupConfiguration =
@@ -169,9 +169,11 @@ public class MessageBoardMessageDTOConverter
 
 		Company company = _companyLocalService.getCompany(companyId);
 
-		if(company.hasCompanyMx(user.getEmailAddress()) && mbModerationGroupConfiguration.enableCompanyMx() == true) {
+		if (company.hasCompanyMx(user.getEmailAddress()) &&
+			(mbModerationGroupConfiguration.enableCompanyMx() == true)) {
+
 			return user.getCompanyMx();
-			}
+		}
 
 		return StringPool.BLANK;
 	}
@@ -186,6 +188,12 @@ public class MessageBoardMessageDTOConverter
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference
@@ -193,12 +201,6 @@ public class MessageBoardMessageDTOConverter
 
 	@Reference
 	private MBStatsUserLocalService _mbStatsUserLocalService;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Portal _portal;

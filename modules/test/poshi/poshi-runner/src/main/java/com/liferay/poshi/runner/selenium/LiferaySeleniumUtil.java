@@ -159,38 +159,8 @@ public class LiferaySeleniumUtil {
 		}
 
 		if (!javaScriptExceptions.isEmpty()) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(javaScriptExceptions.size());
-			sb.append(" Javascript Exception");
-
-			if (javaScriptExceptions.size() > 1) {
-				sb.append("s were");
-			}
-			else {
-				sb.append(" was");
-			}
-
-			sb.append(" thrown");
-
-			System.out.println();
-			System.out.println("##");
-			System.out.println("## " + sb.toString());
-			System.out.println("##");
-
-			for (int i = 0; i < javaScriptExceptions.size(); i++) {
-				Exception exception = javaScriptExceptions.get(i);
-
-				System.out.println();
-				System.out.println("##");
-				System.out.println("## Javascript Exception #" + (i + 1));
-				System.out.println("##");
-				System.out.println();
-				System.out.println(exception.getMessage());
-				System.out.println();
-			}
-
-			throw new Exception(sb.toString());
+			throw new Exception(
+				_getExceptionsMessage(javaScriptExceptions, "JavaScript"));
 		}
 	}
 
@@ -207,38 +177,8 @@ public class LiferaySeleniumUtil {
 		}
 
 		if (!liferayLogExceptions.isEmpty()) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(liferayLogExceptions.size());
-			sb.append(" Liferay Exception");
-
-			if (liferayLogExceptions.size() > 1) {
-				sb.append("s were");
-			}
-			else {
-				sb.append(" was");
-			}
-
-			sb.append(" thrown");
-
-			System.out.println();
-			System.out.println("##");
-			System.out.println("## " + sb.toString());
-			System.out.println("##");
-
-			for (int i = 0; i < liferayLogExceptions.size(); i++) {
-				Exception exception = liferayLogExceptions.get(i);
-
-				System.out.println();
-				System.out.println("##");
-				System.out.println("## Liferay Exception #" + (i + 1));
-				System.out.println("##");
-				System.out.println();
-				System.out.println(exception.getMessage());
-				System.out.println();
-			}
-
-			throw new Exception(sb.toString());
+			throw new Exception(
+				_getExceptionsMessage(liferayLogExceptions, "Liferay"));
 		}
 	}
 
@@ -269,61 +209,12 @@ public class LiferaySeleniumUtil {
 		StringBuilder sb = new StringBuilder();
 
 		if (!javaScriptExceptions.isEmpty()) {
-			sb.append("\n");
-			sb.append("##\n");
-
-			sb.append("## ");
-			sb.append(javaScriptExceptions.size());
-			sb.append(" Javascript Exception");
-
-			if (javaScriptExceptions.size() > 1) {
-				sb.append("s were");
-			}
-			else {
-				sb.append(" was");
-			}
-
-			sb.append(" thrown\n");
-
-			sb.append("##\n");
-			sb.append("\n");
-
-			for (Exception exception : javaScriptExceptions) {
-				sb.append(exception.getMessage());
-
-				sb.append("\n");
-			}
-
-			sb.append("\n");
+			sb.append(
+				_getExceptionsMessage(javaScriptExceptions, "JavaScript"));
 		}
 
 		if (!liferayLogExceptions.isEmpty()) {
-			sb.append("\n");
-			sb.append("##\n");
-
-			sb.append("## ");
-			sb.append(liferayLogExceptions.size());
-			sb.append(" Liferay Exception");
-
-			if (liferayLogExceptions.size() > 1) {
-				sb.append("s were");
-			}
-			else {
-				sb.append(" was");
-			}
-
-			sb.append(" thrown\n");
-
-			sb.append("##\n");
-			sb.append("\n");
-
-			for (Exception exception : liferayLogExceptions) {
-				sb.append(exception.getMessage());
-
-				sb.append("\n");
-			}
-
-			sb.append("\n");
+			sb.append(_getExceptionsMessage(liferayLogExceptions, "Liferay"));
 		}
 
 		if (Validator.isNotNull(sb.toString())) {
@@ -809,6 +700,46 @@ public class LiferaySeleniumUtil {
 			process.getInputStream());
 
 		return new BufferedReader(inputStreamReader);
+	}
+
+	private static String _getExceptionsMessage(
+		List<PoshiRunnerWarningException> poshiRunnerWarningExceptions,
+		String exceptionType) {
+
+		StringBuilder sb = new StringBuilder();
+
+		if (!poshiRunnerWarningExceptions.isEmpty()) {
+			sb.append("\n");
+			sb.append("##\n");
+
+			sb.append("## ");
+			sb.append(poshiRunnerWarningExceptions.size());
+			sb.append(" ");
+			sb.append(exceptionType);
+			sb.append(" Exception");
+
+			if (poshiRunnerWarningExceptions.size() > 1) {
+				sb.append("s were");
+			}
+			else {
+				sb.append(" was");
+			}
+
+			sb.append(" thrown\n");
+
+			sb.append("##\n");
+			sb.append("\n");
+
+			for (Exception exception : poshiRunnerWarningExceptions) {
+				sb.append(exception.getMessage());
+
+				sb.append("\n");
+			}
+
+			sb.append("\n");
+		}
+
+		return sb.toString();
 	}
 
 	private static final long _BYTES_MAX_SIZE_CONSOLE_LOG = 20 * 1024 * 1024;

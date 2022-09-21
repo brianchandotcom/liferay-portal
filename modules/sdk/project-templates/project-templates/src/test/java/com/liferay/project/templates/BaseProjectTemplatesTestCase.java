@@ -1302,7 +1302,7 @@ public interface BaseProjectTemplatesTestCase {
 	public default void testBuildTemplateNpm(
 			TemporaryFolder temporaryFolder, MavenExecutor mavenExecutor,
 			String template, String name, String packageName, String className,
-			String liferayVersion, String nodePackageManager,
+			String liferayVersion, String nodePackageManager, String product,
 			URI gradleDistribution)
 		throws Exception {
 
@@ -1315,10 +1315,17 @@ public interface BaseProjectTemplatesTestCase {
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			gradleWorkspaceModulesDir, template, name, "--liferay-version",
-			liferayVersion);
+			liferayVersion, "--product", product);
 
-		testContains(
-			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
+		if (VersionUtil.getMinorVersion(liferayVersion) < 3) {
+			testContains(
+				gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_DXP_API);
+		}
+		else {
+			testContains(
+				gradleProjectDir, "build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API);
+		}
 
 		testContains(
 			gradleProjectDir, "package.json",
@@ -1337,7 +1344,8 @@ public interface BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=" + className,
-			"-Dpackage=" + packageName, "-DliferayVersion=" + liferayVersion);
+			"-Dpackage=" + packageName, "-DliferayVersion=" + liferayVersion,
+			"-Dproduct=" + product);
 
 		testContains(
 			mavenProjectDir, "package.json",

@@ -48,7 +48,7 @@ function normalizeCategories(categories, fragmentEntryLinks) {
 
 	return categories.map((category) => {
 		const portletIds = new Set(
-			fragmentEntryLinks.map(({portletId}) => portletId)
+			Array.from(fragmentEntryLinks).map(({portletId}) => portletId)
 		);
 
 		const normalizedCategory = {

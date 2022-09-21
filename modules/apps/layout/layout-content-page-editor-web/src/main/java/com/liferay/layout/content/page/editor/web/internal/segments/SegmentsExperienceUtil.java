@@ -104,7 +104,7 @@ public class SegmentsExperienceUtil {
 			long userId)
 		throws PortalException {
 
-		_copyLayoutData(
+		copySegmentsExperienceData(
 			draftLayoutPlid, commentManager, groupId, portletRegistry,
 			sourceSegmentsExperienceId, targetSegmentsExperienceId,
 			serviceContextFunction, userId);
@@ -112,8 +112,8 @@ public class SegmentsExperienceUtil {
 		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
 			draftLayoutPlid);
 
-		if ((draftLayout != null) && (draftLayout.getClassPK() > 0)) {
-			_copyLayoutData(
+		if ((draftLayout != null) && draftLayout.isDraftLayout()) {
+			copySegmentsExperienceData(
 				draftLayout.getClassPK(), commentManager, groupId,
 				portletRegistry, sourceSegmentsExperienceId,
 				targetSegmentsExperienceId, serviceContextFunction, userId);

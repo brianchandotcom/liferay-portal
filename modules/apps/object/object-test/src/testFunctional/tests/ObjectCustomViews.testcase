@@ -72,7 +72,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		var listMetaData = "Author,Create Date,Modified Date,Status,ID";
+		var listMetaData = "Author,Create Date,External Reference Code,Modified Date,Status,ID";
 
 		ObjectCustomViews.addColumnsViaUI(addColumns = "${listMetaData}");
 
@@ -1168,17 +1168,17 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Create Date,Modified Date,Status,ID");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Create Date,External Reference Code,Modified Date,Status,ID");
 
 		ObjectCustomViews.goToDefaultSortTab();
 
-		for (var columnName : list "Author,Create Date,Modified Date,Status,ID") {
+		for (var columnName : list "Author,Create Date,External Reference Code,Modified Date,Status,ID") {
 			ObjectCustomViews.addDefaultSort(
 				columnOption = "${columnName}",
 				sortOption = "Ascending");
 		}
 
-		for (var columnName : list "Author,Create Date,Modified Date,Status,ID") {
+		for (var columnName : list "Author,Create Date,External Reference Code,Modified Date,Status,ID") {
 			ObjectCustomViews.searchOnDefaultSort(columnName = "${columnName}");
 
 			ObjectCustomViews.assertColumnPresentOnDefaultSort(
@@ -1901,7 +1901,7 @@ definition {
 			ObjectPortlet.assertEntryColumnPresent(column = "${columnName}");
 		}
 
-		for (var columnName : list "Modified Date,Status,ID") {
+		for (var columnName : list "External Reference Code,Modified Date,Status,ID") {
 			ObjectPortlet.assertEntryColumnNotPresent(column = "${columnName}");
 		}
 	}

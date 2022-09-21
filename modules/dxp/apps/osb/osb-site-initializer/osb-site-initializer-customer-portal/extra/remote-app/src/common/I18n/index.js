@@ -12,8 +12,8 @@
 import {Liferay} from '../services/liferay';
 
 import en_US from './Language.json';
-import es_ES from './Language_es.json';
-import ja_JP from './Language_ja.json';
+import es_ES from './Language_es_ES.json';
+import ja_JP from './Language_ja_JP.json';
 import pt_BR from './Language_pt_BR.json';
 
 export const languages = {
@@ -26,7 +26,7 @@ export const languages = {
 const translate = (word, languageId = Liferay.ThemeDisplay.getLanguageId()) => {
 	const languageProperties = languages[languageId] || languages.en_US;
 
-	return languageProperties[word] || word;
+	return languageProperties[word] || languages.en_US[word];
 };
 
 const sub = (word, words) => {

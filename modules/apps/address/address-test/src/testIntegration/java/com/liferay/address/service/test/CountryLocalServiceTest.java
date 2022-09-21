@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -44,6 +43,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -256,21 +256,13 @@ public class CountryLocalServiceTest {
 
 	@Test(expected = CountryTitleException.MustNotExceedMaximumLength.class)
 	public void testUpdateCountryLocalizations() throws Exception {
-		Country country = _addCountry(
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
-
 		int maxTitleLength = ModelHintsUtil.getMaxLength(
 			CountryLocalization.class.getName(), "title");
 
-		HashMapBuilder.HashMapWrapper<String, String> titleMap =
-			new HashMapBuilder.HashMapWrapper<>();
-
-		titleMap.put("de_DE", RandomTestUtil.randomString(maxTitleLength + 1));
-
 		_countryLocalService.updateCountryLocalizations(
-			country, titleMap.build());
+			_countryLocalService.createCountry(0L),
+			Collections.singletonMap(
+				"de_DE", RandomTestUtil.randomString(maxTitleLength + 1)));
 	}
 
 	private Country _addCountry(

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -89,6 +90,8 @@ public class CreateAccountUserMVCActionCommand
 		}
 
 		User user = _addUser(actionRequest);
+
+		_ticketLocalService.deleteTicket(ticket);
 
 		if (user.getStatus() == WorkflowConstants.STATUS_APPROVED) {
 			SessionMessages.add(
@@ -195,6 +198,9 @@ public class CreateAccountUserMVCActionCommand
 
 	@Reference
 	private TicketHelper _ticketHelper;
+
+	@Reference
+	private TicketLocalService _ticketLocalService;
 
 	@Reference
 	private UserService _userService;

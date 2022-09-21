@@ -96,13 +96,15 @@ public class CPMediaUtil {
 					cpAttachmentFileEntry.getCPAttachmentFileEntryId()),
 				"\" />");
 
-			String adaptiveMediaImageHTMLTag = amImageHTMLTagFactory.create(
-				originalImgTag, cpAttachmentFileEntry.fetchFileEntry());
+			if (!cpAttachmentFileEntry.isCDNEnabled()) {
+				originalImgTag = amImageHTMLTagFactory.create(
+					originalImgTag, cpAttachmentFileEntry.fetchFileEntry());
+			}
 
 			cpMedias.add(
 				new AdaptiveMediaCPMediaImpl(
-					adaptiveMediaImageHTMLTag, commerceAccountId,
-					cpAttachmentFileEntry, themeDisplay));
+					originalImgTag, commerceAccountId, cpAttachmentFileEntry,
+					themeDisplay));
 		}
 
 		if (cpMedias.isEmpty()) {

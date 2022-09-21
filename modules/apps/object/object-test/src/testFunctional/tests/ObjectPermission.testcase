@@ -2283,8 +2283,7 @@ definition {
 	@description = "LPS-146756 - Verify that a guest user with the resource permission action of "Add Object Entry" activated can add new object entries and view its own entries"
 	@priority = "5"
 	test GuestCanAddObjectEntriesWithAddPermission {
-		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPermission#GuestCanAddObjectEntriesWithAddPermission";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -2501,8 +2500,7 @@ definition {
 	@description = "LPS-146756 - Verify that a guest user with the resource permission action of "View" activated can vizualize object entries"
 	@priority = "5"
 	test GuestCanViewObjectEntriesWithViewPermission {
-		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "ObjectPermission#GuestCanViewObjectEntriesWithViewPermission";
 
 		ObjectAdmin.addObjectViaAPI(

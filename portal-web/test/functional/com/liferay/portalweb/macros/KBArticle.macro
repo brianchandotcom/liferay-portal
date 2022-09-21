@@ -859,7 +859,14 @@ definition {
 	}
 
 	macro importCP {
-		LexiconEntry.gotoAddDropdownMenuItem(menuItem = "Import");
+		if (isSet(centerPaneButton)) {
+			Button.click(button = "New");
+
+			MenuItem.click(menuItem = "Import");
+		}
+		else {
+			LexiconEntry.gotoAddDropdownMenuItem(menuItem = "Import");
+		}
 
 		UploadDependencyFile.uploadArchiveFile(fileName = "${kbZipFile}");
 

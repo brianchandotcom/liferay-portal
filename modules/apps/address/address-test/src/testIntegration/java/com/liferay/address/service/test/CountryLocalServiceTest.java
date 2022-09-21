@@ -255,7 +255,7 @@ public class CountryLocalServiceTest {
 	}
 
 	@Test(expected = CountryTitleException.MustNotExceedMaximumLength.class)
-	public void testUpdateCountryLocalizationsValidation() throws Exception {
+	public void testUpdateCountryLocalizations() throws Exception {
 		Country country = _addCountry(
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),

@@ -42,6 +42,29 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		int status = message.getInteger("status");
+
+		if ((status == BackgroundTaskConstants.STATUS_CANCELLED) ||
+			(status == BackgroundTaskConstants.STATUS_FAILED) ||
+			(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
+
+			_executeQueuedBackgroundTasks(message);
+		}
+		else if (status == BackgroundTaskConstants.STATUS_QUEUED) {
+			long backgroundTaskId = message.getLong(
+				BackgroundTaskConstants.BACKGROUND_TASK_ID);
+
+			if (!_backgroundTaskLockHelper.isLockedBackgroundTask(
+					new BackgroundTaskImpl(
+						_backgroundTaskLocalService.fetchBackgroundTask(
+							backgroundTaskId)))) {
+
+				_executeQueuedBackgroundTasks(message);
+			}
+		}
+	}
+
+	private void _executeQueuedBackgroundTasks(Message message) {
 		String taskExecutorClassName = message.getString(
 			"taskExecutorClassName");
 
@@ -55,29 +78,6 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 			return;
 		}
 
-		int status = message.getInteger("status");
-
-		if ((status == BackgroundTaskConstants.STATUS_CANCELLED) ||
-			(status == BackgroundTaskConstants.STATUS_FAILED) ||
-			(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
-
-			_executeQueuedBackgroundTasks(taskExecutorClassName);
-		}
-		else if (status == BackgroundTaskConstants.STATUS_QUEUED) {
-			long backgroundTaskId = message.getLong(
-				BackgroundTaskConstants.BACKGROUND_TASK_ID);
-
-			if (!_backgroundTaskLockHelper.isLockedBackgroundTask(
-					new BackgroundTaskImpl(
-						_backgroundTaskLocalService.fetchBackgroundTask(
-							backgroundTaskId)))) {
-
-				_executeQueuedBackgroundTasks(taskExecutorClassName);
-			}
-		}
-	}
-
-	private void _executeQueuedBackgroundTasks(String taskExecutorClassName) {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Acquiring next queued background task for " +

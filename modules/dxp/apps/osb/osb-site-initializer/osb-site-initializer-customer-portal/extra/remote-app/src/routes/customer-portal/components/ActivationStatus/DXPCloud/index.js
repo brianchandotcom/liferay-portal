@@ -239,7 +239,7 @@ const ActivationStatusDXPCloud = ({
 					onClose={onCloseSetupModal}
 					project={project}
 					subscriptionGroupId={
-						subscriptionGroupDXPCloud.accountSubscriptionGroupId
+						subscriptionGroupDXPCloud?.accountSubscriptionGroupId
 					}
 				/>
 			)}

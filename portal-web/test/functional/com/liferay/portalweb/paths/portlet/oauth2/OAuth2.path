@@ -196,17 +196,17 @@
 </tr>
 <tr>
 	<td>OAUTH2_TESTER_EXCHANGE_CODE</td>
-	<td>//input[contains(@id,'exchangeCode')]</td>
+	<td>//input[contains(@id,'clientSecretOrCodeChallenge')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OAUTH2_TESTER_REQUEST_URL</td>
-	<td>//input[contains(@id,'url')]</td>
+	<td>//input[contains(@id,'requestUrl')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OAUTH2_TESTER_REQUEST_RESULTS</td>
-	<td>//div[contains(@id,'result')]</td>
+	<td>//textarea[contains(@id,'result')]</td>
 	<td></td>
 </tr>
 <tr>

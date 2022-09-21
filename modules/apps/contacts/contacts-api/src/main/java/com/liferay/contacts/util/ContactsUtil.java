@@ -383,9 +383,9 @@ public class ContactsUtil {
 		for (Phone phone : phones) {
 			sb.append("TEL;TYPE=");
 
-			ListType listType = phone.getType();
-
-			sb.append(StringUtil.toUpperCase(_getVCardListTypeName(listType)));
+			sb.append(
+				StringUtil.toUpperCase(
+					_getVCardListTypeName(phone.getListType())));
 
 			sb.append(StringPool.COLON);
 			sb.append(phone.getNumber());

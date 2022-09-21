@@ -25,7 +25,7 @@ public class PhoneUtil {
 	public static Phone toPhone(com.liferay.portal.kernel.model.Phone phone)
 		throws Exception {
 
-		ListType listType = phone.getType();
+		ListType listType = phone.getListType();
 
 		return new Phone() {
 			{

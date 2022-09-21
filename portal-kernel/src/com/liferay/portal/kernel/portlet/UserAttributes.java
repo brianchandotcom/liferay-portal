@@ -287,7 +287,7 @@ public class UserAttributes {
 			}
 
 			for (Phone phone : user.getPhones()) {
-				ListType listType = phone.getType();
+				ListType listType = phone.getListType();
 
 				String listTypeName = listType.getName();
 

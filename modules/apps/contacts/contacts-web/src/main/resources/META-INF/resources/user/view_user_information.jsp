@@ -89,7 +89,7 @@ if (phones.isEmpty()) {
 			%>
 
 				<li class="<%= phone.isPrimary() ? "primary" : "" %>">
-					<span class="property-type"><liferay-ui:message key="<%= phone.getType().getName() %>" /></span>
+					<span class="property-type"><liferay-ui:message key="<%= phone.getListType().getName() %>" /></span>
 					<span class="property"><%= HtmlUtil.escape(phone.getNumber()) %> <%= phone.getExtension() %></span>
 				</li>
 

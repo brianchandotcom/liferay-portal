@@ -72,10 +72,6 @@ definition {
 			locator1 = "Testray#ITEM_NAME");
 	}
 
-	macro verifyPromoteBuild {
-		AssertElementPresent(locator1 = "TestrayBuild#PROMOTE_BUILD");
-	}
-
 	macro selectDefaultEnvironmentFactors {
 		Refresh();
 
@@ -83,19 +79,19 @@ definition {
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
 
-        Click(
-			locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS",
-			key_environmentFactors = "${optionEnvironmentFactors}");
+		Click(
+			key_environmentFactors = "${optionEnvironmentFactors}",
+			locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS");
 
-        Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
 
 		Click(
-			locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS",
-			key_environmentFactors = "${optionEnvironmentFactors1}");
+			key_environmentFactors = "${optionEnvironmentFactors1}",
+			locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS");
 
-        Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
 
-        Button.click(button = "Next");
+		Button.click(button = "Next");
 
 		Select(
 			key_fieldLabel = "Application Server",
@@ -108,6 +104,10 @@ definition {
 			value1 = "${optionBrowser}");
 
 		Button.click(button = "Save");
+	}
+
+	macro verifyPromoteBuild {
+		AssertElementPresent(locator1 = "TestrayBuild#PROMOTE_BUILD");
 	}
 
 	macro viewBuildDetails {

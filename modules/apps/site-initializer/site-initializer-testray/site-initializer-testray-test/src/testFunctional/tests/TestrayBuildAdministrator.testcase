@@ -159,19 +159,19 @@ definition {
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
 
 			TestrayBuild.selectDefaultEnvironmentFactors(
-				optionEnvironmentFactors = "Application Server",
-				optionEnvironmentFactors1 = "Browser",
 				optionApplicationServer = "JBoss 6.1",
-				optionBrowser = "Chrome x");
+				optionBrowser = "Chrome x",
+				optionEnvironmentFactors = "Application Server",
+				optionEnvironmentFactors1 = "Browser");
 
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
-					description = "Builds_1 Project Description",
-					fieldName = "Builds_1 Project",
-					gitHash = "12345",
-					productVersion = "1.0",
-					routine = "Routines_1 Routine");
+				description = "Builds_1 Project Description",
+				fieldName = "Builds_1 Project",
+				gitHash = "12345",
+				productVersion = "1.0",
+				routine = "Routines_1 Routine");
 		}
 
 		task ("And deleted build with runs") {
@@ -186,8 +186,8 @@ definition {
 			TestrayLayout.clickResultsOnSidebar();
 
 			Testray.changePagination(
-					numberItems = "20",
-					valuePagination = "150");
+				numberItems = "20",
+				valuePagination = "150");
 
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 

@@ -459,17 +459,13 @@ definition {
 		}
 
 		task ("Check both blogs are listed") {
-			ContentDashboard.filterBySite(
-				filterOption = "Site or Asset Library",
-				siteName = "Test Site Name");
+			ContentDashboard.filterBySite(siteName = "Test Site Name");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "Blogs Entry Title 1");
 
-			ContentDashboard.filterBySite(
-				filterOption = "Site or Asset Library",
-				siteName = "Test Site Name 2");
+			ContentDashboard.filterBySite(siteName = "Test Site Name 2");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -698,9 +694,7 @@ definition {
 		task ("Go to Content Dashboard and filtering category") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByCategory(
-				categoryNameList = "Test",
-				filterOption = "Categories");
+			ContentDashboard.filterByCategory(categoryNameList = "Test");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -975,9 +969,7 @@ definition {
 		task ("Open filter modal at Content Dashboard and filtering category") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByCategory(
-				categoryNameList = "Test",
-				filterOption = "Categories");
+			ContentDashboard.filterByCategory(categoryNameList = "Test");
 		}
 
 		task ("Returns to 'Select Categories' and checking if the results bar is present") {
@@ -3022,9 +3014,7 @@ definition {
 		ContentDashboard.goToContentDashboard();
 
 		task ("Filter by category") {
-			ContentDashboard.filterByCategory(
-				categoryNameList = "Category Name",
-				filterOption = "Categories");
+			ContentDashboard.filterByCategory(categoryNameList = "Category Name");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -3051,9 +3041,7 @@ definition {
 		task ("Filter asset by Global Site status in Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterBySite(
-				filterOption = "Site or Asset Library",
-				siteName = "Test Site Name");
+			ContentDashboard.filterBySite(siteName = "Test Site Name");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -3194,9 +3182,7 @@ definition {
 		task ("Filter by tag at Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByTag(
-				filterOption = "Tags",
-				tagName = "tagname");
+			ContentDashboard.filterByTag(tagName = "tagname");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -3307,9 +3293,7 @@ definition {
 		}
 
 		task ("Filter by Category: Category1 and Category2") {
-			ContentDashboard.filterByCategory(
-				categoryNameList = "Category1,Category2",
-				filterOption = "Categories");
+			ContentDashboard.filterByCategory(categoryNameList = "Category1,Category2");
 		}
 
 		task ("Filter by Author: Test test") {
@@ -3350,9 +3334,7 @@ definition {
 		ContentDashboard.goToContentDashboard();
 
 		task ("Filter by category") {
-			ContentDashboard.filterByCategory(
-				categoryNameList = "Category Name",
-				filterOption = "Categories");
+			ContentDashboard.filterByCategory(categoryNameList = "Category Name");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -3426,9 +3408,7 @@ definition {
 		}
 
 		task ("Filter by Category: Category1") {
-			ContentDashboard.filterByCategory(
-				categoryNameList = "Category1",
-				filterOption = "Categories");
+			ContentDashboard.filterByCategory(categoryNameList = "Category1");
 		}
 
 		task ("Filter by Author: Test test") {
@@ -3502,9 +3482,7 @@ definition {
 		}
 
 		task ("Filter by Category: Category1") {
-			ContentDashboard.filterByCategory(
-				categoryNameList = "Category1",
-				filterOption = "Categories");
+			ContentDashboard.filterByCategory(categoryNameList = "Category1");
 		}
 
 		task ("Filter by Author: Test test and userfn userln") {
@@ -3555,15 +3533,11 @@ definition {
 		}
 
 		task ("Filter by Category: Category1") {
-			ContentDashboard.filterByCategory(
-				categoryNameList = "Category1",
-				filterOption = "Categories");
+			ContentDashboard.filterByCategory(categoryNameList = "Category1");
 		}
 
 		task ("Filter by Tag: tagnumber1") {
-			ContentDashboard.filterByTag(
-				filterOption = "Tags",
-				tagName = "tagnumber1");
+			ContentDashboard.filterByTag(tagName = "tagnumber1");
 		}
 
 		task ("Assert if only one asset is displayed") {
@@ -3657,13 +3631,9 @@ definition {
 		task ("Filter asset by tag in Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByTag(
-				filterOption = "Tags",
-				tagName = "tagnumber1");
+			ContentDashboard.filterByTag(tagName = "tagnumber1");
 
-			ContentDashboard.filterByTag(
-				filterOption = "Tags",
-				tagName = "tagnumber2");
+			ContentDashboard.filterByTag(tagName = "tagnumber2");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -3686,9 +3656,7 @@ definition {
 		task ("Filter asset by Global Site status in Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterBySite(
-				filterOption = "Site or Asset Library",
-				siteName = "Global");
+			ContentDashboard.filterBySite(siteName = "Global");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -4135,9 +4103,7 @@ definition {
 		task ("Filter by tag at Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByTag(
-				filterOption = "Tags",
-				tagName = "test_tag");
+			ContentDashboard.filterByTag(tagName = "test_tag");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -4186,7 +4152,7 @@ definition {
 		}
 
 		task ("Filter assets by both structure types") {
-			ContentDashboard.filterByType(typeName = "Basic Web Content,WC Structure Name");
+			ContentDashboard.filterByType(typeNameList = "Basic Web Content,WC Structure Name");
 		}
 
 		task ("Assert if both assets are displayed") {
@@ -4252,9 +4218,7 @@ definition {
 		task ("navigate to the content dashboard, filter by tags and make sure there is only one tag") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByTag(
-				filterOption = "Tags",
-				tagName = "test_tag");
+			ContentDashboard.filterByTag(tagName = "test_tag");
 		}
 
 		task ("Assert if both Web Contents are displayed") {

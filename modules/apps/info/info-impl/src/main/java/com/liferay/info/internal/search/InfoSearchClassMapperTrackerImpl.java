@@ -23,8 +23,6 @@ import com.liferay.petra.reflect.GenericUtil;
 
 import java.util.Collection;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -42,31 +40,32 @@ public class InfoSearchClassMapperTrackerImpl
 		Collection<InfoSearchClassMapper<?>> infoSearchClassMappers =
 			_serviceTrackerMap.values();
 
-		Stream<InfoSearchClassMapper<?>> stream =
-			infoSearchClassMappers.stream();
+		for (InfoSearchClassMapper<?> infoSearchClassMapper :
+				infoSearchClassMappers) {
 
-		return stream.filter(
-			infoSearchClassMapper -> Objects.equals(
-				searchClassName, infoSearchClassMapper.getSearchClassName())
-		).map(
-			infoSearchClassMapper -> GenericUtil.getGenericClass(
-				infoSearchClassMapper)
-		).map(
-			Class::getName
-		).findFirst(
-		).orElse(
-			searchClassName
-		);
+			if (Objects.equals(
+					searchClassName,
+					infoSearchClassMapper.getSearchClassName())) {
+
+				Class<?> genericClass = GenericUtil.getGenericClass(
+					infoSearchClassMapper);
+
+				return genericClass.getName();
+			}
+		}
+
+		return searchClassName;
 	}
 
 	public String getSearchClassName(String className) {
-		return Optional.ofNullable(
-			_serviceTrackerMap.getService(className)
-		).map(
-			InfoSearchClassMapper::getSearchClassName
-		).orElse(
-			className
-		);
+		InfoSearchClassMapper infoSearchClassMapper =
+			_serviceTrackerMap.getService(className);
+
+		if (infoSearchClassMapper == null) {
+			return className;
+		}
+
+		return infoSearchClassMapper.getSearchClassName();
 	}
 
 	@Activate

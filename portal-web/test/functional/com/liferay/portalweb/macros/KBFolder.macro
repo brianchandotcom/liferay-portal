@@ -127,4 +127,10 @@ definition {
 			value1 = "${kbFolderName}");
 	}
 
+	macro viewFolderThroughPageTreePanel {
+		AssertVisible(
+			key_itemName = "${kbFolderName}",
+			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
+	}
+
 }

@@ -42,7 +42,7 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		String taskExecutorClassName = (String)message.get(
+		String taskExecutorClassName = message.getString(
 			"taskExecutorClassName");
 
 		if (Validator.isNull(taskExecutorClassName)) {
@@ -55,7 +55,7 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 			return;
 		}
 
-		int status = (Integer)message.get("status");
+		int status = message.getInteger("status");
 
 		if ((status == BackgroundTaskConstants.STATUS_CANCELLED) ||
 			(status == BackgroundTaskConstants.STATUS_FAILED) ||
@@ -64,7 +64,7 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 			_executeQueuedBackgroundTasks(taskExecutorClassName);
 		}
 		else if (status == BackgroundTaskConstants.STATUS_QUEUED) {
-			long backgroundTaskId = (Long)message.get(
+			long backgroundTaskId = message.getLong(
 				BackgroundTaskConstants.BACKGROUND_TASK_ID);
 
 			if (!_backgroundTaskLockHelper.isLockedBackgroundTask(

@@ -42,7 +42,7 @@ public class RemoveOnCompletionBackgroundTaskStatusMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		long backgroundTaskId = (Long)message.get(
+		long backgroundTaskId = message.getLong(
 			BackgroundTaskConstants.BACKGROUND_TASK_ID);
 
 		BackgroundTask backgroundTask =
@@ -63,11 +63,7 @@ public class RemoveOnCompletionBackgroundTaskStatusMessageListener
 			return;
 		}
 
-		int status = GetterUtil.getInteger(message.get("status"), -1);
-
-		if (status == -1) {
-			return;
-		}
+		int status = message.getInteger("status");
 
 		if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
 			if (_log.isInfoEnabled()) {

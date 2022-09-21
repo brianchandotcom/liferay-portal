@@ -48,11 +48,9 @@ definition {
 				title = "WC Content");
 		}
 
-		task ("Navigate to the content Dashboard, click edit web content and save as draft") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+		task ("Navigate to the content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
 			WebContent.saveAsDraft();
 		}
@@ -277,10 +275,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Go to Content Dashboard and check the vocabularies, public and internal, and their categories are shown in the Info panel") {
@@ -322,10 +317,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Go to Content Dashboard and check the Creation date in the Info panel") {
@@ -357,10 +349,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Go to Content Dashboard and check the Display date in the Info panel") {
@@ -392,10 +381,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Go to Content Dashboard and check the ID in the Info panel") {
@@ -425,10 +411,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Go to Content Dashboard and check the Modified date in the Info panel") {
@@ -472,10 +455,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Check both blogs are listed") {
@@ -529,10 +509,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Assert columns displayed") {
@@ -560,10 +537,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Go to Content Dashboard and check the status in the Info panel") {
@@ -594,10 +568,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Go to Content Dashboard and check the tags are shown in the Info panel") {
@@ -629,10 +600,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Go to Content Dashboard and check the title in the Info panel") {
@@ -659,10 +627,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Go to Content Dashboard and check the type in the Info panel") {
@@ -692,10 +657,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Go to Content Dashboard and check the version in the Info panel") {
@@ -734,10 +696,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and filtering category") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			ContentDashboard.filterByCategory(
 				categoryNameList = "Test",
@@ -1165,10 +1124,7 @@ definition {
 		}
 
 		task ("Check in Content Dashboard if WC is assiciated with Display Page Template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -1191,10 +1147,7 @@ definition {
 		}
 
 		task ("Check in Content Dashboard if WC is assiciated with Display Page Template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -1239,10 +1192,7 @@ definition {
 		}
 
 		task ("Check in Content Dashboard if WC is assiciated with Display Page Template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -1479,10 +1429,7 @@ definition {
 		}
 
 		task ("Navigate to the content Dashboard and the user accesses the Blog Asset information panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			LexiconTable.clickEllipsisItem(
 				item = "Info",
@@ -1510,10 +1457,7 @@ definition {
 		}
 
 		task ("Navigate to the content Dashboard and the user accesses the Web Content information panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			LexiconTable.clickEllipsisItem(
 				item = "Info",
@@ -1538,10 +1482,7 @@ definition {
 		}
 
 		task ("Check in Content Dashboard if the column is being displayed") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#SITE_ASSET_LIBRARY_COLUMN",
@@ -1571,10 +1512,7 @@ definition {
 		}
 
 		task ("Check in Content Dashboard if the right information is being displayed") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#SITE_ASSET_LIBRARY_COLUMN",
@@ -1718,10 +1656,7 @@ definition {
 		}
 
 		task ("Check in Content Dashboard if view option is NOT avalible for this WC") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
 
@@ -1764,10 +1699,7 @@ definition {
 		}
 
 		task ("Check in Content Dashboard if view option is NOT avalible for this WC") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
 
@@ -2089,10 +2021,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard and click on the title") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			LexiconTable.clickTableEntryColumnLink(
 				columnName = "title",
@@ -2625,10 +2554,7 @@ definition {
 		}
 
 		task ("Go to the Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Assert that both documents appear in the table") {
@@ -2829,10 +2755,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Open the Info panel") {
@@ -4078,10 +4001,7 @@ definition {
 		}
 
 		task ("Navigate to the content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Filter by Type") {
@@ -4368,11 +4288,9 @@ definition {
 				title = "Webcontent Title");
 		}
 
-		task ("Check it in its display page and access the edit") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+		task ("Go to ContentDashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
 			Click.clickNoMouseOver(locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_MODIFIED_DATE");
 		}
@@ -4402,11 +4320,11 @@ definition {
 				content = "WC Content",
 				groupName = "Test Site Name",
 				title = "teste");
+		}
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+		task ("Go to ContentDashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
 
 			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
@@ -4439,10 +4357,7 @@ definition {
 		}
 
 		task ("Go to the Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Open the info panel and collapse the Categorization section") {
@@ -4487,10 +4402,7 @@ definition {
 		}
 
 		task ("Go to the Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Open the info panel and expand the Categorization section") {
@@ -5240,10 +5152,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Check if the correct number of entries are being displayed") {
@@ -5266,10 +5175,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Use < > buttons to move forth and back") {
@@ -5298,10 +5204,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Use page numbers to move between pages") {
@@ -5362,10 +5265,7 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Delete user and role created") {
@@ -5511,10 +5411,7 @@ definition {
 		task ("Go to Content Dashboard and Edit WC") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			ContentDashboard.editAsset(assetTitle = "WC WebContent New Title");
 		}
@@ -5553,10 +5450,7 @@ definition {
 		}
 
 		task ("Check in Content Dashboard if WC is assiciated with Display Page Template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -5579,10 +5473,7 @@ definition {
 		}
 
 		task ("Check if WC is not associated in Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
@@ -5830,10 +5721,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Assert the type of the web content is shown in the Type column") {
@@ -5856,10 +5744,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Assert the type of the web content is shown in the Type column") {
@@ -6104,10 +5989,7 @@ definition {
 		}
 
 		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
+			ContentDashboard.goToContentDashboard();
 		}
 
 		task ("Open the Info panel") {

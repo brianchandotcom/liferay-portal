@@ -34,6 +34,8 @@ definition {
 				groupName = "Global",
 				vocabularyName = "${vocabulary}");
 		}
+
+		JSONUser.tearDownNonAdminUsers();
 	}
 
 	@description = "LPS-116987 When the user makes a change on web content and creates a draft version, the Info panel shows the version for the last version approved and the version of the draft "
@@ -139,10 +141,6 @@ definition {
 				value1 = "Web Content Title 2");
 
 			AssertElementNotPresent(locator1 = "ContentDashboard#FILTER_TEXT");
-		}
-
-		task ("Delete user created") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
 		}
 	}
 
@@ -1834,10 +1832,8 @@ definition {
 				value1 = "WC Title");
 		}
 
-		task ("Delete Role and User created") {
+		task ("Delete Role") {
 			JSONRole.deleteRole(roleTitle = "WC Creator Edit Permissions");
-
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
 		}
 	}
 
@@ -1943,10 +1939,8 @@ definition {
 				value1 = "WC Title");
 		}
 
-		task ("Delete Role and User created") {
+		task ("Delete Role") {
 			JSONRole.deleteRole(roleTitle = "WC Creator Edit Permissions");
-
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
 		}
 	}
 
@@ -2066,10 +2060,8 @@ definition {
 				value1 = "Blogs Entry Title");
 		}
 
-		task ("Delete Role and User created") {
+		task ("Delete Role") {
 			JSONRole.deleteRole(roleTitle = "Blog Creator No Edit Permissions");
-
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
 		}
 	}
 
@@ -2315,10 +2307,8 @@ definition {
 				value1 = "DM Document Title");
 		}
 
-		task ("Delete Role and User created") {
+		task ("Delete Role ") {
 			JSONRole.deleteRole(roleTitle = "WC Creator Edit Permissions");
-
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
 		}
 	}
 
@@ -5256,9 +5246,7 @@ definition {
 			ContentDashboard.goToContentDashboard();
 		}
 
-		task ("Delete user and role created") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
-
+		task ("Delete role") {
 			JSONRole.deleteRole(roleTitle = "Content Dashboard User");
 		}
 	}
@@ -5615,10 +5603,6 @@ definition {
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "WC Title 1");
 		}
-
-		task ("Delete user created") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
-		}
 	}
 
 	@description = "LPS-133181 When the user selects the option Filter by Author: Me in the 'Filter and Order' dropdown, the list of contents displays content where the user is the creator"
@@ -5703,10 +5687,6 @@ definition {
 			AssertTextNotPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "WC Title Edit");
-		}
-
-		task ("Delete user created") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
 		}
 	}
 

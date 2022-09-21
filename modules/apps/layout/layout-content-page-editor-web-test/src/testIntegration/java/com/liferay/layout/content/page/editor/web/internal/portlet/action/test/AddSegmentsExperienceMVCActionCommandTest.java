@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -86,8 +85,7 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		_layout = LayoutTestUtil.addTypeContentPublishedLayout(
 			_group, "Test layout", WorkflowConstants.STATUS_APPROVED);
 
-		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
-			_layout.getPlid());
+		_draftLayout = _layout.fetchDraftLayout();
 
 		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
 	}

@@ -12,6 +12,12 @@ definition {
         Click(locator1 = "CP2Overview#SLA_CARD_SHIFT_BUTTON");
     }
 
+    macro assertEmptySLACardMessage {
+        AssertTextEquals(
+            locator1 = "CP2Overview#EMPTY_SLA_CARD_MESSAGE",
+            value1 = "${message}");
+    }
+
     macro assertSLACardBackgroundColor {
         var color = CP2Overview._getBackgroundColor(slaCardtitle = "${slaCardTitle}");
 

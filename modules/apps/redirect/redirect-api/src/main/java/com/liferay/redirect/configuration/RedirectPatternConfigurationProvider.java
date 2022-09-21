@@ -29,5 +29,8 @@ public interface RedirectPatternConfigurationProvider {
 	public Map<String, String> getRedirectionPatternsMap(long groupId)
 		throws ConfigurationException;
 
+	public void updateRedirectionPatterns(
+			long groupId, Map<String, String> redirectionPatters)
+		throws Exception;
 
 }

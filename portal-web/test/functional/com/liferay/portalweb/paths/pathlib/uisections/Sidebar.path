@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLOSE</td>
+	<td>//div[contains(@class,'sidebar')] //*[@title='Close']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DDM_ANY</td>
 	<td>//div[contains(@class,'sidebar')]//label[contains(.,'${key_text}')]//following-sibling::input</td>
 	<td></td>

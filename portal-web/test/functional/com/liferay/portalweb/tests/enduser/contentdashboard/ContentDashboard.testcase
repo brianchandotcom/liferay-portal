@@ -45,7 +45,7 @@ definition {
 	test ApprovedAndDraftStatus {
 		property portal.acceptance = "true";
 
-		task ("Create a Web Content and set a Display Page") {
+		task ("Create a Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Webcontent Content",
 				groupName = "Test Site Name",
@@ -58,7 +58,8 @@ definition {
 
 		task ("Edit the Web Content to draft version") {
 			ContentDashboard.editAsset(
-				assetTitle = "WC Content Edit",
+				assetTitle = "WC Content",
+				assetNewTitle = "WC Content Edit",
 				saveAsDraft = "true");
 		}
 
@@ -484,7 +485,7 @@ definition {
 		}
 
 		task ("Delete site created for this test") {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name 2");
 		}
 	}
 
@@ -1312,7 +1313,9 @@ definition {
 				key_assetName = "Pending Web Content Title",
 				locator1 = "ContentDashboard#ROW_PANEL_ASSET_NAME");
 
-			AssertNotVisible(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
+			AssertNotVisible(
+				locator1 = "ContentDashboard#QUICK_ACTION_ICON",
+				title = "View Metrics");
 		}
 	}
 
@@ -1605,9 +1608,13 @@ definition {
 		task ("Check in Content Dashboard if view option is NOT avalible for this WC") {
 			ContentDashboard.goToContentDashboard();
 
-			Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
+			Click.waitForMenuToggleJSClick(
+				key_tableEntry = "Web Content Title",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
-			AssertElementNotPresent(locator1 = "ContentDashboard#VIEW_OPTION");
+			AssertElementNotPresent(
+				key_menuItem = "View",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
 	}
 
@@ -1648,9 +1655,13 @@ definition {
 		task ("Check in Content Dashboard if view option is NOT avalible for this WC") {
 			ContentDashboard.goToContentDashboard();
 
-			Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
+			Click.waitForMenuToggleJSClick(
+				key_tableEntry = "Web Content Title",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
-			AssertElementNotPresent(locator1 = "ContentDashboard#VIEW_OPTION");
+			AssertElementNotPresent(
+				key_menuItem = "View",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
 	}
 
@@ -2167,11 +2178,17 @@ definition {
 		}
 
 		task ("Assert the view and edit options are not available") {
-			Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
+			Click.waitForMenuToggleJSClick(
+				key_tableEntry = "Blogs Entry Title",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
-			AssertElementNotPresent(locator1 = "ContentDashboard#VIEW_OPTION");
-
-			AssertElementNotPresent(locator1 = "ContentDashboard#EDIT_OPTION");
+			AssertElementNotPresent(
+				key_menuItem = "View",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+			
+			AssertElementNotPresent(
+				key_menuItem = "Edit",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
 		}
 	}
 
@@ -2733,7 +2750,9 @@ definition {
 		}
 
 		task ("Edit the Blog") {
-			ContentDashboard.editAsset(assetTitle = "Blogs Entry Title Edited");
+			ContentDashboard.editAsset(
+				assetTitle = "Blogs Entry Title",
+				assetNewTitle = "Blogs Entry Title Edited");
 		}
 
 		task ("Assert the document has been edited") {
@@ -2765,7 +2784,9 @@ definition {
 		}
 
 		task ("Edit the document") {
-			ContentDashboard.editAsset(assetTitle = "DM Document Title Edited");
+			ContentDashboard.editAsset(
+				assetTitle = "DM Document Title",
+				assetNewTitle = "DM Document Title Edited");
 		}
 
 		task ("Assert the document has been edited") {
@@ -2790,7 +2811,9 @@ definition {
 		task ("Go to edit the asset") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.editAsset(assetTitle = "WC Title Edited");
+			ContentDashboard.editAsset(
+				assetTitle = "WC Title",
+				assetNewTitle = "WC Title Edited");
 		}
 
 		task ("Assert in title was porperty edited") {
@@ -2837,7 +2860,9 @@ definition {
 		}
 
 		task ("Assert the Export XLS button is disabled") {
-			AssertNotEditable(locator1 = "ContentDashboard#EXPORT_XLS_BUTTON");
+			AssertNotEditable(
+				key_text = "Export XLS",
+				locator1 = "Button#ANY");
 		}
 	}
 
@@ -5270,7 +5295,9 @@ definition {
 
 			ContentDashboard.filterByAuthor();
 
-			ContentDashboard.editAsset(assetTitle = "WC Title Edited");
+			ContentDashboard.editAsset(
+				assetTitle = "WC Title",
+				assetNewTitle = "WC Title Edited");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FILTER_TEXT",
@@ -5361,7 +5388,9 @@ definition {
 
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.editAsset(assetTitle = "WC WebContent New Title");
+			ContentDashboard.editAsset(
+				assetTitle = "WC WebContent Title",
+				assetNewTitle = "WC WebContent New Title");
 		}
 
 		task ("Check if content is correct") {

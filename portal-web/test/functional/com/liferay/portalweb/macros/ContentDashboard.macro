@@ -18,14 +18,14 @@ definition {
 	macro checkMimeExtensionDisplayed {
 		if (isSet(typeName)) {
 			AssertVisible(
-				locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW",
-				optionName = "${typeName}");
+				key_nodeName = "${typeName}",
+				locator1 = "Treeview#NODE_ITEM");
 		}
 		else {
 			for (var typeName : list "${typeNameList}") {
 				AssertVisible(
-					locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW",
-					optionName = "${typeName}");
+					key_nodeName = "${typeName}",
+					locator1 = "Treeview#NODE_ITEM");
 			}
 		}
 
@@ -35,11 +35,20 @@ definition {
 	}
 
 	macro clearFilters {
-		Click(locator1 = "ContentDashboard#CLEAR_FILTERS_BUTTON");
+		Click(
+			locator1 = "LINK#ANY",
+			key_text = "Clear"
 	}
 
 	macro clickQuickActionIcon {
-		Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+		if (isSet(assetName)) {
+			Click.clickNoMouseOver(
+				key_assetName = "${assetName}",
+				locator1 = "ContentDashboard#ROW_PANEL_ASSET_NAME");
+		}
+		else {
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL");
+		}
 
 		Click.javaScriptClick(
 			locator1 = "ContentDashboard#QUICK_ACTION_ICON",
@@ -50,9 +59,9 @@ definition {
 		Portlet.expandTree();
 
 		for (var optionName : list "${optionsList}") {
-			Click.javaScriptClick(
-				key_optionName = "${optionName}",
-				locator1 = "ContentDashboard#TREEVIEW_OPTION_CHECKBOX");
+			Check.checkNotVisible(
+				key_nodeName = "${optionName}",
+				locator1 = "Treeview#NODE_CHECKBOX");
 		}
 
 		ClickNoError(
@@ -83,14 +92,14 @@ definition {
 	}
 
 	macro editAsset {
-		Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
+		LexiconTable.clickEllipsisItem(
+			item = "Edit",
+			tableEntry = "${assetTitle}");
 
-		Click(locator1 = "ContentDashboard#EDIT_OPTION");
-
-		if (isSet(assetTitle)) {
+		if (isSet(assetNewTitle)) {
 			Click(locator1 = "TextInput#TITLE");
 
-			PortletEntry.inputTitle(title = "${assetTitle}");
+			PortletEntry.inputTitle(title = "${assetNewTitle}");
 		}
 
 		if (isSet(saveAsDraft)) {
@@ -178,11 +187,11 @@ definition {
 	macro filterBySite {
 		ContentDashboard.openFilterModal(filterOption = "Site or Asset Library");
 
-		var key_siteName = "${siteName}";
+		AssertClick(
+			locator1 = "NavBar#MY_SITES",
+			value1 = "My Sites");
 
-		Click(locator1 = "ContentDashboard#MY_SITES_TAB");
-
-		Click(locator1 = "ContentDashboard#SITE_CARD");
+		LexiconCard.clickCard(card = "${siteName}");
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -290,33 +299,6 @@ definition {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
 				value1 = "Filter and Order");
-		}
-	}
-
-	macro openViewMetricsByDropdownMenu {
-		Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
-
-		Click(locator1 = "ContentDashboard#VIEW_METRICS_OPTION");
-
-		while (IsNotVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL")) {
-			WaitForElementPresent(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
-		}
-	}
-
-	macro openViewMetricsByIcon {
-		if (isSet(assetName)) {
-			Click.clickNoMouseOver(
-				key_assetName = "${assetName}",
-				locator1 = "ContentDashboard#ROW_PANEL_ASSET_NAME");
-		}
-		else {
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
-		}
-
-		Click.javaScriptClick(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
-
-		while (IsNotVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL")) {
-			WaitForElementPresent(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
 		}
 	}
 
@@ -447,9 +429,9 @@ definition {
 		Portlet.expandTree();
 
 		for (var optionName : list "${optionsList}") {
-			Click.javaScriptClick(
-				key_optionName = "${optionName}",
-				locator1 = "ContentDashboard#TREEVIEW_OPTION_CHECKBOX");
+			Check.checkNotVisible(
+				key_nodeName = "${optionName}",
+				locator1 = "Treeview#NODE_CHECKBOX");
 		}
 	}
 
@@ -462,7 +444,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		WaitForElementPresent(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
+		WaitForElementPresent(locator1 = "ContentDashboard#ROW_PANEL");
 	}
 
 	macro viewAppliedFilters {

@@ -60,7 +60,7 @@ definition {
 		task ("Navigate to Content Dashboard and open Metrics Panel") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.openViewMetricsByIcon();
+			ContentDashboard.clickQuickActionIcon(iconName = "View Metrics");
 		}
 
 		task ("Click on the button for do not show again") {
@@ -86,7 +86,7 @@ definition {
 		task ("Check in Content Dashboard and open Content Performance Panel") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.openViewMetricsByIcon();
+			ContentDashboard.clickQuickActionIcon(iconName = "View Metrics");
 		}
 
 		task ("Assert the button is not present and the message are present") {

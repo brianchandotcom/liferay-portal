@@ -867,7 +867,7 @@ definition {
 		}
 
 		task ("Assert that 'View metrics' option is not displayed") {
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL");
 
 			AssertElementNotPresent(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
 		}
@@ -898,7 +898,7 @@ definition {
 		}
 
 		task ("Assert that 'View metrics' option is not displayed") {
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL");
 
 			AssertElementNotPresent(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
 		}
@@ -978,9 +978,11 @@ definition {
 		task ("Check if button is present in Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL");
 
-			AssertVisible(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
+			AssertVisible(
+				locator1 = "ContentDashboard#QUICK_ACTION_ICON",
+				title = "View Metrics");
 		}
 
 		task ("Login with Test user, to allow tearDown") {
@@ -1071,9 +1073,11 @@ definition {
 		task ("Check if button is present in Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 
-			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
+			Click(locator1 = "ContentDashboard#ROW_PANEL");
 
-			AssertVisible(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
+			AssertVisible(
+				locator1 = "ContentDashboard#QUICK_ACTION_ICON",
+				title = "View Metrics");
 		}
 
 		task ("Login with Test user, to allow tearDown") {
@@ -1152,9 +1156,11 @@ definition {
 		task ("Check if button is present in Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 
-			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
+			Click(locator1 = "ContentDashboard#ROW_PANEL");
 
-			AssertElementNotPresent(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
+			AssertElementNotPresent(
+				locator1 = "ContentDashboard#QUICK_ACTION_ICON",
+				title = "View Metrics");
 		}
 
 		task ("Login with Test user, to allow tearDown") {
@@ -1240,9 +1246,11 @@ definition {
 		task ("Check if button is present in Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 
-			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
+			Click(locator1 = "ContentDashboard#ROW_PANEL");
 
-			AssertVisible(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
+			AssertVisible(
+				locator1 = "ContentDashboard#QUICK_ACTION_ICON",
+				title = "View Metrics");
 		}
 
 		task ("Login with Test user, to allow tearDown") {

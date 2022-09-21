@@ -224,7 +224,7 @@ definition {
 		task ("Check in Content Dashboard and open Content Performance Panel") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.openViewMetricsByIcon();
+			ContentDashboard.clickQuickActionIcon(iconName = "View Metrics");
 		}
 
 		task ("Check if elements present") {

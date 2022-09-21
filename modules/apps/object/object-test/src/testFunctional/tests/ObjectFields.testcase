@@ -886,6 +886,76 @@ definition {
 		}
 	}
 
+	@description = "LPS-158821 - Verify that the user is able to set the ERC field as a Title Field"
+	@priority = "4"
+	test CanSetERCFieldAsTitleField {
+		task ("Create Custom Object and Custom Field (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 162184",
+				objectName = "CustomObject162184",
+				pluralLabelName = "Custom Objects 162184");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject162184");
+		}
+
+		task ("Go to Custom Object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 162184");
+		}
+
+		task ("Select title field and assert it") {
+			CreateObject.selectTitleField(fieldLabel = "External Reference Code");
+
+			CreateObject.saveObject();
+
+			CreateObject.assertTitleFieldIsSelected(fieldLabel = "External Reference Code");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject162184");
+		}
+
+		task ("Create Custom View and go to it") {
+			ObjectCustomViews.goToViewsTab();
+
+			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+			ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+		}
+
+		task ("Mark Custom View as default, go to View Builder and add ERC") {
+			ObjectCustomViews.markViewAsDefault();
+
+			ObjectCustomViews.goToViewsBuilderTab();
+
+			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field,External Reference Code");
+
+			Button.clickSave();
+		}
+
+		task ("Create an entry via API") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject162184",
+				value = "Entry Test");
+		}
+
+		task ("Assert that it's possible to see entry with ERC") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject162184");
+
+			ObjectPortlet.viewEntry(entry = "Entry Test");
+
+			for (var columnName : list "Custom Field,External Reference Code") {
+				ObjectPortlet.assertEntryColumnPresent(column = "${columnName}");
+			}
+		}
+	}
+
 	@description = "LPS-148112 - Verify if on the side panel the 'Show files' path can be edited"
 	@priority = "4"
 	test CanUpdateShowFilesOptionBeforePublished {

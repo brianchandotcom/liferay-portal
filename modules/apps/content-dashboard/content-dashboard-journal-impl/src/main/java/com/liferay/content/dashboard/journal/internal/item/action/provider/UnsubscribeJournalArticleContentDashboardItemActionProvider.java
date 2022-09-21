@@ -20,6 +20,7 @@ import com.liferay.content.dashboard.journal.internal.item.action.UnsubscribeJou
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
@@ -44,7 +45,8 @@ public class UnsubscribeJournalArticleContentDashboardItemActionProvider
 		}
 
 		return new UnsubscribeJournalArticleContentDashboardItemAction(
-			httpServletRequest, journalArticle, _language, _portal,
+			httpServletRequest, journalArticle,
+			_journalArticleModelResourcePermission, _language,
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest));
 	}
 
@@ -68,6 +70,12 @@ public class UnsubscribeJournalArticleContentDashboardItemActionProvider
 			JournalArticle.class.getName(),
 			journalArticle.getResourcePrimKey());
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission;
 
 	@Reference
 	private Language _language;

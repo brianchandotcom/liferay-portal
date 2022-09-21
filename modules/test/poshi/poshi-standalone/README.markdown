@@ -136,7 +136,7 @@ Property Name | Type | Default Value | Description
 `environmentOperatingSystemName` | `String` | CentOS 7 | The operating system name and version used in the test environment
 `projectDir` | `File` | `.` | The location of the project directory
 `testrayBuildName` | `String` | DXP Cloud Client Build - $(start.time) | The Testray build name
-`testrayBuildSHA` | `String` | | The Testray build SHA
+`testrayBuildSHA` | `String` | | The Testray DXP build SHA
 `testrayCasePriority` | `Integer` | `1` | The priority of the test case result(s)
 `testrayComponentName` | `String` | DXP Cloud Client Component | The Testray component name
 `testrayProductVersion` | `String` | 1.x | The Testray product version

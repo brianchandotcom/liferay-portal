@@ -213,6 +213,17 @@
 			"slaCurrent": "Gold Subscription",
 			"slaCurrentEndDate": "2022-08-24 00:00:00.0",
 			"slaCurrentStartDate": "2021-08-24 00:00:00.0"
+		},
+		{
+			"accountKey": "ERC-014",
+			"code": "TESTACCOUNT14",
+			"dxpVersion": "7.4",
+			"liferayContactEmailAddress": "customer-service@liferay.com",
+			"liferayContactName": "Liferay Support",
+			"maxRequestors": -1,
+			"name": "Test Account No SLA",
+			"partner": false,
+			"region": "United States"
 		}
 	],
 	"objectDefinitionName": "KoroneikiAccount"

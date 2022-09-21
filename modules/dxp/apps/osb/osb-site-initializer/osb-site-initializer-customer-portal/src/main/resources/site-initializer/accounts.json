@@ -63,5 +63,10 @@
 		"externalReferenceCode": "ERC-013",
 		"name": "Test Account QA 7.0",
 		"type": "business"
+	},
+	{
+		"externalReferenceCode": "ERC-014",
+		"name": "Test Account No SLA",
+		"type": "business"
 	}
 ]

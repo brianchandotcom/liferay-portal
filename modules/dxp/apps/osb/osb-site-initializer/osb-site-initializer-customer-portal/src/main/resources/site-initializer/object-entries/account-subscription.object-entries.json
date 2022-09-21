@@ -279,6 +279,16 @@
 			"quantity": 1,
 			"startDate": "2021-10-01 00:00:00.0",
 			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-014",
+			"accountSubscriptionGroupERC": "ERC-014_dxp",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
 		}
 	],
 	"objectDefinitionName": "AccountSubscription"

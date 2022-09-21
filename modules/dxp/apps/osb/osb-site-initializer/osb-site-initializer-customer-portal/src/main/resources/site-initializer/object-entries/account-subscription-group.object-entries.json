@@ -207,6 +207,13 @@
 			"menuOrder": 5,
 			"name": "Commerce",
 			"tabOrder": 6
+		},
+		{
+			"accountKey": "ERC-014",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "DXP",
+			"tabOrder": 1
 		}
 	],
 	"objectDefinitionName": "AccountSubscriptionGroup"

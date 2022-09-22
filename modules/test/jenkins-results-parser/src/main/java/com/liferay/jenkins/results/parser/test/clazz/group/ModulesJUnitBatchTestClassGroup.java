@@ -115,6 +115,10 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		for (File modifiedFile :
 				portalGitWorkingDirectory.getModifiedFilesList()) {
 
+			if (JenkinsResultsParserUtil.isPoshiFile(modifiedFile)) {
+				continue;
+			}
+
 			excludesJobProperties.addAll(
 				_getJobProperties(
 					modifiedFile,
@@ -133,9 +137,16 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		Set<File> modifiedModuleDirsSet = new HashSet<>();
 
+		List<File> modifiedPoshiModulesList = new ArrayList<>();
+		List<File> modifiedNonPoshiModulesList = new ArrayList<>();
+
 		try {
 			modifiedModuleDirsSet.addAll(
 				portalGitWorkingDirectory.getModifiedModuleDirsList());
+			modifiedPoshiModulesList =
+				portalGitWorkingDirectory.getModifiedPoshiModules();
+			modifiedNonPoshiModulesList =
+				portalGitWorkingDirectory.getModifiedNonPoshiModules();
 		}
 		catch (IOException ioException) {
 			File workingDirectory =
@@ -154,17 +165,26 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 					Lists.newArrayList(modifiedModuleDirsSet)));
 		}
 
-		Set<JobProperty> includesJobProperties = new HashSet<>();
-
 		Matcher matcher = _singleModuleBatchNamePattern.matcher(batchName);
 
 		String moduleName = null;
+
+		Set<JobProperty> includesJobProperties = new HashSet<>();
 
 		if (matcher.find()) {
 			moduleName = matcher.group("moduleName");
 		}
 
 		for (File modifiedModuleDir : modifiedModuleDirsSet) {
+			if (modifiedPoshiModulesList.contains(modifiedModuleDir) &&
+				!modifiedNonPoshiModulesList.contains(modifiedModuleDir)) {
+
+				System.out.println(
+					"does not contain modified non poshi module");
+
+				continue;
+			}
+
 			String modifiedModuleAbsolutePath =
 				JenkinsResultsParserUtil.getCanonicalPath(modifiedModuleDir);
 
@@ -263,7 +283,9 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		File modulesBaseDir = new File(
 			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 
-		if ((file == null) || file.equals(modulesBaseDir)) {
+		if ((file == null) || file.equals(modulesBaseDir) ||
+			JenkinsResultsParserUtil.isPoshiFile(file)) {
+
 			return jobPropertiesList;
 		}
 

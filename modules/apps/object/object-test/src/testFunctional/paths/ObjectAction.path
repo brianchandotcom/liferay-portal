@@ -52,6 +52,11 @@
 		<td>//span[contains(., 'Enable Condition')]/..//span[contains(@class, 'toggle-switch-check-bar')]//input[contains(@type, 'checkbox')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>ACTIONS_STATUS_INFO</td>
+		<td>//*[contains(@class,'label label') and contains(.,'${key_statusInfo}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

@@ -15,10 +15,15 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.layout.admin.web.internal.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletURL;
 
@@ -41,6 +46,9 @@ public class LayoutUtilityPageEntryManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			layoutUtilityPageEntryDisplayContext.
 				getLayoutUtilityPageEntrySearchContainer());
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -50,6 +58,26 @@ public class LayoutUtilityPageEntryManagementToolbarDisplayContext
 		).setKeywords(
 			StringPool.BLANK
 		).buildString();
+	}
+
+	@Override
+	public CreationMenu getCreationMenu() {
+		return new CreationMenu() {
+			{
+				for (LayoutUtilityPageEntryConstants.Type type :
+						LayoutUtilityPageEntryConstants.Type.values()) {
+
+					addPrimaryDropdownItem(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								_getSelectMasterLayoutURL(type.getType()));
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									httpServletRequest, type.getLabel()));
+						});
+				}
+			}
+		};
 	}
 
 	@Override
@@ -68,5 +96,19 @@ public class LayoutUtilityPageEntryManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"name", "create-date"};
 	}
+
+	private String _getSelectMasterLayoutURL(int type) {
+		return PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCPath(
+			"/select_layout_utility_page_entry_master_layout.jsp"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"type", type
+		).buildString();
+	}
+
+	private final ThemeDisplay _themeDisplay;
 
 }

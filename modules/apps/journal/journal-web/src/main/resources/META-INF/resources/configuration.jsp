@@ -30,6 +30,7 @@ String emailFromName = ParamUtil.getString(request, "preferences--emailFromName-
 
 <liferay-frontend:edit-form
 	action="<%= configurationActionURL %>"
+	fluid="<%= true %>"
 	method="post"
 	name="fm"
 >

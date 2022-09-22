@@ -92,8 +92,10 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 			samlSpIdpConnection
 		);
 
-		_webSsoProfileImpl.setIdentifierGenerationStrategyFactory(
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "identifierGenerationStrategyFactory",
 			identifierGenerationStrategyFactory);
+
 		_webSsoProfileImpl.setMetadataManager(metadataManagerImpl);
 		_webSsoProfileImpl.setPortal(portal);
 		_webSsoProfileImpl.setSamlBindings(samlBindings);

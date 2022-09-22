@@ -280,6 +280,119 @@ definition {
 		}
 	}
 
+	@description = "Bug ID: LRAC-11659 | Automation ID: LRAC-11726 | Test Summary: Check Default Events Counted as Default when event sent by console"
+	@priority = "5"
+	test CheckDefaultEventsCountedAsDefaultWhenEventSentByConsole {
+		var layoutName = "Custom 1";
+		var globalAttributesList = "canonicalUrl,pageTitle,referrer,url";
+		var disableAttributesList = "${globalAttributesList}";
+		var attributesList = "category,like";
+
+		task ("Navigation to default events tab") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Default Events");
+		}
+
+		task ("Access the assetViewed") {
+			ACNavigation.openItem(itemName = "assetViewed");
+		}
+
+		task ("Copy the sample JS and replace an existing attribute with a new one") {
+
+			ACCustomEvents.copySampleJavascript(
+				attributesList = "${attributesList}",
+				disableAttributesList = "${disableAttributesList}");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("pageViewed");
+		}
+
+		task ("Send the JavaScript custom event") {
+			var sampleJavascript = "${sampleJavascript}";
+
+			ACUtils.executeJSInBrowserConsole(javaScriptCode = "${sampleJavascript}");
+
+			ACUtils.waitForSendingRequest();
+		}
+
+		task ("View the properties of blogClicked event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "CustomEvent",
+				eventId = "assetViewed",
+				property = "entryId",
+				value = "${entryId}");
+		}
+
+		task ("Add a new site with a public widget page") {
+			ACUtils.addPage(layoutName = "${layoutName}");
+		}
+
+		task ("Add a Web Content Display to page and display a web content") {
+			ACUtils.createWCAndAddToPage(
+				layoutName = "${layoutName}",
+				webContentContent = '''<div data-analytics-asset-type="custom" data-analytics-asset-id="analytics-portal" data-analytics-asset-category="AC" data-analytics-asset-title="Custom Asset Analytics Cloud">%0A<h1> What'\''s your favorite portal? </h1>%0A</div>''',
+				webContentTitle = "Custom Asset AC Title");
+		}
+
+		task ("View web content") {
+			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "Custom Asset AC Title",
+				pageName = "${layoutName}",
+				siteName = "Site Name");
+		}
+
+		task ("View the properties of blogClicked event") {
+			ACUtils.assertEventPropertyValue(
+				applicationId = "Custom",
+				eventId = "assetViewed",
+				property = "entryId",
+				value = "${entryId}");
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Click to add event and switch tab to Custom") {
+			ACEventAnalysis.clickToAddEventButton();
+
+			ACNavigation.switchTabInCard(tabName = "Custom");
+		}
+
+		task ("Search for assetViewed in Custom") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "assetViewed");
+
+			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "assetViewed");
+		}
+
+		task ("Switch to Default event and search") {
+			ACNavigation.switchTabInCard(tabName = "Default");
+
+			ACEventAnalysis.searchEventAnalysis(searchItem = "assetViewed");
+
+			ACEventAnalysis.viewEventAnalysisList(eventList = "assetViewed");
+		}
+	}
+
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10307 | Test Summary: Total Chart, Unique Chart and Average Chart data shown"
 	@priority = "5"
 	test CheckTotalAndUniqueAndAverageChartDataIsShown {

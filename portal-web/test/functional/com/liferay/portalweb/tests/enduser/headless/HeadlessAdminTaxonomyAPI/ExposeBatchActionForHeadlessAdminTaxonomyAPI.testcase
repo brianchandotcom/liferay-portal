@@ -1,0 +1,65 @@
+@component-name = "portal-headless-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless Frontend Infrastructure";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+	}
+
+	tearDown {
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test IncludeBatchEndpointsInActionBlockForAssetLibraryTaxonomyVocabulary {
+		property portal.acceptance = "true";
+
+		task ("Given an asset library is created") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+		}
+
+		task ("When with get request and siteId to retrieve taxonomy vocabularies") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = TaxonomyVocabularyAPI.getTaxonomyVocabularyWithDifferentParameters(assetLibraryId = "${assetLibraryId}");
+		}
+
+		task ("Then I can see details of updateBatch, createBatch and deleteBatch inside of action block in response") {
+			var assetLibraryGroupId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Test Depot Name",
+				site = "false");
+
+			TaxonomyVocabularyAPI.assertProperBatchInActionBlock(
+				assetLibraryGroupId = "${assetLibraryGroupId}",
+				batchActions = "createBatch,updateBatch,deleteBatch",
+				responseToParse = "${response}");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test IncludeBatchEndpointsInActionBlockForSiteTaxonomyVocabulary {
+		property portal.acceptance = "true";
+
+		task ("When with get request and siteId to retrieve taxonomy vocabularies") {
+			var response = TaxonomyVocabularyAPI.getTaxonomyVocabularyWithDifferentParameters(groupName = "Guest");
+		}
+
+		task ("Then I can see details of updateBatch, createBatch and deleteBatch inside of action block in response") {
+			TaxonomyVocabularyAPI.assertProperBatchInActionBlock(
+				batchActions = "createBatch,updateBatch,deleteBatch",
+				groupName = "Guest",
+				responseToParse = "${response}");
+		}
+	}
+
+}

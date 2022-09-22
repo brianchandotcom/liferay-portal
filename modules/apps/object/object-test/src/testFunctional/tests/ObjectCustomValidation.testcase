@@ -2208,6 +2208,47 @@ definition {
 		}
 	}
 
+	@description = "LPS-152735 - Verify that it's possible to validate Expression Builder syntax when creating Actions"
+	@priority = "4"
+	test CanValidateExpressionBuilderAction {
+		task ("Create Custom Object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161913",
+				objectName = "CustomObject161913",
+				pluralLabelName = "Custom Objects 161913");
+		}
+
+		task ("Go to Objects, select Custom Object and click on actions tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161913");
+
+			ObjectAdmin.goToActionsTab();
+		}
+
+		task ("Add a Custom Action and try to add incorrect syntax in Expression Builder") {
+			ObjectAdmin.gotoAddObjectAction();
+
+			ObjectAdmin.fillObjectAction(
+				actionDescription = "Custom Description",
+				actionName = "Custom Action",
+				active = "true",
+				inputExpression = "#",
+				inputMethod = "true",
+				thenAction = "Webhook",
+				urlAction = "www.liferay.com",
+				whenAction = "On After Add");
+
+			Button.clickSave();
+		}
+
+		task ("Assert that there is an error in syntax") {
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "Syntax Error");
+		}
+	}
+
 	@description = "LPS-152735 - Verify that it's possible to validate Groovy syntax when creating Actions"
 	@priority = "4"
 	test CanValidateGroovyAction {

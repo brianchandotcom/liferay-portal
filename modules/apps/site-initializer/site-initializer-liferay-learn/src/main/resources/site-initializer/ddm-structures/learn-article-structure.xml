@@ -1,0 +1,340 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>Learn Article</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"definitionSchemaVersion": "2.0",
+					"fields": [
+						{
+							"autocomplete": false,
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataSourceType": "",
+							"dataType": "string",
+							"ddmDataProviderInstanceId": [
+							],
+							"ddmDataProviderInstanceOutput": [
+							],
+							"direction": [
+								"vertical"
+							],
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "content",
+							"hideField": false,
+							"indexType": "text",
+							"label": {
+								"en_US": "content"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "content",
+							"nativeField": false,
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"autocomplete": false,
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataSourceType": "",
+							"dataType": "string",
+							"ddmDataProviderInstanceId": [
+							],
+							"ddmDataProviderInstanceOutput": [
+							],
+							"direction": [
+								"vertical"
+							],
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "breadcrumbHTML",
+							"hideField": false,
+							"indexType": "none",
+							"label": {
+								"en_US": "breadcrumbHTML"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "breadcrumbHTML",
+							"nativeField": false,
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"autocomplete": false,
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataSourceType": "",
+							"dataType": "string",
+							"ddmDataProviderInstanceId": [
+							],
+							"ddmDataProviderInstanceOutput": [
+							],
+							"direction": [
+								"vertical"
+							],
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "navigationHTML",
+							"hideField": false,
+							"indexType": "none",
+							"label": {
+								"en_US": "navigationHTML"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "navigationHTML",
+							"nativeField": false,
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": [
+								"vertical"
+							],
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "githubEditLink",
+							"hideField": false,
+							"indexType": "text",
+							"label": {
+								"en_US": "Github Edit Link"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "githubEditLink",
+							"nativeField": false,
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": [
+								"vertical"
+							],
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "parentMarkdownFilePath",
+							"hideField": false,
+							"indexType": "text",
+							"label": {
+								"en_US": "parentMarkdownFilePath"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "parentMarkdownFilePath",
+							"nativeField": false,
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": [
+								"vertical"
+							],
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "product",
+							"hideField": false,
+							"indexType": "text",
+							"label": {
+								"en_US": "product"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "product",
+							"nativeField": false,
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataType": "string",
+							"direction": [
+								"vertical"
+							],
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
+							"fieldReference": "landingPage",
+							"hideField": false,
+							"indexType": "text",
+							"label": {
+								"en_US": "landingPage"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "landingPage",
+							"nativeField": false,
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+	</structure>
+</root>

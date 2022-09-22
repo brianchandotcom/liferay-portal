@@ -1,11 +1,164 @@
 {
 	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-heading"
+							},
+							"fragmentConfig": {
+								"headingLevel": "h1"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Welcome to Liferay Docs"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginBottom": "6",
+								"marginTop": "6",
+								"textAlign": "center"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+								},
+								"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+							}
+						},
+						"type": "Widget"
+					},
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+								},
+								"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+							}
+						},
+						"type": "Widget"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "BASIC_COMPONENT-heading"
+							},
+							"fragmentConfig": {
+								"headingLevel": "h1"
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Browse by Topic"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"marginBottom": "4",
+								"marginTop": "4",
+								"textAlign": "center"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"textAlign": "center"
+							},
+							"widgetInstance": {
+								"widgetConfig": {
+									"displayDepth": "0",
+									"displayStyle": "ddmTemplate_SPLIT-BUTTON-DROPDOWNS-FTL",
+									"displayStyleGroupId": "20123",
+									"expandedLevels": "auto",
+									"rootMenuItemLevel": "0",
+									"rootMenuItemType": "absolute",
+									"siteNavigationMenuId": "0",
+									"siteNavigationMenuType": "1"
+								},
+								"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
+							}
+						},
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"widgetInstance": {
+						"widgetConfig": {
+							"boost": "",
+							"customHeading": "",
+							"disabled": "false",
+							"displayStyle": "default",
+							"displayStyleGroupId": "83630",
+							"federatedSearchKey": "",
+							"filterField": "ddmStructureKey",
+							"filterQueryType": "match",
+							"filterValue": "LEARN ARTICLE",
+							"immutable": "false",
+							"invisible": "false",
+							"occur": "must",
+							"parameterName": "",
+							"parentQueryName": "",
+							"queryName": ""
+						},
+						"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
+					}
+				},
+				"type": "Widget"
+			}
+		],
 		"type": "Root"
 	},
 	"settings": {
 		"colorSchemeName": "01",
 		"masterPage": {
-			"key": "prm"
+			"key": "learn"
 		},
 		"themeName": "Classic"
 	},

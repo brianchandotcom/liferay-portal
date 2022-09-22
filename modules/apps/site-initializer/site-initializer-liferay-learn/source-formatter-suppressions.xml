@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="FTLTagAttributesCheck" files="src/main/resources/site-initializer/ddm-templates/landing-page/ddm-template.ftl" />
+	</source-check>
+</suppressions>

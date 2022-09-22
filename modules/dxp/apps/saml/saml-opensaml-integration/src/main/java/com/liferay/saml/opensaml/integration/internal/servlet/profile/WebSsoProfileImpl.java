@@ -682,15 +682,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	@Override
 	@Reference(unbind = "-")
-	protected void setIdentifierGenerationStrategyFactory(
-		IdentifierGenerationStrategyFactory identifierGenerationStrategy) {
-
-		super.setIdentifierGenerationStrategyFactory(
-			identifierGenerationStrategy);
-	}
-
-	@Override
-	@Reference(unbind = "-")
 	protected void setMetadataManager(MetadataManager metadataManager) {
 		super.setMetadataManager(metadataManager);
 	}

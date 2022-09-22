@@ -567,14 +567,6 @@ public abstract class BaseProfile {
 		_samlBindings.remove(samlBinding);
 	}
 
-	protected void setIdentifierGenerationStrategyFactory(
-		IdentifierGenerationStrategyFactory
-			identifierGenerationStrategyFactory) {
-
-		this.identifierGenerationStrategyFactory =
-			identifierGenerationStrategyFactory;
-	}
-
 	protected void setMetadataManager(MetadataManager metadataManager) {
 		this.metadataManager = metadataManager;
 	}

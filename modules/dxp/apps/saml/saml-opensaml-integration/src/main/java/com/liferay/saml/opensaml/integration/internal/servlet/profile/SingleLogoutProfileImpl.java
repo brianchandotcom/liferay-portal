@@ -323,16 +323,6 @@ public class SingleLogoutProfileImpl
 
 	@Override
 	@Reference(unbind = "-")
-	public void setIdentifierGenerationStrategyFactory(
-		IdentifierGenerationStrategyFactory
-			identifierGenerationStrategyFactory) {
-
-		super.setIdentifierGenerationStrategyFactory(
-			identifierGenerationStrategyFactory);
-	}
-
-	@Override
-	@Reference(unbind = "-")
 	public void setMetadataManager(MetadataManager metadataManager) {
 		super.setMetadataManager(metadataManager);
 	}

@@ -257,7 +257,8 @@ public interface MBMessageService extends BaseService {
 
 	public void unsubscribeMessage(long messageId) throws PortalException;
 
-	public void updateAnswer(long messageId, boolean answer, boolean cascade)
+	public MBMessage updateAnswer(
+			long messageId, boolean answer, boolean cascade)
 		throws PortalException;
 
 	public MBMessage updateDiscussionMessage(

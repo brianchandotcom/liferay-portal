@@ -71,8 +71,7 @@ const Pages = () => {
 				payload: ONBOARDING_STEP_TYPES.liferayExperienceCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
-		}
-		else {
+		} else {
 			if (subscriptionDXPCloud && !dxpCloudActivationSubmittedStatus) {
 				return dispatch({
 					payload: ONBOARDING_STEP_TYPES.dxpCloud,
@@ -113,7 +112,7 @@ const Pages = () => {
 
 	const StepsLayout = {
 		[ONBOARDING_STEP_TYPES.invites]: {
-			Component: Liferay.FeatureFlags['LPS-153478'] && (
+			Component: (
 				<InviteTeamMembersForm
 					availableAdministratorAssets={availableAdministratorAssets}
 					handlePage={invitesPageHandle}
@@ -125,7 +124,7 @@ const Pages = () => {
 		},
 
 		[ONBOARDING_STEP_TYPES.liferayExperienceCloud]: {
-			Component: (
+			Component: Liferay.FeatureFlags['LPS-153478'] && (
 				<SetupLiferayExperienceCloudForm
 					client={client}
 					handleChangeForm={() => pageHandle()}

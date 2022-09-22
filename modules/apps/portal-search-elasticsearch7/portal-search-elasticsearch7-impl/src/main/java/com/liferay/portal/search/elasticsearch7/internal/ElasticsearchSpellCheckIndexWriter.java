@@ -197,24 +197,16 @@ public class ElasticsearchSpellCheckIndexWriter
 		return LocalizationUtil.getLocalization();
 	}
 
-	@Reference(unbind = "-")
-	protected void setIndexNameBuilder(IndexNameBuilder indexNameBuilder) {
-		_indexNameBuilder = indexNameBuilder;
-	}
-
 	protected void setLocalization(Localization localization) {
 		_localization = localization;
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setSearchEngineAdapter(
-		SearchEngineAdapter searchEngineAdapter) {
-
-		_searchEngineAdapter = searchEngineAdapter;
-	}
-
+	@Reference
 	private IndexNameBuilder _indexNameBuilder;
+
 	private Localization _localization;
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private SearchEngineAdapter _searchEngineAdapter;
 
 }

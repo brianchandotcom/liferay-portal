@@ -150,24 +150,15 @@ public class TopHitsAggregationTranslatorImpl
 		return topHitsAggregationBuilder;
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setQueryTranslator(
-		QueryTranslator<QueryBuilder> queryTranslator) {
-
-		_queryTranslator = queryTranslator;
-	}
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setSortFieldTranslator(
-		SortFieldTranslator<SortBuilder<?>> sortFieldTranslator) {
-
-		_sortFieldTranslator = sortFieldTranslator;
-	}
-
 	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private QueryTranslator<QueryBuilder> _queryTranslator;
+
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private SortFieldTranslator<SortBuilder<?>> _sortFieldTranslator;
 
 }

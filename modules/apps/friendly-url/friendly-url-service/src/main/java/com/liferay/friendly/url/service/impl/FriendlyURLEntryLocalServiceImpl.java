@@ -726,8 +726,21 @@ public class FriendlyURLEntryLocalServiceImpl
 					}
 				}
 
-				updateFriendlyURLEntryLocalization(
-					friendlyURLEntry, entry.getKey(), normalizedUrlTitle);
+				FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+					friendlyURLEntryLocalizationPersistence.fetchByG_C_U(
+						friendlyURLEntry.getGroupId(), classNameId,
+						normalizedUrlTitle);
+
+				if (friendlyURLEntryLocalization != null) {
+					friendlyURLEntryLocalization.setFriendlyURLEntryId(
+						friendlyURLEntry.getFriendlyURLEntryId());
+
+					updateFriendlyURLLocalization(friendlyURLEntryLocalization);
+				}
+				else {
+					updateFriendlyURLEntryLocalization(
+						friendlyURLEntry, entry.getKey(), normalizedUrlTitle);
+				}
 			}
 			else if ((normalizedUrlTitle != null) &&
 					 normalizedUrlTitle.equals(StringPool.BLANK)) {

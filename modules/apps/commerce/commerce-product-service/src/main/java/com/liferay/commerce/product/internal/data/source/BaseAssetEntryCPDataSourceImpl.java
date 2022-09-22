@@ -36,6 +36,8 @@ import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Ethan Bustad
  */
@@ -77,7 +79,10 @@ public abstract class BaseAssetEntryCPDataSourceImpl implements CPDataSource {
 			"content.Language", locale, getClass());
 	}
 
+	@Reference
 	protected CPDefinitionHelper cpDefinitionHelper;
+
+	@Reference
 	protected Portal portal;
 
 }

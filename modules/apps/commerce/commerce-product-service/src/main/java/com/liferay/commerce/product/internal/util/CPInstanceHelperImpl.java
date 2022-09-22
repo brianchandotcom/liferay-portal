@@ -318,8 +318,49 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			getCPInstanceThumbnailSrc(commerceAccountId, cpInstanceId),
 			"\" />");
 
+		if (fileVersion == null) {
+			return originalImgTag;
+		}
+
 		return _amImageHTMLTagFactory.create(
 			originalImgTag, fileVersion.getFileEntry());
+	}
+
+	@Override
+	public String getCPInstanceCDNURL(long commerceAccountId, long cpInstanceId)
+		throws Exception {
+
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+			cpInstanceId);
+
+		if (cpInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		JSONArray keyValuesJSONArray = _jsonHelper.toJSONArray(
+			_cpDefinitionOptionRelLocalService.
+				getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
+					cpInstanceId));
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
+				cpInstance.getCPDefinitionId(), keyValuesJSONArray.toString(),
+				CPAttachmentFileEntryConstants.TYPE_IMAGE, 0, 1);
+
+		if (cpAttachmentFileEntries.isEmpty()) {
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+			return cpDefinition.getDefaultImageThumbnailSrc(commerceAccountId);
+		}
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			cpAttachmentFileEntries.get(0);
+
+		if (!cpAttachmentFileEntry.isCDNEnabled()) {
+			return StringPool.BLANK;
+		}
+
+		return cpAttachmentFileEntry.getCDNURL();
 	}
 
 	@Override
@@ -472,6 +513,10 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			cpAttachmentFileEntries.get(0);
 
 		FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
+
+		if (fileEntry == null) {
+			return null;
+		}
 
 		return fileEntry.getFileVersion();
 	}

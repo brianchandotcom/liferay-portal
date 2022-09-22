@@ -79,6 +79,9 @@ public interface CPInstanceHelper {
 			long commerceAccountId, long companyId, long cpInstanceId)
 		throws Exception;
 
+	public String getCPInstanceCDNURL(long commerceAccountId, long cpInstanceId)
+		throws Exception;
+
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			getCPInstanceCPDefinitionOptionRelsMap(long cpInstanceId)
 		throws PortalException;

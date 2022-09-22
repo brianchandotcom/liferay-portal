@@ -18,7 +18,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -37,14 +37,12 @@ public class SegmentsExperienceTestUtil {
 
 	public static void addSegmentsExperienceData(
 			String fileName, Layout layout,
-			LayoutPageTemplateStructureLocalService
-				layoutPageTemplateStructureLocalService,
 			LayoutPageTemplatesImporter layoutPageTemplatesImporter,
 			long segmentsExperienceId)
 		throws Exception {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			layoutPageTemplateStructureLocalService.
+			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
 					layout.getGroupId(), layout.getPlid());
 

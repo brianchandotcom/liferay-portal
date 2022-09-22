@@ -17,7 +17,6 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.content.page.editor.web.internal.util.SegmentsExperienceTestUtil;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
@@ -105,12 +104,10 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 
 		SegmentsExperienceTestUtil.addSegmentsExperienceData(
 			"fragment_composition_with_a_card.json", _draftLayout,
-			_layoutPageTemplateStructureLocalService,
 			_layoutPageTemplatesImporter, SegmentsEntryConstants.ID_DEFAULT);
 
 		SegmentsExperienceTestUtil.addSegmentsExperienceData(
 			"fragment_composition_with_a_button.json", _layout,
-			_layoutPageTemplateStructureLocalService,
 			_layoutPageTemplatesImporter, SegmentsEntryConstants.ID_DEFAULT);
 
 		MockLiferayPortletActionRequest mockActionRequest =
@@ -223,10 +220,6 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 
 	@Inject
 	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
-
-	@Inject
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
 
 	@Inject(
 		filter = "mvc.command.name=/layout_content_page_editor/add_segments_experience"

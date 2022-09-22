@@ -121,6 +121,20 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro getWidgetTemplateKey {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/ddm.ddmtemplate/get-template \
+			-u test@liferay.com:test \
+			-d templateId=${templateID}
+		''';
+
+		var templateKey = JSONCurlUtil.post("${curl}", "$.templateKey");
+
+		return "${templateKey}";
+	}
+
 	macro gotoWidgetTemplatesEllipsisItem {
 		Click.waitForMenuToggleJSClick(
 			key_tableEntry = "${widgetTemplateName}",

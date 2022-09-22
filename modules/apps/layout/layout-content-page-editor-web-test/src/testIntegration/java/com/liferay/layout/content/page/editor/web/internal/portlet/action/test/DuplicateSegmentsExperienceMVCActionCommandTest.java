@@ -17,11 +17,10 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.content.page.editor.web.internal.util.SegmentsExperienceTestUtil;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -113,16 +111,16 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 				true, new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_addSegmentsExperienceData(
-			_draftLayout, _layoutPageTemplateStructureLocalService,
+		SegmentsExperienceTestUtil.addSegmentsExperienceData(
+			"fragment_composition_with_a_card.json", _draftLayout,
+			_layoutPageTemplateStructureLocalService,
 			_layoutPageTemplatesImporter,
-			_read("fragment_composition_with_a_card.json"),
 			segmentsExperience.getSegmentsExperienceId());
 
-		_addSegmentsExperienceData(
-			_layout, _layoutPageTemplateStructureLocalService,
+		SegmentsExperienceTestUtil.addSegmentsExperienceData(
+			"fragment_composition_with_a_button.json", _layout,
+			_layoutPageTemplateStructureLocalService,
 			_layoutPageTemplatesImporter,
-			_read("fragment_composition_with_a_button.json"),
 			segmentsExperience.getSegmentsExperienceId());
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -165,74 +163,24 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 			segmentsExperienceJSONObject.getLong("segmentsExperienceId"));
 	}
 
-	private void _addSegmentsExperienceData(
-			Layout layout,
-			LayoutPageTemplateStructureLocalService
-				layoutPageTemplateStructureLocalService,
-			LayoutPageTemplatesImporter layoutPageTemplatesImporter,
-			String pageElementJSON, long segmentsExperienceId)
-		throws Exception {
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(), layout.getPlid());
-
-		String segmentsExperienceData =
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData();
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			segmentsExperienceData);
-
-		layoutPageTemplatesImporter.importPageElement(
-			layout, layoutStructure, layoutStructure.getMainItemId(),
-			pageElementJSON, 0, segmentsExperienceId);
-	}
-
 	private void _assertContentEquals(
 		Layout layout, long sourceSegmentsExperienceId,
 		long targetSegmentsExperienceId) {
 
-		List<FragmentEntryLink> expectedFragmentEntryLinks =
+		List<FragmentEntryLink> sourceFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
 				getFragmentEntryLinksBySegmentsExperienceId(
 					layout.getGroupId(), sourceSegmentsExperienceId,
 					layout.getPlid());
 
-		List<FragmentEntryLink> actualFragmentEntryLinks =
+		List<FragmentEntryLink> targetFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
 				getFragmentEntryLinksBySegmentsExperienceId(
 					layout.getGroupId(), targetSegmentsExperienceId,
 					layout.getPlid());
 
-		Assert.assertEquals(
-			expectedFragmentEntryLinks.toString(), 1,
-			actualFragmentEntryLinks.size());
-
-		Assert.assertEquals(
-			expectedFragmentEntryLinks.toString(), 1,
-			actualFragmentEntryLinks.size());
-
-		FragmentEntryLink expectedFragmentEntryLink =
-			expectedFragmentEntryLinks.get(0);
-
-		FragmentEntryLink actualFragmentEntryLink =
-			actualFragmentEntryLinks.get(0);
-
-		Assert.assertEquals(
-			expectedFragmentEntryLink.getCss(),
-			actualFragmentEntryLink.getCss());
-		Assert.assertEquals(
-			expectedFragmentEntryLink.getHtml(),
-			actualFragmentEntryLink.getHtml());
-		Assert.assertEquals(
-			expectedFragmentEntryLink.getJs(), actualFragmentEntryLink.getJs());
-		Assert.assertEquals(
-			expectedFragmentEntryLink.getConfiguration(),
-			actualFragmentEntryLink.getConfiguration());
-		Assert.assertEquals(
-			expectedFragmentEntryLink.getEditableValues(),
-			actualFragmentEntryLink.getEditableValues());
+		SegmentsExperienceTestUtil.assertContentEquals(
+			sourceFragmentEntryLinks, targetFragmentEntryLinks);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
@@ -278,11 +226,6 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
-	}
-
-	private String _read(String fileName) throws Exception {
-		return new String(
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
 	@Inject

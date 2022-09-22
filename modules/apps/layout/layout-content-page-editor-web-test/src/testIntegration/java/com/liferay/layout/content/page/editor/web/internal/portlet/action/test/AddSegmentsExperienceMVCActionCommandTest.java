@@ -17,11 +17,10 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.content.page.editor.web.internal.util.SegmentsExperienceTestUtil;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -48,6 +46,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -108,15 +107,15 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 
-		_addSegmentsExperienceData(
-			_draftLayout, _layoutPageTemplateStructureLocalService,
-			_layoutPageTemplatesImporter,
-			_read("fragment_composition_with_a_card.json"));
+		SegmentsExperienceTestUtil.addSegmentsExperienceData(
+			"fragment_composition_with_a_card.json", _draftLayout,
+			_layoutPageTemplateStructureLocalService,
+			_layoutPageTemplatesImporter, SegmentsEntryConstants.ID_DEFAULT);
 
-		_addSegmentsExperienceData(
-			_layout, _layoutPageTemplateStructureLocalService,
-			_layoutPageTemplatesImporter,
-			_read("fragment_composition_with_a_button.json"));
+		SegmentsExperienceTestUtil.addSegmentsExperienceData(
+			"fragment_composition_with_a_button.json", _layout,
+			_layoutPageTemplateStructureLocalService,
+			_layoutPageTemplatesImporter, SegmentsEntryConstants.ID_DEFAULT);
 
 		MockLiferayPortletActionRequest mockActionRequest =
 			_getMockLiferayPortletActionRequest(
@@ -163,74 +162,24 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 			_layout, defaultSegmentsExperienceId, segmentsExperienceId);
 	}
 
-	private void _addSegmentsExperienceData(
-			Layout layout,
-			LayoutPageTemplateStructureLocalService
-				layoutPageTemplateStructureLocalService,
-			LayoutPageTemplatesImporter layoutPageTemplatesImporter,
-			String pageElementJSON)
-		throws Exception {
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(), layout.getPlid());
-
-		String segmentsExperienceData =
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData();
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			segmentsExperienceData);
-
-		layoutPageTemplatesImporter.importPageElement(
-			layout, layoutStructure, layoutStructure.getMainItemId(),
-			pageElementJSON, 0);
-	}
-
 	private void _assertContentEquals(
 		Layout layout, long sourceSegmentsExperienceId,
 		long targetSegmentsExperienceId) {
 
-		List<FragmentEntryLink> expectedFragmentEntryLinks =
+		List<FragmentEntryLink> sourceFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
 				getFragmentEntryLinksBySegmentsExperienceId(
 					layout.getGroupId(), sourceSegmentsExperienceId,
 					layout.getPlid());
 
-		List<FragmentEntryLink> actualFragmentEntryLinks =
+		List<FragmentEntryLink> targetFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
 				getFragmentEntryLinksBySegmentsExperienceId(
 					layout.getGroupId(), targetSegmentsExperienceId,
 					layout.getPlid());
 
-		Assert.assertEquals(
-			expectedFragmentEntryLinks.toString(), 1,
-			actualFragmentEntryLinks.size());
-
-		Assert.assertEquals(
-			expectedFragmentEntryLinks.toString(), 1,
-			actualFragmentEntryLinks.size());
-
-		FragmentEntryLink expectedFragmentEntryLink =
-			expectedFragmentEntryLinks.get(0);
-
-		FragmentEntryLink actualFragmentEntryLink =
-			actualFragmentEntryLinks.get(0);
-
-		Assert.assertEquals(
-			expectedFragmentEntryLink.getCss(),
-			actualFragmentEntryLink.getCss());
-		Assert.assertEquals(
-			expectedFragmentEntryLink.getHtml(),
-			actualFragmentEntryLink.getHtml());
-		Assert.assertEquals(
-			expectedFragmentEntryLink.getJs(), actualFragmentEntryLink.getJs());
-		Assert.assertEquals(
-			expectedFragmentEntryLink.getConfiguration(),
-			actualFragmentEntryLink.getConfiguration());
-		Assert.assertEquals(
-			expectedFragmentEntryLink.getEditableValues(),
-			actualFragmentEntryLink.getEditableValues());
+		SegmentsExperienceTestUtil.assertContentEquals(
+			sourceFragmentEntryLinks, targetFragmentEntryLinks);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
@@ -282,11 +231,6 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
-	}
-
-	private String _read(String fileName) throws Exception {
-		return new String(
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
 	private Company _company;

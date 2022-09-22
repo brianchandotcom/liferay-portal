@@ -17,6 +17,7 @@ package com.liferay.project.templates.form.field;
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.BaseProjectTemplatesTestCase;
 import com.liferay.project.templates.extensions.util.Validator;
+import com.liferay.project.templates.extensions.util.VersionUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 
 import java.io.File;
@@ -59,20 +60,24 @@ public class ProjectTemplatesFormFieldTest
 
 	@Test
 	public void testBuildTemplateFormField70() throws Exception {
-		String liferayVersion = "7.0.6-2";
+		String liferayVersion = "7.0.10.17";
 		String name = "foobar";
 		String template = "form-field";
+		String product = "dxp";
 
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, liferayVersion);
 
 		writeGradlePropertiesInWorkspace(
 			gradleWorkspaceDir,
-			"liferay.workspace.target.platform.version=7.0.6-2");
+			"liferay.workspace.target.platform.version=7.0.10.17");
+
+		writeGradlePropertiesInWorkspace(
+			gradleWorkspaceDir, "liferay.workspace.product=dxp-7.0-sp17");
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(gradleWorkspaceDir, "modules"), template, name,
-			"--liferay-version", liferayVersion);
+			"--liferay-version", liferayVersion, "--product", product);
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: " + name,
@@ -117,7 +122,7 @@ public class ProjectTemplatesFormFieldTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=Foobar", "-Dpackage=foobar",
-			"-DliferayVersion=" + liferayVersion);
+			"-DliferayVersion=" + liferayVersion, "-Dproduct=" + product);
 
 		if (isBuildProjects()) {
 			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
@@ -132,26 +137,39 @@ public class ProjectTemplatesFormFieldTest
 
 	@Test
 	public void testBuildTemplateFormField71() throws Exception {
-		String liferayVersion = "7.1.3-1";
+		String liferayVersion = "7.1.10.7";
 		String name = "foobar";
 		String template = "form-field";
+		String product = "dxp";
 
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, liferayVersion);
 
 		writeGradlePropertiesInWorkspace(
 			gradleWorkspaceDir,
-			"liferay.workspace.target.platform.version=7.1.3-1");
+			"liferay.workspace.target.platform.version=7.1.10.7");
+
+		writeGradlePropertiesInWorkspace(
+			gradleWorkspaceDir, "liferay.workspace.product=dxp-7.1-sp7");
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(gradleWorkspaceDir, "modules"), template, name,
-			"--liferay-version", liferayVersion);
+			"--liferay-version", liferayVersion, "--product", product);
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: " + name,
 			"Web-ContextPath: /dynamic-data-foobar-form-field");
-		testContains(
-			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
+
+		if (VersionUtil.getMinorVersion(liferayVersion) < 3) {
+			testContains(
+				gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_DXP_API);
+		}
+		else {
+			testContains(
+				gradleProjectDir, "build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API);
+		}
+
 		testContains(
 			gradleProjectDir, "package.json",
 			"\"name\": \"dynamic-data-foobar-form-field\"",
@@ -204,7 +222,7 @@ public class ProjectTemplatesFormFieldTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=Foobar", "-Dpackage=foobar",
-			"-DliferayVersion=" + liferayVersion);
+			"-DliferayVersion=" + liferayVersion, "-Dproduct=" + product);
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -222,26 +240,39 @@ public class ProjectTemplatesFormFieldTest
 
 	@Test
 	public void testBuildTemplateFormField71WithHyphen() throws Exception {
-		String liferayVersion = "7.1.3-1";
+		String liferayVersion = "7.1.10.7";
 		String name = "foo-bar";
 		String template = "form-field";
+		String product = "dxp";
 
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, liferayVersion);
 
 		writeGradlePropertiesInWorkspace(
 			gradleWorkspaceDir,
-			"liferay.workspace.target.platform.version=7.1.3-1");
+			"liferay.workspace.target.platform.version=7.1.10.7");
+
+		writeGradlePropertiesInWorkspace(
+			gradleWorkspaceDir, "liferay.workspace.product=dxp-7.1-sp7");
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(gradleWorkspaceDir, "modules"), template, name,
-			"--liferay-version", liferayVersion);
+			"--liferay-version", liferayVersion, "--product", product);
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: " + name,
 			"Web-ContextPath: /dynamic-data-foo-bar-form-field");
-		testContains(
-			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
+
+		if (VersionUtil.getMinorVersion(liferayVersion) < 3) {
+			testContains(
+				gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_DXP_API);
+		}
+		else {
+			testContains(
+				gradleProjectDir, "build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API);
+		}
+
 		testContains(
 			gradleProjectDir, "package.json",
 			"\"name\": \"dynamic-data-foo-bar-form-field\"",
@@ -294,7 +325,7 @@ public class ProjectTemplatesFormFieldTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=FooBar", "-Dpackage=foo.bar",
-			"-DliferayVersion=" + liferayVersion);
+			"-DliferayVersion=" + liferayVersion, "-Dproduct=" + product);
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -312,18 +343,22 @@ public class ProjectTemplatesFormFieldTest
 
 	@Test
 	public void testBuildTemplateFormField72CustomPackage() throws Exception {
-		String liferayVersion = "7.2.1-1";
+		String liferayVersion = "7.2.10.7";
 		String name = "foobar";
+		String product = "dxp";
 
 		File workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
 
 		writeGradlePropertiesInWorkspace(
-			workspaceDir, "liferay.workspace.target.platform.version=7.2.1-1");
+			workspaceDir, "liferay.workspace.target.platform.version=7.2.10.7");
+
+		writeGradlePropertiesInWorkspace(
+			workspaceDir, "liferay.workspace.product=dxp-7.2-sp7");
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(workspaceDir, "modules"), "form-field", name,
 			"--liferay-version", liferayVersion, "--package-name",
-			"com.liferay.test.form");
+			"com.liferay.test.form", "--product", product);
 
 		testNotExists(
 			gradleProjectDir,

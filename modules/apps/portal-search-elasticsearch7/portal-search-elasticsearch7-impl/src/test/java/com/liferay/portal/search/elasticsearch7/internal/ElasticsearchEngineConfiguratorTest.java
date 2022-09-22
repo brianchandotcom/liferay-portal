@@ -113,14 +113,14 @@ public class ElasticsearchEngineConfiguratorTest {
 				setDestinationServiceRegistrarHelper(
 					_createDestinationServiceRegistrarHelper());
 				ReflectionTestUtil.setFieldValue(
-					this, "messageBus", Mockito.mock(MessageBus.class));
+					this, "_messageBus", Mockito.mock(MessageBus.class));
 				setSearchDestinationHelper(searchDestinationHelper);
 				setSearchEngine(
 					Mockito.mock(SearchEngine.class),
 					Collections.singletonMap(
 						"search.engine.id", "SYSTEM_ENGINE"));
 				ReflectionTestUtil.setFieldValue(
-					this, "searchEngineHelper",
+					this, "_searchEngineHelper",
 					Mockito.mock(SearchEngineHelper.class));
 			}
 		};

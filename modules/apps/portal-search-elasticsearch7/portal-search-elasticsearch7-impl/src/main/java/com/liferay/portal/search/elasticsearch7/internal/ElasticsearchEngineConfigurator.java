@@ -64,22 +64,22 @@ public class ElasticsearchEngineConfigurator
 
 	@Override
 	protected DestinationFactory getDestinationFactory() {
-		return destinationFactory;
+		return _destinationFactory;
 	}
 
 	@Override
 	protected IndexSearcher getIndexSearcher() {
-		return indexSearcher;
+		return _indexSearcher;
 	}
 
 	@Override
 	protected IndexWriter getIndexWriter() {
-		return indexWriter;
+		return _indexWriter;
 	}
 
 	@Override
 	protected MessageBus getMessageBus() {
-		return messageBus;
+		return _messageBus;
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class ElasticsearchEngineConfigurator
 
 	@Override
 	protected SearchEngineHelper getSearchEngineHelper() {
-		return searchEngineHelper;
+		return _searchEngineHelper;
 	}
 
 	@Reference(
@@ -119,22 +119,23 @@ public class ElasticsearchEngineConfigurator
 		_searchEngines.remove(searchEngineId);
 	}
 
-	@Reference
-	protected DestinationFactory destinationFactory;
-
-	@Reference(target = "(!(search.engine.impl=*))")
-	protected IndexSearcher indexSearcher;
-
-	@Reference(target = "(!(search.engine.impl=*))")
-	protected IndexWriter indexWriter;
-
-	@Reference
-	protected MessageBus messageBus;
-
-	@Reference
-	protected SearchEngineHelper searchEngineHelper;
-
 	private BundleContext _bundleContext;
+
+	@Reference
+	private DestinationFactory _destinationFactory;
+
+	@Reference(target = "(!(search.engine.impl=*))")
+	private IndexSearcher _indexSearcher;
+
+	@Reference(target = "(!(search.engine.impl=*))")
+	private IndexWriter _indexWriter;
+
+	@Reference
+	private MessageBus _messageBus;
+
+	@Reference
+	private SearchEngineHelper _searchEngineHelper;
+
 	private final Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<>();
 

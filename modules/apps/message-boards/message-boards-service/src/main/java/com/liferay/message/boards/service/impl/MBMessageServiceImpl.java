@@ -824,7 +824,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	@Override
-	public void updateAnswer(long messageId, boolean answer, boolean cascade)
+	public MBMessage updateAnswer(long messageId, boolean answer, boolean cascade)
 		throws PortalException {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
@@ -833,7 +833,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			getPermissionChecker(), message.getRootMessageId(),
 			ActionKeys.UPDATE);
 
-		mbMessageLocalService.updateAnswer(messageId, answer, cascade);
+		return mbMessageLocalService.updateAnswer(messageId, answer, cascade);
 	}
 
 	@Override

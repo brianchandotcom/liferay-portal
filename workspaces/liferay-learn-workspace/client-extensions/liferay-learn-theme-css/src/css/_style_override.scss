@@ -1,0 +1,49 @@
+body .search-page .admonition {
+	margin-top: -5.25rem;
+	padding: 0;
+}
+
+div.body {
+	min-width: initial;
+}
+
+dt:target,
+span.highlighted {
+	background-color: $highlight-color;
+}
+
+pre {
+	background-color: inherit;
+	color: inherit;
+}
+
+table {
+	font-size: $h5-font-size;
+
+	&.docutils {
+		@extend .table;
+		@extend .table-autofit;
+		@extend .table-striped;
+	}
+}
+
+ul.search {
+	list-style: none;
+	margin: $spacing-default 0 0;
+
+	li {
+		background: none;
+		padding: 0 0 $spacing-default;
+	}
+}
+
+.document {
+	.body {
+		color: $default-color;
+		max-width: initial;
+	}
+}
+
+.highlight {
+	border-radius: 0.25rem;
+}

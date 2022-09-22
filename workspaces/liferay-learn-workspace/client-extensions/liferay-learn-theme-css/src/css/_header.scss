@@ -1,0 +1,130 @@
+header {
+	align-items: center;
+	background-color: $brand-secondary;
+	color: $white;
+	display: flex;
+	height: $header-height;
+	justify-content: space-between;
+	position: fixed;
+	right: 0;
+	top: 0;
+	width: 100%;
+	z-index: 2;
+
+	a {
+		color: $white;
+
+		&:hover {
+			color: $white;
+		}
+	}
+
+	.brand {
+		align-items: center;
+		display: flex;
+
+		h2 {
+			margin: 0;
+		}
+	}
+
+	.company-logo {
+		margin-left: $spacing-xs;
+		margin-right: $spacing-xs;
+
+		@include media-breakpoint-up(md) {
+			margin-left: 1.125rem;
+		}
+	}
+
+	.header-links {
+		a {
+			font-size: $h5-font-size;
+			margin-right: 3.25rem;
+		}
+	}
+
+	.mobile-menu-wrapper {
+		align-items: center;
+		display: flex;
+
+		&.menu-open {
+			.header-links {
+				display: block;
+			}
+
+			.mobile-menu {
+				.lexicon-icon-bars {
+					display: none;
+				}
+
+				.lexicon-icon-times {
+					display: block;
+				}
+			}
+		}
+
+		&.search-expanded {
+			.mobile-search {
+				display: none;
+			}
+
+			.searchbox {
+				display: inline-block;
+			}
+		}
+
+		.header-links {
+			background: $white;
+			bottom: 0;
+			display: none;
+			font-weight: $font-weight-semi-bold;
+			left: 0;
+			list-style: none;
+			margin-bottom: 0;
+			padding-inline-start: 0;
+			position: fixed;
+			top: $header-height;
+			right: 0;
+
+			a {
+				align-items: center;
+				border-bottom: 1px solid $hr-color;
+				color: $default-color;
+				display: flex;
+				font-size: $h4-font-size;
+				justify-content: space-between;
+				margin-right: 0;
+				padding: $spacing-md;
+			}
+
+			li:last-child a {
+				border-bottom-width: 0;
+			}
+		}
+
+		.mobile-menu {
+			cursor: pointer;
+			margin-right: $spacing-xs;
+			padding: $spacing-sm;
+
+			.lexicon-icon-times {
+				color: $white;
+				display: none;
+			}
+		}
+
+		.searchbox {
+			display: none;
+			margin-right: 0;
+		}
+
+		.search-form {
+			width: 100%;
+
+			label {
+				margin-bottom: 0;
+			}
+		}
+	}
+}

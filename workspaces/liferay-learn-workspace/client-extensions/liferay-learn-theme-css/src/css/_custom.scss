@@ -1,5 +1,43 @@
 @import 'sassy-inputs/sass/main';
 
-body {
-	background-color: aquamarine;
-}
+@import 'clay/functions/_global-functions';
+
+// Custom Variables
+
+@import '_custom_variable';
+
+@import 'clay/atlas/variables/alerts';
+
+@import 'clay/variables/alerts';
+
+// Clay Base-Variables
+
+@import 'clay/variables/_bs4-variable-overwrites';
+
+@import 'clay/bootstrap/_functions';
+@import 'clay/bootstrap/_mixins';
+@import 'clay/bootstrap/_variables';
+
+@import 'clay/_mixins';
+@import 'clay/_variables';
+
+@import 'clay/components/_tables';
+
+// Custom Components
+
+@import '_404';
+@import '_admonition';
+@import '_breadcrumb';
+@import '_buttons';
+@import '_copy_button_override';
+@import '_documentations';
+@import '_elements';
+@import '_header';
+@import '_help_center_footer';
+@import '_highlighting_alert';
+@import '_homepage';
+@import '_landing_page';
+@import '_page_alert';
+@import '_search';
+@import '_sphinx_design_override';
+@import '_style_override';

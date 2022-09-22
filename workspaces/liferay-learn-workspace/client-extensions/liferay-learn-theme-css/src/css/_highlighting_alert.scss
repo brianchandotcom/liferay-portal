@@ -1,0 +1,32 @@
+div.admonition.hilighting-alert {
+	border-left: 0;
+	font-size: 0.875rem;
+	margin: 0 16px 8px;
+	padding: $spacing-sm $spacing-default $spacing-sm 2.625rem;
+
+	&.hide {
+		display: none;
+	}
+
+	.admonition-title {
+		display: flex;
+		margin: 0;
+		text-transform: none;
+	}
+
+	.remove-link {
+		border-width: 0;
+		color: $primary;
+		font-weight: normal;
+		padding: 0;
+
+		&:hover {
+			color: $primary-d2;
+			text-decoration: underline;
+		}
+	}
+
+	.title-text {
+		transform: translateY(-2px);
+	}
+}

@@ -1,0 +1,37 @@
+.btn {
+	cursor: pointer;
+	font-weight: $font-weight-semi-bold;
+
+	&.btn-primary {
+		&,
+		&:active,
+		&:focus {
+			background-color: $white;
+			border-color: $primary;
+			color: $primary;
+		}
+
+		&:hover {
+			background: $filter-color;
+			box-shadow: 0 0.125rem 0.375rem 0 rgba(2, 19, 51, 0.15);
+		}
+	}
+
+	&.btn-secondary {
+		&,
+		&:focus,
+		&:hover,
+		&:not(:disabled):not(.disabled):active {
+			background-color: $filter-color;
+			border-color: $primary;
+			color: $default-color;
+		}
+
+		&:active,
+		&:focus,
+		&:hover,
+		&:not(:disabled):not(.disabled):active {
+			box-shadow: 0 0.125rem 0.375rem 0 rgba(2, 19, 51, 0.15);
+		}
+	}
+}

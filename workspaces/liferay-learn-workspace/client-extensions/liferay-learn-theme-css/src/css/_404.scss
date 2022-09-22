@@ -1,0 +1,18 @@
+.not-found {
+	text-align: center;
+
+	&.main-content {
+		margin-top: 5.3125rem;
+	}
+
+	svg {
+		width: 55%;
+	}
+}
+
+.not-found-message {
+	background-color: $background-color;
+	margin-top: -10%;
+	padding-bottom: 5%;
+	padding-top: 10%;
+}

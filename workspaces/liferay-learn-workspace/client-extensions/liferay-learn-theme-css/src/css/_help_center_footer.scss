@@ -1,0 +1,32 @@
+.help-center-footer {
+	border-top: 1px solid $hr-color;
+	margin-bottom: $spacing-md;
+	margin-top: $spacing-lg;
+	padding-top: $spacing-md;
+
+	a strong {
+		font-weight: 600;
+	}
+
+	h3 {
+		font-size: 20px;
+		margin-bottom: $spacing-sm;
+	}
+
+	.icon-container {
+		margin-top: $spacing-sm;
+	}
+
+	.liferay-waffle-icon {
+		height: $spacing-default;
+		margin-top: 0;
+		width: $spacing-default;
+	}
+}
+
+.landing-page-container {
+	.help-center-footer {
+		margin-left: $spacing-md;
+		margin-right: $spacing-md;
+	}
+}

@@ -1,0 +1,122 @@
+// hiding toggle for removing search matches
+
+.highlight-link {
+	display: none;
+}
+
+.search-form {
+	width: 232px;
+
+	input[type='text'] {
+		background-color: rgba(255, 255, 255, 0.2);
+		background-image: clay-icon(search, $white);
+		background-position: right 0.7rem center;
+		background-repeat: no-repeat;
+		background-size: 0.75rem;
+		border: 0;
+		border-radius: $border-radius;
+		color: $white;
+		font-size: $h5-font-size;
+		height: 2.25rem;
+		padding: $spacing-xs 1.25rem $spacing-xs $spacing-md;
+		width: 100%;
+
+		&::placeholder {
+			color: $white;
+		}
+
+		&:focus {
+			background-image: clay-icon(times, $white);
+			background-size: 0.625rem;
+		}
+	}
+}
+
+.search-page {
+	margin-top: 5.25rem;
+
+	h2 {
+		margin-top: 0;
+	}
+
+	ul.search li div.context {
+		margin: 8px 0;
+	}
+
+	.custom-radio {
+		margin-bottom: 8px;
+
+		.custom-control-label {
+			font-size: $h5-font-size;
+			font-weight: $font-weight-semi-bold;
+			padding-left: $spacing-xs;
+		}
+	}
+
+	.filter-input-container {
+		padding-top: $spacing-md;
+
+		&:first-child {
+			padding-top: $spacing-default;
+		}
+
+		label {
+			display: block;
+		}
+	}
+
+	.no-results {
+		display: none;
+
+		&.show {
+			align-items: center;
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		svg {
+			margin-right: $spacing-md;
+		}
+	}
+
+	.search-form {
+		width: 100%;
+
+		input[type='text'] {
+			background-color: $white;
+			background-image: none;
+			border: 1px solid $hr-color;
+			color: $default-color;
+			width: 100%;
+
+			&::placeholder {
+				color: $pre-text-color;
+			}
+		}
+	}
+
+	.search-filters {
+		background-color: $background-color;
+		border-radius: $border-radius;
+		margin-bottom: $spacing-sm;
+		margin-right: $spacing-default;
+		padding: $spacing-default;
+
+		h3 {
+			margin-top: 0;
+		}
+	}
+
+	@media (max-width: 768px) {
+		margin-top: $spacing-md;
+	}
+}
+
+.search-results-wrapper {
+	display: flex;
+}
+
+.searchbox {
+	display: inline-block;
+	margin-right: $spacing-md;
+}

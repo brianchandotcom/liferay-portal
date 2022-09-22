@@ -1,0 +1,69 @@
+// Overrides for sphinx-copybutton
+a.copybtn {
+	cursor: pointer;
+	height: 26px;
+	left: initial;
+	opacity: 0;
+	right: 6px;
+	top: 6px;
+	transition: none;
+	width: 26px;
+
+	> img {
+		background-color: #373f52;
+		border-radius: 4px;
+		border: 1px dashed rgba(255, 255, 255, 0.2);
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.55);
+		box-sizing: border-box;
+		display: block;
+		height: 26px;
+		padding: 4px;
+		width: 26px;
+	}
+}
+
+li .copybtn img {
+	margin: 0;
+}
+
+button.copybtn,
+.highlight button.copybtn:hover {
+	background-color: $dark;
+}
+
+// Converts position from left to bottom
+
+.o-tooltip--left {
+	position: relative;
+
+	&:after {
+		background-color: $dark;
+		border-radius: 4px;
+		box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
+		color: $white;
+		content: attr(data-tooltip);
+		font-size: 14px;
+		left: 50%;
+		max-width: 230px;
+		opacity: 0;
+		padding: 12px;
+		pointer-events: none;
+		position: absolute;
+		text-align: center;
+		top: 100%;
+		transform: translateX(-50%) translateY(4px);
+		transition: none;
+		visibility: hidden;
+		white-space: nowrap;
+		z-index: 2;
+	}
+
+	&:hover {
+		&:after {
+			display: block;
+			opacity: 1;
+			transform: translateX(-50%) translateY(4px);
+			visibility: visible;
+		}
+	}
+}

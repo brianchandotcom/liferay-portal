@@ -256,8 +256,13 @@ public class UpdatePortletsHighlightedConfigurationMVCActionCommand
 				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 				"nonhighlightedPortletIds", new String[0]));
 
-		if (!highlighted && defaultHighlightedPortletIds.contains(portletId)) {
-			nonhighlightedPortletIds.add(portletId);
+		if (defaultHighlightedPortletIds.contains(portletId)) {
+			if (highlighted) {
+				nonhighlightedPortletIds.remove(portletId);
+			}
+			else {
+				nonhighlightedPortletIds.add(portletId);
+			}
 
 			portalPreferences.setValues(
 				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,

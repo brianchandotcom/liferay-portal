@@ -97,7 +97,7 @@ public class DuplicateSegmentsExperienceMVCActionCommand
 				segmentsExperience.isActive(), new UnicodeProperties(true),
 				serviceContext);
 
-		SegmentsExperienceUtil.copySegmentsExperienceDataFromDraftLayout(
+		SegmentsExperienceUtil.copySegmentsExperienceData(
 			themeDisplay.getPlid(), _commentManager,
 			themeDisplay.getScopeGroupId(), _portletRegistry,
 			segmentsExperienceId,

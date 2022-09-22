@@ -96,30 +96,6 @@ public class SegmentsExperienceUtil {
 		}
 	}
 
-	public static void copySegmentsExperienceDataFromDraftLayout(
-			long draftLayoutPlid, CommentManager commentManager, long groupId,
-			PortletRegistry portletRegistry, long sourceSegmentsExperienceId,
-			long targetSegmentsExperienceId,
-			Function<String, ServiceContext> serviceContextFunction,
-			long userId)
-		throws PortalException {
-
-		_copyLayoutData(
-			draftLayoutPlid, commentManager, groupId, portletRegistry,
-			sourceSegmentsExperienceId, targetSegmentsExperienceId,
-			serviceContextFunction, userId);
-
-		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-			draftLayoutPlid);
-
-		if ((draftLayout != null) && (draftLayout.getClassPK() > 0)) {
-			_copyLayoutData(
-				draftLayout.getClassPK(), commentManager, groupId,
-				portletRegistry, sourceSegmentsExperienceId,
-				targetSegmentsExperienceId, serviceContextFunction, userId);
-		}
-	}
-
 	public static Map<String, Object> getAvailableSegmentsExperiences(
 			HttpServletRequest httpServletRequest)
 		throws Exception {

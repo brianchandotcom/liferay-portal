@@ -2249,6 +2249,59 @@ definition {
 		}
 	}
 
+	@description = "LPS-152735 - Verify that it's possible to validate Expression Builder syntax when creating a Scheduled Action"
+	@priority = "4"
+	test CanValidateExpressionBuilderScheduledAction {
+		task ("Create Custom Object and Custom Field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161915",
+				objectName = "CustomObject161915",
+				pluralLabelName = "Custom Objects 161915");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject161915");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161915");
+		}
+
+		task ("Go to Objects, select Custom Object and click on actions tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161915");
+
+			ObjectAdmin.goToActionsTab();
+		}
+
+		task ("Add a Custom Action and try to add incorrect syntax in Expression Builder") {
+			ObjectAdmin.gotoAddObjectAction();
+
+			ObjectAdmin.fillObjectAction(
+				actionDescription = "Custom Description",
+				actionName = "Custom Action",
+				active = "true",
+				inputExpressionValue = "#",
+				inputMethod = "false",
+				objectLabel = "Custom Object 161915",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Add");
+
+			Button.clickSave();
+		}
+
+		task ("Assert that there is an error in syntax") {
+			SelectFrame(locator1 = "Message#ERROR_DISMISSIBLE");
+
+			AssertElementPresent(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Syntax Error");
+		}
+	}
+
 	@description = "LPS-152735 - Verify that it's possible to validate Groovy syntax when creating Actions"
 	@priority = "4"
 	test CanValidateGroovyAction {

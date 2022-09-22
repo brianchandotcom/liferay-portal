@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterRequestExecutor;
 
@@ -30,21 +31,19 @@ public class ClusterRequestExecutorFixture {
 		ClusterHealthStatusTranslator clusterHealthStatusTranslator =
 			new ClusterHealthStatusTranslatorImpl();
 
-		_clusterRequestExecutor = new ElasticsearchClusterRequestExecutor() {
-			{
-				setHealthClusterRequestExecutor(
-					_createHealthClusterRequestExecutor(
-						clusterHealthStatusTranslator,
-						_elasticsearchClientResolver));
-				setStateClusterRequestExecutor(
-					_createStateClusterRequestExecutor(
-						_elasticsearchClientResolver));
-				setStatsClusterRequestExecutor(
-					_createStatsClusterRequestExecutor(
-						clusterHealthStatusTranslator,
-						_elasticsearchClientResolver));
-			}
-		};
+		_clusterRequestExecutor = new ElasticsearchClusterRequestExecutor();
+
+		ReflectionTestUtil.setFieldValue(
+			_clusterRequestExecutor, "_healthClusterRequestExecutor",
+			_createHealthClusterRequestExecutor(
+				clusterHealthStatusTranslator, _elasticsearchClientResolver));
+		ReflectionTestUtil.setFieldValue(
+			_clusterRequestExecutor, "_stateClusterRequestExecutor",
+			_createStateClusterRequestExecutor(_elasticsearchClientResolver));
+		ReflectionTestUtil.setFieldValue(
+			_clusterRequestExecutor, "_statsClusterRequestExecutor",
+			_createStatsClusterRequestExecutor(
+				clusterHealthStatusTranslator, _elasticsearchClientResolver));
 	}
 
 	protected void setElasticsearchClientResolver(
@@ -57,34 +56,47 @@ public class ClusterRequestExecutorFixture {
 		ClusterHealthStatusTranslator clusterHealthStatusTranslator,
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		return new HealthClusterRequestExecutorImpl() {
-			{
-				setClusterHealthStatusTranslator(clusterHealthStatusTranslator);
-				setElasticsearchClientResolver(elasticsearchClientResolver);
-			}
-		};
+		HealthClusterRequestExecutor healthClusterRequestExecutor =
+			new HealthClusterRequestExecutorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			healthClusterRequestExecutor, "_clusterHealthStatusTranslator",
+			clusterHealthStatusTranslator);
+		ReflectionTestUtil.setFieldValue(
+			healthClusterRequestExecutor, "_elasticsearchClientResolver",
+			elasticsearchClientResolver);
+
+		return healthClusterRequestExecutor;
 	}
 
 	private StateClusterRequestExecutor _createStateClusterRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		return new StateClusterRequestExecutorImpl() {
-			{
-				setElasticsearchClientResolver(elasticsearchClientResolver);
-			}
-		};
+		StateClusterRequestExecutor stateClusterRequestExecutor =
+			new StateClusterRequestExecutorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			stateClusterRequestExecutor, "_elasticsearchClientResolver",
+			elasticsearchClientResolver);
+
+		return stateClusterRequestExecutor;
 	}
 
 	private StatsClusterRequestExecutor _createStatsClusterRequestExecutor(
 		ClusterHealthStatusTranslator clusterHealthStatusTranslator,
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		return new StatsClusterRequestExecutorImpl() {
-			{
-				setClusterHealthStatusTranslator(clusterHealthStatusTranslator);
-				setElasticsearchClientResolver(elasticsearchClientResolver);
-			}
-		};
+		StatsClusterRequestExecutor statsClusterRequestExecutor =
+			new StatsClusterRequestExecutorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			statsClusterRequestExecutor, "_clusterHealthStatusTranslator",
+			clusterHealthStatusTranslator);
+		ReflectionTestUtil.setFieldValue(
+			statsClusterRequestExecutor, "_elasticsearchClientResolver",
+			elasticsearchClientResolver);
+
+		return statsClusterRequestExecutor;
 	}
 
 	private ClusterRequestExecutor _clusterRequestExecutor;

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterRequestExecutor;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterRequest;
@@ -40,13 +41,17 @@ public class ElasticsearchClusterRequestExecutorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_clusterRequestExecutor = new ElasticsearchClusterRequestExecutor() {
-			{
-				setHealthClusterRequestExecutor(_healthClusterRequestExecutor);
-				setStateClusterRequestExecutor(_stateClusterRequestExecutor);
-				setStatsClusterRequestExecutor(_statsClusterRequestExecutor);
-			}
-		};
+		_clusterRequestExecutor = new ElasticsearchClusterRequestExecutor();
+
+		ReflectionTestUtil.setFieldValue(
+			_clusterRequestExecutor, "_healthClusterRequestExecutor",
+			_healthClusterRequestExecutor);
+		ReflectionTestUtil.setFieldValue(
+			_clusterRequestExecutor, "_stateClusterRequestExecutor",
+			_stateClusterRequestExecutor);
+		ReflectionTestUtil.setFieldValue(
+			_clusterRequestExecutor, "_statsClusterRequestExecutor",
+			_statsClusterRequestExecutor);
 	}
 
 	@Test

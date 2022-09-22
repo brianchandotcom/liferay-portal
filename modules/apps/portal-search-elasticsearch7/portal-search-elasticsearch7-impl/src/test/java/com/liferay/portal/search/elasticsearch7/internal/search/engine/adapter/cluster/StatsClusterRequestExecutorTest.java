@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterResponse;
@@ -58,14 +59,14 @@ public class StatsClusterRequestExecutorTest {
 			new String[] {_NODE_ID});
 
 		StatsClusterRequestExecutorImpl statsClusterRequestExecutorImpl =
-			new StatsClusterRequestExecutorImpl() {
-				{
-					setElasticsearchClientResolver(
-						_elasticsearchConnectionFixture);
-					setClusterHealthStatusTranslator(
-						new ClusterHealthStatusTranslatorImpl());
-				}
-			};
+			new StatsClusterRequestExecutorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			statsClusterRequestExecutorImpl, "_clusterHealthStatusTranslator",
+			new ClusterHealthStatusTranslatorImpl());
+		ReflectionTestUtil.setFieldValue(
+			statsClusterRequestExecutorImpl, "_elasticsearchClientResolver",
+			_elasticsearchConnectionFixture);
 
 		StatsClusterResponse statsClusterResponse =
 			statsClusterRequestExecutorImpl.execute(statsClusterRequest);

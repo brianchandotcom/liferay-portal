@@ -43,7 +43,6 @@ import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlIdpSpSessionLocalService;
 import com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalService;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
-import com.liferay.saml.persistence.service.SamlSpSessionLocalService;
 import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.exception.UnsolicitedLogoutResponseException;
 import com.liferay.saml.runtime.exception.UnsupportedBindingException;
@@ -670,13 +669,6 @@ public class SingleLogoutProfileImpl
 		samlPeerEndpointSubcontext.setEndpoint(singleLogoutService);
 
 		sendSamlMessage(messageContext, httpServletResponse);
-	}
-
-	@Reference(unbind = "-")
-	protected void setSamlSpSessionLocalService(
-		SamlSpSessionLocalService samlSpSessionLocalService) {
-
-		super.samlSpSessionLocalService = samlSpSessionLocalService;
 	}
 
 	private void _addSessionIndex(

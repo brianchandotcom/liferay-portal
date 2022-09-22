@@ -111,7 +111,8 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 			_singleLogoutProfileImpl, "samlProviderConfigurationHelper",
 			samlProviderConfigurationHelper);
 
-		_singleLogoutProfileImpl.setSamlSpSessionLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_singleLogoutProfileImpl, "samlSpSessionLocalService",
 			_samlSpSessionLocalService);
 
 		prepareServiceProvider(SP_ENTITY_ID);

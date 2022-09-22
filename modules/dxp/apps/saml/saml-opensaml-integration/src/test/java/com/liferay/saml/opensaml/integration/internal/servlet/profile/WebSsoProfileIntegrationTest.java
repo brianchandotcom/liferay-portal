@@ -145,7 +145,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			_webSsoProfileImpl, "_samlSpAuthRequestLocalService",
 			_samlSpAuthRequestLocalService);
 
-		_webSsoProfileImpl.setSamlSpSessionLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "samlSpSessionLocalService",
 			_samlSpSessionLocalService);
 
 		ReflectionTestUtil.setFieldValue(

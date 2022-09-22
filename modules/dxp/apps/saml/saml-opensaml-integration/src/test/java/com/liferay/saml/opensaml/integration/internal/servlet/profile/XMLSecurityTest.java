@@ -115,7 +115,8 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 			_webSsoProfileImpl, "_samlSpIdpConnectionLocalService",
 			samlSpIdpConnectionLocalService);
 
-		_webSsoProfileImpl.setSamlSpSessionLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_webSsoProfileImpl, "samlSpSessionLocalService",
 			samlSpSessionLocalService);
 
 		prepareServiceProvider(SP_ENTITY_ID);

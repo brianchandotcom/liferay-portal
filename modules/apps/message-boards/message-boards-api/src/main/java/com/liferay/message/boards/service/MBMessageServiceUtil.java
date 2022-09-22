@@ -370,11 +370,11 @@ public class MBMessageServiceUtil {
 		getService().unsubscribeMessage(messageId);
 	}
 
-	public static void updateAnswer(
+	public static MBMessage updateAnswer(
 			long messageId, boolean answer, boolean cascade)
 		throws PortalException {
 
-		getService().updateAnswer(messageId, answer, cascade);
+		return getService().updateAnswer(messageId, answer, cascade);
 	}
 
 	public static MBMessage updateDiscussionMessage(

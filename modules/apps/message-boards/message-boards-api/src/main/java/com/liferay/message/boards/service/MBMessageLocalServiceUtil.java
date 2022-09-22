@@ -983,18 +983,18 @@ public class MBMessageLocalServiceUtil {
 		getService().unsubscribeMessage(userId, messageId);
 	}
 
-	public static void updateAnswer(
+	public static MBMessage updateAnswer(
 			long messageId, boolean answer, boolean cascade)
 		throws PortalException {
 
-		getService().updateAnswer(messageId, answer, cascade);
+		return getService().updateAnswer(messageId, answer, cascade);
 	}
 
-	public static void updateAnswer(
+	public static MBMessage updateAnswer(
 			MBMessage message, boolean answer, boolean cascade)
 		throws PortalException {
 
-		getService().updateAnswer(message, answer, cascade);
+		return getService().updateAnswer(message, answer, cascade);
 	}
 
 	public static void updateAsset(

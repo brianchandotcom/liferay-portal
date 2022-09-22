@@ -28,6 +28,7 @@ import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
+import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.constants.CPContentContributorConstants;
 import com.liferay.commerce.product.constants.CPOptionCategoryConstants;
 import com.liferay.commerce.product.constants.CPWebKeys;
@@ -87,6 +88,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.text.Format;
 
@@ -268,6 +270,40 @@ public class CPContentHelperImpl implements CPContentHelper {
 	@Override
 	public List<CPContentRenderer> getCPContentRenderers(String cpType) {
 		return _cpContentRendererRegistry.getCPContentRenderers(cpType);
+	}
+
+	@Override
+	public String getCPDefinitionCDNURL(
+			long cpDefinitionId, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
+			cpDefinitionId);
+
+		if (cpDefinition == null) {
+			return StringPool.BLANK;
+		}
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			cpDefinition.getCPAttachmentFileEntries(
+				CPAttachmentFileEntryConstants.TYPE_IMAGE,
+				WorkflowConstants.STATUS_APPROVED);
+
+		if (cpAttachmentFileEntries.isEmpty()) {
+			return cpDefinition.getDefaultImageThumbnailSrc(
+				CommerceUtil.getCommerceAccountId(
+					(CommerceContext)httpServletRequest.getAttribute(
+						CommerceWebKeys.COMMERCE_CONTEXT)));
+		}
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			cpAttachmentFileEntries.get(0);
+
+		if (!cpAttachmentFileEntry.isCDNEnabled()) {
+			return StringPool.BLANK;
+		}
+
+		return cpAttachmentFileEntry.getCDNURL();
 	}
 
 	@Override

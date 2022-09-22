@@ -82,6 +82,10 @@ public interface CPContentHelper {
 
 	public List<CPContentRenderer> getCPContentRenderers(String cpType);
 
+	public String getCPDefinitionCDNURL(
+			long cpDefinitionId, HttpServletRequest httpServletRequest)
+		throws Exception;
+
 	public FileVersion getCPDefinitionImageFileVersion(
 			long cpDefinitionId, HttpServletRequest httpServletRequest)
 		throws Exception;

@@ -24,6 +24,8 @@ CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 
 String productDetailURL = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay);
+
+String cpDefinitionCDNURL = cpContentHelper.getCPDefinitionCDNURL(cpCatalogEntry.getCPDefinitionId(), request);
 %>
 
 <div class="cp-renderer">
@@ -32,10 +34,17 @@ String productDetailURL = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDi
 	<div class="card d-flex flex-column product-card">
 		<div class="card-item-first position-relative">
 			<a href="<%= productDetailURL %>">
-				<liferay-adaptive-media:img
-					class="img-fluid product-card-picture"
-					fileVersion="<%= cpContentHelper.getCPDefinitionImageFileVersion(cpCatalogEntry.getCPDefinitionId(), request) %>"
-				/>
+				<c:choose>
+					<c:when test="<%= Validator.isNotNull(cpDefinitionCDNURL) %>">
+						<img class="img-fluid product-card-picture" src="<%= cpDefinitionCDNURL %>" />
+					</c:when>
+					<c:otherwise>
+						<liferay-adaptive-media:img
+							class="img-fluid product-card-picture"
+							fileVersion="<%= cpContentHelper.getCPDefinitionImageFileVersion(cpCatalogEntry.getCPDefinitionId(), request) %>"
+						/>
+					</c:otherwise>
+				</c:choose>
 
 				<div class="aspect-ratio-item-bottom-left">
 					<commerce-ui:availability-label

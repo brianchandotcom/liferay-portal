@@ -111,6 +111,8 @@ export {escapeHTML, unescapeHTML} from './liferay/util/html_util';
 export {default as fetch} from './liferay/util/fetch.es';
 export {default as focusFormField} from './liferay/util/focus_form_field';
 export {default as formatStorage} from './liferay/util/format_storage.es';
+export {default as getCountries} from './liferay/util/address/get_countries.es';
+export {default as getRegions} from './liferay/util/address/get_regions.es';
 export {default as getCropRegion} from './liferay/util/get_crop_region.es';
 export {default as getGeolocation} from './liferay/util/get_geolocation';
 export {default as getLexiconIcon} from './liferay/util/get_lexicon_icon';

@@ -12,7 +12,7 @@
  * details.
  */
 
-import escapeHTML from './../util/html_util';
+import {escapeHTML} from './../util/html_util';
 
 const DEFAULT_APPEND_CONTENT = '&nbsp;&nbsp;';
 

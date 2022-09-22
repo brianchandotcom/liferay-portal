@@ -12,6 +12,7 @@
  * details.
  */
 
+import {getCountries, getRegions} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 
 function CountryRegionDynamicSelect({
@@ -26,7 +27,7 @@ function CountryRegionDynamicSelect({
 		{
 			select: countrySelect,
 			selectData(callback) {
-				Liferay.Address.getCountries((countries) => {
+				getCountries((countries) => {
 					const countryJP = countries.find(
 						(country) => country.a2 === 'JP'
 					);
@@ -44,7 +45,7 @@ function CountryRegionDynamicSelect({
 		{
 			select: regionSelect,
 			selectData(callback, selectKey) {
-				Liferay.Address.getRegions((regions) => {
+				getRegions((regions) => {
 					if (
 						selectKey === japanCountryId &&
 						Liferay.ThemeDisplay.getLanguageId() === 'ja_JP'

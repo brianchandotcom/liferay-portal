@@ -12,7 +12,7 @@
  * details.
  */
 
-import escapeHTML from './util/html_util';
+import {escapeHTML} from './util/html_util';
 import toggleDisabled from './util/toggle_disabled';
 
 function sortByValue(a, b) {

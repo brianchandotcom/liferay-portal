@@ -162,7 +162,14 @@ export function getCheckedCheckboxes(
 	name?: string
 ): Array<number> | '';
 
+export function getCountries(callback?: () => void): Promise<any>;
+
 export function getOpener(): any;
+
+export function getRegions(
+	callback?: () => void,
+	selectKey?: string
+): Promise<any>;
 
 export function getTop(): Window;
 

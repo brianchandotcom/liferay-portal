@@ -8951,7 +8951,10 @@ public class JournalArticleLocalServiceImpl
 		try {
 			PortletRequestModel portletRequestModel = null;
 
-			if (!ExportImportThreadLocal.isImportInProcess()) {
+			if (!ExportImportThreadLocal.isImportInProcess() &&
+				(serviceContext.getLiferayPortletRequest() != null) &&
+				(serviceContext.getLiferayPortletResponse() != null)) {
+
 				portletRequestModel = new PortletRequestModel(
 					serviceContext.getLiferayPortletRequest(),
 					serviceContext.getLiferayPortletResponse());

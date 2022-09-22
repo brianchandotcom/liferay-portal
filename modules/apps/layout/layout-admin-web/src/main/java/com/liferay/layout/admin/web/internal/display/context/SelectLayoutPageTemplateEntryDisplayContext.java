@@ -174,6 +174,17 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		return masterLayoutPageTemplateEntries;
 	}
 
+	public long getMasterLayoutPlid() {
+		if (_masterLayoutPlid != null) {
+			return _masterLayoutPlid;
+		}
+
+		_masterLayoutPlid = ParamUtil.getLong(
+			_httpServletRequest, "masterLayoutPlid");
+
+		return _masterLayoutPlid;
+	}
+
 	public String getRedirect() {
 		if (_redirect != null) {
 			return _redirect;
@@ -193,6 +204,16 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 			_httpServletRequest, "selectedTab", "basic-templates");
 
 		return _selectedTab;
+	}
+
+	public int getType() {
+		if (_type != null) {
+			return _type;
+		}
+
+		_type = ParamUtil.getInteger(_httpServletRequest, "type");
+
+		return _type;
 	}
 
 	public List<String> getTypes() {
@@ -251,9 +272,11 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private Long _layoutPageTemplateCollectionId;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private Long _masterLayoutPlid;
 	private String _redirect;
 	private String _selectedTab;
 	private final ThemeDisplay _themeDisplay;
+	private Integer _type;
 	private List<String> _types;
 
 }

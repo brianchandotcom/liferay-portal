@@ -133,6 +133,8 @@ public class MBMessageModelDocumentContributor
 					WorkflowConstants.STATUS_APPROVED));
 
 			document.addKeyword("question", mbThread.isQuestion());
+
+			document.addNumber("viewCount", mbThread.getViewCount());
 		}
 
 		document.addKeyword("threadId", mbMessage.getThreadId());

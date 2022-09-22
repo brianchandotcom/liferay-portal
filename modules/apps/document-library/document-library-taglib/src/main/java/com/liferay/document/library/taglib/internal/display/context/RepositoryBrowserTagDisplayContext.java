@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FileEntryVerticalCard;
 import com.liferay.document.library.taglib.internal.frontend.taglib.clay.servlet.FileShortcutVerticalCard;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -57,6 +60,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -70,11 +74,13 @@ import javax.servlet.http.HttpServletRequest;
 public class RepositoryBrowserTagDisplayContext {
 
 	public RepositoryBrowserTagDisplayContext(
-		long folderId, HttpServletRequest httpServletRequest,
+		DLAppService dlAppService, long folderId,
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		PortletRequest portletRequest, long repositoryId) {
 
+		_dlAppService = dlAppService;
 		_folderId = folderId;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
@@ -90,6 +96,31 @@ public class RepositoryBrowserTagDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"deleteURL", _getRepositoryBrowserURL()
 		).build();
+	}
+
+	public List<BreadcrumbEntry> getBreadcrumbEntries() throws PortalException {
+		LinkedList<BreadcrumbEntry> breadcrumbEntries = new LinkedList<>();
+
+		long folderId = _folderId;
+
+		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			Folder folder = _dlAppService.getFolder(folderId);
+
+			if (folder.isMountPoint()) {
+				break;
+			}
+
+			breadcrumbEntries.addFirst(
+				_createBreadcrumbEntry(folderId, folder.getName()));
+
+			folderId = folder.getParentFolderId();
+		}
+
+		breadcrumbEntries.addFirst(
+			_createBreadcrumbEntry(
+				folderId, LanguageUtil.get(_httpServletRequest, "home")));
+
+		return breadcrumbEntries;
 	}
 
 	public String getDeleteFileEntryURL(FileEntry fileEntry) {
@@ -110,12 +141,7 @@ public class RepositoryBrowserTagDisplayContext {
 	}
 
 	public String getFolderURL(Folder folder) {
-		return PortletURLBuilder.create(
-			PortletURLUtil.getCurrent(
-				_liferayPortletRequest, _liferayPortletResponse)
-		).setParameter(
-			"folderId", folder.getFolderId()
-		).buildString();
+		return _getFolderURL(folder.getFolderId());
 	}
 
 	public HorizontalCard getHorizontalCard(RepositoryEntry repositoryEntry)
@@ -224,6 +250,17 @@ public class RepositoryBrowserTagDisplayContext {
 		return true;
 	}
 
+	private BreadcrumbEntry _createBreadcrumbEntry(
+		long folderId, String title) {
+
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(title);
+		breadcrumbEntry.setURL(_getFolderURL(folderId));
+
+		return breadcrumbEntry;
+	}
+
 	private SearchContainer<Object> _getDLSearchContainer()
 		throws PortalException {
 
@@ -245,6 +282,15 @@ public class RepositoryBrowserTagDisplayContext {
 			new EmptyOnClickRowChecker(_liferayPortletResponse));
 
 		return searchContainer;
+	}
+
+	private String _getFolderURL(long folderId) {
+		return PortletURLBuilder.create(
+			PortletURLUtil.getCurrent(
+				_liferayPortletRequest, _liferayPortletResponse)
+		).setParameter(
+			"folderId", folderId
+		).buildString();
 	}
 
 	private Hits _getHits(SearchContainer<Object> searchContainer)
@@ -341,6 +387,7 @@ public class RepositoryBrowserTagDisplayContext {
 		return searchContainer;
 	}
 
+	private final DLAppService _dlAppService;
 	private final long _folderId;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;

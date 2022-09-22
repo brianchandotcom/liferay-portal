@@ -27,6 +27,10 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 />
 
 <clay:container-fluid>
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= repositoryBrowserTagDisplayContext.getBreadcrumbEntries() %>"
+	/>
+
 	<liferay-ui:search-container
 		id="repositoryEntries"
 		searchContainer="<%= repositoryBrowserTagDisplayContext.getSearchContainer() %>"

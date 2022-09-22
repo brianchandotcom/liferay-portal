@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.taglib.servlet.taglib;
 
+import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.taglib.internal.display.context.RepositoryBrowserTagDisplayContext;
 import com.liferay.document.library.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -72,7 +73,8 @@ public class RepositoryBrowserTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			RepositoryBrowserTagDisplayContext.class.getName(),
 			new RepositoryBrowserTagDisplayContext(
-				_getFolderId(), httpServletRequest,
+				DLAppServiceUtil.getService(), _getFolderId(),
+				httpServletRequest,
 				PortalUtil.getLiferayPortletRequest(portletRequest),
 				PortalUtil.getLiferayPortletResponse(portletResponse),
 				portletRequest, _getRepositoryId()));

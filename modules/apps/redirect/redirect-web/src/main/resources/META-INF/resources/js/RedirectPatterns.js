@@ -27,27 +27,27 @@ const PatternField = ({
 	handleAddClick,
 	handleRemoveClick,
 	index,
+	pattern = '',
 	portletNamespace,
-	source = '',
 }) => {
 	return (
 		<ClayLayout.Row className="redirect-pattern-row">
 			<ClayLayout.Col md="6">
-				<label htmlFor="source">
-					{Liferay.Language.get('mime-type-field-label')}
+				<label htmlFor="pattern">
+					{Liferay.Language.get('pattern-field-label')}
 
 					<span
 						className="inline-item-after"
-						title={Liferay.Language.get('mime-type-help-message')}
+						title={Liferay.Language.get('pattern-help-message')}
 					>
 						<ClayIcon symbol="question-circle-full" />
 					</span>
 				</label>
 
 				<ClayInput
-					defaultValue={source}
-					id="source"
-					name={`${portletNamespace}source_${index}`}
+					defaultValue={pattern}
+					id="pattern"
+					name={`${portletNamespace}pattern_${index}`}
 					type="text"
 				/>
 			</ClayLayout.Col>
@@ -105,7 +105,7 @@ const RedirectPattern = ({
 	patternList: initialPatternList,
 	portletNamespace,
 }) => {
-	const emptyRow = () => ({destinationURL: '', id: uuidv4(), source: ''});
+	const emptyRow = () => ({destinationURL: '', id: uuidv4(), pattern: ''});
 
 	const addRow = (index) => {
 		const tempList = [...patternsList];
@@ -136,8 +136,8 @@ const RedirectPattern = ({
 					handleRemoveClick={removeRow}
 					index={index}
 					key={item.id}
+					pattern={item.pattern}
 					portletNamespace={portletNamespace}
-					source={item.source}
 				/>
 			))}
 		</>
@@ -149,7 +149,7 @@ RedirectPattern.propTypes = {
 	patternList: PropTypes.arrayOf(
 		PropTypes.shape({
 			destinationURL: PropTypes.string,
-			source: PropTypes.string,
+			pattern: PropTypes.string,
 		})
 	),
 	portletNamespace: PropTypes.string.isRequired,

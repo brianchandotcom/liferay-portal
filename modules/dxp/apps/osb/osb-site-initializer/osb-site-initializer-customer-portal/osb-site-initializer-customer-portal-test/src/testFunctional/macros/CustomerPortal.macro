@@ -770,6 +770,23 @@ definition {
 		AssertElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI");
 	}
 
+	macro getValueFieldKoroneikiByAccountName {
+		var key_label = "${field}";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		CustomerPortal.viewCPObjectCustomInfoByAccountName(accountName = "${accountName}");
+
+		WaitForElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI_VALUE");
+
+		var value = selenium.getElementValue("CustomerPortalSite#FIELDS_KORONEIKI_VALUE");
+
+		return "${value}";
+	}
+
 	macro waitCP20PageToLoad {
 		WaitForVisible(
 			key_userFirstName = "${userFirstName}",

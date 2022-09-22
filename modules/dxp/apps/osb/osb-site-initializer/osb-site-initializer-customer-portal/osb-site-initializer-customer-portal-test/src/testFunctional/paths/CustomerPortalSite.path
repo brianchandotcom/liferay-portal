@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELDS_KORONEIKI_VALUE</td>
+	<td>//*[@class='ddm-label' and text()='${key_label}']/parent::*//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBTITLE_SUPPORT</td>
 	<td>//p[contains(@class, 'text-paragraph-sm')]</td>
 	<td></td>

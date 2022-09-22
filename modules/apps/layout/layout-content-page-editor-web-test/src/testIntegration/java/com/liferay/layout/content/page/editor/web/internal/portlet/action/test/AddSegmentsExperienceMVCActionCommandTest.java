@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -139,11 +138,11 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 
 	private void _addDataContentToDefaultExperience() throws Exception {
 		SegmentsExperienceTestUtil.addDataContentToExperience(
-			"fragment_composition_with_a_button.json", _layout,
-			SegmentsEntryConstants.ID_DEFAULT, _layoutPageTemplatesImporter);
+			"fragment_composition_with_a_button.json", _layout, 0,
+			_layoutPageTemplatesImporter);
 		SegmentsExperienceTestUtil.addDataContentToExperience(
-			"fragment_composition_with_a_card.json", _draftLayout,
-			SegmentsEntryConstants.ID_DEFAULT, _layoutPageTemplatesImporter);
+			"fragment_composition_with_a_card.json", _draftLayout, 0,
+			_layoutPageTemplatesImporter);
 	}
 
 	private JSONObject _addSegmentsExperience(String name, long segmentsEntryId)
@@ -158,8 +157,8 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 			mockActionRequest, new MockLiferayPortletActionResponse());
 	}
 
-	private void _checkNewSegmentExperienceContent(
-		long newSegmentExperienceId) {
+	private void _checkNewSegmentExperienceContent(long newSegmentExperienceId)
+		throws Exception {
 
 		long defaultExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(

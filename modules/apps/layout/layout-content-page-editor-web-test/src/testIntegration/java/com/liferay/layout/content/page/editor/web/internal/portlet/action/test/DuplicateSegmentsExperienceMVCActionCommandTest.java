@@ -160,7 +160,9 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 	}
 
 	private void _checkDuplicateSegmentExperienceContent(
-		long duplicatedSegmentsExperienceId, long sourceSegmentsExperienceId) {
+			long duplicatedSegmentsExperienceId,
+			long sourceSegmentsExperienceId)
+		throws Exception {
 
 		SegmentsExperienceTestUtil.checkNewSegmentExperienceContent(
 			_layout, duplicatedSegmentsExperienceId,

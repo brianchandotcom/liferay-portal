@@ -202,7 +202,7 @@ definition {
 			locator1 = "NavBar#MY_SITES",
 			value1 = "My Sites");
 
-		LexiconCard.clickCard(card = "${siteName}");
+		LexiconCard.clickCardTitle(card = "${siteName}");
 
 		SelectFrame(value1 = "relative=top");
 	}

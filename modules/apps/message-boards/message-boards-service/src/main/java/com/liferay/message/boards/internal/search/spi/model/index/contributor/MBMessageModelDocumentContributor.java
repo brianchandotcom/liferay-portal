@@ -14,10 +14,13 @@
 
 package com.liferay.message.boards.internal.search.spi.model.index.contributor;
 
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -33,13 +36,16 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistryUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -100,6 +106,25 @@ public class MBMessageModelDocumentContributor
 		if (mbMessage.getMessageId() == mbMessage.getRootMessageId()) {
 			MBThread mbThread = mbThreadLocalService.fetchMBThread(
 				mbMessage.getThreadId());
+
+			document.addKeyword("hasValidAnswer", Stream.of(
+				_mbMessageLocalService.getChildMessages(
+					mbMessage.getMessageId(),
+					WorkflowConstants.STATUS_APPROVED)
+			).flatMap(
+				List::stream
+			).anyMatch(
+				MBMessage::isAnswer
+			));
+
+			document.addKeyword("keywords", ListUtil.toArray(
+				_assetTagLocalService.getTags(
+					MBMessage.class.getName(), mbMessage.getMessageId()),
+				AssetTag.NAME_ACCESSOR));
+
+			document.addKeyword("numberOfMessageBoardMessages",_mbMessageLocalService.getChildMessagesCount(
+				mbMessage.getMessageId(),
+				WorkflowConstants.STATUS_APPROVED));
 
 			document.addKeyword("question", mbThread.isQuestion());
 		}
@@ -176,5 +201,11 @@ public class MBMessageModelDocumentContributor
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 }

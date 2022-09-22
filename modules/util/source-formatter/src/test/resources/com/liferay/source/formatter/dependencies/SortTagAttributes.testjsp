@@ -27,3 +27,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 		displayStyle="descriptive"
 	/>
 </aui:form>
+
+<div class="section-card" v-for="card in cards">
+</div>

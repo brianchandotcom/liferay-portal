@@ -1453,7 +1453,7 @@ public class MBMessageServiceHttp {
 		}
 	}
 
-	public static void updateAnswer(
+	public static com.liferay.message.boards.model.MBMessage updateAnswer(
 			HttpPrincipal httpPrincipal, long messageId, boolean answer,
 			boolean cascade)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1466,8 +1466,10 @@ public class MBMessageServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, messageId, answer, cascade);
 
+			Object returnObj = null;
+
 			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
 				if (exception instanceof
@@ -1480,6 +1482,8 @@ public class MBMessageServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
+
+			return (com.liferay.message.boards.model.MBMessage)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {

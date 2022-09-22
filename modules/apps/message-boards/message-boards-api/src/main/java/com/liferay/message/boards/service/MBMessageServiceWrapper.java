@@ -410,10 +410,11 @@ public class MBMessageServiceWrapper
 	}
 
 	@Override
-	public void updateAnswer(long messageId, boolean answer, boolean cascade)
+	public MBMessage updateAnswer(
+			long messageId, boolean answer, boolean cascade)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_mbMessageService.updateAnswer(messageId, answer, cascade);
+		return _mbMessageService.updateAnswer(messageId, answer, cascade);
 	}
 
 	@Override

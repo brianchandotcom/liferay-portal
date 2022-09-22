@@ -128,7 +128,7 @@ export default function UpperToolbar({
 				currentDescription = metadata.description;
 				setDefinitionDescription(currentDescription);
 
-				currentElements = deserializeUtil.getElements();
+				currentElements = deserializeUtil.getElements(xmlDefinition);
 				setElements(currentElements);
 			}
 			else {

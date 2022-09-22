@@ -165,10 +165,71 @@ export function parseReassignments(node) {
 	return assignments;
 }
 
-export function parseNotifications(node) {
-	const notifications = {notificationTypes: [], recipients: []};
+function getReceptionType(node, xmlDefinition, notificationIndex) {
+	const parse = new DOMParser();
+	const xmlDOM = parse.parseFromString(xmlDefinition, 'application/xml');
+	const nodes = [];
+	const nodeTypes = [
+		'condition',
+		'fork',
+		'join',
+		'join-xor',
+		'state',
+		'task',
+	];
+	const receptionType = [];
+
+	nodeTypes.map((nodeType) => {
+		const currentNodes = xmlDOM.querySelectorAll(nodeType);
+
+		currentNodes.forEach((node) => {
+			nodes.push(node);
+		});
+	});
+
+	nodes.map((currentNode) => {
+		const {children: nodeChilds} = currentNode;
+
+		const [{innerHTML: currentNodeId}] = nodeChilds;
+		const nodeId = node.id ? node.id : node.name;
+
+		if (currentNodeId === nodeId) {
+			const notifications = currentNode.querySelectorAll('notification');
+
+			let {children: notificationChilds} = notifications[
+				notificationIndex
+			];
+
+			notificationChilds = [...notificationChilds];
+			notificationChilds.map((child) => {
+				if (child.nodeName === 'recipients') {
+					if (child.hasAttribute('receptionType')) {
+						const {attributes} = child;
+						const [{value}] = attributes;
+
+						receptionType.push(value);
+					}
+					else {
+						receptionType.push('');
+					}
+				}
+			});
+		}
+	});
+
+	return receptionType;
+}
+
+export function parseNotifications(node, xmlDefinition) {
+	const notifications = {
+		notificationTypes: [],
+		receptionType: [],
+		recipients: [],
+	};
 
 	node.notifications.forEach((item, index) => {
+		const currentRecipients = [];
+
 		notifications.description = parseProperty(
 			notifications,
 			item,
@@ -180,10 +241,11 @@ export function parseNotifications(node) {
 			'execution-type'
 		);
 		notifications.name = parseProperty(notifications, item, 'name');
-		notifications.receptionType = parseProperty(
-			notifications,
-			item,
-			'receptionType'
+
+		notifications.receptionType[index] = getReceptionType(
+			node,
+			xmlDefinition,
+			index
 		);
 
 		let notificationTypes = parseProperty(
@@ -214,11 +276,11 @@ export function parseNotifications(node) {
 		);
 
 		if (item.assignees) {
-			notifications.recipients[index] = {
+			currentRecipients.push({
 				assignmentType: ['taskAssignees'],
-			};
+			});
 		}
-		else if (item['user']) {
+		if (item['user']) {
 			if (item['user'].some((item) => item['email-address'])) {
 				const emailAddress = [];
 
@@ -226,10 +288,10 @@ export function parseNotifications(node) {
 					emailAddress.push(item['email-address']);
 				});
 
-				notifications.recipients[index] = {
+				currentRecipients.push({
 					assignmentType: ['user'],
 					emailAddress,
-				};
+				});
 			}
 
 			if (item['user'].some((item) => item['user-id'])) {
@@ -239,10 +301,10 @@ export function parseNotifications(node) {
 					userId.push(item['user-id']);
 				});
 
-				notifications.recipients[index] = {
+				currentRecipients.push({
 					assignmentType: ['user'],
 					userId,
-				};
+				});
 			}
 
 			if (item['user'].some((item) => item['screen-name'])) {
@@ -252,43 +314,46 @@ export function parseNotifications(node) {
 					screenName.push(item['screen-name']);
 				});
 
-				notifications.recipients[index] = {
+				currentRecipients.push({
 					assignmentType: ['user'],
 					screenName,
-				};
+				});
 			}
 		}
-		else if (item['role-type']) {
-			notifications.recipients[index] = {
+		if (item['role-type']) {
+			currentRecipients.push({
 				assignmentType: ['roleType'],
 				autoCreate: item['auto-create'],
 				roleName: item['role-name'],
 				roleType: item['role-type'],
-			};
+			});
 		}
-		else if (item['role-id']) {
-			notifications.recipients[index] = {
+		if (item['role-id']) {
+			currentRecipients.push({
 				assignmentType: ['roleId'],
 				roleId: item['role-id'][0],
-			};
+			});
 		}
-		else if (item['scripted-recipient']) {
+		if (item['scripted-recipient']) {
 			const scriptedRecipient = item['scripted-recipient'][0];
 
 			const script = scriptedRecipient.script;
 			const scriptLanguage = scriptedRecipient['script-language'];
 
-			notifications.recipients[index] = {
+			currentRecipients.push({
 				assignmentType: ['scriptedRecipient'],
 				script: [script],
 				scriptLanguage: scriptLanguage || [DEFAULT_LANGUAGE],
-			};
+			});
 		}
-		else {
-			notifications.recipients[index] = {
+
+		if (!notifications.recipients) {
+			currentRecipients.push({
 				assignmentType: ['user'],
-			};
+			});
 		}
+
+		notifications.recipients[index] = currentRecipients;
 	});
 
 	return notifications;

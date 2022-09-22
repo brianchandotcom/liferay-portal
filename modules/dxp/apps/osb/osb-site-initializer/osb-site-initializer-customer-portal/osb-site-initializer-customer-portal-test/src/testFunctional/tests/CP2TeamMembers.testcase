@@ -221,7 +221,7 @@ definition {
 
 		task ("Assert that object Koroneiki reflects the same number as modal team members displays") {
 			CustomerPortal.viewValueFieldKoroneiki(
-				field = "maxRequestors",
+				field = "Max Requestors",
 				index = "3",
 				value = "2");
 		}
@@ -318,7 +318,7 @@ definition {
 	test IsRequestorShowingUp {
 		task ("Assert the current SLA via Koroneiki") {
 			CustomerPortal.viewValueFieldKoroneiki(
-				field = "slaCurrent",
+				field = "SLA Current",
 				index = "1",
 				value = "Platinum Subscription");
 		}

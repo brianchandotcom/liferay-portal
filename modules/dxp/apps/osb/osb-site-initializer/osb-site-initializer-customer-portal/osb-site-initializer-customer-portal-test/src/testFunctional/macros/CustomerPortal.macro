@@ -757,6 +757,9 @@ definition {
 	}
 
 	macro viewValueFieldKoroneiki {
+		var key_label = "${field}";
+		var key_value = "${value}";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",

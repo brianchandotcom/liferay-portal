@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>FIELDS_KORONEIKI</td>
-	<td>//div[contains(@data-field-name, '${field}')]//input[contains(@value, '${value}')]</td>
+	<td>//*[@class='ddm-label' and text()='${key_label}']/parent::*//*[@type='text' and @value='${key_value}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -45,7 +45,7 @@ public class XMLSpringExtenderServiceCheck extends BaseFileCheck {
 		}
 
 		List<String> allowedSpringExtenderServiceDirNames = getAttributeValues(
-			_ALLOWED_SPRING_EXTENDER_SERVICEDIR_NAMES_KEY, absolutePath);
+			_ALLOWED_SPRING_EXTENDER_SERVICE_DIR_NAMES_KEY, absolutePath);
 
 		for (String allowedSpringExtenderServiceDirName :
 				allowedSpringExtenderServiceDirNames) {
@@ -91,7 +91,7 @@ public class XMLSpringExtenderServiceCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String _ALLOWED_SPRING_EXTENDER_SERVICEDIR_NAMES_KEY =
+	private static final String _ALLOWED_SPRING_EXTENDER_SERVICE_DIR_NAMES_KEY =
 		"allowedSpringExtenderServiceDirNames";
 
 }

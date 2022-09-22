@@ -30,7 +30,11 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -38,6 +42,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -154,7 +160,7 @@ public class LayoutModelDocumentContributor
 		Set<Locale> locales = _language.getAvailableLocales(
 			layout.getGroupId());
 
-		if (!layout.isPrivateLayout()) {
+		if (_useLayoutCrawler(layout)) {
 			for (Locale locale : locales) {
 				String content = StringPool.BLANK;
 
@@ -361,6 +367,33 @@ public class LayoutModelDocumentContributor
 		return false;
 	}
 
+	private boolean _useLayoutCrawler(Layout layout) {
+		if (layout.isPrivateLayout()) {
+			return false;
+		}
+
+		Role role = _roleLocalService.fetchRole(
+			layout.getCompanyId(), RoleConstants.GUEST);
+
+		if (role == null) {
+			return false;
+		}
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				role.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPlid()), role.getRoleId());
+
+		if ((resourcePermission != null) &&
+			resourcePermission.isViewActionId()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final String _WRAPPER_ELEMENT = "id=\"wrapper\">";
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -387,6 +420,12 @@ public class LayoutModelDocumentContributor
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

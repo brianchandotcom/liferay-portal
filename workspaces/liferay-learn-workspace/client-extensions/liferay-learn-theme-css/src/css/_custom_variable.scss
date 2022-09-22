@@ -70,7 +70,7 @@ $link-hover-color: $primary-d2 !default;
 
 // Site Color Variables
 
-$alert: #d33a2f !default;
+$alert-color: #d33a2f !default;
 $background-color: #f4f6f9 !default;
 $black: #000 !default;
 $border-color: #ebeef2 !default;
@@ -86,7 +86,7 @@ $white: #fff !default;
 
 $admonition-error: $danger !default;
 $admonition-error-bg: $danger-l2 !default;
-$admonition-error-highlight: $alert !default;
+$admonition-error-highlight: $alert-color !default;
 $admonition-important: $info !default;
 $admonition-important-bg: $info-l2 !default;
 $admonition-important-highlight: $info-l1 !default;

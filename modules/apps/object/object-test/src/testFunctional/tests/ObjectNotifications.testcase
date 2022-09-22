@@ -124,6 +124,39 @@ definition {
 		}
 	}
 
+	@description = "LPS-161923 - Verify that it's possible to search for notifications"
+	@priority = "3"
+	test CanSearchForNotifications {
+		task ("Go to Templates and add Notification Templates") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Templates");
+
+			for (var templateName : list "Test,Liferay,Site") {
+				ObjectNotifications.addNewNotificationTemplate(
+					emailBody = "Email Body",
+					entryTo = "test@liferay.com",
+					fromAddress = "Liferay",
+					fromName = "Test Test",
+					name = "Notification ${templateName}",
+					subject = "Subject");
+
+				Button.clickSave();
+			}
+		}
+
+		task ("Search for Template by name") {
+			Refresh();
+
+			ObjectNotifications.searchNotificationTemplate(entryName = "Liferay");
+		}
+
+		task ("Assert that Notification Template is present") {
+			ObjectNotifications.viewNotificationTemplate(notificationTemplateName = "Notification Liferay");
+		}
+	}
+
 	@description = "LPS-161920 - Verify that it's possible to send an e-mail notification via an Action"
 	@priority = "3"
 	test CanSendEmailViaAction {

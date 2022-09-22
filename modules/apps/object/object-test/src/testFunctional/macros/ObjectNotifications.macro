@@ -90,4 +90,16 @@ definition {
 		}
 	}
 
+	macro searchNotificationTemplate {
+		AssertElementPresent(locator1 = "ObjectPortlet#SEARCH_FIELD");
+
+		Type(
+			locator1 = "ObjectPortlet#SEARCH_FIELD",
+			value1 = "${entryName}");
+
+		KeyPress(
+			locator1 = "ObjectPortlet#SEARCH_FIELD",
+			value1 = "\RETURN");
+	}
+
 }

@@ -121,7 +121,7 @@ const SideMenu = () => {
 						}
 						appendIconClassName="ml-auto"
 						className={classNames(
-							'align-items-center btn-borderless d-flex px-3 py-2 rounded w-100',
+							'align-items-center btn-borderless d-flex px-2 py-2 rounded w-100',
 							{
 								'cp-product-activation-active': isOpenedProductsMenu,
 								'cp-products-list-active': hasSomeMenuItemActive,
@@ -137,7 +137,9 @@ const SideMenu = () => {
 							)
 						}
 					>
-						{MENU_TYPES.productActivation}
+						{i18n.translate(
+							getKebabCase(MENU_TYPES.productActivation)
+						)}
 					</Button>
 
 					<ul

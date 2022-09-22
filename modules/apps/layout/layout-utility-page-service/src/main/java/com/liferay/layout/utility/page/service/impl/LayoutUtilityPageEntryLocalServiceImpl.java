@@ -21,7 +21,6 @@ import com.liferay.layout.utility.page.service.base.LayoutUtilityPageEntryLocalS
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
@@ -62,12 +61,11 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long userId, long groupId, long plid,
-			String name, int type)
+			String externalReferenceCode, long userId, long groupId,
+			String name, int type, long masterLayoutPlid)
 		throws PortalException {
 
 		_validateExternalReferenceCode(externalReferenceCode, groupId);
-		_validateLayout(groupId, plid);
 		_validateName(name);
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
@@ -84,8 +82,11 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		layoutUtilityPageEntry.setExternalReferenceCode(externalReferenceCode);
 
+		long plid = 0;
+
 		Layout layout = _addLayout(
-			userId, groupId, name, type, 0, WorkflowConstants.STATUS_APPROVED,
+			userId, groupId, name, type, masterLayoutPlid,
+			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextThreadLocal.getServiceContext());
 
 		if (layout != null) {
@@ -167,20 +168,16 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, long plid, String name, int type)
+			long layoutUtilityPageEntryId, String name)
 		throws PortalException {
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			layoutUtilityPageEntryPersistence.fetchByPrimaryKey(
 				layoutUtilityPageEntryId);
 
-		_validateLayout(layoutUtilityPageEntry.getGroupId(), plid);
-
 		_validateName(name);
 
-		layoutUtilityPageEntry.setPlid(plid);
 		layoutUtilityPageEntry.setName(name);
-		layoutUtilityPageEntry.setType(type);
 
 		return layoutUtilityPageEntryPersistence.update(layoutUtilityPageEntry);
 	}
@@ -279,24 +276,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 				StringBundler.concat(
 					"Duplicate layout utility page entry external reference ",
 					"code ", externalReferenceCode, " in group ", groupId));
-		}
-	}
-
-	private void _validateLayout(long groupId, long plid)
-		throws PortalException {
-
-		Layout layout = _layoutLocalService.fetchLayout(plid);
-
-		if (plid <= 0) {
-			return;
-		}
-
-		if ((layout == null) || (layout.getGroupId() != groupId) ||
-			layout.isDraftLayout() || layout.isTypeAssetDisplay()) {
-
-			throw new NoSuchLayoutException(
-				StringBundler.concat(
-					"Layout ", plid, " is invalid for group ", groupId));
 		}
 	}
 

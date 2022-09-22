@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.content.page.editor.web.internal.util.SegmentsExperienceTestUtil;
+import com.liferay.layout.content.page.editor.web.util.SegmentsExperienceTestUtil;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;

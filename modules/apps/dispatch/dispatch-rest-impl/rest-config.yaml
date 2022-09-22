@@ -1,0 +1,10 @@
+apiDir: "../dispatch-rest-api/src/main/java"
+apiPackagePath: "com.liferay.dispatch.rest"
+application:
+    baseURI: "/dispatch-rest"
+    className: "DispatchRESTApplication"
+    name: "Liferay.Dispatch.REST"
+author: "Nilton Vieira"
+clientDir: "../dispatch-rest-client/src/main/java"
+forcePredictableOperationId: true
+testDir: "../dispatch-rest-test/src/testIntegration/java"

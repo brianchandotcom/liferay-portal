@@ -202,35 +202,37 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 				currentPortletCategory.getPath(), new String[] {"/", "."},
 				new String[] {"-", "-"});
 
-			portletCategoryJSONObjectsMap.put(
-				portletCategoryKey,
-				JSONUtil.put(
-					"categories",
-					() -> {
-						Map<String, JSONObject>
-							childPortletCategoryJSONObjectsMap =
-								_getPortletCategoryJSONObjectsMap(
-									highlightedPortletIds, httpServletRequest,
-									currentPortletCategory, themeDisplay);
+			Map<String, JSONObject> childPortletCategoryJSONObjectsMap =
+				_getPortletCategoryJSONObjectsMap(
+					highlightedPortletIds, httpServletRequest,
+					currentPortletCategory, themeDisplay);
 
-						return JSONUtil.toJSONArray(
-							childPortletCategoryJSONObjectsMap.values(),
-							portletCategoryJSONObject ->
-								portletCategoryJSONObject);
-					}
-				).put(
-					"path", portletCategoryKey
-				).put(
-					"portlets",
-					_getPortletsJSONArray(
-						highlightedPortletIds, httpServletRequest,
-						currentPortletCategory, themeDisplay)
-				).put(
-					"title",
-					_getPortletCategoryTitle(
-						httpServletRequest, currentPortletCategory,
-						themeDisplay)
-				));
+			JSONArray childPortletCategoryJSONArray = JSONUtil.toJSONArray(
+				new ArrayList<>(childPortletCategoryJSONObjectsMap.values()),
+				portletCategoryJSONObject -> portletCategoryJSONObject);
+
+			JSONArray portletsJSONArray = _getPortletsJSONArray(
+				highlightedPortletIds, httpServletRequest,
+				currentPortletCategory, themeDisplay);
+
+			if ((childPortletCategoryJSONArray.length() > 0) ||
+				(portletsJSONArray.length() > 0)) {
+
+				portletCategoryJSONObjectsMap.put(
+					portletCategoryKey,
+					JSONUtil.put(
+						"categories", childPortletCategoryJSONArray
+					).put(
+						"path", portletCategoryKey
+					).put(
+						"portlets", portletsJSONArray
+					).put(
+						"title",
+						_getPortletCategoryTitle(
+							httpServletRequest, currentPortletCategory,
+							themeDisplay)
+					));
+			}
 		}
 
 		return portletCategoryJSONObjectsMap;

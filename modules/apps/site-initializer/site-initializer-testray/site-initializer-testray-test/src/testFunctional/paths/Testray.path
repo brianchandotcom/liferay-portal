@@ -135,6 +135,11 @@
 	<td>//div[contains(@class,'listbox')]//label[contains(.,'Available')]/..//div//select//option[text() ='${key_environmentFactors}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VERIFY_ENVIRONMENT_FACTORS_SELECTED</td>
+	<td>//div[contains(@class,'listbox')]//label[contains(.,'Selected')]/..//div//select//option[text() ='${key_environmentFactors}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

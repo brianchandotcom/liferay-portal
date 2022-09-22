@@ -23,6 +23,8 @@ definition {
 
 		TestrayManage.deleteAllCategories();
 
+		Testray.deleteAllProjects();
+
 		Testray.tearDownCP();
 
 		if ("${testPortalInstance}" == "true") {
@@ -41,6 +43,8 @@ definition {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory(category = "Environments_2 Factor Category");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Go to Options on Manage Sidebar, Add Factor Option, change pagination and assert the Factor option has been created") {
@@ -82,6 +86,8 @@ definition {
 		task ("Add a category and check if the category was created") {
 			TestrayManage.addNewCategory(category = "Environments_1 Category");
 
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
 			Testray.assertItemName(key_name = "Environments_1 Category");
 		}
 	}
@@ -97,6 +103,8 @@ definition {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory(category = "Environments_2 Category");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Go to Options on Manage Sidebar, Add Options") {
@@ -121,12 +129,84 @@ definition {
 	}
 
 	@description = "This is a test for LPS-157321 - Verify if as an Administrator I am able to configure Default Environment Factors for a Routine"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanConfigureDefaultEnvironmentFactorsForRoutine {
+		task ("Go to Categories on Manage Sidebar and Add two Category") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		// TODO LPS-157321 AdminCanConfigureDefaultEnvironmentFactorsForRoutine pending implementation
+			TestrayLayout.clickManageOnSidebar();
 
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+
+			TestrayManage.addNewCategory(category = "Environments_1 Category A");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
+			TestrayManage.addNewCategory(category = "Environments_1 Category B");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+		}
+
+		task ("Go to Options on Manage Sidebar and Add New Option") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Options");
+
+			TestrayManage.createNewOption(
+				category = "Environments_1 Category A",
+				option = "Option 1");
+
+			TestrayManage.createNewOption(
+				category = "Environments_1 Category A",
+				option = "Option 2");
+
+			TestrayManage.createNewOption(
+				category = "Environments_1 Category B",
+				option = "Option 3");
+
+			TestrayManage.closeModalInOptions();
+		}
+
+		task ("Create project, change pagination and create Routine") {
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+		}
+
+		task ("Add Environmental Factors and state that it is selected") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.selectDefaultEnvironmentFactors(
+				listCategory = "Environments_1 Category A,Environments_1 Category B",
+				label = "Environments_1 Category A",
+				label1 = "Environments_1 Category B",
+				listOption = "Option 2",
+				listOption1 = "Option 3");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+
+			TestrayBuild.verifyEnvironmentFactors(
+				label = "Environments_1 Category A",
+				label1 = "Environments_1 Category B",
+				listOption = "Option 2",
+				listOption1 = "Option 3",
+				listCategory = "Environments_1 Category A",
+				listCategory1 = "Environments_1 Category B");
+
+			TestrayManage.closeModalInOptions();
+		}
 	}
 
 	@description = "This is a test for LPS-157237 - Verify if as an Administrator I am able to delete Factor Categories"
@@ -142,6 +222,8 @@ definition {
 
 		task ("Add a category, Delete it, and check if the category has been deleted") {
 			TestrayManage.addNewCategory(category = "Environments_4 Category");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
 			TestrayManage.deleteCategory(
 				nameCategory = "Environments_4 Category",
@@ -165,7 +247,11 @@ definition {
 		task ("Create the new category and then edit and state if the name has changed") {
 			TestrayManage.addNewCategory(category = "Environments_6 Category");
 
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
 			TestrayManage.editNameCategory(category = "Environments_6 Category Edited");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
 			Testray.assertItemName(key_name = "Environments_6 Category Edited");
 		}
@@ -183,7 +269,11 @@ definition {
 
 			TestrayManage.addNewCategory(category = "Environments_8 Category A");
 
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
 			TestrayManage.addNewCategory(category = "Environments_8 Category B");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Go to Options on Manage Sidebar and Add New Option") {
@@ -228,6 +318,8 @@ definition {
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
 			TestrayManage.addNewCategory(category = "Environments_7 Category");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Go to Categories on Manage Sidebar and Create the new Options") {
@@ -261,6 +353,27 @@ definition {
 	test AdminCanNotAddCuplicateFactorCategory {
 
 		// TODO LPS-157328 AdminCanNotAddCuplicateFactorCategory pending implementation
+
+	}
+
+	@description = "This is a test for LPS-162506 - Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name in Category"
+	@priority = "4"
+	test AdminCanViewWarningMessage {
+		task ("Go to Categories on Manage Sidebar and Add Category") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Categories");
+
+			TestrayManage.addNewCategory(category = "");
+		}
+
+		task ("Assert which Error Message appears") {
+			Testray.viewErrorMessage(
+				fieldLabel = "Name",
+				warningMessage = "name is a required field");
+		}
 
 	}
 

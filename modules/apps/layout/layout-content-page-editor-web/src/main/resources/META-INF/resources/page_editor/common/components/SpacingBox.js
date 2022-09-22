@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayTooltip from '@clayui/tooltip';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
@@ -20,6 +20,8 @@ import classNames from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {useGlobalContext} from '../../app/contexts/GlobalContext';
+import {useSelector} from '../../app/contexts/StoreContext';
+import {getResetLabelByViewport} from '../../app/utils/getResetLabelByViewport';
 import isValidStyleValue from '../../app/utils/isValidStyleValue';
 import {LengthField} from '../../common/components/LengthField';
 import {useId} from '../../core/hooks/useId';
@@ -176,7 +178,12 @@ function SpacingSelectorButton({
 	const {tokenValues} = useStyleBook();
 	const tooltipId = useId();
 	const triggerId = useId();
+	const headerId = useId();
 	const [triggerElement, setTriggerElement] = useState(null);
+
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 
 	useEffect(() => {
 		if (active && itemListRef.current) {
@@ -253,25 +260,65 @@ function SpacingSelectorButton({
 		>
 			<div ref={itemListRef}>
 				<ClayDropDown.ItemList aria-labelledby={triggerId}>
-					<ClayDropDown.Group header={field?.label}>
-						{active && canSetCustomValue ? (
-							<LengthField
-								className="mb-3 mt-2 px-3"
-								field={field}
-								onEnter={() => {
-									setActive(false);
-									triggerElement?.focus();
-								}}
-								onValueSelect={onChange}
-								showLabel={false}
-								value={
-									isValidStyleValue(field.cssProperty, value)
-										? value
-										: ''
-								}
-							/>
-						) : null}
+					{active && canSetCustomValue ? (
+						<>
+							<li
+								aria-hidden="true"
+								className="align-items-center d-flex dropdown-subheader justify-content-between pr-2"
+								id={headerId}
+								role="presentation"
+							>
+								{field?.label}
 
+								<ClayButtonWithIcon
+									borderless
+									className="lfr-portal-tooltip text-3"
+									displayType="secondary"
+									onClick={() => {
+										onChange(field.name, null, {
+											isReset: true,
+										});
+									}}
+									small
+									symbol="restore"
+									title={getResetLabelByViewport(
+										selectedViewportSize
+									)}
+								/>
+							</li>
+
+							<li role="presentation">
+								<ul
+									aria-labelledby={headerId}
+									className="list-unstyled"
+									role="group"
+								>
+									<LengthField
+										className="mb-3 mt-2 px-3"
+										field={field}
+										onEnter={() => {
+											setActive(false);
+											triggerElement?.focus();
+										}}
+										onValueSelect={onChange}
+										showLabel={false}
+										value={
+											isValidStyleValue(
+												field.cssProperty,
+												value
+											)
+												? value
+												: ''
+										}
+									/>
+								</ul>
+							</li>
+						</>
+					) : null}
+
+					<ClayDropDown.Group
+						header={Liferay.Language.get('existing-tokens')}
+					>
 						{field?.typeOptions?.validValues?.map((option) => (
 							<ClayDropDown.Item
 								aria-label={Liferay.Util.sub(

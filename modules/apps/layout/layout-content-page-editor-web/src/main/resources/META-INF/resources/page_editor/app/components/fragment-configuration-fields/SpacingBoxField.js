@@ -21,13 +21,32 @@ import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';
+import getPreviousResponsiveStyle from '../../utils/getPreviousResponsiveStyle';
 
-export function SpacingBoxField({disabled, field, onValueSelect, value}) {
+export function SpacingBoxField({disabled, field, item, onValueSelect, value}) {
 	const [nextValue, setNextValue] = useControlledState(value);
 	const canSetCustomValue = useSelector(selectCanDetachTokenValues);
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 
-	const handleChange = (key, value) => {
-		setNextValue((previousvalue) => ({...previousvalue, [key]: value}));
+	const handleChange = (key, value, {isReset = false} = {}) => {
+		if (isReset) {
+			const previousResponseValue = getPreviousResponsiveStyle(
+				key,
+				item.config,
+				selectedViewportSize
+			);
+
+			setNextValue((previousvalue) => ({
+				...previousvalue,
+				[key]: previousResponseValue,
+			}));
+		}
+		else {
+			setNextValue((previousvalue) => ({...previousvalue, [key]: value}));
+		}
+
 		onValueSelect(key, value);
 	};
 

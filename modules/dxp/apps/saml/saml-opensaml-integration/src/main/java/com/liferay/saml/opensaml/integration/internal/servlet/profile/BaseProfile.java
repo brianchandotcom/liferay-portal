@@ -223,7 +223,7 @@ public abstract class BaseProfile {
 	public IdentifierGenerationStrategyFactory
 		getIdentifierGenerationStrategyFactory() {
 
-		return _identifierGenerationStrategyFactory;
+		return identifierGenerationStrategyFactory;
 	}
 
 	public MessageContext<SAMLObject> getMessageContext(
@@ -569,7 +569,7 @@ public abstract class BaseProfile {
 		IdentifierGenerationStrategyFactory
 			identifierGenerationStrategyFactory) {
 
-		_identifierGenerationStrategyFactory =
+		this.identifierGenerationStrategyFactory =
 			identifierGenerationStrategyFactory;
 	}
 
@@ -591,6 +591,8 @@ public abstract class BaseProfile {
 		removeSamlBinding(samlBinding);
 	}
 
+	protected IdentifierGenerationStrategyFactory
+		identifierGenerationStrategyFactory;
 	protected MetadataManager metadataManager;
 	protected Portal portal;
 	protected SamlProviderConfigurationHelper samlProviderConfigurationHelper;
@@ -598,8 +600,6 @@ public abstract class BaseProfile {
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseProfile.class);
 
-	private IdentifierGenerationStrategyFactory
-		_identifierGenerationStrategyFactory;
 	private List<SamlBinding> _samlBindings = new ArrayList<>();
 
 }

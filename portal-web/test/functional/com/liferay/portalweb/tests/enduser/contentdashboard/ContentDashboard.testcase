@@ -128,6 +128,12 @@ definition {
 				userLoginFullName = "Test Test");
 		}
 
+		task ("Login with Admin user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
 		task ("Natigate to Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 		}
@@ -3268,6 +3274,12 @@ definition {
 				userPassword = "test");
 		}
 
+		task ("Login with Admin user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
 		task ("Navigate to Content Dashbaord") {
 			ContentDashboard.goToContentDashboard();
 		}
@@ -3389,6 +3401,12 @@ definition {
 				userPassword = "test");
 		}
 
+		task ("Login with Admin user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
 		task ("Navigate to Content Dashbaord") {
 			ContentDashboard.goToContentDashboard();
 		}
@@ -3473,6 +3491,12 @@ definition {
 				title = "Web Content Title 2",
 				userEmailAddress = "userea@liferay.com",
 				userPassword = "test");
+		}
+
+		task ("Login with Admin user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
 		}
 
 		task ("Navigate to Content Dashbaord") {
@@ -5512,6 +5536,12 @@ definition {
 			PortletEntry.publish();
 		}
 
+		task ("Login with Admin user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
 		task ("Go to Content Dashboard and aplly All filter") {
 			ContentDashboard.goToContentDashboard();
 
@@ -5587,6 +5617,12 @@ definition {
 				webContentTitle = "WC Title 2");
 
 			PortletEntry.publish();
+		}
+
+		task ("Login with Admin user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
 		}
 
 		task ("Navigate to Content Dashboard") {
@@ -5672,6 +5708,12 @@ definition {
 			WebContent.editCP(
 				webContentTitle = "WC Title 1",
 				webContentTitleEdit = "WC Title Edit");
+		}
+
+		task ("Login with Admin user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
 		}
 
 		task ("Navigate to Content Dashboard") {

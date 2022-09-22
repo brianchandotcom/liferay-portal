@@ -139,7 +139,7 @@ const FlexContainer = ({
 			})}
 		>
 			{Array.from({length: numberOfItemsToDisplay}).map((_, index) => (
-				<ColumnContext
+				<ItemContext
 					collectionConfig={collectionConfig}
 					collectionId={collectionId}
 					collectionItem={collection.items[index] ?? {}}
@@ -150,7 +150,7 @@ const FlexContainer = ({
 					key={index}
 				>
 					{child}
-				</ColumnContext>
+				</ItemContext>
 			))}
 		</div>
 	);
@@ -207,7 +207,7 @@ const Grid = ({
 									}
 								>
 									{index < numberOfItemsToDisplay && (
-										<ColumnContext
+										<ItemContext
 											collectionConfig={collectionConfig}
 											collectionId={collectionId}
 											collectionItem={
@@ -219,7 +219,7 @@ const Grid = ({
 											index={index}
 										>
 											{child}
-										</ColumnContext>
+										</ItemContext>
 									)}
 								</ClayLayout.Col>
 							);
@@ -234,7 +234,7 @@ const Grid = ({
 	);
 };
 
-const ColumnContext = ({
+const ItemContext = ({
 	children,
 	collectionConfig,
 	collectionId,

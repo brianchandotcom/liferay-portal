@@ -68,7 +68,7 @@ public class ItemClassIndexUtil {
 
 						Class<?> fieldClass = field.getType();
 
-						if (!isMap(fieldClass) &&
+						if (!isIterable(fieldClass) && !isMap(fieldClass) &&
 							!isSingleColumnAdoptableArray(fieldClass) &&
 							!isSingleColumnAdoptableValue(fieldClass) &&
 							!Objects.equals(clazz, fieldClass)) {

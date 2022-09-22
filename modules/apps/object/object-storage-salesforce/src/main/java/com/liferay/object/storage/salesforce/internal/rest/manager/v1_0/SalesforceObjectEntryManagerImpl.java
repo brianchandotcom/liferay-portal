@@ -219,18 +219,9 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	@Override
-	public Page<ObjectEntry> getObjectEntryRelatedObjectEntries(
+	public Page<Object> getObjectEntryRelatedObjectEntries(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, Long objectEntryId,
-			String objectRelationshipName, Pagination pagination)
-		throws Exception {
-
-		return null;
-	}
-
-	@Override
-	public Page<Object> getRelatedSystemObjectEntries(
-			ObjectDefinition objectDefinition, Long objectEntryId,
+			ObjectDefinition objectDefinition, long objectEntryId,
 			String objectRelationshipName, Pagination pagination)
 		throws Exception {
 

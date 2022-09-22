@@ -16,8 +16,10 @@ package com.liferay.object.rest.manager.v1_0;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
@@ -55,11 +57,30 @@ public abstract class BaseObjectEntryManager {
 		return 0;
 	}
 
+	protected ObjectDefinition getRelatedObjectDefinition(
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship)
+		throws Exception {
+
+		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
+
+		if (objectDefinitionId1 != objectDefinition.getObjectDefinitionId()) {
+			return objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+		}
+
+		return objectDefinitionLocalService.getObjectDefinition(
+			objectRelationship.getObjectDefinitionId2());
+	}
+
 	@Reference
 	protected DepotEntryLocalService depotEntryLocalService;
 
 	@Reference
 	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected ObjectDefinitionLocalService objectDefinitionLocalService;
 
 	@Reference
 	protected ObjectScopeProviderRegistry objectScopeProviderRegistry;

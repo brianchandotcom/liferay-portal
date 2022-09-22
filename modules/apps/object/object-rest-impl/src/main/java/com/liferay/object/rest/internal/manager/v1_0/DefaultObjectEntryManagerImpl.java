@@ -36,7 +36,6 @@ import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -161,7 +160,7 @@ public class DefaultObjectEntryManagerImpl
 
 		return getObjectEntry(
 			dtoConverterContext,
-			_objectDefinitionLocalService.getObjectDefinition(
+			objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2()),
 			primaryKey2);
 	}
@@ -231,7 +230,7 @@ public class DefaultObjectEntryManagerImpl
 		if (objectEntry != null) {
 			if (objectDefinition == null) {
 				objectDefinition =
-					_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionLocalService.getObjectDefinition(
 						objectEntry.getObjectDefinitionId());
 			}
 
@@ -477,9 +476,9 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	@Override
-	public Page<ObjectEntry> getObjectEntryRelatedObjectEntries(
+	public Page<Object> getObjectEntryRelatedObjectEntries(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, Long objectEntryId,
+			ObjectDefinition objectDefinition, long objectEntryId,
 			String objectRelationshipName, Pagination pagination)
 		throws Exception {
 
@@ -488,7 +487,7 @@ public class DefaultObjectEntryManagerImpl
 				objectDefinition.getObjectDefinitionId(),
 				objectRelationshipName);
 
-		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
+		ObjectDefinition relatedObjectDefinition = getRelatedObjectDefinition(
 			objectDefinition, objectRelationship);
 
 		ObjectRelatedModelsProvider objectRelatedModelsProvider =
@@ -497,13 +496,22 @@ public class DefaultObjectEntryManagerImpl
 				objectRelationship.getType());
 
 		if (objectDefinition.isSystem()) {
-			return _getSystemObjectRelatedObjectEntries(
-				dtoConverterContext, objectDefinition, objectEntryId,
-				objectRelationship, objectRelatedModelsProvider, pagination);
+			List<Object> objects = _getSystemObjectRelatedObjectEntries(
+				objectDefinition, objectEntryId, objectRelationship,
+				objectRelatedModelsProvider, pagination,
+				relatedObjectDefinition);
+
+			return Page.of(
+				new HashMap<>(),
+				_toObjectEntries(dtoConverterContext, objects));
 		}
 
 		com.liferay.object.model.ObjectEntry objectEntry =
 			_objectEntryService.getObjectEntry(objectEntryId);
+
+		List<Object> objects = _getCustomObjectRelatedObjectEntries(
+			dtoConverterContext, objectEntry, objectRelationship,
+			objectRelatedModelsProvider, pagination, relatedObjectDefinition);
 
 		return Page.of(
 			HashMapBuilder.put(
@@ -517,47 +525,7 @@ public class DefaultObjectEntryManagerImpl
 						objectDefinition.getObjectDefinitionId()),
 					objectEntry.getGroupId(), dtoConverterContext.getUriInfo())
 			).build(),
-			_toObjectEntries(
-				dtoConverterContext,
-				objectRelatedModelsProvider.getRelatedModels(
-					objectEntry.getGroupId(),
-					objectRelationship.getObjectRelationshipId(),
-					objectEntry.getPrimaryKey(), pagination.getStartPosition(),
-					pagination.getEndPosition())));
-	}
-
-	@Override
-	public Page<Object> getRelatedSystemObjectEntries(
-			ObjectDefinition objectDefinition, Long objectEntryId,
-			String objectRelationshipName, Pagination pagination)
-		throws Exception {
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipService.getObjectRelationship(
-				objectDefinition.getObjectDefinitionId(),
-				objectRelationshipName);
-
-		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
-			objectDefinition, objectRelationship);
-
-		ObjectRelatedModelsProvider objectRelatedModelsProvider =
-			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
-				relatedObjectDefinition.getClassName(),
-				objectRelationship.getType());
-
-		com.liferay.object.model.ObjectEntry objectEntry =
-			_objectEntryService.getObjectEntry(objectEntryId);
-
-		return Page.of(
-			TransformUtil.transform(
-				(List<BaseModel<?>>)
-					objectRelatedModelsProvider.getRelatedModels(
-						objectEntry.getGroupId(),
-						objectRelationship.getObjectRelationshipId(),
-						objectEntry.getPrimaryKey(),
-						pagination.getStartPosition(),
-						pagination.getEndPosition()),
-				baseModel -> _toDTO(baseModel, objectEntry)));
+			objects);
 	}
 
 	@Override
@@ -625,6 +593,27 @@ public class DefaultObjectEntryManagerImpl
 		return serviceContext;
 	}
 
+	private List<Object> _getCustomObjectRelatedObjectEntries(
+			DTOConverterContext dtoConverterContext,
+			com.liferay.object.model.ObjectEntry objectEntry,
+			ObjectRelationship objectRelationship,
+			ObjectRelatedModelsProvider objectRelatedModelsProvider,
+			Pagination pagination, ObjectDefinition relatedObjectDefinition)
+		throws Exception {
+
+		List<Object> objects = objectRelatedModelsProvider.getRelatedModels(
+			objectEntry.getGroupId(),
+			objectRelationship.getObjectRelationshipId(),
+			objectEntry.getPrimaryKey(), pagination.getStartPosition(),
+			pagination.getEndPosition());
+
+		if (relatedObjectDefinition.isSystem()) {
+			return _toSystemObjectEntries(objects, objectEntry);
+		}
+
+		return _toObjectEntries(dtoConverterContext, objects);
+	}
+
 	private String _getObjectEntriesPermissionName(long objectDefinitionId) {
 		return ObjectConstants.RESOURCE_NAME + "#" + objectDefinitionId;
 	}
@@ -651,29 +640,16 @@ public class DefaultObjectEntryManagerImpl
 		return ObjectDefinition.class.getName() + "#" + objectDefinitionId;
 	}
 
-	private ObjectDefinition _getRelatedObjectDefinition(
-			ObjectDefinition objectDefinition,
-			ObjectRelationship objectRelationship)
-		throws Exception {
-
-		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
-
-		if (objectDefinitionId1 != objectDefinition.getObjectDefinitionId()) {
-			return _objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-		}
-
-		return _objectDefinitionLocalService.getObjectDefinition(
-			objectRelationship.getObjectDefinitionId2());
-	}
-
-	private Page<ObjectEntry> _getSystemObjectRelatedObjectEntries(
-			DTOConverterContext dtoConverterContext,
+	private List<Object> _getSystemObjectRelatedObjectEntries(
 			ObjectDefinition objectDefinition, long objectEntryId,
 			ObjectRelationship objectRelationship,
 			ObjectRelatedModelsProvider objectRelatedModelsProvider,
-			Pagination pagination)
+			Pagination pagination, ObjectDefinition relatedObjectDefinition)
 		throws Exception {
+
+		if (relatedObjectDefinition.isSystem()) {
+			throw new UnsupportedOperationException();
+		}
 
 		long groupId = GroupThreadLocal.getGroupId();
 
@@ -691,14 +667,10 @@ public class DefaultObjectEntryManagerImpl
 			groupId = assetEntry.getGroupId();
 		}
 
-		return Page.of(
-			Collections.emptyMap(),
-			_toObjectEntries(
-				dtoConverterContext,
-				objectRelatedModelsProvider.getRelatedModels(
-					groupId, objectRelationship.getObjectRelationshipId(),
-					assetEntry.getClassPK(), pagination.getStartPosition(),
-					pagination.getEndPosition())));
+		return objectRelatedModelsProvider.getRelatedModels(
+			groupId, objectRelationship.getObjectRelationshipId(),
+			assetEntry.getClassPK(), pagination.getStartPosition(),
+			pagination.getEndPosition());
 	}
 
 	private boolean _hasRelatedObjectEntries(
@@ -712,7 +684,7 @@ public class DefaultObjectEntryManagerImpl
 					false)) {
 
 			ObjectDefinition objectDefinition2 =
-				_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId2());
 
 			ObjectRelatedModelsProvider objectRelatedModelsProvider =
@@ -821,17 +793,21 @@ public class DefaultObjectEntryManagerImpl
 		return dtoConverter.toDTO(defaultDTOConverterContext, baseModel);
 	}
 
-	private List<ObjectEntry> _toObjectEntries(
-		DTOConverterContext dtoConverterContext,
-		List<com.liferay.object.model.ObjectEntry> objectEntries) {
+	private List<Object> _toObjectEntries(
+		DTOConverterContext dtoConverterContext, List<Object> objects) {
 
 		return TransformUtil.transform(
-			objectEntries,
-			objectEntry -> _toObjectEntry(
-				dtoConverterContext,
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntry.getObjectDefinitionId()),
-				objectEntry));
+			objects,
+			item -> {
+				com.liferay.object.model.ObjectEntry objectEntry =
+					(com.liferay.object.model.ObjectEntry)item;
+
+				return _toObjectEntry(
+					dtoConverterContext,
+					objectDefinitionLocalService.getObjectDefinition(
+						objectEntry.getObjectDefinitionId()),
+					objectEntry);
+			});
 	}
 
 	private ObjectEntry _toObjectEntry(
@@ -971,6 +947,14 @@ public class DefaultObjectEntryManagerImpl
 		return values;
 	}
 
+	private List<Object> _toSystemObjectEntries(
+		List<Object> objects,
+		com.liferay.object.model.ObjectEntry objectEntry) {
+
+		return TransformUtil.transform(
+			objects, item -> _toDTO((BaseModel<?>)item, objectEntry));
+	}
+
 	private static final long _NONEXISTING_ACCOUNT_ENTRY_ID = -1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -990,9 +974,6 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private FilterPredicateFactory _filterPredicateFactory;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryDTOConverter _objectEntryDTOConverter;

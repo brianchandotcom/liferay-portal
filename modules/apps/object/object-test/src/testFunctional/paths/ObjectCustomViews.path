@@ -245,6 +245,11 @@
 		<td>//h3[(@class='lfr-objects__card-title') and text()='Filters']//..//..//li[contains(@class,'custom-view-builder-item') and contains(.,'${key_filterName}')]//button[contains(@class,'dropdown-toggle btn btn-monospaced btn-unstyled')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>CUSTOM_VIEW_MODAL</td>
+		<td>//div[contains(@class, 'portlet-body') and contains(., 'Custom View')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

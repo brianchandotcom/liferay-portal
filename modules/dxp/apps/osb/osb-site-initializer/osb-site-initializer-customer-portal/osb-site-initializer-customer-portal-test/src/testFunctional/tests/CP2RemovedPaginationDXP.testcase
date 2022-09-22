@@ -67,4 +67,34 @@ definition {
 		}
 	}
 
+	@description = "LPS-163837 - Assert the page navigation controls are removed when there is only one page."
+	@priority = "3"
+	test IfPaginationControlsAreRemovedForSinglePage {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+		}
+
+		task ("When the user selects a project in Customer Portal and switches the pagination amount to limit the table to a single page") {
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "DXP");
+
+			CP2ActivationKeys.selectPaginationQuantity(quantity = "50");
+		}
+
+		task ("Then the controls for page navigation will be removed to reflect that only one page is available") {
+            AssertElementNotPresent(locator1 = "CP2ActivationKeys#PAGINATION_CONTROLS");
+		}
+	}
+
 }

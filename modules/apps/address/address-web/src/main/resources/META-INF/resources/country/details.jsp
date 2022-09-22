@@ -81,7 +81,7 @@ Country country = CountryLocalServiceUtil.fetchCountry(countryId);
 
 			<aui:input checked="<%= (country == null) ? false : country.getSubjectToVAT() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="subjectToVAT" type="toggle-switch" />
 
-			<aui:input id="priority" name="position" />
+			<aui:input id="priority" label="priority" name="position" />
 
 			<aui:input checked="<%= (country == null) ? true : country.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 		</liferay-frontend:fieldset-group>

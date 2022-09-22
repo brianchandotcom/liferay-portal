@@ -2,6 +2,8 @@ definition {
 
 	macro _addItemPage {
 		if (isSet(privacy)) {
+			Click.clickAt(locator1 = "//div[contains(@class,'container-fluid-max-xl')]/button[contains(@class,'navbar-toggler')][@aria-expanded='false']");
+
 			Navigator.gotoNavItem(navItem = "${privacy}");
 		}
 

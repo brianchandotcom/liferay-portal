@@ -111,6 +111,13 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testGetProductsPage() throws Exception {
+		super.testGetProductsPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGetProductsPageWithFilterStringEquals() throws Exception {
 	}
 

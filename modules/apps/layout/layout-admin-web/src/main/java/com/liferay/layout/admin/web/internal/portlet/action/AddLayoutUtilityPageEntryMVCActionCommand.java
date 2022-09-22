@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -88,6 +89,9 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
+
+			MultiSessionMessages.add(
+				actionRequest, "layoutUtilityPageEntryAdded");
 		}
 		catch (PortalException portalException) {
 			hideDefaultErrorMessage(actionRequest);

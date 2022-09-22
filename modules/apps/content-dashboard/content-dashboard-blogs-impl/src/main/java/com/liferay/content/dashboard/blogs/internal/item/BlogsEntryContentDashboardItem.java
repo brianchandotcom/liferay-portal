@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item;
+package com.liferay.content.dashboard.blogs.internal.item;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
@@ -23,7 +23,6 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProvi
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
-import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
@@ -271,7 +270,20 @@ public class BlogsEntryContentDashboardItem
 		return Optional.ofNullable(
 			_group
 		).map(
-			group -> ContentDashboardGroupUtil.getGroupName(group, locale)
+			group -> {
+				try {
+					return Optional.ofNullable(
+						group.getDescriptiveName(locale)
+					).orElseGet(
+						() -> group.getName(locale)
+					);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
+
+					return group.getName(locale);
+				}
+			}
 		).orElse(
 			StringPool.BLANK
 		);

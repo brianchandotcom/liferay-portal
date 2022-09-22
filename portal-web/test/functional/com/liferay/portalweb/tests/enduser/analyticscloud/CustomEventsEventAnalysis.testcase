@@ -285,6 +285,7 @@ definition {
 	test CheckDefaultEventsCountedAsDefaultWhenEventSentByConsole {
 		var layoutName = "Custom 1";
 		var globalAttributesList = "canonicalUrl,pageTitle,referrer,url";
+
 		var disableAttributesList = "${globalAttributesList}";
 		var attributesList = "category,like";
 
@@ -305,7 +306,6 @@ definition {
 		}
 
 		task ("Copy the sample JS and replace an existing attribute with a new one") {
-
 			ACCustomEvents.copySampleJavascript(
 				attributesList = "${attributesList}",
 				disableAttributesList = "${disableAttributesList}");

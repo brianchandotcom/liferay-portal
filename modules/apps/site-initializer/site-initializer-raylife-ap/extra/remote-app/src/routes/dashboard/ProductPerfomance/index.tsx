@@ -76,30 +76,32 @@ const colors: {[keys: string]: {}} = {
 	goals: '#DCF1FD',
 };
 
-const paddingValue = 100;
+let paddingValue = 100;
+let widthValue = 20;
 
 const ProductPerformance = () => {
 	const [products, setProducts] = useState<ProductCell[]>([]);
 	const [timePeriod, setTimePeriod] = useState('0');
 	const labelRef = useRef<any>();
 	const [isLoading, setIsLoading] = useState(false);
-	const [threeMonthsSalesData, setThreeMonthsSalesData] = useState<string[]>(
+	const [threeMonthsSalesData, setThreeMonthsSalesData] = useState<number[]>(
 		[]
 	);
-	const [threeMonthsGoalsData, setThreeMonthsGoalsData] = useState<string[]>(
+	const [threeMonthsGoalsData, setThreeMonthsGoalsData] = useState<number[]>(
 		[]
 	);
-	const [sixMonthsSalesData, setSixMonthsSalesData] = useState<string[]>([]);
-	const [sixMonthsGoalsData, setSixMonthsGoalsData] = useState<string[]>([]);
-	const [yearToDateSales, setYearToDateSales] = useState<string[]>([]);
-	const [yearToDateGoals, setYearToDateGoals] = useState<string[]>([]);
-	const [currentTooltip, setCurrentTooltip] = useState<string[]>(
+	const [sixMonthsSalesData, setSixMonthsSalesData] = useState<number[]>([]);
+	const [sixMonthsGoalsData, setSixMonthsGoalsData] = useState<number[]>([]);
+	const [yearToDateSales, setYearToDateSales] = useState<number[]>([]);
+	const [yearToDateGoals, setYearToDateGoals] = useState<number[]>([]);
+	const [currentTooltip, setCurrentTooltip] = useState<number[]>(
 		yearToDateGoals
 	);
-
+	const inicialProductValue = 'All';
+	const [productValues, setProductsValues] = useState(inicialProductValue);
 	let categoryLabelTooltip = '';
 
-	function getExceededValues(goalValue: any, salesValue: any) {
+	function getExceededValues(goalValue: number[], salesValue: number[]) {
 		const exceededValue = goalValue?.map((goal: number, index: number) => {
 			if (goal - salesValue[index] <= 0) {
 				return (goal - salesValue[index]) * -1;
@@ -112,7 +114,7 @@ const ProductPerformance = () => {
 		return exceededValue;
 	}
 
-	function getGoalsValues(goalValue: any, salesValue: any) {
+	function getGoalsValues(goalValue: number[], salesValue: number[]) {
 		const goalsValues = goalValue?.map((goal: number, index: number) => {
 			if (goal - salesValue[index] >= 0) {
 				return goal - salesValue[index];
@@ -125,7 +127,7 @@ const ProductPerformance = () => {
 		return goalsValues;
 	}
 
-	function getAchievedValues(goalValue: any, salesValue: any) {
+	function getAchievedValues(goalValue: number[], salesValue: number[]) {
 		const achievedValues = goalValue?.map((goal: number, index: number) => {
 			if (goal - salesValue[index] <= 0) {
 				return goal;
@@ -232,6 +234,7 @@ const ProductPerformance = () => {
 			label: yearToDateLabel,
 			period: 0,
 			periodDate: 'Period',
+			tooltip: yearToDateGoals,
 		},
 	];
 
@@ -257,6 +260,25 @@ const ProductPerformance = () => {
 			},
 		},
 		type: 'bar',
+	};
+
+	const tooltip = {
+		format: {
+			name(categoryLabel: string) {
+				categoryLabelTooltip = categoryLabel;
+
+				return categoryLabel;
+			},
+
+			value(value: number, _id: number, _index: number, x: number) {
+				return categoryLabelTooltip === 'goals'
+					? currentTooltip[x]
+					: value;
+			},
+		},
+		grouped: false,
+		linked: false,
+		show: true,
 	};
 
 	const productsBaseSetup = async () => {
@@ -336,7 +358,6 @@ const ProductPerformance = () => {
 				});
 			}
 		);
-
 		setProducts(newProductList);
 	};
 
@@ -345,20 +366,19 @@ const ProductPerformance = () => {
 			labelRef.current.categories(getData()[0]?.label);
 		}
 	};
-
 	const settingAnnualRules = async () => {
 		const annualRuleValues = await annualRule(
 			currentDateString,
 			january,
 			yearToDateGoalsArray,
-			yearToDateSalesArray
+			yearToDateSalesArray,
+			productValues
 		);
 		setYearToDateGoals(annualRuleValues[0]);
-
 		setYearToDateSales(annualRuleValues[1]);
+		setCurrentTooltip(annualRuleValues[0]);
 
 		if (lengthExceededColumn === indexOfCurrentMonth + 1) {
-			setCurrentTooltip(yearToDateGoals);
 			setIsLoading(true);
 			settingLabelsPeriod();
 		}
@@ -367,6 +387,7 @@ const ProductPerformance = () => {
 	const settingSixMonthRule = async () => {
 		const sixMonthRuleValues = await sixMonthRule(
 			currentDateString,
+			productValues,
 			sixMonthsAgoDate,
 			sixMonthsGoalsArray,
 			sixMonthsSalesArray
@@ -375,7 +396,7 @@ const ProductPerformance = () => {
 		setSixMonthsSalesData(sixMonthRuleValues[1]);
 
 		if (lengthExceededColumn === 6) {
-			setCurrentTooltip(sixMonthsGoalsData);
+			setCurrentTooltip(sixMonthRuleValues[0]);
 			setIsLoading(true);
 			settingLabelsPeriod();
 		}
@@ -386,35 +407,44 @@ const ProductPerformance = () => {
 			currentDateString,
 			threeMonthsAgoDate,
 			threeMonthsGoalsArray,
-			threeMonthsSalesArray
+			threeMonthsSalesArray,
+			productValues
 		);
 
+		setCurrentTooltip(threeMonthRuleValues[0]);
 		setThreeMonthsGoalsData(threeMonthRuleValues[0]);
 		setThreeMonthsSalesData(threeMonthRuleValues[1]);
 
 		if (lengthExceededColumn === 3) {
-			setCurrentTooltip(threeMonthsGoalsData);
 			setIsLoading(true);
 			settingLabelsPeriod();
 		}
 	};
-
 	useEffect(() => {
 		productsBaseSetup();
+	}, []);
 
+	useEffect(() => {
 		if (timePeriod === '0') {
 			settingAnnualRules();
+			paddingValue = 100;
+			widthValue = 15;
 		}
 
 		if (timePeriod === '1') {
 			settingSixMonthRule();
+			paddingValue = 100;
+			widthValue = 20;
 		}
 
 		if (timePeriod === '2') {
 			settingThreeMonthRule();
+			paddingValue = 100;
+			widthValue = 30;
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [lengthExceededColumn, isLoading, timePeriod]);
+	}, [lengthExceededColumn, isLoading, timePeriod, productValues]);
 
 	const handleProductFilterToggle = (
 		productExternalReferenceCode: string
@@ -428,13 +458,14 @@ const ProductPerformance = () => {
 			return product;
 		});
 
+		setProductsValues(productExternalReferenceCode);
 		setProducts(newProducts);
+		setIsLoading(false);
 	};
-
-	const isFilterAllActive = (product: ProductCell) => !product.active;
 
 	const findActiveProduct = products.find((product) => product.active)
 		?.productName;
+	const isFilterAllActive = (product: ProductCell) => !product.active;
 
 	return (
 		<div className="d-flex flex-wrap ray-dashboard-product-performance">
@@ -462,7 +493,10 @@ const ProductPerformance = () => {
 							displayType="unstyled"
 							onClick={() => {
 								if (!products.every(isFilterAllActive)) {
-									handleProductFilterToggle('All');
+									setProductsValues(inicialProductValue);
+									handleProductFilterToggle(
+										inicialProductValue
+									);
 								}
 							}}
 						>
@@ -499,7 +533,7 @@ const ProductPerformance = () => {
 					</ClaySelect>
 				</div>
 
-				<div className="p-5">
+				<div className="p-md-5 px-2 py-3">
 					{isLoading && (
 						<ClayChart
 							axis={{
@@ -532,7 +566,7 @@ const ProductPerformance = () => {
 								},
 							}}
 							bar={{
-								width: 20,
+								width: widthValue,
 							}}
 							data={dataChart}
 							grid={{
@@ -559,28 +593,7 @@ const ProductPerformance = () => {
 								height: BarChartPerformancee.height,
 								width: BarChartPerformancee.width,
 							}}
-							tooltip={{
-								format: {
-									name(categoryLabel: string) {
-										categoryLabelTooltip = categoryLabel;
-
-										return categoryLabel;
-									},
-
-									value(
-										value: number,
-										_id: number,
-										_index: number,
-										x: number
-									) {
-										return categoryLabelTooltip === 'goals'
-											? currentTooltip[x]
-											: value;
-									},
-								},
-								grouped: false,
-								show: true,
-							}}
+							tooltip={tooltip}
 						/>
 					)}
 				</div>

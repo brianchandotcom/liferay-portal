@@ -21,23 +21,43 @@ export type DataChart = {
 	[keys: string]: DataProperties;
 };
 
-export type MonthProperties = {
-	achieved: number;
-	exceeded: number;
-	goals: number;
-	index: number;
-	label: string;
-};
-
-export type FilterMonth = {
-	[keys: string]: MonthProperties;
-};
-
 export type Policy = {
 	boundDate: string;
 	productExternalReferenceCode: string;
 	productName: string;
 	termPremium: number;
+};
+
+export type MonthTypes = [
+	{
+		achieved: (string | number)[];
+		dataGroups: string[];
+		exceeded: (string | number)[];
+		goals: (string | number)[];
+		label: string[];
+		period: number;
+		periodDate: string;
+	}
+];
+
+export type MonthList = {
+	[keys: string]: MonthTypes;
+};
+
+export type MonthProperties = [
+	{
+		achieved: number;
+		exceeded: number;
+		goals: number;
+		index: number;
+		label: string[];
+		period: number;
+		periodDate: string;
+	}
+];
+
+export type FilterMonth = {
+	[keys: string]: MonthProperties;
 };
 
 export type ProductListType = {
@@ -51,10 +71,21 @@ type ProductType = {
 };
 
 export type SalesGoal = {
-	finalReferenceDate?: string;
+	finalReferenceDate: string;
 	goalValue: number;
 	initialReferenceDate?: string;
 	productExternalReferenceCode: string;
+};
+
+export type SalesPolices = {
+	boundDate: string;
+	productExternalReferenceCode: string;
+	productName: string;
+	termPremium: number;
+};
+
+export type GoalsArray = {
+	year: {month: number}[];
 };
 
 export type BarChartPerformanceTypes = {

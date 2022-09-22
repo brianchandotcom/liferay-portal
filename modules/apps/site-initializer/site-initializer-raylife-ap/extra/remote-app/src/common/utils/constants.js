@@ -24,6 +24,7 @@ export const CONSTANTS = {
 		REVIEWED: 'reviewed',
 		UNDERWRITING: 'underwriting',
 	},
+
 	MONTHS_ABREVIATIONS: [
 		'Jan',
 		'Feb',
@@ -38,6 +39,7 @@ export const CONSTANTS = {
 		'Nov',
 		'Dec',
 	],
+
 	US_STATES: [
 		{
 			label: '',

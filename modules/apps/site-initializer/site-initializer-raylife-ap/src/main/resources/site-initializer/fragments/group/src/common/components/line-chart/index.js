@@ -53,6 +53,14 @@ const LineChart = ({
 							pattern: patternColor,
 						}}
 						data={chartData}
+						grid={{
+							x: {
+								show: false,
+							},
+							y: {
+								show: false,
+							},
+						}}
 						legend={{
 							show: false,
 						}}

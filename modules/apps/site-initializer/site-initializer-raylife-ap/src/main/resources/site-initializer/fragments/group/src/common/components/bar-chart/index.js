@@ -69,6 +69,14 @@ const BarChart = ({
 					type: 'bar',
 					x: 'x',
 				}}
+				grid={{
+					x: {
+						show: false,
+					},
+					y: {
+						show: false,
+					},
+				}}
 				legend={{
 					show: showLegend,
 				}}

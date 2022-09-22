@@ -1233,10 +1233,10 @@
     react-dnd-html5-backend "^11.1.1"
     react-transition-group "^4.4.1"
 
-"@clayui/css@^3.44.2":
-  version "3.44.2"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.44.2.tgz#84d48d03675ff680a7a4bc442da3a11a2d644865"
-  integrity sha512-0kz8MylQEmdT5UwyFdakPyDp33vXmfffJ76TOGdVveqok92/Jmm2uT6Y2TCp5NQlNGB40NNDPJQ2k/hkMbbYRA==
+"@clayui/css@^3.73.0":
+  version "3.73.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.73.0.tgz#ac48f83848abc700fab1cbdb8cca217fda6d1120"
+  integrity sha512-V1YKrI62iZrpfYJqj9ADRPJbXRcrlnbE8Vhut5BCXGmQAT/xtnkF4+hBTBSlzjdd2cdaBNi6Pkizc4ZD2nT+SQ==
 
 "@clayui/date-picker@^3.64.0":
   version "3.64.0"

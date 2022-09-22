@@ -1,0 +1,5 @@
+liferay-learn-theme-css:
+    clayURL: css/clay.css
+    mainURL: css/main.css
+    name: Liferay Learn Theme CSS
+    type: themeCSS

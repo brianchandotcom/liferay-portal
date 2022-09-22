@@ -75,6 +75,15 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 							small="<%= true %>"
 							type="submit"
 						/>
+
+						<clay:button
+							borderless="<%= true %>"
+							icon="cog"
+							id='<%= liferayPortletResponse.getNamespace() + "contextualSidebarButton" %>'
+							small="<%= true %>"
+							title='<%= LanguageUtil.get(request, "configuration") %>'
+							type="button"
+						/>
 					</div>
 				</li>
 			</ul>
@@ -287,6 +296,10 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 		</div>
 	</div>
 </aui:form>
+
+<liferay-frontend:component
+	module="admin/js/EditKBArticle"
+/>
 
 <script>
 	<c:if test="<%= editKBArticleDisplayContext.getKBArticle() == null %>">

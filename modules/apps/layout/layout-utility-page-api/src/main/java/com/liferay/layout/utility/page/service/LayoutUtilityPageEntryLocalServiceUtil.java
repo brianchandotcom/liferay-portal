@@ -62,12 +62,13 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 	}
 
 	public static LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long userId, long groupId, long plid,
-			String name, int type)
+			String externalReferenceCode, long userId, long groupId,
+			String name, int type, long masterLayoutPlid)
 		throws PortalException {
 
 		return getService().addLayoutUtilityPageEntry(
-			externalReferenceCode, userId, groupId, plid, name, type);
+			externalReferenceCode, userId, groupId, name, type,
+			masterLayoutPlid);
 	}
 
 	/**
@@ -477,11 +478,11 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 	}
 
 	public static LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, long plid, String name, int type)
+			long layoutUtilityPageEntryId, String name)
 		throws PortalException {
 
 		return getService().updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntryId, plid, name, type);
+			layoutUtilityPageEntryId, name);
 	}
 
 	public static LayoutUtilityPageEntryLocalService getService() {

@@ -515,7 +515,7 @@ public class ObjectRelationshipLocalServiceTest {
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
 				objectRelationship.getObjectFieldId2(),
-				ObjectFieldSettingConstants.OBJECT_DEFINITION1_SHORT_NAME);
+				ObjectFieldSettingConstants.OBJECT_DEFINITION_1_SHORT_NAME);
 
 		Assert.assertNotNull(objectFieldSetting);
 

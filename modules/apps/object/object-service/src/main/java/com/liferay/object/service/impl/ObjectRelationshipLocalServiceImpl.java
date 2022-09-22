@@ -517,7 +517,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		_objectFieldSettingLocalService.addObjectFieldSetting(
 			user.getUserId(), objectField.getObjectFieldId(),
-			ObjectFieldSettingConstants.OBJECT_DEFINITION1_SHORT_NAME,
+			ObjectFieldSettingConstants.OBJECT_DEFINITION_1_SHORT_NAME,
 			objectDefinition1.getShortName());
 
 		if (objectDefinition2.isApproved()) {

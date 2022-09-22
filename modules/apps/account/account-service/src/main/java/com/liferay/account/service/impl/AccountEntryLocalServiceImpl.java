@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -159,11 +158,6 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setUserName(user.getFullName());
 
 		accountEntry.setParentAccountEntryId(parentAccountEntryId);
-
-		int nameMaxLength = ModelHintsUtil.getMaxLength(
-			AccountEntry.class.getName(), "name");
-
-		name = StringUtil.shorten(name, nameMaxLength);
 
 		_validateName(name);
 

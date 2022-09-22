@@ -14,6 +14,7 @@
 
 package com.liferay.layout.utility.page.exception;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -36,6 +37,50 @@ public class LayoutUtilityPageEntryNameException extends PortalException {
 
 	public LayoutUtilityPageEntryNameException(Throwable throwable) {
 		super(throwable);
+	}
+
+	public static class MustNotBeDuplicate
+		extends LayoutUtilityPageEntryNameException {
+
+		public MustNotBeDuplicate(long groupId, String name) {
+			super(
+				String.format(
+					StringBundler.concat(
+						"Duplicate utility page for group ", groupId,
+						" with name ", name)));
+		}
+
+	}
+
+	public static class MustNotBeNull
+		extends LayoutUtilityPageEntryNameException {
+
+		public MustNotBeNull(long groupId) {
+			super("Name must not be null for group " + groupId);
+		}
+
+	}
+
+	public static class MustNotContainInvalidCharacters
+		extends LayoutUtilityPageEntryNameException {
+
+		public MustNotContainInvalidCharacters(char character) {
+			super("Invalid character in name " + character);
+
+			this.character = character;
+		}
+
+		public final char character;
+
+	}
+
+	public static class MustNotExceedMaximumSize
+		extends LayoutUtilityPageEntryNameException {
+
+		public MustNotExceedMaximumSize(int maxLength) {
+			super("Maximum length of name exceeded " + maxLength);
+		}
+
 	}
 
 }

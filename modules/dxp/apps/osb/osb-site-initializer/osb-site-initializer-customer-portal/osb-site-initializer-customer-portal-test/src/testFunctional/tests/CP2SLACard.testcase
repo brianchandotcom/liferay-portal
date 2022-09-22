@@ -10,6 +10,7 @@ definition {
 	var testSiteURL = "customer-portal-site";
     var testAccount1 = "Test Account LXC-SM";
     var testAccount2 = "Test Account No SLA";
+    var testAccount3 = "Test Account DXP";
 	var testUserFirstName = "Test";
 	var testProduct = "LXC-SM";
 
@@ -28,7 +29,7 @@ definition {
         task ("Add user to the Liferay Staff organization and a account") {
             CustomerPortal.assignUserToOrganization();
 
-            CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount1},${testAccount2}");
+            CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${testAccount1},${testAccount2},${testAccount3}");
         }
 
 		task ("Go to Customer Portal Site") {
@@ -181,6 +182,38 @@ definition {
 
         task ("The I message at SLA Card should be equal to 'The project's Support Level is displayed here for projects with ticketing support.'") {
             CP2Overview.assertEmptySLACardMessage(message = "The project's Support Level is displayed here for projects with ticketing support.");
+        }
+    }
+
+    @description = "Automation Ticket: LPS-147804 | Test Summary: Check if when cards have the same support level the previous deadline date is extended."
+    @priority = "4"
+    test CardsAtTheSameSupportLevelThePreviousDeadlineIsExtended {
+        task("Given I get the start date of oldest license") {
+            var startDate = CustomerPortal.getValueFieldKoroneikiByAccountName(
+                field = "SLA Expired Start Date",
+                accountName = "${testAccount3}");
+        }
+
+        task("And I get the end date of the newest license") {
+            var endDate = CustomerPortal.getValueFieldKoroneikiByAccountName(
+                field = "SLA Future End Date",
+                accountName = "${testAccount3}");
+        }
+
+		task ("And to Customer Portal Site") {
+			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
+
+			CustomerPortal.waitCP20PageToLoad(userFirstName = "${testUserFirstName}");
+		}
+
+        task ("And I go to the test account") {
+			CustomerPortal.search(searchItem = "${testAccount3}");
+
+			CustomerPortal.enterOnProject(title = "${testAccount3}");
+        }
+
+        task ("Then I should be able to view SLA Start and End Date of Current") {
+            CP2Overview.assertSLACardContentIsVisible(cardContent = "${startDate} - ${endDate}");
         }
     }
 }

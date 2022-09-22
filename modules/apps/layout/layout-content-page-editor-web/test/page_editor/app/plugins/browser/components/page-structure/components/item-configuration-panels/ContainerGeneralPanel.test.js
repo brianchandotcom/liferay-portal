@@ -94,7 +94,6 @@ describe('ContainerGeneralPanel', () => {
 				},
 			},
 			itemId: 'some-container-id',
-			segmentsExperienceId: '0',
 		});
 	});
 
@@ -114,7 +113,6 @@ describe('ContainerGeneralPanel', () => {
 				},
 			},
 			itemId: 'some-container-id',
-			segmentsExperienceId: '0',
 		});
 	});
 

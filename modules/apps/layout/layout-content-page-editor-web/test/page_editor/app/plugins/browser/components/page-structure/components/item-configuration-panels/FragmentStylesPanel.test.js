@@ -229,7 +229,6 @@ describe('FragmentStylesPanel', () => {
 				},
 			},
 			itemId: '0',
-			segmentsExperienceId: '0',
 		});
 	});
 });

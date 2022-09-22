@@ -60,7 +60,10 @@ describe('updateItemConfig', () => {
 			itemConfig: {},
 			itemId: '0',
 			segmentsExperienceId: '0',
-		})(() => {});
+		})(
+			() => {},
+			() => ({})
+		);
 
 	it('calls LayoutService.updateItemConfig with the given information', () => {
 		LayoutService.updateItemConfig.mockImplementation(() =>

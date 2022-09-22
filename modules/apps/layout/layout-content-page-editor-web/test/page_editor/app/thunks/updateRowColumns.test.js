@@ -49,8 +49,10 @@ describe('updateRowColumns', () => {
 		updateRowColumnsThunk({
 			itemId: '0',
 			numberOfColumns: 6,
-			segmentsExperienceId: '0',
-		})(() => {});
+		})(
+			() => {},
+			() => ({})
+		);
 
 	it('calls LayoutService.updateRowColumns with the given information', () => {
 		runThunk();
@@ -59,7 +61,6 @@ describe('updateRowColumns', () => {
 			expect.objectContaining({
 				itemId: '0',
 				numberOfColumns: 6,
-				segmentsExperienceId: '0',
 			})
 		);
 	});

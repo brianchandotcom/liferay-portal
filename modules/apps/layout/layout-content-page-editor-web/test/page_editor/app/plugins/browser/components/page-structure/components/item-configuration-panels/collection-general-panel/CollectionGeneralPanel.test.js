@@ -130,7 +130,6 @@ describe('CollectionGeneralPanel', () => {
 		expect(updateItemConfig).toHaveBeenCalledWith({
 			itemConfig: {gutters: true},
 			itemId: '0',
-			segmentsExperienceId: '0',
 		});
 	});
 
@@ -147,7 +146,6 @@ describe('CollectionGeneralPanel', () => {
 				verticalAlignment: 'center',
 			},
 			itemId: '0',
-			segmentsExperienceId: '0',
 		});
 	});
 
@@ -165,7 +163,6 @@ describe('CollectionGeneralPanel', () => {
 				},
 			}),
 			itemId: '0',
-			segmentsExperienceId: '0',
 		});
 	});
 
@@ -189,7 +186,6 @@ describe('CollectionGeneralPanel', () => {
 				},
 			}),
 			itemId: '0',
-			segmentsExperienceId: '0',
 		});
 	});
 
@@ -206,7 +202,6 @@ describe('CollectionGeneralPanel', () => {
 				paginationType: 'none',
 			},
 			itemId: '0',
-			segmentsExperienceId: '0',
 		});
 	});
 
@@ -224,7 +219,6 @@ describe('CollectionGeneralPanel', () => {
 				displayAllItems: true,
 			}),
 			itemId: '0',
-			segmentsExperienceId: '0',
 		});
 	});
 
@@ -255,7 +249,6 @@ describe('CollectionGeneralPanel', () => {
 				displayAllPages: true,
 			}),
 			itemId: '0',
-			segmentsExperienceId: '0',
 		});
 	});
 
@@ -278,7 +271,6 @@ describe('CollectionGeneralPanel', () => {
 					numberOfItems: 3,
 				},
 				itemId: '0',
-				segmentsExperienceId: '0',
 			});
 		});
 
@@ -327,7 +319,6 @@ describe('CollectionGeneralPanel', () => {
 					numberOfPages: 3,
 				},
 				itemId: '0',
-				segmentsExperienceId: '0',
 			});
 		});
 	});
@@ -351,7 +342,6 @@ describe('CollectionGeneralPanel', () => {
 					numberOfItemsPerPage: 2,
 				},
 				itemId: '0',
-				segmentsExperienceId: '0',
 			});
 		});
 
@@ -450,7 +440,6 @@ describe('CollectionGeneralPanel', () => {
 				tablet: {numberOfColumns: '1'},
 			},
 			itemId: '0',
-			segmentsExperienceId: '0',
 		});
 	});
 });

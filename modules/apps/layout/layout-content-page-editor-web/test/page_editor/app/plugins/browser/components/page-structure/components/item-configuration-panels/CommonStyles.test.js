@@ -186,7 +186,6 @@ describe('CommonStyles', () => {
 				},
 			},
 			itemId: '0',
-			segmentsExperienceId: '0',
 		});
 	});
 

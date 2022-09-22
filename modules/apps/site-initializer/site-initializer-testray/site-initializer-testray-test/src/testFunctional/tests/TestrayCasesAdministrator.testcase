@@ -146,7 +146,7 @@ definition {
 
 	@description = "This is a test for LPS-156793 - Verify if as an Administrator I am able to edit Cases without Subcomponents"
 	@priority = "5"
-	test AdminCanEditCasee {
+	test AdminCanEditCase {
 		task ("Given that the user goes to project page") {
 			Testray.goToProjectPage(projectName = "Projects_1 Project");
 		}

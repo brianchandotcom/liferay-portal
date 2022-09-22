@@ -600,6 +600,116 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-159751. The page editor should be rendered after reset changes from site template."
+	@priority = "4"
+	test EditContentPageAfterResetChangesFromSiteTemplate {
+		task ("Given a page creator has a site based on a site template") {
+			task ("Add a site template") {
+				JSONSiteTemplate.addSiteTemplate(
+					description = "It is a site template",
+					siteTemplateName = "Site Template Name");
+			}
+
+			task ("Add a master template on Site Template") {
+				SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+				LexiconEntry.gotoEntryMenuItem(
+					menuItem = "Manage",
+					rowEntry = "Site Template Name");
+
+				ProductMenu.gotoPortlet(
+					category = "Design",
+					portlet = "Page Templates");
+
+				MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+			}
+
+			task ("Add a Button fragment to master template") {
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					dropTarget = "Header",
+					fragmentName = "Button",
+					scope = "Master");
+
+				MastersPageTemplates.publishMaster();
+			}
+
+			task ("Select the master page template to Home page") {
+				ProductMenu.gotoPortlet(
+					category = "Site Builder",
+					portlet = "Pages");
+
+				PagesAdmin.gotoPageEllipsisMenuItem(
+					menuItem = "Edit",
+					pageName = "Home");
+
+				PageEditor.gotoTab(tabName = "Page Design Options");
+
+				Navigator.gotoNavTab(navTab = "Master");
+
+				MastersPageTemplates.selectMasterViaPageDesignOptions(masterLayoutName = "Custom Masters Page Template");
+
+				PageEditor.publish();
+			}
+
+			task ("Add a new site based on site template") {
+				Site.openSitesAdmin();
+
+				Site.addSiteTemplateCP(
+					siteName = "Site Name",
+					siteTemplateName = "Site Template Name");
+			}
+
+			task ("Delete the Button fragment of master template") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Home",
+					siteName = "Site Name");
+
+				PageEditor.gotoTab(tabName = "Page Design Options");
+
+				Click(locator1 = "PageEditor#MORE_LINK");
+
+				WaitForPageLoad();
+
+				Click(
+					key_text = "Edit Master",
+					locator1 = "Button#ANY");
+
+				PageEditor.removeFragment(fragmentName = "Button");
+			}
+
+			task ("Propagate change to master page template") {
+				MastersPageTemplates.propagateChange();
+			}
+
+			task ("Publish the page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Home",
+					siteName = "Site Name");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the page creator resets the changes from site template") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Site Name");
+
+			SiteTemplates.resetPageChanges();
+		}
+
+		task ("Then the page creator could access the page editor of content page") {
+			ContentPages.gotoPageEditor();
+
+			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONSiteTemplate.deleteNonDefaultTemplates();
+		}
+	}
+
 	@description = "This is a test for LPS-134844 and LPS-106776. Fragments can be hidden and shown. Could add widget to react page editor."
 	@priority = "5"
 	@uitest

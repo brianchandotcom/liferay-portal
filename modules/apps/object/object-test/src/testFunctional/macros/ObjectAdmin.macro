@@ -919,6 +919,7 @@ definition {
 			active = "${active}",
 			click = "save",
 			inputExpression = "${inputExpression}",
+			inputExpressionValue = "${inputExpressionValue}",
 			inputMethod = "${inputMethod}",
 			inputValue = "${inputValue}",
 			objectLabel = "${objectLabel}",
@@ -990,7 +991,7 @@ definition {
 				else if ("${inputMethod}" == "false") {
 					Type(
 						locator1 = "ObjectAction#INPUT_NEW_VALUE",
-						value1 = "${inputExpression}");
+						value1 = "${inputExpressionValue}");
 				}
 			}
 		}

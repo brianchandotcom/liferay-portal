@@ -148,41 +148,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
             </div>
             <div
               class="mb-0 sidebar-section"
-            >
-              <ul
-                class="nav nav-underline"
-                role="tablist"
-              >
-                <li
-                  class="nav-item"
-                >
-                  <button
-                    aria-controls="details"
-                    aria-disabled="false"
-                    aria-selected="true"
-                    class="nav-link active btn btn-unstyled"
-                    role="tab"
-                    type="button"
-                  >
-                    details
-                  </button>
-                </li>
-                <li
-                  class="nav-item"
-                >
-                  <button
-                    aria-controls="versions"
-                    aria-disabled="true"
-                    aria-selected="false"
-                    class="nav-link btn btn-unstyled"
-                    role="tab"
-                    type="button"
-                  >
-                    versions
-                  </button>
-                </li>
-              </ul>
-            </div>
+            />
           </div>
         </div>
       </section>
@@ -1399,50 +1365,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
             >
               <ul
                 class="list-group sidebar-list-group"
-              >
-                <li
-                  class="list-group-item list-group-item-flex"
-                >
-                  <div
-                    class="autofit-col autofit-col-expand"
-                  >
-                    <div
-                      class="list-group-title"
-                    >
-                      version 1.1
-                    </div>
-                    <div
-                      class="list-group-subtitle"
-                    />
-                    <div
-                      class="list-group-subtext"
-                    >
-                      no-change-log
-                    </div>
-                  </div>
-                </li>
-                <li
-                  class="list-group-item list-group-item-flex"
-                >
-                  <div
-                    class="autofit-col autofit-col-expand"
-                  >
-                    <div
-                      class="list-group-title"
-                    >
-                      version 1.0
-                    </div>
-                    <div
-                      class="list-group-subtitle"
-                    />
-                    <div
-                      class="list-group-subtext"
-                    >
-                      no-change-log
-                    </div>
-                  </div>
-                </li>
-              </ul>
+              />
             </div>
           </div>
         </div>

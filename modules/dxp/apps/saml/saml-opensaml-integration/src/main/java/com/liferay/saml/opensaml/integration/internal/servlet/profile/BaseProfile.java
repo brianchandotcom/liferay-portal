@@ -75,6 +75,8 @@ import org.opensaml.xmlsec.context.SecurityParametersContext;
 import org.opensaml.xmlsec.criterion.SignatureValidationConfigurationCriterion;
 import org.opensaml.xmlsec.impl.BasicSignatureValidationParametersResolver;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mika Koivisto
  */
@@ -591,8 +593,10 @@ public abstract class BaseProfile {
 		removeSamlBinding(samlBinding);
 	}
 
+	@Reference
 	protected IdentifierGenerationStrategyFactory
 		identifierGenerationStrategyFactory;
+
 	protected MetadataManager metadataManager;
 	protected Portal portal;
 	protected SamlProviderConfigurationHelper samlProviderConfigurationHelper;

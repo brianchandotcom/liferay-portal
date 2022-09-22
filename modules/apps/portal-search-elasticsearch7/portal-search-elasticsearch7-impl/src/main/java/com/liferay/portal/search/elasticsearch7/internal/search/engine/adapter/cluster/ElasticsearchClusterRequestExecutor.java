@@ -75,39 +75,16 @@ public class ElasticsearchClusterRequestExecutor
 			updateSettingsClusterRequest);
 	}
 
-	@Reference(unbind = "-")
-	protected void setHealthClusterRequestExecutor(
-		HealthClusterRequestExecutor healthClusterRequestExecutor) {
-
-		_healthClusterRequestExecutor = healthClusterRequestExecutor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStateClusterRequestExecutor(
-		StateClusterRequestExecutor stateClusterRequestExecutor) {
-
-		_stateClusterRequestExecutor = stateClusterRequestExecutor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStatsClusterRequestExecutor(
-		StatsClusterRequestExecutor statsClusterRequestExecutor) {
-
-		_statsClusterRequestExecutor = statsClusterRequestExecutor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUpdateSettingsClusterRequestExecutor(
-		UpdateSettingsClusterRequestExecutor
-			updateSettingsClusterRequestExecutor) {
-
-		_updateSettingsClusterRequestExecutor =
-			updateSettingsClusterRequestExecutor;
-	}
-
+	@Reference
 	private HealthClusterRequestExecutor _healthClusterRequestExecutor;
+
+	@Reference
 	private StateClusterRequestExecutor _stateClusterRequestExecutor;
+
+	@Reference
 	private StatsClusterRequestExecutor _statsClusterRequestExecutor;
+
+	@Reference
 	private UpdateSettingsClusterRequestExecutor
 		_updateSettingsClusterRequestExecutor;
 

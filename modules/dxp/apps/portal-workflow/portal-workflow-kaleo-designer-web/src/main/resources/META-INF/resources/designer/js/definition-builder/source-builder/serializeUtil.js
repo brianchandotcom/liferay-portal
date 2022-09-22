@@ -66,9 +66,7 @@ function appendXMLActions(
 	const hasAction = isObject(actions) && !isObjectEmpty(actions);
 	const hasAssignment = isObject(assignments) && !isObjectEmpty(assignments);
 	const hasNotification =
-		isObject(notifications) &&
-		!isObjectEmpty(notifications) &&
-		!isObjectEmpty(notifications.recipients);
+		isObject(notifications) && !isObjectEmpty(notifications);
 	const xmlActions = XMLUtil.createObj(wrapperNodeName || 'actions');
 
 	if (hasAction || hasNotification || hasAssignment) {

@@ -111,39 +111,6 @@ public class DefaultSearchResponseTranslator
 				aggregationsMap, _translate(stats)));
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupByResponseFactory(
-		GroupByResponseFactory groupByResponseFactory) {
-
-		_groupByResponseFactory = groupByResponseFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchHitDocumentTranslator(
-		SearchHitDocumentTranslator searchHitDocumentTranslator) {
-
-		_searchHitDocumentTranslator = searchHitDocumentTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStatsRequestBuilderFactory(
-		StatsRequestBuilderFactory statsRequestBuilderFactory) {
-
-		_statsRequestBuilderFactory = statsRequestBuilderFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStatsResultsTranslator(
-		StatsResultsTranslator statsResultsTranslator) {
-
-		_statsResultsTranslator = statsResultsTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStatsTranslator(StatsTranslator statsTranslator) {
-		_statsTranslator = statsTranslator;
-	}
-
 	private void _addSnippets(
 		Document document, Map<String, HighlightField> highlightFields,
 		String fieldName, Locale locale) {
@@ -368,10 +335,19 @@ public class DefaultSearchResponseTranslator
 		}
 	}
 
+	@Reference
 	private GroupByResponseFactory _groupByResponseFactory;
+
+	@Reference
 	private SearchHitDocumentTranslator _searchHitDocumentTranslator;
+
+	@Reference
 	private StatsRequestBuilderFactory _statsRequestBuilderFactory;
+
+	@Reference
 	private StatsResultsTranslator _statsResultsTranslator;
+
+	@Reference
 	private StatsTranslator _statsTranslator;
 
 }

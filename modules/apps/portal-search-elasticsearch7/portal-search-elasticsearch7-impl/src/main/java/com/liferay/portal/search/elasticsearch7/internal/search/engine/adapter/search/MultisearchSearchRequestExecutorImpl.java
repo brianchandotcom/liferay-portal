@@ -128,27 +128,6 @@ public class MultisearchSearchRequestExecutorImpl
 		return multisearchSearchResponse;
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchSearchRequestAssembler(
-		SearchSearchRequestAssembler searchSearchRequestAssembler) {
-
-		_searchSearchRequestAssembler = searchSearchRequestAssembler;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchSearchResponseAssembler(
-		SearchSearchResponseAssembler searchSearchResponseAssembler) {
-
-		_searchSearchResponseAssembler = searchSearchResponseAssembler;
-	}
-
 	private MultiSearchResponse _getMultiSearchResponse(
 		MultiSearchRequest multiSearchRequest,
 		MultisearchSearchRequest multisearchSearchRequest) {
@@ -170,8 +149,13 @@ public class MultisearchSearchRequestExecutorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		MultisearchSearchRequestExecutorImpl.class);
 
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
+
+	@Reference
 	private SearchSearchRequestAssembler _searchSearchRequestAssembler;
+
+	@Reference
 	private SearchSearchResponseAssembler _searchSearchResponseAssembler;
 
 	private class SearchRequestHolder {

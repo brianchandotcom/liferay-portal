@@ -103,34 +103,17 @@ public class CountSearchRequestExecutorImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setCommonSearchResponseAssembler(
-		CommonSearchResponseAssembler commonSearchResponseAssembler) {
-
-		_commonSearchResponseAssembler = commonSearchResponseAssembler;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCommonSearchSourceBuilderAssembler(
-		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler) {
-
-		_commonSearchSourceBuilderAssembler =
-			commonSearchSourceBuilderAssembler;
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CountSearchRequestExecutorImpl.class);
 
+	@Reference
 	private CommonSearchResponseAssembler _commonSearchResponseAssembler;
+
+	@Reference
 	private CommonSearchSourceBuilderAssembler
 		_commonSearchSourceBuilderAssembler;
+
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search;
 
-import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -87,65 +86,11 @@ public class CommonSearchSourceBuilderAssemblerImpl
 		searchRequest.source(searchSourceBuilder);
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setAggregationTranslator(
-		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
-
-		_aggregationTranslator = aggregationTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setComplexQueryBuilderFactory(
-		ComplexQueryBuilderFactory complexQueryBuilderFactory) {
-
-		_complexQueryBuilderFactory = complexQueryBuilderFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFacetTranslator(FacetTranslator facetTranslator) {
-		_facetTranslator = facetTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFilterToQueryBuilderTranslator(
-		FilterToQueryBuilderTranslator filterToQueryBuilderTranslator) {
-
-		_filterToQueryBuilderTranslator = filterToQueryBuilderTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLegacyQueryToQueryBuilderTranslator(
-		com.liferay.portal.search.elasticsearch7.internal.legacy.query.
-			QueryToQueryBuilderTranslator queryToQueryBuilderTranslator) {
-
-		_legacyQueryToQueryBuilderTranslator = queryToQueryBuilderTranslator;
-	}
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setPipelineAggregationTranslator(
-		PipelineAggregationTranslator<PipelineAggregationBuilder>
-			pipelineAggregationTranslator) {
-
-		_pipelineAggregationTranslator = pipelineAggregationTranslator;
-	}
-
 	protected void setQuery(
 		SearchSourceBuilder searchSourceBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
 		searchSourceBuilder.query(_getQueryBuilder(baseSearchRequest));
-	}
-
-	@Reference(unbind = "-")
-	protected void setQueryToQueryBuilderTranslator(
-		QueryToQueryBuilderTranslator queryToQueryBuilderTranslator) {
-
-		_queryToQueryBuilderTranslator = queryToQueryBuilderTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStatsTranslator(StatsTranslator statsTranslator) {
-		_statsTranslator = statsTranslator;
 	}
 
 	protected BoolQueryBuilder translate(
@@ -599,15 +544,30 @@ public class CommonSearchSourceBuilderAssemblerImpl
 		return null;
 	}
 
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private AggregationTranslator<AggregationBuilder> _aggregationTranslator;
+
+	@Reference
 	private ComplexQueryBuilderFactory _complexQueryBuilderFactory;
+
+	@Reference
 	private FacetTranslator _facetTranslator;
-	private FilterTranslator<QueryBuilder> _filterToQueryBuilderTranslator;
+
+	@Reference
+	private FilterToQueryBuilderTranslator _filterToQueryBuilderTranslator;
+
+	@Reference
 	private com.liferay.portal.search.elasticsearch7.internal.legacy.query.
 		QueryToQueryBuilderTranslator _legacyQueryToQueryBuilderTranslator;
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private PipelineAggregationTranslator<PipelineAggregationBuilder>
 		_pipelineAggregationTranslator;
+
+	@Reference
 	private QueryToQueryBuilderTranslator _queryToQueryBuilderTranslator;
+
+	@Reference
 	private StatsTranslator _statsTranslator;
 
 }

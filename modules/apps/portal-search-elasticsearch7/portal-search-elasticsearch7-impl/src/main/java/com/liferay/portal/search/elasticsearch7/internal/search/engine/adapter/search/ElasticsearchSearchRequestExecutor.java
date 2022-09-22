@@ -66,37 +66,16 @@ public class ElasticsearchSearchRequestExecutor
 		return _suggestSearchRequestExecutor.execute(suggestSearchRequest);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCountSearchRequestExecutor(
-		CountSearchRequestExecutor countSearchRequestExecutor) {
-
-		_countSearchRequestExecutor = countSearchRequestExecutor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMultisearchSearchRequestExecutor(
-		MultisearchSearchRequestExecutor multisearchSearchRequestExecutor) {
-
-		_multisearchSearchRequestExecutor = multisearchSearchRequestExecutor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchSearchRequestExecutor(
-		SearchSearchRequestExecutor searchSearchRequestExecutor) {
-
-		_searchSearchRequestExecutor = searchSearchRequestExecutor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSuggestSearchRequestExecutor(
-		SuggestSearchRequestExecutor suggestSearchRequestExecutor) {
-
-		_suggestSearchRequestExecutor = suggestSearchRequestExecutor;
-	}
-
+	@Reference
 	private CountSearchRequestExecutor _countSearchRequestExecutor;
+
+	@Reference
 	private MultisearchSearchRequestExecutor _multisearchSearchRequestExecutor;
+
+	@Reference
 	private SearchSearchRequestExecutor _searchSearchRequestExecutor;
+
+	@Reference
 	private SuggestSearchRequestExecutor _suggestSearchRequestExecutor;
 
 }

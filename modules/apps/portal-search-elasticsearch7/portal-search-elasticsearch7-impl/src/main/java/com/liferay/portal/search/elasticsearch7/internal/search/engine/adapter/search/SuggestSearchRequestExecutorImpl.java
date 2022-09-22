@@ -98,20 +98,6 @@ public class SuggestSearchRequestExecutorImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setSuggesterTranslator(
-		SuggesterTranslator<SuggestionBuilder> suggesterTranslator) {
-
-		_suggesterTranslator = suggesterTranslator;
-	}
-
 	protected SuggestSearchResult.Entry.Option translate(
 		Suggest.Suggestion.Entry.Option suggestionEntryOption) {
 
@@ -217,7 +203,10 @@ public class SuggestSearchRequestExecutorImpl
 		return searchRequest;
 	}
 
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
+
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private SuggesterTranslator<SuggestionBuilder> _suggesterTranslator;
 
 }

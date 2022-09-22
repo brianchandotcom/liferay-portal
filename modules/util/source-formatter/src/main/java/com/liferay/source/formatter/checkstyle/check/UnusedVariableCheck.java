@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checkstyle.check;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.List;
 
@@ -47,11 +48,51 @@ public class UnusedVariableCheck extends BaseCheck {
 		DetailAST modifiersDetailAST = detailAST.findFirstToken(
 			TokenTypes.MODIFIERS);
 
-		if (modifiersDetailAST.branchContains(TokenTypes.ANNOTATION) ||
-			modifiersDetailAST.branchContains(TokenTypes.LITERAL_PROTECTED) ||
+		if (modifiersDetailAST.branchContains(TokenTypes.LITERAL_PROTECTED) ||
 			modifiersDetailAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
 
 			return;
+		}
+
+		if (modifiersDetailAST.branchContains(TokenTypes.ANNOTATION)) {
+			String absolutePath = getAbsolutePath();
+
+			int x = absolutePath.indexOf("/modules/");
+
+			if (x == -1) {
+				return;
+			}
+
+			String modulePath = absolutePath.substring(x + 1);
+
+			if ((!modulePath.startsWith("modules/apps") &&
+				 !modulePath.startsWith("modules/dxp")) ||
+				!AnnotationUtil.containsAnnotation(detailAST, "Reference")) {
+
+				return;
+			}
+
+			List<String> allowedUnusedPrivateVariableDirNames =
+				getAttributeValues(
+					_ALLOWED_UNUSED_PRIVATE_VARIABLE_DIR_NAMES_KEY);
+
+			if (!allowedUnusedPrivateVariableDirNames.isEmpty()) {
+				int i = 0;
+
+				while (i < allowedUnusedPrivateVariableDirNames.size()) {
+					if (modulePath.startsWith(
+							allowedUnusedPrivateVariableDirNames.get(i))) {
+
+						break;
+					}
+
+					i++;
+				}
+
+				if (i == allowedUnusedPrivateVariableDirNames.size()) {
+					return;
+				}
+			}
 		}
 
 		String variableName = getName(detailAST);
@@ -133,6 +174,9 @@ public class UnusedVariableCheck extends BaseCheck {
 
 		return false;
 	}
+
+	private static final String _ALLOWED_UNUSED_PRIVATE_VARIABLE_DIR_NAMES_KEY =
+		"allowedUnusedPrivateVariableDirNames";
 
 	private static final String _MSG_UNUSED_VARIABLE = "variable.unused";
 

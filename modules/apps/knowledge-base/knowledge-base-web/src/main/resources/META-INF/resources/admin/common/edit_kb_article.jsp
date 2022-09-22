@@ -27,22 +27,6 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 }
 %>
 
-<c:if test="<%= editKBArticleDisplayContext.isNavigationBarVisible() %>">
-	<div class="management-bar management-bar-light navbar navbar-expand-md">
-		<clay:container-fluid>
-			<ul class="m-auto navbar-nav"></ul>
-
-			<ul class="middle navbar-nav">
-				<li class="nav-item">
-					<aui:workflow-status id="<%= String.valueOf(editKBArticleDisplayContext.getResourcePrimKey()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= editKBArticleDisplayContext.getKBArticleStatus() %>" version="<%= editKBArticleDisplayContext.getKBArticleVersion() %>" />
-				</li>
-			</ul>
-
-			<ul class="end m-auto navbar-nav"></ul>
-		</clay:container-fluid>
-	</div>
-</c:if>
-
 <c:if test="<%= !editKBArticleDisplayContext.isHeaderVisible() %>">
 	<liferay-ui:header
 		backURL="<%= editKBArticleDisplayContext.getRedirect() %>"
@@ -117,6 +101,24 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 							/>
 						</aui:fieldset>
 					</liferay-expando:custom-attributes-available>
+
+					<c:if test="<%= editKBArticleDisplayContext.isNavigationBarVisible() %>">
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="basic-information">
+							<p>
+								<strong><liferay-ui:message key="version" /></strong>: <%= editKBArticleDisplayContext.getKBArticleVersion() %>
+
+								<clay:label
+									cssClass="ml-2 text-uppercase"
+									displayType="<%= WorkflowConstants.getStatusStyle(editKBArticleDisplayContext.getKBArticleStatus()) %>"
+									label="<%= WorkflowConstants.getStatusLabel(editKBArticleDisplayContext.getKBArticleStatus()) %>"
+								/>
+							</p>
+
+							<p>
+								<strong><liferay-ui:message key="id" /></strong>: <%= String.valueOf(editKBArticleDisplayContext.getResourcePrimKey()) %>
+							</p>
+						</aui:fieldset>
+					</c:if>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
 						<liferay-asset:asset-categories-selector

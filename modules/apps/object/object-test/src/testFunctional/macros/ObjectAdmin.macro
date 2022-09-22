@@ -20,7 +20,7 @@ definition {
 	}
 
 	macro addCategorizationOnLayoutTab {
-		Click(locator1 = "ObjectAdmin#DROPDOWN_CATEGORIZATION_OPTION");
+		Click(locator1 = "ObjectAdmin#LABEL_DROPDOWN");
 
 		DropdownMenuItem.click(menuItem = "Add Categorization");
 	}
@@ -1205,6 +1205,15 @@ definition {
 		}
 
 		Click(locator1 = "Button#SAVE");
+	}
+
+	macro selectCategoryInObjectEntry {
+		Click(
+			key_fieldLabel = "${vocabularyName}",
+			key_text = "Select",
+			locator1 = "Button#ANY_WITH_LABEL");
+
+		AssetCategorization.selectCategories(categoryNameList = "${categoryNameList}");
 	}
 
 	macro selectKebabMenuOption {

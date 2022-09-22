@@ -86,8 +86,13 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>DROPDOWN_CATEGORIZATION_OPTION</td>
+		<td>LABEL_DROPDOWN</td>
 		<td>//button[contains(@aria-controls,'clay-dropdown-menu-1')]//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>CATEGORIZATION_DROPDOWN</td>
+		<td>//button[contains(@aria-controls,'clay-dropdown-menu-4')]//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
 		<td></td>
 	</tr>
 	<tr>

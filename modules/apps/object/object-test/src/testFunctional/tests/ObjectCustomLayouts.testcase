@@ -82,6 +82,89 @@ definition {
 		ObjectAdmin.viewCategorizationInObjectEntry();
 	}
 
+	@description = "LPS-161885 - Verify that it's possible to edit a categorization section"
+	@priority = "3"
+	test CanEditCategorizationSection {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 200",
+			objectName = "CustomObject200",
+			pluralLabelName = "Custom Objects 200");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Date",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "Date",
+			isRequired = "false",
+			objectName = "CustomObject200");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Decimal",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "Decimal",
+			isRequired = "true",
+			objectName = "CustomObject200");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject200");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 200");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "2",
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		ObjectAdmin.addCategorizationOnLayoutTab();
+
+		Button.clickSave();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject200");
+
+		Navigator.openURL();
+
+		JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Category 1",
+			vocabularyName = "Topic");
+
+		JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Category 2",
+			vocabularyName = "Stage");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject200");
+
+		LexiconEntry.gotoAdd();
+
+		ObjectAdmin.selectCategoryInObjectEntry(
+			categoryNameList = "Category 1",
+			vocabularyName = "Topic");
+
+		ObjectAdmin.selectCategoryInObjectEntry(
+			categoryNameList = "Category 2",
+			vocabularyName = "Stage");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		AssetCategorization.removeCategories(categoryNameList = "Category 1,Category 2");
+	}
+
 	@description = "LPS-135397 - Verify that it is not possible to save another Layout as default"
 	@priority = "4"
 	test CannotSaveAnotherLayoutAsDefault {

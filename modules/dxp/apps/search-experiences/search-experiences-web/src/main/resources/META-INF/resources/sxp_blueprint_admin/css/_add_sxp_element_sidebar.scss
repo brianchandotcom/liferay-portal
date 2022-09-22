@@ -22,6 +22,10 @@
 					}
 				}
 
+				&.inactive {
+					opacity: 0.5;
+				}
+
 				.add-sxp-element-button {
 					opacity: 0;
 					position: absolute;

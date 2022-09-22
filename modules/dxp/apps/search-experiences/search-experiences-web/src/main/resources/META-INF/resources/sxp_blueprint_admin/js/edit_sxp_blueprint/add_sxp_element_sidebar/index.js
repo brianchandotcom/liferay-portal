@@ -15,7 +15,9 @@ import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {
 	useCallback,
@@ -42,7 +44,13 @@ const DEFAULT_EXPANDED_LIST = ['match'];
 
 const LAST_CATEGORIES = [DEFAULT_CATEGORY, 'custom'];
 
-const SXPElementList = ({category, expand, onAddSXPElement, sxpElements}) => {
+const SXPElementList = ({
+	category,
+	expand,
+	isIndexCompany,
+	onAddSXPElement,
+	sxpElements,
+}) => {
 	const {locale} = useContext(ThemeContext);
 
 	const [showList, setShowList] = useState(expand);
@@ -54,6 +62,15 @@ const SXPElementList = ({category, expand, onAddSXPElement, sxpElements}) => {
 	const _handleAddSXPElement = (sxpElement) => () => {
 		onAddSXPElement(sxpElement);
 	};
+
+	// All system elements that are not 'Custom JSON Element' or
+	// 'Paste Any Elasticsearch Query Element' cannot be added to
+	// query builder when search index is not the company index.
+
+	const _isElementInactiveFromNonCompanyIndex = (sxpElement) =>
+		!isIndexCompany &&
+		sxpElement.id < 100 &&
+		sxpElement.elementDefinition?.category !== 'custom';
 
 	return (
 		<>
@@ -87,7 +104,11 @@ const SXPElementList = ({category, expand, onAddSXPElement, sxpElements}) => {
 
 						return (
 							<ClayList.Item
-								className="sxp-element-item"
+								className={getCN('sxp-element-item', {
+									inactive: _isElementInactiveFromNonCompanyIndex(
+										sxpElement
+									),
+								})}
 								flex
 								key={index}
 							>
@@ -120,17 +141,38 @@ const SXPElementList = ({category, expand, onAddSXPElement, sxpElements}) => {
 								<ClayList.ItemField>
 									<div className="add-sxp-element-button-background" />
 
-									<ClayButton
-										aria-label={Liferay.Language.get('add')}
-										className="add-sxp-element-button"
-										displayType="secondary"
-										onClick={_handleAddSXPElement(
-											sxpElement
-										)}
-										small
-									>
-										{Liferay.Language.get('add')}
-									</ClayButton>
+									{_isElementInactiveFromNonCompanyIndex(
+										sxpElement
+									) ? (
+										<ClayTooltipProvider>
+											<ClayButton
+												aria-disabled="true"
+												className="add-sxp-element-button disabled"
+												data-tooltip-align="left"
+												displayType="secondary"
+												small
+												title={Liferay.Language.get(
+													'query-element-inactive-from-index-help'
+												)}
+											>
+												{Liferay.Language.get('add')}
+											</ClayButton>
+										</ClayTooltipProvider>
+									) : (
+										<ClayButton
+											aria-label={Liferay.Language.get(
+												'add'
+											)}
+											className="add-sxp-element-button"
+											displayType="secondary"
+											onClick={_handleAddSXPElement(
+												sxpElement
+											)}
+											small
+										>
+											{Liferay.Language.get('add')}
+										</ClayButton>
+									)}
 								</ClayList.ItemField>
 							</ClayList.Item>
 						);
@@ -142,6 +184,7 @@ const SXPElementList = ({category, expand, onAddSXPElement, sxpElements}) => {
 };
 
 function AddSXPElement({
+	isIndexCompany,
 	emptyMessage = Liferay.Language.get('no-query-elements-found'),
 	onAddSXPElement,
 	querySXPElements,
@@ -248,6 +291,7 @@ function AddSXPElement({
 									expandAll ||
 									DEFAULT_EXPANDED_LIST.includes(category)
 								}
+								isIndexCompany={isIndexCompany}
 								key={category}
 								onAddSXPElement={onAddSXPElement}
 								sxpElements={categorizedSXPElements[category]}
@@ -268,6 +312,7 @@ function AddSXPElement({
 
 function AddSXPElementSidebar({
 	emptyMessage,
+	isIndexCompany,
 	onAddSXPElement,
 	onClose,
 	visible,
@@ -332,6 +377,7 @@ function AddSXPElementSidebar({
 		>
 			<AddSXPElement
 				emptyMessage={emptyMessage}
+				isIndexCompany={isIndexCompany}
 				onAddSXPElement={onAddSXPElement}
 				querySXPElements={querySXPElements}
 			/>
@@ -341,6 +387,7 @@ function AddSXPElementSidebar({
 
 AddSXPElementSidebar.propTypes = {
 	emptyMessage: PropTypes.string,
+	isIndexCompany: PropTypes.bool,
 	onAddSXPElement: PropTypes.func,
 	onClose: PropTypes.func,
 	visible: PropTypes.bool,

@@ -25,6 +25,7 @@ function QuerySXPElements({
 	elementInstances,
 	entityJSON,
 	errors = [],
+	isIndexCompany,
 	isSubmitting,
 	indexFields,
 	onBlur,
@@ -119,6 +120,7 @@ function QuerySXPElements({
 								id={id}
 								index={index}
 								indexFields={indexFields}
+								isIndexCompany={isIndexCompany}
 								isSubmitting={isSubmitting}
 								key={id}
 								onBlur={onBlur}

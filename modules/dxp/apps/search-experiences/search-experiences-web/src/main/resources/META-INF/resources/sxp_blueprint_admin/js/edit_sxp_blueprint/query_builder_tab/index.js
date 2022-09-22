@@ -33,6 +33,7 @@ function QueryBuilderTab({
 	frameworkConfig = {},
 	isSubmitting,
 	indexFields,
+	isIndexCompany,
 	onApplyIndexerClausesChange,
 	onBlur,
 	onChange,
@@ -146,6 +147,7 @@ function QueryBuilderTab({
 									entityJSON={entityJSON}
 									errors={errors}
 									indexFields={indexFields}
+									isIndexCompany={isIndexCompany}
 									isSubmitting={isSubmitting}
 									onBlur={onBlur}
 									onChange={onChange}
@@ -202,6 +204,7 @@ QueryBuilderTab.propTypes = {
 	errors: PropTypes.arrayOf(PropTypes.object),
 	frameworkConfig: PropTypes.object,
 	indexFields: PropTypes.arrayOf(PropTypes.object),
+	isIndexCompany: PropTypes.bool,
 	isSubmitting: PropTypes.bool,
 	onApplyIndexerClausesChange: PropTypes.func,
 	onBlur: PropTypes.func,

@@ -53,7 +53,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 			addLayoutUtilityPageEntry(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long groupId, long plid, String name, int type)
+				long groupId, String name, int type, long masterLayoutPlid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -63,7 +63,8 @@ public class LayoutUtilityPageEntryServiceHttp {
 				_addLayoutUtilityPageEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, groupId, plid, name, type);
+				methodKey, externalReferenceCode, groupId, name, type,
+				masterLayoutPlid);
 
 			Object returnObj = null;
 
@@ -410,7 +411,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 			updateLayoutUtilityPageEntry(
 				HttpPrincipal httpPrincipal, long layoutUtilityPageEntryId,
-				long plid, String name, int type)
+				String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -420,7 +421,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 				_updateLayoutUtilityPageEntryParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, layoutUtilityPageEntryId, plid, name, type);
+				methodKey, layoutUtilityPageEntryId, name);
 
 			Object returnObj = null;
 
@@ -456,7 +457,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 
 	private static final Class<?>[] _addLayoutUtilityPageEntryParameterTypes0 =
 		new Class[] {
-			String.class, long.class, long.class, String.class, int.class
+			String.class, long.class, String.class, int.class, long.class
 		};
 	private static final Class<?>[]
 		_deleteLayoutUtilityPageEntryParameterTypes1 = new Class[] {long.class};
@@ -488,7 +489,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateLayoutUtilityPageEntryParameterTypes9 = new Class[] {
-			long.class, long.class, String.class, int.class
+			long.class, String.class
 		};
 
 }

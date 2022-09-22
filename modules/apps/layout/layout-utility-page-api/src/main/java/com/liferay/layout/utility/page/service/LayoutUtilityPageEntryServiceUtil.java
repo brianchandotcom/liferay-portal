@@ -40,12 +40,12 @@ public class LayoutUtilityPageEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.layout.utility.page.service.impl.LayoutUtilityPageEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long groupId, long plid, String name,
-			int type)
+			String externalReferenceCode, long groupId, String name, int type,
+			long masterLayoutPlid)
 		throws PortalException {
 
 		return getService().addLayoutUtilityPageEntry(
-			externalReferenceCode, groupId, plid, name, type);
+			externalReferenceCode, groupId, name, type, masterLayoutPlid);
 	}
 
 	public static LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
@@ -114,11 +114,11 @@ public class LayoutUtilityPageEntryServiceUtil {
 	}
 
 	public static LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, long plid, String name, int type)
+			long layoutUtilityPageEntryId, String name)
 		throws PortalException {
 
 		return getService().updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntryId, plid, name, type);
+			layoutUtilityPageEntryId, name);
 	}
 
 	public static LayoutUtilityPageEntryService getService() {

@@ -81,18 +81,18 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 				source = sources[0];
 			}
 
-			String destination = null;
+			String destinationURL = null;
 
-			String[] destinations = parameterMap.get("destination_" + i);
+			String[] destinationURLs = parameterMap.get("destinationURL_" + i);
 
-			if ((destinations.length != 0) &&
-				Validator.isNotNull(destinations[0])) {
+			if ((destinationURLs.length != 0) &&
+				Validator.isNotNull(destinationURLs[0])) {
 
-				destination = destinations[0];
+				destinationURL = destinationURLs[0];
 			}
 
-			if ((source != null) || (destination != null)) {
-				redirectPatterns.put(source, destination);
+			if ((source != null) || (destinationURL != null)) {
+				redirectPatterns.put(source, destinationURL);
 			}
 		}
 

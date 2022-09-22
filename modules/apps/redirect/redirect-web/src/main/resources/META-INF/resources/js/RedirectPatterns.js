@@ -23,7 +23,7 @@ import uuidv4 from 'uuid/v4';
 import '../css/redirect_pattern.scss';
 
 const PatternField = ({
-	destination = '',
+	destinationURL = '',
 	handleAddClick,
 	handleRemoveClick,
 	index,
@@ -53,13 +53,13 @@ const PatternField = ({
 			</ClayLayout.Col>
 
 			<ClayLayout.Col md="6">
-				<label htmlFor="destination">
-					{Liferay.Language.get('maximum-file-size')}
+				<label htmlFor="destinationURL">
+					{Liferay.Language.get('destination-url')}
 
 					<span
 						className="inline-item-after"
 						title={Liferay.Language.get(
-							'maximum-file-size-help-message'
+							'destination-url-help-message'
 						)}
 					>
 						<ClayIcon symbol="question-circle-full" />
@@ -67,9 +67,9 @@ const PatternField = ({
 				</label>
 
 				<ClayInput
-					defaultValue={destination}
-					id="destination"
-					name={`${portletNamespace}destination_${index}`}
+					defaultValue={destinationURL}
+					id="destinationURL"
+					name={`${portletNamespace}destinationURL_${index}`}
 					type="text"
 				/>
 
@@ -105,7 +105,7 @@ const RedirectPattern = ({
 	patternList: initialPatternList,
 	portletNamespace,
 }) => {
-	const emptyRow = () => ({destination: '', id: uuidv4(), source: ''});
+	const emptyRow = () => ({destinationURL: '', id: uuidv4(), source: ''});
 
 	const addRow = (index) => {
 		const tempList = [...patternsList];
@@ -127,11 +127,11 @@ const RedirectPattern = ({
 
 	return (
 		<>
-			<p className="text-muted">{Liferay.Language.get(description)}</p>
+			<p className="text-muted">{description}</p>
 
 			{patternsList.map((item, index) => (
 				<PatternField
-					destination={item.destination}
+					destinationURL={item.destinationURL}
 					handleAddClick={addRow}
 					handleRemoveClick={removeRow}
 					index={index}
@@ -148,7 +148,7 @@ RedirectPattern.propTypes = {
 	description: PropTypes.string,
 	patternList: PropTypes.arrayOf(
 		PropTypes.shape({
-			destination: PropTypes.string,
+			destinationURL: PropTypes.string,
 			source: PropTypes.string,
 		})
 	),

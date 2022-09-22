@@ -26,10 +26,6 @@ RedirectPatternConfigurationDisplayContext redirectPatternConfigurationDisplayCo
 			<h2>
 				<liferay-ui:message key="redirect-pattern-configuration-name" />
 			</h2>
-
-			<p class="text-default"><strong>
-				<liferay-ui:message key="redirect-pattern-configuration-description" />
-			</strong></p>
 		</clay:sheet-header>
 
 		<clay:sheet-section>

@@ -584,13 +584,9 @@ definition {
 
 		Search.searchCP(searchTerm = "1");
 
-		ObjectAdmin.assertObjectActions(
-			actionActive = "Yes",
-			actionName = "Action Name 1");
+		ObjectAdmin.assertObjectActions(actionName = "Action Name 1");
 
-		ObjectAdmin.assertObjectActionsNotPresent(
-			actionActive = "Yes",
-			actionName = "Action Name 2");
+		ObjectAdmin.assertObjectActionsNotPresent(actionName = "Action Name 2");
 	}
 
 	@description = "LPS-139008 - Verify it is possible to update an Action"

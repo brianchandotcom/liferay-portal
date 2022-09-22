@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.web.internal.item;
 
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardConstants;
 import com.liferay.content.dashboard.web.internal.util.AssetVocabularyUtil;
 import com.liferay.info.search.InfoSearchClassMapperTracker;

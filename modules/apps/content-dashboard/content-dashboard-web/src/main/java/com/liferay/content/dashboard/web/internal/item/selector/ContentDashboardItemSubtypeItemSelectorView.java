@@ -20,7 +20,7 @@ import com.liferay.content.dashboard.info.item.ClassNameClassPKInfoItemIdentifie
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemSubtypeItemSelectorViewDisplayContext;
-import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
+import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;

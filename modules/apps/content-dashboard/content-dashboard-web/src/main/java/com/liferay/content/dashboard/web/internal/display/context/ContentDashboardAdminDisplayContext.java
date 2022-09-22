@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.content.dashboard.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
-import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
+import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeUtil;

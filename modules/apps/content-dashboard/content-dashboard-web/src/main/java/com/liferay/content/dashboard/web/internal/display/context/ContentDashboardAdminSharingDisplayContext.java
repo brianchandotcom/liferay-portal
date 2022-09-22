@@ -15,8 +15,8 @@
 package com.liferay.content.dashboard.web.internal.display.context;
 
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
-import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
-import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
+import com.liferay.content.dashboard.item.ContentDashboardItem;
+import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.info.search.InfoSearchClassMapperTracker;
 import com.liferay.portal.kernel.exception.PortalException;

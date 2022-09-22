@@ -12,25 +12,23 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item;
+package com.liferay.content.dashboard.item;
 
-import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
-import java.util.Optional;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Cristina González
+ * @author Jürgen Kappler
  */
-public interface ContentDashboardItemFactory<T> {
+public interface VersionableContentDashboardItem<T>
+	extends ContentDashboardItem<T> {
 
-	public ContentDashboardItem<T> create(long classPK) throws PortalException;
+	public List<ContentDashboardItem.Version> getAllVersions(
+		ThemeDisplay themeDisplay);
 
-	public Optional<ContentDashboardItemSubtypeFactory>
-		getContentDashboardItemSubtypeFactoryOptional();
-
-	public default boolean isEnabled() {
-		return true;
-	}
+	public String getViewVersionsURL(HttpServletRequest httpServletRequest);
 
 }

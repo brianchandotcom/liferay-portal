@@ -115,7 +115,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 				searchContainer="<%= contentDashboardAdminDisplayContext.getSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
-					className="com.liferay.content.dashboard.web.internal.item.ContentDashboardItem"
+					className="com.liferay.content.dashboard.item.ContentDashboardItem"
 					keyProperty="id"
 					modelVar="contentDashboardItem"
 				>

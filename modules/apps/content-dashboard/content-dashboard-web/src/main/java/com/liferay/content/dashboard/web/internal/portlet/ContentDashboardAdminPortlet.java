@@ -24,7 +24,7 @@ import com.liferay.content.dashboard.web.internal.data.provider.ContentDashboard
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminDisplayContext;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminManagementToolbarDisplayContext;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminSharingDisplayContext;
-import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
+import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactoryTracker;

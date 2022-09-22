@@ -15,7 +15,7 @@
 package com.liferay.content.dashboard.web.internal.servlet.taglib.util;
 
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
-import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
+import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;

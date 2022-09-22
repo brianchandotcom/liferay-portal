@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.content.dashboard.api
 Bundle-Version: 3.0.1
 Export-Package:\
 	com.liferay.content.dashboard.info.item,\
+	com.liferay.content.dashboard.item,\
 	com.liferay.content.dashboard.item.action,\
 	com.liferay.content.dashboard.item.action.exception,\
 	com.liferay.content.dashboard.item.action.provider,\

@@ -17,6 +17,7 @@ package com.liferay.content.dashboard.web.internal.item;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;

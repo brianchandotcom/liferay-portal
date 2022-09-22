@@ -15,10 +15,10 @@
 package com.liferay.content.dashboard.web.internal.portlet.action;
 
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
-import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
-import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
+import com.liferay.content.dashboard.item.ContentDashboardItem;
+import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
-import com.liferay.content.dashboard.web.internal.item.VersionableContentDashboardItem;
+import com.liferay.content.dashboard.item.VersionableContentDashboardItem;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

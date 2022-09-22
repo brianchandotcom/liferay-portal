@@ -213,18 +213,20 @@ function EditSXPElementForm({
 	}, [readOnly]);
 
 	/**
-	 * Parses CodeMirror text after user types into it or submits changes
-	 * on title and description modal. Validates `title_i18n` and
-	 * `description_i18n` and updates `sxpElementJSONObject` if parsing
-	 * succeeds.
+	 * Validates `title_i18n` and `description_i18n` and updates
+	 * `sxpElementJSONObject` if parsing succeeds.
+	 *
+	 * Returns `updatedState` to use in `_handleSubmit` to save the most
+	 * up-to-date value.
 	 */
-	const _handleJSONEditorValueChange = (value) => {
-		setElementJSONEditorValue(value);
+	const _validateAndUpdateSXPElementJSONObject = (sxpElementString) => {
+		const updatedState = {
+			isInvalid: false,
+			sxpElementJSONObjectNew: sxpElementJSONObject,
+		};
 
 		try {
-			const sxpElement = JSON.parse(value);
-
-			setIsSXPElementJSONInvalid(false);
+			const sxpElement = JSON.parse(sxpElementString);
 
 			if (!isPropertyValid(sxpElement, 'title_i18n')) {
 				sxpElement.title_i18n = {};
@@ -234,11 +236,31 @@ function EditSXPElementForm({
 				sxpElement.description_i18n = {};
 			}
 
+			setIsSXPElementJSONInvalid(false);
+			updatedState.isInvalid = false;
+
 			setSXPElementJSONObject(sxpElement);
+			updatedState.sxpElementJSONObjectNew = sxpElement;
 		}
 		catch {
 			setIsSXPElementJSONInvalid(true);
+
+			updatedState.isInvalid = true;
 		}
+
+		return updatedState;
+	};
+
+	/**
+	 * Parses CodeMirror text after user types into it or submits changes
+	 * on title and description modal. Validates `title_i18n` and
+	 * `description_i18n` and updates `sxpElementJSONObject` if parsing
+	 * succeeds.
+	 */
+	const _handleJSONEditorValueChange = (value) => {
+		setElementJSONEditorValue(value);
+
+		_validateAndUpdateSXPElementJSONObject(value);
 	};
 
 	const [handleJSONEditorValueChangeDebounced] = useDebounceCallback(
@@ -276,23 +298,35 @@ function EditSXPElementForm({
 
 		setIsSubmitting(true);
 
+		// Since `_handleJSONEditorValueChange` is debounced while typing in the
+		// CodeMirror editor, validate and update `sxpElementJSONObject` in the
+		// case where a user types in the CodeMirror editor and very quickly
+		// clicks save.
+
+		const doc = elementJSONEditorRef.current.getDoc();
+
+		const {
+			isInvalid,
+			sxpElementJSONObjectNew,
+		} = _validateAndUpdateSXPElementJSONObject(doc.getValue());
+
 		try {
-			if (isSXPElementJSONInvalid) {
+			if (isInvalid) {
 				throw sub(Liferay.Language.get('x-is-invalid'), [
 					Liferay.Language.get('element-source-json'),
 				]);
 			}
 
 			validateConfigKeys(
-				sxpElementJSONObject.elementDefinition?.configuration,
-				sxpElementJSONObject.elementDefinition?.uiConfiguration
+				sxpElementJSONObjectNew.elementDefinition?.configuration,
+				sxpElementJSONObjectNew.elementDefinition?.uiConfiguration
 			);
 
-			if (!Object.keys(sxpElementJSONObject.title_i18n).length) {
+			if (!Object.keys(sxpElementJSONObjectNew.title_i18n).length) {
 				throw Liferay.Language.get('error.title-empty');
 			}
 
-			if (!sxpElementJSONObject.title_i18n[defaultLocale]) {
+			if (!sxpElementJSONObjectNew.title_i18n[defaultLocale]) {
 				throw Liferay.Language.get('error.default-locale-title-empty');
 			}
 		}
@@ -324,9 +358,9 @@ function EditSXPElementForm({
 					'/o/search-experiences-rest/v1.0/sxp-elements/validate',
 					{
 						body: JSON.stringify({
-							description_i18n: sxpElementJSONObject.description_i18n,
-							elementDefinition: sxpElementJSONObject.elementDefinition,
-							title_i18n: sxpElementJSONObject.title_i18n,
+							description_i18n: sxpElementJSONObjectNew.description_i18n,
+							elementDefinition: sxpElementJSONObjectNew.elementDefinition,
+							title_i18n: sxpElementJSONObjectNew.title_i18n,
 							type,
 						}),
 						method: 'POST',
@@ -347,10 +381,11 @@ function EditSXPElementForm({
 				`/o/search-experiences-rest/v1.0/sxp-elements/${sxpElementId}`,
 				{
 					body: JSON.stringify({
-						description_i18n: sxpElementJSONObject.description_i18n,
+						description_i18n:
+							sxpElementJSONObjectNew.description_i18n,
 						elementDefinition:
-							sxpElementJSONObject.elementDefinition,
-						title_i18n: sxpElementJSONObject.title_i18n,
+							sxpElementJSONObjectNew.elementDefinition,
+						title_i18n: sxpElementJSONObjectNew.title_i18n,
 						type,
 					}),
 					headers: new Headers({

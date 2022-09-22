@@ -52,9 +52,11 @@ const WorkspaceConnection: React.FC = () => {
 						value={token}
 					/>
 
-					<small className="disabled text-secondary">
-						{Liferay.Language.get('analytics-cloud-token-help')}
-					</small>
+					<label className="disabled">
+						<small>
+							{Liferay.Language.get('analytics-cloud-token-help')}
+						</small>
+					</label>
 				</ClayForm.Group>
 			</ClayForm>
 

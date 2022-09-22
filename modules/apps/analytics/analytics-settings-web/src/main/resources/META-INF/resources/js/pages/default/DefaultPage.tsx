@@ -12,69 +12,69 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import {ClayVerticalNav} from '@clayui/nav';
 import React, {useState} from 'react';
 
 import WorkspaceConnection from './WorkspaceConnection';
 
-const NAV_KEYS = {
-	ATTRIBUTES: 'attributes',
-	PEOPLE: 'people',
-	PROPERTIES: 'properties',
-	WORKSPACE_CONNECTION: 'workspaceConnection',
-};
+enum EPages {
+	Attributes = 'attributes',
+	People = 'people',
+	Properties = 'properties',
+	WorkspaceConnection = 'workspace-connection',
+}
+
+const PAGES = [
+	{
+		Component: () => <WorkspaceConnection />,
+		key: EPages.WorkspaceConnection,
+		label: Liferay.Language.get('workspace-connection'),
+	},
+	{
+		Component: () => <div>properties</div>,
+		key: EPages.Properties,
+		label: Liferay.Language.get('properties'),
+	},
+	{
+		Component: () => <div>people</div>,
+		key: EPages.People,
+		label: Liferay.Language.get('people'),
+	},
+	{
+		Component: () => <div>attributes</div>,
+		key: EPages.Attributes,
+		label: Liferay.Language.get('attributes'),
+	},
+];
 
 const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const [activeNavKey, setActiveNavKey] = useState(
-		NAV_KEYS.WORKSPACE_CONNECTION
-	);
+	const [activePage, setactivePage] = useState(EPages.WorkspaceConnection);
 
 	return (
-		<div className="d-flex">
-			<>
-				<p className="text-uppercase">
-					{Liferay.Language.get('instance-scope')}
-				</p>
+		<ClayLayout.ContainerFluid>
+			<ClayLayout.Row>
+				<ClayLayout.Col size={3}>
+					<ClayVerticalNav
+						items={PAGES.map(({key, label}) => {
+							return {
+								active: activePage === key,
+								label,
+								onClick: () => setactivePage(key),
+							};
+						})}
+						large={false}
+					/>
+				</ClayLayout.Col>
 
-				<ClayVerticalNav
-					items={[
-						{
-							active:
-								activeNavKey === NAV_KEYS.WORKSPACE_CONNECTION,
-							label: Liferay.Language.get('workspace-connection'),
-							onClick: () =>
-								setActiveNavKey(NAV_KEYS.WORKSPACE_CONNECTION),
-						},
-						{
-							active: activeNavKey === NAV_KEYS.PROPERTIES,
-							label: Liferay.Language.get('properties'),
-							onClick: () => setActiveNavKey(NAV_KEYS.PROPERTIES),
-						},
-						{
-							active: activeNavKey === NAV_KEYS.PEOPLE,
-							label: Liferay.Language.get('people'),
-							onClick: () => setActiveNavKey(NAV_KEYS.PEOPLE),
-						},
-						{
-							active: activeNavKey === NAV_KEYS.ATTRIBUTES,
-							label: Liferay.Language.get('attributes'),
-							onClick: () => setActiveNavKey(NAV_KEYS.ATTRIBUTES),
-						},
-					]}
-					large={false}
-				/>
-			</>
-
-			{activeNavKey === NAV_KEYS.WORKSPACE_CONNECTION && (
-				<WorkspaceConnection />
-			)}
-
-			{activeNavKey === NAV_KEYS.PROPERTIES && <p>properties</p>}
-
-			{activeNavKey === NAV_KEYS.PEOPLE && <p>people</p>}
-
-			{activeNavKey === NAV_KEYS.ATTRIBUTES && <p>attributes</p>}
-		</div>
+				<ClayLayout.Col size={9}>
+					{PAGES.map(
+						({Component, key}) =>
+							activePage === key && <Component />
+					)}
+				</ClayLayout.Col>
+			</ClayLayout.Row>
+		</ClayLayout.ContainerFluid>
 	);
 };
 

@@ -52,22 +52,6 @@ public class DeleteDocumentRequestExecutorImpl
 		return new DeleteDocumentResponse(restStatus.getStatus());
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setBulkableDocumentRequestTranslator(
-		ElasticsearchBulkableDocumentRequestTranslator
-			elasticsearchBulkableDocumentRequestTranslator) {
-
-		_elasticsearchBulkableDocumentRequestTranslator =
-			elasticsearchBulkableDocumentRequestTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private DeleteResponse _getDeleteResponse(
 		DeleteRequest deleteRequest,
 		DeleteDocumentRequest deleteDocumentRequest) {
@@ -86,8 +70,11 @@ public class DeleteDocumentRequestExecutorImpl
 		}
 	}
 
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private ElasticsearchBulkableDocumentRequestTranslator
 		_elasticsearchBulkableDocumentRequestTranslator;
+
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

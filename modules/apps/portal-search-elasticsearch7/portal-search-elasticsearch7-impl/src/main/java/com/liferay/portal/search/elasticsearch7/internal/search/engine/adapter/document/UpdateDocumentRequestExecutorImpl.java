@@ -52,22 +52,6 @@ public class UpdateDocumentRequestExecutorImpl
 		return new UpdateDocumentResponse(restStatus.getStatus());
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setBulkableDocumentRequestTranslator(
-		ElasticsearchBulkableDocumentRequestTranslator
-			elasticsearchBulkableDocumentRequestTranslator) {
-
-		_elasticsearchBulkableDocumentRequestTranslator =
-			elasticsearchBulkableDocumentRequestTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private UpdateResponse _getUpdateResponse(
 		UpdateRequest updateRequest,
 		UpdateDocumentRequest updateDocumentRequest) {
@@ -86,8 +70,11 @@ public class UpdateDocumentRequestExecutorImpl
 		}
 	}
 
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private ElasticsearchBulkableDocumentRequestTranslator
 		_elasticsearchBulkableDocumentRequestTranslator;
+
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

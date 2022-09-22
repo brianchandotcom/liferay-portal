@@ -53,22 +53,6 @@ public class IndexDocumentRequestExecutorImpl
 			restStatus.getStatus(), indexResponse.getId());
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setBulkableDocumentRequestTranslator(
-		ElasticsearchBulkableDocumentRequestTranslator
-			elasticsearchBulkableDocumentRequestTranslator) {
-
-		_elasticsearchBulkableDocumentRequestTranslator =
-			elasticsearchBulkableDocumentRequestTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private IndexResponse _getIndexResponse(
 		IndexRequest indexRequest, IndexDocumentRequest indexDocumentRequest) {
 
@@ -86,8 +70,11 @@ public class IndexDocumentRequestExecutorImpl
 		}
 	}
 
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private ElasticsearchBulkableDocumentRequestTranslator
 		_elasticsearchBulkableDocumentRequestTranslator;
+
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

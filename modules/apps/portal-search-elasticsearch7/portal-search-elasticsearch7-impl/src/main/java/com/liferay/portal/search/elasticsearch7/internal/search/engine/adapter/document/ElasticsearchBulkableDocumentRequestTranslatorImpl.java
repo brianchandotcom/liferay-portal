@@ -127,13 +127,6 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		return updateRequest;
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchDocumentFactory(
-		ElasticsearchDocumentFactory elasticsearchDocumentFactory) {
-
-		_elasticsearchDocumentFactory = elasticsearchDocumentFactory;
-	}
-
 	private String _getType(String type) {
 		if (type != null) {
 			return type;
@@ -256,7 +249,9 @@ public class ElasticsearchBulkableDocumentRequestTranslatorImpl
 		}
 	}
 
+	@Reference
 	private ElasticsearchDocumentFactory _elasticsearchDocumentFactory;
+
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 
 }

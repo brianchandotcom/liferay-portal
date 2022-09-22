@@ -167,22 +167,6 @@ public class BulkDocumentRequestExecutorImpl
 		return bulkRequest;
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
-	protected void setElasticsearchBulkableDocumentRequestTranslator(
-		ElasticsearchBulkableDocumentRequestTranslator
-			elasticsearchBulkableDocumentRequestTranslator) {
-
-		_elasticsearchBulkableDocumentRequestTranslator =
-			elasticsearchBulkableDocumentRequestTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private BulkResponse _getBulkResponse(
 		BulkRequest bulkRequest, BulkDocumentRequest bulkDocumentRequest) {
 
@@ -229,9 +213,13 @@ public class BulkDocumentRequestExecutorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		BulkDocumentRequestExecutorImpl.class);
 
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private ElasticsearchBulkableDocumentRequestTranslator
 		_elasticsearchBulkableDocumentRequestTranslator;
+
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
+
 	private volatile int _numberOfTries;
 	private volatile int _waitInSeconds;
 

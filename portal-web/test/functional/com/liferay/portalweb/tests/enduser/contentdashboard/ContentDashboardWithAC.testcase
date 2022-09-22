@@ -84,7 +84,7 @@ definition {
 		}
 
 		task ("Exit the Content Performance panel and assert is not visible anymore") {
-			Click(locator1 = "Sidebar#CLOSE");
+			Click.javaScriptClick(locator1 = "Sidebar#CLOSE");
 
 			AssertNotVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
 		}

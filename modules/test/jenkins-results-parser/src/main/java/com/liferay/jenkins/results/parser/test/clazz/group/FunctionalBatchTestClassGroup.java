@@ -332,6 +332,10 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			return null;
 		}
 
+		if (JenkinsResultsParserUtil.isPoshiFile(file)) {
+			return "";
+		}
+
 		File canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(file);
 
 		File parentFile = canonicalFile.getParentFile();

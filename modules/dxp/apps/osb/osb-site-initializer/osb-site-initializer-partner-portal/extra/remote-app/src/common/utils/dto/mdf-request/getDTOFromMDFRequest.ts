@@ -11,6 +11,7 @@
 
 import MDFRequestDTO from '../../../interfaces/dto/mdfRequestDTO';
 import MDFRequest from '../../../interfaces/mdfRequest';
+import {Liferay} from '../../../services/liferay';
 import getSummaryActivities from '../../getSummaryActivities';
 
 export function getDTOFromMDFRequest(mdfRequest: MDFRequest): MDFRequestDTO {
@@ -23,6 +24,7 @@ export function getDTOFromMDFRequest(mdfRequest: MDFRequest): MDFRequestDTO {
 		),
 		overallCampaign: mdfRequest.overallCampaign,
 		r_accountToMDFRequests_accountEntryId: mdfRequest.company.id,
+		r_userToMDFRequests_userId: +Liferay.ThemeDisplay.getUserId(),
 		requestStatus: mdfRequest.requestStatus,
 		targetAudienceRoles: mdfRequest.targetAudienceRoles.join(', '),
 		targetMarkets: mdfRequest.targetMarkets.join(', '),

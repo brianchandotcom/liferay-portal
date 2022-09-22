@@ -14,8 +14,6 @@
 
 package com.liferay.object.system;
 
-import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.framework.FrameworkUtil;

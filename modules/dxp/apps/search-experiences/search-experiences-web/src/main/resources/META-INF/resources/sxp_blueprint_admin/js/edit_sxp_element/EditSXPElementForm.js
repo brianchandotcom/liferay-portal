@@ -211,10 +211,18 @@ function EditSXPElementForm({
 
 	const [variables, setVariables] = useState(filteredCategories);
 
-	useShouldConfirmBeforeNavigate(
-		initialElementJSONEditorValueString !==
-			getCodeMirrorValue(elementJSONEditorRef) && !isSubmitting
-	);
+	const shouldConfirmBeforeNavigate = useCallback(() => {
+		return (
+			initialElementJSONEditorValueString !==
+				getCodeMirrorValue(elementJSONEditorRef) && !isSubmitting
+		);
+	}, [
+		initialElementJSONEditorValueString,
+		elementJSONEditorRef,
+		isSubmitting,
+	]);
+
+	useShouldConfirmBeforeNavigate(shouldConfirmBeforeNavigate);
 
 	/**
 	 * Workaround to force a re-render so `elementJSONEditorRef` will be

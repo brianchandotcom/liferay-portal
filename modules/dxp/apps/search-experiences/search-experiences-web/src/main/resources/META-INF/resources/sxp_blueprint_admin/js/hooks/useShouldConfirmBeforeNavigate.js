@@ -19,7 +19,7 @@ import {useEffect} from 'react';
  * an SPA lifecycle event used to detect when the user cancels or navigates to
  * a new page within Liferay.
  *
- * @param {boolean} requiresConfirmation True if the user should be prompted
+ * @param {boolean|Function} requiresConfirmation True if the user should be prompted
  * @param {string} message Message to display in prompt
  */
 export default function useShouldConfirmBeforeNavigate(
@@ -29,20 +29,30 @@ export default function useShouldConfirmBeforeNavigate(
 	)
 ) {
 	useEffect(() => {
+		const getRequiresConfirmationValue = () => {
+			if (typeof requiresConfirmation === 'function') {
+				return requiresConfirmation();
+			}
+			else {
+				return requiresConfirmation;
+			}
+		};
 
 		// The beforeunload event occurs when user reloads or closes the window. The
 		// confirmation is specific to the browser. Using preventDefault() will
 		// signal the browser to show the default confirmation.
 
 		const handleBeforeUnload = (event) => {
-			event.preventDefault();
+			if (getRequiresConfirmationValue()) {
+				event.preventDefault();
 
-			// Setting returnValue is required for activation in certain browsers like Chrome.
-			// Its string message was once used to customize the confirmation message, but now
-			// for security purposes, each browser is in control of its own message.
-			// https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload
+				// Setting returnValue is required for activation in certain browsers like Chrome.
+				// Its string message was once used to customize the confirmation message, but now
+				// for security purposes, each browser is in control of its own message.
+				// https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload
 
-			event.returnValue = '';
+				event.returnValue = '';
+			}
 		};
 
 		// The beforeNavigate event occurs when the user navigates to a new page on
@@ -51,24 +61,24 @@ export default function useShouldConfirmBeforeNavigate(
 		// https://help.liferay.com/hc/en-us/articles/360030709511-Available-SPA-Lifecycle-Events
 
 		const handleBeforeNavigate = (event) => {
-			openConfirmModal({
-				message,
-				onConfirm: (isConfirmed) => {
-					if (!isConfirmed) {
-						event.originalEvent.preventDefault();
-					}
-				},
-			});
+			if (getRequiresConfirmationValue()) {
+				openConfirmModal({
+					message,
+					onConfirm: (isConfirmed) => {
+						if (!isConfirmed) {
+							event.originalEvent.preventDefault();
+						}
+					},
+				});
+			}
 		};
 
-		if (requiresConfirmation) {
-			window.addEventListener('beforeunload', handleBeforeUnload);
-			Liferay.on('beforeNavigate', handleBeforeNavigate);
+		window.addEventListener('beforeunload', handleBeforeUnload);
+		Liferay.on('beforeNavigate', handleBeforeNavigate);
 
-			return () => {
-				window.removeEventListener('beforeunload', handleBeforeUnload);
-				Liferay.detach('beforeNavigate', handleBeforeNavigate);
-			};
-		}
+		return () => {
+			window.removeEventListener('beforeunload', handleBeforeUnload);
+			Liferay.detach('beforeNavigate', handleBeforeNavigate);
+		};
 	}, [requiresConfirmation, message]);
 }

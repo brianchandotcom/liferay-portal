@@ -78,6 +78,11 @@ public class FolderHorizontalCard implements HorizontalCard {
 	}
 
 	@Override
+	public String getHref() {
+		return _repositoryBrowserTagDisplayContext.getFolderURL(_folder);
+	}
+
+	@Override
 	public String getInputName() {
 		try {
 			SearchContainer<Object> searchContainer =

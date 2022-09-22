@@ -14,11 +14,11 @@
 
 package com.liferay.document.library.taglib.servlet.taglib;
 
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.taglib.internal.display.context.RepositoryBrowserTagDisplayContext;
 import com.liferay.document.library.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
@@ -72,10 +72,14 @@ public class RepositoryBrowserTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			RepositoryBrowserTagDisplayContext.class.getName(),
 			new RepositoryBrowserTagDisplayContext(
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, httpServletRequest,
+				_getFolderId(), httpServletRequest,
 				PortalUtil.getLiferayPortletRequest(portletRequest),
 				PortalUtil.getLiferayPortletResponse(portletResponse),
 				portletRequest, _getRepositoryId()));
+	}
+
+	private long _getFolderId() {
+		return ParamUtil.getLong(getRequest(), "folderId");
 	}
 
 	private long _getRepositoryId() {

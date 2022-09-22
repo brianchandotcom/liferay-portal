@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -106,6 +107,15 @@ public class RepositoryBrowserTagDisplayContext {
 	public String getDeleteFolderURL(Folder folder) {
 		return HttpComponentsUtil.addParameter(
 			_getRepositoryBrowserURL(), "folderId", folder.getFolderId());
+	}
+
+	public String getFolderURL(Folder folder) {
+		return PortletURLBuilder.create(
+			PortletURLUtil.getCurrent(
+				_liferayPortletRequest, _liferayPortletResponse)
+		).setParameter(
+			"folderId", folder.getFolderId()
+		).buildString();
 	}
 
 	public HorizontalCard getHorizontalCard(RepositoryEntry repositoryEntry)

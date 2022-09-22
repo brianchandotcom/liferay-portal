@@ -11,9 +11,3 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-export const CONTAINER_DISPLAY_OPTIONS = {
-	block: 'block',
-	flexColumn: 'flex-column',
-	flexRow: 'flex-row',
-};

@@ -16,8 +16,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {SelectField} from '../../../../../../app/components/fragment-configuration-fields/SelectField';
-import {CONTAINER_DISPLAY_OPTIONS} from '../../../../../../app/config/constants/containerDisplayOptions';
 import {CONTAINER_WIDTH_TYPES} from '../../../../../../app/config/constants/containerWidthTypes';
+import {CONTENT_DISPLAY_OPTIONS} from '../../../../../../app/config/constants/contentDisplayOptions';
 import {
 	useDispatch,
 	useSelector,
@@ -30,18 +30,18 @@ const ALIGN_ITEMS_STRETCH = 'align-items-stretch';
 const FLEX_WRAP_NOWRAP = 'flex-nowrap';
 const JUSTIFY_CONTENT_START = 'justify-content-start';
 
-const CONTENT_DISPLAY_OPTIONS = [
+const DISPLAY_OPTIONS = [
 	{
 		label: Liferay.Language.get('block'),
-		value: CONTAINER_DISPLAY_OPTIONS.block,
+		value: CONTENT_DISPLAY_OPTIONS.block,
 	},
 	{
 		label: Liferay.Language.get('flex-row'),
-		value: CONTAINER_DISPLAY_OPTIONS.flexRow,
+		value: CONTENT_DISPLAY_OPTIONS.flexRow,
 	},
 	{
 		label: Liferay.Language.get('flex-column'),
-		value: CONTAINER_DISPLAY_OPTIONS.flexColumn,
+		value: CONTENT_DISPLAY_OPTIONS.flexColumn,
 	},
 ];
 
@@ -122,8 +122,8 @@ export default function ContainerDisplayOptions({item}) {
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const flexOptionsVisible =
-		item.config.contentDisplay === CONTAINER_DISPLAY_OPTIONS.flexColumn ||
-		item.config.contentDisplay === CONTAINER_DISPLAY_OPTIONS.flexRow;
+		item.config.contentDisplay === CONTENT_DISPLAY_OPTIONS.flexColumn ||
+		item.config.contentDisplay === CONTENT_DISPLAY_OPTIONS.flexRow;
 
 	return (
 		<>
@@ -132,12 +132,12 @@ export default function ContainerDisplayOptions({item}) {
 					label: Liferay.Language.get('content-display'),
 					name: 'contentDisplay',
 					typeOptions: {
-						validValues: CONTENT_DISPLAY_OPTIONS,
+						validValues: DISPLAY_OPTIONS,
 					},
 				}}
 				onValueSelect={(name, value) => {
 					const itemConfig =
-						value === CONTAINER_DISPLAY_OPTIONS.block
+						value === CONTENT_DISPLAY_OPTIONS.block
 							? {
 									align: '',
 									flexWrap: '',

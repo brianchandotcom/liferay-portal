@@ -18,8 +18,8 @@ import React, {useEffect, useState} from 'react';
 
 import {useId} from '../../../core/hooks/useId';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
-import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplayOptions';
 import {CONTAINER_WIDTH_TYPES} from '../../config/constants/containerWidthTypes';
+import {CONTENT_DISPLAY_OPTIONS} from '../../config/constants/contentDisplayOptions';
 import {useGetFieldValue} from '../../contexts/CollectionItemContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
@@ -120,10 +120,9 @@ const Container = React.memo(
 							widthType === CONTAINER_WIDTH_TYPES.fixed,
 						'd-flex flex-column':
 							contentDisplay ===
-							CONTAINER_DISPLAY_OPTIONS.flexColumn,
+							CONTENT_DISPLAY_OPTIONS.flexColumn,
 						'd-flex flex-row':
-							contentDisplay ===
-							CONTAINER_DISPLAY_OPTIONS.flexRow,
+							contentDisplay === CONTENT_DISPLAY_OPTIONS.flexRow,
 						'empty': !item.children.length && !height,
 						[flexWrap]: Boolean(flexWrap),
 						[justify]: Boolean(justify),

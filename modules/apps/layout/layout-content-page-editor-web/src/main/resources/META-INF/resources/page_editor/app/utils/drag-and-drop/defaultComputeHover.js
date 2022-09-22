@@ -12,7 +12,7 @@
  * details.
  */
 
-import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplayOptions';
+import {CONTENT_DISPLAY_OPTIONS} from '../../config/constants/contentDisplayOptions';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {collectionIsMapped} from '../collectionIsMapped';
 import {formIsMapped} from '../formIsMapped';
@@ -326,7 +326,7 @@ function shouldBeIgnoredInElevation(item) {
 function itemIsContainerFlex(item) {
 	return (
 		item.type === LAYOUT_DATA_ITEM_TYPES.container &&
-		item.config.contentDisplay === CONTAINER_DISPLAY_OPTIONS.flexRow
+		item.config.contentDisplay === CONTENT_DISPLAY_OPTIONS.flexRow
 	);
 }
 

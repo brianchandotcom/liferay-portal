@@ -17,7 +17,7 @@ import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import {CONTAINER_DISPLAY_OPTIONS} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/containerDisplayOptions';
+import {CONTENT_DISPLAY_OPTIONS} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/contentDisplayOptions';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import updateItemConfig from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
@@ -156,7 +156,7 @@ describe('ContainerGeneralPanel', () => {
 
 	it('does not show Flex Wrap, Align and Justify selects when item is not flex container', async () => {
 		renderComponent({
-			contentDisplay: CONTAINER_DISPLAY_OPTIONS.block,
+			contentDisplay: CONTENT_DISPLAY_OPTIONS.block,
 		});
 
 		expect(screen.queryByLabelText('flex-wrap')).not.toBeInTheDocument();
@@ -168,7 +168,7 @@ describe('ContainerGeneralPanel', () => {
 
 	it('shows Flex Wrap, Align and Justify selects when item is flex container', async () => {
 		renderComponent({
-			contentDisplay: CONTAINER_DISPLAY_OPTIONS.flexRow,
+			contentDisplay: CONTENT_DISPLAY_OPTIONS.flexRow,
 		});
 
 		expect(screen.getByLabelText('flex-wrap')).toBeInTheDocument();
@@ -178,7 +178,7 @@ describe('ContainerGeneralPanel', () => {
 
 	it('sets correct default values for Flex Wrap, Align and Justify when flex is selected', async () => {
 		renderComponent({
-			contentDisplay: CONTAINER_DISPLAY_OPTIONS.flexRow,
+			contentDisplay: CONTENT_DISPLAY_OPTIONS.flexRow,
 		});
 
 		const flexWrapInput = screen.getByLabelText('flex-wrap');

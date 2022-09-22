@@ -14,7 +14,7 @@
 
 import React, {useEffect, useRef, useState} from 'react';
 
-import {CONTAINER_DISPLAY_OPTIONS} from '../config/constants/containerDisplayOptions';
+import {CONTENT_DISPLAY_OPTIONS} from '../config/constants/contentDisplayOptions';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {
@@ -255,7 +255,7 @@ export default function ShortcutManager() {
 
 				if (
 					parentItem.config.contentDisplay ===
-					CONTAINER_DISPLAY_OPTIONS.flexRow
+					CONTENT_DISPLAY_OPTIONS.flexRow
 				) {
 					return (
 						event.keyCode === ARROW_RIGHT_KEYCODE ||

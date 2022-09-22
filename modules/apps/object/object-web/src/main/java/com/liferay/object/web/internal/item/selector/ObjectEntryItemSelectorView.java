@@ -38,12 +38,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -288,30 +286,13 @@ public class ObjectEntryItemSelectorView
 					_portletRequest, _portletURL, null,
 					"no-entries-were-found");
 
+			List<ObjectEntry> objectEntries = new ArrayList<>();
+
 			try {
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-158478"))) {
+				if (Validator.isNull(
+						ParamUtil.getLong(
+							_portletRequest, "objectDefinitionId"))) {
 
-					ObjectRelatedModelsProvider objectRelatedModelsProvider =
-						_objectRelatedModelsProviderRegistry.
-							getObjectRelatedModelsProvider(
-								_objectDefinition.getClassName(),
-								ParamUtil.getString(
-									_portletRequest, "objectRelationshipType"));
-
-					List<ObjectEntry> objectEntries =
-						objectRelatedModelsProvider.getUnrelatedModels(
-							_objectDefinition.getCompanyId(),
-							ParamUtil.getLong(_portletRequest, "groupId"),
-							_objectDefinition,
-							ParamUtil.getLong(_portletRequest, "objectEntryId"),
-							ParamUtil.getLong(
-								_portletRequest, "objectRelationshipId"));
-
-					searchContainer.setResultsAndTotal(
-						() -> objectEntries, objectEntries.size());
-				}
-				else {
 					Group scopeGroup = _themeDisplay.getScopeGroup();
 
 					Page<com.liferay.object.rest.dto.v1_0.ObjectEntry>
@@ -319,18 +300,34 @@ public class ObjectEntryItemSelectorView
 							_objectEntryManager.getObjectEntries(
 								_themeDisplay.getCompanyId(), _objectDefinition,
 								scopeGroup.getGroupKey(), null,
-								_getDTOConverterContext(), _getFilterString(),
+								_getDTOConverterContext(), StringPool.BLANK,
 								null, null, null);
 
-					List<ObjectEntry> objectEntries = TransformUtil.transform(
+					objectEntries = TransformUtil.transform(
 						objectEntriesPage.getItems(),
 						objectEntry -> _toObjectEntry(
 							_objectDefinition.getObjectDefinitionId(),
 							objectEntry));
-
-					searchContainer.setResultsAndTotal(
-						() -> objectEntries, objectEntries.size());
 				}
+				else {
+					ObjectRelatedModelsProvider objectRelatedModelsProvider =
+						_objectRelatedModelsProviderRegistry.
+							getObjectRelatedModelsProvider(
+								_objectDefinition.getClassName(),
+								ParamUtil.getString(
+									_portletRequest, "objectRelationshipType"));
+
+					objectEntries =
+						objectRelatedModelsProvider.getUnrelatedModels(
+							_objectDefinition.getCompanyId(),
+							ParamUtil.getLong(_portletRequest, "groupId"),
+							_objectDefinition,
+							ParamUtil.getLong(_portletRequest, "objectEntryId"),
+							ParamUtil.getLong(
+								_portletRequest, "objectRelationshipId"));
+				}
+
+				searchContainer.setResultsAndTotal(objectEntries);
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -345,22 +342,6 @@ public class ObjectEntryItemSelectorView
 			return new DefaultDTOConverterContext(
 				false, null, null, _httpServletRequest, null,
 				_themeDisplay.getLocale(), null, _themeDisplay.getUser());
-		}
-
-		private String _getFilterString() throws PortalException {
-			long objectDefinitionId = ParamUtil.getLong(
-				_portletRequest, "objectDefinitionId");
-
-			if (objectDefinitionId == 0) {
-				return StringPool.BLANK;
-			}
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectDefinitionId);
-
-			return StringUtil.toLowerCase(objectDefinition.getShortName()) +
-				"Id eq '0'";
 		}
 
 		private ObjectEntry _toObjectEntry(

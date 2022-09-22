@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-import ClayForm from '@clayui/form';
+import ClayForm, {ClaySelect} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import getCN from 'classnames';
-import React from 'react';
+import React, {useContext} from 'react';
 
 import advancedConfigurationSchema from '../../../schemas/advanced-configuration.schema.json';
 import aggregationConfigurationSchema from '../../../schemas/aggregation-configuration.schema.json';
@@ -21,6 +21,7 @@ import parameterConfigurationSchema from '../../../schemas/parameter-configurati
 import sortConfigurationSchema from '../../../schemas/sort-configuration.schema.json';
 import CodeMirrorEditor from '../../shared/CodeMirrorEditor';
 import LearnMessage from '../../shared/LearnMessage';
+import ThemeContext from '../../shared/ThemeContext';
 
 const CONFIGURATION_SCHEMAS = {
 	advancedConfig: advancedConfigurationSchema,
@@ -35,12 +36,16 @@ function ConfigurationTab({
 	aggregationConfig,
 	errors,
 	highlightConfig,
+	indexConfig,
 	parameterConfig,
+	searchIndexes,
 	setFieldTouched,
 	setFieldValue,
 	sortConfig,
 	touched,
 }) {
+	const {featureFlagLps153813} = useContext(ThemeContext);
+
 	const _renderEditor = (configName, configValue) => (
 		<div
 			className={getCN({
@@ -173,6 +178,45 @@ function ConfigurationTab({
 
 						{_renderEditor('advancedConfig', advancedConfig)}
 					</ClayForm.Group>
+
+					{featureFlagLps153813 && (
+						<ClayForm.Group>
+							<label>
+								{Liferay.Language.get('index-configuration')}
+							</label>
+
+							<ClaySelect
+								aria-label={Liferay.Language.get(
+									'index-configuration'
+								)}
+								onChange={(event) =>
+									setFieldValue(
+										'indexConfig',
+										event.target.value
+									)
+								}
+								value={indexConfig}
+							>
+								{searchIndexes.map((index) => (
+									<ClaySelect.Option
+										key={index}
+										label={index}
+										value={index}
+									/>
+								))}
+							</ClaySelect>
+
+							<div className="sheet-text">
+								<span className="help-text">
+									{Liferay.Language.get(
+										'index-configuration-description'
+									)}
+								</span>
+
+								<LearnMessage resourceKey="index-configuration" />
+							</div>
+						</ClayForm.Group>
+					)}
 				</div>
 			</div>
 		</ClayLayout.ContainerFluid>

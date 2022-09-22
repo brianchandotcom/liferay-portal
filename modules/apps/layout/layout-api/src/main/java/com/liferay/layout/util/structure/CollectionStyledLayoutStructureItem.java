@@ -94,6 +94,10 @@ public class CollectionStyledLayoutStructureItem
 		return super.equals(object);
 	}
 
+	public String getAlign() {
+		return _align;
+	}
+
 	public JSONObject getCollectionJSONObject() {
 		return _collectionJSONObject;
 	}
@@ -102,11 +106,17 @@ public class CollectionStyledLayoutStructureItem
 		return _emptyCollectionOptions;
 	}
 
+	public String getFlexWrap() {
+		return _flexWrap;
+	}
+
 	@Override
 	public JSONObject getItemConfigJSONObject() {
 		JSONObject jsonObject = super.getItemConfigJSONObject();
 
 		jsonObject = jsonObject.put(
+			"align", _align
+		).put(
 			"collection", _collectionJSONObject
 		).put(
 			"displayAllItems", _displayAllItems
@@ -122,7 +132,11 @@ public class CollectionStyledLayoutStructureItem
 				return _emptyCollectionOptions.toJSONObject();
 			}
 		).put(
+			"flexWrap", _flexWrap
+		).put(
 			"gutters", _gutters
+		).put(
+			"justify", _justify
 		).put(
 			"listItemStyle", _listItemStyle
 		).put(
@@ -178,6 +192,10 @@ public class CollectionStyledLayoutStructureItem
 	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_COLLECTION;
+	}
+
+	public String getJustify() {
+		return _justify;
 	}
 
 	public String getListItemStyle() {
@@ -246,6 +264,10 @@ public class CollectionStyledLayoutStructureItem
 		return _showAllItems;
 	}
 
+	public void setAlign(String align) {
+		_align = align;
+	}
+
 	public void setCollectionJSONObject(JSONObject collectionJSONObject) {
 		_collectionJSONObject = collectionJSONObject;
 	}
@@ -274,8 +296,16 @@ public class CollectionStyledLayoutStructureItem
 		_emptyCollectionOptions = emptyCollectionOptions;
 	}
 
+	public void setFlexWrap(String flexWrap) {
+		_flexWrap = flexWrap;
+	}
+
 	public void setGutters(boolean gutters) {
 		_gutters = gutters;
+	}
+
+	public void setJustify(String justify) {
+		_justify = justify;
 	}
 
 	public void setListItemStyle(String listItemStyle) {
@@ -352,6 +382,10 @@ public class CollectionStyledLayoutStructureItem
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
 		super.updateItemConfig(itemConfigJSONObject);
 
+		if (itemConfigJSONObject.has("align")) {
+			setAlign(itemConfigJSONObject.getString("align"));
+		}
+
 		if (itemConfigJSONObject.has("collection")) {
 			setCollectionJSONObject(
 				itemConfigJSONObject.getJSONObject("collection"));
@@ -374,8 +408,16 @@ public class CollectionStyledLayoutStructureItem
 						"emptyCollectionOptions")));
 		}
 
+		if (itemConfigJSONObject.has("flexWrap")) {
+			setFlexWrap(itemConfigJSONObject.getString("flexWrap"));
+		}
+
 		if (itemConfigJSONObject.has("gutters")) {
 			setGutters(itemConfigJSONObject.getBoolean("gutters"));
+		}
+
+		if (itemConfigJSONObject.has("justify")) {
+			setJustify(itemConfigJSONObject.getString("justify"));
 		}
 
 		if (itemConfigJSONObject.has("showAllItems")) {
@@ -436,11 +478,14 @@ public class CollectionStyledLayoutStructureItem
 
 	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
 
+	private String _align = "";
 	private JSONObject _collectionJSONObject;
 	private boolean _displayAllItems;
 	private boolean _displayAllPages = true;
 	private EmptyCollectionOptions _emptyCollectionOptions;
+	private String _flexWrap = "";
 	private boolean _gutters = true;
+	private String _justify = "";
 	private String _listItemStyle;
 	private String _listStyle;
 	private int _numberOfColumns = 1;

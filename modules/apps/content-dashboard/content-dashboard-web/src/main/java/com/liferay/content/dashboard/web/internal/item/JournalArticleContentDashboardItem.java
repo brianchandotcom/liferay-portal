@@ -26,6 +26,7 @@ import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
@@ -36,12 +37,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
@@ -54,6 +59,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -383,7 +390,22 @@ public class JournalArticleContentDashboardItem
 
 	@Override
 	public String getViewVersionsURL(HttpServletRequest httpServletRequest) {
-		return null;
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				httpServletRequest,
+				GroupLocalServiceUtil.fetchGroup(_journalArticle.getGroupId()),
+				JournalPortletKeys.JOURNAL, 0, 0, PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/view_article_history.jsp"
+		).setBackURL(
+			themeDisplay.getURLCurrent()
+		).setParameter(
+			"articleId", _journalArticle.getArticleId()
+		).buildString();
 	}
 
 	@Override

@@ -567,18 +567,8 @@ public abstract class BaseProfile {
 		_samlBindings.remove(samlBinding);
 	}
 
-	protected void setMetadataManager(MetadataManager metadataManager) {
-		this.metadataManager = metadataManager;
-	}
-
 	protected void setSamlBindings(List<SamlBinding> samlBindings) {
 		_samlBindings = samlBindings;
-	}
-
-	protected void setSamlProviderConfigurationHelper(
-		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
-
-		this.samlProviderConfigurationHelper = samlProviderConfigurationHelper;
 	}
 
 	protected void unsetSamlBinding(SamlBinding samlBinding) {
@@ -589,9 +579,14 @@ public abstract class BaseProfile {
 	protected IdentifierGenerationStrategyFactory
 		identifierGenerationStrategyFactory;
 
+	@Reference
 	protected MetadataManager metadataManager;
+
 	protected Portal portal;
+
+	@Reference
 	protected SamlProviderConfigurationHelper samlProviderConfigurationHelper;
+
 	protected SamlSpSessionLocalService samlSpSessionLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseProfile.class);

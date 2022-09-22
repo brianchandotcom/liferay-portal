@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item;
+package com.liferay.content.dashboard.journal.internal.item;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
@@ -22,9 +22,8 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProvi
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
-import com.liferay.content.dashboard.web.internal.info.item.provider.util.InfoItemFieldValuesProviderUtil;
-import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -33,6 +32,7 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -305,9 +305,7 @@ public class JournalArticleContentDashboardItem
 
 	@Override
 	public String getDescription(Locale locale) {
-		return InfoItemFieldValuesProviderUtil.getStringValue(
-			_journalArticle, _infoItemFieldValuesProvider, "description",
-			locale);
+		return _getStringValue("description", locale);
 	}
 
 	@Override
@@ -343,7 +341,20 @@ public class JournalArticleContentDashboardItem
 		return Optional.ofNullable(
 			_group
 		).map(
-			group -> ContentDashboardGroupUtil.getGroupName(group, locale)
+			group -> {
+				try {
+					return Optional.ofNullable(
+						group.getDescriptiveName(locale)
+					).orElseGet(
+						() -> group.getName(locale)
+					);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
+
+					return group.getName(locale);
+				}
+			}
 		).orElse(
 			StringPool.BLANK
 		);
@@ -440,6 +451,20 @@ public class JournalArticleContentDashboardItem
 		List<Version> versions = getLatestVersions(locale);
 
 		return versions.get(versions.size() - 1);
+	}
+
+	private String _getStringValue(String infoFieldName, Locale locale) {
+		InfoItemFieldValues infoItemFieldValues =
+			_infoItemFieldValuesProvider.getInfoItemFieldValues(
+				_journalArticle);
+
+		return Optional.ofNullable(
+			infoItemFieldValues.getInfoFieldValue(infoFieldName)
+		).map(
+			infoFieldValue -> infoFieldValue.getValue(locale)
+		).orElse(
+			StringPool.BLANK
+		).toString();
 	}
 
 	private ContentDashboardItemAction _toContentDashboardItemAction(

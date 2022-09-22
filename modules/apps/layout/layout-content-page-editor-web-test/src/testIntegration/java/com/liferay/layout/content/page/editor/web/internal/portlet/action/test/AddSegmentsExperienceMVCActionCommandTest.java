@@ -15,8 +15,6 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.content.page.editor.web.util.SegmentsExperienceTestUtil;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
@@ -25,12 +23,11 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -40,13 +37,12 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
@@ -82,11 +78,7 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
-		_layout = LayoutTestUtil.addTypeContentPublishedLayout(
-			_group, "Test layout", WorkflowConstants.STATUS_APPROVED);
-
-		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
-			_layout.getPlid());
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
 	}
@@ -102,8 +94,6 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
-
-		_addDataContentToDefaultExperience();
 
 		JSONObject responseJSONObject = _addSegmentsExperience(
 			name, segmentsEntry.getSegmentsEntryId());
@@ -132,17 +122,6 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 			segmentsExperience.getSegmentsEntryId());
 		Assert.assertEquals(
 			segmentsExperienceId, segmentsExperience.getSegmentsExperienceId());
-
-		_checkNewSegmentExperienceContent(segmentsExperienceId);
-	}
-
-	private void _addDataContentToDefaultExperience() throws Exception {
-		SegmentsExperienceTestUtil.addDataContentToExperience(
-			"fragment_composition_with_a_button.json", _layout, 0,
-			_layoutPageTemplatesImporter);
-		SegmentsExperienceTestUtil.addDataContentToExperience(
-			"fragment_composition_with_a_card.json", _draftLayout, 0,
-			_layoutPageTemplatesImporter);
 	}
 
 	private JSONObject _addSegmentsExperience(String name, long segmentsEntryId)
@@ -154,33 +133,7 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		return ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addSegmentsExperience",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockActionRequest, new MockLiferayPortletActionResponse());
-	}
-
-	private void _checkNewSegmentExperienceContent(long newSegmentExperienceId)
-		throws Exception {
-
-		long defaultExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_draftLayout.getPlid());
-
-		SegmentsExperienceTestUtil.checkNewSegmentExperienceContent(
-			_layout, newSegmentExperienceId, defaultExperienceId);
-
-		SegmentsExperienceTestUtil.checkNewSegmentExperienceContent(
-			_draftLayout, newSegmentExperienceId, defaultExperienceId);
-	}
-
-	private MockHttpServletRequest _getMockHttpServletRequest(
-		ThemeDisplay themeDisplay) {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return mockHttpServletRequest;
+			mockActionRequest, new MockActionResponse());
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
@@ -203,16 +156,13 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
-		themeDisplay.setLayout(_draftLayout);
-		themeDisplay.setLayoutSet(_draftLayout.getLayoutSet());
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setLayoutSet(_layout.getLayoutSet());
 		themeDisplay.setLocale(LocaleUtil.getDefault());
-		themeDisplay.setLookAndFeel(
-			_draftLayout.getTheme(), _draftLayout.getColorScheme());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setPlid(_draftLayout.getPlid());
-		themeDisplay.setRealUser(TestPropsValues.getUser());
-		themeDisplay.setRequest(_getMockHttpServletRequest(themeDisplay));
+		themeDisplay.setPlid(_layout.getPlid());
+		themeDisplay.setRequest(new MockHttpServletRequest());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setServerName("localhost");
 		themeDisplay.setServerPort(8080);
@@ -227,23 +177,18 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	private Layout _draftLayout;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private Layout _layout;
 
 	@Inject
-	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject(
 		filter = "mvc.command.name=/layout_content_page_editor/add_segments_experience"
 	)
 	private MVCActionCommand _mvcActionCommand;
-
-	@Inject
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Inject
 	private SegmentsExperienceService _segmentsExperienceService;

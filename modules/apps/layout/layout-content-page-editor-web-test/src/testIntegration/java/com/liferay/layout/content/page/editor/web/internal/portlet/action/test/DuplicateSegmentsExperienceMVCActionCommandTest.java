@@ -15,8 +15,6 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.content.page.editor.web.util.SegmentsExperienceTestUtil;
-import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -25,7 +23,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -40,7 +37,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -62,8 +58,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.springframework.mock.web.MockHttpServletRequest;
-
 /**
  * @author Sarai Díaz
  */
@@ -81,11 +75,7 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_layout = LayoutTestUtil.addTypeContentPublishedLayout(
-			_group, "Test layout", WorkflowConstants.STATUS_APPROVED);
-
-		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
-			_layout.getPlid());
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
 	}
@@ -109,9 +99,6 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 					LocaleUtil.getSiteDefault(), "Experience"),
 				true, new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		_addDataContentToNewExperience(
-			segmentsExperience.getSegmentsExperienceId());
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();
@@ -143,46 +130,6 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 			segmentsExperienceJSONObject.getLong("segmentsEntryId"));
 		Assert.assertTrue(
 			segmentsExperienceJSONObject.getLong("segmentsExperienceId") > 0);
-		_checkDuplicateSegmentExperienceContent(
-			segmentsExperienceJSONObject.getLong("segmentsExperienceId"),
-			segmentsExperience.getSegmentsExperienceId());
-	}
-
-	private void _addDataContentToNewExperience(long newSegmentsExperienceId)
-		throws Exception {
-
-		SegmentsExperienceTestUtil.addDataContentToExperience(
-			"fragment_composition_with_a_button.json", _layout,
-			newSegmentsExperienceId, _layoutPageTemplatesImporter);
-		SegmentsExperienceTestUtil.addDataContentToExperience(
-			"fragment_composition_with_a_card.json", _draftLayout,
-			newSegmentsExperienceId, _layoutPageTemplatesImporter);
-	}
-
-	private void _checkDuplicateSegmentExperienceContent(
-			long duplicatedSegmentsExperienceId,
-			long sourceSegmentsExperienceId)
-		throws Exception {
-
-		SegmentsExperienceTestUtil.checkNewSegmentExperienceContent(
-			_layout, duplicatedSegmentsExperienceId,
-			sourceSegmentsExperienceId);
-
-		SegmentsExperienceTestUtil.checkNewSegmentExperienceContent(
-			_draftLayout, duplicatedSegmentsExperienceId,
-			sourceSegmentsExperienceId);
-	}
-
-	private MockHttpServletRequest _getMockHttpServletRequest(
-		ThemeDisplay themeDisplay) {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return mockHttpServletRequest;
 	}
 
 	private MockLiferayPortletActionRequest
@@ -203,14 +150,10 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(_group.getCompanyId()));
-		themeDisplay.setLayout(_draftLayout);
-		themeDisplay.setLayoutSet(_draftLayout.getLayoutSet());
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setLayoutSet(_layout.getLayoutSet());
 		themeDisplay.setLocale(LocaleUtil.US);
-		themeDisplay.setLookAndFeel(
-			_draftLayout.getTheme(), _draftLayout.getColorScheme());
-		themeDisplay.setPlid(_draftLayout.getPlid());
-		themeDisplay.setRealUser(TestPropsValues.getUser());
-		themeDisplay.setRequest(_getMockHttpServletRequest(themeDisplay));
+		themeDisplay.setPlid(_layout.getPlid());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
@@ -224,8 +167,6 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	private Layout _draftLayout;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -233,9 +174,6 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
 
 	@Inject(
 		filter = "mvc.command.name=/layout_content_page_editor/duplicate_segments_experience"

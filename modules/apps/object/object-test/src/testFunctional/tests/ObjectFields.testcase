@@ -1089,6 +1089,48 @@ definition {
 		}
 	}
 
+	@description = "LPS-135404 - Verify that it's possible to update created custom fields in a System Object"
+	@priority = "4"
+	test CanUpdateCustomFieldInSystemObject {
+		task ("Create Custom Fields (via API)") {
+			for (var systemNames : list "AccountEntry,CPDefinition,CommercePricingClass,CommerceOrder,Address,User") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Custom Text",
+					fieldName = "customText",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "${systemNames}");
+			}
+		}
+
+		task ("Go to System Objects and edit your custom fields") {
+			for (var systemNames : list "Account,Commerce Product,Commerce Product Group,Commerce Order,Postal Address,User") {
+				ObjectAdmin.openObjectAdmin();
+
+				ObjectPortlet.selectSystemObject(label = "${systemNames}");
+
+				ObjectAdmin.goToFieldsTab();
+
+				ObjectAdmin.goToFieldsDetails(label = "Custom Text");
+
+				ObjectField.typeLabel(content = "Custom Field Update");
+
+				ObjectField.assertNameDisabled();
+
+				ObjectField.assertTypeDisabled();
+
+				ObjectField.save();
+
+				WaitForSPARefresh();
+
+				ObjectAdmin.assertObjectField(
+					fieldLabel = "Custom Field Update",
+					fieldType = "Text");
+			}
+		}
+	}
+
 	@description = "LPS-148112 - Verify if on the side panel the 'Show files' path can be edited"
 	@priority = "4"
 	test CanUpdateShowFilesOptionBeforePublished {

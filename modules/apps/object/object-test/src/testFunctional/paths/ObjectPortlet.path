@@ -142,7 +142,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_SYSTEM_OBJECT</td>
-		<td>//div[(@class='table-list-title')  and (.='${key_label}')]</td>
+		<td>//div[(@class='table-list-title') and (.='${key_label}')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslatorFixture;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
@@ -76,31 +77,31 @@ public class UpdateByQueryDocumentRequestExecutorTest {
 
 		UpdateByQueryDocumentRequestExecutorImpl
 			updateByQueryDocumentRequestExecutorImpl =
-				new UpdateByQueryDocumentRequestExecutorImpl() {
-					{
-						setElasticsearchClientResolver(_elasticsearchFixture);
+				new UpdateByQueryDocumentRequestExecutorImpl();
 
-						com.liferay.portal.search.elasticsearch7.internal.
-							legacy.query.ElasticsearchQueryTranslatorFixture
-								lecacyElasticsearchQueryTranslatorFixture =
-									new com.liferay.portal.search.
-										elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslatorFixture();
+		com.liferay.portal.search.elasticsearch7.internal.legacy.query.
+			ElasticsearchQueryTranslatorFixture
+				lecacyElasticsearchQueryTranslatorFixture =
+					new com.liferay.portal.search.elasticsearch7.internal.
+						legacy.query.ElasticsearchQueryTranslatorFixture();
 
-						setLegacyQueryTranslator(
-							lecacyElasticsearchQueryTranslatorFixture.
-								getElasticsearchQueryTranslator());
+		ElasticsearchQueryTranslatorFixture
+			elasticsearchQueryTranslatorFixture =
+				new ElasticsearchQueryTranslatorFixture();
 
-						ElasticsearchQueryTranslatorFixture
-							elasticsearchQueryTranslatorFixture =
-								new ElasticsearchQueryTranslatorFixture();
-
-						setQueryTranslator(
-							elasticsearchQueryTranslatorFixture.
-								getElasticsearchQueryTranslator());
-
-						setScripts(_scripts);
-					}
-				};
+		ReflectionTestUtil.setFieldValue(
+			updateByQueryDocumentRequestExecutorImpl,
+			"_elasticsearchClientResolver", _elasticsearchFixture);
+		ReflectionTestUtil.setFieldValue(
+			updateByQueryDocumentRequestExecutorImpl, "_legacyQueryTranslator",
+			lecacyElasticsearchQueryTranslatorFixture.
+				getElasticsearchQueryTranslator());
+		ReflectionTestUtil.setFieldValue(
+			updateByQueryDocumentRequestExecutorImpl, "_queryTranslator",
+			elasticsearchQueryTranslatorFixture.
+				getElasticsearchQueryTranslator());
+		ReflectionTestUtil.setFieldValue(
+			updateByQueryDocumentRequestExecutorImpl, "_scripts", _scripts);
 
 		UpdateByQueryRequest updateByQueryRequest =
 			updateByQueryDocumentRequestExecutorImpl.createUpdateByQueryRequest(

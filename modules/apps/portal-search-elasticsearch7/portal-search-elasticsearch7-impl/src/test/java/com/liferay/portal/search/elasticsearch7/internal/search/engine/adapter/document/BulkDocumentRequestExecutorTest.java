@@ -17,9 +17,9 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.document.DefaultElasticsearchDocumentFactory;
-import com.liferay.portal.search.elasticsearch7.internal.document.ElasticsearchDocumentFactory;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -49,26 +49,25 @@ public class BulkDocumentRequestExecutorTest {
 		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
 			getClass());
 
-		ElasticsearchDocumentFactory elasticsearchDocumentFactory =
-			new DefaultElasticsearchDocumentFactory();
-
 		ElasticsearchBulkableDocumentRequestTranslator
 			elasticsearchBulkableDocumentRequestTranslator =
-				new ElasticsearchBulkableDocumentRequestTranslatorImpl() {
-					{
-						setElasticsearchDocumentFactory(
-							elasticsearchDocumentFactory);
-					}
-				};
+				new ElasticsearchBulkableDocumentRequestTranslatorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchBulkableDocumentRequestTranslator,
+			"_elasticsearchDocumentFactory",
+			new DefaultElasticsearchDocumentFactory());
 
 		_bulkDocumentRequestExecutorImpl =
-			new BulkDocumentRequestExecutorImpl() {
-				{
-					setElasticsearchBulkableDocumentRequestTranslator(
-						elasticsearchBulkableDocumentRequestTranslator);
-					setElasticsearchClientResolver(elasticsearchFixture);
-				}
-			};
+			new BulkDocumentRequestExecutorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			_bulkDocumentRequestExecutorImpl,
+			"_elasticsearchBulkableDocumentRequestTranslator",
+			elasticsearchBulkableDocumentRequestTranslator);
+		ReflectionTestUtil.setFieldValue(
+			_bulkDocumentRequestExecutorImpl, "_elasticsearchClientResolver",
+			elasticsearchFixture);
 
 		_elasticsearchFixture = elasticsearchFixture;
 

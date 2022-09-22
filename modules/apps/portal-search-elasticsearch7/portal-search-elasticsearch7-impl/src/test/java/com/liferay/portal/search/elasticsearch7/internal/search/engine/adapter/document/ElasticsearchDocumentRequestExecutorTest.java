@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
@@ -43,20 +44,25 @@ public class ElasticsearchDocumentRequestExecutorTest {
 	@Before
 	public void setUp() throws Exception {
 		_elasticsearchDocumentRequestExecutor =
-			new ElasticsearchDocumentRequestExecutor() {
-				{
-					setDeleteByQueryDocumentRequestExecutor(
-						_deleteByQueryDocumentRequestExecutor);
-					setDeleteDocumentRequestExecutor(
-						_deleteDocumentRequestExecutor);
-					setIndexDocumentRequestExecutor(
-						_indexDocumentRequestExecutor);
-					setUpdateByQueryDocumentRequestExecutor(
-						_updateByQueryDocumentRequestExecutor);
-					setUpdateDocumentRequestExecutor(
-						_updateDocumentRequestExecutor);
-				}
-			};
+			new ElasticsearchDocumentRequestExecutor();
+
+		ReflectionTestUtil.setFieldValue(
+			_elasticsearchDocumentRequestExecutor,
+			"_deleteByQueryDocumentRequestExecutor",
+			_deleteByQueryDocumentRequestExecutor);
+		ReflectionTestUtil.setFieldValue(
+			_elasticsearchDocumentRequestExecutor,
+			"_deleteDocumentRequestExecutor", _deleteDocumentRequestExecutor);
+		ReflectionTestUtil.setFieldValue(
+			_elasticsearchDocumentRequestExecutor,
+			"_indexDocumentRequestExecutor", _indexDocumentRequestExecutor);
+		ReflectionTestUtil.setFieldValue(
+			_elasticsearchDocumentRequestExecutor,
+			"_updateByQueryDocumentRequestExecutor",
+			_updateByQueryDocumentRequestExecutor);
+		ReflectionTestUtil.setFieldValue(
+			_elasticsearchDocumentRequestExecutor,
+			"_updateDocumentRequestExecutor", _updateDocumentRequestExecutor);
 	}
 
 	@Test

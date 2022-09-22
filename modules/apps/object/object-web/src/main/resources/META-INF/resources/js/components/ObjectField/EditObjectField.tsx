@@ -650,7 +650,6 @@ export default function EditObjectField({
 
 			{values.DBType !== 'Blob' && (
 				<SearchableContainer
-					disabled={disableFieldFormBase}
 					errors={errors}
 					isApproved={isApproved}
 					objectField={values}

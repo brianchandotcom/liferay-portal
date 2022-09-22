@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
@@ -671,11 +670,6 @@ public class SingleLogoutProfileImpl
 		samlPeerEndpointSubcontext.setEndpoint(singleLogoutService);
 
 		sendSamlMessage(messageContext, httpServletResponse);
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		super.portal = portal;
 	}
 
 	@Reference(unbind = "-")

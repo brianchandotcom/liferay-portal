@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -676,11 +675,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		subjectConfirmationData.setNotOnOrAfter(notOnOrAfterDateTime);
 
 		return subjectConfirmationData;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		super.portal = portal;
 	}
 
 	@Reference(

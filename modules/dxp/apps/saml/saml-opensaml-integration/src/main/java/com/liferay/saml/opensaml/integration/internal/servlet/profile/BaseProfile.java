@@ -582,6 +582,7 @@ public abstract class BaseProfile {
 	@Reference
 	protected MetadataManager metadataManager;
 
+	@Reference
 	protected Portal portal;
 
 	@Reference

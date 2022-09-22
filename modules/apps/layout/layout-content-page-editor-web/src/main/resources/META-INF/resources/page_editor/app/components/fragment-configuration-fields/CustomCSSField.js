@@ -66,7 +66,7 @@ export default function CustomCSSField({field, onValueSelect, value}) {
 										'show-more'
 									)}
 									className="ml-2"
-									symbol="info-panel-open"
+									symbol="question-circle-full"
 								/>
 							}
 						/>

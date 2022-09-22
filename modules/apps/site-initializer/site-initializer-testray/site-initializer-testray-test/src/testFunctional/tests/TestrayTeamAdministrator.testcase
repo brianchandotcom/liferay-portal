@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		TestrayManage.deleteAllTeam();
+		Testray.deleteAllProjects();
 
 		Testray.tearDownCP();
 
@@ -37,8 +37,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				description = "Teams_1 Project Description",
-				key_name = "Teams_1 Project");
+				description = "Projects_1 Project Description",
+				key_name = "Projects_1 Project");
 		}
 
 		task ("Change pagination, create Team and Assert it was created") {
@@ -62,8 +62,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				description = "Teams_2 Project Description",
-				key_name = "Teams_2 Project");
+				description = "Projects_1 Project Description",
+				key_name = "Projects_1 Project");
 		}
 
 		task ("Change pagination and create Team") {
@@ -93,8 +93,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				description = "Teams_3 Project Description",
-				key_name = "Teams_3 Project");
+				description = "Projects_1 Project Description",
+				key_name = "Projects_1 Project");
 		}
 
 		task ("Change pagination and create Team") {
@@ -124,8 +124,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				description = "Teams_2 Project Description",
-				key_name = "Teams_2 Project");
+				description = "Projects_1 Project Description",
+				key_name = "Projects_1 Project");
 		}
 
 		task ("Change pagination, create Product Version and Assert that no duplicate product version was created") {
@@ -156,8 +156,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				description = "Teams_2 Project Description",
-				key_name = "Teams_2 Project");
+				description = "Projects_1 Project Description",
+				key_name = "Projects_1 Project");
 		}
 
 		task ("Change pagination and Assert that field Name is required") {

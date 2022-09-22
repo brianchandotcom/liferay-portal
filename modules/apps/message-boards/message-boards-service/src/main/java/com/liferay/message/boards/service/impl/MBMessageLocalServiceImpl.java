@@ -869,6 +869,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				MBThread.class);
 
 			indexer.reindex(thread);
+
+			Indexer<MBMessage> mbMessageIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				MBMessage.class);
+
+			mbMessageIndexer.reindex(mbMessageLocalService.getMBMessage(thread.getRootMessageId()));
 		}
 
 		// Asset

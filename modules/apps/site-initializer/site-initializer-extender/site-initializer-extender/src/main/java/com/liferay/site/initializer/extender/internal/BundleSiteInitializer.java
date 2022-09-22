@@ -1584,11 +1584,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String json = StringUtil.read(url.openStream());
 
 				json = _replace(
-					json, "[$", "$]",
+					json, "\"[$", "$]\"",
 					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues,
-					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					taxonomyCategoryIdsStringUtilReplaceValues);
+
+				json = _replace(
+					json, "[$", "$]",
+					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues);
 
 				Group group = serviceContext.getScopeGroup();
 
@@ -1601,7 +1604,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					new String[] {
 						group.getFriendlyURL(),
 						String.valueOf(serviceContext.getScopeGroupId()),
-						group.getGroupKey()
+						group.getGroupKey(),
+						objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues.toString()
 					});
 
 				String css = _replace(

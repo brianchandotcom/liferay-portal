@@ -322,9 +322,6 @@ public class SegmentsExperimentDisplayContext {
 	private Map<String, Object> _getProps() throws Exception {
 		Locale locale = _themeDisplay.getLocale();
 
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
-
 		return HashMapBuilder.<String, Object>put(
 			"analyticsData",
 			_getAnalyticsDataJSONObject(
@@ -332,8 +329,10 @@ public class SegmentsExperimentDisplayContext {
 		).put(
 			"hideSegmentsExperimentPanelURL",
 			PortletURLBuilder.create(
-				requestBackedPortletURLFactory.createActionURL(
-					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET)
+				_portal.getControlPanelPortletURL(
+					_httpServletRequest, _themeDisplay.getScopeGroup(),
+					SegmentsPortletKeys.SEGMENTS_EXPERIMENT, 0, 0,
+					PortletRequest.ACTION_PHASE)
 			).setActionName(
 				"/segments_experiment/hide_segments_experiment_panel"
 			).setRedirect(
@@ -348,6 +347,8 @@ public class SegmentsExperimentDisplayContext {
 					return _themeDisplay.getLayoutFriendlyURL(
 						_themeDisplay.getLayout());
 				}
+			).setParameter(
+				"p_l_mode", Constants.VIEW
 			).buildString()
 		).put(
 			"historySegmentsExperiments",

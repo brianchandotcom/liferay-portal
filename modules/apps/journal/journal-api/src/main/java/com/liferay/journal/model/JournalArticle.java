@@ -102,6 +102,9 @@ public interface JournalArticle
 
 	public String getContentByLocale(String languageId);
 
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
+		getDDMFormValues();
+
 	public com.liferay.dynamic.data.mapping.model.DDMStructure
 		getDDMStructure();
 

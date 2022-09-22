@@ -429,6 +429,13 @@ public class JournalArticleWrapper
 	}
 
 	@Override
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
+		getDDMFormValues() {
+
+		return model.getDDMFormValues();
+	}
+
+	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructure
 		getDDMStructure() {
 

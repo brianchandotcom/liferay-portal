@@ -17,6 +17,7 @@ package com.liferay.message.boards.internal.search.spi.model.index.contributor;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -130,6 +131,22 @@ public class MBMessageModelIndexerWriterContributor
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);
 		}
+
+		if(mbMessage.getMessageId() == mbMessage.getRootMessageId()){
+
+			return;
+		}
+
+
+		Indexer<MBMessage> mbThreadIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBMessage.class);
+
+		try {
+			mbThreadIndexer.reindex(_mbMessageLocalService.fetchMBMessage(_mbThreadLocalService.fetchThread(mbMessage.getThreadId()).getRootMessageId()));
+		}
+		catch (SearchException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -141,5 +158,8 @@ public class MBMessageModelIndexerWriterContributor
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
 
 }

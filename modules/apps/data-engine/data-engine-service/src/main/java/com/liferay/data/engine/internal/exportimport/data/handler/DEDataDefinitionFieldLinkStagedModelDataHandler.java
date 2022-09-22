@@ -172,16 +172,16 @@ public class DEDataDefinitionFieldLinkStagedModelDataHandler
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.getDDMStructure(layoutDDMStructureId);
 
-			DDMStructureVersion structureVersion =
+			DDMStructureVersion ddmStructureVersion =
 				ddmStructure.getStructureVersion();
 
-			DDMStructureLayout structureLayout =
+			DDMStructureLayout ddmStructureLayout =
 				_ddmStructureLayoutLocalService.
 					getStructureLayoutByStructureVersionId(
-						structureVersion.getStructureVersionId());
+						ddmStructureVersion.getStructureVersionId());
 
 			importedDEDataDefinitionFieldLink.setClassPK(
-				structureLayout.getStructureLayoutId());
+				ddmStructureLayout.getStructureLayoutId());
 		}
 		else {
 			Map<Long, Long> newPrimaryKeysMap =

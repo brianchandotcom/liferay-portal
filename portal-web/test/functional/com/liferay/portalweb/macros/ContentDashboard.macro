@@ -52,13 +52,13 @@ definition {
 		if (isSet(typeName)) {
 			AssertVisible(
 				key_nodeName = "${typeName}",
-				locator1 = "Treeview#NODE_ITEM");
+				locator1 = "Treeview#NODE_ITEM_2");
 		}
 		else {
 			for (var typeName : list "${typeNameList}") {
 				AssertVisible(
 					key_nodeName = "${typeName}",
-					locator1 = "Treeview#NODE_ITEM");
+					locator1 = "Treeview#NODE_ITEM_2");
 			}
 		}
 

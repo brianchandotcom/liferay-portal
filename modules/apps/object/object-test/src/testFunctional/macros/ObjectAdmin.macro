@@ -55,22 +55,6 @@ definition {
 		}
 	}
 
-	macro addObjectActionEntryViaUI {
-		ObjectAdmin.gotoAddObjectAction();
-
-		ObjectAdmin.fillObjectAction(
-			actionActive = "${actionActive}",
-			actionName = "${actionName}",
-			active = "${active}",
-			click = "save",
-			inputValue = "${inputValue}",
-			onAction = "${chooseOption}",
-			secretAction = "${secretAction}",
-			thenAction = "${thenAction}",
-			urlAction = "${urlAction}",
-			whenAction = "${whenAction}");
-	}
-
 	macro addObjectActionViaUI {
 		ObjectAdmin.gotoAddObjectAction();
 

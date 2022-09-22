@@ -15,8 +15,6 @@
 package com.liferay.object.model.impl;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.system.SystemObjectDefinitionMetadataTrackerUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -90,11 +88,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	@Override
 	public String getRESTContextPath() {
 		if (isSystem()) {
-			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
-				SystemObjectDefinitionMetadataTrackerUtil.
-					getSystemObjectDefinitionMetadata(getName());
-
-			return "/" + systemObjectDefinitionMetadata.getRESTContextPath();
+			throw new UnsupportedOperationException();
 		}
 
 		return "/c/" +

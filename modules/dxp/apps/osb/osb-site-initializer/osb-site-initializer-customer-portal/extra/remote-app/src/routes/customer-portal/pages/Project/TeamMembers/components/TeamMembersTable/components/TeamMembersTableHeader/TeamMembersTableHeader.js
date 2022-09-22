@@ -86,7 +86,8 @@ const TeamMembersTableHeader = ({
 							<PopoverIconButton alignPosition="top" />
 
 							<p className="font-weight-bold m-0">
-								{i18n.translate('support-seats')}: &nbsp;
+								{i18n.translate('support-seats-available')}:
+								&nbsp;
 							</p>
 
 							<p
@@ -97,7 +98,7 @@ const TeamMembersTableHeader = ({
 									}
 								)}
 							>
-								{`${i18n.sub('x-of-x-available', [
+								{`${i18n.sub('x-of-x', [
 									`${
 										administratorsAvailable < 0
 											? '0'

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.dashboard.web.internal.item;
+package com.liferay.content.dashboard.document.library.internal.item;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
@@ -22,10 +22,10 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProvi
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
-import com.liferay.content.dashboard.web.internal.info.item.provider.util.InfoItemFieldValuesProviderUtil;
-import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringPool;
@@ -296,8 +296,7 @@ public class FileEntryContentDashboardItem
 
 	@Override
 	public String getDescription(Locale locale) {
-		return InfoItemFieldValuesProviderUtil.getStringValue(
-			_fileEntry, _infoItemFieldValuesProvider, "description");
+		return _getStringValue("description");
 	}
 
 	@Override
@@ -352,7 +351,20 @@ public class FileEntryContentDashboardItem
 		return Optional.ofNullable(
 			_group
 		).map(
-			group -> ContentDashboardGroupUtil.getGroupName(group, locale)
+			group -> {
+				try {
+					return Optional.ofNullable(
+						group.getDescriptiveName(locale)
+					).orElseGet(
+						() -> group.getName(locale)
+					);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
+
+					return group.getName(locale);
+				}
+			}
 		).orElse(
 			StringPool.BLANK
 		);
@@ -431,8 +443,7 @@ public class FileEntryContentDashboardItem
 	}
 
 	private String _getFileName() {
-		return InfoItemFieldValuesProviderUtil.getStringValue(
-			_fileEntry, _infoItemFieldValuesProvider, "fileName");
+		return _getStringValue("fileName");
 	}
 
 	private Version _getLastVersion(Locale locale) {
@@ -476,6 +487,19 @@ public class FileEntryContentDashboardItem
 
 	private String _getSize(Locale locale) {
 		return LanguageUtil.formatStorageSize(_fileEntry.getSize(), locale);
+	}
+
+	private String _getStringValue(String infoFieldName) {
+		InfoItemFieldValues infoItemFieldValues =
+			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
+
+		return Optional.ofNullable(
+			infoItemFieldValues.getInfoFieldValue(infoFieldName)
+		).map(
+			InfoFieldValue::getValue
+		).orElse(
+			StringPool.BLANK
+		).toString();
 	}
 
 	private URL _getWebDAVURL() {

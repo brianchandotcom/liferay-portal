@@ -17,9 +17,9 @@ definition {
 			User.firstLoginPG();
 		}
 
-		/*task ("Create a new Customer Portal Site") {
+		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
-		}*/
+		}
 	}
 
 	tearDown {
@@ -61,7 +61,7 @@ definition {
 		}
 
 		task ("Then the number of items in the table are still visible even when only one page is available") {
-            AssertTextEquals(
+			AssertTextEquals(
 				locator1 = "Pagination#RESULTS",
 				value1 = "Showing 1 to 33 of 33");
 		}
@@ -93,7 +93,7 @@ definition {
 		}
 
 		task ("Then the controls for page navigation will be removed to reflect that only one page is available") {
-            AssertElementNotPresent(locator1 = "CP2ActivationKeys#PAGINATION_CONTROLS");
+			AssertElementNotPresent(locator1 = "CP2ActivationKeys#PAGINATION_CONTROLS");
 		}
 	}
 

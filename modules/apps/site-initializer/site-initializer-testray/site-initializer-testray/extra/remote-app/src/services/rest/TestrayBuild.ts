@@ -16,7 +16,7 @@ import i18n from '../../i18n';
 import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/Stack/StackList';
 import yupSchema from '../../schema/yup';
 import {TEST_STATUS} from '../../util/constants';
-import {searchUtil} from '../../util/search';
+import {SearchBuilder, searchUtil} from '../../util/search';
 import Rest from './Rest';
 import {testrayCaseResultRest} from './TestrayCaseResult';
 import {testrayFactorRest} from './TestrayFactor';
@@ -155,14 +155,36 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 		return !!buildResponse?.totalCount;
 	}
 
-	protected async beforeCreate(build: Build) {
-		const response = await this.fetcher(
-			`/builds?filter=${searchUtil.eq('name', build.name)}`
+	protected async validate(build: Build, id?: number) {
+		const searchBuilder = new SearchBuilder();
+
+		if (id) {
+			searchBuilder.ne('id', id).and();
+		}
+
+		const filters = searchBuilder
+			.eq('name', build.name)
+			.and()
+			.eq('projectId', build.projectId)
+			.and()
+			.eq('routineId', build.routineId)
+			.build();
+
+		const response = await this.fetcher<APIResponse<TestrayBuild>>(
+			`/builds?filter=${filters}`
 		);
 
-		if (response?.items.length) {
+		if (response?.totalCount) {
 			throw new Error(i18n.sub('the-x-name-already-exists', 'build'));
 		}
+	}
+
+	protected async beforeCreate(build: Build): Promise<void> {
+		await this.validate(build);
+	}
+
+	protected async beforeUpdate(id: number, build: Build): Promise<void> {
+		await this.validate(build, id);
 	}
 
 	public async getCurrentCaseIds(buildId: string | number) {

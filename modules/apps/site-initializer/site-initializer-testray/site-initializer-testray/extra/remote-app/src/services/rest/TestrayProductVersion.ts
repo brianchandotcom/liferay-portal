@@ -15,7 +15,6 @@
 import i18n from '../../i18n';
 import yupSchema from '../../schema/yup';
 import {SearchBuilder} from '../../util/search';
-import fetcher from '../fetcher';
 import Rest from './Rest';
 import {APIResponse, TestrayProductVersion} from './types';
 
@@ -57,7 +56,7 @@ class TestrayProductVersionImpl extends Rest<
 			.eq('projectId', productVersion.projectId as string)
 			.build();
 
-		const response = await fetcher<APIResponse<TestrayProductVersion>>(
+		const response = await this.fetcher<APIResponse<TestrayProductVersion>>(
 			`/productversions?filter=${filter}`
 		);
 

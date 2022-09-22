@@ -70,8 +70,10 @@ const yupSchema = {
 		factorStacks: yup.mixed(),
 		gitHash: yup.string(),
 		id: yup.string(),
-		name: yup.string().required(),
-		productVersionId: yup.string().required(),
+		name: yup.string().required(i18n.sub('x-is-a-required-field', 'name')),
+		productVersionId: yup
+			.string()
+			.required(i18n.sub('x-is-a-required-field', 'product-version')),
 		projectId: yup.number(),
 		promoted: yup.boolean(),
 		routineId: yup.string().required(),

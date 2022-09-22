@@ -680,6 +680,14 @@ definition {
 		MenuItem.click(menuItem = "View");
 	}
 
+	macro viewCPObjectCustomInfoByAccountName {
+		Click(
+			key_accountName = "${accountName}",
+			locator1 = "CustomerPortalSite#KORONEIKI_ACCOUNT_ELLIPSIS_BUTTON");
+
+		MenuItem.click(menuItem = "View");
+	}
+
 	macro viewCPObjectInfo {
 		Click(
 			key_text = "",

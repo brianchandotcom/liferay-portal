@@ -17,18 +17,16 @@ package com.liferay.object.rest.internal.openapi.v1_0;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
+import com.liferay.object.rest.internal.vulcan.openapi.contributor.ObjectEntryOpenAPIContributor;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.openapi.DTOProperty;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
@@ -37,13 +35,8 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.PathItem;
-import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.media.Schema;
-import io.swagger.v3.oas.models.parameters.Parameter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -139,10 +132,10 @@ public class ObjectEntryOpenAPIResourceImpl
 		_objectDefinition = _objectDefinitionLocalService.getObjectDefinition(
 			objectDefinitionId);
 
-		Map<ObjectRelationship, ObjectDefinition> relatedObjectDefinitionsMap =
-			_getRelatedObjectDefinitionsMap();
-
-		Response response = _openAPIResource.getOpenAPI(
+		return _openAPIResource.getOpenAPI(
+			new ObjectEntryOpenAPIContributor(
+				_objectDefinition, _objectDefinitionLocalService,
+				_objectRelationshipLocalService),
 			_getOpenAPISchemaFilter(_objectDefinition.getRESTContextPath()),
 			new HashSet<Class<?>>() {
 				{
@@ -151,118 +144,6 @@ public class ObjectEntryOpenAPIResourceImpl
 				}
 			},
 			type, uriInfo);
-
-		OpenAPI openAPI = (OpenAPI)response.getEntity();
-
-		Paths paths = openAPI.getPaths();
-
-		for (String key : new ArrayList<>(paths.keySet())) {
-			if (!key.contains("objectRelationshipName")) {
-				continue;
-			}
-
-			for (Map.Entry<ObjectRelationship, ObjectDefinition> entry :
-					relatedObjectDefinitionsMap.entrySet()) {
-
-				ObjectRelationship objectRelationship = entry.getKey();
-				ObjectDefinition relatedObjectDefinition = entry.getValue();
-
-				paths.addPathItem(
-					StringUtil.replace(
-						key,
-						new String[] {
-							"currentObjectEntry", "{objectRelationshipName}",
-							"relatedObjectEntry"
-						},
-						new String[] {
-							StringUtil.lowerCaseFirstLetter(
-								_objectDefinition.getShortName()),
-							objectRelationship.getName(),
-							StringUtil.lowerCaseFirstLetter(
-								relatedObjectDefinition.getShortName())
-						}),
-					_createPathItem(
-						objectRelationship, paths.get(key),
-						relatedObjectDefinition));
-
-				openAPI.getComponents(
-				).getSchemas(
-				).get(
-					_objectDefinition.getShortName()
-				).getProperties(
-				).put(
-					objectRelationship.getName(),
-					new Schema<Object>() {
-						{
-							setDescription(
-								StringBundler.concat(
-									"Information about the relationship ",
-									objectRelationship.getName(),
-									" can be embedded with \"nestedFields\"."));
-						}
-					}
-				);
-			}
-
-			paths.remove(key);
-		}
-
-		return response;
-	}
-
-	private Operation _createOperation(
-		String httpMethod, ObjectRelationship objectRelationship,
-		Operation operation, ObjectDefinition relatedObjectDefinition) {
-
-		return new Operation() {
-			{
-				operationId(
-					StringBundler.concat(
-						httpMethod, _objectDefinition.getShortName(),
-						StringUtil.upperCaseFirstLetter(
-							objectRelationship.getName()),
-						relatedObjectDefinition.getShortName()));
-				parameters(_getParameters(operation, relatedObjectDefinition));
-				responses(operation.getResponses());
-				tags(operation.getTags());
-			}
-		};
-	}
-
-	private PathItem _createPathItem(
-		ObjectRelationship objectRelationship, PathItem pathItem,
-		ObjectDefinition relatedObjectDefinition) {
-
-		Map<PathItem.HttpMethod, Operation> operations =
-			pathItem.readOperationsMap();
-
-		Operation operation = operations.get(PathItem.HttpMethod.GET);
-
-		if (operation != null) {
-			return new PathItem() {
-				{
-					get(
-						_createOperation(
-							"get", objectRelationship, pathItem.getGet(),
-							relatedObjectDefinition));
-				}
-			};
-		}
-
-		operation = operations.get(PathItem.HttpMethod.PUT);
-
-		if (operation != null) {
-			return new PathItem() {
-				{
-					put(
-						_createOperation(
-							"put", objectRelationship, pathItem.getPut(),
-							relatedObjectDefinition));
-				}
-			};
-		}
-
-		return new PathItem();
 	}
 
 	private DTOProperty _getDTOProperty(ObjectField objectField) {
@@ -341,69 +222,6 @@ public class ObjectEntryOpenAPIResourceImpl
 			).build());
 
 		return openAPISchemaFilter;
-	}
-
-	private List<Parameter> _getParameters(
-		Operation operation, ObjectDefinition relatedObjectDefinition) {
-
-		List<Parameter> parameters = new ArrayList<>();
-
-		for (Parameter parameter : operation.getParameters()) {
-			String parameterName = parameter.getName();
-
-			if (Objects.equals(parameterName, "objectRelationshipName")) {
-				continue;
-			}
-
-			if (Objects.equals(parameterName, "currentObjectEntryId")) {
-				parameterName = StringUtil.replace(
-					parameterName, "currentObjectEntry",
-					StringUtil.lowerCaseFirstLetter(
-						_objectDefinition.getShortName()));
-			}
-			else if (Objects.equals(parameterName, "relatedObjectEntryId")) {
-				parameterName = StringUtil.replace(
-					parameterName, "relatedObjectEntry",
-					StringUtil.lowerCaseFirstLetter(
-						relatedObjectDefinition.getShortName()));
-			}
-
-			String finalParameterName = parameterName;
-
-			parameters.add(
-				new Parameter() {
-					{
-						in(parameter.getIn());
-						name(finalParameterName);
-						required(parameter.getRequired());
-						schema(parameter.getSchema());
-					}
-				});
-		}
-
-		return parameters;
-	}
-
-	private Map<ObjectRelationship, ObjectDefinition>
-		_getRelatedObjectDefinitionsMap() {
-
-		Map<ObjectRelationship, ObjectDefinition> relatedObjectDefinitionsMap =
-			new HashMap<>();
-
-		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipLocalService.getObjectRelationships(
-				_objectDefinition.getObjectDefinitionId());
-
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					objectRelationship.getObjectDefinitionId2());
-
-			relatedObjectDefinitionsMap.put(
-				objectRelationship, objectDefinition);
-		}
-
-		return relatedObjectDefinitionsMap;
 	}
 
 	private List<String> _getRequiredPropertySchemaNames(Schema schema) {

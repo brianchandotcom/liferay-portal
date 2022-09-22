@@ -102,22 +102,10 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 
-		SegmentsExperienceTestUtil.addSegmentsExperienceData(
-			"fragment_composition_with_a_card.json", _draftLayout,
-			_layoutPageTemplatesImporter, SegmentsEntryConstants.ID_DEFAULT);
+		_addDefaultSegmentsExperienceData();
 
-		SegmentsExperienceTestUtil.addSegmentsExperienceData(
-			"fragment_composition_with_a_button.json", _layout,
-			_layoutPageTemplatesImporter, SegmentsEntryConstants.ID_DEFAULT);
-
-		MockLiferayPortletActionRequest mockActionRequest =
-			_getMockLiferayPortletActionRequest(
-				name, segmentsEntry.getSegmentsEntryId());
-
-		JSONObject responseJSONObject = ReflectionTestUtil.invoke(
-			_mvcActionCommand, "addSegmentsExperience",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockActionRequest, new MockLiferayPortletActionResponse());
+		JSONObject responseJSONObject = _addSegmentsExperience(
+			name, segmentsEntry.getSegmentsEntryId());
 
 		JSONObject segmentsExperienceJSONObject =
 			responseJSONObject.getJSONObject("segmentsExperience");
@@ -144,15 +132,41 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		Assert.assertEquals(
 			segmentsExperienceId, segmentsExperience.getSegmentsExperienceId());
 
+		_checkSegmentsExperiences(segmentsExperienceId);
+	}
+
+	private void _addDefaultSegmentsExperienceData() throws Exception {
+		SegmentsExperienceTestUtil.addSegmentsExperienceData(
+			"fragment_composition_with_a_button.json", _layout,
+			_layoutPageTemplatesImporter, SegmentsEntryConstants.ID_DEFAULT);
+
+		SegmentsExperienceTestUtil.addSegmentsExperienceData(
+			"fragment_composition_with_a_card.json", _draftLayout,
+			_layoutPageTemplatesImporter, SegmentsEntryConstants.ID_DEFAULT);
+	}
+
+	private JSONObject _addSegmentsExperience(String name, long segmentsEntryId)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockActionRequest =
+			_getMockLiferayPortletActionRequest(name, segmentsEntryId);
+
+		return ReflectionTestUtil.invoke(
+			_mvcActionCommand, "addSegmentsExperience",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			mockActionRequest, new MockLiferayPortletActionResponse());
+	}
+
+	private void _checkSegmentsExperiences(long segmentsExperienceId) {
 		long defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_draftLayout.getPlid());
 
 		SegmentsExperienceTestUtil.checkSegmentsExperiences(
-			_draftLayout, defaultSegmentsExperienceId, segmentsExperienceId);
+			_layout, defaultSegmentsExperienceId, segmentsExperienceId);
 
 		SegmentsExperienceTestUtil.checkSegmentsExperiences(
-			_layout, defaultSegmentsExperienceId, segmentsExperienceId);
+			_draftLayout, defaultSegmentsExperienceId, segmentsExperienceId);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(

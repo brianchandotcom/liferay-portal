@@ -107,14 +107,7 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 				true, new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		SegmentsExperienceTestUtil.addSegmentsExperienceData(
-			"fragment_composition_with_a_card.json", _draftLayout,
-			_layoutPageTemplatesImporter,
-			segmentsExperience.getSegmentsExperienceId());
-
-		SegmentsExperienceTestUtil.addSegmentsExperienceData(
-			"fragment_composition_with_a_button.json", _layout,
-			_layoutPageTemplatesImporter,
+		_addSegmentsExperienceData(
 			segmentsExperience.getSegmentsExperienceId());
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -148,13 +141,32 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 		Assert.assertTrue(
 			segmentsExperienceJSONObject.getLong("segmentsExperienceId") > 0);
 
-		SegmentsExperienceTestUtil.checkSegmentsExperiences(
-			_layout, segmentsExperience.getSegmentsExperienceId(),
+		_checkSegmentsExperiences(
+			segmentsExperience.getSegmentsExperienceId(),
 			segmentsExperienceJSONObject.getLong("segmentsExperienceId"));
+	}
+
+	private void _addSegmentsExperienceData(long segmentsExperienceId)
+		throws Exception {
+
+		SegmentsExperienceTestUtil.addSegmentsExperienceData(
+			"fragment_composition_with_a_button.json", _layout,
+			_layoutPageTemplatesImporter, segmentsExperienceId);
+
+		SegmentsExperienceTestUtil.addSegmentsExperienceData(
+			"fragment_composition_with_a_card.json", _draftLayout,
+			_layoutPageTemplatesImporter, segmentsExperienceId);
+	}
+
+	private void _checkSegmentsExperiences(
+		long sourceSegmentsExperienceId, long targetSegmentsExperienceId) {
 
 		SegmentsExperienceTestUtil.checkSegmentsExperiences(
-			_draftLayout, segmentsExperience.getSegmentsExperienceId(),
-			segmentsExperienceJSONObject.getLong("segmentsExperienceId"));
+			_layout, sourceSegmentsExperienceId, targetSegmentsExperienceId);
+
+		SegmentsExperienceTestUtil.checkSegmentsExperiences(
+			_draftLayout, sourceSegmentsExperienceId,
+			targetSegmentsExperienceId);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(

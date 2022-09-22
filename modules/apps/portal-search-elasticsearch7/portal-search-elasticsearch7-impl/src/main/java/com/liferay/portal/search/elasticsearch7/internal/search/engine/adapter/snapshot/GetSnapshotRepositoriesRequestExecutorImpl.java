@@ -102,13 +102,6 @@ public class GetSnapshotRepositoriesRequestExecutorImpl
 		return getRepositoriesRequest;
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private GetRepositoriesResponse _getGetRepositoriesResponse(
 		GetRepositoriesRequest getRepositoriesRequest,
 		GetSnapshotRepositoriesRequest getSnapshotRepositoriesRequest) {
@@ -143,6 +136,7 @@ public class GetSnapshotRepositoriesRequestExecutorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetSnapshotRepositoriesRequestExecutorImpl.class);
 
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

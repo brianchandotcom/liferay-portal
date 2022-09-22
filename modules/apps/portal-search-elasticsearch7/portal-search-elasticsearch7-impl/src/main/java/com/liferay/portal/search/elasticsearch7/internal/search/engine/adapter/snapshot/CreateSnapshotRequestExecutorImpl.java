@@ -79,13 +79,6 @@ public class CreateSnapshotRequestExecutorImpl
 		return elasticsearchCreateSnapshotRequest;
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
 	private CreateSnapshotResponse _getCreateSnapshotResponse(
 		CreateSnapshotRequest elasticsearchCreateSnapshotRequest,
 		com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRequest
@@ -107,6 +100,7 @@ public class CreateSnapshotRequestExecutorImpl
 		}
 	}
 
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

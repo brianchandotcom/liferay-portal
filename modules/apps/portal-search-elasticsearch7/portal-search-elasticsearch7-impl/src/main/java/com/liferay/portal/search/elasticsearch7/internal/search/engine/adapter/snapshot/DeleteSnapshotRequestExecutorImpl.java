@@ -86,13 +86,7 @@ public class DeleteSnapshotRequestExecutorImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
+	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

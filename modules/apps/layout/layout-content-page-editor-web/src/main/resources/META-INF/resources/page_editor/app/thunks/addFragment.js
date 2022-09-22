@@ -22,19 +22,16 @@ export default function addFragment({
 	parentItemId,
 	position,
 	selectItem = () => {},
-	store,
 	type,
 }) {
-	return (dispatch) => {
-		const {segmentsExperienceId} = store;
-
+	return (dispatch, getState) => {
 		const params = {
 			fragmentEntryKey,
 			groupId,
 			onNetworkStatus: dispatch,
 			parentItemId,
 			position,
-			segmentsExperienceId,
+			segmentsExperienceId: getState().segmentsExperienceId,
 			type,
 		};
 

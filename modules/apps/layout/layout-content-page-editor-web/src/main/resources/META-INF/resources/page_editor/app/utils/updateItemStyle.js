@@ -18,7 +18,6 @@ import updateItemConfig from '../thunks/updateItemConfig';
 export default function updateItemStyle({
 	dispatch,
 	itemId,
-	segmentsExperienceId,
 	selectedViewportSize,
 	styleName,
 	styleValue,
@@ -43,7 +42,6 @@ export default function updateItemStyle({
 		updateItemConfig({
 			itemConfig,
 			itemId,
-			segmentsExperienceId,
 		})
 	);
 }

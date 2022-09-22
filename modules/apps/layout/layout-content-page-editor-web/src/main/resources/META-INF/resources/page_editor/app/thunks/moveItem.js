@@ -15,19 +15,14 @@
 import moveItemAction from '../actions/moveItem';
 import LayoutService from '../services/LayoutService';
 
-export default function moveItem({
-	itemId,
-	parentItemId,
-	position,
-	segmentsExperienceId,
-}) {
-	return (dispatch) => {
+export default function moveItem({itemId, parentItemId, position}) {
+	return (dispatch, getState) => {
 		return LayoutService.moveItem({
 			itemId,
 			onNetworkStatus: dispatch,
 			parentItemId,
 			position,
-			segmentsExperienceId,
+			segmentsExperienceId: getState().segmentsExperienceId,
 		}).then((layoutData) => {
 			dispatch(moveItemAction({itemId, layoutData}));
 		});

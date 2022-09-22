@@ -14,16 +14,10 @@
 
 import updateItemStyle from './updateItemStyle';
 
-export default function hideFragment({
-	dispatch,
-	itemId,
-	segmentsExperienceId,
-	selectedViewportSize,
-}) {
+export default function hideFragment({dispatch, itemId, selectedViewportSize}) {
 	updateItemStyle({
 		dispatch,
 		itemId,
-		segmentsExperienceId,
 		selectedViewportSize,
 		styleName: 'display',
 		styleValue: 'none',

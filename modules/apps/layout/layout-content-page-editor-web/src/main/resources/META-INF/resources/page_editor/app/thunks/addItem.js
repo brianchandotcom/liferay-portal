@@ -20,17 +20,14 @@ export default function addItem({
 	parentItemId,
 	position,
 	selectItem = () => {},
-	store,
 }) {
-	return (dispatch) => {
-		const {segmentsExperienceId} = store;
-
+	return (dispatch, getState) => {
 		return LayoutService.addItem({
 			itemType,
 			onNetworkStatus: dispatch,
 			parentItemId,
 			position,
-			segmentsExperienceId,
+			segmentsExperienceId: getState().segmentsExperienceId,
 		}).then(({addedItemId, layoutData}) => {
 			dispatch(addItemAction({itemId: addedItemId, layoutData}));
 

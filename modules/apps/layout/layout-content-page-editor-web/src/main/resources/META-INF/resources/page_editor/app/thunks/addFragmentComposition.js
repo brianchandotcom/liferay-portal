@@ -23,9 +23,8 @@ export default function addFragment({
 	previewImageURL,
 	saveInlineContent,
 	saveMappingConfiguration,
-	segmentsExperienceId,
 }) {
-	return (dispatch) => {
+	return (dispatch, getState) => {
 		return FragmentService.addFragmentComposition({
 			description,
 			fragmentCollectionId,
@@ -35,7 +34,7 @@ export default function addFragment({
 			previewImageURL,
 			saveInlineContent,
 			saveMappingConfiguration,
-			segmentsExperienceId,
+			segmentsExperienceId: getState().segmentsExperienceId,
 		}).then((fragmentComposition) => {
 			dispatch(
 				addFragmentComposition({

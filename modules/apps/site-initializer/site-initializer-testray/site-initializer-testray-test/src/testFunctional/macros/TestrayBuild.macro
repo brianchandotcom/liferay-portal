@@ -79,31 +79,49 @@ definition {
 
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
 
-		Click(
-			key_environmentFactors = "${optionEnvironmentFactors}",
-			locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS");
+		for (var listboxItem : list "${listCategory}") {
+			Click(
+				key_environmentFactors = "${listboxItem}",
+				locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS");
 
-		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
-
-		Click(
-			key_environmentFactors = "${optionEnvironmentFactors1}",
-			locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS");
-
-		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
+			Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
+		}
 
 		Button.click(button = "Next");
 
 		Select(
-			key_fieldLabel = "Application Server",
+			key_fieldLabel = "${label}",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${optionApplicationServer}");
+			value1 = "${listOption}");
 
 		Select(
-			key_fieldLabel = "Browser",
+			key_fieldLabel = "${label1}",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${optionBrowser}");
+			value1 = "${listOption1}");
 
 		Button.click(button = "Save");
+	}
+
+	macro verifyEnvironmentFactors {
+		AssertElementPresent(
+			key_environmentFactors = "${listCategory}",
+			locator1 = "Testray#VERIFY_ENVIRONMENT_FACTORS_SELECTED");
+
+		AssertElementPresent(
+			key_environmentFactors = "${listCategory1}",
+			locator1 = "Testray#VERIFY_ENVIRONMENT_FACTORS_SELECTED");
+
+		Button.click(button = "Next");
+
+		AssertElementPresent(
+			key_fieldLabel = "${label}",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${listOption}");
+
+		AssertElementPresent(
+			key_fieldLabel = "${label1}",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${factorOptionId1}");
 	}
 
 	macro verifyPromoteBuild {

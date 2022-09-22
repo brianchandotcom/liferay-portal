@@ -14,42 +14,33 @@
 
 package com.liferay.translation.translator.deepl.internal.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
  * @author Yasuyuki Takeo
  */
 public class SupportedLanguage {
 
-	@JsonProperty("language")
+	public SupportedLanguage(
+		String language, String name, Boolean supportsFormality) {
+
+		_language = language;
+		_name = name;
+		_supportsFormality = supportsFormality;
+	}
+
 	public String getLanguage() {
 		return _language;
 	}
 
-	@JsonProperty("name")
 	public String getName() {
 		return _name;
 	}
 
-	@JsonProperty("supports_formality")
 	public Boolean getSupportsFormality() {
 		return _supportsFormality;
 	}
 
-	public void setLanguage(String language) {
-		_language = language;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public void setSupportsFormality(Boolean supportsFormality) {
-		_supportsFormality = supportsFormality;
-	}
-
-	private String _language;
-	private String _name;
-	private Boolean _supportsFormality;
+	private final String _language;
+	private final String _name;
+	private final Boolean _supportsFormality;
 
 }

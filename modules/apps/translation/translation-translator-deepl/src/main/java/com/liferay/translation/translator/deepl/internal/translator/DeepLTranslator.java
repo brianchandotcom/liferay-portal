@@ -29,13 +29,12 @@ import com.liferay.translation.exception.TranslatorException;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
 import com.liferay.translation.translator.deepl.internal.configuration.DeepLTranslatorConfiguration;
-import com.liferay.translation.translator.deepl.internal.model.SupportedLanguage;
-import com.liferay.translation.translator.deepl.internal.model.TranslateResponse;
+import com.liferay.translation.translator.deepl.internal.manager.SupportedLanguageManager;
+import com.liferay.translation.translator.deepl.internal.manager.TranslationManager;
 import com.liferay.translation.translator.deepl.internal.model.Translation;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -64,7 +63,9 @@ public class DeepLTranslator implements Translator {
 
 		if (deepLTranslatorConfiguration.enabled() &&
 			!Validator.isBlank(deepLTranslatorConfiguration.authKey()) &&
-			!Validator.isBlank(deepLTranslatorConfiguration.url())) {
+			!Validator.isBlank(deepLTranslatorConfiguration.url()) &&
+			!Validator.isBlank(
+				deepLTranslatorConfiguration.validateLanguageUrl())) {
 
 			return true;
 		}
@@ -80,13 +81,14 @@ public class DeepLTranslator implements Translator {
 			return translatorPacket;
 		}
 
-		List<String> supportedLanguages = _getSupportedLanguages(
-			_deepLTranslatorConfiguration);
+		List<String> supportedLanguages =
+			_supportedLanguageManager.getSupportedLanguages(
+				_deepLTranslatorConfiguration);
 
 		String targetLanguageCode = _getLanguageCode(
 			translatorPacket.getTargetLanguageId());
 
-		if (!_verifyLanguage(supportedLanguages, targetLanguageCode)) {
+		if (!_isLanguageSupported(supportedLanguages, targetLanguageCode)) {
 			_log.error(
 				StringBundler.concat(
 					"No target language available for ", targetLanguageCode,
@@ -152,31 +154,18 @@ public class DeepLTranslator implements Translator {
 		return StringUtil.toUpperCase(list.get(0));
 	}
 
-	private List<String> _getSupportedLanguages(
-			DeepLTranslatorConfiguration deepLTranslatorConfiguration)
-		throws PortalException {
+	private boolean _isLanguageSupported(
+		List<String> deepLLanguages, String languageCode) {
 
-		try {
-			List<String> languages = new ArrayList<>();
-
-			List<SupportedLanguage> supportedLanguages =
-				_deepLClient.getSupportedLanguages(
-					deepLTranslatorConfiguration.authKey(), "target",
-					"https://api-free.deepl.com/v2/languages");
-
-			supportedLanguages.forEach(
-				supportedLanguage -> languages.add(
-					supportedLanguage.getLanguage()));
-
-			return languages;
-		}
-		catch (IOException ioException) {
+		if (Collections.disjoint(deepLLanguages, Arrays.asList(languageCode))) {
 			_log.error(
-				"Failed to call supported language list." +
-					System.lineSeparator() + ioException.getLocalizedMessage());
+				"DeepL does not support " + languageCode +
+					". Abort processing translation.");
 
-			return Collections.emptyList();
+			return false;
 		}
+
+		return true;
 	}
 
 	private String _translate(
@@ -189,11 +178,9 @@ public class DeepLTranslator implements Translator {
 				return text;
 			}
 
-			TranslateResponse translateResponse = _deepLClient.execute(
-				authKey, text, sourceLanguageCode, targetLanguageCode, url);
-
 			List<Translation> translations =
-				translateResponse.getTranslations();
+				_translationManager.getTranslateResponse(
+					authKey, text, sourceLanguageCode, targetLanguageCode, url);
 
 			Translation translation = translations.get(0);
 
@@ -206,31 +193,18 @@ public class DeepLTranslator implements Translator {
 		}
 	}
 
-	private boolean _verifyLanguage(
-		List<String> deepLLanguages, String compareLanguage) {
-
-		if (Collections.disjoint(
-				deepLLanguages, Arrays.asList(compareLanguage))) {
-
-			_log.error(
-				"DeepL does not support " + compareLanguage +
-					". Abort processing translation.");
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeepLTranslator.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	@Reference
-	private DeepLClient _deepLClient;
-
 	private volatile DeepLTranslatorConfiguration _deepLTranslatorConfiguration;
+
+	@Reference
+	private SupportedLanguageManager _supportedLanguageManager;
+
+	@Reference
+	private TranslationManager _translationManager;
 
 }

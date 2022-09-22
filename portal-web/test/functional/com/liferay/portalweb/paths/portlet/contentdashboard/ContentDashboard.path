@@ -167,7 +167,7 @@
 </tr>
 <tr>
 	<td>FIRST_ELEMENT_LISTED_DISPLAY_PAGE</td>
-	<td>(//span[contains(@title, 'This content has a display page')])[1]</td>
+	<td>xpath=(//span[contains(@title, 'This content has a display page')])[1]</td>
 	<td></td>
 </tr>
 <tr>

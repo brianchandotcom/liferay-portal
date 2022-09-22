@@ -1319,7 +1319,7 @@ definition {
 				key_assetName = "Pending Web Content Title",
 				locator1 = "ContentDashboard#ROW_PANEL_ASSET_NAME");
 
-			AssertNotVisible(
+			AssertElementNotPresent(
 				locator1 = "ContentDashboard#QUICK_ACTION_ICON",
 				title = "View Metrics");
 		}
@@ -3637,20 +3637,20 @@ definition {
 			ContentDashboard.openFilterModal(filterOption = "Extension");
 
 			AssertVisible(
-				locator1 = "Treeview#NODE_ITEM",
-				optionName = "Audio");
+				key_nodeName = "Audio",
+				locator1 = "Treeview#NODE_ITEM_2");
 
 			AssertVisible(
-				locator1 = "Treeview#NODE_ITEM",
-				optionName = "Code");
+				key_nodeName = "Code",
+				locator1 = "Treeview#NODE_ITEM_2");
 
 			AssertVisible(
-				locator1 = "Treeview#NODE_ITEM",
-				optionName = "Presentation");
+				key_nodeName = "Presentation",
+				locator1 = "Treeview#NODE_ITEM_2");
 
 			AssertVisible(
-				locator1 = "Treeview#NODE_ITEM",
-				optionName = "Text");
+				key_nodeName = "Text",
+				locator1 = "Treeview#NODE_ITEM_2");
 		}
 	}
 
@@ -4642,7 +4642,7 @@ definition {
 			ContentDashboard.goToContentDashboard();
 
 			LexiconTable.clickEllipsisItem(
-				item = "View Metrics",
+				item = "Info",
 				tableEntry = "WC WebContent Title");
 		}
 
@@ -5721,7 +5721,7 @@ definition {
 		}
 
 		task ("Filter by author Me and assert asset displayed") {
-			ContentDashboard.filterByAuthorMe(filterOption = "Me");
+			ContentDashboard.filterByAuthor(authorNameList = "userfn");
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",

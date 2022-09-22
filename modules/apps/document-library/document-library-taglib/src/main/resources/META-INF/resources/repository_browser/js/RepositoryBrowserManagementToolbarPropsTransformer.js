@@ -12,10 +12,15 @@
  * details.
  */
 
-import {fetch, getCheckedCheckboxes, openConfirmModal} from 'frontend-js-web';
+import {
+	fetch,
+	getCheckedCheckboxes,
+	openConfirmModal,
+	openSimpleInputModal,
+} from 'frontend-js-web';
 
 export default function propsTransformer({
-	additionalProps: {deleteURL},
+	additionalProps: {repositoryBrowserURL},
 	portletNamespace,
 	...otherProps
 }) {
@@ -34,7 +39,7 @@ export default function propsTransformer({
 					);
 
 					fetch(
-						`${deleteURL}?repositoryEntryIds=${repositoryEntryIds}`,
+						`${repositoryBrowserURL}?repositoryEntryIds=${repositoryEntryIds}`,
 						{
 							method: 'DELETE',
 						}
@@ -52,6 +57,22 @@ export default function propsTransformer({
 							deleteAction();
 						}
 					},
+				});
+			}
+		},
+
+		onCreateButtonClick: (event, {item}) => {
+			if (item?.data?.action === 'addFolder') {
+				const createFolderURL = `${repositoryBrowserURL}?repositoryId=${item.data.repositoryId}&parentFolderId=${item.data.parentFolderId}`;
+
+				openSimpleInputModal({
+					dialogTitle: Liferay.Language.get('add-folder'),
+					formSubmitURL: createFolderURL,
+					mainFieldLabel: Liferay.Language.get('name'),
+					mainFieldName: 'name',
+					method: 'PUT',
+					namespace: '',
+					onFormSuccess: () => window.location.reload(),
 				});
 			}
 		},

@@ -15,6 +15,8 @@
 package com.liferay.document.library.taglib.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
@@ -35,14 +37,17 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public RepositoryBrowserManagementToolbarDisplayContext(
-		HttpServletRequest httpServletRequest,
+		long folderId, HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
+		LiferayPortletResponse liferayPortletResponse, long repositoryId,
 		SearchContainer<Object> searchContainer) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
+
+		_folderId = folderId;
+		_repositoryId = repositoryId;
 	}
 
 	@Override
@@ -68,6 +73,22 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 	}
 
 	@Override
+	public CreationMenu getCreationMenu() {
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.putData("action", "addFolder");
+				dropdownItem.putData(
+					"parentFolderId", String.valueOf(_folderId));
+				dropdownItem.putData(
+					"repositoryId", String.valueOf(_repositoryId));
+				dropdownItem.setIcon("folder");
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "folder"));
+			}
+		).build();
+	}
+
+	@Override
 	public String[] getDisplayViews() {
 		return new String[] {"icon"};
 	}
@@ -86,5 +107,8 @@ public class RepositoryBrowserManagementToolbarDisplayContext
 	protected String getDefaultDisplayStyle() {
 		return "icon";
 	}
+
+	private final long _folderId;
+	private final long _repositoryId;
 
 }

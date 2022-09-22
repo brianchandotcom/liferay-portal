@@ -94,7 +94,7 @@ public class RepositoryBrowserTagDisplayContext {
 
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
-			"deleteURL", _getRepositoryBrowserURL()
+			"repositoryBrowserURL", _getRepositoryBrowserURL()
 		).build();
 	}
 
@@ -160,8 +160,8 @@ public class RepositoryBrowserTagDisplayContext {
 		throws PortalException {
 
 		return new RepositoryBrowserManagementToolbarDisplayContext(
-			_httpServletRequest, _liferayPortletRequest,
-			_liferayPortletResponse, getSearchContainer());
+			_folderId, _httpServletRequest, _liferayPortletRequest,
+			_liferayPortletResponse, _repositoryId, getSearchContainer());
 	}
 
 	public String getRenameFileEntryURL(FileEntry fileEntry) {

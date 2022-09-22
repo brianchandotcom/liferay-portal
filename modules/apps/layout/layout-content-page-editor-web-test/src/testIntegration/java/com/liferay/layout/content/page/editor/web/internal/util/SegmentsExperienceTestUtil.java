@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.util;
 
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -67,38 +68,44 @@ public class SegmentsExperienceTestUtil {
 		}
 	}
 
-	public static void assertContentEquals(
-		List<FragmentEntryLink> expectedFragmentEntryLinks,
-		List<FragmentEntryLink> actualFragmentEntryLinks) {
+	public static void checkSegmentsExperiences(
+		Layout layout, long sourceSegmentsExperienceId,
+		long targetSegmentsExperienceId) {
+
+		List<FragmentEntryLink> sourceFragmentEntryLinks =
+			FragmentEntryLinkLocalServiceUtil.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					layout.getGroupId(), sourceSegmentsExperienceId,
+					layout.getPlid());
+
+		List<FragmentEntryLink> targetFragmentEntryLinks =
+			FragmentEntryLinkLocalServiceUtil.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					layout.getGroupId(), targetSegmentsExperienceId,
+					layout.getPlid());
+
+		Assert.assertTrue(sourceFragmentEntryLinks.size() == 1);
+		Assert.assertTrue(targetFragmentEntryLinks.size() == 1);
+
+		FragmentEntryLink sourceFragmentEntryLink =
+			sourceFragmentEntryLinks.get(0);
+
+		FragmentEntryLink targetFragmentEntryLink =
+			targetFragmentEntryLinks.get(0);
 
 		Assert.assertEquals(
-			expectedFragmentEntryLinks.toString(), 1,
-			expectedFragmentEntryLinks.size());
-
+			sourceFragmentEntryLink.getCss(), targetFragmentEntryLink.getCss());
 		Assert.assertEquals(
-			actualFragmentEntryLinks.toString(), 1,
-			actualFragmentEntryLinks.size());
-
-		FragmentEntryLink expectedFragmentEntryLink =
-			expectedFragmentEntryLinks.get(0);
-
-		FragmentEntryLink actualFragmentEntryLink =
-			actualFragmentEntryLinks.get(0);
-
+			sourceFragmentEntryLink.getHtml(),
+			targetFragmentEntryLink.getHtml());
 		Assert.assertEquals(
-			expectedFragmentEntryLink.getCss(),
-			actualFragmentEntryLink.getCss());
+			sourceFragmentEntryLink.getJs(), targetFragmentEntryLink.getJs());
 		Assert.assertEquals(
-			expectedFragmentEntryLink.getHtml(),
-			actualFragmentEntryLink.getHtml());
+			sourceFragmentEntryLink.getConfiguration(),
+			targetFragmentEntryLink.getConfiguration());
 		Assert.assertEquals(
-			expectedFragmentEntryLink.getJs(), actualFragmentEntryLink.getJs());
-		Assert.assertEquals(
-			expectedFragmentEntryLink.getConfiguration(),
-			actualFragmentEntryLink.getConfiguration());
-		Assert.assertEquals(
-			expectedFragmentEntryLink.getEditableValues(),
-			actualFragmentEntryLink.getEditableValues());
+			sourceFragmentEntryLink.getEditableValues(),
+			targetFragmentEntryLink.getEditableValues());
 	}
 
 	private static String _readFileContent(String fileName) throws Exception {

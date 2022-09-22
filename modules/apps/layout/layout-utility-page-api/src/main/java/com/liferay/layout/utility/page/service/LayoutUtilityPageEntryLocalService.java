@@ -85,8 +85,8 @@ public interface LayoutUtilityPageEntryLocalService
 		LayoutUtilityPageEntry layoutUtilityPageEntry);
 
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long userId, long groupId, long plid,
-			String name, int type)
+			String externalReferenceCode, long userId, long groupId,
+			String name, int type, long masterLayoutPlid)
 		throws PortalException;
 
 	/**
@@ -405,7 +405,7 @@ public interface LayoutUtilityPageEntryLocalService
 		LayoutUtilityPageEntry layoutUtilityPageEntry);
 
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, long plid, String name, int type)
+			long layoutUtilityPageEntryId, String name)
 		throws PortalException;
 
 	@Override

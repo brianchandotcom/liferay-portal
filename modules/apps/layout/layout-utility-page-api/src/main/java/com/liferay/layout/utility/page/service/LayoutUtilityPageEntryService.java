@@ -55,8 +55,8 @@ public interface LayoutUtilityPageEntryService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.layout.utility.page.service.impl.LayoutUtilityPageEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the layout utility page entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link LayoutUtilityPageEntryServiceUtil} if injection and service tracking are not available.
 	 */
 	public LayoutUtilityPageEntry addLayoutUtilityPageEntry(
-			String externalReferenceCode, long groupId, long plid, String name,
-			int type)
+			String externalReferenceCode, long groupId, String name, int type,
+			long masterLayoutPlid)
 		throws PortalException;
 
 	public LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(
@@ -101,7 +101,7 @@ public interface LayoutUtilityPageEntryService extends BaseService {
 		throws PortalException;
 
 	public LayoutUtilityPageEntry updateLayoutUtilityPageEntry(
-			long layoutUtilityPageEntryId, long plid, String name, int type)
+			long layoutUtilityPageEntryId, String name)
 		throws PortalException;
 
 }

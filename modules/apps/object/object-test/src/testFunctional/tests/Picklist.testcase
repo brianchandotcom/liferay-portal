@@ -367,7 +367,13 @@ definition {
 	test CannotLeavePicklistNameFieldEmpty {
 		Picklist.gotoPicklists();
 
-		Picklist.addPicklistViaUI(picklistName = "");
+		Click.javaScriptClick(locator1 = "Picklist#ADD_PICKLIST_BUTTON");
+
+		Type(
+			locator1 = "Picklist#ADD_PICKLIST_NAME",
+			value1 = "");
+
+		Button.clickSave();
 
 		FieldBase.assertRequiredFieldErrorPresent(fieldLabel = "Name");
 	}

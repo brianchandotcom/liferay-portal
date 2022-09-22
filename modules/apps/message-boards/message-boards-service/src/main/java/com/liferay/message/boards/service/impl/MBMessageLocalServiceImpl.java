@@ -870,10 +870,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			indexer.reindex(thread);
 
-			Indexer<MBMessage> mbMessageIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				MBMessage.class);
+			Indexer<MBMessage> mbMessageIndexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
 
-			mbMessageIndexer.reindex(mbMessageLocalService.getMBMessage(thread.getRootMessageId()));
+			mbMessageIndexer.reindex(
+				mbMessageLocalService.getMBMessage(thread.getRootMessageId()));
 		}
 
 		// Asset
@@ -1682,7 +1683,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public MBMessage updateAnswer(long messageId, boolean answer, boolean cascade)
+	public MBMessage updateAnswer(
+			long messageId, boolean answer, boolean cascade)
 		throws PortalException {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
@@ -1692,7 +1694,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public MBMessage updateAnswer(MBMessage message, boolean answer, boolean cascade)
+	public MBMessage updateAnswer(
+			MBMessage message, boolean answer, boolean cascade)
 		throws PortalException {
 
 		return MBMessageUtil.updateAnswer(

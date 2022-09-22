@@ -89,6 +89,7 @@ public class MBMessageUtil {
 				updateAnswer(mbMessagePersistence, curMessage, answer, cascade);
 			}
 		}
+
 		return message;
 	}
 

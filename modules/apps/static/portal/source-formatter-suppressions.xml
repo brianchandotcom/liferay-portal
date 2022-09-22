@@ -2,7 +2,6 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-upgrade-api/src/main/java/com/liferay/portal/upgrade/release/BaseUpgradeServiceModuleRelease.java" />
 		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-upgrade-api/src/main/java/com/liferay/portal/upgrade/release/BaseUpgradeWebModuleRelease.java" />
 	</source-check>
 </suppressions>

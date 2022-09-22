@@ -210,7 +210,7 @@ definition {
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
 			value1 = "${clientId}");
 
-		Button.click(button = "Authorize My Application");
+		Button.click(button = "Authorize");
 
 		if (IsElementPresent(locator1 = "Button#SIGN_IN")) {
 			Type(
@@ -243,11 +243,11 @@ definition {
 
 		SelectFrameTop();
 
-		Button.click(button = "Obtain OAuth2 Access");
+		Button.click(button = "Obtain token");
 	}
 
 	macro authorizePKCEApplication {
-		Navigator.openSpecificURL(url = "https://localhost:8443/oauth2-tester/pkce/");
+		Navigator.openSpecificURL(url = "https://localhost:8443/oauth2-tester/?pkce=1");
 
 		if (isSet(portalURL)) {
 			Type(
@@ -264,11 +264,11 @@ definition {
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
 			value1 = "${clientId}");
 
-		Button.click(button = "Generate a Code Challenge");
+		Button.click(button = "Generate Code Challenge");
 
 		var codeChallenge = selenium.getElementValue("OAuth2#OAUTH2_TESTER_CODE_CHALLENGE");
 
-		Button.click(button = "Authorize My Application (PKCE)");
+		Button.click(button = "Authorize");
 
 		Button.click(button = "Authorize");
 
@@ -276,7 +276,7 @@ definition {
 			locator1 = "OAuth2#OAUTH2_TESTER_EXCHANGE_CODE",
 			value1 = "${codeChallenge}");
 
-		Button.click(button = "Obtain Access Token");
+		Button.click(button = "Obtain token");
 	}
 
 	macro deleteApplication {
@@ -678,7 +678,7 @@ definition {
 
 		Button.click(button = "Launch Request");
 
-		AssertConfirm.assertConfirmationNoError(value1 = "403 - Unauthorized!");
+		AssertConfirm.assertConfirmationNoError(value1 = "HTTP 403");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
@@ -686,7 +686,7 @@ definition {
 	}
 
 	macro obtainOAuth2AccessNotAuthorized {
-		AssertConfirm.assertConfirmationNoError(value1 = "There's a problem with your authorization access");
+		AssertConfirm.assertConfirmationNoError(value1 = "HTTP 401");
 	}
 
 	macro openOAuth2Admin {
@@ -1187,7 +1187,7 @@ definition {
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
 			value1 = "${clientSecret}");
 
-		Button.click(button = "Obtain OAuth2 Access");
+		Button.click(button = "Obtain token");
 
 		AssertElementPresent(
 			key_text = "Launch Request",

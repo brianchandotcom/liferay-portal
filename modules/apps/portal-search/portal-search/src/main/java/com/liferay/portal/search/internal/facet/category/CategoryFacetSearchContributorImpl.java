@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal.facet.category;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -57,6 +59,9 @@ public class CategoryFacetSearchContributorImpl
 	}
 
 	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
 	private CategoryFacetFactory _categoryFacetFactory;
 
 	private class CategoryFacetBuilderImpl implements CategoryFacetBuilder {
@@ -79,7 +84,14 @@ public class CategoryFacetSearchContributorImpl
 			facet.setFacetConfiguration(buildFacetConfiguration(facet));
 
 			if (_selectedCategoryIds != null) {
-				facet.select(ArrayUtil.toStringArray(_selectedCategoryIds));
+				String fieldName = facet.getFieldName();
+
+				if (fieldName.equals("assetVocabularyCategoryIds")) {
+					facet.select(_getSelections(_selectedCategoryIds));
+				}
+				else {
+					facet.select(ArrayUtil.toStringArray(_selectedCategoryIds));
+				}
 			}
 
 			return facet;
@@ -161,6 +173,22 @@ public class CategoryFacetSearchContributorImpl
 			}
 
 			return null;
+		}
+
+		private String[] _getSelections(long[] selectedCategoryIds) {
+			String[] selections = new String[selectedCategoryIds.length];
+
+			for (int i = 0; i < selectedCategoryIds.length; i++) {
+				AssetCategory assetCategory =
+					_assetCategoryLocalService.fetchAssetCategory(
+						selectedCategoryIds[i]);
+
+				selections[i] =
+					assetCategory.getVocabularyId() + StringPool.DASH +
+						assetCategory.getCategoryId();
+			}
+
+			return selections;
 		}
 
 		private String _aggregationName;

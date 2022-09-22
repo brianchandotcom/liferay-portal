@@ -67,7 +67,7 @@ definition {
 	}
 
 	macro assertCannotAddRelationshipTabFirst {
-		LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAddNoSelectFrame();
 
 		AssertElementPresent(locator1 = "CreateObject#DISABLED_TAB_TYPE_RELATIONSHIPS");
 	}

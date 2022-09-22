@@ -133,7 +133,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "metadataManager", metadataManagerImpl);
 
-		_webSsoProfileImpl.setPortal(portal);
+		ReflectionTestUtil.setFieldValue(_webSsoProfileImpl, "portal", portal);
+
 		_webSsoProfileImpl.setSamlBindings(samlBindings);
 
 		ReflectionTestUtil.setFieldValue(

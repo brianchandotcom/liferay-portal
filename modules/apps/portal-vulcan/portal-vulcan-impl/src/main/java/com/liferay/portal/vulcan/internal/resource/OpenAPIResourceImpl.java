@@ -89,6 +89,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 	@Override
 	public Response getOpenAPI(
+			OpenAPIContributor openAPIContributor,
 			OpenAPISchemaFilter openAPISchemaFilter,
 			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
 		throws Exception {
@@ -160,8 +161,14 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			openAPI.setServers(Collections.singletonList(server));
 		}
 
-		for (OpenAPIContributor openAPIContributor : _openAPIContributors) {
+		if (openAPIContributor != null) {
 			openAPIContributor.contribute(openAPI, uriInfo);
+		}
+
+		for (OpenAPIContributor externalOpenAPIContributor :
+				_openAPIContributors) {
+
+			externalOpenAPIContributor.contribute(openAPI, uriInfo);
 		}
 
 		if (StringUtil.equalsIgnoreCase("yaml", type)) {
@@ -181,6 +188,16 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		).type(
 			MediaType.APPLICATION_JSON_TYPE
 		).build();
+	}
+
+	@Override
+	public Response getOpenAPI(
+			OpenAPISchemaFilter openAPISchemaFilter,
+			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
+		throws Exception {
+
+		return getOpenAPI(
+			null, openAPISchemaFilter, resourceClasses, type, uriInfo);
 	}
 
 	@Override

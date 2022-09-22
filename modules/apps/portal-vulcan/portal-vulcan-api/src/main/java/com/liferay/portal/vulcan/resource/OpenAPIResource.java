@@ -15,6 +15,7 @@
 package com.liferay.portal.vulcan.resource;
 
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
+import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 
 import java.util.Set;
 
@@ -37,6 +38,15 @@ public interface OpenAPIResource {
 		throws Exception {
 
 		return getOpenAPI(resourceClasses, type);
+	}
+
+	public default Response getOpenAPI(
+			OpenAPIContributor openAPIContributor,
+			OpenAPISchemaFilter openAPISchemaFilter,
+			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
+		throws Exception {
+
+		return null;
 	}
 
 	public default Response getOpenAPI(

@@ -22,6 +22,10 @@ const Subscribe = ({disabled, icon, label, url}: IProps) => {
 	const {fetchData} = useContext(SidebarContext);
 
 	const handleSubscribe = async (): Promise<void> => {
+		if (disabled) {
+			return;
+		}
+
 		try {
 			const {ok}: Response = await fetch(url);
 

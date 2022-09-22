@@ -1119,17 +1119,19 @@ public class MBMessageLocalServiceWrapper
 	}
 
 	@Override
-	public void updateAnswer(long messageId, boolean answer, boolean cascade)
+	public MBMessage updateAnswer(
+			long messageId, boolean answer, boolean cascade)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_mbMessageLocalService.updateAnswer(messageId, answer, cascade);
+		return _mbMessageLocalService.updateAnswer(messageId, answer, cascade);
 	}
 
 	@Override
-	public void updateAnswer(MBMessage message, boolean answer, boolean cascade)
+	public MBMessage updateAnswer(
+			MBMessage message, boolean answer, boolean cascade)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_mbMessageLocalService.updateAnswer(message, answer, cascade);
+		return _mbMessageLocalService.updateAnswer(message, answer, cascade);
 	}
 
 	@Override

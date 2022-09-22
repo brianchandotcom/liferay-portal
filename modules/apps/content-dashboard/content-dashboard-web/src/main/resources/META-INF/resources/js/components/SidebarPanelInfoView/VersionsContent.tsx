@@ -13,6 +13,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
+import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
@@ -38,6 +39,7 @@ const VersionsContent = ({
 }: IProps) => {
 	const [loading, setLoading] = useState(false);
 	const [versions, setVersions] = useState([] as IVersion[]);
+	const [viewVersionsURL, setViewVersionsURL] = useState('');
 	const isFirst: boolean = useIsFirstRender();
 	const getVersionsData = useCallback(async (): Promise<void> => {
 		try {
@@ -48,8 +50,9 @@ const VersionsContent = ({
 				throw new Error(`Failed to fetch ${getItemVersionsURL}`);
 			}
 
-			const {versions}: IData = await response.json();
+			const {versions, viewVersionsURL}: IData = await response.json();
 			setVersions(versions);
+			setViewVersionsURL(viewVersionsURL);
 		}
 		catch (error: unknown) {
 			onError();
@@ -113,12 +116,21 @@ const VersionsContent = ({
 					))}
 				</ul>
 			)}
+			{viewVersionsURL && (
+				<ClayLink
+					className="d-flex justify-content-center mt-3"
+					href={viewVersionsURL}
+				>
+					{Liferay.Language.get('view-more')}
+				</ClayLink>
+			)}
 		</>
 	);
 };
 
 interface IData {
 	versions: IVersion[];
+	viewVersionsURL: string;
 }
 
 interface IProps {

@@ -19,14 +19,13 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
-import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -62,9 +61,7 @@ public class BlogsEntryContentDashboardItem
 		BlogsEntry blogsEntry,
 		ContentDashboardItemActionProviderTracker
 			contentDashboardItemActionProviderTracker,
-		Group group,
-		InfoItemFieldValuesProvider<BlogsEntry> infoItemFieldValuesProvider,
-		Language language, Portal portal) {
+		Group group, Language language, Portal portal) {
 
 		if (ListUtil.isEmpty(assetCategories)) {
 			_assetCategories = Collections.emptyList();
@@ -84,7 +81,6 @@ public class BlogsEntryContentDashboardItem
 		_contentDashboardItemActionProviderTracker =
 			contentDashboardItemActionProviderTracker;
 		_group = group;
-		_infoItemFieldValuesProvider = infoItemFieldValuesProvider;
 		_language = language;
 		_portal = portal;
 	}
@@ -361,8 +357,6 @@ public class BlogsEntryContentDashboardItem
 	private final ContentDashboardItemActionProviderTracker
 		_contentDashboardItemActionProviderTracker;
 	private final Group _group;
-	private final InfoItemFieldValuesProvider<BlogsEntry>
-		_infoItemFieldValuesProvider;
 	private final Language _language;
 	private final Portal _portal;
 

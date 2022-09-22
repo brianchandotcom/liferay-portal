@@ -16,9 +16,9 @@ package com.liferay.content.dashboard.web.internal.servlet.taglib.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
-import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;

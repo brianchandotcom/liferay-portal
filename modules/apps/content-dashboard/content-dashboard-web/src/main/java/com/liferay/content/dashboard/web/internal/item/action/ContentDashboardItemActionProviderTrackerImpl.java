@@ -36,9 +36,14 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Cristina González
  */
-@Component(service = ContentDashboardItemActionProviderTracker.class)
-public class ContentDashboardItemActionProviderTracker {
+@Component(
+	service = com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderTracker.class
+)
+public class ContentDashboardItemActionProviderTrackerImpl
+	implements com.liferay.content.dashboard.item.action.
+				   ContentDashboardItemActionProviderTracker {
 
+	@Override
 	public Optional<ContentDashboardItemActionProvider>
 		getContentDashboardItemActionProviderOptional(
 			String className, ContentDashboardItemAction.Type type) {
@@ -60,6 +65,7 @@ public class ContentDashboardItemActionProviderTracker {
 		).findFirst();
 	}
 
+	@Override
 	public List<ContentDashboardItemActionProvider>
 		getContentDashboardItemActionProviders(
 			String className, ContentDashboardItemAction.Type... types) {

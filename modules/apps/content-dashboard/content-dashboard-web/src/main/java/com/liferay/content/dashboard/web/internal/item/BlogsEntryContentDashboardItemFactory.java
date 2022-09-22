@@ -20,11 +20,9 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
-import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactoryTracker;
-import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -59,15 +57,11 @@ public class BlogsEntryContentDashboardItemFactory
 					blogsEntry.getEntryId());
 		}
 
-		InfoItemFieldValuesProvider<BlogsEntry> infoItemFieldValuesProvider =
-			infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, BlogsEntry.class.getName());
-
 		return new BlogsEntryContentDashboardItem(
 			assetEntry.getCategories(), assetEntry.getTags(), blogsEntry,
 			_contentDashboardItemActionProviderTracker,
-			_groupLocalService.fetchGroup(blogsEntry.getGroupId()),
-			infoItemFieldValuesProvider, _language, _portal);
+			_groupLocalService.fetchGroup(blogsEntry.getGroupId()), _language,
+			_portal);
 	}
 
 	@Override
@@ -78,9 +72,6 @@ public class BlogsEntryContentDashboardItemFactory
 			getContentDashboardItemSubtypeFactoryOptional(
 				BlogsEntry.class.getName());
 	}
-
-	@Reference
-	protected InfoItemServiceTracker infoItemServiceTracker;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

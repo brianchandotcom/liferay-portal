@@ -18,10 +18,9 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
+import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
-import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -92,7 +91,7 @@ public class BlogsEntryContentDashboardItemTest {
 		BlogsEntryContentDashboardItem blogsEntryContentDashboardItem =
 			new BlogsEntryContentDashboardItem(
 				Collections.singletonList(assetCategory), null, blogsEntry,
-				null, null, null, null, null);
+				null, null, null, null);
 
 		Assert.assertEquals(
 			Collections.singletonList(assetCategory),
@@ -114,7 +113,7 @@ public class BlogsEntryContentDashboardItemTest {
 		BlogsEntryContentDashboardItem blogsEntryContentDashboardItem =
 			new BlogsEntryContentDashboardItem(
 				Collections.singletonList(assetCategory), null, blogsEntry,
-				null, null, null, null, null);
+				null, null, null, null);
 
 		Assert.assertEquals(
 			Collections.singletonList(assetCategory),
@@ -128,7 +127,7 @@ public class BlogsEntryContentDashboardItemTest {
 
 		BlogsEntryContentDashboardItem blogsEntryContentDashboardItem =
 			new BlogsEntryContentDashboardItem(
-				null, null, blogsEntry, null, null, null, null, null);
+				null, null, blogsEntry, null, null, null, null);
 
 		Assert.assertEquals(
 			Collections.emptyList(),
@@ -150,7 +149,7 @@ public class BlogsEntryContentDashboardItemTest {
 		BlogsEntryContentDashboardItem blogsEntryContentDashboardItem =
 			new BlogsEntryContentDashboardItem(
 				Collections.singletonList(assetCategory), null, blogsEntry,
-				null, null, null, null, null);
+				null, null, null, null);
 
 		Assert.assertEquals(
 			Collections.emptyList(),
@@ -167,7 +166,7 @@ public class BlogsEntryContentDashboardItemTest {
 		BlogsEntryContentDashboardItem blogsEntryContentDashboardItem =
 			new BlogsEntryContentDashboardItem(
 				null, Collections.singletonList(assetTag), blogsEntry, null,
-				null, null, null, null);
+				null, null, null);
 
 		Assert.assertEquals(
 			Collections.singletonList(assetTag),
@@ -184,13 +183,9 @@ public class BlogsEntryContentDashboardItemTest {
 			"description"
 		);
 
-		InfoItemFieldValuesProvider<BlogsEntry> infoItemFieldValuesProvider =
-			Mockito.mock(InfoItemFieldValuesProvider.class);
-
 		BlogsEntryContentDashboardItem blogsEntryContentDashboardItem =
 			new BlogsEntryContentDashboardItem(
-				null, null, blogsEntry, null, null, infoItemFieldValuesProvider,
-				null, null);
+				null, null, blogsEntry, null, null, null, null);
 
 		Assert.assertEquals(
 			"description",
@@ -203,7 +198,7 @@ public class BlogsEntryContentDashboardItemTest {
 
 		BlogsEntryContentDashboardItem blogsEntryContentDashboardItem =
 			new BlogsEntryContentDashboardItem(
-				null, null, blogsEntry, null, null, null, null, null);
+				null, null, blogsEntry, null, null, null, null);
 
 		Assert.assertEquals(
 			blogsEntry.getModifiedDate(),
@@ -224,7 +219,7 @@ public class BlogsEntryContentDashboardItemTest {
 
 		BlogsEntryContentDashboardItem blogsEntryContentDashboardItem =
 			new BlogsEntryContentDashboardItem(
-				null, null, blogsEntry, null, group, null, null, null);
+				null, null, blogsEntry, null, group, null, null);
 
 		Assert.assertEquals(
 			"scopeName",
@@ -237,7 +232,7 @@ public class BlogsEntryContentDashboardItemTest {
 
 		BlogsEntryContentDashboardItem blogsEntryContentDashboardItem =
 			new BlogsEntryContentDashboardItem(
-				null, null, blogsEntry, null, null, null, null, null);
+				null, null, blogsEntry, null, null, null, null);
 
 		ContentDashboardItemSubtype contentDashboardItemType =
 			blogsEntryContentDashboardItem.getContentDashboardItemSubtype();
@@ -251,7 +246,7 @@ public class BlogsEntryContentDashboardItemTest {
 
 		BlogsEntryContentDashboardItem blogsEntryContentDashboardItem =
 			new BlogsEntryContentDashboardItem(
-				null, null, blogsEntry, null, null, null, null, null);
+				null, null, blogsEntry, null, null, null, null);
 
 		Assert.assertEquals(
 			blogsEntry.getTitle(),
@@ -270,7 +265,7 @@ public class BlogsEntryContentDashboardItemTest {
 
 		BlogsEntryContentDashboardItem blogsEntryContentDashboardItem =
 			new BlogsEntryContentDashboardItem(
-				null, null, blogsEntry, null, null, null, null, null);
+				null, null, blogsEntry, null, null, null, null);
 
 		Assert.assertEquals(
 			blogsEntry.getUserId(), blogsEntryContentDashboardItem.getUserId());
@@ -288,7 +283,7 @@ public class BlogsEntryContentDashboardItemTest {
 
 		BlogsEntryContentDashboardItem blogsEntryContentDashboardItem =
 			new BlogsEntryContentDashboardItem(
-				null, null, blogsEntry, null, null, null, null, null);
+				null, null, blogsEntry, null, null, null, null);
 
 		Assert.assertEquals(
 			blogsEntry.getUserId(), blogsEntryContentDashboardItem.getUserId());
@@ -311,7 +306,7 @@ public class BlogsEntryContentDashboardItemTest {
 					_getContentDashboardItemActionProvider(
 						ContentDashboardItemAction.Type.VIEW,
 						"http://localhost:8080/view")),
-				null, null, _getLanguage(), null);
+				null, _getLanguage(), null);
 
 		Assert.assertTrue(
 			blogsEntryContentDashboardItem.isViewable(

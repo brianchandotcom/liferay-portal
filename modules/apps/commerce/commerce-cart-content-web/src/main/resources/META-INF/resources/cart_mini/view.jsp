@@ -105,6 +105,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				<%
 				CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
+
+				String cpInstanceCDNURL = commerceCartContentMiniDisplayContext.getCPInstanceCDNURL(commerceOrderItem);
 				%>
 
 				<liferay-ui:search-container-column-text
@@ -112,10 +114,17 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				>
 					<span class="sticker sticker-xl">
 						<span class="sticker-overlay">
-							<liferay-adaptive-media:img
-								class="sticker-img"
-								fileVersion="<%= commerceCartContentMiniDisplayContext.getCPInstanceImageFileVersion(commerceOrderItem) %>"
-							/>
+							<c:choose>
+								<c:when test="<%= Validator.isNotNull(cpInstanceCDNURL) %>">
+									<img class="sticker-img" src="<%= cpInstanceCDNURL %>" />
+								</c:when>
+								<c:otherwise>
+									<liferay-adaptive-media:img
+										class="sticker-img"
+										fileVersion="<%= commerceCartContentMiniDisplayContext.getCPInstanceImageFileVersion(commerceOrderItem) %>"
+									/>
+								</c:otherwise>
+							</c:choose>
 						</span>
 					</span>
 				</liferay-ui:search-container-column-text>

@@ -87,6 +87,8 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 
 						<%
 						CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
+
+						String cpInstanceCDNURL = orderSummaryCheckoutStepDisplayContext.getCPInstanceCDNURL(commerceOrderItem);
 						%>
 
 						<liferay-ui:search-container-column-text
@@ -95,10 +97,17 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 						>
 							<span class="sticker sticker-xl">
 								<span class="sticker-overlay">
-									<liferay-adaptive-media:img
-										class="sticker-img"
-										fileVersion="<%= orderSummaryCheckoutStepDisplayContext.getCPInstanceImageFileVersion(commerceOrderItem) %>"
-									/>
+									<c:choose>
+										<c:when test="<%= Validator.isNotNull(cpInstanceCDNURL) %>">
+											<img class="sticker-img" src="<%= cpInstanceCDNURL %>" />
+										</c:when>
+										<c:otherwise>
+											<liferay-adaptive-media:img
+												class="sticker-img"
+												fileVersion="<%= orderSummaryCheckoutStepDisplayContext.getCPInstanceImageFileVersion(commerceOrderItem) %>"
+											/>
+										</c:otherwise>
+									</c:choose>
 								</span>
 							</span>
 						</liferay-ui:search-container-column-text>

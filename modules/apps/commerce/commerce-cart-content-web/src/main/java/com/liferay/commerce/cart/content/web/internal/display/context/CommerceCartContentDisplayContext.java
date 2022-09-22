@@ -160,6 +160,14 @@ public class CommerceCartContentDisplayContext {
 		return cpDefinitionHelper.getFriendlyURL(cpDefinitionId, themeDisplay);
 	}
 
+	public String getCPInstanceCDNURL(CommerceOrderItem commerceOrderItem)
+		throws Exception {
+
+		return cpInstanceHelper.getCPInstanceCDNURL(
+			CommerceUtil.getCommerceAccountId(commerceContext),
+			commerceOrderItem.getCPInstanceId());
+	}
+
 	public FileVersion getCPInstanceImageFileVersion(
 			CommerceOrderItem commerceOrderItem)
 		throws Exception {

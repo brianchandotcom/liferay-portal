@@ -332,7 +332,10 @@ public abstract class BaseTagAttributesCheck extends BaseFileCheck {
 		for (Map.Entry<String, String> entry : attributesMap.entrySet()) {
 			String attributeName = entry.getKey();
 
-			if (tagFullName.equals("svg") && attributeName.equals("viewBox")) {
+			if (attributeName.startsWith("v-") ||
+				(tagFullName.equals("svg") &&
+				 attributeName.equals("viewBox"))) {
+
 				continue;
 			}
 

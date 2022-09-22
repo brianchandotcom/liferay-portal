@@ -22,7 +22,7 @@ import com.liferay.content.dashboard.item.ContentDashboardItem;
 import com.liferay.content.dashboard.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
-import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactoryTracker;
+import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactoryTracker;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;

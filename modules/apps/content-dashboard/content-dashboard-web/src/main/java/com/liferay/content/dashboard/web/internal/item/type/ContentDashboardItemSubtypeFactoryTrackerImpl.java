@@ -15,6 +15,7 @@
 package com.liferay.content.dashboard.web.internal.item.type;
 
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
+import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactoryTracker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -33,12 +34,15 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Cristina González
  */
 @Component(service = ContentDashboardItemSubtypeFactoryTracker.class)
-public class ContentDashboardItemSubtypeFactoryTracker {
+public class ContentDashboardItemSubtypeFactoryTrackerImpl
+	implements ContentDashboardItemSubtypeFactoryTracker {
 
+	@Override
 	public Collection<String> getClassNames() {
 		return Collections.unmodifiableCollection(_serviceTrackerMap.keySet());
 	}
 
+	@Override
 	public Optional<ContentDashboardItemSubtypeFactory>
 		getContentDashboardItemSubtypeFactoryOptional(String className) {
 

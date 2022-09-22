@@ -2322,6 +2322,45 @@ definition {
 		}
 	}
 
+	@description = "LPS-152735 - Verify that it's possible to validate Groovy syntax when creating a Scheduled Action"
+	@priority = "4"
+	test CanValidateGroovyScheduledAction {
+		task ("Create Custom Object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161914",
+				objectName = "CustomObject161914",
+				pluralLabelName = "Custom Objects 161914");
+		}
+
+		task ("Go to Objects, select Custom Object and click on actions tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161914");
+
+			ObjectAdmin.goToActionsTab();
+		}
+
+		task ("Add a Custom Action and try to add incorrect syntax in Expression Builder") {
+			ObjectAdmin.gotoAddObjectAction();
+
+			ObjectAdmin.fillObjectAction(
+				actionDescription = "Custom Description",
+				actionName = "Custom Action",
+				active = "true",
+				scriptValidation = "if = (customField == 'Syntax is incorrect')",
+				thenAction = "Groovy Script",
+				whenAction = "On After Add");
+
+			Button.clickSave();
+		}
+
+		task ("Assert that there is an error in syntax") {
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "Syntax Error");
+		}
+	}
+
 	@description = "LPS-151671 - Verify that it's possible to use data validations with expression builder on System Objects"
 	@priority = "5"
 	test CanValidateSystemObjectWithExpressionBuilder {

@@ -21,7 +21,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		TestrayManage.deleteAllProductVersion();
+		Testray.deleteAllProjects();
 
 		Testray.tearDownCP();
 
@@ -37,8 +37,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				description = "Product_Ver_1 Project Description",
-				key_name = "Product_Ver_1 Project");
+				description = "Projects_1 Project Description",
+				key_name = "Projects_1 Project");
 		}
 
 		task ("Change pagination, create Product Version and Assert it was created") {
@@ -62,8 +62,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				description = "Product_Ver_2 Project Description",
-				key_name = "Product_Ver_2 Project");
+				description = "Projects_1 Project Description",
+				key_name = "Projects_1 Project");
 		}
 
 		task ("Change pagination, create Product Version") {
@@ -93,8 +93,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				description = "Product_Ver_3 Project Description",
-				key_name = "Product_Ver_3 Project");
+				description = "Projects_1 Project Description",
+				key_name = "Projects_1 Project");
 		}
 
 		task ("Change pagination, create Product Version") {
@@ -125,8 +125,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				description = "Product_Ver_4 Project Description",
-				key_name = "Product_Ver_4 Project");
+				description = "Projects_1 Project Description",
+				key_name = "Projects_1 Project");
 		}
 
 		task ("Change pagination, create Product Version and Assert that no duplicate product version was created") {
@@ -157,8 +157,8 @@ definition {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.createProjectTestray(
-				description = "Product_Ver_5 Project Description",
-				key_name = "Product_Ver_5 Project");
+				description = "Projects_1 Project Description",
+				key_name = "Projects_1 Project");
 		}
 
 		task ("Change pagination and Assert that field Name is required") {

@@ -526,7 +526,7 @@ definition {
 		AssertElementPresent(
 			key_actionActive = "${actionActive}",
 			key_actionName = "${actionName}",
-			locator1 = "ObjectAdmin#VIEW_ACTIONS_TAB");
+			locator1 = "ObjectAdmin#VIEW_ACTIONS_LABEL");
 
 		if (isSet(status)) {
 			AssertElementPresent(
@@ -539,7 +539,7 @@ definition {
 		AssertElementNotPresent(
 			key_actionActive = "${actionActive}",
 			key_actionName = "${actionName}",
-			locator1 = "ObjectAdmin#VIEW_ACTIONS_TAB");
+			locator1 = "ObjectAdmin#VIEW_ACTIONS_LABEL");
 	}
 
 	macro assertObjectColumnsAreDisplayed {

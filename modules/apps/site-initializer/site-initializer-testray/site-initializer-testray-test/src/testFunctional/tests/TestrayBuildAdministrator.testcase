@@ -159,10 +159,11 @@ definition {
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
 
 			TestrayBuild.selectDefaultEnvironmentFactors(
-				optionApplicationServer = "JBoss 6.1",
-				optionBrowser = "Chrome x",
-				optionEnvironmentFactors = "Application Server",
-				optionEnvironmentFactors1 = "Browser");
+				listCategory = "Application Server,Browser",
+				label = "Application Server",
+				label1 = "Browser",
+				listOption = "JBoss 6.1",
+				listOption1 = "Chrome x");
 
 			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 

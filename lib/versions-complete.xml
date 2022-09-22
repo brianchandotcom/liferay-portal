@@ -8046,7 +8046,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/com.liferay.jenkins.results.parser.jar</file-name>
-				<version>1.0.1060</version>
+				<version>1.0.1123</version>
 				<project-name>Liferay Jenkins Results Parser</project-name>
 				<licenses>
 					<license>
@@ -8057,12 +8057,24 @@
 			</library>
 			<library>
 				<file-name>lib/development/com.liferay.poshi.core.jar</file-name>
-				<version>1.0.63</version>
+				<version>1.0.71</version>
 				<project-name>Liferay Poshi Core</project-name>
 				<licenses>
 					<license>
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/commons-codec.jar</file-name>
+				<version>4.2</version>
+				<project-name>Apache Commons Codec</project-name>
+				<project-url>https://commons.apache.org/proper/commons-codec/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>

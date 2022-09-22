@@ -54,6 +54,7 @@
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.sync.dir.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.jenkins.results.parser.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.poshi.core.jar"/>
+	<classpathentry kind="lib" path="lib/development/commons-codec.jar"/>
 	<classpathentry kind="lib" path="lib/development/commons-collections4.jar"/>
 	<classpathentry kind="lib" path="lib/development/commons-compress.jar"/>
 	<classpathentry kind="lib" path="lib/development/commons-lang3.jar"/>

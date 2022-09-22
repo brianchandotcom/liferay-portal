@@ -187,9 +187,9 @@ definition {
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
 
 			TestrayBuild.selectDefaultEnvironmentFactors(
-				listCategory = "Environments_1 Category A,Environments_1 Category B",
 				label = "Environments_1 Category A",
 				label1 = "Environments_1 Category B",
+				listCategory = "Environments_1 Category A,Environments_1 Category B",
 				listOption = "Option 2",
 				listOption1 = "Option 3");
 
@@ -200,10 +200,10 @@ definition {
 			TestrayBuild.verifyEnvironmentFactors(
 				label = "Environments_1 Category A",
 				label1 = "Environments_1 Category B",
-				listOption = "Option 2",
-				listOption1 = "Option 3",
 				listCategory = "Environments_1 Category A",
-				listCategory1 = "Environments_1 Category B");
+				listCategory1 = "Environments_1 Category B",
+				listOption = "Option 2",
+				listOption1 = "Option 3");
 
 			TestrayManage.closeModalInOptions();
 		}
@@ -374,7 +374,6 @@ definition {
 				fieldLabel = "Name",
 				warningMessage = "name is a required field");
 		}
-
 	}
 
 }

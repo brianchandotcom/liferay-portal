@@ -159,9 +159,9 @@ definition {
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
 
 			TestrayBuild.selectDefaultEnvironmentFactors(
-				listCategory = "Application Server,Browser",
 				label = "Application Server",
 				label1 = "Browser",
+				listCategory = "Application Server,Browser",
 				listOption = "JBoss 6.1",
 				listOption1 = "Chrome x");
 

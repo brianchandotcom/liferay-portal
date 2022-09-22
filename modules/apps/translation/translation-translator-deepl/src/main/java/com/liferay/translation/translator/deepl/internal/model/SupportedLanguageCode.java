@@ -12,23 +12,35 @@
  * details.
  */
 
-package com.liferay.translation.translator.deepl.internal.settings.definition;
-
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.translation.translator.deepl.internal.configuration.DeepLTranslatorConfiguration;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.translation.translator.deepl.internal.model;
 
 /**
  * @author Yasuyuki Takeo
  */
-@Component(service = ConfigurationBeanDeclaration.class)
-public class DeepLTranslatorConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public class SupportedLanguageCode {
 
-	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return DeepLTranslatorConfiguration.class;
+	public SupportedLanguageCode(
+		String languageCode, String name, Boolean supportsFormality) {
+
+		_languageCode = languageCode;
+		_name = name;
+		_supportsFormality = supportsFormality;
 	}
+
+	public String getLanguageCode() {
+		return _languageCode;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public Boolean getSupportsFormality() {
+		return _supportsFormality;
+	}
+
+	private final String _languageCode;
+	private final String _name;
+	private final Boolean _supportsFormality;
 
 }

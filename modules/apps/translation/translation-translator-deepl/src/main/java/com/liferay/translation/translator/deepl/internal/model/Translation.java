@@ -14,32 +14,25 @@
 
 package com.liferay.translation.translator.deepl.internal.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
  * @author Yasuyuki Takeo
  */
 public class Translation {
 
-	@JsonProperty("detected_source_language")
-	public String getDetectedSourceLanguage() {
-		return _detectedSourceLanguage;
+	public Translation(String detectedSourceLanguageId, String text) {
+		_detectedSourceLanguageId = detectedSourceLanguageId;
+		_text = text;
 	}
 
-	@JsonProperty("text")
+	public String getDetectedSourceLanguageId() {
+		return _detectedSourceLanguageId;
+	}
+
 	public String getText() {
 		return _text;
 	}
 
-	public void setDetectedSourceLanguage(String detectedSourceLanguage) {
-		_detectedSourceLanguage = detectedSourceLanguage;
-	}
-
-	public void setText(String text) {
-		_text = text;
-	}
-
-	private String _detectedSourceLanguage;
-	private String _text;
+	private final String _detectedSourceLanguageId;
+	private final String _text;
 
 }

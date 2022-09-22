@@ -1391,6 +1391,7 @@ definition {
 			objectName = "CustomObject141661");
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
+			deletionType = "disassociate",
 			objectName_1 = "CustomObject141661",
 			objectName_2 = "CustomObject141661",
 			relationshipLabel = "Relationship",
@@ -1456,7 +1457,7 @@ definition {
 
 		ObjectPortlet.viewEntryDetails(entry = "Entry A");
 
-		CreateObject.deleteEntryInRelationshipTab(entryName = "Entry B");
+		CreateObject.deleteEntryInRelationshipTab(labelName = "Entry B");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "Entry B");
 

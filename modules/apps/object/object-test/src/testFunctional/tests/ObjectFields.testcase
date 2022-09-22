@@ -150,6 +150,138 @@ definition {
 			fieldType = "LongText");
 	}
 
+	@description = "LPS-135404 - Verify that it's possible to create new custom fields in a System Object"
+	@priority = "5"
+	test CanCreateCustomFieldInSystemObject {
+		property portal.acceptance = "true";
+
+		task ("Go to Objects, select System Object Account and click on fields tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Account");
+
+			ObjectAdmin.goToFieldsTab();
+		}
+
+		task ("Add custom text field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Text",
+				fieldName = "customText",
+				fieldType = "Text");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Text",
+				fieldType = "Text");
+		}
+
+		task ("Go to Objects, select System Object Commerce Product and click on fields tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Commerce Product");
+
+			ObjectAdmin.goToFieldsTab();
+		}
+
+		task ("Add custom integer field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Integer",
+				fieldName = "customInteger",
+				fieldType = "Integer");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Integer",
+				fieldType = "Integer");
+		}
+
+		task ("Go to Objects, select System Object Commerce Product Group and click on fields tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Commerce Product Group");
+
+			ObjectAdmin.goToFieldsTab();
+		}
+
+		task ("Add custom long integer field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Long Integer",
+				fieldName = "customLongInteger",
+				fieldType = "Long Integer");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Long Integer",
+				fieldType = "LongInteger");
+		}
+
+		task ("Go to Objects, select System Object Commerce Order and click on fields tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Commerce Order");
+
+			ObjectAdmin.goToFieldsTab();
+		}
+
+		task ("Add custom date field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Date",
+				fieldName = "customDate",
+				fieldType = "Date");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Date",
+				fieldType = "Date");
+		}
+
+		task ("Go to Objects, select System Object Postal Address and click on fields tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Postal Address");
+
+			ObjectAdmin.goToFieldsTab();
+		}
+
+		task ("Add custom text field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Decimal",
+				fieldName = "customDecimal",
+				fieldType = "Decimal");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Decimal",
+				fieldType = "Decimal");
+		}
+
+		task ("Go to Objects, select System Object User and click on fields tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "User");
+
+			ObjectAdmin.goToFieldsTab();
+		}
+
+		task ("Add custom boolean field") {
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Boolean",
+				fieldName = "customBoolean",
+				fieldType = "Boolean");
+
+			Refresh();
+
+			ObjectAdmin.assertObjectField(
+				fieldLabel = "Custom Boolean",
+				fieldType = "Boolean");
+		}
+	}
+
 	@description = "LPS-149625 - Verify that it's possible to create an object entry with aggregation field"
 	@ignore = "true"
 	@priority = "5"

@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGINATION_CONTROLS</td>
+	<td>//div[contains(@class,'pagination-bar') and not (contains(@class, 'cp-hide-pagination-activation-keys'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KEYS_TABLE_ROWS</td>
 	<td>xpath=(//tbody/tr)[${key_rowCount}]</td>
 	<td></td>

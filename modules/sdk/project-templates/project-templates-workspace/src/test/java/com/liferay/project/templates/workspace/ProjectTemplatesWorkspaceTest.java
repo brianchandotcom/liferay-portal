@@ -361,6 +361,28 @@ public class ProjectTemplatesWorkspaceTest
 				"\n\t\t\t\t<version>" + portalToolsBundleSupportVersion);
 	}
 
+	@Test
+	public void testCreateMavenWorksapce() throws Exception {
+		//		Assume.assumeTrue(isBuildProjects());
+
+		String liferayVersion = "7.2.10.4";
+
+		File destinationDir = temporaryFolder.newFolder("mavenWorkspace");
+
+		String groupId = "com.test";
+
+		File workspaceDir = buildTemplateWithMaven(
+			destinationDir, destinationDir, "workspace", "mavenWS", groupId,
+			mavenExecutor, "-DliferayVersion=" + liferayVersion,
+			"-Dpackage=com.test", "-Dproduct=dxp");
+
+		Assume.assumeTrue(workspaceDir.exists());
+
+		testContains(
+			workspaceDir, "pom.xml",
+			"<liferay.bom.version>7.2.10.4</liferay.bom.version>");
+	}
+
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 

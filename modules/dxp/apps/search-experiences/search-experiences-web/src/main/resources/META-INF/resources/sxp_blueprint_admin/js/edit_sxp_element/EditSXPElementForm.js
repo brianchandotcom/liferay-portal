@@ -62,6 +62,20 @@ const isPropertyValid = (sxpElementJSONObject, property) =>
 	!Array.isArray(sxpElementJSONObject[property]);
 
 /**
+ * Gets current value of the CodeMirror editor.
+ *
+ * The state `elementJSONEditorValue` might not be accurate due to
+ * setElementJSONEditorValue being asynchronous and when immediately navigating
+ * away or submitting, `elementJSONEditorValue` could not be what's exactly in
+ * the editor since it hasn't updated yet.
+ */
+const getCodeMirrorValue = (codeMirrorRef) => {
+	const doc = codeMirrorRef?.current?.getDoc();
+
+	return doc?.getValue();
+};
+
+/**
  * Reassigns the values of `title_i18n` and `description_i18n` in current
  * JSON object after editing them through the modal. Maintains current order
  * of properties and uses the expected locale format.
@@ -198,8 +212,8 @@ function EditSXPElementForm({
 	const [variables, setVariables] = useState(filteredCategories);
 
 	useShouldConfirmBeforeNavigate(
-		initialElementJSONEditorValueString !== elementJSONEditorValue &&
-			!isSubmitting
+		initialElementJSONEditorValueString !==
+			getCodeMirrorValue(elementJSONEditorRef) && !isSubmitting
 	);
 
 	/**
@@ -303,12 +317,12 @@ function EditSXPElementForm({
 		// case where a user types in the CodeMirror editor and very quickly
 		// clicks save.
 
-		const doc = elementJSONEditorRef.current.getDoc();
-
 		const {
 			isInvalid,
 			sxpElementJSONObjectNew,
-		} = _validateAndUpdateSXPElementJSONObject(doc.getValue());
+		} = _validateAndUpdateSXPElementJSONObject(
+			getCodeMirrorValue(elementJSONEditorRef)
+		);
 
 		try {
 			if (isInvalid) {

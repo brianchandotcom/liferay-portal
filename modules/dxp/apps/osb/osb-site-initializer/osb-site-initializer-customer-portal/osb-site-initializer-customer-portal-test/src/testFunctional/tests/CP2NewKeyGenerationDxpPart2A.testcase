@@ -213,4 +213,30 @@ definition {
 			CustomerPortal.assertErrorMessageIsNotVisible(errorMessage = "Invalid MAC.");
 		}
 	}
+
+	@description = "Automation Ticket: LPS-157448 | Test Summary: Verify if the button '+ Add Activation Key' is disabled when the user reaches the maximum number of activation keys allowed."
+	@priority = "4"
+	test CanViewTheAddActivationKeysButtonIsDisabled {
+		task ("Given I fulfill the Environment field") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				field = "Environment Name",
+				content = "Environment Test Name");
+		}
+
+		task ("When I add the maximum of Activation Keys") {
+			CP2ActivationKeys.fulfillActivationKey();
+		}
+
+		task ("Then I should be able to see the '+ Add Activation Key' button disabled") {
+			CustomerPortal.assertButtonIsDisabled(text = "Add Activation Key");
+		}
+
+		task ("When I put the mouse over the '+ Add Activation Key' button") {
+			CustomerPortal.putMouseOverButton(text = "Add Activation Key");
+		}
+
+		task ("Then I should be able to see the tool tip with the text 'Maximum number of Activation Keys reached for this subscription.'") {
+			CP2ActivationKeys.assertTooltipIsVisible(text = "Maximum number of Activation Keys reached for this subscription.");
+		}
+	}
 }

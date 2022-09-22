@@ -207,6 +207,10 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 			expectedFragmentEntryLinks.toString(), 1,
 			actualFragmentEntryLinks.size());
 
+		Assert.assertEquals(
+			expectedFragmentEntryLinks.toString(), 1,
+			actualFragmentEntryLinks.size());
+
 		FragmentEntryLink expectedFragmentEntryLink =
 			expectedFragmentEntryLinks.get(0);
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.util;
+package com.liferay.object.system;
 
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;

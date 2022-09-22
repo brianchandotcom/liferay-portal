@@ -57,9 +57,13 @@ public class CommerceCheckoutStepServicesTrackerImpl
 			return null;
 		}
 
+		ServiceTrackerMap<String, ServiceWrapper<CommerceCheckoutStep>>
+			commerceCheckoutStepServiceTrackerMap =
+				_getCommerceCheckoutStepServiceTrackerMap();
+
 		ServiceWrapper<CommerceCheckoutStep>
 			commerceCheckoutStepServiceWrapper =
-				_commerceCheckoutStepServiceTrackerMap.getService(
+				commerceCheckoutStepServiceTrackerMap.getService(
 					commerceCheckoutStepName);
 
 		if (commerceCheckoutStepServiceWrapper == null) {
@@ -83,9 +87,13 @@ public class CommerceCheckoutStepServicesTrackerImpl
 
 		List<CommerceCheckoutStep> commerceCheckoutSteps = new ArrayList<>();
 
+		ServiceTrackerMap<String, ServiceWrapper<CommerceCheckoutStep>>
+			commerceCheckoutStepServiceTrackerMap =
+				_getCommerceCheckoutStepServiceTrackerMap();
+
 		List<ServiceWrapper<CommerceCheckoutStep>>
 			commerceCheckoutStepServiceWrappers = ListUtil.fromCollection(
-				_commerceCheckoutStepServiceTrackerMap.values());
+				commerceCheckoutStepServiceTrackerMap.values());
 
 		Collections.sort(
 			commerceCheckoutStepServiceWrappers,
@@ -177,22 +185,35 @@ public class CommerceCheckoutStepServicesTrackerImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_commerceCheckoutStepServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, CommerceCheckoutStep.class,
-				"commerce.checkout.step.name",
-				ServiceTrackerCustomizerFactory.
-					<CommerceCheckoutStep>serviceWrapper(bundleContext));
+		_bundleContext = bundleContext;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_commerceCheckoutStepServiceTrackerMap.close();
+		if (_commerceCheckoutStepServiceTrackerMap != null) {
+			_commerceCheckoutStepServiceTrackerMap.close();
+		}
+	}
+
+	private ServiceTrackerMap<String, ServiceWrapper<CommerceCheckoutStep>>
+		_getCommerceCheckoutStepServiceTrackerMap() {
+
+		if (_commerceCheckoutStepServiceTrackerMap == null) {
+			_commerceCheckoutStepServiceTrackerMap =
+				ServiceTrackerMapFactory.openSingleValueMap(
+					_bundleContext, CommerceCheckoutStep.class,
+					"commerce.checkout.step.name",
+					ServiceTrackerCustomizerFactory.
+						<CommerceCheckoutStep>serviceWrapper(_bundleContext));
+		}
+
+		return _commerceCheckoutStepServiceTrackerMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceCheckoutStepServicesTrackerImpl.class);
 
+	private BundleContext _bundleContext;
 	private ServiceTrackerMap<String, ServiceWrapper<CommerceCheckoutStep>>
 		_commerceCheckoutStepServiceTrackerMap;
 	private final Comparator<ServiceWrapper<CommerceCheckoutStep>>

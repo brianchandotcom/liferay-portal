@@ -123,6 +123,9 @@ public class CommerceChannelIndexer extends BaseIndexer<CommerceChannel> {
 		document.addKeyword(
 			CPField.COMMERCE_CHANNEL_GROUP_ID, group.getGroupId());
 
+		document.addKeyword(
+			Field.SCOPE_GROUP_ID, commerceChannel.getSiteGroupId());
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + commerceChannel + " indexed successfully");
 		}

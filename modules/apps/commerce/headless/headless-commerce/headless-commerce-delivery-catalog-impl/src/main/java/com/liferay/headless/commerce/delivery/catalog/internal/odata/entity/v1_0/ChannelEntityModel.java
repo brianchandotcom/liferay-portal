@@ -17,6 +17,7 @@ package com.liferay.headless.commerce.delivery.catalog.internal.odata.entity.v1_
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
@@ -29,7 +30,9 @@ public class ChannelEntityModel implements EntityModel {
 	public ChannelEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName("name")));
+				"name", locale -> Field.getSortableFieldName("name")),
+			new IntegerEntityField(
+				"scopeGroupId", locale -> "scopeGroupId"));
 	}
 
 	@Override

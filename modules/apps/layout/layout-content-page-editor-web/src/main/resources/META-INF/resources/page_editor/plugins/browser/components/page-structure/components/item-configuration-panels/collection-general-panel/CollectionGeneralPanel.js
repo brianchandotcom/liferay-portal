@@ -30,7 +30,6 @@ import {
 	useGetState,
 	useSelector,
 } from '../../../../../../../app/contexts/StoreContext';
-import selectSegmentsExperienceId from '../../../../../../../app/selectors/selectSegmentsExperienceId';
 import CollectionService from '../../../../../../../app/services/CollectionService';
 import InfoItemService from '../../../../../../../app/services/InfoItemService';
 import updateCollectionDisplayCollection from '../../../../../../../app/thunks/updateCollectionDisplayCollection';
@@ -84,7 +83,6 @@ export function CollectionGeneralPanel({item}) {
 	const collectionVerticalAlignmentId = useId();
 	const dispatch = useDispatch();
 	const getState = useGetState();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const {
 		observer: filterConfigurationObserver,
@@ -190,11 +188,10 @@ export function CollectionGeneralPanel({item}) {
 				updateItemConfig({
 					itemConfig,
 					itemId: item.itemId,
-					segmentsExperienceId,
 				})
 			);
 		},
-		[item.itemId, dispatch, segmentsExperienceId, selectedViewportSize]
+		[item.itemId, dispatch, selectedViewportSize]
 	);
 
 	useEffect(() => {

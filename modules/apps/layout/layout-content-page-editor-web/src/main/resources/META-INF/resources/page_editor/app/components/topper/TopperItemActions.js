@@ -45,12 +45,9 @@ export default function TopperItemActions({item}) {
 	const selectItem = useSelectItem();
 	const widgets = useSelector((state) => state.widgets);
 
-	const {
-		fragmentEntryLinks,
-		layoutData,
-		segmentsExperienceId,
-		selectedViewportSize,
-	} = useSelector((state) => state);
+	const {fragmentEntryLinks, layoutData, selectedViewportSize} = useSelector(
+		(state) => state
+	);
 
 	const [openSaveModal, setOpenSaveModal] = useState(false);
 
@@ -72,7 +69,6 @@ export default function TopperItemActions({item}) {
 					hideFragment({
 						dispatch,
 						itemId: item.itemId,
-						segmentsExperienceId,
 						selectedViewportSize,
 					});
 
@@ -112,7 +108,6 @@ export default function TopperItemActions({item}) {
 					dispatch(
 						duplicateItem({
 							itemId: item.itemId,
-							segmentsExperienceId,
 							selectItem,
 						})
 					),
@@ -147,7 +142,6 @@ export default function TopperItemActions({item}) {
 		isInputFragment,
 		item,
 		layoutData,
-		segmentsExperienceId,
 		selectedViewportSize,
 		selectItem,
 		widgets,

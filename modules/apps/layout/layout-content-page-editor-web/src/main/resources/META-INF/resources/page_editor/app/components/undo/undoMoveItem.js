@@ -14,11 +14,10 @@
 
 import moveItem from '../../thunks/moveItem';
 
-function undoAction({action, store}) {
+function undoAction({action}) {
 	const {itemId, parentItemId, position} = action;
-	const {segmentsExperienceId} = store;
 
-	return moveItem({itemId, parentItemId, position, segmentsExperienceId});
+	return moveItem({itemId, parentItemId, position});
 }
 
 function getDerivedStateForUndo({action, state}) {

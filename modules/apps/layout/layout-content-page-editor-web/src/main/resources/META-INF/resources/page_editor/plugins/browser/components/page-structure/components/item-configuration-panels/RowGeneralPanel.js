@@ -23,7 +23,6 @@ import {
 	useDispatch,
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import updateRowColumns from '../../../../../../app/thunks/updateRowColumns';
 import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
@@ -71,7 +70,6 @@ const ROW_STYLE_IDENTIFIERS = {
 export function RowGeneralPanel({item}) {
 	const dispatch = useDispatch();
 	const layoutData = useSelector((state) => state.layoutData);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -105,7 +103,6 @@ export function RowGeneralPanel({item}) {
 					updateRowColumns({
 						itemId: item.itemId,
 						numberOfColumns: newNumberOfColumns,
-						segmentsExperienceId,
 						viewportSizeId: selectedViewportSize,
 					})
 				);
@@ -118,7 +115,6 @@ export function RowGeneralPanel({item}) {
 			updateItemConfig({
 				itemConfig,
 				itemId: item.itemId,
-				segmentsExperienceId,
 			})
 		);
 	};
@@ -150,7 +146,6 @@ export function RowGeneralPanel({item}) {
 					updateRowColumns({
 						itemId: item.itemId,
 						numberOfColumns: newNumberOfColumns,
-						segmentsExperienceId,
 						viewportSizeId: selectedViewportSize,
 					})
 				);
@@ -163,7 +158,6 @@ export function RowGeneralPanel({item}) {
 			updateItemConfig({
 				itemConfig: itemStyles,
 				itemId: item.itemId,
-				segmentsExperienceId,
 			})
 		);
 	};

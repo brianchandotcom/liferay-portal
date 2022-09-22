@@ -107,12 +107,9 @@ const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 	const selectItem = useSelectItem();
 	const widgets = useSelector((state) => state.widgets);
 
-	const {
-		fragmentEntryLinks,
-		layoutData,
-		segmentsExperienceId,
-		selectedViewportSize,
-	} = useSelector((state) => state);
+	const {fragmentEntryLinks, layoutData, selectedViewportSize} = useSelector(
+		(state) => state
+	);
 
 	const isInputFragment =
 		item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
@@ -134,7 +131,6 @@ const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 					updateItemStyle({
 						dispatch,
 						itemId: item.itemId,
-						segmentsExperienceId,
 						selectedViewportSize,
 						styleName: 'display',
 						styleValue: isHidden ? 'block' : 'none',
@@ -178,7 +174,6 @@ const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 					dispatch(
 						duplicateItem({
 							itemId: item.itemId,
-							segmentsExperienceId,
 							selectItem,
 						})
 					),
@@ -222,7 +217,6 @@ const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 		isInputFragment,
 		item,
 		layoutData,
-		segmentsExperienceId,
 		selectedViewportSize,
 		selectItem,
 		widgets,

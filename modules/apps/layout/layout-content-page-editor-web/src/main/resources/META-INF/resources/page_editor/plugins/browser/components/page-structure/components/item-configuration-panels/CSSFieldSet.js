@@ -21,7 +21,6 @@ import {
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
 import selectCanUpdateCSSAdvancedOptions from '../../../../../../app/selectors/selectCanUpdateCSSAdvancedOptions';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
 import {FieldSet} from './FieldSet';
@@ -47,7 +46,6 @@ export default function CSSFieldSet({item}) {
 		selectCanUpdateCSSAdvancedOptions
 	);
 	const languageId = useSelector((state) => state.languageId);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -69,7 +67,6 @@ export default function CSSFieldSet({item}) {
 			updateItemConfig({
 				itemConfig: nextConfig,
 				itemId: item.itemId,
-				segmentsExperienceId,
 			})
 		);
 	};

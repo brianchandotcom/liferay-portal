@@ -22,7 +22,6 @@ import {
 	useDispatch,
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
 import CSSFieldSet from './CSSFieldSet';
@@ -40,7 +39,6 @@ const HTML_TAGS = [
 
 export default function ContainerAdvancedPanel({item}) {
 	const dispatch = useDispatch();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -70,7 +68,6 @@ export default function ContainerAdvancedPanel({item}) {
 								updateItemConfig({
 									itemConfig,
 									itemId: item.itemId,
-									segmentsExperienceId,
 								})
 							);
 						}}
@@ -104,7 +101,6 @@ export default function ContainerAdvancedPanel({item}) {
 										[name]: value,
 									},
 									itemId: item.itemId,
-									segmentsExperienceId,
 								})
 							);
 						}}

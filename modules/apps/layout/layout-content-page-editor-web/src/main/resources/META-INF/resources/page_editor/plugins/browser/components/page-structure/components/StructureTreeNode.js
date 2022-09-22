@@ -38,7 +38,6 @@ import {
 	useSelectorRef,
 } from '../../../../../app/contexts/StoreContext';
 import selectCanUpdatePageStructure from '../../../../../app/selectors/selectCanUpdatePageStructure';
-import selectSegmentsExperienceId from '../../../../../app/selectors/selectSegmentsExperienceId';
 import CollectionService from '../../../../../app/services/CollectionService';
 import moveItem from '../../../../../app/thunks/moveItem';
 import updateItemConfig from '../../../../../app/thunks/updateItemConfig';
@@ -188,7 +187,6 @@ function StructureTreeNodeContent({
 	const dispatch = useDispatch();
 	const hoverItem = useHoverItem();
 	const nodeRef = useRef();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -240,7 +238,6 @@ function StructureTreeNodeContent({
 					itemId: node.id,
 					parentItemId,
 					position,
-					segmentsExperienceId,
 				})
 			)
 	);
@@ -257,7 +254,6 @@ function StructureTreeNodeContent({
 				updateItemConfig({
 					itemConfig: {name: trimmedName},
 					itemId: node.id,
-					segmentsExperienceId,
 				})
 			);
 		}
@@ -389,7 +385,6 @@ function StructureTreeNodeContent({
 						<VisibilityButton
 							dispatch={dispatch}
 							node={node}
-							segmentsExperienceId={segmentsExperienceId}
 							selectedViewportSize={selectedViewportSize}
 							visible={node.hidden || isHovered || isSelected}
 						/>
@@ -490,13 +485,7 @@ const NameLabel = React.forwardRef(
 	}
 );
 
-const VisibilityButton = ({
-	dispatch,
-	node,
-	segmentsExperienceId,
-	selectedViewportSize,
-	visible,
-}) => {
+const VisibilityButton = ({dispatch, node, selectedViewportSize, visible}) => {
 	const hasRequiredChild = useHasRequiredChild(node.id);
 
 	return (
@@ -519,7 +508,6 @@ const VisibilityButton = ({
 				updateItemStyle({
 					dispatch,
 					itemId: node.id,
-					segmentsExperienceId,
 					selectedViewportSize,
 					styleName: 'display',
 					styleValue: node.hidden ? 'block' : 'none',

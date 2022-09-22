@@ -38,7 +38,6 @@ import {
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import moveItem from '../../thunks/moveItem';
 import switchSidebarPanel from '../../thunks/switchSidebarPanel';
 import {TARGET_POSITIONS} from '../../utils/drag-and-drop/constants/targetPositions';
@@ -91,7 +90,6 @@ function TopperContent({
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const hoverItem = useHoverItem();
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectItem = useSelectItem();
 	const topperLabelId = useId();
 
@@ -134,7 +132,6 @@ function TopperContent({
 				itemId: item.itemId,
 				parentItemId,
 				position,
-				segmentsExperienceId,
 			})
 		);
 	};

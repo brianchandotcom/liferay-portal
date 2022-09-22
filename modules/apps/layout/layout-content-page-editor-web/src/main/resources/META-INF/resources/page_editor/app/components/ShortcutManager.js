@@ -85,7 +85,7 @@ export default function ShortcutManager() {
 	const sidebarHidden = state.sidebar.hidden;
 	const {widgets} = state;
 
-	const {fragmentEntryLinks, layoutData, segmentsExperienceId} = state;
+	const {fragmentEntryLinks, layoutData} = state;
 
 	const activeLayoutDataItem =
 		activeItemType === ITEM_TYPES.layoutDataItem
@@ -96,7 +96,6 @@ export default function ShortcutManager() {
 		dispatch(
 			duplicateItem({
 				itemId: activeItemId,
-				segmentsExperienceId,
 				selectItem,
 			})
 		);
@@ -143,7 +142,6 @@ export default function ShortcutManager() {
 				itemId,
 				parentItemId: parentId,
 				position,
-				segmentsExperienceId,
 			})
 		);
 	};

@@ -18,11 +18,7 @@ import React from 'react';
 import {SelectField} from '../../../../../../app/components/fragment-configuration-fields/SelectField';
 import {CONTAINER_WIDTH_TYPES} from '../../../../../../app/config/constants/containerWidthTypes';
 import {CONTENT_DISPLAY_OPTIONS} from '../../../../../../app/config/constants/contentDisplayOptions';
-import {
-	useDispatch,
-	useSelector,
-} from '../../../../../../app/contexts/StoreContext';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
+import {useDispatch} from '../../../../../../app/contexts/StoreContext';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
 import {FlexOptions} from './FlexOptions';
@@ -55,7 +51,6 @@ const WIDTH_TYPE_OPTIONS = [
 
 export default function ContainerDisplayOptions({item}) {
 	const dispatch = useDispatch();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const flexOptionsVisible =
 		item.config.contentDisplay === CONTENT_DISPLAY_OPTIONS.flexColumn ||
@@ -86,7 +81,6 @@ export default function ContainerDisplayOptions({item}) {
 						updateItemConfig({
 							itemConfig,
 							itemId: item.itemId,
-							segmentsExperienceId,
 						})
 					);
 				}}
@@ -103,7 +97,6 @@ export default function ContainerDisplayOptions({item}) {
 									[name]: value,
 								},
 								itemId: item.itemId,
-								segmentsExperienceId,
 							})
 						);
 					}}
@@ -123,7 +116,6 @@ export default function ContainerDisplayOptions({item}) {
 						updateItemConfig({
 							itemConfig: {[name]: value},
 							itemId: item.itemId,
-							segmentsExperienceId,
 						})
 					);
 				}}

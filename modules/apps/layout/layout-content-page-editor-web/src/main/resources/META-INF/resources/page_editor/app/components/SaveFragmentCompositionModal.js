@@ -29,12 +29,10 @@ import {openImageSelector} from '../../core/openImageSelector';
 import {config} from '../config/index';
 import {useActiveItemId} from '../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
-import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import addFragmentComposition from '../thunks/addFragmentComposition';
 
 const SaveFragmentCompositionModal = ({onCloseModal}) => {
 	const dispatch = useDispatch();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const activeItemId = useActiveItemId();
 	const isMounted = useIsMounted();
@@ -81,7 +79,6 @@ const SaveFragmentCompositionModal = ({onCloseModal}) => {
 					previewImageURL: thumbnail.url,
 					saveInlineContent,
 					saveMappingConfiguration,
-					segmentsExperienceId,
 				})
 			)
 				.then(() => {

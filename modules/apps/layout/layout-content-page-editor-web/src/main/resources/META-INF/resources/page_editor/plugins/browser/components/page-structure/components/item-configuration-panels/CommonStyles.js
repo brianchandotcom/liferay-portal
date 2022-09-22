@@ -23,7 +23,6 @@ import {
 	useDispatch,
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateItemStyle from '../../../../../../app/utils/updateItemStyle';
 import {FieldSet, fieldIsDisabled} from './FieldSet';
 
@@ -34,7 +33,6 @@ export function CommonStyles({
 	item,
 }) {
 	const dispatch = useDispatch();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -52,7 +50,6 @@ export function CommonStyles({
 		updateItemStyle({
 			dispatch,
 			itemId: item.itemId,
-			segmentsExperienceId,
 			selectedViewportSize,
 			styleName: name,
 			styleValue: value,

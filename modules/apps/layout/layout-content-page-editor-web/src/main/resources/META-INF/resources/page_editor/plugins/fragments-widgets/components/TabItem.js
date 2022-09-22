@@ -21,8 +21,7 @@ import React from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
-import selectSegmentsExperienceId from '../../../app/selectors/selectSegmentsExperienceId';
+import {useDispatch} from '../../../app/contexts/StoreContext';
 import addFragment from '../../../app/thunks/addFragment';
 import addItem from '../../../app/thunks/addItem';
 import addWidget from '../../../app/thunks/addWidget';
@@ -41,7 +40,6 @@ const ITEM_PROPTYPES_SHAPE = PropTypes.shape({
 
 export default function TabItem({displayStyle, item}) {
 	const dispatch = useDispatch();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const onToggleHighlighted = () => {
 		if (item.data.portletId) {
@@ -93,7 +91,6 @@ export default function TabItem({displayStyle, item}) {
 					itemType: item.type,
 					parentItemId: parentId,
 					position,
-					store: {segmentsExperienceId},
 				})
 			);
 		}

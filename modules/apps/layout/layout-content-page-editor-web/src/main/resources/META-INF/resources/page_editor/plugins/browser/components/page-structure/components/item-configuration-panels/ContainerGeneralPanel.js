@@ -22,7 +22,6 @@ import {
 	useDispatch,
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import isMapped from '../../../../../../app/utils/editable-value/isMapped';
 import {getEditableLinkValue} from '../../../../../../app/utils/getEditableLinkValue';
@@ -35,7 +34,6 @@ import ContainerDisplayOptions from './ContainerDisplayOptions';
 export default function ContainerGeneralPanel({item}) {
 	const dispatch = useDispatch();
 	const languageId = useSelector((state) => state.languageId);
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const [linkConfig, setLinkConfig] = useState({});
 	const [linkValue, setLinkValue] = useState({});
@@ -82,7 +80,6 @@ export default function ContainerGeneralPanel({item}) {
 			updateItemConfig({
 				itemConfig: nextConfig,
 				itemId: item.itemId,
-				segmentsExperienceId,
 			})
 		);
 	};

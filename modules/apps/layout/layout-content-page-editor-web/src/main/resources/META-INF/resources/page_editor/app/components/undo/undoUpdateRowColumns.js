@@ -15,12 +15,11 @@
 import updateRowColumns from '../../thunks/updateRowColumns';
 
 function undoAction({action}) {
-	const {itemId, numberOfColumns, segmentsExperienceId} = action;
+	const {itemId, numberOfColumns} = action;
 
 	return updateRowColumns({
 		itemId,
 		numberOfColumns,
-		segmentsExperienceId,
 	});
 }
 

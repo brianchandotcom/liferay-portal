@@ -19,7 +19,6 @@ import React from 'react';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useSelectItem} from '../../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import {CheckboxField} from './CheckboxField';
 
@@ -37,7 +36,6 @@ function getHiddenAncestorId(layoutData, item) {
 
 export function HideFromSearchField({item}) {
 	const dispatch = useDispatch();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -67,7 +65,6 @@ export function HideFromSearchField({item}) {
 						updateItemConfig({
 							itemConfig,
 							itemId: item.itemId,
-							segmentsExperienceId,
 						})
 					);
 				}}

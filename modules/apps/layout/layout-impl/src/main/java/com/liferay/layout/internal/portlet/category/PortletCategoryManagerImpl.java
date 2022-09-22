@@ -57,6 +57,7 @@ import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -202,32 +203,36 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 				currentPortletCategory.getPath(), new String[] {"/", "."},
 				new String[] {"-", "-"});
 
-			portletCategoryJSONObjectsMap.put(
-				portletCategoryKey,
-				JSONUtil.put(
-					"categories",
-					() -> {
-						Map<String, JSONObject>
-							childPortletCategoryJSONObjectsMap =
-								_getPortletCategoryJSONObjectsMap(
-									highlightedPortletIds, httpServletRequest,
-									currentPortletCategory, themeDisplay);
+			Map<String, JSONObject> childPortletCategoryJSONObjectsMap =
+				_getPortletCategoryJSONObjectsMap(
+					highlightedPortletIds, httpServletRequest,
+					currentPortletCategory, themeDisplay);
 
-						return childPortletCategoryJSONObjectsMap.values();
-					}
-				).put(
-					"path", portletCategoryKey
-				).put(
-					"portlets",
-					_getPortletsJSONArray(
-						highlightedPortletIds, httpServletRequest,
-						currentPortletCategory, themeDisplay)
-				).put(
-					"title",
-					_getPortletCategoryTitle(
-						httpServletRequest, currentPortletCategory,
-						themeDisplay)
-				));
+			Collection<JSONObject> childPortletCategoryJSONObjects =
+				childPortletCategoryJSONObjectsMap.values();
+
+			JSONArray portletsJSONArray = _getPortletsJSONArray(
+				highlightedPortletIds, httpServletRequest,
+				currentPortletCategory, themeDisplay);
+
+			if (childPortletCategoryJSONObjects.isEmpty() ||
+				(portletsJSONArray.length() > 0)) {
+
+				portletCategoryJSONObjectsMap.put(
+					portletCategoryKey,
+					JSONUtil.put(
+						"categories", childPortletCategoryJSONObjects
+					).put(
+						"path", portletCategoryKey
+					).put(
+						"portlets", portletsJSONArray
+					).put(
+						"title",
+						_getPortletCategoryTitle(
+							httpServletRequest, currentPortletCategory,
+							themeDisplay)
+					));
+			}
 		}
 
 		return portletCategoryJSONObjectsMap;

@@ -67,6 +67,7 @@ Import-Package:\
 	!sun.io,\
 	\
 	*
+-dsannotations-options: inherit
 -fixupmessages: Classes found in the wrong directory: ...;is:=ignore
 -includeresource:\
 	opensaml-core-*;lib:=true,\

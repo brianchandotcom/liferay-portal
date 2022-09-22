@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.index.updater.IndexUpdaterUtil;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
+import com.liferay.portal.upgrade.internal.registry.UpgradeStepRegistratorTracker;
 import com.liferay.portal.upgrade.internal.release.ReleasePublisher;
 
 import java.io.OutputStream;
@@ -46,6 +47,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -94,7 +96,8 @@ public class UpgradeExecutor {
 
 		String schemaVersionString = "0.0.0";
 
-		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
+		Release release = _upgradeStepRegistratorTracker.fetchUpgradedRelease(
+			bundleSymbolicName);
 
 		if ((release != null) &&
 			Validator.isNotNull(release.getSchemaVersion())) {
@@ -182,6 +185,16 @@ public class UpgradeExecutor {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+
+		_upgradeStepRegistratorTracker = new UpgradeStepRegistratorTracker(
+			bundleContext, _releaseLocalService, _swappedLogExecutor, this);
+
+		_upgradeStepRegistratorTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_upgradeStepRegistratorTracker.close();
 	}
 
 	private boolean _isInitialRelease(List<UpgradeInfo> upgradeInfos) {
@@ -213,6 +226,8 @@ public class UpgradeExecutor {
 
 	@Reference
 	private SwappedLogExecutor _swappedLogExecutor;
+
+	private UpgradeStepRegistratorTracker _upgradeStepRegistratorTracker;
 
 	private class UpgradeInfosRunnable implements Runnable {
 

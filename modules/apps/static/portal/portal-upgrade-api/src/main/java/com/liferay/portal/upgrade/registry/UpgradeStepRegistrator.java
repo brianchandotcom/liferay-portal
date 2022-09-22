@@ -38,6 +38,10 @@ public interface UpgradeStepRegistrator {
 		public default void registerInitialization() {
 		}
 
+		public default void registerReleaseCreationUpgradeSteps(
+			UpgradeStep... upgradeSteps) {
+		}
+
 	}
 
 }

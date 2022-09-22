@@ -39,7 +39,9 @@ import com.liferay.portal.util.PropsValues;
 import java.io.OutputStream;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.osgi.framework.Bundle;
@@ -49,49 +51,84 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, service = {})
 public class UpgradeStepRegistratorTracker {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+	public UpgradeStepRegistratorTracker(
+		BundleContext bundleContext, ReleaseLocalService releaseLocalService,
+		SwappedLogExecutor swappedLogExecutor,
+		UpgradeExecutor upgradeExecutor) {
 
-		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext, UpgradeStepRegistrator.class,
-			new UpgradeStepRegistratorServiceTrackerCustomizer());
+		_bundleContext = bundleContext;
+		_releaseLocalService = releaseLocalService;
+		_swappedLogExecutor = swappedLogExecutor;
+		_upgradeExecutor = upgradeExecutor;
 	}
 
-	@Deactivate
-	protected void deactivate() {
+	public void close() {
 		_serviceTracker.close();
+	}
+
+	public Release fetchUpgradedRelease(String bundleSymbolicName) {
+		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
+
+		if (release == null) {
+			List<UpgradeStep> releaseUpgradeSteps = _releaseUpgradeStepsMap.get(
+				bundleSymbolicName);
+
+			if (releaseUpgradeSteps != null) {
+				DBProcessContext dbProcessContext = new DBProcessContext() {
+
+					@Override
+					public DBContext getDBContext() {
+						return new DBContext();
+					}
+
+					@Override
+					public OutputStream getOutputStream() {
+						return null;
+					}
+
+				};
+
+				for (UpgradeStep releaseUpgradeStep : releaseUpgradeSteps) {
+					try {
+						releaseUpgradeStep.upgrade(dbProcessContext);
+					}
+					catch (UpgradeException upgradeException) {
+						_log.error(upgradeException);
+					}
+				}
+
+				release = _releaseLocalService.fetchRelease(bundleSymbolicName);
+			}
+		}
+
+		return release;
+	}
+
+	public void open() {
+		_serviceTracker = ServiceTrackerFactory.open(
+			_bundleContext, UpgradeStepRegistrator.class,
+			new UpgradeStepRegistratorServiceTrackerCustomizer());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeStepRegistratorTracker.class);
 
-	private BundleContext _bundleContext;
-
-	@Reference
-	private ReleaseLocalService _releaseLocalService;
-
+	private final BundleContext _bundleContext;
+	private final ReleaseLocalService _releaseLocalService;
+	private final Map<String, List<UpgradeStep>> _releaseUpgradeStepsMap =
+		new HashMap<>();
 	private ServiceTracker<UpgradeStepRegistrator, SafeCloseable>
 		_serviceTracker;
-
-	@Reference
-	private SwappedLogExecutor _swappedLogExecutor;
-
-	@Reference
-	private UpgradeExecutor _upgradeExecutor;
+	private final SwappedLogExecutor _swappedLogExecutor;
+	private final UpgradeExecutor _upgradeExecutor;
 
 	private class InitialReleaseServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Release, Void> {
@@ -186,6 +223,14 @@ public class UpgradeStepRegistratorTracker {
 
 			upgradeStepRegistrator.register(upgradeStepRegistry);
 
+			List<UpgradeStep> releaseUpgradeSteps =
+				upgradeStepRegistry.getReleaseCreationUpgradeSteps();
+
+			if (!releaseUpgradeSteps.isEmpty()) {
+				_releaseUpgradeStepsMap.put(
+					bundleSymbolicName, releaseUpgradeSteps);
+			}
+
 			List<UpgradeStep> initialDeploymentUpgradeSteps =
 				upgradeStepRegistry.getInitialDeploymentUpgradeSteps();
 
@@ -263,6 +308,8 @@ public class UpgradeStepRegistratorTracker {
 				if (releaseServiceTracker != null) {
 					releaseServiceTracker.close();
 				}
+
+				_releaseUpgradeStepsMap.remove(bundleSymbolicName);
 			};
 		}
 

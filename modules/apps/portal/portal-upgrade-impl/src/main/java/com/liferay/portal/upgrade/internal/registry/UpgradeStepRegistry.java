@@ -41,6 +41,10 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 		return _initialDeploymentUpgradeSteps;
 	}
 
+	public List<UpgradeStep> getReleaseCreationUpgradeSteps() {
+		return _releaseCreationUpgradeSteps;
+	}
+
 	public List<UpgradeInfo> getUpgradeInfos() {
 		if (_initialization) {
 			if (_upgradeInfos.isEmpty()) {
@@ -81,6 +85,13 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 	@Override
 	public void registerInitialization() {
 		_initialization = true;
+	}
+
+	@Override
+	public void registerReleaseCreationUpgradeSteps(
+		UpgradeStep... upgradeSteps) {
+
+		Collections.addAll(_releaseCreationUpgradeSteps, upgradeSteps);
 	}
 
 	private void _createUpgradeInfos(
@@ -160,6 +171,8 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 	private final List<UpgradeStep> _initialDeploymentUpgradeSteps =
 		new ArrayList<>();
 	private boolean _initialization;
+	private final List<UpgradeStep> _releaseCreationUpgradeSteps =
+		new ArrayList<>();
 	private final List<UpgradeInfo> _upgradeInfos = new ArrayList<>();
 
 }

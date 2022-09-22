@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.internal.action.util;
+package com.liferay.object.util;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +44,7 @@ public class ObjectScriptVariablesUtil {
 				"creator", payloadJSONObject.get("userId")
 			).build();
 
-		Map<String, Object> allVariables = null;
+		Map<String, Object> allVariables = new HashMap<>();
 
 		if (objectDefinition.isSystem()) {
 			String contentType = _getContentType(

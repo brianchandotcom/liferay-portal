@@ -367,15 +367,14 @@ public class ObjectRelationshipLocalServiceImpl
 					false
 				).and(
 					ObjectRelationshipTable.INSTANCE.name.eq(
-						objectRelationshipName
-					).and(
-						ObjectRelationshipTable.INSTANCE.objectDefinitionId1.eq(
-							objectDefinitionId
-						).or(
-							ObjectRelationshipTable.INSTANCE.
-								objectDefinitionId2.eq(objectDefinitionId)
-						)
-					)
+						objectRelationshipName)
+				).and(
+					ObjectRelationshipTable.INSTANCE.objectDefinitionId1.eq(
+						objectDefinitionId
+					).or(
+						ObjectRelationshipTable.INSTANCE.objectDefinitionId2.eq(
+							objectDefinitionId)
+					).withParentheses()
 				)
 			));
 

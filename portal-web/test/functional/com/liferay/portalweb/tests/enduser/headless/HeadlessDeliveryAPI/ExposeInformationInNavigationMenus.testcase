@@ -24,6 +24,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			BlogPostingAPI.deleteAllBlogPostings();
+
 			JSONSitenavigation.deleteSiteNavigationMenu(
 				groupName = "Guest",
 				siteNavigationMenuName = "Navigation Menu Name");
@@ -79,7 +81,7 @@ definition {
 			var response = NavigationMenuAPI.getNavigationMenu(siteId = "${siteId}");
 		}
 
-		task ("Then I can see values of useCustomName of false, contentURL equals to document endpoint and type equals to document") {
+		task ("Then I can see values of useCustomName is false, contentURL equals to document endpoint and type equals to document") {
 			var portalURL = JSONCompany.getPortalURL();
 
 			NavigationMenuAPI.assertResponseHasCorrectInformations(
@@ -278,7 +280,7 @@ definition {
 			var response = NavigationMenuAPI.getNavigationMenu(navigationMenuId = "${navigationMenuId}");
 		}
 
-		task ("Then I can see values of useCustomName of false, contentURL equals to webcontent endpoint and type equals to structuredContent") {
+		task ("Then I can see values of useCustomName is false, contentURL equals to webcontent endpoint and type equals to structuredContent") {
 			var portalURL = JSONCompany.getPortalURL();
 			var structuredContentId = HeadlessWebcontentAPI.getWebContentIdFromResponse(responseToParse = "${responseFromCreate}");
 
@@ -286,6 +288,87 @@ definition {
 				expectedType = "structuredContent",
 				expectedURL = "${portalURL}/o/headless-delivery/v1.0/structured-contents/${structuredContentId}",
 				expectedUseCustomName = "false",
+				responseToParse = "${response}");
+		}
+	}
+
+	@priority = "4"
+	test GetBlogEntryInformationInNavigationMenuWithNavigationMenuId {
+		property portal.acceptance = "true";
+
+		task ("And Given with post request and siteId I create a blog entry") {
+			var blogPostingId = BlogPostingAPI.getIdOfCreatedBlogPosting(
+				articleBody = "ArticleBody",
+				headline = "Headline");
+		}
+
+		task ("And Given the navigation menu doesn't use custom name assciate with blog entry through UI") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "guest");
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Headline",
+				item = "Blogs Entry");
+		}
+
+		task ("When with get request to retrieve the navigation menu with navigationMenuId") {
+			var navigationMenuId = JSONSitenavigationSetter.setSiteNavigationMenuId(
+				groupName = "Guest",
+				siteNavigationMenuName = "Navigation Menu Name");
+
+			var response = NavigationMenuAPI.getNavigationMenu(navigationMenuId = "${navigationMenuId}");
+		}
+
+		task ("Then I can see values of useCustomName is false, contentURL equals to blog endpoint and type equals to blogPosting") {
+			var portalURL = JSONCompany.getPortalURL();
+
+			NavigationMenuAPI.assertResponseHasCorrectInformations(
+				expectedType = "blogPosting",
+				expectedURL = "${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}",
+				expectedUseCustomName = "false",
+				responseToParse = "${response}");
+		}
+	}
+
+	@priority = "4"
+	test GetBlogEntryInformationInNavigationMenuWithSiteId {
+		property portal.acceptance = "true";
+
+		task ("And Given with post request and siteId I create a blog entry") {
+			var blogPostingId = BlogPostingAPI.getIdOfCreatedBlogPosting(
+				articleBody = "ArticleBody",
+				headline = "Headline");
+		}
+
+		task ("And Given the navigation menu which use custom name associate with the blog entry though UI") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "guest");
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addItem(
+				assetTitle = "Headline",
+				item = "Blogs Entry");
+
+			NavigationMenusAdmin.editItem(
+				itemName = "Headline",
+				useCustomName = "true");
+		}
+
+		task ("When with get request to retrieve the navigation menu with siteId") {
+			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
+
+			var response = NavigationMenuAPI.getNavigationMenu(siteId = "${siteId}");
+		}
+
+		task ("Then I can see values of useCustomName is true, contentURL equals to blog endpoint and type equals to blogPosting") {
+			var portalURL = JSONCompany.getPortalURL();
+
+			NavigationMenuAPI.assertResponseHasCorrectInformations(
+				expectedType = "blogPosting",
+				expectedURL = "${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}",
+				expectedUseCustomName = "true",
+				responseFromSite = "true",
 				responseToParse = "${response}");
 		}
 	}
@@ -318,7 +401,7 @@ definition {
 			var response = NavigationMenuAPI.getNavigationMenu(siteId = "${siteId}");
 		}
 
-		task ("Then I can see values of useCustomName of false, contentURL equals to document endpoint and type equals to document") {
+		task ("Then I can see values of useCustomName is false, contentURL equals to document endpoint and type equals to document") {
 			var portalURL = JSONCompany.getPortalURL();
 			var documentId = JSONDocument.getFileEntryId(
 				dmDocumentTitle = "Document_1.txt",

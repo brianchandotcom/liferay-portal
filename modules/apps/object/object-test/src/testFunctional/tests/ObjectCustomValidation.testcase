@@ -2208,6 +2208,79 @@ definition {
 		}
 	}
 
+	@description = "LPS-152735 - Verify that it's possible to validate Groovy syntax when creating Actions"
+	@priority = "4"
+	test CanValidateGroovyAction {
+		task ("Create Custom Object and Custom Field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161912",
+				objectName = "CustomObject161912",
+				pluralLabelName = "Custom Objects 161912");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Integer",
+				fieldLabelName = "Custom Integer",
+				fieldName = "customInteger",
+				fieldType = "Integer",
+				isRequired = "false",
+				objectName = "CustomObject161912");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161912");
+		}
+
+		task ("Go to Objects, select Custom Object and click on actions tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161912");
+
+			ObjectAdmin.goToActionsTab();
+		}
+
+		task ("Add a Custom Action using Groovy Script") {
+			ObjectAdmin.addObjectActionViaUI(
+				actionDescription = "Custom Description",
+				actionName = "Custom Action",
+				active = "true",
+				scriptValidation = "invalidFields = (customInteger < 18)",
+				thenAction = "Groovy Script",
+				whenAction = "On After Add");
+		}
+
+		task ("Assert that there is Custom Action") {
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionName = "Action Name",
+				status = "Never Ran");
+		}
+
+		task ("Go to Custom Object entries and add an entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject161912");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Integer",
+				entry = "123456789");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert that the status was updated") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161912");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionName = "Action Name",
+				status = "Success");
+		}
+	}
+
 	@description = "LPS-151671 - Verify that it's possible to use data validations with expression builder on System Objects"
 	@priority = "5"
 	test CanValidateSystemObjectWithExpressionBuilder {

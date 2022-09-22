@@ -32,7 +32,7 @@ definition {
 		for (var optionName : list "${optionsList}") {
 			Check.checkNotVisible(
 				key_nodeName = "${optionName}",
-				locator1 = "Treeview#NODE_CHECKBOX");
+				locator1 = "Treeview#NODE_CHECKBOX_2");
 		}
 
 		ClickNoError(
@@ -442,7 +442,7 @@ definition {
 		for (var optionName : list "${optionsList}") {
 			Check.checkNotVisible(
 				key_nodeName = "${optionName}",
-				locator1 = "Treeview#NODE_CHECKBOX");
+				locator1 = "Treeview#NODE_CHECKBOX_2");
 		}
 	}
 

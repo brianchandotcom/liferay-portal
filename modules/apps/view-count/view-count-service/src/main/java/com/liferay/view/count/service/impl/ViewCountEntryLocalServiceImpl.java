@@ -131,27 +131,24 @@ public class ViewCountEntryLocalServiceImpl
 		}
 
 		try {
-			ClassName className = _classNameLocalService.getClassName(classNameId);
-			ViewCountEntryModelListener viewCountIncrementListener = _serviceTrackerMap.getService(className.getValue());
+			ClassName className = _classNameLocalService.getClassName(
+				classNameId);
 
-			if(viewCountIncrementListener == null){
+			ViewCountEntryModelListener viewCountIncrementListener =
+				_serviceTrackerMap.getService(className.getValue());
+
+			if (viewCountIncrementListener == null) {
 				return;
 			}
 
-			viewCountIncrementListener.afterIncrement(fetchViewCountEntry(new ViewCountEntryPK(
-				companyId, classNameId,
-				classPK)));
+			viewCountIncrementListener.afterIncrement(
+				fetchViewCountEntry(
+					new ViewCountEntryPK(companyId, classNameId, classPK)));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
 		}
 	}
-
-	@Deactivate
-	protected void deactivate() {_serviceTrackerMap.close();}
-
-	private ServiceTrackerMap<String, ViewCountEntryModelListener>
-		_serviceTrackerMap;
 
 	@Override
 	@Transactional(enabled = false)
@@ -170,15 +167,22 @@ public class ViewCountEntryLocalServiceImpl
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext, Map<String, Object> properties) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		modified(properties);
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ViewCountEntryModelListener.class, null,
 			ServiceReferenceMapperFactory.createFromFunction(
-				bundleContext,
-				ViewCountEntryModelListener::getModelClassName));
+				bundleContext, ViewCountEntryModelListener::getModelClassName));
 	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	@Modified
 	protected void modified(Map<String, Object> properties) {
 		ViewCountConfiguration viewCountConfiguration =
@@ -203,5 +207,7 @@ public class ViewCountEntryLocalServiceImpl
 
 	private volatile Set<Long> _disabledClassNameIds;
 	private volatile boolean _enabled;
+	private ServiceTrackerMap<String, ViewCountEntryModelListener>
+		_serviceTrackerMap;
 
 }

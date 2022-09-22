@@ -108,9 +108,14 @@ definition {
 			tableEntry = "${assetTitle}");
 
 		if (isSet(assetNewTitle)) {
-			Click(locator1 = "TextInput#TITLE");
+			if (IsElementPresent(locator1 = "TextInput#TITLE")) {
+				Click(locator1 = "TextInput#TITLE");
 
-			PortletEntry.inputTitle(title = "${assetNewTitle}");
+				PortletEntry.inputTitle(title = "${assetNewTitle}");
+			}
+			else {
+				BlogsEntry.addTitle(entryTitle = "${assetNewTitle}");
+			}
 		}
 
 		if (isSet(saveAsDraft)) {

@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch7.internal.facet.DefaultFacetTranslator;
@@ -597,19 +598,29 @@ public class CommonSearchSourceBuilderAssemblerImplTest {
 			elasticsearchQueryTranslatorFixture.
 				getElasticsearchQueryTranslator();
 
-		return new CommonSearchSourceBuilderAssemblerImpl() {
-			{
-				setComplexQueryBuilderFactory(
-					createComplexQueryBuilderFactory(queries));
-				setFacetTranslator(new DefaultFacetTranslator());
-				setFilterToQueryBuilderTranslator(
-					elasticsearchFilterTranslatorFixture.
-						getElasticsearchFilterTranslator());
-				setLegacyQueryToQueryBuilderTranslator(
-					legacyElasticsearchQueryTranslator);
-				setQueryToQueryBuilderTranslator(elasticsearchQueryTranslator);
-			}
-		};
+		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler =
+			new CommonSearchSourceBuilderAssemblerImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			commonSearchSourceBuilderAssembler, "_complexQueryBuilderFactory",
+			createComplexQueryBuilderFactory(queries));
+		ReflectionTestUtil.setFieldValue(
+			commonSearchSourceBuilderAssembler, "_facetTranslator",
+			new DefaultFacetTranslator());
+		ReflectionTestUtil.setFieldValue(
+			commonSearchSourceBuilderAssembler,
+			"_filterToQueryBuilderTranslator",
+			elasticsearchFilterTranslatorFixture.
+				getElasticsearchFilterTranslator());
+		ReflectionTestUtil.setFieldValue(
+			commonSearchSourceBuilderAssembler,
+			"_legacyQueryToQueryBuilderTranslator",
+			legacyElasticsearchQueryTranslator);
+		ReflectionTestUtil.setFieldValue(
+			commonSearchSourceBuilderAssembler,
+			"_queryToQueryBuilderTranslator", elasticsearchQueryTranslator);
+
+		return commonSearchSourceBuilderAssembler;
 	}
 
 	protected static ComplexQueryBuilderFactory

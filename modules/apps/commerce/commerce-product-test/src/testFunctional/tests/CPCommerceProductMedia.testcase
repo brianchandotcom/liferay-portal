@@ -73,19 +73,16 @@ definition {
 			portlet = "Options");
 
 		CPCommerceCatalog.newOptionsEntry(
+			facetable = "true",
 			optionDescription = "Option Description",
 			optionFieldType = "Select from List",
-			optionName = "Color");
+			optionName = "Color",
+			required = "true",
+			skuContributor = "true");
 
 		Button.clickSave();
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		for (var toggleLabel : list "Faceted Navigation,Required,SKU Contributor") {
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "${toggleLabel}",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
 
 		CPCommerceCatalog.addOptionValues(
 			optionEntryName = "Color",

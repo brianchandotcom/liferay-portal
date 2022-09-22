@@ -283,12 +283,9 @@ definition {
 
 			for (var optionNumber : list "1,2") {
 				CPCommerceCatalog.newOptionsEntry(
-					facetable = "false",
 					optionDescription = "",
 					optionFieldType = "Select from List",
-					optionName = "Option${optionNumber}",
-					required = "false",
-					skuContributor = "false");
+					optionName = "Option${optionNumber}");
 
 				Button.clickSave();
 
@@ -535,12 +532,9 @@ definition {
 				portlet = "Options");
 
 			CPCommerceCatalog.newOptionsEntry(
-				facetable = "false",
 				optionDescription = "",
 				optionFieldType = "Select from List",
-				optionName = "Test Option",
-				required = "false",
-				skuContributor = "false");
+				optionName = "Test Option");
 
 			Button.clickSave();
 		}
@@ -671,9 +665,7 @@ definition {
 				facetable = "true",
 				optionDescription = "",
 				optionFieldType = "Select from List",
-				optionName = "Option Test",
-				required = "false",
-				skuContributor = "false");
+				optionName = "Option Test");
 
 			Button.clickSave();
 		}
@@ -849,27 +841,16 @@ definition {
 			portlet = "Options");
 
 		CPCommerceCatalog.newOptionsEntry(
+			facetable = "true",
 			optionDescription = "Test Description",
 			optionFieldType = "Select from List",
-			optionName = "Color");
+			optionName = "Color",
+			required = "true",
+			skuContributor = "true");
 
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
-
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "Use in Faceted Navigation",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "Required",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "SKU Contributor",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-		Button.clickSave();
 
 		CPCommerceCatalog.addOptionValues(
 			optionEntryName = "Color",

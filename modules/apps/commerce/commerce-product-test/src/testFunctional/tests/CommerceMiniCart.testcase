@@ -646,17 +646,12 @@ definition {
 				portlet = "Options");
 
 			CPCommerceCatalog.newOptionsEntry(
+				facetable = "true",
 				optionDescription = "Option Description",
 				optionFieldType = "Select from List",
-				optionName = "Color");
-
-			Button.clickSave();
-
-			CommerceOptions.enableUseInFacetedNavigation();
-
-			CommerceOptions.enableRequired();
-
-			CommerceOptions.enableSKUContributor();
+				optionName = "Color",
+				required = "true",
+				skuContributor = "true");
 
 			Button.clickSave();
 
@@ -1385,17 +1380,12 @@ definition {
 				portlet = "Options");
 
 			CPCommerceCatalog.newOptionsEntry(
+				facetable = "true",
 				optionDescription = "Option Description",
 				optionFieldType = "Select from List",
-				optionName = "Color");
-
-			Button.clickSave();
-
-			CommerceOptions.enableUseInFacetedNavigation();
-
-			CommerceOptions.enableRequired();
-
-			CommerceOptions.enableSKUContributor();
+				optionName = "Color",
+				required = "true",
+				skuContributor = "true");
 
 			Button.clickSave();
 

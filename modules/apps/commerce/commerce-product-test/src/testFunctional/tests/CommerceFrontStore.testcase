@@ -28,7 +28,8 @@ definition {
 		CPCommerceCatalog.newOptionsEntry(
 			optionDescription = "Option Description",
 			optionFieldType = "Select from List",
-			optionName = "Color");
+			optionName = "Color",
+			skuContributor = "true");
 
 		Button.clickSave();
 

@@ -1221,21 +1221,12 @@ definition {
 			portlet = "Options");
 
 		CPCommerceCatalog.newOptionsEntry(
+			facetable = "true",
 			optionDescription = "Option Description",
 			optionFieldType = "Select from List",
-			optionName = "Color");
-
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "Use in Faceted Navigation",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "Required",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "SKU Contributor",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			optionName = "Color",
+			required = "true",
+			skuContributor = "true");
 
 		Button.clickSave();
 

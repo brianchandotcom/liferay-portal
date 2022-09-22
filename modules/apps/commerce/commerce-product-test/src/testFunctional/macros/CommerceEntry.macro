@@ -438,16 +438,16 @@ definition {
 			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
 			value1 = "${optionDescription}");
 
-		if ("${facetable}" == "true") {
+		if (isSet(facetable) && ("${facetable}" == "true")) {
 			Check.checkToggleSwitch(locator1 = "CommerceEntry#FACETABLE_CHECKBOX");
 		}
 
-		if ("${required}" == "true") {
+		if (isSet(required) && ("${required}" == "true")) {
 			Check.checkToggleSwitch(locator1 = "CommerceEntry#REQUIRED_CHECKBOX");
 		}
 
 		if (("${optionFieldType}" == "checkbox-multiple") || ("${optionFieldType}" == "Select from List") || ("${optionFieldType}" == "Radio")) {
-			if ("${skuContributor}" == "true") {
+			if (isSet(skuContributor) && ("${skuContributor}" == "true")) {
 				Check.checkToggleSwitch(locator1 = "CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX");
 			}
 		}

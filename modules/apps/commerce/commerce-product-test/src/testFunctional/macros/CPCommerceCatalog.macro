@@ -24,18 +24,6 @@ definition {
 	}
 
 	macro newOptionsEntry {
-		if (!(isSet(skuContributor))) {
-			var skuContributor = "true";
-		}
-
-		if (!(isSet(facetable))) {
-			var facetable = "true";
-		}
-
-		if (!(isSet(required))) {
-			var required = "true";
-		}
-
 		Click(locator1 = "CommerceEntry#ADD_BUTTON");
 
 		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");

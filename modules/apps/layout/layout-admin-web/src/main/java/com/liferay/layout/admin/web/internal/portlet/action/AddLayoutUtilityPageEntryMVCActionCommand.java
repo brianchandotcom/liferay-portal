@@ -17,7 +17,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.utility.page.exception.LayoutUtilityPageEntryNameException;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
-import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -79,8 +79,9 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 				actionRequest);
 
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
-				_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
-					null, serviceContext.getScopeGroupId(), name, type,
+				_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+					null, serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(), name, type,
 					masterLayoutPlid);
 
 			JSONObject jsonObject = JSONUtil.put(
@@ -213,7 +214,8 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
-	private LayoutUtilityPageEntryService _layoutUtilityPageEntryService;
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 
 	@Reference
 	private Portal _portal;

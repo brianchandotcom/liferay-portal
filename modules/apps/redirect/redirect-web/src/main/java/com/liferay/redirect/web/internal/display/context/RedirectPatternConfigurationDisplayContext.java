@@ -78,9 +78,9 @@ public class RedirectPatternConfigurationDisplayContext {
 		Map<String, String> redirectionPatterns = getPatterns();
 
 		redirectionPatterns.forEach(
-			(source, destination) -> patternList.add(
+			(source, destinationURL) -> patternList.add(
 				HashMapBuilder.<String, Object>put(
-					"destination", destination
+					"destinationURL", destinationURL
 				).put(
 					"source", source.toString()
 				).build()));

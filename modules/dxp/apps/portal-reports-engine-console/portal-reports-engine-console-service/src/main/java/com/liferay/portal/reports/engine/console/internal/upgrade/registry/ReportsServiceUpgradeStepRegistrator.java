@@ -14,12 +14,12 @@
 
 package com.liferay.portal.reports.engine.console.internal.upgrade.registry;
 
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_1.UpgradeKernelPackage;
 import com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_1.UpgradeLastPublishDate;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.release.BaseUpgradeServiceModuleRelease;
+import com.liferay.portal.upgrade.release.ReleaseRenamingUpgradeStep;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,30 +28,19 @@ import org.osgi.service.component.annotations.Reference;
  * @author Wesley Gong
  * @author Calvin Keum
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(service = UpgradeStepRegistrator.class)
 public class ReportsServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"0.0.1", "0.0.2",
-			new BaseUpgradeServiceModuleRelease() {
-
-				@Override
-				protected String getNewBundleSymbolicName() {
-					return "com.liferay.portal.reports.engine.console.service";
-				}
-
-				@Override
-				protected String getOldBundleSymbolicName() {
-					return "reports-portlet";
-				}
-
-			});
+		registry.registerReleaseCreationUpgradeSteps(
+			new ReleaseRenamingUpgradeStep(
+				"com.liferay.portal.reports.engine.console.service",
+				"reports-portlet", _releaseLocalService));
 
 		registry.register(
-			"0.0.2", "1.0.0",
+			"0.0.1", "1.0.0",
 			new com.liferay.portal.reports.engine.console.internal.upgrade.
 				v1_0_0.ReportDefinitionUpgradeProcess(),
 			new com.liferay.portal.reports.engine.console.internal.upgrade.
@@ -68,7 +57,7 @@ public class ReportsServiceUpgradeStepRegistrator
 			new UpgradeKernelPackage(), new UpgradeLastPublishDate());
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
+	@Reference
+	private ReleaseLocalService _releaseLocalService;
 
 }

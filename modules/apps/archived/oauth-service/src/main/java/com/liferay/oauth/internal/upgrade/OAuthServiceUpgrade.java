@@ -14,39 +14,31 @@
 
 package com.liferay.oauth.internal.upgrade;
 
+import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.release.BaseUpgradeServiceModuleRelease;
+import com.liferay.portal.upgrade.release.ReleaseRenamingUpgradeStep;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(service = UpgradeStepRegistrator.class)
 public class OAuthServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"0.0.1", "1.0.0",
-			new BaseUpgradeServiceModuleRelease() {
+		registry.registerReleaseCreationUpgradeSteps(
+			new ReleaseRenamingUpgradeStep(
+				"com.liferay.oauth.service", "oauth-portlet",
+				_releaseLocalService));
 
-				@Override
-				protected String getNamespace() {
-					return "OAuth";
-				}
-
-				@Override
-				protected String getNewBundleSymbolicName() {
-					return "com.liferay.oauth.service";
-				}
-
-				@Override
-				protected String getOldBundleSymbolicName() {
-					return "oauth-portlet";
-				}
-
-			});
+		registry.register("0.0.1", "1.0.0", new DummyUpgradeStep());
 	}
+
+	@Reference
+	private ReleaseLocalService _releaseLocalService;
 
 }

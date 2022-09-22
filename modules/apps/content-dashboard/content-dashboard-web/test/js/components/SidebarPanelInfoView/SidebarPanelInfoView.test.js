@@ -581,4 +581,25 @@ describe('SidebarPanelInfoView', () => {
 			})
 		);
 	});
+
+	it('renders sidebar panel with subscribe button disabled if proceeds', () => {
+		const {getByTitle, rerender} = render(
+			_getSidebarComponent({
+				...mockedProps,
+			})
+		);
+
+		expect(getByTitle('Subscribe')).toBeInTheDocument();
+
+		const copyMockedProps = JSON.parse(JSON.stringify(mockedProps));
+		copyMockedProps.subscribe.disabled = true;
+
+		rerender(
+			_getSidebarComponent({
+				...copyMockedProps,
+			})
+		);
+
+		expect(getByTitle('Subscribe')).toBeDisabled();
+	});
 });

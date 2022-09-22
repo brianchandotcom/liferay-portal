@@ -65,6 +65,7 @@ public class ObjectDefinitionWrapper
 		attributes.put("className", getClassName());
 		attributes.put("enableCategorization", isEnableCategorization());
 		attributes.put("enableComments", isEnableComments());
+		attributes.put("enableEntryHistory", isEnableEntryHistory());
 		attributes.put("name", getName());
 		attributes.put("panelAppOrder", getPanelAppOrder());
 		attributes.put("panelCategoryKey", getPanelCategoryKey());
@@ -202,6 +203,13 @@ public class ObjectDefinitionWrapper
 
 		if (enableComments != null) {
 			setEnableComments(enableComments);
+		}
+
+		Boolean enableEntryHistory = (Boolean)attributes.get(
+			"enableEntryHistory");
+
+		if (enableEntryHistory != null) {
+			setEnableEntryHistory(enableEntryHistory);
 		}
 
 		String name = (String)attributes.get("name");
@@ -396,6 +404,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public boolean getEnableComments() {
 		return model.getEnableComments();
+	}
+
+	/**
+	 * Returns the enable entry history of this object definition.
+	 *
+	 * @return the enable entry history of this object definition
+	 */
+	@Override
+	public boolean getEnableEntryHistory() {
+		return model.getEnableEntryHistory();
 	}
 
 	@Override
@@ -836,6 +854,16 @@ public class ObjectDefinitionWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this object definition is enable entry history.
+	 *
+	 * @return <code>true</code> if this object definition is enable entry history; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isEnableEntryHistory() {
+		return model.isEnableEntryHistory();
+	}
+
+	/**
 	 * Returns <code>true</code> if this object definition is portlet.
 	 *
 	 * @return <code>true</code> if this object definition is portlet; <code>false</code> otherwise
@@ -976,6 +1004,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setEnableComments(boolean enableComments) {
 		model.setEnableComments(enableComments);
+	}
+
+	/**
+	 * Sets whether this object definition is enable entry history.
+	 *
+	 * @param enableEntryHistory the enable entry history of this object definition
+	 */
+	@Override
+	public void setEnableEntryHistory(boolean enableEntryHistory) {
+		model.setEnableEntryHistory(enableEntryHistory);
 	}
 
 	/**

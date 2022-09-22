@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.snapshot;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.AnalyzeIndexRequestExecutorTest;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRequest;
@@ -56,11 +57,11 @@ public class CreateSnapshotRequestExecutorImplTest {
 		createSnapshotRequest.setWaitForCompletion(true);
 
 		CreateSnapshotRequestExecutorImpl createSnapshotRequestExecutorImpl =
-			new CreateSnapshotRequestExecutorImpl() {
-				{
-					setElasticsearchClientResolver(_elasticsearchFixture);
-				}
-			};
+			new CreateSnapshotRequestExecutorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			createSnapshotRequestExecutorImpl, "_elasticsearchClientResolver",
+			_elasticsearchFixture);
 
 		org.elasticsearch.action.admin.cluster.snapshots.create.
 			CreateSnapshotRequest elasticsearchCreateSnapshotRequest =

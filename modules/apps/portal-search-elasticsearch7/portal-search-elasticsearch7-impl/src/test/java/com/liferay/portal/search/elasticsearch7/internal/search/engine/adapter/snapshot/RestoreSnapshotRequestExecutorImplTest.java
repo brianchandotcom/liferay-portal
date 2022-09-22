@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.snapshot;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.AnalyzeIndexRequestExecutorTest;
 import com.liferay.portal.search.engine.adapter.snapshot.RestoreSnapshotRequest;
@@ -59,11 +60,11 @@ public class RestoreSnapshotRequestExecutorImplTest {
 		restoreSnapshotRequest.setIndexNames("index1", "index2");
 
 		RestoreSnapshotRequestExecutorImpl restoreSnapshotRequestExecutorImpl =
-			new RestoreSnapshotRequestExecutorImpl() {
-				{
-					setElasticsearchClientResolver(_elasticsearchFixture);
-				}
-			};
+			new RestoreSnapshotRequestExecutorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			restoreSnapshotRequestExecutorImpl, "_elasticsearchClientResolver",
+			_elasticsearchFixture);
 
 		org.elasticsearch.action.admin.cluster.snapshots.restore.
 			RestoreSnapshotRequest elasticsearchRestoreSnapshotsRequest =

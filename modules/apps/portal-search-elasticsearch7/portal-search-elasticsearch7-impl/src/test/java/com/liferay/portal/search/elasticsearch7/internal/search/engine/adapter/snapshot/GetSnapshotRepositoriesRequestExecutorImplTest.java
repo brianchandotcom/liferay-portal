@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.snapshot;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.AnalyzeIndexRequestExecutorTest;
 import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotRepositoriesRequest;
@@ -56,11 +57,11 @@ public class GetSnapshotRepositoriesRequestExecutorImplTest {
 
 		GetSnapshotRepositoriesRequestExecutorImpl
 			getSnapshotRepositoriesRequestExecutorImpl =
-				new GetSnapshotRepositoriesRequestExecutorImpl() {
-					{
-						setElasticsearchClientResolver(_elasticsearchFixture);
-					}
-				};
+				new GetSnapshotRepositoriesRequestExecutorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			getSnapshotRepositoriesRequestExecutorImpl,
+			"_elasticsearchClientResolver", _elasticsearchFixture);
 
 		GetRepositoriesRequest getRepositoriesRequest =
 			getSnapshotRepositoriesRequestExecutorImpl.

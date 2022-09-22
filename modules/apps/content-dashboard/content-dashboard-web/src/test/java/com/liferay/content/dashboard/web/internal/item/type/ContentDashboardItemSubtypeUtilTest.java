@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -86,47 +84,6 @@ public class ContentDashboardItemSubtypeUtilTest {
 						contentDashboardItemSubtype.getInfoItemReference());
 
 		Assert.assertFalse(contentDashboardItemSubtypeOptional.isPresent());
-	}
-
-	@Test
-	public void testToContentDashboardItemSubtypeOptionalByDocument()
-		throws PortalException {
-
-		ContentDashboardItemSubtype contentDashboardItemSubtype =
-			_getContentDashboardItemSubtype();
-
-		InfoItemReference infoItemReference =
-			contentDashboardItemSubtype.getInfoItemReference();
-
-		Document document = Mockito.mock(Document.class);
-
-		Mockito.when(
-			document.get(Field.ENTRY_CLASS_NAME)
-		).thenReturn(
-			infoItemReference.getClassName()
-		);
-
-		Mockito.when(
-			document.get(Field.ENTRY_CLASS_PK)
-		).thenReturn(
-			String.valueOf(infoItemReference.getClassPK())
-		);
-
-		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory =
-			_getContentDashboardItemSubtypeFactory(contentDashboardItemSubtype);
-
-		Optional<ContentDashboardItemSubtype>
-			contentDashboardItemSubtypeOptional =
-				ContentDashboardItemSubtypeUtil.
-					toContentDashboardItemSubtypeOptional(
-						_getContentDashboardItemSubtypeFactoryTracker(
-							contentDashboardItemSubtype,
-							contentDashboardItemSubtypeFactory),
-						document);
-
-		Assert.assertEquals(
-			contentDashboardItemSubtype,
-			contentDashboardItemSubtypeOptional.get());
 	}
 
 	@Test

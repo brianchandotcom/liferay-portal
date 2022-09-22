@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -36,19 +34,6 @@ import java.util.Optional;
  * @author Cristina González
  */
 public class ContentDashboardItemSubtypeUtil {
-
-	public static Optional<ContentDashboardItemSubtype>
-		toContentDashboardItemSubtypeOptional(
-			ContentDashboardItemSubtypeFactoryTracker
-				contentDashboardItemSubtypeFactoryTracker,
-			Document document) {
-
-		return toContentDashboardItemSubtypeOptional(
-			contentDashboardItemSubtypeFactoryTracker,
-			new InfoItemReference(
-				GetterUtil.getString(document.get(Field.ENTRY_CLASS_NAME)),
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
-	}
 
 	public static Optional<ContentDashboardItemSubtype>
 		toContentDashboardItemSubtypeOptional(

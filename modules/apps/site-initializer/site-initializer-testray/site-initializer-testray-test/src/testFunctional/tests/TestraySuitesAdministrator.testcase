@@ -33,7 +33,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		TestrayManage.deleteAllCasesTypes();
+		Testray.deleteAllProjects();
 
 		Testray.tearDownCP();
 

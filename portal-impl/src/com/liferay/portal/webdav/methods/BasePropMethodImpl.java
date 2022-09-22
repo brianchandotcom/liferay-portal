@@ -311,10 +311,11 @@ public abstract class BasePropMethodImpl implements Method {
 
 				Namespace namespace = qName.getNamespace();
 
-				String text = webDAVProps.getText(
-					qName.getName(), namespace.getPrefix(), namespace.getURI());
-
-				qNameElement.addText(GetterUtil.getString(text));
+				qNameElement.addText(
+					GetterUtil.getString(
+						webDAVProps.getText(
+							qName.getName(), namespace.getPrefix(),
+							namespace.getURI())));
 
 				hasSuccess = true;
 			}

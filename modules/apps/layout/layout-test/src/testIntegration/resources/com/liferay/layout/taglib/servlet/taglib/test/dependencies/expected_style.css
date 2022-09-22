@@ -6,7 +6,7 @@
 	background-color: var(--warning) !important;
 	border-color: var(--info) !important;
 	border-radius: var(--border-radius-sm) !important;
-	border-style: solid; border-width: 2px !important;
+	border-style: solid; border-width: 2 !important; border-width: 2px !important;
 	font-family: var(--font-family-sans-serif) !important;
 	font-size: var(--font-size-sm) !important;
 	font-weight: var(--font-weight-normal) !important;

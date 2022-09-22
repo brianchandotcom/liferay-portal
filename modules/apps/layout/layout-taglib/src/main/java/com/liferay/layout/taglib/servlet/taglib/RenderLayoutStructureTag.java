@@ -285,7 +285,46 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 				ContainerTag containerTag = new ContainerTag();
 
-				containerTag.setCssClass("overflow-hidden px-0");
+				StringBundler containerCSSClassSB = new StringBundler(
+					"overflow-hidden px-0");
+
+				if (Objects.equals(
+						collectionStyledLayoutStructureItem.getListStyle(),
+						"flex-column")) {
+
+					containerCSSClassSB.append(" d-flex flex-column");
+				}
+				else if (Objects.equals(
+							collectionStyledLayoutStructureItem.getListStyle(),
+							"flex-row")) {
+
+					containerCSSClassSB.append(" d-flex flex-row");
+				}
+
+				String align = collectionStyledLayoutStructureItem.getAlign();
+
+				if (Validator.isNotNull(align)) {
+					containerCSSClassSB.append(StringPool.SPACE);
+					containerCSSClassSB.append(align);
+				}
+
+				String flexWrap =
+					collectionStyledLayoutStructureItem.getFlexWrap();
+
+				if (Validator.isNotNull(flexWrap)) {
+					containerCSSClassSB.append(StringPool.SPACE);
+					containerCSSClassSB.append(flexWrap);
+				}
+
+				String justify =
+					collectionStyledLayoutStructureItem.getJustify();
+
+				if (Validator.isNotNull(justify)) {
+					containerCSSClassSB.append(StringPool.SPACE);
+					containerCSSClassSB.append(justify);
+				}
+
+				containerTag.setCssClass(containerCSSClassSB.toString());
 				containerTag.setFluid(true);
 				containerTag.setPageContext(pageContext);
 

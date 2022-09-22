@@ -179,7 +179,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectEntryManagerTracker.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
-		Page<ObjectEntry> page =
+		Page<Object> page =
 			objectEntryManager.getObjectEntryRelatedObjectEntries(
 				_getDTOConverterContext(currentObjectEntryId),
 				_objectDefinition, currentObjectEntryId, objectRelationshipName,
@@ -199,7 +199,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			TransformUtil.transform(
 				page.getItems(),
 				objectEntry -> _getRelatedObjectEntry(
-					objectDefinition2, objectEntry)));
+					objectDefinition2, (ObjectEntry)objectEntry)));
 	}
 
 	@Override

@@ -67,26 +67,11 @@ public class RelatedObjectEntryResourceImpl
 		ObjectDefinition systemObjectDefinition = _getSystemObjectDefinition(
 			previousPath);
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.
-				getObjectRelationshipByObjectDefinitionId(
-					systemObjectDefinition.getObjectDefinitionId(),
-					objectRelationshipName);
-
-		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
-			systemObjectDefinition, objectRelationship);
-
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerTracker.getObjectEntryManager(
 				systemObjectDefinition.getStorageType());
 
-		if (relatedObjectDefinition.isSystem()) {
-			return objectEntryManager.getRelatedSystemObjectEntries(
-				systemObjectDefinition, objectEntryId, objectRelationshipName,
-				pagination);
-		}
-
-		return (Page)objectEntryManager.getObjectEntryRelatedObjectEntries(
+		return objectEntryManager.getObjectEntryRelatedObjectEntries(
 			_getDefaultDTOConverterContext(
 				systemObjectDefinition, objectEntryId, _uriInfo),
 			systemObjectDefinition, objectEntryId, objectRelationshipName,

@@ -274,14 +274,15 @@ public class ObjectDefinitionGraphQLDTOContributor
 		}
 
 		if (relationshipIdName == null) {
-			Page<ObjectEntry> page =
+			Page<Object> page =
 				_objectEntryManager.getObjectEntryRelatedObjectEntries(
 					dtoConverterContext, _objectDefinition, id,
 					relationshipName,
 					Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
 			return (T)TransformUtil.transform(
-				page.getItems(), itemObjectEntry -> _toMap(itemObjectEntry));
+				page.getItems(),
+				itemObjectEntry -> _toMap((ObjectEntry)itemObjectEntry));
 		}
 
 		Object relationshipId = properties.get(relationshipIdName);

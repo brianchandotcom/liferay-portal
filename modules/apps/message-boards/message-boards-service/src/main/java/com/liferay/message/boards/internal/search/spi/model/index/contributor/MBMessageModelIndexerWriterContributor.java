@@ -16,6 +16,7 @@ package com.liferay.message.boards.internal.search.spi.model.index.contributor;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -132,20 +133,23 @@ public class MBMessageModelIndexerWriterContributor
 			throw new SystemException(portalException);
 		}
 
-		if(mbMessage.getMessageId() == mbMessage.getRootMessageId()){
-
+		if (mbMessage.getMessageId() == mbMessage.getRootMessageId()) {
 			return;
 		}
 
-
-		Indexer<MBMessage> mbThreadIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			MBMessage.class);
+		Indexer<MBMessage> mbThreadIndexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
 
 		try {
-			mbThreadIndexer.reindex(_mbMessageLocalService.fetchMBMessage(_mbThreadLocalService.fetchThread(mbMessage.getThreadId()).getRootMessageId()));
+			MBThread mbThread = _mbThreadLocalService.fetchThread(
+				mbMessage.getThreadId());
+
+			mbThreadIndexer.reindex(
+				_mbMessageLocalService.fetchMBMessage(
+					mbThread.getRootMessageId()));
 		}
-		catch (SearchException e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

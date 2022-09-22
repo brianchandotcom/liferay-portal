@@ -752,6 +752,7 @@ public class MessageBoardMessageResourceImpl
 
 			mbMessage.setAnswer(showAsAnswer);
 		}
+
 		return mbMessage;
 	}
 

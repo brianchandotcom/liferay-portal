@@ -107,24 +107,30 @@ public class MBMessageModelDocumentContributor
 			MBThread mbThread = mbThreadLocalService.fetchMBThread(
 				mbMessage.getThreadId());
 
-			document.addKeyword("hasValidAnswer", Stream.of(
-				_mbMessageLocalService.getChildMessages(
+			document.addKeyword(
+				"hasValidAnswer",
+				Stream.of(
+					_mbMessageLocalService.getChildMessages(
+						mbMessage.getMessageId(),
+						WorkflowConstants.STATUS_APPROVED)
+				).flatMap(
+					List::stream
+				).anyMatch(
+					MBMessage::isAnswer
+				));
+
+			document.addKeyword(
+				"keywords",
+				ListUtil.toArray(
+					_assetTagLocalService.getTags(
+						MBMessage.class.getName(), mbMessage.getMessageId()),
+					AssetTag.NAME_ACCESSOR));
+
+			document.addKeyword(
+				"numberOfMessageBoardMessages",
+				_mbMessageLocalService.getChildMessagesCount(
 					mbMessage.getMessageId(),
-					WorkflowConstants.STATUS_APPROVED)
-			).flatMap(
-				List::stream
-			).anyMatch(
-				MBMessage::isAnswer
-			));
-
-			document.addKeyword("keywords", ListUtil.toArray(
-				_assetTagLocalService.getTags(
-					MBMessage.class.getName(), mbMessage.getMessageId()),
-				AssetTag.NAME_ACCESSOR));
-
-			document.addKeyword("numberOfMessageBoardMessages",_mbMessageLocalService.getChildMessagesCount(
-				mbMessage.getMessageId(),
-				WorkflowConstants.STATUS_APPROVED));
+					WorkflowConstants.STATUS_APPROVED));
 
 			document.addKeyword("question", mbThread.isQuestion());
 		}
@@ -194,6 +200,9 @@ public class MBMessageModelDocumentContributor
 		MBMessageModelDocumentContributor.class);
 
 	@Reference
+	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
 	private HtmlParser _htmlParser;
 
 	@Reference
@@ -204,8 +213,5 @@ public class MBMessageModelDocumentContributor
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
-
-	@Reference
-	private AssetTagLocalService _assetTagLocalService;
 
 }

@@ -36,6 +36,7 @@ import org.osgi.service.component.annotations.Deactivate;
 public class InfoSearchClassMapperTrackerImpl
 	implements InfoSearchClassMapperTracker {
 
+	@Override
 	public String getClassName(String searchClassName) {
 		Collection<InfoSearchClassMapper<?>> infoSearchClassMappers =
 			_serviceTrackerMap.values();
@@ -57,8 +58,9 @@ public class InfoSearchClassMapperTrackerImpl
 		return searchClassName;
 	}
 
+	@Override
 	public String getSearchClassName(String className) {
-		InfoSearchClassMapper infoSearchClassMapper =
+		InfoSearchClassMapper<?> infoSearchClassMapper =
 			_serviceTrackerMap.getService(className);
 
 		if (infoSearchClassMapper == null) {

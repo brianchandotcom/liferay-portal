@@ -40,6 +40,12 @@ public class BackgroundTaskExecutorRegistryImpl
 	public synchronized BackgroundTaskExecutor getBackgroundTaskExecutor(
 		String backgroundTaskExecutorClassName) {
 
+		if (_serviceTrackerMap == null) {
+			_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+				_bundleContext, BackgroundTaskExecutor.class,
+				"background.task.executor.class.name");
+		}
+
 		return _serviceTrackerMap.getService(backgroundTaskExecutorClassName);
 	}
 
@@ -79,15 +85,13 @@ public class BackgroundTaskExecutorRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
-
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, BackgroundTaskExecutor.class,
-			"background.task.executor.class.name");
 	}
 
 	@Deactivate
 	protected synchronized void deactivate() {
-		_serviceTrackerMap.close();
+		if (_serviceTrackerMap != null) {
+			_serviceTrackerMap.close();
+		}
 
 		_bundleContext = null;
 

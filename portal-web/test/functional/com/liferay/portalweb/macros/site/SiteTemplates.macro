@@ -438,7 +438,8 @@ definition {
 				key_portletName = "${widgetName}",
 				locator1 = "Home#PORTLET_BORDERLESS");
 		}
-		else {
+
+		if (isSet(columnNumberTo)) {
 			AssertTextEquals(
 				key_pageColumnNumber = "${columnNumberTo}",
 				key_portletName = "${portletName}",

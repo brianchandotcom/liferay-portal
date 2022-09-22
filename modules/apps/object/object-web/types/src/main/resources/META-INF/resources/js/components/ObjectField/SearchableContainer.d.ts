@@ -24,7 +24,6 @@ interface ISearchableProps {
 	setValues: (values: Partial<ObjectField>) => void;
 }
 export declare function SearchableContainer({
-	disabled,
 	isApproved,
 	objectField,
 	readOnly,

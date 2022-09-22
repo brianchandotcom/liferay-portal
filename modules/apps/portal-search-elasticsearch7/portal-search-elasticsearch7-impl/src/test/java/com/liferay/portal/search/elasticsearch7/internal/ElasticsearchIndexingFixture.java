@@ -183,13 +183,20 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		SearchEngineAdapter searchEngineAdapter,
 		IndexNameBuilder indexNameBuilder, Localization localization) {
 
-		return new ElasticsearchQuerySuggester() {
-			{
-				setIndexNameBuilder(indexNameBuilder);
-				setLocalization(localization);
-				setSearchEngineAdapter(searchEngineAdapter);
-			}
-		};
+		ElasticsearchQuerySuggester elasticsearchQuerySuggester =
+			new ElasticsearchQuerySuggester() {
+				{
+					setLocalization(localization);
+				}
+			};
+
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchQuerySuggester, "_indexNameBuilder", indexNameBuilder);
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchQuerySuggester, "_searchEngineAdapter",
+			searchEngineAdapter);
+
+		return elasticsearchQuerySuggester;
 	}
 
 	private ElasticsearchSpellCheckIndexWriter
@@ -197,15 +204,23 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 			SearchEngineAdapter searchEngineAdapter,
 			IndexNameBuilder indexNameBuilder, Localization localization) {
 
-		return new ElasticsearchSpellCheckIndexWriter() {
-			{
-				digester = new DigesterImpl();
+		ElasticsearchSpellCheckIndexWriter elasticsearchSpellCheckIndexWriter =
+			new ElasticsearchSpellCheckIndexWriter() {
+				{
+					digester = new DigesterImpl();
 
-				setIndexNameBuilder(indexNameBuilder);
-				setLocalization(localization);
-				setSearchEngineAdapter(searchEngineAdapter);
-			}
-		};
+					setLocalization(localization);
+				}
+			};
+
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchSpellCheckIndexWriter, "_indexNameBuilder",
+			indexNameBuilder);
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchSpellCheckIndexWriter, "_searchEngineAdapter",
+			searchEngineAdapter);
+
+		return elasticsearchSpellCheckIndexWriter;
 	}
 
 	private void _createIndex(IndexNameBuilder indexNameBuilder) {

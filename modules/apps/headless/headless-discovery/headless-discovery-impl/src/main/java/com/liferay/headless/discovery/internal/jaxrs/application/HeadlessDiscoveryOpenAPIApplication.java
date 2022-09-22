@@ -15,8 +15,8 @@
 package com.liferay.headless.discovery.internal.jaxrs.application;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.vulcan.util.UriInfoUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+
+import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -67,8 +69,8 @@ public class HeadlessDiscoveryOpenAPIApplication extends Application {
 
 		Map<String, List<String>> pathsMap = new TreeMap<>();
 
-		String serverURL = StringUtil.removeSubstring(
-			UriInfoUtil.getAbsolutePath(_uriInfo), "/openapi/");
+		String serverURL =
+			_portal.getPortalURL(_httpServletRequest) + Portal.PATH_MODULE;
 
 		RuntimeDTO runtimeDTO = _jaxrsServiceRuntime.getRuntimeDTO();
 
@@ -121,8 +123,14 @@ public class HeadlessDiscoveryOpenAPIApplication extends Application {
 		}
 	}
 
+	@Context
+	private HttpServletRequest _httpServletRequest;
+
 	@Reference
 	private JaxrsServiceRuntime _jaxrsServiceRuntime;
+
+	@Reference
+	private Portal _portal;
 
 	@Context
 	private UriInfo _uriInfo;

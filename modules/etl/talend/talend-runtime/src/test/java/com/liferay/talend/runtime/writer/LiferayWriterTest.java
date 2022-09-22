@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.json.JsonArray;
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
@@ -101,6 +102,66 @@ public class LiferayWriterTest extends BaseTestCase {
 
 		Assert.assertTrue(
 			"Name has key hr_HR", nameJsonObject.containsKey("hr_HR"));
+	}
+
+	@Test
+	public void testWriteArray() throws Exception {
+		String openApiModule = "/headless-commerce-admin-catalog/v1.0";
+		String endpoint = "/v1.0/products/{id}/categories";
+
+		LiferayRequestContentAggregatorSink
+			liferayRequestContentAggregatorSink =
+				new LiferayRequestContentAggregatorSink();
+
+		LiferayOutputProperties testLiferayOutputProperties =
+			_getLiferayOutputProperties(
+				Operation.Update, openApiModule, _OAS_URL, endpoint, "id");
+
+		JsonObject oasJsonObject = readObject(
+			"headless-commerce-admin-catalog-openapi.json");
+
+		Schema patchContentSchema = getSchema(
+			endpoint, Operation.Update.getHttpMethod(), oasJsonObject);
+
+		Object iterableObjectProp = patchContentSchema.getObjectProp(
+			"iterable");
+
+		Assert.assertNotNull(iterableObjectProp);
+		Assert.assertTrue(iterableObjectProp instanceof Boolean);
+		Assert.assertTrue((Boolean)iterableObjectProp);
+
+		testLiferayOutputProperties.resource.inboundSchemaProperties.schema.
+			setValue(patchContentSchema);
+		testLiferayOutputProperties.resource.outboundSchemaProperties.schema.
+			setValue(patchContentSchema);
+
+		LiferayWriter liferayWriter = new LiferayWriter(
+			new LiferayWriteOperation(
+				liferayRequestContentAggregatorSink,
+				testLiferayOutputProperties),
+			testLiferayOutputProperties);
+
+		liferayWriter.open("aaaa-bbbb-cccc-dddd");
+
+		liferayWriter.write(
+			_createIndexedRecordFromFile(
+				"category_content.json", patchContentSchema));
+
+		JsonValue outputJsonValue =
+			liferayRequestContentAggregatorSink.getOutputJsonValue();
+
+		JsonArray jsonArray = outputJsonValue.asJsonArray();
+
+		Assert.assertNotNull(jsonArray);
+		Assert.assertEquals(1, jsonArray.size());
+
+		Iterable<IndexedRecord> successfulWrites =
+			liferayWriter.getSuccessfulWrites();
+
+		Iterator<IndexedRecord> iterator = successfulWrites.iterator();
+
+		Assert.assertNotNull(iterator.next());
+		Assert.assertFalse(iterator.hasNext());
 	}
 
 	@Test

@@ -185,8 +185,8 @@ describe('ContainerGeneralPanel', () => {
 		const alignInput = screen.getByLabelText('align-items');
 		const justifyInput = screen.getByLabelText('justify-content');
 
-		expect(flexWrapInput).toHaveValue('flex-nowrap');
-		expect(alignInput).toHaveValue('align-items-stretch');
-		expect(justifyInput).toHaveValue('justify-content-start');
+		expect(flexWrapInput).toHaveValue('');
+		expect(alignInput).toHaveValue('');
+		expect(justifyInput).toHaveValue('');
 	});
 });

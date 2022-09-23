@@ -15,7 +15,6 @@
 package com.liferay.layout.utility.page.service.impl;
 
 import com.liferay.layout.utility.page.constants.LayoutUtilityPageActionKeys;
-import com.liferay.layout.utility.page.constants.LayoutUtilityPageConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.base.LayoutUtilityPageEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -140,7 +139,7 @@ public class LayoutUtilityPageEntryServiceImpl
 		_layoutUtilityPageEntryModelResourcePermission;
 
 	@Reference(
-		target = "(resource.name=" + LayoutUtilityPageConstants.RESOURCE_NAME + ")"
+		target = "(component.name=com.liferay.layout.utility.page.internal.security.permission.resource.LayoutUtilityPagePortletResourcePermission)"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

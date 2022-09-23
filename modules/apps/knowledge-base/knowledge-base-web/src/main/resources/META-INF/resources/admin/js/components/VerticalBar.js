@@ -24,6 +24,8 @@ import TemplatesPanel from './TemplatesPanel';
 
 const CSS_EXPANDED = 'expanded';
 
+const SUGGESTION_KEY = 'suggestion';
+
 const VerticalNavigationBar = ({
 	items,
 	parentContainerId,
@@ -34,11 +36,13 @@ const VerticalNavigationBar = ({
 	const [productMenuOpen, setProductMenuOpen] = useState(
 		initialProductMenuOpen
 	);
-	const [verticalBarOpen, setVerticalBarOpen] = useState(
-		!initialProductMenuOpen
-	);
+
 	const [activePanel, setActivePanel] = useState(
 		items.find(({active}) => active)?.key
+	);
+
+	const [verticalBarOpen, setVerticalBarOpen] = useState(
+		!initialProductMenuOpen && activePanel !== SUGGESTION_KEY
 	);
 
 	const productMenu = Liferay.SideNavigation.instance(
@@ -77,14 +81,19 @@ const VerticalNavigationBar = ({
 	}, [activePanel, parentContainer, verticalBarOpen]);
 
 	const onActiveChange = (currentActivePanelKey) => {
-		setVerticalBarOpen(
-			(currenVerticalBarOpen) =>
-				Boolean(currentActivePanelKey) &&
-				!(
-					currentActivePanelKey === activePanel &&
-					currenVerticalBarOpen
-				)
-		);
+		if (currentActivePanelKey === SUGGESTION_KEY) {
+			setVerticalBarOpen(false);
+		}
+		else {
+			setVerticalBarOpen(
+				(currenVerticalBarOpen) =>
+					Boolean(currentActivePanelKey) &&
+					!(
+						currentActivePanelKey === activePanel &&
+						currenVerticalBarOpen
+					)
+			);
+		}
 
 		if (currentActivePanelKey) {
 			if (currentActivePanelKey !== activePanel) {

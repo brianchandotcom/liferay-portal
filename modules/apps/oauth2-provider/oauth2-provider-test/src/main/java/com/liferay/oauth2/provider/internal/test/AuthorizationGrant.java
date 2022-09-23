@@ -19,8 +19,8 @@ import javax.ws.rs.core.MultivaluedMap;
 /**
  * @author Arthur Chan
  */
-public interface TestClientAuthentication {
+public interface AuthorizationGrant {
 
-	public MultivaluedMap<String, String> getClientAuthenticationParameters();
+	public MultivaluedMap<String, String> getAuthorizationGrantParameters();
 
 }

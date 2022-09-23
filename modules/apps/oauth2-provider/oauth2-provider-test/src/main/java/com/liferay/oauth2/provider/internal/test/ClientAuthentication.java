@@ -14,28 +14,13 @@
 
 package com.liferay.oauth2.provider.internal.test;
 
-import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 
 /**
  * @author Arthur Chan
  */
-public class TestClientPasswordClientAuthentication
-	implements TestClientAuthentication {
+public interface ClientAuthentication {
 
-	public TestClientPasswordClientAuthentication(
-		String clientId, String clientSecret) {
-
-		_clientAuthenticationData.add("client_id", clientId);
-		_clientAuthenticationData.add("client_secret", clientSecret);
-	}
-
-	@Override
-	public MultivaluedMap<String, String> getClientAuthenticationParameters() {
-		return _clientAuthenticationData;
-	}
-
-	private final MultivaluedMap<String, String> _clientAuthenticationData =
-		new MultivaluedHashMap<>();
+	public MultivaluedMap<String, String> getClientAuthenticationParameters();
 
 }

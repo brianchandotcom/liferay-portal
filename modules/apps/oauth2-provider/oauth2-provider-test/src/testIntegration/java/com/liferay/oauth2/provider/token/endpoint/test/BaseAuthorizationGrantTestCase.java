@@ -15,7 +15,7 @@
 package com.liferay.oauth2.provider.token.endpoint.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.oauth2.provider.internal.test.TestAuthorizationGrant;
+import com.liferay.oauth2.provider.internal.test.AuthorizationGrant;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.junit.Assert;
@@ -35,7 +35,7 @@ public abstract class BaseAuthorizationGrantTestCase
 			Validator.isNotNull(
 				getAccessToken(
 					getAuthorizationGrant(TEST_CLIENT_ID_1),
-					testClientAuthentications.get(TEST_CLIENT_ID_1))));
+					clientAuthentications.get(TEST_CLIENT_ID_1))));
 	}
 
 	@Test
@@ -44,7 +44,7 @@ public abstract class BaseAuthorizationGrantTestCase
 			Validator.isNotNull(
 				getAccessToken(
 					getAuthorizationGrant(TEST_CLIENT_ID_2),
-					testClientAuthentications.get(TEST_CLIENT_ID_2))));
+					clientAuthentications.get(TEST_CLIENT_ID_2))));
 	}
 
 	@Test
@@ -53,10 +53,10 @@ public abstract class BaseAuthorizationGrantTestCase
 			Validator.isNotNull(
 				getAccessToken(
 					getAuthorizationGrant(TEST_CLIENT_ID_3),
-					testClientAuthentications.get(TEST_CLIENT_ID_3))));
+					clientAuthentications.get(TEST_CLIENT_ID_3))));
 	}
 
-	protected abstract TestAuthorizationGrant getAuthorizationGrant(
+	protected abstract AuthorizationGrant getAuthorizationGrant(
 		String clientId);
 
 }

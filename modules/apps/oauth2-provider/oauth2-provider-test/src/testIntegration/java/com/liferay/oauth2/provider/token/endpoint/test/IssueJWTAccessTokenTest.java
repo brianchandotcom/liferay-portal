@@ -15,7 +15,7 @@
 package com.liferay.oauth2.provider.token.endpoint.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.oauth2.provider.internal.test.TestPasswordAuthorizationGrant;
+import com.liferay.oauth2.provider.internal.test.PasswordAuthorizationGrant;
 import com.liferay.oauth2.provider.internal.test.util.JWTAssertionUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -43,8 +43,8 @@ public class IssueJWTAccessTokenTest extends BaseTokenEndpointTestCase {
 	public void testIssuedJWTAccessToken() {
 		_verifyJWTAccessToken(
 			getAccessToken(
-				new TestPasswordAuthorizationGrant("test@liferay.com", "test"),
-				testClientAuthentications.get(TEST_CLIENT_ID_1)));
+				new PasswordAuthorizationGrant("test@liferay.com", "test"),
+				clientAuthentications.get(TEST_CLIENT_ID_1)));
 	}
 
 	@Override

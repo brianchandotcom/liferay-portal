@@ -20,20 +20,22 @@ import javax.ws.rs.core.MultivaluedMap;
 /**
  * @author Arthur Chan
  */
-public class TestPasswordAuthorizationGrant implements TestAuthorizationGrant {
+public class ClientPasswordClientAuthentication
+	implements ClientAuthentication {
 
-	public TestPasswordAuthorizationGrant(String userName, String password) {
-		_authorizationGrantData.add("grant_type", "password");
-		_authorizationGrantData.add("password", password);
-		_authorizationGrantData.add("username", userName);
+	public ClientPasswordClientAuthentication(
+		String clientId, String clientSecret) {
+
+		_clientAuthenticationData.add("client_id", clientId);
+		_clientAuthenticationData.add("client_secret", clientSecret);
 	}
 
 	@Override
-	public MultivaluedMap<String, String> getAuthorizationGrantParameters() {
-		return _authorizationGrantData;
+	public MultivaluedMap<String, String> getClientAuthenticationParameters() {
+		return _clientAuthenticationData;
 	}
 
-	private final MultivaluedMap<String, String> _authorizationGrantData =
+	private final MultivaluedMap<String, String> _clientAuthenticationData =
 		new MultivaluedHashMap<>();
 
 }

@@ -15,8 +15,8 @@
 package com.liferay.oauth2.provider.token.endpoint.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.oauth2.provider.internal.test.TestAuthorizationGrant;
-import com.liferay.oauth2.provider.internal.test.TestJWTAssertionAuthorizationGrant;
+import com.liferay.oauth2.provider.internal.test.AuthorizationGrant;
+import com.liferay.oauth2.provider.internal.test.JWTAssertionAuthorizationGrant;
 import com.liferay.oauth2.provider.internal.test.util.JWTAssertionUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -41,41 +41,41 @@ public class JWTAssertAuthorizationGrantTest
 	public void testGrantWithCorrectAudience() throws Exception {
 		User user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
 
-		TestJWTAssertionAuthorizationGrant testJWTAssertionAuthorizationGrant =
-			new TestJWTAssertionAuthorizationGrant(
+		JWTAssertionAuthorizationGrant jwtAssertionAuthorizationGrant =
+			new JWTAssertionAuthorizationGrant(
 				TEST_CLIENT_ID_1, null, user.getUuid(), getTokenWebTarget());
 
 		Assert.assertTrue(
 			Validator.isNotNull(
 				getAccessToken(
-					testJWTAssertionAuthorizationGrant,
-					testClientAuthentications.get(TEST_CLIENT_ID_1))));
+					jwtAssertionAuthorizationGrant,
+					clientAuthentications.get(TEST_CLIENT_ID_1))));
 	}
 
 	@Test
 	public void testGrantWithWrongAudience() throws Exception {
 		User user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
 
-		TestJWTAssertionAuthorizationGrant testJWTAssertionAuthorizationGrant =
-			new TestJWTAssertionAuthorizationGrant(
+		JWTAssertionAuthorizationGrant jwtAssertionAuthorizationGrant =
+			new JWTAssertionAuthorizationGrant(
 				TEST_CLIENT_ID_1, null, user.getUuid(),
 				getJsonWebTarget("wrongPath"));
 
 		Assert.assertTrue(
 			Validator.isNull(
 				getAccessToken(
-					testJWTAssertionAuthorizationGrant,
-					testClientAuthentications.get(TEST_CLIENT_ID_1))));
+					jwtAssertionAuthorizationGrant,
+					clientAuthentications.get(TEST_CLIENT_ID_1))));
 	}
 
 	@Override
-	protected TestAuthorizationGrant getAuthorizationGrant(String clientId) {
+	protected AuthorizationGrant getAuthorizationGrant(String clientId) {
 		User user = null;
 
 		try {
 			user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
 
-			return new TestJWTAssertionAuthorizationGrant(
+			return new JWTAssertionAuthorizationGrant(
 				TEST_CLIENT_ID_1, null, user.getUuid(), getTokenWebTarget());
 		}
 		catch (Exception exception) {

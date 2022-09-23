@@ -14,13 +14,26 @@
 
 package com.liferay.oauth2.provider.internal.test;
 
+import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 
 /**
  * @author Arthur Chan
  */
-public interface TestAuthorizationGrant {
+public class PasswordAuthorizationGrant implements AuthorizationGrant {
 
-	public MultivaluedMap<String, String> getAuthorizationGrantParameters();
+	public PasswordAuthorizationGrant(String userName, String password) {
+		_authorizationGrantData.add("grant_type", "password");
+		_authorizationGrantData.add("password", password);
+		_authorizationGrantData.add("username", userName);
+	}
+
+	@Override
+	public MultivaluedMap<String, String> getAuthorizationGrantParameters() {
+		return _authorizationGrantData;
+	}
+
+	private final MultivaluedMap<String, String> _authorizationGrantData =
+		new MultivaluedHashMap<>();
 
 }

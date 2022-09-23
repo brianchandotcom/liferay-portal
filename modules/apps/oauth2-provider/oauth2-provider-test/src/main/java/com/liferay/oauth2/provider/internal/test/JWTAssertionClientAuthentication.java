@@ -23,10 +23,9 @@ import javax.ws.rs.core.MultivaluedMap;
 /**
  * @author Arthur Chan
  */
-public class TestJWTAssertionClientAuthentication
-	implements TestClientAuthentication {
+public class JWTAssertionClientAuthentication implements ClientAuthentication {
 
-	public TestJWTAssertionClientAuthentication(
+	public JWTAssertionClientAuthentication(
 		WebTarget audienceWebTarget, String clientId, boolean clientIdInForm,
 		String issuer, String key, boolean symmetricSignature) {
 

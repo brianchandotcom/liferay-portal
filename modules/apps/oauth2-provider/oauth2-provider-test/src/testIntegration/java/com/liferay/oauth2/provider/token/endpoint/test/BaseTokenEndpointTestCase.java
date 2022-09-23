@@ -18,10 +18,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.client.test.BaseClientTestCase;
 import com.liferay.oauth2.provider.client.test.BaseTestPreparatorBundleActivator;
 import com.liferay.oauth2.provider.constants.GrantType;
-import com.liferay.oauth2.provider.internal.test.TestAuthorizationGrant;
-import com.liferay.oauth2.provider.internal.test.TestClientAuthentication;
-import com.liferay.oauth2.provider.internal.test.TestClientPasswordClientAuthentication;
-import com.liferay.oauth2.provider.internal.test.TestJWTAssertionClientAuthentication;
+import com.liferay.oauth2.provider.internal.test.AuthorizationGrant;
+import com.liferay.oauth2.provider.internal.test.ClientAuthentication;
+import com.liferay.oauth2.provider.internal.test.ClientPasswordClientAuthentication;
+import com.liferay.oauth2.provider.internal.test.JWTAssertionClientAuthentication;
 import com.liferay.oauth2.provider.internal.test.util.JWTAssertionUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -63,18 +63,18 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 			User user = UserTestUtil.getAdminUser(
 				PortalUtil.getDefaultCompanyId());
 
-			testClientAuthentications.put(
+			clientAuthentications.put(
 				TEST_CLIENT_ID_1,
-				new TestClientPasswordClientAuthentication(
+				new ClientPasswordClientAuthentication(
 					TEST_CLIENT_ID_1, TEST_CLIENT_SECRET));
-			testClientAuthentications.put(
+			clientAuthentications.put(
 				TEST_CLIENT_ID_2,
-				new TestJWTAssertionClientAuthentication(
+				new JWTAssertionClientAuthentication(
 					getTokenWebTarget(), TEST_CLIENT_ID_2, false,
 					TEST_CLIENT_ID_2, TEST_CLIENT_SECRET, true));
-			testClientAuthentications.put(
+			clientAuthentications.put(
 				TEST_CLIENT_ID_3,
-				new TestJWTAssertionClientAuthentication(
+				new JWTAssertionClientAuthentication(
 					getTokenWebTarget(), TEST_CLIENT_ID_3, false,
 					TEST_CLIENT_ID_3, JWTAssertionUtil.JWKS, false));
 
@@ -105,32 +105,32 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 	}
 
 	protected String getAccessToken(
-		TestAuthorizationGrant testAuthorizationGrant,
-		TestClientAuthentication testClientAuthentication) {
+		AuthorizationGrant authorizationGrant,
+		ClientAuthentication clientAuthentication) {
 
 		return parseAccessTokenString(
-			getTokenResponse(testAuthorizationGrant, testClientAuthentication));
+			getTokenResponse(authorizationGrant, clientAuthentication));
 	}
 
 	protected String getRefreshToken(
-		TestAuthorizationGrant testAuthorizationGrant,
-		TestClientAuthentication testClientAuthentication) {
+		AuthorizationGrant authorizationGrant,
+		ClientAuthentication clientAuthentication) {
 
 		return parseRefreshTokenString(
-			getTokenResponse(testAuthorizationGrant, testClientAuthentication));
+			getTokenResponse(authorizationGrant, clientAuthentication));
 	}
 
 	protected Response getTokenResponse(
-		TestAuthorizationGrant testAuthorizationGrant,
-		TestClientAuthentication testClientAuthentication) {
+		AuthorizationGrant authorizationGrant,
+		ClientAuthentication clientAuthentication) {
 
 		MultivaluedMap<String, String> multivaluedMap =
 			new MultivaluedHashMap<>();
 
 		multivaluedMap.putAll(
-			testAuthorizationGrant.getAuthorizationGrantParameters());
+			authorizationGrant.getAuthorizationGrantParameters());
 		multivaluedMap.putAll(
-			testClientAuthentication.getClientAuthenticationParameters());
+			clientAuthentication.getClientAuthenticationParameters());
 
 		return _invocationBuilder.post(Entity.form(multivaluedMap));
 	}
@@ -152,8 +152,8 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 	protected static final String TEST_CLIENT_SECRET =
 		"oauthTestApplicationSecret";
 
-	protected static final Map<String, TestClientAuthentication>
-		testClientAuthentications = new HashMap<>();
+	protected static final Map<String, ClientAuthentication>
+		clientAuthentications = new HashMap<>();
 
 	private static Invocation.Builder _getInvocationBuilder() {
 		return getInvocationBuilder(

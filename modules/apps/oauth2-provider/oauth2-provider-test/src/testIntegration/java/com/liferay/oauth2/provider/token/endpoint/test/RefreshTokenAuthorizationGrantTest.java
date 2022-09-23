@@ -16,10 +16,10 @@ package com.liferay.oauth2.provider.token.endpoint.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.GrantType;
+import com.liferay.oauth2.provider.internal.test.AuthorizationGrant;
+import com.liferay.oauth2.provider.internal.test.PasswordAuthorizationGrant;
+import com.liferay.oauth2.provider.internal.test.RefreshTokenAuthorizationGrant;
 import com.liferay.oauth2.provider.internal.test.TestAnnotatedApplication;
-import com.liferay.oauth2.provider.internal.test.TestAuthorizationGrant;
-import com.liferay.oauth2.provider.internal.test.TestPasswordAuthorizationGrant;
-import com.liferay.oauth2.provider.internal.test.TestRefreshTokenAuthorizationGrant;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -128,11 +128,11 @@ public class RefreshTokenAuthorizationGrantTest
 
 	}
 
-	protected TestAuthorizationGrant getAuthorizationGrant(String clientId) {
-		return new TestRefreshTokenAuthorizationGrant(
+	protected AuthorizationGrant getAuthorizationGrant(String clientId) {
+		return new RefreshTokenAuthorizationGrant(
 			getRefreshToken(
-				new TestPasswordAuthorizationGrant("test@liferay.com", "test"),
-				testClientAuthentications.get(clientId)));
+				new PasswordAuthorizationGrant("test@liferay.com", "test"),
+				clientAuthentications.get(clientId)));
 	}
 
 	@Override

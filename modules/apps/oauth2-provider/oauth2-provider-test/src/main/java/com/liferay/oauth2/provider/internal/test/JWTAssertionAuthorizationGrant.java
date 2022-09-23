@@ -14,18 +14,35 @@
 
 package com.liferay.oauth2.provider.internal.test;
 
+import com.liferay.oauth2.provider.internal.test.util.JWTAssertionUtil;
+
+import java.util.List;
+
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
+
+import org.apache.cxf.rs.security.oauth2.grants.jwt.Constants;
 
 /**
  * @author Arthur Chan
  */
-public class TestRefreshTokenAuthorizationGrant
-	implements TestAuthorizationGrant {
+public class JWTAssertionAuthorizationGrant implements AuthorizationGrant {
 
-	public TestRefreshTokenAuthorizationGrant(String refreshToken) {
-		_authorizationGrantData.add("grant_type", "refresh_token");
-		_authorizationGrantData.add("refresh_token", refreshToken);
+	public JWTAssertionAuthorizationGrant(
+		String issuer, List<String> scopes, String subject,
+		WebTarget audienceWebTarget) {
+
+		_authorizationGrantData.add(
+			"assertion",
+			JWTAssertionUtil.getJWTAssertionRS256(
+				audienceWebTarget.getUri(), issuer, JWTAssertionUtil.JWKS,
+				subject));
+		_authorizationGrantData.add("grant_type", Constants.JWT_BEARER_GRANT);
+
+		if (scopes != null) {
+			_authorizationGrantData.put("scope", scopes);
+		}
 	}
 
 	@Override

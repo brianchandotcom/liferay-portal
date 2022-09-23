@@ -96,11 +96,9 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 			deletePreparedStatement.executeBatch();
 		}
 
-		String sql =
+		runSQL(
 			"delete from LayoutPageTemplateStructure where classPK not in " +
-				"(select plid from Layout)";
-
-		runSQL(sql);
+				"(select plid from Layout)");
 	}
 
 	private void _deleteWidgetLayoutsTemplateStructureRels(

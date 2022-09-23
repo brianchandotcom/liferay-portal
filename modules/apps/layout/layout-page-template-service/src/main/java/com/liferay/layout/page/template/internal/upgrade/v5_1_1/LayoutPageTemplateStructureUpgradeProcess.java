@@ -49,17 +49,18 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _deleteOrphanLayoutPageTemplateStructures() throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select layoutPageTemplateStructureId from " +
-					"LayoutPageTemplateStructure where classPK not in " +
-						"(select plid from Layout)");
+		try (PreparedStatement selectPreparedStatement =
+				connection.prepareStatement(
+					"select layoutPageTemplateStructureId from " +
+						"LayoutPageTemplateStructure where classPK not in " +
+							"(select plid from Layout)");
 			PreparedStatement deletePreparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"delete from LayoutPageTemplateStructureRel where " +
 						"layoutPageTemplateStructureId = ?")) {
 
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {
 					deletePreparedStatement.setLong(
 						1, resultSet.getLong("layoutPageTemplateStructureId"));
@@ -81,11 +82,12 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 		List<Long> plids = new ArrayList<>();
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				SQLTransformer.transform(
-					"select layoutPageTemplateStructureId, classPK from " +
-						"LayoutPageTemplateStructure where classPK in " +
-							"(select plid from Layout where type_ = ?)"));
+		try (PreparedStatement selectPreparedStatement =
+				connection.prepareStatement(
+					SQLTransformer.transform(
+						"select layoutPageTemplateStructureId, classPK from " +
+							"LayoutPageTemplateStructure where classPK in " +
+								"(select plid from Layout where type_ = ?)"));
 			PreparedStatement deletePreparedStatement1 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
@@ -97,9 +99,9 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 					"delete from LayoutPageTemplateStructureRel where " +
 						"layoutPageTemplateStructureId = ?")) {
 
-			preparedStatement.setString(1, LayoutConstants.TYPE_PORTLET);
+			selectPreparedStatement.setString(1, LayoutConstants.TYPE_PORTLET);
 
-			ResultSet resultSet = preparedStatement.executeQuery();
+			ResultSet resultSet = selectPreparedStatement.executeQuery();
 
 			while (resultSet.next()) {
 				long classPK = resultSet.getLong("classPK");

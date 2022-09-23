@@ -70,10 +70,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -289,10 +291,9 @@ public class NotificationTemplateLocalServiceImpl
 				siteDefaultLocale, null, notificationType, object);
 		}
 
-		String to = _formatContent(
+		String to = _formatTo(
 			notificationTemplate.getTo(user.getLocale()), user.getLocale(),
-			NotificationTermContributorConstants.RECIPIENT, notificationType,
-			object);
+			notificationType, object);
 
 		if (Validator.isNull(to)) {
 			to = _formatContent(
@@ -472,6 +473,29 @@ public class NotificationTemplateLocalServiceImpl
 			object, termNames);
 	}
 
+	private String _formatTo(
+			String to, Locale locale, NotificationType notificationType,
+			Object object)
+		throws PortalException {
+
+		if (Validator.isNull(to)) {
+			return StringPool.BLANK;
+		}
+
+		Set<String> emails = new HashSet<>();
+
+		Matcher matcher = _emailAddressPattern.matcher(to);
+
+		while (matcher.find()) {
+			emails.add(matcher.group());
+		}
+
+		return _formatContent(
+			StringUtil.merge(emails, ","), locale,
+			NotificationTermContributorConstants.RECIPIENT, notificationType,
+			object);
+	}
+
 	private List<Long> _getFileEntryIds(
 			long companyId, long notificationTemplateId, Object object)
 		throws PortalException {
@@ -586,6 +610,9 @@ public class NotificationTemplateLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		NotificationTemplateLocalServiceImpl.class);
 
+	private static final Pattern _emailAddressPattern = Pattern.compile(
+		"[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@" +
+			"(?:\\w(?:[\\w-]*\\w)?\\.)+(\\w(?:[\\w-]*\\w))");
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[%[^\\[%]+%\\]", Pattern.CASE_INSENSITIVE);
 

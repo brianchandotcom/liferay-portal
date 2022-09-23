@@ -66,7 +66,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		throws PortalException {
 
 		_validateExternalReferenceCode(externalReferenceCode, groupId);
-		_validateName(name);
+		_validateName(groupId, name);
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			layoutUtilityPageEntryPersistence.create(
@@ -175,7 +175,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			layoutUtilityPageEntryPersistence.fetchByPrimaryKey(
 				layoutUtilityPageEntryId);
 
-		_validateName(name);
+		_validateName(layoutUtilityPageEntry.getGroupId(), name);
 
 		layoutUtilityPageEntry.setName(name);
 
@@ -279,17 +279,20 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		}
 	}
 
-	private void _validateName(String name) throws PortalException {
+	private void _validateName(long groupId, String name)
+		throws PortalException {
+
 		if (Validator.isNull(name)) {
-			throw new LayoutUtilityPageEntryNameException("Name is null");
+			throw new LayoutUtilityPageEntryNameException.MustNotBeNull(
+				groupId);
 		}
 
 		int nameMaxLength = ModelHintsUtil.getMaxLength(
 			LayoutUtilityPageEntry.class.getName(), "name");
 
 		if (name.length() > nameMaxLength) {
-			throw new LayoutUtilityPageEntryNameException(
-				"Name has more than " + nameMaxLength + " characters");
+			throw new LayoutUtilityPageEntryNameException.
+				MustNotExceedMaximumSize(nameMaxLength);
 		}
 	}
 

@@ -4,5 +4,11 @@
 			"message": "Learn more.",
 			"url": "https://learn.liferay.com/dxp/latest/en/using-search/search-pages-and-widgets/search-results/sorting-search-results.html"
 		}
+	},
+	"tag-and-category-facet": {
+		"en_US": {
+			"message": "Learn more.",
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/search-pages-and-widgets/search-facets/tag-and-category-facet.html"
+		}
 	}
 }

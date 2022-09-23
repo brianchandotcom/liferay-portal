@@ -12,8 +12,6 @@ definition {
 		}
 		else {
 			for (var assigneeName : list "${assigneeNames}") {
-				Search.searchCP(searchTerm = "${assigneeName}");
-
 				Check(
 					key_tableEntry = "${assigneeName}",
 					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
@@ -48,8 +46,6 @@ definition {
 	macro editCP {
 		AccountGroups.openAccountGroupsAdmin();
 
-		Search.searchCP(searchTerm = "${accountGroupName}");
-
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "${accountGroupName}");
@@ -78,8 +74,6 @@ definition {
 	}
 
 	macro removeAccount {
-		Search.searchCP(searchTerm = "${accountGroupName}");
-
 		if ("${removeType}" == "Toolbar Remove Icon") {
 			LexiconEntry.selectEntry(key_rowEntry = "${accountGroupName}");
 

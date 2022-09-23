@@ -169,8 +169,6 @@ definition {
 			key_title = "Assign Users to ${accountRoleTitle}",
 			locator1 = "IFrame#MODAL_ANY");
 
-		Search.searchCP(searchTerm = "${assigneeName}");
-
 		Check(
 			key_tableEntry = "${assigneeName}",
 			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
@@ -198,8 +196,6 @@ definition {
 		SelectFrame(
 			key_title = "Assign Users to ${accountRoleTitle}",
 			locator1 = "IFrame#MODAL_ANY");
-
-		Search.searchCP(searchTerm = "${assigneeName}");
 
 		Check(
 			key_tableEntry = "${assigneeName}",
@@ -553,8 +549,6 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#ASSIGN_USER");
 
-		Search.searchCP(searchTerm = "${accountUserName}");
-
 		AssertClick(
 			key_accountUserName = "${accountUserName}",
 			locator1 = "Account#ASSIGN_USER_CHOOSE_BUTTON",
@@ -584,8 +578,6 @@ definition {
 			key_title = "Assign Organizations to ${accountName}",
 			locator1 = "IFrame#MODAL_ANY");
 
-		Search.searchCP(searchTerm = "Organization ${organizationNumber}");
-
 		for (var organizationNumber : list "${organizationNumber}") {
 			LexiconEntry.selectEntry(rowEntry = "Organization ${organizationNumber}");
 		}
@@ -606,8 +598,6 @@ definition {
 			key_title = "Assign Organizations to ${accountName}",
 			locator1 = "IFrame#MODAL_ANY");
 
-		Search.searchCP(searchTerm = "${assigneeName}");
-
 		Check(
 			key_tableEntry = "${assigneeName}",
 			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
@@ -627,8 +617,6 @@ definition {
 		SelectFrame(
 			key_title = "Assign Users to ${accountName}",
 			locator1 = "IFrame#MODAL_ANY");
-
-		Search.searchCP(searchTerm = "${assigneeName}");
 
 		Check(
 			key_tableEntry = "${assigneeName}",
@@ -686,15 +674,6 @@ definition {
 	}
 
 	macro deactivateAccount {
-		if (IsElementPresent(locator1 = "Account#2B_ACCOUNT_MANAGEMENT_HEADING")) {
-			Search.searchPG(
-				portletName = "Account Management",
-				searchTerm = "${accountName}");
-		}
-		else {
-			Search.searchCP(searchTerm = "${accountName}");
-		}
-
 		if ("${deactivateType}" == "Hide Icon") {
 			LexiconEntry.selectEntry(key_rowEntry = "${accountName}");
 
@@ -766,15 +745,6 @@ definition {
 	}
 
 	macro deleteAccount {
-		if (IsElementPresent(locator1 = "Account#2B_ACCOUNT_MANAGEMENT_HEADING")) {
-			Search.searchPG(
-				portletName = "Account Management",
-				searchTerm = "${accountName}");
-		}
-		else {
-			Search.searchCP(searchTerm = "${accountName}");
-		}
-
 		if ("${deleteType}" == "Delete Icon") {
 			LexiconEntry.selectEntry(key_rowEntry = "${accountName}");
 
@@ -810,8 +780,6 @@ definition {
 
 	macro deleteOwnedAccountRole {
 		Accounts.gotoAssigneeTab(assigneeTab = "Roles");
-
-		Search.searchCP(searchTerm = "${accountRoleTitle}");
 
 		LexiconEntry.delete(
 			menuItem = "Delete",
@@ -930,10 +898,6 @@ definition {
 	}
 
 	macro editPG {
-		Search.searchPG(
-			portletName = "Account Management",
-			searchTerm = "${accountName}");
-
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "${accountName}");
@@ -998,8 +962,6 @@ definition {
 	}
 
 	macro gotoEdit {
-		Search.searchCP(searchTerm = "${accountName}");
-
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "${accountName}");
@@ -1127,17 +1089,6 @@ definition {
 	}
 
 	macro removeOrganizationAsAssignee {
-		var key_assigneeName = "${assigneeName}";
-
-		if (isSet(accountName)) {
-			Search.searchPG(
-				portletName = "${accountName}",
-				searchTerm = "${assigneeName}");
-		}
-		else {
-			Search.searchCP(searchTerm = "${assigneeName}");
-		}
-
 		ClickNoError(
 			locator1 = "Icon#REMOVE_ASSIGNEE",
 			value1 = "${assigneeName}");
@@ -1148,10 +1099,6 @@ definition {
 	}
 
 	macro removeUserAsAssignee {
-		var key_assigneeName = "${assigneeName}";
-
-		Search.searchCP(searchTerm = "${assigneeName}");
-
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Remove",
 			rowEntry = "${assigneeName}");
@@ -1238,8 +1185,6 @@ definition {
 			key_title = "Set Default Billing Address",
 			locator1 = "IFrame#MODAL_ANY");
 
-		Search.searchCP(searchTerm = "${addressName}");
-
 		Click(
 			key_addressName = "${addressName}",
 			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SELECT_ADDRESS_RADIO");
@@ -1315,8 +1260,6 @@ definition {
 		SelectFrame(
 			key_title = "Set Default Shipping Address",
 			locator1 = "IFrame#MODAL_ANY");
-
-		Search.searchCP(searchTerm = "${addressName}");
 
 		Click(
 			key_addressName = "${addressName}",
@@ -1651,15 +1594,6 @@ definition {
 
 	macro viewInactiveAccount {
 		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
-
-		if (IsElementPresent(locator1 = "Account#2B_ACCOUNT_MANAGEMENT_HEADING")) {
-			Search.searchPG(
-				portletName = "Account Management",
-				searchTerm = "${accountName}");
-		}
-		else {
-			Search.searchCP(searchTerm = "${accountName}");
-		}
 
 		LexiconEntry.viewEntryStatus(
 			rowEntry = "${accountName}",

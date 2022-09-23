@@ -40,8 +40,6 @@ definition {
 	}
 
 	macro deactivateUser {
-		Search.searchCP(searchTerm = "${userFirstName}");
-
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Deactivate",
 			rowEntry = "${userFirstName}");

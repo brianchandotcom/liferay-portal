@@ -122,10 +122,15 @@ definition {
 	macro _getDepotIdByName {
 		Variables.assertDefined(parameterList = "${depotName}");
 
-		var companyId = JSONCompany.getCompanyId();
-
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (isSet(noSelenium)) {
+			var companyId = JSONCompany.getCompanyIdNoSelenium(portalURL = "${portalURL}");
+		}
+		else {
+			var companyId = JSONCompany.getCompanyId();
 		}
 
 		if (!(isSet(defaultLocale))) {

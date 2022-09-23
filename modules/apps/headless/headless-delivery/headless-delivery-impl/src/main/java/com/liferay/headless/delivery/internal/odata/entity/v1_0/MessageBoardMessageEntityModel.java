@@ -73,7 +73,7 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 				"parentMessageBoardMessageId", locale -> "parentMessageId"),
 			new IntegerEntityField(
 				"ratingValue",
-				locale -> Field.getSortableFieldName("totalScore")),
+				locale -> Field.getSortableFieldName("ratingValue")),
 			new IntegerEntityField(
 				"viewCount", locale -> Field.getSortableFieldName("viewCount")),
 			new StringEntityField(

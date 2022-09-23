@@ -54,11 +54,25 @@ definition {
 		}
 
 		task ("Add a widget template for Asset Publisher") {
-			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			var newLine = '''
+''';
+			var script = TestCase.getFileContent(fileName = "adt_asset_publisher_rich_summary.ftl");
 
-			ApplicationDisplayTemplates.addCP(
-				adtFile = "adt_asset_publisher_rich_summary.ftl",
-				adtType = "Asset Publisher");
+			var script = StringUtil.regexReplaceAll("${script}", "${newLine}", "%0A");
+
+			var script = StringUtil.regexReplaceAll("${script}", " ", "%20");
+
+			var script = StringUtil.regexReplaceAll("${script}", "	", "%09");
+
+			var script = StringUtil.regexReplaceAll("${script}", "&", "%26");
+
+			var script = StringUtil.regexReplaceAll("${script}", "\+", "%2B");
+
+			JSONDDMtemplate.addWidgetTemplate(
+				groupName = "Test Site Name",
+				itemType = "Asset Publisher Template",
+				name = "Asset Publisher Test ADT",
+				script = "${script}");
 		}
 
 		task ("Configure the display setttings of Asset Publisher") {

@@ -11,6 +11,7 @@
 
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
+import i18n from '../../I18n';
 import {STATUS_DISPLAY} from './utils/constants/statusDisplays';
 
 const StatusTag = ({currentStatus}) => {
@@ -25,7 +26,7 @@ const StatusTag = ({currentStatus}) => {
 				}
 			)}
 		>
-			{statusDisplay?.label}
+			{statusDisplay && i18n.translate(statusDisplay.label)}
 		</ClayLabel>
 	);
 };

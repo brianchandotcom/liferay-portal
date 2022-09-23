@@ -27,7 +27,7 @@ const NavSegment = ({
 		if (index !== currentIndex) {
 			setCurrentIndex(index);
 
-			if (selectedIndex) {
+			if (selectedIndex !== undefined) {
 				onSelect(index);
 
 				return;

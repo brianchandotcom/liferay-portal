@@ -656,6 +656,24 @@ public class AccountEntryLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public AccountEntry updateDomains(long accountEntryId, String[] domains)
+		throws PortalException {
+
+		AccountEntry accountEntry = getAccountEntry(accountEntryId);
+
+		AccountEntryEmailAddressValidator accountEntryEmailAddressValidator =
+			_accountEntryEmailAddressValidatorFactory.create(
+				accountEntry.getCompanyId());
+
+		domains = _validateDomains(accountEntryEmailAddressValidator, domains);
+
+		accountEntry.setDomains(StringUtil.merge(domains, StringPool.COMMA));
+
+		return updateAccountEntry(accountEntry);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public AccountEntry updateExternalReferenceCode(
 			AccountEntry accountEntry, String externalReferenceCode)
 		throws PortalException {

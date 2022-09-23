@@ -82,14 +82,25 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 				String modifiedFileCanonicalPath =
 					JenkinsResultsParserUtil.getCanonicalPath(modifiedFile);
 
-				Matcher matcher = _modifiedModulesPattern.matcher(
+				Matcher modulesMatcher = _modifiedModulesPattern.matcher(
 					modifiedFileCanonicalPath);
 
-				if (matcher.find()) {
+				if (modulesMatcher.find()) {
 					File modifiedDir = new File(
-						getWorkingDirectory(), matcher.group());
+						getWorkingDirectory(), modulesMatcher.group());
 
 					modifiedNonPoshiDirs.add(modifiedDir);
+				}
+
+				Matcher longerModulesMatcher =
+					_modifiedLongerModulesPattern.matcher(
+						modifiedFileCanonicalPath);
+
+				if (longerModulesMatcher.find()) {
+					File modifiedLongDir = new File(
+						getWorkingDirectory(), longerModulesMatcher.group());
+
+					modifiedNonPoshiDirs.add(modifiedLongDir);
 				}
 			}
 		}
@@ -122,14 +133,25 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 				String modifiedFileCanonicalPath =
 					JenkinsResultsParserUtil.getCanonicalPath(modifiedFile);
 
-				Matcher matcher = _modifiedModulesPattern.matcher(
+				Matcher modulesMatcher = _modifiedModulesPattern.matcher(
 					modifiedFileCanonicalPath);
 
-				if (matcher.find()) {
+				if (modulesMatcher.find()) {
 					File modifiedDir = new File(
-						getWorkingDirectory(), matcher.group());
+						getWorkingDirectory(), modulesMatcher.group());
 
 					modifiedPoshiDirs.add(modifiedDir);
+				}
+
+				Matcher longerModulesMatcher =
+					_modifiedLongerModulesPattern.matcher(
+						modifiedFileCanonicalPath);
+
+				if (longerModulesMatcher.find()) {
+					File modifiedLongDir = new File(
+						getWorkingDirectory(), longerModulesMatcher.group());
+
+					modifiedPoshiDirs.add(modifiedLongDir);
 				}
 			}
 		}
@@ -381,6 +403,8 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		return false;
 	}
 
+	private static final Pattern _modifiedLongerModulesPattern =
+		Pattern.compile("(modules\\/[\\w-]*\\/[\\w-]*([\\/]([\\w-]*))?)");
 	private static final Pattern _modifiedModulesPattern = Pattern.compile(
 		"(modules\\/[\\w-]*\\/[\\w-]*)");
 

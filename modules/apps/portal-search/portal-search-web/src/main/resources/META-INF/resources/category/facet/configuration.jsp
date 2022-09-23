@@ -20,9 +20,11 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/learn" prefix="liferay-learn" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
-taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %>
+taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
@@ -85,27 +87,33 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 
 				<aui:input label="display-frequencies" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE) %>" type="checkbox" value="<%= categoryFacetPortletPreferences.isFrequenciesVisible() %>" />
 
-				<c:choose>
-					<c:when test="<%= !assetCategoriesSearchFacetDisplayContext.isLegacyFieldSelected() %>">
-						<div id="<portlet:namespace />selectVocabularies">
-							<react:component
-								module="js/components/SelectVocabularies"
-								props='<%=
-									HashMapBuilder.<String, Object>put(
-										"initialSelectedVocabularyIds", StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds())
-									).put(
-										"namespace", liferayPortletResponse.getNamespace()
-									).put(
-										"vocabularyIdsInputName", PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS)
-									).build()
-								%>'
-							/>
-						</div>
-					</c:when>
-					<c:otherwise>
-						render the selector "disabled" and add help text/"Learn more" link: To enable this configuration follow the steps in the documentation. Learn More
-					</c:otherwise>
-				</c:choose>
+				<div id="<portlet:namespace />selectVocabularies">
+					<react:component
+						module="js/components/SelectVocabularies"
+						props='<%=
+							HashMapBuilder.<String, Object>put(
+								"disabled", assetCategoriesSearchFacetDisplayContext.isLegacyFieldSelected()
+							).put(
+								"initialSelectedVocabularyIds", StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds())
+							).put(
+								"namespace", liferayPortletResponse.getNamespace()
+							).put(
+								"vocabularyIdsInputName", PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS)
+							).build()
+						%>'
+					/>
+				</div>
+
+				<c:if test="<%= assetCategoriesSearchFacetDisplayContext.isLegacyFieldSelected() %>">
+					<p class="mt-3 sheet-text">
+						<liferay-ui:message key="select-vocabularies-configuration-disabled-description" />
+
+						<liferay-learn:message
+							key="tag-and-category-facet"
+							resource="portal-search-web"
+						/>
+					</p>
+				</c:if>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

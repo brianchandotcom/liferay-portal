@@ -51,6 +51,42 @@ export function FrontendDataSet({
 	views,
 }: IFrontendDataSetProps): JSX.Element;
 
+type TDelta = {
+	href?: string;
+	label: number;
+};
+
+type TInlineEditingSettings = {alwaysOn: boolean; defaultBodyContent: object};
+
+type TItemsActions = {
+	data?: {
+		confirmationMessage?: string;
+		id?: string;
+		method?: 'delete' | 'get';
+		permissionKey?: string;
+	};
+	href?: string;
+	icon?: string;
+	id?: string;
+	label?: string;
+	target?: 'async' | 'headless' | 'link' | 'modal' | 'sidePanel' | 'event';
+};
+
+type TSorting = {
+	direction?: 'asc' | 'desc';
+	key?: string;
+};
+
+type TViews = {
+	component?: any;
+	contentRenderer?: string;
+	contentRendererModuleURL?: string;
+	label?: string;
+	name?: string;
+	schema?: object;
+	thumbnail?: string;
+};
+
 interface IFrontendDataSetProps {
 	actionParameterName?: string;
 	activeViewSettings?: string;
@@ -77,13 +113,7 @@ interface IFrontendDataSetProps {
 		apiURL: string;
 		defaultBodyContent: object;
 	};
-	inlineEditingSettings?: [
-		boolean,
-		{
-			alwaysOn: boolean;
-			defaultBodyContent: object;
-		}
-	];
+	inlineEditingSettings?: boolean | TInlineEditingSettings;
 	items?: any[];
 	itemsActions?: TItemsActions[];
 	namespace?: string;
@@ -93,51 +123,18 @@ interface IFrontendDataSetProps {
 	onBulkActionItemClick?: any;
 	overrideEmptyResultView?: boolean;
 	pagination?: {
-		deltas?: [
-			{
-				href?: string;
-				label: number;
-			}
-		];
-		initialDelta: number;
+		deltas?: TDelta[];
+		initialDelta?: number;
+		initialPageNumber?: number;
 	};
 	portletId?: string;
 	selectedItemsKey?: string;
-	selectionType?: ['single', 'multiple'];
+	selectionType?: 'single' | 'multiple';
 	showManagementBar?: boolean;
 	showPagination?: boolean;
 	showSearch?: boolean;
 	sidePanelId?: string;
-	sorting?: [
-		{
-			direction?: ['asc', 'desc'];
-			key?: string;
-		}
-	];
-	style?: ['default', 'fluid', 'stacked'];
-	views: [
-		{
-			component?: any;
-			contentRenderer?: string;
-			contentRendererModuleURL?: string;
-			label?: string;
-			name?: string;
-			schema?: object;
-			thumbnail?: string;
-		}
-	];
+	sorting?: TSorting[];
+	style?: 'default' | 'fluid' | 'stacked';
+	views: TViews[];
 }
-
-type TItemsActions = {
-	data?: {
-		confirmationMessage?: string;
-		id?: string;
-		method?: 'delete' | 'get';
-		permissionKey?: string;
-	};
-	href?: string;
-	icon?: string;
-	id?: string;
-	label?: string;
-	target?: 'async' | 'headless' | 'link' | 'modal' | 'sidePanel' | 'event';
-};

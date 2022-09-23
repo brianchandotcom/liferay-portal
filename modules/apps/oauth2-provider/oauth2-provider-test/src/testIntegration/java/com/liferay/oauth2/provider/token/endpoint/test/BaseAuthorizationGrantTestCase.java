@@ -30,17 +30,25 @@ public abstract class BaseAuthorizationGrantTestCase
 	extends BaseTokenEndpointTestCase {
 
 	@Test
-	public void testClientAuthentications() {
+	public void testClientAuthentication1() {
 		Assert.assertTrue(
 			Validator.isNotNull(
 				getAccessToken(
 					getAuthorizationGrant(TEST_CLIENT_ID_1),
 					testClientAuthentications.get(TEST_CLIENT_ID_1))));
+	}
+
+	@Test
+	public void testClientAuthentication2() {
 		Assert.assertTrue(
 			Validator.isNotNull(
 				getAccessToken(
 					getAuthorizationGrant(TEST_CLIENT_ID_2),
 					testClientAuthentications.get(TEST_CLIENT_ID_2))));
+	}
+
+	@Test
+	public void testClientAuthentication3() {
 		Assert.assertTrue(
 			Validator.isNotNull(
 				getAccessToken(

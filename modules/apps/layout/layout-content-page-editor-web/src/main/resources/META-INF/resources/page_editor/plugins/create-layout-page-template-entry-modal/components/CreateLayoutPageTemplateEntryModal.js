@@ -16,7 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
-import {openToast} from 'frontend-js-web';
+import {openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
@@ -100,7 +100,7 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 			)
 				.then((response) => {
 					openToast({
-						message: Liferay.Util.sub(
+						message: sub(
 							Liferay.Language.get(
 								'the-page-template-was-created-successfully.-you-can-view-it-here-x'
 							),

@@ -19,6 +19,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {FETCH_STATUS} from '../constants';
@@ -38,10 +39,7 @@ const TranslateAutoTranslateRow = ({
 	}
 
 	const isLoading = fieldStatus.status === FETCH_STATUS.LOADING;
-	const text = Liferay.Util.sub(
-		Liferay.Language.get('auto-translate-x-field'),
-		label
-	);
+	const text = sub(Liferay.Language.get('auto-translate-x-field'), label);
 
 	return (
 		<ClayLayout.Row>

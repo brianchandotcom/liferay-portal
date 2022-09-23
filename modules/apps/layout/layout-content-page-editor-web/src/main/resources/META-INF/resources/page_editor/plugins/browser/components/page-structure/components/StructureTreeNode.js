@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {openToast} from 'frontend-js-web';
+import {openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
@@ -331,9 +331,7 @@ function StructureTreeNodeContent({
 			ref={targetRef}
 		>
 			<div
-				aria-label={Liferay.Util.sub(Liferay.Language.get('select-x'), [
-					node.name,
-				])}
+				aria-label={sub(Liferay.Language.get('select-x'), [node.name])}
 				className="lfr-portal-tooltip page-editor__page-structure__tree-node__mask"
 				data-title={node.tooltipTitle}
 				data-tooltip-align="left"
@@ -490,7 +488,7 @@ const VisibilityButton = ({dispatch, node, selectedViewportSize, visible}) => {
 
 	return (
 		<ClayButton
-			aria-label={Liferay.Util.sub(
+			aria-label={sub(
 				node.hidden || node.hiddenAncestor
 					? Liferay.Language.get('show-x')
 					: Liferay.Language.get('hide-x'),

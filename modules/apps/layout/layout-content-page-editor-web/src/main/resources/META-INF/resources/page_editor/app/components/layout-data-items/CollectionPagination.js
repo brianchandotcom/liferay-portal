@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import ClayPaginationBar from '@clayui/pagination-bar';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -66,7 +67,7 @@ export default function CollectionPagination({
 			{paginationType === 'numeric' ? (
 				<ClayPaginationBar className="flex-grow-1">
 					<ClayPaginationBar.Results>
-						{Liferay.Util.sub(
+						{sub(
 							Liferay.Language.get('showing-x-to-x-of-x-entries'),
 							numericPaginationLabelValues
 						)}

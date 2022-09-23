@@ -17,6 +17,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ManagementToolbar as FrontendManagementToolbar} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 const ManagementToolbar = ({
@@ -138,7 +139,7 @@ const ManagementToolbar = ({
 					<FrontendManagementToolbar.ResultsBarItem>
 						<span className="component-text text-truncate-inline">
 							<span className="text-truncate">
-								{Liferay.Util.sub(
+								{sub(
 									totalCount === 1
 										? Liferay.Language.get('x-result-for-x')
 										: Liferay.Language.get(

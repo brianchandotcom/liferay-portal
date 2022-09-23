@@ -6,20 +6,23 @@ definition {
 		if ("${itemType}" == "Web Content Article") {
 			var value = "com.liferay.journal.model.JournalArticle";
 		}
-		else if ("${itemType}" == "Document") {
+		else if (("${itemType}" == "Document") || ("${itemType}" == "Media Gallery Template")) {
 			var value = "com.liferay.portal.kernel.repository.model.FileEntry";
 		}
-		else if ("${itemType}" == "Blogs Entry") {
+		else if (("${itemType}" == "Blogs Entry") || ("${itemType}" == "Blogs Template")) {
 			var value = "com.liferay.blogs.model.BlogsEntry";
 		}
 		else if ("${itemType}" == "Category") {
 			var value = "com.liferay.asset.kernel.model.AssetCategory";
 		}
-		else if ("${itemType}" == "Asset") {
+		else if (("${itemType}" == "Asset") || ("${itemType}" == "Asset Publisher Template")) {
 			var value = "com.liferay.asset.kernel.model.AssetEntry";
 		}
 		else if ("${itemType}" == "Object") {
 			var value = "com.liferay.object.model.ObjectEntry";
+		}
+		else if ("${itemType}" == "Search Results Template") {
+			var value = "com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext";
 		}
 		else {
 			fail("'value' is either invalid or not yet set.");

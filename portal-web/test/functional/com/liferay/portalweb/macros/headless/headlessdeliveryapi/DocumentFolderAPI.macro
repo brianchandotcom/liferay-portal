@@ -7,7 +7,9 @@ definition {
 			var api = "asset-libraries/${assetLibraryId}";
 		}
 		else {
-			var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "${groupName}",
+				site = "true");
 
 			var api = "sites/${siteId}";
 		}
@@ -45,7 +47,9 @@ definition {
 					var href = "${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryGroupId}/document-folders/batch";
 				}
 				else {
-					var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
+					var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+						groupName = "${groupName}",
+						site = "true");
 
 					var href = "${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/document-folders/batch";
 				}

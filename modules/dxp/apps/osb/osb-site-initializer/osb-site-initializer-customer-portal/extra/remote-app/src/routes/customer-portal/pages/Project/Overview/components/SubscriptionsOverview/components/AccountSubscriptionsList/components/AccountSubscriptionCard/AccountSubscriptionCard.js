@@ -49,11 +49,11 @@ const AccountSubscriptionCard = ({
 			)}
 			onClick={onClick}
 		>
-			<ClayCard.Body>
+			<ClayCard.Body className="cp-account-subscription-card pb-3">
 				{loading ? (
-					<Skeleton className="my-3 py-1" height={45} width={48} />
+					<Skeleton className="mb-3 py-1" height={45} width={48} />
 				) : (
-					<div className="my-3 py-1 text-center">
+					<div className="mb-3 py-1 text-center">
 						<img
 							className="cp-account-subscription-card-logo"
 							src={logoPath}
@@ -62,9 +62,13 @@ const AccountSubscriptionCard = ({
 				)}
 
 				{loading ? (
-					<Skeleton className="mb-1" height={20} width={90} />
+					<Skeleton
+						className="cp-account-subscription-card-name mb-1"
+						height={20}
+						width={90}
+					/>
 				) : (
-					<h5 className="mb-1 text-center">
+					<h5 className="align-items-center cp-account-subscription-card-name d-flex justify-content-center mb-1 text-center">
 						{accountSubscription.name}
 					</h5>
 				)}

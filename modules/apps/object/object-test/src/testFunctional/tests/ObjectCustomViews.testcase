@@ -1368,6 +1368,8 @@ definition {
 	@description = "LPS-147792 - Verify it is possible to see the column label as the alias on the view builder column list"
 	@priority = "5"
 	test CanSeeRenamedColumnOnViewBuilder {
+		property portal.acceptance = "true";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152068",
 			objectName = "CustomObject152068",

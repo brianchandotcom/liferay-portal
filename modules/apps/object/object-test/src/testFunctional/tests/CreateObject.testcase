@@ -1546,7 +1546,7 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 156824");
 
-			CreateObject.assertAccountRestrictedFieldDisabled();
+			CreateObject.assertAccountRestrictedFieldDisabled(valueName = "Choose an Option");
 
 			CreateObject.viewToogleAccountRestrictionDisabled();
 		}

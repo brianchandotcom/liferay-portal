@@ -27,7 +27,9 @@ definition {
 	}
 
 	macro assertAccountRestrictedFieldDisabled {
-		AssertElementPresent(locator1 = "CreateObject#ACCOUNT_RESTRICTED_FIELD_DISABLED");
+		AssertElementPresent(
+			key_valueName = "${valueName}",
+			locator1 = "CreateObject#ACCOUNT_RESTRICTED_FIELD_DISABLED");
 	}
 
 	macro assertAddedEntryRelationshipIsDisplayed {

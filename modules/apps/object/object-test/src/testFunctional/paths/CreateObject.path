@@ -217,7 +217,7 @@
 	</tr>
 	<tr>
 		<td>ACCOUNT_RESTRICTED_FIELD_DISABLED</td>
-		<td>//select[contains(@id,'accountEntryRestrictedObjectFieldId') and contains(@class,'disabled')]</td>
+		<td>//select[contains(@id,'accountEntryRestrictedObjectFieldId') and contains(@class,'disabled') and contains(.,'${key_valueName}')]</td>
 		<td></td>
 	</tr>
 </tbody>

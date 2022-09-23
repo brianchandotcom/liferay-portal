@@ -113,7 +113,7 @@ definition {
 				key_portletName = "AssetPublisher",
 				locator1 = "Home#PORTLET_BORDERLESS");
 
-			SiteTemplates.resetPageChanges(widgetName = "Asset Publisher");
+			SiteTemplates.resetPageChanges(portletName = "Asset Publisher");
 
 			ContentPages.gotoPageEditor();
 

@@ -127,7 +127,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 
 				<h3 class="sheet-subtitle"><liferay-ui:message key="oauth-client-oidc-specific-configurations" /></h3>
 
-				<aui:input helpMessage="oauth-client-oidc-user-info-mapper-json-help" label="oauth-client-oidc-user-info-mapper-json" name="oidcUserInfoMapperJSON" style="min-height: 400px;" type="hidden" value="<%= OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON %>" />
+				<aui:input helpMessage="oauth-client-oidc-user-info-mapper-json-help" label="oauth-client-oidc-user-info-mapper-json" name="OIDCUserInfoMapperJSON" style="min-height: 400px;" type="textarea" value="<%= OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON %>" />
 
 				<aui:button-row>
 					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />
@@ -198,7 +198,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 		).value = tokenRequestParametersJSON;
 
 		var oidcUserInfoMapperJSON = document.getElementById(
-			'<portlet:namespace />oidcUserInfoMapperJSON'
+			'<portlet:namespace />OIDCUserInfoMapperJSON'
 		).value;
 
 		try {
@@ -209,12 +209,12 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 			);
 		}
 		catch (e) {
-			alert('Ill-formatted Default Token Request Parameters JSON');
+			alert('Ill-formatted OIDC User Info Mapper JSON');
 			return;
 		}
 
 		document.getElementById(
-			'<portlet:namespace />oidcUserInfoMapperJSON'
+			'<portlet:namespace />OIDCUserInfoMapperJSON'
 		).value = oidcUserInfoMapperJSON;
 
 		submitForm(
@@ -248,7 +248,7 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 		);
 
 		var oidcUserInfoMapperJSON = document.getElementById(
-			'<portlet:namespace />oidcUserInfoMapperJSON'
+			'<portlet:namespace />OIDCUserInfoMapperJSON'
 		);
 
 		oidcUserInfoMapperJSON.value = JSON.stringify(

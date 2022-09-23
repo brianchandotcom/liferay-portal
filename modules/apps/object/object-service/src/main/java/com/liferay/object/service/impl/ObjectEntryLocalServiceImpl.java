@@ -1042,10 +1042,6 @@ public class ObjectEntryLocalServiceImpl
 			user.isDefaultUser(), objectEntry.getObjectDefinitionId(),
 			objectDefinition.getPortletId(), serviceContext, userId, values);
 
-		Map<String, Serializable> transientValues = objectEntry.getValues();
-
-		objectEntry.setTransientValues(transientValues);
-
 		_updateTable(
 			_getDynamicObjectDefinitionTable(
 				objectEntry.getObjectDefinitionId()),
@@ -1055,9 +1051,15 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.getObjectDefinitionId()),
 			objectEntryId, values);
 
+		objectEntry = objectEntryPersistence.findByPrimaryKey(objectEntryId);
+
 		_setExternalReferenceCode(objectEntry, values);
 
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
+
+		Map<String, Serializable> transientValues = objectEntry.getValues();
+
+		objectEntry.setTransientValues(transientValues);
 
 		objectEntry = objectEntryPersistence.update(objectEntry);
 

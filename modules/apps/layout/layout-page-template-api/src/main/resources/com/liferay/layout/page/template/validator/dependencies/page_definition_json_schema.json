@@ -949,6 +949,46 @@
 					"title": "The fragmentViewports Schema",
 					"type": "array"
 				},
+				"layout": {
+					"additionalProperties": false,
+					"properties": {
+						"align": {
+							"enum": [
+								"Baseline",
+								"Center",
+								"End",
+								"None",
+								"Start",
+								"Stretch"
+							],
+							"title": "The align Schema",
+							"type": "string"
+						},
+						"flexWrap": {
+							"enum": [
+								"NoWrap",
+								"Wrap",
+								"WrapReverse"
+							],
+							"title": "The flexWrap Schema",
+							"type": "string"
+						},
+						"justify": {
+							"enum": [
+								"Center",
+								"End",
+								"None",
+								"SpaceAround",
+								"SpaceBetween",
+								"Start"
+							],
+							"title": "The justify Schema",
+							"type": "string"
+						}
+					},
+					"title": "The layout Schema",
+					"type": "object"
+				},
 				"listItemStyle": {
 					"title": "The listItemStyle Schema",
 					"type": "string"

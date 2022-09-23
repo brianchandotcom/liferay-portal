@@ -963,6 +963,7 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@ignore = "true"
 	@priority = "4"
 	test DeletedObjectDoesNotAppearInManyToManyRelationshipDetailsNestedFields_2 {
 		property portal.acceptance = "true";

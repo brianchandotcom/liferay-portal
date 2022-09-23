@@ -460,9 +460,7 @@ public class CompanyIndexFactory
 					elasticsearchConnectionNotInitializedException) {
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Skipping index settings contributor",
-					elasticsearchConnectionNotInitializedException);
+				_log.info("Skipping index settings contributor");
 			}
 
 			return;

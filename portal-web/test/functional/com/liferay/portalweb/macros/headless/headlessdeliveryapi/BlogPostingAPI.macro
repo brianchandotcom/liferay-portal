@@ -40,7 +40,7 @@ definition {
 			site = "true");
 
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings/batch?createStrategy=${createStrategy}\&importStrategy=${importStrategy} \
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings/batch?createStrategy=${createStrategy}&importStrategy=${importStrategy} \
 			-u test@liferay.com:test \
 			-H Content-Type: application/json \
             -d ${body}
@@ -250,7 +250,7 @@ definition {
 			groupName = "Guest",
 			site = "true");
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/blog-postings/batch?updateStrategy=${updateStrategy}\&importStrategy=${importStrategy} \
+			${portalURL}/o/headless-delivery/v1.0/blog-postings/batch?updateStrategy=${updateStrategy}&importStrategy=${importStrategy} \
 			-u test@liferay.com:test \
 			-H Content-Type: application/json \
             -d ${body}

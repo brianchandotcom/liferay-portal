@@ -800,7 +800,7 @@ definition {
 
 			AssetPublisherPortlet.configureAssetDisplayOrderPG(
 				fieldNameOrder = "Numeric",
-				sortOrder = "Descending");
+				sortOrder = "Ascending");
 		}
 
 		task ("View the displayed assets in en-US") {

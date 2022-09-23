@@ -23,9 +23,9 @@ import java.util.Locale;
  */
 public class ValueDataException extends PortalException {
 
-	public static class MismatchColumnTypeException extends ValueDataException {
+	public static class MismatchColumnType extends ValueDataException {
 
-		public MismatchColumnTypeException(String msg) {
+		public MismatchColumnType(String msg) {
 			super(msg);
 		}
 
@@ -41,10 +41,10 @@ public class ValueDataException extends PortalException {
 
 	}
 
-	public static class UnsupportedColumnTypeException
+	public static class UnsupportedColumnType
 		extends ValueDataException {
 
-		public UnsupportedColumnTypeException(String msg) {
+		public UnsupportedColumnType(String msg) {
 			super(msg);
 		}
 

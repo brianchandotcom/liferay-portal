@@ -131,8 +131,6 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 	private void _processLayoutPageTemplateStructuresOfWidgetLayouts()
 		throws Exception {
 
-		boolean oracleDB = _isOracleDB();
-
 		DynamicQuery widgetLayoutsQuery = _layoutLocalService.dynamicQuery();
 
 		widgetLayoutsQuery.add(
@@ -157,7 +155,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 			"select layoutPageTemplateStructureId, classPK from " +
 				"LayoutPageTemplateStructure where classPK ";
 
-		if (oracleDB) {
+		if (_isOracleDB()) {
 			batchSize = 1000;
 		}
 		else {

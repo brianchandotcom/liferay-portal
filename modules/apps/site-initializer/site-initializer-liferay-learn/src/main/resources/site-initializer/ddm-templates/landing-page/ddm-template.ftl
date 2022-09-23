@@ -1,6 +1,6 @@
 <#noparse>
 	<div class="landing-page" id="landingPage">
-		<div class="section-card" v-for="card cards in">
+		<div class="section-card" v-for="card in cards">
 			<div class="autofit-row autofit-row-center">
 				<div class="autofit-col" v-if="card.icon">
 					<svg class="icon">

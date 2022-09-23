@@ -5,7 +5,7 @@
 
 <#assign groupFriendlyURL = "/web" + themeDisplay.getScopeGroup().getFriendlyURL() />
 
-<div class="container-fluid documentations main-content" role="main">
+<div class="container-fluid documentations main-content mt-6" role="main">
 	<div class="row">
 		<div class="col-12 p-0 page-alert" id="pageAlertContainer">
 			<div class="page-alert-hidden" id="pageAlert" role="alert">
@@ -79,7 +79,7 @@
 						</a>
 					</div>
 
-					<a class="back-link btn btn-link btn-monospaced" href="${parentMarkdownFilePath.getData()}" id="backLink">
+					<a class="back-link btn btn-link btn-monospaced d-flex flex-row justify-content-start" href="${parentMarkdownFilePath.getData()}" id="backLink">
 						<svg class="lexicon-icon lexicon-icon-angle-left" role="presentation" viewBox="0 0 512 512">
 							<use xlink:href="#angle-left" />
 						</svg>
@@ -128,13 +128,13 @@
 			<div class="col-12 doc-content" id="docContent">
 				<div class="row">
 					<div class="article-body col-12 col-md-8">
+						<#if (content.getData())??>
+							${content.getData()}
+						</#if>
 						<#if (landingPage.getData())??>
 							<#if landingPage.getData() == "true">
 								<#include "${templatesPath}/LANDING-PAGE">
 							</#if>
-						</#if>
-						<#if (content.getData())??>
-							${content.getData()}
 						</#if>
 						<div class="autofit-padded-no-gutters-x autofit-row help-center-footer">
 							<div class="autofit-col">

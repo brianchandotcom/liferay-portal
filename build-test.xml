@@ -15242,13 +15242,11 @@ url=${short.hostname}:8080</echo>
 				</not>
 				<equals arg1="${database.version}" arg2="11.5" />
 			</or>
-
 			<then>
 				<var name="database.version" value="11.5.7" />
 			</then>
 			<elseif>
 				<equals arg1="${database.version}" arg2="11.1" />
-
 				<then>
 					<var name="database.version" value="11.1.3" />
 				</then>
@@ -15257,15 +15255,12 @@ url=${short.hostname}:8080</echo>
 
 		<if>
 			<equals arg1="${database.version}" arg2="11.5.7" />
-
 			<then>
 				<var name="database.db2.docker.image" value="ibmcom/db2:11.5.7.0" />
 				<var name="database.db2.docker.run.options" value="-itd --privileged=true -p 25010:50000 --env=LICENSE=accept --env=DB2INST1_PASSWORD=password -v /tmp/database ibmcom/db2:11.5.7.0" />
 			</then>
-
 			<elseif>
 				<equals arg1="${database.version}" arg2="11.1.3" />
-
 				<then>
 					<var name="database.db2.docker.image" value="liferay/liferay-ci-environment:db2-11.1.3.3_1.0.0" />
 					<var name="database.db2.docker.run.options" value="-p 25010:50000 --privileged=true" />
@@ -15353,14 +15348,11 @@ url=${short.hostname}:8080</echo>
 
 		<if>
 			<equals arg1="${database.version}" arg2="10.2" />
-
 			<then>
 				<var name="database.version" value="10.2.25" />
 			</then>
-
 			<elseif>
 				<equals arg1="${database.version}" arg2="10.4" />
-
 				<then>
 					<var name="database.version" value="10.4.14" />
 				</then>
@@ -15535,14 +15527,11 @@ url=${short.hostname}:8080</echo>
 
 		<if>
 			<equals arg1="${database.version}" arg2="2017" />
-
 			<then>
 				<var name="database.sqlserver.docker.image" value="mcr.microsoft.com/mssql/server:2017-CU19-ubuntu-16.04" />
 			</then>
-
 			<elseif>
 				<equals arg1="${database.version}" arg2="2019" />
-
 				<then>
 					<var name="database.sqlserver.docker.image" value="mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04" />
 				</then>

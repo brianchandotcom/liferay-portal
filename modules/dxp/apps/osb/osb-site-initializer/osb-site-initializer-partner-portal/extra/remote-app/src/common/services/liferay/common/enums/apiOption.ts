@@ -9,18 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {Liferay} from '../..';
-import MDFRequestDTO from '../../../../interfaces/dto/mdfRequestDTO';
-import {LiferayAPIs} from '../../common/enums/apis';
-import liferayFetcher from '../../common/utils/fetcher';
-
-export default async function createMDFRequest(
-	mdfRequestDTO: MDFRequestDTO,
-	mdfRequestApiOption: string
-) {
-	return await liferayFetcher.post(
-		`/o/${LiferayAPIs.OBJECT}/${mdfRequestApiOption}`,
-		Liferay.authToken,
-		mdfRequestDTO
-	);
+export enum apiOption {
+	MDF_REQUEST_DXP = 'mdfrequests',
+	MDF_REQUEST_SALESFORCE = 'mdfrequestsfs',
 }

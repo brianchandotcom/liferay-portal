@@ -14,12 +14,16 @@ import MDFRequest from '../../../interfaces/mdfRequest';
 import {Liferay} from '../../../services/liferay';
 import getSummaryActivities from '../../getSummaryActivities';
 
-export function getDTOFromMDFRequest(mdfRequest: MDFRequest): MDFRequestDTO {
+export function getDTOFromMDFRequest(
+	mdfRequest: MDFRequest,
+	externalReferenceCode?: string
+): MDFRequestDTO {
 	return {
 		...getSummaryActivities(mdfRequest.activities),
 		additionalOption: mdfRequest.additionalOption,
 		campaignName: mdfRequest.campaignName,
 		country: mdfRequest.country,
+		externalReferenceCodeSF: externalReferenceCode,
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals.join(
 			', '
 		),

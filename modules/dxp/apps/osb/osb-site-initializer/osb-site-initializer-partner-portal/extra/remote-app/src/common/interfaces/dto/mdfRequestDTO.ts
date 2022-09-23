@@ -23,6 +23,7 @@ export default interface MDFRequestDTO
 		| 'targetMarkets'
 		| 'company'
 	> {
+	externalReferenceCodeSF?: string;
 	liferayBusinessSalesGoals?: string;
 	mdfRequestToActivities?: MDFRequestActivityDTO[];
 	r_accountToMDFRequests_accountEntry?: AccountEntry;

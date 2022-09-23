@@ -17,7 +17,7 @@ import MDFRequest from '../../../common/interfaces/mdfRequest';
 import {Liferay} from '../../../common/services/liferay';
 import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
 import createMDFRequestActivityBudgets from '../../../common/services/liferay/object/budgets/createMDFRequestActivityBudgets';
-import createMDFRequest from '../../../common/services/liferay/object/mdf-requests/createMDFRequest';
+import createViaProxyApi from './createViaProxyApi';
 
 export default async function submitForm(
 	values: MDFRequest,
@@ -31,7 +31,7 @@ export default async function submitForm(
 		values.requestStatus = currentRequestStatus;
 	}
 
-	const dtoMDFRequest = await createMDFRequest(values);
+	const dtoMDFRequest = await createViaProxyApi(values);
 
 	if (values.activities.length && dtoMDFRequest?.id) {
 		const dtoMDFRequestActivities = await createMDFRequestActivities(

@@ -98,8 +98,8 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 	private void _processLayoutPageTemplateStructuresOfWidgetLayouts()
 		throws Exception {
 
-		List<Long> widgetLayoutsWithStructurePlids = new ArrayList<>();
-		List<Long> widgetLayoutTemplateStructureIds = new ArrayList<>();
+		List<Long> plids = new ArrayList<>();
+		List<Long> layoutPageTemplateStructureIds = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(
@@ -109,15 +109,12 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement.setString(1, LayoutConstants.TYPE_PORTLET);
 
-			ResultSet widgetLayoutTemplateStructuresResultSet =
-				preparedStatement.executeQuery();
+			ResultSet resultSet = preparedStatement.executeQuery();
 
-			while (widgetLayoutTemplateStructuresResultSet.next()) {
-				widgetLayoutsWithStructurePlids.add(
-					widgetLayoutTemplateStructuresResultSet.getLong("classPK"));
-				widgetLayoutTemplateStructureIds.add(
-					widgetLayoutTemplateStructuresResultSet.getLong(
-						"layoutPageTemplateStructureId"));
+			while (resultSet.next()) {
+				plids.add(resultSet.getLong("classPK"));
+				layoutPageTemplateStructureIds.add(
+					resultSet.getLong("layoutPageTemplateStructureId"));
 			}
 		}
 
@@ -127,7 +124,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 		draftWidgetLayoutsWithStructureQuery.add(
 			RestrictionsFactoryUtil.and(
 				RestrictionsFactoryUtil.in(
-					"plid", widgetLayoutsWithStructurePlids),
+					"plid", plids),
 				RestrictionsFactoryUtil.eq(
 					"status", WorkflowConstants.STATUS_DRAFT)));
 
@@ -144,7 +141,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 		}
 
 		_deleteWidgetLayoutsTemplateStructureRels(
-			widgetLayoutTemplateStructureIds);
+			layoutPageTemplateStructureIds);
 
 		try (PreparedStatement preparedStatement1 =
 				AutoBatchPreparedStatementUtil.autoBatch(
@@ -152,7 +149,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 					"delete from LayoutPageTemplateStructure where classPK =" +
 						"?")) {
 
-			for (long plid : widgetLayoutsWithStructurePlids) {
+			for (long plid : plids) {
 				preparedStatement1.setLong(1, plid);
 				preparedStatement1.addBatch();
 			}

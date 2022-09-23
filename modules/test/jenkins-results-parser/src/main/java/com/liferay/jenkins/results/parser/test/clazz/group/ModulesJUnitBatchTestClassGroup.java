@@ -179,9 +179,6 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			if (modifiedPoshiModulesList.contains(modifiedModuleDir) &&
 				!modifiedNonPoshiModulesList.contains(modifiedModuleDir)) {
 
-				System.out.println(
-					"does not contain modified non poshi module");
-
 				continue;
 			}
 
@@ -211,6 +208,10 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		for (File modifiedFile :
 				portalGitWorkingDirectory.getModifiedFilesList()) {
+
+			if (JenkinsResultsParserUtil.isPoshiFile(modifiedFile)) {
+				continue;
+			}
 
 			String modifiedFileCanonicalPath =
 				JenkinsResultsParserUtil.getCanonicalPath(modifiedFile);

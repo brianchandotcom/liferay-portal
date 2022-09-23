@@ -502,7 +502,6 @@ components:
             properties:
                 code:
                     format: int32
-                    readOnly: true
                     type: integer
                 label:
                     type: string

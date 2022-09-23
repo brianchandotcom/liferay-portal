@@ -312,7 +312,7 @@ definition {
 			site = "true");
 
 		var curl = '''
-			${portalURL}/o/headless-admin-content/v1.0/sites/${siteId}/structured-contents?filter=${filtervalue}\&sort=${sortvalue} \
+			${portalURL}/o/headless-admin-content/v1.0/sites/${siteId}/structured-contents?filter=${filtervalue}&sort=${sortvalue} \
 			-u test@liferay.com:test \
 			-H accept: application/json
 		''';

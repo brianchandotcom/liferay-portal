@@ -30,8 +30,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,37 +73,16 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 	public List<File> getModifiedNonPoshiModules() throws IOException {
 		List<File> modifiedFilesList = getModifiedFilesList();
 
-		List<File> modifiedNonPoshiDirs = new ArrayList<>();
+		List<File> modifiedNonPoshiFilesList = new ArrayList<>();
 
 		for (File modifiedFile : modifiedFilesList) {
 			if (!JenkinsResultsParserUtil.isPoshiFile(modifiedFile)) {
-				String modifiedFileCanonicalPath =
-					JenkinsResultsParserUtil.getCanonicalPath(modifiedFile);
-
-				Matcher modulesMatcher = _modifiedModulesPattern.matcher(
-					modifiedFileCanonicalPath);
-
-				if (modulesMatcher.find()) {
-					File modifiedDir = new File(
-						getWorkingDirectory(), modulesMatcher.group());
-
-					modifiedNonPoshiDirs.add(modifiedDir);
-				}
-
-				Matcher longerModulesMatcher =
-					_modifiedLongerModulesPattern.matcher(
-						modifiedFileCanonicalPath);
-
-				if (longerModulesMatcher.find()) {
-					File modifiedLongDir = new File(
-						getWorkingDirectory(), longerModulesMatcher.group());
-
-					modifiedNonPoshiDirs.add(modifiedLongDir);
-				}
+				modifiedNonPoshiFilesList.add(modifiedFile);
 			}
 		}
 
-		return modifiedNonPoshiDirs;
+		return JenkinsResultsParserUtil.getDirectoriesContainingFiles(
+			getModuleDirsList(null, null), modifiedNonPoshiFilesList);
 	}
 
 	public List<File> getModifiedNPMTestModuleDirsList() throws IOException {
@@ -126,37 +103,16 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 	public List<File> getModifiedPoshiModules() throws IOException {
 		List<File> modifiedFilesList = getModifiedFilesList();
 
-		List<File> modifiedPoshiDirs = new ArrayList<>();
+		List<File> modifiedPoshiFilesList = new ArrayList<>();
 
 		for (File modifiedFile : modifiedFilesList) {
 			if (JenkinsResultsParserUtil.isPoshiFile(modifiedFile)) {
-				String modifiedFileCanonicalPath =
-					JenkinsResultsParserUtil.getCanonicalPath(modifiedFile);
-
-				Matcher modulesMatcher = _modifiedModulesPattern.matcher(
-					modifiedFileCanonicalPath);
-
-				if (modulesMatcher.find()) {
-					File modifiedDir = new File(
-						getWorkingDirectory(), modulesMatcher.group());
-
-					modifiedPoshiDirs.add(modifiedDir);
-				}
-
-				Matcher longerModulesMatcher =
-					_modifiedLongerModulesPattern.matcher(
-						modifiedFileCanonicalPath);
-
-				if (longerModulesMatcher.find()) {
-					File modifiedLongDir = new File(
-						getWorkingDirectory(), longerModulesMatcher.group());
-
-					modifiedPoshiDirs.add(modifiedLongDir);
-				}
+				modifiedPoshiFilesList.add(modifiedFile);
 			}
 		}
 
-		return modifiedPoshiDirs;
+		return JenkinsResultsParserUtil.getDirectoriesContainingFiles(
+			getModuleDirsList(null, null), modifiedPoshiFilesList);
 	}
 
 	public List<File> getModuleAppDirs() {
@@ -402,11 +358,6 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 
 		return false;
 	}
-
-	private static final Pattern _modifiedLongerModulesPattern =
-		Pattern.compile("(modules\\/[\\w-]*\\/[\\w-]*([\\/]([\\w-]*))?)");
-	private static final Pattern _modifiedModulesPattern = Pattern.compile(
-		"(modules\\/[\\w-]*\\/[\\w-]*)");
 
 	private Properties _appServerProperties;
 	private Properties _releaseProperties;

@@ -1393,6 +1393,12 @@ definition {
 
 		Button.clickEdit();
 
+		Button.clickSave();
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
 		ObjectCustomViews.assertColumnLabelPresent(columnLabel = "Publishing House");
 	}
 

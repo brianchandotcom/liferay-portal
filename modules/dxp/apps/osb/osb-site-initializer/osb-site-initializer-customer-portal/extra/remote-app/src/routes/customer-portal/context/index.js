@@ -177,7 +177,7 @@ const AppContextProvider = ({children}) => {
 			const {data: dataSubscriptionGroups} = await client.query({
 				query: getAccountSubscriptionGroups,
 				variables: {
-					filter: `accountKey eq '${accountKey}' and hasActivation eq true`,
+					filter: `accountKey eq '${accountKey}'`,
 				},
 			});
 

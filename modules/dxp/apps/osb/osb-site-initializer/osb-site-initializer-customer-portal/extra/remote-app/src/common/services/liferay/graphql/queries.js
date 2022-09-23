@@ -380,6 +380,7 @@ export const getAccountSubscriptionGroups = gql`
 					accountSubscriptionGroupId
 					accountKey
 					activationStatus
+					hasActivation
 					name
 					tabOrder
 					menuOrder

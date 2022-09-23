@@ -28,6 +28,14 @@ const SideMenu = () => {
 
 	const productActivationMenuRef = useRef();
 
+	const activationSubscriptionGroups = useMemo(
+		() =>
+			subscriptionGroups?.filter(
+				(subscriptionGroup) => subscriptionGroup.hasActivation
+			),
+		[subscriptionGroups]
+	);
+
 	const hasSomeMenuItemActive = useMemo(
 		() => menuItemActiveStatus.some((menuItemActive) => !!menuItemActive),
 		[menuItemActiveStatus]
@@ -35,14 +43,14 @@ const SideMenu = () => {
 
 	useEffect(() => {
 		const expandedHeightProducts = isOpenedProductsMenu
-			? subscriptionGroups?.length * 48
+			? activationSubscriptionGroups?.length * 48
 			: 0;
 
 		if (productActivationMenuRef?.current) {
 			productActivationMenuRef.current.style.maxHeight = `${expandedHeightProducts}px`;
 		}
 	}, [
-		subscriptionGroups?.length,
+		activationSubscriptionGroups?.length,
 		hasSomeMenuItemActive,
 		isOpenedProductsMenu,
 	]);
@@ -57,7 +65,7 @@ const SideMenu = () => {
 
 	const accountSubscriptionGroupsMenuItem = useMemo(
 		() =>
-			subscriptionGroups?.map(({name}, index) => {
+			activationSubscriptionGroups?.map(({name}, index) => {
 				if (name !== PRODUCT_TYPES.liferayExperienceCloud) {
 					const redirectPage = getKebabCase(name);
 
@@ -89,10 +97,10 @@ const SideMenu = () => {
 					);
 				}
 			}),
-		[subscriptionGroups]
+		[activationSubscriptionGroups]
 	);
 
-	if (!subscriptionGroups) {
+	if (!activationSubscriptionGroups) {
 		return <SideMenuSkeleton />;
 	}
 
@@ -117,7 +125,8 @@ const SideMenu = () => {
 				<li>
 					<Button
 						appendIcon={
-							!!subscriptionGroups.length && 'angle-right-small'
+							!!activationSubscriptionGroups.length &&
+							'angle-right-small'
 						}
 						appendIconClassName="ml-auto"
 						className={classNames(
@@ -125,11 +134,12 @@ const SideMenu = () => {
 							{
 								'cp-product-activation-active': isOpenedProductsMenu,
 								'cp-products-list-active': hasSomeMenuItemActive,
-								'text-neutral-4': subscriptionGroups.length < 1,
-								'text-neutral-10': !!subscriptionGroups.length,
+								'text-neutral-4':
+									activationSubscriptionGroups.length < 1,
+								'text-neutral-10': !!activationSubscriptionGroups.length,
 							}
 						)}
-						disabled={subscriptionGroups.length < 1}
+						disabled={activationSubscriptionGroups.length < 1}
 						onClick={() =>
 							setIsOpenedProductsMenu(
 								(previousIsOpenedProductsMenu) =>

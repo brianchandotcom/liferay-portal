@@ -16,8 +16,6 @@ package com.liferay.layout.page.template.internal.upgrade.v5_1_1;
 
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -122,25 +120,18 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 			deletePreparedStatement2.executeBatch();
 		}
 
-		DynamicQuery draftWidgetLayoutsWithStructureQuery =
-			_layoutLocalService.dynamicQuery();
-
-		draftWidgetLayoutsWithStructureQuery.add(
-			RestrictionsFactoryUtil.and(
-				RestrictionsFactoryUtil.in("plid", plids),
-				RestrictionsFactoryUtil.eq(
-					"status", WorkflowConstants.STATUS_DRAFT)));
-
-		List<Layout> draftWidgetLayoutsWithStructure =
-			_layoutLocalService.dynamicQuery(
-				draftWidgetLayoutsWithStructureQuery);
-
 		ServiceContext serviceContext = new ServiceContext();
 
-		for (Layout layout : draftWidgetLayoutsWithStructure) {
+		for (long plid : plids) {
+			Layout layout = _layoutLocalService.fetchLayout(plid);
+
+			if (layout.getStatus() != WorkflowConstants.STATUS_DRAFT) {
+				continue;
+			}
+
 			_layoutLocalService.updateStatus(
-				layout.getUserId(), layout.getPlid(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				layout.getUserId(), plid, WorkflowConstants.STATUS_APPROVED,
+				serviceContext);
 		}
 	}
 

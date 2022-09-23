@@ -14,21 +14,12 @@
 
 package com.liferay.object.web.internal.list.type.display.context;
 
-import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-
-import java.util.Arrays;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,58 +37,6 @@ public class ViewListTypeEntriesDisplayContext {
 			listTypeDefinitionModelResourcePermission;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
-	}
-
-	public String getAPIURL() {
-		return "/o/headless-admin-list-type/v1.0/list-type-definitions/" +
-			_getListTypeDefinitionId() + "/list-type-entries";
-	}
-
-	public CreationMenu getCreationMenu() throws PortalException {
-		CreationMenu creationMenu = new CreationMenu();
-
-		if (!hasUpdateListTypeDefinitionPermission()) {
-			return creationMenu;
-		}
-
-		creationMenu.addDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setHref("addListTypeEntry");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_objectRequestHelper.getRequest(), "add-item"));
-				dropdownItem.setTarget("event");
-			});
-
-		return creationMenu;
-	}
-
-	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
-		throws Exception {
-
-		return Arrays.asList(
-			new FDSActionDropdownItem(
-				PortletURLBuilder.create(
-					PortletURLUtil.clone(
-						PortletURLUtil.getCurrent(
-							_objectRequestHelper.getLiferayPortletRequest(),
-							_objectRequestHelper.getLiferayPortletResponse()),
-						_objectRequestHelper.getLiferayPortletResponse())
-				).setMVCRenderCommandName(
-					"/list_type_definitions/edit_list_type_entry"
-				).setParameter(
-					"listTypeEntryId", "{id}"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString(),
-				"view", "view",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
-				"get", null, "modal"),
-			new FDSActionDropdownItem(
-				"/o/headless-admin-list-type/v1.0/list-type-entries/{id}",
-				"trash", "delete",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
-				"delete", "delete", "async"));
 	}
 
 	public boolean hasUpdateListTypeDefinitionPermission()

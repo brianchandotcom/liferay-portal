@@ -346,6 +346,23 @@ definition {
 		CustomerPortal.clickOnSkipForNowButton();
 	}
 
+	macro getValueFieldKoroneikiByAccountName {
+		var key_label = "${field}";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		CustomerPortal.viewCPObjectCustomInfoByAccountName(accountName = "${accountName}");
+
+		WaitForElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI_VALUE");
+
+		var value = selenium.getElementValue("CustomerPortalSite#FIELDS_KORONEIKI_VALUE");
+
+		return "${value}";
+	}
+
 	macro loginOktaToUpdateCP {
 		var userEmailAddress = "dbace26d5dadb9eed597@uat.com.broken";
 		var userPassword = "q4F63ZEH3njnnA34S761";
@@ -776,23 +793,6 @@ definition {
 		CustomerPortal.viewObjectInfo(index = "${index}");
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI");
-	}
-
-	macro getValueFieldKoroneikiByAccountName {
-		var key_label = "${field}";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Koroneiki Accounts");
-
-		CustomerPortal.viewCPObjectCustomInfoByAccountName(accountName = "${accountName}");
-
-		WaitForElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI_VALUE");
-
-		var value = selenium.getElementValue("CustomerPortalSite#FIELDS_KORONEIKI_VALUE");
-
-		return "${value}";
 	}
 
 	macro waitCP20PageToLoad {

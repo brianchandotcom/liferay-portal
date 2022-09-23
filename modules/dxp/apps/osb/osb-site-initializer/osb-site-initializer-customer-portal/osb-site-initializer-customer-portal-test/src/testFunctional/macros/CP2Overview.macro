@@ -1,45 +1,46 @@
 definition {
 
-    macro assertSLACardContentIsVisible {
-        var key_cardContent = "${cardContent}";
+	macro _getBackgroundColor {
+		if ("${slaCardtitle}" == "Platinum") {
+			var color = "rgba(255, 255, 255, 1)";
+		}
 
-        AssertVisible(locator1 = "CP2Overview#SLA_CARD_CONTENT");
-    }
+		if ("${slaCardtitle}" == "Premium") {
+			var color = "rgba(231, 239, 255, 1)";
+		}
 
-    macro switchSLACard {
-        MouseOver(locator1 = "CP2Overview#SLA_CARD_CONTAINER");
+		if ("${slaCardtitle}" == "Gold") {
+			var color = "rgba(255, 251, 240, 1)";
+		}
 
-        Click(locator1 = "CP2Overview#SLA_CARD_SHIFT_BUTTON");
-    }
+		return "${color}";
+	}
 
-    macro assertEmptySLACardMessage {
-        AssertTextEquals(
-            locator1 = "CP2Overview#EMPTY_SLA_CARD_MESSAGE",
-            value1 = "${message}");
-    }
+	macro assertEmptySLACardMessage {
+		AssertTextEquals(
+			locator1 = "CP2Overview#EMPTY_SLA_CARD_MESSAGE",
+			value1 = "${message}");
+	}
 
-    macro assertSLACardBackgroundColor {
-        var color = CP2Overview._getBackgroundColor(slaCardtitle = "${slaCardTitle}");
+	macro assertSLACardBackgroundColor {
+		var color = CP2Overview._getBackgroundColor(slaCardtitle = "${slaCardTitle}");
 
-        AssertCssValue(
+		AssertCssValue(
 			locator1 = "CP2Overview#SLA_CARD_CONTAINER",
 			locator2 = "background-color",
 			value1 = "${color}");
-    }
+	}
 
-    macro _getBackgroundColor {
-        if("${slaCardtitle}" == "Platinum") {
-            var color = "rgba(255, 255, 255, 1)";
-        }
+	macro assertSLACardContentIsVisible {
+		var key_cardContent = "${cardContent}";
 
-        if("${slaCardtitle}" == "Premium") {
-            var color = "rgba(231, 239, 255, 1)";
-        }
+		AssertVisible(locator1 = "CP2Overview#SLA_CARD_CONTENT");
+	}
 
-        if("${slaCardtitle}" == "Gold") {
-            var color = "rgba(255, 251, 240, 1)";
-        }
+	macro switchSLACard {
+		MouseOver(locator1 = "CP2Overview#SLA_CARD_CONTAINER");
 
-        return "${color}";
-    }
+		Click(locator1 = "CP2Overview#SLA_CARD_SHIFT_BUTTON");
+	}
+
 }

@@ -58,4 +58,24 @@ definition {
 		return "${templateKey}";
 	}
 
+	macro addWidgetTemplate {
+		Variables.assertDefined(parameterList = "${groupName},${itemType},${name}");
+
+		var groupId = JSONDDMtemplateSetter.setGroupId(
+			groupName = "${groupName}",
+			site = "${site}");
+		var classNameId = JSONDDMtemplateSetter.setClassNameId(itemType = "${itemType}");
+		var descriptionMap = JSONDDMtemplateSetter.setDescriptionMap(description = "${description}");
+		var nameMap = JSONDDMtemplateSetter.setNameMap(title = "${name}");
+
+		var templateKey = JSONDDMtemplateAPI._addWidgetTemplate(
+			classNameId = "${classNameId}",
+			descriptionMap = "${descriptionMap}",
+			groupId = "${groupId}",
+			nameMap = "${nameMap}",
+			script = "${script}");
+
+		return "${templateKey}";
+	}
+
 }

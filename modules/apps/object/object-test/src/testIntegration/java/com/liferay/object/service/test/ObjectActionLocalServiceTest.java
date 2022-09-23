@@ -413,9 +413,13 @@ public class ObjectActionLocalServiceTest {
 			HashMapBuilder.putAll(
 				objectEntry.getModelAttributes()
 			).put(
+				"creator", objectEntry.getUserName()
+			).put(
 				"currentUserId", TestPropsValues.getUserId()
 			).put(
 				"firstName", "João"
+			).put(
+				"id", objectEntry.getObjectEntryId()
 			).build(),
 			arguments[0]);
 		Assert.assertEquals(Collections.emptySet(), arguments[1]);

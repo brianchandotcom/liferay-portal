@@ -33,6 +33,8 @@ const GET_ACCOUNT_SUBSCRIPTION_GROUPS = gql`
 					name
 					tabOrder
 					menuOrder
+					logoPath @client
+					isProvisioned @client
 				}
 				lastPage
 				page

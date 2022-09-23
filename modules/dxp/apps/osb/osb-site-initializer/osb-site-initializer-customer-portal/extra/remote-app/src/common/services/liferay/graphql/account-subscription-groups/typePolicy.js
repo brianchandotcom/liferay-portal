@@ -10,9 +10,27 @@
  */
 
 import {PRODUCT_TYPES} from '../../../../../routes/customer-portal/utils/constants';
+import {LOGO_PATH_TYPES} from './utils/constants/logoPathTypes';
+import {PROVISIONED_ACCOUNT_SUBSCRIPTION_GROUPS_NAMES} from './utils/constants/provisionedAccountSubscriptionGroupsNames';
 
 export const accountSubscriptionGroupsTypePolicy = {
 	C_AccountSubscriptionGroup: {
+		fields: {
+			isProvisioned: {
+				read(_, {readField}) {
+					return PROVISIONED_ACCOUNT_SUBSCRIPTION_GROUPS_NAMES.includes(
+						readField('name')
+					);
+				},
+			},
+			logoPath: {
+				read(_, {readField}) {
+					return `assets/navigation-menu/${
+						LOGO_PATH_TYPES[readField('name')]
+					}`;
+				},
+			},
+		},
 		keyFields: ['externalReferenceCode'],
 	},
 	C_AccountSubscriptionGroupPage: {

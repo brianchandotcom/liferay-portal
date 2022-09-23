@@ -91,50 +91,61 @@ const VersionsContent = ({
 					<ClayLoadingIndicator small />
 				</div>
 			) : (
-				<ul className="list-group sidebar-list-group">
-					{versions.map((version) => (
-						<li
-							className="list-group-item list-group-item-flex"
-							key={version.version}
-						>
-							<ClayLayout.ContentCol expand>
-								<div className="list-group-title">
-									{Liferay.Language.get('version') + ' '}
+				<>
+					{versions && (
+						<ul className="list-group sidebar-list-group">
+							{versions.map((version) => (
+								<li
+									className="list-group-item list-group-item-flex"
+									key={version.version}
+								>
+									<ClayLayout.ContentCol expand>
+										<div className="list-group-title">
+											{Liferay.Language.get('version') +
+												' '}
 
-									{version.version}
-								</div>
+											{version.version}
+										</div>
 
-								<div className="list-group-subtitle">
-									{sub(Liferay.Language.get('x-by-x'), [
-										formatDate(
-											version.createDate,
-											languageTag
-										),
-										version.userName,
-									])}
-								</div>
+										<div className="list-group-subtitle">
+											{sub(
+												Liferay.Language.get('x-by-x'),
+												[
+													formatDate(
+														version.createDate,
+														languageTag
+													),
+													version.userName,
+												]
+											)}
+										</div>
 
-								<div className="list-group-subtext">
-									{version.changeLog
-										? version.changeLog
-										: Liferay.Language.get('no-change-log')}
-								</div>
-							</ClayLayout.ContentCol>
-						</li>
-					))}
-				</ul>
-			)}
-			{viewVersionsURL && (
-				<div className="d-flex justify-content-center">
-					<ClayLink
-						button
-						className="mt-3"
-						displayType="secondary"
-						href={viewVersionsURL}
-					>
-						{Liferay.Language.get('view-more')}
-					</ClayLink>
-				</div>
+										<div className="list-group-subtext">
+											{version.changeLog
+												? version.changeLog
+												: Liferay.Language.get(
+														'no-change-log'
+												  )}
+										</div>
+									</ClayLayout.ContentCol>
+								</li>
+							))}
+						</ul>
+					)}
+
+					{viewVersionsURL && (
+						<div className="d-flex justify-content-center">
+							<ClayLink
+								button
+								className="mt-3"
+								displayType="secondary"
+								href={viewVersionsURL}
+							>
+								{Liferay.Language.get('view-more')}
+							</ClayLink>
+						</div>
+					)}
+				</>
 			)}
 		</>
 	);

@@ -9,22 +9,11 @@
  * distribution rights of the Software.
  */
 
-interface IProps {
-	children?: React.ReactNode;
-	subtitle?: string;
-	title?: string;
+import LiferayObject from './liferayObject';
+import MDFClaimBudget from './mdfClaimBudget';
+
+export default interface MDFClaimActivity extends Partial<LiferayObject> {
+	checkedPanel: boolean;
+	mdfClaimBudgets: MDFClaimBudget[];
+	metrics: string;
 }
-
-const Section = ({children, subtitle, title}: IProps) => (
-	<div>
-		<div className="border-bottom border-neutral-2 mb-4 py-2">
-			<h5 className="font-weight-bold mb-0 text-paragraph">{title}</h5>
-
-			<div className="text-neutral-8 text-paragraph-sm">{subtitle}</div>
-		</div>
-
-		{children}
-	</div>
-);
-
-export default Section;

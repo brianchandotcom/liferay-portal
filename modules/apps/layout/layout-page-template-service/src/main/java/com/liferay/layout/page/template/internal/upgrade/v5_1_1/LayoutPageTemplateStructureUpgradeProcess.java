@@ -76,47 +76,48 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 				"(select plid from Layout)");
 	}
 
-	private void _deleteWidgetLayoutsTemplateStructureRels(
-			List<Long> layoutPageTemplateStructureIds)
-		throws Exception {
-
-		try (PreparedStatement preparedStatement =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection,
-					"delete from LayoutPageTemplateStructureRel where " +
-						"layoutPageTemplateStructureId = ?")) {
-
-			for (long id : layoutPageTemplateStructureIds) {
-				preparedStatement.setLong(1, id);
-
-				preparedStatement.addBatch();
-			}
-
-			preparedStatement.executeBatch();
-		}
-	}
-
 	private void _processLayoutPageTemplateStructuresOfWidgetLayouts()
 		throws Exception {
 
 		List<Long> plids = new ArrayList<>();
-		List<Long> layoutPageTemplateStructureIds = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(
 					"select layoutPageTemplateStructureId, classPK from " +
 						"LayoutPageTemplateStructure where classPK in " +
-							"(select plid from Layout where type_ = ?)"))) {
+							"(select plid from Layout where type_ = ?)"));
+			PreparedStatement deletePreparedStatement1 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					"delete from LayoutPageTemplateStructure where classPK = " +
+						"?");
+			PreparedStatement deletePreparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"delete from LayoutPageTemplateStructureRel where " +
+						"layoutPageTemplateStructureId = ?")) {
 
 			preparedStatement.setString(1, LayoutConstants.TYPE_PORTLET);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				plids.add(resultSet.getLong("classPK"));
-				layoutPageTemplateStructureIds.add(
-					resultSet.getLong("layoutPageTemplateStructureId"));
+				long classPK = resultSet.getLong("classPK");
+
+				plids.add(classPK);
+
+				deletePreparedStatement1.setLong(1, classPK);
+
+				deletePreparedStatement1.addBatch();
+
+				deletePreparedStatement2.setLong(
+					1, resultSet.getLong("layoutPageTemplateStructureId"));
+
+				deletePreparedStatement2.addBatch();
 			}
+
+			deletePreparedStatement1.executeBatch();
+			deletePreparedStatement2.executeBatch();
 		}
 
 		DynamicQuery draftWidgetLayoutsWithStructureQuery =
@@ -124,8 +125,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 		draftWidgetLayoutsWithStructureQuery.add(
 			RestrictionsFactoryUtil.and(
-				RestrictionsFactoryUtil.in(
-					"plid", plids),
+				RestrictionsFactoryUtil.in("plid", plids),
 				RestrictionsFactoryUtil.eq(
 					"status", WorkflowConstants.STATUS_DRAFT)));
 
@@ -139,24 +139,6 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 			_layoutLocalService.updateStatus(
 				layout.getUserId(), layout.getPlid(),
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
-		}
-
-		_deleteWidgetLayoutsTemplateStructureRels(
-			layoutPageTemplateStructureIds);
-
-		try (PreparedStatement preparedStatement1 =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection,
-					"delete from LayoutPageTemplateStructure where classPK = " +
-						"?")) {
-
-			for (long plid : plids) {
-				preparedStatement1.setLong(1, plid);
-
-				preparedStatement1.addBatch();
-			}
-
-			preparedStatement1.executeBatch();
 		}
 	}
 

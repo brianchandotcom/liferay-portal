@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD_CLEAR_ALL_BUTTON</td>
+	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${elementName}')]]//li[contains(@class,'list-group-item')][.//label[contains(.,'${fieldLabel}')]]//button[@title="Clear All"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_NTH_ELEMENT</td>
 	<td>xpath=(//div[contains(@id,'querySXPElement')])[${index}]</td>
 	<td></td>
@@ -161,6 +166,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_ASSET_CATEGORY_FIELD_AUTOCOMPLETE_DROPDOWN_ITEM</td>
+	<td>//div[contains(@class,'autocomplete-dropdown-menu')]//button[contains(.,'${assetCategory}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ASSET_CATEGORY_TREE_VIEW_ITEM</td>
+	<td>//span[contains(@class,'text-truncate')][normalize-space(text())='${treeItem}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ASSET_CATEGORY_TREE_VIEW_ITEM_CHECKBOX</td>
+	<td>//div[@role='treeitem' and contains(.,'${treeItem}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ASSET_CATEGORY_TREE_VIEW_ITEM_SELECT</td>
+	<td>//div[contains(@class,'autofit-row')][.//span[contains(@class,'text-truncate')][normalize-space(text())='${treeItem}']]//button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_CLAUSE_CONTRIBUTOR_CLEAR_FILTER_BUTTON</td>
 	<td>//span[contains(@class,'label-dismissible') and contains(.,'${filter}')]//button[contains(@class,'close')]</td>
 	<td></td>
@@ -228,6 +253,11 @@
 <tr>
 	<td>BLUEPRINTS_EDIT_PAGE_SIDE_NAV_LINK</td>
 	<td>//button[contains(@class,'nav-link') and contains(.,'${linkName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_NUMBER</td>
+	<td>//span[contains(@class,'cm-number') and contains(.,'${key_jsonNumber}')]</td>
 	<td></td>
 </tr>
 <tr>

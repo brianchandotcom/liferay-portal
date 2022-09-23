@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_ID</td>
+	<td>//select[contains(@id,'${selectId}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGNMENT_TYPE</td>
 	<td>//select[@name='assignmentType']</td>
 	<td></td>

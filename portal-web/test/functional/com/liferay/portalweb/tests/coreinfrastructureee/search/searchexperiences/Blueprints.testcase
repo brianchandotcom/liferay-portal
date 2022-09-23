@@ -3977,6 +3977,288 @@ definition {
 		SelectWindow(locator1 = "Using a Search Blueprint on a Search Page — Liferay Learn");
 	}
 
+	test ViewQueryBuilderAssetCategoryMultiselectField {
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Test Vocabulary");
+
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Test Category",
+			vocabularyName = "Test Vocabulary");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Boost Contents in a Category");
+
+		Type(
+			elementName = "Boost Contents in a Category",
+			fieldLabel = "Asset Category IDs",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "Test Category");
+
+		KeyPress(
+			elementName = "Boost Contents in a Category",
+			fieldLabel = "Asset Category IDs",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "\RETURN");
+
+		AssertTextEquals.assertPartialText(
+			element = "Boost Contents in a Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT",
+			value1 = "Test Category (ID: ${categoryId})");
+
+		Blueprints.selectAddedElementMenuItem(
+			element = "Boost Contents in a Category",
+			menuItem = "View Element JSON");
+
+		AssertVisible(
+			key_jsonText = "${categoryId}",
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_TEXT");
+
+		Click(locator1 = "Modal#CLOSE_BUTTON");
+
+		Click.clickNoMouseOver(
+			elementName = "Boost Contents in a Category",
+			fieldLabel = "Asset Category IDs",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD_CLEAR_ALL_BUTTON");
+
+		AssertTextNotEquals.assertNotPartialText(
+			element = "Boost Contents in a Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT",
+			value1 = "Test Category");
+
+		Blueprints.selectAddedElementMenuItem(
+			element = "Boost Contents in a Category",
+			menuItem = "View Element JSON");
+
+		AssertElementNotPresent(
+			key_jsonText = "${categoryId}",
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_TEXT");
+
+		Click(locator1 = "Modal#CLOSE_BUTTON");
+
+		Type(
+			elementName = "Boost Contents in a Category",
+			fieldLabel = "Asset Category IDs",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "Test");
+
+		Click(
+			assetCategory = "Test Category (ID: ${categoryId})",
+			locator1 = "Blueprints#BLUEPRINTS_ASSET_CATEGORY_FIELD_AUTOCOMPLETE_DROPDOWN_ITEM");
+
+		AssertTextEquals.assertPartialText(
+			element = "Boost Contents in a Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT",
+			value1 = "Test Category (ID: ${categoryId})");
+
+		Blueprints.selectAddedElementMenuItem(
+			element = "Boost Contents in a Category",
+			menuItem = "View Element JSON");
+
+		AssertVisible(
+			key_jsonText = "${categoryId}",
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_TEXT");
+
+		Click(locator1 = "Modal#CLOSE_BUTTON");
+
+		Click.clickNoMouseOver(
+			elementName = "Boost Contents in a Category",
+			fieldLabel = "Asset Category IDs",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD_CLEAR_ALL_BUTTON");
+
+		Type(
+			elementName = "Boost Contents in a Category",
+			fieldLabel = "Asset Category IDs",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "${categoryId}");
+
+		Click(
+			assetCategory = "Test Category (ID: ${categoryId})",
+			locator1 = "Blueprints#BLUEPRINTS_ASSET_CATEGORY_FIELD_AUTOCOMPLETE_DROPDOWN_ITEM");
+
+		AssertTextEquals.assertPartialText(
+			element = "Boost Contents in a Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT",
+			value1 = "Test Category (ID: ${categoryId})");
+
+		Click.clickNoMouseOver(
+			elementName = "Boost Contents in a Category",
+			fieldLabel = "Asset Category IDs",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD_CLEAR_ALL_BUTTON");
+
+		Button.clickSelect();
+
+		var siteName = TestCase.getSiteName();
+
+		Select(
+			locator1 = "Select#ANY_ID",
+			selectId = "selectSite",
+			value1 = "${siteName}");
+
+		Click(
+			locator1 = "Blueprints#BLUEPRINTS_ASSET_CATEGORY_TREE_VIEW_ITEM",
+			treeItem = "Test Vocabulary");
+
+		Check.checkNotVisible(
+			locator1 = "Blueprints#BLUEPRINTS_ASSET_CATEGORY_TREE_VIEW_ITEM_CHECKBOX",
+			treeItem = "Test Category (ID: ${categoryId})");
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		AssertTextEquals.assertPartialText(
+			element = "Boost Contents in a Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT",
+			value1 = "Test Category (ID: ${categoryId})");
+
+		Blueprints.selectAddedElementMenuItem(
+			element = "Boost Contents in a Category",
+			menuItem = "View Element JSON");
+
+		AssertVisible(
+			key_jsonText = "${categoryId}",
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_TEXT");
+
+		PortletEntry.save();
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+	test ViewQueryBuilderAssetCategorySingleSelectField {
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Test Vocabulary");
+
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Test Category",
+			vocabularyName = "Test Vocabulary");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Hide Contents in a Category for Guest Users");
+
+		Type(
+			elementName = "Hide Contents in a Category for Guest Users",
+			fieldLabel = "Asset Category ID",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "Test Category");
+
+		Click(
+			assetCategory = "Test Category (ID: ${categoryId})",
+			locator1 = "Blueprints#BLUEPRINTS_ASSET_CATEGORY_FIELD_AUTOCOMPLETE_DROPDOWN_ITEM");
+
+		AssertValue(
+			elementName = "Hide Contents in a Category for Guest Users",
+			fieldLabel = "Asset Category ID",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "Test Category (ID: ${categoryId})");
+
+		Blueprints.selectAddedElementMenuItem(
+			element = "Hide Contents in a Category for Guest Users",
+			menuItem = "View Element JSON");
+
+		AssertVisible(
+			key_jsonNumber = "${categoryId}",
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_NUMBER");
+
+		Click(locator1 = "Modal#CLOSE_BUTTON");
+
+		Type(
+			elementName = "Hide Contents in a Category for Guest Users",
+			fieldLabel = "Asset Category ID",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is required. Please select from the dropdown list or type in an ID number.");
+
+		Type(
+			elementName = "Hide Contents in a Category for Guest Users",
+			fieldLabel = "Asset Category ID",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "Test");
+
+		Click(
+			assetCategory = "Test Category (ID: ${categoryId})",
+			locator1 = "Blueprints#BLUEPRINTS_ASSET_CATEGORY_FIELD_AUTOCOMPLETE_DROPDOWN_ITEM");
+
+		AssertValue(
+			elementName = "Hide Contents in a Category for Guest Users",
+			fieldLabel = "Asset Category ID",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "Test Category (ID: ${categoryId})");
+
+		Blueprints.selectAddedElementMenuItem(
+			element = "Hide Contents in a Category for Guest Users",
+			menuItem = "View Element JSON");
+
+		AssertVisible(
+			key_jsonNumber = "${categoryId}",
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_NUMBER");
+
+		Click(locator1 = "Modal#CLOSE_BUTTON");
+
+		Type(
+			elementName = "Hide Contents in a Category for Guest Users",
+			fieldLabel = "Asset Category ID",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "");
+
+		Button.clickSelect();
+
+		var siteName = TestCase.getSiteName();
+
+		Select(
+			locator1 = "Select#ANY_ID",
+			selectId = "selectSite",
+			value1 = "${siteName}");
+
+		Click(
+			locator1 = "Blueprints#BLUEPRINTS_ASSET_CATEGORY_TREE_VIEW_ITEM",
+			treeItem = "Test Vocabulary");
+
+		Click.clickAtNotVisible(
+			locator1 = "Blueprints#BLUEPRINTS_ASSET_CATEGORY_TREE_VIEW_ITEM_SELECT",
+			treeItem = "Test Category (ID: ${categoryId})");
+
+		AssertValue(
+			elementName = "Hide Contents in a Category for Guest Users",
+			fieldLabel = "Asset Category ID",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "Test Category (ID: ${categoryId})");
+
+		Blueprints.selectAddedElementMenuItem(
+			element = "Hide Contents in a Category for Guest Users",
+			menuItem = "View Element JSON");
+
+		AssertVisible(
+			key_jsonNumber = "${categoryId}",
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_NUMBER");
+
+		PortletEntry.save();
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
+
+		Type(
+			elementName = "Hide Contents in a Category for Guest Users",
+			fieldLabel = "Asset Category ID",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "Test Category");
+
+		Button.clickSave();
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is required. Please select from the dropdown list or type in an ID number.");
+
+		Alert.viewErrorMessage(errorMessage = "Unable to save due to invalid or missing configuration values.");
+	}
+
 	test ViewQueryBuilderFieldValidation {
 		Blueprints.openBlueprintsAdmin();
 

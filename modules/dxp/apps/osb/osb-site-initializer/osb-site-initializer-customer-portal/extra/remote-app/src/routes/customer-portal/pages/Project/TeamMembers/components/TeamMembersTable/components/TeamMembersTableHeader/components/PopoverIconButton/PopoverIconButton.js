@@ -33,7 +33,7 @@ const PopoverIconButton = ({alignPosition = 'bottom'}) => {
 		>
 			<p className="m-0 text-neutral-10">
 				{i18n.translate(
-					'the-support-seats-limit-counts-the-total-users-with-the-administrator-requester-role-administrators-requesters-have-permissions-to-open-support-tickets'
+					'the-support-seats-limit-counts-the-total-users-with-the-administrator-or-requester-role-administrators-and-requesters-have-permissions-to-open-support-tickets'
 				)}
 
 				<a

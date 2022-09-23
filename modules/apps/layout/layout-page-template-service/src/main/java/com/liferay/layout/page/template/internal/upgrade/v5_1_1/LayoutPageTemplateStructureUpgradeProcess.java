@@ -74,23 +74,27 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _deleteOrphanLayoutPageTemplateStructures() throws Exception {
-		List<Long> layoutPageTemplateStructureIds = new ArrayList<>();
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select layoutPageTemplateStructureId from " +
 					"LayoutPageTemplateStructure where classPK not in " +
-						"(select plid from Layout)")) {
+						"(select plid from Layout)");
+			PreparedStatement deletePreparedStatement =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"delete from LayoutPageTemplateStructureRel where " +
+						"layoutPageTemplateStructureId = ?")) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					layoutPageTemplateStructureIds.add(
-						resultSet.getLong("layoutPageTemplateStructureId"));
+					deletePreparedStatement.setLong(
+						1, resultSet.getLong("layoutPageTemplateStructureId"));
+
+					deletePreparedStatement.addBatch();
 				}
 			}
-		}
 
-		_deleteWidgetLayoutsTemplateStructureRels(
-			layoutPageTemplateStructureIds);
+			deletePreparedStatement.executeBatch();
+		}
 
 		String sql =
 			"delete from LayoutPageTemplateStructure where classPK not in " +

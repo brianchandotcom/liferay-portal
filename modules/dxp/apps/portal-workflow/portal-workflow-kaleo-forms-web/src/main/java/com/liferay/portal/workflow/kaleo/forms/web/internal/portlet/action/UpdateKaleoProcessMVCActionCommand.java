@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
@@ -71,10 +71,10 @@ public class UpdateKaleoProcessMVCActionCommand
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		long ddmStructureId = ParamUtil.getLong(
 			actionRequest, "ddmStructureId");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "description");
 		long ddmTemplateId = ParamUtil.getLong(actionRequest, "ddmTemplateId");
 		String workflowDefinitionName = ParamUtil.getString(
 			actionRequest, "workflowDefinitionName");
@@ -114,6 +114,9 @@ public class UpdateKaleoProcessMVCActionCommand
 			KaleoProcess.class.getName(), kaleoProcess.getKaleoProcessId(), 0,
 			workflowDefinition);
 	}
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

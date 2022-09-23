@@ -58,7 +58,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -143,7 +143,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		String articleId = ParamUtil.getString(
 			uploadPortletRequest, "articleId");
 
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> titleMap = _localization.getLocalizationMap(
 			actionRequest, "titleMapAsXML");
 
 		String ddmStructureKey = ParamUtil.getString(
@@ -166,11 +166,10 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		String content = _journalConverter.getContent(
 			ddmStructure, fields, groupId);
 
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, "descriptionMapAsXML");
-		Map<Locale, String> friendlyURLMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "descriptionMapAsXML");
+		Map<Locale, String> friendlyURLMap = _localization.getLocalizationMap(
+			actionRequest, "friendlyURL");
 
 		String ddmTemplateKey = ParamUtil.getString(
 			uploadPortletRequest, "ddmTemplateKey");
@@ -684,6 +683,9 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

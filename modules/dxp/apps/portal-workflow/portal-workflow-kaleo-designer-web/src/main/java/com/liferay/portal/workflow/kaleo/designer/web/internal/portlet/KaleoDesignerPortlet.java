@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -314,7 +314,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				"name", kaleoDefinitionVersion.getName()
 			).put(
 				"title",
-				LocalizationUtil.getLocalizationMap(
+				_localization.getLocalizationMap(
 					kaleoDefinitionVersion.getTitle())
 			);
 		}
@@ -541,6 +541,9 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 	@Reference
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

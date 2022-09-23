@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsolePortletKeys;
@@ -55,7 +55,7 @@ public class EditDataSourceMVCActionCommand extends BaseMVCActionCommand {
 
 		long sourceId = ParamUtil.getLong(actionRequest, "sourceId");
 
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
 		String driverClassName = ParamUtil.getString(
 			actionRequest, "driverClassName");
@@ -82,6 +82,9 @@ public class EditDataSourceMVCActionCommand extends BaseMVCActionCommand {
 				driverPassword, serviceContext);
 		}
 	}
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private SourceService _sourceService;

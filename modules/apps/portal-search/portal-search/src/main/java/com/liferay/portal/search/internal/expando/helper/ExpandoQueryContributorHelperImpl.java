@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -117,8 +116,6 @@ public class ExpandoQueryContributorHelperImpl
 		}
 	}
 
-	protected Localization localization;
-
 	private Query _addTerm(
 		BooleanQuery booleanQuery, String fieldName, String keywords,
 		boolean like) {
@@ -161,25 +158,12 @@ public class ExpandoQueryContributorHelperImpl
 		return fieldName;
 	}
 
-	private Localization _getLocalization() {
-
-		// See LPS-72507
-
-		if (localization != null) {
-			return localization;
-		}
-
-		return LocalizationUtil.getLocalization();
-	}
-
 	private String _getLocalizedName(String name, Locale locale) {
 		if (locale == null) {
 			return name;
 		}
 
-		Localization localization = _getLocalization();
-
-		return localization.getLocalizedName(
+		return _localization.getLocalizedName(
 			name, LocaleUtil.toLanguageId(locale));
 	}
 
@@ -191,5 +175,8 @@ public class ExpandoQueryContributorHelperImpl
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private Localization _localization;
 
 }

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.search.suggest.SuggesterResult;
 import com.liferay.portal.kernel.search.suggest.SuggesterResults;
 import com.liferay.portal.kernel.search.suggest.TermSuggester;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchRequest;
@@ -167,17 +166,6 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 		return keywordQueries.toArray(new String[0]);
 	}
 
-	protected Localization getLocalization() {
-
-		// See LPS-72507 and LPS-76500
-
-		if (_localization != null) {
-			return _localization;
-		}
-
-		return LocalizationUtil.getLocalization();
-	}
-
 	protected void setLocalization(Localization localization) {
 		_localization = localization;
 	}
@@ -241,9 +229,7 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 	private PhraseSuggester _createQuerySuggester(
 		SearchContext searchContext, int max) {
 
-		Localization localization = getLocalization();
-
-		String field = localization.getLocalizedName(
+		String field = _localization.getLocalizedName(
 			Field.KEYWORD_SEARCH, searchContext.getLanguageId());
 
 		PhraseSuggester phraseSuggester = new PhraseSuggester(
@@ -257,9 +243,7 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 	private Suggester _createSpellCheckSuggester(
 		SearchContext searchContext, int max) {
 
-		Localization localization = getLocalization();
-
-		String field = localization.getLocalizedName(
+		String field = _localization.getLocalizedName(
 			Field.SPELL_CHECK_WORD, searchContext.getLanguageId());
 
 		TermSuggester termSuggester = new TermSuggester(
@@ -364,6 +348,7 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
 
+	@Reference
 	private Localization _localization;
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")

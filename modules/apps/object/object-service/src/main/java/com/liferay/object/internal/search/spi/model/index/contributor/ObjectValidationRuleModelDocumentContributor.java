@@ -18,7 +18,7 @@ import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,7 +41,7 @@ public class ObjectValidationRuleModelDocumentContributor
 
 		document.addLocalizedText(
 			Field.NAME,
-			LocalizationUtil.populateLocalizationMap(
+			_localization.populateLocalizationMap(
 				objectValidationRule.getNameMap(),
 				objectValidationRule.getDefaultLanguageId(), 0));
 		document.addKeyword(
@@ -51,5 +51,8 @@ public class ObjectValidationRuleModelDocumentContributor
 
 	@Reference
 	protected ClassNameLocalService classNameLocalService;
+
+	@Reference
+	private Localization _localization;
 
 }

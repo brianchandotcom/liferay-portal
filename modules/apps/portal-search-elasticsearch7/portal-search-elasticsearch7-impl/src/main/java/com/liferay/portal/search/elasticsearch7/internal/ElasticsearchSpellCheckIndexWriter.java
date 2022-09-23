@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
 import com.liferay.portal.kernel.search.suggest.SuggestionConstants;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.elasticsearch7.internal.util.DocumentTypes;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -131,10 +130,8 @@ public class ElasticsearchSpellCheckIndexWriter
 
 		Document document = createDocument();
 
-		Localization localization = getLocalization();
-
 		document.addKeyword(
-			localization.getLocalizedName(keywordFieldName, languageId),
+			_localization.getLocalizedName(keywordFieldName, languageId),
 			keywords);
 
 		document.addKeyword(Field.COMPANY_ID, companyId);
@@ -186,17 +183,6 @@ public class ElasticsearchSpellCheckIndexWriter
 		}
 	}
 
-	protected Localization getLocalization() {
-
-		// See LPS-72507 and LPS-76500
-
-		if (_localization != null) {
-			return _localization;
-		}
-
-		return LocalizationUtil.getLocalization();
-	}
-
 	protected void setLocalization(Localization localization) {
 		_localization = localization;
 	}
@@ -204,6 +190,7 @@ public class ElasticsearchSpellCheckIndexWriter
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
 
+	@Reference
 	private Localization _localization;
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")

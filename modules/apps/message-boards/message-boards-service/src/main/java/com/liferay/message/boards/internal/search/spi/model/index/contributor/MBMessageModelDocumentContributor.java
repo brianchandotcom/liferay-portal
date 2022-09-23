@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistryUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
@@ -65,10 +65,10 @@ public class MBMessageModelDocumentContributor
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.CONTENT, languageId),
+				_localization.getLocalizedName(Field.CONTENT, languageId),
 				_processContent(mbMessage));
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
+				_localization.getLocalizedName(Field.TITLE, languageId),
 				mbMessage.getSubject());
 		}
 
@@ -173,5 +173,8 @@ public class MBMessageModelDocumentContributor
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Localization _localization;
 
 }

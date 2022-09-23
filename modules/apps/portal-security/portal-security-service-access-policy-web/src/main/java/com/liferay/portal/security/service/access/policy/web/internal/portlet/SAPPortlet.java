@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryService;
 import com.liferay.portal.security.service.access.policy.web.internal.constants.SAPPortletKeys;
@@ -157,7 +157,7 @@ public class SAPPortlet extends MVCPortlet {
 			actionRequest, "defaultSAPEntry");
 		boolean enabled = ParamUtil.getBoolean(actionRequest, "enabled");
 		String name = ParamUtil.getString(actionRequest, "name");
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> titleMap = _localization.getLocalizationMap(
 			actionRequest, "title");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -269,6 +269,9 @@ public class SAPPortlet extends MVCPortlet {
 
 	@Reference
 	private JSONWebServiceActionsManager _jsonWebServiceActionsManager;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private SAPEntryService _sapEntryService;

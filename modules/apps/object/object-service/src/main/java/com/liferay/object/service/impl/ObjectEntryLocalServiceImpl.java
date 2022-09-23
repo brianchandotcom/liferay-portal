@@ -119,7 +119,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -707,7 +707,7 @@ public class ObjectEntryLocalServiceImpl
 				primaryKey);
 
 			if (value instanceof String) {
-				value = LocalizationUtil.getLocalization(
+				value = _localization.getLocalization(
 					(String)value, null, true);
 			}
 
@@ -2983,6 +2983,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
+	private Localization _localization;
 
 	private volatile ObjectConfiguration _objectConfiguration;
 

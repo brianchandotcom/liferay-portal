@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -77,18 +77,17 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 		boolean openGraphDescriptionEnabled = ParamUtil.getBoolean(
 			actionRequest, "openGraphDescriptionEnabled");
 		Map<Locale, String> openGraphDescriptionMap =
-			LocalizationUtil.getLocalizationMap(
+			_localization.getLocalizationMap(
 				actionRequest, "openGraphDescription");
 		Map<Locale, String> openGraphImageAltMap =
-			LocalizationUtil.getLocalizationMap(
+			_localization.getLocalizationMap(
 				actionRequest, "openGraphImageAlt");
 		long openGraphImageFileEntryId = ParamUtil.getLong(
 			actionRequest, "openGraphImageFileEntryId");
 		boolean openGraphTitleEnabled = ParamUtil.getBoolean(
 			actionRequest, "openGraphTitleEnabled");
 		Map<Locale, String> openGraphTitleMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, "openGraphTitle");
+			_localization.getLocalizationMap(actionRequest, "openGraphTitle");
 
 		LayoutSEOEntry layoutSEOEntry =
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
@@ -151,6 +150,9 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -97,14 +97,13 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			boolean privateLayout = ParamUtil.getBoolean(
 				actionRequest, "privateLayout");
 			long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			Map<Locale, String> nameMap = _localization.getLocalizationMap(
 				actionRequest, "name");
 			String type = ParamUtil.getString(uploadPortletRequest, "type");
 			boolean hidden = ParamUtil.getBoolean(
 				uploadPortletRequest, "hidden");
 			Map<Locale, String> friendlyURLMap =
-				LocalizationUtil.getLocalizationMap(
-					actionRequest, "friendlyURL");
+				_localization.getLocalizationMap(actionRequest, "friendlyURL");
 			boolean deleteLogo = ParamUtil.getBoolean(
 				actionRequest, "deleteLogo");
 
@@ -395,6 +394,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

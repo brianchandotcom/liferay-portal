@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -87,9 +87,9 @@ public class CopyDataDefinitionMVCActionCommand
 		long ddmStructureId = ParamUtil.getLong(
 			actionRequest, "ddmStructureId");
 
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "description");
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
 
 		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
@@ -201,6 +201,9 @@ public class CopyDataDefinitionMVCActionCommand
 
 	@Reference
 	private DDMTemplateService _ddmTemplateService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

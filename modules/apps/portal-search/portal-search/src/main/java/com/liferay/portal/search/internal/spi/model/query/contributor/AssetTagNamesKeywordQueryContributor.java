@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
@@ -51,11 +50,9 @@ public class AssetTagNamesKeywordQueryContributor
 
 		Locale locale = _getLocale(searchContext);
 
-		Localization localization = _getLocalization();
-
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext,
-			localization.getLocalizedName(
+			_localization.getLocalizedName(
 				Field.ASSET_TAG_NAMES, LocaleUtil.toLanguageId(locale)),
 			false);
 	}
@@ -86,17 +83,6 @@ public class AssetTagNamesKeywordQueryContributor
 		return searchContext.getLocale();
 	}
 
-	private Localization _getLocalization() {
-
-		// See LPS-72507 and LPS-76500
-
-		if (_localization != null) {
-			return _localization;
-		}
-
-		return LocalizationUtil.getLocalization();
-	}
-
 	private Locale _getSiteDefaultLocale(long groupId) {
 		try {
 			return _portal.getSiteDefaultLocale(groupId);
@@ -106,6 +92,7 @@ public class AssetTagNamesKeywordQueryContributor
 		}
 	}
 
+	@Reference
 	private Localization _localization;
 
 	@Reference

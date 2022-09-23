@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -108,7 +108,7 @@ public class PLOPortlet extends MVCPortlet {
 
 		_ploEntryService.setPLOEntries(
 			ParamUtil.getString(actionRequest, "key"),
-			LocalizationUtil.getLocalizationMap(actionRequest, "value"));
+			_localization.getLocalizationMap(actionRequest, "value"));
 	}
 
 	@Override
@@ -211,6 +211,9 @@ public class PLOPortlet extends MVCPortlet {
 	}
 
 	private EditDisplayContextFactory _editDisplayContextFactory;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private PermissionCheckerFactory _permissionCheckerFactory;

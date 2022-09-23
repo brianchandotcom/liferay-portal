@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -119,7 +119,7 @@ public class MBAdminConfigurationAction
 				}
 			}
 
-			String preferenceName = LocalizationUtil.getLocalizedName(
+			String preferenceName = _localization.getLocalizedName(
 				"priorities", languageId);
 
 			setPreference(
@@ -169,7 +169,7 @@ public class MBAdminConfigurationAction
 				ranks[count++] = kvpName + StringPool.EQUAL + kvpValue;
 			}
 
-			String preferenceName = LocalizationUtil.getLocalizedName(
+			String preferenceName = _localization.getLocalizedName(
 				"ranks", languageId);
 
 			setPreference(actionRequest, preferenceName, ranks);
@@ -178,5 +178,8 @@ public class MBAdminConfigurationAction
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Localization _localization;
 
 }

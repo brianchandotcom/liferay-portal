@@ -132,7 +132,13 @@ public class ColumnValuesExtractor {
 			Field field = fieldsMap.get(fieldName);
 
 			if (field == null) {
-				throw new IllegalArgumentException("Field " + fieldName);
+				columnDescriptors[localIndex] = ColumnDescriptor._from(
+					null, masterIndex++, parentColumnDescriptor,
+					_getUnsafeFunction(fieldsMap, fieldName));
+
+				localIndex++;
+
+				continue;
 			}
 
 			columnDescriptors[localIndex] = ColumnDescriptor._from(
@@ -422,11 +428,11 @@ public class ColumnValuesExtractor {
 				(_parentColumnDescriptors.size() * 2) + 2);
 
 			for (ColumnDescriptor columnDescriptor : _parentColumnDescriptors) {
-				sb.append(_getSanitizedFieldName(columnDescriptor._field));
+				sb.append(columnDescriptor._getSanitizedFieldName());
 				sb.append(StringPool.PERIOD);
 			}
 
-			sb.append(_getSanitizedFieldName(_field));
+			sb.append(_getSanitizedFieldName());
 
 			return sb.toString();
 		}
@@ -442,8 +448,12 @@ public class ColumnValuesExtractor {
 			return columnDescriptor.hashCode();
 		}
 
-		private String _getSanitizedFieldName(Field field) {
-			String name = field.getName();
+		private String _getSanitizedFieldName() {
+			if (_field == null) {
+				return StringPool.POUND;
+			}
+
+			String name = _field.getName();
 
 			if (name.startsWith(StringPool.UNDERLINE)) {
 				return name.substring(1);

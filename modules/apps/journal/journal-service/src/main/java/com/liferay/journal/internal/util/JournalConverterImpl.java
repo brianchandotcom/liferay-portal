@@ -477,11 +477,13 @@ public class JournalConverterImpl implements JournalConverter {
 			return _getSelectValue(dynamicContentElement);
 		}
 
+		String value = dynamicContentElement.getText();
+
 		return FieldConstants.getSerializable(
 			LocaleUtil.ROOT,
 			LocaleUtil.fromLanguageId(
 				dynamicContentElement.attributeValue("language-id")),
-			ddmFormField.getDataType(), dynamicContentElement.getText());
+			ddmFormField.getDataType(), value.trim());
 	}
 
 	private String _getSelectValue(Element dynamicContentElement) {

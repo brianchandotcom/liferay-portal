@@ -74,6 +74,8 @@ definition {
 				value1 = "${kbArticleTitleFormatted}");
 		}
 
+		ProductMenuHelper.closeProductMenu();
+
 		if ("${cancel}" == "true") {
 			Button.clickCancel();
 		}
@@ -81,9 +83,7 @@ definition {
 			Button.clickSaveAsDraft();
 		}
 		else {
-			AssertClick(
-				locator1 = "Button#PUBLISH",
-				value1 = "Publish");
+			Button.click(button = "Publish");
 		}
 	}
 
@@ -203,6 +203,8 @@ definition {
 		}
 
 		if ("${kbWorkflowAction}" == "Submit for Publication") {
+			ProductMenuHelper.closeProductMenu();
+
 			AssertClick(
 				locator1 = "Button#SUBMIT_FOR_PUBLICATION",
 				value1 = "Submit for Publication");
@@ -211,9 +213,9 @@ definition {
 			Button.clickSaveAsDraft();
 		}
 		else {
-			AssertClick(
-				locator1 = "Button#PUBLISH",
-				value1 = "Publish");
+			ProductMenuHelper.closeProductMenu();
+
+			Button.click(button = "Publish");
 		}
 
 		if ("${kbArticleInvalidContent}" == "true") {
@@ -273,9 +275,9 @@ definition {
 
 		CKEditor.addContent(content = "${kbArticleContent}");
 
-		AssertClick(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
+		ProductMenuHelper.closeProductMenu();
+
+		Button.click(button = "Publish");
 
 		Alert.viewRequiredField();
 	}
@@ -313,9 +315,7 @@ definition {
 
 		CKEditor.addContent(content = "${kbArticleContent}");
 
-		AssertClick(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
+		Button.click(button = "Publish");
 	}
 
 	macro cancelAddKBArticle {
@@ -716,9 +716,7 @@ definition {
 			Button.clickSaveAsDraft();
 		}
 		else {
-			AssertClick(
-				locator1 = "Button#PUBLISH",
-				value1 = "Publish");
+			Button.click(button = "Publish");
 		}
 	}
 

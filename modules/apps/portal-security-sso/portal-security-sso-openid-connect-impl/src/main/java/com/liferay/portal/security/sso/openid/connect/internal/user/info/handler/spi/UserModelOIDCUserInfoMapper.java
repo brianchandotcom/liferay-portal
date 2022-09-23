@@ -102,7 +102,9 @@ public class UserModelOIDCUserInfoMapper {
 
 		if (propertyRoleIds == null) {
 			roleIds = _getRoleIds(
-				companyId, userInfoJSONObject, userMapperJSONObject);
+				companyId, userInfoJSONObject,
+				JSONObjectUtils.getJSONObject(
+					userInfoMapperJSONObject, "users_roles"));
 		}
 
 		User user = _userLocalService.addUser(
@@ -113,10 +115,10 @@ public class UserModelOIDCUserInfoMapper {
 			OIDCUserInfoClaimUtil.getStringClaim(
 				"middleName", userMapperJSONObject, userInfoJSONObject),
 			lastName, prefixId, suffixId,
-			_isMale(userInfoJSONObject, userMapperJSONObject), birthday[1],
+			_isMale(contactMapperJSONObject, userInfoJSONObject), birthday[1],
 			birthday[2], birthday[0],
 			OIDCUserInfoClaimUtil.getStringClaim(
-				"jobTitle", contactMapperJSONObject, userInfoJSONObject),
+				"jobTitle", userMapperJSONObject, userInfoJSONObject),
 			groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
 			serviceContext);
 
@@ -243,17 +245,17 @@ public class UserModelOIDCUserInfoMapper {
 
 	private long[] _getRoleIds(
 		long companyId, JSONObject userInfoJSONObject,
-		JSONObject userMapperJSONObject) {
+		JSONObject usersRolesMapperJSONObject) {
 
-		if ((userMapperJSONObject == null) ||
-			(userMapperJSONObject.size() < 1)) {
+		if ((usersRolesMapperJSONObject == null) ||
+			(usersRolesMapperJSONObject.size() < 1)) {
 
 			return null;
 		}
 
 		try {
 			JSONArray rolesJSONArray = OIDCUserInfoClaimUtil.getJSONArrayClaim(
-				"roles", userMapperJSONObject, userInfoJSONObject);
+				"roles", usersRolesMapperJSONObject, userInfoJSONObject);
 
 			long[] roleIds = new long[rolesJSONArray.size()];
 
@@ -276,11 +278,11 @@ public class UserModelOIDCUserInfoMapper {
 	}
 
 	private boolean _isMale(
-		JSONObject userInfoJSONObject, JSONObject userMapperJSONObject) {
+		JSONObject contactMapperJSONObject, JSONObject userInfoJSONObject) {
 
 		try {
 			String gender = OIDCUserInfoClaimUtil.getStringClaim(
-				"gender", userMapperJSONObject, userInfoJSONObject);
+				"gender", contactMapperJSONObject, userInfoJSONObject);
 
 			if (Validator.isNull(gender) || gender.equals("male")) {
 				return true;

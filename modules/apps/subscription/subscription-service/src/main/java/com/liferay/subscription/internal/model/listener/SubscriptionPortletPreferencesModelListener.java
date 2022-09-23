@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
@@ -54,28 +55,33 @@ public class SubscriptionPortletPreferencesModelListener
 				return;
 			}
 
-			PortletPreferences remainingPortletPreferences =
-				_portletPreferencesLocalService.fetchPortletPreferences(
-					portletPreferences.getOwnerId(),
-					portletPreferences.getOwnerType(),
-					portletPreferences.getPlid(),
-					portletPreferences.getPortletId());
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					PortletPreferences remainingPortletPreferences =
+						_portletPreferencesLocalService.fetchPortletPreferences(
+							portletPreferences.getOwnerId(),
+							portletPreferences.getOwnerType(),
+							portletPreferences.getPlid(),
+							portletPreferences.getPortletId());
 
-			if (remainingPortletPreferences == null) {
-				_subscriptionLocalService.deleteSubscriptions(
-					portletPreferences.getCompanyId(),
-					portletPreferences.getModelClassName(),
-					portletPreferences.getPortletPreferencesId());
+					if (remainingPortletPreferences == null) {
+						_subscriptionLocalService.deleteSubscriptions(
+							portletPreferences.getCompanyId(),
+							portletPreferences.getModelClassName(),
+							portletPreferences.getPortletPreferencesId());
 
-				return;
-			}
+						return null;
+					}
 
-			_subscriptionLocalService.updateSubscriptions(
-				remainingPortletPreferences.getCompanyId(),
-				_classNameLocalService.getClassNameId(
-					remainingPortletPreferences.getModelClassName()),
-				portletPreferences.getPortletPreferencesId(),
-				remainingPortletPreferences.getPortletPreferencesId());
+					_subscriptionLocalService.updateSubscriptions(
+						remainingPortletPreferences.getCompanyId(),
+						_classNameLocalService.getClassNameId(
+							remainingPortletPreferences.getModelClassName()),
+						portletPreferences.getPortletPreferencesId(),
+						remainingPortletPreferences.getPortletPreferencesId());
+
+					return null;
+				});
 		}
 		catch (Exception exception) {
 			_log.error("Unable to delete subscriptions", exception);

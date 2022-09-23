@@ -433,18 +433,17 @@ definition {
 			locator1 = "Button#RESET_CHANGES",
 			value1 = "Reset Changes");
 
-		if (isSet(widgetName)) {
-			AssertElementNotPresent(
-				key_portletName = "${widgetName}",
-				locator1 = "Home#PORTLET_BORDERLESS");
-		}
-
 		if (isSet(columnNumberTo)) {
 			AssertTextEquals(
 				key_pageColumnNumber = "${columnNumberTo}",
 				key_portletName = "${portletName}",
 				locator1 = "Portlet#PORTLET_TITLE_INSIDE_PAGE_COLUMN",
 				value1 = "${portletName}");
+		}
+		else if (!(isSet(columnNumberTo)) && isSet(portletName)) {
+			AssertElementNotPresent(
+				key_portletName = "${portletName}",
+				locator1 = "Home#PORTLET_BORDERLESS");
 		}
 
 		AssertClick(

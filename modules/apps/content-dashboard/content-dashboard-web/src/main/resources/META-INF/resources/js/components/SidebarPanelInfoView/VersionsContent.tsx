@@ -38,9 +38,14 @@ const VersionsContent = ({
 	onError,
 }: IProps) => {
 	const [loading, setLoading] = useState(false);
-	const [versions, setVersions] = useState([] as IVersion[]);
-	const [viewVersionsURL, setViewVersionsURL] = useState('');
+
+	const [versionsData, setVersionsData] = useState({
+		versions: [],
+		viewVersionsURL: '',
+	} as IData);
+
 	const isFirst: boolean = useIsFirstRender();
+
 	const getVersionsData = useCallback(async (): Promise<void> => {
 		try {
 			setLoading(true);
@@ -50,9 +55,9 @@ const VersionsContent = ({
 				throw new Error(`Failed to fetch ${getItemVersionsURL}`);
 			}
 
-			const {versions, viewVersionsURL}: IData = await response.json();
-			setVersions(versions);
-			setViewVersionsURL(viewVersionsURL);
+			const data: IData = await response.json();
+
+			setVersionsData(data);
 		}
 		catch (error: unknown) {
 			onError();
@@ -73,8 +78,11 @@ const VersionsContent = ({
 		if (isFirst) {
 			return;
 		}
+
 		getVersionsData();
 	}, [getVersionsData, isFirst]);
+
+	const {versions, viewVersionsURL} = versionsData;
 
 	return (
 		<>
@@ -131,7 +139,6 @@ const VersionsContent = ({
 		</>
 	);
 };
-
 interface IData {
 	versions: IVersion[];
 	viewVersionsURL: string;

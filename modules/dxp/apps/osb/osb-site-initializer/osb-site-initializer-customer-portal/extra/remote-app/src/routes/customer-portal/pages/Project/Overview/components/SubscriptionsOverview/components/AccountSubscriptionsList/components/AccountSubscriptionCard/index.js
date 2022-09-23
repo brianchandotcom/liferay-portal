@@ -9,14 +9,4 @@
  * distribution rights of the Software.
  */
 
-export const PRODUCT_TYPES = {
-	analyticsCloud: 'Analytics Cloud',
-	commerce: 'Commerce',
-	dxp: 'DXP',
-	dxpCloud: 'LXC-SM',
-	enterpriseSearch: 'Enterprise Search',
-	liferayExperienceCloud: 'Liferay Experience Cloud',
-	partnership: 'Partnership',
-	portal: 'Portal',
-	socialOffice: 'Social Office',
-};
+export {default} from './AccountSubscriptionCard';

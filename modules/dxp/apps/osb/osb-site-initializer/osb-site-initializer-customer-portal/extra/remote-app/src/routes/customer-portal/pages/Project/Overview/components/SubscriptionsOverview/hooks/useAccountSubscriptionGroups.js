@@ -30,19 +30,16 @@ export default function useAccountSubscriptionGroups(
 	const accountSubscriptionGroups = data?.c.accountSubscriptionGroups.items;
 
 	useEffect(() => {
-		if (!loading && !!accountSubscriptionGroups.length) {
+		if (!loading && !!accountSubscriptionGroups?.length) {
 			setLastAccountSubscriptionGroup(accountSubscriptionGroups[0]);
 		}
 	}, [accountSubscriptionGroups, loading]);
 
-	const onSelectAccountSubscriptionGroup = (accountSubscriptionGroup) =>
-		setLastAccountSubscriptionGroup(accountSubscriptionGroup);
-
 	return [
+		{lastAccountSubcriptionGroup, setLastAccountSubscriptionGroup},
 		{
-			lastAccountSubcriptionGroup,
-			onSelectAccountSubscriptionGroup,
+			data,
+			loading: koroneikiAccountLoading || loading,
 		},
-		{accountSubscriptionGroups, loading},
 	];
 }

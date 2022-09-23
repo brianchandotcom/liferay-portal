@@ -79,7 +79,7 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 				{loading ? (
 					<Skeleton height={18} width={40} />
 				) : (
-					i18n.translate('status')
+					`${i18n.translate('status')}:`
 				)}
 			</div>
 

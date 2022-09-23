@@ -13,6 +13,7 @@ import {useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import i18n from '../../../../../../../common/I18n';
 import Skeleton from '../../../../../../../common/components/Skeleton';
+import AccountSubscriptionsList from './components/AccountSubscriptionsList/AccountSubscriptionsList';
 import SubscriptionsNavbar from './components/SubscriptionsNavbar/SubscriptionsNavbar';
 import useAccountSubscriptionGroups from './hooks/useAccountSubscriptionGroups';
 import useAccountSubscriptions from './hooks/useAccountSubscriptions';
@@ -20,17 +21,26 @@ import useAccountSubscriptions from './hooks/useAccountSubscriptions';
 const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
 	const [
-		{lastAccountSubcriptionGroup, onSelectAccountSubscriptionGroup},
-		{accountSubscriptionGroups, loading: accountSubscriptionGroupsLoading},
+		{lastAccountSubcriptionGroup, setLastAccountSubscriptionGroup},
+		{
+			data: accountSubscriptionGroupsData,
+			loading: accountSubscriptionGroupsLoading,
+		},
 	] = useAccountSubscriptionGroups(koroneikiAccount?.accountKey, loading);
 
+	const accountSubscriptionGroups =
+		accountSubscriptionGroupsData?.c.accountSubscriptionGroups;
+
 	const [
-		onSelectSubscriptionStatus,
-		{loading: accountSubscriptionsLoading},
+		setLastSubscriptionStatus,
+		{data: accountSubscriptionsData, loading: accountSubscriptionsLoading},
 	] = useAccountSubscriptions(
 		lastAccountSubcriptionGroup,
 		accountSubscriptionGroupsLoading
 	);
+
+	const accountSubscriptions =
+		accountSubscriptionsData?.c.accountSubscriptions.items;
 
 	useEffect(() => {
 		setHasQuickLinksPanel(true);
@@ -39,12 +49,12 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 
 	const handleDropdownOnClick = (selectedStatus) => {
 		if (selectedStatus) {
-			onSelectSubscriptionStatus(`'${selectedStatus.join("', '")}'`);
+			setLastSubscriptionStatus(`'${selectedStatus.join("', '")}'`);
 
 			return;
 		}
 
-		onSelectSubscriptionStatus();
+		setLastSubscriptionStatus();
 	};
 
 	return (
@@ -65,8 +75,14 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 				loading={accountSubscriptionGroupsLoading}
 				onClickDropdownItem={handleDropdownOnClick}
 				onSelectNavItem={(accountSubscriptionGroup) => {
-					onSelectAccountSubscriptionGroup(accountSubscriptionGroup);
+					setLastAccountSubscriptionGroup(accountSubscriptionGroup);
 				}}
+			/>
+
+			<AccountSubscriptionsList
+				accountSubscriptions={accountSubscriptions}
+				loading={accountSubscriptionsLoading}
+				selectedAccountSubscriptionGroup={lastAccountSubcriptionGroup}
 			/>
 		</div>
 	);

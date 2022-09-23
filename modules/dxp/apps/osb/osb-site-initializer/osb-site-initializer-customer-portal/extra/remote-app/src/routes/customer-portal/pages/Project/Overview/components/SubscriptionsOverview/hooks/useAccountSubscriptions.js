@@ -20,7 +20,7 @@ export default function useAccountSubscriptions(
 
 	const [
 		handleGetAccountSubscriptions,
-		{data, loading},
+		{called, data, loading},
 	] = useLazyGetAccountSubscriptions();
 
 	const getSubscriptionStatusFilter = (subscriptionStatus) => {
@@ -30,9 +30,6 @@ export default function useAccountSubscriptions(
 
 		return '';
 	};
-
-	const onSelectSubscriptionStatus = (subscriptionStatus) =>
-		setLastSubscriptionStatus(subscriptionStatus);
 
 	useEffect(() => {
 		if (accountSubcriptionGroup) {
@@ -51,10 +48,10 @@ export default function useAccountSubscriptions(
 	]);
 
 	return [
-		onSelectSubscriptionStatus,
+		setLastSubscriptionStatus,
 		{
 			data,
-			loading: accountSubscriptionGroupsLoading || loading,
+			loading: accountSubscriptionGroupsLoading || !called || loading,
 		},
 	];
 }

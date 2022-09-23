@@ -37,10 +37,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = OpenIdConnectPhoneUserMapperProcessor.class
 )
-public class OpenIdConnectPhoneUserMapperProcessor
-	implements OpenIdConnectOptionalUserMapperProcessor {
+public class OpenIdConnectPhoneUserMapperProcessor {
 
-	@Override
 	public void process(
 			long userId, ServiceContext serviceContext, String userInfoJSON,
 			String userInfoMapperJSON)

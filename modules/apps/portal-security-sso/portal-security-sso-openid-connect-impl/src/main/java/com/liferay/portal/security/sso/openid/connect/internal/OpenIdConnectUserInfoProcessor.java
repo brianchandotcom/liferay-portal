@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.sso.openid.connect.internal.user.info.handler.spi.DefaultOpenIdConnectUserMapperProcessor;
 import com.liferay.portal.security.sso.openid.connect.internal.user.info.handler.spi.OpenIdConnectAddressUserMapperProcessor;
 import com.liferay.portal.security.sso.openid.connect.internal.user.info.handler.spi.OpenIdConnectPhoneUserMapperProcessor;
-import com.liferay.portal.security.sso.openid.connect.internal.user.info.handler.spi.OpenIdConnectUserMapperProcessor;
 
 import java.util.Objects;
 
@@ -51,8 +51,10 @@ public class OpenIdConnectUserInfoProcessor {
 			// TODO: Service tracker to find a suitable custom
 			// UserMapperProcessor(MUST), once which becomes SPI.
 
-			userId = _openIdConnectUserMapperProcessor.getUserIdByEmailAddress(
-				companyId, userInfoJSON, userInfoMapperJSON);
+			userId =
+				_defaultOpenIdConnectUserMapperProcessor.
+					getUserIdByEmailAddress(
+						companyId, userInfoJSON, userInfoMapperJSON);
 
 			if (userId > 0) {
 				return userId;
@@ -61,7 +63,7 @@ public class OpenIdConnectUserInfoProcessor {
 			// TODO: Remove propertyRoleIds from signature once LXC migrates to
 			//  use UserInfoMapper Configuration.
 
-			userId = _openIdConnectUserMapperProcessor.generateUser(
+			userId = _defaultOpenIdConnectUserMapperProcessor.generateUser(
 				companyId, _getRoleIds(companyId, issuer), serviceContext,
 				userInfoJSON, userInfoMapperJSON);
 		}
@@ -127,15 +129,16 @@ public class OpenIdConnectUserInfoProcessor {
 		OpenIdConnectUserInfoProcessor.class);
 
 	@Reference
+	private DefaultOpenIdConnectUserMapperProcessor
+		_defaultOpenIdConnectUserMapperProcessor;
+
+	@Reference
 	private OpenIdConnectAddressUserMapperProcessor
 		_openIdConnectAddressUserMapperProcessor;
 
 	@Reference
 	private OpenIdConnectPhoneUserMapperProcessor
 		_openIdConnectPhoneUserMapperProcessor;
-
-	@Reference
-	private OpenIdConnectUserMapperProcessor _openIdConnectUserMapperProcessor;
 
 	@Reference
 	private Props _props;

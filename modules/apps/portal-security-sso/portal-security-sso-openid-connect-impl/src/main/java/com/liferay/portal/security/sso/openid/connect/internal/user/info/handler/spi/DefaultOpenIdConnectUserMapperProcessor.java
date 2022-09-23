@@ -43,11 +43,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Arthur Chan
  */
-@Component(immediate = true, service = OpenIdConnectUserMapperProcessor.class)
-public class DefaultOpenIdConnectUserMapperProcessor
-	implements OpenIdConnectUserMapperProcessor {
+@Component(
+	immediate = true, service = DefaultOpenIdConnectUserMapperProcessor.class
+)
+public class DefaultOpenIdConnectUserMapperProcessor {
 
-	@Override
 	public long generateUser(
 			long companyId, long[] propertyRoleIds,
 			ServiceContext serviceContext, String userInfoJSON,
@@ -127,7 +127,6 @@ public class DefaultOpenIdConnectUserMapperProcessor
 		return user.getUserId();
 	}
 
-	@Override
 	public long getUserIdByEmailAddress(
 			long companyId, String userInfoJSON, String userInfoMapperJSON)
 		throws Exception {

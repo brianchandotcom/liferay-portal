@@ -43,10 +43,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = OpenIdConnectAddressUserMapperProcessor.class
 )
-public class OpenIdConnectAddressUserMapperProcessor
-	implements OpenIdConnectOptionalUserMapperProcessor {
+public class OpenIdConnectAddressUserMapperProcessor {
 
-	@Override
 	public void process(
 			long userId, ServiceContext serviceContext, String userInfoJSON,
 			String userInfoMapperJSON)

@@ -44,9 +44,14 @@ const useBuildTemplateActions = () => {
 		},
 		{
 			action: (build, mutate) => {
-				testrayBuildImpl
-					.remove(build.id)
-					.then(() => removeItemFromList(mutate, build.id));
+				if (build.active) {
+					alert(i18n.sub('x-items-cannot-be-deleted', 'activate'));
+				}
+				else {
+					testrayBuildImpl
+						.remove(build.id)
+						.then(() => removeItemFromList(mutate, build.id));
+				}
 			},
 			icon: 'trash',
 			name: i18n.translate('delete'),

@@ -115,6 +115,7 @@ const BuildForm = () => {
 					template: testrayBuild.template,
 			  }
 			: {
+					active: true,
 					factorStacks: [{}],
 					projectId: Number(projectId),
 					routineId,

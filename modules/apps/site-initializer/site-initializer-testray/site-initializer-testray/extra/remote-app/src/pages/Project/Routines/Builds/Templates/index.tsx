@@ -47,7 +47,6 @@ const BuildTemplates = () => {
 					actions,
 					columns: [
 						{
-							clickable: true,
 							key: 'active',
 							render: (active) =>
 								active
@@ -58,22 +57,18 @@ const BuildTemplates = () => {
 							value: i18n.translate('status'),
 						},
 						{
-							clickable: true,
 							key: 'name',
 							value: i18n.translate('template-name'),
 						},
 						{
-							clickable: true,
 							key: 'templateTestrayBuildId',
 							value: i18n.translate('template-test'),
 						},
 						{
-							clickable: true,
 							key: 'templateTestrayBuildId',
 							value: i18n.translate('latest-build'),
 						},
 						{
-							clickable: true,
 							key: 'modifiedDate',
 							render: (modifiedDate) =>
 								dayjs(modifiedDate).format('lll'),
@@ -89,7 +84,10 @@ const BuildTemplates = () => {
 					)} and ${searchUtil.eq(
 						'routineId',
 						routineId as string
-					)} and ${searchUtil.eq('template', true)}`,
+					)} and ${searchUtil.eq(
+						'template',
+						true
+					)} and ${searchUtil.eq('active', true)}`,
 				}}
 			/>
 		</Container>

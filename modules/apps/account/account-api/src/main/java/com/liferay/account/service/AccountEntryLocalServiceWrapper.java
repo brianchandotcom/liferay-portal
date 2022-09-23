@@ -646,6 +646,14 @@ public class AccountEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry updateDomains(
+			long accountEntryId, String[] domains)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.updateDomains(accountEntryId, domains);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountEntry updateExternalReferenceCode(
 			com.liferay.account.model.AccountEntry accountEntry,
 			String externalReferenceCode)

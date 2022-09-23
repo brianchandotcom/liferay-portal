@@ -444,6 +444,10 @@ public interface AccountEntryLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
+	public AccountEntry updateDomains(long accountEntryId, String[] domains)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
 	public AccountEntry updateExternalReferenceCode(
 			AccountEntry accountEntry, String externalReferenceCode)
 		throws PortalException;

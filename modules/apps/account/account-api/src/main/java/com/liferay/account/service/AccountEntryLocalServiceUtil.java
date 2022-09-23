@@ -556,6 +556,13 @@ public class AccountEntryLocalServiceUtil {
 			accountEntryId, addressId);
 	}
 
+	public static AccountEntry updateDomains(
+			long accountEntryId, String[] domains)
+		throws PortalException {
+
+		return getService().updateDomains(accountEntryId, domains);
+	}
+
 	public static AccountEntry updateExternalReferenceCode(
 			AccountEntry accountEntry, String externalReferenceCode)
 		throws PortalException {

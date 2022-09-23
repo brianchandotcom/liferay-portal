@@ -546,7 +546,7 @@ public class ExpandoColumnLocalServiceImpl
 				for (String defaultValue : defaultValuesMap.values()) {
 					if (Validator.isNotNull(defaultValue)) {
 						throw new ValueDataException.MustInformDefaultLocale(
-							LocaleUtil.getDefault());
+							defaultLocale);
 					}
 				}
 			}

@@ -825,18 +825,18 @@ public class ExpandoValueLocalServiceImpl
 					(Map<Locale, String>)attributeValue;
 
 				Locale defaultLocale = LocaleUtil.getDefault();
+
 				if (Validator.isNull(defaultValuesMap.get(defaultLocale))) {
 					for (String defaultValue : defaultValuesMap.values()) {
 						if (Validator.isNotNull(defaultValue)) {
 							throw new ValueDataException.MustInformDefaultLocale(
-								LocaleUtil.getDefault());
+								defaultLocale);
 						}
 					}
 				}
 
 				value.setStringMap(
-					(Map<Locale, String>)attributeValue,
-					LocaleUtil.getDefault());
+					(Map<Locale, String>)attributeValue, defaultLocale);
 			}
 			else {
 				value.setString((String)attributeValue);

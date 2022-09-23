@@ -55,6 +55,10 @@ public class UnusedVariableCheck extends BaseCheck {
 		}
 
 		if (modifiersDetailAST.branchContains(TokenTypes.ANNOTATION)) {
+			if (!isAttributeValue(_CHECK_UNUSED_REFERENCE_VARIABLE_KEY)) {
+				return;
+			}
+
 			String absolutePath = getAbsolutePath();
 
 			int x = absolutePath.indexOf("/modules/");
@@ -198,6 +202,9 @@ public class UnusedVariableCheck extends BaseCheck {
 
 	private static final String _ALLOWED_UNUSED_VARIABLE_TYPE_NAMES_KEY =
 		"allowedUnusedVariableTypeNames";
+
+	private static final String _CHECK_UNUSED_REFERENCE_VARIABLE_KEY =
+		"checkUnusedReferenceVariable";
 
 	private static final String _MSG_UNUSED_VARIABLE = "variable.unused";
 

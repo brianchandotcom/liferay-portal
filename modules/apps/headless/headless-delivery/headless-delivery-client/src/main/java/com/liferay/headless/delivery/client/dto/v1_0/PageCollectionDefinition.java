@@ -189,6 +189,27 @@ public class PageCollectionDefinition implements Cloneable, Serializable {
 
 	protected FragmentViewport[] fragmentViewports;
 
+	public Layout getLayout() {
+		return layout;
+	}
+
+	public void setLayout(Layout layout) {
+		this.layout = layout;
+	}
+
+	public void setLayout(
+		UnsafeSupplier<Layout, Exception> layoutUnsafeSupplier) {
+
+		try {
+			layout = layoutUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Layout layout;
+
 	public String getListItemStyle() {
 		return listItemStyle;
 	}

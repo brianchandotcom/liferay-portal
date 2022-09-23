@@ -3304,6 +3304,21 @@ components:
                     items:
                         $ref: "#/components/schemas/FragmentViewport"
                     type: array
+                layout:
+                    # @review
+                    description:
+                        the page section's layout.
+                    properties:
+                        align:
+                            enum: [Baseline, Center, End, None, Start, Stretch]
+                            type: string
+                        flexWrap:
+                            enum: [NoWrap, Wrap, WrapReverse]
+                            type: string
+                        justify:
+                            enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
+                            type: string
+                    type: object
                 listItemStyle:
                     # @review
                     description:

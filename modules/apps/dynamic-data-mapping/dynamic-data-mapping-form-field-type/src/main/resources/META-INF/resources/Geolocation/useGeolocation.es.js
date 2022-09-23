@@ -12,8 +12,8 @@
  * details.
  */
 
-import MapGoogleMaps from '@liferay/map-google-maps/js/MapGoogleMaps.es';
-import MapOpenStreetMap from '@liferay/map-openstreetmap/js/MapOpenStreetMap.es';
+import MapGoogleMaps from '@liferay/map-google-maps/js/MapGoogleMaps';
+import MapOpenStreetMap from '@liferay/map-openstreetmap/js/MapOpenStreetMap';
 import {parseName} from 'data-engine-js-components-web';
 import Leaflet from 'leaflet';
 import {useEffect, useRef} from 'react';

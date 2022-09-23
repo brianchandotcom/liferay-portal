@@ -14,11 +14,11 @@
 
 import MapBase from '@liferay/map-common/js/MapBase';
 
-import GoogleMapsDialog from './GoogleMapsDialog.es';
-import GoogleMapsGeoJSON from './GoogleMapsGeoJSON.es';
-import GoogleMapsGeocoder from './GoogleMapsGeocoder.es';
-import GoogleMapsMarker from './GoogleMapsMarker.es';
-import GoogleMapsSearch from './GoogleMapsSearch.es';
+import GoogleMapsDialog from './GoogleMapsDialog';
+import GoogleMapsGeoJSON from './GoogleMapsGeoJSON';
+import GoogleMapsGeocoder from './GoogleMapsGeocoder';
+import GoogleMapsMarker from './GoogleMapsMarker';
+import GoogleMapsSearch from './GoogleMapsSearch';
 
 /**
  * MapGoogleMaps

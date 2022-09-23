@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -66,7 +67,11 @@ public class FragmentCollectionContributorTest {
 
 		_serviceRegistration = bundleContext.registerService(
 			FragmentCollectionContributor.class,
-			new TestFragmentCollectionContributor(), null);
+			new TestFragmentCollectionContributor(),
+			MapUtil.singletonDictionary(
+				"fragment.collection.key",
+				TestFragmentCollectionContributor.
+					TEST_FRAGMENT_COLLECTION_KEY));
 	}
 
 	@After

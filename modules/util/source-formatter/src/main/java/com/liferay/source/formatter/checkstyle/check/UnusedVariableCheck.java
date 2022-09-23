@@ -72,16 +72,15 @@ public class UnusedVariableCheck extends BaseCheck {
 				return;
 			}
 
-			List<String> allowedUnusedPrivateVariableDirNames =
-				getAttributeValues(
-					_ALLOWED_UNUSED_PRIVATE_VARIABLE_DIR_NAMES_KEY);
+			List<String> allowedUnusedVariableDirNames = getAttributeValues(
+				_ALLOWED_UNUSED_VARIABLE_DIR_NAMES_KEY);
 
-			if (!allowedUnusedPrivateVariableDirNames.isEmpty()) {
+			if (!allowedUnusedVariableDirNames.isEmpty()) {
 				int i = 0;
 
-				while (i < allowedUnusedPrivateVariableDirNames.size()) {
+				while (i < allowedUnusedVariableDirNames.size()) {
 					if (modulePath.startsWith(
-							allowedUnusedPrivateVariableDirNames.get(i))) {
+							allowedUnusedVariableDirNames.get(i))) {
 
 						break;
 					}
@@ -89,7 +88,7 @@ public class UnusedVariableCheck extends BaseCheck {
 					i++;
 				}
 
-				if (i == allowedUnusedPrivateVariableDirNames.size()) {
+				if (i == allowedUnusedVariableDirNames.size()) {
 					return;
 				}
 			}
@@ -175,8 +174,8 @@ public class UnusedVariableCheck extends BaseCheck {
 		return false;
 	}
 
-	private static final String _ALLOWED_UNUSED_PRIVATE_VARIABLE_DIR_NAMES_KEY =
-		"allowedUnusedPrivateVariableDirNames";
+	private static final String _ALLOWED_UNUSED_VARIABLE_DIR_NAMES_KEY =
+		"allowedUnusedVariableDirNames";
 
 	private static final String _MSG_UNUSED_VARIABLE = "variable.unused";
 

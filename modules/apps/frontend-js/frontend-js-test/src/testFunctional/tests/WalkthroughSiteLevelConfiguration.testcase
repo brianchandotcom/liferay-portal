@@ -49,7 +49,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Given walkthrough enabled site-level") {
-			Walkthrough.addWalkthrough(fileName = "walkthrough_configuration.json");
+			Walkthrough.addWalkthrough(fileName = "walkthrough_configuration_single_page.json");
 		}
 
 		task ("When walkthrough is disabled") {
@@ -101,7 +101,7 @@ definition {
 		}
 
 		task ("When a JSON description is saved") {
-			Walkthrough._editWalkthroughJSON(fileName = "walkthrough_configuration.json");
+			Walkthrough._editWalkthroughJSON(fileName = "walkthrough_configuration_single_page.json");
 
 			SystemSettings.saveConfiguration();
 		}
@@ -119,7 +119,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Given walkthrough enabled site-level") {
-			Walkthrough.addWalkthrough(fileName = "walkthrough_configuration.json");
+			Walkthrough.addWalkthrough(fileName = "walkthrough_configuration_single_page.json");
 		}
 
 		task ("When step 1 title is modified") {

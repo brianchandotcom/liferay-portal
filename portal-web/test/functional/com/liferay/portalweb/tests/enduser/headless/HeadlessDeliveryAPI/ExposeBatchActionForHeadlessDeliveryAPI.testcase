@@ -10,12 +10,7 @@ definition {
 	}
 
 	tearDown {
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONDepot.deleteDepot(depotName = "Test Depot Name");
-		}
+		JSONDepot.deleteDepot(depotName = "Test Depot Name");
 	}
 
 	@disable-webdriver = "true"
@@ -28,7 +23,9 @@ definition {
 		}
 
 		task ("When with get request and assetLibraryId to retrieve document folders") {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(
+				depotName = "Test Depot Name",
+				noSelenium = "true");
 
 			var response = DocumentFolderAPI.getDocumentFolders(assetLibraryId = "${assetLibraryId}");
 		}

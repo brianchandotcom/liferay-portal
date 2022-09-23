@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionC
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -108,8 +108,8 @@ public class AddDataDefinitionMVCActionCommand
 		String structureKey = ParamUtil.getString(
 			actionRequest, "structureKey");
 		String dataLayout = ParamUtil.getString(actionRequest, "dataLayout");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "description");
 
 		dataDefinition.setDataDefinitionKey(structureKey);
 		dataDefinition.setDefaultDataLayout(DataLayout.toDTO(dataLayout));
@@ -122,5 +122,8 @@ public class AddDataDefinitionMVCActionCommand
 
 	@Reference
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
+
+	@Reference
+	private Localization _localization;
 
 }

@@ -17,10 +17,11 @@ package com.liferay.document.library.internal.search.spi.model.index.contributor
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -36,23 +37,26 @@ public class DLFileEntryTypeModelDocumentContributor
 	public void contribute(Document document, DLFileEntryType dlFileEntryType) {
 		document.addLocalizedText(
 			Field.DESCRIPTION,
-			LocalizationUtil.populateLocalizationMap(
+			_localization.populateLocalizationMap(
 				dlFileEntryType.getDescriptionMap(),
 				dlFileEntryType.getDefaultLanguageId(),
 				dlFileEntryType.getGroupId()));
 		document.addLocalizedText(
 			Field.NAME,
-			LocalizationUtil.populateLocalizationMap(
+			_localization.populateLocalizationMap(
 				dlFileEntryType.getNameMap(),
 				dlFileEntryType.getDefaultLanguageId(),
 				dlFileEntryType.getGroupId()));
 		document.addLocalizedKeyword(
 			"localized_name",
-			LocalizationUtil.populateLocalizationMap(
+			_localization.populateLocalizationMap(
 				dlFileEntryType.getNameMap(),
 				dlFileEntryType.getDefaultLanguageId(),
 				dlFileEntryType.getGroupId()),
 			true, true);
 	}
+
+	@Reference
+	private Localization _localization;
 
 }

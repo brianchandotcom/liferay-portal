@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -231,7 +231,7 @@ public class ExpandoPortlet extends MVCPortlet {
 		}
 
 		if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
-			return (Serializable)LocalizationUtil.getLocalizationMap(
+			return (Serializable)_localization.getLocalizationMap(
 				actionRequest, "defaultValueLocalized");
 		}
 
@@ -454,6 +454,9 @@ public class ExpandoPortlet extends MVCPortlet {
 
 	@Reference
 	private ExpandoColumnService _expandoColumnService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

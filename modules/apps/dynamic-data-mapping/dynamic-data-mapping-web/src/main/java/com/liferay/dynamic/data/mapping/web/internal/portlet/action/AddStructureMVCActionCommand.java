@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.Locale;
@@ -72,10 +72,10 @@ public class AddStructureMVCActionCommand extends BaseDDMMVCActionCommand {
 		long parentStructureId = ParamUtil.getLong(
 			actionRequest, "parentStructureId",
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "description");
 
 		DDMForm ddmForm = _ddm.getDDMForm(actionRequest);
 
@@ -97,5 +97,8 @@ public class AddStructureMVCActionCommand extends BaseDDMMVCActionCommand {
 
 	@Reference
 	private DDMStructureService _ddmStructureService;
+
+	@Reference
+	private Localization _localization;
 
 }

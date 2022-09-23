@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,19 +44,19 @@ public class DDMStructureLayoutModelDocumentContributor
 			classNameLocalService.getClassNameId(DDMStructureLayout.class));
 		document.addLocalizedText(
 			Field.DESCRIPTION,
-			LocalizationUtil.populateLocalizationMap(
+			_localization.populateLocalizationMap(
 				ddmStructureLayout.getDescriptionMap(),
 				ddmStructureLayout.getDefaultLanguageId(),
 				ddmStructureLayout.getGroupId()));
 		document.addLocalizedText(
 			Field.NAME,
-			LocalizationUtil.populateLocalizationMap(
+			_localization.populateLocalizationMap(
 				ddmStructureLayout.getNameMap(),
 				ddmStructureLayout.getDefaultLanguageId(),
 				ddmStructureLayout.getGroupId()));
 		document.addLocalizedKeyword(
 			"localized_name",
-			LocalizationUtil.populateLocalizationMap(
+			_localization.populateLocalizationMap(
 				ddmStructureLayout.getNameMap(),
 				ddmStructureLayout.getDefaultLanguageId(),
 				ddmStructureLayout.getGroupId()),
@@ -68,8 +68,7 @@ public class DDMStructureLayoutModelDocumentContributor
 	protected String[] getLanguageIds(
 		String defaultLanguageId, String content) {
 
-		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
-			content);
+		String[] languageIds = _localization.getAvailableLanguageIds(content);
 
 		if (languageIds.length == 0) {
 			languageIds = new String[] {defaultLanguageId};
@@ -80,5 +79,8 @@ public class DDMStructureLayoutModelDocumentContributor
 
 	@Reference
 	protected ClassNameLocalService classNameLocalService;
+
+	@Reference
+	private Localization _localization;
 
 }

@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -194,11 +194,11 @@ public class EditFileEntryTypeMVCActionCommand
 				themeDisplay.getScopeGroupId(), "document-library",
 				dataDefinition);
 
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
 
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntryType.class.getName(), actionRequest);
@@ -317,11 +317,11 @@ public class EditFileEntryTypeMVCActionCommand
 			ParamUtil.getLong(actionRequest, "dataDefinitionId"),
 			dataDefinition);
 
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
 
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "description");
 
 		_dlFileEntryTypeService.updateFileEntryType(
 			fileEntryTypeId, nameMap, descriptionMap);
@@ -343,6 +343,9 @@ public class EditFileEntryTypeMVCActionCommand
 
 	@Reference
 	private DLFileEntryTypeService _dlFileEntryTypeService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

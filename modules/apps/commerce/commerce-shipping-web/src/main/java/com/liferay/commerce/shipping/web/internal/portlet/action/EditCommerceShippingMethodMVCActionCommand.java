@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -104,11 +104,10 @@ public class EditCommerceShippingMethodMVCActionCommand
 		long commerceShippingMethodId = ParamUtil.getLong(
 			actionRequest, "commerceShippingMethodId");
 
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "nameMapAsXML");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, "descriptionMapAsXML");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "descriptionMapAsXML");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		File imageFile = uploadPortletRequest.getFile("imageFile");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
@@ -147,6 +146,9 @@ public class EditCommerceShippingMethodMVCActionCommand
 
 	@Reference
 	private CommerceShippingMethodService _commerceShippingMethodService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -169,10 +169,10 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 
 		BigDecimal amount = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "amount", BigDecimal.ZERO);
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
+			actionRequest, "description");
 		String key = ParamUtil.getString(actionRequest, "key");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
@@ -210,6 +210,9 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 
 	@Reference
 	private CommerceShippingMethodService _commerceShippingMethodService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

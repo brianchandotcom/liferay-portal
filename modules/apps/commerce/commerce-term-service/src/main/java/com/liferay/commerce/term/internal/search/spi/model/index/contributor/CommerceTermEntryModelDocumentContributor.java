@@ -18,7 +18,7 @@ import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.util.List;
@@ -52,12 +52,15 @@ public class CommerceTermEntryModelDocumentContributor
 
 		for (String languageId : languageIds) {
 			document.addKeywordSortable(
-				LocalizationUtil.getLocalizedName("label", languageId),
+				_localization.getLocalizedName("label", languageId),
 				commerceTermEntry.getLabel(languageId));
 		}
 	}
 
 	@Reference
 	private CommerceTermEntryLocalService _commerceTermEntryLocalService;
+
+	@Reference
+	private Localization _localization;
 
 }

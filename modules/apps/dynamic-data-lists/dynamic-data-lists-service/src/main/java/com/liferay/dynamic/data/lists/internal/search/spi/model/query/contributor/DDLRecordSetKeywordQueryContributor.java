@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.lists.internal.search.spi.model.query.contribut
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
@@ -64,7 +64,7 @@ public class DDLRecordSetKeywordQueryContributor
 		}
 
 		searchContext.setAttribute(
-			LocalizationUtil.getLocalizedName(
+			_localization.getLocalizedName(
 				fieldName, searchContext.getLanguageId()),
 			searchContext.getAttribute(fieldName));
 
@@ -72,5 +72,8 @@ public class DDLRecordSetKeywordQueryContributor
 			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
 			fieldName, false);
 	}
+
+	@Reference
+	private Localization _localization;
 
 }

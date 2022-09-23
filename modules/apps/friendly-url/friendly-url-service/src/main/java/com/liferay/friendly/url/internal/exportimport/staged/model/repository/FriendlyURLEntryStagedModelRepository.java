@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.HashMap;
@@ -182,7 +182,7 @@ public class FriendlyURLEntryStagedModelRepository
 			portletDataContext, friendlyURLEntry);
 
 		Map<Locale, String> localeLocalizationMap =
-			LocalizationUtil.getLocalizationMap(
+			_localization.getLocalizationMap(
 				portletDataContext.getZipEntryAsString(modelPath));
 
 		Map<String, String> languageIdLocalizationMap = new HashMap<>();
@@ -216,6 +216,9 @@ public class FriendlyURLEntryStagedModelRepository
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;

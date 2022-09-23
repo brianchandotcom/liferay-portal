@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
@@ -73,11 +72,10 @@ public class UpdateTemplateMVCActionCommand
 		long templateId = ParamUtil.getLong(uploadPortletRequest, "templateId");
 
 		long classPK = ParamUtil.getLong(uploadPortletRequest, "classPK");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+		Map<Locale, String> nameMap = localization.getLocalizationMap(
 			uploadPortletRequest, "name");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				uploadPortletRequest, "description");
+		Map<Locale, String> descriptionMap = localization.getLocalizationMap(
+			uploadPortletRequest, "description");
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
 		String mode = ParamUtil.getString(uploadPortletRequest, "mode");
 		String language = ParamUtil.getString(

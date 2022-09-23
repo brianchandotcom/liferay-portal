@@ -19,7 +19,7 @@ import com.liferay.headless.delivery.resource.v1_0.LanguageResource;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -67,7 +67,7 @@ public class LanguageResourceImpl extends BaseLanguageResourceImpl {
 	private Locale _getDefaultLocale(long groupId) throws Exception {
 		Group group = _groupService.getGroup(groupId);
 
-		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
+		String defaultLanguageId = _localization.getDefaultLanguageId(
 			group.getName());
 
 		if (Validator.isNotNull(defaultLanguageId)) {
@@ -125,5 +125,8 @@ public class LanguageResourceImpl extends BaseLanguageResourceImpl {
 
 	@Reference
 	private com.liferay.portal.kernel.language.Language _language;
+
+	@Reference
+	private Localization _localization;
 
 }

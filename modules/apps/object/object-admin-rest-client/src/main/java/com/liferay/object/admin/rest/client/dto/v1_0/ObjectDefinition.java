@@ -211,6 +211,27 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected Boolean enableComments;
 
+	public Boolean getEnableEntryHistory() {
+		return enableEntryHistory;
+	}
+
+	public void setEnableEntryHistory(Boolean enableEntryHistory) {
+		this.enableEntryHistory = enableEntryHistory;
+	}
+
+	public void setEnableEntryHistory(
+		UnsafeSupplier<Boolean, Exception> enableEntryHistoryUnsafeSupplier) {
+
+		try {
+			enableEntryHistory = enableEntryHistoryUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean enableEntryHistory;
+
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}

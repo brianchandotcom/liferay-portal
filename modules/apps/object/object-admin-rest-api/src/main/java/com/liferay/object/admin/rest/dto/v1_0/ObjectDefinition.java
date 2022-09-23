@@ -295,6 +295,34 @@ public class ObjectDefinition implements Serializable {
 	protected Boolean enableComments;
 
 	@Schema
+	public Boolean getEnableEntryHistory() {
+		return enableEntryHistory;
+	}
+
+	public void setEnableEntryHistory(Boolean enableEntryHistory) {
+		this.enableEntryHistory = enableEntryHistory;
+	}
+
+	@JsonIgnore
+	public void setEnableEntryHistory(
+		UnsafeSupplier<Boolean, Exception> enableEntryHistoryUnsafeSupplier) {
+
+		try {
+			enableEntryHistory = enableEntryHistoryUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean enableEntryHistory;
+
+	@Schema
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -978,6 +1006,16 @@ public class ObjectDefinition implements Serializable {
 			sb.append("\"enableComments\": ");
 
 			sb.append(enableComments);
+		}
+
+		if (enableEntryHistory != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableEntryHistory\": ");
+
+			sb.append(enableEntryHistory);
 		}
 
 		if (externalReferenceCode != null) {

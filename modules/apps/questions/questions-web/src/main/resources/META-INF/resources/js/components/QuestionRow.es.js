@@ -30,6 +30,7 @@ import UserIcon from './UserIcon.es';
 
 export default function QuestionRow({
 	context,
+	creatorId,
 	currentSection,
 	items,
 	question,
@@ -172,7 +173,12 @@ export default function QuestionRow({
 
 			<div className="align-items-sm-center align-items-start d-flex flex-column-reverse flex-sm-row justify-content-between">
 				<div className="c-mt-3 c-mt-sm-0 stretched-link-layer">
-					<Link to={creatorInformation.link}>
+					<Link
+						className={classNames({
+							'disabled-link': !!creatorId,
+						})}
+						to={creatorInformation.link}
+					>
 						<UserIcon
 							fullName={creatorInformation.name}
 							portraitURL={creatorInformation.portraitURL}

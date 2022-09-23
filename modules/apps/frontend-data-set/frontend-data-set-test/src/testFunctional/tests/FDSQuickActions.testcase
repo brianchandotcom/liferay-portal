@@ -59,6 +59,7 @@ definition {
 	test BehaviorIsEqualToEllipsisDropdownEquivalentAction {
 		property custom.properties = "upgrade.database.auto.run=false";
 		property test.name.skip.portal.instance = "FDSQuickActions#BehaviorIsEqualToEllipsisDropdownEquivalentAction";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("When click on Pencil Icon") {

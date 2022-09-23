@@ -91,6 +91,29 @@ public class UnusedVariableCheck extends BaseCheck {
 				if (i == allowedUnusedVariableDirNames.size()) {
 					return;
 				}
+
+				DetailAST typeDetailAST = detailAST.findFirstToken(
+					TokenTypes.TYPE);
+
+				DetailAST firstChildDetailAST = typeDetailAST.getFirstChild();
+
+				if (firstChildDetailAST == null) {
+					return;
+				}
+
+				if (firstChildDetailAST.getType() != TokenTypes.DOT) {
+					String variableTypeName = getTypeName(typeDetailAST, false);
+
+					List<String> allowedUnusedVariableTypeNames =
+						getAttributeValues(
+							_ALLOWED_UNUSED_VARIABLE_TYPE_NAMES_KEY);
+
+					if (allowedUnusedVariableTypeNames.contains(
+							variableTypeName)) {
+
+						return;
+					}
+				}
 			}
 		}
 
@@ -176,6 +199,9 @@ public class UnusedVariableCheck extends BaseCheck {
 
 	private static final String _ALLOWED_UNUSED_VARIABLE_DIR_NAMES_KEY =
 		"allowedUnusedVariableDirNames";
+
+	private static final String _ALLOWED_UNUSED_VARIABLE_TYPE_NAMES_KEY =
+		"allowedUnusedVariableTypeNames";
 
 	private static final String _MSG_UNUSED_VARIABLE = "variable.unused";
 

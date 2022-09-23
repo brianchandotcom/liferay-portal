@@ -146,7 +146,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement1 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
-					"delete from LayoutPageTemplateStructure where classPK =" +
+					"delete from LayoutPageTemplateStructure where classPK = " +
 						"?")) {
 
 			for (long plid : plids) {

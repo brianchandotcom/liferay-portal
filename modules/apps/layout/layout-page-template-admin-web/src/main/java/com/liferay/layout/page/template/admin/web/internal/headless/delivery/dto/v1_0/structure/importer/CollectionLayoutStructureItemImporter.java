@@ -24,10 +24,14 @@ import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.layout.page.template.util.AlignConverter;
+import com.liferay.layout.page.template.util.FlexWrapConverter;
+import com.liferay.layout.page.template.util.JustifyConverter;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -168,6 +172,35 @@ public class CollectionLayoutStructureItemImporter
 
 				collectionStyledLayoutStructureItem.updateItemConfig(
 					jsonObject);
+			}
+		}
+
+		Map<String, Object> formLayout = (Map<String, Object>)definitionMap.get(
+			"layout");
+
+		if (formLayout != null) {
+			String align = String.valueOf(
+				formLayout.getOrDefault("align", StringPool.BLANK));
+
+			if (Validator.isNotNull(align)) {
+				collectionStyledLayoutStructureItem.setAlign(
+					AlignConverter.convertToInternalValue(align));
+			}
+
+			String flexWrap = String.valueOf(
+				formLayout.getOrDefault("flexWrap", StringPool.BLANK));
+
+			if (Validator.isNotNull(flexWrap)) {
+				collectionStyledLayoutStructureItem.setFlexWrap(
+					FlexWrapConverter.convertToInternalValue(flexWrap));
+			}
+
+			String justify = String.valueOf(
+				formLayout.getOrDefault("justify", StringPool.BLANK));
+
+			if (Validator.isNotNull(justify)) {
+				collectionStyledLayoutStructureItem.setJustify(
+					JustifyConverter.convertToInternalValue(justify));
 			}
 		}
 

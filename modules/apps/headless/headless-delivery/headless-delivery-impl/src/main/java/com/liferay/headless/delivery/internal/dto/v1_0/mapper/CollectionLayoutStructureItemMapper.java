@@ -20,10 +20,14 @@ import com.liferay.headless.delivery.dto.v1_0.CollectionConfig;
 import com.liferay.headless.delivery.dto.v1_0.CollectionViewport;
 import com.liferay.headless.delivery.dto.v1_0.CollectionViewportDefinition;
 import com.liferay.headless.delivery.dto.v1_0.EmptyCollectionConfig;
+import com.liferay.headless.delivery.dto.v1_0.Layout;
 import com.liferay.headless.delivery.dto.v1_0.PageCollectionDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.layout.page.template.util.AlignConverter;
+import com.liferay.layout.page.template.util.FlexWrapConverter;
+import com.liferay.layout.page.template.util.JustifyConverter;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -74,6 +78,7 @@ public class CollectionLayoutStructureItemMapper
 								isDisplayAllPages();
 						emptyCollectionConfig = _getEmptyCollectionConfig(
 							collectionStyledLayoutStructureItem);
+						layout = _toLayout(collectionStyledLayoutStructureItem);
 						listItemStyle =
 							collectionStyledLayoutStructureItem.
 								getListItemStyle();
@@ -281,6 +286,52 @@ public class CollectionLayoutStructureItemMapper
 						}
 
 						return jsonObject.getInt("numberOfColumns");
+					});
+			}
+		};
+	}
+
+	private Layout _toLayout(
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem) {
+
+		return new Layout() {
+			{
+				setAlign(
+					() -> {
+						String align =
+							collectionStyledLayoutStructureItem.getAlign();
+
+						if (Validator.isNull(align)) {
+							return null;
+						}
+
+						return Align.create(
+							AlignConverter.convertToExternalValue(align));
+					});
+				setFlexWrap(
+					() -> {
+						String flexWrap =
+							collectionStyledLayoutStructureItem.getFlexWrap();
+
+						if (Validator.isNull(flexWrap)) {
+							return null;
+						}
+
+						return FlexWrap.create(
+							FlexWrapConverter.convertToExternalValue(flexWrap));
+					});
+				setJustify(
+					() -> {
+						String justify =
+							collectionStyledLayoutStructureItem.getJustify();
+
+						if (Validator.isNull(justify)) {
+							return null;
+						}
+
+						return Justify.create(
+							JustifyConverter.convertToExternalValue(justify));
 					});
 			}
 		};

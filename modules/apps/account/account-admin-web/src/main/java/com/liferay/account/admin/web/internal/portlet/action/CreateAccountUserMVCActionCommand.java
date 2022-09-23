@@ -14,7 +14,7 @@
 
 package com.liferay.account.admin.web.internal.portlet.action;
 
-import com.liferay.account.admin.web.internal.helper.TicketHelper;
+import com.liferay.account.admin.web.internal.portlet.action.util.TicketUtil;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
@@ -80,7 +80,8 @@ public class CreateAccountUserMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Ticket ticket = _ticketHelper.getTicket(actionRequest);
+		Ticket ticket = TicketUtil.getTicket(
+			actionRequest, _ticketLocalService);
 
 		if (ticket == null) {
 			SessionErrors.add(actionRequest, NoSuchTicketException.class);
@@ -195,9 +196,6 @@ public class CreateAccountUserMVCActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private TicketHelper _ticketHelper;
 
 	@Reference
 	private TicketLocalService _ticketLocalService;

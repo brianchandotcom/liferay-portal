@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.account.admin.web.internal.helper;
+package com.liferay.account.admin.web.internal.portlet.action.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,16 +24,14 @@ import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = TicketHelper.class)
-public class TicketHelper {
+public class TicketUtil {
 
-	public Ticket getTicket(PortletRequest portletRequest) {
+	public static Ticket getTicket(
+		PortletRequest portletRequest, TicketLocalService ticketLocalService) {
+
 		String ticketKey = ParamUtil.getString(portletRequest, "ticketKey");
 
 		if (Validator.isNull(ticketKey)) {
@@ -41,7 +39,7 @@ public class TicketHelper {
 		}
 
 		try {
-			Ticket ticket = _ticketLocalService.fetchTicket(ticketKey);
+			Ticket ticket = ticketLocalService.fetchTicket(ticketKey);
 
 			if ((ticket == null) ||
 				(ticket.getType() != TicketConstants.TYPE_EMAIL_ADDRESS)) {
@@ -53,7 +51,7 @@ public class TicketHelper {
 				return ticket;
 			}
 
-			_ticketLocalService.deleteTicket(ticket);
+			ticketLocalService.deleteTicket(ticket);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -64,9 +62,6 @@ public class TicketHelper {
 		return null;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(TicketHelper.class);
-
-	@Reference
-	private TicketLocalService _ticketLocalService;
+	private static final Log _log = LogFactoryUtil.getLog(TicketUtil.class);
 
 }

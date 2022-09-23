@@ -14,11 +14,12 @@
 
 package com.liferay.account.admin.web.internal.portlet.action;
 
-import com.liferay.account.admin.web.internal.helper.TicketHelper;
+import com.liferay.account.admin.web.internal.portlet.action.util.TicketUtil;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 
 import javax.portlet.PortletException;
@@ -47,7 +48,8 @@ public class CreateAccountUserMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		Ticket ticket = _ticketHelper.getTicket(renderRequest);
+		Ticket ticket = TicketUtil.getTicket(
+			renderRequest, _ticketLocalService);
 
 		if (ticket == null) {
 			SessionErrors.add(renderRequest, NoSuchTicketException.class);
@@ -59,6 +61,6 @@ public class CreateAccountUserMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private TicketHelper _ticketHelper;
+	private TicketLocalService _ticketLocalService;
 
 }

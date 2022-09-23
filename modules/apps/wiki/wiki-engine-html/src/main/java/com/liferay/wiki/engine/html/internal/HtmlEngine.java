@@ -125,13 +125,6 @@ public class HtmlEngine extends BaseWikiEngine {
 		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiNodeLocalService(
-		WikiNodeLocalService wikiNodeLocalService) {
-
-		_wikiNodeLocalService = wikiNodeLocalService;
-	}
-
 	protected void unsetWikiGroupServiceConfiguration(
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 
@@ -216,6 +209,8 @@ public class HtmlEngine extends BaseWikiEngine {
 	private ServletContext _servletContext;
 
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+
+	@Reference
 	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

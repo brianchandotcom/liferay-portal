@@ -98,13 +98,13 @@ public class UserModelOIDCUserInfoMapper {
 		long[] userGroupIds = null;
 		boolean sendEmail = false;
 
-		long[] roleIds = propertyRoleIds;
+		long[] roleIds = _getRoleIds(
+			companyId, userInfoJSONObject,
+			JSONObjectUtils.getJSONObject(
+				userInfoMapperJSONObject, "users_roles"));
 
-		if (propertyRoleIds == null) {
-			roleIds = _getRoleIds(
-				companyId, userInfoJSONObject,
-				JSONObjectUtils.getJSONObject(
-					userInfoMapperJSONObject, "users_roles"));
+		if ((roleIds == null) || (roleIds.length == 0)) {
+			roleIds = propertyRoleIds;
 		}
 
 		User user = _userLocalService.addUser(

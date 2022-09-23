@@ -66,7 +66,7 @@ public class DLViewFileEntryMetadataSetsManagementToolbarDisplayContext
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteMetadataSets");
-				dropdownItem.setIcon("times-circle");
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);

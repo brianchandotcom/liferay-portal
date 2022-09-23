@@ -1578,20 +1578,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			String urlPath = url.getPath();
 
-			if (StringUtil.endsWith(urlPath, "display-page-template.json") |
-				StringUtil.endsWith(urlPath, "page-definition.json")) {
+			String json = StringUtil.read(url.openStream());
 
-				String json = StringUtil.read(url.openStream());
-
+			if (StringUtil.endsWith(urlPath, "page-definition.json")) {
 				json = _replace(
 					json, "\"[$", "$]\"",
 					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues,
 					taxonomyCategoryIdsStringUtilReplaceValues);
-
-				json = _replace(
-					json, "[$", "$]",
-					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues);
 
 				Group group = serviceContext.getScopeGroup();
 
@@ -1634,10 +1628,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 					json);
 			}
 			else {
+				if (StringUtil.endsWith(
+						urlPath, "display-page-template.json")) {
+
+					json = _replace(
+						json, "[$", "$]",
+						objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues);
+				}
+
 				zipWriter.addEntry(
 					StringUtil.removeFirst(
 						urlPath, "/site-initializer/layout-page-templates"),
-					url.openStream());
+					json);
 			}
 		}
 

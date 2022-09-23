@@ -5323,11 +5323,8 @@ tell application "Safari" to quit
 
 							<if>
 								<and>
+									<contains string="${database.version}" substring="11.5" />
 									<equals arg1="${database.type}" arg2="db2" />
-									<or>
-										<equals arg1="${database.version}" arg2="11.5.6" />
-										<equals arg1="${database.version}" arg2="11.5.7" />
-									</or>
 								</and>
 								<then>
 									<get-testcase-property property.name="databases.size" />
@@ -7026,11 +7023,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<if>
 				<and>
+					<contains string="${database.version}" substring="11.5" />
 					<equals arg1="${database.type}" arg2="db2" />
-					<or>
-						<equals arg1="${database.version}" arg2="11.5.6" />
-						<equals arg1="${database.version}" arg2="11.5.7" />
-					</or>
 				</and>
 				<then>
 					<property name="docker.database.wait.condition">[[ "$(/bin/su - db2inst1 -c '~/sqllib/bin/db2 db2start')" =~ "SQL1026N" ]]</property>
@@ -13097,8 +13091,8 @@ database.partition.enabled=true</echo>
 
 				<if>
 					<and>
+						<contains string="${database.version}" substring="11.5" />
 						<equals arg1="${database.type}" arg2="db2" />
-						<equals arg1="${database.version}" arg2="11.5.6" />
 					</and>
 					<then>
 						<echo file="${import.database.sh.file.path}">
@@ -15236,36 +15230,27 @@ url=${short.hostname}:8080</echo>
 
 	<target name="start-docker-database-db2">
 		<if>
-			<or>
-				<not>
-					<isset property="database.version" />
-				</not>
-				<equals arg1="${database.version}" arg2="11.5" />
-			</or>
+			<not>
+				<isset property="database.version" />
+			</not>
 			<then>
-				<var name="database.version" value="11.5.7" />
+				<var name="database.version" value="11.5.7.0" />
 			</then>
-			<elseif>
-				<equals arg1="${database.version}" arg2="11.1" />
-				<then>
-					<var name="database.version" value="11.1.3" />
-				</then>
-			</elseif>
 		</if>
 
 		<if>
-			<equals arg1="${database.version}" arg2="11.5.7" />
-			<then>
-				<var name="database.db2.docker.image" value="ibmcom/db2:11.5.7.0" />
-				<var name="database.db2.docker.run.options" value="-itd --privileged=true -p 25010:50000 --env=LICENSE=accept --env=DB2INST1_PASSWORD=password -v /tmp/database ibmcom/db2:11.5.7.0" />
-			</then>
-			<elseif>
+			<or>
+				<equals arg1="${database.version}" arg2="11.1" />
 				<equals arg1="${database.version}" arg2="11.1.3" />
-				<then>
-					<var name="database.db2.docker.image" value="liferay/liferay-ci-environment:db2-11.1.3.3_1.0.0" />
-					<var name="database.db2.docker.run.options" value="-p 25010:50000 --privileged=true" />
-				</then>
-			</elseif>
+			</or>
+			<then>
+				<var name="database.db2.docker.image" value="liferay/liferay-ci-environment:db2-11.1.3.3_1.0.0" />
+				<var name="database.db2.docker.run.options" value="-p 25010:50000 --privileged=true" />
+			</then>
+			<else>
+				<var name="database.db2.docker.image" value="ibmcom/db2:${database.version}" />
+				<var name="database.db2.docker.run.options" value="-itd --privileged=true -p 25010:50000 --env=LICENSE=accept --env=DB2INST1_PASSWORD=password -v /tmp/database ibmcom/db2:${database.version}" />
+			</else>
 		</if>
 
 		<get-database-property property.name="database.host" />
@@ -15530,12 +15515,9 @@ url=${short.hostname}:8080</echo>
 			<then>
 				<var name="database.sqlserver.docker.image" value="mcr.microsoft.com/mssql/server:2017-CU19-ubuntu-16.04" />
 			</then>
-			<elseif>
-				<equals arg1="${database.version}" arg2="2019" />
-				<then>
-					<var name="database.sqlserver.docker.image" value="mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04" />
-				</then>
-			</elseif>
+			<else>
+				<var name="database.sqlserver.docker.image" value="mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04" />
+			</else>
 		</if>
 
 		<get-database-property property.name="database.host" />

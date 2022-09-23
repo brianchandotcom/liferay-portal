@@ -5,34 +5,25 @@
 
 	<target name="run-selenium-tomcat-db2">
 		<if>
-			<or>
-				<not>
-					<isset property="database.version" />
-				</not>
-				<equals arg1="${database.version}" arg2="11.5" />
-			</or>
+			<not>
+				<isset property="database.version" />
+			</not>
 			<then>
-				<var name="database.version" value="11.5.7" />
+				<var name="database.version" value="11.5.7.0" />
 			</then>
-			<elseif>
-				<equals arg1="${database.version}" arg2="11.1" />
-				<then>
-					<var name="database.version" value="11.1.3" />
-				</then>
-			</elseif>
 		</if>
 
 		<if>
-			<equals arg1="${database.version}" arg2="11.5.7" />
-			<then>
-				<var name="database.db2.docker.image" value="ibmcom/db2:11.5.7.0" />
-			</then>
-			<elseif>
+			<or>
+				<equals arg1="${database.version}" arg2="11.1" />
 				<equals arg1="${database.version}" arg2="11.1.3" />
-				<then>
-					<var name="database.db2.docker.image" value="liferay/liferay-ci-environment:db2-11.1.3.3_1.0.0" />
-				</then>
-			</elseif>
+			</or>
+			<then>
+				<var name="database.db2.docker.image" value="liferay/liferay-ci-environment:db2-11.1.3.3_1.0.0" />
+			</then>
+			<else>
+				<var name="database.db2.docker.image" value="ibmcom/db2:${database.version}" />
+			</else>
 		</if>
 
 		<get-database-property property.name="database.host" />

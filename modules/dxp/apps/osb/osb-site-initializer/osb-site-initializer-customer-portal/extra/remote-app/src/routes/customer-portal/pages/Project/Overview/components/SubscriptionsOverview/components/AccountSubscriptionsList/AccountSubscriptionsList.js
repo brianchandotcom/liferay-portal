@@ -36,16 +36,14 @@ const AccountSubscriptionsList = ({
 		onOpenChange,
 	]);
 
-	const getLoadingCards = () => (
-		<div className="d-flex flex-wrap">
-			{[...new Array(maxCardsLoading)].map((_, index) => (
-				<AccountSubscriptionCard key={index} loading />
-			))}
-		</div>
-	);
-
 	if (loading) {
-		return getLoadingCards();
+		return (
+			<div className="d-flex flex-wrap">
+				{[...new Array(maxCardsLoading)].map((_, index) => (
+					<AccountSubscriptionCard key={index} loading />
+				))}
+			</div>
+		);
 	}
 
 	if (!accountSubscriptions?.length) {

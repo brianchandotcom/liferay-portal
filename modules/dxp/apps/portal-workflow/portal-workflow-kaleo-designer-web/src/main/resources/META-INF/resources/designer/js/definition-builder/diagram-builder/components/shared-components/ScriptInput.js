@@ -15,11 +15,7 @@ import React from 'react';
 
 const ScriptInput = ({inputValue, updateSelectedItem}) => (
 	<ClayForm.Group>
-		<label htmlFor="nodeScript">
-			{`${Liferay.Language.get('script')} (${Liferay.Language.get(
-				'groovy'
-			)})`}
-		</label>
+		<label htmlFor="nodeScript">{Liferay.Language.get('script')}</label>
 
 		<ClayInput
 			component="textarea"

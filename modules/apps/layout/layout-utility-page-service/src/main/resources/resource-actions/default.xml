@@ -3,30 +3,6 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.layout.utility.page</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>
-		</portlet-ref>
-		<weight>1</weight>
-		<permissions>
-			<supports>
-				<action-key>ADD_LAYOUT_UTILITY_PAGE_ENTRY</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>ADD_LAYOUT_UTILITY_PAGE_ENTRY</action-key>
-				<action-key>PERMISSIONS</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
 		<model-name>com.liferay.layout.utility.page.model.LayoutUtilityPageEntry</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>

@@ -15,19 +15,16 @@
 package com.liferay.layout.utility.page.service.impl;
 
 import com.liferay.layout.utility.page.constants.LayoutUtilityPageActionKeys;
-import com.liferay.layout.utility.page.constants.LayoutUtilityPageConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.base.LayoutUtilityPageEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -48,7 +45,7 @@ public class LayoutUtilityPageEntryServiceImpl
 			long masterLayoutPlid)
 		throws PortalException {
 
-		_portletResourcePermission.check(
+		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId,
 			LayoutUtilityPageActionKeys.ADD_LAYOUT_UTILITY_PAGE_ENTRY);
 
@@ -132,16 +129,5 @@ public class LayoutUtilityPageEntryServiceImpl
 		return layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
 			layoutUtilityPageEntryId, name);
 	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.layout.utility.page.model.LayoutUtilityPageEntry)"
-	)
-	private ModelResourcePermission<LayoutUtilityPageEntry>
-		_layoutUtilityPageEntryModelResourcePermission;
-
-	@Reference(
-		target = "(resource.name=" + LayoutUtilityPageConstants.RESOURCE_NAME + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 }

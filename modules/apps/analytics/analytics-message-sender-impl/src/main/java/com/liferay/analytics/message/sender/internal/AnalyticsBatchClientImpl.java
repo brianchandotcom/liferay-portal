@@ -97,7 +97,7 @@ public class AnalyticsBatchClientImpl
 							Charset.defaultCharset()));
 
 				processInvalidTokenMessage(
-					companyId, responseJSONObject.getString("message"));
+					companyId, false, responseJSONObject.getString("message"));
 			}
 
 			HttpEntity httpEntity = closeableHttpResponse.getEntity();
@@ -158,7 +158,7 @@ public class AnalyticsBatchClientImpl
 							Charset.defaultCharset()));
 
 				processInvalidTokenMessage(
-					companyId, responseJSONObject.getString("message"));
+					companyId, false, responseJSONObject.getString("message"));
 			}
 
 			if ((statusCode < 200) || (statusCode >= 300)) {

@@ -66,13 +66,15 @@ public abstract class BaseAnalyticsClientImpl {
 		return true;
 	}
 
-	protected void processInvalidTokenMessage(long companyId, String message) {
-		if (message.equals("INVALID_TOKEN")) {
+	protected void processInvalidTokenMessage(
+		long companyId, boolean disconnected, String message) {
+
+		if (message.equals("INVALID_TOKEN") || disconnected) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
 						"Disconnecting data source for company ", companyId,
-						". Cause: ", message));
+						". Cause: INVALID_TOKEN"));
 			}
 
 			_disconnectDataSource(companyId);

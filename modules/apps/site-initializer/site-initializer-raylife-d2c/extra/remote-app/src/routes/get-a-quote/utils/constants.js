@@ -316,3 +316,5 @@ export const APPLICATION_STATUS = {
 		name: 'Quoted',
 	},
 };
+
+export const CONTACT_INFORMATION_STEP = 2;

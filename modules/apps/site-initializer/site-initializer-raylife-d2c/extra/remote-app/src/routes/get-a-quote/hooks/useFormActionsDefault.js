@@ -15,12 +15,15 @@ import {useCallback, useContext, useEffect, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
 import {RAYLIFE_PAGES} from '../../../common/utils/constants';
-import {clearExitAlert} from '../../../common/utils/exitAlert';
 import {redirectTo} from '../../../common/utils/liferay';
 import {smoothScroll} from '../../../common/utils/scroll';
 import {AppContext} from '../context/AppContextProvider';
 import {createOrUpdateRaylifeApplication} from '../services/RaylifeApplication';
-import {APPLICATION_STATUS, AVAILABLE_STEPS} from '../utils/constants';
+import {
+	APPLICATION_STATUS,
+	AVAILABLE_STEPS,
+	CONTACT_INFORMATION_STEP,
+} from '../utils/constants';
 import {verifyInputAgentPage} from '../utils/contact-agent';
 import {useStepWizard} from './useStepWizard';
 
@@ -93,6 +96,12 @@ const useFormActions = ({
 
 			setError('continueButton', {});
 
+			status = APPLICATION_STATUS.OPEN;
+
+			if (selectedStep.index !== CONTACT_INFORMATION_STEP) {
+				status = APPLICATION_STATUS.INCOMPLETE;
+			}
+
 			try {
 				const response = await createOrUpdateRaylifeApplication(
 					form,
@@ -114,6 +123,7 @@ const useFormActions = ({
 				throw error;
 			}
 		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[errorMessage, form, saveData, setError]
 	);
 
@@ -137,9 +147,10 @@ const useFormActions = ({
 		if (AVAILABLE_STEPS.PROPERTY.index === selectedStep.index) {
 			status = APPLICATION_STATUS.QUOTED;
 		}
-		await onSave(status);
 
-		clearExitAlert();
+		const response = await createOrUpdateRaylifeApplication(form, status);
+
+		setApplicationId(response.data.id);
 
 		const validated = _onValidation();
 
@@ -152,7 +163,9 @@ const useFormActions = ({
 
 			redirectTo(RAYLIFE_PAGES.HANG_TIGHT);
 		}
-	}, [_onValidation, nextSection, selectedStep, onSave, setSection]);
+
+		return response;
+	}, [selectedStep.index, form, _onValidation, nextSection, setSection]);
 
 	return {onNext, onPrevious, onSave};
 };

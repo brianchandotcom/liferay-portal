@@ -15,7 +15,6 @@
 import React, {useContext, useEffect} from 'react';
 import {useWatch} from 'react-hook-form';
 
-import {createExitAlert} from '../../../common/utils/exitAlert';
 import Providers from '../Providers';
 import {FormLayout} from '../components/containers/Forms';
 import {Steps} from '../components/containers/Steps';
@@ -59,10 +58,6 @@ const QuoteApp = () => {
 			},
 		},
 	} = useContext(AppContext);
-
-	useEffect(() => {
-		createExitAlert();
-	});
 
 	useEffect(() => {
 		updateState('');

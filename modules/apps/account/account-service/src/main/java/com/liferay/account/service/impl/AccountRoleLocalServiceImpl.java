@@ -21,7 +21,6 @@ import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.base.AccountRoleLocalServiceBaseImpl;
 import com.liferay.account.service.persistence.AccountEntryPersistence;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -462,9 +461,6 @@ public class AccountRoleLocalServiceImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private CustomSQL _customSQL;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

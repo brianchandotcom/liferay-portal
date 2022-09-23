@@ -74,7 +74,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _deleteOrphanLayoutPageTemplateStructures() throws Exception {
-		ArrayList<Long> layoutPageTemplateStructureIds = new ArrayList<>();
+		List<Long> layoutPageTemplateStructureIds = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select layoutPageTemplateStructureId from " +
@@ -100,7 +100,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _deleteWidgetLayoutsTemplateStructureRels(
-			ArrayList<Long> layoutPageTemplateStructureIds)
+			List<Long> layoutPageTemplateStructureIds)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement =
@@ -176,8 +176,8 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 			String sql, String[] idBatch)
 		throws Exception {
 
-		ArrayList<Long> widgetLayoutsWithStructurePlids = new ArrayList<>();
-		ArrayList<Long> widgetLayoutTemplateStructureIds = new ArrayList<>();
+		List<Long> widgetLayoutsWithStructurePlids = new ArrayList<>();
+		List<Long> widgetLayoutTemplateStructureIds = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(sql))) {

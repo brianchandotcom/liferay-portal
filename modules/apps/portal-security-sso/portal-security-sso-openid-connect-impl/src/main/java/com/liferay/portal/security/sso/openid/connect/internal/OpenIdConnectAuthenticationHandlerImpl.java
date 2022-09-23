@@ -145,7 +145,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		String userInfoJSON = _requestUserInfoJSON(
 			oidcTokens.getAccessToken(), oidcProviderMetadata);
 
-		long userId = _openIdConnectUserInfoProcessor.processUserInfo(
+		long userId = _oidcUserInfoProcessor.processUserInfo(
 			_portal.getCompanyId(httpServletRequest),
 			String.valueOf(oidcProviderMetadata.getIssuer()),
 			ServiceContextFactory.getInstance(httpServletRequest), userInfoJSON,
@@ -462,11 +462,11 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		_offlineOpenIdConnectSessionManager;
 
 	@Reference
-	private OpenIdConnectProviderManagedServiceFactory
-		_openIdConnectProviderManagedServiceFactory;
+	private OIDCUserInfoProcessor _oidcUserInfoProcessor;
 
 	@Reference
-	private OpenIdConnectUserInfoProcessor _openIdConnectUserInfoProcessor;
+	private OpenIdConnectProviderManagedServiceFactory
+		_openIdConnectProviderManagedServiceFactory;
 
 	@Reference
 	private Portal _portal;

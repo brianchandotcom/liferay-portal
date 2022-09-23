@@ -26,7 +26,7 @@ import net.minidev.json.JSONObject;
 /**
  * @author Arthur Chan
  */
-public class OpenIdConnectUserInfoClaimUtil {
+public class OIDCUserInfoClaimUtil {
 
 	public static Object getClaim(
 			String fieldName, JSONObject mapperJSONObject,
@@ -94,6 +94,6 @@ public class OpenIdConnectUserInfoClaimUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdConnectUserInfoClaimUtil.class);
+		OIDCUserInfoClaimUtil.class);
 
 }

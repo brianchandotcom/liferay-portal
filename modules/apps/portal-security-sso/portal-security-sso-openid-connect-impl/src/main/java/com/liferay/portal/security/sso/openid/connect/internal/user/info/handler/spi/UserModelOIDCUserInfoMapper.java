@@ -43,10 +43,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Arthur Chan
  */
-@Component(
-	immediate = true, service = DefaultOpenIdConnectUserMapperProcessor.class
-)
-public class DefaultOpenIdConnectUserMapperProcessor {
+@Component(immediate = true, service = UserModelOIDCUserInfoMapper.class)
+public class UserModelOIDCUserInfoMapper {
 
 	public long generateUser(
 			long companyId, long[] propertyRoleIds,
@@ -62,11 +60,11 @@ public class DefaultOpenIdConnectUserMapperProcessor {
 		JSONObject userMapperJSONObject = JSONObjectUtils.getJSONObject(
 			userInfoMapperJSONObject, "user");
 
-		String emailAddress = OpenIdConnectUserInfoClaimUtil.getStringClaim(
+		String emailAddress = OIDCUserInfoClaimUtil.getStringClaim(
 			"emailAddress", userMapperJSONObject, userInfoJSONObject);
-		String firstName = OpenIdConnectUserInfoClaimUtil.getStringClaim(
+		String firstName = OIDCUserInfoClaimUtil.getStringClaim(
 			"firstName", userMapperJSONObject, userInfoJSONObject);
-		String lastName = OpenIdConnectUserInfoClaimUtil.getStringClaim(
+		String lastName = OIDCUserInfoClaimUtil.getStringClaim(
 			"lastName", userMapperJSONObject, userInfoJSONObject);
 
 		if (Validator.isNull(firstName) || Validator.isNull(lastName) ||
@@ -89,7 +87,7 @@ public class DefaultOpenIdConnectUserMapperProcessor {
 		boolean autoPassword = true;
 		String password1 = null;
 		String password2 = null;
-		String screenName = OpenIdConnectUserInfoClaimUtil.getStringClaim(
+		String screenName = OIDCUserInfoClaimUtil.getStringClaim(
 			"screenName", userMapperJSONObject, userInfoJSONObject);
 		long prefixId = 0;
 		long suffixId = 0;
@@ -112,12 +110,12 @@ public class DefaultOpenIdConnectUserMapperProcessor {
 			Validator.isNull(screenName), screenName, emailAddress,
 			_getLocale(companyId, userInfoJSONObject, userMapperJSONObject),
 			firstName,
-			OpenIdConnectUserInfoClaimUtil.getStringClaim(
+			OIDCUserInfoClaimUtil.getStringClaim(
 				"middleName", userMapperJSONObject, userInfoJSONObject),
 			lastName, prefixId, suffixId,
 			_isMale(userInfoJSONObject, userMapperJSONObject), birthday[1],
 			birthday[2], birthday[0],
-			OpenIdConnectUserInfoClaimUtil.getStringClaim(
+			OIDCUserInfoClaimUtil.getStringClaim(
 				"jobTitle", contactMapperJSONObject, userInfoJSONObject),
 			groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
 			serviceContext);
@@ -141,7 +139,7 @@ public class DefaultOpenIdConnectUserMapperProcessor {
 
 		User user = _userLocalService.fetchUserByEmailAddress(
 			companyId,
-			OpenIdConnectUserInfoClaimUtil.getStringClaim(
+			OIDCUserInfoClaimUtil.getStringClaim(
 				"emailAddress", userMapperJSONObject, userInfoJSONObject));
 
 		if (user != null) {
@@ -180,7 +178,7 @@ public class DefaultOpenIdConnectUserMapperProcessor {
 		String birthdate;
 
 		try {
-			birthdate = OpenIdConnectUserInfoClaimUtil.getStringClaim(
+			birthdate = OIDCUserInfoClaimUtil.getStringClaim(
 				"birthdate", contactMapperJSONObject, userInfoJSONObject);
 
 			if (Validator.isNull(birthdate)) {
@@ -214,7 +212,7 @@ public class DefaultOpenIdConnectUserMapperProcessor {
 		String languageId = null;
 
 		try {
-			languageId = OpenIdConnectUserInfoClaimUtil.getStringClaim(
+			languageId = OIDCUserInfoClaimUtil.getStringClaim(
 				"languageId", userMapperJSONObject, userInfoJSONObject);
 		}
 		catch (Exception exception) {
@@ -254,9 +252,8 @@ public class DefaultOpenIdConnectUserMapperProcessor {
 		}
 
 		try {
-			JSONArray rolesJSONArray =
-				OpenIdConnectUserInfoClaimUtil.getJSONArrayClaim(
-					"roles", userMapperJSONObject, userInfoJSONObject);
+			JSONArray rolesJSONArray = OIDCUserInfoClaimUtil.getJSONArrayClaim(
+				"roles", userMapperJSONObject, userInfoJSONObject);
 
 			long[] roleIds = new long[rolesJSONArray.size()];
 
@@ -282,7 +279,7 @@ public class DefaultOpenIdConnectUserMapperProcessor {
 		JSONObject userInfoJSONObject, JSONObject userMapperJSONObject) {
 
 		try {
-			String gender = OpenIdConnectUserInfoClaimUtil.getStringClaim(
+			String gender = OIDCUserInfoClaimUtil.getStringClaim(
 				"gender", userMapperJSONObject, userInfoJSONObject);
 
 			if (Validator.isNull(gender) || gender.equals("male")) {
@@ -299,7 +296,7 @@ public class DefaultOpenIdConnectUserMapperProcessor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultOpenIdConnectUserMapperProcessor.class);
+		UserModelOIDCUserInfoMapper.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

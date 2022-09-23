@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.sso.openid.connect.internal.user.info.handler.spi.DefaultOpenIdConnectUserMapperProcessor;
-import com.liferay.portal.security.sso.openid.connect.internal.user.info.handler.spi.OpenIdConnectAddressUserMapperProcessor;
-import com.liferay.portal.security.sso.openid.connect.internal.user.info.handler.spi.OpenIdConnectPhoneUserMapperProcessor;
+import com.liferay.portal.security.sso.openid.connect.internal.user.info.handler.spi.AddressModelOIDCUserInfoMapper;
+import com.liferay.portal.security.sso.openid.connect.internal.user.info.handler.spi.PhoneModelOIDCUserInfoMapper;
+import com.liferay.portal.security.sso.openid.connect.internal.user.info.handler.spi.UserModelOIDCUserInfoMapper;
 
 import java.util.Objects;
 
@@ -36,8 +36,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = OpenIdConnectUserInfoProcessor.class)
-public class OpenIdConnectUserInfoProcessor {
+@Component(immediate = true, service = OIDCUserInfoProcessor.class)
+public class OIDCUserInfoProcessor {
 
 	public long processUserInfo(
 			long companyId, String issuer, ServiceContext serviceContext,
@@ -49,12 +49,10 @@ public class OpenIdConnectUserInfoProcessor {
 		try {
 
 			// TODO: Service tracker to find a suitable custom
-			// UserMapperProcessor(MUST), once which becomes SPI.
+			// UserModelOIDCMapper(MUST), once which becomes SPI.
 
-			userId =
-				_defaultOpenIdConnectUserMapperProcessor.
-					getUserIdByEmailAddress(
-						companyId, userInfoJSON, userInfoMapperJSON);
+			userId = _userModelOIDCUserInfoMapper.getUserIdByEmailAddress(
+				companyId, userInfoJSON, userInfoMapperJSON);
 
 			if (userId > 0) {
 				return userId;
@@ -63,7 +61,7 @@ public class OpenIdConnectUserInfoProcessor {
 			// TODO: Remove propertyRoleIds from signature once LXC migrates to
 			//  use UserInfoMapper Configuration.
 
-			userId = _defaultOpenIdConnectUserMapperProcessor.generateUser(
+			userId = _userModelOIDCUserInfoMapper.generateUser(
 				companyId, _getRoleIds(companyId, issuer), serviceContext,
 				userInfoJSON, userInfoMapperJSON);
 		}
@@ -74,17 +72,17 @@ public class OpenIdConnectUserInfoProcessor {
 		try {
 
 			// TODO: Service tracker to find a list of suitable custom
-			// UserOptionalMapperProcessors(OPTIONAL), once which become SPI.
+			// OptionalOIDCUserInfoMappers(OPTIONAL), once which become SPI.
 
-			_openIdConnectAddressUserMapperProcessor.process(
+			_addressModelOIDCUserInfoMapper.process(
 				userId, serviceContext, userInfoJSON, userInfoMapperJSON);
 
-			_openIdConnectPhoneUserMapperProcessor.process(
+			_phoneModelOIDCUserInfoMapper.process(
 				userId, serviceContext, userInfoJSON, userInfoMapperJSON);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to process optional user mapper" + exception);
+				_log.warn("Unable to process optional mapper" + exception);
 			}
 		}
 
@@ -126,19 +124,13 @@ public class OpenIdConnectUserInfoProcessor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdConnectUserInfoProcessor.class);
+		OIDCUserInfoProcessor.class);
 
 	@Reference
-	private DefaultOpenIdConnectUserMapperProcessor
-		_defaultOpenIdConnectUserMapperProcessor;
+	private AddressModelOIDCUserInfoMapper _addressModelOIDCUserInfoMapper;
 
 	@Reference
-	private OpenIdConnectAddressUserMapperProcessor
-		_openIdConnectAddressUserMapperProcessor;
-
-	@Reference
-	private OpenIdConnectPhoneUserMapperProcessor
-		_openIdConnectPhoneUserMapperProcessor;
+	private PhoneModelOIDCUserInfoMapper _phoneModelOIDCUserInfoMapper;
 
 	@Reference
 	private Props _props;
@@ -148,5 +140,8 @@ public class OpenIdConnectUserInfoProcessor {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserModelOIDCUserInfoMapper _userModelOIDCUserInfoMapper;
 
 }

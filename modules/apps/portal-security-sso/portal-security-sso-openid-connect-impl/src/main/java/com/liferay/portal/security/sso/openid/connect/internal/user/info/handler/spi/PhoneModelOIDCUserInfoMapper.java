@@ -34,10 +34,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Arthur Chan
  */
-@Component(
-	immediate = true, service = OpenIdConnectPhoneUserMapperProcessor.class
-)
-public class OpenIdConnectPhoneUserMapperProcessor {
+@Component(immediate = true, service = PhoneModelOIDCUserInfoMapper.class)
+public class PhoneModelOIDCUserInfoMapper {
 
 	public void process(
 			long userId, ServiceContext serviceContext, String userInfoJSON,
@@ -58,7 +56,7 @@ public class OpenIdConnectPhoneUserMapperProcessor {
 
 		try {
 			ListType contactPhoneListType = _listTypeLocalService.getListType(
-				OpenIdConnectUserInfoClaimUtil.getStringClaim(
+				OIDCUserInfoClaimUtil.getStringClaim(
 					"phoneType", phoneMapperJSONObject, userInfoJSONObject),
 				Contact.class.getName() + ".phone");
 
@@ -77,7 +75,7 @@ public class OpenIdConnectPhoneUserMapperProcessor {
 
 			_phoneLocalService.addPhone(
 				user.getUserId(), Contact.class.getName(), user.getContactId(),
-				OpenIdConnectUserInfoClaimUtil.getStringClaim(
+				OIDCUserInfoClaimUtil.getStringClaim(
 					"phone", phoneMapperJSONObject, userInfoJSONObject),
 				null, contactPhoneListType.getListTypeId(), false,
 				serviceContext);

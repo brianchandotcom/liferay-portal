@@ -40,10 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Arthur Chan
  */
-@Component(
-	immediate = true, service = OpenIdConnectAddressUserMapperProcessor.class
-)
-public class OpenIdConnectAddressUserMapperProcessor {
+@Component(immediate = true, service = AddressModelOIDCUserInfoMapper.class)
+public class AddressModelOIDCUserInfoMapper {
 
 	public void process(
 			long userId, ServiceContext serviceContext, String userInfoJSON,
@@ -64,7 +62,7 @@ public class OpenIdConnectAddressUserMapperProcessor {
 
 		try {
 			ListType contactAddressListType = _listTypeLocalService.getListType(
-				OpenIdConnectUserInfoClaimUtil.getStringClaim(
+				OIDCUserInfoClaimUtil.getStringClaim(
 					"addressType", addressMapperJSONObject, userInfoJSONObject),
 				Contact.class.getName() + ".address");
 
@@ -83,7 +81,7 @@ public class OpenIdConnectAddressUserMapperProcessor {
 
 			Region region = null;
 
-			String countryClaim = OpenIdConnectUserInfoClaimUtil.getStringClaim(
+			String countryClaim = OIDCUserInfoClaimUtil.getStringClaim(
 				"country", addressMapperJSONObject, userInfoJSONObject);
 
 			User user = _userLocalService.fetchUser(userId);
@@ -111,9 +109,8 @@ public class OpenIdConnectAddressUserMapperProcessor {
 						StringUtil.toLowerCase(countryClaim));
 				}
 
-				String regionClaim =
-					OpenIdConnectUserInfoClaimUtil.getStringClaim(
-						"region", addressMapperJSONObject, userInfoJSONObject);
+				String regionClaim = OIDCUserInfoClaimUtil.getStringClaim(
+					"region", addressMapperJSONObject, userInfoJSONObject);
 
 				if ((country != null) && Validator.isNotNull(regionClaim)) {
 					region = _regionLocalService.fetchRegion(
@@ -122,7 +119,7 @@ public class OpenIdConnectAddressUserMapperProcessor {
 				}
 			}
 
-			String streetClaim = OpenIdConnectUserInfoClaimUtil.getStringClaim(
+			String streetClaim = OIDCUserInfoClaimUtil.getStringClaim(
 				"street", addressMapperJSONObject, userInfoJSONObject);
 
 			String[] streetParts = streetClaim.split("\n");
@@ -133,9 +130,9 @@ public class OpenIdConnectAddressUserMapperProcessor {
 				(streetParts.length > 0) ? streetParts[0] : null,
 				(streetParts.length > 1) ? streetParts[1] : null,
 				(streetParts.length > 2) ? streetParts[2] : null,
-				OpenIdConnectUserInfoClaimUtil.getStringClaim(
+				OIDCUserInfoClaimUtil.getStringClaim(
 					"city", addressMapperJSONObject, userInfoJSONObject),
-				OpenIdConnectUserInfoClaimUtil.getStringClaim(
+				OIDCUserInfoClaimUtil.getStringClaim(
 					"zip", addressMapperJSONObject, userInfoJSONObject),
 				(region == null) ? 0 : region.getRegionId(),
 				(country == null) ? 0 : country.getCountryId(),

@@ -2990,6 +2990,44 @@ definition {
 		}
 	}
 
+	@description = "LPS-155962 - Verify that it's possible to restrict a previously created Object"
+	@priority = "4"
+	test CanRestrictExistingObject {
+		task ("Add Custom Object (via API)") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161897",
+				objectName = "CustomObject161897",
+				pluralLabelName = "Custom Objects 161897");
+		}
+
+		task ("Add Relationship Account to Custom Object (via API)") {
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "AccountEntry",
+				objectName_2 = "CustomObject161897",
+				relationshipLabel = "RelationshipAccount",
+				relationshipName = "relationshipAccount",
+				relationshipType = "oneToMany");
+		}
+
+		task ("Publish the Custom Object (via API)") {
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161897");
+		}
+
+		task ("Go to Custom Object and active Account Restriction") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161897");
+
+			CreateObject.activeToogleAccountRestriction();
+
+			CreateObject.selectAccountRestrictedField(accountRestrictedField = "RelationshipAccount");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	@description = "LPS-135551 - Verify it is possible to scope the Object by Company"
 	@priority = "5"
 	test CanScopeObjectByCompany {

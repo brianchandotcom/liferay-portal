@@ -45,17 +45,6 @@ export default function useSLACards(koroneikiAccount) {
 				);
 			}
 
-			if (!!slaExpired && slaExpired !== slaCurrent) {
-				slaCards.push(
-					getSLACard(
-						slaExpiredEndDate,
-						slaExpiredStartDate,
-						slaExpired,
-						SLA_LABELS.expired
-					)
-				);
-			}
-
 			if (!!slaFuture && slaFuture !== slaCurrent) {
 				slaCards.push(
 					getSLACard(
@@ -63,6 +52,17 @@ export default function useSLACards(koroneikiAccount) {
 						slaFutureStartDate,
 						slaFuture,
 						SLA_LABELS.future
+					)
+				);
+			}
+
+			if (!!slaExpired && slaExpired !== slaCurrent) {
+				slaCards.push(
+					getSLACard(
+						slaExpiredEndDate,
+						slaExpiredStartDate,
+						slaExpired,
+						SLA_LABELS.expired
 					)
 				);
 			}

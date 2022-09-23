@@ -12,6 +12,8 @@
  * details.
  */
 
+/// <reference types="react" />
+
 declare const VersionActions: ({actions}: IProps) => JSX.Element;
 interface IProps {
 	actions: IAction[];

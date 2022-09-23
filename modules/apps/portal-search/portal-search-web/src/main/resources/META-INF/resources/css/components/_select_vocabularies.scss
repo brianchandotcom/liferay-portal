@@ -1,5 +1,23 @@
 .select-vocabularies {
+	&.disabled {
+		.select-vocabularies-helptext {
+			color: #a7a9bc;
+		}
+
+		.alert-info {
+			opacity: 0.5;
+		}
+
+		.treeview {
+			.autofit-col,
+			.custom-control-label-text {
+				color: #a7a9bc;
+			}
+		}
+	}
+
 	.select-vocabularies-helptext {
+		color: #6b6c7e;
 		margin-bottom: 16px;
 		margin-top: 8px;
 	}

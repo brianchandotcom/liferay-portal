@@ -118,19 +118,6 @@ public class HtmlEngine extends BaseWikiEngine {
 		_router = friendlyURLMapper.getRouter();
 	}
 
-	@Reference
-	protected void setWikiGroupServiceConfiguration(
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
-
-		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
-	}
-
-	protected void unsetWikiGroupServiceConfiguration(
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
-
-		_wikiGroupServiceConfiguration = null;
-	}
-
 	private Map<String, Boolean> _getOutgoingLinks(WikiPage page)
 		throws PortalException {
 
@@ -208,6 +195,7 @@ public class HtmlEngine extends BaseWikiEngine {
 	)
 	private ServletContext _servletContext;
 
+	@Reference
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 	@Reference

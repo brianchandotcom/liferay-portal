@@ -88,6 +88,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 			for (long id : layoutPageTemplateStructureIds) {
 				preparedStatement.setLong(1, id);
+
 				preparedStatement.addBatch();
 			}
 
@@ -151,6 +152,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 			for (long plid : plids) {
 				preparedStatement1.setLong(1, plid);
+
 				preparedStatement1.addBatch();
 			}
 

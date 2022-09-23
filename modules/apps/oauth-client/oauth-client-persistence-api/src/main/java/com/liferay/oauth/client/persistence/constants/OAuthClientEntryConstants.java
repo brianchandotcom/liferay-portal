@@ -37,7 +37,12 @@ public class OAuthClientEntryConstants {
 			"zip", "address->postal_code"
 		)
 	).put(
-		"contact", JSONUtil.put("birthdate", "birthdate")
+		"contact",
+		JSONUtil.put(
+			"birthdate", "birthdate"
+		).put(
+			"gender", "gender"
+		)
 	).put(
 		"phone",
 		JSONUtil.put(
@@ -52,8 +57,6 @@ public class OAuthClientEntryConstants {
 		).put(
 			"firstName", "given_name"
 		).put(
-			"gender", "gender"
-		).put(
 			"jobTitle", ""
 		).put(
 			"languageId", "locale"
@@ -62,10 +65,10 @@ public class OAuthClientEntryConstants {
 		).put(
 			"middleName", "middle_name"
 		).put(
-			"roles", ""
-		).put(
 			"screenName", ""
 		)
+	).put(
+		"users_roles", JSONUtil.put("roles", "")
 	).toString();
 
 }

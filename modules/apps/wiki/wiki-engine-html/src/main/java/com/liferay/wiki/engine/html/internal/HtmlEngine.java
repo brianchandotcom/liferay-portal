@@ -187,6 +187,9 @@ public class HtmlEngine extends BaseWikiEngine {
 
 	private static final Log _log = LogFactoryUtil.getLog(HtmlEngine.class);
 
+	@Reference(target = "(javax.portlet.name=" + WikiPortletKeys.WIKI + ")")
+	private FriendlyURLMapper _friendlyURLMapper;
+
 	private String _friendlyURLMapping;
 	private Router _router;
 

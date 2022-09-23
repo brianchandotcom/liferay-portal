@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -781,6 +782,28 @@ public class KaleoDesignerDisplayContext {
 		KaleoDefinitionVersionActiveComparator
 			kaleoDefinitionVersionActiveComparator =
 				new KaleoDefinitionVersionActiveComparator();
+
+		kaleoDefinitionVersions = ListUtil.filter(
+			kaleoDefinitionVersions,
+			kaleoDefinitionVersion -> {
+				try {
+					KaleoDefinition kaleoDefinition =
+						kaleoDefinitionVersion.getKaleoDefinition();
+
+					if (kaleoDefinition.getVersion() == GetterUtil.getFloat(
+							kaleoDefinitionVersion.getVersion())) {
+
+						return true;
+					}
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
+				}
+
+				return false;
+			});
 
 		Collections.sort(
 			kaleoDefinitionVersions,

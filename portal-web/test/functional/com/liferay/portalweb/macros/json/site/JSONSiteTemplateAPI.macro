@@ -1,14 +1,14 @@
 definition {
 
 	macro _addSiteTemplateByName {
-		Variables.assertDefined(parameterList = "${name},${description},${active},${layoutsUpdateable},${readyForPropagation}");
+		Variables.assertDefined(parameterList = "${description},${active},${layoutsUpdateable},${readyForPropagation},${siteTemplateName}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/api/jsonws/layoutsetprototype/add-layout-set-prototype \
 				-u test@liferay.com:test \
-				-d name=${name} \
+				-d name=${siteTemplateName} \
 				-d description=${description} \
 				-d active=${active} \
 				-d layoutsUpdateable=${layoutsUpdateable} \

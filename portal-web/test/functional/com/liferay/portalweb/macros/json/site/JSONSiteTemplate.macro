@@ -39,8 +39,8 @@ definition {
 			active = "${active}",
 			description = "${description}",
 			layoutsUpdateable = "${layoutsUpdateable}",
-			name = "${siteTemplateName}",
-			readyForPropagation = "${readyForPropagation}");
+			readyForPropagation = "${readyForPropagation}",
+			siteTemplateName = "${siteTemplateName}");
 	}
 
 	macro deleteNonDefaultTemplates {

@@ -165,7 +165,7 @@ function useBreadcrumbItems() {
 			items.reverse();
 
 			if (items.length) {
-				const lastItem = items.at(-1);
+				const lastItem = items[items.length - 1];
 				lastItem.active = true;
 			}
 

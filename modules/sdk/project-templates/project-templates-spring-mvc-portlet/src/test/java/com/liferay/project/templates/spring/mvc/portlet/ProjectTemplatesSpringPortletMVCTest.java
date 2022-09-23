@@ -46,24 +46,36 @@ public class ProjectTemplatesSpringPortletMVCTest
 	public static final MavenExecutor mavenExecutor = new MavenExecutor();
 
 	@Parameterized.Parameters(
-		name = "Testcase-{index}: testing {0}, {1}, {2}, {3}"
+		name = "Testcase-{index}: testing {0}, {1}, {2}, {3}, {4}"
 	)
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"springportletmvc", "embedded", "jsp", "7.0.6-2"},
-				{"springportletmvc", "embedded", "jsp", "7.1.3-1"},
-				{"springportletmvc", "embedded", "jsp", "7.2.1-1"},
-				{"springportletmvc", "embedded", "jsp", "7.3.7"},
-				{"springportletmvc", "embedded", "jsp", "7.4.3.29"},
-				{"portletmvc4spring", "embedded", "jsp", "7.1.3-1"},
-				{"portletmvc4spring", "embedded", "jsp", "7.2.1-1"},
-				{"portletmvc4spring", "embedded", "jsp", "7.3.7"},
-				{"portletmvc4spring", "embedded", "jsp", "7.4.3.29"},
-				{"portletmvc4spring", "embedded", "thymeleaf", "7.1.3-1"},
-				{"portletmvc4spring", "embedded", "thymeleaf", "7.2.1-1"},
-				{"portletmvc4spring", "embedded", "thymeleaf", "7.3.7"},
-				{"portletmvc4spring", "embedded", "thymeleaf", "7.4.3.29"}
+				{"springportletmvc", "embedded", "jsp", "7.0.10.17", "dxp"},
+				{"springportletmvc", "embedded", "jsp", "7.1.10.7", "dxp"},
+				{"springportletmvc", "embedded", "jsp", "7.2.10.7", "dxp"},
+				{"springportletmvc", "embedded", "jsp", "7.3.7", "portal"},
+				{"springportletmvc", "embedded", "jsp", "7.4.3.29", "portal"},
+				{"portletmvc4spring", "embedded", "jsp", "7.1.10.7", "dxp"},
+				{"portletmvc4spring", "embedded", "jsp", "7.2.10.7", "dxp"},
+				{"portletmvc4spring", "embedded", "jsp", "7.3.7", "portal"},
+				{"portletmvc4spring", "embedded", "jsp", "7.4.3.29", "portal"},
+				{
+					"portletmvc4spring", "embedded", "thymeleaf", "7.1.10.7",
+					"dxp"
+				},
+				{
+					"portletmvc4spring", "embedded", "thymeleaf", "7.2.10.7",
+					"dxp"
+				},
+				{
+					"portletmvc4spring", "embedded", "thymeleaf", "7.3.7",
+					"portal"
+				},
+				{
+					"portletmvc4spring", "embedded", "thymeleaf", "7.4.3.29",
+					"portal"
+				}
 			});
 	}
 
@@ -85,12 +97,13 @@ public class ProjectTemplatesSpringPortletMVCTest
 
 	public ProjectTemplatesSpringPortletMVCTest(
 		String framework, String frameworkDependencies, String viewType,
-		String liferayVersion) {
+		String liferayVersion, String product) {
 
 		_framework = framework;
 		_frameworkDependencies = frameworkDependencies;
 		_viewType = viewType;
 		_liferayVersion = liferayVersion;
+		_product = product;
 	}
 
 	@Test
@@ -211,14 +224,16 @@ public class ProjectTemplatesSpringPortletMVCTest
 				mavenExecutor, "-Dpackage=com.test", "-DclassName=Sample",
 				"-Dframework=" + framework,
 				"-DframeworkDependencies=" + frameworkDependencies,
-				"-DviewType=" + viewType, "-DliferayVersion=" + liferayVersion);
+				"-DviewType=" + viewType, "-DliferayVersion=" + liferayVersion,
+				"-Dproduct=" + _product);
 		}
 
 		return buildTemplateWithGradle(
 			destinationDir, template, name, "--package-name", "com.test",
 			"--class-name", "Sample", "--framework", framework,
 			"--framework-dependencies", frameworkDependencies, "--view-type",
-			viewType, "--liferay-version", liferayVersion);
+			viewType, "--liferay-version", liferayVersion, "--product",
+			_product);
 	}
 
 	private static URI _gradleDistribution;
@@ -226,6 +241,7 @@ public class ProjectTemplatesSpringPortletMVCTest
 	private final String _framework;
 	private final String _frameworkDependencies;
 	private final String _liferayVersion;
+	private final String _product;
 	private final String _viewType;
 
 }

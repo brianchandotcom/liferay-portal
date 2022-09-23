@@ -22,6 +22,30 @@
 		"name": "brandColor1",
 		"value": "#0b5fff"
 	},
+	"colorActionPrimaryDefault": {
+		"cssVariableMapping": "color-action-primary-default",
+		"value": "#0B5FFF"
+	},
+	"colorBrandPrimary": {
+		"cssVariableMapping": "color-brand-primary",
+		"value": "#0B63CE"
+	},
+	"colorBrandPrimaryDarken5": {
+		"cssVariableMapping": "color-brand-primary-darken-5",
+		"value": "#00256C"
+	},
+	"colorNeutral10": {
+		"cssVariableMapping": "color-neutral-10",
+		"value": "#282934"
+	},
+	"display4Size": {
+		"cssVariableMapping": "display4-size",
+		"value": "2rem"
+	},
+	"display4Weight": {
+		"cssVariableMapping": "display4-weight",
+		"value": "600"
+	},
 	"fontFamilyBase": {
 		"cssVariableMapping": "font-family-base",
 		"value": "\"Source Sans Pro\", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"

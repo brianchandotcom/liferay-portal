@@ -241,6 +241,17 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 	}
 
 	@Override
+	public AccountEntry updateDomains(long accountEntryId, String[] domains)
+		throws PortalException {
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.MANAGE_DOMAINS);
+
+		return accountEntryLocalService.updateDomains(accountEntryId, domains);
+	}
+
+	@Override
 	public AccountEntry updateExternalReferenceCode(
 			long accountEntryId, String externalReferenceCode)
 		throws PortalException {

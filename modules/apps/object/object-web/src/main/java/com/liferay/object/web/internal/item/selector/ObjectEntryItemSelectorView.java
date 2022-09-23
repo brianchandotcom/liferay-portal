@@ -286,7 +286,10 @@ public class ObjectEntryItemSelectorView
 					"no-entries-were-found");
 
 			try {
-				searchContainer.setResultsAndTotal(_getObjectEntries());
+				searchContainer.setResultsAndTotal(
+					_getObjectEntries(
+						ParamUtil.getLong(
+							_portletRequest, "objectDefinitionId")));
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -303,11 +306,10 @@ public class ObjectEntryItemSelectorView
 				_themeDisplay.getLocale(), null, _themeDisplay.getUser());
 		}
 
-		private List<ObjectEntry> _getObjectEntries() throws Exception {
-			long objectDefinitionId = ParamUtil.getLong(
-				_portletRequest, "objectDefinitionId");
+		private List<ObjectEntry> _getObjectEntries(long objectDefinitionId)
+			throws Exception {
 
-			if (objectDefinitionId > 0) {
+			if (objectDefinitionId == 0) {
 				Group scopeGroup = _themeDisplay.getScopeGroup();
 
 				Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> page =

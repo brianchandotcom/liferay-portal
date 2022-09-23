@@ -248,6 +248,16 @@ definition {
 		MenuItem.clickNoError(menuItem = "${menuItem}");
 	}
 
+	macro setTitleAndDescriptionLocalization {
+		PageEditor.changeLocale(
+			currentLocale = "${currentLocale}",
+			locale = "${locale}");
+
+		PortletEntry.inputTitle(title = "${title}");
+
+		PortletEntry.inputDescription(description = "${description}");
+	}
+
 	macro viewDownloadedContent {
 		var tempDir = PropsUtil.get("output.dir.name");
 

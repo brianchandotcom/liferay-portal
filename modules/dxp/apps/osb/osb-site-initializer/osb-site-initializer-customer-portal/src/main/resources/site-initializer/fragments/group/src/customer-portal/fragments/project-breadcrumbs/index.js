@@ -14,27 +14,15 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {memo, useCallback, useEffect, useState} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 
 const spritemap =
 	Liferay.ThemeDisplay.getCDNBaseURL() +
 	'/o/admin-theme/images/clay/icons.svg';
 
-const KORONEIKI_ACCOUNTS_EVENT_NAME =
-	'customer-portal-koroneiki-accounts-available';
-
-const SELECTED_KORONEIKI_ACCOUNT_EVENT_NAME = 'customer-portal-project-loading';
-
 const DELAY_TYPING_TIME = 500;
 const MAX_ITEM_BEFORE_FILTER = 9;
-
-const eventFetchMoreData = Liferay.publish(
-	'customer-portal-fetch-more-koroneiki-accounts'
-);
-
-const eventSearchData = Liferay.publish(
-	'customer-portal-search-koroneiki-accounts'
-);
+const FIRST_PAGE = 1;
 
 const useIntersectionObserver = () => {
 	const [trackedRefCurrent, setTrackedRefCurrent] = useState();
@@ -49,7 +37,7 @@ const useIntersectionObserver = () => {
 	useEffect(() => {
 		const observer = new IntersectionObserver(memoizedSetIntersecting, {
 			root: null,
-			threshold: 0.25,
+			threshold: 1.0,
 		});
 
 		if (trackedRefCurrent) {
@@ -82,12 +70,162 @@ const useDebounce = (value, delay) => {
 	return debouncedValue;
 };
 
+const useCurrentKoroneikiAccount = () => {
+	const [koroneikiAccount, setKoroneikiAccount] = useState();
+
+	const accountKey = useMemo(() => {
+		const hashLocation = window.location.hash;
+
+		return hashLocation.replace('#/', '').split('/').filter(Boolean)[0];
+	}, []);
+
+	useEffect(() => {
+		const getKoroneikiAccount = async (externalReferenceCode) => {
+			// eslint-disable-next-line @liferay/portal/no-global-fetch
+			const response = await fetch(
+				`/o/c/koroneikiaccounts/by-external-reference-code/${externalReferenceCode}`,
+				{
+					headers: {
+						'accept': 'application/json',
+						'x-csrf-token': Liferay.authToken,
+					},
+				}
+			);
+
+			if (response.ok) {
+				setKoroneikiAccount(await response.json());
+
+				return;
+			}
+
+			Liferay.Util.openToast({
+				message: 'An unexpected error occured.',
+				type: 'danger',
+			});
+		};
+
+		if (accountKey) {
+			getKoroneikiAccount(accountKey);
+		}
+	}, [accountKey]);
+
+	return koroneikiAccount;
+};
+
+const useSearchTerm = (onSearch) => {
+	const [lastSearchTerm, setLastSearchTerm] = useState('');
+
+	return (searchTerm) => {
+		if (searchTerm !== lastSearchTerm) {
+			onSearch(searchTerm);
+			setLastSearchTerm(searchTerm);
+		}
+	};
+};
+
+const getKoroneikiAccounts = async (filter, page, onResponse) => {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`/o/c/koroneikiaccounts?page=${page}${filter}`,
+		{
+			headers: {
+				'accept': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+		}
+	);
+
+	if (response.ok) {
+		onResponse(await response.json());
+
+		return;
+	}
+
+	Liferay.Util.openToast({
+		message: 'An unexpected error occured.',
+		type: 'danger',
+	});
+};
+
+const useKoroneikiAccounts = () => {
+	const [koroneikiAccounts, setKoroneikiAccounts] = useState();
+	const [initialTotalCount, setInitialTotalCount] = useState(0);
+	const [fetching, setFetching] = useState(false);
+	const [currentQuery, setCurrentQuery] = useState({
+		filter: '',
+		page: FIRST_PAGE,
+	});
+
+	useEffect(() => {
+		if (currentQuery.page !== FIRST_PAGE) {
+			setFetching(true);
+		}
+
+		getKoroneikiAccounts(
+			currentQuery.filter,
+			currentQuery.page,
+			(koroneikiAccounts) => {
+				if (koroneikiAccounts) {
+					setKoroneikiAccounts((previousKoroneikiAccounts) => {
+						if (currentQuery.page !== FIRST_PAGE) {
+							koroneikiAccounts.items = [
+								...previousKoroneikiAccounts.items,
+								...koroneikiAccounts.items,
+							];
+
+							return {
+								...koroneikiAccounts,
+							};
+						}
+
+						return koroneikiAccounts;
+					});
+
+					setFetching(false);
+				}
+			}
+		);
+	}, [currentQuery.filter, currentQuery.page]);
+
+	useEffect(() => {
+		if (koroneikiAccounts?.totalCount > initialTotalCount) {
+			setInitialTotalCount(koroneikiAccounts.totalCount);
+		}
+	}, [initialTotalCount, koroneikiAccounts?.totalCount]);
+
+	const fetchMore = () =>
+		setCurrentQuery((previousCurrentQuery) => ({
+			filter: previousCurrentQuery.filter,
+			page: previousCurrentQuery.page + 1,
+		}));
+
+	const search = useSearchTerm((searchTerm) =>
+		setCurrentQuery({
+			filter: searchTerm && `&filter=contains(name, '${searchTerm}')`,
+			page: FIRST_PAGE,
+		})
+	);
+
+	return {
+		fetchMore,
+		fetching,
+		initialTotalCount,
+		koroneikiAccounts,
+		search,
+	};
+};
+
 const Search = memo(({setSearchTerm}) => {
 	const [value, setValue] = useState('');
+	const debouncedValue = useDebounce(value, DELAY_TYPING_TIME);
+
 	const [isClear, setIsClear] = useState(false);
 
 	useEffect(() => setIsClear(!!value), [value]);
-	useEffect(() => setSearchTerm(value), [setSearchTerm, value]);
+	useEffect(() => setSearchTerm(debouncedValue), [
+		debouncedValue,
+		setSearchTerm,
+	]);
 
 	return (
 		<ClayInput.Group className="m-0" small>
@@ -154,29 +292,23 @@ const AllProjectButton = memo(({onClick}) => {
 
 const DropDown = memo(
 	({
+		fetching,
 		initialTotalCount,
 		koroneikiAccounts,
+		onIntersecting,
+		onSearch,
 		selectedKoroneikiAccount,
 		totalCount,
 	}) => {
 		const [active, setActive] = useState(false);
 
-		const [searchTerm, setSearchTerm] = useState('');
-		const debouncedSearchTerm = useDebounce(searchTerm, DELAY_TYPING_TIME);
-
 		const [trackedRef, isIntersecting] = useIntersectionObserver();
 
 		useEffect(() => {
 			if (isIntersecting) {
-				eventFetchMoreData.fire();
+				onIntersecting();
 			}
-		}, [isIntersecting]);
-
-		useEffect(() => {
-			eventSearchData.fire({
-				detail: debouncedSearchTerm,
-			});
-		}, [debouncedSearchTerm]);
+		}, [isIntersecting, onIntersecting]);
 
 		const getHref = useCallback((accountKey) => {
 			const hashLocation = window.location.hash.replace(
@@ -241,7 +373,7 @@ const DropDown = memo(
 			>
 				{initialTotalCount > MAX_ITEM_BEFORE_FILTER && (
 					<div className="dropdown-section px-3">
-						<Search setSearchTerm={setSearchTerm} />
+						<Search setSearchTerm={onSearch} />
 					</div>
 				)}
 
@@ -259,7 +391,7 @@ const DropDown = memo(
 					<ClayDropDown.ItemList className="overflow-auto">
 						{getDropDownItems()}
 
-						{koroneikiAccounts.length < totalCount && (
+						{koroneikiAccounts.length < totalCount && !fetching && (
 							<ClayDropDown.Section className="px-3">
 								<div
 									className="font-weight-semi-bold text-neutral-5 text-paragraph-sm"
@@ -279,36 +411,14 @@ const DropDown = memo(
 );
 
 export default function () {
-	const [totalCount, setTotalCount] = useState();
-	const [initialTotalCount, setInitialTotalCount] = useState();
-	const [koroneikiAccounts, setKoroneikiAccounts] = useState();
-	const [selectedKoroneikiAccount, setSelectKoroneikiAccount] = useState();
-
-	useEffect(() => {
-		Liferay.once(SELECTED_KORONEIKI_ACCOUNT_EVENT_NAME, ({detail}) => {
-			setSelectKoroneikiAccount(detail);
-		});
-
-		return () => Liferay.detach(SELECTED_KORONEIKI_ACCOUNT_EVENT_NAME);
-	}, []);
-
-	useEffect(() => {
-		Liferay.on(KORONEIKI_ACCOUNTS_EVENT_NAME, ({detail}) => {
-			if (detail?.koroneikiAccounts) {
-				setKoroneikiAccounts(detail.koroneikiAccounts);
-			}
-
-			if (detail?.totalCount) {
-				setTotalCount(detail.totalCount);
-			}
-
-			if (detail?.initialTotalCount) {
-				setInitialTotalCount(detail.initialTotalCount);
-			}
-		});
-
-		return () => Liferay.detach(KORONEIKI_ACCOUNTS_EVENT_NAME);
-	}, []);
+	const selectedKoroneikiAccount = useCurrentKoroneikiAccount();
+	const {
+		fetchMore,
+		fetching,
+		initialTotalCount,
+		koroneikiAccounts,
+		search,
+	} = useKoroneikiAccounts();
 
 	if (!koroneikiAccounts || !selectedKoroneikiAccount) {
 		return (
@@ -321,10 +431,13 @@ export default function () {
 
 	return (
 		<DropDown
+			fetching={fetching}
 			initialTotalCount={initialTotalCount}
-			koroneikiAccounts={koroneikiAccounts}
+			koroneikiAccounts={koroneikiAccounts.items}
+			onIntersecting={fetchMore}
+			onSearch={search}
 			selectedKoroneikiAccount={selectedKoroneikiAccount}
-			totalCount={totalCount}
+			totalCount={koroneikiAccounts.totalCount}
 		/>
 	);
 }

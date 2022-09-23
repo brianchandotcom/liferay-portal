@@ -45,7 +45,7 @@ const Home = () => {
 						<SearchHeader
 							count={koroneikiAccounts?.totalCount}
 							loading={searching}
-							onSearchSubmit={(term) => search(term)}
+							onSearchSubmit={search}
 						/>
 					)}
 

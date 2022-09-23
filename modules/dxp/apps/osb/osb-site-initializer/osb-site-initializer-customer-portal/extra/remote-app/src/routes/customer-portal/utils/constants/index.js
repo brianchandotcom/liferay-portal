@@ -12,7 +12,6 @@
 export * from './alertDownloadType';
 export * from './autoCloseAlertTime';
 export * from './contentTypes';
-export * from './customEventTypes';
 export * from './extensionFileTypes';
 export * from './listTypes';
 export * from './menuTypes';

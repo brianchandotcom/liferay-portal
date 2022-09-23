@@ -14,21 +14,15 @@
 
 package com.liferay.layout.page.template.internal.upgrade.v5_1_1;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.PreparedStatement;
@@ -36,7 +30,6 @@ import java.sql.ResultSet;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * @author Márk Gulácsy
@@ -53,24 +46,6 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		_deleteOrphanLayoutPageTemplateStructures();
 		_processLayoutPageTemplateStructuresOfWidgetLayouts();
-	}
-
-	private String[][] _createIdBatches(String[] ids, int size) {
-		return (String[][])ArrayUtil.split(ids, size);
-	}
-
-	private String _createInClause(String[] idBatch) {
-		StringBundler sb = new StringBundler(idBatch.length + 1);
-
-		sb.append("in (?");
-
-		for (int i = 1; i < idBatch.length; i++) {
-			sb.append(", ?");
-		}
-
-		sb.append(")");
-
-		return sb.toString();
 	}
 
 	private void _deleteOrphanLayoutPageTemplateStructures() throws Exception {
@@ -120,73 +95,19 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private boolean _isOracleDB() {
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.ORACLE) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private void _processLayoutPageTemplateStructuresOfWidgetLayouts()
-		throws Exception {
-
-		DynamicQuery widgetLayoutsQuery = _layoutLocalService.dynamicQuery();
-
-		widgetLayoutsQuery.add(
-			RestrictionsFactoryUtil.eq("type", LayoutConstants.TYPE_PORTLET));
-
-		List<Layout> widgetLayouts = _layoutLocalService.dynamicQuery(
-			widgetLayoutsQuery);
-
-		Stream<Layout> widgetLayoutsStream = widgetLayouts.stream();
-
-		String[] widgetPlids = widgetLayoutsStream.mapToLong(
-			LayoutModel::getPlid
-		).boxed(
-		).map(
-			String::valueOf
-		).toArray(
-			String[]::new
-		);
-
-		int batchSize;
-		String sql =
-			"select layoutPageTemplateStructureId, classPK from " +
-				"LayoutPageTemplateStructure where classPK ";
-
-		if (_isOracleDB()) {
-			batchSize = 1000;
-		}
-		else {
-			batchSize = widgetPlids.length;
-		}
-
-		String[][] idBatches = _createIdBatches(widgetPlids, batchSize);
-
-		for (String[] batch : idBatches) {
-			String inClause = _createInClause(batch);
-
-			_processOneBatchOfNonorphanPagesAndStructures(
-				sql + inClause, batch);
-		}
-	}
-
-	private void _processOneBatchOfNonorphanPagesAndStructures(
-			String sql, String[] idBatch)
 		throws Exception {
 
 		List<Long> widgetLayoutsWithStructurePlids = new ArrayList<>();
 		List<Long> widgetLayoutTemplateStructureIds = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				SQLTransformer.transform(sql))) {
+				SQLTransformer.transform(
+					"select layoutPageTemplateStructureId, classPK from " +
+						"LayoutPageTemplateStructure where classPK in " +
+							"(select plid from Layout where type_ = ?)"))) {
 
-			for (int i = 0; i < idBatch.length; i++) {
-				preparedStatement.setString(i + 1, idBatch[i]);
-			}
+			preparedStatement.setString(1, LayoutConstants.TYPE_PORTLET);
 
 			ResultSet widgetLayoutTemplateStructuresResultSet =
 				preparedStatement.executeQuery();

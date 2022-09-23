@@ -19,7 +19,9 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragmentStyle": {"minHeight": "84.4vh"},
+							"fragmentStyle": {
+								"minHeight": "84.4vh"
+							},
 							"widgetInstance": {
 								"widgetConfig": {
 									"portletSetupPortletDecoratorId": "barebone",

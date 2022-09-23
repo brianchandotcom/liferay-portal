@@ -214,12 +214,15 @@ function EditSXPElementForm({
 	const shouldConfirmBeforeNavigate = useCallback(() => {
 		return (
 			initialElementJSONEditorValueString !==
-				getCodeMirrorValue(elementJSONEditorRef) && !isSubmitting
+				getCodeMirrorValue(elementJSONEditorRef) &&
+			!isSubmitting &&
+			!readOnly
 		);
 	}, [
 		initialElementJSONEditorValueString,
 		elementJSONEditorRef,
 		isSubmitting,
+		readOnly,
 	]);
 
 	useShouldConfirmBeforeNavigate(shouldConfirmBeforeNavigate);

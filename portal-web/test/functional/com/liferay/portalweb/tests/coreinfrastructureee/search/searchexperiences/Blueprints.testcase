@@ -2983,6 +2983,56 @@ definition {
 			resultTitle = "");
 	}
 
+	@description = "This is a use case for LPS-134492."
+	test ViewBlueprintTitleAndDescriptionLocalization {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(
+			description = "Description in English",
+			title = "Title in English");
+
+		Click(
+			ariaLabel = "Edit Title",
+			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_HEADER_TITLE");
+
+		Blueprints.setTitleAndDescriptionLocalization(
+			currentLocale = "en-US",
+			description = "Descripción en Espanol",
+			locale = "es-ES",
+			title = "Título en Español");
+
+		Blueprints.setTitleAndDescriptionLocalization(
+			currentLocale = "es-ES",
+			description = "Beschreibung auf Deutsch",
+			locale = "de-DE",
+			title = "Titel auf Deutsch");
+
+		Button.clickDone();
+
+		PortletEntry.save();
+
+		Blueprints.openBlueprintsAdmin(locale = "es");
+
+		AssertTextEquals(
+			entryTitle = "Título en Español",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION",
+			value1 = "Descripción en Espanol");
+
+		Blueprints.openBlueprintsAdmin(locale = "de");
+
+		AssertTextEquals(
+			entryTitle = "Titel auf Deutsch",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION",
+			value1 = "Beschreibung auf Deutsch");
+
+		Blueprints.openBlueprintsAdmin(locale = "en");
+
+		AssertTextEquals(
+			entryTitle = "Title in English",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION",
+			value1 = "Description in English");
+	}
+
 	test ViewClauseContributorsFilterAndSort {
 		Blueprints.openBlueprintsAdmin();
 

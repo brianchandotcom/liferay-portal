@@ -124,6 +124,9 @@ public interface AccountEntryService extends BaseService {
 			int status, ServiceContext serviceContext)
 		throws PortalException;
 
+	public AccountEntry updateDomains(long accountEntryId, String[] domains)
+		throws PortalException;
+
 	public AccountEntry updateExternalReferenceCode(
 			long accountEntryId, String externalReferenceCode)
 		throws PortalException;

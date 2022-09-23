@@ -21,6 +21,7 @@ import {
 	koroneikiAccountsQueryTypePolicy,
 	koroneikiAccountsTypePolicy,
 } from './koroneiki-accounts/typePolicy';
+import {orderItemsQueryTypePolicy} from './order-items/typePolicy';
 import {userAccountsTypePolicy} from './user-accounts/typePolicy';
 
 export const liferayTypePolicies = {
@@ -30,6 +31,11 @@ export const liferayTypePolicies = {
 	...koroneikiAccountsTypePolicy,
 	Mutationc: {
 		merge: true,
+	},
+	Query: {
+		fields: {
+			...orderItemsQueryTypePolicy,
+		},
 	},
 	c: {
 		fields: {

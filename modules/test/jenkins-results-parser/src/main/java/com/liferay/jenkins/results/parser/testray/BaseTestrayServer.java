@@ -50,6 +50,35 @@ public abstract class BaseTestrayServer implements TestrayServer {
 	}
 
 	@Override
+	public TestrayCaseType getTestrayCaseType(String testrayCaseTypeName) {
+		if (_testrayCaseTypes != null) {
+			return _testrayCaseTypes.get(testrayCaseTypeName);
+		}
+
+		_testrayCaseTypes = new HashMap<>();
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				getURL() + "/home/-/testray/case_types.json");
+
+			JSONArray dataJSONArray = jsonObject.getJSONArray("data");
+
+			for (int i = 0; i < dataJSONArray.length(); i++) {
+				JSONObject dataJSONObject = dataJSONArray.getJSONObject(i);
+
+				_testrayCaseTypes.put(
+					dataJSONObject.getString("name"),
+					new TestrayCaseType(this, dataJSONObject));
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return _testrayCaseTypes.get(testrayCaseTypeName);
+	}
+
+	@Override
 	public TestrayProject getTestrayProjectByID(int projectID) {
 		_initTestrayProjects();
 
@@ -308,6 +337,7 @@ public abstract class BaseTestrayServer implements TestrayServer {
 	private static final int _DELTA = 50;
 
 	private JenkinsResultsParserUtil.HTTPAuthorization _httpAuthorization;
+	private Map<String, TestrayCaseType> _testrayCaseTypes;
 	private Map<Integer, TestrayProject> _testrayProjectsByID;
 	private Map<String, TestrayProject> _testrayProjectsByName;
 	private final URL _url;

@@ -28,6 +28,8 @@ public interface TestrayServer {
 
 	public JenkinsResultsParserUtil.HTTPAuthorization getHTTPAuthorization();
 
+	public TestrayCaseType getTestrayCaseType(String testrayCaseTypeName);
+
 	public TestrayProject getTestrayProjectByID(int projectID);
 
 	public TestrayProject getTestrayProjectByName(String projectName);

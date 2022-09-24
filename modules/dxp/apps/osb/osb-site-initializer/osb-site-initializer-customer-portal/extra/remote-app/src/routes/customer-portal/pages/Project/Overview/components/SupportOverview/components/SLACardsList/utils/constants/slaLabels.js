@@ -10,7 +10,7 @@
  */
 
 export const SLA_LABELS = {
-	current: 'current',
-	expired: 'expired',
-	future: 'future',
+	current: 'Current',
+	expired: 'Expired',
+	future: 'Future',
 };

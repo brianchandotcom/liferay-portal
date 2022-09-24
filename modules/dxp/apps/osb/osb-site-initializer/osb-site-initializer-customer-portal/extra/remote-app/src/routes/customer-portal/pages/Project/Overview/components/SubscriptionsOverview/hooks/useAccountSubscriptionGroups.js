@@ -22,7 +22,7 @@ export default function useAccountSubscriptionGroups(
 	] = useState();
 
 	const {data, loading} = useGetAccountSubscriptionGroups({
-		filter: `accountKey eq '${accountKey}' and hasActivation eq true`,
+		filter: `accountKey eq '${accountKey}'`,
 		skip: koroneikiAccountLoading,
 		sort: 'tabOrder:asc',
 	});

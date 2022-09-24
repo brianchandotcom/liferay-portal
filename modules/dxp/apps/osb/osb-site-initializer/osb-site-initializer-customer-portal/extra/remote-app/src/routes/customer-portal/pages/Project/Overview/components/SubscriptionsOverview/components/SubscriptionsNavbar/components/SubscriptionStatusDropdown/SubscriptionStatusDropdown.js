@@ -14,6 +14,7 @@ import ClayIcon from '@clayui/icon';
 import {useCallback, useMemo, useState} from 'react';
 import i18n from '../../../../../../../../../../../common/I18n';
 import Skeleton from '../../../../../../../../../../../common/components/Skeleton';
+import getKebabCase from '../../../../../../../../../../../common/utils/getKebabCase';
 import {SUBSCRIPTIONS_STATUS} from '../../../../../../../../../utils/constants';
 
 const MAX_SUBSCRIPTION_STATUS = 3;
@@ -70,7 +71,7 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 				onClick={() => handleOnClick(index)}
 				symbolRight={item.active && 'check'}
 			>
-				{i18n.translate(item.label)}
+				{i18n.translate(getKebabCase(item.label))}
 			</DropDown.Item>
 		));
 

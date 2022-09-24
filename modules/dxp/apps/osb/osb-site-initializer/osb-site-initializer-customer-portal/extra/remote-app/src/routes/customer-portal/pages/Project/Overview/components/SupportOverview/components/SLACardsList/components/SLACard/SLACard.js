@@ -14,6 +14,7 @@ import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import {memo} from 'react';
 import i18n from '../../../../../../../../../../../common/I18n';
+import getKebabCase from '../../../../../../../../../../../common/utils/getKebabCase';
 import getStyleFromTitle from './utils/getStyleFromTitle';
 
 const SLACard = ({active, endDate, label, last, startDate, title, unique}) => {
@@ -39,7 +40,7 @@ const SLACard = ({active, endDate, label, last, startDate, title, unique}) => {
 			>
 				<ClayCard.Row className="align-items-center d-flex justify-content-between">
 					<h5 className={classNames('mb-0', currentStyle.titleStyle)}>
-						{i18n.translate(title)}
+						{i18n.translate(getKebabCase(title))}
 					</h5>
 
 					<div>
@@ -51,7 +52,9 @@ const SLACard = ({active, endDate, label, last, startDate, title, unique}) => {
 								)}
 								displayType="secundary"
 							>
-								{i18n.translate(label).toUpperCase()}
+								{i18n
+									.translate(getKebabCase(label))
+									.toUpperCase()}
 							</ClayLabel>
 						</ClayCard.Caption>
 					</div>

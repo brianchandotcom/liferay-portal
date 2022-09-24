@@ -126,30 +126,24 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:otherwise>
+
+				<%
+				row.setCssClass("card-page-item card-page-item-directory");
+
+				request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW, row);
+				%>
+
 				<portlet:renderURL var="viewFolderURL">
 					<portlet:param name="mvcRenderCommandName" value="/image_gallery_display/view" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 				</portlet:renderURL>
 
-				<%
-				row.setCssClass("card-page-item card-page-item-directory");
-				%>
-
 				<liferay-ui:search-container-column-text>
-					<liferay-frontend:horizontal-card
-						actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/document_library/folder_action.jsp" : StringPool.BLANK %>'
-						actionJspServletContext="<%= application %>"
-						resultRow="<%= row %>"
-						text="<%= curFolder.getName() %>"
-						url="<%= viewFolderURL %>"
-					>
-						<liferay-frontend:horizontal-card-col>
-							<liferay-frontend:horizontal-card-icon
-								icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
-							/>
-						</liferay-frontend:horizontal-card-col>
-					</liferay-frontend:horizontal-card>
+					<clay:horizontal-card
+						horizontalCard="<%= new FolderHorizontalCard(dlPortletInstanceSettingsHelper, dlTrashHelper, curFolder, request, null, viewFolderURL) %>"
+						propsTransformer="document_library/js/DLFolderDropdownPropsTransformer"
+					/>
 				</liferay-ui:search-container-column-text>
 			</c:otherwise>
 		</c:choose>

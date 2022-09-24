@@ -330,35 +330,27 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 
 							<%
 							row.setCssClass("card-page-item card-page-item-directory");
+
+							String viewFolderURL = PortletURLBuilder.createRenderURL(
+								liferayPortletResponse
+							).setMVCRenderCommandName(
+								"/document_library/view_folder"
+							).setRedirect(
+								currentURL
+							).setParameter(
+								"folderId", curFolder.getFolderId()
+							).buildString();
+
+							request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW, row);
 							%>
 
 							<liferay-ui:search-container-column-text
 								colspan="<%= 2 %>"
 							>
-								<liferay-frontend:horizontal-card
-									actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/document_library/folder_action.jsp" : null %>'
-									actionJspServletContext="<%= application %>"
-									resultRow="<%= row %>"
-									rowChecker="<%= searchContainer.getRowChecker() %>"
-									text="<%= curFolder.getName() %>"
-									url='<%=
-										PortletURLBuilder.createRenderURL(
-											liferayPortletResponse
-										).setMVCRenderCommandName(
-											"/document_library/view_folder"
-										).setRedirect(
-											currentURL
-										).setParameter(
-											"folderId", curFolder.getFolderId()
-										).buildString()
-									%>'
-								>
-									<liferay-frontend:horizontal-card-col>
-										<liferay-frontend:horizontal-card-icon
-											icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
-										/>
-									</liferay-frontend:horizontal-card-col>
-								</liferay-frontend:horizontal-card>
+								<clay:horizontal-card
+									horizontalCard="<%= new FolderHorizontalCard(dlPortletInstanceSettingsHelper, dlTrashHelper, curFolder, request, searchContainer.getRowChecker(), viewFolderURL) %>"
+									propsTransformer="document_library/js/DLFolderDropdownPropsTransformer"
+								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:otherwise>

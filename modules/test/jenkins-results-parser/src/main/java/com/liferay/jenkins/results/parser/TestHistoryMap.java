@@ -15,7 +15,10 @@
 package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.testray.TestrayBuild;
+import com.liferay.jenkins.results.parser.testray.TestrayCaseType;
 import com.liferay.jenkins.results.parser.testray.TestrayRoutine;
+import com.liferay.jenkins.results.parser.testray.TestrayRun;
+import com.liferay.jenkins.results.parser.testray.TestrayServer;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +47,8 @@ public class TestHistoryMap {
 		if (testrayBuilds.size() > maxBuildCount) {
 			testrayBuilds = testrayBuilds.subList(0, maxBuildCount);
 		}
+
+		_latestTestrayBuild = testrayBuilds.get(0);
 
 		for (TestrayBuild testrayBuild : testrayBuilds) {
 			TopLevelBuildReport topLevelBuildReport =
@@ -78,6 +83,10 @@ public class TestHistoryMap {
 				"Test history map populated in ",
 				JenkinsResultsParserUtil.toDurationString(
 					JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
+	}
+
+	public TestrayBuild getLatestTestrayBuild() {
+		return _latestTestrayBuild;
 	}
 
 	public void setMinimumStatusChanges(int minimumStatusChanges) {
@@ -322,6 +331,7 @@ public class TestHistoryMap {
 	private static List<String> _excludedTestNameRegexes;
 
 	private final Map<String, BatchHistory> _batchHistoryMap = new HashMap<>();
+	private final TestrayBuild _latestTestrayBuild;
 	private int _minimumStatusChanges = 3;
 	private long _minimumTestDuration = 60 * 1000;
 	private final TestrayRoutine _testrayRoutine;
@@ -428,6 +438,47 @@ public class TestHistoryMap {
 			return testHistories;
 		}
 
+		public TestrayCaseType getTestrayCaseType() {
+			if (_testrayCaseType != null) {
+				return _testrayCaseType;
+			}
+
+			try {
+				String testrayCaseTypeName =
+					JenkinsResultsParserUtil.getProperty(
+						JenkinsResultsParserUtil.getBuildProperties(),
+						"testray.case.type", getBatchName());
+
+				if (JenkinsResultsParserUtil.isNullOrEmpty(
+						testrayCaseTypeName)) {
+
+					return null;
+				}
+
+				TestrayServer testrayServer =
+					_latestTestrayBuild.getTestrayServer();
+
+				_testrayCaseType = testrayServer.getTestrayCaseType(
+					testrayCaseTypeName);
+
+				return _testrayCaseType;
+			}
+			catch (IOException ioException) {
+				return null;
+			}
+		}
+
+		public TestrayRun getTestrayRun() {
+			if (_testrayRun != null) {
+				return _testrayRun;
+			}
+
+			_testrayRun = new TestrayRun(
+				getLatestTestrayBuild(), getBatchName(), new ArrayList<>());
+
+			return _testrayRun;
+		}
+
 		private boolean _excludeTestClassReport(
 			TestClassReport testClassReport) {
 
@@ -463,6 +514,8 @@ public class TestHistoryMap {
 			new ArrayList<>();
 		private final Map<String, TestClassHistory> _testClassHistoryMap =
 			new HashMap<>();
+		private TestrayCaseType _testrayCaseType;
+		private TestrayRun _testrayRun;
 
 	}
 

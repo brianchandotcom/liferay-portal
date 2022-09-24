@@ -82,6 +82,26 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		return matcher.group("portalSHA");
 	}
 
+	public JSONObject getRunsJSONObject() {
+		if (_runsJSONObject != null) {
+			return _runsJSONObject;
+		}
+
+		TestrayServer testrayServer = getTestrayServer();
+
+		try {
+			_runsJSONObject = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.combine(
+					String.valueOf(testrayServer.getURL()),
+					"/home/-/testray/runs.json?delta=200&testrayBuildId=",
+					String.valueOf(getID())));
+		}
+		catch (IOException ioException) {
+		}
+
+		return _runsJSONObject;
+	}
+
 	public String getStartYearMonth() {
 		Matcher matcher = _getTestrayAttachmentURLMatcher();
 
@@ -335,6 +355,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 			"testrayBuildId=(?<buildID>\\d+)"));
 
 	private final JSONObject _jsonObject;
+	private JSONObject _runsJSONObject;
 	private Matcher _testrayAttachmentURLMatcher;
 	private final TestrayProductVersion _testrayProductVersion;
 	private final TestrayProject _testrayProject;

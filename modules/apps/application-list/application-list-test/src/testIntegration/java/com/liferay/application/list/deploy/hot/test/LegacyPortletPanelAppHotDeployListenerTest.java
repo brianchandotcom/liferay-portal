@@ -16,11 +16,21 @@ package com.liferay.application.list.deploy.hot.test;
 
 import com.liferay.application.list.deploy.hot.LegacyPortletPanelAppHotDeployListener;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.portlet.PortletInstanceFactory;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.impl.PortletAppImpl;
+import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -67,13 +77,36 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 
 	@Test
 	public void testLegacyPortletWithControlPanelEntry() throws Exception {
+		HotDeployEvent hotDeployEvent = getHotDeployEvent(
+			"classpath:/com/liferay/application/list/deploy/hot/test" +
+				"/dependencies/control-panel-entry-liferay-portlet.xml");
+
+		_testPortlet = new PortletImpl() {
+			{
+				setPortletId(
+					"1" + PortletConstants.WAR_SEPARATOR +
+						hotDeployEvent.getServletContextName());
+				setPortletClass(MVCPortlet.class.getName());
+				setPortletApp(
+					new PortletAppImpl(StringPool.BLANK) {
+						{
+							setServletContext(
+								hotDeployEvent.getServletContext());
+						}
+					});
+			}
+		};
+
+		ServletContextClassLoaderPool.register(
+			hotDeployEvent.getServletContextName(),
+			hotDeployEvent.getContextClassLoader());
+
+		_portletLocalService.deployPortlet(_testPortlet);
+
 		int initialServiceRegistrationsSize =
 			_hotDeployListener.getServiceRegistrationsSize();
 
-		_hotDeployListener.invokeDeploy(
-			getHotDeployEvent(
-				"classpath:/com/liferay/application/list/deploy/hot/test" +
-					"/dependencies/control-panel-entry-liferay-portlet.xml"));
+		_hotDeployListener.invokeDeploy(hotDeployEvent);
 
 		Assert.assertEquals(
 			initialServiceRegistrationsSize + 1,
@@ -124,6 +157,9 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 		return new HotDeployEvent(servletContext, classLoader);
 	}
 
+	@Inject
+	private static PortletInstanceFactory _portletInstanceFactory;
+
 	private boolean _dependencyManagementEnabled;
 
 	@Inject(
@@ -131,6 +167,12 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 		type = HotDeployListener.class
 	)
 	private LegacyPortletPanelAppHotDeployListener _hotDeployListener;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
+
+	@DeleteAfterTestRun
+	private Portlet _testPortlet;
 
 	private static class TestResourceLoader extends DefaultResourceLoader {
 

@@ -14,11 +14,11 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayMultiStepNav from '@clayui/multi-step-nav';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {ReactNode, useContext, useState} from 'react';
 
+import MultiSteps from '../../../../../common/components/multi-steps';
 import ClayIconProvider from '../../../../../common/context/ClayIconProvider';
 import {
 	createOrUpdateRaylifeApplication,
@@ -79,7 +79,7 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 		event?.preventDefault();
 		dispatch({payload: false, type: ACTIONS.SET_HAS_FORM_CHANGE});
 
-		const hasUnderwritingStatus = form.some(
+		const hasUnderwritingStatus = form?.some(
 			(currentIndex) => currentIndex.hasAccidentOrCitations === 'yes'
 		);
 
@@ -256,34 +256,12 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 					</div>
 
 					<hr></hr>
-					<>
-						<ClayMultiStepNav className="mx-10">
-							{steps.map(({active, complete, title}, index) => (
-								<ClayMultiStepNav.Item
-									active={active}
-									complete={complete}
-									expand={index + 1 !== steps.length}
-									key={index}
-								>
-									<ClayMultiStepNav.Title>
-										{title}
-									</ClayMultiStepNav.Title>
 
-									{index + 1 !== steps.length ? (
-										<ClayMultiStepNav.Divider />
-									) : (
-										''
-									)}
+					<div className="d-flex justify-content-center">
+						<MultiSteps steps={steps} />
 
-									<ClayMultiStepNav.Indicator
-										complete={complete}
-										label={1 + index}
-									/>
-								</ClayMultiStepNav.Item>
-							))}
-						</ClayMultiStepNav>
 						<hr className="mb-5"></hr>
-					</>
+					</div>
 
 					{children}
 

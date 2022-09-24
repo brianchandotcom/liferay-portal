@@ -40,6 +40,7 @@ const ContactInfo = () => {
 	const [state, dispatch] = useContext(NewApplicationAutoContext);
 
 	const {setAutoComplete} = useLocation();
+	const [ownership, setOwnership] = useState('');
 
 	const addressElement = document.querySelector(
 		'#streetAddress'
@@ -150,6 +151,7 @@ const ContactInfo = () => {
 
 	useEffect(() => {
 		handleSaveChanges(form);
+		setOwnership(form?.ownership);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [form]);
@@ -165,6 +167,27 @@ const ContactInfo = () => {
 			</div>
 		</div>
 	);
+
+	const RadioGroup = () => {
+		return (
+			<ClayRadioGroup className="ml-3" defaultValue={ownership} inline>
+				<ClayRadio
+					checked={true}
+					label="Rent"
+					onClick={() => handleChangeField('ownership', 'rent')}
+					value="rent"
+				/>
+
+				<ClayRadio
+					checked={ownership === 'own'}
+					label="Own"
+					onClick={() => handleChangeField('ownership', 'own')}
+					value="own"
+				/>
+			</ClayRadioGroup>
+		);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	};
 
 	return (
 		<div className="mx-8">
@@ -274,6 +297,11 @@ const ContactInfo = () => {
 							dateFormat="MM/dd/yyyy"
 							onBlur={(event) => {
 								const dateValue = event;
+
+								handleChangeField(
+									'dateOfBirth',
+									dateValue.target.value
+								);
 
 								setHasError({
 									...hasError,
@@ -663,23 +691,7 @@ const ContactInfo = () => {
 					<span className="text-danger-darken-1">*</span>
 				</div>
 
-				<ClayRadioGroup
-					className="ml-3"
-					defaultValue={form.ownership}
-					inline
-				>
-					<ClayRadio
-						label="Rent"
-						onClick={() => handleChangeField('ownership', 'rent')}
-						value="rent"
-					/>
-
-					<ClayRadio
-						label="Own"
-						onClick={() => handleChangeField('ownership', 'own')}
-						value="own"
-					/>
-				</ClayRadioGroup>
+				<RadioGroup />
 			</div>
 		</div>
 	);

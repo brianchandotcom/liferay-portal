@@ -47,6 +47,10 @@ const adaptToFormApplicationRequest = (state: any, status: any) => ({
 	},
 	city: state?.contactInfo?.form?.city,
 	dataJSON: JSON.stringify({
+		contactInfo: {
+			dateOfBirth: state?.contactInfo?.form?.dateOfBirth,
+			ownership: state?.contactInfo?.form?.ownership,
+		},
 		coverage: {
 			form: state?.coverage?.form,
 		},
@@ -81,4 +85,12 @@ export function exitRaylifeApplication(state: any, status: any) {
 	const payload = adaptToFormApplicationRequest(state?.steps, status);
 
 	return axios.patch(`${DeliveryAPI}/${state.applicationId}`, payload);
+}
+
+export function getApplicationByExternalReferenceCode(
+	externalReferenceCode: string
+) {
+	return axios.get(
+		`${DeliveryAPI}/by-external-reference-code/${externalReferenceCode}`
+	);
 }

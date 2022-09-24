@@ -94,17 +94,6 @@
 								"pageElements": [
 									{
 										"definition": {
-											"widgetInstance": {
-												"widgetConfig": {
-													"properties": "route=applications"
-												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
-											}
-										},
-										"type": "Widget"
-									},
-									{
-										"definition": {
 											"fragment": {
 												"key": "tabs"
 											},
@@ -1752,6 +1741,17 @@
 											}
 										],
 										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"properties": "route=applications"
+												},
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+											}
+										},
+										"type": "Widget"
 									}
 								],
 								"type": "FragmentDropZone"

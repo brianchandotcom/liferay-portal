@@ -15,6 +15,7 @@
 import ClayTable from '@clayui/table';
 import classnames from 'classnames';
 
+import {redirectTo} from '../../utils/liferay';
 import SettingsButton, {ActionObject} from '../settings-button';
 
 const {Body, Cell, Head, Row} = ClayTable;
@@ -36,6 +37,10 @@ type TableHeaders = {
 
 const handleRedirectToGmail = (email: string) => {
 	window.location.href = `mailto:${email}`;
+};
+
+const handleRedirectToDetails = (externalReferenceCode: string) => {
+	redirectTo(`app-details?externalReferenceCode=${externalReferenceCode}`);
 };
 
 const Table: React.FC<TableProps> = ({data, headers, actions = []}) => {
@@ -91,6 +96,22 @@ const Table: React.FC<TableProps> = ({data, headers, actions = []}) => {
 											) {
 												handleRedirectToGmail(
 													rowContent[item.key]
+												);
+											}
+
+											if (
+												item.clickable &&
+												rowContent['name'] ===
+													'Incomplete' &&
+												(item.key ===
+													'externalReferenceCode' ||
+													item.key ===
+														'applicationCreateDate')
+											) {
+												handleRedirectToDetails(
+													rowContent[
+														'externalReferenceCode'
+													]
 												);
 											}
 										}}

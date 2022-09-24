@@ -59,7 +59,11 @@
 				<div class="left-content">
 					<lfr-drop-zone></lfr-drop-zone>
 				</div>
-
+				[#if configuration.layoutName == 'Details']
+				<div class="middle-content">
+					<lfr-drop-zone></lfr-drop-zone>
+				</div>
+				[/#if]
 				<div class="d-flex flex-row right-content">
 				<img alt="search" class="search-icon" src="[resources:search_icon.svg]" />
 

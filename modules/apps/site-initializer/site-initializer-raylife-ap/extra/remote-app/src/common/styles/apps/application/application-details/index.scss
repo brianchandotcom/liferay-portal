@@ -1,0 +1,32 @@
+.application-details-container .multi-steps-content {
+	box-shadow: 1px 2px 5px rgb(39 40 51 / 10%),
+		1px 7px 20px rgb(76 132 255 / 5%);
+	background: linear-gradient(
+			0,
+			rgba(76, 132, 255, 0.03),
+			rgba(76, 132, 255, 0.03)
+		),
+		#fff;
+	padding: 30px 0 0;
+}
+
+.summary-container,
+.action-detail-container {
+	min-height: 443px;
+}
+
+.application-details-container .application-detail-content {
+	padding: 30px 200px !important;
+}
+
+@media screen and (max-width: 1700px) {
+	.application-details-container .application-detail-content {
+		padding: 30px 50px !important;
+	}
+}
+
+@media screen and (max-width: 576px) {
+	.application-details-container .application-detail-content {
+		padding: 30px 20px !important;
+	}
+}

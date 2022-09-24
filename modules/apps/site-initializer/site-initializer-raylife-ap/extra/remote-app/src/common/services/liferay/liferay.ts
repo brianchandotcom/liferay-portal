@@ -26,6 +26,7 @@ interface ILiferay {
 	authToken: string;
 	detach: (eventName: string, options?: any) => void;
 	on: (eventName: string, options?: any) => void;
+	publish: (eventName: string, optopms?: any) => void;
 }
 
 declare global {
@@ -44,4 +45,5 @@ export const Liferay = window.Liferay || {
 		getUserName: () => 'Test Test',
 	},
 	authToken: '',
+	publish: '',
 };

@@ -138,6 +138,10 @@
 	cursor: pointer;
 }
 
+.layout-container #Details .header-content .search-icon {
+	display: none !important;
+}
+
 #Applications .page-header-container {
 	box-shadow: 0 1px #d3d3d4 !important;
 }
@@ -166,6 +170,7 @@
 @media screen and (max-width: 1625px) {
 	.layout-container
 		.raylife-agent-portal-content:not(#Applications
+			.raylife-agent-portal-content, #Details
 			.raylife-agent-portal-content) {
 		padding: 0 16px;
 	}

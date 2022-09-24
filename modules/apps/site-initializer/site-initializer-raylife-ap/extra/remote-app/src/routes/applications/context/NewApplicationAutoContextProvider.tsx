@@ -12,8 +12,9 @@
  * details.
  */
 
-import React, {ReactNode, createContext, useReducer} from 'react';
+import React, {ReactNode, createContext, useEffect, useReducer} from 'react';
 
+import {getApplicationByExternalReferenceCode} from '../../../common/services';
 import {ActionMap} from '../../../types';
 
 type ContactInfoFormTypes = {
@@ -30,6 +31,20 @@ type ContactInfoFormTypes = {
 	zipCode: string;
 };
 
+const ContactInfoForm: ContactInfoFormTypes = {
+	apt: '',
+	city: '',
+	dateOfBirth: '',
+	email: '',
+	firstName: '',
+	lastName: '',
+	ownership: '',
+	phone: '',
+	state: '',
+	streetAddress: '',
+	zipCode: '',
+};
+
 type CoverageFormTypes = {
 	bodilyInjury: string;
 	medical: string;
@@ -40,6 +55,20 @@ type CoverageFormTypes = {
 		collision: string;
 		comprehensive: string;
 	}[];
+};
+
+const CoverageForm: CoverageFormTypes = {
+	bodilyInjury: '',
+	medical: '',
+	propertyDamage: '',
+	uninsuredOrUnderinsuredMBI: '',
+	uninsuredOrUnderinsuredMPD: '',
+	vehicles: [
+		{
+			collision: '',
+			comprehensive: '',
+		},
+	],
 };
 
 type AccidentCitationTypes = {
@@ -64,6 +93,25 @@ export type DriverInfoFormTypes = {
 	relationToContact: string;
 };
 
+const DriverInfoForm: DriverInfoFormTypes[] = [
+	{
+		accidentCitation: [],
+		ageFirstLicenced: '',
+		firstName: '',
+		gender: '',
+		governmentAffiliation: '',
+		hasAccidentOrCitations: '',
+		highestEducation: '',
+		id: Number((Math.random() * 1000000).toFixed(0)),
+		lastName: '',
+		maritalStatus: '',
+		millitaryAffiliation: '',
+		occupation: '',
+		otherOccupation: '',
+		relationToContact: '',
+	},
+];
+
 export type VehicleInfoFormTypes = {
 	annualMileage: string;
 	id: number;
@@ -73,6 +121,18 @@ export type VehicleInfoFormTypes = {
 	primaryUsage: string;
 	year: string;
 };
+
+const VehicleInfoForm: VehicleInfoFormTypes[] = [
+	{
+		annualMileage: '',
+		id: Number((Math.random() * 1000000).toFixed(0)),
+		make: '',
+		model: '',
+		ownership: '',
+		primaryUsage: '',
+		year: '',
+	},
+];
 
 export type InitialStateTypes = {
 	applicationId: string;
@@ -116,58 +176,17 @@ const initialState: InitialStateTypes = {
 	isAbleToNextStep: false,
 	steps: {
 		contactInfo: {
-			form: {
-				apt: '',
-				city: '',
-				dateOfBirth: '',
-				email: '',
-				firstName: '',
-				lastName: '',
-				ownership: '',
-				phone: '',
-				state: '',
-				streetAddress: '',
-				zipCode: '',
-			},
+			form: ContactInfoForm,
 			index: 0,
 			name: 'Contact Info',
 		},
 		coverage: {
-			form: {
-				bodilyInjury: '',
-				medical: '',
-				propertyDamage: '',
-				uninsuredOrUnderinsuredMBI: '',
-				uninsuredOrUnderinsuredMPD: '',
-				vehicles: [
-					{
-						collision: '',
-						comprehensive: '',
-					},
-				],
-			},
+			form: CoverageForm,
 			index: 3,
 			name: 'Coverage',
 		},
 		driverInfo: {
-			form: [
-				{
-					accidentCitation: [],
-					ageFirstLicenced: '',
-					firstName: '',
-					gender: '',
-					governmentAffiliation: '',
-					hasAccidentOrCitations: '',
-					highestEducation: '',
-					id: Number((Math.random() * 1000000).toFixed(0)),
-					lastName: '',
-					maritalStatus: '',
-					millitaryAffiliation: '',
-					occupation: '',
-					otherOccupation: '',
-					relationToContact: '',
-				},
-			],
+			form: DriverInfoForm,
 			index: 2,
 			name: 'Driver Info',
 		},
@@ -176,17 +195,7 @@ const initialState: InitialStateTypes = {
 			name: 'Review',
 		},
 		vehicleInfo: {
-			form: [
-				{
-					annualMileage: '',
-					id: Number((Math.random() * 1000000).toFixed(0)),
-					make: '',
-					model: '',
-					ownership: '',
-					primaryUsage: '',
-					year: '',
-				},
-			],
+			form: VehicleInfoForm,
 			index: 1,
 			name: 'Vehicle Info',
 		},
@@ -200,6 +209,7 @@ export enum ACTIONS {
 	SET_VEHICLE_INFO_FORM = 'SET_VEHICLE_INFO_FORM',
 	SET_COVERAGE_FORM = 'SET_COVERAGE_FORM',
 	SET_DRIVER_INFO_FORM = 'SET_DRIVER_INFO_FORM',
+	SET_INITIAL_STATE = 'SET_INITIAL_STATE',
 	SET_HAS_FORM_CHANGE = 'SET_HAS_FORM_CHANGE',
 	SET_IS_ABLE_TO_NEXT = 'SET_IS_ABLE_TO_NEXT',
 	SET_IS_ABLE_TO_SAVE = 'SET_IS_ABLE_TO_SAVE',
@@ -223,6 +233,7 @@ type ActionsPayload = {
 		value: string;
 	};
 	[ACTIONS.SET_HAS_FORM_CHANGE]: boolean;
+	[ACTIONS.SET_INITIAL_STATE]: InitialStateTypes;
 	[ACTIONS.SET_IS_ABLE_TO_NEXT]: boolean;
 	[ACTIONS.SET_IS_ABLE_TO_SAVE]: boolean;
 	[ACTIONS.SET_NEW_ACCIDENT_CITATION]: DriverInfoFormTypes;
@@ -548,6 +559,10 @@ const reducer = (state: InitialStateTypes, action: ApplicationActions) => {
 			};
 		}
 
+		case ACTIONS.SET_INITIAL_STATE: {
+			return action.payload;
+		}
+
 		default: {
 			return state;
 		}
@@ -557,9 +572,83 @@ const reducer = (state: InitialStateTypes, action: ApplicationActions) => {
 export type NewApplicationAutoProviderProps = Partial<InitialStateTypes>;
 
 const NewApplicationAutoContextProvider: React.FC<
-	NewApplicationAutoProviderProps & {children: ReactNode}
+	NewApplicationAutoProviderProps & {
+		children: ReactNode;
+		defaultState?: Partial<InitialStateTypes>;
+	}
 > = ({children}) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
+
+	const getInitialState = async () => {
+		const queryParams = new URLSearchParams(window.location.search);
+		const externalReferenceCode = queryParams.get('externalReferenceCode');
+
+		const {data = {}} = await getApplicationByExternalReferenceCode(
+			externalReferenceCode || ''
+		);
+
+		const dataJSON = data.dataJSON ? JSON.parse(data.dataJSON) : {};
+
+		const payload = {
+			applicationId: data.id,
+			currentStep: 0,
+			hasFormChanges: false,
+			isAbleToBeSave: false,
+			isAbleToNextStep: true,
+			steps: {
+				contactInfo: {
+					form: {
+						apt: data.addressApt || '',
+						city: data.city || '',
+						dateOfBirth: dataJSON.contactInfo?.dateOfBirth || '',
+						email: data.email || '',
+						firstName: data.firstName || '',
+						lastName: data.lastName || '',
+						ownership: dataJSON.contactInfo?.ownership || '',
+						phone: data.phone || '',
+						state: data.state || '',
+						streetAddress: data.address || '',
+						zipCode: data.zip || '',
+					},
+					index: 0,
+					name: 'Contact Info',
+				},
+				coverage: {
+					form: dataJSON.coverage?.form
+						? dataJSON.coverage?.form
+						: CoverageForm,
+					index: 3,
+					name: 'Coverage',
+				},
+				driverInfo: {
+					form: dataJSON.driverInfo?.form
+						? dataJSON.driverInfo?.form
+						: DriverInfoForm,
+					index: 2,
+					name: 'Driver Info',
+				},
+				review: {
+					index: 4,
+					name: 'Review',
+				},
+				vehicleInfo: {
+					form: dataJSON.vehicleInfo?.form
+						? dataJSON.vehicleInfo?.form
+						: VehicleInfoForm,
+					index: 1,
+					name: 'Vehicle Info',
+				},
+			},
+		};
+
+		return payload;
+	};
+
+	useEffect(() => {
+		getInitialState().then((response) => {
+			dispatch({payload: response, type: ACTIONS.SET_INITIAL_STATE});
+		});
+	}, []);
 
 	return (
 		<NewApplicationAutoContext.Provider value={[state, dispatch]}>

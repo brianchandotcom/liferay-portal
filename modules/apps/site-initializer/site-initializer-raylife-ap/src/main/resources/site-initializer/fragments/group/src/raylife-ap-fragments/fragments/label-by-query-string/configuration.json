@@ -1,0 +1,19 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "externalReferenceCode",
+					"description": "container-text",
+					"label": "Parameter Name",
+					"name": "parameterName",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "Insert the parameter name"
+					}
+				}
+			]
+		}
+	]
+}

@@ -167,23 +167,9 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 						</c:choose>
 
 						<div class="d-none" id="<portlet:namespace />appViewEntryTemplates">
-							<liferay-frontend:icon-vertical-card
-								cssClass="card-type-asset display-icon entry-display-style file-card form-check form-check-card"
-								icon="documents-and-media"
-								title="{title}"
-								url="<%= dlViewDisplayContext.getUploadURL() %>"
-							>
-								<liferay-frontend:vertical-card-sticker-bottom>
-									<clay:sticker
-										cssClass="file-icon-color-0 sticker-bottom-left sticker-document"
-										icon="document-default"
-									/>
-								</liferay-frontend:vertical-card-sticker-bottom>
-
-								<liferay-frontend:vertical-card-header>
-									<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
-								</liferay-frontend:vertical-card-header>
-							</liferay-frontend:icon-vertical-card>
+							<clay:vertical-card
+								verticalCard="<%= new FileEntryTemplateVerticalCard(dlViewDisplayContext, request) %>"
+							/>
 
 							<dd class="display-descriptive entry-display-style list-group-item list-group-item-flex">
 								<div class="autofit-col"></div>

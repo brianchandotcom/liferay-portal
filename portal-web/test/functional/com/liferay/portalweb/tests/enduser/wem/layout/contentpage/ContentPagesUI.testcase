@@ -338,6 +338,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-158746. Favorite session is hidden when no favorite fragment is chosen."
+	@priority = "4"
+	test ViewFavoriteSessionIsHiddenWhenNoFavoriteFragmentIsChosen {
+		property custom.properties = "feature.flag.LPS-158737=true";
+
+		task ("Given go to edit content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then assert favorite session is hidden") {
+			AssertElementNotPresent(
+				key_panel = "Favorites",
+				locator1 = "Panel#PANEL");
+		}
+
+		task ("When switch to card view") {
+			Click(
+				key_switchTo = "card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+		}
+
+		task ("And then assert favorite session is hidden") {
+			AssertElementNotPresent(
+				key_panel = "Favorites",
+				locator1 = "Panel#PANEL");
+		}
+	}
+
 	@description = "This is a test for LPS-140266. The color samples are sorted by the token definition doc order and sections."
 	@priority = "5"
 	@uitest

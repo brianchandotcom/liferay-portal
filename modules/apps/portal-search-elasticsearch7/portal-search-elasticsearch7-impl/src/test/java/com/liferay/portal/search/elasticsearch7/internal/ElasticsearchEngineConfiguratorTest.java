@@ -25,8 +25,6 @@ import com.liferay.portal.search.elasticsearch7.internal.BaseSearchEngineConfigu
 import com.liferay.portal.search.elasticsearch7.internal.BaseSearchEngineConfigurator.SearchDestinationHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Collections;
-
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -115,10 +113,8 @@ public class ElasticsearchEngineConfiguratorTest {
 				ReflectionTestUtil.setFieldValue(
 					this, "_messageBus", Mockito.mock(MessageBus.class));
 				setSearchDestinationHelper(searchDestinationHelper);
-				setSearchEngine(
-					Mockito.mock(SearchEngine.class),
-					Collections.singletonMap(
-						"search.engine.id", "SYSTEM_ENGINE"));
+				ReflectionTestUtil.setFieldValue(
+					this, "_searchEngine", Mockito.mock(SearchEngine.class));
 				ReflectionTestUtil.setFieldValue(
 					this, "_searchEngineHelper",
 					Mockito.mock(SearchEngineHelper.class));

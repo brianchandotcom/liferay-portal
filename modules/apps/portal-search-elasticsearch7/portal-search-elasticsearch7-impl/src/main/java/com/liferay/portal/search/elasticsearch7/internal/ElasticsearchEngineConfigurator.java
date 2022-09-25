@@ -21,11 +21,8 @@ import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineConfigurator;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Collections;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentContext;
@@ -47,7 +44,9 @@ public class ElasticsearchEngineConfigurator
 	protected void activate(ComponentContext componentContext) {
 		_bundleContext = componentContext.getBundleContext();
 
-		setSearchEngines(_searchEngines);
+		setSearchEngines(
+			Collections.singletonMap(
+				SearchEngineHelper.SYSTEM_ENGINE_ID, _searchEngine));
 
 		initialize();
 	}
@@ -89,31 +88,6 @@ public class ElasticsearchEngineConfigurator
 		return _searchEngineHelper;
 	}
 
-	@Reference(
-		target = "(&(search.engine.id=SYSTEM_ENGINE)(search.engine.impl=Elasticsearch))"
-	)
-	protected void setSearchEngine(
-		SearchEngine searchEngine, Map<String, Object> properties) {
-
-		String searchEngineId = MapUtil.getString(
-			properties, "search.engine.id");
-
-		_searchEngines.put(searchEngineId, searchEngine);
-	}
-
-	protected void unsetSearchEngine(
-		SearchEngine searchEngine, Map<String, Object> properties) {
-
-		String searchEngineId = MapUtil.getString(
-			properties, "search.engine.id");
-
-		if (Validator.isNull(searchEngineId)) {
-			return;
-		}
-
-		_searchEngines.remove(searchEngineId);
-	}
-
 	private BundleContext _bundleContext;
 
 	@Reference
@@ -128,10 +102,12 @@ public class ElasticsearchEngineConfigurator
 	@Reference
 	private MessageBus _messageBus;
 
+	@Reference(
+		target = "(&(search.engine.id=SYSTEM_ENGINE)(search.engine.impl=Elasticsearch))"
+	)
+	private SearchEngine _searchEngine;
+
 	@Reference
 	private SearchEngineHelper _searchEngineHelper;
-
-	private final Map<String, SearchEngine> _searchEngines =
-		new ConcurrentHashMap<>();
 
 }

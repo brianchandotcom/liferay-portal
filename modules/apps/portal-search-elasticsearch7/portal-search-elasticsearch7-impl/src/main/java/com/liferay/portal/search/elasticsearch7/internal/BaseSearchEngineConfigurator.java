@@ -199,8 +199,6 @@ public abstract class BaseSearchEngineConfigurator
 		for (Map.Entry<String, SearchEngine> entry : entrySet) {
 			_initSearchEngine(entry.getKey(), entry.getValue());
 		}
-
-		_searchEngines.clear();
 	}
 
 	protected ServiceRegistration<Destination> registerDestination(

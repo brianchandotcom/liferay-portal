@@ -1,5 +1,4 @@
 {
-	"lxc-sm": "LXC - SM",
 	"actions": "Ações",
 	"activated": "Atividade",
 	"activation-key-details": "Detalhes da chave de ativação",
@@ -150,6 +149,7 @@
 	"lowercase-letters-and-numbers-only-the-project-id-cannot-be-changed": "Apenas letras minúsculas e números. O ID de projeto não pode ser alterado.",
 	"lowercase-letters-numbers-and-dashes-only": "Apenas letras minúsculas, números e traços.",
 	"luxembourg": "Luxemburgo",
+	"lxc-sm": "LXC - SM",
 	"lxc-sm-system-admin-s-email-address": "Endereço de e-mail do administrador do sistema LXC - SM",
 	"mac-address": "Endereço MAC",
 	"mac-addresses": "Endereços MAC",

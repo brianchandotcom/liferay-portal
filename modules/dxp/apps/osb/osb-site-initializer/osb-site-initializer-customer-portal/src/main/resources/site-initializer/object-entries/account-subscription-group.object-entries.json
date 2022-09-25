@@ -2,10 +2,10 @@
 	"object-entries": [
 		{
 			"accountKey": "ERC-001",
-			"externalReferenceCode": "ERC-001_lxc-sm",
+			"externalReferenceCode": "ERC-001_lxc---sm",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "LXC-SM",
+			"name": "LXC - SM",
 			"tabOrder": 2
 		},
 		{
@@ -34,10 +34,10 @@
 		},
 		{
 			"accountKey": "ERC-004",
-			"externalReferenceCode": "ERC-004_lxc-sm",
+			"externalReferenceCode": "ERC-004_lxc---sm",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "LXC-SM",
+			"name": "LXC - SM",
 			"tabOrder": 2
 		},
 		{
@@ -66,10 +66,10 @@
 		},
 		{
 			"accountKey": "ERC-008",
-			"externalReferenceCode": "ERC-008_lxc-sm",
+			"externalReferenceCode": "ERC-008_lxc---sm",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "LXC-SM",
+			"name": "LXC - SM",
 			"tabOrder": 2
 		},
 		{

@@ -9,8 +9,8 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccount = "Test Account LXC-SM";
-	var testProduct = "LXC-SM";
+	var testAccount = "Test Account LXC - SM";
+	var testProduct = "LXC - SM";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -627,7 +627,7 @@ definition {
 			CustomerPortal.clickOnFinishActivationButton();
 		}
 
-		task ("Assert modal Setup LXC-SM") {
+		task ("Assert modal Setup LXC - SM") {
 			AssertElementPresent(
 				locator1 = "CustomerPortalSite#MODAL_PAGE",
 				modal = "Set up ${testProduct}");

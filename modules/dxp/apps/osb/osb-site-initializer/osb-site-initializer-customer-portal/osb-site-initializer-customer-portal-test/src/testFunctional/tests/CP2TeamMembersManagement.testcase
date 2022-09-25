@@ -9,7 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccount = "Test Account LXC-SM";
+	var testAccount = "Test Account LXC - SM";
 
 	setUp {
 		task ("Set up instance and sign in") {

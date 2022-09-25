@@ -88,10 +88,10 @@ definition {
 			Navigator.openSpecificURL(url = "${baseURL}/web/${testSiteURL}/project/#/ERC-001/activation/lxc-sm");
 		}
 
-		task ("Assert that the URL displays the page of the LXC-SM product") {
+		task ("Assert that the URL displays the page of the LXC - SM product") {
 			AssertElementPresent(
 				locator1 = "CP2NavigationMenu#PRODUCT",
-				product = "LXC-SM");
+				product = "LXC - SM");
 		}
 	}
 
@@ -185,7 +185,7 @@ definition {
 		task ("Assert that the URL displays the page of the DXP product") {
 			AssertElementPresent(
 				locator1 = "CP2NavigationMenu#PRODUCT",
-				product = "LXC-SM");
+				product = "LXC - SM");
 		}
 
 		task ("Navigate to the homepage and assert that the URL displays the homepage") {

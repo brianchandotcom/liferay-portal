@@ -9,7 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccounts = "Test Account LXC-SM,Test Account Analytics Cloud";
+	var testAccounts = "Test Account LXC - SM,Test Account Analytics Cloud";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -48,7 +48,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
+			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -58,7 +58,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Start the project configuration and invite a user to the project") {
@@ -237,7 +237,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
+			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -251,7 +251,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Starting the Setup") {
@@ -280,7 +280,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
+			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -294,7 +294,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Starting the Setup") {
@@ -326,7 +326,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
+			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -336,7 +336,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Starting the Setup") {
@@ -357,7 +357,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
+			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -367,7 +367,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Starting the Setup") {
@@ -393,7 +393,7 @@ definition {
 		task ("Change the user role in the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
+			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -403,7 +403,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Starting the Setup") {

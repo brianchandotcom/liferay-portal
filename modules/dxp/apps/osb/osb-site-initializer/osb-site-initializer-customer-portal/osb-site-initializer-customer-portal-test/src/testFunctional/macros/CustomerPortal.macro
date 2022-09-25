@@ -104,7 +104,7 @@ definition {
 	}
 
 	macro addUserToAllAccounts {
-		var accountsList = "Test Account LXC-SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account Partnership,Test Account Others,Test Account QA 7.4,Test Account QA 7.3,Test Account QA 7.2,Test Account QA 7.1,Test Account QA 7.0";
+		var accountsList = "Test Account LXC - SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account Partnership,Test Account Others,Test Account QA 7.4,Test Account QA 7.3,Test Account QA 7.2,Test Account QA 7.1,Test Account QA 7.0";
 
 		CustomerPortal.addUserToOneOrMoreAccounts(accountsList = "${accountsList}");
 	}
@@ -394,7 +394,7 @@ definition {
 	macro openAccountsAdminForCP {
 		Accounts.openAccountsAdmin();
 
-		CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
+		CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
 		Navigator.gotoNavTab(navTab = "Users");
 

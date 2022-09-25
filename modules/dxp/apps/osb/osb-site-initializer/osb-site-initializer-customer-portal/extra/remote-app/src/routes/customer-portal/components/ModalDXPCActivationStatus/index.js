@@ -13,6 +13,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {useState} from 'react';
+import i18n from '../../../../common/I18n';
 import {Badge, Button} from '../../../../common/components';
 import {useAppPropertiesContext} from '../../../../common/contexts/AppPropertiesContext';
 import {
@@ -126,7 +127,7 @@ const ModalDXPCActivationStatus = ({
 				<div className="bg-neutral-1 cp-analytics-cloud-status-modal">
 					<div className="d-flex justify-content-between">
 						<h4 className="ml-4 mt-4 text-brand-primary text-paragraph">
-							LXC-SM SETUP
+							{i18n.translate('lxc-sm-setup').toUpperCase()}
 						</h4>
 
 						<div className="mr-4 mt-3">
@@ -140,12 +141,13 @@ const ModalDXPCActivationStatus = ({
 					</div>
 
 					<h2 className="ml-4 text-neutral-10">
-						Project ID Confirmation
+						{i18n.translate('project-id-confirmation')}
 					</h2>
 
 					<p className="mb-2 ml-4 mt-4">
-						Confirm the final Project ID used to create the
-						customer&apos;s LXC-SM environments.
+						{i18n.translate(
+							'confirm-the-final-project-id-used-to-create-the-customer-s-lxc-sm-environments'
+						)}
 					</p>
 
 					<div className="mx-2">
@@ -173,7 +175,9 @@ const ModalDXPCActivationStatus = ({
 							</Badge>
 						) : (
 							<p className="pl-3 pr-2 text-neutral-7 text-paragraph-sm">
-								Please enter the Project ID here.
+								{i18n.translate(
+									'please-enter-the-project-id-here'
+								)}
 							</p>
 						)}
 					</div>
@@ -183,7 +187,7 @@ const ModalDXPCActivationStatus = ({
 							displayType="secondary ml-auto mt-2"
 							onClick={onClose}
 						>
-							Cancel
+							{i18n.translate('cancel')}
 						</Button>
 
 						<Button
@@ -191,7 +195,7 @@ const ModalDXPCActivationStatus = ({
 							displayType="primary ml-3 mt-2"
 							onClick={handleOnConfirm}
 						>
-							Confirm
+							{i18n.translate('confirm')}
 						</Button>
 					</div>
 				</div>

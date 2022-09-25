@@ -2,7 +2,7 @@
 	"object-entries": [
 		{
 			"accountKey": "ERC-001",
-			"accountSubscriptionGroupERC": "ERC-001_lxc-sm",
+			"accountSubscriptionGroupERC": "ERC-001_lxc---sm",
 			"endDate": "2024-01-31 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",
@@ -12,7 +12,7 @@
 		},
 		{
 			"accountKey": "ERC-001",
-			"accountSubscriptionGroupERC": "ERC-001_lxc-sm",
+			"accountSubscriptionGroupERC": "ERC-001_lxc---sm",
 			"endDate": "2022-03-31 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Non-Production",
@@ -72,7 +72,7 @@
 		},
 		{
 			"accountKey": "ERC-004",
-			"accountSubscriptionGroupERC": "ERC-004_lxc-sm",
+			"accountSubscriptionGroupERC": "ERC-004_lxc---sm",
 			"endDate": "2024-03-14 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",
@@ -172,7 +172,7 @@
 		},
 		{
 			"accountKey": "ERC-008",
-			"accountSubscriptionGroupERC": "ERC-008_lxc-sm",
+			"accountSubscriptionGroupERC": "ERC-008_lxc---sm",
 			"endDate": "2024-01-31 00:00:00.0",
 			"instanceSize": "1",
 			"name": "Production",

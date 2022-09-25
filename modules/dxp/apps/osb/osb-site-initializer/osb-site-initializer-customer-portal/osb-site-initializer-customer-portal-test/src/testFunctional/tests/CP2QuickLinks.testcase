@@ -9,7 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccounts = "Test Account LXC-SM,Test Account Analytics Cloud,Test Account DXP,Test Account Enterprise Search,Test Account Partnership";
+	var testAccounts = "Test Account LXC - SM,Test Account Analytics Cloud,Test Account DXP,Test Account Enterprise Search,Test Account Partnership";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -48,7 +48,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Click the Hide button and assert that the quick links panel collapses") {
@@ -202,13 +202,13 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "LXC-SM");
+			CP2NavigationMenu.clickOnProductButton(product = "LXC - SM");
 		}
 
 		task ("Assert the Latest Fix Packs card") {
@@ -226,7 +226,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Assert that the card is not present in the panel") {
@@ -240,7 +240,7 @@ definition {
 		}
 
 		task ("Check that subscriptions are present") {
-			CustomerPortal.viewSubscriptionManagementTab(productTab = "LXC-SM,Commerce");
+			CustomerPortal.viewSubscriptionManagementTab(productTab = "LXC - SM,Commerce");
 		}
 
 		task ("Assert that the desired card appears in the panel") {
@@ -274,7 +274,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Check that the following subscription are not part of the project") {
@@ -329,7 +329,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Assert that the project does not have a Partnership subscription and does not have a limited SLA card") {
@@ -350,7 +350,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 	}
 
@@ -360,7 +360,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Assert that the desired card appears in the panel") {
@@ -374,13 +374,13 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = "LXC-SM");
+			CP2NavigationMenu.clickOnProductButton(product = "LXC - SM");
 		}
 
 		task ("Assert that the desired card appears in the panel") {
@@ -394,7 +394,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Go to the Team Members page") {
@@ -412,7 +412,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Make the quick links panel collapse and then expand again") {

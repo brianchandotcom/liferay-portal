@@ -47,13 +47,13 @@ definition {
 		task ("Check how many projects are available in CP2.0") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.tableListInAccountsAdmin(projectsList = "Test Account LXC-SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account QA 7.0,Test Account QA 7.1,Test Account QA 7.2,Test Account QA 7.3,Test Account QA 7.4");
+			CustomerPortal.tableListInAccountsAdmin(projectsList = "Test Account LXC - SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account QA 7.0,Test Account QA 7.1,Test Account QA 7.2,Test Account QA 7.3,Test Account QA 7.4");
 		}
 
 		task ("Navigate to the Customer Portal 2.0 and assert the number of projects displayed on the homepage") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.tableListInHomepage(projectList = "Test Account LXC-SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account QA 7.0,Test Account QA 7.1,Test Account QA 7.2,Test Account QA 7.3,Test Account QA 7.4");
+			CustomerPortal.tableListInHomepage(projectList = "Test Account LXC - SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account QA 7.0,Test Account QA 7.1,Test Account QA 7.2,Test Account QA 7.3,Test Account QA 7.4");
 		}
 	}
 
@@ -63,7 +63,7 @@ definition {
 		task ("Navigate to Account Administrator and make the user an admin of the project") {
 			Accounts.openAccountsAdmin();
 
-			CustomerPortal.accountTableProject(title = "Test Account LXC-SM");
+			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
 
 			Accounts.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
@@ -73,7 +73,7 @@ definition {
 		task ("Assert that when the user is Liferay Staff and administrator of the project has gone through onboarding") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 
 			AssertElementPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
 		}
@@ -101,7 +101,7 @@ definition {
 		task ("Assert that the Liferay Staff user has not gone through onboarding") {
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal Site");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 
 			AssertElementNotPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
 		}

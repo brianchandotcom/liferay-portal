@@ -9,8 +9,8 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccounts = "Test Account LXC-SM";
-	var testproduct = "LXC-SM";
+	var testAccounts = "Test Account LXC - SM";
+	var testproduct = "LXC - SM";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -136,11 +136,11 @@ definition {
 				productIcon = "dxp_icon",
 				project = "${testAccounts}",
 				status = "Not Activated",
-				subtitle = "Almost there! Setup LXC-SM by finishing the activation form");
+				subtitle = "Almost there! Setup LXC - SM by finishing the activation form");
 		}
 	}
 
-	@description = "Automation ID: LPS-146852 | Test Summary: Verify if when the status is 'In Progress' the page subtitle: 'Your LXC-SM environments are being set up and will be available soon' appears"
+	@description = "Automation ID: LPS-146852 | Test Summary: Verify if when the status is 'In Progress' the page subtitle: 'Your LXC - SM environments are being set up and will be available soon' appears"
 	@priority = "4"
 	test CanViewCaptionWhenTheStatusIsInProgress {
 		task ("Change the user role in the project") {
@@ -178,7 +178,7 @@ definition {
 		task ("Assert the card legend change") {
 			AssertElementPresent(
 				locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
-				title = "Your LXC-SM environments are being set up and will be available soon");
+				title = "Your LXC - SM environments are being set up and will be available soon");
 		}
 
 		task ("Delete the entries and objects created") {

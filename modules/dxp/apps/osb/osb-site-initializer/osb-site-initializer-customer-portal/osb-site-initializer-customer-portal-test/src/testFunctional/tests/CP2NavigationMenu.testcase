@@ -9,7 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccounts = "Test Account Analytics Cloud,Test Account Commerce,Test Account LXC-SM,Test Account Enterprise Search";
+	var testAccounts = "Test Account Analytics Cloud,Test Account Commerce,Test Account LXC - SM,Test Account Enterprise Search";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -90,7 +90,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Go to the product activation page") {
@@ -99,7 +99,7 @@ definition {
 
 		task ("Assert the DXP Cloud product") {
 			AssertElementPresent(
-				key_text = "LXC-SM",
+				key_text = "LXC - SM",
 				locator1 = "Button#ANY");
 		}
 	}
@@ -150,7 +150,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Assert the Overview option in the on side menu") {
@@ -187,7 +187,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Assert the Team Members option in the on side menu") {

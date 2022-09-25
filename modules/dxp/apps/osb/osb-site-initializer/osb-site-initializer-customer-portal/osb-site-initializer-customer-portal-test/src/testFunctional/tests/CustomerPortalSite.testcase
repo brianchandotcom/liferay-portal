@@ -220,7 +220,7 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "CustomerPortalSite#ACCOUNTS_TABLE",
-				value = "Test Account LXC-SM");
+				value = "Test Account LXC - SM");
 		}
 	}
 

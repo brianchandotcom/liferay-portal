@@ -9,7 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccounts = "Test Account LXC-SM,Test Account Analytics Cloud,Test Account Portal,Test Account Commerce,Test Account Partnership,Test Account Others";
+	var testAccounts = "Test Account LXC - SM,Test Account Analytics Cloud,Test Account Portal,Test Account Commerce,Test Account Partnership,Test Account Others";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -48,7 +48,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Assert the signature card details") {
@@ -62,7 +62,7 @@ definition {
 		task ("Go to CP2.0 and join a project") {
 			ApplicationsMenu.gotoSite(key_site = "${testSiteName}");
 
-			CustomerPortal.enterOnProject(title = "Test Account LXC-SM");
+			CustomerPortal.enterOnProject(title = "Test Account LXC - SM");
 		}
 
 		task ("Assert if the Active status reflects the dates") {
@@ -141,7 +141,7 @@ definition {
 		}
 
 		task ("Assert that the signatures are being displayed in the tab") {
-			CustomerPortal.viewSubscriptionManagementTab(productTab = "LXC-SM,Commerce,Enterprise Search");
+			CustomerPortal.viewSubscriptionManagementTab(productTab = "LXC - SM,Commerce,Enterprise Search");
 		}
 	}
 
@@ -178,7 +178,7 @@ definition {
 
 		task ("Assert the drop-down list") {
 			CustomerPortal.viewSubscriptionManagementList(
-				dropDownItems = "LXC-SM,DXP,Commerce,Enterprise Search,Portal",
+				dropDownItems = "LXC - SM,DXP,Commerce,Enterprise Search,Portal",
 				dropDownLabel = "Type");
 		}
 	}

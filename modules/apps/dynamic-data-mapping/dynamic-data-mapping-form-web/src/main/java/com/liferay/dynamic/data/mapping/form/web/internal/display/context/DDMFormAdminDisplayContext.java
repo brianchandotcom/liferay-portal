@@ -564,13 +564,17 @@ public class DDMFormAdminDisplayContext {
 	public String getDefaultLanguageId() {
 		String defaultLanguageId = _getFormBuilderContextDefaultLanguageId();
 
-		if (defaultLanguageId != null) {
+		if ((defaultLanguageId != null) &&
+			LanguageUtil.isAvailableLocale(defaultLanguageId)) {
+
 			return defaultLanguageId;
 		}
 
 		defaultLanguageId = _getFormDefaultLanguageId();
 
-		if (defaultLanguageId != null) {
+		if ((defaultLanguageId != null) &&
+			LanguageUtil.isAvailableLocale(defaultLanguageId)) {
+
 			return defaultLanguageId;
 		}
 

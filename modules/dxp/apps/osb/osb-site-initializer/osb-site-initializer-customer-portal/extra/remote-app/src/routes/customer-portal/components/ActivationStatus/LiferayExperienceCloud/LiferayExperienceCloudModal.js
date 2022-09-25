@@ -64,11 +64,12 @@ const LiferayExperienceCloudModal = ({
 
 	const updateSubscriptionGroupsStatus = async () => {
 		getUpdateSubscriptionGroupsStatus(
-			handleStatusLxcActivation,
-			handleFinishUpdate,
-			project,
-			subscriptionGroupLxcEnvironment,
 			dispatch,
+			handleFinishUpdate,
+			handleStatusLxcActivation,
+			project,
+			projectIdValue,
+			subscriptionGroupLxcEnvironment,
 			subscriptionGroups,
 			updateAccountSubscriptionGroup
 		);

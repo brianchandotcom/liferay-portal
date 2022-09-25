@@ -51,8 +51,8 @@ const ModalDXPCActivationStatus = ({
 
 			return;
 		}
-		updateSubscriptionGroupsStatus();
 		updateProjectId(accountKey);
+		updateSubscriptionGroupsStatus();
 		onClose();
 	};
 
@@ -71,6 +71,7 @@ const ModalDXPCActivationStatus = ({
 				accountSubscriptionGroup: {
 					accountKey: project.accountKey,
 					activationStatus: STATUS_TAG_TYPE_NAMES.active,
+					manageContactsURL: `https://console.liferay.cloud/projects/${projectIdValue}/overview`,
 				},
 				id: dxpCloudSubscriptionGroup?.accountSubscriptionGroupId,
 			},

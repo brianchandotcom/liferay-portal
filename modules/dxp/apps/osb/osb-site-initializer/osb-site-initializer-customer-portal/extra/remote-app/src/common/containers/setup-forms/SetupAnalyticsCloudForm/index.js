@@ -165,6 +165,7 @@ const SetupAnalyticsCloudPage = ({
 						accountSubscriptionGroup: {
 							accountKey: project.accountKey,
 							activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
+							manageContactsURL: `https://analytics.liferay.com/workspace/${analyticsCloudWorkspaceId}/sites`,
 						},
 						id: subscriptionGroupId,
 					},

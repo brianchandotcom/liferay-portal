@@ -31,6 +31,7 @@ const GET_ACCOUNT_SUBSCRIPTION_GROUPS = gql`
 					activationStatus
 					externalReferenceCode
 					hasActivation
+					manageContactsURL
 					name
 					tabOrder
 					menuOrder

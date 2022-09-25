@@ -193,6 +193,7 @@ const SetupDXPCloudPage = ({
 						accountSubscriptionGroup: {
 							accountKey: project.accountKey,
 							activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
+							manageContactsURL: `https://console.liferay.cloud/projects/${dxpCloudEnvironmentId}/overview`,
 						},
 						id: subscriptionGroupId,
 					},

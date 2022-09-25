@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * @author Qi Zhang
  */
-public class UpgradeRegistryParameterCheck extends BaseCheck {
+public class JavaUpgradeRegistryParameterCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -231,7 +231,6 @@ public class UpgradeRegistryParameterCheck extends BaseCheck {
 
 		String currentMethodName = null;
 		String parameter1 = null;
-		String parameter2 = null;
 
 		while (childDetailAST != null) {
 			int tokenType = childDetailAST.getType();
@@ -259,7 +258,8 @@ public class UpgradeRegistryParameterCheck extends BaseCheck {
 
 			String methodName = getMethodName(firstChildDetailAST);
 
-			if (!StringUtil.equals(methodName, "alterColumnType") &&
+			if (!StringUtil.equals(methodName, "alterColumnName") &&
+				!StringUtil.equals(methodName, "alterColumnType") &&
 				!StringUtil.equals(methodName, "alterTableAddColumn") &&
 				!StringUtil.equals(methodName, "alterTableDropColumn")) {
 
@@ -275,21 +275,13 @@ public class UpgradeRegistryParameterCheck extends BaseCheck {
 			if (Validator.isNull(currentMethodName)) {
 				currentMethodName = methodName;
 
-				if (StringUtil.equals(methodName, "alterColumnType")) {
-					parameter1 = parameters.get(0);
-					parameter2 = parameters.get(2);
-				}
-				else {
-					parameter1 = parameters.get(0);
-				}
+				parameter1 = parameters.get(0);
 			}
 			else {
-				if (!StringUtil.equals(currentMethodName, methodName) ||
-					(StringUtil.equals(methodName, "alterColumnType") &&
-					 (!StringUtil.equals(parameters.get(0), parameter1) ||
-					  !StringUtil.equals(parameters.get(2), parameter2))) ||
-					(!StringUtil.equals(methodName, "alterColumnType") &&
-					 !StringUtil.equals(parameters.get(0), parameter1))) {
+				if (StringUtil.equals(currentMethodName, "alterColumnName") ||
+					StringUtil.equals(currentMethodName, "alterColumnType") ||
+					!StringUtil.equals(currentMethodName, methodName) ||
+					!StringUtil.equals(parameters.get(0), parameter1)) {
 
 					return;
 				}
@@ -336,6 +328,6 @@ public class UpgradeRegistryParameterCheck extends BaseCheck {
 	private static final String _MSG_PARAMETER_SIMPLY = "parameter.can.simply";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeRegistryParameterCheck.class);
+		JavaUpgradeRegistryParameterCheck.class);
 
 }

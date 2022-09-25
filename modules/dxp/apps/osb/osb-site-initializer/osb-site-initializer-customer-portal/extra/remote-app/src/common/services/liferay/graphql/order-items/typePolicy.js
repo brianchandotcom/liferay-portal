@@ -17,17 +17,17 @@ export const orderItemsTypePolicy = {
 		fields: {
 			options: {
 				read(options) {
+					let finalOptions = options;
+
 					if (typeof options === 'string') {
-						const parsedOptions = JSON.parse(options);
-
-						if (!parsedOptions.instanceSize) {
-							parsedOptions.instanceSize = 0;
-						}
-
-						return parsedOptions;
+						finalOptions = JSON.parse(options);
 					}
 
-					return options;
+					if (!finalOptions.instanceSize) {
+						finalOptions.instanceSize = 0;
+					}
+
+					return finalOptions;
 				},
 			},
 			reducedCustomFields: {

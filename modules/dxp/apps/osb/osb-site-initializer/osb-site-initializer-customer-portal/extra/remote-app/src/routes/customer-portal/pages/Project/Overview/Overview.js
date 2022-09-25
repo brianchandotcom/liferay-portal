@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
+import useCurrentKoroneikiAccount from '../../../../../common/hooks/useCurrentKoroneikiAccount';
 import SubscriptionsOverview from './components/SubscriptionsOverview';
 import SupportOverview from './components/SupportOverview/';
-import useCurrentKoroneikiAccount from './hooks/useCurrentKoroneikiAccount';
 
 const Overview = () => {
 	const {data, loading} = useCurrentKoroneikiAccount();

@@ -8,11 +8,9 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-const SLA_TYPES = {
+export const SLA_TYPES = {
 	gold: 'Gold',
 	limited: 'Limited',
 	platinum: 'Platinum',
 	premium: 'Premium',
 };
-
-export {SLA_TYPES};

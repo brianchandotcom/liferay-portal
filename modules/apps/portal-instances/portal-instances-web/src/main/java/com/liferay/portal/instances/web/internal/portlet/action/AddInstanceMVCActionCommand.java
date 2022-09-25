@@ -20,6 +20,9 @@ import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortle
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.exception.UserPasswordException;
+import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -32,7 +35,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.util.ParamUtil;
-
+import com.liferay.portal.kernel.util.Validator;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -77,6 +80,15 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			else if (exception instanceof CompanyWebIdException) {
 				errorMessage = "please-enter-a-valid-web-id";
 			}
+			else if (exception instanceof UserScreenNameException) {
+				errorMessage = "please-enter-a-valid-screen-name";
+			}
+			else if (exception instanceof UserEmailAddressException) {
+				errorMessage = "please-enter-a-valid-email-address";
+			}
+			else if (exception instanceof UserPasswordException) {
+				errorMessage = "please-enter-a-valid-password";
+			}
 
 			jsonObject.put(
 				"error",
@@ -90,6 +102,31 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _addInstance(ActionRequest actionRequest) throws Exception {
+		String screenNameAdmin = ParamUtil.getString(
+			actionRequest, "screenNameAdmin");
+
+		if (Validator.isNull(screenNameAdmin)) {
+			throw new UserScreenNameException.MustNotBeNull(screenNameAdmin);
+		}
+
+		String emailAdmin = ParamUtil.getString(actionRequest, "emailAdmin");
+
+		if (Validator.isNull(emailAdmin)) {
+			throw new UserEmailAddressException.MustValidate(emailAdmin, null);
+		}
+
+		String passwordAdmin = ParamUtil.getString(
+			actionRequest, "passwordAdmin");
+
+		if (Validator.isNull(passwordAdmin)) {
+			throw new UserPasswordException.MustNotBeNull(0);
+		}
+
+		String firstNameAdmin = ParamUtil.getString(
+			actionRequest, "firstNameAdmin");
+		String lastNameAdmin = ParamUtil.getString(
+			actionRequest, "lastNameAdmin");
+
 		String webId = ParamUtil.getString(actionRequest, "webId");
 		String virtualHostname = ParamUtil.getString(
 			actionRequest, "virtualHostname");
@@ -97,21 +134,9 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		int maxUsers = ParamUtil.getInteger(actionRequest, "maxUsers");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
-		String screenNameAdminUser = ParamUtil.getString(
-			actionRequest, "screenNameAdmin");
-		String emailAdminUser = ParamUtil.getString(
-			actionRequest, "emailAdmin");
-		String passwordAdminUser = ParamUtil.getString(
-			actionRequest, "passwordAdmin");
-		String firstNameAdminUser = ParamUtil.getString(
-			actionRequest, "firstNameAdmin");
-		String lastNameAdminUser = ParamUtil.getString(
-			actionRequest, "lastNameAdmin");
-
 		Company company = _companyService.addCompany(
-			webId, virtualHostname, mx, maxUsers, active, screenNameAdminUser,
-			emailAdminUser, passwordAdminUser, firstNameAdminUser,
-			lastNameAdminUser);
+			webId, virtualHostname, mx, maxUsers, active, screenNameAdmin,
+			emailAdmin, passwordAdmin, firstNameAdmin, lastNameAdmin);
 
 		String siteInitializerKey = ParamUtil.getString(
 			actionRequest, "siteInitializerKey");

@@ -28,15 +28,15 @@ export default function useOrderItems(
 		pageSize: PAGE_SIZE,
 	});
 
-	useEffect(
-		() =>
+	useEffect(() => {
+		if (activePage !== FIRST_PAGE) {
 			fetchMore({
 				variables: {
 					page: activePage,
 				},
-			}),
-		[activePage, fetchMore]
-	);
+			});
+		}
+	}, [activePage, fetchMore]);
 
 	return [
 		{activePage, setActivePage},

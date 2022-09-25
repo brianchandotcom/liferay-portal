@@ -152,14 +152,6 @@ public abstract class BaseSearchEngineConfigurator
 
 	protected abstract BundleContext getBundleContext();
 
-	protected Destination getDestination(
-		ServiceRegistration<Destination> serviceRegistration) {
-
-		BundleContext bundleContext = getBundleContext();
-
-		return bundleContext.getService(serviceRegistration.getReference());
-	}
-
 	protected abstract DestinationFactory getDestinationFactory();
 
 	protected abstract IndexSearcher getIndexSearcher();
@@ -552,11 +544,7 @@ public abstract class BaseSearchEngineConfigurator
 			for (ServiceRegistration<Destination> serviceRegistration :
 					_serviceRegistrations) {
 
-				Destination destination = getDestination(serviceRegistration);
-
 				serviceRegistration.unregister();
-
-				destination.destroy();
 			}
 
 			_serviceRegistrations.clear();

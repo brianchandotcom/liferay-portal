@@ -9,20 +9,21 @@
  * distribution rights of the Software.
  */
 
-import {Button} from '../../../../../../../../../common/components';
+import ClayIcon from '@clayui/icon';
 
-const ManageProductButton = ({activatedLink, activatedTitle}) => (
-	<a href={activatedLink} rel="noopener noreferrer" target="_blank">
-		<Button
-			appendIcon="shortcut"
-			className="align-items-stretch btn cp-manager-product-button d-flex mr-3 p-2 text-neutral-10"
-			displayType="secudary"
-		>
-			<p className="font-weight-semi-bold h6 m-0 pl-1">
-				{activatedTitle}
-			</p>
-		</Button>
+const ManageUsersButton = ({href, title}) => (
+	<a
+		className="align-items-stretch border border-secondary btn d-flex mr-3 p-2 text-neutral-10"
+		href={href}
+		rel="noopener noreferrer"
+		target="_blank"
+	>
+		<h6 className="font-weight-semi-bold m-0 pr-1">{title}</h6>
+
+		<span className="inline-item inline-item-after mt-0">
+			<ClayIcon className="cp-manage-users-icon" symbol="shortcut" />
+		</span>
 	</a>
 );
 
-export default ManageProductButton;
+export default ManageUsersButton;

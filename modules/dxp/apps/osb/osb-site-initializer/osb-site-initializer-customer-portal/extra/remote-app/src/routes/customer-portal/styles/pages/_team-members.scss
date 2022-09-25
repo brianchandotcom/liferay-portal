@@ -15,18 +15,3 @@
 		width: 10px;
 	}
 }
-.cp-manager-product-button {
-	&:hover {
-		border-color: var(--color-action-neutral-default);
-	}
-	& span {
-		margin-left: 6px;
-		margin-right: 0.25rem;
-		width: 12px;
-	}
-
-	border-color: var(--color-action-neutral-default);
-}
-.cp-manager-product-container {
-	max-width: fit-content;
-}

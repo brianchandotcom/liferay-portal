@@ -12,51 +12,43 @@
 import {useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import i18n from '../../../../../common/I18n';
-import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
-import {useCustomerPortal} from '../../../context';
+import useCurrentKoroneikiAccount from '../../../../../common/hooks/useCurrentKoroneikiAccount';
 import ManageProductUsers from './components/ManageProductUsers/ManageProductUsers';
-import TeamMembersTable from './components/TeamMembersTable/TeamMembersTable';
 
 const TeamMembers = () => {
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
-	const [{project, sessionId, subscriptionGroups}] = useCustomerPortal();
-	const {provisioningServerAPI} = useAppPropertiesContext();
+	const {data, loading} = useCurrentKoroneikiAccount();
+	const koroneikiAccount = data?.koroneikiAccountByExternalReferenceCode;
 
 	useEffect(() => {
 		setHasQuickLinksPanel(false);
 		setHasSideMenu(true);
 	}, [setHasSideMenu, setHasQuickLinksPanel]);
 
-	if (!project || !subscriptionGroups || !sessionId) {
-		return <>{i18n.translate('loading')}...</>;
-	}
-
 	return (
 		<>
 			<div>
-				<h1 className="m-0">{i18n.translate('team-members')}</h1>
+				<h1>{i18n.translate('team-members')}</h1>
 
-				<p className="mb-0 mt-1 text-neutral-7 text-paragraph-sm">
+				<p className="text-neutral-7 text-paragraph-sm">
 					{i18n.translate(
 						'team-members-have-access-to-this-project-in-customer-portal'
 					)}
 				</p>
 			</div>
 
-			<div className="mt-4">
+			{/* <div className="mt-4">
 				<TeamMembersTable
 					project={project}
 					provisioningServerAPI={provisioningServerAPI}
 					sessionId={sessionId}
 				/>
-			</div>
+			</div> */}
 
-			<div className="mt-5">
-				<ManageProductUsers
-					project={project}
-					subscriptionGroups={subscriptionGroups}
-				/>
-			</div>
+			<ManageProductUsers
+				koroneikiAccount={koroneikiAccount}
+				loading={loading}
+			/>
 		</>
 	);
 };

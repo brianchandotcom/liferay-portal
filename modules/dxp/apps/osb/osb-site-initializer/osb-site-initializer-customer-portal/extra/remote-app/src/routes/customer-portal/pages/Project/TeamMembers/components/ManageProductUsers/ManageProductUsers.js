@@ -9,141 +9,112 @@
  * distribution rights of the Software.
  */
 
-import {useEffect, useState} from 'react';
+import {useMemo} from 'react';
 import i18n from '../../../../../../../common/I18n';
-import {useAppPropertiesContext} from '../../../../../../../common/contexts/AppPropertiesContext';
-import {Liferay} from '../../../../../../../common/services/liferay';
-import {useGetLiferayExperienceCloudEnvironments} from '../../../../../../../common/services/liferay/graphql/liferay-experience-cloud-environments/queries/useGetLiferayExperienceEnvironments';
-import {
-	getAnalyticsCloudWorkspace,
-	getDXPCloudEnvironment,
-} from '../../../../../../../common/services/liferay/graphql/queries';
+import Skeleton from '../../../../../../../common/components/Skeleton';
 import {PRODUCT_TYPES} from '../../../../../utils/constants/productTypes';
-import {STATUS_TAG_TYPE_NAMES} from '../../../../../utils/constants/statusTag';
-import ManageProductButton from './components/ManageProductButton/ManageProductButton';
+import ManageUsersButton from './components/ManageUsersButton/ManageUsersButton';
+import useActiveAccountSubscriptionGroups from './hooks/useActiveAccountSubscriptionGroups';
 
-const ManageProductUsers = ({project, subscriptionGroups}) => {
-	const [dxpCloudProjectId, setDxpCloudProjectId] = useState('');
-	const [analyctsCloudGroupId, setAnalyctsCloudGroupId] = useState('');
-	const {client} = useAppPropertiesContext();
+const ManageProductUsers = ({koroneikiAccount, loading}) => {
+	const {
+		data,
+		loading: accountSubscriptionGroupsLoading,
+	} = useActiveAccountSubscriptionGroups(
+		koroneikiAccount?.accountKey,
+		loading,
+		[
+			PRODUCT_TYPES.analyticsCloud,
+			PRODUCT_TYPES.dxpCloud,
+			PRODUCT_TYPES.liferayExperienceCloud,
+		]
+	);
 
-	const activatedLinkDXPC = `https://console.liferay.cloud/projects/${dxpCloudProjectId}/overview`;
-	const activatedLinkAC = `https://analytics.liferay.com/workspace/${analyctsCloudGroupId}/sites`;
+	const accountSubscriptionGroups = data?.c.accountSubscriptionGroups.items;
+	const accountSubscriptionGroupLiferayExperienceCloud = useMemo(
+		() =>
+			accountSubscriptionGroups?.find(
+				({name}) => name === PRODUCT_TYPES.liferayExperienceCloud
+			),
+		[accountSubscriptionGroups]
+	);
 
-	useEffect(() => {
-		const getDxpCloudEnvimentProjectId = async () => {
-			const {data} = await client.query({
-				query: getDXPCloudEnvironment,
-				variables: {
-					filter: `accountKey eq '${project.accountKey}'`,
-					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
-				},
-			});
+	const getManageUsersButton = () => {
+		if (accountSubscriptionGroupLiferayExperienceCloud) {
+			return (
+				<ManageUsersButton
+					href={
+						accountSubscriptionGroupLiferayExperienceCloud.manageContactsURL
+					}
+					title={i18n.translate(
+						'manage-liferay-experience-cloud-users'
+					)}
+				/>
+			);
+		}
 
-			if (data) {
-				const dxpProjectId =
-					data.c?.dXPCloudEnvironments?.items[0]?.projectId;
-				setDxpCloudProjectId(dxpProjectId);
-			}
-		};
-
-		getDxpCloudEnvimentProjectId();
-
-		const getAnalyticsCloudWorkspaces = async () => {
-			const {data} = await client.query({
-				query: getAnalyticsCloudWorkspace,
-				variables: {
-					filter: `accountKey eq '${project.accountKey}'`,
-					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
-				},
-			});
-			if (data) {
-				const analyticsCloudWorkspacesGroupID =
-					data?.c?.analyticsCloudWorkspaces?.items[0]
-						?.workspaceGroupId;
-				setAnalyctsCloudGroupId(analyticsCloudWorkspacesGroupID);
-			}
-		};
-		getAnalyticsCloudWorkspaces();
-	}, [client, project.accountKey]);
-
-	const {data} = useGetLiferayExperienceCloudEnvironments({
-		filter: `accountKey eq '${project.accountKey}'`,
-	});
-
-	const lxcProjectId =
-		data?.c?.liferayExperienceCloudEnvironments?.items[0]?.projectId;
-
-	const activatedLinkLxc = `http://${lxcProjectId}.lxc.liferay.com`;
-
-	const isActiveStatusDXPC =
-		subscriptionGroups.find(
-			(subscriptionGroup) =>
-				subscriptionGroup.name === PRODUCT_TYPES.dxpCloud
-		)?.activationStatus === STATUS_TAG_TYPE_NAMES.active;
-	const isActiveStatusAC =
-		subscriptionGroups.find(
-			(subscriptionGroup) =>
-				subscriptionGroup.name === PRODUCT_TYPES.analyticsCloud
-		)?.activationStatus === STATUS_TAG_TYPE_NAMES.active;
-
-	const isActiveStatusLXC =
-		subscriptionGroups.find(
-			(subscriptionGroup) =>
-				subscriptionGroup.name === PRODUCT_TYPES.liferayExperienceCloud
-		)?.activationStatus === STATUS_TAG_TYPE_NAMES.active;
-
-	return (
-		<>
-			{(isActiveStatusDXPC || isActiveStatusAC || isActiveStatusLXC) && (
-				<div className="bg-brand-primary-lighten-6 border-0 card card-flat cp-manager-product-container mt-5">
-					<div className="p-4">
-						<h4>
-							{isActiveStatusLXC
-								? i18n.translate(
-										'manage-liferay-experience-cloud-users'
-								  )
-								: i18n.translate('manage-product-users')}
-						</h4>
-
-						<p className="mt-2 text-neutral-7 text-paragraph-sm">
-							{i18n.translate(
-								'manage-roles-and-permissions-of-users-within-each-product'
-							)}
-						</p>
-
-						<div className="d-flex">
-							{isActiveStatusDXPC && (
-								<ManageProductButton
-									activatedLink={activatedLinkDXPC}
-									activatedTitle={i18n.translate(
+		return (
+			<div className="d-flex">
+				{accountSubscriptionGroups?.map(
+					({manageContactsURL, name}, index) => {
+						if (name === PRODUCT_TYPES.dxpCloud) {
+							return (
+								<ManageUsersButton
+									href={manageContactsURL}
+									key={index}
+									title={i18n.translate(
 										'manage-lxc-sm-users'
 									)}
 								/>
-							)}
+							);
+						}
 
-							{isActiveStatusAC && (
-								<ManageProductButton
-									activatedLink={activatedLinkAC}
-									activatedTitle={i18n.translate(
-										'manage-analytics-cloud-users'
-									)}
-								/>
-							)}
+						return (
+							<ManageUsersButton
+								href={manageContactsURL}
+								key={index}
+								title={i18n.translate(
+									'manage-analytics-cloud-users'
+								)}
+							/>
+						);
+					}
+				)}
+			</div>
+		);
+	};
 
-							{isActiveStatusLXC && (
-								<ManageProductButton
-									activatedLink={activatedLinkLxc}
-									activatedTitle={i18n.translate(
-										'manage-liferay-experience-cloud-users'
-									)}
-								/>
-							)}
-						</div>
-					</div>
-				</div>
+	return (
+		<div className="bg-brand-primary-lighten-6 cp-manage-product-users mt-5 p-4 rounded-lg">
+			{accountSubscriptionGroupsLoading ? (
+				<Skeleton height={25} width={224} />
+			) : (
+				<h4 className="mb-0">
+					{accountSubscriptionGroupLiferayExperienceCloud
+						? i18n.translate(
+								'manage-liferay-experience-cloud-users'
+						  )
+						: i18n.translate('manage-product-users')}
+				</h4>
 			)}
-		</>
+
+			{accountSubscriptionGroupsLoading ? (
+				<Skeleton className="mb-3 mt-2" height={20} width={320} />
+			) : (
+				<p className="mt-2 text-neutral-7 text-paragraph-sm">
+					{i18n.translate(
+						'manage-roles-and-permissions-of-users-within-each-product'
+					)}
+				</p>
+			)}
+
+			{accountSubscriptionGroupsLoading ? (
+				<Skeleton height={34} width={210} />
+			) : (
+				getManageUsersButton()
+			)}
+		</div>
 	);
 };
+
 export default ManageProductUsers;

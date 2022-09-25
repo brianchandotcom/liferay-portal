@@ -26,7 +26,7 @@ export const languages = {
 const translate = (word, languageId = Liferay.ThemeDisplay.getLanguageId()) => {
 	const languageProperties = languages[languageId] || languages.en_US;
 
-	return languageProperties[word] || languages.en_US[word];
+	return languageProperties[word] || languages.en_US[word] || word;
 };
 
 const sub = (word, words) => {
@@ -39,6 +39,7 @@ const sub = (word, words) => {
 	words.forEach((value, index) => {
 		const translatedKey = translate(value);
 		const key = `{${index}}`;
+
 		translatedWord = translatedWord.replace(key, translatedKey);
 	});
 

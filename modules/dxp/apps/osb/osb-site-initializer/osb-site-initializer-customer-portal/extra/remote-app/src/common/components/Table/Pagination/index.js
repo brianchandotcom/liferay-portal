@@ -27,9 +27,9 @@ const TablePagination = ({
 }) => {
 	if (showDeltasDropDown || totalItems > itemsPerPage) {
 		const defaultLabels = {
-			paginationResults: 'showing-x-to-x-of-x',
-			perPageItems: 'show-x-items',
-			selectPerPageItems: 'x-items',
+			paginationResults: i18n.translate('showing-x-to-x-of-x'),
+			perPageItems: i18n.translate('show-x-items'),
+			selectPerPageItems: i18n.translate('x-items'),
 		};
 
 		return (

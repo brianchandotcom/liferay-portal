@@ -283,10 +283,12 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		DDMFormValues ddmFormValues = DDMFieldLocalServiceUtil.getDDMFormValues(
 			ddmForm, getId());
 
-		ddmFormValues.setDDMFormFieldValues(
-			DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
-				ddmForm.getDDMFormFields(),
-				ddmFormValues.getDDMFormFieldValuesMap(true)));
+		if (ddmFormValues != null) {
+			ddmFormValues.setDDMFormFieldValues(
+				DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
+					ddmForm.getDDMFormFields(),
+					ddmFormValues.getDDMFormFieldValuesMap(true)));
+		}
 
 		return ddmFormValues;
 	}

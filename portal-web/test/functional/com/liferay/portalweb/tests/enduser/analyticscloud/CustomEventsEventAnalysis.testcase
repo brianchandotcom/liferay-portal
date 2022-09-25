@@ -283,11 +283,9 @@ definition {
 	@description = "Bug ID: LRAC-11659 | Automation ID: LRAC-11726 | Test Summary: Check Default Events Counted as Default when event sent by console"
 	@priority = "5"
 	test CheckDefaultEventsCountedAsDefaultWhenEventSentByConsole {
-		var layoutName = "Custom 1";
-		var globalAttributesList = "canonicalUrl,pageTitle,referrer,url";
-
-		var disableAttributesList = "${globalAttributesList}";
-		var attributesList = "category,like";
+		var layoutName = "Custom Asset";
+		var disableAttributesList = "assetId,canonicalUrl,category,pageDescription,pageKeywords,pageTitle,title,referrer,url";
+		var eventName = "assetViewed";
 
 		task ("Navigation to default events tab") {
 			ACUtils.launchAC();
@@ -302,68 +300,40 @@ definition {
 		}
 
 		task ("Access the assetViewed") {
-			ACNavigation.openItem(itemName = "assetViewed");
+			ACNavigation.openItem(itemName = "${eventName}");
 		}
 
-		task ("Copy the sample JS and replace an existing attribute with a new one") {
-			ACCustomEvents.copySampleJavascript(
-				attributesList = "${attributesList}",
-				disableAttributesList = "${disableAttributesList}");
+		task ("Copy the sample JS and disable existing attribute") {
+			ACCustomEvents.copySampleJavascript(disableAttributesList = "${disableAttributesList}");
 		}
 
-		task ("Close sessions and launch DXP") {
-			ACUtils.closeAllSessions();
-
+		task ("Go to DXP > Go to AC Page") {
 			ACUtils.launchDXP();
 
-			ACUtils.navigateToSitePage( pageName = "AC Page", siteName = "Site Name");
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
-		task ("Start Har recording") {
-			ProxyUtil.startHarRecording("pageViewed");
-		}
-
-		task ("Send the JavaScript custom event") {
-			var sampleJavascript = "${sampleJavascript}";
-
+		task ("Submit JS sample via browser console") {
 			ACUtils.executeJSInBrowserConsole(javaScriptCode = "${sampleJavascript}");
 
 			ACUtils.waitForSendingRequest();
-		}
-
-		task ("View the properties of assetViewed event") {
-			ACUtils.assertEventPropertyValue(
-				applicationId = "CustomEvent",
-				eventId = "assetViewed",
-				property = "entryId",
-				value = "${entryId}");
 		}
 
 		task ("Add a new site with a public widget page") {
 			ACUtils.addPage(layoutName = "${layoutName}");
 		}
 
-		task ("Add a Web Content Display to page and display a web content") {
+		task ("Add a Web Content Display to page and display a Custom Asset") {
 			ACUtils.createWCAndAddToPage(
 				layoutName = "${layoutName}",
 				webContentContent = '''<div data-analytics-asset-type="custom" data-analytics-asset-id="analytics-portal" data-analytics-asset-category="AC" data-analytics-asset-title="Custom Asset Analytics Cloud">%0A<h1> What'\''s your favorite portal? </h1>%0A</div>''',
 				webContentTitle = "Custom Asset AC Title");
 		}
 
-		task ("View web content") {
-			ACUtils.navigateToSitePage(
-				actionType = "View WC",
-				documentTitleList = "Custom Asset AC Title",
-				pageName = "${layoutName}",
-				siteName = "Site Name");
-		}
-
-		task ("View the properties of assetViewed event") {
-			ACUtils.assertEventPropertyValue(
-				applicationId = "Custom",
-				eventId = "assetViewed",
-				property = "entryId",
-				value = "${entryId}");
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch the property in AC and go to event analysis") {
@@ -380,18 +350,34 @@ definition {
 			ACNavigation.switchTabInCard(tabName = "Custom");
 		}
 
-		task ("Search for assetViewed in Custom") {
-			ACEventAnalysis.searchEventAnalysis(searchItem = "assetViewed");
+		task ("Search for assetViewed in Custom tab and check that the event does not appear") {
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${eventName}");
 
-			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "assetViewed");
+			ACEventAnalysis.viewEventAnalysisListNotPresent(eventList = "${eventName}");
 		}
 
-		task ("Switch to Default event and search") {
+		task ("Search for assetViewed in Default tab and check that the event appears") {
 			ACNavigation.switchTabInCard(tabName = "Default");
 
-			ACEventAnalysis.searchEventAnalysis(searchItem = "assetViewed");
+			ACEventAnalysis.searchEventAnalysis(searchItem = "${eventName}");
 
-			ACEventAnalysis.viewEventAnalysisList(eventList = "assetViewed");
+			ACEventAnalysis.viewEventAnalysisList(eventList = "${eventName}");
+		}
+
+		task ("Add the custom event to analysis") {
+			Click(
+				key_buttonName = "${eventName}",
+				locator1 = "ACUtils#GENERIC_BUTTON");
+		}
+
+		task ("Change the time filter to 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Check the number of interactions with the event") {
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "2");
 		}
 	}
 

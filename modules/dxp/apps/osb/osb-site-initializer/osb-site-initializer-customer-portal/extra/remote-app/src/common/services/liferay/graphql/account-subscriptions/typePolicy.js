@@ -11,6 +11,17 @@
 
 export const accountSubscriptionsTypePolicy = {
 	C_AccountSubscription: {
+		fields: {
+			instanceSize: {
+				read(instanceSize) {
+					if (!instanceSize) {
+						return 0;
+					}
+
+					return instanceSize;
+				},
+			},
+		},
 		keyFields: ['externalReferenceCode'],
 	},
 };

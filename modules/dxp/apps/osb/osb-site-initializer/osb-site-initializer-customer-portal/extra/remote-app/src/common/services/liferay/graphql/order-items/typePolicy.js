@@ -15,20 +15,47 @@ import readPageSizePagination from '../common/utils/readPageSizePagination';
 export const orderItemsTypePolicy = {
 	OrderItem: {
 		fields: {
-			customFields: {
-				read(customFields) {
-					return customFields.reduce(
-						(fieldsAccumulator, currentField) => ({
-							...fieldsAccumulator,
-							[currentField.name]: currentField.customValue.data,
-						}),
-						{}
-					);
-				},
-			},
 			options: {
 				read(options) {
-					return JSON.parse(options);
+					if (typeof options === 'string') {
+						const parsedOptions = JSON.parse(options);
+
+						if (!parsedOptions.instanceSize) {
+							parsedOptions.instanceSize = 0;
+						}
+
+						return parsedOptions;
+					}
+
+					return options;
+				},
+			},
+			reducedCustomFields: {
+				read(_, {readField}) {
+					const customFields = readField('customFields');
+
+					if (Array.isArray(customFields)) {
+						return customFields.reduce(
+							(customFieldsAccumulator, currentCustomField) => ({
+								...customFieldsAccumulator,
+								[readField(
+									'name',
+									currentCustomField
+								)]: readField(
+									'data',
+									readField('customValue', currentCustomField)
+								),
+							}),
+							{}
+						);
+					}
+
+					return {
+						[readField('name', customFields)]: readField(
+							'data',
+							readField('customValue', customFields)
+						),
+					};
 				},
 			},
 		},
@@ -37,8 +64,8 @@ export const orderItemsTypePolicy = {
 	OrderItemPage: {
 		fields: {
 			items: {
-				...readPageSizePagination(),
 				...concatPageSizePagination(),
+				...readPageSizePagination(),
 			},
 		},
 	},

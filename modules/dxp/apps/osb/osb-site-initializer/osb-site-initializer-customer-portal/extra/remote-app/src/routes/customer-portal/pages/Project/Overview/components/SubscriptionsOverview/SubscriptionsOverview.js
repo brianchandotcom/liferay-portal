@@ -69,21 +69,31 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 				)
 			)}
 
-			<SubscriptionsNavbar
-				accountSubscriptionGroups={accountSubscriptionGroups?.items}
-				disabled={accountSubscriptionsLoading}
-				loading={accountSubscriptionGroupsLoading}
-				onClickDropdownItem={handleDropdownOnClick}
-				onSelectNavItem={(accountSubscriptionGroup) => {
-					setLastAccountSubscriptionGroup(accountSubscriptionGroup);
-				}}
-			/>
+			{!!lastAccountSubcriptionGroup && (
+				<>
+					<SubscriptionsNavbar
+						accountSubscriptionGroups={
+							accountSubscriptionGroups?.items
+						}
+						disabled={accountSubscriptionsLoading}
+						loading={accountSubscriptionGroupsLoading}
+						onClickDropdownItem={handleDropdownOnClick}
+						onSelectNavItem={(accountSubscriptionGroup) => {
+							setLastAccountSubscriptionGroup(
+								accountSubscriptionGroup
+							);
+						}}
+					/>
 
-			<AccountSubscriptionsList
-				accountSubscriptions={accountSubscriptions}
-				loading={accountSubscriptionsLoading}
-				selectedAccountSubscriptionGroup={lastAccountSubcriptionGroup}
-			/>
+					<AccountSubscriptionsList
+						accountSubscriptions={accountSubscriptions}
+						loading={accountSubscriptionsLoading}
+						selectedAccountSubscriptionGroup={
+							lastAccountSubcriptionGroup
+						}
+					/>
+				</>
+			)}
 		</div>
 	);
 };

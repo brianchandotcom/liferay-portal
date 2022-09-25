@@ -49,7 +49,7 @@ const AccountSubscriptionCard = ({
 			)}
 			onClick={onClick}
 		>
-			<ClayCard.Body className="cp-account-subscription-card pb-3">
+			<ClayCard.Body className="cp-account-subscription-card d-flex flex-column justify-content-between pb-3">
 				{loading ? (
 					<Skeleton className="mb-3 py-1" height={45} width={48} />
 				) : (
@@ -73,35 +73,42 @@ const AccountSubscriptionCard = ({
 					</h5>
 				)}
 
-				{loading ? (
-					<Skeleton className="mb-1" height={13} width={80} />
-				) : (
-					<p className="mb-1 text-center text-neutral-7 text-paragraph-sm">
-						{`${i18n.translate('instance-size')}: `}
+				<div>
+					{loading ? (
+						<Skeleton className="mb-1" height={13} width={80} />
+					) : (
+						<p className="mb-1 text-center text-neutral-7 text-paragraph-sm">
+							{`${i18n.translate('instance-size')}: `}
 
-						{accountSubscription.instanceSize}
-					</p>
-				)}
+							{accountSubscription.instanceSize}
+						</p>
+					)}
 
-				{loading ? (
-					<Skeleton className="mb-3" height={24} width={160} />
-				) : (
-					<p className="mb-3 text-center">{getDatesDisplay()}</p>
-				)}
+					{loading ? (
+						<Skeleton className="mb-3" height={24} width={160} />
+					) : (
+						accountSubscription.startDate &&
+						accountSubscription.endDate && (
+							<p className="mb-3 text-center">
+								{getDatesDisplay()}
+							</p>
+						)
+					)}
 
-				{loading ? (
-					<Skeleton height={20} width={38} />
-				) : (
-					<div className="d-flex justify-content-center">
-						<StatusTag
-							currentStatus={
-								SLA_STATUS_TYPES[
-									accountSubscription.subscriptionStatus.toLowerCase()
-								]
-							}
-						/>
-					</div>
-				)}
+					{loading ? (
+						<Skeleton height={20} width={38} />
+					) : (
+						<div className="d-flex justify-content-center">
+							<StatusTag
+								currentStatus={
+									SLA_STATUS_TYPES[
+										accountSubscription.subscriptionStatus.toLowerCase()
+									]
+								}
+							/>
+						</div>
+					)}
+				</div>
 			</ClayCard.Body>
 		</ClayCard>
 	);

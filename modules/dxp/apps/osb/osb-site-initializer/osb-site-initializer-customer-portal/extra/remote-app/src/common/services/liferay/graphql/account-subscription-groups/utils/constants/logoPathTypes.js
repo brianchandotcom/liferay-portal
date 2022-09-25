@@ -21,4 +21,5 @@ export const LOGO_PATH_TYPES = {
 	[PRODUCT_TYPES.portal]: 'portal_icon.svg',
 	[PRODUCT_TYPES.partnership]: 'portal_icon.svg',
 	[PRODUCT_TYPES.socialOffice]: 'portal_icon.svg',
+	[PRODUCT_TYPES.other]: 'portal_icon.svg',
 };

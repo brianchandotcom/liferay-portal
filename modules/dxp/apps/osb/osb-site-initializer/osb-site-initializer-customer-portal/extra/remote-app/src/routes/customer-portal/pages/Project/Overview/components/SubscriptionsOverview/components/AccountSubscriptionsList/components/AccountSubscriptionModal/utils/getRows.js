@@ -10,12 +10,14 @@
  */
 
 import {StatusTag} from '../../../../../../../../../../../../common/components';
-import {FORMAT_DATE_TYPES} from '../../../../../../../../../../../../common/utils/constants';
+import {
+	FORMAT_DATE_TYPES,
+	SLA_STATUS_TYPES,
+} from '../../../../../../../../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../../../../../../../../common/utils/getDateCustomFormat';
-import {STATUS_TAG_TYPES} from '../../../../../../../../../../utils/constants/statusTag';
 
 export default function getRows(orderItems) {
-	return orderItems?.map(({customFields, options, quantity}) => {
+	return orderItems?.map(({options, quantity, reducedCustomFields}) => {
 		const datesDisplay = `${getDateCustomFormat(
 			options.startDate,
 			FORMAT_DATE_TYPES.day2DMonth2DYearN
@@ -26,13 +28,15 @@ export default function getRows(orderItems) {
 
 		return {
 			'instance-size': options.instanceSize,
-			'provisioned': customFields.provisionedCount,
+			'provisioned': reducedCustomFields.provisionedCount,
 			quantity,
 			'start-end-date': datesDisplay,
-			'subscription-term-status': customFields.status && (
+			'subscription-term-status': reducedCustomFields.status && (
 				<StatusTag
 					currentStatus={
-						STATUS_TAG_TYPES[customFields.status.toLowerCase()]
+						SLA_STATUS_TYPES[
+							reducedCustomFields.status.toLowerCase()
+						]
 					}
 				/>
 			),

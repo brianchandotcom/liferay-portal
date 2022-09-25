@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import {NetworkStatus} from '@apollo/client';
 import {useEffect, useState} from 'react';
 import useGetOrderItems from '../../../../../../../../../../../../common/services/liferay/graphql/order-items/queries/useGetOrderItems';
 
@@ -20,19 +21,26 @@ export default function useOrderItems(
 ) {
 	const [activePage, setActivePage] = useState(FIRST_PAGE);
 
-	const {data, fetchMore, loading} = useGetOrderItems({
+	const {data, fetchMore, networkStatus} = useGetOrderItems({
 		filter: `customFields/accountSubscriptionERC eq '${accountSubscriptionExternalReferenceCode}'`,
-		page: FIRST_PAGE,
+		notifyOnNetworkStatusChange: true,
+		page: activePage,
 		pageSize: PAGE_SIZE,
 	});
 
 	useEffect(
 		() =>
 			fetchMore({
-				page: activePage,
+				variables: {
+					page: activePage,
+				},
 			}),
 		[activePage, fetchMore]
 	);
 
-	return [{activePage, setActivePage}, PAGE_SIZE, {data, loading}];
+	return [
+		{activePage, setActivePage},
+		PAGE_SIZE,
+		{data, loading: networkStatus === NetworkStatus.loading},
+	];
 }

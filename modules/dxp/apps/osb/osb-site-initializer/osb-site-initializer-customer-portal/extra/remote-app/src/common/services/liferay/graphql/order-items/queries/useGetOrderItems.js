@@ -23,8 +23,12 @@ export const GET_ORDER_ITEMS = gql`
 						data
 					}
 				}
+				reducedCustomFields @client
 				options
 			}
+			lastPage
+			page
+			pageSize
 			totalCount
 		}
 	}

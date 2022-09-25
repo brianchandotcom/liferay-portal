@@ -15,9 +15,9 @@ export default function readPageSizePagination() {
 			const {page = 1, pageSize = 20} = variables;
 
 			const offset = (page - 1) * pageSize;
-			const limit = pageSize - 1;
+			const limit = page * pageSize;
 
-			return existing && existing.slice(offset, offset + limit);
+			return existing && existing.slice(offset, limit);
 		},
 	};
 }

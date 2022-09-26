@@ -366,6 +366,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		properties.put("dateModified", objectEntry.getDateModified());
 		properties.put(
 			"externalReferenceCode", objectEntry.getExternalReferenceCode());
+		properties.put("id", objectEntry.getId());
 
 		Status status = objectEntry.getStatus();
 

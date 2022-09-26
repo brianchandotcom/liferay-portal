@@ -17,6 +17,7 @@ import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
+import {VIEWPORT_SIZES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import SpacingBox from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/SpacingBox';
 import {StyleBookContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-design-options/hooks/useStyleBook';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test-utils/StoreMother';
@@ -25,6 +26,12 @@ jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
+			availableViewportSizes: {
+				desktop: {label: 'desktop'},
+				landscapeMobile: {label: 'landscapeMobile'},
+				portraitMobile: {label: 'portraitMobile'},
+				tablet: {label: 'tablet'},
+			},
 			frontendTokens: {
 				spacer0: {
 					defaultValue: '3rem',
@@ -42,11 +49,13 @@ jest.mock(
 );
 
 const SpacingBoxTest = ({
+	itemConfig = {},
 	canSetCustomValue = true,
 	onChange = () => {},
 	value = {},
+	getState = () => ({}),
 }) => (
-	<StoreMother.Component>
+	<StoreMother.Component getState={getState}>
 		<StyleBookContextProvider>
 			<SpacingBox
 				canSetCustomValue={canSetCustomValue}
@@ -140,6 +149,7 @@ const SpacingBoxTest = ({
 						},
 					},
 				}}
+				item={{config: itemConfig}}
 				onChange={onChange}
 				value={value}
 			/>
@@ -276,6 +286,49 @@ describe('SpacingBox', () => {
 
 			expect(onChange).toHaveBeenCalledWith('paddingTop', '20px');
 			expect(screen.queryByText('10rem')).not.toBeInTheDocument();
+		});
+	});
+
+	describe('Reset button inside SpacingBox', () => {
+		it('reset value when pressing the button', () => {
+			const onChange = jest.fn();
+
+			render(
+				<SpacingBoxTest onChange={onChange} value={{marginTop: '10'}} />
+			);
+
+			const button = screen.getByLabelText('margin-top');
+
+			userEvent.click(button);
+
+			userEvent.click(screen.getByTitle('reset-to-initial-value'));
+
+			expect(onChange).toHaveBeenCalledWith(
+				'marginTop',
+				null,
+				expect.anything()
+			);
+		});
+
+		it('renders correct label if we are in different viewport', () => {
+			const onChange = jest.fn();
+
+			render(
+				<SpacingBoxTest
+					getState={() => ({
+						selectedViewportSize: VIEWPORT_SIZES.tablet,
+					})}
+					itemConfig={{marginTop: '2px'}}
+					onChange={onChange}
+					value={{marginTop: '10'}}
+				/>
+			);
+
+			userEvent.click(screen.getByLabelText('margin-top'));
+
+			expect(
+				screen.getByTitle('reset-to-desktop-value')
+			).toBeInTheDocument();
 		});
 	});
 });

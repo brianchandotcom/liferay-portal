@@ -20,12 +20,11 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 /**
  * @author Qi Zhang
  */
-public class ReplaceDummyUpgradeStepForInitialize2
-	implements UpgradeStepRegistrator {
+public class MissingRegisterInitialization2 implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.registerInitialization();
+		registry.register("0.0.0", "0.0.2", new DummyUpgradeStep());
 
 		registry.register("0.0.1", "0.0.2", new DummyUpgradeStep());
 	}

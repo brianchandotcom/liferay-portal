@@ -60,11 +60,11 @@ public class JavaUpgradeVersionSourceProcessorTest
 	}
 
 	@Test
-	public void testReplaceDummyUpgradeStepForInitialize() throws Exception {
-		test("ReplaceDummyUpgradeStepForInitialize1.testjava");
-		test("ReplaceDummyUpgradeStepForInitialize2.testjava");
+	public void testMissingRegisterInitialization() throws Exception {
+		test("MissingRegisterInitialization1.testjava");
+		test("MissingRegisterInitialization2.testjava");
 		test(
-			"ReplaceDummyUpgradeStepForInitialize3.testjava",
+			"MissingRegisterInitialization3.testjava",
 			"Upgrades from version 0.0.0 with non-Dummy progress shuold be " +
 				"replaced by 'registry.registerInitialization()'");
 	}

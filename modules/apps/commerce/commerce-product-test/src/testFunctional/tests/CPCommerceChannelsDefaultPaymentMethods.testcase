@@ -33,7 +33,7 @@ definition {
 	test AddAndRemoveANewDefaultPaymentMethod {
 		property portal.acceptance = "false";
 
-		task ("When the user goes into the Order Defaults tab for an account in Minium account Management") {
+		task ("When the user goes into the Channel Defaults tab for an account in Minium account Management") {
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
 		}
 
@@ -542,7 +542,7 @@ definition {
 				locator1 = "SystemSettings#CONFIGURATION_ENTRY");
 		}
 
-		task ("And the user goes into the Order Defaults tab inside the Account") {
+		task ("And the user goes into the Channel Defaults tab inside the Account") {
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
 		}
 

@@ -77,7 +77,7 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "${accountName}");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Order Defaults");
+		CommerceEntry.gotoMenuTab(menuTab = "Channel Defaults");
 	}
 
 	macro gotoMiniumSidebarItem {

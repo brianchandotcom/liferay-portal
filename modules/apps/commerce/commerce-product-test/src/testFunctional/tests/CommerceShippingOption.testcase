@@ -25,7 +25,7 @@ definition {
 	test AddEditAndRemoveNewDefaultShippingOption {
 		property portal.acceptance = "false";
 
-		task ("Given the Sales Manager is on the Order Defaults tab in the Account") {
+		task ("Given the Sales Manager is on the Channel Defaults tab in the Account") {
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
 		}
 
@@ -126,7 +126,7 @@ definition {
 	test DefaultShippingOptionsAreSingleSelectable {
 		property portal.acceptance = "false";
 
-		task ("Given the Sales Manager is on the Order Defaults tab in the Account") {
+		task ("Given the Sales Manager is on the Channel Defaults tab in the Account") {
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
 		}
 
@@ -187,7 +187,7 @@ definition {
 				shippingMethod = "Flat Rate");
 		}
 
-		task ("And the Sales Manager goes back into the Order Defaults tab inside the Account") {
+		task ("And the Sales Manager goes back into the Channel Defaults tab inside the Account") {
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
 		}
 
@@ -221,7 +221,7 @@ definition {
 				shippingMethod = "Flat Rate");
 		}
 
-		task ("And the Sales Manager goes back into the Order Defaults tab inside the Account") {
+		task ("And the Sales Manager goes back into the Channel Defaults tab inside the Account") {
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
 		}
 
@@ -269,7 +269,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("And the Sales Manager goes back into the Order Defaults tab inside the Account") {
+		task ("And the Sales Manager goes back into the Channel Defaults tab inside the Account") {
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
 		}
 
@@ -478,7 +478,7 @@ definition {
 	test VerifyIfDefaultShippingOptionsAreSortedAndIfUsePrioritySettingArePresentIntoTheList {
 		property portal.acceptance = "false";
 
-		task ("Given the Sales Manager is on the Order Defaults tab in the Account") {
+		task ("Given the Sales Manager is on the Channel Defaults tab in the Account") {
 			CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = "Commerce Account");
 		}
 

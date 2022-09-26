@@ -829,8 +829,9 @@ public class CPInstanceServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPInstance
 			updateCPInstance(
-				HttpPrincipal httpPrincipal, long cpInstanceId, String sku,
-				String gtin, String manufacturerPartNumber, boolean purchasable,
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long cpInstanceId, String sku, String gtin,
+				String manufacturerPartNumber, boolean purchasable,
 				double width, double height, double depth, double weight,
 				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
 				java.math.BigDecimal cost, boolean published,
@@ -851,15 +852,15 @@ public class CPInstanceServiceHttp {
 				_updateCPInstanceParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpInstanceId, sku, gtin, manufacturerPartNumber,
-				purchasable, width, height, depth, weight, price, promoPrice,
-				cost, published, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire, unspsc,
-				discontinued, replacementCPInstanceUuid, replacementCProductId,
-				discontinuedDateMonth, discontinuedDateDay,
-				discontinuedDateYear, serviceContext);
+				methodKey, externalReferenceCode, cpInstanceId, sku, gtin,
+				manufacturerPartNumber, purchasable, width, height, depth,
+				weight, price, promoPrice, cost, published, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, unspsc, discontinued, replacementCPInstanceUuid,
+				replacementCProductId, discontinuedDateMonth,
+				discontinuedDateDay, discontinuedDateYear, serviceContext);
 
 			Object returnObj = null;
 
@@ -1122,13 +1123,14 @@ public class CPInstanceServiceHttp {
 		};
 	private static final Class<?>[] _updateCPInstanceParameterTypes17 =
 		new Class[] {
-			long.class, String.class, String.class, String.class, boolean.class,
-			double.class, double.class, double.class, double.class,
+			String.class, long.class, String.class, String.class, String.class,
+			boolean.class, double.class, double.class, double.class,
+			double.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, boolean.class, int.class, int.class,
+			boolean.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class, String.class, boolean.class,
-			String.class, long.class, int.class, int.class, int.class,
+			boolean.class, String.class, boolean.class, String.class,
+			long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updatePricingInfoParameterTypes18 =

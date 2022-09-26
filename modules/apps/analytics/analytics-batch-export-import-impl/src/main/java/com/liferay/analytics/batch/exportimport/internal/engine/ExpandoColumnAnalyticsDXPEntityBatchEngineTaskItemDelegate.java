@@ -16,7 +16,6 @@ package com.liferay.analytics.batch.exportimport.internal.engine;
 
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.converter.DXPEntityDTOConverter;
-import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
@@ -121,9 +120,6 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 		return buildDynamicQuery(companyId, dynamicQuery, filter);
 	}
-
-	@Reference
-	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

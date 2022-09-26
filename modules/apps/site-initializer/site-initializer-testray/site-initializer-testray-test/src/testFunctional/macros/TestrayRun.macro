@@ -16,6 +16,12 @@ definition {
 		Button.click(button = "Save");
 	}
 
+	macro assertValueRun {
+		AssertElementPresent(
+			key_title = "${valueRun}",
+			locator1 = "TestrayRun#VERIFY_VALUES_RUN");
+	}
+
 	macro deleteRun {
 		RightClick.rightClick(
 			key_projectName = "${runName}",
@@ -46,12 +52,6 @@ definition {
 		Button.click(button = "Save");
 
 		Alert.viewSuccessMessage();
-	}
-
-	macro assertValueRun {
-		AssertElementPresent(
-			key_title = "${valueRun}",
-			locator1 = "TestrayRun#VERIFY_VALUES_RUN");
 	}
 
 }

@@ -9,17 +9,17 @@ definition {
 	property testray.main.component.name = "Site Initializer Testray";
 
 	setUp {
-        task ("Login and create a Testray Site") {
-            TestCase.setUpPortalInstance();
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
 
-            User.firstLoginPG();
+			User.firstLoginPG();
 
-            Testray.createTestraySite(siteName = "Testray 2");
+			Testray.createTestraySite(siteName = "Testray 2");
 
-            Refresh();
-        }
+			Refresh();
+		}
 
-        task ("Go to Categories on Manage Sidebar and Add two Category") {
+		task ("Go to Categories on Manage Sidebar and Add two Category") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			TestrayLayout.clickManageOnSidebar();
@@ -56,7 +56,7 @@ definition {
 		}
 
 		task ("Create project, create Product Version and create Routine") {
-            Testray.changePagination(
+			Testray.changePagination(
 				numberItems = "20",
 				valuePagination = "150");
 
@@ -68,14 +68,14 @@ definition {
 				numberItems = "20",
 				valuePagination = "150");
 
-            TestrayManage.createProductVersion(
+			TestrayManage.createProductVersion(
 				manageOption = "Manage Product Versions",
 				nameOptions = "Projects_1 Project",
 				version = "1.x");
 
-            Refresh();
+			Refresh();
 
-            Testray.changePagination(
+			Testray.changePagination(
 				numberItems = "20",
 				valuePagination = "150");
 
@@ -96,17 +96,17 @@ definition {
 				listOption = "Option 2",
 				listOption1 = "Option 3");
 
-            TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
-            TestrayBuild.createBuild(
+			TestrayBuild.createBuild(
 				description = "Builds_1 Project Description",
 				fieldName = "Builds_1 Project",
 				gitHash = "12345",
 				productVersion = "1.x",
 				routine = "Routines_1 Routine");
-        }
+		}
 
-        task ("Go to Testray 2 and change the pagination") {
+		task ("Go to Testray 2 and change the pagination") {
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 
 			Testray.changePagination(
@@ -118,8 +118,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        task ("Delete routine in setup") {
-            TestrayLayout.clickResultsOnSidebar();
+		task ("Delete routine in setup") {
+			TestrayLayout.clickResultsOnSidebar();
 
 			Testray.changePagination(
 				numberItems = "20",
@@ -129,7 +129,7 @@ definition {
 
 			TestrayRoutines.deleteRoutine(itemName = "Routines_1 Routine");
 
-            CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		TestrayManage.deleteAllCategories();
@@ -147,54 +147,36 @@ definition {
 	@priority = "5"
 	test AdminCanAddAndDeleteRun {
 		task ("Given that the user goes into build") {
-            Testray.goToProjectPage(projectName = "Projects_1 Project");
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-            TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
 		}
 
-        task ("And create run that should appear on the list") {
+		task ("And create run that should appear on the list") {
 			Testray.projectTabNavigator(navTabName = "Runs");
 
-            TestrayRun.addRun(
-                label = "Environments_1 Category A",
+			TestrayRun.addRun(
+				label = "Environments_1 Category A",
 				label1 = "Environments_1 Category B",
 				listOption = "Option 1",
 				listOption1 = "Option 3");
 
-            Testray.assertItemName(key_name = "01");
+			Testray.assertItemName(key_name = "01");
 
-            CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Then run should not appear on the list") {
 			TestrayRun.deleteRun(runName = "01");
 
-            Testray.assertItemNotPresent(key_name = "01");
+			Testray.assertItemNotPresent(key_name = "01");
 		}
 	}
 
-	@description = "This is a test for LPS-160591 - Verify if as an Administrator I should not be able to add a duplicate run"
-    @ignore = "Test Stub"
-	@priority = "5"
-	test AdminCanNotAddDuplicateRun {
-		
-        // TODO LPS-160591 AdminCanNotAddDuplicateRun pending implementation
-
-	}
-
-	@description = "This is a test for LPS-160592 - Verify if as an administrator I should not be allowed to add runs with identical environments"
-    @ignore = "Test Stub"
-	@priority = "4"
-	test AdminCanNotAddRunWithIdenticalEnvironments {
-		
-        // TODO LPS-160592 AdminCanNotAddRunWithIdenticalEnvironments pending implementation
-
-	}
-
 	@description = "This is a test for LPS-160593 - Verify if as an Administrator I should be able to delete a run that contains Case Results"
-    @ignore = "Test Stub"
+	@ignore = "Test Stub"
 	@priority = "5"
 	test AdminCanDeleteRunsWithCaseResults {
 
@@ -205,41 +187,58 @@ definition {
 	@description = "This is a test for LPS-163959 - Verify if as an Administrator I should be able to edit a Run"
 	@priority = "5"
 	test AdminCanEditRun {
-        task ("Given that the user goes into build") {
-            Testray.goToProjectPage(projectName = "Projects_1 Project");
+		task ("Given that the user goes into build") {
+			Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-            TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
 
 			TestrayBuild.goToBuild(buildName = "Builds_1 Project");
 		}
 
-        task ("And edit run") {
+		task ("And edit run") {
 			Testray.projectTabNavigator(navTabName = "Runs");
 
-            TestrayRun.addRun(
-                label = "Environments_1 Category A",
+			TestrayRun.addRun(
+				label = "Environments_1 Category A",
 				label1 = "Environments_1 Category B",
 				listOption = "Option 1",
 				listOption1 = "Option 3");
 
-            Testray.assertItemName(key_name = "01");
+			Testray.assertItemName(key_name = "01");
 
-            TestrayRun.assertValueRun(valueRun = "Option 1");
+			TestrayRun.assertValueRun(valueRun = "Option 1");
 
-            CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 
 		task ("Then run should appear on the list edited") {
 			TestrayRun.editRun(
-                runName = "01",
-                label = "Environments_1 Category A",
+				label = "Environments_1 Category A",
 				label1 = "Environments_1 Category B",
 				listOption = "Option 2",
-				listOption1 = "Option 3");
+				listOption1 = "Option 3",
+				runName = "01");
 
-            TestrayRun.assertValueRun(valueRun = "Option 2");
+			TestrayRun.assertValueRun(valueRun = "Option 2");
 		}
-		
+	}
+
+	@description = "This is a test for LPS-160591 - Verify if as an Administrator I should not be able to add a duplicate run"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanNotAddDuplicateRun {
+
+		// TODO LPS-160591 AdminCanNotAddDuplicateRun pending implementation
+
+	}
+
+	@description = "This is a test for LPS-160592 - Verify if as an administrator I should not be allowed to add runs with identical environments"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AdminCanNotAddRunWithIdenticalEnvironments {
+
+		// TODO LPS-160592 AdminCanNotAddRunWithIdenticalEnvironments pending implementation
+
 	}
 
 }

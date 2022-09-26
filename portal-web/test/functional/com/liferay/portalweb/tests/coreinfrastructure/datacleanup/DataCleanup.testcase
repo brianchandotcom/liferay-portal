@@ -81,8 +81,6 @@ definition {
 
 			fail("Failed: Hello World data still present in ResourceAction table.");
 		}
-
-
 	}
 
 	@priority = "3"
@@ -169,7 +167,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test CanCleanupShoppingDataAfterUpgrade {
 		property data.archive.type = "data-archive-portal";
@@ -241,7 +238,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test CanCleanupSoftwareCatalogDataAfterUpgrade {
 		property data.archive.type = "data-archive-portal";

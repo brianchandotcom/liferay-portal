@@ -19,7 +19,7 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-		 	CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
 
 		task ("Adding a user to the project") {
@@ -44,7 +44,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-		 	JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 		}
 	}
 

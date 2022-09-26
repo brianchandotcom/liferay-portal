@@ -1,0 +1,14 @@
+// Vitest Snapshot v1
+
+exports[`Container > renders with success 1`] = `
+<DocumentFragment>
+  <div
+    class="bg-white border-1 rounded-xs p-4"
+  >
+    <div />
+    <div>
+      Element
+    </div>
+  </div>
+</DocumentFragment>
+`;

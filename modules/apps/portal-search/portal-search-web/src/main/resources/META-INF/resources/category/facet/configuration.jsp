@@ -26,7 +26,8 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
+<%@ page import="com.liferay.learn.LearnMessageUtil" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.search.web.internal.category.facet.configuration.CategoryFacetPortletInstanceConfiguration" %><%@
@@ -95,6 +96,8 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 								"disabled", assetCategoriesSearchFacetDisplayContext.isLegacyFieldSelected()
 							).put(
 								"initialSelectedVocabularyIds", StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds())
+							).put(
+								"learnMessages", LearnMessageUtil.getJSONObject("portal-search-web")
 							).put(
 								"namespace", liferayPortletResponse.getNamespace()
 							).put(

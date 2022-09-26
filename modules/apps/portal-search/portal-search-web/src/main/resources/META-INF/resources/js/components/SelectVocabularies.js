@@ -22,6 +22,8 @@ import getCN from 'classnames';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
+import LearnMessage from '../shared/LearnMessage';
+
 const CONFIGURATION = {
 	headers: new Headers({
 		'Accept': 'application/json',
@@ -239,6 +241,7 @@ function VocabularyTree({
 function SelectVocabularies({
 	disabled = false,
 	initialSelectedVocabularyIds = SELECT_OPTIONS.ALL,
+	learnMessages,
 	namespace = '',
 	vocabularyIdsInputName = '',
 }) {
@@ -369,6 +372,11 @@ function SelectVocabularies({
 						{Liferay.Language.get(
 							'select-vocabularies-configuration-view-permission-alert'
 						)}
+
+						<LearnMessage
+							learnMessages={learnMessages}
+							resourceKey="tag-and-category-facet"
+						/>
 					</ClayAlert>
 				)}
 

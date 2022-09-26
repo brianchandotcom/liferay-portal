@@ -55,12 +55,12 @@ public class EmailAddressLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.EmailAddress addEmailAddress(
 			long userId, java.lang.String className, long classPK,
-			java.lang.String address, long typeId, boolean primary,
+			java.lang.String address, long listTypeId, boolean primary,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressLocalService.addEmailAddress(
-			userId, className, classPK, address, typeId, primary,
+			userId, className, classPK, address, listTypeId, primary,
 			serviceContext);
 	}
 
@@ -409,12 +409,12 @@ public class EmailAddressLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
-			long emailAddressId, java.lang.String address, long typeId,
+			long emailAddressId, java.lang.String address, long listTypeId,
 			boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressLocalService.updateEmailAddress(
-			emailAddressId, address, typeId, primary);
+			emailAddressId, address, listTypeId, primary);
 	}
 
 	@Override

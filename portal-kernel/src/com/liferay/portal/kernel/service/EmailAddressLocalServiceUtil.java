@@ -61,11 +61,11 @@ public class EmailAddressLocalServiceUtil {
 
 	public static EmailAddress addEmailAddress(
 			long userId, String className, long classPK, String address,
-			long typeId, boolean primary, ServiceContext serviceContext)
+			long listTypeId, boolean primary, ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addEmailAddress(
-			userId, className, classPK, address, typeId, primary,
+			userId, className, classPK, address, listTypeId, primary,
 			serviceContext);
 	}
 
@@ -355,11 +355,12 @@ public class EmailAddressLocalServiceUtil {
 	}
 
 	public static EmailAddress updateEmailAddress(
-			long emailAddressId, String address, long typeId, boolean primary)
+			long emailAddressId, String address, long listTypeId,
+			boolean primary)
 		throws PortalException {
 
 		return getService().updateEmailAddress(
-			emailAddressId, address, typeId, primary);
+			emailAddressId, address, listTypeId, primary);
 	}
 
 	public static EmailAddressLocalService getService() {

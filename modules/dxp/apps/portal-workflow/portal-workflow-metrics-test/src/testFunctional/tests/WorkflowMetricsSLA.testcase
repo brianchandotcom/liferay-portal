@@ -244,11 +244,11 @@ definition {
 	test DeletingSLAReflectInProgressInstances {
 		property test.name.skip.portal.instance = "WorkflowMetricsSLA#DeletingSLAReflectInProgressInstances";
 
-		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
-
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = "1",
 			slaJobInterval = "1");
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 

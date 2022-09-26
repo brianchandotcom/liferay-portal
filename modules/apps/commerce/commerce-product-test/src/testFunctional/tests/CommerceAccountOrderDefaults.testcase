@@ -39,12 +39,12 @@ definition {
 				termsType = "Delivery");
 		}
 
-		task ("When the admin goes into the "Order Defaults" for the account") {
+		task ("When the admin goes into the "Channel Defaults" for the account") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("And goes into the section "Delivery Terms And Conditions"") {
@@ -76,7 +76,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.setDefaultCommerceTermsEntry(
 				channelEntry = "Minium Portal",
@@ -85,7 +85,7 @@ definition {
 		}
 
 		task ("Then the option "All Channels" will become "All Other Channels"") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Click(
 				key_termType = "Delivery",
@@ -109,7 +109,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.removeDefaultCommerceTerms(
 				entryDetails = "Delivery Term 1",
@@ -123,7 +123,7 @@ definition {
 		}
 
 		task ("And the entries table contains "All Channels" linked to the delivery") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(
 				termEntry = "All Channels,Delivery Term 1,Yes,No",
@@ -131,7 +131,7 @@ definition {
 		}
 
 		task ("And admin links the channel "Minium Portal" to a delivery") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.setDefaultCommerceTermsEntry(
 				channelEntry = "Minium Portal",
@@ -140,7 +140,7 @@ definition {
 		}
 
 		task ("Then entries tables should show "All Other Channels" instead of "All Channels" ") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(
 				termEntry = "All Other Channels,Delivery Term 1,Yes,No",
@@ -157,12 +157,12 @@ definition {
 				termsType = "Payment");
 		}
 
-		task ("When the admin goes into the "Order Defaults" for the account") {
+		task ("When the admin goes into the "Channel Defaults" for the account") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("And goes into the section "Payment Terms And Conditions"") {
@@ -194,7 +194,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.setDefaultCommerceTermsEntry(
 				channelEntry = "Minium Portal",
@@ -203,7 +203,7 @@ definition {
 		}
 
 		task ("Then the option "All Channels" will become "All Other Channels"") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Click(
 				key_termType = "Payment",
@@ -227,7 +227,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.removeDefaultCommerceTerms(
 				entryDetails = "Payment Term 1",
@@ -241,7 +241,7 @@ definition {
 		}
 
 		task ("And the entries table contains "All Channels" linked to the payment") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(
 				termEntry = "All Channels,Payment Term 1,Yes,No",
@@ -249,7 +249,7 @@ definition {
 		}
 
 		task ("And admin links the channel "Minium Portal" to a payment") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.setDefaultCommerceTermsEntry(
 				channelEntry = "Minium Portal",
@@ -258,7 +258,7 @@ definition {
 		}
 
 		task ("Then entries tables should show "All Other Channels" instead of "All Channels" ") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(
 				termEntry = "All Other Channels,Payment Term 1,Yes,No",
@@ -311,7 +311,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Test Account 1");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			for (var typeList : list "Billing,Shipping") {
 				Accounts.addDefaultCommerceAddressEntry(
@@ -402,7 +402,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.addDefaultCommerceAddressEntry(
 				addressEntry = "Billing Address Entry 1",
@@ -498,7 +498,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			for (var channelEntries : list "Minium Portal,Test Channel 1,Test Channel 2") {
 				Accounts.addDefaultCommerceAddressEntry(
@@ -566,7 +566,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			for (var channelEntries : list "Minium Portal,Test Channel 1,Test Channel 2") {
 				Accounts.addDefaultCommerceAddressEntry(

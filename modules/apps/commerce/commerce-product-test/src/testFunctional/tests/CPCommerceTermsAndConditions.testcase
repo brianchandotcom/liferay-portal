@@ -47,12 +47,12 @@ definition {
 				valuePosition = "2");
 		}
 
-		task ("When I go into the "Order Defaults" tab inside the Account and click on the Set Default Delivery Commerce Term Entry") {
+		task ("When I go into the "Channel Defaults" tab inside the Account and click on the Set Default Delivery Commerce Term Entry") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Test Account 1");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Click(
 				key_termType = "Delivery",
@@ -65,12 +65,12 @@ definition {
 			Accounts.viewDefaultCommerceTermsListByPriority(rowList = "ZZ Terms and Condition Entry:1,AA Terms and Condition Entry:2");
 		}
 
-		task ("When I go into the "Order Defaults" tab inside the Account and click on the Set Default Delivery Commerce Term Entry") {
+		task ("When I go into the "Channel Defaults" tab inside the Account and click on the Set Default Delivery Commerce Term Entry") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Test Account 1");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("Then I can select one single entry") {
@@ -78,19 +78,19 @@ definition {
 				termEntry = "AA Terms and Condition Entry",
 				termType = "Delivery");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(
 				termEntry = "All Channels,AA Terms and Condition Entry,Yes,No",
 				termType = "Delivery");
 		}
 
-		task ("When I go into the "Order Defaults" tab inside the Account") {
+		task ("When I go into the "Channel Defaults" tab inside the Account") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Test Account 2");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("Then the default entry that is already selected is Use Priority Settings") {
@@ -104,7 +104,7 @@ definition {
 		}
 
 		task ("And Remove the default delivery terms, "Use Priority Settings" is displayed instead of the T&C entry") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.removeDefaultCommerceTerms(
 				entryDetails = "AA Terms and Condition Entry",
@@ -145,12 +145,12 @@ definition {
 				valuePosition = "2");
 		}
 
-		task ("When I go into the "Order Defaults" tab inside the Account and click on the Set Default Payment Commerce Term Entry") {
+		task ("When I go into the "Channel Defaults" tab inside the Account and click on the Set Default Payment Commerce Term Entry") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Test Account 1");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Click(
 				key_termType = "Payment",
@@ -163,12 +163,12 @@ definition {
 			Accounts.viewDefaultCommerceTermsListByPriority(rowList = "AA Terms and Condition Entry:1,BB Terms and Condition Entry:2");
 		}
 
-		task ("When I go into the "Order Defaults" tab inside the Account and click on the Set Default Payment Commerce Term Entry") {
+		task ("When I go into the "Channel Defaults" tab inside the Account and click on the Set Default Payment Commerce Term Entry") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Test Account 1");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("Then I can select one single entry") {
@@ -176,19 +176,19 @@ definition {
 				termEntry = "BB Terms and Condition Entry",
 				termType = "Payment");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(
 				termEntry = "All Channels,BB Terms and Condition Entry,Yes,No",
 				termType = "Payment");
 		}
 
-		task ("When I go into the "Order Defaults" tab inside the Account") {
+		task ("When I go into the "Channel Defaults" tab inside the Account") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Test Account 2");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("Then the default entry that is already selected is Use Priority Settings") {
@@ -202,7 +202,7 @@ definition {
 		}
 
 		task ("And Remove the default payment terms, "Use Priority Settings" is displayed instead of the T&C entry") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.removeDefaultCommerceTerms(
 				entryDetails = "AA Terms and Condition Entry",
@@ -244,13 +244,13 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.setDefaultCommerceTermsEntry(
 				termEntry = "Terms and Condition Entry 1",
 				termType = "Delivery");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(
 				termEntry = "All Channels,Terms and Condition Entry 1,Yes,No",
@@ -276,7 +276,7 @@ definition {
 				menuItem = "Edit",
 				rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("Then the default delivery is not present anymore.") {
@@ -322,13 +322,13 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.setDefaultCommerceTermsEntry(
 				termEntry = "Terms and Condition Entry 1",
 				termType = "Payment");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(
 				termEntry = "All Channels,Terms and Condition Entry 1,Yes,No",
@@ -354,7 +354,7 @@ definition {
 				menuItem = "Edit",
 				rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("Then the default payment is not present anymore.") {
@@ -394,7 +394,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.setDefaultCommerceTermsEntry(
 				termEntry = "Terms and Condition Entry 1",
@@ -424,7 +424,7 @@ definition {
 				menuItem = "Edit",
 				rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("Then the Delivery Term is inactive") {
@@ -462,7 +462,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			Accounts.setDefaultCommerceTermsEntry(
 				termEntry = "Terms and Condition Entry 1",
@@ -492,7 +492,7 @@ definition {
 				menuItem = "Edit",
 				rowEntry = "Account Name");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("Then the Payment Term is inactive") {

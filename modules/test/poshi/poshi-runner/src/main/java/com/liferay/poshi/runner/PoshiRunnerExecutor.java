@@ -1171,52 +1171,46 @@ public class PoshiRunnerExecutor {
 
 		String methodName = method.getName();
 
-		Callable<Object> task = new Callable<Object>() {
+		Callable<Object> task = () -> {
+			int maxRetries = 1;
+			int retryCount = 0;
 
-			public Object call() throws Exception {
-				int maxRetries = 1;
-				int retryCount = 0;
+			while (true) {
+				try {
+					return method.invoke(liferaySelenium, args);
+				}
+				catch (Exception exception) {
+					Throwable throwable = exception.getCause();
 
-				while (true) {
-					try {
-						return method.invoke(liferaySelenium, args);
+					if ((throwable instanceof StaleElementReferenceException) &&
+						(retryCount < maxRetries)) {
+
+						retryCount++;
+
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("\nElement turned stale while running ");
+						sb.append(methodName);
+						sb.append(". Retrying in ");
+						sb.append(PropsValues.TEST_RETRY_COMMAND_WAIT_TIME);
+						sb.append("seconds.");
+
+						System.out.println(sb.toString());
+
+						continue;
 					}
-					catch (Exception exception) {
-						Throwable throwable = exception.getCause();
 
-						if ((throwable instanceof
-								StaleElementReferenceException) &&
-							(retryCount < maxRetries)) {
-
-							retryCount++;
-
-							StringBuilder sb = new StringBuilder();
-
-							sb.append("\nElement turned stale while running ");
-							sb.append(methodName);
-							sb.append(". Retrying in ");
-							sb.append(PropsValues.TEST_RETRY_COMMAND_WAIT_TIME);
-							sb.append("seconds.");
-
-							System.out.println(sb.toString());
-
-							continue;
-						}
-
-						if (PropsValues.DEBUG_STACKTRACE) {
-							throw new Exception(
-								throwable.getMessage(), exception);
-						}
-
-						if (throwable instanceof Error) {
-							throw (Error)throwable;
-						}
-
-						throw (Exception)throwable;
+					if (PropsValues.DEBUG_STACKTRACE) {
+						throw new Exception(throwable.getMessage(), exception);
 					}
+
+					if (throwable instanceof Error) {
+						throw (Error)throwable;
+					}
+
+					throw (Exception)throwable;
 				}
 			}
-
 		};
 
 		Long timeout = Long.valueOf(PropsValues.TIMEOUT_EXPLICIT_WAIT) + 60L;

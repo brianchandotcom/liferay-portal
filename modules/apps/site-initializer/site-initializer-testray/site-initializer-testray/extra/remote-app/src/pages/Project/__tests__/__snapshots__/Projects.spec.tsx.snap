@@ -1,0 +1,341 @@
+// Vitest Snapshot v1
+
+exports[`Projects > render projects with success 1`] = `
+<DocumentFragment>
+  <div
+    class="bg-white border-1 rounded-xs p-4"
+  >
+    <div />
+    <nav
+      class="management-bar navbar navbar-expand-md management-bar-light"
+    >
+      <div
+        class="container-fluid container-fluid-max-xl"
+      >
+        <h5
+          class="ml-2"
+        >
+          Projects
+        </h5>
+        <ul
+          class="navbar-nav"
+        />
+      </div>
+    </nav>
+    <div
+      class="mt-4"
+    >
+      <div
+        class="pagination-bar"
+      >
+        <div
+          class="dropdown pagination-items-per-page"
+        >
+          <button
+            aria-controls="clay-dropdown-menu-1"
+            aria-expanded="false"
+            aria-haspopup="menu"
+            class="dropdown-toggle btn btn-unstyled"
+            style=""
+            type="button"
+          >
+            20 Items
+            <svg
+              class="lexicon-icon lexicon-icon-caret-double-l"
+              role="presentation"
+            >
+              <use
+                xlink:href="#caret-double-l"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          class="pagination-results"
+        >
+          Showing 1 to 20 of 100
+        </div>
+        <ul
+          class="pagination pagination-root"
+        >
+          <li
+            class="page-item disabled"
+          >
+            <button
+              aria-label="Previous"
+              class="page-link"
+              disabled=""
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-angle-left"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#angle-left"
+                />
+              </svg>
+            </button>
+          </li>
+          <li
+            class="page-item active"
+          >
+            <button
+              class="page-link"
+              disabled=""
+              type="button"
+            >
+              1
+            </button>
+          </li>
+          <li
+            class="page-item"
+          >
+            <button
+              class="page-link"
+              type="button"
+            >
+              2
+            </button>
+          </li>
+          <li
+            class="page-item"
+          >
+            <button
+              class="page-link"
+              type="button"
+            >
+              3
+            </button>
+          </li>
+          <li
+            class="page-item"
+          >
+            <button
+              class="page-link"
+              type="button"
+            >
+              4
+            </button>
+          </li>
+          <li
+            class="page-item"
+          >
+            <button
+              class="page-link"
+              type="button"
+            >
+              5
+            </button>
+          </li>
+          <li
+            class="page-item"
+          >
+            <button
+              aria-label="Next"
+              class="page-link"
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-angle-right"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#angle-right"
+                />
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      class="table-responsive"
+    >
+      <table
+        class="table table-autofit show-quick-actions-on-hover table-hover testray-table"
+      >
+        <thead>
+          <tr
+            class=""
+          >
+            <td
+              class="align-items-center text-nowrap"
+            >
+              <p
+                class="table-list-title"
+              >
+                Project
+                <svg
+                  class="lexicon-icon lexicon-icon-caret-double-l cursor-pointer ml-1"
+                  role="presentation"
+                >
+                  <use
+                    xlink:href="#caret-double-l"
+                  />
+                </svg>
+              </p>
+            </td>
+            <td
+              class="align-items-center text-nowrap"
+            >
+              <p
+                class="table-list-title"
+              >
+                Description
+              </p>
+            </td>
+            <td
+              class=""
+            />
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="table-row text-nowrap"
+          >
+            <td
+              class="text-dark cursor-pointer"
+            >
+              Liferay Portal 7.4
+            </td>
+            <td
+              class="text-dark"
+            >
+              DXP Version
+            </td>
+            <td
+              class="py-0 table-action-column table-cell-expand text-right"
+            >
+              <div />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div
+      class="pagination-bar"
+    >
+      <div
+        class="dropdown pagination-items-per-page"
+      >
+        <button
+          aria-controls="clay-dropdown-menu-2"
+          aria-expanded="false"
+          aria-haspopup="menu"
+          class="dropdown-toggle btn btn-unstyled"
+          style=""
+          type="button"
+        >
+          20 Items
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double-l"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double-l"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="pagination-results"
+      >
+        Showing 1 to 20 of 100
+      </div>
+      <ul
+        class="pagination pagination-root"
+      >
+        <li
+          class="page-item disabled"
+        >
+          <button
+            aria-label="Previous"
+            class="page-link"
+            disabled=""
+            type="button"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-angle-left"
+              role="presentation"
+            >
+              <use
+                xlink:href="#angle-left"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          class="page-item active"
+        >
+          <button
+            class="page-link"
+            disabled=""
+            type="button"
+          >
+            1
+          </button>
+        </li>
+        <li
+          class="page-item"
+        >
+          <button
+            class="page-link"
+            type="button"
+          >
+            2
+          </button>
+        </li>
+        <li
+          class="page-item"
+        >
+          <button
+            class="page-link"
+            type="button"
+          >
+            3
+          </button>
+        </li>
+        <li
+          class="page-item"
+        >
+          <button
+            class="page-link"
+            type="button"
+          >
+            4
+          </button>
+        </li>
+        <li
+          class="page-item"
+        >
+          <button
+            class="page-link"
+            type="button"
+          >
+            5
+          </button>
+        </li>
+        <li
+          class="page-item"
+        >
+          <button
+            aria-label="Next"
+            class="page-link"
+            type="button"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-angle-right"
+              role="presentation"
+            >
+              <use
+                xlink:href="#angle-right"
+              />
+            </svg>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</DocumentFragment>
+`;

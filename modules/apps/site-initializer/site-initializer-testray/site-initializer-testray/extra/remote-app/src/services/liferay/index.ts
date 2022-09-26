@@ -52,6 +52,9 @@ export const Liferay = window.Liferay || {
 		getUserId: () => '0',
 		getUserName: () => 'Test Test',
 	},
+	Util: {
+		openToast: () => null,
+	},
 	authToken: '',
 };
 

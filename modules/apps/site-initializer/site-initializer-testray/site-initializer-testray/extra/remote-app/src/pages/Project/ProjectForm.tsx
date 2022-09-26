@@ -22,7 +22,8 @@ import {useHeader} from '../../hooks';
 import useFormActions from '../../hooks/useFormActions';
 import i18n from '../../i18n';
 import yupSchema, {yupResolver} from '../../schema/yup';
-import {TestrayProject, testrayProjectImpl} from '../../services/rest';
+import {testrayProjectImpl} from '../../services/rest/TestrayProject';
+import {TestrayProject} from '../../services/rest/types';
 
 type ProjectFormType = typeof yupSchema.project.__outputType;
 

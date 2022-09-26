@@ -1,0 +1,70 @@
+// Vitest Snapshot v1
+
+exports[`ProjectForm > render ProjectForm with success 1`] = `
+<DocumentFragment>
+  <div
+    class="bg-white border-1 rounded-xs p-4 container"
+  >
+    <div />
+    <div
+      class="form-group"
+    >
+      <label
+        class="font-weight-normal mb-1 mx-0 text-paragraph required"
+        for="name"
+      >
+        Name
+      </label>
+      <input
+        class="form-control rounded-xs"
+        id="name"
+        name="name"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      class="form-group"
+    >
+      <label
+        class="font-weight-normal mb-1 mx-0 text-paragraph"
+        for="description"
+      >
+        Description
+      </label>
+      <input
+        class="form-control rounded-xs"
+        id="description"
+        name="description"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      class="btn-group"
+      role="group"
+    >
+      <div
+        class="btn-group-item"
+      >
+        <button
+          class="btn btn-primary"
+          type="button"
+        >
+          Save
+        </button>
+      </div>
+      <div
+        class="btn-group-item"
+      >
+        <button
+          class="btn btn-secondary"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

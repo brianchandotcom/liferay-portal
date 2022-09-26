@@ -593,8 +593,7 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 			methodCall);
 
 		if (!Objects.equals(parameterList.get(0), "\"0.0.0\"")) {
-			String version = StringUtil.removeChar(
-				parameterList.get(0), CharPool.QUOTE);
+			String version = StringUtil.unquote(parameterList.get(0));
 
 			if (!version.matches("\\d+\\.\\d+\\.\\d+")) {
 				return content;

@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.testray.TestrayBuild;
+import com.liferay.jenkins.results.parser.testray.TestrayCaseResult;
 import com.liferay.jenkins.results.parser.testray.TestrayCaseType;
 import com.liferay.jenkins.results.parser.testray.TestrayRoutine;
 import com.liferay.jenkins.results.parser.testray.TestrayRun;
@@ -28,6 +29,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -78,6 +80,32 @@ public class TestHistoryMap {
 			}
 		}
 
+		for (BatchHistory batchHistory : _batchHistoryMap.values()) {
+			TestrayCaseType testrayCaseType = batchHistory.getTestrayCaseType();
+			TestrayRun testrayRun = batchHistory.getTestrayRun();
+
+			if ((testrayCaseType == null) || (testrayRun == null)) {
+				continue;
+			}
+
+			List<TestrayCaseResult> testrayCaseResults =
+				_latestTestrayBuild.getTestrayCaseResults(
+					testrayCaseType, testrayRun);
+
+			for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
+				String testClassName = testrayCaseResult.getName();
+
+				TestClassHistory testClassHistory =
+					batchHistory.getTestClassHistory(testClassName);
+
+				if (testClassHistory == null) {
+					continue;
+				}
+
+				testClassHistory.setTestrayCaseResult(testrayCaseResult);
+			}
+		}
+
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"Test history map populated in ",
@@ -116,9 +144,19 @@ public class TestHistoryMap {
 					"averageOverheadDuration",
 					testClassHistory.getAverageOverheadDuration());
 				testJSONObject.put(
+					"failureCount", testClassHistory.getFailureCount());
+				testJSONObject.put(
 					"statusChanges", testClassHistory.getStatusChanges());
 				testJSONObject.put(
 					"testName", testClassHistory.getTestClassName());
+
+				TestrayCaseResult testrayCaseResult =
+					testClassHistory.getTestrayCaseResult();
+
+				if (testrayCaseResult != null) {
+					testJSONObject.put(
+						"testrayCaseResultID", testrayCaseResult.getID());
+				}
 
 				testsJSONArray.put(testJSONObject);
 			}
@@ -426,6 +464,10 @@ public class TestHistoryMap {
 			return new ArrayList<>(_testClassHistoryMap.values());
 		}
 
+		public TestClassHistory getTestClassHistory(String testClassName) {
+			return _testClassHistoryMap.get(testClassName);
+		}
+
 		public List<TestHistory> getTestHistories() {
 			List<TestHistory> testHistories = new ArrayList<>();
 
@@ -474,7 +516,7 @@ public class TestHistoryMap {
 			}
 
 			_testrayRun = new TestrayRun(
-				getLatestTestrayBuild(), getBatchName(), new ArrayList<>());
+				getLatestTestrayBuild(), getBatchName(), new ArrayList<File>());
 
 			return _testrayRun;
 		}
@@ -599,6 +641,20 @@ public class TestHistoryMap {
 			return totalOverheadDuration / count;
 		}
 
+		public int getFailureCount() {
+			int failureCount = 0;
+
+			for (TestClassReport testClassReport : _testClassReports) {
+				String status = _fixStatus(testClassReport.getStatus());
+
+				if (!Objects.equals(status, "PASSED")) {
+					failureCount++;
+				}
+			}
+
+			return failureCount;
+		}
+
 		public int getStatusChanges() {
 			int statusChanges = 0;
 
@@ -631,6 +687,14 @@ public class TestHistoryMap {
 			return new ArrayList<>(_testHistoryMap.values());
 		}
 
+		public TestrayCaseResult getTestrayCaseResult() {
+			return _testrayCaseResult;
+		}
+
+		public void setTestrayCaseResult(TestrayCaseResult testrayCaseResult) {
+			_testrayCaseResult = testrayCaseResult;
+		}
+
 		private boolean _excludeTestReport(TestReport testReport) {
 			String status = _fixStatus(testReport.getStatus());
 
@@ -661,6 +725,7 @@ public class TestHistoryMap {
 			new ArrayList<>();
 		private final Map<String, TestHistory> _testHistoryMap =
 			new HashMap<>();
+		private TestrayCaseResult _testrayCaseResult;
 
 	}
 

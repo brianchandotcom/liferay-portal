@@ -41,6 +41,7 @@ const Input: React.FC<InputProps> = ({
 }) => (
 	<BaseWrapper
 		error={errors[name]?.message}
+		id={id}
 		label={label}
 		required={required}
 	>

@@ -23,6 +23,7 @@ type BaseWrapperProps = {
 	children: ReactNode;
 	description?: string;
 	error?: string;
+	id?: string;
 	label?: string;
 	required?: boolean;
 };
@@ -31,6 +32,7 @@ const BaseWrapper: React.FC<BaseWrapperProps> = ({
 	children,
 	description,
 	error,
+	id,
 	label,
 	required,
 }) => {
@@ -46,6 +48,7 @@ const BaseWrapper: React.FC<BaseWrapperProps> = ({
 						'font-weight-normal mb-1 mx-0 text-paragraph',
 						{required}
 					)}
+					htmlFor={id}
 				>
 					{i18n.translate(label)}
 				</label>
